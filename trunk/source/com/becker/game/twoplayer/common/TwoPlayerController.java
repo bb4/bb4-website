@@ -44,7 +44,7 @@ public abstract class TwoPlayerController extends GameController {
     private SearchStrategy strategy_;
 
     /** if this becomes non-null, we will fill in the game tree for display in a UI. */
-    private IGameTreeViewable gameTreeListener_;
+    private IGameTreeViewable gameTreeViewer_;
 
     /** Worker represents a separate thread for computing the next move. */
     private TwoPlayerSearchWorker worker_;
@@ -223,8 +223,8 @@ public abstract class TwoPlayerController extends GameController {
 
         weights = player1 ? weights_.getPlayer1Weights() : weights_.getPlayer2Weights();
 
-        if ( gameTreeListener_ != null ) {
-            gameTreeListener_.resetTree(lastMove);
+        if ( gameTreeViewer_ != null ) {
+            gameTreeViewer_.resetTree(lastMove);
         }
         TwoPlayerMove selectedMove = searchForNextMove(weights, lastMove);
 
@@ -246,9 +246,9 @@ public abstract class TwoPlayerController extends GameController {
         strategy_ = getTwoPlayerOptions().getSearchOptions().getSearchStrategy(getSearchable(), weights);
 
         SearchTreeNode root = null;
-        if (gameTreeListener_ != null) {
-            strategy_.setGameTreeEventListener(gameTreeListener_);
-            root = gameTreeListener_.getRootNode();
+        if (gameTreeViewer_ != null) {
+            strategy_.setGameTreeEventListener(gameTreeViewer_);
+            root = gameTreeViewer_.getRootNode();
         }
 
         return strategy_.search( lastMove, root );
@@ -267,7 +267,7 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     /**
-     * this makes an arbitrary move (assumed valid) and adds it to the move list.
+     * this makes the specified move (assumed valid) and adds it to the move list.
      * Calling this does not keep track of weights or the search.
      * Its most common use is for browsing the game tree.
      *  @param m the move to play.
@@ -340,7 +340,7 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     /**
-     * if desired we can set a game tree listener. If non-null then this
+     * if desired we can set a game tree viewer. If non-null then this
      * will be updated as the search is conducted. The GameTreeDialog
      * is an example of something that implements this interface and can
      * be used to view the game tree as the search is progressing.
@@ -348,7 +348,7 @@ public abstract class TwoPlayerController extends GameController {
      * Here's how the GameTreeDialog is able to show the game tree:
      * When the user indicates that they want to see the GameTreeDialog,
      * the game panel gives the GameTreeDialog to the Controller:
-     * controller_.setGameTreeListener( treeDialog_ );
+     * controller_.setGameTreeViewer( treeDialog_ );
      * Then whenever a move by either party occurs, the GameTreeDialog recieves
      * a game tree event. The GameTreeDialog renders the tree that was build up during search.
      * It already has a reference to the root of the tree.
@@ -356,7 +356,7 @@ public abstract class TwoPlayerController extends GameController {
      * that it should not bother to create the tree when searching.
      */
     public final void setGameTreeViewable( IGameTreeViewable gameTreeViewable ) {
-        gameTreeListener_ = gameTreeViewable;
+        gameTreeViewer_ = gameTreeViewable;
     }
 
     /**

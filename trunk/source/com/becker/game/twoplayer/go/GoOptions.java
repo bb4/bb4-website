@@ -18,10 +18,10 @@ public class GoOptions extends TwoPlayerOptions {
     private static final int DEFAULT_LOOK_AHEAD = 3;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
-    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 60;
+    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 0;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. Not used for go */
-    private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 0;
+    private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 60;
 
     /** for any given ply never consider less taht this many moves. */
     private static final int DEFAULT_MIN_BEST_MOVES = 6;

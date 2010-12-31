@@ -64,7 +64,7 @@ public class GoMove extends TwoPlayerMove {
      * factory method for creating a passing move
      * @return new passing move
      */
-    public static GoMove createPassMove( int val,  boolean player1) {
+    public static GoMove createPassMove(int val, boolean player1) {
         GoMove m = createGoMove( new Location(1, 1), val, null );
         m.isPass_ = true;
         m.setPlayer1(player1);

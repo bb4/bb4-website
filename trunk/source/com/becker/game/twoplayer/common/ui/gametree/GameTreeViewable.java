@@ -63,7 +63,7 @@ public final class GameTreeViewable implements IGameTreeViewable {
     public void addNode(final SearchTreeNode parent, final SearchTreeNode child) {
 
         synchronized (root_) {
-                parent.add(child);
+            parent.add(child);
         }
     }
 

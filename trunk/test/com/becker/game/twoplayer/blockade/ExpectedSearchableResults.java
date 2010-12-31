@@ -326,10 +326,10 @@ public class ExpectedSearchableResults {
     static final BlockadeMove[] EXPECTED_TOP_END_GAME_MOVES_P2 = {
         createMove(5,8,  4,8, 2000, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
         createMove(5,8,  4,8, 2000, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))),
-        createMove(5,8,  4,8, 2000, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
+        /*createMove(5,8,  4,8, 2000, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
         createMove(8,3,  9,2, -182, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
         createMove(8,3,  9,2, -186, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
-        createMove(8,3,  9,2, -186, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4)))
+        createMove(8,3,  9,2, -186, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4)))   */
     };
     
     private static BlockadeMove createMove(int r1, int c1, int r2, int c2, int val, GamePiece piece, BlockadeWall wall) {

@@ -58,7 +58,7 @@ public final class GoMoveGenerator {
 
     /**
      * @return all possible reasonable next moves. We try to limit to reasonable moves as best we can, but that
-     * is difficult without static evalutaion. At least no illegal moves will be returned.
+     * is difficult without static evaluation. At least no illegal moves will be returned.
      */
     public final MoveList generatePossibleMoves(TwoPlayerMove lastMove, boolean player1sPerspective ) {
         assert player1sPerspective;
@@ -96,7 +96,7 @@ public final class GoMoveGenerator {
     }
 
     /**
-     * Make the generated move, determine its value, set it into the move, and undo the move on the baord.
+     * Make the generated move, determine its value, set it into the move, and undo the move on the board.
      */
     private void setMoveValue(ParameterArray weights, boolean player1sPerspective, GoBoard board, GoMove m) {
         GoProfiler prof = GoProfiler.getInstance();
@@ -104,8 +104,7 @@ public final class GoMoveGenerator {
         board.makeMove( m );
         prof.startGenerateMoves();
 
-        // this value is not likely to change much except local to last move,
-        // anyway we could cache that?
+        // this value is not likely to change much except local to last move, anyway could we cache that?
         prof.startCalcWorth();
         m.setValue(searchable_.worth( m, weights, player1sPerspective ));
         prof.stopCalcWorth();
@@ -130,7 +129,7 @@ public final class GoMoveGenerator {
     }
 
     /**
-     * It is a takeback move if the proposed move position (row,col) would immediately replace the last captured piece
+     * It is a take-back move if the proposed move position (row,col) would immediately replace the last captured piece
      *  and capture the stone that did the capturing.
      * @return true of this is an immediate take-back (not allowed in go - see "rule of ko")
      */

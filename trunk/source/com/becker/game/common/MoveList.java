@@ -111,4 +111,13 @@ public class MoveList extends ArrayList<Move> {
         int r = GameContext.random().nextInt(ct);
         return get( r );
     }
+
+    public String toString() {
+        StringBuilder bldr = new StringBuilder();
+        int ct = 1;
+        for (Move m : this) {
+            bldr.append(ct).append(") ").append(m.toString());
+        }
+        return bldr.toString();
+    }
 }

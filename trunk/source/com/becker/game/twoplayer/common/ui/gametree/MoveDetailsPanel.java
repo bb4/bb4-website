@@ -67,7 +67,7 @@ class MoveDetailsPanel extends JPanel {
                 append("\" bgcolor=\"#99AA99>\">").append(entity).append(passSuffix).append("</font><br>");
         sBuf.append("Static value = ").append(Util.formatNumber(m.getValue())).append("<br>");
 
-        sBuf.append("[[["+lastNode.toString() +"]]]");
+        sBuf.append(lastNode.toString());
 
         sBuf.append("<br>Number of descendants = ").append(numKids).append("<br>");
         if (m.isUrgent())
