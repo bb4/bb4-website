@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.common.board.CaptureList;
 import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.BoardValidator;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
@@ -46,6 +47,30 @@ public abstract class PostChangeUpdater {
 
     GoGroupSet getAllGroups() {
         return board_.getGroups();
+    }
+
+    /**
+     * The structure of the groups can change after a move.
+     * First remove all the current groups then rediscover them.
+     */
+    protected void recreateGroupsAfterChange() {
+
+        GoProfiler profiler = GoProfiler.getInstance();
+        profiler.startRecreateGroupsAfterMove();
+        GoGroupSet groups = new GoGroupSet();
+
+        for ( int i = 1; i <= getBoard().getNumRows(); i++ )  {
+           for ( int j = 1; j <= getBoard().getNumCols(); j++ ) {
+               GoBoardPosition seed = (GoBoardPosition)getBoard().getPosition(i, j);
+               if (seed.isOccupied() && !seed.isVisited()) {
+                   GoBoardPositionList newGroup = nbrAnalyzer_.findGroupFromInitialPosition(seed, false);
+                   GoGroup g = new GoGroup(newGroup);
+                   groups.add(g);
+               }
+           }
+        }
+        profiler.stopRecreateGroupsAfterMove();
+        board_.setGroups(groups);
     }
 
 

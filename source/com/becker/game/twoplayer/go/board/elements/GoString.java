@@ -181,7 +181,7 @@ public class GoString extends GoSet
 
     void removeInternal(GoBoardPosition stone ) {
        boolean removed = getMembers().remove( stone );
-       assert (removed) : "failed to remove "+stone+" from"+ this;
+       assert (removed) : "failed to remove " + stone + " from" + this;
        stone.setString(null);
        if ( getMembers().isEmpty()) {
            group_.remove( this );

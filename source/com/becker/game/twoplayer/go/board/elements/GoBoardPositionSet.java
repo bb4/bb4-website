@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.elements;
 import com.becker.game.common.GameContext;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -16,6 +17,14 @@ public class GoBoardPositionSet extends HashSet<GoBoardPosition> {
 
     public GoBoardPositionSet(Set<GoBoardPosition> set) {
         super(set);
+    }
+
+    /**
+     * Note: there is no concept of order.
+     * @return one of the members
+     */
+    public GoBoardPosition getOneMember() {
+        return iterator().next();
     }
 
     /**
