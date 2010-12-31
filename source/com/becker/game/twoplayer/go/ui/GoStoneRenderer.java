@@ -101,8 +101,8 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
             double score = ((GoBoardPosition)position).getScoreContribution();
             Color pc = (score > 0? PLAYER1_STONE_COLOR : PLAYER2_STONE_COLOR);
             int op = (int)((100 * Math.abs(score)));
-            if (op >255) {
-                GameContext.log(0, "error score too big ="+score);
+            if (op > 255) {
+                GameContext.log(1, "error: score too big ="+score + "\n");
             }
             Color c = new Color(pc.getRed(), pc.getGreen(), pc.getBlue(),
                          Math.min(255, op));

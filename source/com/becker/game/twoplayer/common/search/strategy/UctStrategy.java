@@ -98,8 +98,7 @@ public class UctStrategy extends AbstractSearchStrategy {
 
             // may be null if there are no move valid moves or lastMoveNode won the game.
             if (nextNode != null) {
-
-                SearchTreeNode nextParent = parent!=null ? parent.findSearchNodeForMove(nextNode.move) : null;
+                SearchTreeNode nextParent = parent!=null ? parent.findChild(nextNode.move) : null;
                 searchable_.makeInternalMove(nextNode.move);
                 p1Score = playSimulation(nextNode, nextParent);
                 searchable_.undoInternalMove(nextNode.move);

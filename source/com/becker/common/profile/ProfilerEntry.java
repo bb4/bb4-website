@@ -66,11 +66,10 @@ public class ProfilerEntry {
         print("", null);
     }
 
-    public void print(String indent, ILog logger)
-    {
-        double seconds = getTimeInSeconds();
-        String text = indent+ "Time for "+name_+" : "+ Util.formatNumber(seconds) +" seconds";
-        if (logger==null)
+    public void print(String indent, ILog logger) {
+
+        String text = indent + getFormattedTime();
+        if (logger == null)
             System.out.println(text);
         else
             logger.println(text);
@@ -81,16 +80,26 @@ public class ProfilerEntry {
             pe.print(indent + INDENT, logger);
         }
 
-        assert (totalChildTime <= 1.1 * totalTime_ ): "The sum of the child times("+totalChildTime
-                +") cannot be greater than the parent time ("+totalTime_+").";
+        assert (totalChildTime <= 1.0 * totalTime_ ): "The sum of the child times("+totalChildTime
+                +") cannot be greater than the parent time ("+totalTime_+") for entry '" + name_ + "'. " +
+                "child entries =" + children_;
     }
 
-    public String toString(ILog log)
-    {
+    public String toString(ILog log) {
         log.setDestination(ILog.LOG_TO_STRING);
         StringBuilder bldr = new StringBuilder();
         log.setStringBuilder(bldr);
         print(INDENT, log);
         return bldr.toString();
+    }
+
+    public String toString() {
+        return getFormattedTime();
+    }
+
+
+    private String getFormattedTime() {
+        double seconds = getTimeInSeconds();
+        return  "Time for " + name_ + " : " + Util.formatNumber(seconds) + " seconds";
     }
 }

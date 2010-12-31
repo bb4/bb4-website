@@ -129,27 +129,10 @@ public class SearchTreeNode extends DefaultMutableTreeNode
      * One of our existing children bust be the next node.
      * It must never be null, but it may not be there yet because they are added in a different thread
      * So we block until there.
+     * @param move the move whose child moves we will search.
      * @return  the next child node to use as parent. Must never be null.
      */
-    public SearchTreeNode findSearchNodeForMove(TwoPlayerMove move) {
-
-        assert move!= null;
-
-        SearchTreeNode node = findChild(move);
-        int ct = 0;
-        while (node == null && ct < 5)  {
-            Util.sleep(20);
-            if (ct > 0) {
-                System.out.println("researching " + ct);
-            }
-            node = findChild(move);
-            ct++;
-        }
-        assert node != null : "Could not find node for "+ move +" after re-searching "+ ct + " times among " + childrenAsString();
-        return node;
-    }
-
-    private SearchTreeNode findChild(TwoPlayerMove move) {
+    public SearchTreeNode findChild(TwoPlayerMove move) {
         Enumeration enumeration = this.children();
         while (enumeration.hasMoreElements()) {
             SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();

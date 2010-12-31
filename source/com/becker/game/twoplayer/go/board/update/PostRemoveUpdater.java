@@ -5,6 +5,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoCaptureList;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.*;
@@ -29,19 +30,23 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     @Override
     public void update(GoMove move) {
 
+        profiler_.startUpdateGroupsAfterRemove();
         GoBoardPosition stone = (GoBoardPosition) (getBoard().getPosition(move.getToLocation()));
 
         GoString stringThatItBelongedTo = stone.getString();
         // clearing a stone may cause a string to split into smaller strings
         stone.clear(getBoard());
-        adjustLiberties(stone);
+        board_.adjustLiberties(stone);
 
         updateStringsAfterRemove( stone, stringThatItBelongedTo);
-        restoreCaptures(move.getCaptures());
+        restoreCaptures((GoCaptureList)move.getCaptures());
+
+        profiler_.startRecreateGroupsAfterRemove();
         recreateGroupsAfterChange();
-        getBoard().unvisitAll();
+        profiler_.stopRecreateGroupsAfterRemove();
 
         captures_.updateCaptures(move, false);
+        profiler_.stopUpdateGroupsAfterRemove();
     }
 
     /**
@@ -101,93 +106,17 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * restore this moves captures stones on the board
      * @param captures list of captures to remove.
      */
-    private void restoreCaptures(CaptureList captures) {
-        if ( captures != null ) {
-            restoreCapturesOnBoard(captures);
-            updateAfterRestoringCaptures(captures);     // XXX should remove
-            if (GameContext.getDebugMode() > 1) {
-                validator_.confirmStonesInValidGroups();
-                getAllGroups().confirmAllStonesInUniqueGroups();
-                GameContext.log( 3, "GoBoard: undoInternalMove: " + getBoard() + "  groups after restoring captures:" );
-            }
+    private void restoreCaptures(GoCaptureList captures) {
+
+        if ( captures == null || captures.isEmpty() ) return;
+
+        captures.restoreOnBoard(board_);
+        updateAfterRestoringCaptures(captures);     // XXX should remove
+        if (GameContext.getDebugMode() > 1) {
+            validator_.confirmStonesInValidGroups();
+            getAllGroups().confirmAllStonesInUniqueGroups();
+            GameContext.log( 3, "GoBoard: undoInternalMove: " + getBoard() + "  groups after restoring captures:" );
         }
-    }
-
-    /**
-     * put the captures back on the board.
-     */
-    private void restoreCapturesOnBoard( CaptureList captureList ) {
-        captureList.restoreOnBoard( getBoard() );
-
-        GameContext.log( 3, "GoMove: restoring these captures: " + captureList );
-
-        List<GoBoardPositionList> strings = getRestoredStringList(captureList);  // XXX should remove
-        adjustStringLiberties(captureList);
-
-        // XXX should remove next lines
-        GoGroup group = getRestoredGroup(strings);
-
-        assert ( group!=null): "no group was formed when restoring "
-                + captureList + " the list of strings was "+strings;
-        getAllGroups().add( group );
-    }
-
-    /**
-     * There may have been more than one string in the captureList
-     * @return list of strings that were restored ont he board.
-     */
-    private List<GoBoardPositionList> getRestoredStringList(CaptureList captureList) {
-
-        GoBoardPositionList restoredList = getRestoredList(captureList);
-        List<GoBoardPositionList> strings = new LinkedList<GoBoardPositionList>();
-
-        for (GoBoardPosition s : restoredList) {
-            if (!s.isVisited()) {
-                GoBoardPositionList string1 = nbrAnalyzer_.findStringFromInitialPosition(s, false);
-                strings.add(string1);
-            }
-        }
-        return strings;
-    }
-
-    /**
-     * @return list of captured stones that were restored on the board.
-     */
-    private GoBoardPositionList getRestoredList(CaptureList captureList) {
-        Iterator it = captureList.iterator();
-        GoBoardPositionList restoredList = new GoBoardPositionList();
-        while ( it.hasNext() ) {
-            GoBoardPosition capStone = (GoBoardPosition) it.next();
-            GoBoardPosition stoneOnBoard =
-                    (GoBoardPosition) getBoard().getPosition( capStone.getRow(), capStone.getCol() );
-            stoneOnBoard.setVisited(false);    // make sure in virgin unvisited state
-
-            // --adjustLiberties(stoneOnBoard, board);
-            restoredList.add( stoneOnBoard );
-        }
-        return restoredList;
-    }
-
-    /**
-     * @return the group that was restored when the captured stones were replaced on the board.
-     */
-    private GoGroup getRestoredGroup(List<GoBoardPositionList> strings) {
-        // ?? form new group, or check group nbrs to see if we can add to an existing one.
-        boolean firstString = true;
-        GoGroup group = null;
-        for  (GoBoardPositionList stringList : strings) {
-            GoString string = new GoString( stringList, getBoard() );
-            if ( firstString ) {
-                group = new GoGroup( string );
-                firstString = false;
-            }
-            else {
-                group.addMember( string);
-                //GameContext.log( 2, "GoMove: restoring ----------------" + string );
-            }
-            string.unvisit();
-        }
-        return group;
     }
 
     /**

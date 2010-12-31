@@ -9,6 +9,7 @@ import com.becker.game.common.AbstractGameProfiler;
  * 
  * @author Barry Becker
  */
+@SuppressWarnings({"ClassWithTooManyMethods"})
 public final class GoProfiler extends AbstractGameProfiler {
 
     /** singleton instance */
@@ -19,19 +20,18 @@ public final class GoProfiler extends AbstractGameProfiler {
     private static final String UPDATE_STRINGS_AFTER_MOVE = "updating strings after move";
     private static final String UPDATE_GROUPS_AFTER_MOVE = "updating groups after move";
     private static final String RECREATE_GROUPS_AFTER_MOVE = "recreating groups after move";
-    //private static final String GET_NBR_GROUPS = "getting nbr groups";
-    public static final String UPDATE_TERRITORY = "updating territory";
-    public static final String ABSOLUTE_TERRITORY = "absolute territory";
-    public static final String RELATIVE_TERRITORY = "relative territory";
-    public static final String UPDATE_EMPTY = "updating empty regions";
-    //private static final String CHECK_FOR_CUTS = "checking for cuts";
-    public static final String GET_GROUP_NBRS = "getting group nbrs";
+    private static final String RECREATE_GROUPS_AFTER_REMOVE = "recreating groups after remove";
+    private static final String UPDATE_TERRITORY = "updating territory";
+    private static final String ABSOLUTE_TERRITORY = "absolute territory";
+    private static final String RELATIVE_TERRITORY = "relative territory";
+    private static final String UPDATE_EMPTY = "updating empty regions";
+    private static final String GET_GROUP_NBRS = "getting group nbrs";
     private static final String FIND_GROUPS = "finding groups";
-    public static final String FIND_STRINGS = "finding strings";
-    public static final String FIND_CAPTURES = "finding capturess";
-    public static final String UPDATE_EYES = "update eyes";
-    public static final String GET_ENEMY_GROUPS_NBRS = "get enemy group nbrs";
-    public static final String COPY_BOARD = "copy go board";
+    private static final String FIND_STRINGS = "finding strings";
+    private static final String FIND_CAPTURES = "finding capturess";
+    private static final String UPDATE_EYES = "update eyes";
+    private static final String GET_ENEMY_GROUPS_NBRS = "get enemy group nbrs";
+    private static final String COPY_BOARD = "copy go board";
 
     public static GoProfiler getInstance() {
         if (instance == null) {
@@ -43,23 +43,22 @@ public final class GoProfiler extends AbstractGameProfiler {
 
     private GoProfiler() {
         add(GENERATE_MOVES);
-          add(CALC_WORTH, GENERATE_MOVES);
+            add(CALC_WORTH, GENERATE_MOVES);
         add(UNDO_MOVE);
-          add(UPDATE_STRINGS_AFTER_REMOVE, UNDO_MOVE);
-          add(UPDATE_GROUPS_AFTER_REMOVE, UNDO_MOVE);
+            add(UPDATE_GROUPS_AFTER_REMOVE, UNDO_MOVE);
+                add(UPDATE_STRINGS_AFTER_REMOVE, UPDATE_GROUPS_AFTER_REMOVE);
+                add(RECREATE_GROUPS_AFTER_REMOVE, UPDATE_GROUPS_AFTER_REMOVE);
         add(MAKE_MOVE);
-          add(FIND_CAPTURES, MAKE_MOVE);
-          add(UPDATE_STRINGS_AFTER_MOVE, MAKE_MOVE);
-          add(UPDATE_GROUPS_AFTER_MOVE, MAKE_MOVE);
-            add(RECREATE_GROUPS_AFTER_MOVE);
-            //add(GET_NBR_GROUPS, UPDATE_GROUPS_AFTER_MOVE);
-            //add(CHECK_FOR_CUTS, UPDATE_GROUPS_AFTER_MOVE);
-            add(UPDATE_TERRITORY, UPDATE_GROUPS_AFTER_MOVE);
-              add(ABSOLUTE_TERRITORY, UPDATE_TERRITORY);
-                add(UPDATE_EYES, ABSOLUTE_TERRITORY);
-              add(RELATIVE_TERRITORY, UPDATE_TERRITORY);
-                add(GET_ENEMY_GROUPS_NBRS, RELATIVE_TERRITORY);
-              add(UPDATE_EMPTY, UPDATE_TERRITORY);
+            add(FIND_CAPTURES, MAKE_MOVE);
+            add(UPDATE_STRINGS_AFTER_MOVE, MAKE_MOVE);
+            add(UPDATE_GROUPS_AFTER_MOVE, MAKE_MOVE);
+                add(RECREATE_GROUPS_AFTER_MOVE, UPDATE_GROUPS_AFTER_MOVE);
+                add(UPDATE_TERRITORY, UPDATE_GROUPS_AFTER_MOVE);
+                    add(ABSOLUTE_TERRITORY, UPDATE_TERRITORY);
+                        add(UPDATE_EYES, ABSOLUTE_TERRITORY);
+                    add(RELATIVE_TERRITORY, UPDATE_TERRITORY);
+                        add(GET_ENEMY_GROUPS_NBRS, RELATIVE_TERRITORY);
+                    add(UPDATE_EMPTY, UPDATE_TERRITORY);
         add(GET_GROUP_NBRS);
         add(FIND_GROUPS);
         add(FIND_STRINGS);
@@ -86,9 +85,15 @@ public final class GoProfiler extends AbstractGameProfiler {
     public void startRecreateGroupsAfterMove() {
         this.start(RECREATE_GROUPS_AFTER_MOVE);
     }
-
     public void stopRecreateGroupsAfterMove() {
         this.stop(RECREATE_GROUPS_AFTER_MOVE);
+    }
+
+    public void startRecreateGroupsAfterRemove() {
+        this.start(RECREATE_GROUPS_AFTER_REMOVE);
+    }
+    public void stopRecreateGroupsAfterRemove() {
+        this.stop(RECREATE_GROUPS_AFTER_REMOVE);
     }
 
     public void startUpdateStringsAfterMove() {
@@ -113,5 +118,77 @@ public final class GoProfiler extends AbstractGameProfiler {
 
     public void stopCopyBoard() {
         this.stop(COPY_BOARD);
+    }
+
+    public void startUpdateTerritory() {
+        this.start(UPDATE_TERRITORY);
+    }
+
+    public void stopUpdateTerritory() {
+        this.stop(UPDATE_TERRITORY);
+    }
+
+    public void startAbsoluteTerritory() {
+        this.start(ABSOLUTE_TERRITORY);
+    }
+
+    public void stopAbsoluteTerritory() {
+        this.stop(ABSOLUTE_TERRITORY);
+    }
+
+    public void startRelativeTerritory() {
+        this.start(RELATIVE_TERRITORY);
+    }
+
+    public void stopRelativeTerritory() {
+        this.stop(RELATIVE_TERRITORY);
+    }
+
+    public void startUpdateEmpty() {
+        this.start(UPDATE_EMPTY);
+    }
+
+    public void stopUpdateEmpty() {
+        this.stop(UPDATE_EMPTY);
+    }
+
+    public void startGetGroupNeightbors() {
+        this.start(GET_GROUP_NBRS);
+    }
+
+    public void stopGetGroupNeighbors() {
+        this.stop(GET_GROUP_NBRS);
+    }
+
+    public void startFindStrings() {
+        this.start(FIND_STRINGS);
+    }
+
+    public void stopFindStrings() {
+        this.stop(FIND_STRINGS);
+    }
+
+    public void startFindCaptures() {
+        this.start(FIND_CAPTURES);
+    }
+
+    public void stopFindCaptures() {
+        this.stop(FIND_CAPTURES);
+    }
+
+    public void startUpdateEyes() {
+        this.start(UPDATE_EYES);
+    }
+
+    public void stopUpdateEyes() {
+        this.stop(UPDATE_EYES);
+    }
+
+    public void startGetEnemyGroupNbrs() {
+        this.start(GET_ENEMY_GROUPS_NBRS);
+    }
+
+    public void stopGetEnemyGroupNbrs() {
+        this.stop(GET_ENEMY_GROUPS_NBRS);
     }
 }

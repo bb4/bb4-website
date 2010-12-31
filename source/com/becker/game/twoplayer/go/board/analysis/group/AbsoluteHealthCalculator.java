@@ -112,9 +112,9 @@ class AbsoluteHealthCalculator {
 
         absoluteHealth_ = eyeEvaluator.determineHealth(side, numEyes, numLiberties, numStones);
 
-        GoProfiler.getInstance().start(GoProfiler.UPDATE_EYES);
+        GoProfiler.getInstance().startUpdateEyes();
         eyeCache_.updateEyes(board);  // expensive
-        GoProfiler.getInstance().stop(GoProfiler.UPDATE_EYES);
+        GoProfiler.getInstance().stopUpdateEyes();
 
         numEyes = Math.max(eyeCache_.getEyePotential(), eyeCache_.calcNumEyes());
 

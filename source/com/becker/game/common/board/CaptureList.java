@@ -11,32 +11,32 @@ import java.util.LinkedList;
  *  @see Board
  *  @author Barry Becker
  */
-public class CaptureList extends LinkedList<BoardPosition>
-{
+public class CaptureList extends LinkedList<BoardPosition> {
+
     private static final long serialVersionUID = 0L;
 
     /**
      * remove the captured pieces from the board.
      */
-    public void removeFromBoard( Board b ) {
-        modifyCaptures( b, true );
+    public void removeFromBoard( Board board ) {
+        modifyCaptures( board, true );
     }
 
     /**
      * restore the captured pieces on the board.
      */
-    public void restoreOnBoard( Board b )  {
-        modifyCaptures( b, false );
+    public void restoreOnBoard( Board board )  {
+        modifyCaptures( board, false );
     }
 
     /**
-     * Either take the peices off the board, or put them back on based on the value of remove.
-     * @param b the game board.
+     * Either take the pieces off the board, or put them back on based on the value of remove.
+     * @param board the game board.
      * @param remove if true then remove the pieces, else restore them
      */
-    private void modifyCaptures( Board b, boolean remove ) {
+    protected void modifyCaptures( Board board, boolean remove ) {
         for (BoardPosition capture : this) {
-            BoardPosition pos = b.getPosition(capture.getRow(), capture.getCol());
+            BoardPosition pos = board.getPosition(capture.getRow(), capture.getCol());
             assert pos != null : "Captured position was null " + capture;
             if (remove)
                 pos.setPiece(null);
@@ -50,8 +50,7 @@ public class CaptureList extends LinkedList<BoardPosition>
      *  @return true if the piece was already captured
      */
     public boolean alreadyCaptured( BoardPosition p ) {
-        for (Object o : this) {
-            BoardPosition capture = (BoardPosition) o;
+        for (BoardPosition capture : this) {
             if (capture.getRow() == p.getRow() &&
                     capture.getCol() == p.getCol() &&
                     capture.getPiece().getType() == p.getPiece().getType())
@@ -64,10 +63,9 @@ public class CaptureList extends LinkedList<BoardPosition>
      * @return a deep copy of the capture list.
      */
     public CaptureList copy()  {
-        Iterator it = this.iterator();
+
         CaptureList newList = new CaptureList();
-        while ( it.hasNext() ) {
-            BoardPosition capture = (BoardPosition) it.next();
+        for (BoardPosition capture : this)  {
             newList.add( capture.copy() );
         }
         return newList;

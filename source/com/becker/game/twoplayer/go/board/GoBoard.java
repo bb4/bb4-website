@@ -153,6 +153,20 @@ public final class GoBoard extends TwoPlayerBoard {
         groups_ = groups;
     }
 
+
+    /**
+     * Adjust the liberties on the strings (both black and white) that we touch.
+     * @param liberty either occupied or not depending on if we are placing the stone or removing it.
+     */
+    public void adjustLiberties(GoBoardPosition liberty) {
+
+         NeighborAnalyzer na = new NeighborAnalyzer(this);
+         GoStringSet stringNbrs = na.findStringNeighbors( liberty );
+         for (GoString sn : stringNbrs) {
+             sn.changedLiberty(liberty);
+         }
+    }
+
     /**
      * Make sure that all the positions on the board are reset to the unvisited state.
      */
@@ -177,8 +191,7 @@ public final class GoBoard extends TwoPlayerBoard {
      * @return false if the move is somehow invalid
      */
     @Override
-    protected boolean makeInternalMove( Move move )
-    {
+    protected boolean makeInternalMove( Move move ) {
         getProfiler().startMakeMove();
 
         GoMove m = (GoMove)move;
