@@ -123,16 +123,16 @@ public class TerritoryAnalyzer {
     public float updateTerritory(boolean isEndOfGame) {
 
         GoProfiler prof = GoProfiler.getInstance();
-        prof.start(GoProfiler.UPDATE_TERRITORY);
+        prof.startUpdateTerritory();
 
         float delta = calcAbsoluteHealth();
         delta = calcRelativeHealth(prof, delta);
 
-        prof.start(GoProfiler.UPDATE_EMPTY);
+        prof.startUpdateEmpty();
         delta += updateEmptyRegions(isEndOfGame);
-        prof.stop(GoProfiler.UPDATE_EMPTY);
+        prof.stopUpdateEmpty();
 
-        prof.stop(GoProfiler.UPDATE_TERRITORY);
+        prof.stopUpdateTerritory();
         territoryDelta_ = delta;
         return delta;
     }
@@ -145,7 +145,7 @@ public class TerritoryAnalyzer {
     private float calcAbsoluteHealth() {
         float delta = 0;
         GoProfiler prof = GoProfiler.getInstance();
-        prof.start(GoProfiler.ABSOLUTE_TERRITORY);
+        prof.startAbsoluteTerritory();
 
         for (GoGroup g : board_.getGroups()) {
 
@@ -157,7 +157,7 @@ public class TerritoryAnalyzer {
             }
         }
 
-        prof.stop(GoProfiler.ABSOLUTE_TERRITORY);
+        prof.stopAbsoluteTerritory();
         return delta;
     }
 
@@ -169,14 +169,14 @@ public class TerritoryAnalyzer {
     private float calcRelativeHealth(GoProfiler prof, float initDelta) {
         float delta = initDelta;
         if (USE_RELATIVE_GROUP_SCORING) {
-            prof.start(GoProfiler.RELATIVE_TERRITORY);
+            prof.startRelativeTerritory();
             for (GoGroup g : board_.getGroups()) {
                 float health = g.calculateRelativeHealth(board_);
                 g.updateTerritory(health);
                 delta += health * g.getNumStones();
             }
 
-            prof.stop(GoProfiler.RELATIVE_TERRITORY);
+            prof.stopRelativeTerritory();
         }
         return delta;
     }

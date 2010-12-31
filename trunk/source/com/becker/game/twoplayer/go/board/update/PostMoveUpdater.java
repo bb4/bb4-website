@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.go.board.update;
 
-import com.becker.game.common.board.CaptureList;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoCaptureList;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.*;
 
@@ -26,15 +26,16 @@ public class PostMoveUpdater extends PostChangeUpdater {
     @Override
     public void update(GoMove move) {
 
-        GoBoardPosition stone = (GoBoardPosition) (getBoard().getPosition(move.getToRow(), move.getToCol()));
+        GoBoardPosition stone = (GoBoardPosition) (getBoard().getPosition(move.getToLocation()));
 
-        adjustLiberties(stone);
+        board_.adjustLiberties(stone);
 
-        CaptureList captures = determineCaptures(stone);
+        GoCaptureList captures = determineCaptures(stone);
         move.setCaptures(captures);
 
         updateStringsAfterMove(stone);
-        removeCaptures(captures);
+        captures.removeFromBoard(getBoard());
+
         assert (stone.getString().getNumLiberties(getBoard()) > 0):
             "The placed stone "+stone+" has no liberties "+stone.getGroup() +"\n"+ getBoard().toString();
         updateGroupsAfterMove(stone);
@@ -44,14 +45,15 @@ public class PostMoveUpdater extends PostChangeUpdater {
     /**
      * Determine a list of enemy stones that are captured when this stone is played on the board.
      * In other words determine all opponent strings (at most 4) whose last liberty is at the new stone location.
-     * @return list of captured stones.
+     * @param stone stone that was just placed and caused stones to be captured (if any)
+     * @return list of captured stones.  Empty if no captures.
      */
-    private CaptureList determineCaptures(GoBoardPosition stone)
-    {
-        GoProfiler.getInstance().start(GoProfiler.FIND_CAPTURES);
-        assert ( stone!=null );
+    private GoCaptureList determineCaptures(GoBoardPosition stone) {
+
+        profiler_.startFindCaptures();
+        assert ( stone != null );
         GoBoardPositionSet nbrs = nbrAnalyzer_.getNobiNeighbors( stone, NeighborType.ENEMY );
-        CaptureList captureList = null;
+        GoCaptureList captureList = new GoCaptureList();
         // keep track of the strings captured so we don't capture the same one twice
         GoStringSet capturedStrings = new GoStringSet();
 
@@ -67,33 +69,12 @@ public class PostMoveUpdater extends PostChangeUpdater {
             if ( str.getNumLiberties(getBoard()) == 0 && !capturedStrings.contains(str) ) {
                 capturedStrings.add( str );
                 // we need to add copies so that when the original stones on the board are
-                // changed we don't change the captures
-                if ( captureList == null )
-                    captureList = new CaptureList();
-
-                addCaptures(captureList, str.getMembers() );
+                // changed we don't change the captures.
+                captureList.addCaptures(str.getMembers());
             }
         }
-        GoProfiler.getInstance().stop(GoProfiler.FIND_CAPTURES);
+        profiler_.stopFindCaptures();
         return  captureList;
-    }
-
-    /**
-     * we need to add copies so that when the original stones on the board are
-     * changed we don't change the captures
-     * @return true if set is not null and not 0 sized.
-     */
-    private boolean addCaptures(CaptureList captureList, GoBoardPositionSet set) {
-        if ( set == null )  {
-            return false;
-        }
-
-        for (GoBoardPosition capture : set) {
-            // make sure none of the captures are blanks
-            assert capture.isOccupied();
-            captureList.add(capture.copy());
-        }
-        return (!set.isEmpty());
     }
 
     /**
@@ -104,8 +85,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * @param stone the stone that was just placed on the board.
      */
     private void updateStringsAfterMove( GoBoardPosition stone )  {
-        GoProfiler profiler = GoProfiler.getInstance();
-        profiler.startUpdateStringsAfterMove();
+
+        profiler_.startUpdateStringsAfterMove();
 
        GoBoardPositionSet nbrs = nbrAnalyzer_.getNobiNeighbors( stone, NeighborType.FRIEND );
 
@@ -117,7 +98,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
             updateNeighborStringsAfterMove(stone, nbrs);
         }
         cleanupGroups();
-        profiler.stopUpdateStringsAfterMove();
+        profiler_.stopUpdateStringsAfterMove();
     }
 
     /**
@@ -153,39 +134,20 @@ public class PostMoveUpdater extends PostChangeUpdater {
     }
 
     /**
-     * Make the positions on the board represented by the captureList show up empty.
-     * Afterwards these empty spaces should not belong to any strings.
-     */
-    private void removeCaptures(CaptureList captureList) {
-
-        if ( captureList == null ) return;
-        for (Object aCaptureList : captureList) {
-            GoBoardPosition capStone = (GoBoardPosition) aCaptureList;
-            GoBoardPosition stoneOnBoard =
-                (GoBoardPosition) getBoard().getPosition(capStone.getRow(), capStone.getCol());
-            stoneOnBoard.clear(getBoard());
-        }
-
-        adjustStringLiberties(captureList);
-    }
-
-    /**
      * First remove all the groups on the board.
      * Then for each stone, find its group and add that new group to the board's group list.
      * Continue until all stone accounted for.
      */
     private void updateGroupsAfterMove(GoBoardPosition pos) {
 
-        GoProfiler profiler = GoProfiler.getInstance();
-        profiler.startUpdateGroupsAfterMove();
+        profiler_.startUpdateGroupsAfterMove();
 
         if (GameContext.getDebugMode() > 1) {
             getAllGroups().confirmAllStonesInUniqueGroups();
         }
-
+        profiler_.startRecreateGroupsAfterMove();
         recreateGroupsAfterChange();
-
-        getBoard().unvisitAll();
+        profiler_.stopRecreateGroupsAfterMove();
 
         // verify that the string to which we added the stone has at least one liberty
         assert (pos.getString().getNumLiberties(getBoard()) > 0):
@@ -200,6 +162,6 @@ public class PostMoveUpdater extends PostChangeUpdater {
         if ( GameContext.getDebugMode() > 1 )
             validator_.consistencyCheck(pos);
 
-        profiler.stopUpdateGroupsAfterMove();
+        profiler_.stopUpdateGroupsAfterMove();
     }
 }

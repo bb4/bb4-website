@@ -38,7 +38,6 @@ public class BestMovesOptionsPanel extends JPanel {
         bestMovesOptions_.setPercentLessThanBestThresh(percentLessThanBestThreshField_.getIntValue());
         bestMovesOptions_.setPercentageBestMoves(bestPercentageField_.getIntValue());
         bestMovesOptions_.setMinBestMoves(minBestMovesField_.getIntValue());
-        System.out.println("bustMove opts="+ bestMovesOptions_);
     }
 
     /**

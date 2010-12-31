@@ -81,11 +81,11 @@ public class NeighborAnalyzer {
      */
     public GoBoardPositionList findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
                                                      boolean returnToUnvisitedState, NeighborType type, Box box) {
-        GoProfiler.getInstance().start(GoProfiler.FIND_STRINGS);
+        GoProfiler.getInstance().startFindStrings();
         GoBoardPositionList stones =
                 stringNbrAnalyzer_.findStringFromInitialPosition(stone, friendOwnedByP1, returnToUnvisitedState,
                                                  type, box);
-        GoProfiler.getInstance().stop(GoProfiler.FIND_STRINGS);
+        GoProfiler.getInstance().stopFindStrings();
 
         return stones;
     }

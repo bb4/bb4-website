@@ -55,7 +55,7 @@ public class MoveGenerator {
             }
         }
         if (moveList.isEmpty())
-            System.out.println("There aren't any moves to consider for lastMove="+lastMove
+            GameContext.log(1, "There aren't any moves to consider for lastMove="+lastMove
                     +" Complete movelist ="+board_.getMoveList() + " \nThe pieces are at:" + pawnLocations);
 
         return moveList;
@@ -104,7 +104,7 @@ public class MoveGenerator {
                  numMovesAdded += wallMoves.size();
             }
             else {
-                System.out.println("one of the paths was empty : " + paths);
+                GameContext.log(1, "one of the paths was empty : " + paths);
             }
         }
 

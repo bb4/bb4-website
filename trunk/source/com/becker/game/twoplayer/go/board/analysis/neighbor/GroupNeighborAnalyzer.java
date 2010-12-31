@@ -125,7 +125,7 @@ public class GroupNeighborAnalyzer {
      */
     private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, GoBoardPositionList stack,
                                     boolean samePlayerOnly ) {
-        GoProfiler.getInstance().start(GoProfiler.GET_GROUP_NBRS);
+        GoProfiler.getInstance().startGetGroupNeightbors();
         // start with the nobi string nbrs
         int numPushed = stringAnalyzer_.pushStringNeighbors( s, friendPlayer1, stack, samePlayerOnly );
 
@@ -135,7 +135,7 @@ public class GroupNeighborAnalyzer {
 
         // we only find pure group neighbors of the same color
         numPushed += pushPureGroupNeighbors( s, friendPlayer1, true, stack );
-        GoProfiler.getInstance().stop(GoProfiler.GET_GROUP_NBRS);
+        GoProfiler.getInstance().stopGetGroupNeighbors();
         return numPushed;
     }
 

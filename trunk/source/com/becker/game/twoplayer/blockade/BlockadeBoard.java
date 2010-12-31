@@ -36,7 +36,6 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @param numCols number of rows in the board grid.
      */
     public BlockadeBoard(int numRows, int numCols) {
-        System.out.println("bb numRows=" + numRows +" nc="+ numCols);
         setSize(numRows, numCols);
         boardAnalyzer_ = new BoardAnalyzer(this);
     }
