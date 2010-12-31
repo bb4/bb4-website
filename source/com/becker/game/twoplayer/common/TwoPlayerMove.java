@@ -276,21 +276,25 @@ public class TwoPlayerMove extends Move {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        if (piece_!=null)
-            s.append( piece_.isOwnedByPlayer1()? P1 : P2 );
 
+        s.append( player1_ ? P1 : P2 );
         s.append(" val:").append(Util.formatNumber(getValue()));
         s.append(" inhrtd:").append(Util.formatNumber(inheritedValue_));
-        if (piece_!=null)
+        if (piece_ != null)  {
             s.append(" piece: ").append(piece_.toString());
+        }
         //s.append(" sel:"+selected);
-        s.append('(').append(toLocation_.toString()).append(')');
-        if (urgent_)
+        if (!(isPass_ || isResignation_))  {
+            s.append('(').append(toLocation_.toString()).append(')');
+        }
+        if (urgent_) {
             s.append(" urgent!");
-        if (isPass_)
-            s.append("Passing move");
+        }
+        if (isPass_)  {
+            s.append(" Passing move");
+        }
         if (isResignation_) {
-            s.append("Resignation move");
+            s.append(" Resignation move");
         }
         s.append(" ");
         return s.toString();

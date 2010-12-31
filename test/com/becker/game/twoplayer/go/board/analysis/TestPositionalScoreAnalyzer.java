@@ -52,12 +52,12 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
         PositionalScore totalScore = new PositionalScore();
         verifyPositionalScore(new Location(2,2), createPositionalScore(0.0f, 1.0f, 0.0f, 0.0f, 0.0f), totalScore);
         verifyPositionalScore(new Location(2,3), createPositionalScore(2.0f, 0.0f, 0.0f, 0.0f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(3,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.029f, 0.606f), totalScore);
-        verifyPositionalScore(new Location(3,3), createPositionalScore(0.0f, 0.0f, 0.0f, 0.435f, 0.606f), totalScore);
+        verifyPositionalScore(new Location(3,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.029f, 0.5875f), totalScore);
+        verifyPositionalScore(new Location(3,3), createPositionalScore(0.0f, 0.0f, 0.0f, 0.421875f, 0.5875f), totalScore);
 
-        verifyScoresEqual(createPositionalScore(2.0f, 1.0f, 0.0f, 0.4645f, 1.212f), totalScore);
+        verifyScoresEqual(createPositionalScore(2.0f, 1.0f, 0.0f, .45f, 1.175f), totalScore);
         Assert.assertEquals("Unexpected final position score.  ",
-                3.635, totalScore.getPositionScore(), TOLERANCE);
+                4.625, totalScore.getPositionScore(), TOLERANCE);
     }
     
 
