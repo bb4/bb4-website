@@ -54,20 +54,21 @@ public class PostMoveUpdater extends PostChangeUpdater {
     {
         GoProfiler.getInstance().start(GoProfiler.FIND_CAPTURES);
         assert ( stone!=null );
-        Set nbrs = nbrAnalyzer_.getNobiNeighbors( stone, NeighborType.ENEMY );
+        GoBoardPositionSet nbrs = nbrAnalyzer_.getNobiNeighbors( stone, NeighborType.ENEMY );
         CaptureList captureList = null;
-        Iterator it = nbrs.iterator();
         // keep track of the strings captured so we don't capture the same one twice
         GoStringSet capturedStrings = new GoStringSet();
 
-        while ( it.hasNext() ) {
-            GoBoardPosition enbr = (GoBoardPosition) it.next();
+        for (GoBoardPosition enbr : nbrs) {
+
             assert (enbr.isOccupied()): "enbr=" + enbr;
 
             GoString str = enbr.getString();
             assert ( str.isOwnedByPlayer1() != stone.getPiece().isOwnedByPlayer1()):
                     "The "+str+" is not an enemy of "+stone;
-            if ( str.getNumLiberties(getBoard()) == 0 && str.size() > 0 && !capturedStrings.contains(str) ) {
+            assert ( str.size() > 0 ) : "Sting has 0 stones:" + str;
+
+            if ( str.getNumLiberties(getBoard()) == 0 && !capturedStrings.contains(str) ) {
                 capturedStrings.add( str );
                 // we need to add copies so that when the original stones on the board are
                 // changed we don't change the captures
@@ -83,6 +84,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
 
 
     /**
+     * we need to add copies so that when the original stones on the board are
+     * changed we don't change the captures
      * @return true if set is not null and not 0 sized.
      */
     private boolean addCaptures(CaptureList captureList, GoBoardPositionSet set)
@@ -90,8 +93,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
         if ( set == null )  {
             return false;
         }
-        // we need to add copies so that when the original stones on the board are
-        // changed we don't change the captures
+
         for (GoBoardPosition capture : set) {
             // make sure none of the captures are blanks
             assert capture.isOccupied();
@@ -131,17 +133,16 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * @param nbrs
      */
     private void updateNeighborStringsAfterMove(GoBoardPosition stone, GoBoardPositionSet nbrs) {
-        GoString str;
-        Iterator nbrIt = nbrs.iterator();
-        GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
-        str = nbrStone.getString();
+
+        GoBoardPosition nbrStone = nbrs.getOneMember();
+        GoString str = nbrStone.getString();
         str.addMember( stone, getBoard() );
         getAllGroups().debugPrint( 3, "groups before merging:", true, true);
 
         if ( nbrs.size() > 1 ) {
-            mergeStringsIfNeeded(str, nbrIt);
+            mergeStringsIfNeeded(str, nbrs);
         }
-        verifyNewStringNotInAtari(stone, str);
+        //verifyNewStringNotInAtari(stone, str);
     }
 
     /**
@@ -149,7 +150,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * If it is, then we need to split that ataried string off from its group and form a new group.
      * @param stone stone just added.
      * @param str newly formed string to check for atari on.
-     */
+     *
     private void verifyNewStringNotInAtari(GoBoardPosition stone, GoString str) {
 
         if (stone.isInAtari(getBoard())) {
@@ -163,20 +164,19 @@ public class PostMoveUpdater extends PostChangeUpdater {
             assert (!newGroup.getMembers().isEmpty()) : "The group we are trying to add is empty";
             getAllGroups().add(newGroup);
         }
-    }
+    }*/
 
     /**
      * Then we probably need to merge the strings.
      * We will not, for example, if we are completing a clump of four.
      */
-    private void mergeStringsIfNeeded(GoString str, Iterator nbrIt) {
-        GoBoardPosition nbrStone;
-        while ( nbrIt.hasNext() ) {
+    private void mergeStringsIfNeeded(GoString str, GoBoardPositionSet nbrs) {
+
+        for (GoBoardPosition nbrStone: nbrs ) {
             // if its the same string then there is nothing to merge
-            nbrStone = (GoBoardPosition) nbrIt.next();
             GoString nbrString = nbrStone.getString();
             if ( str != nbrString )   {
-                str.merge( nbrString, getBoard() );
+                str.merge(nbrString, getBoard());
             }
         }
     }
@@ -187,7 +187,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
     private void removeCaptures(int toRow, int toCol, CaptureList captures) {
         if ( captures != null ) {
             removeCapturesOnBoard( captures );
-            updateAfterRemovingCaptures( toRow, toCol );
+            //updateAfterRemovingCaptures( toRow, toCol );
         }
     }
 
@@ -197,16 +197,12 @@ public class PostMoveUpdater extends PostChangeUpdater {
      */
     private void removeCapturesOnBoard(CaptureList captureList) {
 
-        GoString capString = ((GoBoardPosition) captureList.get( 0 )).getString();
-        GoGroup group = capString.getGroup();
-        removeCapturedStringsFromGroup(captureList, group);
-
-        GoGroupSet groupsCopy = new GoGroupSet(getAllGroups());
-        // if there are no more stones in the group, remove it.
-        if ( group.getNumStones() == 0 ) {
-            groupsCopy.remove( group );
+        for (Object aCaptureList : captureList) {
+            GoBoardPosition capStone = (GoBoardPosition) aCaptureList;
+            GoBoardPosition stoneOnBoard =
+                (GoBoardPosition) getBoard().getPosition(capStone.getRow(), capStone.getCol());
+            stoneOnBoard.clear(getBoard());
         }
-        board_.setGroups(groupsCopy);
 
         adjustStringLiberties(captureList);
     }
@@ -214,7 +210,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
     /**
      * Remove the captured strings from the owning group (there could be up to 4)
      * We can't just call captureList.removeOnBoard because we need to do additional updates for go.
-     */
+     *
     private void removeCapturedStringsFromGroup(CaptureList captureList, GoGroup group) {
         GoString capString;
         GoStringSet capStrings = new GoStringSet();
@@ -234,7 +230,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
             stoneOnBoard.clear(getBoard());
             // ?? restore disconnected groups?
         }
-    }
+    } */
 
     /**
      * First remove all the groups on the board.
@@ -250,7 +246,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
             getAllGroups().confirmAllStonesInUniqueGroups();
         }
 
-        recreateGroupsAfterMove();
+        recreateGroupsAfterChange();
 
         getBoard().unvisitAll();
 
@@ -271,35 +267,11 @@ public class PostMoveUpdater extends PostChangeUpdater {
     }
 
     /**
-     * The structure of the groups can change after a move.
-     * First remove all the current groups then rediscover them.
-     */
-    private void recreateGroupsAfterMove() {
-
-        GoProfiler profiler = GoProfiler.getInstance();
-        profiler.startRecreateGroupsAfterMove();
-        GoGroupSet groups = new GoGroupSet();
-
-        for ( int i = 1; i <= getBoard().getNumRows(); i++ )  {
-           for ( int j = 1; j <= getBoard().getNumCols(); j++ ) {
-               GoBoardPosition seed = (GoBoardPosition)getBoard().getPosition(i, j);
-               if (seed.isOccupied() && !seed.isVisited()) {
-                   GoBoardPositionList newGroup = nbrAnalyzer_.findGroupFromInitialPosition(seed, false);
-                   GoGroup g = new GoGroup(newGroup);
-                   groups.add(g);
-               }
-           }
-        }
-        profiler.stopRecreateGroupsAfterMove();
-        board_.setGroups(groups);
-    }
-
-    /**
      * After removing the captures, the stones surrounding the captures will form 1 (or sometimes 2)
      * cohesive group(s) rather than disparate ones.
      * There can be two if, for example, the capturing stone joins a string that is
      * still in atari after the captured stones have been removed.
-     */
+     *
     private void updateAfterRemovingCaptures(int toRow, int toCol) {
 
         GoBoardPosition finalStone = (GoBoardPosition) getBoard().getPosition(toRow, toCol);
@@ -322,7 +294,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
 
         GoGroup newBigGroup = new GoGroup( bigGroup );
         getAllGroups().add( newBigGroup );
-    }
+    }  */
 
     /**
      * We need to identify this pattern:
@@ -336,7 +308,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * There are 4 cases to check
      * @param stone
      * @return one of the other 2 0's in the picture.
-     */
+     *
     private GoBoardPosition findAlternativeSeed(GoBoardPosition stone) {
 
         // List nbrs = this.getNobiNeighbors(stone, NeighborType.ANY)
@@ -359,13 +331,12 @@ public class PostMoveUpdater extends PostChangeUpdater {
            return alternative;
         assert false : "There was no alternative seed for "+stone +" board:\n"+this;
         return stone;
-    }
-
+    }*/
 
     /**
      * @param stone to find alternative for.
      * @return null if no alternative found
-     */
+     *
     private GoBoardPosition getConfirmedAlternative(GoBoardPosition stone,
                                                     int r, int c, int rowOffset, int colOffset) {
         
@@ -395,5 +366,5 @@ public class PostMoveUpdater extends PostChangeUpdater {
         }
         else
             return null;
-    }
+    }   */
 }
