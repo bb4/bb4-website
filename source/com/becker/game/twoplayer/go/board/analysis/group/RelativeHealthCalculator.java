@@ -39,8 +39,7 @@ class RelativeHealthCalculator {
      *
      * @return the overall health of the group.
      */
-    public float calculateRelativeHealth(GoBoard board,float absoluteHealth )
-    {
+    public float calculateRelativeHealth(GoBoard board,float absoluteHealth ) {
         return boostRelativeHealthBasedOnWeakNbr(board, absoluteHealth);
     }
 

@@ -50,7 +50,6 @@ class RunPotentialAnalyzer {
                 runLength++;
                 pos.increment(rowInc, colInc);
                 nextSpace = (GoBoardPosition) board_.getPosition( pos );
-                //System.out.println(nextSpace + " next");
             }
             boolean bounded = isBounded(startSpace, nextSpace, firstSpace);
             runPotential += accrueRunPotential(rowInc, pos, breadth, firstSpace, containsEnemy, runLength, bounded);
