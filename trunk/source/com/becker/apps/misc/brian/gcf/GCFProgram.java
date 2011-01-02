@@ -33,6 +33,6 @@ public final class GCFProgram {
 
         long elapsedTime = (System.currentTimeMillis() - time);
 
-        System.out.println("found answer = "+ answer +" in time = "+ elapsedTime + " miliseconds\n");
+        System.out.println("found answer = "+ answer +" in time = "+ elapsedTime + " milliseconds\n");
     }
 }

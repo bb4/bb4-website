@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GROUP_SCORING;
+
 /**
  *  A GoGroup is composed of a loosely connected set of one or more same color strings.
  *  A GoString by comparison, is composed of a strongly connected set of one or more same color stones.
@@ -19,9 +21,10 @@ import java.util.Set;
  *  @see GoString
  *  @author Barry Becker
  */
+
 public final class GoGroup extends GoSet 
-                           implements IGoGroup
-{
+                           implements IGoGroup {
+
     /** a set of same color strings that are in the group. */
     private GoStringSet members_;
 
@@ -29,7 +32,7 @@ public final class GoGroup extends GoSet
     private GroupAnalyzer groupAnalyzer_;
 
     /**
-     * constructor. Create a new group containing the specified string.
+     * Constructor. Create a new group containing the specified string.
      * @param string make the group from this string.
      */
     public GoGroup(GoString string)  {
@@ -41,39 +44,33 @@ public final class GoGroup extends GoSet
     }
 
     /**
-     * Copy constructor
-     *
-    public GoGroup(GoGroup group) {
-        members_ = new GoStringSet(group.members_);
-        ownedByPlayer1_ = group.isOwnedByPlayer1();
-        commonInit();
-    }*/
-
-    /**
      * Constructor. 
      * Create a new group containing the specified list of stones
      * Every stone in the list passed in must say that it is owned by this new group,
      * and every string must be wholy owned by this new group.
      * @param stones list of stones to create a group from.
      */
-    public GoGroup( GoBoardPositionList stones )
-    {
+    public GoGroup( GoBoardPositionList stones ) {
         commonInit();
         ownedByPlayer1_ = (stones.get(0)).getPiece().isOwnedByPlayer1();
         for (GoBoardPosition stone : stones) {
-            assert stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_ :
-                    "Stones in group must all be owned by the same player. stones=" + stones;
-            //actually this is ok - sometimes happens legitimately
-            //assert isFalse(stone.isVisited(), stone+" is marked visited in "+stones+" when it should not be.");
-            GoString string = stone.getString();
-            assert (string != null) : "There is no owning string for " + stone;
-            if (!getMembers().contains(string)) {
-                assert (ownedByPlayer1_ == string.isOwnedByPlayer1()) : string + "ownership not the same as " + this;
-                //string.confirmOwnedByOnlyOnePlayer();
-                getMembers().add(string);
-            }
-            string.setGroup(this);
+            assimilateStone(stones, stone);
         }       
+    }
+
+    private void assimilateStone(GoBoardPositionList stones, GoBoardPosition stone) {
+        assert stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_ :
+                "Stones in group must all be owned by the same player. stones=" + stones;
+        //actually this is ok - sometimes happens legitimately
+        //assert isFalse(stone.isVisited(), stone+" is marked visited in "+stones+" when it should not be.");
+        GoString string = stone.getString();
+        assert (string != null) : "There is no owning string for " + stone;
+        if (!getMembers().contains(string)) {
+            assert (ownedByPlayer1_ == string.isOwnedByPlayer1()) : string + "ownership not the same as " + this;
+            //string.confirmOwnedByOnlyOnePlayer();
+            getMembers().add(string);
+        }
+        string.setGroup(this);
     }
 
     private void commonInit()  {
@@ -95,13 +92,22 @@ public final class GoGroup extends GoSet
     public GoStringSet getMembers() {
         return members_;
     }
+
+    /**
+     * make sure all the stones in the string are unvisited or visited, as specified
+     */
+    public void setVisited(boolean visited) {
+        for (GoString str : getMembers()) {
+            str.setVisited(visited);
+        }
+    }
     
     /**
      * add a string to the group.
      * @param string the string to add
      */
-    public void addMember(GoString string)
-    {
+    public void addMember(GoString string) {
+
         assert ( string.isOwnedByPlayer1() == ownedByPlayer1_):
                 "strings added to a group must have like ownership. String="+string
                 +". Group we are trying to add it to: "+this;
@@ -167,8 +173,7 @@ public final class GoGroup extends GoSet
      * @return the number of liberties that the group has
      */
     @Override
-    public GoBoardPositionSet getLiberties(GoBoard board)
-    {
+    public GoBoardPositionSet getLiberties(GoBoard board) {
         return groupAnalyzer_.getLiberties(board);
     }
 
@@ -176,18 +181,15 @@ public final class GoGroup extends GoSet
      * Calculate the number of stones in the group.
      * @return number of stones in the group.
      */
-    public int getNumStones()
-    {
+    public int getNumStones() {
         return groupAnalyzer_.getNumStones();
     }
     
-    public float calculateAbsoluteHealth( GoBoard board)
-    {
+    public float calculateAbsoluteHealth( GoBoard board) {
         return groupAnalyzer_.calculateAbsoluteHealth(board);
     }
     
-    public float calculateRelativeHealth( GoBoard board)
-    {
+    public float calculateRelativeHealth( GoBoard board) {
         return groupAnalyzer_.calculateRelativeHealth(board);
     }
     
@@ -202,6 +204,9 @@ public final class GoGroup extends GoSet
      * @return relative health
      */
     public float getRelativeHealth(GoBoard board, boolean useCachedValue) {
+        if (!USE_RELATIVE_GROUP_SCORING)
+            return getAbsoluteHealth();
+
         if (groupAnalyzer_.isValid() || useCachedValue) {
             if (!groupAnalyzer_.isValid())
                 GameContext.log(0, "using cached relative health when not valid");
@@ -221,7 +226,6 @@ public final class GoGroup extends GoSet
         }
         return stones;
     }
-    
     
     /**
      * @return  set of eyes currently identified for this group.
@@ -259,42 +263,6 @@ public final class GoGroup extends GoSet
                 return true;
         }
         return false;
-    }
-    
-    /**
-     * @param stones list of stones to check if same as those in this group
-     * @return true if this group exacly contains the list of stones and no others
-     */
-    public boolean exactlyContains(GoBoardPositionList stones) {
-        if ( !contains(stones ) )
-            return false;
-        // make sure that every stone in the group is also in the list.
-        // that way we are assured that they are the same.
-        for (GoBoardPosition stone : getStones()) {
-
-            if (!stones.contains(stone))
-                return false;
-        }
-        return true;
-    }
-    
-    /**
-     * See if the group contains all the stones that are in the specified list (it may contain others as well)
-     * @param stones list of stones to check if same as those in this group
-     * @return true if all the strings are in this group
-     */
-    private boolean contains(GoBoardPositionList stones) {
-        for (GoBoardPosition stone : stones) {
-            boolean found = false;
-            for (GoString str : getMembers()) {
-                if (str.getMembers().contains(stone)) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) return false;
-        }
-        return true;
     }
 
     /**
@@ -357,8 +325,8 @@ public final class GoGroup extends GoSet
      * @param newline string to use for the newline - eg "\n" or "<br>".
      * @return string form.
      */
-    private String toString( String newline )
-    {
+    private String toString( String newline ) {
+
         StringBuilder sb = new StringBuilder( " GROUP {" + newline );
         Iterator it = getMembers().iterator();
         // print the member strings

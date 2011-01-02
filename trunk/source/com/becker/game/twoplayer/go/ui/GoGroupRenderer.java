@@ -17,8 +17,6 @@ import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.List;
 
-import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GROUP_SCORING;
-
 /**
  *  Static Utility methods for rendering GoGroup description.
  *  A GoString by comparison, is composed of a strongly connected set of one or more same color stones.
@@ -56,7 +54,7 @@ final class GoGroupRenderer {
 
 
     /**
-     * draw debugging information about the group like its border and eyeshapes.
+     * draw debugging information about the group like its border and eye shapes.
      */
     public void drawGroupDecoration(GoGroup group) {
 
@@ -66,7 +64,7 @@ final class GoGroupRenderer {
 
             // the colormap will show red if close to dead,
             // so reverse the health value for the other player
-            double h = (USE_RELATIVE_GROUP_SCORING ? group.getRelativeHealth(board_, true) : group.getAbsoluteHealth());
+            double h = (group.getRelativeHealth(board_, true));
             if (!group.isOwnedByPlayer1())  {
                 h = -h;
             }

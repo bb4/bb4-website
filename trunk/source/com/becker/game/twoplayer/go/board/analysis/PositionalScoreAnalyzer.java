@@ -145,7 +145,7 @@ public final class PositionalScoreAnalyzer {
 
         // Usually a very low weight is assigned to where stone is played unless we are at the start of the game.
         score.posScore = side * positionalWt * gameStageBoost * positionalScore / totalWeight;
-        score.healthScore =  healthWt * stone.getHealth() / totalWeight;
+        score.healthScore = healthWt * stone.getHealth() / totalWeight;
 
         if (GameContext.getDebugMode() > 1)  {
             stone.setPositionalScore(score);

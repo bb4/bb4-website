@@ -74,6 +74,8 @@ class AbsoluteHealthCalculator {
     }
 
     /**
+     * Performance bottleneck
+     *
      * Calculate the absolute health of a group.
      * All the stones in the group have the same health rating because the
      * group lives or dies as a unit
@@ -96,7 +98,7 @@ class AbsoluteHealthCalculator {
      */
     public float calculateAbsoluteHealth(GoBoard board) {
         if ( eyeCache_.isValid() ) {
-            GameContext.log(0, "cache valid. Returning health="+ absoluteHealth_);
+            GameContext.log(1, "cache valid. Returning health="+ absoluteHealth_);
             return absoluteHealth_;
         }
 

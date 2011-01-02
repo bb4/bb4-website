@@ -156,7 +156,6 @@ public class TerritoryAnalyzer {
                 delta += health * g.getNumStones();
             }
         }
-
         prof.stopAbsoluteTerritory();
         return delta;
     }
@@ -264,12 +263,7 @@ public class TerritoryAnalyzer {
 
         for (GoBoardPosition stone : stones) {           
             GoGroup group = stone.getString().getGroup();
-            if (USE_RELATIVE_GROUP_SCORING) {
-                totalScore += group.getRelativeHealth(board_, false);
-            }
-            else {
-                totalScore += group.getAbsoluteHealth();
-            }
+            totalScore += group.getRelativeHealth(board_, false);
         }
         return totalScore/stones.size();
     } 

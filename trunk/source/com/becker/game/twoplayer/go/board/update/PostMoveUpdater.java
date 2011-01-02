@@ -136,6 +136,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * First remove all the groups on the board.
      * Then for each stone, find its group and add that new group to the board's group list.
      * Continue until all stone accounted for.
+     * @param pos the stone that was just placed on the board.
      */
     private void updateGroupsAfterMove(GoBoardPosition pos) {
 
@@ -151,12 +152,6 @@ public class PostMoveUpdater extends PostChangeUpdater {
         // verify that the string to which we added the stone has at least one liberty
         assert (pos.getString().getNumLiberties(getBoard()) > 0):
                 "The placed stone "+pos+" has no liberties "+pos.getGroup();
-
-        if ( GameContext.getDebugMode() > 1 )
-            validator_.consistencyCheck(pos);
-
-        // this gets used when calculating the worth of the board
-        getBoard().updateTerritory(false);
 
         if ( GameContext.getDebugMode() > 1 )
             validator_.consistencyCheck(pos);

@@ -12,14 +12,14 @@ import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
  */
 public class CandidateMoveAnalyzer {
 
-    /** Distance from already played stones that we will splat a footprint of cancdidate stones to add. */
+    /** Distance from already played stones that we will splat a footprint of candidate stones to add. */
     private static final int CANDIDATE_MOVE_OFFSET = 2;
 
     private final GoBoard board_;
 
     private final int size_;
 
-    /** this is an auxilliary structure to help determine candidate moves. */
+    /** this is an auxiliary structure to help determine candidate moves. */
     private final boolean[][] candidateMoves_;
 
     /**
@@ -120,7 +120,7 @@ public class CandidateMoveAnalyzer {
 
     /**
      * Add only if unoccupied and not an unconditionally alive eye.
-     * never add a stone from either side to an unconditonally alive eye. There is no advantage to it.
+     * never add a stone from either side to an unconditionally alive eye. There is no advantage to it.
      * @param position the position to try adding as a possible candidate move.
      */
     private void tryToAddCandidateMove(BoardPosition position) {

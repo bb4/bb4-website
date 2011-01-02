@@ -62,8 +62,6 @@ public final class GoMoveGenerator {
      */
     public final MoveList generatePossibleMoves(TwoPlayerMove lastMove, boolean player1sPerspective ) {
         assert player1sPerspective;
-        GoProfiler prof = GoProfiler.getInstance();
-        prof.startGenerateMoves();
         GoBoard board = (GoBoard)searchable_.getBoard();
         MoveList moveList = new MoveList();
         int nCols = board.getNumCols();
@@ -90,8 +88,6 @@ public final class GoMoveGenerator {
                 }
             }
         }
-
-        prof.stopGenerateMoves();
         return moveList;
     }
 
@@ -102,15 +98,10 @@ public final class GoMoveGenerator {
         GoProfiler prof = GoProfiler.getInstance();
         prof.stopGenerateMoves();
         board.makeMove( m );
-        prof.startGenerateMoves();
 
-        // this value is not likely to change much except local to last move, anyway could we cache that?
-        prof.startCalcWorth();
         m.setValue(searchable_.worth( m, weights, player1sPerspective ));
-        prof.stopCalcWorth();
 
         // now revert the board
-        prof.stopGenerateMoves();
         board.undoMove();
         prof.startGenerateMoves();
     }
