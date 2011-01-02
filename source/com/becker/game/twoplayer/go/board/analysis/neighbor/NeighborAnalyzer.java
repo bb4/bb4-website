@@ -124,7 +124,6 @@ public class NeighborAnalyzer {
     public GoBoardPositionSet findGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1,
                                                    boolean samePlayerOnly ) {
        return groupNbrAnalyzer_.findGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
-
     }
 
     /**

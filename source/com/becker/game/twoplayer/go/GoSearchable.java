@@ -118,6 +118,7 @@ public class GoSearchable extends TwoPlayerSearchable {
      */
     @Override
     public int worth( Move lastMove, ParameterArray weights ) {
+        getProfiler().startCalcWorth();
         double worth = calculateWorth(lastMove, weights);
 
         GameContext.log(3,"GoController.worth: worth="+worth);
@@ -129,6 +130,7 @@ public class GoSearchable extends TwoPlayerSearchable {
             // then the margin is too great the losing player should resign
             return WINNING_VALUE;
         }
+        getProfiler().stopCalcWorth();
         return (int)worth;
     }
 
@@ -170,6 +172,9 @@ public class GoSearchable extends TwoPlayerSearchable {
         double scaleFactor = 361.0 / Math.pow(board.getNumRows(), 2);
         GameStageBoostCalculator gameStageBoostCalc_= new GameStageBoostCalculator(board.getNumRows());
         double gameStageBoost = gameStageBoostCalc_.getGameStageBoost(getNumMoves());
+
+        // Update status of groups and stones on the board. Expensive.
+        board.updateTerritory(false);
 
         PositionalScore totalScore = new PositionalScore();
         for (int row = 1; row <= board.getNumRows(); row++ ) {

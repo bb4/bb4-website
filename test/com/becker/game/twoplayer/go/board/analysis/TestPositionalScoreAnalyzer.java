@@ -34,14 +34,14 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
 
         PositionalScore totalScore = new PositionalScore();
                                                                 //     deads  es  badShp  posScore health
-        verifyPositionalScore(new Location(2,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.0435f, 0.0645f), totalScore);
-        verifyPositionalScore(new Location(2,3), createPositionalScore(0.0f, 0.0f, 0.0f, -0.029f, -0.0645f), totalScore);
+        verifyPositionalScore(new Location(2,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.0435f, 0.0f/*0.0645f*/), totalScore);
+        verifyPositionalScore(new Location(2,3), createPositionalScore(0.0f, 0.0f, 0.0f, -0.029f, 0.0f/*-0.0645f*/), totalScore);
         verifyPositionalScore(new Location(3,3), createPositionalScore(0.0f, 0.0f, 0.0f, 0.0f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(3,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.029f, 0.0645f), totalScore);
+        verifyPositionalScore(new Location(3,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.029f, 0.0f/*0.0645f*/), totalScore);
 
-        verifyScoresEqual(createPositionalScore(0.0f, 0.0f, 0.0f, 0.0435f, 0.0645f), totalScore);
+        verifyScoresEqual(createPositionalScore(0.0f, 0.0f, 0.0f, 0.0435f, 0.0f/*0.0645f*/), totalScore);
         Assert.assertEquals("Unexpected final position score.  ",
-                0.108, totalScore.getPositionScore(), TOLERANCE);
+                0.04218/*0.108*/, totalScore.getPositionScore(), TOLERANCE);
     }
 
 
@@ -50,14 +50,14 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
         initializeBoard("positional_score_stone_in_eye");
 
         PositionalScore totalScore = new PositionalScore();
-        verifyPositionalScore(new Location(2,2), createPositionalScore(0.0f, 1.0f, 0.0f, 0.0f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(2,3), createPositionalScore(2.0f, 0.0f, 0.0f, 0.0f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(3,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.029f, 0.5875f), totalScore);
-        verifyPositionalScore(new Location(3,3), createPositionalScore(0.0f, 0.0f, 0.0f, 0.421875f, 0.5875f), totalScore);
+        verifyPositionalScore(new Location(2,2), createPositionalScore(0.0f, /*1?*/0.0f, 0.0f, 0.0f, 0.0f), totalScore);
+        verifyPositionalScore(new Location(2,3), createPositionalScore(0.0f/*2.0f*/, 0.0f, 0.0f, /*0.0*/-0.028125f, 0.0f), totalScore);
+        verifyPositionalScore(new Location(3,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.029f, 0.0f/*0.5875f*/), totalScore);
+        verifyPositionalScore(new Location(3,3), createPositionalScore(0.0f, 0.0f, 0.0f, 0.421875f, 0.0f/*0.5875f*/), totalScore);
 
-        verifyScoresEqual(createPositionalScore(2.0f, 1.0f, 0.0f, .45f, 1.175f), totalScore);
+        verifyScoresEqual(createPositionalScore(0.0f/*2.0f*/, 0.0f/*1.0f*/, 0.0f, 0.422f/*.45f*/, 0.0f/*1.175f*/), totalScore);
         Assert.assertEquals("Unexpected final position score.  ",
-                4.625, totalScore.getPositionScore(), TOLERANCE);
+                0.421875/*4.625*/, totalScore.getPositionScore(), TOLERANCE);
     }
     
 

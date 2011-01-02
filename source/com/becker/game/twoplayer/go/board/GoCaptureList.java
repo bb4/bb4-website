@@ -140,7 +140,7 @@ public class GoCaptureList extends CaptureList {
             else {
                 group.addMember( string);
             }
-            string.unvisit();
+            string.setVisited(false);
         }
         return group;
     }

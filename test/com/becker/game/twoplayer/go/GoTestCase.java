@@ -68,6 +68,7 @@ public class GoTestCase extends TestCase {
         sOptions.getBruteSearchOptions().setAlphaBeta(true);
         sOptions.getBruteSearchOptions().setLookAhead(2);
         sOptions.getBestMovesSearchOptions().setPercentageBestMoves(40);
+        sOptions.getBestMovesSearchOptions().setPercentLessThanBestThresh(0);
         //sOptions.setQuiescence(true); // takes too long if on
         sOptions.setSearchStrategyMethod(SearchStrategyType.NEGAMAX_W_MEMORY);
     }

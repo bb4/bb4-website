@@ -43,7 +43,6 @@ public final class GoProfiler extends AbstractGameProfiler {
 
     private GoProfiler() {
         add(GENERATE_MOVES);
-            add(CALC_WORTH, GENERATE_MOVES);
         add(UNDO_MOVE);
             add(UPDATE_GROUPS_AFTER_REMOVE, UNDO_MOVE);
                 add(UPDATE_STRINGS_AFTER_REMOVE, UPDATE_GROUPS_AFTER_REMOVE);
@@ -53,12 +52,13 @@ public final class GoProfiler extends AbstractGameProfiler {
             add(UPDATE_STRINGS_AFTER_MOVE, MAKE_MOVE);
             add(UPDATE_GROUPS_AFTER_MOVE, MAKE_MOVE);
                 add(RECREATE_GROUPS_AFTER_MOVE, UPDATE_GROUPS_AFTER_MOVE);
-                add(UPDATE_TERRITORY, UPDATE_GROUPS_AFTER_MOVE);
-                    add(ABSOLUTE_TERRITORY, UPDATE_TERRITORY);
-                        add(UPDATE_EYES, ABSOLUTE_TERRITORY);
-                    add(RELATIVE_TERRITORY, UPDATE_TERRITORY);
-                        add(GET_ENEMY_GROUPS_NBRS, RELATIVE_TERRITORY);
-                    add(UPDATE_EMPTY, UPDATE_TERRITORY);
+        add(CALC_WORTH);     // some of this goes in generate moves, some in
+            add(UPDATE_TERRITORY, CALC_WORTH);
+                add(ABSOLUTE_TERRITORY, UPDATE_TERRITORY);
+                    add(UPDATE_EYES, ABSOLUTE_TERRITORY);
+                add(RELATIVE_TERRITORY, UPDATE_TERRITORY);
+                    add(GET_ENEMY_GROUPS_NBRS, RELATIVE_TERRITORY);
+                add(UPDATE_EMPTY, UPDATE_TERRITORY);
         add(GET_GROUP_NBRS);
         add(FIND_GROUPS);
         add(FIND_STRINGS);

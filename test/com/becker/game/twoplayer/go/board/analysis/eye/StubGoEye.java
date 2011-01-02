@@ -33,9 +33,9 @@ class StubGoEye implements IGoString {
         return null;
     }
 
-    public void unvisit() {
+    public void setVisited(boolean visted) {
         for (GoBoardPosition p : members) {
-            p.setVisited(false);
+            p.setVisited(visted);
         }
     }
 }

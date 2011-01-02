@@ -49,12 +49,46 @@ public abstract class PostChangeUpdater {
 
     /**
      * The structure of the groups can change after a move.
-     * First remove all the current groups then rediscover them.
+     * First remove all the groups, and then find them again.
      */
     protected void recreateGroupsAfterChange() {
 
         GoGroupSet groups = new GoGroupSet();
 
+        addFluxGroups(groups);
+
+        board_.setGroups(groups);
+        board_.unvisitAll();
+    }
+
+    /**
+     * The structure of the groups can change after a move.
+     * First remove all the groups that neighbor the position that changed, then rediscover them.
+     * @param pos the board position that just changed.
+     *
+    protected void recreateGroupsAfterChange(GoBoardPosition pos) {
+
+        GoGroupSet groups = new GoGroupSet(board_.getGroups());
+        GoBoardPositionSet groupNbrs = nbrAnalyzer_.findGroupNeighbors(pos, true, false);
+
+        groups.removeGroupForStone(pos);
+        for (GoBoardPosition nbr : groupNbrs)  {
+            groups.removeGroupForStone(nbr);
+        }
+        for (GoGroup group : groups)  {
+            group.setVisited(true);
+        }
+
+        addFluxGroups(groups);
+
+        board_.setGroups(groups);
+        board_.unvisitAll();
+    } */
+
+    /**
+     * Add back the groups that are in flux due to the changed position.
+     */
+    private void addFluxGroups(GoGroupSet groups) {
         for ( int i = 1; i <= getBoard().getNumRows(); i++ )  {
            for ( int j = 1; j <= getBoard().getNumCols(); j++ ) {
                GoBoardPosition seed = (GoBoardPosition)getBoard().getPosition(i, j);
@@ -65,8 +99,6 @@ public abstract class PostChangeUpdater {
                }
            }
         }
-        board_.setGroups(groups);
-        board_.unvisitAll();
     }
 
     /**

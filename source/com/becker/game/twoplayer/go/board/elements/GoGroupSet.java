@@ -76,7 +76,7 @@ public class GoGroupSet implements Set<GoGroup> {
         return groups.toArray();
     }
 
-    public <T> T[] toArray(T[] a) {
+    public <GoGroup> GoGroup[] toArray(GoGroup[] a) {
         return groups.toArray(a);
     }
 
@@ -86,6 +86,19 @@ public class GoGroupSet implements Set<GoGroup> {
 
     public boolean remove(Object o) {
         return groups.remove(o);
+    }
+
+    /** Remove the group that contains this stone */
+    public boolean removeGroupForStone(GoBoardPosition pos) {
+        Iterator<GoGroup> iter = this.iterator();
+        while (iter.hasNext()) {
+            GoGroup group = iter.next();
+            if (group.containsStone(pos)) {
+                iter.remove();
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean containsAll(Collection<?> c) {

@@ -75,11 +75,10 @@ public class EyeNeighborMap {
      * Do a breadth first search of all the positions in the eye, adding their nbr set to the map as we go.
      * @return the new neighbor map
      */
-    private Map<GoBoardPosition, GoBoardPositionList> createMap()
-    {
+    private Map<GoBoardPosition, GoBoardPositionList> createMap() {
         Map<GoBoardPosition, GoBoardPositionList> nbrMap = new HashMap<GoBoardPosition, GoBoardPositionList>();
         // we should probably be able to assume that the eye spaces_ are unvisited, but apparently not. assert instead?
-        eye_.unvisit();
+        eye_.setVisited(false);
         
         List<GoBoardPosition> queue = new LinkedList<GoBoardPosition>();
         GoBoardPosition firstPos = eye_.getMembers().iterator().next();
@@ -92,7 +91,7 @@ public class EyeNeighborMap {
             throw new IllegalArgumentException("The eye string must not have been nobi connected because " +
                     "not all memebers were searched. " + eye_);
         }
-        eye_.unvisit();
+        eye_.setVisited(false);
         return nbrMap;
     }
 
@@ -102,8 +101,7 @@ public class EyeNeighborMap {
      */
     private int processSearchQueue(List<GoBoardPosition> queue, Map<GoBoardPosition, GoBoardPositionList> nbrMap) {
         int count = 0;
-        while (!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             GoBoardPosition current = queue.remove(0);
             GoBoardPositionList nbrs = getEyeNobiNeighbors(current);
             nbrMap.put(current, nbrs);
@@ -123,8 +121,7 @@ public class EyeNeighborMap {
      * @return number of eye-space nobi neighbors.
      * these neighbors may either be blanks or dead stones of the opponent
      */
-    private GoBoardPositionList getEyeNobiNeighbors(GoBoardPosition space)
-    {
+    private GoBoardPositionList getEyeNobiNeighbors(GoBoardPosition space) {
         GoBoardPositionList nbrs = new GoBoardPositionList();
         for (GoBoardPosition eyeSpace : eye_.getMembers()) {
 

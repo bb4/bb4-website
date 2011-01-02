@@ -52,7 +52,7 @@ public final class DeadStoneUpdater
                     GoStone stone = (GoStone)space.getPiece();
                     int side = (stone.isOwnedByPlayer1() ? 1: -1);
                     GameContext.log(1, "life & death: "+space+" health="+stone.getHealth()
-                                       +" string health=" +space.getGroup().getRelativeHealth(board_, true));
+                                       +" string health=" + space.getGroup().getRelativeHealth(board_, true));
                     if (side*stone.getHealth() < 0)  {
                         // then the stone is more dead than alive, so mark it so
                         GameContext.log(1, "setting "+space+" to dead");

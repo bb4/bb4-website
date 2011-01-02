@@ -20,7 +20,8 @@ public interface IGoString {
     GoGroup getGroup();
 
     /**
-     * Mark all members unvisted.
+     * Mark all members unvisited.
+     * @param visited whether or not the string members should be marked visited or unvisited.
      */
-    void unvisit();
+    void setVisited(boolean visited);
 }
