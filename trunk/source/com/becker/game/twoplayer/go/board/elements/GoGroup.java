@@ -204,9 +204,9 @@ public final class GoGroup extends GoSet
      * @return relative health
      */
     public float getRelativeHealth(GoBoard board, boolean useCachedValue) {
-        if (!USE_RELATIVE_GROUP_SCORING)
+        if (!USE_RELATIVE_GROUP_SCORING) {
             return getAbsoluteHealth();
-
+        }
         if (groupAnalyzer_.isValid() || useCachedValue) {
             if (!groupAnalyzer_.isValid())
                 GameContext.log(0, "using cached relative health when not valid");

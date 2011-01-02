@@ -96,10 +96,11 @@ public class TerritoryAnalyzer {
             assert(piece != null);
             if (group != null) {
                 // add credit for probable captured stones.
-                if (forPlayer1 && !piece.isOwnedByPlayer1() && group.getRelativeHealth(board_, isEndOfGame) >= 0) {
+                double relHealth = group.getRelativeHealth(board_, isEndOfGame);
+                if (forPlayer1 && !piece.isOwnedByPlayer1() && relHealth >= 0) {
                     territoryEstimate += val;
                 }
-                else if (!forPlayer1 && piece.isOwnedByPlayer1() && group.getRelativeHealth(board_, isEndOfGame) <= 0)  {
+                else if (!forPlayer1 && piece.isOwnedByPlayer1() && relHealth <= 0)  {
                     territoryEstimate -= val;
                 }
             }
@@ -257,8 +258,7 @@ public class TerritoryAnalyzer {
      * @param stones actually the positions containing the stones.
      * @return the average scores of the stones in the list.
      */
-    private float calcAverageScore(GoBoardPositionSet stones)
-    {
+    private float calcAverageScore(GoBoardPositionSet stones) {
         float totalScore = 0;
 
         for (GoBoardPosition stone : stones) {           

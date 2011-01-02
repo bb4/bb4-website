@@ -35,7 +35,6 @@ public final class GoProfiler extends AbstractGameProfiler {
 
     public static GoProfiler getInstance() {
         if (instance == null) {
-            System.out.println("creating go profiler");
             instance = new GoProfiler();
         }
         return instance;
