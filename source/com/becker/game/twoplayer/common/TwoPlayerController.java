@@ -288,7 +288,7 @@ public abstract class TwoPlayerController extends GameController {
      * @throws AssertionError thrown if something bad happened while searching.
      */
     public boolean requestComputerMove(boolean player1ToMove) throws AssertionError {
-        return requestComputerMove(player1ToMove, getTwoPlayerOptions().isAutoOptimize());
+        return requestComputerMove(player1ToMove, this.getPlayers().allPlayersComputer()/*getTwoPlayerOptions().isAutoOptimize()*/);
     }
 
     /**

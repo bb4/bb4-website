@@ -8,8 +8,6 @@ import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -22,9 +20,6 @@ import java.util.List;
  *  @author Barry Becker
  */
 public class UctStrategy extends AbstractSearchStrategy {
-
-    private static final double WIN_THRESH = (float)WINNING_VALUE / 6.0;
-
 
     /** ratio of exploration to exploitation (of known good moves) while searching.  */
     private double exploreExploitRatio;
@@ -87,7 +82,7 @@ public class UctStrategy extends AbstractSearchStrategy {
 
             if (!searchable_.done(lastMoveNode.move, false))  {
                if (!lastMoveNode.hasChildren()) {
-                   int added = lastMoveNode.addChildren(searchable_.generateMoves(lastMoveNode.move, weights_, true));
+                   int added = lastMoveNode.addChildren(searchable_.generateMoves(lastMoveNode.move, weights_));
                    if (added == 0) {
                        System.out.println("no moves added for " + lastMoveNode);
                    }
@@ -153,11 +148,11 @@ public class UctStrategy extends AbstractSearchStrategy {
         if (numRandMoves >= numRandomLookAhead || searchable.done(move, false)) {
             // GoGameExporter exporter = new GoGameExporter((GoBoard)searchable.getBoard());
             // exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + startNumMoves + "_" + move.hashCode(), null);
-            int score = searchable.worth( move, weights_, true );
+            int score = searchable.worth( move, weights_);
             move.setValue(score);
             return WinProbabilityCaclulator.getChanceOfPlayer1Winning(score);
         }
-        MoveList moves = searchable.generateMoves(move, weights_, true);
+        MoveList moves = searchable.generateMoves(move, weights_);
         if (moves.size() == 0) {
             return WinProbabilityCaclulator.getChanceOfPlayer1Winning(move.getValue());
         }

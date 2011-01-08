@@ -127,7 +127,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
         restore("urgentMoveP1ToPlay");
         // there should not be any urgent moves at the very start of the game.
         MoveList moves =
-            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
+            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights());
 
         checkMoveListAgainstExpected("urgentMoveP1ToPlay", EXPECTED_URGENT_MOVES_P1, moves);
     }
@@ -138,7 +138,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
         restore("urgentMoveP2ToPlay");
         // there should not be any urgent moves at the very start of the game.
         MoveList moves =
-            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
+            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights());
 
         checkMoveListAgainstExpected("urgentMoveP2ToPlay", EXPECTED_URGENT_MOVES_P2, moves);
     }
@@ -148,7 +148,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
         restore(fileName);
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
         MoveList moves =
-                getController().getSearchable().generateMoves(lastMove, weights(), !lastMove.isPlayer1());
+                getController().getSearchable().generateMoves(lastMove, weights());
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);
     }

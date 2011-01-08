@@ -23,22 +23,19 @@ public class MoveGenerator  {
 
     private MoveList moveList_;
     private ParameterArray weights_;
-    private boolean player1sPerspective_;
 
     /**
      * Construct the Checkers game controller.
      * @param searchable
      * @param moveList add the potential moves to this existing list.
      * @param weights to use.
-     * @param player1sPerspective if true evaluate the moves from player1s perspective.
      */
     public MoveGenerator(CheckersSearchable searchable, MoveList moveList,
-                         ParameterArray weights, boolean player1sPerspective) {
+                         ParameterArray weights) {
         searchable_ = searchable;
         board_ = (CheckersBoard) searchable_.getBoard();
         moveList_ = moveList;
         weights_ = weights;
-        player1sPerspective_ = player1sPerspective;
     }
 
 
@@ -144,7 +141,7 @@ public class MoveGenerator  {
               && beyondNext!=null && beyondNext.isUnoccupied()
               && (m.captureList != null) && (!m.captureList.alreadyCaptured( next )) ) {
             // then there is another jump. We must take it.
-            CheckersMove mm = (CheckersMove) m.copy();  // base it on the original jump
+            CheckersMove mm = m.copy();  // base it on the original jump
             mm.setToLocation(new Location(beyondNext.getLocation().getRow(), beyondNext.getLocation().getCol()));
             mm.captureList.add( next.copy() );
             // next.setPiece(null); ?
@@ -212,7 +209,7 @@ public class MoveGenerator  {
         if ( !moreJumps ) { // base case of recursion
             // we can finally add the move after we evaluate its worth
             board_.makeMove( m );
-            m.setValue(searchable_.worth( m, weights, player1sPerspective_ ));
+            m.setValue(searchable_.worth( m, weights));
             board_.undoMove();
 
             jumpMoves.add( m );

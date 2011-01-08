@@ -17,13 +17,13 @@ public class PenteOptions extends TwoPlayerOptions {
     private static final int DEFAULT_LOOK_AHEAD = 4;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
-    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 0;
+    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 70;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. not used. */
-    private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 60;
+    private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 0;
 
-    /** for any given ply never consider less taht this many moves. */
-    private static final int DEFAULT_MIN_BEST_MOVES = 4;
+    /** for any given ply never consider less that this many moves. */
+    private static final int DEFAULT_MIN_BEST_MOVES = 5;
 
 
     public PenteOptions() {

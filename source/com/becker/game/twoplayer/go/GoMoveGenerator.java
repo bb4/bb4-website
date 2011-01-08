@@ -34,21 +34,20 @@ public final class GoMoveGenerator {
     /**
      * @return all reasonably good next moves with statically evaluated scores.
      */
-    public final MoveList generateEvaluatedMoves(TwoPlayerMove lastMove, ParameterArray weights,
-                                                 boolean player1sPerspective ) {
-        assert player1sPerspective;
+    public final MoveList generateEvaluatedMoves(TwoPlayerMove lastMove, ParameterArray weights) {
+
         GoProfiler prof = GoProfiler.getInstance();
         prof.startGenerateMoves();
 
         GoBoard board = (GoBoard)searchable_.getBoard();
-        MoveList moveList = generatePossibleMoves(lastMove, player1sPerspective);
+        MoveList moveList = generatePossibleMoves(lastMove);
 
         for (Move move : moveList)  {
-            setMoveValue(weights, player1sPerspective, board, (GoMove)move);
+            setMoveValue(weights, board, (GoMove)move);
         }
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
         BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions().getBestMovesSearchOptions());
-        moveList = finder.getBestMoves(player1, moveList, player1sPerspective);
+        moveList = finder.getBestMoves(player1, moveList);
 
         addPassingMoveIfNeeded(lastMove, moveList, player1);
 
@@ -60,8 +59,8 @@ public final class GoMoveGenerator {
      * @return all possible reasonable next moves. We try to limit to reasonable moves as best we can, but that
      * is difficult without static evaluation. At least no illegal moves will be returned.
      */
-    public final MoveList generatePossibleMoves(TwoPlayerMove lastMove, boolean player1sPerspective ) {
-        assert player1sPerspective;
+    public final MoveList generatePossibleMoves(TwoPlayerMove lastMove) {
+
         GoBoard board = (GoBoard)searchable_.getBoard();
         MoveList moveList = new MoveList();
         int nCols = board.getNumCols();
@@ -94,12 +93,12 @@ public final class GoMoveGenerator {
     /**
      * Make the generated move, determine its value, set it into the move, and undo the move on the board.
      */
-    private void setMoveValue(ParameterArray weights, boolean player1sPerspective, GoBoard board, GoMove m) {
+    private void setMoveValue(ParameterArray weights, GoBoard board, GoMove m) {
         GoProfiler prof = GoProfiler.getInstance();
         prof.stopGenerateMoves();
         board.makeMove( m );
 
-        m.setValue(searchable_.worth( m, weights, player1sPerspective ));
+        m.setValue(searchable_.worth( m, weights));
 
         // now revert the board
         board.undoMove();

@@ -124,7 +124,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
         ParameterArray wts = weights();
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
         MoveList moves =
-                getController().getSearchable().generateMoves(lastMove, wts, !lastMove.isPlayer1());
+                getController().getSearchable().generateMoves(lastMove, wts);
 
         if (expectedMoves.length != moves.size()) {
             printMoves( fileName, moves);
@@ -153,7 +153,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
     @Override
     public void  testGenerateUrgentMoves() {
          // there should not be any urgent moves at the very start of the game
-         List moves = searchable.generateUrgentMoves(null, weights(), true);
+         List moves = searchable.generateUrgentMoves(null, weights());
          Assert.assertTrue("We expect move list to be empty since generateUrgentMoves is not implemented for Blockade.",
                  moves.isEmpty());
     }

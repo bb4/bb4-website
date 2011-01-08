@@ -22,8 +22,8 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public interface IGameController
-{
+public interface IGameController {
+
     /**
      * @return the board representation object.
      */
@@ -66,7 +66,7 @@ public interface IGameController
 
     /**
      *
-     * @return the player whos turn it is now.
+     * @return the player who's turn it is now.
      */
     Player getCurrentPlayer();
 

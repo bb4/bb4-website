@@ -223,7 +223,7 @@ public class BlockadeMove extends TwoPlayerMove {
             pieceCreator = "new GamePiece(" + getPiece().isOwnedByPlayer1() + ")";
         }
 
-        return "new BlockadeMove("
+        return "createMove("
                 + getFromLocation().getRow() + "," + getFromLocation().getCol() +",  "
                 +  getToLocation().getRow()  + "," + getToLocation().getCol()  + ", " + getValue() + ", "
                 + pieceCreator +", " + wallCreator +

@@ -39,21 +39,21 @@ public class ExpectedSearchStrategyResults {
     static final ExpectedMoveMatrix EXPECTED_ONE_LEVEL_WITH_QUIESCENCE = new ExpectedMoveMatrix(
 
             TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),  // beginningP1
-            TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), //             "midGameCenterO"
+            TwoPlayerMove.createMove(new Location(2, 1), -4, PLAYER1_PIECE), //             "midGameCenterO"
             TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), // middleP1    "lateMidGameX" :
-            TwoPlayerMove.createMove(new Location(2, 3), -32, PLAYER1_PIECE),//              "lateMidGameO";   
+            TwoPlayerMove.createMove(new Location(1, 2), -8196, PLAYER1_PIECE),//             "lateMidGameO";
             TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),  // endP1       "endGameX";
-            TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE) // endP2       "endGame0";
+            TwoPlayerMove.createMove(new Location(3, 1), 8132, PLAYER1_PIECE) // endP2       "endGame0";
     );
 
     static final ExpectedMoveMatrix EXPECTED_ONE_LEVEL_WITH_QUIESCENCE_AND_AB = new ExpectedMoveMatrix(
 
-            TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),  // beginningP1
-            TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), //             "midGameCenterO"
-            TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), // middleP1    "lateMidGameX" :
-            TwoPlayerMove.createMove(new Location(2, 3), -32, PLAYER1_PIECE),//             "lateMidGameO";
-            TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),  // endP1       "endGameX";
-            TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE) // endP2       "endGame0";
+            TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),   // beginningP1
+            TwoPlayerMove.createMove(new Location(2, 1), 8208, PLAYER1_PIECE), //            "midGameCenterO"
+            TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE),  // middleP1    "lateMidGameX" :
+            TwoPlayerMove.createMove(new Location(1, 2), 8196, PLAYER1_PIECE), //             "lateMidGameO";
+            TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),   // endP1       "endGameX";
+            TwoPlayerMove.createMove(new Location(3, 1), 8132, PLAYER1_PIECE)  // endP2       "endGame0";
     );
 
     static final ExpectedMoveMatrix EXPECTED_TWO_LEVEL_WITH_QUIESCENCE = new ExpectedMoveMatrix(
@@ -68,17 +68,17 @@ public class ExpectedSearchStrategyResults {
     static final ExpectedMoveMatrix EXPECTED_TWO_LEVEL_WITH_QUIESCENCE_AND_AB = new ExpectedMoveMatrix(
 
             TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),  // beginningP1
-            TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), //             "midGameCenterO"
+            TwoPlayerMove.createMove(new Location(2, 1), 8208, PLAYER1_PIECE), //             "midGameCenterO"
             TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), // middleP1    "lateMidGameX" :
-            TwoPlayerMove.createMove(new Location(2, 3), -32, PLAYER1_PIECE),  //             "lateMidGameO";   
+            TwoPlayerMove.createMove(new Location(1, 2), 8196, PLAYER1_PIECE),  //             "lateMidGameO";
             TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),  // endP1       "endGameX";
-            TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE) // endP2       "endGame0";
+            TwoPlayerMove.createMove(new Location(3, 1), 8132, PLAYER1_PIECE) // endP2       "endGame0";
     );
 
     static final ExpectedMoveMatrix EXPECTED_THREE_LEVEL_WITH_QUIESCENCE = new ExpectedMoveMatrix(
 
             TwoPlayerMove.createMove(new Location(1, 2), 4, new GamePiece(false)),
-            TwoPlayerMove.createMove(new Location(2, 1), 48, new GamePiece(true)),
+            TwoPlayerMove.createMove(new Location(3, 3), 8232, new GamePiece(true)),
             TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
             TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
             TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
@@ -94,12 +94,9 @@ public class ExpectedSearchStrategyResults {
             TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE)
         );
 
-    //static final ExpectedMoveMatrix EXPECTED_FOUR_LEVEL_LOOKAHEAD = new ExpectedMoveMatrix(
-    //);
-
     static final ExpectedMoveMatrix EXPECTED_FOUR_LEVEL_BEST_20_PERCENT = new ExpectedMoveMatrix(
             TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),
-            TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE),
+            TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE),   // wrong
             TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE),
             TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE),
             TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),
@@ -107,8 +104,8 @@ public class ExpectedSearchStrategyResults {
     );
 
     static final ExpectedMoveMatrix EXPECTED_FOUR_LEVEL_WITH_QUIESCENCE = new ExpectedMoveMatrix(
-            TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),  // beginningP1
-            TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), //             "midGameCenterO"
+            TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),  // beginningP1 "midGameCenterX"
+            TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), //             "midGameCenterO"      // wrong
             TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), // middleP1    "lateMidGameX"
             TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE),  //             "lateMidGameO"
             TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),  // endP1       "endGameX"
@@ -118,7 +115,7 @@ public class ExpectedSearchStrategyResults {
 
     static final ExpectedMoveMatrix EXPECTED_FOUR_LEVEL_NO_ALPHA_BETA = new ExpectedMoveMatrix(
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 1), 8, PLAYER2_PIECE), 2080),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 979),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 979),  // wrong
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 50),
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 141),
             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 4),

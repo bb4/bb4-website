@@ -32,12 +32,9 @@ public class BlockadeControllerTest extends BlockadeTestCase {
         controller_.makeMove(winningMove);
 
         ParameterArray weights = controller_.getComputerWeights().getDefaultWeights();
-        int winFromP1Persp = controller_.getSearchable().worth(winningMove, weights, true);
-        int winFromP2Persp = controller_.getSearchable().worth(winningMove, weights, false);
+        int winFromP1Persp = controller_.getSearchable().worth(winningMove, weights);
 
         Assert.assertEquals("Unexpected value of winning move from P1 perspective",
                 SearchStrategy.WINNING_VALUE, winFromP1Persp);
-        Assert.assertEquals("Unexpected value of winning move from P2 perspective",
-                -SearchStrategy.WINNING_VALUE, winFromP2Persp);
     }
 }

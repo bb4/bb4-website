@@ -122,7 +122,6 @@ public final class GoController extends TwoPlayerController {
      */
     public int getTerritoryEstimate( boolean forPlayer1 ) {
         return ((GoSearchable)getSearchable()).getTerritoryEstimate(forPlayer1);
-
     }
 
     /**
@@ -146,7 +145,7 @@ public final class GoController extends TwoPlayerController {
     }
 
     public void computerMovesFirst()  {
-        List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
+        List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights());
         // select the best(first since sorted) move to use
         GoMove m = (GoMove) moveList.get( 0 );
 

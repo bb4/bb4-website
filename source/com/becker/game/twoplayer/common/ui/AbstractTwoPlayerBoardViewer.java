@@ -37,7 +37,7 @@ import java.util.List;
  * A progress bar is used to show how close the computer is to playing its next move.
  * The progressbar updates by polling the controller for its search progress.
  * If you open the GameTreeDialog to see the game tree, there are buttons to pause,
- * step through, and continue processing the search as it is happenning.
+ * step through, and continue processing the search as it is happening.
  *
  * This class displays the game and takes input from the user.
  * It passes the user's input to the TwoPlayerController, which in turn tells the GameViewer
@@ -150,7 +150,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * @return true if the game is over now.
      */
     private boolean manMoves( TwoPlayerMove move) {
-        // this method will fill in some of m's structure
+        // this method will fill in some of lastMove's structure
         TwoPlayerController c = get2PlayerController();
         if ( GameContext.getUseSound() ) {
             GameContext.getMusicMaker().playNote( c.getTwoPlayerOptions().getPreferredTone(), 45, 0, 200, 1000 );
@@ -182,7 +182,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * Since this can take a very long time we will show the user a progress bar
      * to give feedback.
      *   The computer needs to search through vast numbers of moves to find the best one.
-     * This will happen asynchrounously in a separate thread so that the event dispatch
+     * This will happen asynchronously in a separate thread so that the event dispatch
      * thread can return immediately and not lock up the user interface (UI).
      *   Some moves can be complex (like multiple jumps in checkers). For these
      * We animate these types of moves so the human player does not get disoriented.
@@ -190,7 +190,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * @param isPlayer1 if the computer player now moving is player 1.
      * @return done always returns false unless auto optimizing
      */
-    boolean doComputerMove( boolean isPlayer1 ) {
+    private boolean doComputerMove( boolean isPlayer1 ) {
         setCursor( waitCursor_ );
 
         try {
@@ -386,10 +386,10 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     }
 
     private class PostMoveCleanup implements Runnable {
-        private final Move m;
+        private final Move lastMove;
 
-        public PostMoveCleanup(Move m) {
-            this.m = m;
+        public PostMoveCleanup(Move lastMOve) {
+            this.lastMove = lastMOve;
         }
 
         public void run() {
@@ -401,10 +401,10 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
             showLastMove();
             cachedGameBoard_ = null;
             if (!get2PlayerController().getTwoPlayerOptions().isAutoOptimize()) {
-                // show a popup for certain exceptional cases.
+                // show a pop-up for certain exceptional cases.
                 // For example, in chess we warn on a checking move.
-                warnOnSpecialMoves( (TwoPlayerMove) m);
-                sendGameChangedEvent(m);
+                warnOnSpecialMoves( (TwoPlayerMove) lastMove);
+                sendGameChangedEvent(lastMove);
             }
             moveProgress_.cleanup();
        }

@@ -51,11 +51,11 @@ public class NegaScoutStrategyTest extends NegaScoutStrategyTst {
     protected ExpectedMoveMatrix getExpectedOneLevelWithQuiescenceMoves() {
         return new ExpectedMoveMatrix(
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 8),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), 14),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 8208, PLAYER1_PIECE), 13),
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 4),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 3), -32, PLAYER1_PIECE), 14),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 8196, PLAYER1_PIECE), 12),
             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 2),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE), 5)
+            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 1), 8132, PLAYER1_PIECE), 5)
         );
     }
 
@@ -135,7 +135,7 @@ public class NegaScoutStrategyTest extends NegaScoutStrategyTst {
     protected ExpectedMoveMatrix getExpectedThreeLevelWithQuiescenceMoves() {
         return new ExpectedMoveMatrix(
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 76),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 93),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 3), 8272, PLAYER1_PIECE), 136),
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 14),
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 27),
             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 4),
@@ -145,7 +145,7 @@ public class NegaScoutStrategyTest extends NegaScoutStrategyTst {
     @Override
     protected ExpectedMoveMatrix getExpectedFourLevelWithQuiescenceMoves() {
         return new ExpectedMoveMatrix(
-            new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 247),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), -8240, PLAYER2_PIECE), 784),  // was 247, now 784
             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 97),
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 18),
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 28),

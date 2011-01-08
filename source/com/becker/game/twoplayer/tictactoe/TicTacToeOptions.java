@@ -18,10 +18,10 @@ public class TicTacToeOptions extends TwoPlayerOptions {
     private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 100;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
-    private static final int DEFAULT_PERCENTAGE_LESS_THAN_BEST_THRESH = 100;
+    private static final int DEFAULT_PERCENTAGE_LESS_THAN_BEST_THRESH = 0;
 
     /** for any given ply never consider less that this many moves. */
-    private static final int DEFAULT_MIN_BEST_MOVES = 3;
+    private static final int DEFAULT_MIN_BEST_MOVES = 4;
 
 
     public TicTacToeOptions() {}
@@ -32,6 +32,6 @@ public class TicTacToeOptions extends TwoPlayerOptions {
                                  new BestMovesSearchOptions(DEFAULT_PERCENTAGE_BEST_MOVES,
                                                             DEFAULT_MIN_BEST_MOVES,
                                                             DEFAULT_PERCENTAGE_LESS_THAN_BEST_THRESH),
-                                 new MonteCarloSearchOptions(200, 1.0, 7));
+                                 new MonteCarloSearchOptions(200, 1.0, 8));
     }
 }
