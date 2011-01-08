@@ -291,9 +291,8 @@ public class GoSearchable extends TwoPlayerSearchable {
     /**
      * @return any moves that take captures or get out of atari.
      */
-    public final MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights,
-                                               boolean player1sPerspective ) {
-        MoveList moves = generateMoves(lastMove, weights, player1sPerspective );
+    public final MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights) {
+        MoveList moves = generateMoves(lastMove, weights);
         GoBoard gb = (GoBoard) board_;
         GoMove lastMovePlayed = (GoMove) lastMove;
 
@@ -318,7 +317,7 @@ public class GoSearchable extends TwoPlayerSearchable {
      * @return true if the last move created a big change in the score
      */
     @Override
-    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights) {
         GoBoard gb = (GoBoard) board_;
         return (( (GoMove)lastMove ).causesAtari(gb) > CRITICAL_GROUP_SIZE);
     }
@@ -326,9 +325,8 @@ public class GoSearchable extends TwoPlayerSearchable {
     /**
      * generate all good next moves (statically evaluated)
      */
-    public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
-                                        boolean player1sPerspective ) {
+    public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         GoMoveGenerator generator = new GoMoveGenerator(this);
-        return generator.generateEvaluatedMoves(lastMove, weights, player1sPerspective);
+        return generator.generateEvaluatedMoves(lastMove, weights);
     }
 }

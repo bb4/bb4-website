@@ -91,7 +91,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
         }
 
         // generate a list of all (or bestPercent) candidate next moves, and pick the best one
-        MoveList list = searchable_.generateMoves(lastMove,  weights_, true);
+        MoveList list = searchable_.generateMoves(lastMove,  weights_);
 
         if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
@@ -120,7 +120,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
      * @return true of we should continue searching a bit to find a stable/quiescnet move.
      */
     protected boolean doQuiescentSearch(int depth, boolean done, TwoPlayerMove lastMove) {
-        boolean inJeopardy = searchable_.inJeopardy(lastMove, weights_, true);
+        boolean inJeopardy = searchable_.inJeopardy(lastMove, weights_);
         return quiescence_
                  && depth > -maxQuiescentDepth_
                  && !done
@@ -136,7 +136,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
     TwoPlayerMove quiescentSearch(TwoPlayerMove lastMove,
                                             int depth, SearchWindow window, SearchTreeNode parent) {
 
-        MoveList urgentMoves = searchable_.generateUrgentMoves(lastMove, weights_, true);
+        MoveList urgentMoves = searchable_.generateUrgentMoves(lastMove, weights_);
         if (emptyMoveList(urgentMoves, lastMove)) return null;
 
         return findBestMove(lastMove, depth, urgentMoves, window, parent);
@@ -144,13 +144,13 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
 
     /**
      * This is the part of the search algorithm that varies most among the search strategies.
-     * That is why I break it out into a separete overridable method.
+     * That is why I break it out into a separate overridable method.
      *
      * @param lastMove the most recent move made by one of the players.
      * @param depth how deep in this local game tree that we are to search.
      *   When depth becomes 0 we are at a leaf and should terminate (unless its an urgent move and quiescence is on).
       *@param list generated list of next moves to search.
-     * @param window search window - alpha nd abeta
+     * @param window search window - alpha and beta
      * @param parent for constructing a ui tree. If null no game tree is constructed.
      * @return the chosen move (ie the best move) (may be null if no next move).
      */
@@ -196,7 +196,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
     }
 
     /**
-     * Update the percentage done serching variable for the progress bar
+     * Update the percentage done searching variable for the progress bar
      * if we are at the top level (otherwise this is a no-op).
      */
     protected void updatePercentDone(int depth, List remainingNextMoves) {

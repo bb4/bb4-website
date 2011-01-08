@@ -161,7 +161,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
      */
    public void testGenerateMovesBeforeFirstMove() {
  
-       List moves = searchable.generateMoves(null, weights(), true);
+       List moves = searchable.generateMoves(null, weights());
        assertTrue("We expect the move list to be non-null at the very start of the game.", moves!= null);
 
        // usually we have a special way to generate the first move (see computerMovesFirst).
@@ -182,7 +182,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
        controller.computerMovesFirst();
        ParameterArray wts = weights();
        TwoPlayerMove lastMove = (TwoPlayerMove)controller.getLastMove();
-       List moves = searchable.generateMoves(lastMove, wts, true);
+       List moves = searchable.generateMoves(lastMove, wts);
 
        assertTrue("We expect the move list to be non-null very start of the game.", moves!= null);
        assertTrue("We expected some valid next moves at the very start of the game.",  moves.size() > 0);
@@ -230,7 +230,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
    /**  There should not be any urgent moves at the very start of the game.  */
    public void  testGenerateUrgentMovesAtStartOfGame() {
-         List moves = searchable.generateUrgentMoves(null, weights(), true);
+         List moves = searchable.generateUrgentMoves(null, weights());
          assertTrue("We expected move list to be non-null.",
                  moves != null );
          assertTrue("We expected no urgent moves at the start of the game, but was:" + moves,
@@ -250,13 +250,12 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     /**  Verify that we can detect when a player is in jeopardy. */
     public void testInJeopardy() {
         boolean actualInJeopardy =
-                searchable.inJeopardy(null, weights(), true);
+                searchable.inJeopardy(null, weights());
         assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
 
         actualInJeopardy =
                 searchable.inJeopardy(createInitialMove(),
-                                      getController().getComputerWeights().getPlayer2Weights(),
-                                      false);
+                                      getController().getComputerWeights().getPlayer2Weights());
         assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
 
         // load a typical game in the middle and verify a move that does not put anything in jeopardy.

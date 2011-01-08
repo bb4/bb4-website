@@ -212,7 +212,7 @@ public abstract class MultiGameController extends GameController
      * generate all possible next moves.
      * impossible for this game.
      */
-    public MoveList generateMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
+    public MoveList generateMoves( Move lastMove, ParameterArray weights)
     {
         return new MoveList();
     }
@@ -220,7 +220,7 @@ public abstract class MultiGameController extends GameController
     /**
      * return any moves that result in a win
      */
-    public List generateUrgentMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
+    public List generateUrgentMoves( Move lastMove, ParameterArray weights)
     {
         return null;
     }
@@ -228,10 +228,9 @@ public abstract class MultiGameController extends GameController
     /**
      * @param m
      * @param weights
-     * @param player1sPerspective
      * @return true if the last move created a big change in the score
      */
-    public boolean inJeopardy( Move m, ParameterArray weights, boolean player1sPerspective )
+    public boolean inJeopardy( Move m, ParameterArray weights)
     {
         return false;
     }

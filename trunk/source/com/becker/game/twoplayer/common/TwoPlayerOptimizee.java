@@ -87,8 +87,7 @@ class TwoPlayerOptimizee implements Optimizee {
      * @return if positive then computer1 won, else computer2 won.
      *   the magnitude of this returned value indicates how much it won by.
      */
-    private double runComputerVsComputer()
-    {
+    private double runComputerVsComputer() {
         boolean done = false;
         controller_.reset();
         controller_.computerMovesFirst();

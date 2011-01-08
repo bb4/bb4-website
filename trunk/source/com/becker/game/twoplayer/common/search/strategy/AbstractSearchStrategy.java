@@ -4,7 +4,6 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
-import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.NodeAttributes;

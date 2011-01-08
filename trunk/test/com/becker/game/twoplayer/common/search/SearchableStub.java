@@ -88,7 +88,7 @@ public class SearchableStub implements Searchable {
      * {@inheritDoc}
      * @@ we should remove the final argument because it always seems to be true
      */
-    public MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+    public MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
     }
 
@@ -96,7 +96,7 @@ public class SearchableStub implements Searchable {
      * {@inheritDoc}
      * @@ we should remove the final argument because it always seems to be true
      */
-    public MoveList generatePossibleMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+    public MoveList generatePossibleMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
     }
 
@@ -105,7 +105,7 @@ public class SearchableStub implements Searchable {
      * {@inheritDoc}
      * @@ we should remove the final argument because it always seems to be true
      */
-    public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+    public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         MoveList urgentMoves = new MoveList();
         for (Move m : ((TwoPlayerMoveStub) lastMove).getChildren()) {
             TwoPlayerMove move = (TwoPlayerMove)m;
@@ -119,7 +119,7 @@ public class SearchableStub implements Searchable {
     /**
      * {@inheritDoc}
      */
-    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights) {
         return ((TwoPlayerMoveStub)lastMove).causedUrgency();
     }
 

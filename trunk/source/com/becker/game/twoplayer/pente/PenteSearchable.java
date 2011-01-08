@@ -44,9 +44,9 @@ public class PenteSearchable extends TwoPlayerSearchable {
     }
     
     /**
-     *  Statically evaluate the board position.
-     *  @return the lastMoves value modified by the value add of the new move.
-     *   a large positive value means that the move is good from the specified players viewpoint
+     * Statically evaluate the board position.
+     * @return the lastMoves value modified by the value add of the new move.
+     *  a large positive value means that the move is good from the specified players viewpoint
      */
     @Override
     public int worth( Move lastMove, ParameterArray weights ) {
@@ -57,8 +57,8 @@ public class PenteSearchable extends TwoPlayerSearchable {
      * generate all possible next moves.
      */
     public MoveList generateMoves(TwoPlayerMove lastMove,
-                                  ParameterArray weights, boolean player1sPerspective ) {
-        return generator.generateMoves(lastMove, weights, player1sPerspective);
+                                  ParameterArray weights) {
+        return generator.generateMoves(lastMove, weights);
     }
 
     /**
@@ -66,9 +66,8 @@ public class PenteSearchable extends TwoPlayerSearchable {
      * Opponent moves that result in a win should be blocked.
      * @return Set of moves the moves that result in a certain win or a certain loss.
      */
-    public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective)
-    {
-        return generator.generateUrgentMoves(lastMove, weights, player1sPerspective);
+    public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights) {
+        return generator.generateUrgentMoves(lastMove, weights);
     }
 
     /**
@@ -76,11 +75,10 @@ public class PenteSearchable extends TwoPlayerSearchable {
      * @return true if the last move created a big change in the score
      */
     @Override
-    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective  )
-    {
+    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights ) {
         if (lastMove == null)
             return false;
-        double newValue = worth( lastMove, weights, player1sPerspective );
+        double newValue = worth( lastMove, weights);
         double diff = newValue - lastMove.getValue();
         return (diff > getJeopardyWeight());
     }

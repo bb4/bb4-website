@@ -18,7 +18,8 @@ import junit.framework.TestCase;
 
 /**
  * Verify that all the methods in the SearchStrategy interface work as expected (especially search).
- * Derived test classes will excersize these methods for specific game instances.
+ * Derived test classes will exercise these methods for specific game instances.
+ * Note that these are really integration tests and not unit tests.
  *
  * These classes are called by specific game implementations.
  *
@@ -138,6 +139,7 @@ public abstract class AbstractStrategyTst extends TestCase {
             verifyMove(prog, true, expectedMoves, desc);
             verifyMove(prog, false, expectedMoves, desc);
         }
+        // an extra check to make sure the calculation does not take too long.
         double elapsed = (float)(System.currentTimeMillis() - time) / 1000.0;
         assertTrue("Took too long: " + elapsed, elapsed < 1.0);
         System.out.println("TOTAL TIME = " + Util.formatNumber( elapsed));
@@ -184,7 +186,7 @@ public abstract class AbstractStrategyTst extends TestCase {
 
 
     /**
-     * do the search for the next move.
+     * Do the search for the next move.
      * @return the next move that was found after searching using the strategy and game under test.
      */
     protected TwoPlayerMove searchForNextMove(SearchStrategy strategy) {

@@ -45,26 +45,17 @@ public interface Searchable
      */
     boolean done( TwoPlayerMove m, boolean recordWin );
 
-    /**
-     * Evaluates from player 1's perspective
-     * @return an integer value for the worth of the move.
-     *  must be between -SearchStrategy.WINNING_VALUE and SearchStrategy.WINNING_VALUE.
-     */
-    int worth( Move lastMove, ParameterArray weights );
-
      /**
       *  Statically evaluate a boards state to compute the value of the last move
       *  from player1's perspective.
       *  This function is a key function that must be created for each type of game added.
-      *  If evaluating from player 1's perpective, then good moves for p1 are given a positive score.
-      *  If evaluating from player 2's perpective, then good moves for p2 are given a positive score.
+      *  If evaluating from player 1's perspective, then good moves for p1 are given a positive score.
       *
       *  @param lastMove  the last move made
       *  @param weights  the polynomial weights to use in the polynomial evaluation function
-      *  @param player1sPerspective if true, evaluate the board from p1's perspective, else p2's.
       *  @return the worth of the board from the specified players point of view
       */
-    int worth( Move lastMove, ParameterArray weights, boolean player1sPerspective );
+    int worth( Move lastMove, ParameterArray weights);
 
     /**
      * Generate a list of good evaluated next moves given the last move.
@@ -72,10 +63,9 @@ public interface Searchable
      *
      * @param lastMove  the last move made if there was one. (null if first move of the game)
      * @param weights  the polynomial weights to use in the polynomial evaluation function.
-     * @param player1sPerspective if true assign worth values according to p1.  @@ is this always true? remove if so.
      * @return list of possible next moves.
      */
-    MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );
+    MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights);
 
     /**
      * generate those moves that are critically urgent
@@ -84,23 +74,24 @@ public interface Searchable
      *
      * @param lastMove  the last move made
      * @param weights  the polynomial weights to use in the polynomial evaluation function
-     * @param player1sPerspective if true, then the values are generated from player one's perspective.
      * @return a list of moves that the current player needs to urgently play or face imminent defeat.
      */
-    MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );
+    MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights);
 
     /**
      * returns true if the specified move caused one or more opponent pieces to become jeopardized
      * @return true if the move m is in jeopardy.
      */
-    boolean inJeopardy( TwoPlayerMove m, ParameterArray weights, boolean player1sPerspective );
+    boolean inJeopardy( TwoPlayerMove m, ParameterArray weights);
 
     /** The current board state. */
     TwoPlayerBoard getBoard();
 
     MoveList getMoveList();
     
-    /** num moves played so far */
+    /**
+     * @return num moves played so far
+     */
     int getNumMoves();
     
     /**

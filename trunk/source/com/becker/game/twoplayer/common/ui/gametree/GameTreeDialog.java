@@ -177,7 +177,7 @@ public final class GameTreeDialog extends AbstractDialog
         textTree_.addMouseMotionListener(motionListener_);
 
         // make the viewer shows the game so far
-        setMoveList( mainController_.getMoveList() );
+        setMoveList( mainController_.getMoveList().copy() );
 
         refresh();
     }
@@ -200,7 +200,7 @@ public final class GameTreeDialog extends AbstractDialog
     }
 
     /**
-     *  initialize the tree previewer to show the moves made so far.
+     * Initialize the tree previewer to show the moves made so far.
      */
     private synchronized void setMoveList( List moveList ) {
         boardViewer_.reset();

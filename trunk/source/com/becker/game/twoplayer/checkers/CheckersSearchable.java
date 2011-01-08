@@ -36,13 +36,13 @@ public class CheckersSearchable extends TwoPlayerSearchable {
     /**
      *  generate all possible next moves
      */
-    public MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective) {
+    public MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights) {
 
         MoveList moveList = new MoveList();
         int j, row,col;
 
         boolean player1 = (lastMove == null) || !(lastMove.isPlayer1());
-        MoveGenerator generator = new MoveGenerator(this, moveList, weights, player1sPerspective);
+        MoveGenerator generator = new MoveGenerator(this, moveList, weights);
 
         // scan through the board positions. For each each piece of the current player's,
         // add all the moves that it can make.
@@ -56,7 +56,7 @@ public class CheckersSearchable extends TwoPlayerSearchable {
                 }
             }
         }
-        return bestMoveFinder_.getBestMoves( player1, moveList, player1sPerspective );
+        return bestMoveFinder_.getBestMoves( player1, moveList);
     }
 
     /**
@@ -161,7 +161,7 @@ public class CheckersSearchable extends TwoPlayerSearchable {
      * @return list of urgent moves
      */
     public MoveList generateUrgentMoves(
-            TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+            TwoPlayerMove lastMove, ParameterArray weights) {
         return new MoveList();
     }
 }

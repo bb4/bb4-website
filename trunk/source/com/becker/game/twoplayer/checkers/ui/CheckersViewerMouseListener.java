@@ -82,10 +82,10 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
         Iterator it = possibleMoveList.iterator();
         boolean found = false;
 
-        TwoPlayerMove m = null;
+        TwoPlayerMove move = null;
         while ( it.hasNext() && !found ) {
-            m = (TwoPlayerMove) it.next();
-            if ( (m.getToRow() == destp.getRow()) && (m.getToCol() == destp.getCol()) )
+            move = (TwoPlayerMove) it.next();
+            if ( (move.getToRow() == destp.getRow()) && (move.getToCol() == destp.getCol()) )
                 found = true;
         }
 
@@ -94,7 +94,7 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
             return; // it was not valid
         }
 
-        if (!viewer.continuePlay( m )) {
+        if (!viewer.continuePlay( move )) {
             // then game over
             viewer.showWinnerDialog();
         }
@@ -135,10 +135,9 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
         MoveList possibleMoveList = new MoveList();
 
         TwoPlayerMove lastMove = (TwoPlayerMove)controller.getLastMove();
-        boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
         MoveGenerator generator =
                 new MoveGenerator((CheckersSearchable)controller.getSearchable(), possibleMoveList,
-                                  controller.getComputerWeights().getDefaultWeights(), player1);
+                                  controller.getComputerWeights().getDefaultWeights());
 
         // it doesn't matter which set of wts are pass in here since we just need
         // a list of valid moves, so use default weights.

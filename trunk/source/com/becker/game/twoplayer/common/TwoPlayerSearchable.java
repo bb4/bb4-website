@@ -100,26 +100,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
      * @return an integer value for the worth of the move.
      *  must be between -SearchStrategy.WINNING_VALUE and SearchStrategy.WINNING_VALUE.
      */
-    public abstract int worth( Move lastMove, ParameterArray weights );
-
-
-    /**
-     *  Statically evaluate a boards state to compute the value of the last move
-     *  from player1's perspective.
-     *  This function is a key function that must be created for each type of game added.
-     *  If evaluating from player 1's perpective, then good moves for p1 are given a positive score.
-     *  If evaluating from player 2's perpective, then good moves for p2 are given a positive score.
-     *
-     *  @param lastMove  the last move made
-     *  @param weights  the polynomial weights to use in the polynomial evaluation function
-     *  @param player1sPerspective if true, evaluate the board from p1's perspective, else p2's.
-     *  @return the worth of the board from the specified players point of view
-     */
-    public final int worth( Move lastMove, ParameterArray weights, boolean player1sPerspective ) {
-
-        int value = worth( lastMove, weights );
-        return (player1sPerspective) ? value : -value;
-    }
+    public abstract int worth( Move lastMove, ParameterArray weights);
 
     /**
      * given a move, determine whether the game is over.
@@ -158,7 +139,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
     /**
      * @return true if the specified move caused one or more opponent pieces to become jeopardized
      */
-    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights) {
         return false;
     }
 

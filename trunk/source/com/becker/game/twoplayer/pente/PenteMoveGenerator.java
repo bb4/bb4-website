@@ -31,8 +31,7 @@ final class PenteMoveGenerator {
     /**
      * @return all reasonably good next moves.
      */
-    public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
-                                        boolean player1sPerspective ) {
+    public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         MoveList moveList = new MoveList();
 
         PenteBoard pb = (PenteBoard) searchable_.getBoard();
@@ -52,7 +51,7 @@ final class PenteMoveGenerator {
                     else
                        m = TwoPlayerMove.createMove( j, i, lastMove.getValue(), new GamePiece(player1));
                     pb.makeMove( m );
-                    m.setValue(searchable_.worth( m, weights, player1sPerspective ));
+                    m.setValue(searchable_.worth( m, weights));
                     // now revert the board
                     pb.undoMove();
                     moveList.add( m );
@@ -60,18 +59,18 @@ final class PenteMoveGenerator {
             }
         }
         BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions().getBestMovesSearchOptions());
-        return finder.getBestMoves( player1, moveList, player1sPerspective );
+        return finder.getBestMoves( player1, moveList);
     }
 
     /**
      * @return a list of urgent moves (i.e positions that can result in a win for either player.
      */
-    public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective) {
+    public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         // no urgent moves at start of game.
         if (lastMove == null)  {
             return new MoveList();
         }
-        MoveList allMoves = findMovesForBothPlayers(lastMove, weights, player1sPerspective);
+        MoveList allMoves = findMovesForBothPlayers(lastMove, weights);
 
         // now keep only those that result in a win or loss.
         Iterator<Move> it = allMoves.iterator();
@@ -91,15 +90,15 @@ final class PenteMoveGenerator {
      * Consider both our moves and and opponent moves.
      * @return Set of all next moves.
      */
-    private MoveList findMovesForBothPlayers(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective) {
+    private MoveList findMovesForBothPlayers(TwoPlayerMove lastMove, ParameterArray weights) {
         MoveList allMoves = new MoveList();
-        MoveList moves = generateMoves( lastMove, weights, player1sPerspective );
+        MoveList moves = generateMoves( lastMove, weights);
         allMoves.addAll(moves);
 
         TwoPlayerMove oppLastMove = lastMove.copy();
         oppLastMove.setPlayer1(!lastMove.isPlayer1());
         MoveList opponentMoves =
-                generateMoves( oppLastMove, weights, !player1sPerspective );
+                generateMoves( oppLastMove, weights);
         for (Move m : opponentMoves){
             TwoPlayerMove move = (TwoPlayerMove) m;
             move.setPlayer1(!lastMove.isPlayer1());

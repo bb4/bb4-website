@@ -88,8 +88,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
      * wall placements. So restrict wall placements to those that hinder the enemy while not hindering you.
      * lastMove may be null if there was no last move.
      */
-    public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights,
-                                    boolean player1sPerspective )  {
+    public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights)  {
         getProfiler().startGenerateMoves();
 
         MoveGenerator generator = new MoveGenerator(weights, (BlockadeBoard)board_);
@@ -98,7 +97,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
 
         MoveList bestMoves =
-            bestMoveFinder_.getBestMoves( player1, moveList, player1sPerspective );
+            bestMoveFinder_.getBestMoves( player1, moveList);
 
         getProfiler().stopGenerateMoves();
         return bestMoves;
@@ -136,8 +135,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
      *
      * @return list of urgent moves
      */
-    public MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights,
-                                         boolean player1sPerspective ) {
+    public MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights) {
         return new MoveList();
     }
 }

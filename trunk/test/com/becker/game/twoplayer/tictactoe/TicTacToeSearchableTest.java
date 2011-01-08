@@ -137,7 +137,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
         // there should not be any urgent moves at the very start of the game.
         System.out.println("lastMove="+getController().getLastMove() );   // 1,1
         MoveList moves =
-            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
+            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights());
 
         checkMoveListAgainstExpected("urgentMoves", EXPECTED_URGENT_MOVES, moves);
         System.out.println("DONE GEN URGENT 1");
@@ -149,9 +149,9 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
         System.out.println("GEN URGENT 2......");
         restore("urgentMoves");
         // there should not be any urgent moves at the very start of the game.
-        System.out.println("lastMove="+getController().getLastMove() );   // 1,1
+        System.out.println("lastMove=" + getController().getLastMove() );   // 1,1
         MoveList moves =
-            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
+            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights());
 
         checkMoveListAgainstExpected("urgentMoves", EXPECTED_URGENT_MOVES, moves);
         System.out.println("DONE GEN URGENT 2");
@@ -162,7 +162,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
         restore(fileName);
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
         MoveList moves =
-                getController().getSearchable().generateMoves(lastMove, weights(), true);
+                getController().getSearchable().generateMoves(lastMove, weights());
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);
     }

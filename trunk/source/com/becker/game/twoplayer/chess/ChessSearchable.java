@@ -67,8 +67,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
     /**
      *  generate all possible next moves.
      */
-   public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights,
-                                  boolean player1sPerspective ) {
+   public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights) {
        MoveList moveList = new MoveList();
        int row,col;
 
@@ -80,7 +79,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
            for ( col = 1; col <= ChessController.NUM_COLS; col++ ) {
                BoardPosition pos = board_.getPosition( row, col );
                if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == player1 ) {
-                   addMoves( pos, moveList, lastMove, weights, player1sPerspective);
+                   addMoves( pos, moveList, lastMove, weights);
                }
            }
        }
@@ -88,15 +87,14 @@ public class ChessSearchable extends TwoPlayerSearchable {
        // remove any moves that causes the king goes into jeopardy (ie check).
        removeSelfCheckingMoves(moveList);
 
-       return  bestMoveFinder_.getBestMoves( player1, moveList, player1sPerspective );
+       return  bestMoveFinder_.getBestMoves( player1, moveList);
    }
 
    /**
     * @@todo
     * @return those moves that result in check or getting out of check.
     */
-   public MoveList generateUrgentMoves(
-           TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+   public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights) {
        return new MoveList();
    }
 
@@ -108,8 +106,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
      * @param weights to use.
      * @return the number of moves added.
      */
-    int addMoves( BoardPosition pos, MoveList moveList, TwoPlayerMove lastMove,
-                         ParameterArray weights, boolean player1sPerspective ) {
+    int addMoves( BoardPosition pos, MoveList moveList, TwoPlayerMove lastMove, ParameterArray weights) {
         List<ChessMove> moves =
                 ((ChessPiece)pos.getPiece()).findPossibleMoves(board_, pos.getRow(), pos.getCol(), lastMove);
 
@@ -117,7 +114,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
         for (ChessMove move : moves) {
             // first apply the move
             board_.makeMove(move);
-            move.setValue(worth(move, weights, player1sPerspective));
+            move.setValue(worth(move, weights));
             board_.undoMove();
         }
         moveList.addAll( moves );

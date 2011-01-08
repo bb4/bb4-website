@@ -47,7 +47,7 @@ class ComputerMoveProgress {
      * Since this can take a very long time we will show the user a progress bar
      * to give feedback.
      *   The computer needs to search through vast numbers of moves to find the best one.
-     * This will happen asynchrounously in a separate thread so that the event dispatch
+     * This will happen asynchronously in a separate thread so that the event dispatch
      * thread can return immediately and not lock up the user interface (UI).
      *   Some moves can be complex (like multiple jumps in checkers). For these
      * We animate these types of moves so the human player does not get disoriented.
@@ -70,9 +70,7 @@ class ComputerMoveProgress {
         }
 
         // this will spawn the worker thread and return immediately (unless autoOptimize on)
-        controller_.requestComputerMove(isPlayer1);
-
-        return false;
+        return controller_.requestComputerMove(isPlayer1);
     }
 
 

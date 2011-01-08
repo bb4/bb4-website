@@ -24,6 +24,7 @@ public class TestAll  {
         suite.addTestSuite(MiniMaxStrategyTest.class);
         suite.addTestSuite(NegaMaxStrategyTest.class);
         suite.addTestSuite(NegaScoutStrategyTest.class);
+        suite.addTestSuite(ComputerVsComputerMiniMaxTest.class);
 
         return suite;
     }
