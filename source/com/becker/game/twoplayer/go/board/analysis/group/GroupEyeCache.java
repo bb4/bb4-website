@@ -13,9 +13,6 @@ import java.util.Set;
  */
 class GroupEyeCache {
 
-    /** The group we are maintaining eyes for. */
-    private GoGroup group_;
-
     /**
      * need 2 true eyes to be unconditionally alive.
      * This is a set of GoEyes which give the spaces in the eye.
@@ -41,11 +38,10 @@ class GroupEyeCache {
      * Constructor
      */
     public GroupEyeCache(GoGroup group) {
-        group_ = group;
         eyes_ = new LinkedHashSet<GoEye>();
         isValid_ = false;
-        eyeAnalyzer_ = new EyeSpaceAnalyzer(group_);
-        potentialAnalyzer_ = new EyePotentialAnalyzer(group_);
+        eyeAnalyzer_ = new EyeSpaceAnalyzer(group);
+        potentialAnalyzer_ = new EyePotentialAnalyzer(group);
     }
 
     /**
@@ -62,6 +58,7 @@ class GroupEyeCache {
      * Also update eyePotential (a measure of how good the groups ability to make 2 eyes.
      * This method is expensive. That is why the 2 things it computes (eyes and eyePotential) are cached.
      * After this method runs, the cache is valid until something about the group changes.
+     * @param board the game board. If null, we just use what is in the cache.
      */
     public void updateEyes(GoBoard board) {
         if (isValid_ || board == null) {
@@ -104,7 +101,7 @@ class GroupEyeCache {
     public float calcNumEyes() {
         float numEyes = 0;
         for (GoEye eye : eyes_) {
-            numEyes += eye.getStatus().getScore(); //eye.getInformation().getEyeValue();
+            numEyes += eye.getStatus().getScore();
         }
         return numEyes;
     }

@@ -33,11 +33,11 @@ public class TestScoring extends GoTestCase {
 
     /**
      *
-     * @param scoringProblem
+     * @param scoringProblem determines problem file to load
      * @param expectedBlackCapturesSoFar number of black stones that were captured by white.
      * @param expectedWhiteCapturesSoFar number of white stones that were captured by black.
      * @param expectedDeadBlackOnBoard number of black stones that that are dead on the board at the end.
-     * @param expectedDeadWhiteOnBoard number of white stones tthat that are dead on the board at the end.
+     * @param expectedDeadWhiteOnBoard number of white stones that that are dead on the board at the end.
      * @param expectedBlackTerr amount of black territory (excluding dead white stones in the territory)
      * @param expectedWhiteTerr amount of white territory (excluding dead black stones in the territory)
      */

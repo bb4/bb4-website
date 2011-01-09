@@ -209,7 +209,7 @@ public final class LifeAnalyzer {
     }
 
     /**
-     * For each eye in the group determine if it is unconditionally alive by verifying that
+     * For each eye in the group, determine if it is unconditionally alive by verifying that
      * all its neighbors are unconditional life candidates still.
      */
     private void initializeEyeLife() {

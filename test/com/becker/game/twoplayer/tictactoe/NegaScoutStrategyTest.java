@@ -63,11 +63,11 @@ public class NegaScoutStrategyTest extends NegaScoutStrategyTst {
     protected ExpectedMoveMatrix getExpectedOneLevelWithQuiescenceAndABMoves() {
         return new ExpectedMoveMatrix(
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 8),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), 14),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 8208, PLAYER1_PIECE), 13),
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 4),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 3), -32, PLAYER1_PIECE), 14),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 8196, PLAYER1_PIECE), 12),
             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 2),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE), 5)
+            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 1), 8132, PLAYER1_PIECE), 5)
         );
     }
 
@@ -98,10 +98,10 @@ public class NegaScoutStrategyTest extends NegaScoutStrategyTst {
     @Override
     protected ExpectedMoveMatrix getExpectedFourLevelBest20PercentMoves() {
         return new ExpectedMoveMatrix(
-             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 17),
-             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 14),
-             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 12),
-             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 10),
+             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 61),
+             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 49),
+             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 18),
+             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 26),
              new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 4),
              new MoveInfo(TwoPlayerMove.createMove(new Location(3, 1), -12, PLAYER1_PIECE), 11)
         );
@@ -110,9 +110,9 @@ public class NegaScoutStrategyTest extends NegaScoutStrategyTst {
     @Override
     protected ExpectedMoveMatrix getExpectedTwoLevelWithQuiescenceMoves() {
         return new ExpectedMoveMatrix(
-            new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 113),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 35),
             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 19),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 12),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 15),
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 17),
             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 4),
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE), 9)
@@ -123,11 +123,11 @@ public class NegaScoutStrategyTest extends NegaScoutStrategyTst {
     protected ExpectedMoveMatrix getExpectedTwoLevelWithQuiescenceAndABMoves() {
         return new ExpectedMoveMatrix(
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 8),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), 14),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 8208, PLAYER1_PIECE), 13),
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 4),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 3), -32, PLAYER1_PIECE), 14),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 8196, PLAYER1_PIECE), 12),
             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 2),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE), 5)
+            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 1), 8132, PLAYER1_PIECE), 5)
         );
     }
 

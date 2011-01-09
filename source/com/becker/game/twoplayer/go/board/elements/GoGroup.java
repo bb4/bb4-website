@@ -35,7 +35,7 @@ public final class GoGroup extends GoSet
      * Constructor. Create a new group containing the specified string.
      * @param string make the group from this string.
      */
-    public GoGroup(GoString string)  {
+    public GoGroup(GoString string) {
         commonInit();
         ownedByPlayer1_ = string.isOwnedByPlayer1();
          
@@ -47,7 +47,7 @@ public final class GoGroup extends GoSet
      * Constructor. 
      * Create a new group containing the specified list of stones
      * Every stone in the list passed in must say that it is owned by this new group,
-     * and every string must be wholy owned by this new group.
+     * and every string must be wholly owned by this new group.
      * @param stones list of stones to create a group from.
      */
     public GoGroup( GoBoardPositionList stones ) {
@@ -61,8 +61,8 @@ public final class GoGroup extends GoSet
     private void assimilateStone(GoBoardPositionList stones, GoBoardPosition stone) {
         assert stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_ :
                 "Stones in group must all be owned by the same player. stones=" + stones;
-        //actually this is ok - sometimes happens legitimately
-        //assert isFalse(stone.isVisited(), stone+" is marked visited in "+stones+" when it should not be.");
+        // actually this is ok - sometimes happens legitimately
+        // assert isFalse(stone.isVisited(), stone+" is marked visited in "+stones+" when it should not be.");
         GoString string = stone.getString();
         assert (string != null) : "There is no owning string for " + stone;
         if (!getMembers().contains(string)) {
