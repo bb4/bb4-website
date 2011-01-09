@@ -95,100 +95,18 @@ sure I want to. I enjoy doing it.<br>
 <h3>High Priority Features<br>
 </h3>
 <ul>
-  <li>Use events to update GameTree. In GameTreeDialog, post events so
-updating of tree happens in same thread as rendering. Currently getting
-these exceptions:<br>
-    <small><small>Exception in thread "AWT-EventQueue-0"
-java.lang.NullPointerException<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.twoplayer.blockade.ui.PathRenderer.drawShortestPaths(PathRenderer.java:55)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.twoplayer.blockade.ui.BlockadeBoardRenderer.drawMarkers(BlockadeBoardRenderer.java:160)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.common.ui.GameBoardRenderer.render(GameBoardRenderer.java:300)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.common.ui.GameBoardViewer.paintComponent(GameBoardViewer.java:367)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-javax.swing.JComponent.paint(JComponent.java:1027)<br>
-    <br>
-Exception in thread "AWT-EventQueue-0"
-java.util.ConcurrentModificationException<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-java.util.LinkedList$ListItr.checkForComodification(LinkedList.java:761)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-java.util.LinkedList$ListItr.next(LinkedList.java:696)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.twoplayer.common.ui.GameTreeDialog.setMoveList(GameTreeDialog.java:329)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.twoplayer.common.ui.GameTreeDialog.showCurrentGameTree(GameTreeDialog.java:218)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.twoplayer.common.ui.GameTreeDialog.gameChanged(GameTreeDialog.java:199)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.common.ui.GameBoardViewer.processEvent(GameBoardViewer.java:342)<br>
-Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.common.BoardPosition.copy(BoardPosition.java:138)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.common.Board.clone(Board.java:148)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer.getBoard(TwoPlayerBoardViewer.java:536)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.common.ui.GamePanel.gameChanged(GamePanel.java:295)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.common.ui.GameBoardViewer.processEvent(GameBoardViewer.java:342)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-java.awt.Component.dispatchEventImpl(Component.java:4583)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-java.awt.Container.dispatchEventImpl(Container.java:2099)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-java.awt.Component.dispatchEvent(Component.java:4413)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-java.awt.EventQueue.dispatchEvent(EventQueue.java:599)<br>
-    <br>
-Exception in thread "AWT-EventQueue-0"
-java.lang.ArrayIndexOutOfBoundsException: 7<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.twoplayer.common.ui.GameTreeViewer.drawTree(GameTreeViewer.java:203)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.twoplayer.common.ui.GameTreeViewer.paintComponent(GameTreeViewer.java:314)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-javax.swing.JComponent.paint(JComponent.java:1027)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-javax.swing.JComponent.paintChildren(JComponent.java:864)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-javax.swing.JSplitPane.paintChildren(JSplitPane.java:1030)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-javax.swing.JComponent.paint(JComponent.java:1036)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-javax.swing.JComponent.paintChildren(JComponent.java:864)<br>
-    <br>
-Exception in thread "AWT-EventQueue-0" java.lang.AssertionError<br>
-    <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.twoplayer.common.TwoPlayerController.getChanceOfPlayer1Winning(TwoPlayerController.java:221)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel.gameChanged(TwoPlayerInfoPanel.java:102)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-com.becker.game.common.ui.GameBoardViewer.processEvent(GameBoardViewer.java:343)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
-java.awt.Component.dispatchEventImpl(Component.java:4583)</small></small><br>
-    <br>
+  <li>Turn off Eye-caching and see if it affects performance.</li>
+  <li>Use score caching. Update the groups, but only update the eyes,
+territory, and static score if not in cache.<br>
   </li>
-  <li>Use enum for ChessPieceType.<br>
-  </li>
-  <li>Dont play in an eye unless its a false eye&nbsp; (fixed?)</li>
-  <li>Add negaScout</li>
   <li>Add mtd(f) search.<br>
   </li>
   <li>Allow player to ask for suggested move (1)&nbsp;&nbsp;</li>
-  <li>Show visualization of all next move values in main
-and debug windows. (done?)<br>
-  </li>
   <li>Implement accurate scoring (allow for different types of rule
 systems). Score what
 it can, and allow for player dispute fo score (2)&nbsp;</li>
   <li>If the computer or player resigns, the playerWon vars
-should be set and the strcngth of the win should be large. (1)</li>
+should be set and the strength of the win should be large. (1)</li>
   <li>Add test cases for every little method of every class. Use clover
 to verify. (10)&nbsp; <br>
   </li>
@@ -279,7 +197,8 @@ times(23411) cannot be greater than the parent time (23296)</li>
 <h3>Packaging issues
 </h3>
 <ul>
-  <li>&nbsp;split off jag0_sgf and jhlabs into separate modules (gradle projects)
+  <li>&nbsp;split off jag0_sgf and jhlabs into separate modules (gradle
+projects)
 that produce jars that we will depend on.</li>
   <li>&nbsp;ant deploy could use significant cleanup.</li>
   <li>&nbsp;images on index web page should link directly to applets

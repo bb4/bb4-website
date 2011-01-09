@@ -16,13 +16,11 @@ import java.util.List;
  *  A ChessPiece is either empty or contains one of the standard chess pieces.
  *  This class has in it the rules for how each chess move can move.
  *
- *  @@ make this an enum with findMoves as an abstract method.
  *  The images and label could also be part of the enum.
  *
  * @author Barry Becker
  */
-public enum ChessPieceType
-{
+public enum ChessPieceType {
     PAWN('P') {
         @Override
         public List<ChessMove> findPossibleMoves(Board board, int row, int col, Move lastMove, ChessPiece piece) {
@@ -102,7 +100,7 @@ public enum ChessPieceType
 
         @Override
         public List<ChessMove> findPossibleMoves(Board board, int row, int col, Move lastMove, ChessPiece piece) {
-            return getEightDirectionalMoves(board, row, col, lastMove, knightMoveRow_, knightMoveCol_, piece);
+            return getEightDirectionalMoves(board, row, col, knightMoveRow_, knightMoveCol_, piece);
         }
 
         @Override
@@ -156,7 +154,7 @@ public enum ChessPieceType
         private final int[] kingMoveCol_ = {0,  0,  1, -1, -1,  1,  1, -1};
         @Override
         public List<ChessMove> findPossibleMoves(Board board, int row, int col, Move lastMove, ChessPiece piece) {
-            return getEightDirectionalMoves(board, row, col, lastMove, kingMoveRow_, kingMoveCol_, piece);
+            return getEightDirectionalMoves(board, row, col, kingMoveRow_, kingMoveCol_, piece);
         }
 
         @Override
@@ -193,9 +191,9 @@ public enum ChessPieceType
 
     /**
      * @param side 1 is p1 -1 if p2.
-     * @param pos position of the peice
+     * @param pos position of the piece
      * @param weights game weights
-     * @param advancement  how far toawrds the opponents side of the board the piece is.
+     * @param advancement  how far towards the opponents side of the board the piece is.
      * @return weighted score
      */
     public abstract double getWeightedScore(int side, BoardPosition pos, ParameterArray weights, int advancement);
@@ -205,9 +203,8 @@ public enum ChessPieceType
      * find moves for kings or knights which have 8 possible moves.
      * @return  those moves which are valid out of the eight possible that are checked.
      */
-    private static List<ChessMove> getEightDirectionalMoves(Board board, int row, int col, Move lastMove,
-                                                            int[] rowOffsets, int[] colOffsets, ChessPiece piece)
-    {
+    private static List<ChessMove> getEightDirectionalMoves(Board board, int row, int col,
+                                                            int[] rowOffsets, int[] colOffsets, ChessPiece piece) {
         List<ChessMove> moveList = new LinkedList<ChessMove>();
 
         for (int i=0; i<8; i++) {
@@ -221,14 +218,13 @@ public enum ChessPieceType
 
     /**
      * Check all the moves in the direction specified by rowDir and colDir. Add all legal moves in that direction.
+     * loop through all spaces between this piece and the next piece or the edge of the board.
+     * if the next piece encountered in the specified direction is an opponent piece, then capture it.
      * @param moveList the accumulated possible moves
      * @return moveList
      */
     private static List<ChessMove> checkRunDirection(int curRow, int curCol, int rowDir, int colDir, Board board,
-                                                       List<ChessMove> moveList, ChessPiece piece)
-    {
-      // loop through all spaces between this piece and the next piece or the edge of the board.
-      // if the next piece encountered in the specified direction is an opponent piece, then capture it.
+                                                       List<ChessMove> moveList, ChessPiece piece)  {
       int row = (curRow+rowDir);
       int col = (curCol+colDir);
       BoardPosition next = board.getPosition( row, col );
@@ -255,8 +251,7 @@ public enum ChessPieceType
      * @return all current legal moves plus the capture if there is one
      */
     private static List<ChessMove> checkForNonCapture(BoardPosition next, int row, int col, List<ChessMove> moveList,
-                                                      ChessPiece piece)
-    {
+                                                      ChessPiece piece) {
         if ( (next != null) &&  next.isUnoccupied()) {
             ChessMove m = ChessMove.createMove(new Location(row, col), new Location(next.getRow(), next.getCol()),
                                                null, 0, piece);
@@ -272,8 +267,7 @@ public enum ChessPieceType
      * @return all current legal moves plus the capture if there is one
      */
     private static List<ChessMove> checkForCapture(BoardPosition next, int row, int col, List<ChessMove> moveList,
-                                                   ChessPiece piece)
-    {
+                                                   ChessPiece piece) {
         if ( (next != null) &&  next.isOccupied() && (next.getPiece().isOwnedByPlayer1() != piece.isOwnedByPlayer1())) {
             // there can only be one capture in chess.
             CaptureList capture = new CaptureList();
