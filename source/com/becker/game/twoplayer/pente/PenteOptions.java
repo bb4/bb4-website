@@ -35,6 +35,6 @@ public class PenteOptions extends TwoPlayerOptions {
                                  new BestMovesSearchOptions(DEFAULT_PERCENTAGE_BEST_MOVES, 
                                                             DEFAULT_MIN_BEST_MOVES,
                                                             DEFAULT_PERCENT_LESS_THAN_BEST_THRESH),
-                                 new MonteCarloSearchOptions(1000, 1.0, 20));
+                                 new MonteCarloSearchOptions(4000, 1.0, 25));
     }
 }

@@ -27,7 +27,7 @@ public class MoveList extends ArrayList<Move> {
     }
 
     /**
-     * Copyies the constituent moves as well.
+     * Copies the constituent moves as well.
      * @return a deep copy of the movelist.
      */
     public synchronized MoveList copy() {
@@ -38,7 +38,6 @@ public class MoveList extends ArrayList<Move> {
         return copiedList;
     }
 
-
     /**
      *  @return the player that goes first.
      */
@@ -46,7 +45,7 @@ public class MoveList extends ArrayList<Move> {
         return get(0);
     }
 
-    public Move getLastMove() {
+    public synchronized Move getLastMove() {
         if ( isEmpty() ) {
             return null;
         }

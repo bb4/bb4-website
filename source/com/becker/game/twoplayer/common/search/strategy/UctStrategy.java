@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.WinProbabilityCaclulator;
@@ -84,7 +85,7 @@ public class UctStrategy extends AbstractSearchStrategy {
                if (!lastMoveNode.hasChildren()) {
                    int added = lastMoveNode.addChildren(searchable_.generateMoves(lastMoveNode.move, weights_));
                    if (added == 0) {
-                       System.out.println("no moves added for " + lastMoveNode);
+                       GameContext.log(0, "No moves added for " + lastMoveNode);
                    }
                    addNodesToTree(parent, lastMoveNode.getChildren());
                }
