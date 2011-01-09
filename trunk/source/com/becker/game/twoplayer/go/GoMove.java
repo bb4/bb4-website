@@ -191,7 +191,7 @@ public class GoMove extends TwoPlayerMove {
     public String toString() {
         String s = super.toString();
         if ( captureList_ != null ) {
-            s += "num captured="+captureList_.size();
+            s += "num captured=" + captureList_.size();
         }
         return s;
     }

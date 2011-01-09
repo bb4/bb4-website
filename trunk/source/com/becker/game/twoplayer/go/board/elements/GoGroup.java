@@ -209,7 +209,7 @@ public final class GoGroup extends GoSet
         }
         if (groupAnalyzer_.isValid() || useCachedValue) {
             if (!groupAnalyzer_.isValid())
-                GameContext.log(0, "using cached relative health when not valid");
+                GameContext.log(3, "using cached relative health when not valid");
             return groupAnalyzer_.getRelativeHealth();
         }
         GameContext.log(0, "stale abs health. recalculating relative health");
