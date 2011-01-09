@@ -196,7 +196,7 @@ public class ExpectedSearchableResults {
         TwoPlayerMove.createMove(new Location(3, 7), -24, PLAYER2_PIECE),
         TwoPlayerMove.createMove(new Location(2, 6), -8, PLAYER2_PIECE),
         TwoPlayerMove.createMove(new Location(2, 8), 112, PLAYER2_PIECE),
-        TwoPlayerMove.createMove(new Location(4, 8), 112, PLAYER2_PIECE),
+        //TwoPlayerMove.createMove(new Location(4, 8), 112, PLAYER2_PIECE),
     };
 
     static final TwoPlayerMove[] EXPECTED_URGENT_MOVES_P1 = {

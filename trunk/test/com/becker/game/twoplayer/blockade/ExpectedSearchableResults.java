@@ -315,8 +315,7 @@ public class ExpectedSearchableResults {
          createMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 1), new BlockadeBoardPosition(12, 2))),
          createMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 1), new BlockadeBoardPosition(7, 1))),
          createMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 2), new BlockadeBoardPosition(8, 1))),
-         createMove(3,10,  1,10, 184, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(8, 9))),
-
+         //createMove(3,10,  1,10, 184, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(8, 9))),
     };
 
     static final BlockadeMove[] EXPECTED_ALL_END_GAME_MOVES_P2 = {
