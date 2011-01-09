@@ -45,8 +45,8 @@ public class GroupNeighborAnalyzer {
             GoBoardPosition s = stack.remove(stack.size()-1);
             if ( !s.isVisited()) {
                 s.setVisited( true );
-                assert (s.getPiece().isOwnedByPlayer1()==stone.getPiece().isOwnedByPlayer1()):
-                       s+" does not have same ownership as "+stone;
+                assert (s.getPiece().isOwnedByPlayer1() == stone.getPiece().isOwnedByPlayer1()):
+                       s + " does not have same ownership as " + stone;
                 stones.add( s );
                 pushGroupNeighbors(s, s.getPiece().isOwnedByPlayer1(), stack );
             }

@@ -251,8 +251,13 @@ public class GoGroupSet implements Set<GoGroup> {
         }
     }
 
+    /**
+     * Make sure that every stone in the string belongs in this group
+     * @param str every stone in this string should also be in the specified group
+     * @param group group that contains all the stones in the string.
+     */
     private void confirmStoneInStringAlsoInGroup(GoString str, GoGroup group) {
-        //make sure that every stone in the string belongs in this group
+
         for (GoBoardPosition pos : str.getMembers()) {
 
             if (pos.getGroup() != null && !group.equals(pos.getGroup())) {

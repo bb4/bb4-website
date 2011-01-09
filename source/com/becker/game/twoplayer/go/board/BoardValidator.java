@@ -4,7 +4,9 @@ import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.*;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -84,19 +86,21 @@ public class BoardValidator {
 
 
     /**
-     * For every stone in every group specified in groups, verify that the group determined from using that stone as a seed
-     * matches the group that is claims by ancestry.
+     * For every stone in every group specified in groups, verify that the group determined from using that stone as a
+     * seed matches the group that is claims by ancestry.
      * (expensive to check)
      * @param groups we will check each stone in each of these groups.
      */
     public void confirmAllStonesInGroupsClaimed(GoGroupSet groups) {
 
         NeighborAnalyzer na = new NeighborAnalyzer(board_);
-        for (GoGroup parentGroup : groups) {  // for each group on the board
+
+        for (GoGroup parentGroup : groups) {
             GoBoardPositionSet parentGroupStones = parentGroup.getStones();
             for (GoBoardPosition stone : parentGroupStones) {  // for each stone in that group
                 // compute the group from this stone and confirm it matches the parent group
                 GoBoardPositionList g = na.findGroupFromInitialPosition(stone);
+
                 // perhaps we should do something more than check the size.
                 if (g.size() != parentGroupStones.size()) {
                     groups.debugPrint(0, "Confirm stones in groups they Claim failed. \nGroups are:\n", true, true);
@@ -104,9 +108,10 @@ public class BoardValidator {
                     bldr.append(board_.toString());
                     bldr.append("\n");
                     bldr.append("\n\nIt seems that using different seeds yields different groups:");
-                    for (GoBoardPosition stone1 : parentGroupStones) {  // for each stone in that group
-                         GoBoardPositionList gg = na.findGroupFromInitialPosition(stone);
-                        bldr.append(gg.toString("\nSEED STONE = "+ stone1));
+                    for (GoBoardPosition stone1 : parentGroupStones) {
+                        GoBoardPositionList gg = na.findGroupFromInitialPosition(stone);
+                        String title = "\nSEED STONE = "+ stone1 + " found groups of size " + gg.size();
+                        bldr.append(gg.toString(title));
                     }
                     GameContext.log(0, bldr.toString());
                     GameContext.log(0,
@@ -117,8 +122,7 @@ public class BoardValidator {
         }
     }
 
-    public static void confirmNoNullMembers(GoGroup group)
-    {
+    public static void confirmNoNullMembers(GoGroup group) {
         Iterator it = group.getStones().iterator();
         boolean failed = false;
         while (it.hasNext()) {

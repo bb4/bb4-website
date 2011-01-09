@@ -83,7 +83,7 @@ public class TwoPlayerMove extends Move {
         inheritedValue_ = getValue();
         selected_ = false;
         piece_ = p;
-        if (p!=null)
+        if (p != null)
             player1_ = p.isOwnedByPlayer1();
         isPass_ = false;
     }
