@@ -81,6 +81,7 @@ public class BestMovesSearchOptions {
     }
 
     public void setMinBestMoves(int minBest) {
+        assert minBest > 0 : "minBest must be greater than 0. It was " + minBest;
         minBestMoves_ = minBest;
     }
 
@@ -92,6 +93,7 @@ public class BestMovesSearchOptions {
     }
 
     public void setPercentLessThanBestThresh(int percent) {
+        assert percent >= 0 && percent <= 100 : "percent out of range : " + percent;
         percentLessThanBestThreshold_ = percent;
     }
 

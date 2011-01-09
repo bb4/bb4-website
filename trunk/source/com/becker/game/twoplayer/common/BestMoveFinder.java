@@ -52,7 +52,7 @@ public class BestMoveFinder {
      * A move which has a low score this time might actually lead to the best move later.
      *
      * @param moveList reasonable next moves.
-     * @return  set of best moves from the orignal list
+     * @return  set of best moves from the original list
      */
     private MoveList determineBestMoves(MoveList moveList) {
 
@@ -62,12 +62,12 @@ public class BestMoveFinder {
 
         if (percentLessThanBestThresh > 0) {
             bestMoveList =
-                    determineMovesExceedingValueThresh(moveList, minBest, percentLessThanBestThresh);
+                determineMovesExceedingValueThresh(moveList, minBest, percentLessThanBestThresh);
         }
         else {
             int topPercent = searchOptions_.getPercentageBestMoves();
             bestMoveList =
-                    determineTopPercentMoves(moveList, minBest, topPercent);
+                determineTopPercentMoves(moveList, minBest, topPercent);
         }
         return bestMoveList;
     }
@@ -88,7 +88,7 @@ public class BestMoveFinder {
             bestMoveList.add(currentMove);
             int ct = 1;
 
-            while ((sign * currentMove.getValue() > sign * thresholdValue || ct < minBest) && ct < numMoves) {
+            while ((sign * currentMove.getValue() >= sign * thresholdValue || ct < minBest) && ct < numMoves) {
                 currentMove = moveList.get(ct++);
                 bestMoveList.add(currentMove);
             }
@@ -103,8 +103,9 @@ public class BestMoveFinder {
     private MoveList determineTopPercentMoves(MoveList moveList, int minBest, int topPercent) {
         int numMoves = moveList.size();
         MoveList bestMoveList = moveList;
-        int best = (int) ((float) topPercent / 100.0 * numMoves) + 1;
-        if ( best < numMoves && numMoves > minBest)  {
+        int requestedBest = (int) ((float) topPercent / 100.0 * numMoves + 0.5);
+        int best = Math.max(minBest, requestedBest);
+        if ( best < numMoves)  {
             bestMoveList = moveList.subList(0, best);
         }
         return bestMoveList;
