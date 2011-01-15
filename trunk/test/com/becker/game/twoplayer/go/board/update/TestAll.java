@@ -19,6 +19,8 @@ public class TestAll {
 
         TestSuite suite =  new TestSuite("Board update Tests");
 
+        suite.addTestSuite(TestPostMoveUpdater.class);
+        suite.addTestSuite(TestPostRemoveUpdater.class);
         suite.addTestSuite(TestCaptures.class);
         suite.addTestSuite(TestDeadStones.class);
         //suite.addTestSuite(TestCaptures.class);

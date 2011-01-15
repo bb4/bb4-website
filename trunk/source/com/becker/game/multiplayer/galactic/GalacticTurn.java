@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  Captures the delta state change of everything that happened during one turn (year) of the game.
+ *  CaptureCounts the delta state change of everything that happened during one turn (year) of the game.
  *
  *  @see Galaxy
  *  @author Barry Becker

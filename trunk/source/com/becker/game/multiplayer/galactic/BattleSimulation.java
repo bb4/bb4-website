@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *  Captures the delta state change of everything that happened during one turn of the game.
+ *  CaptureCounts the delta state change of everything that happened during one turn of the game.
  *
  *  @see Galaxy
  *  @author Barry Becker

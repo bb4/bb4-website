@@ -39,9 +39,4 @@ public class TestDeadStones extends GoTestCase {
         assertEquals("Unexpected black dead stones", 1, deadStones.getNumberOnBoard(true));
         assertEquals("Unexpected white dead stones", 2, deadStones.getNumberOnBoard(false));
     }
-
-
-    public static Test suite() {
-        return new TestSuite(TestDeadStones.class);
-    }
 }

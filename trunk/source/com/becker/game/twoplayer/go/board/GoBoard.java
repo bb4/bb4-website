@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Representation of a Go Game Board
- * There are a lot of datastructures to organize the state of the pieces.
+ * There are a lot of data structures to organize the state of the pieces.
  * For example, we update strings, and groups (and eventually armies) after each move.
  * After updating we can use these structures to estimate territory for each side.
  *
@@ -61,7 +61,7 @@ public final class GoBoard extends TwoPlayerBoard {
         analyzer.determineAllStringsOnBoard();
         groups_ = analyzer.findAllGroupsOnBoard();
 
-        boardUpdater_ = new BoardUpdater(this);
+        boardUpdater_ = new BoardUpdater(this, board.boardUpdater_);
         territoryAnalyzer_ = new TerritoryAnalyzer(this);
     }
 
@@ -267,7 +267,7 @@ public final class GoBoard extends TwoPlayerBoard {
     /**
      * Corner triples are the 3 points closest to a corner
      * @param position position to see if in corner of board.
-     * @return true if the specified BoardPosition is on the corder of the board
+     * @return true if the specified BoardPosition is on the order of the board
      */
     public boolean isCornerTriple(BoardPosition position) {
         return new CornerChecker(getNumRows(), getNumCols()).isCornerTriple(position);

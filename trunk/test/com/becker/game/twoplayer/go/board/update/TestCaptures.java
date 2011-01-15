@@ -1,12 +1,7 @@
 package com.becker.game.twoplayer.go.board.update;
 
-import com.becker.game.common.board.CaptureList;
-import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
-import com.becker.game.twoplayer.go.board.elements.GoString;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -17,7 +12,7 @@ import junit.framework.TestSuite;
 public class TestCaptures extends GoTestCase {
 
     /** instance under test */
-    private Captures captures;
+    private CaptureCounts captures;
 
 
     /**
@@ -25,7 +20,7 @@ public class TestCaptures extends GoTestCase {
      */
     @Override
     protected void setUp() throws Exception {
-        captures = new Captures();
+        captures = new CaptureCounts();
         super.setUp();
     }
 
@@ -79,7 +74,7 @@ public class TestCaptures extends GoTestCase {
 
     public void verifyDecrCaptures(boolean isPlayer1) {
 
-        // first add some captrues so they can be decremented
+        // first add some captures so they can be decremented
         GoMoveStub move = new GoMoveStub(new GoStone(!isPlayer1));
         move.setNumCaptures(3);
         captures.updateCaptures(move, true);
@@ -93,10 +88,5 @@ public class TestCaptures extends GoTestCase {
 
         captures.updateCaptures(move, false);
         assertEquals("Unexpected number of "+color+" captures" , 1, captures.getNumCaptures(isPlayer1));
-    }
-
-
-    public static Test suite() {
-        return new TestSuite(TestCaptures.class);
     }
 }

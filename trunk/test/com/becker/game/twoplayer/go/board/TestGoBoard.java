@@ -14,32 +14,32 @@ public class TestGoBoard extends GoTestCase {
 
     private static final String PREFIX = "board/";
     
-    // verify that the right stones are captured by a given move
+    /** verify that the right stones are captured by a given move. */
     public void testFindCaptures1() {
-        verifyCaptures("findCaptures1", 5, 6, 6);
+        verifyCaptures("findCaptures1", new Location(5, 6), 6);
     }
 
     public void testFindCaptures2() {
-        verifyCaptures("findCaptures2", 6, 6, 9);
+        verifyCaptures("findCaptures2", new Location(6, 6), 9);
     }
 
     public void testFindCaptures3() {
-        verifyCaptures("findCaptures3", 5, 4, 7);
+        verifyCaptures("findCaptures3", new Location(5, 4), 7);
     }
 
     public void testFindCaptures4() {
-        verifyCaptures("findCaptures4", 4, 8, 16);
+        verifyCaptures("findCaptures4", new Location(4, 8), 16);
     }
 
     public void testFindCaptures5() {
-        verifyCaptures("findCaptures5", 10, 2, 11);
+        verifyCaptures("findCaptures5", new Location(10, 2), 11);
     }
 
-    private void verifyCaptures(String file, int row, int col, int numCaptures) {
+    private void verifyCaptures(String file, Location moveLocation, int expNnumCaptures) {
 
         restore(PREFIX  + file);
 
-        GoMove move = new GoMove(new Location(row, col), 0, new GoStone(true));
+        GoMove move = new GoMove(moveLocation, 0, new GoStone(true));
 
         GoBoard board = (GoBoard)controller_.getBoard();
 
@@ -51,12 +51,12 @@ public class TestGoBoard extends GoTestCase {
 
         int actualNumCaptures = move.getNumCaptures();
 
-        Assert.assertTrue("move.captures=" + actualNumCaptures + " expected "+numCaptures,
-                              actualNumCaptures == numCaptures);
+        Assert.assertTrue("move.captures=" + actualNumCaptures + " expected "+expNnumCaptures,
+                              actualNumCaptures == expNnumCaptures);
         int diffWhite = numWhiteStonesBefore - numWhiteStonesAfter;
         Assert.assertTrue("diff in num white stones ("+ diffWhite
-                + ") not = numcaptures (" + numCaptures
-                + ')', diffWhite == numCaptures);
+                + ") not = numcaptures (" + expNnumCaptures
+                + ')', diffWhite == expNnumCaptures);
 
         controller_.undoLastMove();
         // verify that all the captured stones get restored to the board

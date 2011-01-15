@@ -64,8 +64,8 @@ class HandicapStones {
         for ( int i = 0; i < numHandicapStones_; i++ ) {
             GoBoardPosition hpos = starPoints_.get( i );
 
-            GoMove m = GoMove.createGoMove( hpos.getLocation(), 0, (GoStone)hpos.getPiece());
-                                            new GoStone(hpos.getPiece().isOwnedByPlayer1(), GamePiece.REGULAR_PIECE );
+            GoMove m = new GoMove(hpos.getLocation(), 0, (GoStone)hpos.getPiece());
+                                  new GoStone(hpos.getPiece().isOwnedByPlayer1(), GamePiece.REGULAR_PIECE );
             handicapMoves.add(m);
         }
         return handicapMoves;

@@ -26,22 +26,10 @@ public class GoMove extends TwoPlayerMove {
     private CaptureList captureList_ = null;
 
     /**
-     * Constructor. This should never be called directly
-     * instead call the factory method so we recycle objects.
-     * use createMove to get moves, and dispose to recycle them
+     * Constructor.
      */
     public GoMove( Location destination, int val, GoStone stone ) {
         super(destination, val, stone );
-    }
-
-    /**
-     * factory method for getting new moves.
-     * it uses recycled objects if possible.
-     * @return new go move
-     */
-    public static GoMove createGoMove( Location destination, int val, GoStone stone ) {
-
-        return new GoMove( destination, val, stone );
     }
 
     /** Copy constructor */
@@ -65,7 +53,7 @@ public class GoMove extends TwoPlayerMove {
      * @return new passing move
      */
     public static GoMove createPassMove(int val, boolean player1) {
-        GoMove m = createGoMove( new Location(1, 1), val, null );
+        GoMove m = new GoMove(new Location(1, 1), val, null );
         m.isPass_ = true;
         m.setPlayer1(player1);
         return m;
@@ -76,7 +64,7 @@ public class GoMove extends TwoPlayerMove {
      * @return new passing move
      */
     public static GoMove createResignationMove(boolean player1) {
-        GoMove m = createGoMove( new Location(1, 1), 0, null );
+        GoMove m = new GoMove( new Location(1, 1), 0, null );
         m.isResignation_ = true;
         m.setPlayer1(player1);
         return m;

@@ -14,8 +14,13 @@ import com.becker.game.twoplayer.go.board.elements.*;
  */
 public class PostMoveUpdater extends PostChangeUpdater {
 
-    PostMoveUpdater(GoBoard board, Captures captures) {
-        super(board, captures);
+    /**
+     * Update the board information data after a stone has been played.
+     * @param board board that changed.
+     * @param captureCounter captureCounter added or removed during the change
+     */
+    PostMoveUpdater(GoBoard board, CaptureCounts captureCounter) {
+        super(board, captureCounter);
     }
 
     /**
@@ -36,9 +41,9 @@ public class PostMoveUpdater extends PostChangeUpdater {
         captures.removeFromBoard(getBoard());
 
         assert (stone.getString().getNumLiberties(getBoard()) > 0):
-            "The placed stone "+stone+" has no liberties "+stone.getGroup() +"\n"+ getBoard().toString();
+            "The placed stone " + stone + " has no liberties "+stone.getGroup() +"\n"+ getBoard().toString();
         updateGroupsAfterMove(stone);
-        captures_.updateCaptures(move, true);
+        captureCounter_.updateCaptures(move, true);
     }
 
     /**

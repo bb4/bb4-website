@@ -6,11 +6,18 @@ import com.becker.game.twoplayer.go.GoMove;
  *  Maintains the count of captured stones for each side.
  * @author Barry Becker
  */
-public class Captures {
+public class CaptureCounts {
 
     private int numWhiteStonesCaptured_ = 0;
     private int numBlackStonesCaptured_ = 0;
 
+
+    public CaptureCounts copy() {
+        CaptureCounts countsCopy = new CaptureCounts();
+        countsCopy.numBlackStonesCaptured_ = this.numBlackStonesCaptured_;
+        countsCopy.numWhiteStonesCaptured_ = this.numWhiteStonesCaptured_;
+        return countsCopy;
+    }
  
     public int getNumCaptures(boolean player1StonesCaptured) {
         return player1StonesCaptured ? numBlackStonesCaptured_ : numWhiteStonesCaptured_ ;

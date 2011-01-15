@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.go.board.update;
 
-import com.becker.game.common.board.CaptureList;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoProfiler;
@@ -19,7 +18,7 @@ import java.util.*;
  */
 public class PostRemoveUpdater extends PostChangeUpdater {
 
-    PostRemoveUpdater(GoBoard board, Captures captures) {
+    PostRemoveUpdater(GoBoard board, CaptureCounts captures) {
         super(board, captures);
     }
 
@@ -45,7 +44,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         recreateGroupsAfterChange();
         profiler_.stopRecreateGroupsAfterRemove();
 
-        captures_.updateCaptures(move, false);
+        captureCounter_.updateCaptures(move, false);
         profiler_.stopUpdateGroupsAfterRemove();
     }
 
