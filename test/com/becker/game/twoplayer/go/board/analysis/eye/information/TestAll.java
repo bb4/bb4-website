@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 public class
 
 
-        TestAllInformation extends GoTestCase {
+        TestAll extends GoTestCase {
 
     /**
      * @return all the junit test caes to run (in this class)

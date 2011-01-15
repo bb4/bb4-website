@@ -24,13 +24,13 @@ public class GoWeights extends GameWeights {
         "Health",
         "Position",
         "Bad shape",
-        "Captures"};
+        "CaptureCounts"};
 
     private static final String[] WEIGHT_DESCRIPTIONS = {
         "Weight to associate with the relative health of groups",
         "Weight to associate with Position",
         "Weight to associate with the Bad Shape Penalty",
-        "Weight to give to Captures"
+        "Weight to give to CaptureCounts"
         //"Min Difference between health of two groups for one to be considered dead relative to the other"
     };
 

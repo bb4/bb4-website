@@ -15,7 +15,7 @@ import com.becker.game.twoplayer.go.board.elements.*;
 public abstract class PostChangeUpdater {
 
     GoBoard board_;
-    Captures captures_;
+    CaptureCounts captureCounter_;
     NeighborAnalyzer nbrAnalyzer_;
     BoardValidator validator_;
     GoProfiler profiler_;
@@ -23,11 +23,11 @@ public abstract class PostChangeUpdater {
     /**
      * Update the board information data after a change has been made (like an add or a remove of a stone)
      * @param board board that changed.
-     * @param captures captures added or removed during the change
+     * @param captureCounter captures added or removed during the change
      */
-    PostChangeUpdater(GoBoard board, Captures captures) {
+    PostChangeUpdater(GoBoard board, CaptureCounts captureCounter) {
         board_ = board;
-        captures_ = captures;
+        captureCounter_ = captureCounter;
         profiler_ = GoProfiler.getInstance();
         nbrAnalyzer_ = new NeighborAnalyzer(board);
         validator_ = new BoardValidator(board);

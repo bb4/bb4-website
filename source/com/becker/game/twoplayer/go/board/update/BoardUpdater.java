@@ -12,20 +12,39 @@ public class BoardUpdater {
 
     private PostMoveUpdater postMoveUpdater_;
     private PostRemoveUpdater postRemoveUpdater_;
-    private Captures captures_;
+    private CaptureCounts captureCounts_;
 
     /**
      * Constructor
      */
     public BoardUpdater(GoBoard board) {
 
-        captures_ = new Captures();
-        postMoveUpdater_ = new PostMoveUpdater(board, captures_);
-        postRemoveUpdater_ = new PostRemoveUpdater(board, captures_);
+        captureCounts_ = new CaptureCounts();
+        initialize(board);
     }
 
+    /**
+     * Essentially a copy constructor. The counts are preserved.
+     * @param board
+     * @param updater used to copy the current counts so they are not lost.
+     */
+    public BoardUpdater(GoBoard board, BoardUpdater updater) {
+        captureCounts_ = updater.captureCounts_.copy();
+        initialize(board);
+    }
+
+    private void initialize(GoBoard board) {
+        postMoveUpdater_ = new PostMoveUpdater(board, captureCounts_);
+        postRemoveUpdater_ = new PostRemoveUpdater(board, captureCounts_);
+    }
+
+
+    /**
+     * @param player1StonesCaptured if true then get the black stones captured
+     * @return the captured stones of the specified color
+     */
     public int getNumCaptures(boolean player1StonesCaptured) {
-        return captures_.getNumCaptures(player1StonesCaptured);
+        return captureCounts_.getNumCaptures(player1StonesCaptured);
     }
     
     /**

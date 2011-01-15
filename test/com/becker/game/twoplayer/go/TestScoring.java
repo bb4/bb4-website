@@ -56,7 +56,7 @@ public class TestScoring extends GoTestCase {
         int numDeadBlack = searchable.getNumDeadStonesOnBoard(true);
         int numDeadWhite = searchable.getNumDeadStonesOnBoard(false);
 
-        GameContext.log(0, "Captures :          black = " + numBlackCaptures + "   white = "+ numWhiteCaptures);
+        GameContext.log(0, "CaptureCounts :          black = " + numBlackCaptures + "   white = "+ numWhiteCaptures);
         GameContext.log(0, "Territory: black = " + blackTerrEst + "   white = "+ whiteTerrEst);
         assertTrue(
                 "Unexpected number of black captures. Expected "+expectedBlackCapturesSoFar+" got "+numBlackCaptures,
