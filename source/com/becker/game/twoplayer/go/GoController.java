@@ -109,22 +109,6 @@ public final class GoController extends TwoPlayerController {
     }
 
     /**
-     * get a territory estimate for player1 or player2
-     * When the game is over, this should return a precise value for the amount of territory
-     * (not yet filled with captures).
-     * So the estimate will be very rough at the beginning of the game, but should get better as more pieces are played.
-     *
-     * Since this can be called while we are processing, we return cached values in
-     * those cases to avoid a ConcurrentModificationException.
-     *
-     * @param forPlayer1 if true, get the captures for player1, else for player2
-     * @return estimate of the amount of territory the player has
-     */
-    public int getTerritoryEstimate( boolean forPlayer1 ) {
-        return ((GoSearchable)getSearchable()).getTerritoryEstimate(forPlayer1);
-    }
-
-    /**
      * Call this at the end of the game when we need to try to get an accurate score.
      * @param forPlayer1  true if player one (black)
      * @return the actual score (each empty space counts as one)

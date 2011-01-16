@@ -2,8 +2,6 @@ package com.becker.game.common;
 
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Random;
 
 /**
  * A list of game moves.
@@ -12,6 +10,8 @@ import java.util.Random;
  * @author Barry Becker
  */
 public class MoveList extends ArrayList<Move> {
+
+    private final Object lock = new Object();
 
     /**
      * Construct set of players
@@ -32,10 +32,26 @@ public class MoveList extends ArrayList<Move> {
      */
     public synchronized MoveList copy() {
         MoveList copiedList = new MoveList();
-        for (Move m : this) {
-            copiedList.add(m.copy());
+        synchronized (lock) {
+            for (Move m : this) {
+                copiedList.add(m.copy());
+            }
         }
         return copiedList;
+    }
+
+    @Override
+    public boolean add(Move m) {
+        synchronized (lock) {
+           return super.add(m);
+        }
+    }
+
+    @Override
+    public void add(int index, Move move) {
+         synchronized (lock) {
+           super.add(index, move);
+        }
     }
 
     /**
@@ -53,7 +69,9 @@ public class MoveList extends ArrayList<Move> {
     }
 
     public Move removeLast() {
-        return remove(this.size()-1);
+        synchronized (lock) {
+           return remove(this.size()-1);
+        }
     }
 
     /**
@@ -66,7 +84,9 @@ public class MoveList extends ArrayList<Move> {
     @Override
     public MoveList subList(int first, int last) {
         MoveList subList = new MoveList();
-        subList.addAll(super.subList(first, last));
+        synchronized (lock) {
+            subList.addAll(super.subList(first, last));
+        }
         return subList;
     }
 

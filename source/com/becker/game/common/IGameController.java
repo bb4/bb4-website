@@ -52,7 +52,7 @@ public interface IGameController {
     /**
      * @return the list of moves made so far.
      */
-    List getMoveList();
+    MoveList getMoveList();
 
     /**
      * @return  the number of moves currently played.

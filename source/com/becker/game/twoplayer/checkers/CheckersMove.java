@@ -52,7 +52,7 @@ public class CheckersMove extends TwoPlayerMove {
             ((piece.isOwnedByPlayer1() && m.getToRow() == CheckersController.NUM_ROWS) ||
              (!piece.isOwnedByPlayer1() && m.getToRow() == 1)) ) {
             m.kinged = true;
-            piece.setType(CheckersPiece.KING);
+            m.setPiece(new CheckersPiece(m.isPlayer1(), CheckersPiece.KING));
             m.setPiece(piece);
 
         }

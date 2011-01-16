@@ -85,16 +85,14 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * @return our game controller.
      */
-    public GameController getController()
-    {
+    public GameController getController() {
        return controller_;
     }
 
     /**
      * set an optional progress bar for showing progress as the computer thinks about its next move.
      */
-    public void setProgressBar(JProgressBar progressBar)
-    {
+    public void setProgressBar(JProgressBar progressBar) {
         progressBar_ = progressBar;
     }
 
@@ -102,8 +100,7 @@ public abstract class GameBoardViewer extends JPanel
      * restore a game from a previously saved file (in SGF = Smart Game Format)
      * Derived classes should implement the details of the open.
      */
-    public void openGame()
-    {
+    public void openGame() {
         JFileChooser chooser = FileChooserUtil.getFileChooser(new SgfFileFilter());
         int state = chooser.showOpenDialog( null );
         File file = chooser.getSelectedFile();
@@ -117,8 +114,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * save the current game to the specified file (in SGF = Smart Game Format)
      */
-    public void saveGame()
-    {
+    public void saveGame() {
        saveGame(null);
     }
     
@@ -126,8 +122,7 @@ public abstract class GameBoardViewer extends JPanel
      * save the current game to the specified file (in SGF = Smart Game Format)
      * Derived classes should implement the details of the save
      */
-    void saveGame( AssertionError ae )
-    {
+    void saveGame( AssertionError ae ) {
         JFileChooser chooser = FileChooserUtil.getFileChooser(new SgfFileFilter());
         int state = chooser.showSaveDialog( null );
         File file = chooser.getSelectedFile();
@@ -143,8 +138,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      *  cause the board UI to draw itself based on the current state of the game.
      */
-    public void refresh()
-    {
+    public void refresh() {
         // this will paint the component immediately
         if (this.getGraphics() != null) {
             this.paint( this.getGraphics() );
@@ -156,8 +150,7 @@ public abstract class GameBoardViewer extends JPanel
      *  By default this just redraws the board, but for games with complex moves,
      *  we may want to do more.
      */
-    protected void showLastMove()
-    {
+    protected void showLastMove() {
         // this will paint the component immediately
         Graphics g = this.getGraphics();
         if (g != null) {
@@ -168,8 +161,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * return the game to its original state.
      */
-    public void reset()
-    {
+    public void reset() {
         controller_.reset();  //clear what's there and start over
         Board board = controller_.getBoard();
         commonReset(board);
@@ -181,8 +173,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     protected abstract GameBoardRenderer getBoardRenderer();
 
-    protected void commonReset(Board board)
-    {
+    protected void commonReset(Board board) {
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();
 
@@ -199,8 +190,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * in some cases the viewer is used to show games only.
      */
-    public void setViewOnly( boolean viewOnly )
-    {
+    public void setViewOnly( boolean viewOnly ) {
         if ( viewOnly ) {
             removeMouseListener( mouseListener_ );
             removeMouseMotionListener( mouseListener_ );
@@ -216,8 +206,7 @@ public abstract class GameBoardViewer extends JPanel
      * Called when the game has changed in some way
      * @param evt
      */
-    public void gameChanged(GameChangedEvent evt)
-    {
+    public void gameChanged(GameChangedEvent evt) {
         GameContext.log(1, "game changed" );
         this.refresh();
     }
@@ -226,8 +215,7 @@ public abstract class GameBoardViewer extends JPanel
      *  This method gets called when the game has changed in some way.
      *  Most likely because a move has been played.
      */
-    public void sendGameChangedEvent(Move m)
-    {
+    public void sendGameChangedEvent(Move m) {
         GameChangedEvent gce = new GameChangedEvent( m, controller_, this );
         evtq_.postEvent( gce );
     }
@@ -235,16 +223,14 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * @return true if there is a move to undo.
      */
-    public final boolean canUndoMove()
-    {
+    public final boolean canUndoMove() {
         return  (controller_.getLastMove() != null);
     }
 
     /**
      * @return true if there is a move to redo.
      */
-     public final boolean canRedoMove()
-     {
+     public final boolean canRedoMove() {
          return  !undoneMoves_.isEmpty();
      }
 
@@ -252,8 +238,7 @@ public abstract class GameBoardViewer extends JPanel
      * display a dialog at the end of the game showing who won and other relevant
      * game specific information.
      */
-    public void showWinnerDialog()
-    {
+    public void showWinnerDialog() {
         String message = getGameOverMessage();
         JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
                 JOptionPane.INFORMATION_MESSAGE );
@@ -269,8 +254,7 @@ public abstract class GameBoardViewer extends JPanel
      * @param c  the new color of the board.
      */
     @Override
-    public void setBackground( Color c )
-    {
+    public void setBackground( Color c ) {
         getBoardRenderer().setBackground(c);
         refresh();
     }
@@ -279,16 +263,14 @@ public abstract class GameBoardViewer extends JPanel
      * @return c  the board color
      */
     @Override
-    public Color getBackground()
-    {
+    public Color getBackground() {
         return getBoardRenderer().getBackground();
     }
 
     /**
      * @param c  the new color of the board's grid.
      */
-    public void setGridColor( Color c )
-    {
+    public void setGridColor( Color c ) {
         getBoardRenderer().setGridColor(c);
         refresh();
     }
@@ -296,8 +278,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * @return c  the new color of the board's grid.
      */
-    public Color getGridColor()
-    {
+    public Color getGridColor()  {
         return getBoardRenderer().getGridColor();
     }
 
@@ -305,8 +286,7 @@ public abstract class GameBoardViewer extends JPanel
      * This is how the client can register itself to receive these events.
      * @param gcl the listener to add
      */
-    public void addGameChangedListener( GameChangedListener gcl )
-    {
+    public void addGameChangedListener( GameChangedListener gcl ) {
         gameListeners_.add(gcl);
     }
 
@@ -314,8 +294,7 @@ public abstract class GameBoardViewer extends JPanel
      * This is how the client can unregister itself to receive these events.
      * @param gcl the listener  to remove
      */
-    private void removeGameChangedListener( GameChangedListener gcl )
-    {
+    private void removeGameChangedListener( GameChangedListener gcl ) {
         gameListeners_.remove(gcl);
     }
 
@@ -323,8 +302,7 @@ public abstract class GameBoardViewer extends JPanel
      * This overrides Component's processEvent.
      */
     @Override
-    public void processEvent( AWTEvent evt )
-    {
+    public void processEvent( AWTEvent evt ) {
         if ( evt instanceof GameChangedEvent ) {
             for (GameChangedListener gcl : gameListeners_) {
                 gcl.gameChanged((GameChangedEvent) evt);
@@ -340,8 +318,7 @@ public abstract class GameBoardViewer extends JPanel
      * This renders the current state of the Board to the screen.
      */
     @Override
-    protected void paintComponent( Graphics g )
-    {
+    protected void paintComponent( Graphics g ) {
         super.paintComponents( g );
 
         getBoardRenderer().render( g, controller_, this.getWidth(), this.getHeight());
@@ -350,8 +327,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * @return the cached game board if we are in the middle of processing.
      */
-    public Board getBoard()
-    {
+    public Board getBoard() {
         return controller_.getBoard();
     }
 
@@ -359,8 +335,7 @@ public abstract class GameBoardViewer extends JPanel
      * implements the AssertHandler interface.
      * It gets called whenever an assertion fails.
      */
-    protected void assertFailed( AssertionError ae )
-    {
+    protected void assertFailed( AssertionError ae ) {
         GameContext.log(1, "An assertion failed. Writing to error file." );
         ae.printStackTrace();
         // make sure the state of the game at the point of the error is displayed.
@@ -371,8 +346,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * do any needed cleanup.
      */
-    public void dispose()
-    {
+    public void dispose() {
         removeMouseListener( mouseListener_ );
         removeMouseMotionListener( mouseListener_);
         removeGameChangedListener( this );

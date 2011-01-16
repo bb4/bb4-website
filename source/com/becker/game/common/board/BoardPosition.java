@@ -49,7 +49,7 @@ public class BoardPosition {
     /**
      * constructor
      * @param loc -  location on the board.
-     * @param piece - the pice to put at this position (use null if there is none).
+     * @param piece - the piece to put at this position (use null if there is none).
      */
     protected BoardPosition( Location loc, GamePiece piece)  {
         location_ = loc;

@@ -135,8 +135,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
      * first draw borders for the groups in the appropriate color, then draw the pieces for both players.
      */
     @Override
-    protected void drawMarkers( IGameController controller, Graphics2D g2 )
-    {
+    protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
         GoBoard board = (GoBoard)controller.getBoard();
 
         // draw the star point markers

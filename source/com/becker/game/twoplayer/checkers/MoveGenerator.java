@@ -154,7 +154,7 @@ public class MoveGenerator  {
                     || (!mm.isPlayer1() && mm.getToRow() == 1)) ) {
                 mm.kinged = true;
                 justKinged = true;
-                mm.getPiece().setType(CheckersPiece.KING);
+                mm.setPiece(new CheckersPiece(mm.isPlayer1(), CheckersPiece.KING));
                 GameContext.log( 2, "KINGED: " + mm );
             }
             else

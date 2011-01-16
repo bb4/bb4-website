@@ -46,7 +46,7 @@ class RelativeHealthCalculator {
     /**
      * If there is a weakest group, then boost ourselves relative to it.
      * it may be a positive or negative boost to our health depending on its relative strength.
-     * @return realtive health
+     * @return relative health
      */
     private float boostRelativeHealthBasedOnWeakNbr(GoBoard board, float absoluteHealth) {
 

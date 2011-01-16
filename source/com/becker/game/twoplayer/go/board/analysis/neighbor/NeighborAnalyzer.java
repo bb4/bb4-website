@@ -103,8 +103,8 @@ public class NeighborAnalyzer {
      * @return the list of stones in the group that was found.
      */
     public GoBoardPositionSet findGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly ) {
-        assert (position != null);
-        assert (position.getPiece() != null);
+
+        assert (position.getPiece() != null) : "Position " + position + " does not have a piece!";
         return findGroupNeighbors( position, position.getPiece().isOwnedByPlayer1(), samePlayerOnly );
     }
 
@@ -170,8 +170,8 @@ public class NeighborAnalyzer {
      * @return all the strings on the board
      */
     public GoStringSet determineAllStringsOnBoard() {
-        clearAllPositions();
 
+        clearEyes();
         GoStringSet strings = new GoStringSet();
         for ( int i = 1; i <= board_.getNumRows(); i++ )  {
             for ( int j = 1; j <= board_.getNumCols(); j++ ) {
@@ -195,11 +195,14 @@ public class NeighborAnalyzer {
     /**
      * Gets rid of everything we know about the board. Careful.
      */
-    private void clearAllPositions() {
+    private void clearEyes() {
          for ( int i = 1; i <= board_.getNumRows(); i++ ) {
             for ( int j = 1; j <= board_.getNumCols(); j++ ) {
                 GoBoardPosition pos = (GoBoardPosition) board_.getPosition( i, j );
-                pos.clear();
+                pos.setEye(null);
+                pos.setString(null);
+                pos.setVisited(false);
+                //pos.clear();
             }
         }
     }

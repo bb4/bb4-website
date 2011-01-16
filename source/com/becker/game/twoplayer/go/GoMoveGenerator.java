@@ -79,7 +79,7 @@ public final class GoMoveGenerator {
                     GoMove m = new GoMove( new Location(j, i), lastMoveValue, new GoStone(player1) );
 
                     if ( m.isSuicidal(board) ) {
-                        GameContext.log( 2, "The move was a suicide (can't add it to the list): " + m );
+                        GameContext.log( 3, "The move was a suicide (can't add it to the list): " + m );
                     }
                     else {
                         moveList.add( m );

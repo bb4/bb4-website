@@ -96,6 +96,16 @@ public class TestGoBoard extends GoTestCase {
         verifyGroupLiberties("numLiberties2", 1, 2, 17,   3, 6, 16);
     }
 
+    public void testCopy() {
+        GoBoard board = new GoBoard(3, 3, 0);
+        Location center = new Location(2, 2);
+        board.makeMove(new GoMove(center, 1, new GoStone(true)));
+        GoBoard boardCopy = board.copy();
+
+
+        assertEquals("Center positions not equal.", board.getPosition(center), boardCopy.getPosition(center));
+    }
+
     private void verifyGroupLiberties(String file,
                                       int bRow, int bCol, int expectedBlackLiberties,
                                       int wRow, int wCol, int expectedWhiteLiberties) {

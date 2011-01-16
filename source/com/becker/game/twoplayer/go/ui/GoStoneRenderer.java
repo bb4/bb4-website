@@ -155,10 +155,12 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     private void drawAnnotations(Graphics2D g2, int cellSize, GoStone stone, int pieceSize, Point pos) {
         int offset = (cellSize - pieceSize) >> 1;
         g2.setFont( ANNOTATION_FONT );
+        int xPos =  pos.x + 2 * offset;
+        int yPos =  pos.y + 4 * offset;
         g2.setColor( stone.isOwnedByPlayer1()? Color.WHITE: Color.BLACK);
-        g2.drawString( stone.getAnnotation(), pos.x + 2*offset, pos.y + 4*offset);
+        g2.drawString( stone.getAnnotation(), xPos, yPos);
         g2.setColor( stone.isOwnedByPlayer1()? Color.BLACK : Color.WHITE);
-        g2.drawString( stone.getAnnotation(), pos.x + 2*offset + 1, pos.y + 4*offset);
+        g2.drawString( stone.getAnnotation(), xPos + 1, yPos  + 1);
     }
 
 }

@@ -134,7 +134,7 @@ class AbsoluteHealthCalculator {
     }
 
     /**
-     * @return  set of eyes currently identified for this group.
+     * @return set of eyes currently identified for this group.
      */
     public Set<GoEye> getEyes(GoBoard board) {
         return eyeCache_.getEyes(board);

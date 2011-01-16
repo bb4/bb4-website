@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go.ui;
 
 import com.becker.common.ColorMap;
+import com.becker.common.Location;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.BoardValidator;
@@ -37,9 +38,9 @@ final class GoGroupRenderer {
     private static final Map<GoGroup, GroupRegion> hmRegionCache_ = new HashMap<GoGroup, GroupRegion>();
 
     private ColorMap colormap_;
-    private float cellSize_;
-    private int margin_;
-    private GoBoard board_;
+    private final float cellSize_;
+    private final int margin_;
+    private final GoBoard board_;
     private Graphics2D g2_;
 
 
@@ -98,20 +99,20 @@ final class GoGroupRenderer {
         GoBoardPosition firstStone = groupStones.iterator().next();
 
         if ( groupStones.size() == 1 ) {
-            return createSingleStoneBorder(firstStone);
+            return createSingleStoneBorder(firstStone.getLocation());
         }
 
-        return createMultiStoneBorder(firstStone);
+        return createMultiStoneBorder(firstStone.getLocation());
     }
 
     /**
      * @return the boarder for a single stone.
      */
-    private Area createSingleStoneBorder(GoBoardPosition firstStone) {
+    private Area createSingleStoneBorder(Location firstStoneLoc) {
         float offset = + BORDER_OFFSET + 0.5f;
         // case where the group contains only 1 stone
-        float x = margin_ + (firstStone.getCol() - offset) * cellSize_;
-        float y = margin_ + (firstStone.getRow() - offset) * cellSize_;
+        float x = margin_ + (firstStoneLoc.getCol() - offset) * cellSize_;
+        float y = margin_ + (firstStoneLoc.getRow() - offset) * cellSize_;
         return new Area( new Ellipse2D.Float( x, y, cellSize_, cellSize_ ) );
     }
 
@@ -119,16 +120,18 @@ final class GoGroupRenderer {
     /**
      * To avoid adding the same stone to the queue twice we maintain a hashSet
      * which does not allow dupes.
-     * @return the border for a multistone group.
+     * @return the border for a multi-stone group.
      */
-    private Area createMultiStoneBorder(GoBoardPosition firstStone) {
+    private synchronized Area createMultiStoneBorder(Location firstStoneLoc) {
 
         GoBoard boardCopy = board_.copy();
 
         List<BoardPosition> q = new ArrayList<BoardPosition>();
         GoBoardPositionSet qset = new GoBoardPositionSet();
         GoBoardPositionList visitedSet = new GoBoardPositionList();
-        q.add( firstStone.copy() );
+
+        GoBoardPosition firstStone = (GoBoardPosition) boardCopy.getPosition(firstStoneLoc);
+        q.add( firstStone );
         qset.add( firstStone );
         Area area = new Area();
         NeighborAnalyzer nbrAnalyzer = new NeighborAnalyzer(boardCopy);
@@ -244,7 +247,7 @@ final class GoGroupRenderer {
     }
 
     /**
-     * @return a path correspodning to a diagonal neighbor border.
+     * @return a path corresponding to a diagonal neighbor border.
      */
     private GeneralPath getDiagonalNbrBorder( GoBoardPosition s1, GoBoardPosition s2) {
         GeneralPath border = new GeneralPath();
