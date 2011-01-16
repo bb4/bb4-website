@@ -72,7 +72,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
         TwoPlayerMove lastMove = (TwoPlayerMove)(moveList_.getLastMove());
         if (moveList_.getNumMoves() > 0) {
             assert(lastMove.isPlayer1() != m.isPlayer1()):
-                    "can't go twice in a row m=" + m + " getLastMove()=" + lastMove + " movelist = " + moveList_;
+                    "can't go twice in a row m=" + m + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_;
         }
 
         board_.makeMove( m );

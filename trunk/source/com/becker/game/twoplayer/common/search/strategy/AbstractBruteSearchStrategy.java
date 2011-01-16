@@ -115,9 +115,9 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
     }
 
     /**
-     * Search more if quiescense is on, depth is negative, but not yet at -maxQiuiescentDepth
+     * Search more if quiescense is on, depth is negative, but not yet at -maxQuiescentDepth
      * and the last moved played created an urgent situation.
-     * @return true of we should continue searching a bit to find a stable/quiescnet move.
+     * @return true of we should continue searching a bit to find a stable/quiescent move.
      */
     protected boolean doQuiescentSearch(int depth, boolean done, TwoPlayerMove lastMove) {
         boolean inJeopardy = searchable_.inJeopardy(lastMove, weights_);

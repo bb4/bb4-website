@@ -6,6 +6,7 @@ import java.io.Serializable;
 /**
  *  the BoardPosition describes the physical marker at a location on the board.
  *  It may be empty if there is no piece there.
+ *  Immutable except for transparency and annotation which should not matter.
  *
  * @see Board
  * @author Barry Becker
@@ -48,7 +49,7 @@ public class GamePiece implements Serializable {
      * constructor   (assumes a regular piece)
      * @param player1 if owned by player1
      */
-    public GamePiece( boolean player1)  {
+    public GamePiece(boolean player1)  {
         ownedByPlayer1_ = player1;
         type_ = REGULAR_PIECE;
         transparency_ = 0;
@@ -79,10 +80,6 @@ public class GamePiece implements Serializable {
      */
     public GamePiece copy() {
         return new GamePiece(this);
-    }
-
-    public final void setType( char type ) {
-        type_ = type;
     }
 
     public final char getType() {

@@ -103,7 +103,7 @@ public class CheckersBoard extends TwoPlayerBoard {
         startPos.setPiece( m.getPiece().copy() );
         if ( m.kinged ) {
             // then it was just kinged and we need to undo it
-            startPos.getPiece().setType( CheckersPiece.REGULAR_PIECE );
+            startPos.setPiece(new CheckersPiece(m.isPlayer1(), CheckersPiece.REGULAR_PIECE));
         }
         // restore the captured pieces to the board
         m.restoreCaptures( this );

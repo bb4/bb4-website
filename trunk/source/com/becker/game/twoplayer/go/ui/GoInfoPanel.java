@@ -8,6 +8,8 @@ import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoSearchable;
+import com.becker.game.twoplayer.go.board.BoardValidator;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.ui.legend.ContinuousColorLegend;
 
 import javax.swing.*;
@@ -17,18 +19,16 @@ import javax.swing.*;
  *
  *  @author Barry Becker
  */
-final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListener
-{
+final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListener {
 
     // do not initialize these to null.
-    // if you do, things will not work. With the 1.3.1_02 compiler, they will get initialized to values when
+    // if you do, things will not work. With the java 1.3.1_02 compiler, they will get initialized to values when
     // you call createCustomInfoPanel from the super class constructor, but then they will then get initialized
     // to null when it is done calling the super class constructor and then calls the constructor for this class.
     private JLabel p1CapturesLabel_;
     private JLabel p2CapturesLabel_;
     private JLabel p1TerritoryLabel_;
     private JLabel p2TerritoryLabel_;
-
 
     private JPanel legendPanel_;
 
@@ -110,12 +110,13 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         if ( p1CapturesLabel_ == null )
             return;
 
-        GoSearchable searchable = (GoSearchable) goController.getSearchable();
+        GoSearchable searchable = (GoSearchable) goController.getSearchable().copy();
         p1CapturesLabel_.setText( searchable.getNumCaptures( false ) + " " );
         p2CapturesLabel_.setText( searchable.getNumCaptures( true ) + " " );
 
-        p1TerritoryLabel_.setText( goController.getTerritoryEstimate( true ) + " " );
-        p2TerritoryLabel_.setText( goController.getTerritoryEstimate( false ) + " " );
+        new BoardValidator((GoBoard)searchable.getBoard()).confirmStonesInValidGroups();
+        p1TerritoryLabel_.setText( searchable.getTerritoryEstimate( true ) + " " );
+        p2TerritoryLabel_.setText( searchable.getTerritoryEstimate( false ) + " " );
 
         legendPanel_.setVisible(GameContext.getDebugMode() > 0);
     }

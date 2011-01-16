@@ -158,8 +158,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
         assert (pos.getString().getNumLiberties(getBoard()) > 0):
                 "The placed stone "+pos+" has no liberties "+pos.getGroup();
 
-        if ( GameContext.getDebugMode() > 1 )
-            validator_.consistencyCheck(pos);
+        ////if ( GameContext.getDebugMode() > 1 )
+           ////validator_.consistencyCheck(pos);
 
         profiler_.stopUpdateGroupsAfterMove();
     }

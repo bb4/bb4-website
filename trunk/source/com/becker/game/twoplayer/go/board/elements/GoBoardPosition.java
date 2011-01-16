@@ -51,7 +51,8 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      * Create a deep copy of this position.
      */
     public GoBoardPosition(GoBoardPosition pos) {
-        this( pos.location_.getRow(), pos.location_.getCol(), pos.string_, (GoStone)pos.piece_);
+        this( pos.location_.getRow(), pos.location_.getCol(), pos.string_,
+              (pos.piece_ == null) ? null : (GoStone)pos.piece_.copy());
         pos.setEye(getEye());
         setVisited(pos.isVisited());
     }

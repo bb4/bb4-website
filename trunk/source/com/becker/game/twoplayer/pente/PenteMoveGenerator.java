@@ -8,8 +8,6 @@ import com.becker.game.twoplayer.common.BestMoveFinder;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.Iterator;
-
 import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 /**
@@ -73,10 +71,9 @@ final class PenteMoveGenerator {
         MoveList allMoves = findMovesForBothPlayers(lastMove, weights);
 
         // now keep only those that result in a win or loss.
-        Iterator<Move> it = allMoves.iterator();
         MoveList urgentMoves = new MoveList();
-        while ( it.hasNext() ) {
-            TwoPlayerMove move = (TwoPlayerMove)it.next();
+        for (Move m : allMoves) {
+            TwoPlayerMove move = (TwoPlayerMove) m;
             // if its not a winning move or we already have it, then skip
             if ( Math.abs(move.getValue()) >= WINNING_VALUE  && !contains(move, urgentMoves) ) {
                 move.setUrgent(true);

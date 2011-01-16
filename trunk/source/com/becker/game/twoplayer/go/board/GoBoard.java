@@ -74,7 +74,7 @@ public final class GoBoard extends TwoPlayerBoard {
     }
 
     /**
-     * start over from the beggining and reinitialize everything.
+     * start over from the begining and reinitialize everything.
      * The first time through we need to initialize the star-point positions
      */
     @Override

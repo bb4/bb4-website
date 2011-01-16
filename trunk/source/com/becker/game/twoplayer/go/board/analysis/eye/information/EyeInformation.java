@@ -24,7 +24,7 @@ public interface EyeInformation
     /**
      * A list of vital points described by indices.
      * @return list of vital points where a point is described by an index created by adding the number of
-     * neighbors to (those neighvor's neighbors)/100. so for example, 2.03 means the space has 2 nobi neighbors
+     * neighbors to (those neighbor's neighbors)/100. so for example, 2.03 means the space has 2 nobi neighbors
      * and those 2 neighbors have a total of 3 neighbors.
      * Returns an empty array if we have no vitals or the type has the life property.
      */
@@ -36,7 +36,7 @@ public interface EyeInformation
      * hence missing a likely opportunity to kill the group. If the same color plays them they are helping to create a
      * nakade eye shape.  End points are the spaces left after the nakade shape of size n-1 fills the eye.
      * @return list of end points where a point is described by an index created by adding the number of
-     * neighbors to (those neighvor's neighbors)/100. so for example, 2.03 means the space has 2 nobi neighbors
+     * neighbors to (those neighbor's neighbors)/100. so for example, 2.03 means the space has 2 nobi neighbors
      * and those 2 neighbors have a total of 3 neighbors.
      * Returns an empty array if we have no vitals or the type has the life property.
      */

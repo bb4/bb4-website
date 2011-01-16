@@ -35,7 +35,7 @@ public class BoardValidator {
         try {
             confirmAllStonesInGroupsClaimed(board_.getGroups());
         } catch (AssertionError e) {
-            System.err.println("The move was :" + pos);
+            GameContext.log(0,"The move was :" + pos);
             throw e;
         }
     }
@@ -70,7 +70,7 @@ public class BoardValidator {
 
     /**
      * verify that all the stones are marked unvisited.
-     * @return positiont hat is still marked visited.
+     * @return position that is still marked visited.
      */
     private GoBoardPosition areAllUnvisited()  {
 

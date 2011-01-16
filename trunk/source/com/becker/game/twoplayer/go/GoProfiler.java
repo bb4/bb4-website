@@ -32,6 +32,7 @@ public final class GoProfiler extends AbstractGameProfiler {
     private static final String UPDATE_EYES = "update eyes";
     private static final String GET_ENEMY_GROUPS_NBRS = "get enemy group nbrs";
     private static final String COPY_BOARD = "copy go board";
+    private static final String BENSONS_CHECK = "Bensons check";
 
     public static GoProfiler getInstance() {
         if (instance == null) {
@@ -55,6 +56,7 @@ public final class GoProfiler extends AbstractGameProfiler {
             add(UPDATE_TERRITORY, CALC_WORTH);
                 add(ABSOLUTE_TERRITORY, UPDATE_TERRITORY);
                     add(UPDATE_EYES, ABSOLUTE_TERRITORY);
+                    add(BENSONS_CHECK, ABSOLUTE_TERRITORY);
                 add(RELATIVE_TERRITORY, UPDATE_TERRITORY);
                     add(GET_ENEMY_GROUPS_NBRS, RELATIVE_TERRITORY);
                 add(UPDATE_EMPTY, UPDATE_TERRITORY);
@@ -189,5 +191,13 @@ public final class GoProfiler extends AbstractGameProfiler {
 
     public void stopGetEnemyGroupNbrs() {
         this.stop(GET_ENEMY_GROUPS_NBRS);
+    }
+
+    public void startBensonsCheck() {
+        this.start(BENSONS_CHECK);
+    }
+
+    public void stopBensonsCheck() {
+        this.stop(BENSONS_CHECK);
     }
 }

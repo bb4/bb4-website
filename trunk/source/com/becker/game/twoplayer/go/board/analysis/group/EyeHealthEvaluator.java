@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
 
@@ -52,6 +53,8 @@ class EyeHealthEvaluator {
      */
     private float calcTwoEyedHealth(float side, GoBoard board) {
         float health;
+
+        GoProfiler.getInstance().startBensonsCheck();
         LifeAnalyzer analyzer = new LifeAnalyzer(group_, board);
         if (analyzer.isUnconditionallyAlive()) {
             // in addition to this, the individual strings will get a score of side (ie +/- 1).
@@ -62,6 +65,7 @@ class EyeHealthEvaluator {
             // may not be alive if the opponent has a lot of kos and gets to play lots of times in a row
             health = BEST_ALMOST_TWO_EYED_HEALTH * side;
         }
+        GoProfiler.getInstance().stopBensonsCheck();
         return health;
     }
 
