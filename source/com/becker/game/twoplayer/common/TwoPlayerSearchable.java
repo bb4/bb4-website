@@ -66,8 +66,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
     /**
      * @param m the move to play.
      */
-    public final void makeInternalMove( TwoPlayerMove m )
-    {
+    public final void makeInternalMove( TwoPlayerMove m ) {
         TwoPlayerBoard b = board_;
         TwoPlayerMove lastMove = (TwoPlayerMove)(moveList_.getLastMove());
         if (moveList_.getNumMoves() > 0) {

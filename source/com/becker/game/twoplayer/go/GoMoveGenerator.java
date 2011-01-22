@@ -49,7 +49,7 @@ public final class GoMoveGenerator {
         BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions().getBestMovesSearchOptions());
         moveList = finder.getBestMoves(player1, moveList);
 
-        addPassingMoveIfNeeded(lastMove, moveList, player1);
+        addPassingMoveIfNeeded(lastMove, moveList);
 
         prof.stopGenerateMoves();
         return moveList;
@@ -110,11 +110,12 @@ public final class GoMoveGenerator {
      * if none of the generated moves have an inherited value better than the passing move
      * (which just uses the value of the current move) then we should pass.
      */
-    private void addPassingMoveIfNeeded(TwoPlayerMove lastMove, MoveList moveList, boolean player1) {
+    private void addPassingMoveIfNeeded(TwoPlayerMove lastMove, MoveList moveList) {
 
         Board b = searchable_.getBoard();
         if (searchable_.getNumMoves() > (b.getNumCols() + b.getNumRows()))  {
-            moveList.add(moveList.size(), GoMove.createPassMove(lastMove.getValue(), player1));
+            GoMove passMove = GoMove.createPassMove(lastMove.getValue(), !lastMove.isPlayer1());
+            moveList.add(moveList.size(), passMove);
         }
     }
 

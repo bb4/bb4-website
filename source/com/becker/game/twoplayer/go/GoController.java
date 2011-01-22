@@ -130,7 +130,7 @@ public final class GoController extends TwoPlayerController {
 
     public void computerMovesFirst()  {
         List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights());
-        // select the best(first since sorted) move to use
+        // select the best (first move, since they are sorted) move to use
         GoMove m = (GoMove) moveList.get( 0 );
 
         makeMove( m );
