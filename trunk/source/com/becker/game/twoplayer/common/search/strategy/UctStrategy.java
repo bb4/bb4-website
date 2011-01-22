@@ -132,10 +132,10 @@ public class UctStrategy extends AbstractSearchStrategy {
      * Its semi random in the sense that we try to avoid obviously bad moves.
      * @return a score (0 = p1 lost; 0.5 = tie; or 1= p1 won) indication p1 advantage.
      */
-    private float playRandomGame(TwoPlayerMove move) {
+    private float playRandomGame(TwoPlayerMove lastMove) {
 
         Searchable s = searchable_.copy();
-        return playRandomMove(move, s, s.getNumMoves());
+        return playRandomMove(lastMove, s, s.getNumMoves());
     }
 
     /**
@@ -143,19 +143,19 @@ public class UctStrategy extends AbstractSearchStrategy {
      * Its semi-random in the sense that we try to avoid obviously bad moves.
      * @return a score (0 = p1 lost; 0.5 = tie; or 1= p1 won) indication p1 advantage.
      */
-    private float playRandomMove(TwoPlayerMove move, Searchable searchable, int startNumMoves) {
+    private float playRandomMove(TwoPlayerMove lastMove, Searchable searchable, int startNumMoves) {
 
         int numRandMoves = searchable.getNumMoves() - startNumMoves;
-        if (numRandMoves >= numRandomLookAhead || searchable.done(move, false)) {
+        if (numRandMoves >= numRandomLookAhead || searchable.done(lastMove, false)) {
             // GoGameExporter exporter = new GoGameExporter((GoBoard)searchable.getBoard());
-            // exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + startNumMoves + "_" + move.hashCode(), null);
-            int score = searchable.worth( move, weights_);
-            move.setValue(score);
+            // exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + startNumMoves + "_" + lastMove.hashCode(), null);
+            int score = searchable.worth(lastMove, weights_);
+            lastMove.setValue(score);
             return WinProbabilityCaclulator.getChanceOfPlayer1Winning(score);
         }
-        MoveList moves = searchable.generateMoves(move, weights_);
+        MoveList moves = searchable.generateMoves(lastMove, weights_);
         if (moves.size() == 0) {
-            return WinProbabilityCaclulator.getChanceOfPlayer1Winning(move.getValue());
+            return WinProbabilityCaclulator.getChanceOfPlayer1Winning(lastMove.getValue());
         }
         TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMoveForThresh(percentLessThanBestThresh);
 

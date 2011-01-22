@@ -10,24 +10,21 @@ import com.becker.ui.components.NumberInput;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionListener
-{
+final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionListener {
 
-    /** must not initialialize to null */
+    /** must not initialize to null */
     private NumberInput handicapField_;
 
     private static final String BLACK_IS = GameContext.getLabel("BLACK_IS");
     private static final String WHITE_IS = GameContext.getLabel("WHITE_IS");
 
     /** constructor */
-    GoNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    GoNewGameDialog( JFrame parent, GameViewable viewer ) {
         super( parent, viewer );
     }
 
     @Override
-    protected JPanel createCustomBoardConfigPanel()
-    {
+    protected JPanel createCustomBoardConfigPanel() {
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
 
@@ -40,20 +37,17 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
     }
 
     @Override
-    protected String getPlayer1Label()
-    {
+    protected String getPlayer1Label() {
         return BLACK_IS;
     }
 
     @Override
-    protected String getPlayer2Label()
-    {
+    protected String getPlayer2Label() {
         return WHITE_IS;
     }
 
     @Override
-    protected void ok()
-    {
+    protected void ok() {
         GoController gcontroller = (GoController) controller_;
 
         assert ( handicapField_!=null );

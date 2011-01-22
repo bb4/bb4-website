@@ -292,6 +292,7 @@ public class GoSearchable extends TwoPlayerSearchable {
      * @return any moves that take captures or get out of atari.
      */
     public final MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights) {
+
         MoveList moves = generateMoves(lastMove, weights);
         GoBoard gb = (GoBoard) board_;
         GoMove lastMovePlayed = (GoMove) lastMove;

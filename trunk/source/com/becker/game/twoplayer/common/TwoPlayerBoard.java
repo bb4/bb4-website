@@ -31,15 +31,15 @@ public abstract class TwoPlayerBoard extends Board {
      * @return false if the move is illegal.
      */
     @Override
-    protected boolean makeInternalMove( Move move )
-    {
+    protected boolean makeInternalMove( Move move ) {
+
         TwoPlayerMove m = (TwoPlayerMove)move;
         if ( !m.isPassOrResignation() ) {
             BoardPosition pos = getPosition(m.getToLocation());
-            assert(m.getPiece() != null): "moves piece was null :" + m;
+            assert(m.getPiece() != null) : "moves piece was null :" + m;
             pos.setPiece(m.getPiece());  // need copy?  I don't think so.
             GamePiece piece = pos.getPiece();
-            assert (piece!=null):
+            assert (piece != null):
                     "The piece was " + piece + ". Moved to " + m.getToRow() + ", " + m.getToCol();
             if ( GameContext.getDebugMode() > 0 ) {
                 piece.setAnnotation( Integer.toString(getMoveList().getNumMoves()) );

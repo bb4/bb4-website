@@ -101,6 +101,7 @@ public class TwoPlayerMove extends Move {
         this.urgent_ = move.urgent_;
         this.isResignation_ = move.isResignation_;
         this.scoreDescription_ = move.scoreDescription_;
+        this.setPlayer1(move.isPlayer1());
     }
 
     /**

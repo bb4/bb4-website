@@ -24,6 +24,7 @@ import java.io.File;
  * @author Barry Becker
  */
 public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListener {
+
     // radio buttons for selecting 1st and second players
     private JRadioButton human1Button_;
     private JRadioButton computer1Button_;
