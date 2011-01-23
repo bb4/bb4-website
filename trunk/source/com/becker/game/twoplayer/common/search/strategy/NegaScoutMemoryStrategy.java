@@ -118,7 +118,6 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
         TwoPlayerMove bestMove = (TwoPlayerMove) list.get(0);
         Entry entry = new Entry(bestMove, depth, window);
 
-        //System.out.println("list.size="+ list.size() + " int depth=" + depth + "     alpha="+ alpha +" beta=" + beta);
         while ( !list.isEmpty() ) {
             TwoPlayerMove theMove = getNextMove(list);
             if (pauseInterrupted())
@@ -147,7 +146,6 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
                 }
                 if (window.alpha >= newBeta) {
                     // re-search with narrower window (typical alpha beta search).
-                    //System.out.println("re-searching with narrower window a=" + -beta +" b="+ -alpha);
                     searchable_.makeInternalMove( theMove );
                     selectedMove = searchInternal( theMove, depth-1, window.negateAndSwap(), child );
                     searchable_.undoInternalMove( theMove );

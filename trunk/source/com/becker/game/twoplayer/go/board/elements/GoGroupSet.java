@@ -9,24 +9,12 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public class GoGroupSet implements Set<GoGroup> {
-
-    private final Set<GoGroup> groups;
+public class GoGroupSet extends HashSet<GoGroup> {
 
     /**
-     * Default constructor creates unsynchronized version.
+     * Default constructor.
      */
     public GoGroupSet() {
-        this(false);
-    }
-
-    /**
-     * Constructor
-     * @param synchronize  if true, then create synchronized set.
-     */
-    private GoGroupSet(boolean synchronize) {
-        groups = synchronize? Collections.synchronizedSet(new LinkedHashSet<GoGroup>()) :
-                              new LinkedHashSet<GoGroup>();
     }
 
     /**
@@ -34,17 +22,9 @@ public class GoGroupSet implements Set<GoGroup> {
      * @param groups to add initially.
      */
     public GoGroupSet(GoGroupSet groups) {
-        this(false);
         addAll(groups);
     }
-    
-    public int size() {
-        return groups.size();
-    }
 
-    public boolean isEmpty() {
-        return groups.isEmpty();
-    }
 
     /**
      * Check all the groups of the same color to see if the stone is already in one of them
@@ -63,69 +43,6 @@ public class GoGroupSet implements Set<GoGroup> {
         }
         return false;
     }
-
-    public boolean contains(Object o) {
-        return groups.contains(o);
-    }
-
-    public Iterator<GoGroup> iterator() {
-        return groups.iterator();
-    }
-
-    public Object[] toArray() {
-        return groups.toArray();
-    }
-
-    public <GoGroup> GoGroup[] toArray(GoGroup[] a) {
-        return groups.toArray(a);
-    }
-
-    public boolean add(GoGroup group) {
-        return groups.add(group);
-    }
-
-    public boolean remove(Object o) {
-        return groups.remove(o);
-    }
-
-    /** Remove the group that contains this stone */
-    public boolean removeGroupForStone(GoBoardPosition pos) {
-        Iterator<GoGroup> iter = this.iterator();
-        while (iter.hasNext()) {
-            GoGroup group = iter.next();
-            if (group.containsStone(pos)) {
-                iter.remove();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean containsAll(Collection<?> c) {
-        return groups.containsAll(c);
-    }
-
-    public synchronized boolean addAll(Collection<? extends GoGroup> c) {
-        return groups.addAll(c);
-    }
-
-    /** Intentionally not implemented for thread safety reasons.*/
-    public boolean retainAll(Collection<?> c) {
-        assert false : "unsafe";
-        return false;
-    }
-
-    /** Intentionally not implemented for thread safety reasons.*/
-    public boolean removeAll(Collection<?> c) {
-        assert false : "unsafe";
-        return false;
-    }
-
-    /** Intentionally not implemented for thread safety reasons.*/
-    public void clear() {
-        assert false : "unsafe";
-    }
-
 
     /**
      * create a nice list of all the current groups (and the strings they contain)
@@ -147,7 +64,7 @@ public class GoGroupSet implements Set<GoGroup> {
         StringBuilder whiteGroupsText =
                 new StringBuilder((showBlack?"\n":"") + (showWhite? "The white groups are :\n" : ""));
 
-        for (Object group1 : groups) {
+        for (Object group1 : this) {
             GoGroup group = (GoGroup) group1;
             if (group.isOwnedByPlayer1() && (showBlack)) {
                 //blackGroupsText.append( "black group owner ="+ group.isOwnedByPlayer1());
@@ -227,7 +144,6 @@ public class GoGroupSet implements Set<GoGroup> {
         }                  
     }
 
-
     /**
      * @param stone verify that this stone has a valid string and a group in the board's member list.
      */
@@ -247,7 +163,7 @@ public class GoGroupSet implements Set<GoGroup> {
                     g.isOwnedByPlayer1(), !g.isOwnedByPlayer1());
             assert false :
                    "Error: This " + stone + " does not belong to a valid group: " +
-                    g + " \nThe valid groups are:" + groups;
+                    g + " \nThe valid groups are:" + this;
         }
     }
 

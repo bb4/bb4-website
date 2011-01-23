@@ -84,6 +84,7 @@ class StringNeighborAnalyzer {
      */
     int pushStringNeighbors( GoBoardPosition s, boolean friendIsPlayer1, GoBoardPositionList stack,
                                      boolean samePlayerOnly ) {
+
         return pushStringNeighbors(s, friendIsPlayer1, stack, samePlayerOnly, NeighborType.OCCUPIED,
                                    new Box(1, 1, board_.getNumRows(), board_.getNumCols()));
     }
@@ -100,16 +101,15 @@ class StringNeighborAnalyzer {
         int r = s.getRow();
         int c = s.getCol();
         int numPushed = 0;
-        Location loc = new Location(r, c);
 
         if ( r > 1 )
-            numPushed += checkNeighbor( loc, -1, 0, friendPlayer1, stack, samePlayerOnly, type, bbox );
+            numPushed += checkNeighbor( r, c, -1, 0, friendPlayer1, stack, samePlayerOnly, type, bbox );
         if ( c > 1 )
-            numPushed += checkNeighbor( loc, 0, -1, friendPlayer1, stack, samePlayerOnly, type, bbox );
-        if ( r + 1 <= board_.getNumRows() )
-            numPushed += checkNeighbor( loc, 1, 0, friendPlayer1, stack, samePlayerOnly, type, bbox );
-        if ( c + 1 <= board_.getNumCols() )
-            numPushed += checkNeighbor( loc, 0, 1, friendPlayer1, stack, samePlayerOnly, type, bbox );
+            numPushed += checkNeighbor( r, c, 0, -1, friendPlayer1, stack, samePlayerOnly, type, bbox );
+        if ( r + 1 <= bbox.getMaxRow())
+            numPushed += checkNeighbor( r, c, 1, 0, friendPlayer1, stack, samePlayerOnly, type, bbox );
+        if ( c + 1 <= bbox.getMaxCol() )
+            numPushed += checkNeighbor( r, c, 0, 1, friendPlayer1, stack, samePlayerOnly, type, bbox );
 
         return numPushed;
     }
@@ -119,16 +119,13 @@ class StringNeighborAnalyzer {
      * These are the immediately adjacent (nobi) nbrs within the specified rectangular bounds
      * @return number of neighbors added (0 or 1).
      */
-    private int checkNeighbor( Location loc, int rowOffset, int colOffset,
+    private int checkNeighbor( int r, int c, int rowOffset, int colOffset,
                                boolean friendOwnedByPlayer1, GoBoardPositionList stack,
                                boolean samePlayerOnly, NeighborType type,
-                               Box bbox )
-    {
-        int r = loc.getRow();
-        int c = loc.getCol();
+                               Box bbox )  {
+
         GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
-        if ( nbr.getRow() >= bbox.getMinRow() && nbr.getRow() <= bbox.getMaxRow()
-          && nbr.getCol() >= bbox.getMinCol() && nbr.getCol() <= bbox.getMaxCol() ) {
+        if (bbox.contains(nbr.getLocation())) {
             return checkNeighbor( r, c, rowOffset, colOffset, friendOwnedByPlayer1, stack, samePlayerOnly, type );
         }
         else {
@@ -153,6 +150,7 @@ class StringNeighborAnalyzer {
     private int checkNeighbor( int r, int c, int rowOffset, int colOffset,
                                     boolean friendOwnedByPlayer1, GoBoardPositionList stack,
                                     boolean samePlayerOnly, NeighborType type) {
+
         GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
 
         switch (type) {
@@ -160,13 +158,13 @@ class StringNeighborAnalyzer {
             case OCCUPIED:
                  if ( !nbr.isVisited() && nbr.isOccupied() &&
                      (!samePlayerOnly || nbr.getPiece().isOwnedByPlayer1() == friendOwnedByPlayer1)) {
-                     stack.add( 0, nbr );
+                     stack.push( nbr );
                      return 1;
                  }
                  break;
             case UNOCCUPIED:
                  if ( !nbr.isVisited() && nbr.isUnoccupied() ) {
-                     stack.add( 0, nbr );
+                     stack.push( nbr );
                      return 1;
                  }
                  break;
@@ -175,7 +173,7 @@ class StringNeighborAnalyzer {
                     ( nbr.isUnoccupied() ||
                        ( nbr.isOccupied() && (nbr.getPiece().isOwnedByPlayer1() != friendOwnedByPlayer1))
                     ))  {
-                     stack.add( 0, nbr );
+                     stack.push( nbr );
                      return 1;
                  }
                 break;

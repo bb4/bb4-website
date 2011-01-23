@@ -4,24 +4,19 @@ import com.becker.game.common.GameContext;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  *  A list of GoStrings.
  *
  *  @author Barry Becker
  */
-public class GoBoardPositionList extends ArrayList<GoBoardPosition>  {
+public class GoBoardPositionList extends LinkedList<GoBoardPosition> {
     /**
-     * Default construcotr.
+     * Default constructor.
      */
     public GoBoardPositionList() {}
 
-    /**
-     * @param initialCapacity initial size.
-     */
-    public GoBoardPositionList(int initialCapacity) {
-        super(initialCapacity);
-    }
 
     /**
      * copy constructor.
@@ -33,21 +28,11 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>  {
     }
 
     /**
-     * Pop a position off the end of the list
-     * @return position removed from the end of the list.
-     */
-    public GoBoardPosition pop() {
-        return remove( size()-1 );
-    }
-
-    /**
      * pretty print this list.
      */
     public void debugPrint( int logLevel, String title) {
        GameContext.log(logLevel, this.toString(title));
     }
-
-
 
     /**
      * pretty print a list of all the current groups (and the strings they contain)
@@ -62,12 +47,22 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>  {
         return buf.substring(0, buf.length() - 2);
     }
 
+    @Override
+    public GoBoardPosition getFirst() {
+        return super.getFirst();
+    }
+
+    @Override
+    public GoBoardPosition get(int i) {
+        return super.get(i);
+    }
+
 
 
     // --- internal consistency checks ----
 
     /**
-     * Verify all stones in this list are marked unvsited.
+     * Verify all stones in this list are marked unvisited.
      */
     public void confirmUnvisited() {
         for (GoBoardPosition pos : this) {
@@ -93,7 +88,7 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>  {
 
     /**
      * Confirm that this list contains some smaller list
-     * @param smallerGroup
+     * @param smallerGroup  smaller group
      * @return true if larger group contains smaller group.
      */
     public boolean confirmStoneListContains(GoBoardPositionList smallerGroup) {

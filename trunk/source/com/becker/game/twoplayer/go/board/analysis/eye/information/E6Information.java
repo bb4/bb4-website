@@ -100,8 +100,8 @@ public class E6Information extends AbstractEyeSubtypeInformation
      */
     private Eye6Type determineE112233Subtype(EyeNeighborMap nbrMap) {
 
-        GoBoardPositionList oneNbrPoints = new GoBoardPositionList(2);
-        GoBoardPositionList otherPoints = new GoBoardPositionList(4);
+        GoBoardPositionList oneNbrPoints = new GoBoardPositionList();
+        GoBoardPositionList otherPoints = new GoBoardPositionList();
 
         for (GoBoardPosition pos : nbrMap.keySet()) {
             if (nbrMap.getNumEyeNeighbors(pos) == 1)  {
@@ -113,7 +113,7 @@ public class E6Information extends AbstractEyeSubtypeInformation
         }
         assert oneNbrPoints.size() == 2 : "Did not get 2 one nbr points. Instead got "
                 + oneNbrPoints.size()+ "\n nbrmap="+ nbrMap;
-        Box bounds = new Box(oneNbrPoints.get(0).getLocation(), oneNbrPoints.get(1).getLocation());
+        Box bounds = new Box(oneNbrPoints.getFirst().getLocation(), oneNbrPoints.get(1).getLocation());
 
         for (GoBoardPosition otherPt : otherPoints) {
             if (!bounds.contains(otherPt.getLocation())) {

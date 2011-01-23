@@ -105,8 +105,8 @@ public class E7Information extends AbstractEyeSubtypeInformation
      */
     private Eye7Type determineE1112234Subtype(EyeNeighborMap nbrMap) {
 
-        GoBoardPositionList oneNbrPoints = new GoBoardPositionList(3);
-        GoBoardPositionList otherPoints = new GoBoardPositionList(4);
+        GoBoardPositionList oneNbrPoints = new GoBoardPositionList();
+        GoBoardPositionList otherPoints = new GoBoardPositionList();
 
         for (GoBoardPosition pos : nbrMap.keySet()) {
             if (nbrMap.getNumEyeNeighbors(pos) == 1)  {
@@ -117,7 +117,7 @@ public class E7Information extends AbstractEyeSubtypeInformation
             }
         }
         assert oneNbrPoints.size() == 3;  // hitting this
-        Box bounds = new Box(oneNbrPoints.get(0).getLocation(), oneNbrPoints.get(1).getLocation());
+        Box bounds = new Box(oneNbrPoints.getFirst().getLocation(), oneNbrPoints.get(1).getLocation());
         bounds.expandBy(oneNbrPoints.get(2).getLocation());
 
         for (GoBoardPosition otherPt : otherPoints) {

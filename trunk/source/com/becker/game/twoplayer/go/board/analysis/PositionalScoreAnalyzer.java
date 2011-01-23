@@ -118,7 +118,7 @@ public final class PositionalScoreAnalyzer {
      */
     private void updateEyePointScore(PositionalScore score, GoBoardPosition position) {
         if (position.isOccupied()) {
-            score.deadStoneScore = position.getEye().isOwnedByPlayer1()? 2.0 : -2.0;
+            score.deadStoneScore = position.getEye().isOwnedByPlayer1()? 1.0 : -1.0;    // was 2 instead of one.
         }
         else {
             score.eyeSpaceScore = position.getEye().isOwnedByPlayer1()? 1.0 : -1.0;

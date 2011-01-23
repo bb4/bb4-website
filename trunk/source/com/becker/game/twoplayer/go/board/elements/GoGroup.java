@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GROUP_SCORING;
+import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORING;
 
 /**
  *  A GoGroup is composed of a loosely connected set of one or more same color strings.
@@ -52,7 +52,7 @@ public final class GoGroup extends GoSet
      */
     public GoGroup( GoBoardPositionList stones ) {
         commonInit();
-        ownedByPlayer1_ = (stones.get(0)).getPiece().isOwnedByPlayer1();
+        ownedByPlayer1_ = (stones.getFirst()).getPiece().isOwnedByPlayer1();
         for (GoBoardPosition stone : stones) {
             assimilateStone(stones, stone);
         }       

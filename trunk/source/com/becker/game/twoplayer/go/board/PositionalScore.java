@@ -38,8 +38,7 @@ public class PositionalScore {
      */
     public void calcPositionScore() {
         assert (!incremented_);
-        double s = deadStoneScore + eyeSpaceScore + healthScore + posScore + badShapeScore;
-        positionScore_ = s;  //Math.max(-1.0, Math.min(1.0, s));
+        positionScore_ = deadStoneScore + eyeSpaceScore + healthScore + posScore + badShapeScore;
     }
 
     public String getDescription(double worth, double captureScore, double territoryDelta, double scaleFactor)  {

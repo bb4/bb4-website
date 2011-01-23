@@ -158,9 +158,10 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         // need to clear the cache, otherwise we may render a stale board.
         cachedGameBoard_ = null;
         c.manMoves(move);
-        refresh();
+        //refresh();
+        boolean done = c.getSearchable().done(move, true);
         sendGameChangedEvent(move);
-        return c.getSearchable().done(move, true );
+        return done;
     }
 
     /**
@@ -243,6 +244,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         // note: we don't show the winner dialog if we are optimizing the weights.
         if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true) && !c.getTwoPlayerOptions().isAutoOptimize()) {
             showWinnerDialog();
+            c.reset();
         }
         else {
             if (get2PlayerController().getPlayers().allPlayersComputer()) {
@@ -363,7 +365,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      */
     @Override
     protected String getGameOverMessage() {
-        return new GameOverMessage(get2PlayerController()).toString();
+        return new GameOverMessage(get2PlayerController()).getText();
     }
 
 
@@ -403,7 +405,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
             if (!get2PlayerController().getTwoPlayerOptions().isAutoOptimize()) {
                 // show a pop-up for certain exceptional cases.
                 // For example, in chess we warn on a checking move.
-                warnOnSpecialMoves( (TwoPlayerMove) lastMove);
+                warnOnSpecialMoves((TwoPlayerMove) lastMove);
                 sendGameChangedEvent(lastMove);
             }
             moveProgress_.cleanup();

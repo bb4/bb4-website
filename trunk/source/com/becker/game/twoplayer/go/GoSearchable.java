@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
-import static com.becker.game.twoplayer.go.GoControllerConstants.WIN_THRESHOLD;
+import static com.becker.game.twoplayer.go.GoController.WIN_THRESHOLD;
 
 /**
  * For searching go games search space.

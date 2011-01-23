@@ -98,7 +98,7 @@ public class GoViewerMouseListener extends ViewerMouseListener {
 
         if ( !viewer.continuePlay( m ) ) {   // then game over
             getRenderer().setDraggedShowPiece(null);
-            viewer.showWinnerDialog();
+            //viewer.showWinnerDialog();
         }
         else if (controller.getPlayers().allPlayersHuman()) {
             // create a stone to show for the next players move

@@ -8,7 +8,6 @@ import com.becker.game.common.ui.viewer.ViewerMouseListener;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoSearchable;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoEye;
@@ -24,11 +23,6 @@ import java.awt.event.MouseEvent;
  *  @author Barry Becker
  */
 final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
-
-    private static final String STONES_CAPTURED = GameContext.getLabel("CAPTURES_EQUALS");
-    private static final String TERRITORY = GameContext.getLabel("TERRITORY_EQUALS");
-    private static final String SCORE = GameContext.getLabel("SCORE_EQUALS");
-
 
     /**
      * Construct the viewer given the controller.
@@ -77,46 +71,23 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
         continuePlay( m );
     }
 
-
     /**
      * @return   the message to display at the completion of the game.
      */
     @Override
-    protected String getGameOverMessage()
-    {
-        String message = "\n";
-        GoController gc = (GoController)controller_;
+    protected String getGameOverMessage() {
 
         // show the dead stones marked as such.
         this.paint( this.getGraphics() );
 
-        GoSearchable searchable = (GoSearchable)gc.getSearchable();
-        int blackCaptures = searchable.getNumCaptures(true);
-        int whiteCaptures = searchable.getNumCaptures(false);
-
-        String p1Name = gc.getPlayers().getPlayer1().getName();
-        String p2Name = gc.getPlayers().getPlayer2().getName();
-
-        message += p1Name +' '+ STONES_CAPTURED + blackCaptures +'\n';
-        message += p2Name +' '+ STONES_CAPTURED + whiteCaptures +"\n\n";
-
-        int blackTerritory = gc.getTerritory(true);
-        int whiteTerritory = gc.getTerritory(false);
-        message += p1Name +' '+ TERRITORY + blackTerritory +'\n';
-        message += p2Name +' '+ TERRITORY + whiteTerritory +"\n\n";
-
-        message += p1Name +' '+ SCORE + gc.getFinalScore(true) +'\n';
-        message += p2Name +' '+ SCORE + gc.getFinalScore(false) +'\n';
-
-        return super.getGameOverMessage() +'\n'+ message;
+        return new GoGameOverMessage((GoController)controller_).getText();
     }
 
     /**
      * @return the tooltip for the panel given a mouse event.
      */
     @Override
-    public String getToolTipText( MouseEvent e )
-    {
+    public String getToolTipText( MouseEvent e ) {
         if (get2PlayerController().isProcessing())
             return "";  // avoids concurrent modification exception
 
@@ -159,5 +130,4 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
         sb.append( "</font></html>" );
         return sb.toString();
     }
-
 }
