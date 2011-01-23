@@ -80,7 +80,7 @@ public class EyeNeighborMap {
         // we should probably be able to assume that the eye spaces_ are unvisited, but apparently not. assert instead?
         eye_.setVisited(false);
         
-        List<GoBoardPosition> queue = new LinkedList<GoBoardPosition>();
+        GoBoardPositionList queue = new GoBoardPositionList();
         GoBoardPosition firstPos = eye_.getMembers().iterator().next();
         firstPos.setVisited(true);
         queue.add(firstPos);
@@ -99,7 +99,7 @@ public class EyeNeighborMap {
      * Do a breadth first search of all the positions in the eye, adding their nbr set to the map as we go.
      * @return the number of element that were searched.
      */
-    private int processSearchQueue(List<GoBoardPosition> queue, Map<GoBoardPosition, GoBoardPositionList> nbrMap) {
+    private int processSearchQueue(GoBoardPositionList queue, Map<GoBoardPosition, GoBoardPositionList> nbrMap) {
         int count = 0;
         while (!queue.isEmpty()) {
             GoBoardPosition current = queue.remove(0);

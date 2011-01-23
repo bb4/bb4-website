@@ -14,7 +14,7 @@ import com.becker.game.twoplayer.go.board.elements.GoGroup;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GROUP_SCORING;
+import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORING;
 
 /**
  *
@@ -57,6 +57,7 @@ public class TerritoryAnalyzer {
      * This estimate is computed by summing all spaces in eyes with dead opponent stones that are still on the board.
      * Empty spaces are weighted by how likely they are to eventually be territory of one side or the other.
      * At the end of the game this + the number of pieces captured so far should give the true score.
+     * @param forPlayer1 player to get the estimate for.
      * @param isEndOfGame use 0 or 1 instead of pos.scoreContribution if true.
      * @return estimate of territory for forPlayer1
      */
@@ -67,7 +68,7 @@ public class TerritoryAnalyzer {
         // we should be able to just sum all the position scores now.
         for ( int i = 1; i <= board_.getNumRows(); i++ )  {
            for ( int j = 1; j <= board_.getNumCols(); j++ ) {
-               GoBoardPosition pos =  (GoBoardPosition) board_.getPosition(i, j);
+               GoBoardPosition pos = (GoBoardPosition) board_.getPosition(i, j);
                territoryEstimate += getTerritoryEstimateForPosition(pos, forPlayer1, isEndOfGame);
            }
         }

@@ -125,7 +125,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      * @return the eye spaces that have enemy stones in them.
      */
     GoBoardPositionList findFilledSpaces(GoEye eye) {
-        GoBoardPositionList filledSpaces = new GoBoardPositionList(6);
+        GoBoardPositionList filledSpaces = new GoBoardPositionList();
         for (GoBoardPosition space : eye.getMembers()) {
             if (space.isOccupied()) {
                 assert eye.isOwnedByPlayer1() != space.getPiece().isOwnedByPlayer1();

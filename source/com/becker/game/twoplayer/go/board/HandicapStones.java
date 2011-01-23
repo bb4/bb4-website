@@ -79,7 +79,7 @@ class HandicapStones {
         // initialize the list of handicap stones.
         // The number of these that actually get placed on the board
         // depends on the handicap
-        starPoints_ = new GoBoardPositionList(9);
+        starPoints_ = new GoBoardPositionList();
         int min = 4;
         // on a really small board we put the corner star points at 3-3.
         if (boardSize < 13)

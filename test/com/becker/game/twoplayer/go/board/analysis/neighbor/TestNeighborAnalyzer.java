@@ -93,7 +93,7 @@ public class TestNeighborAnalyzer extends GoTestCase {
         restore(PREFIX + file);
         GoBoard board = (GoBoard)controller_.getBoard();
 
-        GoBoardPositionList empties = new GoBoardPositionList(4);
+        GoBoardPositionList empties = new GoBoardPositionList();
         empties.add((GoBoardPosition)board.getPosition(3, 3));
         empties.add((GoBoardPosition)board.getPosition(3, 4));
         empties.add((GoBoardPosition)board.getPosition(4, 3));

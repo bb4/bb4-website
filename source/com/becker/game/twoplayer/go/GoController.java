@@ -14,8 +14,6 @@ import com.becker.game.twoplayer.go.persistence.GoGameImporter;
 
 import java.util.List;
 
-import static com.becker.game.twoplayer.go.GoControllerConstants.DEFAULT_NUM_ROWS;
-
 /**
  * Defines everything the computer needs to know to play Go.
  *
@@ -26,6 +24,15 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.DEFAULT_NUM_ROW
 public final class GoController extends TwoPlayerController {
 
     public static final String VERSION = "0.99";
+
+    /** if true use an additional heuristic to get more accurate scoring of group health in a second pass. */
+    public static final boolean USE_RELATIVE_GROUP_SCORING = true;
+
+    /** default num row and columns for a default square go board.   */
+    static final int DEFAULT_NUM_ROWS = 5;
+
+    /** if difference greater than this, then consider a win. */
+    static final int WIN_THRESHOLD = 2000;
 
 
     /**
@@ -110,8 +117,8 @@ public final class GoController extends TwoPlayerController {
 
     /**
      * Call this at the end of the game when we need to try to get an accurate score.
-     * @param forPlayer1  true if player one (black)
-     * @return the actual score (each empty space counts as one)
+     * @param forPlayer1  true if for player one (black)
+     * @return the actual amount of territory for the specified player (each empty space counts as one)
      */
     public int getTerritory( boolean forPlayer1 ) {
         return((GoBoard) board_).getTerritoryEstimate(forPlayer1, true);

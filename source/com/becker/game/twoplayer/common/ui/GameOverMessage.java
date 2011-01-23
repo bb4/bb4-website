@@ -10,20 +10,29 @@ import java.text.MessageFormat;
 
 /**
  * Represents the message shown when the game is over.
- * Immutable.
  *
  * @author Barry Becker
  */
-class GameOverMessage {
+public class GameOverMessage {
 
-    private String text_;
+    /** Used to get the score values. */
+    protected TwoPlayerController controller_ = null;
 
     /**
      * Constructor.
      */
     public GameOverMessage(TwoPlayerController controller) {
 
-        PlayerList players = controller.getPlayers();
+        controller_ = controller;
+    }
+
+    /**
+     * @return   the message to display at the completion of the game.
+     */
+    public String getText() {
+
+        PlayerList players = controller_.getPlayers();
+        String text;
 
         if ( players.anyPlayerWon())    {
             Player winningPlayer = players.getPlayer1().hasWon() ? players.getPlayer1() : players.getPlayer2();
@@ -37,23 +46,20 @@ class GameOverMessage {
                 args[0] = winningPlayer.isHuman() ? GameContext.getLabel("YOU") : GameContext.getLabel("THE_COMPUTER");
             }
             args[1] = winningPlayer.getName();
-            args[2] = Integer.toString(controller.getNumMoves());
-            args[3] = Util.formatNumber(controller.getStrengthOfWin());
-            text_ = formatter.format(args);
+            args[2] = Integer.toString(controller_.getNumMoves());
+            args[3] = Util.formatNumber(controller_.getStrengthOfWin());
+            text = formatter.format(args);
 
             assert(!losingPlayer.hasWon()) : "Both players should not win. Players=" + players;
         }
         else {
-            text_ = GameContext.getLabel("TIE_MSG");
+            text = GameContext.getLabel("TIE_MSG");
         }
+        return text;
     }
 
 
-    /**
-     * @return   the message to display at the completion of the game.
-     */
-    @Override
     public String toString() {
-       return text_;
+        return getText();
     }
 }

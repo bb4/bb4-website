@@ -54,7 +54,7 @@ public class GoString extends GoSet
      */
     public GoString( GoBoardPositionList stones, GoBoard board ) {
         assert (stones != null && stones.size() > 0): "Tried to create list from empty list";
-        GoStone stone =  (GoStone)((BoardPosition) stones.get(0)).getPiece();
+        GoStone stone =  (GoStone)stones.getFirst().getPiece();
         // GoEye constructor calls this method. For eyes the stone is null.
         if (stone != null)
             ownedByPlayer1_ = stone.isOwnedByPlayer1();
