@@ -6,8 +6,8 @@ package com.becker.game.twoplayer.go.board.update;
  *
  * @author Barry Becker
  */
-final class DeadStones
-{
+final class DeadStones {
+
     private int numDeadBlackStonesOnBoard_ = 0;
     private int numDeadWhiteStonesOnBoard_ = 0;
 
@@ -44,6 +44,11 @@ final class DeadStones
         else {
             numDeadWhiteStonesOnBoard_++;
         }
+    }
+
+    public String toString() {
+        return "Dead black stones: "+ numDeadBlackStonesOnBoard_
+                + "\nDead white stones: " + numDeadWhiteStonesOnBoard_;
     }
 
 }

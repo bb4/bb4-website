@@ -32,6 +32,10 @@ public class ChessSearchable extends TwoPlayerSearchable {
         return new ChessSearchable(this);
     }
 
+    @Override
+    public ChessBoard getBoard() {
+        return (ChessBoard) board_;
+    }
     /**
      *  The primary way of computing the score for Chess is to just add up the pieces
      *  Kings should count more heavily. How much more is determined by the weights.
@@ -50,7 +54,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
         // evaluate the board after the move has been made
         for ( row = 1; row <= ChessController.NUM_ROWS; row++ ) {
             for ( col = 1; col <= ChessController.NUM_COLS; col++ ) {
-                BoardPosition pos = board_.getPosition( row, col );
+                BoardPosition pos = getBoard().getPosition( row, col );
                 if ( pos.isOccupied() ) {
                     ChessPiece piece = (ChessPiece)pos.getPiece();
                     int side = piece.isOwnedByPlayer1() ? 1 : -1;
@@ -77,7 +81,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
        // add all the moves that it can make.
        for ( row = 1; row <= ChessController.NUM_ROWS; row++ ) {
            for ( col = 1; col <= ChessController.NUM_COLS; col++ ) {
-               BoardPosition pos = board_.getPosition( row, col );
+               BoardPosition pos = getBoard().getPosition(row, col);
                if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == player1 ) {
                    addMoves( pos, moveList, lastMove, weights);
                }
@@ -108,14 +112,14 @@ public class ChessSearchable extends TwoPlayerSearchable {
      */
     int addMoves( BoardPosition pos, MoveList moveList, TwoPlayerMove lastMove, ParameterArray weights) {
         List<ChessMove> moves =
-                ((ChessPiece)pos.getPiece()).findPossibleMoves(board_, pos.getRow(), pos.getCol(), lastMove);
+                ((ChessPiece)pos.getPiece()).findPossibleMoves(getBoard(), pos.getRow(), pos.getCol(), lastMove);
 
         // score the moves in this list
         for (ChessMove move : moves) {
             // first apply the move
-            board_.makeMove(move);
+            getBoard().makeMove(move);
             move.setValue(worth(move, weights));
-            board_.undoMove();
+            getBoard().undoMove();
         }
         moveList.addAll( moves );
 
@@ -127,11 +131,11 @@ public class ChessSearchable extends TwoPlayerSearchable {
      * @param moveList
      */
     public void removeSelfCheckingMoves(List moveList) {
-        ChessBoard b = (ChessBoard)board_;
+
         Iterator it = moveList.iterator();
         while (it.hasNext()) {
            ChessMove move = (ChessMove)it.next();
-           if (b.causesSelfCheck(move)) {
+           if (getBoard().causesSelfCheck(move)) {
                 GameContext.log(2, "don't allow " + move + " because it puts the king in check." );
                 it.remove();
            }

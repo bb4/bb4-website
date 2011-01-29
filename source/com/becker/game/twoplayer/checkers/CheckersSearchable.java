@@ -81,7 +81,7 @@ public class CheckersSearchable extends TwoPlayerSearchable {
             else
                 players_.getPlayer2().setWon(true);
         }
-        if ( getNumMoves() >= board_.getMaxNumMoves() ) {
+        if ( getNumMoves() >= getBoard().getMaxNumMoves() ) {
             won = true;
             if ( recordWin ) {
                 if ( Math.abs( m.getValue() ) >= 0 )
@@ -113,7 +113,7 @@ public class CheckersSearchable extends TwoPlayerSearchable {
             odd = row % 2;
             for ( int j = 1; j <= 4; j++ ) {
                 col = 2 * j - odd;
-                BoardPosition p = board_.getPosition( row, col );
+                BoardPosition p = getBoard().getPosition( row, col );
                 if ( p.isOccupied() ) {
                     CheckersPiece piece = (CheckersPiece) p.getPiece();
                     boolean isPlayer1 = piece.isOwnedByPlayer1();

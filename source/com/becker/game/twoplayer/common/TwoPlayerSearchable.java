@@ -67,18 +67,18 @@ public abstract class TwoPlayerSearchable implements Searchable {
      * @param m the move to play.
      */
     public final void makeInternalMove( TwoPlayerMove m ) {
-        TwoPlayerBoard b = board_;
+
         TwoPlayerMove lastMove = (TwoPlayerMove)(moveList_.getLastMove());
         if (moveList_.getNumMoves() > 0) {
             assert(lastMove.isPlayer1() != m.isPlayer1()):
                     "can't go twice in a row m=" + m + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_;
         }
 
-        board_.makeMove( m );
+        getBoard().makeMove( m );
 
-        BoardPosition pos = b.getPosition(m.getToLocation());
+        BoardPosition pos = getBoard().getPosition(m.getToLocation());
         //assert pos != null : "pos was null at " + m.getToLocation() + " pass="+  m.isPassingMove();
-        hash.applyMove(m, b.getStateIndex(pos));
+        hash.applyMove(m, getBoard().getStateIndex(pos));
     }
 
     /**
@@ -88,9 +88,9 @@ public abstract class TwoPlayerSearchable implements Searchable {
     public final void undoInternalMove( TwoPlayerMove m ) {
         TwoPlayerMove lastMove = (TwoPlayerMove)moveList_.getLastMove();
         assert m.equals(lastMove) : "The move we are trying to undo ("+m+") in list="
-                + moveList_+" was not equal to the last move ("+lastMove+"). all move=" + board_.getMoveList();
-        hash.applyMove(m, board_.getStateIndex(board_.getPosition(m.getToLocation())));
-        board_.undoMove();
+                + moveList_+" was not equal to the last move ("+lastMove+"). all move=" + getBoard().getMoveList();
+        hash.applyMove(m, getBoard().getStateIndex(getBoard().getPosition(m.getToLocation())));
+        getBoard().undoMove();
     }
 
 
@@ -130,7 +130,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
             else
                 players_.getPlayer2().setWon(true);
         }
-        boolean maxMovesExceeded = moveList_.getNumMoves() >= board_.getMaxNumMoves();
+        boolean maxMovesExceeded = moveList_.getNumMoves() >= getBoard().getMaxNumMoves();
 
         return (maxMovesExceeded || won);
     }
