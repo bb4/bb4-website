@@ -38,8 +38,7 @@ public abstract class GameController
     /**
      * Construct the game controller
      */
-    public GameController()
-    {
+    public GameController() {
         GameContext.log( 3, " mem=" + Runtime.getRuntime().freeMemory() );
     }
 
@@ -47,16 +46,14 @@ public abstract class GameController
      * optionally set a viewer for the controller.
      * @param viewer
      */
-    public void setViewer(GameViewable viewer)
-    {
+    public void setViewer(GameViewable viewer) {
        viewer_ = viewer;
     }
 
     /**
-     * Return the game board back to its initial openning state
+     * Return the game board back to its initial opening state
      */
-    public void reset()
-    {
+    public void reset() {
         board_.reset();
     }
 
@@ -129,18 +126,9 @@ public abstract class GameController
      * @param fileName the file to save the state to
      * @param rte exception that occurred upon failure
      */
-    public void saveToFile( String fileName, AssertionError rte )
-    {
-        GameContext.log(0,  "Error: saveToFile(name, rte) not implemented yet for " + getClass().getName());
-    }
+    public void saveToFile( String fileName, AssertionError rte ) {
 
-    /**
-     * save the current state of the game to a file.
-     * You must override if you want it to work.
-     */
-    public void saveToFile( String fileName )
-    {
-        GameContext.log(0,  "Error: saveToFile("+fileName+") not implemented yet" );
+        GameContext.log(0,  "Error: saveToFile(name, rte) not implemented yet for " + getClass().getName());
     }
 
     /**
@@ -227,9 +215,9 @@ public abstract class GameController
     }
 
     /**
-     * Someday 2 player games should use actions rathern than moves so
+     * Someday 2 player games should use actions rather than moves so
      * that they too can be run over the game server.
-     * @param action
+     * @param action some action
      */
     public void handlePlayerAction(PlayerAction action) {
         assert false : "handlePlayerAction not implemented for " + this.getClass().getName();

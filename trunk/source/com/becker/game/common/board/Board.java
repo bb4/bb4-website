@@ -127,9 +127,9 @@ public abstract class Board implements IBoard {
      * @return false if the move is illegal
      */
     public final boolean makeMove( Move move ) {
-        boolean done = makeInternalMove(move);
+        boolean legal = makeInternalMove(move);
         getMoveList().add( move );
-        return done;
+        return legal;
     }
 
     /**
@@ -165,7 +165,7 @@ public abstract class Board implements IBoard {
 
     /**
      * @param move the move to make
-     * @return  false if the move is illegal
+     * @return false if the move is illegal (true if leagl)
      */
     protected abstract boolean makeInternalMove( Move move );
 

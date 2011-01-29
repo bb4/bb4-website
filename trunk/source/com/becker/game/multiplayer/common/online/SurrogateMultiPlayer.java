@@ -70,14 +70,16 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
             
             long t1 = System.currentTimeMillis();
             // wait gives other threads time to execute until we receive a notify and can continue.
-            System.out.println(player_.getName() + " now waiting for surrogate action on "+ this + ",  Thread=" + Thread.currentThread().getName());
+            System.out.println(player_.getName() + " now waiting for surrogate action on "
+                    + this + ",  Thread=" + Thread.currentThread().getName());
             wait(TIMEOUT_DURATION);
             if ((System.currentTimeMillis() - t1) > (TIMEOUT_DURATION - 10)) {
                   System.out.println("****** TIMEOUT! "+ player_.getName() +" is waiting for someone to play.");
             }
             PlayerAction a = player_.getAction(controller);
             float time = (float)(System.currentTimeMillis() - t1)/1000.0f;
-            System.out.println("got action =" + a + " for "+player_.getName()+" after " + time +"s   on "+this+",  Thread=" + Thread.currentThread().getName());
+            System.out.println("got action =" + a + " for "+player_.getName()+" after " + time +"s   on "
+                    + this + ",  Thread=" + Thread.currentThread().getName());
             return a;
             
         } catch (InterruptedException e) {

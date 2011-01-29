@@ -90,6 +90,8 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
     public void renderNextMove( Graphics2D g2, TwoPlayerMove move, int cellSize,
                                 int margin, Board b) {
 
+        if (move.isPassOrResignation()) return;
+
         assert (move.getPiece() != null) : "piece for next move is null: " + move;
 
         g2.setColor(getPieceColor(move.getPiece()));
