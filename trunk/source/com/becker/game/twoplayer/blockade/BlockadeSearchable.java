@@ -33,6 +33,11 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
     public BlockadeSearchable copy() {
         return new BlockadeSearchable(this);
     }
+
+    @Override
+    public BlockadeBoard getBoard() {
+        return (BlockadeBoard)board_;
+    }
  
     /**
      * The primary way of computing the score for Blockade is to
@@ -49,18 +54,17 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
     @Override
     public int worth( Move lastMove, ParameterArray weights ) {
         getProfiler().startCalcWorth();
-        BlockadeBoard board = (BlockadeBoard)board_;
         BlockadeMove m = (BlockadeMove)lastMove;
         // if its a winning move then return the winning value
         boolean player1Moved = m.isPlayer1();
 
         if (checkForWin(player1Moved,
-                                 player1Moved? board.getPlayer2Homes() : board.getPlayer1Homes())) {
+                                 player1Moved? getBoard().getPlayer2Homes() : getBoard().getPlayer1Homes())) {
             GameContext.log(1, "FOUND WIN!!!");
             return player1Moved ? WINNING_VALUE : -WINNING_VALUE;
         }
 
-        PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);
+        PlayerPathLengths pathLengths = getBoard().findPlayerPathLengths(m);
         int worth = pathLengths.determineWorth(WINNING_VALUE, weights);
         getProfiler().stopCalcWorth();
         return worth;
@@ -91,7 +95,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
     public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights)  {
         getProfiler().startGenerateMoves();
 
-        MoveGenerator generator = new MoveGenerator(weights, (BlockadeBoard)board_);
+        MoveGenerator generator = new MoveGenerator(weights, getBoard());
         MoveList moveList  = generator.generateMoves(lastMove);
 
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
@@ -111,8 +115,8 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
      * @param recordWin if true then the controller state will record wins
      */
     @Override
-    public boolean done( TwoPlayerMove lastMove, boolean recordWin )
-    {
+    public boolean done( TwoPlayerMove lastMove, boolean recordWin ) {
+
         if (getNumMoves() > 0 && lastMove == null) {
             GameContext.log(0, "Game is over because there are no more moves.");
             return true;

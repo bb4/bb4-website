@@ -117,11 +117,13 @@ public final class PositionalScoreAnalyzer {
      * A dead enemy stone in the eye counts twice.
      */
     private void updateEyePointScore(PositionalScore score, GoBoardPosition position) {
+
+        double scoreForPosition = position.getEye().isOwnedByPlayer1()? 1.0 : -1.0;
         if (position.isOccupied()) {
-            score.deadStoneScore = position.getEye().isOwnedByPlayer1()? 1.0 : -1.0;    // was 2 instead of one.
+            score.deadStoneScore = scoreForPosition;   // was 2, but one woks better.
         }
         else {
-            score.eyeSpaceScore = position.getEye().isOwnedByPlayer1()? 1.0 : -1.0;
+            score.eyeSpaceScore = scoreForPosition;
         }
     }
 

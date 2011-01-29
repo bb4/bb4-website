@@ -159,7 +159,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         cachedGameBoard_ = null;
         c.manMoves(move);
         //refresh();
-        boolean done = c.getSearchable().done(move, true);
+        boolean done = c.getSearchable().done(move, false); // was true, but then we did final update twice.
         sendGameChangedEvent(move);
         return done;
     }

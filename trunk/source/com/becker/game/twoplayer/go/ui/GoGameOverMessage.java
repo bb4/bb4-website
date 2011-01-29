@@ -38,8 +38,9 @@ final class GoGameOverMessage extends GameOverMessage {
         String message = "\n";
 
         GoSearchable searchable = (GoSearchable) controller_.getSearchable();
-        int blackCaptures = searchable.getNumCaptures(true);
-        int whiteCaptures = searchable.getNumCaptures(false);
+        int blackCaptures = searchable.getNumCaptures(true) + searchable.getNumDeadStonesOnBoard(true);
+        int whiteCaptures = searchable.getNumCaptures(false) + searchable.getNumDeadStonesOnBoard(false);
+
 
         String p1Name = gc.getPlayers().getPlayer1().getName();
         String p2Name = gc.getPlayers().getPlayer2().getName();

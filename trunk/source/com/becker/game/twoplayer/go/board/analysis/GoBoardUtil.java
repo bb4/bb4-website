@@ -16,8 +16,7 @@ import java.util.List;
  * @see GoBoard
  * @author Barry Becker.
  */
-public final class GoBoardUtil
-{
+public final class GoBoardUtil {
     /**
      * an opponent stone must be at least this much more unhealthy to be considered part of an eye.
      * if its not that much weaker then we don't really have an eye.

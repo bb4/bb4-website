@@ -49,9 +49,15 @@ public class GoSearchable extends TwoPlayerSearchable {
         return new GoSearchable(this);
     }
 
+    @Override
+    public GoBoard getBoard() {
+        return (GoBoard) board_;
+    }
+
+
     private void init() {
-        deadStoneUpdater_ = new DeadStoneUpdater((GoBoard)board_);
-        positionalScorer_ = new PositionalScoreAnalyzer((GoBoard)board_);
+        deadStoneUpdater_ = new DeadStoneUpdater(getBoard());
+        positionalScorer_ = new PositionalScoreAnalyzer(getBoard());
     }
 
     @Override
@@ -95,19 +101,31 @@ public class GoSearchable extends TwoPlayerSearchable {
         }
 
         if (gameOver && recordWin) {
-            //we should not call this twice
-            if (getNumDeadStonesOnBoard(true)  > 0 || getNumDeadStonesOnBoard(false) > 0) {
-                GameContext.log(0, " Error: should not update life and death twice.");
-            }
-            // now that we are finally at the end of the game,
-            // update the life and death of all the stones still on the board
-            GameContext.log(1,  "about to update life and death." );
-            deadStoneUpdater_.determineDeadStones();
+            doFinalBookKeeping();
         }
 
         return gameOver;
     }
 
+    /**
+     * Update final territory and number of dead stones.
+     * Include this in calcWorth because we call updateTerritory which is under calcWorth for timing.
+     */
+    private void doFinalBookKeeping() {
+
+        getProfiler().startCalcWorth();
+        getBoard().updateTerritory(true);
+
+        //we should not call this twice
+        if (getNumDeadStonesOnBoard(true)  > 0 || getNumDeadStonesOnBoard(false) > 0) {
+            GameContext.log(0, " Error: should not update life and death twice.");
+        }
+        // now that we are finally at the end of the game,
+        // update the life and death of all the stones still on the board
+        GameContext.log(1,  "about to update life and death." );
+        deadStoneUpdater_.determineDeadStones();
+        getProfiler().stopCalcWorth();
+    }
 
     /**
      *  Statically evaluate the board position.
@@ -138,10 +156,10 @@ public class GoSearchable extends TwoPlayerSearchable {
     /**
      * get the number of black (player1=true) or white (player1=false) stones that were captured and removed.
      * @param player1sStones if true, get the captures for player1, else for player2.
-     * @return num captures
+     * @return num captures of the specified color
      */
     public int getNumCaptures( boolean player1sStones )  {
-        return ((GoBoard) board_).getNumCaptures(player1sStones);
+        return getBoard().getNumCaptures(player1sStones);
     }
 
 
@@ -167,25 +185,24 @@ public class GoSearchable extends TwoPlayerSearchable {
     private double calculateWorth(Move lastMove, ParameterArray weights) {
 
         double worth;
-        GoBoard board = (GoBoard)board_;
         // adjust for board size - so worth will be comparable regardless of board size.
-        double scaleFactor = 361.0 / Math.pow(board.getNumRows(), 2);
-        GameStageBoostCalculator gameStageBoostCalc_= new GameStageBoostCalculator(board.getNumRows());
+        double scaleFactor = 361.0 / Math.pow(getBoard().getNumRows(), 2);
+        GameStageBoostCalculator gameStageBoostCalc_= new GameStageBoostCalculator(getBoard().getNumRows());
         double gameStageBoost = gameStageBoostCalc_.getGameStageBoost(getNumMoves());
 
         // Update status of groups and stones on the board. Expensive.
-        board.updateTerritory(false);
+        getBoard().updateTerritory(false);
 
         PositionalScore totalScore = new PositionalScore();
-        for (int row = 1; row <= board.getNumRows(); row++ ) {
-            for (int col = 1; col <= board.getNumCols(); col++ ) {
+        for (int row = 1; row <= getBoard().getNumRows(); row++ ) {
+            for (int col = 1; col <= getBoard().getNumCols(); col++ ) {
 
                 PositionalScore s = positionalScorer_.determineScoreForPosition(row, col, gameStageBoost, weights);
                 totalScore.incrementBy(s);
             }
         }
 
-        double territoryDelta = board.getTerritoryDelta();
+        double territoryDelta = getBoard().getTerritoryDelta();
         double captureScore = getCaptureScore(weights);
         worth = scaleFactor * (totalScore.getPositionScore() + captureScore + territoryDelta);
 
@@ -252,7 +269,7 @@ public class GoSearchable extends TwoPlayerSearchable {
         if ( m == null )
             return 0;
 
-        return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, false);
+        return getBoard().getTerritoryEstimate(forPlayer1, false);
     }
 
 
@@ -262,7 +279,7 @@ public class GoSearchable extends TwoPlayerSearchable {
      */
     public double getFinalScore(boolean player1) {
         int numDead = getNumDeadStonesOnBoard(player1);
-        int totalCaptures = numDead + getNumCaptures(player1);
+        int totalCaptures = numDead + getNumCaptures(!player1);
         int p1Territory = getTerritory(player1);
 
         String side = (player1? "black":"white");
@@ -271,10 +288,15 @@ public class GoSearchable extends TwoPlayerSearchable {
         GameContext.log(2, "getNumCaptures(" + side + ")=" + getNumCaptures(player1));
         GameContext.log(2, "num dead " + side + " stones on board: "+ numDead);
         GameContext.log(2, "getTerritory(" + side + ")="+p1Territory);
-        GameContext.log(0, "terr - totalCaptures="+ (p1Territory - totalCaptures));
-        return p1Territory - totalCaptures;
+        GameContext.log(0, "terr + totalEnemyCaptures="+ (p1Territory + totalCaptures));
+        return p1Territory + totalCaptures;
     }
 
+    /**
+     * Only valid after final bookkeeping has been done at the end of the game.
+     * @param forPlayer1  player to get dead stones for.
+     * @return number of dead stones of specified players color.
+     */
     public int getNumDeadStonesOnBoard(boolean forPlayer1)  {
         return deadStoneUpdater_.getNumDeadStonesOnBoard(forPlayer1);
     }
@@ -285,7 +307,7 @@ public class GoSearchable extends TwoPlayerSearchable {
      * @return the actual score (each empty space counts as one)
      */
     public int getTerritory( boolean forPlayer1 ) {
-        return((GoBoard) board_).getTerritoryEstimate(forPlayer1, true);
+        return getBoard().getTerritoryEstimate(forPlayer1, true);
     }
 
     /**
@@ -294,14 +316,13 @@ public class GoSearchable extends TwoPlayerSearchable {
     public final MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights) {
 
         MoveList moves = generateMoves(lastMove, weights);
-        GoBoard gb = (GoBoard) board_;
         GoMove lastMovePlayed = (GoMove) lastMove;
 
         // just keep the moves that take captures
         Iterator<Move> it = moves.iterator();
         while ( it.hasNext() ) {
             GoMove move = (GoMove) it.next();
-            if ( move.getNumCaptures() == 0 || lastMovePlayed.causesAtari(gb) > 0 ) {
+            if ( move.getNumCaptures() == 0 || lastMovePlayed.causesAtari(getBoard()) > 0 ) {
                 it.remove();
             }
             else {
@@ -319,8 +340,8 @@ public class GoSearchable extends TwoPlayerSearchable {
      */
     @Override
     public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights) {
-        GoBoard gb = (GoBoard) board_;
-        return (( (GoMove)lastMove ).causesAtari(gb) > CRITICAL_GROUP_SIZE);
+
+        return (( (GoMove)lastMove ).causesAtari(getBoard()) > CRITICAL_GROUP_SIZE);
     }
 
     /**

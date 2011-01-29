@@ -6,11 +6,11 @@ import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
 
 /**
- * Responsible for determining and updating the deadstones on the board.
+ * Responsible for determining and updating the dead stones on the board.
  * @author Barry Becker
  */
-public final class DeadStoneUpdater
-{
+public final class DeadStoneUpdater {
+
     private GoBoard board_;
 
     /** keeps track of dead stones.  */
@@ -20,8 +20,7 @@ public final class DeadStoneUpdater
     /**
      * Construct the Go game controller.
      */
-    public DeadStoneUpdater(GoBoard board)
-    {
+    public DeadStoneUpdater(GoBoard board) {
         board_ = board;
         deadStones_ = new DeadStones();
     }
@@ -31,21 +30,16 @@ public final class DeadStoneUpdater
         return deadStones_.getNumberOnBoard(forPlayer1);
     }
 
-    public void reset() {
-        deadStones_.clear();
-    }
-
     /**
      * Update the final life and death status of all the stones still on the board.
      * This method must only be called once at the end of the game or stones will get prematurely marked as dead.
-     * @@ should do in 2 passes.
      * The first can update the health of groups and perhaps remove obviously dead stones.
      */
-    public void determineDeadStones()
-    {
-       board_.updateTerritory(true);
+    public void determineDeadStones() {
 
-       for ( int row = 1; row <= board_.getNumRows(); row++ ) {
+        deadStones_.clear();
+
+        for ( int row = 1; row <= board_.getNumRows(); row++ ) {
             for ( int col = 1; col <= board_.getNumCols(); col++ ) {
                 GoBoardPosition space = (GoBoardPosition)board_.getPosition( row, col );
                 if (space.isOccupied())  {
@@ -55,12 +49,13 @@ public final class DeadStoneUpdater
                                        +" string health=" + space.getGroup().getRelativeHealth(board_, true));
                     if (side*stone.getHealth() < 0)  {
                         // then the stone is more dead than alive, so mark it so
-                        GameContext.log(1, "setting "+space+" to dead");
+                        GameContext.log(0, "setting " + space + " to dead");
                         stone.setDead(true);
                         deadStones_.increment(space.getPiece().isOwnedByPlayer1());
                     }
                 }
             }
         }
+        GameContext.log(0, deadStones_.toString());
     }
 }

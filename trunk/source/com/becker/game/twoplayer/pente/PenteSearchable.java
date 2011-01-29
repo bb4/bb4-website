@@ -34,6 +34,11 @@ public class PenteSearchable extends TwoPlayerSearchable {
         return new PenteSearchable(this);
     }
 
+    @Override
+    public PenteBoard getBoard() {
+        return (PenteBoard) board_;
+    }
+
     private void init() {
         generator = new PenteMoveGenerator(this);
         moveEvaluator_ = new MoveEvaluator(board_, createPatterns());
