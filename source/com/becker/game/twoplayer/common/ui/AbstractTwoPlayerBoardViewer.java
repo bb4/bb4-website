@@ -83,7 +83,6 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * set an optional progress bar for showing progress as the computer thinks about its next move.
      */
-    @Override
     public void setProgressBar(JProgressBar progressBar) {
         moveProgress_.setProgressBar(progressBar);
     }
@@ -241,8 +240,11 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     @Override
     public void gameChanged(GameChangedEvent evt) {
         TwoPlayerController c = get2PlayerController();
+        assert c == evt.getController();
+
         // note: we don't show the winner dialog if we are optimizing the weights.
-        if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true) && !c.getTwoPlayerOptions().isAutoOptimize()) {
+        if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true)
+                && !c.getTwoPlayerOptions().isAutoOptimize()) {
             showWinnerDialog();
             c.reset();
         }

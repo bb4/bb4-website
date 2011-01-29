@@ -25,12 +25,20 @@ public class BoardUpdater {
 
     /**
      * Essentially a copy constructor. The counts are preserved.
-     * @param board
-     * @param updater used to copy the current counts so they are not lost.
+     * @param board board to update
+     * @param capCounts current counts so they are not lost.
      */
-    public BoardUpdater(GoBoard board, BoardUpdater updater) {
-        captureCounts_ = updater.captureCounts_.copy();
+    public BoardUpdater(GoBoard board, CaptureCounts capCounts) {
+        captureCounts_ = capCounts;
         initialize(board);
+    }
+
+    /**
+     *
+     * @return a defensive copy
+     */
+    public CaptureCounts getCaptureCounts() {
+        return captureCounts_.copy();
     }
 
     private void initialize(GoBoard board) {

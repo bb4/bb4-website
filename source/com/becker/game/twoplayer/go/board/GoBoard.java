@@ -10,6 +10,7 @@ import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.*;
 import com.becker.game.twoplayer.go.board.update.BoardUpdater;
+import com.becker.game.twoplayer.go.board.update.CaptureCounts;
 
 import java.util.List;
 
@@ -46,8 +47,7 @@ public final class GoBoard extends TwoPlayerBoard {
         setSize( numRows, numCols );
         setHandicap(numHandicapStones);
 
-        boardUpdater_ = new BoardUpdater(this);
-        territoryAnalyzer_ = new TerritoryAnalyzer(this);
+        init(new CaptureCounts());
     }
 
     /**
@@ -61,8 +61,7 @@ public final class GoBoard extends TwoPlayerBoard {
         analyzer.determineAllStringsOnBoard();
         groups_ = analyzer.findAllGroupsOnBoard();
 
-        boardUpdater_ = new BoardUpdater(this, board.boardUpdater_);
-        territoryAnalyzer_ = new TerritoryAnalyzer(this);
+        init(board.boardUpdater_.getCaptureCounts());
     }
 
     public GoBoard copy() {
@@ -74,7 +73,7 @@ public final class GoBoard extends TwoPlayerBoard {
     }
 
     /**
-     * start over from the begining and reinitialize everything.
+     * start over from the beginning and reinitialize everything.
      * The first time through we need to initialize the star-point positions
      */
     @Override
@@ -84,6 +83,12 @@ public final class GoBoard extends TwoPlayerBoard {
         groups_ = new GoGroupSet();
 
         setHandicap(getHandicap());
+        init(new CaptureCounts());
+    }
+
+    private void init(CaptureCounts capCounts) {
+        boardUpdater_ = new BoardUpdater(this, capCounts);
+        territoryAnalyzer_ = new TerritoryAnalyzer(this);
     }
 
     @Override
@@ -203,11 +208,11 @@ public final class GoBoard extends TwoPlayerBoard {
             return true;
         }
         clearEyes();
-        super.makeInternalMove( m );
+        boolean valid = super.makeInternalMove( m );
         boardUpdater_.updateAfterMove(m);
 
         getProfiler().stopMakeMove();
-        return true;
+        return valid;
     }
 
     /**

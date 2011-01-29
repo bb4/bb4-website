@@ -27,7 +27,7 @@ public class GameOverMessage {
     }
 
     /**
-     * @return   the message to display at the completion of the game.
+     * @return the message to display at the completion of the game.
      */
     public String getText() {
 

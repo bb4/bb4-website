@@ -44,7 +44,7 @@ public abstract class GameBoardViewer extends JPanel
     /** list of listeners for handling those events. */
     private final List<GameChangedListener> gameListeners_ = new ArrayList<GameChangedListener>();
 
-    private JProgressBar progressBar_ = null;
+    private JProgressBar progressBar_;
 
     protected final Cursor waitCursor_ = new Cursor( Cursor.WAIT_CURSOR );
     protected Cursor origCursor_ = null;
@@ -90,7 +90,7 @@ public abstract class GameBoardViewer extends JPanel
     }
 
     /**
-     * set an optional progress bar for showing progress as the computer thinks about its next move.
+     * @param progressBar an optional progress bar for showing progress as the computer thinks about its next move.
      */
     public void setProgressBar(JProgressBar progressBar) {
         progressBar_ = progressBar;
@@ -169,7 +169,7 @@ public abstract class GameBoardViewer extends JPanel
 
     /**
      * Each board must create its own renderer singleton.
-     * @return gamve viewer specific renderer
+     * @return game viewer specific renderer
      */
     protected abstract GameBoardRenderer getBoardRenderer();
 
@@ -212,8 +212,8 @@ public abstract class GameBoardViewer extends JPanel
     }
 
     /**
-     *  This method gets called when the game has changed in some way.
-     *  Most likely because a move has been played.
+     * This method gets called when the game has changed in some way.
+     * Most likely because a move has been played.
      */
     public void sendGameChangedEvent(Move m) {
         GameChangedEvent gce = new GameChangedEvent( m, controller_, this );
