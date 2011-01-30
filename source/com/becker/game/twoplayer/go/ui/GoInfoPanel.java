@@ -114,7 +114,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         p1CapturesLabel_.setText( searchable.getNumCaptures( false ) + " " );
         p2CapturesLabel_.setText( searchable.getNumCaptures( true ) + " " );
 
-        new BoardValidator((GoBoard)searchable.getBoard()).confirmStonesInValidGroups();
+        new BoardValidator(searchable.getBoard()).confirmStonesInValidGroups();
         p1TerritoryLabel_.setText( searchable.getTerritoryEstimate( true ) + " " );
         p2TerritoryLabel_.setText( searchable.getTerritoryEstimate( false ) + " " );
 

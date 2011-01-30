@@ -14,7 +14,7 @@ import java.util.Random;
  * Verify expected hash key are generated based on board state.
  * @author Barry Becker
  */
-public class ZobristHashTest  extends TestCase {
+public class ZobristHashTest extends TestCase {
 
     private static final Long CENTER_X_HASH = 428667830982598836L;
     private static final Long CORNER_O_HASH = -6688467811848818630L;
@@ -78,7 +78,7 @@ public class ZobristHashTest  extends TestCase {
                 new Long(-6422371760107745138L), hash.getKey());
     }
 
-    public void testHashAfterTwoMovesThenUndo() {
+    public void testHashAfterTwoMovesThenUndoFirst() {
 
         applyMoveToHash(2, 2, true);
         applyMoveToHash(1, 1, false);
@@ -88,6 +88,81 @@ public class ZobristHashTest  extends TestCase {
                 CORNER_O_HASH, hash.getKey());        
     }
 
+    public void testHashAfterTwoMovesThenUndoSecond() {
+
+        applyMoveToHash(2, 2, true);
+        applyMoveToHash(1, 1, false);
+
+        applyMoveToHash(1, 1, false);
+        assertEquals("Unexpected hashkey for board after 2 moves then an undo",
+                CENTER_X_HASH, hash.getKey());
+    }
+
+    public void testHashAfterTwoMovesThenUndoMoveO() {
+
+        board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
+        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
+
+        board.undoMove();
+        hash = createZHash(board);
+        assertEquals("Unexpected hashkey for board after 2 moves then an undo move",
+                CORNER_O_HASH, hash.getKey());
+    }
+
+    public void testHashAfterTwoMovesThenUndoMoveX() {
+
+        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
+
+        board.undoMove();
+        hash = createZHash(board);
+        assertEquals("Unexpected hashkey for board after 2 moves then an undo move",
+                CENTER_X_HASH, hash.getKey());
+    }
+
+
+    public void testHashAfterTwoMovesThenTwoUndos() {
+
+        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
+
+        board.undoMove();
+        board.undoMove();
+        hash = createZHash(board);
+        assertEquals("Unexpected hashkey for board after 2 moves then two undos",
+                new Long(0), hash.getKey());
+    }
+
+    public void testHashesForDifferentBoardsStatesUnequal() {
+        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
+        hash = createZHash(board);
+        Long hash1 = hash.getKey();
+
+        board = new TicTacToeBoard();
+        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new Location(3, 1), 0, new GamePiece(false)));
+        hash = createZHash(board);
+
+        assertFalse("Hash keys for different moves unexpectedly equal. both=" + hash1,
+                hash1.equals(hash.getKey()));
+    }
+
+    public void testHashesForDifferentBoardsStatesUnequalUsingUndo() {
+        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
+        hash = createZHash(board);
+        Long hash1 = hash.getKey();
+
+        board.undoMove();
+        board.undoMove();
+        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new Location(3, 1), 0, new GamePiece(false)));
+        hash = createZHash(board);
+
+        assertFalse("Hash keys for different moves unexpectedly equal. both=" + hash1,
+                hash1.equals(hash.getKey()));
+    }
 
     private void applyMoveToHash(int row, int col, boolean player1) {
         GamePiece p = new GamePiece(player1);

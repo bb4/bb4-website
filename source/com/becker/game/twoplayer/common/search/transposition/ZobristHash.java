@@ -14,9 +14,7 @@ import java.util.Random;
  * The key is not guaranteed to be unique between positions, but collisions
  * should be exceedingly rare.
  * Keeps track of the random numbers to use for the state at each position.
- *
  * No need to create more than one of these per game type.
- * (perhaps we could have instances per type and move numStates here.)
  *
  * @author Barry Becker
  */
@@ -24,7 +22,7 @@ public final class ZobristHash {
 
     private long[][][] randomNumberTable_;
 
-    /** Get random numbers with a seed so things are predictable. */
+    /** Get random 64bit integers with a seed so things are predictable. */
     private Random RANDOM;
 
     private TwoPlayerBoard board;
@@ -37,8 +35,9 @@ public final class ZobristHash {
      */
     public ZobristHash(TwoPlayerBoard board) {
 
+        currentKey = 0L;
         this.board = board;
-        injectRandom(GameContext.random());
+        injectRandom(new Random(0));
     }
 
     /** for unit testing only so we get repeatable tests. */
@@ -48,8 +47,8 @@ public final class ZobristHash {
     }
 
     /**
-     * The number of states for a position is the number of pieces (or combinations of pieces - if more than one
-     * are allowed at a given position) times the number of players (always 2?).
+     * The number of states for a position is the number of pieces (or combinations of pieces if more than one
+     * piece type is allowed) at a given position times the number of players (always 2?).
      * So for example, in chess, the numStates would be 7 * 2 = 14. For go, its 2.
      */
     private void initialize() {
@@ -69,7 +68,7 @@ public final class ZobristHash {
     }
 
     /**
-     * @param board   board state to initailize hash from.
+     * @param board board state to initialize hash from.
      * @return the Zobrist Hash Key created from XORing together all the position states.
      */
     private Long getInitialKey(TwoPlayerBoard board) {
@@ -90,15 +89,16 @@ public final class ZobristHash {
     }
 
     /**
-     * @return  the current zobrish hash key for the board state.
+     * @return  the current Zobrist hash key for the board state.
      */
     public Long getKey() {
         return currentKey;
     }
 
     public void applyMove(TwoPlayerMove move, int stateIndex) {
-        if (!move.isPassingMove())
+        if (!move.isPassingMove())  {
             applyPositionToKey(move.getToLocation(), stateIndex);
+        }
     }
 
     /**

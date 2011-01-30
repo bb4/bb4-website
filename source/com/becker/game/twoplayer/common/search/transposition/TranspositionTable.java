@@ -72,26 +72,11 @@ public class TranspositionTable extends LRUCache<Long, Entry> {
     }
 
     /**
-     * @return the number of times we looked but failed to find a sotored move..
+     * @return the number of times we looked but failed to find a stored move..
      */
     public int getCacheMisses() {
         return cacheMisses;
     }
-
-    /*
-    @Override
-    public Entry get(Long key) {
-        Entry e =  super.get(key);
-        System.out.println("got " + e + " for " + key);
-        return e;
-    }
-
-    @Override
-    public void put(Long key, Entry e) {
-        System.out.println("put " + e + " for " + key);
-        super.put(key, e);
-    }
-    */
 
     public String toString() {
         StringBuilder bldr = new StringBuilder("TranspositionTable [\n");

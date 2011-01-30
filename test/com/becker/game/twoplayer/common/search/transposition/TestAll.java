@@ -18,7 +18,6 @@ public class TestAll extends TestCase {
 
         TestSuite suite =  new TestSuite("All Transposition Tests");
 
-
         suite.addTestSuite(ZobristHashTest.class);
 
         return suite;
