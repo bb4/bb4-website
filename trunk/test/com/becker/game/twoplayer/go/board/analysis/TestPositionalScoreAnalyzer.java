@@ -82,7 +82,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
 
         GoBoard board = (GoBoard)controller_.getBoard();
 
-        scoreAnalyzer_ = new PositionalScoreAnalyzer(board);
+        scoreAnalyzer_ = new PositionalScoreAnalyzer(board.getNumRows(), board.getNumCols());
     }
 
     /**
@@ -91,7 +91,8 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
     private void  verifyPositionalScore(Location loc, PositionalScore expScore, PositionalScore totalScore) {
 
         PositionalScore actScore =
-                scoreAnalyzer_.determineScoreForPosition(loc.getRow(), loc.getCol(), FULL_BOOST,
+                scoreAnalyzer_.determineScoreForPosition((GoBoard)controller_.getBoard(),
+                                              loc.getRow(), loc.getCol(), FULL_BOOST,
                                               GO_WEIGHTS.getDefaultWeights());
         verifyScoresEqual(expScore, actScore);
         totalScore.incrementBy(actScore);

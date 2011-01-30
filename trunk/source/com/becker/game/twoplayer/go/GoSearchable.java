@@ -5,19 +5,16 @@ import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerSearchable;
+import com.becker.game.twoplayer.common.cache.ScoreCache;
+import com.becker.game.twoplayer.common.cache.ScoreEntry;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.PositionalScore;
-import com.becker.game.twoplayer.go.board.analysis.GameStageBoostCalculator;
-import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
+import com.becker.game.twoplayer.go.board.WorthCalculator;
 import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
 import com.becker.optimization.parameter.ParameterArray;
 
 import java.util.Iterator;
 import java.util.List;
-
-import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
-import static com.becker.game.twoplayer.go.GoController.WIN_THRESHOLD;
 
 /**
  * For searching go games search space.
@@ -26,22 +23,29 @@ import static com.becker.game.twoplayer.go.GoController.WIN_THRESHOLD;
  */
 public class GoSearchable extends TwoPlayerSearchable {
 
-    private static final int CRITICAL_GROUP_SIZE = 4;
-
-    /** a lookup table of scores to attribute to the board positions when calculating the worth */
-    private PositionalScoreAnalyzer positionalScorer_;
+    /** Size of group that needs to be in atari before we consider a group urgent. */
+    private static final int CRITICAL_GROUP_SIZE = 3;
 
     /** keeps track of dead stones.  */
     private DeadStoneUpdater deadStoneUpdater_;
 
+    private ScoreCache scoreCache_;
 
-    public GoSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
+    private WorthCalculator worthCalculator_;
+
+
+    /**
+     * Constructor.
+     */
+    public GoSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options, ScoreCache cache) {
         super(board, players, options);
+        scoreCache_ = cache;
         init();
     }
 
     public GoSearchable(GoSearchable searchable) {
         super(searchable);
+        scoreCache_ = searchable.scoreCache_;
         init();
     }
 
@@ -54,10 +58,9 @@ public class GoSearchable extends TwoPlayerSearchable {
         return (GoBoard) board_;
     }
 
-
     private void init() {
         deadStoneUpdater_ = new DeadStoneUpdater(getBoard());
-        positionalScorer_ = new PositionalScoreAnalyzer(getBoard());
+        worthCalculator_ = new WorthCalculator(getBoard().getNumRows(), getBoard().getNumCols());
     }
 
     @Override
@@ -136,20 +139,25 @@ public class GoSearchable extends TwoPlayerSearchable {
      */
     @Override
     public int worth( Move lastMove, ParameterArray weights ) {
-        getProfiler().startCalcWorth();
-        double worth = calculateWorth(lastMove, weights);
 
-        GameContext.log(3,"GoController.worth: worth="+worth);
-        if ( worth < -WIN_THRESHOLD ) {
-            // then the margin is too great the losing player should resign
-            return -WINNING_VALUE;
+        //// Why doesn't playing with caching give same results as without.  Also uncomment TwoPlayerSearchable  constructor
+        ////ScoreEntry cachedScore = scoreCache_.get(getHashKey());
+        //if (cachedScore != null) return cachedScore;
+
+        int worth = worthCalculator_.worth(getBoard(),lastMove, weights);
+
+        /*
+        if (cachedScore == null) {
+            scoreCache_.put(getHashKey(), new ScoreEntry(worth, getBoard().toString()));
         }
-        else if ( worth > WIN_THRESHOLD ) {
-            // then the margin is too great the losing player should resign
-            return WINNING_VALUE;
-        }
-        getProfiler().stopCalcWorth();
-        return (int)worth;
+        else {
+            if (cachedScore.getScore() == worth) {
+                System.out.println("matched");
+            } else {
+                //System.out.println("cachedScore "+cachedScore +" for key="+getHashKey()+" did not match "+ worth + "\n" + getBoard().toString());
+            }
+        }*/
+        return worth;
     }
 
 
@@ -160,57 +168,6 @@ public class GoSearchable extends TwoPlayerSearchable {
      */
     public int getNumCaptures( boolean player1sStones )  {
         return getBoard().getNumCaptures(player1sStones);
-    }
-
-
-    /**
-     *  Statically evaluate the board position.
-     *  The most naive thing we could do here is to simply return the sum of the captures
-     *  for player1 - sum of the captures for player2.
-     *  However for go, since search is not likely to be that useful given
-     *  the huge branch factor, we need to heavily rely on a sophisticated evaluation.
-     *    So what we do is have every space on the board have a score representing
-     *  how strongly it is controlled by player1 (black).  If the score is 1.00, then that
-     *  position is inside or part of an unconditionally alive group owned by player1 (black)
-     *  or it is inside a dead white group.
-     *  If the score is -1.00 then its player 2's(white) unconditionally alive group
-     *  or black's dead group. A blank dame might have a score
-     *  of 0. A white stone might have a positive score if its part of a white group
-     *  which is considered mostly dead.
-     *
-     *  @return statically evaluated value of the board.
-     *   a positive value means that player1 has the advantage.
-     *   A big negative value means a good move for p2.
-     */
-    private double calculateWorth(Move lastMove, ParameterArray weights) {
-
-        double worth;
-        // adjust for board size - so worth will be comparable regardless of board size.
-        double scaleFactor = 361.0 / Math.pow(getBoard().getNumRows(), 2);
-        GameStageBoostCalculator gameStageBoostCalc_= new GameStageBoostCalculator(getBoard().getNumRows());
-        double gameStageBoost = gameStageBoostCalc_.getGameStageBoost(getNumMoves());
-
-        // Update status of groups and stones on the board. Expensive.
-        getBoard().updateTerritory(false);
-
-        PositionalScore totalScore = new PositionalScore();
-        for (int row = 1; row <= getBoard().getNumRows(); row++ ) {
-            for (int col = 1; col <= getBoard().getNumCols(); col++ ) {
-
-                PositionalScore s = positionalScorer_.determineScoreForPosition(row, col, gameStageBoost, weights);
-                totalScore.incrementBy(s);
-            }
-        }
-
-        double territoryDelta = getBoard().getTerritoryDelta();
-        double captureScore = getCaptureScore(weights);
-        worth = scaleFactor * (totalScore.getPositionScore() + captureScore + territoryDelta);
-
-        if (GameContext.getDebugMode() > 0)  {
-            String desc = totalScore.getDescription(worth, captureScore, territoryDelta, scaleFactor);
-            ((TwoPlayerMove) lastMove).setScoreDescription(desc);
-        }
-        return worth;
     }
 
     /**
@@ -241,16 +198,6 @@ public class GoSearchable extends TwoPlayerSearchable {
             players_.getPlayer2().setWon(true);
         }
     }
-
-
-    /**
-     * @return score attributed to captured stones.
-     */
-    private double getCaptureScore(ParameterArray weights) {
-        double captureWt = weights.get(GoWeights.CAPTURE_WEIGHT_INDEX).getValue();
-        return captureWt * (getNumCaptures( false ) - getNumCaptures( true ));
-    }
-
 
     /**
      * get a territory estimate for player1 or player2
@@ -333,8 +280,8 @@ public class GoSearchable extends TwoPlayerSearchable {
     }
 
     /**
-     * returns true if the specified move caused one or more opponent pieces to become jeopardized
-     * For go, if the specified move caused a group to become in atari, then we return true.
+     * True if the specified move caused one or more opponent pieces to become jeopardized
+     * For go, if the specified move caused a sufficiently large group of stones to become in atari, then we return true.
      *
      * @return true if the last move created a big change in the score
      */

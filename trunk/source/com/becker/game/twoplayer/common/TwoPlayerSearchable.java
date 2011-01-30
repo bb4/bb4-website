@@ -17,30 +17,40 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
  */
 public abstract class TwoPlayerSearchable implements Searchable {
 
-    protected TwoPlayerBoard board_;
-    protected SearchOptions options_;
-    protected PlayerList players_;
-    protected MoveList moveList_;
-
-    /** Used to generate hashkeys. */
-    ZobristHash hash;
+    protected final TwoPlayerBoard board_;
+    protected final SearchOptions options_;
+    protected final PlayerList players_;
+    protected final MoveList moveList_;
 
     /** helps to find the best moves. */
-    protected BestMoveFinder bestMoveFinder_;
+    protected final BestMoveFinder bestMoveFinder_;
+
+    /** Used to generate hashkeys. */
+    private final ZobristHash hash;
 
 
-    public TwoPlayerSearchable(TwoPlayerBoard board,  PlayerList players, SearchOptions options) {
+    public TwoPlayerSearchable(final TwoPlayerBoard board,  PlayerList players, SearchOptions options) {
+
         board_ = board;
         moveList_ = board.getMoveList();
         players_ = players;
         options_ = options;
 
-        hash =  new ZobristHash(board_);
+        hash = new ZobristHash(board_);
         bestMoveFinder_ = new BestMoveFinder(getSearchOptions().getBestMovesSearchOptions());
     }
 
     public TwoPlayerSearchable(TwoPlayerSearchable searchable) {
+
         this((TwoPlayerBoard)searchable.getBoard().copy(), (PlayerList)searchable.players_.clone(), searchable.options_);
+
+        ////
+        /*assert searchable.getHashKey().equals(getHashKey()) :
+                 "key=" + searchable.getHashKey() +  " for\n"
+                + searchable.getBoard() + " different from key=" + getHashKey() + " for\n" + getBoard()
+                         +"\n b1 moves="+ searchable.getBoard().getMoveList() + "\nb2 moves=" + getBoard().getMoveList();
+        */
+
     }
 
     public TwoPlayerBoard getBoard() {

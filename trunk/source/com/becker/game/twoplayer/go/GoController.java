@@ -6,6 +6,7 @@ import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.cache.ScoreCache;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.go.board.GoBoard;
@@ -29,11 +30,12 @@ public final class GoController extends TwoPlayerController {
     public static final boolean USE_RELATIVE_GROUP_SCORING = true;
 
     /** default num row and columns for a default square go board.   */
-    static final int DEFAULT_NUM_ROWS = 4;
+    static final int DEFAULT_NUM_ROWS = 5;
 
     /** if difference greater than this, then consider a win. */
-    static final int WIN_THRESHOLD = 2000;
+    public static final int WIN_THRESHOLD = 2000;
 
+    private ScoreCache scoreCache_;
 
     /**
      * Construct the Go game controller.
@@ -112,6 +114,7 @@ public final class GoController extends TwoPlayerController {
             GameContext.log(0,  "Error: tried to get Score() while processing!");
             return 0;
         }
+        GameContext.log(0, "cache results " + scoreCache_);
         return ((GoSearchable)getSearchable()).getFinalScore(player1);
     }
 
@@ -133,6 +136,7 @@ public final class GoController extends TwoPlayerController {
         if ( ((GoBoard) board_).getHandicap() > 0 )   {
             player1sTurn_ = false;
         }
+        scoreCache_ = new ScoreCache();
     }
 
     public void computerMovesFirst()  {
@@ -163,6 +167,6 @@ public final class GoController extends TwoPlayerController {
 
     @Override
     protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
-        return new GoSearchable(board, players, options);
+        return new GoSearchable(board, players, options, scoreCache_);
     }
 }
