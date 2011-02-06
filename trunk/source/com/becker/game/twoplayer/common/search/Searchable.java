@@ -6,6 +6,7 @@ import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
+import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.optimization.parameter.ParameterArray;
 
 
@@ -17,8 +18,8 @@ import com.becker.optimization.parameter.ParameterArray;
  *
  * @author Barry Becker
  */
-public interface Searchable
-{
+public interface Searchable {
+
     /** 
      * @return the search options having to do with search parameters.
      */
@@ -103,5 +104,5 @@ public interface Searchable
      *
      * @return  the Zobrist hash for the currently searched position
      */
-    Long getHashKey();
+    HashKey getHashKey();
 }

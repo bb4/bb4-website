@@ -63,7 +63,7 @@ public class UctStrategy extends AbstractSearchStrategy {
             numSimulations++;
             percentDone_ = (100 *  numSimulations) / maxSimulations;
         }
-        //root.printTree();
+
         return root.findBestChildMove();
     }
 

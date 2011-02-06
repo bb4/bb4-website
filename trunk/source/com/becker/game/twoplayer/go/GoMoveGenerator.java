@@ -39,11 +39,10 @@ public final class GoMoveGenerator {
         GoProfiler prof = GoProfiler.getInstance();
         prof.startGenerateMoves();
 
-        GoBoard board = (GoBoard)searchable_.getBoard();
         MoveList moveList = generatePossibleMoves(lastMove);
 
         for (Move move : moveList)  {
-            setMoveValue(weights, board, (GoMove)move);
+            setMoveValue(weights, (GoMove)move);
         }
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
         BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions().getBestMovesSearchOptions());
@@ -61,7 +60,7 @@ public final class GoMoveGenerator {
      */
     public final MoveList generatePossibleMoves(TwoPlayerMove lastMove) {
 
-        GoBoard board = (GoBoard)searchable_.getBoard();
+        GoBoard board = searchable_.getBoard();
         MoveList moveList = new MoveList();
         int nCols = board.getNumCols();
         int nRows = board.getNumRows();
@@ -93,15 +92,15 @@ public final class GoMoveGenerator {
     /**
      * Make the generated move, determine its value, set it into the move, and undo the move on the board.
      */
-    private void setMoveValue(ParameterArray weights, GoBoard board, GoMove m) {
+    private void setMoveValue(ParameterArray weights, GoMove m) {
         GoProfiler prof = GoProfiler.getInstance();
         prof.stopGenerateMoves();
-        board.makeMove( m );
+        searchable_.makeInternalMove( m );
 
-        m.setValue(searchable_.worth( m, weights));
+        m.setValue(searchable_.worth(m, weights));
 
         // now revert the board
-        board.undoMove();
+        searchable_.undoInternalMove( m );
         prof.startGenerateMoves();
     }
 

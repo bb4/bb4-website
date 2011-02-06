@@ -48,10 +48,10 @@ final class PenteMoveGenerator {
                        m = TwoPlayerMove.createMove( j, i, 0, new GamePiece(player1));
                     else
                        m = TwoPlayerMove.createMove( j, i, lastMove.getValue(), new GamePiece(player1));
-                    pb.makeMove( m );
+                    searchable_.makeInternalMove( m );
                     m.setValue(searchable_.worth( m, weights));
                     // now revert the board
-                    pb.undoMove();
+                    searchable_.undoInternalMove( m );
                     moveList.add( m );
                 }
             }

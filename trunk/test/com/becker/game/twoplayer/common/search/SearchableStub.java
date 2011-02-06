@@ -6,6 +6,7 @@ import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
+import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.optimization.parameter.ParameterArray;
 
 
@@ -92,15 +93,6 @@ public class SearchableStub implements Searchable {
         return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
     }
 
-/**
-     * {@inheritDoc}
-     * @@ we should remove the final argument because it always seems to be true
-     */
-    public MoveList generatePossibleMoves(TwoPlayerMove lastMove, ParameterArray weights) {
-        return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
-    }
-
-
     /**
      * {@inheritDoc}
      * @@ we should remove the final argument because it always seems to be true
@@ -126,10 +118,11 @@ public class SearchableStub implements Searchable {
     /**
      *{@inheritDoc}
      */
-    public Long getHashKey() {
-        long key = 0;
+    public HashKey getHashKey() {
+        HashKey key = new HashKey();
         for (Move m : moves_) {
-            key += m.hashCode();
+            //key += m.hashCode();
+            key.applyMove(((TwoPlayerMove)m).getToLocation(), m.hashCode());
         }
         return key;
     }

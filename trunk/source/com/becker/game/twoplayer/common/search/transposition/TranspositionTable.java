@@ -16,7 +16,7 @@ import com.becker.game.twoplayer.common.search.SearchWindow;
  *
  * @author Barry Becker
  */
-public class TranspositionTable extends LRUCache<Long, Entry> {
+public class TranspositionTable extends LRUCache<HashKey, Entry> {
 
     /** Size of the table. If bigger, will take longer before we have to recycle positions. */
     private static final int MAX_ENTRIES = 1000000;

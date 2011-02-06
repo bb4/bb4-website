@@ -5,6 +5,7 @@ import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
+import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.game.twoplayer.common.search.transposition.ZobristHash;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -29,6 +30,9 @@ public abstract class TwoPlayerSearchable implements Searchable {
     private final ZobristHash hash;
 
 
+    /**
+     * Constructor.
+     */
     public TwoPlayerSearchable(final TwoPlayerBoard board,  PlayerList players, SearchOptions options) {
 
         board_ = board;
@@ -40,17 +44,20 @@ public abstract class TwoPlayerSearchable implements Searchable {
         bestMoveFinder_ = new BestMoveFinder(getSearchOptions().getBestMovesSearchOptions());
     }
 
+    /**
+     * Copy constructor.
+     */
     public TwoPlayerSearchable(TwoPlayerSearchable searchable) {
 
         this((TwoPlayerBoard)searchable.getBoard().copy(), (PlayerList)searchable.players_.clone(), searchable.options_);
+        /*
+        HashKey key1 = searchable.getHashKey(); // sometimes incorrect because it does not contain the full movelist.    .
+        HashKey key2 = this.getHashKey();  // correct
 
-        ////
-        /*assert searchable.getHashKey().equals(getHashKey()) :
-                 "key=" + searchable.getHashKey() +  " for\n"
-                + searchable.getBoard() + " different from key=" + getHashKey() + " for\n" + getBoard()
-                         +"\n b1 moves="+ searchable.getBoard().getMoveList() + "\nb2 moves=" + getBoard().getMoveList();
+        assert key1.equals(key2) : "Original key=" + key1 +  " for\n"
+              + searchable.getBoard() + " different from key=" + key2 + " for copied \n" + this.getBoard()
+              +"\n orig b1 moves="+ searchable.getBoard().getMoveList() + "\nb2 moves=" + this.getBoard().getMoveList();
         */
-
     }
 
     public TwoPlayerBoard getBoard() {
@@ -87,7 +94,6 @@ public abstract class TwoPlayerSearchable implements Searchable {
         getBoard().makeMove( m );
 
         BoardPosition pos = getBoard().getPosition(m.getToLocation());
-        //assert pos != null : "pos was null at " + m.getToLocation() + " pass="+  m.isPassingMove();
         hash.applyMove(m, getBoard().getStateIndex(pos));
     }
 
@@ -155,7 +161,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
     /**
      * @return get a hash key that represents this board state (with negligibly small chance of conflict)
      */
-    public Long getHashKey() {
+    public HashKey getHashKey() {
         return hash.getKey();
     }
 }

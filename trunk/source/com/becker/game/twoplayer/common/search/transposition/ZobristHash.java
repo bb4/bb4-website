@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.search.transposition;
 
 import com.becker.common.Location;
 import com.becker.game.common.board.BoardPosition;
-import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
@@ -27,7 +26,7 @@ public final class ZobristHash {
 
     private TwoPlayerBoard board;
 
-    private Long currentKey;
+    private HashKey currentKey;
 
     /**
      * Create the static table of random numbers to use for the Hash from a sample board.
@@ -35,7 +34,7 @@ public final class ZobristHash {
      */
     public ZobristHash(TwoPlayerBoard board) {
 
-        currentKey = 0L;
+        currentKey = new HashKey();
         this.board = board;
         injectRandom(new Random(0));
     }
@@ -71,8 +70,8 @@ public final class ZobristHash {
      * @param board board state to initialize hash from.
      * @return the Zobrist Hash Key created from XORing together all the position states.
      */
-    private Long getInitialKey(TwoPlayerBoard board) {
-        currentKey = 0L;
+    private HashKey getInitialKey(TwoPlayerBoard board) {
+        currentKey = new HashKey();
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();
 
@@ -91,7 +90,7 @@ public final class ZobristHash {
     /**
      * @return  the current Zobrist hash key for the board state.
      */
-    public Long getKey() {
+    public HashKey getKey() {
         return currentKey;
     }
 
@@ -105,9 +104,12 @@ public final class ZobristHash {
      * note ^ is XOR (exclusive OR) in java.
      * @return key after the move has been made
      */
-    private Long applyPositionToKey(Location location, int stateIndex) {
-        currentKey ^= randomNumberTable_[location.getRow()-1][location.getCol()-1][stateIndex];
-        return currentKey;
+    private void applyPositionToKey(Location location, int stateIndex) {
+
+        currentKey.applyMove(location, randomNumberTable_[location.getRow()-1][location.getCol()-1][stateIndex]);
+
+        //currentKey ^= randomNumberTable_[location.getRow()-1][location.getCol()-1][stateIndex];
+        //return currentKey;
     }
 
 }

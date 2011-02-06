@@ -5,6 +5,9 @@ import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.game.twoplayer.tictactoe.TicTacToeBoard;
 import junit.framework.TestCase;
 
@@ -16,8 +19,8 @@ import java.util.Random;
  */
 public class ZobristHashTest extends TestCase {
 
-    private static final Long CENTER_X_HASH = 428667830982598836L;
-    private static final Long CORNER_O_HASH = -6688467811848818630L;
+    private static final HashKey CENTER_X_HASH = new HashKey(428667830982598836L);
+    private static final HashKey CORNER_O_HASH = new HashKey(-6688467811848818630L);
 
     private ZobristHash hash;
     private TwoPlayerBoard board;
@@ -29,7 +32,7 @@ public class ZobristHashTest extends TestCase {
     }
 
     public void testEmptyBoardHash() {
-        assertEquals("Unexpected hashkey for empty board", new Long(0), hash.getKey());
+        assertEquals("Unexpected hashkey for empty board", new HashKey(), hash.getKey());
     }
 
     public void testCenterXHash() {
@@ -66,7 +69,7 @@ public class ZobristHashTest extends TestCase {
         applyMoveToHash(2, 2, true);
         applyMoveToHash(2, 2, true);
         assertEquals("Unexpected hashkey for entry board after undo",
-                new Long(0), hash.getKey());
+                new HashKey(), hash.getKey());
     }
 
 
@@ -75,7 +78,7 @@ public class ZobristHashTest extends TestCase {
         applyMoveToHash(2, 2, true);
         applyMoveToHash(1, 1, false);
         assertEquals("Unexpected hashkey for board after 2 moves",
-                new Long(-6422371760107745138L), hash.getKey());
+                new HashKey(-6422371760107745138L), hash.getKey());
     }
 
     public void testHashAfterTwoMovesThenUndoFirst() {
@@ -130,14 +133,14 @@ public class ZobristHashTest extends TestCase {
         board.undoMove();
         hash = createZHash(board);
         assertEquals("Unexpected hashkey for board after 2 moves then two undos",
-                new Long(0), hash.getKey());
+                new HashKey(), hash.getKey());
     }
 
     public void testHashesForDifferentBoardsStatesUnequal() {
         board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
         board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
         hash = createZHash(board);
-        Long hash1 = hash.getKey();
+        HashKey hash1 = hash.getKey();
 
         board = new TicTacToeBoard();
         board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
@@ -152,7 +155,7 @@ public class ZobristHashTest extends TestCase {
         board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
         board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
         hash = createZHash(board);
-        Long hash1 = hash.getKey();
+        HashKey hash1 = hash.getKey();
 
         board.undoMove();
         board.undoMove();
@@ -162,6 +165,16 @@ public class ZobristHashTest extends TestCase {
 
         assertFalse("Hash keys for different moves unexpectedly equal. both=" + hash1,
                 hash1.equals(hash.getKey()));
+    }
+
+    public void testGoHash()  {
+        GoBoard board = new GoBoard(5, 5, 0);
+        board.makeMove(new GoMove(new Location(3, 3), 0, new GoStone(true)));
+        board.makeMove(new GoMove(new Location(1, 3), 0, new GoStone(false)));
+        hash = createZHash(board);
+
+        assertEquals("Unexpected hashkey for GoBoard",
+             new HashKey(-5179128285022783026L), hash.getKey());
     }
 
     private void applyMoveToHash(int row, int col, boolean player1) {
