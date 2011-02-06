@@ -261,7 +261,7 @@ public abstract class TwoPlayerController extends GameController {
      * @return the same move with some of the fields filled in
      */
     public final Move manMoves( Move m ) {
-        makeMove( (TwoPlayerMove)m );
+        makeMove( m );
         // we pass the default weights because we just need to know if the game is over
         m.setValue(getSearchable().worth( m, weights_.getDefaultWeights() ));
         return m;
