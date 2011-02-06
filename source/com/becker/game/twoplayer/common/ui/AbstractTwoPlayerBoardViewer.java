@@ -149,7 +149,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * @return true if the game is over now.
      */
     private boolean manMoves( TwoPlayerMove move) {
-        // this method will fill in some of lastMove's structure
+
         TwoPlayerController c = get2PlayerController();
         if ( GameContext.getUseSound() ) {
             GameContext.getMusicMaker().playNote( c.getTwoPlayerOptions().getPreferredTone(), 45, 0, 200, 1000 );

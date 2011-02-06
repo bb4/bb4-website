@@ -4,6 +4,7 @@ import com.becker.common.LRUCache;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.transposition.Entry;
+import com.becker.game.twoplayer.common.search.transposition.HashKey;
 
 /**
  * A kind of LRU cache for game moves so that we do not need to
@@ -17,7 +18,7 @@ import com.becker.game.twoplayer.common.search.transposition.Entry;
  *
  * @author Barry Becker
  */
-public class ScoreCache extends LRUCache<Long, ScoreEntry> {
+public class ScoreCache extends LRUCache<HashKey, ScoreEntry> {
 
     /** Size of the table. If bigger, will take longer before we have to recycle positions. */
     private static final int MAX_ENTRIES = 1000000;
@@ -45,7 +46,7 @@ public class ScoreCache extends LRUCache<Long, ScoreEntry> {
     }
 
     @Override
-    public ScoreEntry get(Long key) {
+    public ScoreEntry get(HashKey key) {
         ScoreEntry score = super.get(key);
         if (score == null)
             cacheMisses++;

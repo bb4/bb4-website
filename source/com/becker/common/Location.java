@@ -104,7 +104,7 @@ public class Location implements Serializable
      * @return the string form
      */
     public String toString() {
-        return "row=" + row_ + ", column=" + col_;
+        return "(row=" + row_ + ", column=" + col_ + ")";
     }
 }
 

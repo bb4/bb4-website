@@ -5,6 +5,7 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.transposition.Entry;
+import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.game.twoplayer.common.search.transposition.TranspositionTable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
@@ -72,7 +73,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove, int depth,
                                           SearchWindow window, SearchTreeNode parent ) {
         System.out.println("moves="+ searchable_.getMoveList());
-        Long key = searchable_.getHashKey();
+        HashKey key = searchable_.getHashKey();
         Entry entry = lookupTable.get(key);
         if (lookupTable.entryExists(entry, lastMove, depth, window))
             return entry.bestMove;

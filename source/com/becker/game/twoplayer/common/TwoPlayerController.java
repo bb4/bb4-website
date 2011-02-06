@@ -189,11 +189,12 @@ public abstract class TwoPlayerController extends GameController {
      */
     @Override
     public Move undoLastMove() {
-        TwoPlayerMove m = (TwoPlayerMove) board_.undoMove();
-        if (m != null) {
-            player1sTurn_ = m.isPlayer1();
+        TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
+        getSearchable().undoInternalMove(lastMove); //(TwoPlayerMove) board_.undoMove();
+        if (lastMove != null) {
+            player1sTurn_ = lastMove.isPlayer1();
         }
-        return m;
+        return lastMove;
     }
 
     /**
@@ -229,7 +230,7 @@ public abstract class TwoPlayerController extends GameController {
         TwoPlayerMove selectedMove = searchForNextMove(weights, lastMove);
 
         if ( selectedMove != null ) {
-            makeMove( selectedMove );
+            makeMove( selectedMove);
             GameContext.log( 2, "computer move :" + selectedMove.toString() );
         }
 
@@ -260,7 +261,7 @@ public abstract class TwoPlayerController extends GameController {
      * @return the same move with some of the fields filled in
      */
     public final Move manMoves( Move m ) {
-        makeMove( m );
+        makeMove( (TwoPlayerMove)m );
         // we pass the default weights because we just need to know if the game is over
         m.setValue(getSearchable().worth( m, weights_.getDefaultWeights() ));
         return m;
@@ -274,7 +275,7 @@ public abstract class TwoPlayerController extends GameController {
      */
     @Override
     public void makeMove( Move m ) {
-        board_.makeMove( m );
+        getSearchable().makeInternalMove((TwoPlayerMove)m);
         player1sTurn_ = !((TwoPlayerMove)m).isPlayer1();
     }
 

@@ -21,19 +21,18 @@ import java.util.logging.Logger;
  *
  *  @author Barry Becker
  */
-public class GtpKgsTesujisoftGoClient
-{
+public class GtpKgsTesujisoftGoClient {
+
     private GtpKgsTesujisoftGoClient() {}
 
-    public static void main(String[] args)
-    {
-        try
-        {
+    public static void main(String[] args)  {
+
+        try {
             String logFile = FileUtil.getHomeDir() + "/temp/" + "log.txt";
             
             File file = new File(logFile);
             PrintStream log = new PrintStream(new FileOutputStream(file));
-           log.println("log=" + logFile);
+            log.println("log=" + logFile);
 
             final GtpTesujisoftGoServer gtpTSGoServer = new GtpTesujisoftGoServer(System.in, System.out, log);
 
@@ -46,14 +45,13 @@ public class GtpKgsTesujisoftGoClient
 
             log.println("step 0");
             SwingUtilities.invokeLater(new Runnable() {
-                    public void run()
-                     {
-                        try {
-                            gtpTSGoServer.mainLoop();
-                        } catch (IOException ex) {
-                            Logger.getLogger(GtpKgsTesujisoftGoClient.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                public void run() {
+                    try {
+                        gtpTSGoServer.mainLoop();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GtpKgsTesujisoftGoClient.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
             });
 
             Options kgsOptions = new Options(props, logFile);
@@ -66,8 +64,7 @@ public class GtpKgsTesujisoftGoClient
 
             log.close();
         }
-        catch (Throwable t)
-        {
+        catch (Throwable t) {
             t.printStackTrace();
             System.exit(-1);
         }

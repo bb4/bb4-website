@@ -140,11 +140,11 @@ public class GoSearchable extends TwoPlayerSearchable {
     @Override
     public int worth( Move lastMove, ParameterArray weights ) {
 
-        //// Why doesn't playing with caching give same results as without.  Also uncomment TwoPlayerSearchable  constructor
-        ////ScoreEntry cachedScore = scoreCache_.get(getHashKey());
+        // Why doesn't playing with caching give same results as without?
+        //ScoreEntry cachedScore = scoreCache_.get(getHashKey());
         //if (cachedScore != null) return cachedScore;
 
-        int worth = worthCalculator_.worth(getBoard(),lastMove, weights);
+        int worth = worthCalculator_.worth(getBoard(), lastMove, weights);
 
         /*
         if (cachedScore == null) {
@@ -154,9 +154,12 @@ public class GoSearchable extends TwoPlayerSearchable {
             if (cachedScore.getScore() == worth) {
                 System.out.println("matched");
             } else {
-                //System.out.println("cachedScore "+cachedScore +" for key="+getHashKey()+" did not match "+ worth + "\n" + getBoard().toString());
+                System.out.println("\ncachedScore "+cachedScore +" for key=" + getHashKey()
+                  +"\ndid not match "+ worth + " for \n" + getBoard().toString());
+                System.out.flush();
+                assert false;
             }
-        }*/
+        } */
         return worth;
     }
 

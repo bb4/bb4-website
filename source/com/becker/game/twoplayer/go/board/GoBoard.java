@@ -73,8 +73,8 @@ public final class GoBoard extends TwoPlayerBoard {
     }
 
     /**
-     * start over from the beginning and reinitialize everything.
-     * The first time through we need to initialize the star-point positions
+     * Start over from the beginning and reinitialize everything.
+     * The first time through we need to initialize the star-point positions.
      */
     @Override
     public void reset() {
