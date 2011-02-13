@@ -172,7 +172,7 @@ public abstract class TwoPlayerController extends GameController {
     public int getStrengthOfWin() {
         if (!getPlayers().anyPlayerWon())
             return 0;
-        return board_.getTypicalNumMoves() / getNumMoves();
+        return getBoard().getTypicalNumMoves() / getNumMoves();
     }
 
     /**
@@ -375,7 +375,7 @@ public abstract class TwoPlayerController extends GameController {
     public Searchable getSearchable() {
         if (searchable_ == null) {
             SearchOptions options = ((TwoPlayerOptions) gameOptions_).getSearchOptions();
-            searchable_ = createSearchable((TwoPlayerBoard)board_, getPlayers(),  options);
+            searchable_ = createSearchable((TwoPlayerBoard)getBoard(), getPlayers(),  options);
         }
         return searchable_;
     }

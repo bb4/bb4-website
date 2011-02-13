@@ -185,8 +185,7 @@ public class ZobristHashTest extends TestCase {
     }
 
     private ZobristHash createZHash(TwoPlayerBoard board) {
-        hash = new ZobristHash(board);
-        hash.injectRandom(new Random(0));
+        hash = new ZobristHash(board, 0, true);
         return hash;
     }
 }

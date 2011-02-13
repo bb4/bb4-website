@@ -9,6 +9,7 @@ import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.optimization.parameter.ParameterArray;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -34,8 +35,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public abstract class MultiGameController extends GameController
-{
+public abstract class MultiGameController extends GameController {
 
     protected int currentPlayerIndex_;
  
@@ -44,37 +44,40 @@ public abstract class MultiGameController extends GameController
     
     // the ith play in a given round
     protected int playIndex_ = 0;
+
+    private Dimension size;
         
-    protected  MultiGameController()
-    {
-        this(0, 0);
+    protected  MultiGameController()  {
+        size = new Dimension(0, 0);
     }
     
     /**
      *  Construct the game controller given an initial board size
      */
-    protected MultiGameController(int nrows, int ncols )
-    {
-        board_ = createTable( nrows, ncols);
+    protected MultiGameController(int nrows, int ncols ) {
+        size = new Dimension(nrows, ncols);
         initializeData();
+    }
+
+    @Override
+    protected Board createBoard() {
+        return createTable(size.width, size.height);
     }
     
     protected abstract Board createTable(int nrows, int ncols);
 
 
     /**
-     * Return the game board back to its initial openning state
+     * Return the game board back to its initial opening state
      */
     @Override
-    public void reset()
-    {
+    public void reset() {
         super.reset();
         initializeData();
     }
 
     @Override
-    protected void initializeData()
-    {
+    protected void initializeData() {
         startingPlayerIndex_ = 0;
         playIndex_ = 0;
         currentPlayerIndex_ = 0;

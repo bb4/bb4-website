@@ -10,6 +10,7 @@ import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
+import java.awt.*;
 import java.util.Random;
 
 /**
@@ -21,11 +22,13 @@ public class PenteController extends TwoPlayerController {
 
     private static final int DEFAULT_NUM_ROWS = 20;
 
+    private Dimension size;
+
     /**
      *  Constructor
      */
     public PenteController() {
-        board_ = new PenteBoard( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS );
+        size = new Dimension(DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS);
         initializeData();
     }
 
@@ -33,8 +36,13 @@ public class PenteController extends TwoPlayerController {
      *  Construct the Pente game controller given an initial board size
      */
     public PenteController(int nrows, int ncols ) {
-        board_ = new PenteBoard( nrows, ncols );
+        size = new Dimension( nrows, ncols );
         initializeData();
+    }
+
+    @Override
+    protected PenteBoard createBoard() {
+        return new PenteBoard(size.width, size.height);
     }
 
     @Override
@@ -56,8 +64,8 @@ public class PenteController extends TwoPlayerController {
     public void computerMovesFirst()
     {
         int delta = getWinRunLength() - 1;
-        int c = (int) (GameContext.random().nextFloat() * (board_.getNumCols() - 2 * delta) + delta + 1);
-        int r = (int) (GameContext.random().nextFloat() * (board_.getNumRows() - 2 * delta) + delta + 1);
+        int c = (int) (GameContext.random().nextFloat() * (getBoard().getNumCols() - 2 * delta) + delta + 1);
+        int r = (int) (GameContext.random().nextFloat() * (getBoard().getNumRows() - 2 * delta) + delta + 1);
         TwoPlayerMove m = TwoPlayerMove.createMove( r, c, 0, new GamePiece(true) );
         makeMove( m );
     }

@@ -38,7 +38,11 @@ public class CheckersBoard extends TwoPlayerBoard {
     @Override
     public void reset() {
         super.reset();
-        int i;
+        fillRows();
+    }
+
+    protected void fillRows() {
+       int i;
         for ( i = 1; i <= 3; i++ )
             fillRow( i, i % TWO, true );
 
@@ -47,7 +51,7 @@ public class CheckersBoard extends TwoPlayerBoard {
     }
 
     /**
-     * fill a reow with pieces during setup.
+     * fill a row with pieces during setup.
      */
     private void fillRow( int row, int odd, boolean player1 ) {
         

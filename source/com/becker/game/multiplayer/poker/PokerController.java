@@ -22,7 +22,7 @@ import java.util.List;
  *  - for chat, you should only chat with those at your table if you are in t a game, else chat only with those not in a game.
  * - something screwed up adding players out of order
  * - fix TrivialMarker not showing number.
- * - move most of what is in the trivial game up to multiplayer common.
+ * - move most of what is in the trivial game up to multi-player common.
  * - Make PokerHumanPlayer return a PokerAction
  * - SurrogatePokerPlayer should wait (block) on an Action from the client or server.
  * - All players should have an action that they perform (for all games. This action is like a move in a 2 player game.)
@@ -67,8 +67,7 @@ public class PokerController extends MultiGameController
     /**
      *  Construct the Poker game controller
      */
-    public PokerController()
-    {
+    public PokerController() {
         super( DEFAULT_NUM_ROWS, DEFAULT_NUM_COLS );   
     }
 
@@ -76,8 +75,7 @@ public class PokerController extends MultiGameController
      * Return the game board back to its initial openning state
      */
     @Override
-    public void reset()
-    {
+    public void reset() {
         super.reset();
         initializeData();
         pot_ = 0;
@@ -93,8 +91,7 @@ public class PokerController extends MultiGameController
      *  Construct the game controller given an initial board size
      */
     @Override
-    protected Board createTable(int nrows, int ncols )
-    {
+    protected Board createTable(int nrows, int ncols ) {
         return new PokerTable(nrows, ncols);
     }
 
@@ -125,7 +122,7 @@ public class PokerController extends MultiGameController
         dealCardsToPlayers(5);
         currentPlayerIndex_ = 0;
         
-        ((PokerTable)board_).initPlayers(players_);
+        ((PokerTable)getBoard()).initPlayers(players_);
     }
 
     /**

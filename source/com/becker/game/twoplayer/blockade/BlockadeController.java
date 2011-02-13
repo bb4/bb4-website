@@ -36,7 +36,11 @@ public class BlockadeController extends TwoPlayerController {
      */
     public BlockadeController() {
         initializeData();
-        board_ = new BlockadeBoard(NUM_ROWS, NUM_COLS);
+    }
+
+    @Override
+    protected BlockadeBoard createBoard() {
+        return new BlockadeBoard(NUM_ROWS, NUM_COLS);
     }
 
     /**
@@ -101,7 +105,7 @@ public class BlockadeController extends TwoPlayerController {
      * @return a possible list of moves based on position passed in.
      */
     public List<BlockadeMove> getPossibleMoveList(BoardPosition position) {
-        return ((BlockadeBoard)board_).getPossibleMoveList(position, !position.getPiece().isOwnedByPlayer1());
+        return ((BlockadeBoard)getBoard()).getPossibleMoveList(position, !position.getPiece().isOwnedByPlayer1());
     }
 
     @Override

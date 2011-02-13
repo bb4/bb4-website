@@ -18,8 +18,12 @@ public class TicTacToeController extends PenteController {
      *  Constructor
      */
     public TicTacToeController() {
-        board_ = new TicTacToeBoard();
         initializeData();
+    }
+
+    @Override
+    protected TicTacToeBoard createBoard() {
+        return new TicTacToeBoard();
     }
 
     @Override

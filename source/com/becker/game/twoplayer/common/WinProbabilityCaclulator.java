@@ -34,7 +34,7 @@ public class WinProbabilityCaclulator {
             return 0.5f;
         }
 
-        assert(lastMove != null);
+        assert (lastMove != null) : "last move was null";
 
         // we can use this formula to estimate the outcome:       
         float inherVal = lastMove.getInheritedValue();

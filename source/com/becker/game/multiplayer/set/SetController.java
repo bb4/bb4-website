@@ -16,27 +16,26 @@ import java.util.List;
  * Defines everything the computer needs to know to play Set with multiple players.
  *
  * todo
- *  - seelection does not always take
+ *  - selection does not always take
  *  - show sets panel does not scroll.
  *  - add hints
  *
  * @author Barry Becker
  */
-public class SetController extends MultiGameController
-{
+public class SetController extends MultiGameController {
 
-    // the deck is like the board or model
+    /** the deck is like the board or model  */
     private List<Card> deck_;
 
-    // num cards on the board at the current moment.
+    /** num cards on the board at the current moment.  */
     private int numCardsShown_;
 
     private static final int NO_PLAYER_SELECTED = -1;
 
-    // currently selected player. -1 if none selected
+    /** currently selected player. -1 if none selected        */
     private int currentPlayerIndex_ = NO_PLAYER_SELECTED;
 
-    // the maximum number of cards you can have and still not have a set (exceedingly rare).
+    /** the maximum number of cards you can have and still not have a set (exceedingly rare). */
     private static final int MAX_CARDS_BEFORE_SET = 20;
 
 
@@ -52,17 +51,15 @@ public class SetController extends MultiGameController
     }
 
     /**
-     * Return the game board back to its initial openning state
+     * Return the game board back to its initial opening state
      */
     @Override
-    public void reset()
-    {
+    public void reset() {
         initializeData();
     }
 
     @Override
-    protected void initializeData()
-    {
+    protected void initializeData() {
         deck_ = Card.newDeck();
         numCardsShown_ = ((SetOptions)getOptions()).getInitialNumCardsShown();
 

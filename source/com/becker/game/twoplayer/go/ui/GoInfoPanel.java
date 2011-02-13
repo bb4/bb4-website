@@ -110,7 +110,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         if ( p1CapturesLabel_ == null )
             return;
 
-        GoSearchable searchable = (GoSearchable) goController.getSearchable();
+        GoSearchable searchable = (GoSearchable) goController.getSearchable().copy();
         p1CapturesLabel_.setText( searchable.getNumCaptures( false ) + " " );
         p2CapturesLabel_.setText( searchable.getNumCaptures( true ) + " " );
 

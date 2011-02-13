@@ -7,15 +7,15 @@ package com.becker.game.twoplayer.common.cache;
  */
 public class ScoreEntry {
 
-    private double score;
+    private int score;
     private String boardDesc;
 
-    public ScoreEntry(double score, String boardDesc) {
+    public ScoreEntry(int score, String boardDesc) {
         this.score = score;
         this.boardDesc = boardDesc;
     }
 
-    public double getScore() {
+    public int getScore() {
         return score;
     }
 
