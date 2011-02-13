@@ -16,8 +16,8 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class ChessBoard extends CheckersBoard
-{
+public class ChessBoard extends CheckersBoard {
+
     /** arrangement of pieces on the back line. */
     private static final ChessPieceType[] PIECE_ARRANGEMENT = {
         ChessPieceType.ROOK, ChessPieceType.KNIGHT, ChessPieceType.BISHOP,
@@ -39,11 +39,10 @@ public class ChessBoard extends CheckersBoard
     }
 
     /**
-     *  reset the board to its initial state.
+     * reset the board to its initial state.
      */
     @Override
-    public void reset() {
-        super.reset();
+    protected void fillRows() {
         setupPlayerPieces(true); // player1
         setupPlayerPieces(false); // player2
     }

@@ -37,11 +37,13 @@ public final class GoController extends TwoPlayerController {
 
     private ScoreCache scoreCache_;
 
+    private BoardOpts boardOpts;
+
     /**
      * Construct the Go game controller.
      */
     public GoController() {
-        this( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS, 0);
+        boardOpts = new BoardOpts( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS, 0);
     }
 
     /**
@@ -49,8 +51,13 @@ public final class GoController extends TwoPlayerController {
      * @param numHandicapStones  0 - 9 handicap stones to show initially.
      */
     public GoController( int nrows, int ncols, int numHandicapStones ) {
-        board_ = new GoBoard( nrows, ncols, numHandicapStones );
+        boardOpts = new BoardOpts(nrows, ncols, numHandicapStones);
         initializeData();
+    }
+
+    @Override
+    protected GoBoard createBoard() {
+        return new GoBoard( boardOpts.numRows, boardOpts.numCols, boardOpts.numHandicaps);
     }
 
     @Override
@@ -79,7 +86,7 @@ public final class GoController extends TwoPlayerController {
      * @param handicap number of handicap stones to place on the board at star points.
      */
     public void setHandicap( int handicap ) {
-        ((GoBoard) board_).setHandicap( handicap );
+        ((GoBoard) getBoard()).setHandicap( handicap );
         player1sTurn_ = false;
     }
 
@@ -88,7 +95,7 @@ public final class GoController extends TwoPlayerController {
      */
     @Override
     public boolean doesComputerMoveFirst() {
-        int handicap = ((GoBoard) board_).getHandicap();
+        int handicap = ((GoBoard) getBoard()).getHandicap();
         Player player1 = getPlayers().getPlayer1();
         return ((!player1.isHuman() && (handicap == 0)) ||
                 (player1.isHuman() && (handicap > 0)));
@@ -124,7 +131,7 @@ public final class GoController extends TwoPlayerController {
      * @return the actual amount of territory for the specified player (each empty space counts as one)
      */
     public int getTerritory( boolean forPlayer1 ) {
-        return((GoBoard) board_).getTerritoryEstimate(forPlayer1, true);
+        return((GoBoard) getBoard()).getTerritoryEstimate(forPlayer1, true);
     }
 
     /**
@@ -133,7 +140,7 @@ public final class GoController extends TwoPlayerController {
     @Override
     public void reset() {
         super.reset();
-        if ( ((GoBoard) board_).getHandicap() > 0 )   {
+        if ( ((GoBoard) getBoard()).getHandicap() > 0 )   {
             player1sTurn_ = false;
         }
         scoreCache_ = new ScoreCache();
@@ -168,5 +175,16 @@ public final class GoController extends TwoPlayerController {
     @Override
     protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
         return new GoSearchable(board, players, options, scoreCache_);
+    }
+
+    private class BoardOpts {
+        int numRows, numCols;
+        int numHandicaps;
+
+        BoardOpts(int numRows, int numCols, int numHandicaps) {
+            this.numRows = numRows;
+            this.numCols = numCols;
+            this.numHandicaps = numHandicaps;
+        }
     }
 }

@@ -68,7 +68,7 @@ public class TrivialController extends MultiGameController
         }
 
         currentPlayerIndex_ = 0;
-        ((TrivialTable)board_).initPlayers(players_, this);
+        ((TrivialTable)getBoard()).initPlayers(players_, this);
     }
 
 

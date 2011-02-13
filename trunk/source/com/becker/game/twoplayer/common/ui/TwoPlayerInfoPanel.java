@@ -19,8 +19,7 @@ import java.text.MessageFormat;
  *
  *  @author Barry Becker
  */
-public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedListener
-{
+public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedListener {
 
     private JLabel chanceOfWinningLabel_;
 
@@ -28,13 +27,11 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
     /**
      * Constructor
      */
-    public TwoPlayerInfoPanel( GameController controller )
-    {
+    public TwoPlayerInfoPanel( GameController controller ) {
         super(controller);
     }
 
-    protected TwoPlayerController getController()
-    {
+    protected TwoPlayerController getController() {
         return (TwoPlayerController)controller_;
     }
 
@@ -42,8 +39,8 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
      * this is general information that is applicable to every 2 player game.
      */
     @Override
-    protected JPanel createGeneralInfoPanel()
-    {
+    protected JPanel createGeneralInfoPanel()  {
+
         JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
 
         JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
@@ -75,8 +72,8 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
      * set the appropriate text and color for the player label.
      */
     @Override
-    protected void setPlayerLabel()
-    {
+    protected void setPlayerLabel() {
+
         AbstractTwoPlayerBoardViewer viewer = (AbstractTwoPlayerBoardViewer)controller_.getViewer();
         TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
         PlayerList players = getController().getPlayers();
@@ -95,8 +92,8 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
      * This method called whenever a move has been made.
      */
     @Override
-    public void gameChanged( GameChangedEvent gce )
-    {
+    public void gameChanged( GameChangedEvent gce ) {
+
         if ( controller_ == null )
             return;
         if ( controller_.getLastMove() != null ) {
@@ -104,10 +101,9 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
             moveNumLabel_.setText( controller_.getNumMoves() + " " );
             WinProbabilityCaclulator calc = new WinProbabilityCaclulator();
             String formattedPropability =
-                    Util.formatNumber(calc.getChanceOfPlayer1Winning(getController().getMoveList()));
+                    Util.formatNumber(calc.getChanceOfPlayer1Winning(getController().getMoveList().copy()));
             chanceOfWinningLabel_.setText(  formattedPropability + ' ' );
         }
-        
     }
 
 }

@@ -29,7 +29,11 @@ public class CheckersController extends TwoPlayerController {
      */
     public CheckersController() {
         initializeData();
-        board_ = new CheckersBoard();
+    }
+
+    @Override
+    protected CheckersBoard createBoard() {
+        return new CheckersBoard();
     }
 
     /**
@@ -91,7 +95,7 @@ public class CheckersController extends TwoPlayerController {
             else
                 getPlayers().getPlayer2().setWon(true);
         }
-        if ( getNumMoves() >= board_.getMaxNumMoves() ) {
+        if ( getNumMoves() >= getBoard().getMaxNumMoves() ) {
             won = true;
             if ( recordWin ) {
                 if ( Math.abs( m.getValue() ) >= 0 )

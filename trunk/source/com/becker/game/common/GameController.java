@@ -17,7 +17,7 @@ public abstract class GameController
            implements IGameController {
 
     /** the board has the layout of the pieces. */
-    protected Board board_;
+    private Board board_;
 
     /** sometimes we want to draw directly to the ui while thinking (for debugging purposes) . */
     protected GameViewable viewer_;
@@ -54,12 +54,12 @@ public abstract class GameController
      * Return the game board back to its initial opening state
      */
     public void reset() {
-        board_.reset();
+        getBoard().reset();
     }
 
 
     public MoveList getMoveList() {
-        return board_.getMoveList();
+        return getBoard().getMoveList();
     }
 
     /**
@@ -73,7 +73,7 @@ public abstract class GameController
      * @return number of moves made so far.
      */
     public int getNumMoves() {
-        return board_.getMoveList().getNumMoves();
+        return getBoard().getMoveList().getNumMoves();
     }
 
     /**
@@ -96,8 +96,13 @@ public abstract class GameController
      * @return the board representation object.
      */
     public final Board getBoard() {
+        if (board_ == null) {
+            board_ = createBoard();
+        }
         return board_;
     }
+
+    protected abstract Board createBoard();
 
     /**
      * Setup the initial game state.
@@ -106,7 +111,7 @@ public abstract class GameController
 
 
     public void makeMove(Move move) {
-        board_.makeMove(move);
+        getBoard().makeMove(move);
     }
 
     /**
@@ -115,7 +120,7 @@ public abstract class GameController
      */
     public Move undoLastMove()
     {
-        return board_.undoMove();
+        return getBoard().undoMove();
     }
 
     /**

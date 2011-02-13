@@ -38,7 +38,11 @@ public class ChessController extends CheckersController
      */
     public ChessController() {
         initializeData();
-        board_ = new ChessBoard();
+    }
+
+    @Override
+    protected ChessBoard createBoard() {
+        return new ChessBoard();
     }
 
     /**
@@ -72,7 +76,7 @@ public class ChessController extends CheckersController
      * @param moveList
      */
     public void removeSelfCheckingMoves(List moveList) {
-        ChessBoard b = (ChessBoard)board_;
+        ChessBoard b = (ChessBoard)getBoard();
         Iterator it = moveList.iterator();
         while (it.hasNext()) {
            ChessMove move = (ChessMove)it.next();

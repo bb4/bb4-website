@@ -53,8 +53,7 @@ public class GalacticController extends MultiGameController
     /**
      *  Construct the Galactic game controller
      */
-    public GalacticController()
-    {
+    public GalacticController() {
         super(DEFAULT_NUM_ROWS, DEFAULT_NUM_COLS );
     }
 
@@ -62,8 +61,7 @@ public class GalacticController extends MultiGameController
      *  Construct the Galactic game controller given an initial board size
      */
     @Override
-    protected Board createTable(int nrows, int ncols )
-    {
+    protected Board createTable(int nrows, int ncols ) {
         return new Galaxy( nrows, ncols );
     }
 
@@ -92,7 +90,7 @@ public class GalacticController extends MultiGameController
         }
         currentPlayerIndex_ = 0;
         
-        ((Galaxy)board_).initPlanets(players_, (GalacticOptions)getOptions());
+        ((Galaxy)getBoard()).initPlanets(players_, (GalacticOptions)getOptions());
     }
 
     /**
@@ -213,7 +211,7 @@ public class GalacticController extends MultiGameController
 
     public void setNumPlanets(int numPlanets)
     {
-        ((Galaxy)board_).setNumPlanets(numPlanets);
+        ((Galaxy)getBoard()).setNumPlanets(numPlanets);
     }
 
 }

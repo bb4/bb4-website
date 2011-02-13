@@ -28,19 +28,44 @@ public final class ZobristHash {
 
     private HashKey currentKey;
 
+    private boolean includeHistory;
+
     /**
      * Create the static table of random numbers to use for the Hash from a sample board.
      * @param board game board
      */
     public ZobristHash(TwoPlayerBoard board) {
 
-        currentKey = new HashKey();
+        this(board, 0, false);
+    }
+
+    /**
+     * Create the static table of random numbers to use for the Hash from a sample board.
+     * @param board game board
+     */
+    public ZobristHash(TwoPlayerBoard board, int randomSeed, boolean includeHistory) {
+
+
         this.board = board;
-        injectRandom(new Random(0));
+        this.includeHistory = includeHistory;
+        injectRandom(new Random(randomSeed));
+    }
+
+    /**
+     * @return  the current Zobrist hash key for the board state.
+     */
+    public HashKey getKey() {
+        return currentKey;
+    }
+
+    public void applyMove(TwoPlayerMove move, int stateIndex) {
+        if (!move.isPassingMove())  {
+            applyPositionToKey(move.getToLocation(), stateIndex);
+        }
     }
 
     /** for unit testing only so we get repeatable tests. */
-    public void injectRandom(Random r) {
+    private void injectRandom(Random r) {
         RANDOM = r;
         initialize();
     }
@@ -71,7 +96,7 @@ public final class ZobristHash {
      * @return the Zobrist Hash Key created from XORing together all the position states.
      */
     private HashKey getInitialKey(TwoPlayerBoard board) {
-        currentKey = new HashKey();
+        currentKey = createHashKey();
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();
 
@@ -79,7 +104,6 @@ public final class ZobristHash {
             for (int j=1; j<=ncols; j++) {
                 BoardPosition pos = board.getPosition(i, j);
                 if (pos.isOccupied()) {
-                    // note ^ is XOR (exclusive OR) in java.
                     applyPositionToKey(new Location(i, j), board.getStateIndex(pos));
                 }
             }
@@ -87,22 +111,12 @@ public final class ZobristHash {
         return currentKey;
     }
 
-    /**
-     * @return  the current Zobrist hash key for the board state.
-     */
-    public HashKey getKey() {
-        return currentKey;
-    }
-
-    public void applyMove(TwoPlayerMove move, int stateIndex) {
-        if (!move.isPassingMove())  {
-            applyPositionToKey(move.getToLocation(), stateIndex);
-        }
+    private HashKey createHashKey() {
+        return includeHistory ? new HistoricalHashKey() : new HashKey();
     }
 
     /**
      * note ^ is XOR (exclusive OR) in java.
-     * @return key after the move has been made
      */
     private void applyPositionToKey(Location location, int stateIndex) {
 

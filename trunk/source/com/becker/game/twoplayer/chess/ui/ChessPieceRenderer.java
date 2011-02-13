@@ -60,8 +60,7 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
     private ChessPieceRenderer()
     {}
 
-    public static TwoPlayerPieceRenderer getRenderer()
-    {
+    public static TwoPlayerPieceRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new ChessPieceRenderer();
         return renderer_;
@@ -72,8 +71,7 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
      *  ignored if using icons to represent the pieces.
      */
     @Override
-    public Color getPlayer1Color()
-    {
+    public Color getPlayer1Color() {
         return DEFAULT_PLAYER1_COLOR;
     }
 
@@ -82,8 +80,7 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
      *  ignored if using icons to represent the pieces.
      */
     @Override
-    public Color getPlayer2Color()
-    {
+    public Color getPlayer2Color() {
         return DEFAULT_PLAYER2_COLOR;
     }
 
@@ -91,8 +88,7 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
      * this draws the actual chess piece
      */
     @Override
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
-    {
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b) {
         ChessPiece piece = (ChessPiece)position.getPiece();
         if (piece==null)
             return; // nothing to render
