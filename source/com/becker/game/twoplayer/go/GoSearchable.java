@@ -140,14 +140,14 @@ public class GoSearchable extends TwoPlayerSearchable {
     @Override
     public int worth( Move lastMove, ParameterArray weights ) {
 
+        // Try turning off all forms of go caching.
         // Why doesn't playing with caching give same results as without?
-        ////ScoreEntry cachedScore = scoreCache_.get(getHashKey());
+        ScoreEntry cachedScore = scoreCache_.get(getHashKey());
         //if (cachedScore != null)
         //    return cachedScore.getScore();
 
         int worth = worthCalculator_.worth(getBoard(), lastMove, weights);
 
-        /*
         if (cachedScore == null) {
             scoreCache_.put(getHashKey(), new ScoreEntry(worth, getBoard().toString()));
         }
@@ -160,7 +160,7 @@ public class GoSearchable extends TwoPlayerSearchable {
                 System.out.flush();
                 assert false;
             }
-        }   */
+        }
         return worth;
     }
 
