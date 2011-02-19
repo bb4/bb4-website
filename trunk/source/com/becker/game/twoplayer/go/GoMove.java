@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.common.Location;
-import com.becker.game.common.board.CaptureList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoCaptureList;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.*;
@@ -23,7 +23,7 @@ public class GoMove extends TwoPlayerMove {
      * A linked list of the pieces that were captured with this move.
      * null if there were no captures.
      */
-    private CaptureList captureList_ = null;
+    private GoCaptureList captureList_ = null;
 
     /**
      * Constructor.
@@ -102,9 +102,9 @@ public class GoMove extends TwoPlayerMove {
     }
 
     /**
-     * If the newly placed stone captures an opponent string, then we reutnr false.
+     * If the newly placed stone captures an opponent string, then we return false.
      * @param occupiedNbrs The 4 occupied Nbrs neighbors to check
-     * @return true if the newly placed stone is part of a string that is now captured as a reuslt of playing.
+     * @return true if the newly placed stone is part of a string that is now captured as a result of playing.
      */
     private boolean partOfDeadString(GoBoardPositionSet occupiedNbrs, GoBoard board ) {
         for (GoBoardPosition nbr : occupiedNbrs)  {
@@ -155,11 +155,11 @@ public class GoMove extends TwoPlayerMove {
      * I would like to avoid this setter.
      * @param captures
      */
-    public void setCaptures(CaptureList captures) {
+    public void setCaptures(GoCaptureList captures) {
         captureList_ = captures;
     }
 
-    public CaptureList getCaptures() {
+    public GoCaptureList getCaptures() {
         return captureList_;
     }
 

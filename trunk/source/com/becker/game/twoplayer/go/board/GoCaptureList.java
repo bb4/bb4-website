@@ -19,6 +19,26 @@ import java.util.List;
  */
 public class GoCaptureList extends CaptureList {
 
+    public GoCaptureList() {
+    }
+
+    /**
+     * copy constructor
+     */
+    public GoCaptureList(CaptureList captureList) {
+
+        super(captureList);
+    }
+
+    /**
+     * @return a deep copy of the capture list.
+     */
+    @Override
+    public GoCaptureList copy()  {
+
+        return new GoCaptureList(this);
+    }
+
     /**
      * we need to add copies so that when the original stones on the board are
      * changed we don't change the captures

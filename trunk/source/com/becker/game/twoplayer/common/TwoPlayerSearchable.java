@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common;
 
+import com.becker.common.Location;
 import com.becker.game.common.*;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.player.PlayerList;
@@ -27,7 +28,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
     protected final BestMoveFinder bestMoveFinder_;
 
     /** Used to generate hashkeys. */
-    private final ZobristHash hash;
+    protected final ZobristHash hash;
 
 
     /**
@@ -83,7 +84,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
     /**
      * @param m the move to play.
      */
-    public final void makeInternalMove( TwoPlayerMove m ) {
+    public void makeInternalMove( TwoPlayerMove m ) {
 
         TwoPlayerMove lastMove = (TwoPlayerMove)(moveList_.getLastMove());
         if (moveList_.getNumMoves() > 0) {
@@ -93,19 +94,23 @@ public abstract class TwoPlayerSearchable implements Searchable {
 
         getBoard().makeMove( m );
 
-        BoardPosition pos = getBoard().getPosition(m.getToLocation());
-        hash.applyMove(m, getBoard().getStateIndex(pos));
+        if (!m.isPassingMove())  {
+             Location loc = m.getToLocation();
+             hash.applyMove(loc, getBoard().getStateIndex(getBoard().getPosition(loc)));
+        }
     }
 
     /**
      * takes back the most recent move.
      * @param m  move to undo
      */
-    public final void undoInternalMove( TwoPlayerMove m ) {
+    public void undoInternalMove( TwoPlayerMove m ) {
         TwoPlayerMove lastMove = (TwoPlayerMove)moveList_.getLastMove();
         assert m.equals(lastMove) : "The move we are trying to undo ("+m+") in list="
                 + moveList_+" was not equal to the last move ("+lastMove+"). all move=" + getBoard().getMoveList();
-        hash.applyMove(m, getBoard().getStateIndex(getBoard().getPosition(m.getToLocation())));
+
+        Location loc = m.getToLocation();
+        hash.applyMove(loc, getBoard().getStateIndex(getBoard().getPosition(loc)));
         getBoard().undoMove();
     }
 

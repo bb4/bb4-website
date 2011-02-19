@@ -74,7 +74,7 @@ class RelativeHealthCalculator {
      */
     private GoGroup findWeakestGroup(GoBoard board, GoBoardPositionSet groupStones) {
 
-        Set cachedEnemyNbrGroups = getEnemyGroupNeighbors(board, groupStones);
+        Set enemyNbrGroups = getEnemyGroupNeighbors(board, groupStones);
 
         // we multiply by a +/- sign depending on the side
         float side = group_.isOwnedByPlayer1()? 1.0f : -1.0f;
@@ -82,7 +82,7 @@ class RelativeHealthCalculator {
         // of these enemy groups which is the weakest?
         double weakestHealth = -side;
         GoGroup weakestGroup = null;
-        for (Object egroup : cachedEnemyNbrGroups) {
+        for (Object egroup : enemyNbrGroups) {
             GoGroup enemyGroup = (GoGroup)egroup;
             double h = enemyGroup.getAbsoluteHealth();
             if ((side * h) > (side * weakestHealth)) {

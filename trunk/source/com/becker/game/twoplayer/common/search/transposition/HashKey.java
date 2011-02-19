@@ -62,6 +62,6 @@ public class HashKey {
 
 
     public String toString() {
-        return "key="+ Long.toBinaryString(key);
+        return Long.toBinaryString(key);
     }
 }

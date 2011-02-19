@@ -179,9 +179,10 @@ public class ZobristHashTest extends TestCase {
 
     private void applyMoveToHash(int row, int col, boolean player1) {
         GamePiece p = new GamePiece(player1);
-        TwoPlayerMove m = TwoPlayerMove.createMove(new Location(row, col), 0, p);
+        Location loc = new Location(row, col);
+        TwoPlayerMove m = TwoPlayerMove.createMove(loc, 0, p);
         int stateIndex = board.getStateIndex(new BoardPosition(row, col, p));
-        hash.applyMove(m, stateIndex);
+        hash.applyMove(loc, stateIndex);
     }
 
     private ZobristHash createZHash(TwoPlayerBoard board) {
