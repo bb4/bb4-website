@@ -15,6 +15,27 @@ public class CaptureList extends LinkedList<BoardPosition> {
 
     private static final long serialVersionUID = 0L;
 
+    public CaptureList() {
+    }
+
+    /**
+     * copy constructor
+     */
+    public CaptureList(CaptureList captureList) {
+
+        for (BoardPosition capture : captureList)  {
+            add( capture.copy() );
+        }
+    }
+
+    /**
+     * @return a deep copy of the capture list.
+     */
+    public CaptureList copy()  {
+
+        return new CaptureList(this);
+    }
+
     /**
      * remove the captured pieces from the board.
      */
@@ -57,18 +78,6 @@ public class CaptureList extends LinkedList<BoardPosition> {
                 return true;
         }
         return false;
-    }
-
-    /**
-     * @return a deep copy of the capture list.
-     */
-    public CaptureList copy()  {
-
-        CaptureList newList = new CaptureList();
-        for (BoardPosition capture : this)  {
-            newList.add( capture.copy() );
-        }
-        return newList;
     }
 
     /**

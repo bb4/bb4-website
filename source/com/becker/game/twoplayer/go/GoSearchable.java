@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.*;
+import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -8,6 +9,7 @@ import com.becker.game.twoplayer.common.TwoPlayerSearchable;
 import com.becker.game.twoplayer.common.cache.ScoreCache;
 import com.becker.game.twoplayer.common.cache.ScoreEntry;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
+import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.WorthCalculator;
 import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
@@ -142,15 +144,18 @@ public class GoSearchable extends TwoPlayerSearchable {
 
         // Try turning off all forms of go caching.
         // Why doesn't playing with caching give same results as without?
-        ScoreEntry cachedScore = scoreCache_.get(getHashKey());
-        //if (cachedScore != null)
-        //    return cachedScore.getScore();
+        ////HashKey key = getHashKey();
+        ////ScoreEntry cachedScore = scoreCache_.get(key);
+        // probably should add a flag for whether or not to use score caching
+        ////if (cachedScore != null)
+        ////    return cachedScore.getScore();
 
         int worth = worthCalculator_.worth(getBoard(), lastMove, weights);
 
-        if (cachedScore == null) {
-            scoreCache_.put(getHashKey(), new ScoreEntry(worth, getBoard().toString()));
-        }
+        //if (cachedScore == null) {
+        ////    scoreCache_.put(getHashKey(), new ScoreEntry(worth, getBoard().toString()));
+        //}
+        /*
         else {
             if (cachedScore.getScore() == worth) {
                 System.out.println("matched");
@@ -158,9 +163,8 @@ public class GoSearchable extends TwoPlayerSearchable {
                 System.out.println("\ncachedScore "+cachedScore +" for key=" + getHashKey()
                   +"\ndid not match "+ worth + " for \n" + getBoard().toString());
                 System.out.flush();
-                assert false;
             }
-        }
+        } */
         return worth;
     }
 
@@ -172,6 +176,41 @@ public class GoSearchable extends TwoPlayerSearchable {
      */
     public int getNumCaptures( boolean player1sStones )  {
         return getBoard().getNumCaptures(player1sStones);
+    }
+
+    /**
+     * @param m the move to play.
+     */
+    @Override
+    public void makeInternalMove( TwoPlayerMove m ) {
+
+        super.makeInternalMove(m);
+        updateHashIfCaptures((GoMove) m);
+    }
+
+    /**
+     * takes back the most recent move.
+     * @param m  move to undo
+     */
+    @Override
+    public void undoInternalMove( TwoPlayerMove m ) {
+
+        super.undoInternalMove(m);
+        updateHashIfCaptures((GoMove) m);
+    }
+
+    /**
+     * Whether we are removing captures from the board or adding them back, the operation is the same: XOR.
+     */
+    private void updateHashIfCaptures(GoMove goMove)  {
+
+        if (goMove.getNumCaptures() > 0)  {
+            for (BoardPosition pos : goMove.getCaptures()) {
+                hash.applyMove(pos.getLocation(), getBoard().getStateIndex(pos));
+            }
+        }
+        // this is needed to disambiguate ko's.
+        hash.applyMoveNumber(getNumMoves());
     }
 
     /**

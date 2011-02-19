@@ -58,10 +58,13 @@ public final class ZobristHash {
         return currentKey;
     }
 
-    public void applyMove(TwoPlayerMove move, int stateIndex) {
-        if (!move.isPassingMove())  {
-            applyPositionToKey(move.getToLocation(), stateIndex);
-        }
+    public void applyMove(Location move, int stateIndex) {
+
+        applyPositionToKey(move, stateIndex);
+    }
+
+    public void applyMoveNumber(int number) {
+          currentKey.applyMove(null, number);
     }
 
     /** for unit testing only so we get repeatable tests. */

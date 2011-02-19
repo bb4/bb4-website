@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.transposition;
 
+import com.becker.common.Location;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.GamePiece;
@@ -99,7 +100,7 @@ public class HashUniquenessTest extends TestCase {
             TwoPlayerMove move = (TwoPlayerMove) m;
             board.makeMove(move);
 
-            applyMoveToHash(move);
+            applyMoveToHash(move.getToLocation());
             HashKey key = hash.getKey();
             ScoreEntry cachedScore = scoreCache.get(key);
 
@@ -122,7 +123,7 @@ public class HashUniquenessTest extends TestCase {
             playAllMoves(depth + 1);
 
              // removes it from hash. must be done before next line.
-            applyMoveToHash(move);
+            applyMoveToHash(move.getToLocation());
             board.undoMove();
         }
     }
@@ -155,8 +156,8 @@ public class HashUniquenessTest extends TestCase {
     }
 
 
-    private void applyMoveToHash(TwoPlayerMove move) {
-        int stateIndex = board.getStateIndex(board.getPosition(move.getToLocation()));
+    private void applyMoveToHash(Location move) {
+        int stateIndex = board.getStateIndex(board.getPosition(move));
         hash.applyMove(move, stateIndex);
     }
 

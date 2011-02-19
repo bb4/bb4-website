@@ -19,7 +19,7 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Transposition Tests");
 
         suite.addTestSuite(ZobristHashTest.class);
-        suite.addTestSuite(HashUniquenessTest.class);
+        //suite.addTestSuite(HashUniquenessTest.class);
 
         return suite;
     }

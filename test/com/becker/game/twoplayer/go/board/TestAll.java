@@ -27,7 +27,6 @@ public class TestAll {
         suite.addTestSuite(TestGoBoard.class);
         suite.addTestSuite(TestGroupFinding.class);
 
-
         return suite;
     }
 }
