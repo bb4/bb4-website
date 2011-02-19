@@ -16,7 +16,7 @@ public enum EyeStatus
     /**
      * The eye will end up as only one eye and this will not be sufficient to
      * live. A nakade eye can be the result of: (1) an eye with an empty set of vital
-     * points or (2) an eye with all the set of vital points filled by the opponent’s stones.
+     * points or (2) an eye with all the set of vital points filled by the opponent's stones.
      */
     NAKADE("Nakade", "Ends up as one eye and this will not be sufficient to live.", SINGLE_EYE),
 
@@ -49,7 +49,7 @@ public enum EyeStatus
             " block, and capturing the opponent stones inside the eye grants an alive status.", FALSE_EYE),
 
     /**
-     * For exmaple if may be a false eye with only one space in the eye - in other words a ko.
+     * For example if may be a false eye with only one space in the eye - in other words a ko.
      */
     KO("Ko", "Will never be an eye no matter who plays first.", FALSE_EYE),
 

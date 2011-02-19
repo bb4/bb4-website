@@ -19,9 +19,9 @@
   <!-- property name="java_home" value="/usr/java/jdk1.5.0_05"/
          property name="java14" value="/usr/java/jdk1.4.2/bin/java"/
          property name="java15" value="${java_home}/bin/amd64/java"/ -->
-  <property name="java_home" value="D:/apps/java"/>
+  <property name="java_home" value="C:/Program Files/Java"/>
   <property name="java15" value="${java_home}/java1.5.0_12/jre/bin/java"/>
-  <property name="java16" value="${java_home}/jdk1.6.0_23/bin/java"/>
+  <property name="java16" value="${java_home}/jdk1.6.0_24/bin/java"/>
   <property name="java_compiler" value="${java16}"/>
   <property name="sleepTime" value="100"/>
 
