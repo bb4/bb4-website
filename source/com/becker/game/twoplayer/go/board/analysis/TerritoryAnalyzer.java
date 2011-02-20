@@ -146,8 +146,7 @@ public class TerritoryAnalyzer {
      */
     private float calcAbsoluteHealth() {
         float delta = 0;
-        GoProfiler prof = GoProfiler.getInstance();
-        prof.startAbsoluteTerritory();
+        GoProfiler.getInstance().startAbsoluteTerritory();
 
         for (GoGroup g : board_.getGroups()) {
 
@@ -158,7 +157,7 @@ public class TerritoryAnalyzer {
                 delta += health * g.getNumStones();
             }
         }
-        prof.stopAbsoluteTerritory();
+        GoProfiler.getInstance().stopAbsoluteTerritory();
         return delta;
     }
 

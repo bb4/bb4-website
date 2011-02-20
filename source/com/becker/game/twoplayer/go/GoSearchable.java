@@ -28,6 +28,8 @@ public class GoSearchable extends TwoPlayerSearchable {
     /** Size of group that needs to be in atari before we consider a group urgent. */
     private static final int CRITICAL_GROUP_SIZE = 3;
 
+    private static final boolean USE_SCORE_CACHING = false;
+
     /** keeps track of dead stones.  */
     private DeadStoneUpdater deadStoneUpdater_;
 
@@ -134,28 +136,39 @@ public class GoSearchable extends TwoPlayerSearchable {
 
     /**
      *  Statically evaluate the board position.
-     *
-     *  @return statically evaluated value of the board.
+     *  @return statically evaluated value for the board.
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
     @Override
     public int worth( Move lastMove, ParameterArray weights ) {
 
+        if (USE_SCORE_CACHING) {
+            return cachedWorth(lastMove, weights);
+        } else {
+            return worthCalculator_.worth(getBoard(), lastMove, weights);
+        }
+    }
+
+    /**
+     *  If we have a cached worth value for this board position, then use that.
+     *  @return statically evaluated value for the board.
+     */
+    public int cachedWorth( Move lastMove, ParameterArray weights ) {
+
         // Try turning off all forms of go caching.
         // Why doesn't playing with caching give same results as without?
-        ////HashKey key = getHashKey();
-        ////ScoreEntry cachedScore = scoreCache_.get(key);
-        // probably should add a flag for whether or not to use score caching
-        ////if (cachedScore != null)
-        ////    return cachedScore.getScore();
+        HashKey key = getHashKey();
+        ScoreEntry cachedScore = scoreCache_.get(key);
+        //if (cachedScore != null) {
+        //    return cachedScore.getScore();
+        //}
 
         int worth = worthCalculator_.worth(getBoard(), lastMove, weights);
 
-        //if (cachedScore == null) {
-        ////    scoreCache_.put(getHashKey(), new ScoreEntry(worth, getBoard().toString()));
-        //}
-        /*
+        if (cachedScore == null) {
+            scoreCache_.put(getHashKey(), new ScoreEntry(worth, getBoard().toString()));
+        }
         else {
             if (cachedScore.getScore() == worth) {
                 System.out.println("matched");
@@ -164,10 +177,9 @@ public class GoSearchable extends TwoPlayerSearchable {
                   +"\ndid not match "+ worth + " for \n" + getBoard().toString());
                 System.out.flush();
             }
-        } */
+        }
         return worth;
     }
-
 
     /**
      * get the number of black (player1=true) or white (player1=false) stones that were captured and removed.

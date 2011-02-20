@@ -92,13 +92,12 @@ class AbsoluteHealthCalculator {
      *
      * @@ need expert advice to make this work well.
      * @@ make the constants parameters and optimize them.
-     * @@ we currently don't give any bonus for false eyes. should we?
      *
      * @return the overall health of the group independent of nbr groups.
      */
     public float calculateAbsoluteHealth(GoBoard board) {
-        if ( eyeCache_.isValid() ) {
-            GameContext.log(1, "cache valid. Returning health="+ absoluteHealth_);
+        if (eyeCache_.isValid()) {
+            GameContext.log(1, "cache valid. Returning health=" + absoluteHealth_);
             return absoluteHealth_;
         }
 
@@ -118,7 +117,9 @@ class AbsoluteHealthCalculator {
         eyeCache_.updateEyes(board);  // expensive
         GoProfiler.getInstance().stopUpdateEyes();
 
-        numEyes = Math.max(eyeCache_.getEyePotential(), eyeCache_.calcNumEyes());
+        float eyePotential = eyeCache_.getEyePotential();
+        float revisedNumEyes = eyeCache_.calcNumEyes();
+        numEyes = Math.max(eyePotential, revisedNumEyes);
 
         // health based on eye shape - the most significant factor
         float health = eyeEvaluator.determineHealth(side, numEyes, numLiberties, numStones);
