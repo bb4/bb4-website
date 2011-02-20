@@ -58,7 +58,7 @@ class EyeSpaceAnalyzer {
      * Don't count these as eyes unless the stones of the opposite color are much weaker -
      * in which case they are assumed dead and hence part of the eye.
      * @param candidateEyeLists eye space lists
-     * @return set of eyes in this group/
+     * @return set of eyes in this group
      */
     private Set<GoEye> findEyeFromCandidates(List<GoBoardPositionList> candidateEyeLists) {
         Set<GoEye> eyes = new LinkedHashSet<GoEye>();
@@ -92,7 +92,7 @@ class EyeSpaceAnalyzer {
     }
 
     /**
-     * Eliminate all the stones and spaces that are in the bounding rect,
+     * Eliminate all the stones and spaces that are in the bounding rectangle,
      * but not in the group. We do this by marching around the perimeter cutting out
      * the strings of empty or opponent spaces that do not belong.
      * Note : we do not go all the way to the edge. If the border of a group includes an edge of the board,

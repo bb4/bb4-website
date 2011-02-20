@@ -67,7 +67,6 @@ public enum EyeStatus
     private String description_;
     private float score_;
 
-    
 
     /**
      * constructor.
@@ -81,7 +80,6 @@ public enum EyeStatus
         score_ = score;
     }
 
-
     @Override
     public String toString() {
         return label_;
@@ -94,5 +92,4 @@ public enum EyeStatus
     public float getScore() {
         return score_;
     }
-
 }

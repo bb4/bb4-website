@@ -9,7 +9,7 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public class GoGroupSet extends HashSet<GoGroup> {
+public class GoGroupSet extends LinkedHashSet<GoGroup> {
 
     /**
      * Default constructor.

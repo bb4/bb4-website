@@ -166,7 +166,7 @@ class EyeHealthEvaluator {
     }
 
     /**
-     * @return health of a single stone mased on numbe rof liberties it has.
+     * @return health of a single stone based on number of liberties it has.
      */
     private float calcSingleStoneHealth(float side, int numLiberties) {
         float health = 0;

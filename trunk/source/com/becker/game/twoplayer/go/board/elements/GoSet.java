@@ -26,7 +26,7 @@ public abstract class GoSet implements GoMember {
 
     /**
      * Get the number of liberties (open surrounding spaces)
-     * @param board
+     * @param board go board
      * @return the liberties/positions for the set.
      */
     public abstract GoBoardPositionSet getLiberties(GoBoard board);

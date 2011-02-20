@@ -100,7 +100,6 @@ public class WorthCalculator {
             String desc = totalScore.getDescription(worth, captureScore, territoryDelta, scaleFactor);
             ((TwoPlayerMove) lastMove).setScoreDescription(desc);
         }
-
         return worth;
     }
 

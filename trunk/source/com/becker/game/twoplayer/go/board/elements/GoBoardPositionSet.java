@@ -2,8 +2,7 @@ package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.game.common.GameContext;
 
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -11,7 +10,7 @@ import java.util.Set;
  *
  *  @author Barry Becker
  */
-public class GoBoardPositionSet extends HashSet<GoBoardPosition> {
+public class GoBoardPositionSet extends LinkedHashSet<GoBoardPosition> {
 
     public GoBoardPositionSet() {}
 
