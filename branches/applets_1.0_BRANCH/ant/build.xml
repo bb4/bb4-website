@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="deploy" name="applets">
+  <description>usage: ant {task}
+  </description>
+
+  <property file="common.properties"/>
+
+  <!-- enable or disable assertions when runnning. Should disable before formally releasing a new version. -->
+  <property name="assertionsFlag" value="-enableassertions"/>
+
+  <!-- put test results here -->
+  <property name="testOutput" value="../temp"/>
+
+  <!-- place to put .class files, images and resources, so they can be jar'd up -->
+  <property name="stagingDir" value="../temp/classes"/>
+  <!-- the base game applicaiton class -->
+  <property name="gameAppClass" value="com.becker.game.common.ui.GameApp"/>
+  <!-- the jvm to use when executing -->
+  <!-- property name="java_home" value="/usr/java/jdk1.5.0_05"/
+         property name="java14" value="/usr/java/jdk1.4.2/bin/java"/
+         property name="java15" value="${java_home}/bin/amd64/java"/ -->
+  <property name="java_home" value="C:/Program Files/Java"/>
+  <property name="java15" value="${java_home}/java1.5.0_12/jre/bin/java"/>
+  <property name="java16" value="${java_home}/jdk1.6.0_24/bin/java"/>
+  <property name="java_compiler" value="${java16}"/>
+  <property name="sleepTime" value="100"/>
+
+  <!-- Load additional tasks -->
+   <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+   </taskdef>
+
+  <!-- source metrics
+  <taskdef name="javancss"
+           classname="javancss.JavancssAntTask"
+           classpath="${antHome}/lib"/>
+  -->
+
+  <path id="compile.classpath">
+    <pathelement location="${libDir}/oalnf/oalnf.jar"/>
+    <pathelement location="${libDir}/vecmath.jar"/>
+    <pathelement location="${libDir}/sun.jar"/>
+    <pathelement location="../lib/jai_codec.jar"/>
+    <pathelement location="${libDir}/jnlp.jar"/>
+    <pathelement location="${libDir}/junit.jar"/>
+    <pathelement location="${libDir}/gogui7.1.jar"/>
+    <pathelement location="${libDir}/kgsGtp.jar"/>
+    <pathelement location="${libDir}/gtpserver.jar"/>
+    <pathelement location="${libDir}/commons-codec-1.3.jar"/>
+    <pathelement location="${libDir}/rt.jar"/>
+  </path>
+
+
+  <target name="compile" depends="init" description="Compiles the source code">
+    <javac debug="yes" deprecation="yes" destdir="${classesDir}"
+        nowarn="no" optimize="yes" srcdir="${sourceDir}" verbose="false"
+        executable="${java_home}/bin/javac" compiler="modern" source="1.5">
+       <!-- compilerarg value="-Xlint" /   this is nice but adding support for generics is a bit of a rathole.-->
+       <classpath refid="compile.classpath"/>
+    </javac>
+    <!-- use ant deploy to copy the resources to the classes dir -->
+  </target>
+
+
+  <target name="game metrics" depends="compile"
+      description="calculate metrics (e.g. lines of code) for all the source files in the project">
+    <javancss srcdir="${sourceDir}/com/becker/game"
+         generateReport="true"
+         packageMetrics="true"
+         classMetrics="false"
+         functionMetrics="false"
+         outputfile="../performance/javancss_metrics.txt"
+         format="plain">
+      <include name="**/*.java"/>
+    </javancss>
+  </target>
+
+  <target name="clean" depends="init" description="Cleans out all the existing compiled classes and ${distributionDir}">
+     <delete dir="${classesDir}"/>
+     <delete dir="${distributionDir}"/>
+     <ant antfile="rmi.xml" inheritall="true" target="rmi_clean"/>
+  </target>
+
+  <target name="init">
+     <mkdir dir="${classesDir}"/>
+     <mkdir dir="${distributionDir}"/>
+     <mkdir dir="${distributionGameDir}"/>
+     <ant antfile="rmi.xml" inheritall="true" target="rmi_init"/>
+  </target>
+
+
+  <target name="deploy" depends="compile" 
+      description="deploys the built jar files to the ${distributionDir} dir so they can be bulk copied to a website">
+      <ant antfile="distribute.xml" inheritall="true" target="distribute"/>
+  </target>
+
+
+  <target name="deployRMI" depends="compile"
+      description="deploys rmi client and server stubs to ${rmiClientDir} and ${rmiServerDir} dirs">
+      <ant antfile="rmi.xml" inheritall="true" target="deployRMIClient"/>
+      <ant antfile="rmi.xml" inheritall="true" target="deployRMIServer"/>
+  </target>
+
+  <target name="testCommon" depends="compile" description="common tests">
+       <echo message="now running Common tests"/>
+       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
+           <assertions><enable/></assertions>
+           <formatter type="plain"/>
+           <test name="com.becker.common.TestAll" outfile="../test/com/becker/common/commonTestResults"/>
+       </junit>
+  </target>
+
+  <!--************** Tasks to execute programs ****************-->
+
+  <target name="executeGalactic" description="Run the Galactic Empire program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name galactic -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+  <target name="executePente" description="Run the pente program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name pente -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+  <target name="testPente" depends="compile" description=" pente game tests">
+       <echo message="now running Pente tests"/>
+       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
+           <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->
+           <assertions><enable/></assertions>
+           <formatter type="plain"/>
+           <test name="com.becker.game.twoplayer.pente.TestAll" outfile="../test/com/becker/game/twoplayer/pente/penteTestResults"/>
+       </junit>
+  </target>
+
+  <target name="executeTicTacToe" description="Run the tic-tac-toe program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name tictactoe -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+  <target name="testTicTacToe" depends="compile" description=" tic-tac-toe game tests">
+       <echo message="now running TicTacToe tests"/>
+       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
+           <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->
+           <assertions><enable/></assertions>
+           <formatter type="plain"/>
+           <test name="com.becker.game.twoplayer.tictactoe.TestAll" outfile="../test/com/becker/game/twoplayer/tictactoe/tictactoeTestResults"/>
+       </junit>
+  </target>
+
+  <target name="executeBlockade" description="Run the blockade program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name blockade -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+   <target name="testBlockade" depends="compile" description="Blockade game tests">
+       <echo message="now running BLOCKADE tests"/>
+       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes">
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
+           <formatter type="plain"/>
+           <!--formatter type="brief" usefile="false" /-->
+          <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->  <!--   for Netbeans debugging-->
+           <test name="com.becker.game.twoplayer.blockade.TestAll" outfile="../test/com/becker/game/twoplayer/blockade/blockadeTestResults"/>
+       </junit>
+  </target>
+
+  <target name="executeCheckers" description="Run the checkers program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name checkers -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+  <target name="executeChess" description="Run the chess program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name chess -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+
+  <target name="executeTrivial" depends="compile" description="Run trivial test game app">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name trivial -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+   <target name="executeTrivialServer" depends="compile" description="Run online trivial server">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name trivial"/>
+    </antcall>
+  </target>
+
+  <target name="executeTrivialServerAndClients" depends="compile" description="Run online trivial server and several clients">
+      <parallel>
+          <antcall target="executeTrivialServer"/>
+          <sequential>
+              <sleep seconds="4" />
+              <antcall target="executeTrivial"/>
+          </sequential>
+           <sequential>
+              <sleep seconds="5"/>
+              <antcall target="executeTrivial"/>
+          </sequential>
+          <sequential>
+              <sleep seconds="6"/>
+              <antcall target="executeTrivial"/>
+          </sequential>
+      </parallel>
+  </target>
+
+
+  <target name="executePoker" depends="compile" description="Run poker card game app">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name poker -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+   <target name="executePokerServer" depends="compile" description="Run online poker server">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name poker -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+  <target name="executePokerServerAndClients" depends="compile" description="Run online poker server and several clients">
+      <parallel>
+          <antcall target="executePokerServer"/>
+          <sequential>
+              <sleep seconds="5" />
+              <antcall target="executePoker"/>
+          </sequential>
+           <sequential>
+              <sleep seconds="5"/>
+              <antcall target="executePoker"/>
+          </sequential>
+          <sequential>
+              <sleep seconds="5"/>
+              <antcall target="executePoker"/>
+          </sequential>
+      </parallel>
+  </target>
+
+
+  <target name="executeSetGame" description="Run the Set Game app">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>  <!-- com.becker.game.multiplayer.set.SetApplet -->
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-name set -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+  <target name="executeGo" description="Run the go program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/gtpserver.jar;"/>
+      <param name="args" value="-name go -locale ENGLISH"/>
+    </antcall>
+  </target>
+
+  <target name="testGo" depends="compile" description=" go game tests">
+       <echo message="now running GO tests"/>
+       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
+           <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->
+           <assertions><enable/></assertions>
+           <formatter type="plain"/>
+           <test name="com.becker.game.twoplayer.go.TestAll" outfile="../test/com/becker/game/twoplayer/go/goTestResults"/>
+           <!--test name="com.becker.game.twoplayer.go.test.whitebox.TestAllWhiteBox" outfile="../test/go/goTestResults"/-->
+           <!-- test name="com.becker.game.twoplayer.go.test.TestEyes" outfile="../test/go/goTestResults"/-->
+       </junit>
+  </target>
+
+  <!--target name="executeColorMixer" description="Run the color mixer tool">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.misc.colormixer.ColorMixer"/>
+    </antcall>
+  </target-->
+
+  <target name="executeImageBreeder" description="Run the Image Breeder">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.apps.imagebreeder.ImageBreederApplet" />
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar" />
+      <param name="args" value=""/>
+    </antcall>
+  </target>
+
+  <target name="executeDice" description="Run the Dice simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.dice.DiceSimulator"/>
+    </antcall>
+  </target>
+
+  <target name="executeStock" description="Run the Stock simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.stock.StockSimulator"/>
+    </antcall>
+  </target>
+
+  <target name="executeGraph" description="Run the Graph simulator">
+      <antcall target="executeProgram">
+        <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+        <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+        <param name="args" value="com.becker.simulation.graphing.GraphSimulator"/>
+      </antcall>
+    </target>
+
+
+  <target name="executeParameterDistribution" description="Run the Parameter Distribution simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.parameter.ParameterSimulator"/>
+    </antcall>
+  </target>
+
+  <target name="executeMaze" description="Run the maze generation program">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.puzzle.maze.MazeSimulator"/>
+      <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <param name="args" value=""/>
+    </antcall>
+  </target>
+
+
+  <target name="executeSpirograph" description="Run the SpiroGraph program">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.apps.spirograph.SpiroGraph"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar"/>
+    </antcall>
+  </target>
+
+  <target name="executeSnake" description="Run the Snake simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.snake.SnakeSimulator"/>
+    </antcall>
+  </target>
+
+  <target name="executeReactionDiffusion" description="Run the Reaction Diffusion simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.reactiondiffusion.RDSimulator"/>
+    </antcall>
+  </target>
+
+  <target name="executeFractalExplorer" description="Run the Fractal Explorer">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.fractalexplorer.FractalExplorer"/>
+    </antcall>
+  </target>
+
+  <target name="executeLiquid" description="Run the Liquid simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <param name="args" value="com.becker.simulation.liquid.LiquidSimulator"/>
+    </antcall>
+  </target>
+
+  <target name="executeFluid" description="Run the Fluid simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <param name="args" value="com.becker.simulation.fluid.FluidSimulator"/>
+    </antcall>
+  </target>
+
+  <target name="testLiquid" depends="compile" description=" liquid tests" >
+       <echo message="now running LIQUID tests"/>
+       <junit  printsummary="yes" fork="yes"  haltonfailure="no" showoutput="yes" >
+           <classpath path="${classesDir};${libDir}/junit.jar;${libDir}/vecmath.jar"/>
+           <assertions><enable/></assertions>
+           <formatter type="plain"/>
+           <!--formatter type="brief" usefile="false" /-->
+           <test name="com.becker.simulation.liquid.TestAll" outfile="../test/liquid/liquidTestResults"/>
+       </junit>
+  </target>
+
+  <target name="testSound" depends="compile" description=" sound tests">
+       <echo message="now running sound tests"/>
+       <junit  printsummary="yes"  fork="yes" haltonfailure="no" showoutput="yes">
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
+           <assertions><enable/></assertions>
+           <formatter type="plain"/>
+           <!--formatter type="brief" usefile="false" /-->
+           <test name="com.becker.sound.test.SoundTest" outfile="../test/sound/soundTestResults"/>
+       </junit>
+  </target>
+
+   <target name="executeTrebuchet" depends="compile" description="Run the Trebuchet simulator">
+     <antcall target="executeProgram">
+       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+       <param name="libPath" value="${libDir}/vecmath.jar"/>
+       <param name="args" value="com.becker.simulation.trebuchet.TrebuchetSimulator"/>
+     </antcall>
+  </target>
+
+  <target name="executeAdventure(Text)" depends="compile" description="An Exciting text based adventure game">
+    <echo message="now executing TextAdventure"/>
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.puzzle.adventure.TextAdventure"/>
+      <param name="args" value="ludlow/ludlowScript.xml"/>
+    </antcall>
+  </target>
+
+  <target name="executeAdventure(Graphical)" depends="compile" description="An Exciting graphical based adventure game">
+    <echo message="now executing GraphicalAdventure"/>
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.puzzle.adventure.ui.GraphicalAdventure"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar" />
+      <param name="args" value="ludlow/ludlowScript.xml"/>
+    </antcall>
+  </target>
+
+  <target name="executeGiveChange" depends="compile" description="A simple educational program for computing change.">
+    <echo message="now executing GiveChange"/>
+    <java classname="com.becker.apps.misc.givechange.GiveChange" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+
+  <target name="executeStringUtil" depends="compile">
+    <echo message="now executing StringUtil test"/>
+    <java classname="com.becker.apps.misc.string.StringUtil" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+
+  <target name="executeSimpleEditor" depends="compile" description="A simple editor.">
+    <echo message="now executing simple editor"/>
+    <java classname="com.becker.apps.misc.sedit.SimpleEditor" classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar" fork="true" jvm="${java_compiler}" maxmemory="128M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+
+  <target name="executeNativeRender" depends="compile" description="A simple test of the native graphics renderer.">
+      <echo message="now executing NativeRender"/>
+      <java classname="com.becker.apps.misc.nativeRender.NativeRenderTest" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+          <jvmarg value="${assertionsFlag}"/>
+      </java>
+  </target>
+
+  <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle screenSaver">
+     <echo message="now executing red puzzle"/>
+     <java classname="com.becker.puzzle.redpuzzle.RedPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+         <jvmarg value="${assertionsFlag}"/>
+     </java>
+  </target>
+
+  <target name="executeSudoku" depends="compile" description=" run the Sudoku solver">
+     <echo message="now executing Sudoku"/>
+     <java classname="com.becker.puzzle.sudoku.SudokuPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+         <jvmarg value="${assertionsFlag}"/>
+     </java>
+  </target>
+
+  <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle screenSaver">
+     <echo message="now executing Hi-Q"/>
+     <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="400M">
+         <jvmarg value="${assertionsFlag}"/>
+     </java>
+  </target>
+
+
+  <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.ui.xmlviewer.DomEcho"/>
+      <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <!--param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/ -->
+      <param name="args" value="${project_home}/source/com/becker/apps/misc/yugioh/yugiohCards.xml"/>
+    </antcall>
+  </target>
+
+  <target name="XMLAppGenerator" depends="compile" description=" run the XML App Generator">
+     <antcall target="executeProgram">
+       <param name="className" value="com.becker.xml.AikidoAppGenerator"/>
+       <param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/>
+     </antcall>
+  </target>
+
+
+  <target name="showFonts" depends="compile">
+     <java classname="com.becker.java2d.examples.ShowFonts" classpath="${classesDir}"/>
+  </target>
+
+  <target name="kgsTesujisoftGoClient" depends="compile" description="run the Tesujisoft Go engine on KGS.">
+     <antcall target="executeProgram">
+      <param name="className" value="com.becker.game.twoplayer.go.GtpKgsTesujisoftGoClient"/>
+      <param name="libPath" value="${libDir}/kgsGtp.jar;${libDir}/gogui7.1.jar"/>
+    </antcall>
+  </target>
+  
+  <target name="GoGui" depends="compile">
+    <echo message="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
+    <antcall target="executeProgram2">
+      <param name="className" value="gogui.Main"/>
+      <param name="libPath" value="${libDir}/gogui7.1.jar"/>
+      <param name="arg1" value="-program"/>
+      <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
+    </antcall>
+  </target>
+
+  <!-- call this to run java programs  -->
+  <target name="executeProgram" depends="compile">
+    <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
+        <sysproperty key="DEBUG" value="true"/>
+        <arg line="${args}"/>
+        <!-- use this if running Yourkit profiler -->
+        <!-- jvmarg value="-agentlib:yjpagent"/  -->
+        <!-- use this if running netbeans profiler -->
+        <!--jvmarg value="-agentpath:D:\apps\java\netbeans-5.5\profiler1\lib\deployed\jdk15\windows\profilerinterface.dll=D:\apps\java\netbeans-5.5\profiler1\lib,5140"/-->
+        <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->  <!--   for Netbeans debugging-->
+        <jvmarg value="-Xms128M"/>
+        <jvmarg value="-Xmx1028M"/>
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+
+  <!-- call this to run java programs with two arguments -->
+  <target name="executeProgram2" depends="compile">
+    <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
+        <sysproperty key="DEBUG" value="true"/>
+        <arg value="${arg1}"/>
+        <arg value="${arg2}"/>
+        <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000 "/  for Netbeans debugging-->
+        <jvmarg value="-Xms128M"/>
+        <jvmarg value="-Xmx512M"/>
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+
+</project>
+
+

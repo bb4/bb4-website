@@ -1,0 +1,94 @@
+package com.becker.optimization.strategy;
+
+import com.becker.optimization.Optimizee;
+import com.becker.optimization.Optimizer;
+
+/**
+ * Enum for the different possible Optimization Strategies.
+ * There is an optimization strategy class corresponding to each of these types.
+ * Detailed explanations for many of these algorithms can be found in
+ *  How To Solve It: Modern Heuristics  by Michaelwics and Fogel
+ *
+ * @see OptimizationStrategy
+ * @see Optimizer
+ *
+ * @author Barry Becker
+ */
+public enum OptimizationStrategyType
+{
+    GLOBAL_SAMPLING ("Sparsely sample the space and return the best sample.") {
+        @Override
+        public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
+            GlobalSampleStrategy gsStrategy = new GlobalSampleStrategy(optimizee);
+            // 10 sample points in each dim. 1000 evaluations if 3 dimensions.
+            gsStrategy.setSamplingRate(120 / optimizee.getNumParameters());
+            return gsStrategy;
+        }
+    },
+    GLOBAL_HILL_CLIMBING ("Start with the best global sampling and hill climb from there.") {
+        @Override
+        public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
+            return new GlobalHillClimbingStrategy(optimizee);
+        }
+    },
+    HILL_CLIMBING ("Search method which always marches toward the direction of greatest improvement.") {
+        @Override
+        public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
+            return new HillClimbingStrategy(optimizee);
+        }
+    },
+    SIMULATED_ANNEALING ("Marches in the general direction of improvement, but can excape local optima.") {
+        @Override
+        public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
+            SimulatedAnnealingStrategy strategy = new SimulatedAnnealingStrategy(optimizee);
+            strategy.setMaxTemperature(fitnessRange/20.0);
+            return strategy;
+        }
+    },
+    TABU_SEARCH ("Uses memory of past solutions to avoid searching them again as it marches toward an optimal solution.") {
+        @Override
+        public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
+            throw new AbstractMethodError("Tabu search not yet implemented");
+        }
+    },
+    GENETIC_SEARCH ("Uses a genetic algorithm to search for the best solution.") {
+        @Override
+        public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
+            GeneticSearchStrategy strategy = new GeneticSearchStrategy(optimizee);
+            strategy.setImprovementEpsilon(fitnessRange/100000000.0);
+            return strategy;
+        }
+    },
+    STATE_SPACE ("Searches the state space to find an optima.") {
+        @Override
+        public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
+            throw new AbstractMethodError("State space search not yet implemented");
+        }
+    };
+
+
+    private String description_;
+
+    /**
+     * constructor for optimizatrion type enum
+     *
+     * @param description string description of the optimization strategy.
+     */
+    OptimizationStrategyType(String description) {
+       description_ = description;
+    }
+
+    public String getDescription() {
+        return description_;
+    }
+
+    /**
+     * Create an instance of the strategry to use.
+     * @param optimizee the thing to optimize.
+     * @param fitnessRange the approximate range (max-min) of the fitness values
+     * @return an instance of the strategry to use.
+     */
+    public abstract OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange);
+
+}
+
