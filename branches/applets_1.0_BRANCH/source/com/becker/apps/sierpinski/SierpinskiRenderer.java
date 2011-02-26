@@ -1,4 +1,4 @@
-package com.becker.apps.sierpinski;
+package com.becker.apps.sierpinksi;
 
 import java.awt.*;
 
@@ -36,6 +36,8 @@ public class SierpinskiRenderer {
     public void paint(Graphics g) {
 
         g2 = (Graphics2D) g;
+        // this smooths the lines.
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         clear();
 
         Point A = new Point(width/2, MARGIN);
@@ -58,6 +60,16 @@ public class SierpinskiRenderer {
     private void drawSierpinski(Point A, Point B, Point C, int depth) {
 
         drawTriangle(A, B, C);
+        Point a = midpoint(B,C);
+        Point b = midpoint(A,C);
+        Point c = midpoint(B,A);
+        if (depth>=maxDepth){
+             drawTriangle(a, b, c);
+        }else {
+            drawSierpinski(A,c,b, depth+1);
+            drawSierpinski(c,B,a,depth+1);
+            drawSierpinski(b,a,C, depth+1);
+        }
     }
 
     private Point midpoint(Point P1, Point P2) {

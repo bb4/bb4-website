@@ -1,4 +1,4 @@
-package com.becker.apps.sierpinski;
+package com.becker.apps.misc.sierpinksi;
 
 import com.becker.common.math.function.Function;
 import com.becker.simulation.graphing.FunctionType;
