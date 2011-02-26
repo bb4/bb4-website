@@ -41,12 +41,10 @@ public class GraphSimulator extends Simulator {
         return 1.0;
     }
 
-@Override
-    public double timeStep()
-    {
+    @Override
+    public double timeStep() {
         return timeStep_;
     }
-
 
     protected void initGraph() {
         if (function_ == null) {
@@ -61,16 +59,13 @@ public class GraphSimulator extends Simulator {
          return new GraphOptionsDialog( frame_, this );
     }
 
-
     @Override
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         graph_.setSize(getWidth(), getHeight());
         graph_.paint(g);
     }
 
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         final GraphSimulator sim = new GraphSimulator();
 
         sim.setPaused(true);
