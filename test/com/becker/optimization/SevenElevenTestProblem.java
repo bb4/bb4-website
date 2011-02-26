@@ -101,7 +101,7 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem
     {
         OptimizeeTestProblem problem = new SevenElevenTestProblem();
         Optimizer optimizer =
-                new Optimizer(problem, FileUtil.PROJECT_DIR + "performance/test_optimizer/seven11_optimization.txt");
+                new Optimizer(problem, FileUtil.PROJECT_HOME + "performance/test_optimizer/seven11_optimization.txt");
 
         ParameterArray initialGuess = problem.getInitialGuess();
 
