@@ -1,4 +1,4 @@
-package com.becker.apps.misc.sierpinksi;
+package com.becker.apps.sierpinksi;
 
 import java.awt.*;
 
@@ -36,6 +36,8 @@ public class SierpinskiRenderer {
     public void paint(Graphics g) {
 
         g2 = (Graphics2D) g;
+        // this smooths the lines.
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         clear();
 
         Point A = new Point(width/2, MARGIN);
@@ -58,21 +60,15 @@ public class SierpinskiRenderer {
     private void drawSierpinski(Point A, Point B, Point C, int depth) {
 
         drawTriangle(A, B, C);
-
-        // find midpoints of sides of parent triangle
-        Point a = midpoint(B, C);
-        Point b = midpoint(A, C);
-        Point c = midpoint(A, B);
-
-        if (depth >= maxDepth) {
-            // base case of the recursion
-            drawTriangle(a, b, c);
-        }
-        else {
-            // three recursive calls for the three sub-triangles at this depth.
-            drawSierpinski(A, c, b, depth+1);
-            drawSierpinski(c, B, a, depth+1);
-            drawSierpinski(b, a, C, depth+1);
+        Point a = midpoint(B,C);
+        Point b = midpoint(A,C);
+        Point c = midpoint(B,A);
+        if (depth>=maxDepth){
+             drawTriangle(a, b, c);
+        }else {
+            drawSierpinski(A,c,b, depth+1);
+            drawSierpinski(c,B,a,depth+1);
+            drawSierpinski(b,a,C, depth+1);
         }
     }
 
