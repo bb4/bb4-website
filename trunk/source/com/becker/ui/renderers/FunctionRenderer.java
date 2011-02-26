@@ -22,7 +22,6 @@ public class FunctionRenderer {
     private static final Color LINE_COLOR = new Color(0, 0, 0);
 
     private static final int MARGIN = 24;
-    private static final int TICK_LENGTH = 4;
 
     private int width_;
     private int height_;
@@ -58,7 +57,7 @@ public class FunctionRenderer {
     }
 
     /**
-     * The larger this is, the fewere equally spaced x labels.
+     * The larger this is, the fewer equally spaced x labels.
      * @param maxLabelWidth   max width of x labels.
      */
     public void setMaxLabelWidth(int maxLabelWidth) {

@@ -15,13 +15,7 @@ import java.awt.event.ActionListener;
  */
 public class AxesPanel extends JPanel implements ActionListener {
 
-    //private static final double[] values1_ = {-0.0,  40.0,  1101.1};
-    //private static final double[] values2_ = {-100.1,  0.0,  1.1};
-
-
     private static final double[] values1_ = {-30.1,  -0.5, 1101.1};
-
-
     private static final double[] values2_ = {-1.1, 0.5, 1.1};
 
     private static final int CM_TRANS = 150;
@@ -34,12 +28,11 @@ public class AxesPanel extends JPanel implements ActionListener {
     private ContinuousColorLegend legend1_;
     private ContinuousColorLegend legend2_;
 
-
-
+    /**
+     * Constructor
+     */
     public AxesPanel() {
         this.setLayout(new BorderLayout());
-        //this.setPreferredSize(new Dimension(500, 200));
-
 
         ColorMap colormap1 = new ColorMap( values1_, colors_ );
         ColorMap colormap2 = new ColorMap( values2_, colors_ );
@@ -59,7 +52,6 @@ public class AxesPanel extends JPanel implements ActionListener {
         this.add(legend1_, BorderLayout.CENTER);
         this.add(legend2_, BorderLayout.SOUTH);
     }
-
 
 
     public void actionPerformed(ActionEvent e) {
