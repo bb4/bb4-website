@@ -13,7 +13,7 @@ import com.becker.game.twoplayer.go.board.elements.GoEye;
 public interface EyeInformation
 {
     /**
-     * The life property should be regarded as a property slightly below Benson’s definition
+     * The life property should be regarded as a property slightly below Bensons definition
      * of unconditional life, because if we have an AliveInAtari status for an eye, it might be
      * necessary to play inside the eye, but with the great advantage that detecting it
      * is just a matter of counting neighbours as it will be shown in Section 4.
