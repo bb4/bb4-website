@@ -1,4 +1,4 @@
-package com.becker.apps.sierpinksi;
+package com.becker.apps.sierpinski;
 
 import com.becker.ui.GUIUtil;
 import com.becker.ui.components.ResizableAppletPanel;
@@ -30,7 +30,8 @@ public class SierpinskiApplet extends JApplet {
     }
 
     private JPanel createMainPanel() {
-        SierpinskiComponent sierpinskiComp = new SierpinskiComponent();
+
+        SierpinskiComponent sierpinskiComp = SierpinskiComponent();
         sierpinskiComp.setBorder(BorderFactory.createEtchedBorder());
 
         JPanel mainPanel = new JPanel();
