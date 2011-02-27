@@ -7,6 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Draws a horizontal slider with a label on top.
@@ -21,7 +22,7 @@ public class LabeledSlider extends JPanel implements ChangeListener {
     private JLabel label_;
     private String labelText_;
     private JSlider slider_;
-    private java.util.List<SliderChangeListener> listeners_;
+    private List<SliderChangeListener> listeners_;
 
     private double min_, max_;
     private int resolution_ = DEFAULT_SLIDER_RESOLUTION;

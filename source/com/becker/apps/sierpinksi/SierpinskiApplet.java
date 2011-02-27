@@ -19,10 +19,6 @@ public class SierpinskiApplet extends JApplet {
 
     private void commonInit() {
         GUIUtil.setCustomLookAndFeel();
-
-        enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        setFont( new Font( "Serif", Font.PLAIN, 14 ) );
-
         JPanel mainPanel = createMainPanel();
 
         resizablePanel_ = new ResizableAppletPanel( mainPanel );
@@ -38,14 +34,6 @@ public class SierpinskiApplet extends JApplet {
         mainPanel.add(sierpinskiComp, BorderLayout.CENTER );
 
         return mainPanel;
-    }
-
-    /**
-     * This method allow javascript to resize the applet from the browser.
-     */
-    @Override
-    public void setSize( int width, int height )  {
-        resizablePanel_.setSize( width, height );
     }
 
     //------ Main method --------------------------------------------------------
