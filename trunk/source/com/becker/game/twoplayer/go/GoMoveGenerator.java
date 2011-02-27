@@ -8,6 +8,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.BestMoveFinder;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
@@ -21,13 +22,12 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public final class GoMoveGenerator {
 
-    private GoSearchable searchable_;
-
+    private Searchable searchable_;
 
     /**
      * Constructor.
      */
-    public GoMoveGenerator(GoSearchable controller) {
+    public GoMoveGenerator(Searchable controller) {
         searchable_ = controller;
     }
 
@@ -60,7 +60,7 @@ public final class GoMoveGenerator {
      */
     public final MoveList generatePossibleMoves(TwoPlayerMove lastMove) {
 
-        GoBoard board = searchable_.getBoard();
+        GoBoard board = (GoBoard) searchable_.getBoard();
         MoveList moveList = new MoveList();
         int nCols = board.getNumCols();
         int nRows = board.getNumRows();

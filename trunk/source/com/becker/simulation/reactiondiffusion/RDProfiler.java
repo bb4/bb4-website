@@ -2,7 +2,7 @@ package com.becker.simulation.reactiondiffusion;
 
 import com.becker.common.profile.Profiler;
 import com.becker.common.util.Util;
-import com.becker.game.common.GameContext;
+
 
 /**
  * Singleton for RD profiling.
@@ -37,13 +37,9 @@ public class RDProfiler extends Profiler {
         add(RENDERING);
     }
 
-
     public void initialize() {
         resetAll();
-        setEnabled(GameContext.isProfiling());
-        setLogger(GameContext.getLogger());
     }
-
 
     @Override
     public void print() {
