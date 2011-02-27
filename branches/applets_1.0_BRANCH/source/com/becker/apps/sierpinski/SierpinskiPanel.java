@@ -10,6 +10,7 @@ import java.awt.*;
 
 /**
  * Draws a recursive Sierpinksi triangle.
+ *
  * @author Barry Becker
  */
 public class SierpinskiPanel extends JPanel {
