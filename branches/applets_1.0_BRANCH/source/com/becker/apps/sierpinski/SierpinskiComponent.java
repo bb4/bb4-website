@@ -1,4 +1,4 @@
-package com.becker.apps.sierpinksi;
+package com.becker.apps.sierpinski;
 
 import com.becker.ui.components.NumberInput;
 
@@ -12,7 +12,8 @@ import java.awt.event.ActionListener;
  *
  * @author Barry Becker
  */
-public class SierpinskiComponent extends JPanel implements ActionListener {
+public class SierpinskiComponent extends JPanel
+                                 implements ActionListener {
 
     private static final int INITIAL_RECURSIVE_DEPTH = 1;
     private static final int MAX_RECURSIVE_DEPTH = 10;

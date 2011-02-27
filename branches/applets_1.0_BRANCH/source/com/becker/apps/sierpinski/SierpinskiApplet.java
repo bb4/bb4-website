@@ -31,7 +31,7 @@ public class SierpinskiApplet extends JApplet {
 
     private JPanel createMainPanel() {
 
-        SierpinskiComponent sierpinskiComp = SierpinskiComponent();
+        SierpinskiComponent sierpinskiComp = new SierpinskiComponent();
         sierpinskiComp.setBorder(BorderFactory.createEtchedBorder());
 
         JPanel mainPanel = new JPanel();
