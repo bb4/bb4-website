@@ -1,9 +1,4 @@
-package com.becker.apps.misc.sierpinksi;
-
-import com.becker.common.math.function.Function;
-import com.becker.simulation.graphing.FunctionType;
-import com.becker.ui.components.NumberInput;
-import com.becker.ui.renderers.FunctionRenderer;
+package com.becker.apps.sierpinksi;
 
 import javax.swing.*;
 import java.awt.*;
