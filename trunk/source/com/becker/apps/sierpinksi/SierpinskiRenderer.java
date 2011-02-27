@@ -8,32 +8,30 @@ import java.awt.*;
  */
 public class SierpinskiRenderer {
 
+    public static final int DEFAULT_LINE_WIDTH = 23;
     private static final Color BACKGROUND_COLOR = new Color(255, 255, 255);
-    private static final Color[] COLORS = {
-            new Color(0, 0, 20, 155),
-            new Color(0, 10, 210, 230),
-            new Color(0, 200, 90, 210),
-            new Color(80, 255, 0, 160),
-            new Color(250, 200, 0, 150),
-            new Color(255, 0, 0, 100),
-            new Color(255, 0, 100, 70),
-            new Color(250, 0, 255, 40)
-    };
-    private static final int MARGIN = 20;
+    private static final int MARGIN = 30;
 
     private int width;
     private int height;
     private int maxDepth = 1;
+
     private Graphics2D g2;
+    private GraphicsStyler styler;
 
     /**
      * Constructor.
      */
     public SierpinskiRenderer() {
+        styler = new GraphicsStyler(DEFAULT_LINE_WIDTH);
     }
 
     public void setDepth(int depth) {
         this.maxDepth = depth;
+    }
+
+    public void setLineWidth(float width) {
+        styler.setLineWidth(width);
     }
 
     public void setSize(int width, int height) {
@@ -68,17 +66,15 @@ public class SierpinskiRenderer {
      */
     private void drawSierpinski(Point A, Point B, Point C, int depth) {
 
-        initStyle(depth);
+        styler.setStyle(depth, g2);
         drawTriangle(A, B, C);
         Point a = midpoint(B, C);
         Point b = midpoint(A, C);
         Point c = midpoint(B, A);
         if (depth >= maxDepth) {
-             drawTriangle(a, b, c);
+             drawTriangle(a, b, c, true);
         }
         else {
-
-
             drawSierpinski(A, c, b, depth+1);
             drawSierpinski(c, B, a, depth+1);
             drawSierpinski(b, a, C, depth+1);
@@ -106,10 +102,5 @@ public class SierpinskiRenderer {
         else {
             g2.drawPolygon(triangle);
         }
-    }
-
-    private void initStyle(int depth) {
-        g2.setStroke(new BasicStroke(25.0f/(3 * depth + 1.0f)));
-        g2.setColor(COLORS[Math.min(depth, COLORS.length-1)]);
     }
 }

@@ -19,6 +19,10 @@ public class SierpinskiPanel extends JPanel {
         renderer.setDepth(depth);
     }
 
+    public void setLineWidth(float width) {
+        renderer.setLineWidth(width);
+    }
+
     @Override
     public void paint( Graphics g ) {
         renderer.setSize(getWidth(), getHeight());

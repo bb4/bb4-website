@@ -1,6 +1,8 @@
 package com.becker.apps.sierpinksi;
 
 import com.becker.ui.components.NumberInput;
+import com.becker.ui.sliders.LabeledSlider;
+import com.becker.ui.sliders.SliderChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,14 +14,15 @@ import java.awt.event.ActionListener;
  *
  * @author Barry Becker
  */
-public class SierpinskiComponent extends JPanel implements ActionListener {
+public class SierpinskiComponent extends JPanel implements ActionListener, SliderChangeListener {
 
     private static final int INITIAL_RECURSIVE_DEPTH = 1;
     private static final int MAX_RECURSIVE_DEPTH = 10;
 
     SierpinskiPanel sierpinskiPanel;
-
+    LabeledSlider lineWidthSlider;
     NumberInput depthField;
+
     JButton drawButton;
 
     /**
@@ -44,10 +47,13 @@ public class SierpinskiComponent extends JPanel implements ActionListener {
         depthField =
                 new NumberInput("Recursive depth:  ", INITIAL_RECURSIVE_DEPTH,
                                 "This the amount of detail that will be shown.", 1, MAX_RECURSIVE_DEPTH, true);
+        lineWidthSlider = new LabeledSlider("Line Width", SierpinskiRenderer.DEFAULT_LINE_WIDTH, 0.1, 100.0 );
+        lineWidthSlider.addChangeListener(this);
         drawButton = new JButton("Draw it!");
         drawButton.addActionListener(this);
 
         controlsPanel.add(depthField);
+        controlsPanel.add(lineWidthSlider);
         controlsPanel.add(drawButton);
         return controlsPanel;
     }
@@ -61,5 +67,10 @@ public class SierpinskiComponent extends JPanel implements ActionListener {
             sierpinskiPanel.setRecursiveDepth(depth);
             sierpinskiPanel.repaint();
         }
+    }
+
+    public void sliderChanged(LabeledSlider slider) {
+        sierpinskiPanel.setLineWidth((float)slider.getValue());
+        sierpinskiPanel.repaint();
     }
 }
