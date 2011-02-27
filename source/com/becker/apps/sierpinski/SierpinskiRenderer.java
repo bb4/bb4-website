@@ -1,4 +1,4 @@
-package com.becker.apps.sierpinksi;
+package com.becker.apps.sierpinski;
 
 import java.awt.*;
 
