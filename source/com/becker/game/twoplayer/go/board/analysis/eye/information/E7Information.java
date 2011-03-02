@@ -6,7 +6,7 @@ import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.IGoEye;
 
 /**
  * Eye6Type containing MetaData for the different possible Eye shapes of size 7.
@@ -68,7 +68,7 @@ public class E7Information extends AbstractEyeSubtypeInformation
      * @return eye status for E7 types.
      */
     @Override
-    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
+    public EyeStatus determineStatus(IGoEye eye, GoBoard board) {
         EyeNeighborMap nbrMap = new EyeNeighborMap(eye);
         switch (type) {
             case E1122222 :

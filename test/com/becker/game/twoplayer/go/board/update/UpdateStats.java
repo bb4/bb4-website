@@ -1,12 +1,5 @@
 package com.becker.game.twoplayer.go.board.update;
 
-import com.becker.common.Location;
-import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
-
 
 /**
  * Things to verify after moving or removing stones from the board

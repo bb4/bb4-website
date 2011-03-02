@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.*;
 import com.becker.game.common.board.BoardPosition;
@@ -10,8 +10,8 @@ import com.becker.game.twoplayer.common.cache.ScoreCache;
 import com.becker.game.twoplayer.common.cache.ScoreEntry;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.WorthCalculator;
+import com.becker.game.twoplayer.go.board.move.GoMove;
+import com.becker.game.twoplayer.go.board.move.GoMoveGenerator;
 import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
 import com.becker.optimization.parameter.ParameterArray;
 

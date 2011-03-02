@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.neighbor;
 
 import com.becker.common.Box;
-import com.becker.game.twoplayer.go.GoProfiler;
+import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.*;
 
@@ -177,7 +177,7 @@ public class NeighborAnalyzer {
             for ( int j = 1; j <= board_.getNumCols(); j++ ) {
                 GoBoardPosition pos = (GoBoardPosition)board_.getPosition(i, j);
                 if (pos.isOccupied()) {
-                    GoString existingString = strings.findStringContainingPosition(pos);
+                    IGoString existingString = strings.findStringContainingPosition(pos);
                     if (existingString == null) {
                         GoString str = new GoString(findStringFromInitialPosition(pos, true), board_);
                         strings.add(str);

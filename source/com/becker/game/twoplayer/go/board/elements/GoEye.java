@@ -16,9 +16,9 @@ import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformatio
  *
  *  @author Barry Becker
  */
-public class GoEye extends GoString implements GoMember
+public class GoEye extends GoString implements IGoEye
 {
-    /** A set of poisitions that are in the eye space. Need not be empty. */
+    /** A set of positions that are in the eye space. Need not be empty. */
     private GoBoardPositionSet members_;
     
     /** The kind of eye that this is. */
@@ -33,7 +33,7 @@ public class GoEye extends GoString implements GoMember
     /**
      * constructor. Create a new eye shape containing the specified list of stones/spaces
      */
-    public GoEye( GoBoardPositionList spaces, GoBoard board, GoGroup g ) {
+    public GoEye( GoBoardPositionList spaces, GoBoard board, IGoGroup g ) {
         super( spaces, board );
         group_ = g;
         ownedByPlayer1_ = g.isOwnedByPlayer1();
@@ -65,7 +65,6 @@ public class GoEye extends GoString implements GoMember
     public int getNumEdgePoints() {
         return numEdgePoints_;
     }
-
 
     @Override
     protected void initializeMembers() {
@@ -101,7 +100,7 @@ public class GoEye extends GoString implements GoMember
     @Override
     public boolean isEnemy(GoBoardPosition pos)
     {
-        GoGroup g = getGroup();
+        IGoGroup g = getGroup();
         assert (g != null): "group for "+ this +" is null";
         if (pos.isUnoccupied()) {
             return false;
@@ -130,9 +129,7 @@ public class GoEye extends GoString implements GoMember
         getMembers().add( space );
     }
 
-    /**
-     * empty the positions from the eye.
-     */
+    /** {@inheritDoc} */
     public void clear() {
         for (GoBoardPosition pos : getMembers()) {
             pos.setEye(null);

@@ -7,11 +7,12 @@ import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.common.ui.viewer.ViewerMouseListener;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.go.GoController;
-import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.board.elements.IGoEye;
+import com.becker.game.twoplayer.go.board.elements.IGoString;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
-import com.becker.game.twoplayer.go.board.elements.GoString;
+import com.becker.game.twoplayer.go.ui.rendering.GoBoardRenderer;
 
 import java.awt.event.MouseEvent;
 
@@ -22,13 +23,12 @@ import java.awt.event.MouseEvent;
  *
  *  @author Barry Becker
  */
-final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
+public final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
 
     /**
      * Construct the viewer given the controller.
      */
     GoBoardViewer() {}
-
 
     @Override
     protected ViewerMouseListener createViewerMouseListener() {
@@ -67,7 +67,7 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
      */
     public void resign() {
         GameContext.log( 1, "player resigns" );
-        GoMove m = GoMove.createResignationMove(get2PlayerController().isPlayer1sTurn() );
+        GoMove m = GoMove.createResignationMove(get2PlayerController().isPlayer1sTurn());
         continuePlay( m );
     }
 
@@ -98,30 +98,14 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
         if ( space != null && GameContext.getDebugMode() > 0 ) {
             String spaceText = space.getDescription();
             sb.append( spaceText);
-            GoString string = space.getString();
-            GoEye eye = space.getEye();
+            IGoString string = space.getString();
+            IGoEye eye = space.getEye();
             if ( string != null ) {
-                sb.append( "<br>" );
-                sb.append("string liberties = ").append(string.getNumLiberties((GoBoard) controller_.getBoard()));
-                String stringText = string.toString();
-                if ( string.getGroup() != null ) {
-                    sb.append( "<br>" );
-                    String groupText = string.getGroup().toHtml();
-
-                    groupText = groupText.replaceAll(stringText, "<font color=#440000>" + stringText + "</font>" );
-                    groupText = groupText.replaceAll(spaceText, "<b><font color=#991100>" + spaceText + "</font></b>");
-                    sb.append( groupText );
-                }
+                appendStringText(sb, spaceText, string);
             }
             // it might belong to both an eye and a string
             if (eye != null) {
-               String eyeText = eye.toString();
-               sb.append( "<br>" );
-               eyeText = eyeText.replaceAll(spaceText, "<b><font color=#991100>" + spaceText + "</font></b>");
-               sb.append(eyeText);
-               // to debug show the group that contains this eye
-               sb.append( "<br>" );
-                sb.append("The group that contains this eye is ").append(eye.getGroup());
+                appendEyeText(sb, spaceText, eye);
             }
         }
         else {
@@ -129,5 +113,29 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
         }
         sb.append( "</font></html>" );
         return sb.toString();
+    }
+
+    private void appendEyeText(StringBuilder sb, String spaceText, IGoEye eye) {
+        String eyeText = eye.toString();
+        sb.append( "<br>" );
+        eyeText = eyeText.replaceAll(spaceText, "<b><font color=#991100>" + spaceText + "</font></b>");
+        sb.append(eyeText);
+        // to debug show the group that contains this eye
+        sb.append( "<br>" );
+        sb.append("The group that contains this eye is ").append(eye.getGroup());
+    }
+
+    private void appendStringText(StringBuilder sb, String spaceText, IGoString string) {
+        sb.append( "<br>" );
+        sb.append("string liberties = ").append(string.getNumLiberties((GoBoard) controller_.getBoard()));
+        String stringText = string.toString();
+        if ( string.getGroup() != null ) {
+            sb.append( "<br>" );
+            String groupText = string.getGroup().toHtml();
+
+            groupText = groupText.replaceAll(stringText, "<font color=#440000>" + stringText + "</font>" );
+            groupText = groupText.replaceAll(spaceText, "<b><font color=#991100>" + spaceText + "</font></b>");
+            sb.append( groupText );
+        }
     }
 }

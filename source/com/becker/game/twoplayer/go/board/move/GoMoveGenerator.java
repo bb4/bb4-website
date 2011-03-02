@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board.move;
 
 import com.becker.common.Location;
 import com.becker.game.common.Move;
@@ -10,6 +10,7 @@ import com.becker.game.twoplayer.common.BestMoveFinder;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoStone;

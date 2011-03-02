@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.IGoEye;
 
 /**
  * Three space eye *** - there is only one type.
@@ -21,7 +21,7 @@ public class E3Information extends AbstractEyeSubtypeInformation
      * @return eye status for E3 type.
      */
     @Override
-    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
+    public EyeStatus determineStatus(IGoEye eye, GoBoard board) {
 
         EyeNeighborMap nbrMap = new EyeNeighborMap(eye);
         return handleVitalPointCases(nbrMap, eye, 1);

@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.ui;
+package com.becker.game.twoplayer.go.ui.rendering;
 
 import com.becker.common.ColorMap;
 import com.becker.common.Location;
@@ -362,14 +362,14 @@ final class GoGroupRenderer {
     /**
      * draw the group's eyes (for debugging/understanding purposes).
      */
-    private void drawEyes(Set<GoEye> eyes)
+    private void drawEyes(GoEyeSet eyes)
     {
         if ( !eyes.isEmpty() ) {
             Font font = new Font( "SanSerif", Font.PLAIN, (int) (1.6 * Math.sqrt( cellSize_ ) - 1) );
             g2_.setFont( font );
             g2_.setColor( EYE_TEXT_COLOR );
 
-            for (GoEye eye : eyes) {
+            for (IGoEye eye : eyes) {
                 String eyeName = eye.getEyeTypeName();
                 for (GoBoardPosition eyeSpace : eye.getMembers()) {
                     float x = margin_ + ((float) eyeSpace.getCol() - BORDER_OFFSET - 0.5f) * cellSize_;

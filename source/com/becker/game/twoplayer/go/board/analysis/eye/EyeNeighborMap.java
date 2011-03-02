@@ -1,9 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.IGoString;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,14 +14,14 @@ import java.util.Map;
  */
 public class EyeNeighborMap {
 
-    private IGoString eye_;
+    private IGoEye eye_;
     private Map<GoBoardPosition, GoBoardPositionList> nbrMap_;
 
     /**
      * Constructor
      * @param eye we take an IGoString because that is all we need, but typically you want to pass in a GoEye.
      */
-    public EyeNeighborMap(IGoString eye) {
+    public EyeNeighborMap(IGoEye eye) {
         eye_ = eye;
         nbrMap_ = createMap();
     }

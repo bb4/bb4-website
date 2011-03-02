@@ -5,7 +5,7 @@ import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeTypeAnalyzer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
+
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E4Information.Eye4Type.*;
 
 /**

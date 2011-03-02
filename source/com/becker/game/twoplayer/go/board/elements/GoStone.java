@@ -10,7 +10,7 @@ import com.becker.game.twoplayer.go.board.PositionalScore;
  * @see GoBoardPosition
  * @author Barry Becker
  */
-public class GoStone extends GamePiece implements GoMember {
+public class GoStone extends GamePiece implements IGoMember {
     /**
      * The health is a number representing the influence of player1(black).
      * A living black stone has a positive health, while a black stone in poor health

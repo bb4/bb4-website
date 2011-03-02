@@ -5,6 +5,7 @@ import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.IGoEye;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +23,7 @@ import java.util.List;
 class BigEyeAnalyzer {
 
     /** the eye to classify. */
-    private GoEye eye_;
+    private IGoEye eye_;
 
     /** spaces_ in the eye */
     private GoBoardPositionSet spaces_;
@@ -31,7 +32,7 @@ class BigEyeAnalyzer {
      * The eye must have between 3 and 8 spaces_.
      * @param eye the eye to analyze
      */
-    BigEyeAnalyzer(GoEye eye) {
+    BigEyeAnalyzer(IGoEye eye) {
         eye_ = eye;
         spaces_ = eye_.getMembers();
         int size = spaces_.size();

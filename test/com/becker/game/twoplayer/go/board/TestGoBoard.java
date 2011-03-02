@@ -1,10 +1,11 @@
 package com.becker.game.twoplayer.go.board;
 
 import com.becker.common.Location;
-import com.becker.game.twoplayer.go.*;
+import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
-import junit.framework.*;
+import com.becker.game.twoplayer.go.board.move.GoMove;
+import junit.framework.Assert;
 
 /**
  * Verify that all the methods in GoBoard work as expected

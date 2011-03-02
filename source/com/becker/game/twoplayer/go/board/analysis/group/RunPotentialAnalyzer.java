@@ -5,6 +5,7 @@ import com.becker.common.MutableLocation;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoString;
+import com.becker.game.twoplayer.go.board.elements.IGoString;
 
 /**
  * Figure out the "eye potential" contribution from a horizontal or vertical run within a string.
@@ -14,7 +15,7 @@ import com.becker.game.twoplayer.go.board.elements.GoString;
 class RunPotentialAnalyzer {
 
     /** We will analyze the potential of a run within this string. */
-    private GoString groupString_;
+    private IGoString groupString_;
 
     private GoBoard board_;
 
@@ -22,7 +23,7 @@ class RunPotentialAnalyzer {
     /**
      * Constructor.
      */
-    public RunPotentialAnalyzer(GoString groupString, GoBoard board) {
+    public RunPotentialAnalyzer(IGoString groupString, GoBoard board) {
         groupString_ = groupString;
         board_ = board;
     }

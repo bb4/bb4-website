@@ -1,11 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
-
-import java.util.Set;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 /**
  * Analyzes a group to determine how alive it is, and also find other properties like eyes and liberties.
@@ -15,7 +11,7 @@ import java.util.Set;
 public class GroupAnalyzer {
 
     /** The group of go stones that we are analyzing. */
-    private GoGroup group_;
+    private IGoGroup group_;
 
     /**
      * This measure of health is also between -1 and 1 but it should be more
@@ -34,7 +30,7 @@ public class GroupAnalyzer {
      * Constructor.
      * @param group group to analyze.
      */
-    public GroupAnalyzer(GoGroup group) {
+    public GroupAnalyzer(IGoGroup group) {
         group_ = group;
         absHealthCalculator_ = new AbsoluteHealthCalculator(group);
     }
@@ -95,7 +91,7 @@ public class GroupAnalyzer {
     /**
      * @return  set of eyes currently identified for this group.
      */
-    public Set<GoEye> getEyes(GoBoard board) {
+    public GoEyeSet getEyes(GoBoard board) {
         return absHealthCalculator_.getEyes(board);
     }
 

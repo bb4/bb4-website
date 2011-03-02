@@ -46,7 +46,7 @@ public class SierpinskiComponent extends JPanel implements ActionListener, Slide
 
         depthField =
                 new NumberInput("Recursive depth:  ", INITIAL_RECURSIVE_DEPTH,
-                                "This the amount of detail that will be shown.", 1, MAX_RECURSIVE_DEPTH, true);
+                                "This the amount of detail that will be shown.", 0, MAX_RECURSIVE_DEPTH, true);
         lineWidthSlider = new LabeledSlider("Line Width", SierpinskiRenderer.DEFAULT_LINE_WIDTH, 0.1, 100.0 );
         lineWidthSlider.addChangeListener(this);
         drawButton = new JButton("Draw it!");

@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board.update;
 
-import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 
 /**
  *  Maintains the count of captured stones for each side.

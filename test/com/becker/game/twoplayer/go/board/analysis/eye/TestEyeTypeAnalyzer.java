@@ -1,12 +1,10 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.*;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
+import com.becker.game.twoplayer.go.board.elements.*;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -48,7 +46,7 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
         GoBoard board = (GoBoard)controller_.getBoard();
 
         // consider the 2 biggest groups
-        Set<GoGroup> groups = board.getGroups();
+        Set<IGoGroup> groups = board.getGroups();
         Assert.assertEquals("Unexpected number of groups.",
                 expectedNumGroups, groups.size());
 
@@ -96,13 +94,13 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
                               EyeInformation expectedInfo, EyeStatus expectedStatus, boolean isBlack,
                               boolean isInCorner, boolean isOnEdge, GroupType groupType) {
 
-        GoGroup group = getGroupToCheck(isBlack, groupType, board);
+        IGoGroup group = getGroupToCheck(isBlack, groupType, board);
 
-        Set<GoEye> eyes = group.getEyes(board);
+        GoEyeSet eyes = group.getEyes(board);
 
         assertEquals("The group\n" + group + "\n did not have one eye.",
                 1, eyes.size());
-        GoEye firstEye = group.getEyes(board).iterator().next();
+        IGoEye firstEye = group.getEyes(board).iterator().next();
 
         EyeTypeAnalyzer eyeAnalyzer = new EyeTypeAnalyzer(firstEye, board);
         EyeInformation information = eyeAnalyzer.determineEyeInformation();
@@ -117,7 +115,7 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
         assertEquals("Edge status unexpected.", isOnEdge, information.isOnEdge(firstEye));
     }
 
-    private GoGroup getGroupToCheck(boolean isBlack, GroupType type, GoBoard board) {
+    private IGoGroup getGroupToCheck(boolean isBlack, GroupType type, GoBoard board) {
         switch (type) {
             case BIGGEST : return getBiggestGroup(isBlack);
             case SURROUNDED : return getSurroundedGroup(isBlack, board);
@@ -129,13 +127,13 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
      * @param isBlack true if black
      * @return a large group of the specified side with 2 or fewer liberties.
      */
-    protected GoGroup getSurroundedGroup(boolean isBlack, GoBoard board) {
+    protected IGoGroup getSurroundedGroup(boolean isBlack, GoBoard board) {
 
-        Set<GoGroup> groups = ((GoBoard) controller_.getBoard()).getGroups();
-        GoGroup surroundedGroup = null;
+        Set<IGoGroup> groups = ((GoBoard) controller_.getBoard()).getGroups();
+        IGoGroup surroundedGroup = null;
 
-        for (GoGroup group : groups) {
-            GoBoardPositionSet stones = group.getStones();
+        for (IGoGroup group : groups) {
+            GoBoardPositionSet stones = ((GoGroup)group).getStones();
             if (stones.iterator().next().getPiece().isOwnedByPlayer1() == isBlack) {
                 if (surroundedGroup == null ||
                     (group.getNumStones() > 5 && group.getLiberties(board).size() < 3)) {

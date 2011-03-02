@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.IGoEye;
 
 /**
  * Eye6Type containing MetaData for the different possible Eye shapes of size 4.
@@ -36,7 +36,7 @@ public class E4Information extends AbstractEyeSubtypeInformation
      * @return eye status for E4 types.
      */
     @Override
-    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
+    public EyeStatus determineStatus(IGoEye eye, GoBoard board) {
         EyeNeighborMap nbrMap = new EyeNeighborMap(eye);
         switch (e4Type) {
             case E1122 :

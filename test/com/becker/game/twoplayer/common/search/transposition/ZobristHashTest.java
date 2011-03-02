@@ -5,13 +5,11 @@ import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.game.twoplayer.tictactoe.TicTacToeBoard;
 import junit.framework.TestCase;
-
-import java.util.Random;
 
 /**
  * Verify expected hash key are generated based on board state.

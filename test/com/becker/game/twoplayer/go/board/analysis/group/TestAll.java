@@ -1,8 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeNeighborMap;
-import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeTypeAnalyzer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

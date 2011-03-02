@@ -9,7 +9,7 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public class GoGroupSet extends LinkedHashSet<GoGroup> {
+public class GoGroupSet extends LinkedHashSet<IGoGroup> {
 
     /**
      * Default constructor.
@@ -25,7 +25,6 @@ public class GoGroupSet extends LinkedHashSet<GoGroup> {
         addAll(groups);
     }
 
-
     /**
      * Check all the groups of the same color to see if the stone is already in one of them
      * @param pos position on the board to check
@@ -36,7 +35,7 @@ public class GoGroupSet extends LinkedHashSet<GoGroup> {
         if (!pos.isOccupied())
             return false;
 
-        for (GoGroup group : this) {
+        for (IGoGroup group : this) {
             if (group.isOwnedByPlayer1() == pos.getPiece().isOwnedByPlayer1() && group.containsStone(pos)) {
                 return true;
             }
@@ -106,7 +105,7 @@ public class GoGroupSet extends LinkedHashSet<GoGroup> {
      * for every stone one the board verify that it belongs to exactly one group
      */
     public void confirmAllStonesInUniqueGroups() {
-        for (GoGroup g : this) {
+        for (IGoGroup g : this) {
             confirmStonesInOneGroup(g);
         }
     }
@@ -115,12 +114,12 @@ public class GoGroupSet extends LinkedHashSet<GoGroup> {
     /**
      * confirm that the stones in this group are not contained in any other group.
      */
-    public void confirmStonesInOneGroup( GoGroup group) {
-        for (GoString string : group.getMembers()) {
-            for (GoGroup g : this) {  // for each group on the board
+    public void confirmStonesInOneGroup( IGoGroup group) {
+        for (IGoString string : group.getMembers()) {
+            for (IGoGroup g : this) {  // for each group on the board
 
                 if (!g.equals(group)) {
-                    for (GoString s : g.getMembers()) {   // for each string in that group
+                    for (IGoString s : g.getMembers()) {   // for each string in that group
                         if (string.equals(s)) {
                             debugPrint(0);
                             assert false : "ERROR: " + s + " contained by 2 groups";
@@ -137,7 +136,7 @@ public class GoGroupSet extends LinkedHashSet<GoGroup> {
      */
     public void confirmNoEmptyStrings() {
         for (Object g : this)  {
-            for (Object s : ((GoSet) g).getMembers()) {
+            for (Object s : ((IGoSet) g).getMembers()) {
                 GoString string = (GoString) s;
                 assert (string.size() > 0): "There is an empty string in " + string.getGroup();
             }
@@ -148,9 +147,9 @@ public class GoGroupSet extends LinkedHashSet<GoGroup> {
      * @param stone verify that this stone has a valid string and a group in the board's member list.
      */
     public void confirmStoneInValidGroup(GoBoardPosition stone) {
-        GoString str = stone.getString();
+        IGoString str = stone.getString();
         assert ( str!=null) : stone + " does not belong to any string!" ;
-        GoGroup g = str.getGroup();
+        IGoGroup g = str.getGroup();
         boolean valid = false;
         Iterator gIt = this.iterator();
         GoGroup g1;
@@ -172,7 +171,7 @@ public class GoGroupSet extends LinkedHashSet<GoGroup> {
      * @param str every stone in this string should also be in the specified group
      * @param group group that contains all the stones in the string.
      */
-    private void confirmStoneInStringAlsoInGroup(GoString str, GoGroup group) {
+    private void confirmStoneInStringAlsoInGroup(IGoString str, IGoGroup group) {
 
         for (GoBoardPosition pos : str.getMembers()) {
 

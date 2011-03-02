@@ -1,9 +1,10 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.GoProfiler;
+import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.IGoGroup;
 
 
 /**
@@ -12,7 +13,7 @@ import com.becker.game.twoplayer.go.board.elements.GoGroup;
  */
 class EyeHealthEvaluator {
 
-    private GoGroup group_;
+    private IGoGroup group_;
     private GoBoard board_;
 
     private static final float BEST_TWO_EYED_HEALTH = 1.0f;
@@ -22,7 +23,7 @@ class EyeHealthEvaluator {
     /**
      * Constructor
      */
-    public EyeHealthEvaluator(GoGroup group, GoBoard board) {
+    public EyeHealthEvaluator(IGoGroup group, GoBoard board) {
         group_ = group;
         board_ = board;
     }

@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.update;
 
-import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoProfiler;
+import com.becker.game.twoplayer.go.board.move.GoMove;
+import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.BoardValidator;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
@@ -107,7 +107,7 @@ public abstract class PostChangeUpdater {
     void cleanupGroups() {
         GoGroupSet newGroups = new GoGroupSet();
 
-        for (GoGroup group: getAllGroups()) {
+        for (IGoGroup group: getAllGroups()) {
 
             if ( group.getNumStones() > 0 )  {
                 newGroups.add(group);

@@ -6,6 +6,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
 import go.Point;
 import gtp.GtpServer;
@@ -27,7 +28,6 @@ import java.util.List;
  *   clear_board
  *   gen_move
  *   play
- *
  * 
  * Inherits the ability to connect a Go program supporting GTP to a socket from GtpServer.
  *

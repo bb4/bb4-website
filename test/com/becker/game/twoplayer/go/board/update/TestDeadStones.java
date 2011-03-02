@@ -1,12 +1,6 @@
 package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
-import com.becker.game.twoplayer.go.board.elements.GoString;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 
 /**

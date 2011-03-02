@@ -6,7 +6,7 @@ import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeTypeAnalyzer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import static com.becker.game.twoplayer.go.board.analysis.eye.information.E6Information.Eye6Type.*;
+import static com.becker.game.twoplayer.go.board.analysis.eye.information.E6Information.Eye6Type.E112222;
 
 /**
  * Test that we can get the correct type and status for all the different 6 space eyes that can arise.

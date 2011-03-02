@@ -2,14 +2,11 @@ package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.common.Box;
 import com.becker.game.common.board.GamePiece;
-import com.becker.game.twoplayer.go.GoProfiler;
+import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -93,7 +90,7 @@ public class TerritoryAnalyzer {
         }
         else { // occupied
             GamePiece piece = pos.getPiece();
-            GoGroup group = pos.getGroup();
+            IGoGroup group = pos.getGroup();
             assert(piece != null);
             if (group != null) {
                 // add credit for probable captured stones.
@@ -148,7 +145,7 @@ public class TerritoryAnalyzer {
         float delta = 0;
         GoProfiler.getInstance().startAbsoluteTerritory();
 
-        for (GoGroup g : board_.getGroups()) {
+        for (IGoGroup g : board_.getGroups()) {
 
             float health = g.calculateAbsoluteHealth(board_);
 
@@ -170,7 +167,7 @@ public class TerritoryAnalyzer {
         float delta = initDelta;
         if (USE_RELATIVE_GROUP_SCORING) {
             prof.startRelativeTerritory();
-            for (GoGroup g : board_.getGroups()) {
+            for (IGoGroup g : board_.getGroups()) {
                 float health = g.calculateRelativeHealth(board_);
                 g.updateTerritory(health);
                 delta += health * g.getNumStones();
@@ -262,7 +259,7 @@ public class TerritoryAnalyzer {
         float totalScore = 0;
 
         for (GoBoardPosition stone : stones) {           
-            GoGroup group = stone.getString().getGroup();
+            IGoGroup group = stone.getString().getGroup();
             totalScore += group.getRelativeHealth(board_, false);
         }
         return totalScore/stones.size();

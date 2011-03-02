@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoCaptureList;
+import com.becker.game.twoplayer.go.board.move.GoCaptureList;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.*;
 
@@ -65,7 +65,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
 
             assert (enbr.isOccupied()): "enbr=" + enbr;
 
-            GoString str = enbr.getString();
+            IGoString str = enbr.getString();
             assert ( str.isOwnedByPlayer1() != stone.getPiece().isOwnedByPlayer1()):
                     "The "+str+" is not an enemy of "+stone;
             assert ( str.size() > 0 ) : "Sting has 0 stones:" + str;
@@ -113,7 +113,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
     private void updateNeighborStringsAfterMove(GoBoardPosition stone, GoBoardPositionSet nbrs) {
 
         GoBoardPosition nbrStone = nbrs.getOneMember();
-        GoString str = nbrStone.getString();
+        GoString str = (GoString) nbrStone.getString();
         str.addMember( stone, getBoard() );
         getAllGroups().debugPrint( 3, "groups before merging:", true, true);
 
@@ -130,7 +130,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
 
         for (GoBoardPosition nbrStone: nbrs ) {
             // if its the same string then there is nothing to merge
-            GoString nbrString = nbrStone.getString();
+            IGoString nbrString = nbrStone.getString();
             if ( str != nbrString )   {
                 str.merge(nbrString, getBoard());
             }

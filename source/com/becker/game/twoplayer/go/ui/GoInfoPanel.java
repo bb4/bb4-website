@@ -7,9 +7,9 @@ import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
 import com.becker.game.twoplayer.go.GoController;
-import com.becker.game.twoplayer.go.GoSearchable;
+import com.becker.game.twoplayer.go.board.GoSearchable;
 import com.becker.game.twoplayer.go.board.BoardValidator;
-import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.ui.rendering.GoBoardRenderer;
 import com.becker.ui.legend.ContinuousColorLegend;
 
 import javax.swing.*;

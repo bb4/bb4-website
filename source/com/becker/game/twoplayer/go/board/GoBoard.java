@@ -3,12 +3,11 @@ package com.becker.game.twoplayer.go.board;
 import com.becker.game.common.*;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
-import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.analysis.CornerChecker;
 import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.*;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.update.BoardUpdater;
 import com.becker.game.twoplayer.go.board.update.CaptureCounts;
 
@@ -167,8 +166,8 @@ public final class GoBoard extends TwoPlayerBoard {
 
          NeighborAnalyzer na = new NeighborAnalyzer(this);
          GoStringSet stringNbrs = na.findStringNeighbors( liberty );
-         for (GoString sn : stringNbrs) {
-             sn.changedLiberty(liberty);
+         for (IGoString sn : stringNbrs) {
+            ((GoString)sn).changedLiberty(liberty);
          }
     }
 

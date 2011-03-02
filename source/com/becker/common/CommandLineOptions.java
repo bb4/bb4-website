@@ -18,7 +18,7 @@ public class CommandLineOptions  {
      * Constructor.
      * Parse out the args and put them in a hashmap.
      * We expect the args to be some set of flags of the form -<flagname> followed by and  optional value
-     * So an example argumant list might be
+     * So an example argument list might be
      *   java someProgram -p 3434 -type pente -locale en -verbose -safe -title "my title"
      * Note: verbose and -safe are options and do not have values.
      * @param args

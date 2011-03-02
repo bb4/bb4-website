@@ -5,6 +5,8 @@ import com.becker.common.Location;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
 import com.becker.game.twoplayer.go.board.elements.GoString;
+import com.becker.game.twoplayer.go.board.elements.IGoGroup;
+import com.becker.game.twoplayer.go.board.elements.IGoString;
 
 /**
  * Figure out how likely (the potential) that a group can form two eyes.
@@ -14,7 +16,7 @@ import com.becker.game.twoplayer.go.board.elements.GoString;
 class EyePotentialAnalyzer {
 
     /** The group of go stones that we are analyzing. */
-    private GoGroup group_;
+    private IGoGroup group_;
 
     private GoBoard board_;
 
@@ -25,7 +27,7 @@ class EyePotentialAnalyzer {
     /**
      * Constructor.
      */
-    public EyePotentialAnalyzer(GoGroup group) {
+    public EyePotentialAnalyzer(IGoGroup group) {
         group_ = group;
 
     }
@@ -62,7 +64,7 @@ class EyePotentialAnalyzer {
      */
     private float findTotalEyePotential() {
 
-        GoString groupString = group_.getMembers().iterator().next();
+        IGoString groupString = group_.getMembers().iterator().next();
 
         int rMin = boundingBox_.getMinRow();
         int rMax = boundingBox_.getMaxRow();
@@ -79,7 +81,7 @@ class EyePotentialAnalyzer {
     /**
      * @return  total of all the row run potentials.
      */
-    private float getTotalRowPotentials(GoString groupString, int rMin, int rMax, int cMin, int cMax) {
+    private float getTotalRowPotentials(IGoString groupString, int rMin, int rMax, int cMin, int cMax) {
 
         float totalPotential = 0;
         RunPotentialAnalyzer runAnalyzer = new RunPotentialAnalyzer(groupString, board_);
@@ -93,7 +95,7 @@ class EyePotentialAnalyzer {
     /**
      * @return total of all the column run potentials.
      */
-    private float getTotalColumnPotentials(GoString groupString, int rMin, int rMax, int cMin, int cMax) {
+    private float getTotalColumnPotentials(IGoString groupString, int rMin, int rMax, int cMin, int cMax) {
 
         float totalPotential = 0;
         RunPotentialAnalyzer runAnalyzer = new RunPotentialAnalyzer(groupString, board_);

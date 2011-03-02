@@ -7,8 +7,7 @@ import java.util.LinkedHashSet;
  *
  *  @author Barry Becker
  */
-public class GoStringSet extends LinkedHashSet<GoString>
-{
+public class GoStringSet extends LinkedHashSet<IGoString> {
 
     public GoStringSet() {}
     
@@ -23,10 +22,10 @@ public class GoStringSet extends LinkedHashSet<GoString>
     /**
      *
      * @param pos
-     * @return the stirng that contains pos if any. Null if none.
+     * @return the string that contains pos if any. Null if none.
      */
-    public GoString findStringContainingPosition(GoBoardPosition pos) {
-        for (GoString str : this) {
+    public IGoString findStringContainingPosition(GoBoardPosition pos) {
+        for (IGoString str : this) {
             if (str.contains(pos)) {
                 return str;
             }

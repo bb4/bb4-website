@@ -5,8 +5,7 @@ import java.text.DecimalFormat;
 /**
  * Miscelaneous commonly used static utility methods.
  */
-public final class Util
-{
+public final class Util {
     
     private static final DecimalFormat expFormat_ = new DecimalFormat("0.###E0");
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");
@@ -19,8 +18,7 @@ public final class Util
      * @param num the number to format.
      * @return a nicely formatted string representation of the number.
      */
-    public static String formatNumber(double num)
-    {
+    public static String formatNumber(double num) {
         double absnum = Math.abs(num);
 
         if (absnum == 0)  {
@@ -61,8 +59,7 @@ public final class Util
      * @param num the number to format.
      * @return a nicely formatted string representation of the number.
      */
-    public static String formatNumber(long num)
-    {
+    public static String formatNumber(long num) {
         return intFormat_.format(num);
     }
 
@@ -70,12 +67,13 @@ public final class Util
      * @param num the number to format.
      * @return a nicely formatted string representation of the number.
      */
-    public static String formatNumber(int num)
-    {
+    public static String formatNumber(int num) {
         return intFormat_.format(num);
     }
 
-
+    /**
+     * Cause this thread to sleep for specified amount of time while other threads run.
+     */
     public static void sleep(int millis) {
         if (millis > 0) {
             try {

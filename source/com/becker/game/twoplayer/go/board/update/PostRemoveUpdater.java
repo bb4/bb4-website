@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoProfiler;
+import com.becker.game.twoplayer.go.board.move.GoMove;
+import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoCaptureList;
+import com.becker.game.twoplayer.go.board.move.GoCaptureList;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.*;
@@ -32,13 +32,13 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         profiler_.startUpdateGroupsAfterRemove();
         GoBoardPosition stone = (GoBoardPosition) (getBoard().getPosition(move.getToLocation()));
 
-        GoString stringThatItBelongedTo = stone.getString();
+        IGoString stringThatItBelongedTo = stone.getString();
         // clearing a stone may cause a string to split into smaller strings
         stone.clear(getBoard());
         board_.adjustLiberties(stone);
 
         updateStringsAfterRemove( stone, stringThatItBelongedTo);
-        restoreCaptures((GoCaptureList)move.getCaptures());
+        restoreCaptures(move.getCaptures());
 
         profiler_.startRecreateGroupsAfterRemove();
         recreateGroupsAfterChange();
@@ -54,7 +54,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * @param stone that was removed.
      * @param string that the stone belonged to.
      */
-    private void updateStringsAfterRemove( GoBoardPosition stone, GoString string ) {
+    private void updateStringsAfterRemove( GoBoardPosition stone, IGoString string ) {
         GoProfiler profiler = GoProfiler.getInstance();
         profiler.startUpdateStringsAfterRemove();
 
@@ -75,9 +75,9 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * @param stone that was removed.
      * @param string that the stone belonged to.
      */
-    private void splitStringsIfNeeded(GoBoardPosition stone, GoString string) {
+    private void splitStringsIfNeeded(GoBoardPosition stone, IGoString string) {
 
-        GoGroup group = string.getGroup();
+        IGoGroup group = string.getGroup();
         GoBoardPositionSet nbrs =
             nbrAnalyzer_.getNobiNeighbors( stone, group.isOwnedByPlayer1(), NeighborType.FRIEND );
 

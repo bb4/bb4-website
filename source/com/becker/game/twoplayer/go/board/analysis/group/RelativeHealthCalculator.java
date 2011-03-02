@@ -1,13 +1,10 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.game.twoplayer.go.GoProfiler;
+import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
-import com.becker.game.twoplayer.go.board.elements.GoGroupSet;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.util.Set;
 
@@ -18,13 +15,13 @@ import java.util.Set;
 class RelativeHealthCalculator {
 
     /** The group of go stones that we are analyzing. */
-    private GoGroup group_;
+    private IGoGroup group_;
 
     /**
      * Constructor
      * @param group the group to analyze
      */
-    public RelativeHealthCalculator(GoGroup group) {
+    public RelativeHealthCalculator(IGoGroup group) {
         group_ = group;
     }
 

@@ -17,14 +17,14 @@ import java.util.*;
  */
 public final class LifeAnalyzer {
 
-    private GoGroup group_;
+    private IGoGroup group_;
     private GoBoard board_;
 
     /** Keep track of living strings neighboring eyes. */
-    private Map<GoEye, List<GoString>> eyeStringNbrMap;
+    private Map<IGoEye, List<IGoString>> eyeStringNbrMap;
     
     /** Keep track of vital eyes neighboring living string. */
-    private Map<GoString, List<GoEye>> stringEyeNbrMap;
+    private Map<IGoString, GoEyeList> stringEyeNbrMap;
 
     private NeighborAnalyzer nbrAnalyzer_;
 
@@ -33,7 +33,7 @@ public final class LifeAnalyzer {
      * @param group the group to analyze for unconditional life.
      * @param board board on which the group exists.
      */
-    public LifeAnalyzer(GoGroup group, GoBoard board) {
+    public LifeAnalyzer(IGoGroup group, GoBoard board) {
         group_ = group;
         board_ = board;
         nbrAnalyzer_ = new NeighborAnalyzer(board);
@@ -48,7 +48,7 @@ public final class LifeAnalyzer {
     public boolean isUnconditionallyAlive() {
         initMaps();
 
-        Set<GoEye> eyes = group_.getEyes(board_);
+        GoEyeSet eyes = group_.getEyes(board_);
         findNeighborStringSetsForEyes(eyes);
         createVitalEyeSets(eyes);
 
@@ -56,17 +56,17 @@ public final class LifeAnalyzer {
     }
 
     private void initMaps() {
-        eyeStringNbrMap = new HashMap<GoEye, List<GoString>>();
-        stringEyeNbrMap = new HashMap<GoString, List<GoEye>>();
+        eyeStringNbrMap = new HashMap<IGoEye, List<IGoString>>();
+        stringEyeNbrMap = new HashMap<IGoString, GoEyeList>();
     }
 
     /**
      * first find the neighbor string sets for each true eye in the group.
      */
-    private void findNeighborStringSetsForEyes(Set<GoEye> eyes) {
+    private void findNeighborStringSetsForEyes(GoEyeSet eyes) {
 
-        for (GoEye eye : eyes) {
-            List<GoString> stringNbrs = findNeighborStringsForEye(eye);
+        for (IGoEye eye : eyes) {
+            List<IGoString> stringNbrs = findNeighborStringsForEye(eye);
             eyeStringNbrMap.put(eye, stringNbrs);
         }
     }
@@ -76,8 +76,8 @@ public final class LifeAnalyzer {
      * @param eye eye to find neighboring strings of.
      * @return living neighbor strings. May be empty, but never null.
      */
-    private List<GoString> findNeighborStringsForEye(GoEye eye) {
-        List<GoString> nbrStrings = new LinkedList<GoString>();
+    private List<IGoString> findNeighborStringsForEye(IGoEye eye) {
+        List<IGoString> nbrStrings = new LinkedList<IGoString>();
         for (GoBoardPosition pos : eye.getMembers()) {
             if (pos.isUnoccupied()) {
                 findNeighborStringsForEyeSpace(eye, pos, nbrStrings);
@@ -92,7 +92,7 @@ public final class LifeAnalyzer {
      * @param pos empty position within eye.
      * @param nbrStrings the list to add neighboring still living strings to.
      */
-    private void findNeighborStringsForEyeSpace(GoEye eye, GoBoardPosition pos, List<GoString> nbrStrings) {
+    private void findNeighborStringsForEyeSpace(IGoEye eye, GoBoardPosition pos, List<IGoString> nbrStrings) {
         GoBoardPositionSet nbrs =
                 nbrAnalyzer_.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
         for (GoBoardPosition nbr : nbrs) {
@@ -115,8 +115,8 @@ public final class LifeAnalyzer {
     /**
      * Create the neighbor eye sets for each qualified string.
      */
-    private void createVitalEyeSets(Set<GoEye> eyes) {
-        for (GoEye eye : eyes) {
+    private void createVitalEyeSets(GoEyeSet eyes) {
+        for (IGoEye eye : eyes) {
             updateVitalEyesForStringNeighbors(eye);
         }
         GameContext.log(3, "num strings with vital eye nbrs = " + stringEyeNbrMap.size());
@@ -126,16 +126,16 @@ public final class LifeAnalyzer {
      *
      * @param eye
      */
-    private void updateVitalEyesForStringNeighbors(GoEye eye) {
+    private void updateVitalEyesForStringNeighbors(IGoEye eye) {
 
-        for (GoString str : eyeStringNbrMap.get(eye)) {
+        for (IGoString str : eyeStringNbrMap.get(eye)) {
             // only add the eye if every unoccupied position in the eye is adjacent to the string
-            List<GoEye> vitalEyes;
+            GoEyeList vitalEyes;
             if (stringEyeNbrMap.containsKey(str)) {
                 vitalEyes = stringEyeNbrMap.get(str);
             }
             else {
-                vitalEyes = new LinkedList<GoEye>();
+                vitalEyes = new GoEyeList();
                 stringEyeNbrMap.put(str, vitalEyes);
             }
 
@@ -149,7 +149,7 @@ public final class LifeAnalyzer {
     /**
      * @return true if all the empty spaces in this eye are touching the specified string.
      */
-    private boolean allUnocupiedAdjacentToString(GoEye eye, GoString string)   {
+    private boolean allUnocupiedAdjacentToString(IGoEye eye, IGoString string)   {
         for (GoBoardPosition pos : eye.getMembers()) {
             if (pos.isUnoccupied()) {
                 GoBoardPositionSet nbrs =
@@ -190,12 +190,12 @@ public final class LifeAnalyzer {
 
         do {
             initializeEyeLife();
-            Iterator<GoString> it = candidateStrings.iterator();
+            Iterator<IGoString> it = candidateStrings.iterator();
 
             done = true;
             while (it.hasNext()) {
 
-                GoString str = it.next();
+                IGoString str = it.next();
                 int numLivingAdjacentEyes = findNumLivingAdjacentEyes(str);
                 if (numLivingAdjacentEyes < 2) {
                     str.setUnconditionallyAlive(false);
@@ -213,9 +213,9 @@ public final class LifeAnalyzer {
      * all its neighbors are unconditional life candidates still.
      */
     private void initializeEyeLife() {
-        for (GoEye eye : group_.getEyes(board_)) {
+        for (IGoEye eye : group_.getEyes(board_)) {
             eye.setUnconditionallyAlive(true);
-            for (GoString nbrStr : eyeStringNbrMap.get(eye)) {
+            for (IGoString nbrStr : eyeStringNbrMap.get(eye)) {
                 if (!(nbrStr.isUnconditionallyAlive())) {
                     eye.setUnconditionallyAlive(false);
                 }
@@ -226,12 +226,12 @@ public final class LifeAnalyzer {
     /**
      * @return the number of unconditionally alive adjacent eyes.
      */
-    private int findNumLivingAdjacentEyes(GoString str) {
+    private int findNumLivingAdjacentEyes(IGoString str) {
         int numLivingAdjacentEyes = 0;
 
-        List<GoEye> vitalEyeNbrs = stringEyeNbrMap.get(str);
+        GoEyeList vitalEyeNbrs = stringEyeNbrMap.get(str);
         if (vitalEyeNbrs != null)  {
-            for (GoString eye : vitalEyeNbrs) {
+            for (IGoEye eye : vitalEyeNbrs) {
                 if (eye.isUnconditionallyAlive()) {
                     numLivingAdjacentEyes++;
                 }
