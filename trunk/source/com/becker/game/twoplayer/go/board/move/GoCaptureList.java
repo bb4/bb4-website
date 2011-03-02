@@ -1,9 +1,10 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.move;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.CaptureList;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.*;
 

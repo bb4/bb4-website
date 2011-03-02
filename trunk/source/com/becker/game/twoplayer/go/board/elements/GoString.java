@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.go.board.elements;
 
-import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
@@ -28,7 +27,7 @@ public class GoString extends GoSet
     private GoBoardPositionSet members_;
     
     /** The group to which this string belongs. */
-    GoGroup group_;
+    IGoGroup group_;
     
     /** If true, then we are an eye in an unconditionally alive group (according to Benson's algorithm). */
     private boolean unconditionallyAlive_;
@@ -85,11 +84,11 @@ public class GoString extends GoSet
         members_ = new GoBoardPositionSet();
     }
 
-    public final void setGroup( GoGroup group ) {
+    public final void setGroup( IGoGroup group ) {
         group_ = group;
     }
 
-    public final GoGroup getGroup() {
+    public IGoGroup getGroup() {
         return group_;
     }
 
@@ -127,7 +126,7 @@ public class GoString extends GoSet
     /**
      * merge a string into this one
      */
-    public final void merge( GoString string, GoBoard board ) {
+    public final void merge( IGoString string, GoBoard board ) {
         if ( this == string ) {
             GameContext.log( 1, "Warning: merging " + string + " into itself" );
             // its a self join
@@ -138,13 +137,13 @@ public class GoString extends GoSet
         stringMembers.addAll(string.getMembers());
         // must remove these after iterating otherwise we get a ConcurrentModificationException
         string.getGroup().remove(string);
-        string.removeAll();
+        ((GoString) string).removeAll();
 
         Iterator it = stringMembers.iterator();
         GoBoardPosition stone;
         while ( it.hasNext() ) {
             stone = (GoBoardPosition) it.next();
-            GoString myString = stone.getString();
+            IGoString myString = stone.getString();
             if (myString != null && myString != string) {
                 myString.remove(stone, board);
             }

@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.twoplayer.go.GoTestCase;
+import com.becker.game.twoplayer.go.board.analysis.group.StubGoGroup;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.game.twoplayer.go.board.elements.IGoGroup;
-import com.becker.game.twoplayer.go.board.analysis.group.StubGoGroup;
 
 /**
  * @author Barry Becker

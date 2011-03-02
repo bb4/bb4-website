@@ -1,11 +1,12 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.common.Location;
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.GoTestCase;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import junit.framework.Assert;
+
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.Assert;
 
 /**
  *Test that candidate moves can be generated appropriately.

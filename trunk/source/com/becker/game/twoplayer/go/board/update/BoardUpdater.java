@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board.update;
 
-import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 
 /**

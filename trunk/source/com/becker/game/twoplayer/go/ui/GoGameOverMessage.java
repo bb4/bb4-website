@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.go.ui;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.ui.GameOverMessage;
 import com.becker.game.twoplayer.go.GoController;
-import com.becker.game.twoplayer.go.GoSearchable;
+import com.becker.game.twoplayer.go.board.GoSearchable;
 
 /**
  *  Takes a GoController as input and displays the

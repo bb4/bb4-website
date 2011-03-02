@@ -1,8 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -19,7 +18,7 @@ class GroupEyeCache {
      * It includes eyes of all types including false eyes.
      * false-eye: any string of spaces or dead enemy stones for which one is a false eye.
      */
-    private Set<GoEye> eyes_;
+    private GoEyeSet eyes_;
 
     /** measure of how easily the group can make 2 eyes. */
     private float eyePotential_;
@@ -37,8 +36,8 @@ class GroupEyeCache {
     /**
      * Constructor
      */
-    public GroupEyeCache(GoGroup group) {
-        eyes_ = new LinkedHashSet<GoEye>();
+    public GroupEyeCache(IGoGroup group) {
+        eyes_ = new GoEyeSet();
         isValid_ = false;
         eyeAnalyzer_ = new EyeSpaceAnalyzer(group);
         potentialAnalyzer_ = new EyePotentialAnalyzer(group);
@@ -47,7 +46,7 @@ class GroupEyeCache {
     /**
      * @return  set of eyes currently identified for this group.
      */
-    public Set<GoEye> getEyes(GoBoard board) {
+    public GoEyeSet getEyes(GoBoard board) {
         updateEyes(board);
         return eyes_;
     }
@@ -100,7 +99,7 @@ class GroupEyeCache {
      */
     public float calcNumEyes() {
         float numEyes = 0;
-        for (GoEye eye : eyes_) {
+        for (IGoEye eye : eyes_) {
             numEyes += eye.getStatus().getScore();
         }
         return numEyes;
@@ -112,7 +111,7 @@ class GroupEyeCache {
     private void clearEyes() {
         if (eyes_.isEmpty()) return;
 
-        for (GoEye eye : eyes_) {
+        for (IGoEye eye : eyes_) {
             eye.clear();
         }
         eyes_.clear();

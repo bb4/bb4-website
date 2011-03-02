@@ -95,7 +95,7 @@ public class BoardValidator {
 
         NeighborAnalyzer na = new NeighborAnalyzer(board_);
 
-        for (GoGroup parentGroup : groups) {
+        for (IGoGroup parentGroup : groups) {
             GoBoardPositionSet parentGroupStones = parentGroup.getStones();
             for (GoBoardPosition stone : parentGroupStones) {  // for each stone in that group
                 // compute the group from this stone and confirm it matches the parent group

@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.IGoGroup;
 import junit.framework.Assert;
 
 /**
@@ -173,7 +174,7 @@ public class TestEyePotentialAnalyzer extends GoTestCase {
      */
     private void verifyEyePotential(boolean forBlackGroup, int expectedSizeOfGroup, float expectedPotential) {
 
-        GoGroup group = getBiggestGroup(forBlackGroup);
+        IGoGroup group = getBiggestGroup(forBlackGroup);
 
         int size = group.getNumStones();
         Assert.assertEquals("Unexpected size of test group.", expectedSizeOfGroup, size);

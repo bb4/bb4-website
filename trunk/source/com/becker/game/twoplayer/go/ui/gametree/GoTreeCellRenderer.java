@@ -5,7 +5,7 @@ import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.ui.gametree.GameTreeCellRenderer;
-import com.becker.game.twoplayer.go.ui.GoStoneRenderer;
+import com.becker.game.twoplayer.go.ui.rendering.GoStoneRenderer;
 
 import javax.swing.*;
 import java.awt.*;

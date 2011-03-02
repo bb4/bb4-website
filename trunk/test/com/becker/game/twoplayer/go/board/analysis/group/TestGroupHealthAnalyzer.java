@@ -1,18 +1,22 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.game.twoplayer.go.board.*;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.go.GoTestCase;
-import java.util.Set;
-
-import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.E1Information;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.E2Information;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.FalseEyeInformation;
+import com.becker.game.twoplayer.go.board.elements.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.IGoEye;
+import com.becker.game.twoplayer.go.board.elements.IGoGroup;
 import junit.framework.Assert;
+
+import static com.becker.game.twoplayer.go.board.analysis.eye.information.E4Information.Eye4Type.E2222;
+import static com.becker.game.twoplayer.go.board.analysis.eye.information.E5Information.Eye5Type.E12223;
+import static com.becker.game.twoplayer.go.board.analysis.eye.information.E6Information.Eye6Type.E222233;
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType.*;
-import static com.becker.game.twoplayer.go.board.analysis.eye.information.E4Information.Eye4Type.*;
-import static com.becker.game.twoplayer.go.board.analysis.eye.information.E5Information.Eye5Type.*;
-import static com.becker.game.twoplayer.go.board.analysis.eye.information.E6Information.Eye6Type.*;
 
 
 /**
@@ -485,8 +489,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         restore(PREFIX + file);
 
         // find the biggest black and white groups
-        GoGroup bg = getBiggestGroup(true);
-        GoGroup wg = getBiggestGroup(false);
+        IGoGroup bg = getBiggestGroup(true);
+        IGoGroup wg = getBiggestGroup(false);
 
         GoBoard board = (GoBoard) controller_.getBoard();
         GroupAnalyzer blackHealthAnalyzer = new GroupAnalyzer(bg);
@@ -573,14 +577,14 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         return (OK?"":"      *Error*");
     }
 
-    private void verifyEyes(Set<GoEye> eyes, EyeInformation[] expectedEyes, boolean black)
+    private void verifyEyes(GoEyeSet eyes, EyeInformation[] expectedEyes, boolean black)
     {
         String color = black? "black" : "white";
         Assert.assertEquals("unequal numbers of "+color+" eyes", expectedEyes.length, eyes.size());
         if (eyes.size() > 0)
         {
             int i = 0;
-            for (GoEye eye : eyes) {
+            for (IGoEye eye : eyes) {
                 EyeInformation eyeInformation = eye.getInformation();
                 Assert.assertEquals(color + "Eye " + i + " was not the type that we expected. ",
                          expectedEyes[i], eyeInformation);

@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.board.GamePiece;
-import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 
 import java.util.ArrayList;
 import java.util.List;

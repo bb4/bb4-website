@@ -18,7 +18,7 @@ import java.util.*;
 class EyeSpaceAnalyzer {
 
     /** The group of go stones that we are analyzing eyespace for. */
-    private GoGroup group_;
+    private IGoGroup group_;
 
     private GoBoard board_;
 
@@ -30,7 +30,7 @@ class EyeSpaceAnalyzer {
     /**
      * Constructor.
      */
-    public EyeSpaceAnalyzer(GoGroup group) {
+    public EyeSpaceAnalyzer(IGoGroup group) {
         group_ = group;
     }
 
@@ -44,7 +44,7 @@ class EyeSpaceAnalyzer {
      * Determine the set of eyes within a group
      * @return the set of eyes that are in this group.
      */
-    public Set<GoEye> determineEyes() {
+    public GoEyeSet determineEyes() {
 
         assert (board_ != null) : "The board must be set before determining eyes.";
         List<GoBoardPositionList> candidateEyeLists = createEyeSpaceLists();
@@ -60,8 +60,8 @@ class EyeSpaceAnalyzer {
      * @param candidateEyeLists eye space lists
      * @return set of eyes in this group
      */
-    private Set<GoEye> findEyeFromCandidates(List<GoBoardPositionList> candidateEyeLists) {
-        Set<GoEye> eyes = new LinkedHashSet<GoEye>();
+    private GoEyeSet findEyeFromCandidates(List<GoBoardPositionList> candidateEyeLists) {
+        GoEyeSet eyes = new GoEyeSet();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
         for ( int r = boundingBox_.getMinRow(); r <= boundingBox_.getMaxRow(); r++ ) {
@@ -168,7 +168,7 @@ class EyeSpaceAnalyzer {
 
             // make sure that every occupied stone in the list is a real enemy and not just a dead opponent stone.
             // compare it with one of the group strings
-            GoString groupString = group_.getMembers().iterator().next();
+            IGoString groupString = group_.getMembers().iterator().next();
 
             Iterator it = list.iterator();
             while (it.hasNext()) {
@@ -205,10 +205,10 @@ class EyeSpaceAnalyzer {
         if ( eyeList == null )
             return false;
 
-        GoString groupString = group_.getMembers().iterator().next();
+        IGoString groupString = group_.getMembers().iterator().next();
 
         for (GoBoardPosition position : eyeList) {
-            GoString string = position.getString();
+            IGoString string = position.getString();
 
             if (position.isOccupied()) {
                 if (string.size() > 6 && groupString.isEnemy(position)) {

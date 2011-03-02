@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

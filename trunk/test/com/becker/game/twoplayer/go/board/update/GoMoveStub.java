@@ -1,19 +1,9 @@
 package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.common.Location;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
-import com.becker.game.common.MoveList;
-import com.becker.game.common.board.CaptureList;
-import com.becker.game.common.board.GamePiece;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
-import com.becker.game.twoplayer.go.board.elements.*;
-
-import java.util.Iterator;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 
 
 /**

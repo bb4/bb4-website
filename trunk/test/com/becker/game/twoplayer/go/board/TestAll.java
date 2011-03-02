@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.go.board;
 
-import com.becker.game.twoplayer.go.board.elements.TestGoString;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

@@ -1,14 +1,12 @@
 package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.common.Location;
-import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoGroup;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 
 
 /**
@@ -93,6 +91,6 @@ public class TestPostMoveUpdater extends GoTestCase {
         assertEquals("Unexpected number of groups",
                 stats.expGroupsOnBoard, board.getGroups().size());
         assertEquals("The group is new so should be valid",
-                stats.expValid, pos.getGroup().isValid());
+                stats.expValid, ((GoGroup)pos.getGroup()).isValid());
     }
 }

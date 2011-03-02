@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.IGoEye;
 
 /**
  * Describes an eye shape with 8 or more internal spaces.
@@ -13,7 +13,7 @@ import com.becker.game.twoplayer.go.board.elements.GoEye;
  */
 public class TerritorialEyeInformation extends AbstractEyeInformation {
 
-    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
+    public EyeStatus determineStatus(IGoEye eye, GoBoard board) {
         return EyeStatus.ALIVE;
     }
 

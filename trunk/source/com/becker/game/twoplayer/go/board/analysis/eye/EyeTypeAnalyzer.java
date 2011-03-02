@@ -5,10 +5,7 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.util.Set;
 
@@ -19,12 +16,12 @@ import java.util.Set;
  */
 public class EyeTypeAnalyzer {
 
-    private GoEye eye_;
+    private IGoEye eye_;
     private GoBoard board_;
     private NeighborAnalyzer nbrAnalyzer_;
 
     
-    public EyeTypeAnalyzer(GoEye eye, GoBoard board) {
+    public EyeTypeAnalyzer(IGoEye eye, GoBoard board) {
         eye_ = eye;
         board_ = board;
         nbrAnalyzer_ = new NeighborAnalyzer(board);
@@ -87,7 +84,7 @@ public class EyeTypeAnalyzer {
      */
     private boolean isFalseEye( GoBoardPosition space )
     {
-        GoGroup ourGroup = eye_.getGroup();
+        IGoGroup ourGroup = eye_.getGroup();
         boolean groupP1 = ourGroup.isOwnedByPlayer1();
         Set nbrs = nbrAnalyzer_.getNobiNeighbors( space, groupP1, NeighborType.FRIEND );
 

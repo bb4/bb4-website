@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
-import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.IGoEye;
 
 import java.util.Arrays;
 
@@ -24,11 +24,11 @@ public abstract class AbstractEyeInformation implements EyeInformation
         return new float[0];
     }
 
-    public boolean isInCorner(GoEye eye) {
+    public boolean isInCorner(IGoEye eye) {
         return eye.getNumCornerPoints() == 3;
     }
 
-    public boolean isOnEdge(GoEye eye){
+    public boolean isOnEdge(IGoEye eye){
          return eye.getNumEdgePoints() >= 3;
     }
 

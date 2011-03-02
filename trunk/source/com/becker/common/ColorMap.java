@@ -10,8 +10,7 @@ import java.util.List;
  * The colormap can be dynamically changed by adding and removing control points.
  * @author Barry Becker
  */
-public class ColorMap
-{
+public class ColorMap {
     final private List<Double> values_;
     final private List<Color> colors_;
 
@@ -22,8 +21,7 @@ public class ColorMap
      * @param values a monotonically increasing sequence of numbers.
      * @param colors a corresponding set of colors to map to.
      */
-    public ColorMap( double[] values, Color[] colors)
-    {
+    public ColorMap( double[] values, Color[] colors) {
         assert(values!=null) : "values was null";
         assert(colors!=null) : "colors was null";
         // should also assert that the values are increasing
@@ -36,8 +34,7 @@ public class ColorMap
         }
     }
 
-    public Color getColorForValue( final int value )
-    {
+    public Color getColorForValue( final int value ) {
         return getColorForValue( (double) value );
     }
 
@@ -46,8 +43,7 @@ public class ColorMap
      * @param value numeric value to get a color for from the continuous map.
      * @return color that corresponds to specified value.
      */
-    public Color getColorForValue( final double value )
-    {
+    public Color getColorForValue( final double value ) {
         int len = getNumValues();
         if ( value <= values_.get(0)) {
             return colors_.get(0);
@@ -67,18 +63,13 @@ public class ColorMap
         return interpolate( x );
     }
 
-    // temporary variables for interpolation
-    //private static final float[] rgba_ = new float[4];
-    //private static final float[] rgba1_ = new float[4];
-
     /**
      * I don't think we should get a race condition because the static rgb variables are only used in this
      * class and this method is synchronized. I want to avoid creating the rgb arrays each time the method is called.
      * @param x value to retur color for.
      * @return interpolated color
      */
-    private Color interpolate( double x )
-    {
+    private Color interpolate( double x ) {
         int i = (int) x;
         double delta = x - (double) i;
         float[] rgba_ = new float[4];

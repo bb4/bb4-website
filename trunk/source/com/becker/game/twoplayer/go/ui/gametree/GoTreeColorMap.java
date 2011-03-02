@@ -16,7 +16,6 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
  */
 class GoTreeColorMap extends ColorMap {
 
-
         private static final double[] myValues_ = {
                                   -WINNING_VALUE,
                                   -WINNING_VALUE/2.0,

@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.ui;
+package com.becker.game.twoplayer.go.ui.rendering;
 
 import com.becker.common.ColorMap;
 import com.becker.game.common.board.Board;
@@ -12,6 +12,7 @@ import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.IGoGroup;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
@@ -153,8 +154,8 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
         // draw the group borders
         if ( GameContext.getDebugMode() > 0 ) {
             GoGroupRenderer groupRenderer = new GoGroupRenderer(board, COLORMAP, (float) cellSize_, getMargin(), g2);
-            for (GoGroup group : board.getGroups()) {
-                groupRenderer.drawGroupDecoration(group);
+            for (IGoGroup group : board.getGroups()) {
+                groupRenderer.drawGroupDecoration((GoGroup)group);
             }
         }
 

@@ -1,9 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
-import junit.framework.Assert;
 
 /**
  * Verify that we come up with reasonable eye potential values (likelihood of making eyes in the group).

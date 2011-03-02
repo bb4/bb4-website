@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.IGoEye;
 
 /**
  * Info about a false eye
@@ -11,7 +11,7 @@ import com.becker.game.twoplayer.go.board.elements.GoEye;
  */
 public class FalseEyeInformation extends AbstractEyeInformation {
     
-    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
+    public EyeStatus determineStatus(IGoEye eye, GoBoard board) {
         if (eye.getMembers().size() > 5)  {
             return EyeStatus.NAKADE;
         }

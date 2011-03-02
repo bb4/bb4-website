@@ -18,7 +18,6 @@ import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORI
  *  A GoString by comparison, is composed of a strongly connected set of one or more same color stones.
  *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi.
  *
- *  @see GoString
  *  @author Barry Becker
  */
 
@@ -35,7 +34,7 @@ public final class GoGroup extends GoSet
      * Constructor. Create a new group containing the specified string.
      * @param string make the group from this string.
      */
-    public GoGroup(GoString string) {
+    public GoGroup(IGoString string) {
         commonInit();
         ownedByPlayer1_ = string.isOwnedByPlayer1();
          
@@ -63,7 +62,7 @@ public final class GoGroup extends GoSet
                 "Stones in group must all be owned by the same player. stones=" + stones;
         // actually this is ok - sometimes happens legitimately
         // assert isFalse(stone.isVisited(), stone+" is marked visited in "+stones+" when it should not be.");
-        GoString string = stone.getString();
+        IGoString string = stone.getString();
         assert (string != null) : "There is no owning string for " + stone;
         if (!getMembers().contains(string)) {
             assert (ownedByPlayer1_ == string.isOwnedByPlayer1()) : string + "ownership not the same as " + this;
@@ -97,7 +96,7 @@ public final class GoGroup extends GoSet
      * make sure all the stones in the string are unvisited or visited, as specified
      */
     public void setVisited(boolean visited) {
-        for (GoString str : getMembers()) {
+        for (IGoString str : getMembers()) {
             str.setVisited(visited);
         }
     }
@@ -118,7 +117,7 @@ public final class GoGroup extends GoSet
              return;
         }
         // remove it from the old group
-        GoGroup oldGroup = string.getGroup();
+        IGoGroup oldGroup = string.getGroup();
         if ( oldGroup != null && oldGroup != this ) {
             oldGroup.remove( string );
         }
@@ -132,7 +131,7 @@ public final class GoGroup extends GoSet
      * It is an error if the specified set of stones is not a prpper subset.
      * Really we just remove the strings that own these stones.
      * @param stones the list of stones to subtract from this one
-     */
+     *
     public void remove( List stones ) {
         // use a HashSet to avoid duplicate strings
         // otherwise we might try to remove the same string twice.
@@ -149,13 +148,13 @@ public final class GoGroup extends GoSet
             // remove the string associated with the stone
             remove( str );
         }
-    }
+    } */
 
     /**
      * remove a string from this group
      * @param string the string to remove from the group
      */
-    public void remove( GoString string ) {
+    public void remove(IGoString string) {
         if (string == null) {
             GameContext.log(2, "attempting to remove "+string+" string from group. "+this);
             return;
@@ -175,6 +174,10 @@ public final class GoGroup extends GoSet
     @Override
     public GoBoardPositionSet getLiberties(GoBoard board) {
         return groupAnalyzer_.getLiberties(board);
+    }
+
+    public int getNumLiberties(GoBoard board) {
+        return getLiberties(board).size();
     }
 
     /**
@@ -221,7 +224,7 @@ public final class GoGroup extends GoSet
      */
     public GoBoardPositionSet getStones() {
         GoBoardPositionSet stones = new GoBoardPositionSet();
-        for (GoString string : getMembers()) {
+        for (IGoString string : getMembers()) {
             stones.addAll(string.getMembers());
         }
         return stones;
@@ -230,7 +233,7 @@ public final class GoGroup extends GoSet
     /**
      * @return  set of eyes currently identified for this group.
      */
-    public Set<GoEye> getEyes(GoBoard board) {
+    public GoEyeSet getEyes(GoBoard board) {
         return groupAnalyzer_.getEyes(board);
     }
 
@@ -239,7 +242,7 @@ public final class GoGroup extends GoSet
      * @param health the health of the group
      */
     public void updateTerritory( float health ) {
-        for (GoString string : getMembers()) {
+        for (IGoString string : getMembers()) {
             if (string.isUnconditionallyAlive()) {
                 string.updateTerritory(ownedByPlayer1_ ? 1.0f : -1.0f);
             } else {
@@ -257,8 +260,8 @@ public final class GoGroup extends GoSet
      * @param stone the stone to check for containment of
      * @return true if the stone is in this group
      */
-    public  boolean containsStone(GoBoardPosition stone ) {
-        for (GoString string : getMembers()) {
+    public boolean containsStone(GoBoardPosition stone ) {
+        for (IGoString string : getMembers()) {
             if (string.getMembers().contains(stone))
                 return true;
         }
@@ -271,7 +274,7 @@ public final class GoGroup extends GoSet
      *  because one of them is dead.
      */
     @Override
-    protected boolean isEnemy( GoBoardPosition pos) {
+    public boolean isEnemy( GoBoardPosition pos) {
         assert (pos.isOccupied());
         GoStone stone = (GoStone)pos.getPiece();
         boolean muchWeaker = GoBoardUtil.isStoneMuchWeaker(this, stone);
@@ -290,7 +293,7 @@ public final class GoGroup extends GoSet
         int cMax = 0;
 
         // first determine a bounding rectangle for the group.
-        for (GoString string : this.getMembers()) {
+        for (IGoString string : this.getMembers()) {
 
             for (GoBoardPosition stone : string.getMembers()) {
                 int row = stone.getRow();
@@ -331,15 +334,15 @@ public final class GoGroup extends GoSet
         Iterator it = getMembers().iterator();
         // print the member strings
         if ( it.hasNext() ) {
-            GoString p = (GoString) it.next();
+            IGoString p = (IGoString) it.next();
             sb.append("    ").append(p.toString());
         }
         while ( it.hasNext() ) {
-            GoString p = (GoString) it.next();
+            IGoString p = (IGoString) it.next();
             sb.append(',').append(newline).append("    ").append(p.toString());
         }
         sb.append(newline).append('}');
-        Set<GoEye> eyes = getEyes(null);
+        GoEyeSet eyes = getEyes(null);
         if (eyes!=null && !eyes.isEmpty())
             sb.append(eyes.toString()).append(newline);
         // make sure that the health and eyes are up to date

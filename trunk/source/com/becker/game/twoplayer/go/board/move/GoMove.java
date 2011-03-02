@@ -1,9 +1,8 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board.move;
 
 import com.becker.common.Location;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoCaptureList;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.*;
@@ -14,7 +13,6 @@ import java.util.Iterator;
  *  describes a change in state from one board
  *  position to the next in a Go game.
  *
- *  @see GoBoard
  *  @author Barry Becker
  */
 public class GoMove extends TwoPlayerMove {
@@ -142,7 +140,7 @@ public class GoMove extends TwoPlayerMove {
         GoStringSet stringSet = new GoStringSet();
         while ( it.hasNext() ) {
             GoBoardPosition s = (GoBoardPosition) it.next();
-            GoString atariedString = s.getString();
+            IGoString atariedString = s.getString();
             if (!stringSet.contains(atariedString) && atariedString.getNumLiberties(board) == 1 ) {
                 numInAtari += atariedString.size();
             }

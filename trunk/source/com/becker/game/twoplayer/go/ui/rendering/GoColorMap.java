@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.ui;
+package com.becker.game.twoplayer.go.ui.rendering;
 
 import com.becker.common.ColorMap;
 
@@ -10,7 +10,7 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-class GoColorMap extends ColorMap {
+public class GoColorMap extends ColorMap {
 
     private static final double[] myValues_ = {-1.1, -1.0, -0.2, 0.1, -0.05,
                                                0.0,

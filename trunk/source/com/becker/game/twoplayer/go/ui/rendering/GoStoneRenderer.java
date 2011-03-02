@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.ui;
+package com.becker.game.twoplayer.go.ui.rendering;
 
 import com.becker.common.util.ImageUtil;
 import com.becker.game.common.board.Board;
@@ -17,7 +17,6 @@ import java.awt.image.RescaleOp;
 
 /**
  * Singleton class that takes a go piece and renders it for the GoBoardViewer.
- * @see GoBoardViewer
  * @author Barry Becker
  */
 public final class GoStoneRenderer extends TwoPlayerPieceRenderer
@@ -35,11 +34,11 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     // instead of rendering we can just show image icons which look even better.
     // gets the images from resources or the filesystem depending if we are running as an applet or
     // application respectively.
-    private static final String DIR = GameContext.GAME_ROOT+"twoplayer/go/ui/images/";
-    public static final ImageIcon BLACK_STONE_IMG = GUIUtil.getIcon(DIR+"goStoneBlack.png");
-    public static final ImageIcon WHITE_STONE_IMG = GUIUtil.getIcon(DIR+"goStoneWhite.png");
-    private static final ImageIcon BLACK_STONE_DEAD_IMG = GUIUtil.getIcon(DIR+"goStoneBlackDead.png");
-    private static final ImageIcon WHITE_STONE_DEAD_IMG = GUIUtil.getIcon(DIR+"goStoneWhiteDead.png");
+    private static final String DIR = GameContext.GAME_ROOT + "twoplayer/go/ui/images/";
+    public static final ImageIcon BLACK_STONE_IMG = GUIUtil.getIcon(DIR + "goStoneBlack.png");
+    public static final ImageIcon WHITE_STONE_IMG = GUIUtil.getIcon(DIR + "goStoneWhite.png");
+    private static final ImageIcon BLACK_STONE_DEAD_IMG = GUIUtil.getIcon(DIR + "goStoneBlackDead.png");
+    private static final ImageIcon WHITE_STONE_DEAD_IMG = GUIUtil.getIcon(DIR + " goStoneWhiteDead.png");
 
     private static final float[] scaleFactors_ = {1.0f, 1.0f, 1.0f, 1.0f};
     private static final float[] OFFSETS = {0.0f, 0.0f, 0.0f, 0.0f};

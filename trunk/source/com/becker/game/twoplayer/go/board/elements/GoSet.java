@@ -4,6 +4,7 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 
 import java.util.Set;
 
+
 /**
  *  A GoSet is an abstract class representing a set of go entities
  *  (stones, strings, groups, or armies)
@@ -12,7 +13,7 @@ import java.util.Set;
  *  @see GoGroup
  *  @author Barry Becker
  */
-public abstract class GoSet implements GoMember {
+public abstract class GoSet implements IGoSet {
 
     /** true if this set of stones is owned by player one (black)  */
     boolean ownedByPlayer1_;
@@ -48,12 +49,12 @@ public abstract class GoSet implements GoMember {
     /**
      * @return the hashSet containing the members
      */
-    public abstract Set<? extends GoMember> getMembers();
+    public abstract Set<? extends IGoMember> getMembers();
     
     protected abstract void initializeMembers();
     
     /**
-     * remove all the elelments of this set.
+     * remove all the elements of this set.
      */
     final void removeAll() {
         getMembers().clear();
@@ -62,8 +63,5 @@ public abstract class GoSet implements GoMember {
     /**
      *  @return true if the piece is an enemy of the set owner
      */
-    protected abstract boolean isEnemy(GoBoardPosition p);
+    public abstract boolean isEnemy(GoBoardPosition p);
 }
-
-
-

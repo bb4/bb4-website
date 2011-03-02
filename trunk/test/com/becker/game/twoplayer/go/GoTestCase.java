@@ -1,21 +1,20 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.common.util.Util;
 import com.becker.common.Location;
 import com.becker.common.util.FileUtil;
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.*;
+import com.becker.common.util.Util;
+import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.elements.*;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.ui.file.GenericFileFilter;
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.TestCase;
 
-import java.util.*;
+import java.util.Set;
 
 /**
  * Base class for all Go test cases.
@@ -38,7 +37,7 @@ public class GoTestCase extends TestCase {
 
     /**
      * common initialization for all go test cases.
-     * Override setOptionOverides if you want different search parameters.
+     * Override setOptionOverrides if you want different search parameters.
      */
     @Override
     protected void setUp() throws Exception {
@@ -146,12 +145,12 @@ public class GoTestCase extends TestCase {
      * @param isBlack true if black
      * @return the biggest black group if black is true else biggest white group.
      */
-    protected GoGroup getBiggestGroup(boolean isBlack) {
+    protected IGoGroup getBiggestGroup(boolean isBlack) {
 
-        Set<GoGroup> groups = ((GoBoard) controller_.getBoard()).getGroups();
-        GoGroup biggestGroup = null;
+        Set<IGoGroup> groups = ((GoBoard) controller_.getBoard()).getGroups();
+        IGoGroup biggestGroup = null;
 
-        for (GoGroup group : groups) {
+        for (IGoGroup group : groups) {
             GoBoardPositionSet stones = group.getStones();
             if (stones.iterator().next().getPiece().isOwnedByPlayer1() == isBlack) {
                 if (biggestGroup == null || group.getNumStones() > biggestGroup.getNumStones()) {

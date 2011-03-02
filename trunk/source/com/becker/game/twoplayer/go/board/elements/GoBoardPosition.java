@@ -12,16 +12,17 @@ import com.becker.game.twoplayer.go.board.GoBoard;
  *
  * @author Barry Becker
  */
-public final class GoBoardPosition extends BoardPosition implements GoMember
-{
+public final class GoBoardPosition extends BoardPosition
+                                   implements IGoMember {
+
     /** the string (connected set of stones) to which this stone belongs. */
-    private GoString string_;
+    private IGoString string_;
 
     /**
      * if non-null then this position belongs to an eye string.
      * The group owner of the eye is different than the owner of the string.
      */
-    private GoEye eye_;
+    private IGoEye eye_;
 
     /**
      * when true the stone has been visited already during a search.
@@ -40,7 +41,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      * @param string the string that this stone belongs to.
      * @param stone the stone at this position if there is one (use null if no stone).
      */
-    public GoBoardPosition( int row, int col, GoString string, GoStone stone) {
+    public GoBoardPosition( int row, int col, IGoString string, GoStone stone) {
         super( row, col, stone );
         string_ = string;
         eye_ = null;
@@ -68,7 +69,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * @param string  the string owner we are assignign to this stone.
      */
-    public void setString( GoString string ) {
+    public void setString( IGoString string ) {
         string_ = string;
     }
 
@@ -76,7 +77,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      * @return  the string owner for this stone.
      * There may be none if its blank and part of an eye, in that case null is returned.
      */
-    public GoString getString() {
+    public IGoString getString() {
         return string_;
     }
 
@@ -85,7 +86,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      * There is only one group owner that has the same ownership (color) as this stone.
      * The stone may also belong to to an eye in an opponent group, however.
      */
-    public GoGroup getGroup() {
+    public IGoGroup getGroup() {
        if (string_ != null)
            return string_.getGroup();
        else if (eye_ != null) {
@@ -97,14 +98,14 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * @param eye the eye owner this space is to be assigned to
      */
-    public void setEye( GoEye eye ) {
+    public void setEye( IGoEye eye ) {
         eye_ = eye;
     }
 
     /**
      * @return  the eye that this space belongs to. May be null if no eye owner.
      */
-    public GoEye getEye() {
+    public IGoEye getEye() {
         return eye_;
     }
 
@@ -157,7 +158,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
       * make it show an empty board position.
       */
     public void clear(GoBoard board) {
-        GoString string = getString();
+        IGoString string = getString();
 
         if (string != null)  {
             string.remove(this, board);

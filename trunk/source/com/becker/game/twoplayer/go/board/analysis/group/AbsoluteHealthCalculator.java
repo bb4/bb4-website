@@ -1,12 +1,9 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.GoProfiler;
+import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
-import com.becker.game.twoplayer.go.board.elements.GoString;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.util.Set;
 
@@ -17,7 +14,7 @@ import java.util.Set;
 class AbsoluteHealthCalculator {
 
     /** The group of go stones that we are analyzing. */
-    private GoGroup group_;
+    private IGoGroup group_;
 
     /**
      * This is a number between -1 and 1 that indicates how likely the group is to live
@@ -49,7 +46,7 @@ class AbsoluteHealthCalculator {
      * Constructor
      * @param group the group to analyze
      */
-    public AbsoluteHealthCalculator(GoGroup group) {
+    public AbsoluteHealthCalculator(IGoGroup group) {
         group_ = group;
         eyeCache_ = new GroupEyeCache(group);
     }
@@ -137,7 +134,7 @@ class AbsoluteHealthCalculator {
     /**
      * @return set of eyes currently identified for this group.
      */
-    public Set<GoEye> getEyes(GoBoard board) {
+    public GoEyeSet getEyes(GoBoard board) {
         return eyeCache_.getEyes(board);
     }
 
@@ -150,7 +147,7 @@ class AbsoluteHealthCalculator {
              return cachedLiberties_;
         }
         GoBoardPositionSet liberties = new GoBoardPositionSet();
-        for (GoString str : group_.getMembers()) {
+        for (IGoString str : group_.getMembers()) {
             liberties.addAll(str.getLiberties(board));
         }
         cachedLiberties_ = liberties;
@@ -178,7 +175,7 @@ class AbsoluteHealthCalculator {
             return cachedNumStonesInGroup_;
         }
         int numStones = 0;
-        for (GoString str : group_.getMembers()) {
+        for (IGoString str : group_.getMembers()) {
             numStones += str.size();
         }
         cachedNumStonesInGroup_ = numStones;

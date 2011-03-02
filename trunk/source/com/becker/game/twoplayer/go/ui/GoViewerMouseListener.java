@@ -5,9 +5,10 @@ import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.game.common.ui.viewer.ViewerMouseListener;
+import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.go.GoController;
-import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoMoveGenerator;
+import com.becker.game.twoplayer.go.board.move.GoMove;
+import com.becker.game.twoplayer.go.board.move.GoMoveGenerator;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
@@ -45,8 +46,7 @@ public class GoViewerMouseListener extends ViewerMouseListener {
     @Override
     public void mousePressed( MouseEvent e ) {
 
-        GoBoardViewer viewer = (GoBoardViewer) viewer_;
-        GoController controller = (GoController) viewer.getController();
+        GoController controller = (GoController) viewer_.getController();
         // all derived classes must check this to disable user clicks while the computer is thinking
         if (controller.isProcessing()) {
             return;
@@ -55,7 +55,7 @@ public class GoViewerMouseListener extends ViewerMouseListener {
         GoBoard board = (GoBoard) controller.getBoard();
         boolean player1sTurn = controller.isPlayer1sTurn();
 
-        GameContext.log( 3, "GoBoardViewer: mousePressed: player1sTurn()=" + player1sTurn);
+        GameContext.log( 3, "BoardViewer: mousePressed: player1sTurn()=" + player1sTurn);
 
         GoMove m = new GoMove( loc, 0, new GoStone(player1sTurn));
 
@@ -74,17 +74,16 @@ public class GoViewerMouseListener extends ViewerMouseListener {
      */
     private void processStonePlacement(Location loc, GoMove m, GoBoardPosition stone) {
 
-        GoBoardViewer viewer = (GoBoardViewer) viewer_;
-        GoController controller = (GoController) viewer.getController();
+        GoController controller = (GoController) viewer_.getController();
         GoBoard board = (GoBoard) controller.getBoard();
         boolean player1sTurn = controller.isPlayer1sTurn();
 
         if ( stone.isOccupied() ) {
             JOptionPane.showMessageDialog( null, GameContext.getLabel("CANT_PLAY_ON_STONE") );
-            GameContext.log( 0, "GoBoardViewer: There is already a stone there: " + stone );
+            GameContext.log( 0, "BoardViewer: There is already a stone there: " + stone );
             return;
         }
-        if ( GoMoveGenerator.isTakeBack( m.getToRow(), m.getToCol(), (GoMove) controller.getLastMove(), board ) ) {
+        if ( GoMoveGenerator.isTakeBack(m.getToRow(), m.getToCol(), (GoMove) controller.getLastMove(), board) ) {
             JOptionPane.showMessageDialog( null, GameContext.getLabel("NO_TAKEBACKS"));
             return;
         }
@@ -92,13 +91,12 @@ public class GoViewerMouseListener extends ViewerMouseListener {
 
         if (m.isSuicidal(board)) {
             JOptionPane.showMessageDialog( null, GameContext.getLabel("SUICIDAL") );
-            GameContext.log( 1, "GoBoardViewer: That move is suicidal (and hence illegal): " + stone );
+            GameContext.log( 1, "BoardViewer: That move is suicidal (and hence illegal): " + stone );
             return;
         }
 
-        if ( !viewer.continuePlay( m ) ) {   // then game over
+        if ( !((AbstractTwoPlayerBoardViewer)viewer_).continuePlay( m ) ) {   // then game over
             getRenderer().setDraggedShowPiece(null);
-            //viewer.showWinnerDialog();
         }
         else if (controller.getPlayers().allPlayersHuman()) {
             // create a stone to show for the next players move
@@ -135,5 +133,4 @@ public class GoViewerMouseListener extends ViewerMouseListener {
     public void mouseExited( MouseEvent e ) {
         getRenderer().setDraggedShowPiece(null);
     }
-
 }

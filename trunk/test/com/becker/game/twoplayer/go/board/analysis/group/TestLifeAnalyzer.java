@@ -1,8 +1,9 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.GoTestCase;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.IGoGroup;
 import junit.framework.Assert;
 
 /**
@@ -82,7 +83,7 @@ public class TestLifeAnalyzer extends GoTestCase {
         restore(PREFIX + file);
 
         // find the biggest black and white groups
-        GoGroup group = getBiggestGroup(forBlackGroup);
+        IGoGroup group = getBiggestGroup(forBlackGroup);
 
         int size = group.getNumStones();
         Assert.assertEquals("Unexpected size of test group.", expectedSizeOfGroup, size);

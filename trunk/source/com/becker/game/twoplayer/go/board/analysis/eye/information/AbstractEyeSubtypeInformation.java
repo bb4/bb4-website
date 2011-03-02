@@ -5,7 +5,7 @@ import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.IGoEye;
 
 import java.util.Arrays;
 
@@ -39,7 +39,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      * where the number of neighbor neighbors is the total of all the nobie neighbors nobi neighbors.
      * For example the encoded vital point for a pyramid shaped eye is 3.03 because
      *  - the central key point position has 3 neighbors and
-     *  - each of those neighobrs has only one neighbor (the center)
+     *  - each of those neighbors has only one neighbor (the center)
      * A few other examples:
      *  For a star shape, the vital point is 4.04.
      *  For three in a row, the vital point is 1.02.
@@ -92,7 +92,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      * @param board
      * @return status of the eye shape.
      */
-    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
+    public EyeStatus determineStatus(IGoEye eye, GoBoard board) {
         return EyeStatus.NAKADE;
     }
 
@@ -102,7 +102,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      * If 2 or more vitals are still open, then we assume that this will become 2 eyes.
      * @return status of shape with numVitals vital points.
      */
-    EyeStatus handleVitalPointCases(EyeNeighborMap nbrMap, GoEye eye, final int numVitals)   {
+    EyeStatus handleVitalPointCases(EyeNeighborMap nbrMap, IGoEye eye, final int numVitals)   {
         GoBoardPositionList vitalFilledSpaces = findSpecialFilledSpaces(nbrMap, getVitalPoints(), eye);
         int numFilledVitals = vitalFilledSpaces.size();
         assert numFilledVitals <= numVitals :
@@ -124,7 +124,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      * I suppose, in very rare cases, there could be a same side stone among the enemy filled spaces in the eye.
      * @return the eye spaces that have enemy stones in them.
      */
-    GoBoardPositionList findFilledSpaces(GoEye eye) {
+    GoBoardPositionList findFilledSpaces(IGoEye eye) {
         GoBoardPositionList filledSpaces = new GoBoardPositionList();
         for (GoBoardPosition space : eye.getMembers()) {
             if (space.isOccupied()) {
@@ -140,7 +140,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      *
      * @return the set of special spaces (vital or end) that have enemy stones in them.
      */
-    GoBoardPositionList findSpecialFilledSpaces(EyeNeighborMap nbrMap, float[] specialPoints, GoEye eye) {
+    GoBoardPositionList findSpecialFilledSpaces(EyeNeighborMap nbrMap, float[] specialPoints, IGoEye eye) {
         GoBoardPositionList specialFilledSpaces = new GoBoardPositionList();
         for (GoBoardPosition space : eye.getMembers()) {
             if (space.isOccupied()) {
@@ -158,7 +158,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      * When the eye type has the life property, we can only be alive or alive in atari.
      * @return either alive or alive in atari (rare)
      */
-    EyeStatus handleSubtypeWithLifeProperty(GoEye eye, GoBoard board) {
+    EyeStatus handleSubtypeWithLifeProperty(IGoEye eye, GoBoard board) {
         GoBoardPositionList filledSpaces = findFilledSpaces(eye);
         if (eye.size() - filledSpaces.size() == 1 && eye.getGroup().getLiberties(board).size() == 1) {
             return EyeStatus.ALIVE_IN_ATARI;
