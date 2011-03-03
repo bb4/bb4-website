@@ -33,7 +33,7 @@ public class TestAnalyticFunctionProblem extends OptimizerTestCase {
         for (AnalyticFunctionTestProblem.Variation v : AnalyticFunctionTestProblem.Variation.values()) {
 
             OptimizeeTestProblem problem = new AnalyticFunctionTestProblem(v);
-            String logFile = FileUtil.PROJECT_DIR + "performance/test_optimizer/analytic_" + v + "_optimization.txt";
+            String logFile = FileUtil.PROJECT_HOME + "performance/test_optimizer/analytic_" + v + "_optimization.txt";
 
             Optimizer optimizer =  new Optimizer(problem, logFile);
 

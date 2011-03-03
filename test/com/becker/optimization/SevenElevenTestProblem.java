@@ -83,14 +83,17 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem
     }
 
 
+    @Override
     public ParameterArray getExactSolution() {
         return EXACT_SOLUTION;
     }
 
+    @Override
     public ParameterArray getInitialGuess() {
         return INITIAL_GUESS;
     }
 
+    @Override
     public double getFitnessRange() {
         return FITNESS_RANGE;
     }
@@ -101,7 +104,7 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem
     {
         OptimizeeTestProblem problem = new SevenElevenTestProblem();
         Optimizer optimizer =
-                new Optimizer(problem, FileUtil.PROJECT_DIR + "performance/test_optimizer/seven11_optimization.txt");
+                new Optimizer(problem, FileUtil.PROJECT_HOME + "performance/test_optimizer/seven11_optimization.txt");
 
         ParameterArray initialGuess = problem.getInitialGuess();
 

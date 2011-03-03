@@ -161,7 +161,7 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem
         Variation v = Variation.ABS_SINUSOIDAL;
         OptimizeeTestProblem testProblem = new AnalyticFunctionTestProblem(v);
         Optimizer optimizer =
-                new Optimizer(testProblem, FileUtil.PROJECT_DIR + "performance/test_optimizer/poly_optimization.txt");
+                new Optimizer(testProblem, FileUtil.PROJECT_HOME + "performance/test_optimizer/poly_optimization.txt");
 
 
         OptimizerEvalFrame oef = new OptimizerEvalFrame(optimizer, new Point2D.Double(1.0, 2.0));
