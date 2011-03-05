@@ -31,7 +31,7 @@ public class StubGoGroup implements IGoGroup {
         return isOwnedByPlayer1;
     }
 
-    public void addMember(GoString string) {
+    public void addMember(IGoString string) {
         throw new NotImplementedException();
     }
 

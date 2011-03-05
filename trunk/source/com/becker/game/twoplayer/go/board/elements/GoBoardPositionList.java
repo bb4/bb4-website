@@ -19,7 +19,6 @@ public class GoBoardPositionList extends LinkedList<GoBoardPosition> {
      */
     public GoBoardPositionList() {}
 
-
     /**
      * copy constructor.
      *
@@ -27,13 +26,6 @@ public class GoBoardPositionList extends LinkedList<GoBoardPosition> {
      */
     public GoBoardPositionList(GoBoardPositionList positionList) {
         super(positionList);
-    }
-
-    /**
-     * pretty print this list.
-     */
-    public void debugPrint( int logLevel, String title) {
-       GameContext.log(logLevel, this.toString(title));
     }
 
     /**
@@ -58,7 +50,6 @@ public class GoBoardPositionList extends LinkedList<GoBoardPosition> {
     public GoBoardPosition get(int i) {
         return super.get(i);
     }
-
 
     /**
      * Set the visited flag back to false for a set of stones.

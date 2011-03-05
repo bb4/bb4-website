@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- *  A set of GoStrings.
+ *  A set of GoBoardPositions.
  *
  *  @author Barry Becker
  */

@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public interface IGoGroup extends IGoSet {
 
-    void addMember(GoString string);
+    void addMember(IGoString string);
 
     GoStringSet getMembers();
 

@@ -15,8 +15,6 @@ import java.util.List;
  *  A GoGroup by comparison, is composed of a set of one or more same color strings.
  *  Groups may be connected by diagonals, or ikken tobi, or kogeima (knight's move).
  *
- *  @see GoGroup
- *  @see GoBoard
  *  @author Barry Becker
  */
 public class GoString extends GoSet
@@ -136,7 +134,7 @@ public class GoString extends GoSet
         stringMembers.addAll(string.getMembers());
         // must remove these after iterating otherwise we get a ConcurrentModificationException
         string.getGroup().remove(string);
-        ((GoString) string).removeAll();
+        string.getMembers().clear();
 
         Iterator it = stringMembers.iterator();
         GoBoardPosition stone;

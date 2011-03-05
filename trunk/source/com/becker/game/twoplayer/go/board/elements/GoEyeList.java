@@ -1,7 +1,5 @@
 package com.becker.game.twoplayer.go.board.elements;
 
-import com.becker.game.common.GameContext;
-
 import java.util.LinkedList;
 
 /**
@@ -17,7 +15,7 @@ public class GoEyeList extends LinkedList<IGoEye> {
     public GoEyeList() {}
 
     /**
-     * copy constructor.
+     * Copy constructor.
      *
      * @param eyeList list to initialize with
      */

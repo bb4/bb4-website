@@ -102,7 +102,7 @@ public final class GoGroup extends GoSet
      * add a string to the group.
      * @param string the string to add
      */
-    public void addMember(GoString string) {
+    public void addMember(IGoString string) {
 
         assert ( string.isOwnedByPlayer1() == ownedByPlayer1_):
                 "strings added to a group must have like ownership. String="+string

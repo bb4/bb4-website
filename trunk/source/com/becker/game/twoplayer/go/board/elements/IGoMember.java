@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.go.board.elements;
 
-
 /**
  * This marker interface must be implemented by any class which becomes GoSet
  * members (or members of derived classes).
@@ -10,5 +9,4 @@ package com.becker.game.twoplayer.go.board.elements;
  * @author Barry Becker
  */
 public interface IGoMember {
-
 }
