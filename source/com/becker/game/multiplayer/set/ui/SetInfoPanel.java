@@ -2,9 +2,9 @@ package com.becker.game.multiplayer.set.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
-import com.becker.game.common.ui.GameChangedEvent;
-import com.becker.game.common.ui.GameChangedListener;
-import com.becker.game.common.ui.GameInfoPanel;
+import com.becker.game.common.ui.panel.GameChangedEvent;
+import com.becker.game.common.ui.panel.GameChangedListener;
+import com.becker.game.common.ui.panel.GameInfoPanel;
 import com.becker.game.multiplayer.set.SetController;
 import com.becker.game.multiplayer.set.SetPlayer;
 

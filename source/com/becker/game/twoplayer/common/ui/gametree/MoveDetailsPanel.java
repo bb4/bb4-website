@@ -7,7 +7,7 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
-import com.becker.ui.ColorUtil;
+import com.becker.ui.util.ColorUtil;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;

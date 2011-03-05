@@ -8,13 +8,10 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class OutputWindow extends AbstractDialog
-{
+public class OutputWindow extends AbstractDialog {
 
-    protected JPanel mainPanel_ = null;
     protected JTextArea textArea_ = null;
 
-    
     private static final Font TEXT_FONT = new Font( "Times-Roman", Font.PLAIN, 10 );
     private static final Dimension DEFAUT_SIZE = new Dimension( 500, 400 );
     private static final long serialVersionUID = 1234L;
@@ -22,16 +19,15 @@ public class OutputWindow extends AbstractDialog
     /**
      * Constructor
      */
-    public OutputWindow( String title, JFrame parent )
-    {
+    public OutputWindow( String title, JFrame parent ) {
         super( parent );
         this.setTitle( title );     
         this.setModal( false );
         showContent();
     }
 
-    protected JComponent createDialogContent()
-    {
+    @Override
+    protected JComponent createDialogContent() {
         textArea_ = new JTextArea( "" );
         textArea_.setWrapStyleWord( true );
         // if its editable then we can copy from it
@@ -45,22 +41,19 @@ public class OutputWindow extends AbstractDialog
         //this.getContentPane().add( scrollPane, "Center" );
         return scrollPane;
     }
- 
 
     /**
      * add this text to what is already there
      */
-    public void appendText( String text )
-    {
+    public void appendText( String text ) {
         if ( text != null )
             textArea_.append( text );
     }
 
     /**
-     * repalce current text with this text
+     * replace current text with this text
      */
-    public void setText( String text )
-    {
+    public void setText( String text )  {
         textArea_.setText( text );
     }
 }

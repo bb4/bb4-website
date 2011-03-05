@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
  */
 public interface ILog {
 
-
     // you can specify the debug, profile info, warning, and error resources to go to one
     // or more of these places.
     int LOG_TO_CONSOLE = 0x1;
@@ -24,7 +23,7 @@ public interface ILog {
     void setDestination( int logDestination );
 
     /**
-     * @return  the current loggin destination
+     * @return the current logging destination
      */
     int getDestination();
 

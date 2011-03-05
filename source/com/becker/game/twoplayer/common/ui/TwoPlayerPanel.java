@@ -2,9 +2,9 @@ package com.becker.game.twoplayer.common.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
-import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.common.ui.panel.GameChangedListener;
 import com.becker.game.common.ui.dialogs.GameOptionsDialog;
-import com.becker.game.common.ui.GamePanel;
+import com.becker.game.common.ui.panel.GamePanel;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.ui.gametree.GameTreeCellRenderer;
@@ -46,8 +46,7 @@ public abstract class TwoPlayerPanel extends GamePanel
      */
     protected TwoPlayerPanel()  {}
 
-    private TwoPlayerController get2PlayerController()
-    {
+    private TwoPlayerController get2PlayerController() {
         return (TwoPlayerController)boardViewer_.getController();
     }
 
@@ -55,8 +54,7 @@ public abstract class TwoPlayerPanel extends GamePanel
      *  UIComponent initialization.
      */
     @Override
-    protected void initGui(JFrame parent)
-    {
+    protected void initGui(JFrame parent) {
         super.initGui(parent);
 
         // we create a separate controller for the TreeDialog so it can browse without

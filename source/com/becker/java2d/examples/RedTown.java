@@ -1,6 +1,6 @@
 package com.becker.java2d.examples;
 
-import com.becker.ui.ApplicationFrame;
+import com.becker.ui.application.ApplicationFrame;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;

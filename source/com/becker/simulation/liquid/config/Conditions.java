@@ -2,7 +2,7 @@ package com.becker.simulation.liquid.config;
 
 import com.becker.common.Location;
 import com.becker.common.xml.DomUtil;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

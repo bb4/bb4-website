@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.pente.ui;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.GameViewable;
-import com.becker.game.common.ui.GameInfoPanel;
+import com.becker.game.common.ui.panel.GameInfoPanel;
 import com.becker.game.common.ui.dialogs.NewGameDialog;
 import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;

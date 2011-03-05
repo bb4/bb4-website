@@ -1,7 +1,7 @@
 package com.becker.apps.spirograph;
 
-import com.becker.ui.ApplicationApplet;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.application.ApplicationApplet;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,7 +1,7 @@
 package com.becker.ui.file;
 
 import com.becker.common.util.FileUtil;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;

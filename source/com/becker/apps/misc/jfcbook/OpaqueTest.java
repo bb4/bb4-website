@@ -1,7 +1,7 @@
 package com.becker.apps.misc.jfcbook;
 
 import com.becker.common.util.FileUtil;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.ResizableAppletPanel;
 import com.becker.ui.components.TexturedPanel;
 

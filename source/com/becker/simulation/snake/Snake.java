@@ -1,7 +1,7 @@
 package com.becker.simulation.snake;
 
 import com.becker.common.ILog;
-import com.becker.ui.Log;
+import com.becker.ui.util.Log;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;

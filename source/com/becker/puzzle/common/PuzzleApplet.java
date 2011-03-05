@@ -1,6 +1,6 @@
 package com.becker.puzzle.common;
 
-import com.becker.ui.ApplicationApplet;
+import com.becker.ui.application.ApplicationApplet;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;

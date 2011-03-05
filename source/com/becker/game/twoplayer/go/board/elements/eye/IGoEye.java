@@ -13,9 +13,9 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
  */
 public interface IGoEye extends IGoSet {
 
-    EyeInformation getInformation();
-
     EyeStatus getStatus();
+
+    EyeInformation getInformation();
 
     String getEyeTypeName();
 
@@ -24,7 +24,7 @@ public interface IGoEye extends IGoSet {
     int getNumEdgePoints();
 
     /**
-     * @return  the group that this string belongs to.
+     * @return the group that this string belongs to.
      */
     IGoGroup getGroup();
 

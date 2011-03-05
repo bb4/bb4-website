@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.game.common.board.Board;
-import com.becker.game.common.ui.GameChangedEvent;
-import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.common.ui.panel.GameChangedEvent;
+import com.becker.game.common.ui.panel.GameChangedListener;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerViewable;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;

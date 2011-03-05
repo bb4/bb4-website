@@ -1,4 +1,4 @@
-package com.becker.ui;
+package com.becker.ui.application;
 
 import javax.swing.*;
 import java.awt.*;

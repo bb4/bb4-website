@@ -9,7 +9,7 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.NewtonianSimulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;

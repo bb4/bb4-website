@@ -3,7 +3,7 @@ package com.becker.game.common.ui.menu;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.GamePlugin;
 import com.becker.game.common.plugin.PluginManager;
-import com.becker.game.common.ui.GamePanel;
+import com.becker.game.common.ui.panel.IGamePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -33,7 +33,7 @@ public class GameMenu extends AbstractGameMenu implements ActionListener  {
             add(createMenuItem(gameNameLabel));
         }
 
-         showGame(initialGame);
+        showGame(initialGame);
     }
 
     /**
@@ -46,7 +46,11 @@ public class GameMenu extends AbstractGameMenu implements ActionListener  {
         showGame(PluginManager.getInstance().getPluginFromLabel(item.getText()).getName());
     }
 
-    public GamePanel getGamePanel() {
+    public JComponent getGameComponent() {
+        return (JComponent)gamePanel_;
+    }
+
+    public IGamePanel getGamePanel() {
         return gamePanel_;
     }
 
@@ -59,13 +63,13 @@ public class GameMenu extends AbstractGameMenu implements ActionListener  {
         GameContext.loadGameResources(gameName);
 
         if (gamePanel_ != null) {
-            frame_.getContentPane().remove(gamePanel_);
+            frame_.getContentPane().remove(getGameComponent());
         }
 
         gamePanel_ = PluginManager.getInstance().getPlugin(gameName).getPanelInstance();
         gamePanel_.init(frame_);
 
-        frame_.getContentPane().add(gamePanel_);
+        frame_.getContentPane().add(getGameComponent());
         frame_.setTitle(gamePanel_.getTitle());
         frame_.setVisible(true);
     }

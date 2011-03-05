@@ -1,4 +1,4 @@
-package com.becker.ui;
+package com.becker.ui.util;
 
 import com.becker.common.ClassLoaderSingleton;
 import com.becker.common.util.FileUtil;
@@ -17,14 +17,13 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
 /**
  * This class implements a number of static utility functions that are useful when creating UIs.
  *
  * @author Barry Becker
  */
-public final class GUIUtil
-{
+public final class GUIUtil {
+
     private GUIUtil() {}
 
     /** if true then running as an applet or webstart. if false, then running as an application. */
@@ -40,25 +39,21 @@ public final class GUIUtil
      */
     private static JFileChooser fileChooser_ = null;
 
-
     // webstart services
     private static BasicService basicService_ = null;
-
 
 
     /**
      * @param standAlone  if true then running as applet or through webstart; ohterwize, application
      */
-    public static void setStandAlone(boolean standAlone)
-    {
+    public static void setStandAlone(boolean standAlone) {
         isStandAlone_ = standAlone;
     }
 
     /**
      * @return if true then running as applet or through webstart; ohterwize, application.
      */
-    public static boolean isStandAlone()
-    {
+    public static boolean isStandAlone() {
         return isStandAlone_;
     }
 
@@ -66,8 +61,7 @@ public final class GUIUtil
     /**
      *get a singleton filechooser.
      */
-    public static JFileChooser getFileChooser()
-    {
+    public static JFileChooser getFileChooser() {
         if ( fileChooser_ == null )
             fileChooser_ = new JFileChooser();
         return fileChooser_;
@@ -76,8 +70,7 @@ public final class GUIUtil
     /**
      *  Set the ui looki and feel to my very own.
      */
-    public static void setCustomLookAndFeel()
-    {
+    public static void setCustomLookAndFeel()  {
         BarryTheme theme = new BarryTheme();
         MetalLookAndFeel.setCurrentTheme( theme );
 
@@ -192,18 +185,9 @@ public final class GUIUtil
         return url;
      }
 
-
-     /**
-     * displays a splash screen while the application is busy starting up.
-     */
-    public static JWindow showSplashScreen( int waitMillis ) {
-        return showSplashScreen(waitMillis, "config/images/splash.gif");
-    }
-
-
     /**
      * Displays a splash screen while the application is busy starting up.
-     * @return the window containing th esplash screen image.
+     * @return the window containing the splash screen image.
      */
     public static JWindow showSplashScreen( int waitMillis, String imagePath) {
         // show a splash screen initially (if we are running through web start)
@@ -215,8 +199,7 @@ public final class GUIUtil
         else
             splash = new ImageIcon( url );
 
-        JWindow w = new SplashScreen( splash, null, waitMillis );
-        return w;
+        return new com.becker.ui.components.SplashScreen( splash, null, waitMillis );
     }
 
 
@@ -331,8 +314,7 @@ public final class GUIUtil
     /**
      * @return the basic jnlp service or null if it is not available.
      */
-    public static BasicService getBasicService()
-    {
+    public static BasicService getBasicService() {
         if (basicService_ == null) {
             try {
                 basicService_ = (BasicService)ServiceManager.lookup("javax.jnlp.BasicService");

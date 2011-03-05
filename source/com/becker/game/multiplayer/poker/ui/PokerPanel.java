@@ -3,11 +3,11 @@ package com.becker.game.multiplayer.poker.ui;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.GameViewable;
-import com.becker.game.common.ui.*;
 import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.common.ui.dialogs.NewGameDialog;
+import com.becker.game.common.ui.panel.GameInfoPanel;
+import com.becker.game.common.ui.panel.GamePanel;
 import com.becker.game.common.ui.viewer.GameBoardViewer;
-import com.becker.game.common.ui.GameInfoPanel;
 
 import javax.swing.*;
 

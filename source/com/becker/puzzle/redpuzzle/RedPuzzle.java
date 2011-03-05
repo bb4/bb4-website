@@ -1,7 +1,7 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.puzzle.common.*;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.sliders.SliderChangeListener;
 
@@ -73,6 +73,6 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
         PuzzleApplet applet = new RedPuzzle();
 
         // this will call applet.init() and start() methods instead of the browser
-        GUIUtil.showApplet( applet, "Red Puzzle Solver");
+        GUIUtil.showApplet(applet, "Red Puzzle Solver");
     }
 }
