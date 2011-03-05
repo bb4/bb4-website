@@ -1,6 +1,4 @@
-package com.becker.game.twoplayer.go.board.elements;
-
-import com.becker.game.common.GameContext;
+package com.becker.game.twoplayer.go.board.elements.position;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

@@ -1,10 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.GoEyeSet;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
-import com.becker.game.twoplayer.go.board.elements.IGoGroup;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 
 /**
  * Analyze the strength of stone relative to the group that it is in.

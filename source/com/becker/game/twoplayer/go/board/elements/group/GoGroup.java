@@ -1,10 +1,18 @@
-package com.becker.game.twoplayer.go.board.elements;
+package com.becker.game.twoplayer.go.board.elements.group;
 
 import com.becker.common.Box;
 import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
+import com.becker.game.twoplayer.go.board.elements.GoSet;
+import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
+import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
+import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 import java.util.Iterator;
 
@@ -18,7 +26,7 @@ import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORI
  *  @author Barry Becker
  */
 
-public final class GoGroup extends GoSet 
+public final class GoGroup extends GoSet
                            implements IGoGroup {
 
     /** a set of same color strings that are in the group. */

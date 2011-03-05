@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.common.Location;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 
 

@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.IGoEye;
+import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 
 /**
  * Three space eye *** - there is only one type.

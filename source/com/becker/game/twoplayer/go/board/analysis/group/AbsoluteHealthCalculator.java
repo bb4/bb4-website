@@ -3,9 +3,10 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.*;
-
-import java.util.Set;
+import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 /**
  * Determine the absolute health of a group independent of the health of neighboring groups.

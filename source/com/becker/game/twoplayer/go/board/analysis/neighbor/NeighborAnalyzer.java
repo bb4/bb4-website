@@ -3,7 +3,13 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.*;
+import com.becker.game.twoplayer.go.board.elements.group.GoGroupSet;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.string.GoString;
+import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
+import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 /**
  * Performs static analysis of a go board to determine strings and

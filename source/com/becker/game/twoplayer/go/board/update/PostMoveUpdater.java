@@ -1,11 +1,15 @@
 package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.string.GoString;
+import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
+import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.move.GoCaptureList;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
-import com.becker.game.twoplayer.go.board.elements.*;
 
 /**
  * Responsible for updating a go board after making a move.

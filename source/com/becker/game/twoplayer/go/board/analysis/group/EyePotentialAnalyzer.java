@@ -3,10 +3,8 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 import com.becker.common.Box;
 import com.becker.common.Location;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
-import com.becker.game.twoplayer.go.board.elements.GoString;
-import com.becker.game.twoplayer.go.board.elements.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.IGoString;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
+import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 /**
  * Figure out how likely (the potential) that a group can form two eyes.

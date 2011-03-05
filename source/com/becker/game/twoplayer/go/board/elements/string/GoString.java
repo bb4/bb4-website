@@ -1,9 +1,15 @@
-package com.becker.game.twoplayer.go.board.elements;
+package com.becker.game.twoplayer.go.board.elements.string;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.StringLibertyAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
+import com.becker.game.twoplayer.go.board.elements.GoSet;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -24,7 +30,7 @@ public class GoString extends GoSet
     private GoBoardPositionSet members_;
     
     /** The group to which this string belongs. */
-    IGoGroup group_;
+    protected IGoGroup group_;
     
     /** If true, then we are an eye in an unconditionally alive group (according to Benson's algorithm). */
     private boolean unconditionallyAlive_;
@@ -100,9 +106,9 @@ public class GoString extends GoSet
     /**
      * add a stone to the string
      */
-    void addMemberInternal(GoBoardPosition stone, GoBoard board) {
+    protected void addMemberInternal(GoBoardPosition stone, GoBoard board) {
         assert ( stone.isOccupied()): "trying to add empty space to string. stone=" + stone ;
-        assert ( stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_):
+        assert ( stone.getPiece().isOwnedByPlayer1() == this.isOwnedByPlayer1()):
                 "stones added to a string must have like ownership";
         if ( getMembers().contains( stone ) ) {
             // this case can happen sometimes.
@@ -241,7 +247,7 @@ public class GoString extends GoSet
         }
     }
 
-    String getPrintPrefix() {
+    protected String getPrintPrefix() {
         return " STRING(";
     }
 

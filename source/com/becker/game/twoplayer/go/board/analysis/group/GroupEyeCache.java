@@ -1,10 +1,9 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.*;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
+import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
+import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 
 /**
  * Keep a cache of the eyes in a group because its expensive to recompute them.

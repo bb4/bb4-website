@@ -10,9 +10,9 @@ import com.becker.game.common.MoveList;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.options.GoOptions;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
 
 import java.util.Enumeration;
 import java.util.Iterator;

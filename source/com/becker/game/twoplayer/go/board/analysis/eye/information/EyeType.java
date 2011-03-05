@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
-import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.eye.GoEye;
 
 /**
  * Enum for the different possible Eye shapes.

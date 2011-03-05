@@ -3,9 +3,8 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 import com.becker.common.Location;
 import com.becker.common.MutableLocation;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoString;
-import com.becker.game.twoplayer.go.board.elements.IGoString;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 /**
  * Figure out the "eye potential" contribution from a horizontal or vertical run within a string.

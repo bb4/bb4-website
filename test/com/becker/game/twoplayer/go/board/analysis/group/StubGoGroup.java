@@ -2,10 +2,14 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.*;
+import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
+import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
+import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.util.Set;
 
 /**
  * @author Barry Becker
