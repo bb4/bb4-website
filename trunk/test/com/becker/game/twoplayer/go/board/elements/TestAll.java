@@ -13,13 +13,14 @@ public class TestAll {
     private TestAll() {}
 
     /**
-     * @return all the junit test caes to run (in this class)
+     * @return all the junit test cases to run (in this class)
      */
     public static Test suite() {
 
         TestSuite suite =  new TestSuite("Go elements Tests");
 
         suite.addTestSuite(TestGoString.class);
+        suite.addTestSuite(TestGoGroup.class);
 
         return suite;
     }

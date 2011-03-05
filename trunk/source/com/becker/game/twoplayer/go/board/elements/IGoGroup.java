@@ -42,5 +42,7 @@ public interface IGoGroup extends IGoSet {
 
     Box findBoundingBox();
 
+    boolean isStoneMuchWeaker(GoStone stone);
+
     String toHtml();
 }

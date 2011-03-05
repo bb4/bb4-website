@@ -6,7 +6,6 @@ import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.BoardValidator;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.*;
 
@@ -152,7 +151,7 @@ final class GoGroupRenderer {
             }
         }
         // mark all the stones in the group unvisited again.
-        GoBoardUtil.unvisitPositions( visitedSet );
+        visitedSet.unvisitPositions();
         if (GameContext.getDebugMode() > 1) {
             new BoardValidator(boardCopy).confirmAllUnvisited();
         }

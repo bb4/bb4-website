@@ -5,7 +5,6 @@ package com.becker.common;
  * A box defined by 2 locations.
  * @author Barry Becker
  */
-@SuppressWarnings({"UnusedDeclaration"})
 public class Box {
     
     private Location topLeftCorner_;
@@ -15,6 +14,7 @@ public class Box {
      * Constructor
      * Two points that define the box.
      * @param pt0 one corner of the box
+
      * @param pt1 the opposite corner of the box.
      */
     public Box(Location pt0, Location pt1) {
@@ -149,4 +149,28 @@ public class Box {
         buf.append(bottomRightCorner_);
         return buf.toString();
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Box box = (Box) o;
+
+        if (bottomRightCorner_ != null ? !bottomRightCorner_.equals(box.bottomRightCorner_) : box.bottomRightCorner_ != null)
+            return false;
+        if (topLeftCorner_ != null ? !topLeftCorner_.equals(box.topLeftCorner_) : box.topLeftCorner_ != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = topLeftCorner_ != null ? topLeftCorner_.hashCode() : 0;
+        result = 31 * result + (bottomRightCorner_ != null ? bottomRightCorner_.hashCode() : 0);
+        return result;
+    }
+
 }

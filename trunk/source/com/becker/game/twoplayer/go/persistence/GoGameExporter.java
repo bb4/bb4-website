@@ -2,10 +2,10 @@ package com.becker.game.twoplayer.go.persistence;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
+import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
-import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.board.move.GoMove;
-import com.becker.game.twoplayer.go.GoOptions;
+import com.becker.game.twoplayer.go.options.GoOptions;
 import com.becker.game.twoplayer.go.board.GoBoard;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class GoGameExporter extends TwoPlayerGameExporter {
 
     float komi = 0.5f;
 
-    public GoGameExporter(GoController controller) {
+    public GoGameExporter(TwoPlayerController controller) {
         super(controller);
         komi = ((GoOptions) controller.getOptions()).getKomi();
     }

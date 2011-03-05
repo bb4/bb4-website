@@ -8,10 +8,10 @@ import com.becker.common.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.player.PlayerList;
+import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
-import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.board.move.GoMove;
-import com.becker.game.twoplayer.go.GoOptions;
+import com.becker.game.twoplayer.go.options.GoOptions;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
 
 import java.util.Enumeration;
@@ -24,7 +24,7 @@ import java.util.Iterator;
  */
 public class GoGameImporter extends TwoPlayerGameImporter {
 
-    public GoGameImporter(GoController controller) {
+    public GoGameImporter(TwoPlayerController controller) {
         super(controller);
     }
 
@@ -39,7 +39,7 @@ public class GoGameImporter extends TwoPlayerGameImporter {
     @Override
     protected void parseSGFGameInfo( SGFGame game) {
 
-        GoController gc = (GoController) controller_;
+        TwoPlayerController gc = (TwoPlayerController) controller_;
         PlayerList players = gc.getPlayers();
 
         Enumeration e = game.getInfoTokens();
@@ -69,10 +69,6 @@ public class GoGameImporter extends TwoPlayerGameImporter {
                 BlackNameToken nameToken = (BlackNameToken) token;
                 players.getPlayer1().setName(nameToken.getName());
             }
-            else if (token instanceof KomiToken) {
-                KomiToken komiToken = (KomiToken) token;
-                ((GoOptions)gc.getOptions()).setKomi(komiToken.getKomi());
-            }
             else if (token instanceof RuleSetToken) {
                 //RuleSetToken ruleToken = (RuleSetToken) token;
                 //this.setRuleSet(ruleToken.getKomi());
@@ -90,7 +86,7 @@ public class GoGameImporter extends TwoPlayerGameImporter {
 
         boolean found = false;
         if (token instanceof MoveToken ) {
-            moveList.add( createMoveFromToken( (MoveToken) token ) );
+            moveList.add( createMoveFromToken( token ) );
             found = true;
         }
         else if (token instanceof AddBlackToken ) {

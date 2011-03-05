@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.options;
 
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;

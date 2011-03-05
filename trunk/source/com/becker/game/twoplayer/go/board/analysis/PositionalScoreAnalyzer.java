@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.GoWeights;
+import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.PositionalScore;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;

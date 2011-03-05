@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.options;
 
 import com.becker.game.common.GameWeights;
 
@@ -9,7 +9,6 @@ import com.becker.game.common.GameWeights;
  * @author Barry Becker Date: Feb 11, 2007
  */
 public class GoWeights extends GameWeights {
-
 
     /** use these if no others are provided. */
     private static final double[] DEFAULT_WEIGHTS = {2.0,  0.9,  0.3,  10.0};

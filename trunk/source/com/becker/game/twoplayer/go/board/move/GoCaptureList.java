@@ -86,7 +86,7 @@ public class GoCaptureList extends CaptureList {
 
         GameContext.log(3, "GoMove: restoring these captures: " + this);
 
-        List<GoBoardPositionList> strings = getRestoredStringList(b);  // XXX should remove
+        GoBoardPositionLists strings = getRestoredStringList(b);  // XXX should remove
         adjustStringLiberties(b);
 
         // XXX should remove next lines
@@ -113,10 +113,10 @@ public class GoCaptureList extends CaptureList {
      * There may have been more than one string in the captureList
      * @return list of strings that were restored ont he board.
      */
-    private List<GoBoardPositionList> getRestoredStringList( GoBoard b ) {
+    private GoBoardPositionLists getRestoredStringList( GoBoard b ) {
 
         GoBoardPositionList restoredList = getRestoredList(b);
-        List<GoBoardPositionList> strings = new LinkedList<GoBoardPositionList>();
+        GoBoardPositionLists strings = new GoBoardPositionLists();
         NeighborAnalyzer nbrAnalyzer = new NeighborAnalyzer(b);
         for (GoBoardPosition s : restoredList) {
             if (!s.isVisited()) {

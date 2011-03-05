@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.*;
 
@@ -62,7 +61,7 @@ class RelativeHealthCalculator {
             relativeHealth =
                     (float) (Math.min(1.0, Math.max(-1.0, absoluteHealth + diff * proportionWithEnemyNbrs)));
         }
-        GoBoardUtil.unvisitPositions(groupStones);
+        groupStones.unvisitPositions();
         return relativeHealth;
     }
 

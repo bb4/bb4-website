@@ -1,8 +1,8 @@
-package com.becker.game.twoplayer.go.board.analysis.eye;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.elements.GoEye;
 
-import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
+import static com.becker.game.twoplayer.go.board.analysis.eye.information.EyeShapeScores.*;
 
 /**
  * Enum for the different possible center Eye Status'.

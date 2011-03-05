@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 import com.becker.common.Box;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.*;
@@ -47,7 +46,7 @@ class EyeSpaceAnalyzer {
     public GoEyeSet determineEyes() {
 
         assert (board_ != null) : "The board must be set before determining eyes.";
-        List<GoBoardPositionList> candidateEyeLists = createEyeSpaceLists();
+        GoBoardPositionLists candidateEyeLists = createEyeSpaceLists();
         return findEyeFromCandidates(candidateEyeLists);
     }
 
@@ -60,7 +59,7 @@ class EyeSpaceAnalyzer {
      * @param candidateEyeLists eye space lists
      * @return set of eyes in this group
      */
-    private GoEyeSet findEyeFromCandidates(List<GoBoardPositionList> candidateEyeLists) {
+    private GoEyeSet findEyeFromCandidates(GoBoardPositionLists candidateEyeLists) {
         GoEyeSet eyes = new GoEyeSet();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
@@ -87,7 +86,7 @@ class EyeSpaceAnalyzer {
                 }
             }
         }
-        GoBoardUtil.unvisitPositionsInLists( candidateEyeLists );
+        candidateEyeLists.unvisitPositionsInLists();
         return eyes;
     }
 
@@ -99,9 +98,9 @@ class EyeSpaceAnalyzer {
      * then empty spaces there are most likely eyes (but not necessarily).
      * @return list of lists of eye space spaces find real eye from (and to unvisit at the end)
      */
-    private List<GoBoardPositionList> createEyeSpaceLists() {
+    private GoBoardPositionLists createEyeSpaceLists() {
 
-        List<GoBoardPositionList> lists = new ArrayList<GoBoardPositionList>();
+        GoBoardPositionLists lists = new GoBoardPositionLists();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
         if (boundingBox_.getArea() == 0) return lists;
@@ -158,7 +157,7 @@ class EyeSpaceAnalyzer {
      * @param lists list of stones connected to the seed stone
      */
     private void excludeSeed( GoBoardPosition space, boolean groupOwnership,
-                              List<GoBoardPositionList> lists, Box box) {
+                              GoBoardPositionLists lists, Box box) {
         if ( !space.isVisited()
              && (space.isUnoccupied() || space.getPiece().isOwnedByPlayer1() != group_.isOwnedByPlayer1())) {
             // this will leave stones outside the group visited

@@ -5,7 +5,6 @@ import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.move.GoCaptureList;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.*;
 
@@ -82,7 +81,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
             nbrAnalyzer_.getNobiNeighbors( stone, group.isOwnedByPlayer1(), NeighborType.FRIEND );
 
         if ( nbrs.size() > 1 ) {
-            List<GoBoardPositionList> lists = new ArrayList<GoBoardPositionList>(8);
+            GoBoardPositionLists lists = new GoBoardPositionLists();
             GoBoardPosition firstNbr = nbrs.getOneMember();
             GoBoardPositionList stones = nbrAnalyzer_.findStringFromInitialPosition( firstNbr, false );
             lists.add( stones );
@@ -94,7 +93,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
                     lists.add( stones1 );
                 }
             }
-            GoBoardUtil.unvisitPositionsInLists( lists );
+            lists.unvisitPositionsInLists();
         }
     }
 

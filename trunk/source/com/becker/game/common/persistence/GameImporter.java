@@ -24,7 +24,6 @@ public abstract class GameImporter {
 
     protected GameController controller_;
 
-
     protected GameImporter(GameController controller) {
         controller_ = controller;
     }

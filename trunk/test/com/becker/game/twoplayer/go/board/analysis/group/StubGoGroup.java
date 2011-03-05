@@ -99,6 +99,10 @@ public class StubGoGroup implements IGoGroup {
         throw new NotImplementedException();
     }
 
+    public boolean isStoneMuchWeaker(GoStone stone) {
+        throw new NotImplementedException();
+    }
+
     public String toHtml() {
         throw new NotImplementedException();
     }

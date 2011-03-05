@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board.analysis.eye;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 /**
  * Scores for various sorts of prototypical eye types.

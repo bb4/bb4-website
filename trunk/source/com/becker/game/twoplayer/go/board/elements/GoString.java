@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.StringLibertyAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
@@ -229,7 +228,7 @@ public class GoString extends GoSet
         assert (group_ != null): "group for "+this+" is null";
         assert (pos.isOccupied()): "pos not occupied: ="+pos;
         GoStone stone = (GoStone)pos.getPiece();
-        boolean stoneMuchWeaker = GoBoardUtil.isStoneMuchWeaker(getGroup(), stone);
+        boolean stoneMuchWeaker = getGroup().isStoneMuchWeaker(stone);
 
         assert (getGroup().isOwnedByPlayer1() == isOwnedByPlayer1()): getGroup() + " string=" + this;
         return ((stone.isOwnedByPlayer1() != isOwnedByPlayer1() && !stoneMuchWeaker));

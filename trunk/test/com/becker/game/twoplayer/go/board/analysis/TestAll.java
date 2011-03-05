@@ -27,7 +27,6 @@ public class TestAll {
         suite.addTestSuite(TestShapeAnalyzer.class);
         suite.addTestSuite(TestCandidateMoveAnalyzer.class);
         suite.addTestSuite(TestPositionalScoreAnalyzer.class);
-        suite.addTestSuite(TestGoBoardUtil.class);
         
         return suite;
     }

@@ -202,7 +202,7 @@ public class TerritoryAnalyzer {
         int cMax = board_.getNumCols() - edgeOffset;
         Box box = new Box(min, min, rMax, cMax);
 
-        List<GoBoardPositionList> emptyLists = new LinkedList<GoBoardPositionList>();
+        GoBoardPositionLists emptyLists = new GoBoardPositionLists();
 
         for ( int i = min; i <= rMax; i++ )  {
            for ( int j = min; j <= cMax; j++ ) {
@@ -211,7 +211,7 @@ public class TerritoryAnalyzer {
            }
         }
 
-        GoBoardUtil.unvisitPositionsInLists(emptyLists);
+        emptyLists.unvisitPositionsInLists();
         return diffScore;
     }
 
@@ -220,7 +220,7 @@ public class TerritoryAnalyzer {
      * If pos is in an eye, update the score contribution for that eye space.
      * @return diffScore value.
      */
-    private float updateEmptyRegionFromSeed(Box box, List<GoBoardPositionList> emptyLists,
+    private float updateEmptyRegionFromSeed(Box box, GoBoardPositionLists emptyLists,
                                             GoBoardPosition pos) {
         float diffScore = 0;
         if (pos.getString() == null && !pos.isInEye()) {

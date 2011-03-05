@@ -2,8 +2,7 @@ package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
-import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeTypeAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 
@@ -106,7 +105,7 @@ public class GoEye extends GoString implements IGoEye
             return false;
         }
         GoStone stone = (GoStone)pos.getPiece();
-        boolean weaker = GoBoardUtil.isStoneMuchWeaker(g, stone);
+        boolean weaker = g.isStoneMuchWeaker(stone);
 
         assert (g.isOwnedByPlayer1() == isOwnedByPlayer1()):
                  "Bad group ownership for eye="+ this +". Owning Group="+g;
@@ -116,7 +115,6 @@ public class GoEye extends GoString implements IGoEye
     /**
      * Add a space to the eye string.
      * The space is either blank or a dead enemy stone.
-     * @deprecated not needed.
      */
     @Override
     protected void addMemberInternal(GoBoardPosition space, GoBoard board) {
