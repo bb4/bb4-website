@@ -90,7 +90,7 @@ public class GoCaptureList extends CaptureList {
         adjustStringLiberties(b);
 
         // XXX should remove next lines
-        GoGroup group = getRestoredGroup(strings, b);
+        IGoGroup group = getRestoredGroup(strings, b);
 
         assert ( group!=null): "no group was formed when restoring "
                 + this + " the list of strings was "+strings;
@@ -148,18 +148,18 @@ public class GoCaptureList extends CaptureList {
     /**
      * @return the group that was restored when the captured stones were replaced on the board.
      */
-    private GoGroup getRestoredGroup(List<GoBoardPositionList> strings, GoBoard b) {
+    private IGoGroup getRestoredGroup(List<GoBoardPositionList> strings, GoBoard b) {
         // ?? form new group, or check group nbrs to see if we can add to an existing one.
         boolean firstString = true;
-        GoGroup group = null;
+        IGoGroup group = null;
         for  (GoBoardPositionList stringList : strings) {
-            GoString string = new GoString( stringList, b );
+            IGoString string = new GoString( stringList, b );
             if ( firstString ) {
                 group = new GoGroup( string );
                 firstString = false;
             }
             else {
-                group.addMember( string);
+                group.addMember(string);
             }
             string.setVisited(false);
         }

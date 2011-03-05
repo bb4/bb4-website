@@ -4,7 +4,6 @@ import com.becker.common.util.Util;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
 
-
 /**
  * The GoBoardPosition describes the physical marker at a location on the board.
  * It can be empty or occupied. If occupied, then it is  either black or white and has a string owner.

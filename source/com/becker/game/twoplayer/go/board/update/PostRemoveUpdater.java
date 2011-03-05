@@ -88,8 +88,8 @@ public class PostRemoveUpdater extends PostChangeUpdater {
             for ( GoBoardPosition nbrStone : nbrs ) {
                 if ( !nbrStone.isVisited() ) {
                     GoBoardPositionList stones1 = nbrAnalyzer_.findStringFromInitialPosition( nbrStone, false );
-                    GoString newString = new GoString( stones1, getBoard() );
-                    group.addMember( newString);
+                    IGoString newString = new GoString( stones1, getBoard() );
+                    group.addMember(newString);
                     lists.add( stones1 );
                 }
             }

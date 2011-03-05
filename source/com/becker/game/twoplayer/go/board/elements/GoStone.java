@@ -69,7 +69,6 @@ public class GoStone extends GamePiece implements IGoMember {
         positionalScore_ = s;
     }
 
-
     public void setHealth( float health ) {
         health_ = health;
     }
@@ -110,7 +109,7 @@ public class GoStone extends GamePiece implements IGoMember {
     public String getDescription() {
         StringBuilder sb = new StringBuilder( "" );
         //sb.append( type_ );
-        sb.append( (ownedByPlayer1_ ? "Black" : "White") + "stone");
+        sb.append(ownedByPlayer1_ ? "Black" : "White").append("stone");
         if (positionalScore_ != null)  {
             sb.append(positionalScore_.toString(true));
         }
@@ -124,7 +123,6 @@ public class GoStone extends GamePiece implements IGoMember {
     @Override
     public String toString()  {
         StringBuilder sb = new StringBuilder( "" );
-        //sb.append( type_ );
         sb.append( ownedByPlayer1_ ? 'B' : 'W' );
 
         return sb.toString();

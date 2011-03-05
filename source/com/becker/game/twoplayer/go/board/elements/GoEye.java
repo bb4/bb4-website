@@ -30,7 +30,8 @@ public class GoEye extends GoString implements IGoEye
     private int numEdgePoints_;
 
     /**
-     * constructor. Create a new eye shape containing the specified list of stones/spaces
+     * Constructor.
+     * Create a new eye shape containing the specified list of stones/spaces
      */
     public GoEye( GoBoardPositionList spaces, GoBoard board, IGoGroup g ) {
         super( spaces, board );

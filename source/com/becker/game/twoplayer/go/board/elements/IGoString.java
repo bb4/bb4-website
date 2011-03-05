@@ -26,9 +26,9 @@ public interface IGoString extends IGoSet {
 
     void setUnconditionallyAlive(boolean unconditionallyAlive);
 
-    void remove( GoBoardPosition stone, GoBoard board );
+    void remove( GoBoardPosition stone, GoBoard board);
 
     void updateTerritory( float health );
 
-    void setGroup(IGoGroup grou);
+    void setGroup(IGoGroup group);
 }

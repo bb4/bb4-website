@@ -9,8 +9,6 @@ import java.util.Set;
  *  A GoSet is an abstract class representing a set of go entities
  *  (stones, strings, groups, or armies)
  *
- *  @see GoString
- *  @see GoGroup
  *  @author Barry Becker
  */
 public abstract class GoSet implements IGoSet {
@@ -52,13 +50,6 @@ public abstract class GoSet implements IGoSet {
     public abstract Set<? extends IGoMember> getMembers();
     
     protected abstract void initializeMembers();
-    
-    /**
-     * remove all the elements of this set.
-     */
-    final void removeAll() {
-        getMembers().clear();
-    }
 
     /**
      *  @return true if the piece is an enemy of the set owner

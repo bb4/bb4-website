@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *  A list of GoBoardPositionList.
+ *  A list of GoBoardPositionLists.
  *
  *  @author Barry Becker
  */
@@ -20,7 +20,6 @@ public class GoBoardPositionLists extends LinkedList<GoBoardPositionList> {
 
     /**
      * copy constructor.
-     *
      * @param positionList list to initialize with
      */
     public GoBoardPositionLists(GoBoardPositionLists positionList) {
@@ -31,8 +30,6 @@ public class GoBoardPositionLists extends LinkedList<GoBoardPositionList> {
     public GoBoardPositionList get(int i) {
         return super.get(i);
     }
-
-
 
     /**
      * Set the visited flag back to false for a list of lists of stones

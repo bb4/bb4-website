@@ -14,16 +14,7 @@ public class GoGroupSet extends LinkedHashSet<IGoGroup> {
     /**
      * Default constructor.
      */
-    public GoGroupSet() {
-    }
-
-    /**
-     * Copy constructor.
-     * @param groups to add initially.
-     */
-    public GoGroupSet(GoGroupSet groups) {
-        addAll(groups);
-    }
+    public GoGroupSet() {}
 
     /**
      * Check all the groups of the same color to see if the stone is already in one of them
@@ -51,7 +42,6 @@ public class GoGroupSet extends LinkedHashSet<IGoGroup> {
         return toString(true, true);
     }
 
-
     /**
      * create a nice list of all the current groups (and the strings they contain)
      * @return String containing the current groups
@@ -64,7 +54,7 @@ public class GoGroupSet extends LinkedHashSet<IGoGroup> {
                 new StringBuilder((showBlack?"\n":"") + (showWhite? "The white groups are :\n" : ""));
 
         for (Object group1 : this) {
-            GoGroup group = (GoGroup) group1;
+            IGoGroup group = (IGoGroup) group1;
             if (group.isOwnedByPlayer1() && (showBlack)) {
                 //blackGroupsText.append( "black group owner ="+ group.isOwnedByPlayer1());
                 blackGroupsText.append(group);
@@ -78,7 +68,6 @@ public class GoGroupSet extends LinkedHashSet<IGoGroup> {
 
         return groupText.toString();
     }
-
 
     /**
      * pretty print a list of all the current groups (and the strings they contain)
@@ -97,7 +86,6 @@ public class GoGroupSet extends LinkedHashSet<IGoGroup> {
             GameContext.log( logLevel, "----" );
         }
     }
-
 
     // --- methods for ensuring internal consistency ----
 
@@ -137,7 +125,7 @@ public class GoGroupSet extends LinkedHashSet<IGoGroup> {
     public void confirmNoEmptyStrings() {
         for (Object g : this)  {
             for (Object s : ((IGoSet) g).getMembers()) {
-                GoString string = (GoString) s;
+                IGoString string = (IGoString) s;
                 assert (string.size() > 0): "There is an empty string in " + string.getGroup();
             }
         }                  
@@ -152,9 +140,9 @@ public class GoGroupSet extends LinkedHashSet<IGoGroup> {
         IGoGroup g = str.getGroup();
         boolean valid = false;
         Iterator gIt = this.iterator();
-        GoGroup g1;
+        IGoGroup g1;
         while ( !valid && gIt.hasNext() ) {
-            g1 = (GoGroup) gIt.next();
+            g1 = (IGoGroup) gIt.next();
             valid = g.equals(g1);
         }
         if ( !valid ) {
@@ -182,5 +170,4 @@ public class GoGroupSet extends LinkedHashSet<IGoGroup> {
             }
         }
     }
-
 }
