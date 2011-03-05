@@ -1,6 +1,6 @@
 package com.becker.java2d.examples;
 
-import com.becker.ui.ApplicationFrame;
+import com.becker.ui.application.ApplicationFrame;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

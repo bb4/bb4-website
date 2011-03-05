@@ -1,4 +1,4 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.panel;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
@@ -7,8 +7,8 @@ import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.common.ui.dialogs.HelpDialog;
 import com.becker.game.common.ui.dialogs.NewGameDialog;
 import com.becker.game.common.ui.viewer.GameBoardViewer;
-import com.becker.ui.GUIUtil;
-import com.becker.ui.Log;
+import com.becker.ui.util.GUIUtil;
+import com.becker.ui.util.Log;
 import com.becker.ui.components.ResizableAppletPanel;
 import com.becker.ui.components.TexturedPanel;
 import com.becker.ui.dialogs.OutputWindow;
@@ -38,7 +38,7 @@ import java.awt.event.ComponentEvent;
  *  @author Barry Becker
  */
 public abstract class GamePanel extends TexturedPanel
-                                implements ActionListener, GameChangedListener {
+                                implements ActionListener, GameChangedListener, IGamePanel {
 
     // ui elements.
     // There are (at least) 5 buttons in the ToolBar. There could be more depending on the game.
@@ -107,7 +107,6 @@ public abstract class GamePanel extends TexturedPanel
 
         boardViewer_.saveGame();
     }
-
 
     /**
      * @return the title for the applet/application window.
@@ -251,6 +250,7 @@ public abstract class GamePanel extends TexturedPanel
         dlg.setModal( true );
         dlg.setVisible( true );
     }
+
 
 
     /**

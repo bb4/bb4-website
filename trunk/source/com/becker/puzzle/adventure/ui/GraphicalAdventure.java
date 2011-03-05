@@ -4,8 +4,8 @@ import com.becker.common.xml.DomUtil;
 import com.becker.puzzle.adventure.Story;
 import com.becker.puzzle.adventure.TextAdventure;
 import com.becker.puzzle.adventure.ui.editor.StoryEditorDialog;
-import com.becker.ui.ApplicationApplet;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.application.ApplicationApplet;
+import com.becker.ui.util.GUIUtil;
 import com.becker.ui.dialogs.PasswordDialog;
 import org.w3c.dom.Document;
 

@@ -5,7 +5,7 @@ import com.becker.game.common.player.PlayerAction;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.online.IServerConnection;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
-import com.becker.ui.ColorUtil;
+import com.becker.ui.util.ColorUtil;
 
 import java.awt.*;
 

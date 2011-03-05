@@ -1,4 +1,4 @@
-package com.becker.ui;
+package com.becker.ui.util;
 
 import java.awt.*;
 

@@ -2,8 +2,8 @@ package com.becker.game.common.ui.viewer;
 
 import com.becker.game.common.*;
 import com.becker.game.common.board.Board;
-import com.becker.game.common.ui.GameChangedEvent;
-import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.common.ui.panel.GameChangedEvent;
+import com.becker.game.common.ui.panel.GameChangedListener;
 import com.becker.game.common.ui.SgfFileFilter;
 import com.becker.ui.file.FileChooserUtil;
 
@@ -303,7 +303,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     @Override
     public void processEvent( AWTEvent evt ) {
-        if ( evt instanceof GameChangedEvent ) {
+        if ( evt instanceof GameChangedEvent) {
             for (GameChangedListener gcl : gameListeners_) {
                 gcl.gameChanged((GameChangedEvent) evt);
             }

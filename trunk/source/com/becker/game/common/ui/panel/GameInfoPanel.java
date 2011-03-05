@@ -1,10 +1,8 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.panel;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.online.ui.ChatWindow;
-import com.becker.game.common.ui.GameChangedEvent;
-import com.becker.game.common.ui.GameChangedListener;
 import com.becker.ui.components.TexturedPanel;
 
 import javax.swing.*;

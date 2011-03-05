@@ -4,9 +4,9 @@ import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.player.PlayerList;
-import com.becker.game.common.ui.GameChangedEvent;
-import com.becker.game.common.ui.GameChangedListener;
-import com.becker.game.common.ui.GameInfoPanel;
+import com.becker.game.common.ui.panel.GameChangedEvent;
+import com.becker.game.common.ui.panel.GameChangedListener;
+import com.becker.game.common.ui.panel.GameInfoPanel;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.WinProbabilityCaclulator;
 

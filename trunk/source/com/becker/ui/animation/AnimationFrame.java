@@ -1,6 +1,6 @@
 package com.becker.ui.animation;
 
-import com.becker.ui.ApplicationFrame;
+import com.becker.ui.application.ApplicationFrame;
 
 import java.awt.*;
 

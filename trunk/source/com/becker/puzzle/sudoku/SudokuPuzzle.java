@@ -1,7 +1,7 @@
 package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.Worker;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;

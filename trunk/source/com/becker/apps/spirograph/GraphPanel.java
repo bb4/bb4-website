@@ -13,8 +13,8 @@ import java.awt.event.ComponentEvent;
  * @author David Little
  * @author Barry Becker
  */
-public class GraphPanel extends JPanel implements Runnable
-{
+public class GraphPanel extends JPanel implements Runnable {
+
     private static final Color BACKGROUND_COLOR = Color.WHITE;
     private Thread thread_;
     private GraphRenderer graphRenderer_;

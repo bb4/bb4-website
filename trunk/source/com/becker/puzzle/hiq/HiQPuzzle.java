@@ -1,7 +1,7 @@
 package com.becker.puzzle.hiq;
 
 import com.becker.puzzle.common.*;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 
 /**
  * HiQ Puzzle.

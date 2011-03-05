@@ -6,7 +6,7 @@ import com.becker.common.i18n.MessageContext;
 import com.becker.game.common.plugin.GamePlugin;
 import com.becker.game.common.plugin.PluginManager;
 import com.becker.sound.MusicMaker;
-import com.becker.ui.Log;
+import com.becker.ui.util.Log;
 
 import java.util.HashSet;
 import java.util.Random;

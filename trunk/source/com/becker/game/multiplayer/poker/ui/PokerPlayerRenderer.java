@@ -14,7 +14,7 @@ import com.becker.game.multiplayer.poker.PokerTable;
 import com.becker.game.multiplayer.poker.player.PokerPlayer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.java2d.gradient.RoundGradientPaint;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.panel;
 
 import com.becker.game.common.IGameController;
 import com.becker.game.common.Move;

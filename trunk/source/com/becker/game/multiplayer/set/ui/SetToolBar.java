@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.set.ui;
 
-import com.becker.game.common.ui.GameToolBar;
-import com.becker.ui.GUIUtil;
+import com.becker.game.common.ui.panel.GameToolBar;
+import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
@@ -21,7 +21,7 @@ public class SetToolBar extends GameToolBar {
     private GradientButton solveButton_;
 
     private static final ImageIcon addImage = GUIUtil.getIcon(DIR+"plus.gif");
-    private static final ImageIcon removeImage = GUIUtil.getIcon(DIR+"minus.gif");
+    private static final ImageIcon removeImage = GUIUtil.getIcon(DIR + "minus.gif");
     private static final ImageIcon solveImage = GUIUtil.getIcon(DIR+"greenFlag.gif");
 
 

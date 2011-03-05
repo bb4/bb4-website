@@ -1,7 +1,7 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.panel;
 
 import com.becker.game.common.GameContext;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.TexturedToolBar;
 
@@ -31,7 +31,7 @@ public class GameToolBar extends TexturedToolBar {
     private static final ImageIcon undoImage = GUIUtil.getIcon(DIR+"undo_on.gif");
     private static final ImageIcon redoImage = GUIUtil.getIcon(DIR+"redo_on.gif");
     private static final ImageIcon undoImageDisabled = GUIUtil.getIcon(DIR+"undo_off.gif");
-    private static final ImageIcon redoImageDisabled = GUIUtil.getIcon(DIR+"redo_off.gif");
+    private static final ImageIcon redoImageDisabled = GUIUtil.getIcon(DIR + "redo_off.gif");
     private static final ImageIcon optionsImage = GUIUtil.getIcon(DIR+"iconDesktop.gif");
 
     public GameToolBar(ImageIcon texture, ActionListener listener) {

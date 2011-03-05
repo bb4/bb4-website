@@ -136,7 +136,6 @@ public final class GoBoardPosition extends BoardPosition
         return eye_!=null;
     }
 
-
     /**
      * we must recalculate the number of liberties every time because it changes often.
      * @return the number of liberties the specified position has.

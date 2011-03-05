@@ -1,7 +1,7 @@
 package com.becker.puzzle.adventure.ui;
 
 import com.becker.puzzle.adventure.Story;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 import com.becker.ui.file.ExtensionFileFilter;
 import com.becker.ui.file.FileChooserUtil;
 

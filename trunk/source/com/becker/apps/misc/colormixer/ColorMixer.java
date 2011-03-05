@@ -1,7 +1,7 @@
 package com.becker.apps.misc.colormixer;
 
-import com.becker.ui.ApplicationApplet;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.application.ApplicationApplet;
+import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.ColorInputPanel;
 
 import javax.swing.*;
@@ -118,6 +118,6 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
     public static void main( String[] args )
     {
         ColorMixer simulator = new ColorMixer();
-        GUIUtil.showApplet( simulator, "Color Mixer" );
+        GUIUtil.showApplet(simulator, "Color Mixer");
     }
 }

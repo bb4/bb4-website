@@ -8,7 +8,7 @@ import com.becker.game.multiplayer.galactic.GalacticAction;
 import com.becker.game.multiplayer.galactic.Galaxy;
 import com.becker.game.multiplayer.galactic.Order;
 import com.becker.game.multiplayer.galactic.Planet;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;

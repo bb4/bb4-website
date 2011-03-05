@@ -7,6 +7,7 @@
       <w>callables</w>
       <w>codec</w>
       <w>colormap</w>
+      <w>dockable</w>
       <w>dropdown</w>
       <w>eerie</w>
       <w>eyespace</w>
@@ -32,6 +33,7 @@
       <w>profiler</w>
       <w>quiescense</w>
       <w>recurse</w>
+      <w>resizable</w>
       <w>resized</w>
       <w>runnables</w>
       <w>searchable</w>

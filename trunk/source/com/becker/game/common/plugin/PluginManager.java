@@ -2,7 +2,7 @@ package com.becker.game.common.plugin;
 
 import com.becker.common.xml.DomUtil;
 import com.becker.game.common.GameContext;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

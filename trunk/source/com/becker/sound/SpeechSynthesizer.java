@@ -3,7 +3,7 @@
  */
 package com.becker.sound;
 
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 
 import javax.sound.sampled.*;
 import java.net.URL;
@@ -219,7 +219,7 @@ public class SpeechSynthesizer
         try {
             //URL url = SpeechSynthesizer.class.getResource( fileName );
             //System.out.println("getSound sPath=" + sPath);
-            URL url = GUIUtil.getURL( sPath );
+            URL url = GUIUtil.getURL(sPath);
             AudioInputStream stream = AudioSystem.getAudioInputStream( url );
             AudioFormat format = stream.getFormat();
 

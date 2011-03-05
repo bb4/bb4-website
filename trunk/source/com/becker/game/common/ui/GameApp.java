@@ -6,7 +6,8 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.PluginManager;
 import com.becker.game.common.ui.menu.FileMenu;
 import com.becker.game.common.ui.menu.GameMenu;
-import com.becker.ui.GUIUtil;
+import com.becker.game.common.ui.panel.GamePanel;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
@@ -33,8 +34,8 @@ public class GameApp
      * Game application constructor.
      * @param initialGame the initial game to show.
      */
-    private GameApp(String initialGame)
-    {
+    private GameApp(String initialGame) {
+
         GUIUtil.setCustomLookAndFeel();
 
         frame_ = new JFrame();
@@ -59,8 +60,7 @@ public class GameApp
     /**
      * Add a top level menu to allow changing to a different game from the one currently displayed.
      */
-    private void addMenuBar(String initialGame)
-    {
+    private void addMenuBar(String initialGame) {
         GameMenu gameMenu = new GameMenu(frame_, initialGame);
         JMenu fileMenu = new FileMenu(gameMenu);
        
@@ -82,7 +82,6 @@ public class GameApp
      */
     public static void main(String[] args) {
 
-        // do webstart check and set appropriately
         GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
 
         String defaultGame = PluginManager.getInstance().getDefaultPlugin().getName();

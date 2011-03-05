@@ -1,6 +1,6 @@
 package com.becker.game.common.ui.menu;
 
-import com.becker.game.common.ui.GamePanel;
+import com.becker.game.common.ui.panel.IGamePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -12,31 +12,26 @@ import java.awt.event.ActionListener;
  */
 public abstract class AbstractGameMenu extends JMenu implements ActionListener {
 
-    GamePanel gamePanel_;
-
+    IGamePanel gamePanel_;
 
     /**
      * Game file menu constructor
      * @param title user visible menu title.
      */
-    AbstractGameMenu(String title)
-    {
+    AbstractGameMenu(String title) {
         super(title);
-        
         setBorder(BorderFactory.createEtchedBorder());
     }
-
 
     /**
      * Create a menu item.
      * @param name name of the menu item. The label.
      * @return the menu item to add.
      */
-    JMenuItem createMenuItem(String name)
-    {
+    JMenuItem createMenuItem(String name) {
+
         JMenuItem item = new JMenuItem(name);
         item.addActionListener(this);
         return item;
     }
-
 }

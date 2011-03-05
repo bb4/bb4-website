@@ -1,6 +1,6 @@
 package com.becker.sound;
 
-import com.becker.ui.GUIUtil;
+import com.becker.ui.util.GUIUtil;
 
 import javax.sound.sampled.*;
 import java.io.IOException;

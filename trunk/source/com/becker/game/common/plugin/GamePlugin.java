@@ -1,7 +1,7 @@
 package com.becker.game.common.plugin;
 
 import com.becker.common.ClassLoaderSingleton;
-import com.becker.game.common.ui.GamePanel;
+import com.becker.game.common.ui.panel.GamePanel;
 
 /**
  * Immutable class representing information info about a game plugin.
