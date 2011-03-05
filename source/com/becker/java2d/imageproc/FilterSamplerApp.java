@@ -184,7 +184,7 @@ public class FilterSamplerApp extends ApplicationFrame
 
     public static void main( String[] args )
     {
-        String imageFile = Utilities.DEFAULT_IMAGE_DIR + "Ethol with Roses.small.jpg";
+        String imageFile = Utilities.DEFAULT_IMAGE_DIR + "EtholWithRoses.small.jpg";
         if ( args.length > 0 ) 
             imageFile = args[0];
         new FilterSamplerApp( imageFile );
