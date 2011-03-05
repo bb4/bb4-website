@@ -1,10 +1,6 @@
-package com.becker.game.twoplayer.go.board.elements;
+package com.becker.game.twoplayer.go.board.elements.position;
 
-import com.becker.game.common.GameContext;
-
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  *  A list of GoBoardPositionLists.

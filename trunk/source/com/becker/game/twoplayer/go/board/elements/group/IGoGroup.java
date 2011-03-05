@@ -1,10 +1,14 @@
-package com.becker.game.twoplayer.go.board.elements;
+package com.becker.game.twoplayer.go.board.elements.group;
 
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.GoBoard;
-
-import java.util.List;
-import java.util.Set;
+import com.becker.game.twoplayer.go.board.elements.IGoSet;
+import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
+import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
+import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 /**
  * Makes some unit tests much simpler if we create the tests to use this interface instead

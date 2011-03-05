@@ -2,11 +2,14 @@ package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
-import com.becker.game.twoplayer.go.board.elements.*;
+import com.becker.game.twoplayer.go.board.elements.group.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.group.GoGroupSet;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 
 /**

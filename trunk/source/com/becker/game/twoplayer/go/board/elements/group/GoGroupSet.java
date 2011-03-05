@@ -1,6 +1,9 @@
-package com.becker.game.twoplayer.go.board.elements;
+package com.becker.game.twoplayer.go.board.elements.group;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.board.elements.IGoSet;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 import java.util.*;
 

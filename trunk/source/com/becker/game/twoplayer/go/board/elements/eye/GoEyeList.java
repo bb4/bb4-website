@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board.elements;
+package com.becker.game.twoplayer.go.board.elements.eye;
 
 import java.util.LinkedList;
 

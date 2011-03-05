@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.IGoEye;
+import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 
 /**
  * Eye6Type containing MetaData for the different possible Eye shapes of size 4.

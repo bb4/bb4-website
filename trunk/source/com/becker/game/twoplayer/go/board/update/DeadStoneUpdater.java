@@ -2,8 +2,8 @@ package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 
 /**
  * Responsible for determining and updating the dead stones on the board.

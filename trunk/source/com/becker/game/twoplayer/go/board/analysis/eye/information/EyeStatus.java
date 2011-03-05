@@ -1,13 +1,11 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
-import com.becker.game.twoplayer.go.board.elements.GoEye;
-
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.EyeShapeScores.*;
 
 /**
  * Enum for the different possible center Eye Status'.
  * See http://www.ai.univ-paris8.fr/~cazenave/eyeLabelling.pdf
- * @see GoEye
+ * @see com.becker.game.twoplayer.go.board.elements.eye.GoEye
  *
  * @author Barry Becker
  */

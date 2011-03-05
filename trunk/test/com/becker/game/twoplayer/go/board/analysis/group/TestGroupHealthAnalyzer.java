@@ -7,10 +7,9 @@ import com.becker.game.twoplayer.go.board.analysis.eye.information.E1Information
 import com.becker.game.twoplayer.go.board.analysis.eye.information.E2Information;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.FalseEyeInformation;
-import com.becker.game.twoplayer.go.board.elements.GoEyeSet;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
-import com.becker.game.twoplayer.go.board.elements.IGoEye;
-import com.becker.game.twoplayer.go.board.elements.IGoGroup;
+import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
+import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import junit.framework.Assert;
 
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E4Information.Eye4Type.E2222;

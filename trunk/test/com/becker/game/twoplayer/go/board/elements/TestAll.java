@@ -1,5 +1,7 @@
 package com.becker.game.twoplayer.go.board.elements;
 
+import com.becker.game.twoplayer.go.board.elements.group.TestGoGroup;
+import com.becker.game.twoplayer.go.board.elements.string.TestGoString;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -19,8 +21,8 @@ public class TestAll {
 
         TestSuite suite =  new TestSuite("Go elements Tests");
 
-        suite.addTestSuite(TestGoString.class);
-        suite.addTestSuite(TestGoGroup.class);
+        suite.addTest(com.becker.game.twoplayer.go.board.elements.group.TestAll.suite());
+        suite.addTest(com.becker.game.twoplayer.go.board.elements.string.TestAll.suite());
 
         return suite;
     }

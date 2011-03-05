@@ -1,10 +1,8 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
-import com.becker.game.twoplayer.go.board.elements.IGoGroup;
-import junit.framework.Assert;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 
 /**
  * Mostly test that the scoring of groups works correctly.

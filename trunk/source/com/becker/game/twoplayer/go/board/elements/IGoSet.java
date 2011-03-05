@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 
 import java.util.Set;
 
@@ -16,8 +18,14 @@ public interface IGoSet extends IGoMember {
      */
     Set<? extends IGoMember> getMembers();
 
+    /**
+     * @return true if pos is our enemy.
+     */
     boolean isEnemy(GoBoardPosition pos);
 
+    /**
+     * @return true if owned by player 1 (i.e. black).
+     */
     boolean isOwnedByPlayer1();
 
     /**
@@ -38,5 +46,6 @@ public interface IGoSet extends IGoMember {
      */
     GoBoardPositionSet getLiberties(GoBoard board);
 
+    /** @return the number of liberties. */
     int getNumLiberties(GoBoard board);
 }

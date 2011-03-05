@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 
 
 /**

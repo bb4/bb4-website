@@ -1,10 +1,11 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
-import com.becker.game.twoplayer.go.board.elements.*;
+import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 /**
