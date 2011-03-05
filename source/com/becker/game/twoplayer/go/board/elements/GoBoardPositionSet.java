@@ -27,12 +27,14 @@ public class GoBoardPositionSet extends LinkedHashSet<GoBoardPosition> {
     }
 
     /**
-     * pretty print this set of stones.
+     * Set the visited flag back to false for a set of stones.
+     * Returns the whole list of stones to unvisited state.
      */
-    public void debugPrint( int logLevel, String title) {
-        GameContext.log(logLevel, this.toString(title));
+    public void unvisitPositions() {
+        for (GoBoardPosition position : this) {
+            position.setVisited(false);
+        }
     }
-
 
     /**
      * pretty print a list of all the current groups (and the strings they contain)

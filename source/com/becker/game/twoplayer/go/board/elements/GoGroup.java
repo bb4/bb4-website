@@ -4,12 +4,9 @@ import com.becker.common.Box;
 import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 
 import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORING;
 
@@ -125,30 +122,6 @@ public final class GoGroup extends GoSet
         getMembers().add( string );
         groupAnalyzer_.invalidate();
     }
-
-    /**
-     * subtract the contents of a specified set of stones from this one.
-     * It is an error if the specified set of stones is not a prpper subset.
-     * Really we just remove the strings that own these stones.
-     * @param stones the list of stones to subtract from this one
-     *
-    public void remove( List stones ) {
-        // use a HashSet to avoid duplicate strings
-        // otherwise we might try to remove the same string twice.
-        GoStringSet hsStrings = new GoStringSet();
-
-        Iterator it = stones.iterator();
-        while ( it.hasNext() ) {
-            GoBoardPosition s = (GoBoardPosition) it.next();
-            hsStrings.add( s.getString() );
-        }
-        it = hsStrings.iterator();
-        while ( it.hasNext() ) {
-            GoString str = (GoString) it.next();
-            // remove the string associated with the stone
-            remove( str );
-        }
-    } */
 
     /**
      * remove a string from this group
@@ -277,11 +250,10 @@ public final class GoGroup extends GoSet
     public boolean isEnemy( GoBoardPosition pos) {
         assert (pos.isOccupied());
         GoStone stone = (GoStone)pos.getPiece();
-        boolean muchWeaker = GoBoardUtil.isStoneMuchWeaker(this, stone);
+        boolean muchWeaker = isStoneMuchWeaker(stone);
 
         return ( stone.isOwnedByPlayer1() != ownedByPlayer1_  && !muchWeaker);
     }
-
 
     /**
      * @return bounding box of set of stones/positions passed in
@@ -351,5 +323,12 @@ public final class GoGroup extends GoSet
         sb.append(" rel health=").append(Util.formatNumber(groupAnalyzer_.getRelativeHealth()));
         sb.append(" group Liberties=").append(groupAnalyzer_.getNumLiberties(null)).append('\n');
         return sb.toString();
+    }
+
+    /**
+     * @return true if the stone is much weaker than the group
+     */
+    public boolean isStoneMuchWeaker(GoStone stone) {
+        return groupAnalyzer_.isStoneMuchWeakerThanGroup(stone);
     }
 }

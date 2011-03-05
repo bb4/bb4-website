@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.elements.*;
 
 /**
@@ -52,7 +51,7 @@ public class GroupNeighborAnalyzer {
             }
         }
         if (returnToUnvisitedState) {
-            GoBoardUtil.unvisitPositions( stones );
+            stones.unvisitPositions();
         }
         return stones;
     }

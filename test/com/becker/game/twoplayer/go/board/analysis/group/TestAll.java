@@ -22,6 +22,7 @@ public class TestAll extends GoTestCase {
         suite.addTestSuite(TestEyePotentialAnalyzer.class);
         suite.addTestSuite(TestGroupHealthAnalyzer.class);
         suite.addTestSuite(TestLifeAnalyzer.class);
+        suite.addTestSuite(TestStoneInGroupAnalyzer.class);
 
         return suite;
     }

@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board.analysis.eye;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.elements.*;
 

@@ -13,6 +13,8 @@ public class GroupAnalyzer {
     /** The group of go stones that we are analyzing. */
     private IGoGroup group_;
 
+    private StoneInGroupAnalyzer stoneInGroupAnalyzer_;
+
     /**
      * This measure of health is also between -1 and 1 but it should be more
      * accurate because it takes into account the health of neighboring enemy groups as well.
@@ -33,6 +35,7 @@ public class GroupAnalyzer {
     public GroupAnalyzer(IGoGroup group) {
         group_ = group;
         absHealthCalculator_ = new AbsoluteHealthCalculator(group);
+        stoneInGroupAnalyzer_ = new StoneInGroupAnalyzer(group);
     }
 
     /**
@@ -139,5 +142,12 @@ public class GroupAnalyzer {
         Object clone = super.clone();
         ((GroupAnalyzer)clone).absHealthCalculator_ = new AbsoluteHealthCalculator(group_);
         return clone;
+    }
+
+    /**
+     * @return true if the stone is much weaker than the group
+     */
+    public boolean isStoneMuchWeakerThanGroup(GoStone stone) {
+        return stoneInGroupAnalyzer_.isStoneMuchWeakerThanGroup(stone);
     }
 }

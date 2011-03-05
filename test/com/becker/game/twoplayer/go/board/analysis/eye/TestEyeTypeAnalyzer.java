@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis.eye;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
 import com.becker.game.twoplayer.go.board.elements.*;
 import junit.framework.Assert;

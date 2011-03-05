@@ -8,6 +8,7 @@ import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
+import com.becker.game.twoplayer.go.options.GoOptions;
 import go.Point;
 import gtp.GtpServer;
 import utils.Options;

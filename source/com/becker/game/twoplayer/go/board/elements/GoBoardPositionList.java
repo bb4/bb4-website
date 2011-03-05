@@ -3,15 +3,17 @@ package com.becker.game.twoplayer.go.board.elements;
 import com.becker.game.common.GameContext;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- *  A list of GoStrings.
+ *  A list of GoBoardPositions.
  *
  *  @author Barry Becker
  */
 public class GoBoardPositionList extends LinkedList<GoBoardPosition> {
+
     /**
      * Default constructor.
      */
@@ -58,6 +60,15 @@ public class GoBoardPositionList extends LinkedList<GoBoardPosition> {
     }
 
 
+    /**
+     * Set the visited flag back to false for a set of stones.
+     * Returns the whole list of stones to unvisited state.
+     */
+    public void unvisitPositions() {
+        for (GoBoardPosition position : this) {
+            position.setVisited(false);
+        }
+    }
 
     // --- internal consistency checks ----
 
