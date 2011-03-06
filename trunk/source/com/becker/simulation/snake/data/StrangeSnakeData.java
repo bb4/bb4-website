@@ -1,6 +1,5 @@
 package com.becker.simulation.snake.data;
 
-
 /**
  * Snake geometry data
  * it is defined by the width of the transverse cross-sectional edges (of which there are num segments+1)
