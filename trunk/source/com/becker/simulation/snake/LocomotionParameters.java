@@ -24,6 +24,9 @@ public class LocomotionParameters {
     private static final double STATIC_FRICTION = 0.01;
     private static final double DYNAMIC_FRICTION = 0.01;
 
+    /** hard left = 1.0; hard right = -1.0; straight = 0; */
+    private double direction_ = 0.0;
+
     private WaveType waveType_ = WaveType.SINE_WAVE;
 
     private boolean useFriction_ = USE_FRICTION;
@@ -43,6 +46,7 @@ public class LocomotionParameters {
     /** the stiffness of the springs that make up the snakes body   */
     private double springK_ = SPRING_K;
 
+
     /**
      * the amount of spring damping present in the springs
      * this corresponds to how quickly the amplitude of the spring goes to 0
@@ -56,6 +60,13 @@ public class LocomotionParameters {
      * Constructor
      */
     public LocomotionParameters() {
+    }
+
+    public void setDirection(double dir) {
+        direction_ = dir;
+    }
+    public double getDirection() {
+        return direction_;
     }
 
     public void setUseFriction(boolean use) {

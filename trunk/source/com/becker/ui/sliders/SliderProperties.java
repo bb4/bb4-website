@@ -19,6 +19,14 @@ public class SliderProperties {
         this(name, minValue, maxValue, initialValue, 1.0);
     }
 
+    /**
+     *
+     * @param name
+     * @param minValue
+     * @param maxValue
+     * @param initialValue
+     * @param scale  resolution. A bigger number means more increments.
+     */
     public SliderProperties(String name, double minValue, double maxValue, double initialValue, double scale) {
         this.name = name;
         this.minValue = minValue;
@@ -61,6 +69,4 @@ public class SliderProperties {
     public double getScale() {
         return scale;
     }
-
-
 }

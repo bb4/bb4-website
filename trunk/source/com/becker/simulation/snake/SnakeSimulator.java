@@ -13,6 +13,7 @@ import com.becker.simulation.snake.data.ISnakeData;
 import com.becker.simulation.snake.data.LongSnakeData;
 import com.becker.ui.util.GUIUtil;
 
+import javax.swing.*;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 import java.awt.*;
@@ -24,6 +25,8 @@ public class SnakeSimulator extends NewtonianSimulator {
 
     /** the amount to advance the animation in time for each frame in seconds. */
     protected static final int NUM_STEPS_PER_FRAME = 200;
+
+    private SnakeDynamicOptions dynamicOptions_;
 
     private static final Parameter[] PARAMS = {
             new DoubleParameter( LocomotionParameters.WAVE_SPEED, 0.0001, 0.02, "wave speed" ),
@@ -145,6 +148,16 @@ public class SnakeSimulator extends NewtonianSimulator {
         return snake_.getLocomotionParams().getDynamicFriction();
     }
 
+    public void setDirection(double direction) {
+        snake_.getLocomotionParams().setDirection(direction);
+    }
+
+    @Override
+    public JPanel createDynamicControls() {
+        dynamicOptions_ = new SnakeDynamicOptions(this);
+        return dynamicOptions_;
+    }
+
     @Override
     public void doOptimization()  {
         Optimizer optimizer;
@@ -179,7 +192,7 @@ public class SnakeSimulator extends NewtonianSimulator {
                 useAntialiasing_ ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF );
 
         Point2d newCenter = snake_.getCenter();
-        Vector2d distanceDelta = new Vector2d( oldCenter_.x - newCenter.x, 0/*oldCenter_.y - newCenter_.y*/ );
+        Vector2d distanceDelta = new Vector2d( oldCenter_.x - newCenter.x, oldCenter_.y - newCenter.y );
         velocity_ = distanceDelta.length() / (getNumStepsPerFrame() * timeStep_);
         distance_.add( distanceDelta );
 

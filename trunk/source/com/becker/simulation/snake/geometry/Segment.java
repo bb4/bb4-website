@@ -5,7 +5,6 @@ import com.becker.simulation.snake.Snake;
 
 import javax.vecmath.Vector2d;
 
-import static com.becker.simulation.snake.SnakeConstants.*;
 
 /**
  *  A segment of a snakes body. It is composed of edges and particles
@@ -205,7 +204,7 @@ public class Segment {
      * Contract the muscles on the left and right of the segment.
      * Don't contract the nose because there are no muscles there
      */
-    public void contractMuscles( LocomotionParameters params, double time)  {
+    public void contractMuscles(LocomotionParameters params, double time)  {
 
         double waveSpeed = params.getWaveSpeed();
         double amplitude = params.getWaveAmplitude();
@@ -215,7 +214,8 @@ public class Segment {
         double theta = (double) segmentIndex_ / period - waveSpeed * time;
         double offset = 0;
 
-        offset = params.getWaveType().calculateOffset(amplitude, theta);
+        double dir = params.getDirection();
+        offset = amplitude * (params.getWaveType().calculateOffset(theta) - dir);
 
         double contractionLeft = 1.0 + offset;
         double contractionRight = 1.0 - offset;

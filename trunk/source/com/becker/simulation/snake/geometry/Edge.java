@@ -28,15 +28,6 @@ public class Edge {
 
     private static final double EPS = 0.00000017287893433;
 
-
-    // show the edge different colors depending on percentage stretched  ( one being 100% stretched)
-    private static final double stretchVals_[] = {0.3, 0.9, 1.0, 1.1, 3.0};
-    private static final Color stretchColors_[] = {
-        new Color( 255, 0, 0, 200 ), new Color( 230, 120, 57, 250 ), new Color( 50, 90, 60, 250 ), new Color( 70, 120, 210, 200 ), new Color( 10, 10, 255, 100 )
-    };
-    private static final ColorMap stretchColorMap_ =
-            new ColorMap( stretchVals_, stretchColors_ );
-
     /** the spring constant K (large K = stiffer) */
     private double k_;
     /** damping constant  */
@@ -174,11 +165,4 @@ public class Edge {
     public double dot( Edge edge ) {
         return getDirection().dot( edge.getDirection() );
     }
-
-    /**
-     * @return true if the point lies on the wall
-     *
-    public boolean intersects( double i, double j, double eps ) {
-        return segment_.intersects( i, j, eps, eps );
-    }  */
 }
