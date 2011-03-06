@@ -21,13 +21,11 @@ import java.awt.event.ActionListener;
 public abstract class Simulator extends AnimationComponent
                                 implements Optimizee {
 
-
     protected static final String CONFIG_FILE_PATH_PREFIX = FileUtil.PROJECT_HOME + "source/com/becker/simulation/";
     protected static final String ANIMATION_FRAME_FILE_NAME_PREFIX = FileUtil.PROJECT_HOME + "temp/animations/simulation/";
 
     // debug level of 0 means no debug info, 3 is all debug info
     public static final int DEBUG_LEVEL = 0;
-
 
     protected SimulatorOptionsDialog optionsDialog_ = null;
     protected static JFrame frame_ = null;
@@ -51,13 +49,11 @@ public abstract class Simulator extends AnimationComponent
 
     protected abstract double getInitialTimeStep();
 
-    public void setTimeStep( double timeStep )
-    {
+    public void setTimeStep( double timeStep )  {
         timeStep_ = timeStep;
     }
 
-    public double getTimeStep()
-    {
+    public double getTimeStep() {
         return timeStep_;
     }
 
@@ -74,16 +70,15 @@ public abstract class Simulator extends AnimationComponent
         return 1;
     }
 
-    protected GradientButton createOptionsButton()
-    {
+    protected GradientButton createOptionsButton() {
+
         GradientButton button = new GradientButton( "Options" );
 
         optionsDialog_ = createOptionsDialog();
 
-        button.addActionListener( new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
+        button.addActionListener( new ActionListener() {
+
+            public void actionPerformed( ActionEvent e ) {
 
                 optionsDialog_.setLocationRelativeTo( (Component) e.getSource() );
                 // pause the snake while the options are open
@@ -106,8 +101,8 @@ public abstract class Simulator extends AnimationComponent
     protected abstract void reset();
 
 
-    public JPanel createTopControls()
-    {
+    public JPanel createTopControls() {
+
         JPanel controls = new JPanel();
         controls.add( createStartButton() );
         
@@ -119,8 +114,8 @@ public abstract class Simulator extends AnimationComponent
     }
 
     @Override
-    protected String getFileNameBase()
-    {
+    protected String getFileNameBase() {
+
         return this.getClass().getName();
     }
     
@@ -128,8 +123,8 @@ public abstract class Simulator extends AnimationComponent
      *
      * @return  a reset button that allows you to restore the initial condition of the simulation.
      */
-    protected JButton createResetButton()
-    {
+    protected JButton createResetButton() {
+
         final JButton resetButton = new JButton( "Reset");
         resetButton.addActionListener( new ActionListener()  {
             public void actionPerformed( ActionEvent e )
@@ -192,10 +187,8 @@ public abstract class Simulator extends AnimationComponent
      *
      * evaluates the fitness.
      */
-    public double evaluateFitness( ParameterArray params )
-    {
+    public double evaluateFitness( ParameterArray params ) {
         assert false : "not implemented yet";
         return 0.0;
     }
-    
 }

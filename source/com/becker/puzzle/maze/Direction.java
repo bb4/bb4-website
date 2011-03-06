@@ -15,15 +15,24 @@ import java.util.Random;
  */
 public enum Direction {
 
-    FORWARD(0.5) {public Point apply(Point p) { return p; }},
-    LEFT(0.28) {public Point apply(Point p) { return leftOf(p); }},
-    RIGHT(0.22) {public Point apply(Point p) { return rightOf(p); }};
+    FORWARD(0.5) {
+        @Override
+        public Point apply(Point p) { return p; }
+    },
+    LEFT(0.28) {
+        @Override
+        public Point apply(Point p) { return leftOf(p); }
+    },
+    RIGHT(0.22) {
+        @Override
+        public Point apply(Point p) { return rightOf(p); }
+    };
 
     private double probability_;
 
     private static Random RANDOM = new Random(1);
 
-    private Direction(double probability) {
+    Direction(double probability) {
         probability_ = probability;
     }
 
@@ -39,10 +48,9 @@ public enum Direction {
 
     /**
      * return a shuffled list of directions
-     * they are ordered given the potentially skewed probablilities at the top.
+     * they are ordered given the potentially skewed probabilities at the top.
      */
-    public static List getShuffledDirections()
-    {
+    public static List getShuffledDirections() {
         double rnd = RANDOM.nextDouble();
         List<Direction> directions = new ArrayList<Direction>();
         List<Direction> originalDirections = new ArrayList<Direction>();
@@ -74,11 +82,10 @@ public enum Direction {
     }
 
     /**
-     * Determine the second direction in the list given a probabilit
+     * Determine the second direction in the list given a probability
      * @return  the second direction.
      */
-    private static Direction getSecondDir( List twoDirections, double p1)
-    {
+    private static Direction getSecondDir( List twoDirections, double p1) {
         double rnd = RANDOM.nextDouble();
         if ( rnd < p1 )
             return (Direction) twoDirections.remove( 0 );
@@ -90,8 +97,7 @@ public enum Direction {
     /**
      *  find the direction which is counterclockwise 90 to the left of the specified dir.
      */
-    private static Point leftOf( Point dir )
-    {
+    private static Point leftOf( Point dir ) {
         Point newDir;
         if ( dir.x == 0 ) {
             newDir = new Point((dir.y > 0)? -1 : 1, 0 );
@@ -105,8 +111,7 @@ public enum Direction {
     /**
      * find the direction which is clockwise 90 to the right of the specified dir.
      */
-    private static Point rightOf( Point dir )
-    {
+    private static Point rightOf( Point dir ) {
         Point newDir ;
         if ( dir.x == 0 ) {
             newDir = new Point( (dir.y > 0)? 1 : -1, 0 );

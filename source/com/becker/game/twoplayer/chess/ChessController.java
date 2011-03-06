@@ -19,7 +19,7 @@ import java.util.List;
  * Chess features to add:
  *  - show indicator of invalid move while dragging piece (before placed)
  *        Should show piece grayed our or transparent until in a valid position
- *       If you drop the piece in an invlid position, instead of showing an error messagem
+ *       If you drop the piece in an invalid position, instead of showing an error message
  *      animate the piece back to its original position.
  * - exchange pawn for best piece when it reaches the other side.
  * - if you are in check, then don't allow moves other than those that get you out of check.
@@ -32,8 +32,8 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class ChessController extends CheckersController
-{
+public class ChessController extends CheckersController {
+
     /**
      *  Constructor.
      */

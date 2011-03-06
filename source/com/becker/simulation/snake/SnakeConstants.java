@@ -1,13 +1,13 @@
 package com.becker.simulation.snake;
 
 /**
- * @author Barry Becker Date: Sep 17, 2005
+ * @author Barry Becker
  */
 public final class SnakeConstants {
 
-    private SnakeConstants() {};
+    private SnakeConstants() {}
 
-        // scales the size of the snakes geometry
+    /** scales the size of the snakes geometry */
     public static final double SCALE = 0.9;
 
     // snake locomotion constants.
@@ -17,9 +17,6 @@ public final class SnakeConstants {
     public static final double WAVE_SPEED = 0.00478;  // .04  before optimization
     public static final double WAVE_AMPLITUDE = 0.026877; // .04
     public static final double WAVE_PERIOD = 3.6346; // 3.0
-
-
-    
 
     public static final int SINE_WAVE = 0;
     public static final int SQUARE_WAVE = 1;

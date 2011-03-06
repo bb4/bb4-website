@@ -9,6 +9,8 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.NewtonianSimulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.simulation.snake.data.BasicSnakeData;
+import com.becker.simulation.snake.data.ISnakeData;
 import com.becker.ui.util.GUIUtil;
 
 import javax.vecmath.Point2d;
@@ -17,10 +19,10 @@ import java.awt.*;
 
 import static com.becker.simulation.snake.SnakeConstants.*;
 
-public class SnakeSimulator extends NewtonianSimulator
-{
-
-    public static final String CONFIG_FILE = CONFIG_FILE_PATH_PREFIX + "snake/snakeGeomNormal.data";
+/**
+ * Simulates the motion of a snake.
+ */
+public class SnakeSimulator extends NewtonianSimulator {
 
     /** the amount to advance the animation in time for each frame in seconds. */
     protected static final int NUM_STEPS_PER_FRAME = 200;
@@ -33,11 +35,10 @@ public class SnakeSimulator extends NewtonianSimulator
     
     private static final ParameterArray INITIAL_PARAMS = new ParameterArray( PARAMS);
 
-    private Snake snake_ = null;
+    private Snake snake_ = new Snake(new BasicSnakeData());
 
-
-    // change in center of the snake between timesteps
-    private Point2d oldCenter_, newCenter_;
+    /** change in center of the snake between time steps */
+    private Point2d oldCenter_;
 
     // the overall distance the the snake has travelled so far.
     private Vector2d distance_ = new Vector2d( 0.0, 0.0 );
@@ -57,84 +58,97 @@ public class SnakeSimulator extends NewtonianSimulator
 
     private Color gridColor_ = GRID_COLOR;
 
-    public SnakeSimulator()
-    {
+
+    public SnakeSimulator() {
         super("Snake");
-        //final Snake snake = new Snake(CONFIG_FILE);
- 
-        Snake snake = new Snake();
-        commonInit( snake );
+        commonInit();
     }
 
-    public SnakeSimulator( Snake snake )
-    {
+    public SnakeSimulator( ISnakeData snakeData ) {
         super("Snake");
-        commonInit( snake );
+        setSnakeData(snakeData);
     }
 
-    private void commonInit( Snake snake )
-    {
-        snake_ = snake;
-        oldCenter_ = snake_.getCenter();
-        setNumStepsPerFrame(NUM_STEPS_PER_FRAME);
-
-        this.setPreferredSize(new Dimension( (int) (CELL_SIZE * XDIM), (int) (CELL_SIZE * YDIM)) );
-        initCommonUI();      
-    }
-
+    @Override
     protected void reset() {
         snake_.reset();
     }
     
+    @Override
     protected double getInitialTimeStep() {
         return TIME_STEP;
     }
 
+    public void setSnakeData(ISnakeData snakeData) {
+        snake_.setData(snakeData);
+        commonInit();
+    }
+
+    private void commonInit() {
+        oldCenter_ = snake_.getCenter();
+        setNumStepsPerFrame(NUM_STEPS_PER_FRAME);
+
+        this.setPreferredSize(new Dimension( (int) (CELL_SIZE * XDIM), (int) (CELL_SIZE * YDIM)) );
+        initCommonUI();
+    }
+
+    @Override
     public void setScale( double scale ) {
-        snake_.setScale(scale);
+        snake_.getRenderingParams().setScale(scale);
     }
+
+    @Override
     public double getScale() {
-        return snake_.getScale();
+        return snake_.getRenderingParams().getScale();
     }
 
+    @Override
     public void setShowVelocityVectors( boolean show ) {
-        snake_.setShowVelocityVectors(show);
+        snake_.getRenderingParams().setShowVelocityVectors(show);
     }
+    @Override
     public boolean getShowVelocityVectors() {
-        return snake_.getShowVelocityVectors();
+        return snake_.getRenderingParams().getShowVelocityVectors();
     }
 
+    @Override
     public void setShowForceVectors( boolean show ) {
-        snake_.setShowForceVectors(show);
+        snake_.getRenderingParams().setShowForceVectors(show);
     }
+    @Override
     public boolean getShowForceVectors() {
-        return snake_.getShowForceVectors();
+        return snake_.getRenderingParams().getShowForceVectors();
     }
 
+    @Override
     public void setDrawMesh( boolean use ) {
-        snake_.setDrawMesh(use);
+        snake_.getRenderingParams().setDrawMesh(use);
     }
+    @Override
     public boolean getDrawMesh() {
-        return snake_.getDrawMesh();
+        return snake_.getRenderingParams().getDrawMesh();
     }
 
+    @Override
     public void setStaticFriction( double staticFriction ) {
-        snake_.setStaticFriction( staticFriction );
+        snake_.getLocomotionParams().setStaticFriction( staticFriction );
     }
+    @Override
     public double getStaticFriction() {
-        return snake_.getStaticFriction();
+        return snake_.getLocomotionParams().getStaticFriction();
     }
 
+    @Override
     public void setDynamicFriction( double dynamicFriction ) {
-        snake_.setDynamicFriction(dynamicFriction);
+        snake_.getLocomotionParams().setDynamicFriction(dynamicFriction);
     }
+    @Override
     public double getDynamicFriction() {
-        return snake_.getDynamicFriction();
+        return snake_.getLocomotionParams().getDynamicFriction();
     }
 
-
-    public void doOptimization()
-    {
+    @Override
+    public void doOptimization()  {
         Optimizer optimizer;
         if (GUIUtil.isStandAlone())
             optimizer = new Optimizer( this );
@@ -150,10 +164,8 @@ public class SnakeSimulator extends NewtonianSimulator
         return INITIAL_PARAMS.size();
     }
 
-
     @Override
-    public double timeStep()
-    {
+    public double timeStep() {
         if ( !isPaused() ) {
             timeStep_ = snake_.stepForward( timeStep_ );
         }
@@ -161,16 +173,15 @@ public class SnakeSimulator extends NewtonianSimulator
     }
 
     @Override
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g )  {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
                 useAntialiasing_ ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF );
 
-        newCenter_ = snake_.getCenter();
-        Vector2d distanceDelta = new Vector2d( oldCenter_.x - newCenter_.x, 0/*oldCenter_.y - newCenter_.y*/ );
+        Point2d newCenter = snake_.getCenter();
+        Vector2d distanceDelta = new Vector2d( oldCenter_.x - newCenter.x, 0/*oldCenter_.y - newCenter_.y*/ );
         velocity_ = distanceDelta.length() / (getNumStepsPerFrame() * timeStep_);
         distance_.add( distanceDelta );
 
@@ -184,23 +195,10 @@ public class SnakeSimulator extends NewtonianSimulator
     }
 
     // api for setting snake params  /////////////////////////////////
-    public Snake getSnake()
-    {
+
+    public Snake getSnake() {
         return snake_;
     }
-
-
-    public void setGridColor( Color c )
-    {
-        gridColor_ = c;
-    }
-
-    public Color getGridColor()
-    {
-        return gridColor_;
-    }
-
-
 
     @Override
     protected SimulatorOptionsDialog createOptionsDialog() {
@@ -208,11 +206,9 @@ public class SnakeSimulator extends NewtonianSimulator
     }
 
     @Override
-    protected String getStatusMessage()
-    {
+    protected String getStatusMessage() {
         return super.getStatusMessage() + "    velocity=" + Util.formatNumber( velocity_ );
     }
-
 
     /**
      * *** implements the key method of the Optimizee interface
@@ -222,11 +218,12 @@ public class SnakeSimulator extends NewtonianSimulator
      * If the snake becomes unstable, then 0.0 is returned.
      */
     @Override
-    public double evaluateFitness( ParameterArray params )
-    {
-        snake_.setWaveSpeed( params.get( 0 ).getValue() );
-        snake_.setWaveAmplitude( params.get( 1 ).getValue() );
-        snake_.setWavePeriod( params.get( 2 ).getValue() );
+    public double evaluateFitness( ParameterArray params ) {
+
+        LocomotionParameters locoParams = snake_.getLocomotionParams();
+        locoParams.setWaveSpeed( params.get( 0 ).getValue() );
+        locoParams.setWaveAmplitude( params.get( 1 ).getValue() );
+        locoParams.setWavePeriod( params.get( 2 ).getValue() );
 
         boolean stable = true;
         boolean improved = true;
@@ -235,7 +232,7 @@ public class SnakeSimulator extends NewtonianSimulator
 
         while ( stable && improved ) {
             try {
-                // let the snake ru nfor a while
+                // let the snake run for a while
                 Thread.sleep( 1000 + (int) (3000 / (1.0 + 0.2 * ct)) );
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -251,8 +248,8 @@ public class SnakeSimulator extends NewtonianSimulator
             System.out.println( "SnakeSim unstable" );
             return 0.0;
         }
-        else
+        else {
             return oldVelocity;
+        }
     }
-
 }

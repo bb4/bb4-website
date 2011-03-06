@@ -283,7 +283,7 @@ public class MidiSynth extends JPanel {
 
         public Key getKey(Point point) {
             for (int i = 0; i < keys.size(); i++) {
-                if (((Key) keys.get(i)).contains(point)) {
+                if (((Rectangle) keys.get(i)).contains(point)) {
                     return (Key) keys.get(i);
                 }
             }
@@ -457,7 +457,6 @@ public class MidiSynth extends JPanel {
             }
         }
     }
-
 
     /**
      * A collection of MIDI controllers.
@@ -795,7 +794,6 @@ public class MidiSynth extends JPanel {
             }
         }
 
-
         class TrackData extends Object {
             Integer chanNum; String name; Track track;
             public TrackData(int chanNum, String name, Track track) {
@@ -805,7 +803,6 @@ public class MidiSynth extends JPanel {
             }
         }
     }
-
 
     public static void main(String args[]) {
         final MidiSynth midiSynth = new MidiSynth();
