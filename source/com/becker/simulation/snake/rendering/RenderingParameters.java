@@ -9,6 +9,9 @@ import static com.becker.simulation.snake.SnakeConstants.*;
  */
 public class RenderingParameters {
 
+        /** scales the size of the snakes geometry */
+    public static final double SCALE = 0.9;
+
     private boolean showVelocityVectors_ = false;
     private boolean showForceVectors_ = false;
     private boolean drawMesh_ = false;

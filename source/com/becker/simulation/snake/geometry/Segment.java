@@ -112,9 +112,10 @@ public class Segment {
 
         double segmentMass_ = (width1 + width2) * halfLength_;
         particleMass_ = MASS_SCALE * segmentMass_ / 3;
+        double scale = snake.getRenderingParams().getScale();
 
-        particles_[0] = new Particle( xpos - halfLength_, ypos + SCALE * width2 / 2.0, particleMass_ );
-        particles_[3] = new Particle( xpos - halfLength_, ypos - SCALE * width2 / 2.0, particleMass_ );
+        particles_[0] = new Particle( xpos - halfLength_, ypos + scale * width2 / 2.0, particleMass_ );
+        particles_[3] = new Particle( xpos - halfLength_, ypos - scale * width2 / 2.0, particleMass_ );
         particles_[CENTER_INDEX] = new Particle( xpos, ypos, particleMass_ );
     }
 

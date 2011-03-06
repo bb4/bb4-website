@@ -3,10 +3,6 @@ package com.becker.simulation.snake.geometry;
 import com.becker.simulation.snake.LocomotionParameters;
 import com.becker.simulation.snake.Snake;
 
-import javax.vecmath.Vector2d;
-
-import static com.becker.simulation.snake.SnakeConstants.SCALE;
-
 /**
  *  The head/nose segment of the snakes body.
  *  @author Barry Becker
@@ -25,9 +21,10 @@ public class HeadSegment extends Segment {
         length_ = length;
         halfLength_ = length_ / 2.0;
         commonInit( width1, width2, xpos, ypos, segmentIndex, snake );
+        double scale = snake.getRenderingParams().getScale();
 
-        particles_[1] = new Particle( xpos + halfLength_, ypos + SCALE * width1 / 2.0, particleMass_ );
-        particles_[2] = new Particle( xpos + halfLength_, ypos - SCALE * width1 / 2.0, particleMass_ );
+        particles_[1] = new Particle( xpos + halfLength_, ypos + scale * width1 / 2.0, particleMass_ );
+        particles_[2] = new Particle( xpos + halfLength_, ypos - scale * width1 / 2.0, particleMass_ );
 
         initCommonEdges();
         edges_[1] = new Edge( particles_[1], particles_[2] ); // front

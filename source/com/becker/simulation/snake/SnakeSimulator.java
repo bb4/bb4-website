@@ -9,15 +9,13 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.NewtonianSimulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
-import com.becker.simulation.snake.data.BasicSnakeData;
 import com.becker.simulation.snake.data.ISnakeData;
+import com.becker.simulation.snake.data.LongSnakeData;
 import com.becker.ui.util.GUIUtil;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 import java.awt.*;
-
-import static com.becker.simulation.snake.SnakeConstants.*;
 
 /**
  * Simulates the motion of a snake.
@@ -28,25 +26,25 @@ public class SnakeSimulator extends NewtonianSimulator {
     protected static final int NUM_STEPS_PER_FRAME = 200;
 
     private static final Parameter[] PARAMS = {
-            new DoubleParameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" ),
-            new DoubleParameter( WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" ),
-            new DoubleParameter( WAVE_PERIOD, 0.5, 9.0, "wave period" ),
+            new DoubleParameter( LocomotionParameters.WAVE_SPEED, 0.0001, 0.02, "wave speed" ),
+            new DoubleParameter( LocomotionParameters.WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" ),
+            new DoubleParameter( LocomotionParameters.WAVE_PERIOD, 0.5, 9.0, "wave period" ),
     };
     
     private static final ParameterArray INITIAL_PARAMS = new ParameterArray( PARAMS);
 
-    private Snake snake_ = new Snake(new BasicSnakeData());
+    private Snake snake_ = new Snake(new LongSnakeData());
 
     /** change in center of the snake between time steps */
     private Point2d oldCenter_;
 
-    // the overall distance the the snake has travelled so far.
+    /** the overall distance the the snake has travelled so far. */
     private Vector2d distance_ = new Vector2d( 0.0, 0.0 );
 
-    // magnitude of the snakes velocity vector
+    /** magnitude of the snakes velocity vector */
     private double velocity_ = 0;
 
-    // initial time step
+    /** initial time step */
     protected static final double TIME_STEP = 0.4;
 
     // size of the background grid
