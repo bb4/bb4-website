@@ -1,8 +1,8 @@
 package com.becker.game.multiplayer.common.online.ui;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.player.Player;
 import com.becker.game.common.online.OnlineGameTable;
+import com.becker.game.common.player.Player;
 import com.becker.game.multiplayer.common.MultiGameOptions;
 import com.becker.game.multiplayer.common.ui.PlayerTableModel;
 import com.becker.ui.table.TableBase;
@@ -14,7 +14,6 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * A table that has a row for each virtual online game table.

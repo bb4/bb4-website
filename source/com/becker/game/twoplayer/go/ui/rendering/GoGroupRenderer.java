@@ -2,8 +2,8 @@ package com.becker.game.twoplayer.go.ui.rendering;
 
 import com.becker.common.ColorMap;
 import com.becker.common.Location;
-import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
+import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.go.board.BoardValidator;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
@@ -19,8 +19,10 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  Static Utility methods for rendering GoGroup description.

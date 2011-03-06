@@ -1,10 +1,14 @@
 package com.becker.game.twoplayer.blockade;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.player.PlayerList;
-import com.becker.game.twoplayer.common.*;
+import com.becker.game.twoplayer.common.TwoPlayerBoard;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerSearchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.optimization.parameter.ParameterArray;
 

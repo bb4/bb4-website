@@ -1,9 +1,9 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.puzzle.common.*;
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.sliders.SliderChangeListener;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 

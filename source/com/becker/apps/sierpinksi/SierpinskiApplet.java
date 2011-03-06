@@ -1,7 +1,7 @@
 package com.becker.apps.sierpinksi;
 
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.ResizableAppletPanel;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;

@@ -11,7 +11,6 @@ import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 import java.awt.*;
-import java.util.Random;
 
 /**
  * Defines everything the computer needs to know to play Pente.

@@ -6,11 +6,11 @@ import com.becker.java2d.imageproc.ParameterPanel;
 import com.becker.java2d.imageproc.ProcessingOperators;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.ui.application.ApplicationApplet;
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.ImageListPanel;
 import com.becker.ui.components.ImageSelectionListener;
 import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.sliders.SliderChangeListener;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;

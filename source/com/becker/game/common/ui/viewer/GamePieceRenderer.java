@@ -1,8 +1,8 @@
 package com.becker.game.common.ui.viewer;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
-import com.becker.game.common.GameContext;
 import com.becker.game.common.board.GamePiece;
 import com.becker.java2d.gradient.RoundGradientPaint;
 

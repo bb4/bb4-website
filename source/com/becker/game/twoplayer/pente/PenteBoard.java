@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.pente;
 
-import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;

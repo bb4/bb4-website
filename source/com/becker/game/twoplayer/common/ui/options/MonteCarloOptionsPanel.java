@@ -1,16 +1,10 @@
 package com.becker.game.twoplayer.common.ui.options;
 
-import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.MonteCarloSearchOptions;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 /**
  * Panel that shows the options for search strategies that use monte carlo methods (like UCT derivatives).

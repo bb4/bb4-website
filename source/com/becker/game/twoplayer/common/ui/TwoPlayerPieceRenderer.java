@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.ui;
 
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
-import com.becker.game.common.GameContext;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.ui.viewer.GamePieceRenderer;
 import com.becker.game.twoplayer.common.TwoPlayerMove;

@@ -1,9 +1,6 @@
 package com.becker.game.twoplayer.common.cache;
 
 import com.becker.common.LRUCache;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.SearchWindow;
-import com.becker.game.twoplayer.common.search.transposition.Entry;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
 
 /**

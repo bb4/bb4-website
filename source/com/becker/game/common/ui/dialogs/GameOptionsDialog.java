@@ -353,7 +353,6 @@ public abstract class GameOptionsDialog extends OptionsDialog
 
     public abstract GameOptions getOptions();
 
-
     /**
      * called when a button has been pressed
      */

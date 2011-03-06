@@ -1,10 +1,10 @@
 package com.becker.game.multiplayer.common.online;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.player.PlayerAction;
 import com.becker.game.common.online.GameCommand;
 import com.becker.game.common.online.IServerConnection;
 import com.becker.game.common.online.OnlineChangeListener;
+import com.becker.game.common.player.PlayerAction;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.MultiPlayerMarker;

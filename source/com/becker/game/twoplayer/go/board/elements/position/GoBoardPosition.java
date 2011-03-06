@@ -3,9 +3,9 @@ package com.becker.game.twoplayer.go.board.elements.position;
 import com.becker.common.util.Util;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.elements.IGoMember;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.IGoMember;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 /**

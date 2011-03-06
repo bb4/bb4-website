@@ -1,7 +1,6 @@
 package com.becker.game.common.player;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * A list of players.

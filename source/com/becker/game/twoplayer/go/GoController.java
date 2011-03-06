@@ -10,9 +10,9 @@ import com.becker.game.twoplayer.common.cache.ScoreCache;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoSearchable;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.options.GoOptions;
 import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.game.twoplayer.go.persistence.GoGameExporter;
@@ -115,7 +115,6 @@ public final class GoController extends TwoPlayerController {
     public int getStrengthOfWin() {
         return (int)Math.abs(getFinalScore(true) - getFinalScore(false));
     }
-
 
     /**
      * @param player1 if true, then the score for player one is returned else player2's score is returned

@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.common.ColorMap;
-import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;

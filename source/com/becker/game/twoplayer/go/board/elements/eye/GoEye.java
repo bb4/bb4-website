@@ -2,15 +2,15 @@ package com.becker.game.twoplayer.go.board.elements.eye;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeTypeAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.string.GoString;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoStone;
+import com.becker.game.twoplayer.go.board.elements.string.GoString;
 
 /**
  *  A GoEye is composed of a strongly connected set of empty spaces (and possible some dead enemy stones).

@@ -1,8 +1,8 @@
 package com.becker.apps.misc.sedit;
 
 import com.becker.common.Base64Codec;
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.file.ExtensionFileFilter;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;

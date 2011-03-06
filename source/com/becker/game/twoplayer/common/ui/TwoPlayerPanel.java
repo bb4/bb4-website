@@ -2,8 +2,8 @@ package com.becker.game.twoplayer.common.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
-import com.becker.game.common.ui.panel.GameChangedListener;
 import com.becker.game.common.ui.dialogs.GameOptionsDialog;
+import com.becker.game.common.ui.panel.GameChangedListener;
 import com.becker.game.common.ui.panel.GamePanel;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;

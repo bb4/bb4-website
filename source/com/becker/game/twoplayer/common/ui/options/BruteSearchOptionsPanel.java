@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.ui.options;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;

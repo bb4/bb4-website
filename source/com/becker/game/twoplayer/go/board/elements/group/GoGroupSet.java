@@ -5,7 +5,8 @@ import com.becker.game.twoplayer.go.board.elements.IGoSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 /**
  * A set of GoGroups.

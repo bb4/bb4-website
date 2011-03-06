@@ -1,8 +1,8 @@
 package com.becker.game.multiplayer.set;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.board.Board;
 import com.becker.game.common.GameOptions;
+import com.becker.game.common.board.Board;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.ui.viewer.GameBoardViewer;

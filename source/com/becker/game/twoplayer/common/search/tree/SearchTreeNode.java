@@ -1,15 +1,11 @@
 package com.becker.game.twoplayer.common.search.tree;
 
-import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.SearchWindow;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
 
 /**
  *  Represents a move/node in the game tree.

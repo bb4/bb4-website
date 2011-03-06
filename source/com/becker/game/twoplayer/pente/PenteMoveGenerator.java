@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.pente;
 
 import com.becker.common.Location;
-import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.BestMoveFinder;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;

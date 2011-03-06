@@ -7,11 +7,11 @@ import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.common.ui.dialogs.HelpDialog;
 import com.becker.game.common.ui.dialogs.NewGameDialog;
 import com.becker.game.common.ui.viewer.GameBoardViewer;
-import com.becker.ui.util.GUIUtil;
-import com.becker.ui.util.Log;
 import com.becker.ui.components.ResizableAppletPanel;
 import com.becker.ui.components.TexturedPanel;
 import com.becker.ui.dialogs.OutputWindow;
+import com.becker.ui.util.GUIUtil;
+import com.becker.ui.util.Log;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,15 +1,15 @@
 package com.becker.game.twoplayer.go.board.update;
 
+import com.becker.game.twoplayer.go.board.BoardValidator;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoProfiler;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.group.GoGroup;
 import com.becker.game.twoplayer.go.board.elements.group.GoGroupSet;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.move.GoMove;
-import com.becker.game.twoplayer.go.board.GoProfiler;
-import com.becker.game.twoplayer.go.board.BoardValidator;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
 /**
  * Base class for classes responsible for updating a go board after making or undoing a move.
