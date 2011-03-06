@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.trivial;
 
-import com.becker.game.common.board.Board;
 import com.becker.game.common.GameOptions;
+import com.becker.game.common.board.Board;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.multiplayer.common.MultiGameController;

@@ -1,7 +1,5 @@
 package com.becker.game.twoplayer.common.search.options;
 
-import com.becker.game.twoplayer.common.search.SearchWindow;
-
 /**
  * The options for search strategies that use brute-force minimax search like MiniMax, NegaMax, NegaScout,
  * and alsot the memory and aspiration variations of these strategies.

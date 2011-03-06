@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.chess.ui;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
-import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.chess.ChessPiece;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.ui.util.GUIUtil;

@@ -14,7 +14,6 @@ import junit.framework.*;
  */
 public class BlockadeTestCase extends TestCase {
 
-
     /** moved all test cases here so they are not included in the jar and do not need to be searched */
     private static final String EXTERNAL_TEST_CASE_DIR =
             FileUtil.getHomeDir() +"/test/com/becker/game/twoplayer/blockade/cases/";
@@ -42,7 +41,6 @@ public class BlockadeTestCase extends TestCase {
         sOptions.getBestMovesSearchOptions().setPercentageBestMoves(100);
         //sOptions.setQuiescence(true); // takes too long if on
         sOptions.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
-
     }
 
     protected void restore(String problemFile) {

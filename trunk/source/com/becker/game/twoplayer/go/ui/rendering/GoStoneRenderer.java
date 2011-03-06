@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.go.ui.rendering;
 
 import com.becker.common.util.ImageUtil;
+import com.becker.game.common.GameContext;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
-import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;

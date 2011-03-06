@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.chess;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.MoveList;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.checkers.CheckersController;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
@@ -23,7 +24,7 @@ import java.util.List;
  * - exchange pawn for best piece when it reaches the other side.
  * - if you are in check, then don't allow moves other than those that get you out of check.
  * - game is over if no moves available (because of check mate usually).
- * - there is a tendancy to get into an infinite cycle at the end of a computer vs computer game.
+ * - there is a tendency to get into an infinite cycle at the end of a computer vs computer game.
  * - castling.
  * - account for amount of king endangerment in worth.
  * - Checkers and Chess should probably have a common abstract base class, but I can't think of a good

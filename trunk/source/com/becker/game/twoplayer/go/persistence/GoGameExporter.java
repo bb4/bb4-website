@@ -4,9 +4,9 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.options.GoOptions;
-import com.becker.game.twoplayer.go.board.GoBoard;
 
 import java.io.IOException;
 import java.io.Writer;

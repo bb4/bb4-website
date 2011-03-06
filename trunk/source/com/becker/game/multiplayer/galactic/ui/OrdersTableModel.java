@@ -2,7 +2,6 @@ package com.becker.game.multiplayer.galactic.ui;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
-import java.util.Vector;
 
 
 /**

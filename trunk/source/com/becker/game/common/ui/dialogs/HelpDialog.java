@@ -1,9 +1,9 @@
 package com.becker.game.common.ui.dialogs;
 
 import com.becker.game.common.GameContext;
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.AbstractDialog;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

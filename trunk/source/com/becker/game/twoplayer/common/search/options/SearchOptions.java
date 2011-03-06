@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.common.search.options;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.twoplayer.common.ui.options.MonteCarloOptionsPanel;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**

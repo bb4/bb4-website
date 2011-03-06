@@ -1,8 +1,5 @@
 package com.becker.common;
 
-import java.awt.geom.Point2D;
-import java.io.Serializable;
-
 /**
  * Represents a location location of something in byte coordinates.
  * The range of bytes are only 0 to 255 and cannot be negative.

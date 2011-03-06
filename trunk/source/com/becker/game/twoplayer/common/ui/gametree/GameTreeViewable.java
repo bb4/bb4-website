@@ -6,7 +6,6 @@ import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.NodeAttributes;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
-import javax.swing.*;
 import java.util.Enumeration;
 
 /**

@@ -3,9 +3,9 @@ package com.becker.game.twoplayer.go.board;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.game.twoplayer.go.board.analysis.GameStageBoostCalculator;
 import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
+import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.optimization.parameter.ParameterArray;
 
 import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;

@@ -4,9 +4,9 @@ import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.animation.AnimationComponent;
 import com.becker.ui.components.GradientButton;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;

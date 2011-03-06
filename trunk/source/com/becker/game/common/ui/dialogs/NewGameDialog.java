@@ -1,9 +1,9 @@
 package com.becker.game.common.ui.dialogs;
 
-import com.becker.game.common.board.Board;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.GameViewable;
+import com.becker.game.common.board.Board;
 import com.becker.game.common.online.ui.OnlineGameManagerPanel;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.NumberInput;

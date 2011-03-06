@@ -1,13 +1,16 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.Location;
-import com.becker.game.common.*;
+import com.becker.game.common.AbstractGameProfiler;
+import com.becker.game.common.GameProfiler;
+import com.becker.game.common.Move;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.blockade.analysis.BoardAnalyzer;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Defines the structure of the com.becker.game.twoplayer.blockade board and the pieces on it.

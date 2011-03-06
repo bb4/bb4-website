@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.chess;
 
+import com.becker.game.common.Move;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.CaptureList;
-import com.becker.game.common.Move;
 import com.becker.game.twoplayer.checkers.CheckersBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 

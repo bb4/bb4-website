@@ -13,7 +13,7 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionLists;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
-import java.util.*;
+import java.util.Iterator;
 
 /**
  * Methods related to understanding the eye spaces within a group.

@@ -2,8 +2,6 @@ package com.becker.game.twoplayer.common.search.transposition;
 
 import com.becker.common.Location;
 
-import java.util.LinkedList;
-
 /**
  * As an experiment to see the sequence of moves that led to a certain hash key,
  * include the move history in the key itself. Should never do this in practice.

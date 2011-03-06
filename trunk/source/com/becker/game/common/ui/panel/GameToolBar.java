@@ -1,9 +1,9 @@
 package com.becker.game.common.ui.panel;
 
 import com.becker.game.common.GameContext;
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.TexturedToolBar;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

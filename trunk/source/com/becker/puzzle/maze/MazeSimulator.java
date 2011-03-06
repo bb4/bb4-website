@@ -1,9 +1,9 @@
 package com.becker.puzzle.maze;
 
 import com.becker.ui.application.ApplicationApplet;
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.NumberInput;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;

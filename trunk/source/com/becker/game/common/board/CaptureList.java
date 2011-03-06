@@ -1,6 +1,5 @@
 package com.becker.game.common.board;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**

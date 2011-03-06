@@ -7,11 +7,11 @@ import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.common.ui.viewer.ViewerMouseListener;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.go.GoController;
-import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
-import com.becker.game.twoplayer.go.board.elements.string.IGoString;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.string.IGoString;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.ui.rendering.GoBoardRenderer;
 
 import java.awt.event.MouseEvent;

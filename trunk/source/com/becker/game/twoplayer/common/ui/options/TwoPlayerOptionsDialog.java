@@ -9,11 +9,12 @@ import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.SearchAttribute;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * Use this modal dialog to let the user choose from among the
@@ -24,7 +25,6 @@ import java.awt.event.*;
 public class TwoPlayerOptionsDialog extends GameOptionsDialog
                                     implements ActionListener, ItemListener {
 
-    private static final SearchStrategyType DEFAULT_SEARCH_ALG = SearchStrategyType.UCT;
     /** search alg radio button group */
     private JRadioButton[] strategyButtons_;
     private SearchStrategyType algorithm_;
@@ -59,11 +59,10 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         monteCarloOptionsPanel_.updateMonteCarloOptionsOptions();
         bestMovesOptionsPanel_.updateBestMovesOptions();
 
-        searchOptions.setSearchStrategyMethod(getSelectedStrategy());
+        searchOptions.setSearchStrategyMethod(getSelectedStrategy(searchOptions.getSearchStrategyMethod()));
         options.setShowGameTree(gameTreeCheckbox_.isSelected() );
         return options;
     }
-
 
     /**
      * @return algorithm tab panel.
@@ -163,7 +162,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     @Override
     public void itemStateChanged( ItemEvent e ) {
         super.itemStateChanged(e);
-        algorithm_ = getSelectedStrategy();
+        algorithm_ = getSelectedStrategy(getSearchOptions().getSearchStrategyMethod());
         showOptionsBasedOnAlgorithm();
     }
 
@@ -174,13 +173,13 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         monteCarloOptionsPanel_.setVisible(!bruteForceStrategy);
     }
 
-    private SearchStrategyType getSelectedStrategy() {
+    private SearchStrategyType getSelectedStrategy(SearchStrategyType defaultStrategy) {
         int numStrategies = SearchStrategyType.values().length;
         for (int i=0; i<numStrategies; i++) {
             if (strategyButtons_[i].isSelected()) {
                 return SearchStrategyType.values()[i];
             }
         }
-        return SearchOptions.DEFAULT_STRATEGY_METHOD;
+        return defaultStrategy;
     }
 }

@@ -2,10 +2,10 @@ package com.becker.puzzle.adventure.ui.editor;
 
 import com.becker.puzzle.adventure.Scene;
 import com.becker.puzzle.adventure.Story;
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.AbstractDialog;
 import com.becker.ui.table.TableButtonListener;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

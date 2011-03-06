@@ -2,12 +2,12 @@ package com.becker.game.multiplayer.common.online.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameViewable;
-import com.becker.game.common.player.Player;
-import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.online.GameCommand;
 import com.becker.game.common.online.OnlineGameTable;
 import com.becker.game.common.online.OnlineGameTableList;
 import com.becker.game.common.online.ui.OnlineGameManagerPanel;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.multiplayer.common.MultiGameOptions;
 import com.becker.game.multiplayer.common.MultiGamePlayer;

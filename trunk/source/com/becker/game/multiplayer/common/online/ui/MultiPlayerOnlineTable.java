@@ -1,8 +1,8 @@
 package com.becker.game.multiplayer.common.online.ui;
 
 import com.becker.game.common.GameOptions;
-import com.becker.game.common.player.Player;
 import com.becker.game.common.online.OnlineGameTable;
+import com.becker.game.common.player.Player;
 import com.becker.game.multiplayer.common.MultiGameOptions;
 
 /**

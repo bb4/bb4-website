@@ -1,7 +1,7 @@
 package com.becker.ui.dialogs;
 
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.GradientButton;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import javax.swing.border.Border;

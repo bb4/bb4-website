@@ -2,9 +2,9 @@ package com.becker.game.common.ui.viewer;
 
 import com.becker.game.common.*;
 import com.becker.game.common.board.Board;
+import com.becker.game.common.ui.SgfFileFilter;
 import com.becker.game.common.ui.panel.GameChangedEvent;
 import com.becker.game.common.ui.panel.GameChangedListener;
-import com.becker.game.common.ui.SgfFileFilter;
 import com.becker.ui.file.FileChooserUtil;
 
 import javax.swing.*;

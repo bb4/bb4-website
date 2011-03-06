@@ -1,11 +1,11 @@
 package com.becker.game.twoplayer.go.board.move;
 
 import com.becker.common.Location;
+import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.CaptureList;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.BestMoveFinder;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Searchable;

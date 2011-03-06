@@ -1,8 +1,8 @@
 package com.becker.apps.misc.colormixer;
 
 import com.becker.ui.application.ApplicationApplet;
-import com.becker.ui.util.GUIUtil;
 import com.becker.ui.components.ColorInputPanel;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

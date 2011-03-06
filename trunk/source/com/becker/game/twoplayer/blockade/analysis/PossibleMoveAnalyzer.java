@@ -1,11 +1,15 @@
 package com.becker.game.twoplayer.blockade.analysis;
 
 import com.becker.common.Location;
-import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.blockade.*;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.twoplayer.blockade.BlockadeBoard;
+import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.BlockadeMove;
+import com.becker.game.twoplayer.blockade.Direction;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Finds list of all possible next moves given a current position..
