@@ -11,8 +11,7 @@ import java.awt.event.ActionEvent;
 /**
  * @author Barry Becker Date: Sep 18, 2005
  */
-public abstract class SimulatorOptionsDialog extends OptionsDialog
-{
+public abstract class SimulatorOptionsDialog extends OptionsDialog {
 
     // the options get set directly on the snake simulator object that is passed in
     private Simulator simulator_;
@@ -169,8 +168,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
     /**
      * override if you want this panel of options for your simulation.
      */
-    protected JPanel createGlobalPhysicalParamPanel()
-    {
+    protected JPanel createGlobalPhysicalParamPanel() {
         return null;
     }
 
@@ -180,8 +178,8 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
     protected abstract JPanel createCustomParamPanel();
 
 
-    protected void ok()
-    {
+    protected void ok() {
+
         // set the common rendering and global options
         simulator_.setAntialiasing( antialiasingCheckbox_.isSelected() );
         simulator_.setRecordAnimation( recordAnimationCheckbox_.isSelected() );
@@ -191,10 +189,10 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
         simulator_.setScale( scaleField_.getValue() );
 
         this.setVisible( false );
+        simulator_.repaint();
     }
 
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e )  {
 
         Object source = e.getSource();
 

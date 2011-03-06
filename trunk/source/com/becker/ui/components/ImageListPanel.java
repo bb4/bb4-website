@@ -18,8 +18,7 @@ import java.util.Timer;
  * @author Barry Becker
  */
 public final class ImageListPanel extends JPanel
-                                  implements MouseMotionListener, MouseListener
-{
+                                  implements MouseMotionListener, MouseListener {
     private List<BufferedImage> images_;
     private BufferedImage highlightedImage_ = null;
     private List<BufferedImage> selectedImages_;
@@ -40,22 +39,20 @@ public final class ImageListPanel extends JPanel
     private static final int IMAGE_MARGIN = 2;
     private static final int TOTAL_MARGIN = 2 * IMAGE_MARGIN;
     
-    private static List<ImageSelectionListener> imgSelectionListeners_;
-    
-    
+    private List<ImageSelectionListener> imgSelectionListeners_;
+
     /**
      * Use this Constructor if you just want the empty panel initially.
      * Maybe add constructor for unequal sized images where we specify the desired max size.
      */ 
-    public ImageListPanel()
-    {              
+    public ImageListPanel() {
         imgSelectionListeners_ = new LinkedList<ImageSelectionListener>();
         
         this.setMinimumSize(new Dimension(100, 100));        
         this.addComponentListener( new ComponentAdapter()  {
-            public void componentResized( ComponentEvent ce )
-            {
-                panelResized();
+            @Override
+            public void componentResized( ComponentEvent ce ) {
+                repaint();
             }
         } );
         this.addMouseMotionListener(this);
@@ -66,8 +63,7 @@ public final class ImageListPanel extends JPanel
      * Constructor.
      * @param images array of identically sized images to show in an array.
      */ 
-    public ImageListPanel(List<BufferedImage> images)
-    {                        
+    public ImageListPanel(List<BufferedImage> images) {
         this();                
         setImageList(images);
     }
@@ -202,7 +198,7 @@ public final class ImageListPanel extends JPanel
             imageDisplayWidth_ = (int) (imageDisplayHeight_ * imageRatio_);               
         } else {
             // horizontal space completely used
-            numRows = numRows -1;
+            numRows--;
             numColumns_ = (int)Math.ceil((double)numImages / (double)numRows);    
             imageDisplayWidth_ = Math.min( getWidth() / numColumns_, baseImageWidth_) - TOTAL_MARGIN;     
             imageDisplayHeight_ = (int) (imageDisplayWidth_ / imageRatio_);     
@@ -259,12 +255,9 @@ public final class ImageListPanel extends JPanel
     }
     
 
-    private void panelResized() {
-        this.repaint();
-    }
 
     /**
-     * @return  the image that the mouse is currently over (at x, y coords)
+     * @return  the image that the mouse is currently over (at x, y coordinates)
      */
     private BufferedImage findImageOver(int x, int y) {
 
@@ -305,6 +298,7 @@ public final class ImageListPanel extends JPanel
             enlargeHighlightedImage_ = false;
             enlargementTimer.schedule(
                     new TimerTask () {
+                       @Override
                        public void run ()   {
                             enlargeHighlightedImage_ = true;
                             enlargementTimer.cancel ();

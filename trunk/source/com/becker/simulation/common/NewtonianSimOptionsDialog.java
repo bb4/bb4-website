@@ -87,8 +87,7 @@ public abstract class NewtonianSimOptionsDialog extends SimulatorOptionsDialog {
 
 
     @Override
-    protected void ok()
-    {
+    protected void ok() {
         super.ok();
 
         NewtonianSimulator simulator = (NewtonianSimulator) getSimulator();

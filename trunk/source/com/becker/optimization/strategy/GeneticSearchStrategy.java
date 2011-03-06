@@ -217,7 +217,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
     private static void printPopulation(List population, int limit)
     {
         for (int i=0; i<population.size() && i<limit; i++)
-            System.out.println( i+": "+ ((ParameterArray) population.get(i)));
+            System.out.println( i + ": " + population.get(i));
         System.out.println( "" );
     }
 }

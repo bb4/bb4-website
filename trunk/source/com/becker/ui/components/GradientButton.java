@@ -14,8 +14,9 @@ import java.awt.geom.Rectangle2D;
  * Standard GradientButton that shows a vertical gradient on it.
  * @author Barry Becker
  */
-public class GradientButton extends JButton implements MouseListener
-{
+public class GradientButton extends JButton
+                            implements MouseListener {
+
     /** color at the top of the button. */
     private Color gradientStartColor_ = null;
 
@@ -32,8 +33,7 @@ public class GradientButton extends JButton implements MouseListener
      * Constructor
      *  default to colors from the UIManager
      */
-    public GradientButton()
-    {
+    public GradientButton() {
         commonDefaultInit();
     }
 
@@ -41,8 +41,7 @@ public class GradientButton extends JButton implements MouseListener
      * Constructor
      *  default to colors from the UIManager
      */
-    public GradientButton( String text )
-    {
+    public GradientButton( String text ) {
         commonDefaultInit();
         this.setText( text );
     }
@@ -51,8 +50,7 @@ public class GradientButton extends JButton implements MouseListener
      * Constructor
      *  default to colors from the UIManager
      */
-    public GradientButton( String text, Icon icon )
-    {
+    public GradientButton( String text, Icon icon ) {
         commonDefaultInit();
         this.setText( text );
         this.setIcon( icon );
@@ -63,15 +61,13 @@ public class GradientButton extends JButton implements MouseListener
      * @param startColor the color at the top of the button
      * @param endColor  the color at the bottom of the button
      */
-    public GradientButton( Color startColor, Color endColor )
-    {
+    public GradientButton( Color startColor, Color endColor ) {
         gradientStartColor_ = startColor;
         gradientEndColor_ = endColor;
         setUI( myUI_ );
     }
 
-    private void commonDefaultInit()
-    {
+    private void commonDefaultInit() {
         Color c = UIManager.getColor( "Button.background" );
         gradientStartColor_ = c.brighter();
         gradientEndColor_ = c;
@@ -83,61 +79,22 @@ public class GradientButton extends JButton implements MouseListener
      * Don't let anyone change the UI object.
      */
     @Override
-    public void setUI( ButtonUI b )
-    {
+    public void setUI( ButtonUI b ) {
         super.setUI( myUI_ );
     }
 
     /**
      * Set starting gradient color
      */
-    public void setStartColor( Color pStartColor )
-    {
+    public void setStartColor( Color pStartColor ) {
         gradientStartColor_ = pStartColor;
     }
 
     /**
      * Set ending gradient color
      */
-    public void setEndColor( Color pEndColor )
-    {
+    public void setEndColor( Color pEndColor ) {
         gradientEndColor_ = pEndColor;
-    }
-
-    /**
-     * Does the work of actually drawing the gradient background.
-     */
-    private void addGradientBackground( Graphics g )
-    {
-        Graphics2D g2D = (Graphics2D) g;
-
-        double width = this.getSize().getWidth();
-        double height = this.getSize().getHeight();
-
-        Point2D.Double origin = new Point2D.Double( 0.0, 0.0 );
-        Point2D.Double end = new Point2D.Double( 0.0, height );
-
-        Color startColor = gradientStartColor_;
-        Color endColor = gradientEndColor_;
-        startColor = mousedOver_ ?  startColor.brighter() : startColor;
-        //endColor = mousedOver_ ? endColor.brighter() : endColor;
-
-        GradientPaint rtow;
-        if ( isSelected() ) {
-            rtow = new GradientPaint( origin, endColor, end, startColor );
-        }
-        else {
-            rtow = new GradientPaint( origin, startColor, end, endColor );
-        }
-
-        float opacity = mousedOver_ ? 1.0f : 0.75f;
-        if (!isEnabled()) {
-            opacity = 0.6f;
-        }
-        g2D.setComposite(           // SRC_OVER
-                AlphaComposite.getInstance( AlphaComposite.SRC_OVER, opacity ));
-        g2D.setPaint( rtow );
-        g2D.fill( new Rectangle2D.Double( 0, 0, width, height ) );
     }
 
 
@@ -159,28 +116,61 @@ public class GradientButton extends JButton implements MouseListener
      * Custom Button UI class that paints a gradient background on the button
      * before text or an icon is painted on the button.
      */
-    private class CustomUI extends BasicButtonUI
-    {
+    private class CustomUI extends BasicButtonUI {
         @Override
-        protected void paintText( Graphics g, JComponent c, Rectangle textRect, String text )
-        {
+        protected void paintText( Graphics g, JComponent c, Rectangle textRect, String text ) {
             //if the button has no icon, add the gradient background
-            if ( c instanceof GradientButton && (((GradientButton) c).getIcon() == null)) {
+            if ( c instanceof GradientButton && (((AbstractButton) c).getIcon() == null)) {
                 addGradientBackground( g );
             }
             super.paintText( g, c, textRect, text );
         }
 
         @Override
-        protected void paintIcon( Graphics g, JComponent c, Rectangle iconRect )
-        {
+        protected void paintIcon( Graphics g, JComponent c, Rectangle iconRect ) {
             //if the button has an icon, add the gradient background
-            if ( c instanceof GradientButton && (((GradientButton) c).getIcon() != null)) {
+            if ( c instanceof GradientButton && (((AbstractButton) c).getIcon() != null)) {
                 addGradientBackground( g );
             }
             super.paintIcon( g, c, iconRect );
         }
 
+
+        /**
+         * Does the work of actually drawing the gradient background.
+         */
+        private void addGradientBackground( Graphics g )
+        {
+            Graphics2D g2D = (Graphics2D) g;
+
+            double width = getSize().getWidth();
+            double height = getSize().getHeight();
+
+            Point2D.Double origin = new Point2D.Double( 0.0, 0.0 );
+            Point2D.Double end = new Point2D.Double( 0.0, height );
+
+            Color startColor = gradientStartColor_;
+            Color endColor = gradientEndColor_;
+            startColor = mousedOver_ ?  startColor.brighter() : startColor;
+            //endColor = mousedOver_ ? endColor.brighter() : endColor;
+
+            GradientPaint rtow;
+            if ( isSelected() ) {
+                rtow = new GradientPaint( origin, endColor, end, startColor );
+            }
+            else {
+                rtow = new GradientPaint( origin, startColor, end, endColor );
+            }
+
+            float opacity = mousedOver_ ? 1.0f : 0.75f;
+            if (!isEnabled()) {
+                opacity = 0.6f;
+            }
+            g2D.setComposite(           // SRC_OVER
+                    AlphaComposite.getInstance( AlphaComposite.SRC_OVER, opacity ));
+            g2D.setPaint( rtow );
+            g2D.fill( new Rectangle2D.Double( 0, 0, width, height ) );
+        }
     }
 }
 

@@ -65,7 +65,7 @@ public class CurlFilter extends TransformFilter {
 	
 /*
     public BufferedImage filter( BufferedImage src, BufferedImage dst ) {
-		this.width = src.getWidth();
+		this.width = src.getWidths();
 		this.height = src.getHeight();
 		return super.filter( src, dst );
 	}

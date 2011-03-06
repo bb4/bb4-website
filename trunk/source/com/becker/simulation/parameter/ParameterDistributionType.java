@@ -7,10 +7,11 @@ import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.redistribution.*;
 
 /**
- * Different types of parmeter distributions to test.
- * Since we apply a redistribution to the original skewed distribution, we expect the result to be a uniform distribution.
+ * Different types of parameter distributions to test.
+ * Since we apply a redistribution to the original skewed distribution,
+ * we expect the result to be a uniform distribution.
  * 
- * @author Bary Becker
+ * @author Barry Becker
  */
 public enum ParameterDistributionType {
     GAUSSIAN8("Gaussian 0-8",
@@ -150,7 +151,6 @@ public enum ParameterDistributionType {
         final double[] valueProbs = {0.01, 0.02, 0.01, 0.01};
         return new UniformRedistribution(values, valueProbs);
     }
-    
     
     private static RedistributionFunction getDiscUniform1() {
         final int[] values = {3};

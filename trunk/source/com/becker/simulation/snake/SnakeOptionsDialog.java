@@ -1,6 +1,9 @@
 package com.becker.simulation.snake;
 
+import com.becker.common.math.WaveType;
 import com.becker.simulation.common.NewtonianSimOptionsDialog;
+import com.becker.simulation.snake.data.ISnakeData;
+import com.becker.simulation.snake.data.SnakeType;
 import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
@@ -9,12 +12,18 @@ import java.awt.event.ActionListener;
 
 /**
  * Use this modal dialog to let the user choose from among the
- * different game options.
+ * different snake options.
  *
- * @author Bary Becker
+ * @author Barry Becker
  */
-class SnakeOptionsDialog extends NewtonianSimOptionsDialog implements ActionListener
-{
+class SnakeOptionsDialog extends NewtonianSimOptionsDialog
+                         implements ActionListener {
+
+    /** type of snake to show.   */
+    private JComboBox snakeCombo_;
+
+    /** type of snake to show.   */
+    private JComboBox waveTypeCombo_;
 
     // snake param options controls
     private NumberInput waveSpeedField_;
@@ -26,12 +35,13 @@ class SnakeOptionsDialog extends NewtonianSimOptionsDialog implements ActionList
 
 
 
-    // constructor
+    /** constructor */
     SnakeOptionsDialog( JFrame parent, SnakeSimulator simulator ) {
         super( parent, simulator );
     }
 
 
+    @Override
     protected JPanel createCustomParamPanel() {
 
         JPanel customParamPanel = new JPanel();
@@ -41,40 +51,51 @@ class SnakeOptionsDialog extends NewtonianSimOptionsDialog implements ActionList
         snakeParamPanel.setLayout( new BoxLayout(snakeParamPanel, BoxLayout.Y_AXIS ) );
         snakeParamPanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Snake Parameters" ) );
-        
 
         Snake snake = ((SnakeSimulator) getSimulator()).getSnake();
 
+        ComboBoxModel snakeModel = new DefaultComboBoxModel(SnakeType.values());
+        snakeCombo_ = new JComboBox(snakeModel);
+        snakeCombo_.setToolTipText("Select a type of snake to show.");
+
+        ComboBoxModel waveModel = new DefaultComboBoxModel(WaveType.values());
+        waveTypeCombo_ = new JComboBox(waveModel);
+        waveTypeCombo_.setToolTipText("Select a type of wave form to use for muscle contractions.");
+
+        LocomotionParameters params = snake.getLocomotionParams();
+
         waveSpeedField_ =
-                new NumberInput("Wave Speed (.001 slow - .9 fast):  ", snake.getWaveSpeed(),
+                new NumberInput("Wave Speed (.001 slow - .9 fast):  ", params.getWaveSpeed(),
                      "This controls the speed at which the force function that travels down the body of the snake",
                      0.001, 0.9, false);
         waveAmplitudeField_ =
-                new NumberInput("Wave Amplitude (.001 small - 2.0 large):  ", snake.getWaveAmplitude(),
+                new NumberInput("Wave Amplitude (.001 small - 2.0 large):  ", params.getWaveAmplitude(),
                     "This controls the amplitude of the force function that travels down the body of the snake",
                     0.001, 0.9, false);
         wavePeriodField_ =
-                new NumberInput("Wave Period (1.0 small - 4.0 large):  ", snake.getWavePeriod(),
+                new NumberInput("Wave Period (1.0 small - 4.0 large):  ", params.getWavePeriod(),
                     "This controls the period (in number of PI radians) of the force function "
                     + "that travels down the body of the snake", 1.0, 4.0, false);
         massScaleField_ =
-                new NumberInput("Mass Scale (.3 small - 2.0 large):  ", snake.getMassScale(),
+                new NumberInput("Mass Scale (.3 small - 2.0 large):  ", params.getMassScale(),
                     "This controls the overall mass of the snake. A high number indicates that the snake weighs a lot.",
                     0.3, 2.0, false);
         massScaleField_.setEnabled( false );
 
         springKField_ =
-                new NumberInput("Spring Stiffness  (1.0 small - 2.0 large):  ", snake.getSpringK(),
+                new NumberInput("Spring Stiffness  (1.0 small - 2.0 large):  ", params.getSpringK(),
                     "This controls the stiffness of the springs used to make up the snake's body.",
                     1.0, 2.0, false);
         springKField_.setEnabled( false );
 
         springDampingField_ =
-                new NumberInput("Spring Damping (.1 small - 3.0 large):  ", snake.getSpringDamping(),
+                new NumberInput("Spring Damping (.1 small - 3.0 large):  ", params.getSpringDamping(),
                     "This controls how quickly the spring returns to rest once released.",
                     0.1, 3.0, false);
         springDampingField_.setEnabled( false );
 
+        snakeParamPanel.add(snakeCombo_);
+        snakeParamPanel.add(waveTypeCombo_);
         snakeParamPanel.add( waveSpeedField_ );
         snakeParamPanel.add( waveAmplitudeField_ );
         snakeParamPanel.add( wavePeriodField_ );
@@ -88,6 +109,7 @@ class SnakeOptionsDialog extends NewtonianSimOptionsDialog implements ActionList
         return customParamPanel;
     }
 
+    @Override
     protected void ok() {
 
         super.ok();
@@ -95,12 +117,15 @@ class SnakeOptionsDialog extends NewtonianSimOptionsDialog implements ActionList
         // set the snake params
         SnakeSimulator simulator = (SnakeSimulator) getSimulator();
 
-        simulator.getSnake().setWaveSpeed(waveSpeedField_.getValue());
-        simulator.getSnake().setWaveAmplitude( waveAmplitudeField_.getValue() );
-        simulator.getSnake().setWavePeriod( wavePeriodField_.getValue() );
-        simulator.getSnake().setMassScale( massScaleField_.getValue()  );
-        simulator.getSnake().setSpringK( springKField_.getValue() );
-        simulator.getSnake().setSpringDamping( springDampingField_.getValue() );
-    }
+        LocomotionParameters params = simulator.getSnake().getLocomotionParams();
+        params.setWaveSpeed(waveSpeedField_.getValue());
+        params.setWaveAmplitude(waveAmplitudeField_.getValue());
+        params.setWavePeriod(wavePeriodField_.getValue());
+        params.setMassScale(massScaleField_.getValue());
+        params.setSpringK(springKField_.getValue());
+        params.setSpringDamping(springDampingField_.getValue());
 
+        ISnakeData snakeData = ((SnakeType)snakeCombo_.getSelectedItem()).getData();
+        simulator.setSnakeData(snakeData);
+    }
 }

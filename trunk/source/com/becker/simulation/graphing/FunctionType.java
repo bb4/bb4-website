@@ -5,10 +5,9 @@ import com.becker.common.math.function.ErrorFunction;
 import com.becker.common.math.function.Function;
 
 /**
- * Different types of parmeter distributions to test.
- * Since we apply a redistribution to the original skewed distribution, we expect the result to be a uniform distribution.
+ * Different types of functions to test.
  *
- * @author Bary Becker
+ * @author Barry Becker
  */
 public enum FunctionType {
 

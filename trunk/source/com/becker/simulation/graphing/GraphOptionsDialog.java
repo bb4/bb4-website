@@ -22,7 +22,6 @@ public class GraphOptionsDialog extends SimulatorOptionsDialog {
     private JComboBox interpolationTypeCombo_;
 
 
-
     /**
      * constructor
      */
