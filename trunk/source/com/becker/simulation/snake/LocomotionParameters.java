@@ -2,14 +2,19 @@ package com.becker.simulation.snake;
 
 import com.becker.common.math.WaveType;
 
-import static com.becker.simulation.snake.SnakeConstants.*;
-
 /**
  * Tweakable snake parameters that define locomotion.
  *
  * @author Barry Becker
  */
 public class LocomotionParameters {
+
+    // I used simulated annealing to come up with these optimal parameter values
+    // When I originally started the snake's speed was about .21 using my best guess.
+    // After optimization the snake's speed is about .33
+    public static final double WAVE_SPEED = 0.00478;  // .04  before optimization
+    public static final double WAVE_AMPLITUDE = 0.026877; // .04
+    public static final double WAVE_PERIOD = 3.6346; // 3.0
 
     private static final boolean USE_FRICTION = true;
 

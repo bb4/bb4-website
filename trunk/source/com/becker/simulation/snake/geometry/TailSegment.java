@@ -1,6 +1,5 @@
 package com.becker.simulation.snake.geometry;
 
-import com.becker.simulation.snake.LocomotionParameters;
 import com.becker.simulation.snake.Snake;
 
 import javax.vecmath.Vector2d;

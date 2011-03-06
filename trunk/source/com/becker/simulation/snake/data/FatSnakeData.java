@@ -2,9 +2,7 @@ package com.becker.simulation.snake.data;
 
 
 /**
- * Snake geometry data
- * it is defined by the width of the transverse cross-sectional edges (of which there are num segments+1)
- * the length of each segment is the same as its longer width
+ * Snake that has just eaten a big cat.
  *
  *  @author Barry Becker
  */
@@ -12,15 +10,15 @@ public final class FatSnakeData implements ISnakeData {
 
     /** The widths starting at the nose and edging at the tip of the tail  */
     private static final double[] WIDTHS = {
-        9.0, 20.0, 10.0, 15.0, 20.0, 25.0, 30.0, 34.0,
-        37.0, 40.0, 42.0, 44.0, 45.0, 46.0, 47.0, 48.0,
-        48.0, 48.0, 48.0, 47.0, 46.0, 45.0, 44.0, 42.0, 40.0,
-        38.0, 36.0, 34.0, 31.0, 28.0, 24.0, 18.0, 14.0,
-        10.0, 6.0, 2.0
+        9.0, 22.0, 10.0, 16.0, 22.0, 29.0, 35.0, 41.0,
+        47.0, 52.0, 56.0, 60.0, 63.0, 65.0, 66.0, 67.0,
+        67.0, 66.0, 65.0, 63.0, 60.0, 56.0, 52.0, 48.0,
+        43.0, 38.0, 33.0, 28.0, 23.0, 19.0, 16.0, 13.0,
+        10.0, 7.0, 4.0
     };
 
     public int getNumSegments() {
-       return 35;
+       return 34;
     }
 
     public double getSegmentLength() {
