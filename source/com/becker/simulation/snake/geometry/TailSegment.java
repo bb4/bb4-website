@@ -4,8 +4,6 @@ import com.becker.simulation.snake.Snake;
 
 import javax.vecmath.Vector2d;
 
-import static com.becker.simulation.snake.SnakeConstants.SCALE;
-
 /**
  *  The tail segment of a snakes body.
  *  @author Barry Becker
