@@ -17,8 +17,7 @@ import javax.swing.*;
  *
  *  @author Barry Becker
  */
-public class PentePanel extends TwoPlayerPanel
-{
+public class PentePanel extends TwoPlayerPanel {
 
     /**
      *  Construct the panel.
@@ -28,34 +27,29 @@ public class PentePanel extends TwoPlayerPanel
 
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return  GameContext.getLabel("PENTE_TITLE");
     }
 
 
     @Override
-    protected GameBoardViewer createBoardViewer()
-    {
+    protected GameBoardViewer createBoardViewer() {
         return new PenteBoardViewer();
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer ) {
         return new PenteNewGameDialog( parent, viewer );
     }
 
     @Override
-    protected GameInfoPanel createInfoPanel(GameController controller)
-    {
-        return new TwoPlayerInfoPanel( controller );   // make PenteInfoPanel
+    protected GameInfoPanel createInfoPanel(GameController controller) {
+        return new TwoPlayerInfoPanel( controller );
     }
 
     // Display the help dialog to give instructions
     @Override
-    protected void showHelpDialog()
-    {
+    protected void showHelpDialog() {
         String name = getTitle();
         String comments = GameContext.getLabel("PENTE_TITLE");
         String overview = GameContext.getLabel("PENTE_OVERVIEW");

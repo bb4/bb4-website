@@ -6,7 +6,6 @@ import com.becker.ui.sliders.SliderProperties;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 /**
  * Dynamic controls for the RD simulation that will show on the right.
@@ -18,16 +17,17 @@ class SnakeDynamicOptions extends JPanel
 
     private SnakeSimulator snakeSim_;
 
-
     private static final String DIRECTION_SLIDER = "Direction";
+    private static final String WAVE_SPEED_SLIDER = "Wave Speed";
+    private static final String WAVE_AMPLITUDE_SLIDER = "Wave Amplitude";
+    private static final String WAVE_PERIOD_SLIDER = "Wave Period";
+    private static final String MASS_SCALE_SLIDER = "Mass Scale";
+    private static final String SPRING_CONST_SLIDER = "Spring Constant";
+    private static final String SPRING_DAMPING_SLIDER = "Spring Damping";
     private static final String TIMESTEP_SLIDER = "Time Step Size";
 
     private SliderGroup sliderGroup_;
 
-    private static final SliderProperties[] SLIDER_PROPS = {
-        new SliderProperties(DIRECTION_SLIDER,    -1.0,       1.0,    0.0,     100),
-        new SliderProperties(TIMESTEP_SLIDER,    0.001,       1.0,    0.02,    10000),
-    };
 
     /**
      * Constructor
@@ -40,7 +40,7 @@ class SnakeDynamicOptions extends JPanel
 
         snakeSim_ = snake;
         
-        sliderGroup_ = new SliderGroup(SLIDER_PROPS);
+        sliderGroup_ = new SliderGroup(createSliderProperties());
         sliderGroup_.addSliderChangeListener(this);
         
         add(sliderGroup_);
@@ -50,6 +50,23 @@ class SnakeDynamicOptions extends JPanel
         add(fill);
     }
 
+    private SliderProperties[] createSliderProperties() {
+        LocomotionParameters params = new LocomotionParameters();
+        SliderProperties[] sliderProps;
+        sliderProps = new SliderProperties[]{
+                //                                     MIN  MAX   INITIAL   SCALE
+                new SliderProperties(DIRECTION_SLIDER, -1.0, 1.0, params.getDirection(), 100),
+                new SliderProperties(WAVE_SPEED_SLIDER, 0.0001, 0.1, params.getWaveSpeed(), 1000),
+                new SliderProperties(WAVE_AMPLITUDE_SLIDER, 0.000, 0.3, params.getWaveAmplitude(), 100),
+                new SliderProperties(WAVE_PERIOD_SLIDER, .5, 5.0, params.getWavePeriod(), 100),
+                new SliderProperties(MASS_SCALE_SLIDER, 0.1, 6.0, params.getMassScale(), 100),
+                new SliderProperties(SPRING_CONST_SLIDER, 0.1, 4.0, params.getSpringK(), 100),
+                new SliderProperties(SPRING_DAMPING_SLIDER, 0.1, 4.0, params.getSpringDamping(), 100),
+                new SliderProperties(TIMESTEP_SLIDER, 0.001, 0.5, SnakeSimulator.INITIAL_TIME_STEP, 1000)};
+         return sliderProps;
+    }
+
+
     public void reset() {
         sliderGroup_.reset();
     }
@@ -58,8 +75,29 @@ class SnakeDynamicOptions extends JPanel
      * One of the sliders was moved.
      */
     public void sliderChanged(int sliderIndex, String sliderName, double value) {
+
+        LocomotionParameters params = snakeSim_.getLocomotionParams();
+
         if (sliderName.equals(DIRECTION_SLIDER)) {
-            snakeSim_.setDirection(value);
+            params.setDirection(value);
+        }
+        else if (sliderName.equals(WAVE_SPEED_SLIDER)) {
+            params.setWaveSpeed(value);
+        }
+        else if (sliderName.equals(WAVE_AMPLITUDE_SLIDER)) {
+            params.setWaveAmplitude(value);
+        }
+        else if (sliderName.equals(WAVE_PERIOD_SLIDER)) {
+            params.setWavePeriod(value);
+        }
+        else if (sliderName.equals(MASS_SCALE_SLIDER)) {
+            params.setMassScale(value);
+        }
+        else if (sliderName.equals(SPRING_CONST_SLIDER)) {
+            params.setSpringK(value);
+        }
+        else if (sliderName.equals(SPRING_DAMPING_SLIDER)) {
+            params.setSpringDamping(value);
         }
         else if (sliderName.equals(TIMESTEP_SLIDER)) {
             snakeSim_.setTimeStep(value);

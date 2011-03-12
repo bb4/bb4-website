@@ -1,7 +1,7 @@
 package com.becker.simulation.reactiondiffusion.rendering;
 
 import com.becker.common.ColorMap;
-import com.becker.java2d.OfflineGraphics;
+import com.becker.ui.renderers.OfflineGraphics;
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
 
 import java.awt.*;

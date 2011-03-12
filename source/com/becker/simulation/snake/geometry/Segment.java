@@ -220,8 +220,8 @@ public class Segment {
         double contractionLeft = 1.0 + offset;
         double contractionRight = 1.0 - offset;
         if ( contractionRight < 0 ) {
-            System.out.println( "Error contractionRight is less than 0 = " + contractionRight );
-            contractionRight = 0.0;
+            throw new IllegalArgumentException( "Error contractionRight is less than 0 = " + contractionRight );
+            //contractionRight = 0.0;
         }
 
         edges_[0].setContraction( contractionLeft );
@@ -347,7 +347,6 @@ public class Segment {
      * @return unstable if the velocities are getting to big. This is an indication that we should reduce the timestep.
      */
     public boolean updateVelocities( double timeStep ) {
-
         boolean unstable = false;
         for ( int i = 0; i < NUM_PARTICLES; i++ ) {
             if ( (i != 3 && i != 0) || isTail() ) {
@@ -362,19 +361,6 @@ public class Segment {
                 }
                 vel_.add( change_ );
                 particles_[i].velocity.set( vel_ );
-                /*
-                if (i==CENTER_INDEX) {
-                    Vector2d spineDir = this.getSpinalDirection();
-                    double dot = spineDir.dot(particles_[CENTER_INDEX].velocity);
-                    if (dot < 0 ) {
-                        // then the velocity vector is going at least partially backwards
-                        // remove the backwards component.
-                        change_.set(spineDir);
-                        change_.scale(dot);
-                        particles_[CENTER_INDEX].velocity.sub(change_);
-                    }
-                }
-                */
             }
         }
         return unstable;

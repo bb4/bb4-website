@@ -1,6 +1,8 @@
 package com.becker.puzzle.maze;
 
-import java.awt.*;
+
+import java.awt.Point;
+import java.util.List;
 
 /**
  * The model part of the model view controller pattern for the maze.
@@ -55,7 +57,8 @@ public class MazeModel {
     }
 
     public MazeCell getCell(int x, int y) {
-        return grid_[x][y];
+
+        return grid_[Math.min(x, width_-1)][Math.min(y, height_-1)];
     }
 
     public MazeCell getCell(Point p) {
@@ -78,15 +81,15 @@ public class MazeModel {
     /**
      * From currentPosition try moving in each direction in a random order.
      */
-    public static void pushMoves( Point currentPosition, Point currentDir, int depth, java.util.List stack )
+    public static void pushMoves( Point currentPosition, Point currentDir, int depth, List<GenState> stack )
     {
         // assigning different probabilities to the order in which we check these directions
         // can give interesting effects.
-        java.util.List directions = Direction.getShuffledDirections();
+        List<Direction> directions = Direction.getShuffledDirections();
 
         // check all the directions except the one we came from
         for ( int i = 0; i < 3; i++ ) {
-            Direction direction = (Direction) directions.get(i);
+            Direction direction = directions.get(i);
             Point dir = direction.apply(currentDir);
             stack.add(0, new GenState( currentPosition, dir, depth ) );
         }

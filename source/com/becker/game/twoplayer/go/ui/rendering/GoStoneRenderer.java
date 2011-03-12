@@ -38,7 +38,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     public static final ImageIcon BLACK_STONE_IMG = GUIUtil.getIcon(DIR + "goStoneBlack.png");
     public static final ImageIcon WHITE_STONE_IMG = GUIUtil.getIcon(DIR + "goStoneWhite.png");
     private static final ImageIcon BLACK_STONE_DEAD_IMG = GUIUtil.getIcon(DIR + "goStoneBlackDead.png");
-    private static final ImageIcon WHITE_STONE_DEAD_IMG = GUIUtil.getIcon(DIR + " goStoneWhiteDead.png");
+    private static final ImageIcon WHITE_STONE_DEAD_IMG = GUIUtil.getIcon(DIR + "goStoneWhiteDead.png");
 
     private static final float[] scaleFactors_ = {1.0f, 1.0f, 1.0f, 1.0f};
     private static final float[] OFFSETS = {0.0f, 0.0f, 0.0f, 0.0f};

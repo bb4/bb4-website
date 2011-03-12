@@ -9,16 +9,16 @@ import javax.swing.*;
  * Base class for programs that you want to be
  * run as applications or resizable applets.
  *
- * @author Barry Becker  Date: Dec 2008
+ * @author Barry Becker
  */
-public abstract class ApplicationApplet extends JApplet
-{
+public abstract class ApplicationApplet extends JApplet{
 
     protected ResizableAppletPanel resizablePanel_;
 
     static {
         GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
     }
+
     /**
      * Construct the application.
      */
@@ -61,7 +61,9 @@ public abstract class ApplicationApplet extends JApplet
      * called by the browser after init(), if running as an applet
      */
     @Override
-    public void start() {}
+    public void start() {
+        this.repaint();
+    }
 
 }
 

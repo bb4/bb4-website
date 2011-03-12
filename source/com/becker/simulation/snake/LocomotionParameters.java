@@ -21,8 +21,8 @@ public class LocomotionParameters {
     private static final double MASS_SCALE = 1.5;
     private static final double SPRING_K = 0.6;
     private static final double SPRING_DAMPING = 1.2;
-    private static final double STATIC_FRICTION = 0.01;
-    private static final double DYNAMIC_FRICTION = 0.01;
+    private static final double STATIC_FRICTION = 0.1;
+    private static final double DYNAMIC_FRICTION = 0.1;
 
     /** hard left = 1.0; hard right = -1.0; straight = 0; */
     private double direction_ = 0.0;

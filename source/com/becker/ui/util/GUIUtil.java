@@ -42,16 +42,15 @@ public final class GUIUtil {
     // webstart services
     private static BasicService basicService_ = null;
 
-
     /**
-     * @param standAlone  if true then running as applet or through webstart; ohterwize, application
+     * @param standAlone  if true then running as applet or through webstart; otherwise, application
      */
     public static void setStandAlone(boolean standAlone) {
         isStandAlone_ = standAlone;
     }
 
     /**
-     * @return if true then running as applet or through webstart; ohterwize, application.
+     * @return if true then running as applet or through webstart; otherwise, application.
      */
     public static boolean isStandAlone() {
         return isStandAlone_;
@@ -59,7 +58,7 @@ public final class GUIUtil {
 
 
     /**
-     *get a singleton filechooser.
+     *get a singleton file chooser.
      */
     public static JFileChooser getFileChooser() {
         if ( fileChooser_ == null )

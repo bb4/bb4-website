@@ -121,7 +121,7 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
         if ( getRenderer().getDraggedShowPiece() != null ) {
             getRenderer().getDraggedShowPiece().setLocation( loc );
         }
-        viewer_.refresh();
+        viewer_.repaint(); viewer_.refresh();
     }
 
     /**

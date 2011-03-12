@@ -1,6 +1,6 @@
 package com.becker.apps.spirograph;
 
-import com.becker.java2d.OfflineGraphics;
+import com.becker.ui.renderers.OfflineGraphics;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

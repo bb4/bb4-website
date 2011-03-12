@@ -58,7 +58,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      */
     private Board cachedGameBoard_ = null;
 
-    /** we occasionally want to show the conputers considered next moves in the ui. */
+    /** we occasionally want to show the computer's considered next moves in the ui. */
     private TwoPlayerMove[] nextMoves_;
 
     private MoveSequencePlayback moveSequencePlayer_;

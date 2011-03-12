@@ -8,14 +8,19 @@ import java.io.*;
  */
 public final class FileUtil
 {
-    /** Get the correct file separator whether orn windows (\) or linux (/). */
-    public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+    /**
+     * Get the correct file separator whether orn windows (\) or linux (/).
+     * Getting error in applets if trying to use System.getProperty("file.separator")
+     */
+    public static final String FILE_SEPARATOR = "/";
     
     /**
-     *  This path should be changed if you run the application form of the applets on a different machine.
-     *  use this if running under windows
+     * Points to the main project directory.
+     * Reads the PROJECT_HOME env variable to figure out where the data files are.
+     * If not deployed, you can use System.getenv("PROJECT_HOME") + FILE_SEPARATOR;
+     *
      */
-    public static final String PROJECT_HOME = System.getenv("PROJECT_HOME") + FILE_SEPARATOR;
+    public static final String PROJECT_HOME = "E:/projects/java_projects/trunk" + FILE_SEPARATOR;
     
     /**
      * cannot instantiate static class.

@@ -1,7 +1,5 @@
 package com.becker.simulation.snake.rendering;
 
-import static com.becker.simulation.snake.SnakeConstants.*;
-
 /**
  * Tweakable rendering parameters.
  *
@@ -9,7 +7,7 @@ import static com.becker.simulation.snake.SnakeConstants.*;
  */
 public class RenderingParameters {
 
-        /** scales the size of the snakes geometry */
+    /** scales the size of the snakes geometry */
     public static final double SCALE = 0.9;
 
     private boolean showVelocityVectors_ = false;
@@ -28,7 +26,6 @@ public class RenderingParameters {
 
     public void setShowVelocityVectors( boolean show ) {
         showVelocityVectors_ = show;
-        System.out.println("setting show velocity to " + show);
     }
 
     public boolean getShowVelocityVectors() {

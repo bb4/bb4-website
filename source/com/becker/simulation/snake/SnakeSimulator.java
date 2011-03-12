@@ -48,7 +48,7 @@ public class SnakeSimulator extends NewtonianSimulator {
     private double velocity_ = 0;
 
     /** initial time step */
-    protected static final double TIME_STEP = 0.4;
+    protected static final double INITIAL_TIME_STEP = 0.2;
 
     // size of the background grid
     // note the ground should move, not the snake so that the snake always remains visible.
@@ -77,7 +77,7 @@ public class SnakeSimulator extends NewtonianSimulator {
     
     @Override
     protected double getInitialTimeStep() {
-        return TIME_STEP;
+        return INITIAL_TIME_STEP;
     }
 
     public void setSnakeData(ISnakeData snakeData) {
@@ -91,6 +91,10 @@ public class SnakeSimulator extends NewtonianSimulator {
 
         this.setPreferredSize(new Dimension( (int) (CELL_SIZE * XDIM), (int) (CELL_SIZE * YDIM)) );
         initCommonUI();
+    }
+
+    public LocomotionParameters getLocomotionParams() {
+        return snake_.getLocomotionParams();
     }
 
     @Override
