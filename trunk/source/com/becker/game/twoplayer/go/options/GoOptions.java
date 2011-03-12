@@ -52,7 +52,7 @@ public class GoOptions extends TwoPlayerOptions {
                                                             DEFAULT_MIN_BEST_MOVES,
                                                             DEFAULT_PERCENT_LESS_THAN_BEST_THRESH),
                                  new MonteCarloSearchOptions(200, 1.0, 10));
-        opts.setSearchStrategyMethod(SearchStrategyType.NEGAMAX);
+        opts.setSearchStrategyMethod(SearchStrategyType.NEGASCOUT);
         opts.getBruteSearchOptions().setQuiescence(true);
         return opts;
     }

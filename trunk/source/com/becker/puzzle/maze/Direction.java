@@ -50,7 +50,7 @@ public enum Direction {
      * return a shuffled list of directions
      * they are ordered given the potentially skewed probabilities at the top.
      */
-    public static List getShuffledDirections() {
+    public static List<Direction> getShuffledDirections() {
         double rnd = RANDOM.nextDouble();
         List<Direction> directions = new ArrayList<Direction>();
         List<Direction> originalDirections = new ArrayList<Direction>();

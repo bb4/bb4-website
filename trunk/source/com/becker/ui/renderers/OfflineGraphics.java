@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.ui.renderers;
 
 import com.becker.common.util.ImageUtil;
 
@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 /**
  * For fast rendering into an offscreen image.
- * Partially imlements methods found in Graphics2D.
+ * Partially implements methods found in Graphics2D.
  * @author Barry Becker
  */
 public class OfflineGraphics  {

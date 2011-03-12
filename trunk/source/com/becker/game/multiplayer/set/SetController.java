@@ -42,7 +42,9 @@ public class SetController extends MultiGameController {
     /**
      *  Construct the Set game controller
      */
-    public SetController() {}
+    public SetController() {
+         initializeData();
+    }
     
     
     @Override
@@ -180,12 +182,12 @@ public class SetController extends MultiGameController {
     }
 
      /**
-     * by default we start with one human and one robot player.
-     */
+      * By default we start with one human and one robot player.
+      * After that, they can change manually to get different players.
+      */
     @Override
     protected void initPlayers() {
-        // we just init the first time.
-        // After that, they can change manually to get different players.
+
         if (players_ == null) {
             // create the default players. One human and one robot.
             players_ = new PlayerList();

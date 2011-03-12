@@ -41,6 +41,7 @@
           <include name="com/becker/ui/**/*.class"/>
           <include name="com/becker/xml/*.class"/>
           <include name="com/becker/common/ImageUtil.class"/>
+          <include name="com/becker/java2d/gradient/**/*.class"/>
           <exclude name="com/becker/**/test"/>
         </fileset>
       </copy>
@@ -319,6 +320,12 @@
           <param name="jarFile" value="spirograph.jar"/>
       </antcall>
 
+      <!-- copy the class files that are needed for sierpinski deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="apps/sierpinski"/>
+          <param name="jarFile" value="sierpinski.jar"/>
+      </antcall>
+
       <!-- copy the class files that are needed for imagebreeder deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="apps/imagebreeder"/>
@@ -506,12 +513,11 @@
     <replace file="${replaceFile}" token="{${item}.${token}}" value="${newValue}"/>
   </target>
 
-
   <target name="tr_substitute">
     <propertycopy from="appletIndexFile.${locale}" name="appletIndexFileForLocale"/>
     <property name="appName" value="${token}"/>
     <property name="TRTemplate"
-        value="${TRTemplate1}${appName}.title${TRTemplate2}${appName}.longDescription${TRTemplate3}${appName}${TRTemplate4}${locale}${TRTemplate4a}${appName}.title${TRTemplate5}${appName}${TRTemplate6}${locale}${TRTemplate6a}${appName}.title${TRTemplate7}${appName}${TRTemplate7a}${locale}${TRTemplate7b}${appName}${TRTemplate8}${appName}.title${TRTemplate9}${appName}.title${TRTemplate10}"/>
+        value="${TRTemplate1}${appName}.title${TRTemplate2}${appName}.longDescription${TRTemplate3}${appName}${TRTemplate4}${locale}${TRTemplate5}${appName}${TRTemplate6}${locale}${TRTemplate7}${appName}${TRTemplate7a}${locale}${TRTemplate7b}${appName}${TRTemplate8}${appName}.title${TRTemplate9}${appName}.title${TRTemplate10}"/>
     <!--echo message="****** TR Substitute ${TRTemplate} in file ${appletIndexFileForLocale}"/-->
     <replace file="${distributionDir}/${appletIndexFileForLocale}" token="{${token}TR}" value="${TRTemplate}"/>
   </target>

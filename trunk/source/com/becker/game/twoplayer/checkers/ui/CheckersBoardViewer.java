@@ -28,8 +28,7 @@ public class CheckersBoardViewer extends AbstractTwoPlayerBoardViewer {
 
 
     @Override
-    protected GameController createController()
-    {
+    protected GameController createController() {
         return new CheckersController();
     }
 
@@ -47,8 +46,8 @@ public class CheckersBoardViewer extends AbstractTwoPlayerBoardViewer {
      * @return the tooltip for the panel given a mouse event
      */
     @Override
-    public String getToolTipText( MouseEvent e )
-    {
+    public String getToolTipText( MouseEvent e ) {
+
         Location loc = getBoardRenderer().createLocation(e);
         StringBuilder sb = new StringBuilder( "<html><font=-3>" );
 
@@ -61,5 +60,4 @@ public class CheckersBoardViewer extends AbstractTwoPlayerBoardViewer {
         sb.append( "</font></html>" );
         return sb.toString();
     }
-
 }

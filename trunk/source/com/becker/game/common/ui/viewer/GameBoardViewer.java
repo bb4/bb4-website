@@ -136,26 +136,23 @@ public abstract class GameBoardViewer extends JPanel
 
 
     /**
-     *  cause the board UI to draw itself based on the current state of the game.
+     * Cause the board UI to draw itself based on the current state of the game.
      */
     public void refresh() {
-        // this will paint the component immediately
-        if (this.getGraphics() != null) {
-            this.paint( this.getGraphics() );
-        }
+        this.repaint();
+        // this will paint the component immediately - no good.
+        //if (this.getGraphics() != null) {
+        //    this.paint( this.getGraphics() );
+        //}
     }
 
     /**
-     *  animate the last move so the player does not lose orientation.
+     *  Animate the last move so the player does not lose orientation.
      *  By default this just redraws the board, but for games with complex moves,
      *  we may want to do more.
      */
     protected void showLastMove() {
-        // this will paint the component immediately
-        Graphics g = this.getGraphics();
-        if (g != null) {
-            this.paint(g);
-        }
+        this.repaint();
     }
 
     /**

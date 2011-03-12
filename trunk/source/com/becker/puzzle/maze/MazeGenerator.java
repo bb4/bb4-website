@@ -67,7 +67,7 @@ public class MazeGenerator
      */
     public void search()
     {
-        List stack = new LinkedList();
+        List<GenState> stack = new LinkedList<GenState>();
 
         Point currentPosition = maze_.getStartPosition();
         MazeCell currentCell = maze_.getCell(currentPosition);
@@ -117,7 +117,7 @@ public class MazeGenerator
                 }
             } while ( !moved && !stack.isEmpty() );
 
-            // this can be really slow if you do a refresh everytime
+            // this can be really slow if you do a refresh every time
             if (Math.random() < 4.0/(Math.pow(panel_.getAnimationSpeed(), 2) + 1)) {
                 panel_.paintAll();
             }

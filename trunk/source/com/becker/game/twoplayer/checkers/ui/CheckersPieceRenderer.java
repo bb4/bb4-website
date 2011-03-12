@@ -12,8 +12,8 @@ import java.awt.*;
  * @see CheckersBoardViewer
  * @author Barry Becker
  */
-public class CheckersPieceRenderer extends TwoPlayerPieceRenderer
-{
+public class CheckersPieceRenderer extends TwoPlayerPieceRenderer {
+
     private static TwoPlayerPieceRenderer renderer_ = null;
 
     /**
@@ -23,8 +23,8 @@ public class CheckersPieceRenderer extends TwoPlayerPieceRenderer
     private CheckersPieceRenderer()
     {}
 
-    public static TwoPlayerPieceRenderer getRenderer()
-    {
+    public static TwoPlayerPieceRenderer getRenderer() {
+
         if (renderer_ == null)
             renderer_ = new CheckersPieceRenderer();
         return renderer_;
@@ -34,8 +34,8 @@ public class CheckersPieceRenderer extends TwoPlayerPieceRenderer
      * this draws the actual piece.
      */
     @Override
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
-    {
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b) {
+
         CheckersPiece piece = (CheckersPiece)position.getPiece();
         if (piece == null)
             return; // nothing to render

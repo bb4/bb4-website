@@ -12,13 +12,12 @@
       var applet = null;
 
       // called when page done loading
-      //
       function doInit()
       {
         if (document.applets == null || document.applets[0] == null)
         {
           var errorMsg = "You must have the java plugin for this page to work. \n";
-          errorMsg += "You can get it from http://java.sun.com/products/plugin/";
+          errorMsg += "You can get it from http://www.oracle.com/technetwork/java/javase/downloads/index.html";
           alert(errorMsg);
           return;
         }
@@ -38,7 +37,7 @@
         if (!doIt) return;
 
         // allow for a huge double width screen because that's what I have
-        var nWidthMax = 2000;
+        var nWidthMax = 2400;
         var nHeightMax = 1400;
 
         var nWidthNew = document.body.clientWidth;
@@ -56,7 +55,7 @@
 
 
   </head>
-  <body bgcolor="#CCCCFF" onload="doInit();" onresize="resizeApplet({doResize});"
+  <body bgcolor="#EEF1FF" onload="doInit();" onresize="resizeApplet({doResize});"
         style="overflow-y: hidden; overflow-x: hidden;" topmargin="0" leftmargin="0">
 
     <div style="width:100%; margin: 6 6 6 6; border: solid 1px #043C08;">

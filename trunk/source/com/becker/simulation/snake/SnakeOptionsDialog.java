@@ -25,7 +25,7 @@ class SnakeOptionsDialog extends NewtonianSimOptionsDialog
     /** type of snake to show.   */
     private JComboBox waveTypeCombo_;
 
-    // snake param options controls
+    // snake numeric param options controls
     private NumberInput waveSpeedField_;
     private NumberInput waveAmplitudeField_;
     private NumberInput wavePeriodField_;

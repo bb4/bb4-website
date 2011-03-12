@@ -180,7 +180,7 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
     public void setSize( int width, int height )
     {
         super.setSize( width, height );
-        //System.out.println("setSize: call regen ("+ width+", "+height + ")");
+        System.out.println("setSize: call regen ("+ width+", "+height + ")");
         regenerate();
     }
 

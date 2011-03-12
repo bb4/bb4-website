@@ -56,13 +56,6 @@ public class Edge {
         commonInit( p1, p2, K, D );
     }
 
-    /**
-     *  Constructor - everything defined explicitly
-     */
-    Edge( Particle p1, Particle p2, double k, double d ) {
-        commonInit( p1, p2, k, d );
-    }
-
     public Particle getFirstParticle() {
         return firstParticle_;
     }
@@ -99,8 +92,8 @@ public class Edge {
      */
     public void setContraction( double contraction )  {
         if (contraction <= 0) {
-            System.out.println( "Error contraction<=0 = "+contraction );
-            contraction = EPS;
+            throw new IllegalArgumentException( "Error contraction <=0 = "+contraction );
+            //contraction = EPS;
         }
         effectiveLength_ = contraction * restingLength_;
     }
@@ -110,6 +103,7 @@ public class Edge {
      * where L is the resting length of the edge and l is the current length
      * The official formula in proceedings of Siggraph 1988 p169 is
      *   k(L-l) - D* dl/dt
+     * @return the computed force exerted on the particle.
      */
     public Vector2d getForce() {
         force_.set( secondParticle_ );
@@ -121,8 +115,7 @@ public class Edge {
         damping_.set( secondParticle_.velocity );
         damping_.sub( firstParticle_.velocity );
         double d = damping * damping_.dot( direction_ );
-        //if (d>1.0)
-        //  System.out.println("vel("+damping_.length()+")="+damping_+"   dir="+direction_);
+
         double halfEffectiveL = effectiveLength_ / 2.0;
 
         length_ = force_.length();
@@ -132,7 +125,6 @@ public class Edge {
         else if ( length_ < halfEffectiveL ) {
             // prevent the springs from getting too compressed
             force_.scale( (k_ * (restingLength_ - length_) + k_ * 100000.0 * (halfEffectiveL - length_) / halfEffectiveL - d) );
-            //System.out.println("! force="+force_);
         }
         else {
             //if (d>1.0)
