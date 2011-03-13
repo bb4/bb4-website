@@ -16,7 +16,7 @@ public abstract class ApplicationApplet extends JApplet{
     protected ResizableAppletPanel resizablePanel_;
 
     static {
-        GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
+        //GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
     }
 
     /**
@@ -36,6 +36,7 @@ public abstract class ApplicationApplet extends JApplet{
                 new ResizableAppletPanel(createMainPanel());
 
         getContentPane().add(resizablePanel_);
+        System.out.println("applet init");
     }
 
     /**
@@ -48,22 +49,23 @@ public abstract class ApplicationApplet extends JApplet{
      * This method allow javascript to resize the applet from the browser.
      */
     @Override
-    public void setSize( int width, int height )
-    {
+    public void setSize( int width, int height ) {
+
         super.setSize(width, height);
+        System.out.println("applet resize width="+ width +" height="+ height);
         if (resizablePanel_ != null) {
             resizablePanel_.setSize( width, height );
         }
     }
 
-
     /**
      * called by the browser after init(), if running as an applet
-     */
+     *
     @Override
     public void start() {
-        this.repaint();
-    }
+        System.out.println("applet start");
+        this.getContentPane().repaint();
+    } */
 
 }
 

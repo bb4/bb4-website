@@ -16,8 +16,8 @@ import java.awt.event.ComponentEvent;
  * A maze generator and solver
  *@author Barry Becker
  */
-public class MazeSimulator extends ApplicationApplet implements ActionListener
-{
+public class MazeSimulator extends ApplicationApplet implements ActionListener {
+
     MazePanel mazePanel_;
 
     // the passage thickness in pixels
@@ -44,8 +44,8 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
     /**
      * Build the user interface with parameter input controls at the top.
      */
-    protected JPanel createMainPanel()
-    {
+    @Override
+    protected JPanel createMainPanel() {
         mazePanel_ = createMazePanel();
 
         JPanel mainPanel = new JPanel();
@@ -69,11 +69,10 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
 
     private MazePanel createMazePanel() {
         final MazePanel mazePanel = new MazePanel();
-        mazePanel.addComponentListener( new ComponentAdapter()
-        {
+
+        mazePanel.addComponentListener( new ComponentAdapter() {
             @Override
-            public void componentResized( ComponentEvent ce )
-            {
+            public void componentResized( ComponentEvent ce )  {
                 // only resize if the dimensions have changed
                 Dimension newSize = mazePanel.getSize();
                 boolean changedSize = oldSize_ == null ||
@@ -127,8 +126,7 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
     /**
      * called when a button is pressed.
      */
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e )  {
 
         Object source = e.getSource();
 
@@ -144,8 +142,7 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
      * regenerate the maze based on the current UI parameter settings
      * and current size of the panel.
      */
-    public void regenerate()
-    {
+    public void regenerate() {
         if ( thicknessField_ == null )   {
             return; // not initialized yet
         }
@@ -162,37 +159,23 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
         mazePanel_.generate(thickness, forwardP / sum, leftP / sum, rightP / sum );
     }
 
-    public void solve()
-    {
+    public void solve() {
         mazePanel_.setAnimationSpeed(getAnimationSpeed());
         mazePanel_.solve();
     }
 
-    private int getAnimationSpeed()
-    {
+    private int getAnimationSpeed() {
         return animationSpeedField_.getIntValue();
     }
 
-    /**
-     * This method allow javascript to resize the applet from the browser.
-     */
     @Override
-    public void setSize( int width, int height )
-    {
-        super.setSize( width, height );
-        System.out.println("setSize: call regen ("+ width+", "+height + ")");
-        regenerate();
-    }
-
-    @Override
-    public void start()
-    {
+    public void start() {
         regenerate();
     }
 
     //------ Main method --------------------------------------------------------
-    public static void main( String[] args )
-    {
+
+    public static void main( String[] args ) {
         MazeSimulator simulator = new MazeSimulator();
         GUIUtil.showApplet( simulator, "Maze Generator");
     }

@@ -39,14 +39,12 @@ public abstract class Worker {
         }
     }
 
-
     /**
      * @return the value produced by the worker thread, or null if it hasn't been constructed yet.
      */
     protected synchronized Object getValue() {
         return returnValue_;
     }
-
 
     /**
      * Compute the value to be returned by the <code>get</code> method.
