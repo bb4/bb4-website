@@ -424,7 +424,16 @@
 
 
   <target name="create_html_for_locale"
-      description="deploys the all the html files for a specified locale. This includes the index page and all the applet pages.">
+      description="deploys the all the html files for a specified locale. This includes the index page, javascript, and all the applet pages.">
+
+      <!-- copy the class files that are needed for go deployment -->
+      <copy todir="${distributionDir}/..">
+        <fileset dir="${sourceDir}/html">
+          <include name="*.js"/>
+          <include name="*.css"/>
+          <include name="*.gif"/>
+        </fileset>
+      </copy>
 
       <!--echo message="locale=${locale}"/-->
       <propertycopy from="appletHtml.${locale}.appletList" name="appletListForLocale"/>
