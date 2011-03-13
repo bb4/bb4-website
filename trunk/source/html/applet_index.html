@@ -7,21 +7,66 @@
   <meta name="author" content="Barry Becker">
   <meta name="description" content="Barry's java applet index page">
   <meta name="keywords" content="game applet applets chess computer go simulation java ai minimax negamax">
+
+  <link rel="stylesheet" type="text/css" href="tabcontent.css" />
+  <script type="text/javascript" src="tabcontent.js">
+  /***********************************************
+  * Tab Content script v2.2- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+  * This notice MUST stay intact for legal use
+  * Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+  ***********************************************/
+  </script>
 </head>
-<body style="color: rgb(0, 0, 0);font-family:arial;font-size:12;background-color: #F4F8FF;padding-left:10; padding-right:10;"
+<body style="color: rgb(0, 0, 0);font-family:arial;font-size:12;background-color: #F4FaFF;padding-left:10; padding-right:10;"
  link="#000099" vlink="#990099" alink="#000099">
 <h1 style="text-align: center; text-decoration: underline;">{appletHtml.title}</h1>
-<br>
 {appletHtml.introduction}
 <br>
 <br>
-<table cellpadding="4" cellspacing="4" border="1"
- style="text-align: left; width: 100%;font-size:12;">
-  <tbody>
-  {appletHtml.appletEntries}
-  </tbody>
-</table>
-<br>
+<ul id="tabs" class="shadetabs">
+<li><a href="#" rel="tab1" class="selected">Games</a></li>
+<li><a href="#" rel="tab2">Puzzles</a></li>
+<li><a href="#" rel="tab3">Simulations</a></li>
+</ul>
+
+<div style="border:1px solid gray; width:100%; margin-bottom: 1em; padding: 10px">
+
+    <div id="tab1" class="tabcontent">
+        <table cellpadding="4" cellspacing="4" border="1"
+         style="text-align: left; width: 100%;font-size:12;">
+          <tbody>
+          {appletHtml.appletGameEntries}
+          </tbody>
+        </table>
+    </div>
+
+    <div id="tab2" class="tabcontent">
+        <table cellpadding="4" cellspacing="4" border="1"
+         style="text-align: left; width: 100%;font-size:12;">
+          <tbody>
+          {appletHtml.appletPuzzleEntries}
+          </tbody>
+        </table>
+    </div>
+
+    <div id="tab3" class="tabcontent">
+        <table cellpadding="4" cellspacing="4" border="1"
+         style="text-align: left; width: 100%;font-size:12;">
+          <tbody>
+          {appletHtml.appletSimulationEntries}
+          </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+var tabs=new ddtabcontent("tabs")
+tabs.setpersist(false)
+tabs.setselectedClassTarget("link") //"link" or "linkparent"
+tabs.init()
+</script>
+
 </body>
 </html>
 <noembed><xmp>
