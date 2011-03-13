@@ -320,17 +320,18 @@
           <param name="jarFile" value="spirograph.jar"/>
       </antcall>
 
+      <!-- copy the class files that are needed for imagebreeder deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="apps/imagebreeder"/>
+          <param name="jarFile" value="imagebreeder.jar"/>
+      </antcall>
+
       <!-- copy the class files that are needed for sierpinski deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="apps/sierpinski"/>
           <param name="jarFile" value="sierpinski.jar"/>
       </antcall>
 
-      <!-- copy the class files that are needed for imagebreeder deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="apps/imagebreeder"/>
-          <param name="jarFile" value="imagebreeder.jar"/>
-      </antcall>
 
       <copy file="${libDir}/vecmath.jar" tofile="${distributionGameDir}/vecmath.jar"/>
       <copy file="${libDir}/sun.jar" tofile="${distributionGameDir}/sun.jar"/>
