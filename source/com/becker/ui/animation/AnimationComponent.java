@@ -13,8 +13,7 @@ import java.awt.event.ItemListener;
  * The calculation and animation rendering are done in a separate thread
  * So the rest of the ui does not lock up.
  */
-public abstract class AnimationComponent extends Container implements Runnable
-{
+public abstract class AnimationComponent extends Container implements Runnable {
 
     protected boolean animating_ = true;
     protected int numStepsPerFrame_ = 1;
@@ -34,8 +33,7 @@ public abstract class AnimationComponent extends Container implements Runnable
 
     private boolean bPaused_ = true;
 
-    public AnimationComponent()
-    {
+    public AnimationComponent() {
         previousTimes_ = new long[64];
         previousTimes_[0] = System.currentTimeMillis();
         previousIndex_ = 1;
@@ -46,8 +44,7 @@ public abstract class AnimationComponent extends Container implements Runnable
      * if recordAnimation is true then each frame is written to a numbered file for
      * compilation into a movie later
      */
-    public void setRecordAnimation( boolean doIt )
-    {
+    public void setRecordAnimation( boolean doIt ) {
         recordAnimation_ = doIt;
     }
 
@@ -135,8 +132,8 @@ public abstract class AnimationComponent extends Container implements Runnable
     /**
      * render the animation component as an image
      */
-    protected void render()
-    {
+    protected void render() {
+
         Graphics2D g = (Graphics2D)getGraphics();
         if ( g != null ) {
             Dimension d = getSize();
@@ -159,8 +156,8 @@ public abstract class AnimationComponent extends Container implements Runnable
     /**
      *  Offscreen image.
      */
-    protected boolean checkImage( Dimension d )
-    {
+    protected boolean checkImage( Dimension d ) {
+
         if ( d.width <= 0 || d.height <= 0 ) return false;
         if ( image_ == null || image_.getWidth( null ) != d.width
                 || image_.getHeight( null ) != d.height) {
@@ -170,11 +167,10 @@ public abstract class AnimationComponent extends Container implements Runnable
     }
 
     /**
-     *determine the number of frames per second as a moving average.
+     * Determine the number of frames per second as a moving average.
      */
-    protected void calculateFrameRate()
-    {
-        // Measure the frame rate
+    protected void calculateFrameRate() {
+
         long now = System.currentTimeMillis();
         int numberOfFrames = previousTimes_.length;
         double newRate;
@@ -204,28 +200,23 @@ public abstract class AnimationComponent extends Container implements Runnable
     /**
      *message to show in the status bar at the bottom
      */
-    protected String getStatusMessage()
-    {
+    protected String getStatusMessage() {
         return Util.formatNumber( getFrameRate() ) + " fps";
     }
 
-    public double getFrameRate()
-    {
+    public double getFrameRate() {
         return frameRate_;
     }
-
 
     /**
      * If paused is true the animation is stopped
      */
 
-    public void setPaused( boolean bPaused )
-    {
+    public void setPaused( boolean bPaused ) {
         bPaused_ = bPaused;
     }
 
-    public boolean isPaused()
-    {
+    public boolean isPaused() {
         return bPaused_;
     }
 
@@ -233,13 +224,11 @@ public abstract class AnimationComponent extends Container implements Runnable
     // Property change support.
     private transient AnimationChangeListener animationChangeListener_;
 
-    public void setChangeListener( AnimationChangeListener af )
-    {
+    public void setChangeListener( AnimationChangeListener af ) {
         animationChangeListener_ = af;
     }
 
-    protected void firePropertyChange( String name, String newValue )
-    {
+    protected void firePropertyChange( String name, String newValue ) {
         animationChangeListener_.statusChanged( newValue );
     }
 }

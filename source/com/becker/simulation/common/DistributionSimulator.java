@@ -67,8 +67,7 @@ public abstract class DistributionSimulator extends Simulator {
 
 
     @Override
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         histogram_.setSize(getWidth(), getHeight());
         histogram_.paint(g);
     }
@@ -77,7 +76,6 @@ public abstract class DistributionSimulator extends Simulator {
         simulator.setPaused(false);
         JFrame f = new AnimationFrame( simulator );    
     }
-    
 }
 
 

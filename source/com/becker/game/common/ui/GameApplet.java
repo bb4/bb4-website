@@ -16,8 +16,8 @@ import java.awt.*;
  * @see GamePanel
  * @author Barry Becker
  */
-public class GameApplet extends JApplet
-{
+public class GameApplet extends JApplet {
+
     private GamePanel gamePanel_ = null;
     private static final long serialVersionUID = 0L;
     private static final Dimension INITIAL_SIZE =  new Dimension(600, 500);
@@ -50,8 +50,8 @@ public class GameApplet extends JApplet
      * Usually applets are not resizable within a web page, but this is a neat trick that allows you to do it.
      */
     @Override
-    public final void setSize( int width, int height )
-    {
+    public final void setSize( int width, int height )  {
+
         GameContext.log(3, "in setSize w="+width+" h="+height);
         gamePanel_.setSize( width, height );
     }

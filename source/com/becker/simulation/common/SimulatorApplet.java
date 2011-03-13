@@ -43,9 +43,8 @@ public class SimulatorApplet extends ApplicationApplet {
      * create and initialize the simulation
      */
     @Override
-    public JPanel createMainPanel()
-    {
-        //this.getParameterInfo();
+    public JPanel createMainPanel() {
+
         if (simulator_ == null) {
 
             String className = getParameter("panel_class");
@@ -61,7 +60,7 @@ public class SimulatorApplet extends ApplicationApplet {
         }
 
         simulator_.setVisible(true);
-        setSize(simulator_.getPreferredSize());
+        //setSize(simulator_.getPreferredSize());
         return animPanel;
     }
 
@@ -90,16 +89,17 @@ public class SimulatorApplet extends ApplicationApplet {
      * the applets start method.
      */
     @Override
-    public void start()
-    {
+    public void start() {
+        super.start();
         if (RUN_OPTIMIZATION)
             simulator_.doOptimization();
+        this.repaint();
     }
 
 
     //------ Main method - to allow running as an application ---------------------
-    public static void main( String[] args )
-    {
+
+    public static void main( String[] args ) {
 
         // create a simulator panel of the appropriate type based on the name of the class passed in.
         // if no simulator is specified as an argument, then we use the default.

@@ -8,26 +8,19 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-public class AxesSynch extends JApplet
-{
+public class AxesSynch extends JApplet {
 
     ResizableAppletPanel resizablePanel_ = null;
 
     private AxesPanel axesPanel_;
 
-
-    public boolean isStandalone_ = false;
-
-
     // constructor
-    public AxesSynch()
-    {
+    public AxesSynch() {
         commonInit();
     }
 
     // constructor
-    public void commonInit()
-    {
+    public void commonInit() {
         GUIUtil.setCustomLookAndFeel();
 
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
@@ -37,28 +30,9 @@ public class AxesSynch extends JApplet
 
         resizablePanel_ = new ResizableAppletPanel( mainPanel );
         this.getContentPane().add( resizablePanel_ );
-
-        axesPanel_.addComponentListener( new ComponentAdapter()
-        {
-            @Override
-            public void componentResized( ComponentEvent ce )
-            {
-                    //resized();
-            }
-        } );
     }
 
-    /**
-     *  Overrides the applet init() method
-     */
-    @Override
-    public void init()
-    {
-        //resized();
-    }
-
-    private JPanel createMainPanel()
-    {
+    private JPanel createMainPanel() {
         axesPanel_ = new AxesPanel();
         axesPanel_.setBorder(BorderFactory.createEtchedBorder());
 
@@ -81,16 +55,12 @@ public class AxesSynch extends JApplet
     /**
      * This method allow javascript to resize the applet from the browser.
      */
-    public void setSize( int width, int height )
-    {
+    @Override
+    public void setSize( int width, int height ) {
+
         resizablePanel_.setSize( width, height );
     }
 
-
-    public void start()
-    {
-        //resized();
-    }
 
     //------ Main method --------------------------------------------------------
 

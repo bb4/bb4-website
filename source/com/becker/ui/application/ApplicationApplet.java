@@ -31,12 +31,9 @@ public abstract class ApplicationApplet extends JApplet{
      */
     @Override
     public void init() {
-
         resizablePanel_ =
                 new ResizableAppletPanel(createMainPanel());
-
         getContentPane().add(resizablePanel_);
-        System.out.println("applet init");
     }
 
     /**
@@ -51,8 +48,8 @@ public abstract class ApplicationApplet extends JApplet{
     @Override
     public void setSize( int width, int height ) {
 
-        super.setSize(width, height);
-        System.out.println("applet resize width="+ width +" height="+ height);
+        getContentPane().setSize(width, height);  // this was the key.
+        System.out.println("setSize w="+width + " h=" + height);
         if (resizablePanel_ != null) {
             resizablePanel_.setSize( width, height );
         }
@@ -60,12 +57,11 @@ public abstract class ApplicationApplet extends JApplet{
 
     /**
      * called by the browser after init(), if running as an applet
-     *
+     */
     @Override
     public void start() {
         System.out.println("applet start");
-        this.getContentPane().repaint();
-    } */
-
+        validate();
+    }
 }
 

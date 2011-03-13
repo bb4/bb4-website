@@ -1,31 +1,15 @@
 package com.becker.apps.sierpinski;
 
-import com.becker.ui.components.ResizableAppletPanel;
+import com.becker.ui.application.ApplicationApplet;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SierpinskiApplet extends JApplet {
+public class SierpinskiApplet extends ApplicationApplet {
 
-    ResizableAppletPanel resizablePanel_ = null;
-
-    /**
-     * Constructor
-     */
-    public SierpinskiApplet() {
-        commonInit();
-    }
-
-    private void commonInit() {
-        GUIUtil.setCustomLookAndFeel();
-        JPanel mainPanel = createMainPanel();
-
-        resizablePanel_ = new ResizableAppletPanel( mainPanel );
-        this.getContentPane().add( resizablePanel_ );
-    }
-
-    private JPanel createMainPanel() {
+    @Override
+    protected JPanel createMainPanel() {
         SierpinskiComponent sierpinskiComp = new SierpinskiComponent();
         sierpinskiComp.setBorder(BorderFactory.createEtchedBorder());
 
