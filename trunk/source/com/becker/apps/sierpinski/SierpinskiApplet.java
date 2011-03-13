@@ -1,4 +1,4 @@
-package com.becker.apps.sierpinksi;
+package com.becker.apps.sierpinski;
 
 import com.becker.ui.components.ResizableAppletPanel;
 import com.becker.ui.util.GUIUtil;
