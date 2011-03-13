@@ -19,8 +19,7 @@ import java.awt.event.ItemListener;
  * @author Barry becker
  */
 public final class SudokuPuzzle extends JApplet
-                                implements ActionListener, ItemListener
-{
+                                implements ActionListener, ItemListener {
 
     private SudokuPanel puzzlePanel_;
     // buttons

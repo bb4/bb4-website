@@ -40,28 +40,29 @@ import java.awt.event.ComponentEvent;
 public abstract class GamePanel extends TexturedPanel
                                 implements ActionListener, GameChangedListener, IGamePanel {
 
-    // ui elements.
-    // There are (at least) 5 buttons in the ToolBar. There could be more depending on the game.
-    // toolbar is protected rather than private so derived classes can add buttons to it.
+    /**
+     * There are (at least) 5 buttons in the ToolBar. There could be more depending on the game.
+     * toolbar is protected rather than private so derived classes can add buttons to it.
+     */
     protected GameToolBar toolBar_;
 
     private final JScrollPane boardViewerScrollPane_ = new JScrollPane();
 
-    // must contain a GameBoardViewer to graphically represent the status of the board.
+    /** must contain a GameBoardViewer to graphically represent the status of the board.  */
     protected GameBoardViewer boardViewer_;
 
     protected NewGameDialog newGameDialog_;
-    //protected OnlineGameManagerPanel onlineGameDialog_;
+
     protected GameOptionsDialog optionsDialog_;
     private GameInfoPanel infoPanel_;
 
-    // for a resizable applet
+    /** for a resizable applet   */
     private ResizableAppletPanel resizablePanel_;
 
-    // font for the undo/redo buttons
+    /** font for the undo/redo buttons    */
     private static final Font STATUS_FONT = new Font( "SansSerif", Font.PLAIN, 10 );
 
-    // A greeting specified using allophones. See SpeechSynthesizer.
+    /** A greeting specified using allophones. See SpeechSynthesizer.    */
     protected static final String[] GREETING = {"w|u|d", "y|ouu", "l|ii|k", "t|ouu", "p|l|ay", "aa", "gg|AY|M"};
 
     private static final String CORE_IMAGE_PATH = GameContext.GAME_ROOT+"common/ui/images/";
@@ -88,8 +89,7 @@ public abstract class GamePanel extends TexturedPanel
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         initGui(parent);
 
-        addComponentListener( new ComponentAdapter()
-        {
+        addComponentListener( new ComponentAdapter() {
 
             @Override
             public void componentResized( ComponentEvent ce )
@@ -202,7 +202,7 @@ public abstract class GamePanel extends TexturedPanel
             //AudioClip clip = new AppletAudioClip(url);
             //clip.play();
         }
-        this.setDoubleBuffered(false);
+       // this.setDoubleBuffered(false);
     }
 
     protected JPanel createBottomDecorationPanel() {
@@ -250,8 +250,6 @@ public abstract class GamePanel extends TexturedPanel
         dlg.setModal( true );
         dlg.setVisible( true );
     }
-
-
 
     /**
      * This method allows javascript to resize the applet from the browser.
@@ -308,5 +306,4 @@ public abstract class GamePanel extends TexturedPanel
         else if ( source == toolBar_.getHelpButton() )
             showHelpDialog();
     }
-
 }

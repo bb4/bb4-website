@@ -8,16 +8,16 @@ import java.awt.*;
 
 /**
  * That old spirograph game from the 70's brought into the computer age.
- * Based on work originially done by David Little.
+ * Based on work originialy done by David Little.
  * http://www.math.psu.edu/dlittle/java/parametricequations/index.html
  *
  * @author Barry Becker
  */
-public class SpiroGraph extends ApplicationApplet
-{
+public class SpiroGraph extends ApplicationApplet {
+
     @Override
-    public JPanel createMainPanel()
-    {
+    public JPanel createMainPanel()  {
+
         GraphState state = ControlSliderGroup.createGraphState();
 
         GraphPanel graphPanel = new GraphPanel(state);
@@ -34,8 +34,8 @@ public class SpiroGraph extends ApplicationApplet
     /**
      *  Main method - to allow running as an application instead of applet.
      */
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
+
         SpiroGraph applet = new SpiroGraph();
         GUIUtil.showApplet( applet, "SpiroGraph" );
     }

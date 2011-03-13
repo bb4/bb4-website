@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 /**
  * Base class for all simulations.
  *
- * @author Barry Becker Date: Sep 17, 2005
+ * @author Barry Becker
  */
 public abstract class Simulator extends AnimationComponent
                                 implements Optimizee {

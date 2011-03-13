@@ -27,15 +27,15 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener {
     protected NumberInput thicknessField_ = null;
 
     // ui for entering the direction probabilities.
-    protected NumberInput forwardProbField_ = null;
-    protected NumberInput leftProbField_ = null;
-    protected NumberInput rightProbField_ = null;
-    protected NumberInput animationSpeedField_ = null;
+    protected NumberInput forwardProbField_;
+    protected NumberInput leftProbField_;
+    protected NumberInput rightProbField_;
+    protected NumberInput animationSpeedField_;
 
-    protected GradientButton regenerateButton_ = null;
-    protected GradientButton solveButton_ = null;
+    protected GradientButton regenerateButton_;
+    protected GradientButton solveButton_;
 
-    protected Dimension oldSize_ = null;
+    protected Dimension oldSize_;
 
     // constructor
     public MazeSimulator()
