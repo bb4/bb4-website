@@ -24,6 +24,9 @@ import java.io.IOException;
 public final class GraphicalAdventure extends ApplicationApplet
                                       implements SceneChangeListener {
 
+    /** The top secret password - don't tell anyone. */
+    private static final String PASSWORD = "ludlow";
+
     private Story story_;
     private ChoicePanel choicePanel_ = null;
     private JPanel mainPanel_;
@@ -111,7 +114,7 @@ public final class GraphicalAdventure extends ApplicationApplet
      */
     public void editStory() {
         // show password dialog.
-        PasswordDialog pwDlg = new PasswordDialog("ludlow");
+        PasswordDialog pwDlg = new PasswordDialog(PASSWORD);
         boolean canceled = pwDlg.showDialog();
         if ( canceled ) return;
 

@@ -8,240 +8,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="7f837598-b78e-4519-945f-e7b7f7021387" name="Default" comment="Removing all the jhlab files from this repository. They have been moved to a separate jhlabs svn repo. I now just use the precompiled jar file (jhlabs-1.0.1.jar).">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/jhlabs-1.0.1.jar" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\AddComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\AverageComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\BurnComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\ColorBurnComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\ColorComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\ColorDodgeComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\ContourComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\DarkenComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\DifferenceComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\DodgeComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\ExclusionComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\HardLightComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\HueComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\LightenComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\MiscComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\MiscCompositeContext.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\MultiplyComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\NegationComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\OverlayComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\PinLightComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\RGBComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\SaturationComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\ScreenComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\SoftLightComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\SubtractComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\composite\ValueComposite.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\AbstractBufferedImageOp.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ApplyMaskFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ArrayColormap.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\AverageFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\BicubicScaleFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\BinaryFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\BlockFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\BlurFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\BorderFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\BoxBlurFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\BrushedMetalFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\BumpFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\CausticsFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\CellularFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ChannelMixFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\CheckFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ChromaKeyFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ChromeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\CircleFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\Colormap.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\CompositeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\CompoundFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ContourFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ContrastFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ConvolveFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\CropFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\CrystallizeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\CurlFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\CurvesFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\DespeckleFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\DiffuseFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\DiffusionFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\DilateFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\DisplaceFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\DissolveFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\DitherFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\EdgeAction.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\EdgeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\EmbossFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\EqualizeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ErodeAlphaFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ErodeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ExposureFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\FBMFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\FadeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\FeedbackFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\FieldWarpFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\FillFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\FilterInfo.xml" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\FlareFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\FlipFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\Flush3DFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\FourColorFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\GainFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\GammaFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\GaussianFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\GlintFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\GlowFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\Gradient.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\GradientFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\GradientWipeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\GrayFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\GrayscaleColormap.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\GrayscaleFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\HSBAdjustFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\HalftoneFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\Histogram.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ImageCombiningFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ImageMath.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ImageUtils.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\InterpolateFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\InterpolationType.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\InvertAlphaFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\InvertFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\IteratedFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\JavaLnFFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\KaleidoscopeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\KeyFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\LensBlurFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\LevelsFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\LifeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\LightFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\LinearColormap.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\LookupFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MapColorsFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MapFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MarbleFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MarbleTexFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MaskFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MaximumFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MedianFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MinimumFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MirrorFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MotionBlurFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MotionBlurOp.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\MutatableFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\NoiseFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\OctTreeQuantizer.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\OffsetFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\OilFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\OpacityFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\OperationType.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\OutlineFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\PerspectiveFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\PinchFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\PixelUtils.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\PlasmaFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\PointFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\PointillizeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\PolarFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\PosterizeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\PremultiplyFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\QuantizeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\Quantizer.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\QuiltFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\RGBAdjustFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\RaysFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ReduceNoiseFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\RenderTextFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\RescaleFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\RippleFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\RotateFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SaturationFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ScaleFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ScratchFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ShadeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ShadowFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ShapeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SharpenFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ShatterFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ShearFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ShineFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SkeletonFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SkyFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SmartBlurFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SmearFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SolarizeFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SparkleFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\Spectrum.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SpectrumColormap.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SphereFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SplineColormap.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\StampFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\SwimFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\TextureFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\ThresholdFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\TileImageFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\TransferFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\TransformFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\TransitionFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\TwirlFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\UnpremultiplyFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\UnsharpFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\VariableBlurFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\WarpFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\WarpGrid.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\WaterFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\WeaveFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\WholeImageFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\image\WoodFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\BinaryFunction.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\BlackFunction.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\CellularFunction2D.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\CompositeFunction1D.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\CompoundFunction2D.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\FBM.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\FFT.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\FractalSumFunction.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\Function1D.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\Function2D.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\Function3D.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\ImageFunction2D.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\MarbleFunction.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\MathFunction1D.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\Noise.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\RidgedFBM.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\SCNoise.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\TurbulenceFunction.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\math\VLNoise.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\AxisAngle4f.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\Color4f.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\Matrix4f.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\Point3f.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\Point4f.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\Quat4f.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\Tuple3f.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\Tuple4f.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\Vector3f.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\Vector4f.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\test\com\jhlabs\vecmath\Color4fTest.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\test\com\jhlabs\vecmath\TestAll.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\test\com\jhlabs_bak\vecmath\Color4fTest.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\test\com\jhlabs_bak\vecmath\TestAll.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/com/jhlabs/composite" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/com/jhlabs/image" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/com/jhlabs/math" afterPath="" />
-      <change type="DELETED" beforePath="E:\projects\java_projects\trunk\source\com\jhlabs\vecmath\package_classes.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/com/jhlabs/vecmath" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/com/jhlabs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/com/jhlabs/vecmath" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/com/jhlabs_bak/vecmath" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/blockade_applet.jpg" afterPath="$PROJECT_DIR$/source/images/blockade_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/checkers_applet.jpg" afterPath="$PROJECT_DIR$/source/images/checkers_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/chess_applet.jpg" afterPath="$PROJECT_DIR$/source/images/chess_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/dice_applet.jpg" afterPath="$PROJECT_DIR$/source/images/dice_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/fluid_applet.jpg" afterPath="$PROJECT_DIR$/source/images/fluid_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/fractalexplorer_applet.jpg" afterPath="$PROJECT_DIR$/source/images/fractalexplorer_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/galactic_applet.jpg" afterPath="$PROJECT_DIR$/source/images/galactic_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/go_applet.jpg" afterPath="$PROJECT_DIR$/source/images/go_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/hiq_applet.jpg" afterPath="$PROJECT_DIR$/source/images/hiq_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/imagebreeder_applet.jpg" afterPath="$PROJECT_DIR$/source/images/imagebreeder_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/liquid_applet.jpg" afterPath="$PROJECT_DIR$/source/images/liquid_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/maze_applet.jpg" afterPath="$PROJECT_DIR$/source/images/maze_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/pente_applet.jpg" afterPath="$PROJECT_DIR$/source/images/pente_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/poker_applet.jpg" afterPath="$PROJECT_DIR$/source/images/poker_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/reactiondiffusion_applet.jpg" afterPath="$PROJECT_DIR$/source/images/reactiondiffusion_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/redpuzzle_applet.jpg" afterPath="$PROJECT_DIR$/source/images/redpuzzle_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/set_applet.jpg" afterPath="$PROJECT_DIR$/source/images/set_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/sierpinski_applet.jpg" afterPath="$PROJECT_DIR$/source/images/sierpinski_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/snake_applet.jpg" afterPath="$PROJECT_DIR$/source/images/snake_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/spirograph_applet.jpg" afterPath="$PROJECT_DIR$/source/images/spirograph_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/stock_applet.jpg" afterPath="$PROJECT_DIR$/source/images/stock_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/sudoku_applet.jpg" afterPath="$PROJECT_DIR$/source/images/sudoku_applet.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/images/trebuchet_applet.jpg" afterPath="$PROJECT_DIR$/source/images/trebuchet_applet.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ant/appletHtmlCommon.properties" afterPath="$PROJECT_DIR$/ant/appletHtmlCommon.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ant/appletHtml_en.properties" afterPath="$PROJECT_DIR$/ant/appletHtml_en.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ant/build.xml" afterPath="$PROJECT_DIR$/ant/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ant/common.properties" afterPath="$PROJECT_DIR$/ant/common.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ant/distribute.xml" afterPath="$PROJECT_DIR$/ant/distribute.xml" />
-      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\test\com\jhlabs" afterPath="$PROJECT_DIR$/test/com/jhlabs_bak" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/adventure/ui/GraphicalAdventure.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/adventure/ui/GraphicalAdventure.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/html/applet_index.html" afterPath="$PROJECT_DIR$/source/html/applet_index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/html/applet_template.html" afterPath="$PROJECT_DIR$/source/html/applet_template.html" />
     </list>
     <list id="f156c665-549e-4227-a588-09fe7dde4dd3" name="Failed commit: Default (3)" comment="try to remove corrupt dir." />
     <list id="205c041e-69b6-43e2-8a4d-a6606d9a31ad" name="Failed commit: Default" comment="some refactoring of common through intellij. Used structure 101 too." />
@@ -356,39 +153,28 @@
       <file leaf-file-name="common.properties" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ant/common.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="18" column="1" selection-start="686" selection-end="686" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ant/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="302" column="89" selection-start="13302" selection-end="13302" vertical-scroll-proportion="-11.461538">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProcessingOperators.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/java2d/imageproc/ProcessingOperators.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="22" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="appletHtml_en.properties" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="appletHtml_en.properties" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ant/appletHtml_en.properties">
           <provider editor-type-id="ResourceBundle">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="581" column="78" selection-start="32147" selection-end="32147" vertical-scroll-proportion="-14.5">
+            <state line="98" column="14" selection-start="4333" selection-end="4333" vertical-scroll-proportion="0.2268431">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GraphicalAdventure.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/ui/GraphicalAdventure.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="79" selection-start="1047" selection-end="1047" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -397,7 +183,34 @@
       <file leaf-file-name="distribute.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ant/distribute.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="322" column="68" selection-start="14471" selection-end="14471" vertical-scroll-proportion="-17.615385">
+            <state line="21" column="51" selection-start="1146" selection-end="1146" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="applet_template.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/html/applet_template.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="67" column="22" selection-start="2196" selection-end="2196" vertical-scroll-proportion="-19.275862">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="applet_template.jnlp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/html/applet_template.jnlp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="25" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="applet_index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/html/applet_index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="23" column="0" selection-start="1167" selection-end="1171" vertical-scroll-proportion="-10.551724">
               <folding />
             </state>
           </provider>
@@ -421,12 +234,89 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractRedistributionFunction.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AbstractRedistributionFunction.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/com/becker/optimization/parameter/redistribution/AbstractRedistributionFunction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="66" selection-start="708" selection-end="708" vertical-scroll-proportion="0.3781344">
+            <state line="24" column="77" selection-start="636" selection-end="636" vertical-scroll-proportion="0.0">
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="adventure_applet.jpg" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/images/adventure_applet.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="appletHtmlCommon.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ant/appletHtmlCommon.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="67" selection-start="471" selection-end="471" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="appletHtml_de.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ant/appletHtml_de.properties">
+          <provider editor-type-id="ResourceBundle">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="blockade_applet.jpg" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/images/blockade_applet.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="checkers_applet.jpg" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/images/checkers_applet.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fractalexplorer_applet.jpg" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/images/fractalexplorer_applet.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="galactic_applet.jpg" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/images/galactic_applet.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="go_applet.jpg" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/images/go_applet.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="imagebreeder_applet.jpg" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/images/imagebreeder_applet.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="liquid_applet.jpg" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/images/liquid_applet.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -447,22 +337,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/source/com/becker/ui/components/ResizableAppletPanel.java" />
         <option value="$PROJECT_DIR$/source/com/becker/simulation/common/DistributionSimulator.java" />
         <option value="$PROJECT_DIR$/source/com/becker/ui/animation/AnimationComponent.java" />
         <option value="$PROJECT_DIR$/source/com/becker/simulation/common/Simulator.java" />
         <option value="$PROJECT_DIR$/source/com/becker/simulation/common/SimulatorApplet.java" />
         <option value="$PROJECT_DIR$/ant/appletHtml_vi.properties" />
-        <option value="$PROJECT_DIR$/ant/appletHtmlCommon.properties" />
         <option value="$PROJECT_DIR$/ant/appletHtml_de.properties" />
         <option value="$PROJECT_DIR$/ant/appletHtml_jp.properties" />
-        <option value="$PROJECT_DIR$/source/html/applet_index.html" />
-        <option value="$PROJECT_DIR$/source/html/applet_template.html" />
-        <option value="$PROJECT_DIR$/ant/common.properties" />
-        <option value="$PROJECT_DIR$/ant/appletHtml_en.properties" />
-        <option value="$PROJECT_DIR$/ant/distribute.xml" />
         <option value="$PROJECT_DIR$/source/com/becker/java2d/imageproc/ProcessingOperators.java" />
         <option value="$PROJECT_DIR$/ant/build.xml" />
+        <option value="$PROJECT_DIR$/ant/common.properties" />
+        <option value="$PROJECT_DIR$/ant/distribute.xml" />
+        <option value="$PROJECT_DIR$/source/com/becker/puzzle/adventure/ui/GraphicalAdventure.java" />
+        <option value="$PROJECT_DIR$/source/html/applet_template.html" />
+        <option value="$PROJECT_DIR$/source/html/applet_index.html" />
+        <option value="$PROJECT_DIR$/ant/appletHtmlCommon.properties" />
+        <option value="$PROJECT_DIR$/ant/appletHtml_en.properties" />
       </list>
     </option>
   </component>
@@ -543,7 +433,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages ProjectPane="false" />
       <showMembers ProjectPane="false" />
       <showModules />
@@ -555,6 +445,104 @@
       <sortByType ProjectPane="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ant" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ant" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resource Bundle 'appletHtml'" />
+              <option name="myItemType" value="com.intellij.lang.properties.projectView.ResourceBundleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -649,425 +637,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jhlabs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="optimization" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="optimization" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parameter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="optimization" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parameter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="redistribution" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java2d" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java2d" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imageproc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="math" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="math" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="interplolation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="math" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="function" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ant" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ant" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resource Bundle 'appletHtml'" />
-              <option name="myItemType" value="com.intellij.lang.properties.projectView.ResourceBundleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
-        <subPane subId="ui">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="source">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com/ui">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
         <subPane>
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1390,8 +960,31 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+        <subPane subId="ui">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Trunk">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="trunk">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="source">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="com/ui">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
         <subPane subId="Problems" />
-        <subPane subId="Tests" />
         <subPane subId="Production">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1576,6 +1169,7 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+        <subPane subId="Tests" />
         <subPane subId="Project Files">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1604,324 +1198,6 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="game">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="twoplayer">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="game">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="twoplayer">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="go">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="game">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="twoplayer">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="go">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="board">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="game">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="twoplayer">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="common">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="game">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="twoplayer">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="common">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="search">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="game">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="twoplayer">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="common">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="search">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="transposition">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="game">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="source">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
@@ -1944,7 +1220,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
+            <PATH_ELEMENT USER_OBJECT="html">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1966,11 +1242,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
+            <PATH_ELEMENT USER_OBJECT="com/becker">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1992,15 +1264,11 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
+            <PATH_ELEMENT USER_OBJECT="com/becker">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="apps">
+            <PATH_ELEMENT USER_OBJECT="puzzle">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -2022,19 +1290,15 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
+            <PATH_ELEMENT USER_OBJECT="com/becker">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
+            <PATH_ELEMENT USER_OBJECT="puzzle">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="apps">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="misc">
+            <PATH_ELEMENT USER_OBJECT="adventure">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -2052,65 +1316,7 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="source">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="apps">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="misc">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="brian">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="source">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="becker">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="apps">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="misc">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="axes">
+            <PATH_ELEMENT USER_OBJECT="ant">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -2586,17 +1792,17 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="432" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="394" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="33" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="OverrideImplement.combined" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="424" />
-    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
@@ -2623,15 +1829,15 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
-    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -2969,23 +2175,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1851" y="196" width="2058" height="1578" extended-state="0" />
+    <frame x="486" y="-9" width="2058" height="1577" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13910575" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14156626" sideWeight="0.7045134" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29830748" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29781228" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14156626" sideWeight="0.79110795" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42228532" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30042315" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2954866" sideWeight="0.98475224" order="12" side_tool="false" content_ui="tabs" x="147" y="657" width="2264" height="688" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20889203" sideWeight="0.98475224" order="12" side_tool="false" content_ui="tabs" x="147" y="657" width="2264" height="688" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24171382" sideWeight="0.14914773" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2021645" sideWeight="0.6391459" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39935845" sideWeight="0.61981064" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15963855" sideWeight="0.7045134" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15963855" sideWeight="0.79110795" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48361254" sideWeight="0.0" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31170663" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30168006" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Code explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.328654" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -2998,6 +2203,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4446033" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30593425" sideWeight="0.66496724" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31170663" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
@@ -3127,65 +2333,100 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/source/com/becker/apps/spirograph/SpiroGraph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/source/images/galactic_applet.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ant/antRunAsync.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/source/images/go_applet.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/snake/Snake.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="22" selection-start="3420" selection-end="3431" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/source/images/imagebreeder_applet.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/GoController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="31" selection-start="6272" selection-end="6288" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/source/images/liquid_applet.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="376" column="60" selection-start="13420" selection-end="13420" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/GameController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="20" selection-start="4465" selection-end="4475" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/ui/dialogs/GameOptionsDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="342" column="30" selection-start="12467" selection-end="12467" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/TestAll.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="13" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/source/images/adventure_applet.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ant/common.properties">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="1" selection-start="686" selection-end="686" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ant/distribute.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="51" selection-start="1146" selection-end="1146" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ant/appletHtml_de.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ant/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="302" column="89" selection-start="13302" selection-end="13302" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/html/applet_template.jnlp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="25" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/java2d/imageproc/ProcessingOperators.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="22" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/ui/GraphicalAdventure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="79" selection-start="1047" selection-end="1047" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/html/applet_template.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="22" selection-start="2196" selection-end="2196" vertical-scroll-proportion="-19.275862">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/html/applet_index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="1167" selection-end="1171" vertical-scroll-proportion="-10.551724">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ant/appletHtmlCommon.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="67" selection-start="471" selection-end="471" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -3195,51 +2436,7 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="581" column="78" selection-start="32147" selection-end="32147" vertical-scroll-proportion="-14.5">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/java2d/imageproc/ProcessingOperators.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="22" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ant/build.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="302" column="89" selection-start="13302" selection-end="13302" vertical-scroll-proportion="-11.461538">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ant/distribute.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="322" column="68" selection-start="14471" selection-end="14471" vertical-scroll-proportion="-17.615385">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/common/math/interplolation/LinearInterpolator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="779" selection-end="779" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/common/math/function/ArrayFunction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="0" selection-start="2457" selection-end="2457" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/optimization/parameter/redistribution/AbstractRedistributionFunction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="66" selection-start="708" selection-end="708" vertical-scroll-proportion="0.3781344">
+        <state line="98" column="14" selection-start="4333" selection-end="4333" vertical-scroll-proportion="0.2268431">
           <folding />
         </state>
       </provider>

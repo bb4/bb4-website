@@ -16,9 +16,8 @@
           description="deploys the built jar files and generated html pages to the ${distributionGameDir} dir so they can be bulk copied to a website">
 
       <!--//////////////// auto generate the html based on the properties files ///////////////////-->
-      <!-- there needs to be a separate set of html files for each locale. -->
-
-      <!-- auto generate the index and applet html pages for all locales -->
+      <!-- there needs to be a separate set of html files for each locale.
+           auto generate the index and applet html pages for all locales -->
       <foreach delimiter="," list="${appletHtml.localesList}" param="locale" target="create_html_for_locale">
          <param name="appletIndexFile" value="${appletIndexFile}"/>
          <param name="sourceDir" value="${sourceDir}"/>
