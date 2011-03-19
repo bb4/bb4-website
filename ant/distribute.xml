@@ -59,15 +59,6 @@
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/imageproc.jar"/>
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy jhlabs class files that are needed for programs that want to do image processing. Produces jhlabs.jar-->
-      <copy todir="${stagingDir}">
-        <fileset dir="${classesDir}">
-          <include name="com/jhlabs/**/*.class"/>
-        </fileset>
-      </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/jhlabs.jar"/>
-      <delete dir="${stagingDir}/com"/>
-
       <!-- copy the class files that are needed for programs that want to have sound. Produces sound.jar-->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
