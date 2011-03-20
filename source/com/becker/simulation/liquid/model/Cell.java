@@ -1,4 +1,4 @@
-package com.becker.simulation.liquid;
+package com.becker.simulation.liquid.model;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -21,8 +21,7 @@ import javax.vecmath.Vector2d;
  *
  *  @author Barry Becker
  */
-public class Cell
-{
+public class Cell {
 
     /**  4 if 2d, 6 if 3d, 12 if 4d */
     private static final int NUM_CELL_FACES = 4;
@@ -101,31 +100,25 @@ public class Cell
         vjp_[0] = vjp_[1] = v;
     }
 
-    public double getUip()
-    {
+    public double getUip() {
         return uip_[current_];
     }
-    public double getVjp()
-    {
+    public double getVjp() {
         return vjp_[current_];
     }
 
-    public void incParticles()
-    {
+    public void incParticles() {
         numParticles_++;
     }
-    public void decParticles()
-    {
+    public void decParticles() {
         numParticles_--;
     }
 
-    public int getNumParticles()
-    {
+    public int getNumParticles() {
         return numParticles_;
     }
 
-    public CellStatus getStatus()
-    {
+    public CellStatus getStatus() {
         return status_;
     }
 

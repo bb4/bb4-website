@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Test out all of my testable methods in my go related classes.
+ * Test out all of my testable methods.
  *
  * @author Barry Becker
  */
@@ -13,7 +13,7 @@ public class TestAllConfig extends TestCase {
 
 
     /**
-     * @return all the junit test caes to run (in this class)
+     * @return all the junit test cases to run (in this class)
      */
     public static Test suite() {
 

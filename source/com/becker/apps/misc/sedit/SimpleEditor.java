@@ -2,6 +2,7 @@ package com.becker.apps.misc.sedit;
 
 import com.becker.common.Base64Codec;
 import com.becker.ui.file.ExtensionFileFilter;
+import com.becker.ui.file.FileChooserUtil;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
@@ -141,7 +142,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
     
     private static JFileChooser getFileChooser() {
         if (chooser_ == null) {
-            chooser_ = GUIUtil.getFileChooser();
+            chooser_ = FileChooserUtil.getFileChooser();
             //chooser_.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
             chooser_.setFileFilter(new ExtensionFileFilter(EXT));
         }

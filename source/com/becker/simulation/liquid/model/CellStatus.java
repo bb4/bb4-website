@@ -1,4 +1,4 @@
-package com.becker.simulation.liquid;
+package com.becker.simulation.liquid.model;
 
 /**
  * Possible status of the cell. determined by what's in it.
@@ -24,7 +24,7 @@ public enum CellStatus {
      *
      * @param symbol character representation of the type.
      */
-    private CellStatus(char symbol) {
+    CellStatus(char symbol) {
        symbol_ = symbol;
     }
 

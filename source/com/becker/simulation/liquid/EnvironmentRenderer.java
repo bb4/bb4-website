@@ -2,6 +2,9 @@ package com.becker.simulation.liquid;
 
 import com.becker.common.ColorMap;
 import com.becker.simulation.liquid.config.PressureColorMap;
+import com.becker.simulation.liquid.model.Cell;
+import com.becker.simulation.liquid.model.LiquidEnvironment;
+import com.becker.simulation.liquid.model.Particle;
 
 import javax.vecmath.Vector2d;
 import java.awt.*;
@@ -26,7 +29,7 @@ public final class EnvironmentRenderer
 
     private static final Color WALL_COLOR = new Color( 100, 210, 170, 150 );
     private static final Color TEXT_COLOR = new Color( 10, 10, 170, 200 );
-    //private static final float PRESSURE_COL_OPACITY = 0.01f;
+
     /** scales the size of everything */
     private static final double DEFAULT_SCALE = 30;
 
@@ -35,7 +38,7 @@ public final class EnvironmentRenderer
 
     private static final ColorMap pressureColorMap_ = new PressureColorMap();
 
-    // temp var used throughout for efficency. avoids creating objects
+    // temp var used throughout for efficiency. avoids creating objects
     private static final double[] a_ = new double[2]; // temp point var
     private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
 

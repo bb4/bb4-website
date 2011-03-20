@@ -1,4 +1,4 @@
-package com.becker.simulation.liquid;
+package com.becker.simulation.liquid.model;
 
 import javax.vecmath.Point2d;
 

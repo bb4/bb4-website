@@ -1,4 +1,4 @@
-package com.becker.simulation.fluid;
+package com.becker.simulation.fluid.model;
 
 /**
  *  this is the global space containing all the cells, walls, and particles
@@ -13,8 +13,7 @@ package com.becker.simulation.fluid;
  *
  *  @author Jos Stam, ported to java by Barry Becker
  */
-public class FluidEnvironment
-{
+public class FluidEnvironment {
 
     // the dimensions of the space in the X/y and Y/v directions
     private int dimX_;
@@ -85,8 +84,7 @@ public class FluidEnvironment
         x[1] = temp;
     }
     
-    private void add_source(float[][][] x,  float dt )
-    {        
+    private void add_source(float[][][] x,  float dt ) {
         
         for (int i = 0 ; i < dimX_+2 ; i++ ) {
             for (int j = 0 ; j < dimY_ + 2 ; j++ ) {
@@ -95,8 +93,8 @@ public class FluidEnvironment
         }
     }
 
-    private void set_bnd(int b, float[][] x )
-    {
+    private void set_bnd(int b, float[][] x )  {
+
             for (int i=1 ; i<=dimX_ ; i++ ) {
        
                 x[i][0] = b==2 ? -x[i][1] : x[i][1];
@@ -113,8 +111,8 @@ public class FluidEnvironment
             x[dimX_+1][dimY_+1] = 0.5f*(x[dimX_][dimY_+1]+x[dimX_+1][dimY_]);
     }
 
-    private void lin_solve( int b, float[][] x, float[][] x0, float a, float c )
-    {
+    private void lin_solve( int b, float[][] x, float[][] x0, float a, float c ) {
+
            for ( int k=0 ; k<20 ; k++ ) {
                 for ( int i=1 ; i<=dimX_ ; i++ ) { 
                     for ( int j=1 ; j<=dimY_ ; j++ ) {                    
@@ -125,48 +123,47 @@ public class FluidEnvironment
             }
     }
 
-    private void diffuse( int b, float[][][] x, float diff, float dt )
-    {
+    private void diffuse( int b, float[][][] x, float diff, float dt ) {
             float a = dt * diff * dimX_ * dimY_;
             lin_solve( b, x[1], x[0], a, 1+4*a );
     }
 
     private void advect( int b, float [][][] d, float[][] u, float[][] v, float dt )  {
-            int i, j, i0, j0, i1, j1;
-            float x, y, s0, t0, s1, t1, dt0;
+        int i, j, i0, j0, i1, j1;
+        float x, y, s0, t0, s1, t1, dt0;
 
-            dt0 = dt * dimX_;
-            for ( i=1 ; i <= dimX_ ; i++ ) { 
-                for ( j=1 ; j <= dimY_ ; j++ ) {            
-                    x = i - dt0 * u[i][j]; 
-                    y = j - dt0 * v[i][j];
-                    if (x<0.5f) {
-                        x=0.5f; 
-                    }
-                    if (x>dimX_+0.5f)  {
-                        x=dimX_+0.5f; 
-                    }
-                    i0=(int)x; i1=i0+1;
-                    if (y<0.5f) {
-                        y=0.5f;
-                    }
-                    if (y>dimY_+0.5f) {
-                        y=dimY_+0.5f;
-                    }
-                    j0=(int)y; j1=j0+1;
-                    s1 = x - i0; 
-                    s0 = 1 - s1;
-                    t1 = y - j0; 
-                    t0 = 1 - t1;
-                    d[1][i][j] = s0*(t0*d[0][i0][j0] + t1*d[0][i0][j1]) +
-                                      s1*(t0*d[0][i1][j0] + t1*d[0][i1][j1]);      
+        dt0 = dt * dimX_;
+        for ( i=1 ; i <= dimX_ ; i++ ) {
+            for ( j=1 ; j <= dimY_ ; j++ ) {
+                x = i - dt0 * u[i][j];
+                y = j - dt0 * v[i][j];
+                if (x<0.5f) {
+                    x=0.5f;
                 }
+                if (x>dimX_+0.5f)  {
+                    x=dimX_+0.5f;
+                }
+                i0=(int)x; i1=i0+1;
+                if (y<0.5f) {
+                    y=0.5f;
+                }
+                if (y>dimY_+0.5f) {
+                    y=dimY_+0.5f;
+                }
+                j0=(int)y; j1=j0+1;
+                s1 = x - i0;
+                s0 = 1 - s1;
+                t1 = y - j0;
+                t0 = 1 - t1;
+                d[1][i][j] = s0*(t0*d[0][i0][j0] + t1*d[0][i0][j1]) +
+                                  s1*(t0*d[0][i1][j0] + t1*d[0][i1][j1]);
             }
-            set_bnd ( b, d[1] );
+        }
+        set_bnd ( b, d[1] );
     }
 
     private void project( float[][] u, float[][] v,
-                                       float[][] p, float[][] div )   {
+                          float[][] p, float[][] div )   {
             int i, j;
 
             for ( i =1 ; i <= dimX_ ; i++ ) { 
@@ -189,8 +186,7 @@ public class FluidEnvironment
             set_bnd ( 1, u ); set_bnd ( 2, v );
     }
 
-    private void dens_step( float[][][] x, float[][] u, float [][] v, float diff, float dt )
-    {
+    private void dens_step( float[][][] x, float[][] u, float [][] v, float diff, float dt ) {
             //add_source( x, dt );
             swap( x ); 
             diffuse( 0, x, diff, dt );
@@ -198,8 +194,7 @@ public class FluidEnvironment
             advect( 0, x, u, v, dt );
     }
 
-    private void vel_step( float[][][] u, float[][][] v, float visc, float dt )
-    {
+    private void vel_step( float[][][] u, float[][][] v, float visc, float dt ) {
             //add_source( u, dt ); 
             //add_source( v, dt );
             swap( u ); 

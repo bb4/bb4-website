@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class Conditions {
 
-
     private static final String START = "start";
     private static final String STOP = "stop";
 
@@ -44,7 +43,7 @@ public class Conditions {
      * @param configFile file defines the constraints and initial conditions.
      */
     public Conditions(String configFile) {
-         // use a default if nulll passed in.
+         // use a default if null passed in.
         String file = configFile == null ? ConfigurationEnum.BASIC.getFileName() :  configFile;
         URL url = GUIUtil.getURL(file);
         Document document = DomUtil.parseXML(url);

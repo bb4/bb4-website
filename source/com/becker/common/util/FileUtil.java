@@ -1,13 +1,17 @@
 package com.becker.common.util;
 
+import com.becker.common.ClassLoaderSingleton;
+
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
- * Miscelaneous commonly used file related static utility methods.
+ * Miscellaneous commonly used file related static utility methods.
  * @author Barry Becker
  */
-public final class FileUtil
-{
+public final class FileUtil {
+
     /**
      * Get the correct file separator whether orn windows (\) or linux (/).
      * Getting error in applets if trying to use System.getProperty("file.separator")
@@ -18,7 +22,6 @@ public final class FileUtil
      * Points to the main project directory.
      * Reads the PROJECT_HOME env variable to figure out where the data files are.
      * If not deployed, you can use System.getenv("PROJECT_HOME") + FILE_SEPARATOR;
-     *
      */
     public static final String PROJECT_HOME = "E:/projects/java_projects/trunk" + FILE_SEPARATOR;
     
@@ -38,10 +41,9 @@ public final class FileUtil
      * create a PrintWriter with utf8 encoding
      * returns null if there was a problem creating it.
      * @param filename including the full path
-     * @return
+     * @return new PrintWriter instance
      */
-    public static PrintWriter createPrintWriter( String filename )
-    {
+    public static PrintWriter createPrintWriter( String filename ) {
         PrintWriter outfile = null;
         try {
             outfile = new PrintWriter(
@@ -54,6 +56,8 @@ public final class FileUtil
         }
         return outfile;
     }
+
+
     
     /**
      * Copy source file to destination file.
@@ -62,8 +66,7 @@ public final class FileUtil
      * @param destfile The destination file
      * @throws SecurityException
      */
-    public static void copyFile( String srcfile, String destfile ) throws IOException
-    {
+    public static void copyFile( String srcfile, String destfile ) throws IOException {
         byte[] bytearr = new byte[512];
         int len = 0;
         BufferedInputStream input = new BufferedInputStream( new FileInputStream( srcfile ) );

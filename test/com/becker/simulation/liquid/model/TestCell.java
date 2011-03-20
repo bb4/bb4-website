@@ -1,10 +1,11 @@
-package com.becker.simulation.liquid;
+package com.becker.simulation.liquid.model;
 
 import javax.vecmath.Vector2d;
+
 import junit.framework.*;
 
 /**
- * @author Barry Becker Date: Aug 12, 2006
+ * @author Barry Becker
  */
 public class TestCell extends TestCase {
 

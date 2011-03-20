@@ -10,6 +10,7 @@ import com.becker.game.common.ui.dialogs.NewGameDialog;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.ui.components.GradientButton;
+import com.becker.ui.file.FileChooserUtil;
 import com.becker.ui.file.TextFileFilter;
 import com.becker.ui.util.GUIUtil;
 
@@ -245,7 +246,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
                    JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_RUN_OPT_WHEN_STANDALONE"));
                 }
                 else {
-                    JFileChooser chooser = GUIUtil.getFileChooser();
+                    JFileChooser chooser = FileChooserUtil.getFileChooser();
                     chooser.setCurrentDirectory( new File( FileUtil.getHomeDir() ) );
                     chooser.setFileFilter(new TextFileFilter());
                     int state = chooser.showOpenDialog( this );
