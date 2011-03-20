@@ -11,7 +11,7 @@ import javax.vecmath.Vector2d;
  *                   |
  *              _______
  *             |             |
- *     <--  |      p      |  --> uip_[cur_]
+ *        <--  |      p      |  --> uip_[cur_]
  *             |             |
  *              -----------
  *                   |
@@ -59,8 +59,7 @@ public class Cell {
     /**
      * constructor
      */
-    public Cell()
-    {
+    public Cell()  {
         pressure_ = 0;
         uip_[0] = uip_[1] = 0;
         vjp_[0] = vjp_[1] = 0;
@@ -77,26 +76,21 @@ public class Cell {
     /**
      *  global swap of fields (use with care). (hack)
      */
-    public static void swap()
-    {
+    public static void swap()  {
         current_ = 1 - current_;
     }
 
-    public void setPressure( double p )
-    {
+    public void setPressure( double p ) {
         pressure_ = p;
     }
-    public double getPressure()
-    {
+    public double getPressure() {
         return pressure_;
     }
 
-    public void setUip( double u )
-    {
+    public void setUip( double u ) {
         uip_[0] = uip_[1] = u;
     }
-    public void setVjp( double v )
-    {
+    public void setVjp( double v ) {
         vjp_[0] = vjp_[1] = v;
     }
 
@@ -138,8 +132,7 @@ public class Cell {
         return status_ == CellStatus.ISOLATED;
     }
 
-    public void setStatus( CellStatus status )
-    {
+    public void setStatus( CellStatus status ) {
         status_ = status;
     }
 
@@ -150,8 +143,8 @@ public class Cell {
      * cYm1 stands for the neighbor cell that is -1 in the y direction.
      * RISK: 1
      */
-    public void updateStatus( Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 )
-    {
+    public void updateStatus( Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 ) {
+
         assert (numParticles_ >= 0) : "num particles less than 0.";
         
         if ( status_ == CellStatus.OBSTACLE ) {
@@ -182,21 +175,21 @@ public class Cell {
     }
 
     /**
-     * compute velocity at next time step given nieghboring cells.
+     * compute velocity at next time step given neighboring cells.
      *         O        cYp1  cXp1Yp1
      *       cXm1       M       cXp1
      *     cXm1Yp1  cYm1     O
      *
      * The formulas here equate to a numerical solution
-     * of the Navioer-Stokes equation.
+     * of the Navier-Stokes equation.
      * RISK:5
      */
     public void updateTildeVelocities(
-                          Cell cXp1, Cell cXm1,
-                           Cell cYp1, Cell cYm1,
-                           Cell cXp1Ym1, Cell cXm1Yp1,
-                           double dt, double forceX, double forceY, double viscosity )
-    {
+                        Cell cXp1, Cell cXm1,
+                        Cell cYp1, Cell cYm1,
+                        Cell cXp1Ym1, Cell cXm1Yp1,
+                        double dt, double forceX, double forceY, double viscosity ) {
+
         // only for FULL cells.
         if ( status_ != CellStatus.FULL ) {
             uip_[1 - current_] = uip_[current_]; // + dt * forceX;
@@ -258,9 +251,7 @@ public class Cell {
         double v_j = (cYm1.vjp_[current_] + vjp_[current_]) / 2.0;
 
         // v(i, j+1) = 0.5*(v(i, j+0.5) + v(i, j+1.5) // / 2.0 was not here originally
-        double v_jp1 = (vjp_[current_] + cYp1.vjp_[current_]) / 2.0;   
-
-        
+        double v_jp1 = (vjp_[current_] + cYp1.vjp_[current_]) / 2.0;
 
         if ( !cYp1.isObstacle() ) {
             double xNume = (u_imjp * v_imjp - u_ipjp * v_ipjp);
@@ -303,7 +294,7 @@ public class Cell {
      * What is the intuitive meaning of b0?
      * RISK:3
      * @return the amount of divergence from the cell that
-     * we will need to dissapate.
+     * we will need to dissipate.
      */
     public double updateMassConservation( double b0, double dt,
                                           Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 )
@@ -354,16 +345,16 @@ public class Cell {
      *          X  5  6
      *  case 2: particle in upper left
      *         4   2   X
-     *       1/3  c   X
+     *        1/3  c   X
      *         6   5   X
      *  case 3: lower right.
      *          X   X   X
      *          3   c   1
-     *          4 2/5 6
+     *          4  2/5  6
      *  case 4: particle in lower left.
      *         X    X    X
-     *       1/3   c    X
-     *       4/6 2/5  X
+     *        1/3   c    X
+     *        4/6 2/5   X
      *
      * RISK: 1
      * @param cX either one forward or one back in the x direction
@@ -376,6 +367,7 @@ public class Cell {
      * @param cYm1  y - 1  (always the cell to the bottom)       [5]
      * @param cYm1x  y - 1 and either one forward or one back in the x 
      *       direction depending on the position of the particle.  [6]
+     * @return the interpolated velocity vector.
      */
     public Vector2d interpolateVelocity( Point2d particle,
                                      Cell cX, Cell cY,
@@ -415,8 +407,8 @@ public class Cell {
     public void updateSurfaceVelocities( 
                                     Cell cXp1, Cell cXm1,
                                     Cell cYp1, Cell cYm1,
-                                    double pressure0 )
-    {
+                                    double pressure0 ) {
+
         // only surface cells can have overflow dissipated.
         if ( !(isSurface() || isIsolated()) ) {
             return;
@@ -460,9 +452,9 @@ public class Cell {
      *     surface sides that do not have liquid.
      * RISK:3
      */
-    private void dissipateOverflow( int numSurfaces, double overflow,
-                                    Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 )
-    {
+    private void dissipateOverflow(int numSurfaces, double overflow,
+                                   Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 ) {
+
         if (Math.abs(overflow) > 100) {
             System.out.println("dissipating large overflow ="+overflow);
         }
@@ -491,8 +483,7 @@ public class Cell {
         assert (count == numSurfaces);
     }
 
-    public void setVelocityP( double u, double v )
-    {
+    public void setVelocityP( double u, double v ) {
         uip_[0] = u;
         uip_[1] = u;
         vjp_[0] = v;

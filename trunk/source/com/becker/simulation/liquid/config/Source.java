@@ -20,7 +20,7 @@ public class Source extends Region {
     private double repeatInterval;
 
     /**
-     *
+     * Constructor
      * @param start one corner of the rectangle were  the flow to start.
      * @param stop opposite corner of the rectangle were  the flow to start.
      * @param velocity speed at which the liquid will flow.
@@ -30,7 +30,7 @@ public class Source extends Region {
     }
 
     /**
-     *
+     * Constructor
      * @param start one corner of the rectangle were  the flow to start.
      * @param stop opposite corner of the rectangle were  the flow to start.
      * @param velocity speed at which the liquid will flow.
@@ -61,7 +61,6 @@ public class Source extends Region {
     }
 
     /**
-     *
      * @param time the current time in the simulation
      * @return true if the source is currently flowing.
      */

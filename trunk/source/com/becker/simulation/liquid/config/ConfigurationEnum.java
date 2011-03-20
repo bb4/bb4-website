@@ -22,16 +22,16 @@ public enum ConfigurationEnum {
             
     /**
      * Constructor
-     * @param the nice name for the configuration that will show in the dropDown.
-     * @param the actual xml filename that condatins the config data.
+     * @param name the nice name for the configuration that will show in the dropDown.
+     * @param fileName the actual xml filename that contains the config data.
      */
-    private ConfigurationEnum(String name, String description, String fileName) {
+    ConfigurationEnum(String name, String description, String fileName) {
         this.name = name;
         this.description = description;
         this.fileName = fileName;
     }
 
-    private static final String getFileBase() {
+    private static String getFileBase() {
         return "com/becker/simulation/liquid/data/";
     }
 

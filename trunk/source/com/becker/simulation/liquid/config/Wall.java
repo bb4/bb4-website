@@ -13,8 +13,7 @@ import java.awt.geom.Rectangle2D;
  *
  *  @author Barry Becker
  */
-public class Wall
-{
+public class Wall {
 
     /** the 2 endpoints defining the wall */
     private final Line2D.Double segment_;
@@ -23,9 +22,10 @@ public class Wall
     private final float thickness_;
 
     /**
+     * Constructor
      * The start and stop locations define the endpoints of a horizontal or vertical line.
-     * @param startLocation
-     * @param stopLocation
+     * @param startLocation begin point for wall
+     * @param stopLocation  endpoint for wall
      */
     public Wall(Location startLocation, Location stopLocation) {
         this(startLocation.getX(), startLocation.getY(), stopLocation.getX(), stopLocation.getY());
@@ -34,48 +34,40 @@ public class Wall
     /**
      * Constructor
      */
-    public Wall( double x1, double y1, double x2, double y2 )
-    {
+    public Wall( double x1, double y1, double x2, double y2 ) {
         assert (x1 == x2 || y1 == y2);
         segment_ = new Line2D.Double( x1, y1, x2, y2 );
         thickness_ = 2.0f;
     }
 
-    public Point2D.Double getStartPoint()
-    {
+    public Point2D.Double getStartPoint() {
         return (Point2D.Double) segment_.getP1();
     }
 
-    public Point2D.Double getStopPoint()
-    {
+    public Point2D.Double getStopPoint() {
         return (Point2D.Double) segment_.getP2();
     }
 
-    public float getThickness()
-    {
+    public float getThickness() {
         return thickness_;
     }
 
-    public boolean intersects( Rectangle2D.Double rect )
-    {
+    public boolean intersects( Rectangle2D.Double rect ) {
         return segment_.intersects( rect );
     }
 
     /**
      * returns true if the point lies on the wall
      */
-    public boolean intersects( double i, double j, double eps )
-    {
+    public boolean intersects( double i, double j, double eps ) {
         return segment_.intersects( i, j, eps, eps );
     }
 
-    public boolean isVertical()
-    {
+    public boolean isVertical() {
         return (segment_.getX1() == segment_.getX2());
     }
 
-    public boolean isHorizontal()
-    {
+    public boolean isHorizontal() {
         return (segment_.getY1() == segment_.getY2());
     }
 

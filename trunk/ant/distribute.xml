@@ -322,10 +322,11 @@
           <param name="jarFile" value="sierpinski.jar"/>
       </antcall>
 
-
+      <!-- some thirdparty libs needed by the applets. -->
       <copy file="${libDir}/vecmath.jar" tofile="${distributionGameDir}/vecmath.jar"/>
       <copy file="${libDir}/sun.jar" tofile="${distributionGameDir}/sun.jar"/>
       <copy file="../lib/jai_codec.jar" tofile="${distributionGameDir}/jai_codec.jar"/>
+      <copy file="../lib/jhlabs-1.0.1.jar" tofile="${distributionGameDir}/jhlabs-1.0.1.jar"/>
   </target>
 
 

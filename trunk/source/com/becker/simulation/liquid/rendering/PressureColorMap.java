@@ -1,4 +1,4 @@
-package com.becker.simulation.liquid.config;
+package com.becker.simulation.liquid.rendering;
 
 import com.becker.common.ColorMap;
 
