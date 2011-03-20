@@ -15,14 +15,12 @@ public class Region {
     /** optional stopping location for the region */
     Location stop;
 
-
+    /**
+     * Constructor
+     */
     public Region(Location start, Location stop) {
         this.start = start;
         this.stop = stop;
-    }
-
-    public Region(Location start) {
-        this(start, null);
     }
 
     public Location getStart() {

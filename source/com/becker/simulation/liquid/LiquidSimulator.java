@@ -10,6 +10,7 @@ import com.becker.simulation.common.NewtonianSimulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.liquid.config.ConfigurationEnum;
 import com.becker.simulation.liquid.model.LiquidEnvironment;
+import com.becker.simulation.liquid.rendering.EnvironmentRenderer;
 import com.becker.ui.dialogs.OutputWindow;
 import com.becker.ui.util.GUIUtil;
 import com.becker.ui.util.Log;

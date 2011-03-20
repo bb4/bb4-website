@@ -3,15 +3,15 @@ package com.becker.simulation.liquid.model;
 /**
  * Possible status of the cell. determined by what's in it.
  *
- * @author Barry Becker Date: Aug 12, 2006
+ * @author Barry Becker
  */
 public enum CellStatus {
 
-    EMPTY('.'),         // no liquid
+    EMPTY('.'),      // no liquid
     SURFACE('*'),    // has liquid and full cell is adjacent
-    FULL('#'),          // liquid on all sides
+    FULL('#'),       // liquid on all sides
     OBSTACLE('o'),   // solid object (like a wall)
-    ISOLATED('I');    // has liquid, but no full cells are adjacent
+    ISOLATED('I');   // has liquid, but no full cells are adjacent
 
 
     /**
@@ -28,6 +28,9 @@ public enum CellStatus {
        symbol_ = symbol;
     }
 
+    /**
+     * @return a unique symbol that represents the cell status.
+     */
     public char getSymbol() {
         return symbol_;
     }

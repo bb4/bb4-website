@@ -23,7 +23,7 @@ public class Conditions {
     private static final String START = "start";
     private static final String STOP = "stop";
 
-    private int  gridWidth_;
+    private int gridWidth_;
     private int gridHeight_;
 
     private double cellSize_;
@@ -43,7 +43,7 @@ public class Conditions {
      * @param configFile file defines the constraints and initial conditions.
      */
     public Conditions(String configFile) {
-         // use a default if null passed in.
+        // use a default if null passed in.
         String file = configFile == null ? ConfigurationEnum.BASIC.getFileName() :  configFile;
         URL url = GUIUtil.getURL(file);
         Document document = DomUtil.parseXML(url);
@@ -65,14 +65,13 @@ public class Conditions {
         gravity_ = Double.parseDouble(DomUtil.getAttribute(envRoot, "gravity"));
 
         int num = children.getLength();
+
+        // #comment nodes are skipped
         for (int i=0; i < num; i++) {
 
             Node n = children.item(i);
             String name = n.getNodeName();
             //String name = DomUtil.getAttribute(n, "name");
-
-            if (("#comment".equals(name)))
-                continue;     // skip comment nodes
 
             if ("walls".equals(name)) {
                 parseWalls(n);
@@ -125,14 +124,12 @@ public class Conditions {
         
         NodeList children = wallsNode.getChildNodes();
         int num = children.getLength();
+
+        // #comment nodes are skipped
         for (int i=0; i < num; i++) {          
             
             Node n = children.item(i);
             String name = n.getNodeName();
-            //String name = DomUtil.getAttribute(n, "name");
-            
-            if (("#comment".equals(name)))
-                continue;     // skip comment nodes
 
             if ("source".equals(name)) {
                 Source source = parseSource(n);
@@ -158,19 +155,16 @@ public class Conditions {
         double repeatInterval =
                 Double.parseDouble(DomUtil.getAttribute(sourceNode, "repeatInterval", "-1"));
 
-        Source source = new Source(parseLocation(sourceNode, START), 
+        return new Source(parseLocation(sourceNode, START),
                                                       parseLocation(sourceNode, STOP), 
                                                       parseVector(sourceNode, "velocity"),
                                                       startTime, duration, repeatInterval);
-
-        return source;
     }
     
     private Region parseRegion(Node node) {
            
-        Region region = new Region(parseLocation(node, START), 
-                                                      parseLocation(node, STOP));             
-        return region;
+        return new Region(parseLocation(node, START),
+                                                      parseLocation(node, STOP));
     }
 
     private Location parseLocation(Node n, String locationAttribute) {
