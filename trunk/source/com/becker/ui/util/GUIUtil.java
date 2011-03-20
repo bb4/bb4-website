@@ -3,6 +3,8 @@ package com.becker.ui.util;
 import com.becker.common.ClassLoaderSingleton;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.ImageUtil;
+import com.becker.ui.components.SplashScreen;
+import com.becker.ui.file.FileChooserUtil;
 import com.becker.ui.themes.BarryTheme;
 
 import javax.jnlp.BasicService;
@@ -32,12 +34,6 @@ public final class GUIUtil {
     /** default location of files on the local system unless otherwise specified. */
     public static final String RESOURCE_ROOT = FileUtil.PROJECT_HOME + "source/";
 
-    /**
-     * For opening files.
-     * don't create this here or applets using this class will have a security exception
-     * instead we create a singleton when needed.
-     */
-    private static JFileChooser fileChooser_ = null;
 
     // webstart services
     private static BasicService basicService_ = null;
@@ -54,16 +50,6 @@ public final class GUIUtil {
      */
     public static boolean isStandAlone() {
         return isStandAlone_;
-    }
-
-
-    /**
-     *get a singleton file chooser.
-     */
-    public static JFileChooser getFileChooser() {
-        if ( fileChooser_ == null )
-            fileChooser_ = new JFileChooser();
-        return fileChooser_;
     }
 
     /**
@@ -198,7 +184,7 @@ public final class GUIUtil {
         else
             splash = new ImageIcon( url );
 
-        return new com.becker.ui.components.SplashScreen( splash, null, waitMillis );
+        return new SplashScreen( splash, null, waitMillis );
     }
 
 
@@ -283,7 +269,7 @@ public final class GUIUtil {
 
     public static void saveSnapshot(JComponent component, String directory) {
 
-        JFileChooser chooser = getFileChooser();
+        JFileChooser chooser = FileChooserUtil.getFileChooser();
         chooser.setCurrentDirectory( new File( directory ) );
         int state = chooser.showSaveDialog( null );
         File file = chooser.getSelectedFile();

@@ -1,4 +1,4 @@
-package com.becker.simulation.fluid;
+package com.becker.simulation.fluid.model;
 
 /**
  * Data behind the Fluid.

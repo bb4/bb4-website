@@ -394,7 +394,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
-      <param name="args" value="com.becker.simulation.fluid.FluidSimulator"/>
+      <param name="args" value="com.becker.simulation.fluid.ui.FluidSimulator"/>
     </antcall>
   </target>
 

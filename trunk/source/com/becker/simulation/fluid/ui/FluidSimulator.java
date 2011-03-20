@@ -1,4 +1,4 @@
-package com.becker.simulation.fluid;
+package com.becker.simulation.fluid.ui;
 
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
@@ -7,15 +7,17 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.NewtonianSimulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.simulation.fluid.model.FluidEnvironment;
+import com.becker.simulation.fluid.rendering.EnvironmentRenderer;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- *Simulate deep water.
- *Based on work by Jos Stam
- *http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf
+ * Simulate deep water.
+ * Based on work by Jos Stam
+ * http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf
  *
  *
  * TODO
@@ -23,14 +25,13 @@ import java.awt.*;
  *  Should not need to check the show force vector check to see things.
  *  Have the grid resize as the panel resizes
  *  Liquid specific parameters 
- *   - number of cells (x,y) - autocalculate the scale size based on the window size.
+ *   - number of cells (x,y) - auto-calculate the scale size based on the window size.
  *   - diffusion
  *   - viscosity
  *   - force factor
  *   - source_ink factor
  */
-public class FluidSimulator extends NewtonianSimulator 
-{
+public class FluidSimulator extends NewtonianSimulator  {
 
     public static final String CONFIG_FILE = "com/becker/fluid/initialStateTest.data";
     private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "fluid/fluidFrame";
@@ -40,10 +41,12 @@ public class FluidSimulator extends NewtonianSimulator
     InteractionHandler handler_;
     FluidDynamicOptions fluidOptions_;
 
-    // if true it will save all the animation steps to files
+    public static final int DEFAULT_STEPS_PER_FRAME = 1;
+
+    /** if true it will save all the animation steps to file */
     public static final boolean RECORD_ANIMATION = false;
     protected static final double TIME_STEP = 0.03;  // initial time step
-    protected static final int DEFAULT_STEPS_PER_FRAME = 1;
+
     private static final Color BG_COLOR = Color.white;
     private static final int NUM_OPT_PARAMS = 3;
 

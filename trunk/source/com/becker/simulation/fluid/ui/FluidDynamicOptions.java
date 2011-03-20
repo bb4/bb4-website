@@ -1,5 +1,7 @@
-package com.becker.simulation.fluid;
+package com.becker.simulation.fluid.ui;
 
+import com.becker.simulation.fluid.model.FluidEnvironment;
+import com.becker.simulation.fluid.rendering.EnvironmentRenderer;
 import com.becker.ui.legend.ContinuousColorLegend;
 import com.becker.ui.sliders.SliderGroup;
 import com.becker.ui.sliders.SliderGroupChangeListener;
@@ -17,13 +19,10 @@ import java.awt.event.ActionListener;
 public class FluidDynamicOptions extends JPanel
                               implements ActionListener, SliderGroupChangeListener {
 
-
     private FluidSimulator simulator_;
 
     private JCheckBox useConcurrency_;
 
-    private ContinuousColorLegend legend_;
-    
     private static final String DR_SLIDER = "Diffusion Rate";
     private static final String VISC_SLIDER = "Viscosity";
     private static final String FORCE_SLIDER = "Force";    
@@ -33,14 +32,14 @@ public class FluidDynamicOptions extends JPanel
     private SliderGroup sliderGroup_;
     
     private static final double MIN_STEPS = FluidSimulator.DEFAULT_STEPS_PER_FRAME/10.0;
-    private static final double MAX_STEPS = 4.0*FluidSimulator.DEFAULT_STEPS_PER_FRAME;
+    private static final double MAX_STEPS = 4.0 * FluidSimulator.DEFAULT_STEPS_PER_FRAME;
 
     private static final SliderProperties[] SLIDER_PROPS = {
-        new SliderProperties(DR_SLIDER,           0,              9.0,       FluidEnvironment.DEFAULT_DIFFUSION_RATE,         100.0),
-        new SliderProperties(VISC_SLIDER,        0,              8.0,       FluidEnvironment.DEFAULT_VISCOSITY,                   100.0),
-        new SliderProperties(FORCE_SLIDER,     0.01,        30.0,      InteractionHandler.DEFAULT_FORCE,                         100.0),
-        new SliderProperties(SD_SLIDER,           0.01,         4.0,       InteractionHandler.DEFAULT_SOURCE_DENSITY,       100.0),
-        new SliderProperties( NS_SLIDER, MIN_STEPS, MAX_STEPS, FluidSimulator.DEFAULT_STEPS_PER_FRAME,               1.0),
+        new SliderProperties(DR_SLIDER,      0,       9.0,   FluidEnvironment.DEFAULT_DIFFUSION_RATE,   100.0),
+        new SliderProperties(VISC_SLIDER,    0,       8.0,   FluidEnvironment.DEFAULT_VISCOSITY,        100.0),
+        new SliderProperties(FORCE_SLIDER,   0.01,    30.0,  InteractionHandler.DEFAULT_FORCE,          100.0),
+        new SliderProperties(SD_SLIDER,       0.01,   4.0,   InteractionHandler.DEFAULT_SOURCE_DENSITY,  100.0),
+        new SliderProperties( NS_SLIDER, MIN_STEPS, MAX_STEPS, FluidSimulator.DEFAULT_STEPS_PER_FRAME,    1.0),
     };
 
 
@@ -56,8 +55,8 @@ public class FluidDynamicOptions extends JPanel
         sliderGroup_.addSliderChangeListener(this);
     
         JPanel checkBoxes = createCheckBoxes();
-        
-        legend_ = new ContinuousColorLegend(null, simulator_.getRenderer().getColorMap(), true);
+
+        ContinuousColorLegend legend_ = new ContinuousColorLegend(null, simulator_.getRenderer().getColorMap(), true);
 
         add(sliderGroup_);
       
@@ -71,7 +70,7 @@ public class FluidDynamicOptions extends JPanel
         
         JPanel checkBoxes = new JPanel(new FlowLayout());
         
-        EnvironmentRenderer r = simulator_.getRenderer(); 
+        EnvironmentRenderer r = simulator_.getRenderer();
    
         useConcurrency_ = new JCheckBox("Parallel", false); // add var here
         useConcurrency_.setToolTipText("Will take advantage of multiple processors if present.");
@@ -85,7 +84,7 @@ public class FluidDynamicOptions extends JPanel
 
 
     public void reset() {       
-            sliderGroup_.reset();          
+        sliderGroup_.reset();
     }
     
     /**
@@ -94,11 +93,10 @@ public class FluidDynamicOptions extends JPanel
     public void actionPerformed(ActionEvent e) {
         EnvironmentRenderer r = simulator_.getRenderer();
     
-         if (e.getSource() == useConcurrency_) {
+        if (e.getSource() == useConcurrency_) {
             // gs_.setParallelized(!gs_.isParallelized());
         }
     }
-       
         
     /**
      * one of the sliders was moved.

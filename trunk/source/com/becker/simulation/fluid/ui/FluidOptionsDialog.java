@@ -1,4 +1,4 @@
-package com.becker.simulation.fluid;
+package com.becker.simulation.fluid.ui;
 
 import com.becker.simulation.common.NewtonianSimOptionsDialog;
 
@@ -8,16 +8,13 @@ import java.awt.event.ActionListener;
 
 /**
  * Use this modal dialog to let the user choose from among the
- * different game options.
+ * different simulation options.
  *
  * @author Bary Becker
  */
 class FluidOptionsDialog extends NewtonianSimOptionsDialog
-                          implements ActionListener
-{
+                         implements ActionListener {
 
-
-    // constructor
     FluidOptionsDialog( JFrame parent, FluidSimulator simulator ) {
         super( parent, simulator );
     }
@@ -32,28 +29,9 @@ class FluidOptionsDialog extends NewtonianSimOptionsDialog
         liquidParamPanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Liquid Parameters" ) );
 
-        FluidSimulator simulator = (FluidSimulator) getSimulator();
-
-        /*
-        waveSpeedField_ = new JTextField( Double.toString( simulator.getSnake().getWaveSpeed() ) );
-        waveSpeedField_.setMaximumSize( TEXT_FIELD_DIM );
-        JPanel p1 =
-                new NumberInputPanel( "Wave Speed (.001 slow - .9 fast):  ", waveSpeedField_ );
-        p1.setToolTipText( "This controls the speed at which the force function that travels down the body of the snake" );
-        liquidParamPanel.add( p1 );
-        */
-
+        //FluidSimulator simulator = (FluidSimulator) getSimulator();
         customParamPanel.add(liquidParamPanel, BorderLayout.NORTH);
 
         return customParamPanel;
     }
-
-    protected void ok() {
-
-        super.ok();
-
-        // set the snake params
-        FluidSimulator simulator = (FluidSimulator) getSimulator();
-    }
-
 }

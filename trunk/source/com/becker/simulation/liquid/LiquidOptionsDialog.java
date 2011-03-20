@@ -13,18 +13,17 @@ import java.awt.event.ActionEvent;
  *
  * @author Bary Becker
  */
-class LiquidOptionsDialog extends NewtonianSimOptionsDialog
-{
+class LiquidOptionsDialog extends NewtonianSimOptionsDialog {
 
      /** type of distribution function to test.   */
     private JComboBox configurationChoiceField_;
 
-    // constructor
+    /** constructor  */
     LiquidOptionsDialog( JFrame parent, LiquidSimulator simulator ) {
         super( parent, simulator );
     }
 
-
+    @Override
     protected JPanel createCustomParamPanel() {
 
         JPanel customParamPanel = new JPanel();
@@ -34,8 +33,6 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog
         liquidParamPanel.setLayout( new BoxLayout(liquidParamPanel, BoxLayout.Y_AXIS ) );
         liquidParamPanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Liquid Parameters" ) );
-
-        //LiquidSimulator simulator = (LiquidSimulator) getSimulator();
 
         configurationChoiceField_ = createConfigChoice();
 
@@ -58,6 +55,7 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog
         return configurationChoice;
     }
     
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         super.actionPerformed(e);
@@ -72,7 +70,6 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog
         }
     }
 
-
     @Override
     protected void ok() {
 
@@ -85,5 +82,4 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog
 
         super.ok();
     }
-
 }

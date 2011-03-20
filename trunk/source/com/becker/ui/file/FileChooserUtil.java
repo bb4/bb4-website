@@ -11,16 +11,19 @@ import java.io.File;
  * Miscelaneous commonly used file chooser related utility methods.
  * @author Barry Becker
  */
-public final class FileChooserUtil
-{
+public final class FileChooserUtil {
 
+    /**
+     * For opening files.
+     * don't create this here or applets using this class will have a security exception
+     * instead we create a singleton when needed.
+     */
     private static JFileChooser chooser_ = null;
 
     /**
      * cannot instantiate static class.
      */
     private FileChooserUtil() {}
-
 
     /**
      * @return a generic file chooser.
@@ -30,12 +33,13 @@ public final class FileChooserUtil
     }
 
     /**
+     * get a singleton file chooser.
      * @param filter optional file filter
      * @return file chooser with specified filter.
      */
     public static JFileChooser getFileChooser(FileFilter filter) {
         if (chooser_ == null) {
-            chooser_ = GUIUtil.getFileChooser();
+            chooser_ = new JFileChooser();
             chooser_.setCurrentDirectory( new File( FileUtil.getHomeDir() ) );
             chooser_.setFileFilter(filter);
         }

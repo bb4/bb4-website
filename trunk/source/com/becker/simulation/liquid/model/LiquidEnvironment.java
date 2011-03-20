@@ -1,11 +1,9 @@
-package com.becker.simulation.liquid;
+package com.becker.simulation.liquid.model;
 
 import com.becker.common.ILog;
 import com.becker.simulation.liquid.config.Conditions;
 import com.becker.simulation.liquid.config.Region;
 import com.becker.simulation.liquid.config.Source;
-import com.becker.ui.dialogs.OutputWindow;
-import com.becker.ui.util.Log;
 
 import javax.vecmath.Vector2d;
 import java.util.HashSet;
@@ -31,8 +29,8 @@ import static com.becker.simulation.common.PhysicsConstants.GRAVITY;
  *
  *  @author Barry Becker
  */
-public class LiquidEnvironment
-{
+public class LiquidEnvironment {
+
     /** for debugging */
     public static final int LOG_LEVEL = 0;
 
@@ -43,7 +41,7 @@ public class LiquidEnvironment
     private static final double DENSITY = 0.001;
 
     /**
-     *  viscosity of the liquid. Larger for molasses (.3), smaller for kerosine (.0001)
+     *  viscosity of the liquid. Larger for molasses (.3), smaller for kerosene (.0001)
      * Water is about .001 Ns/m^2 or .01 g/s mm
      */
     private static final double VISCOSITY = 0.002; //0.001;
@@ -59,7 +57,7 @@ public class LiquidEnvironment
     // in x,y (col, row) order
     private Cell[][] grid_ = null;
 
-    /** constraints and conditions from the configuation file. */
+    /** constraints and conditions from the configuration file. */
     private Conditions conditions_;
 
     // the set of particles in this simulation
@@ -67,20 +65,21 @@ public class LiquidEnvironment
 
     private static final double EPSILON = 0.0000001;
 
-    // the time since the start of the simulation
+    /** the time since the start of the simulation  */
     private double time_ = 0.0;
 
-    // ensure that the runs are the same
+    /** ensure that the runs are the same  */
     private static final Random RANDOM = new Random(1);
 
-    private static ILog logger_ = null;
+    private static ILog logger_;
 
 
     /**
      * Constructor to use if you want the environment based on a config file.
      */
-    public LiquidEnvironment( String configFile )
-    {
+    public LiquidEnvironment( String configFile, ILog logger ) {
+
+        logger_ = logger;
         initializeFromConfigFile(configFile);
     }
 
@@ -95,18 +94,13 @@ public class LiquidEnvironment
         initEnvironment();
     }
 
-    private void initEnvironment()
-    {
+    private void initEnvironment() {
+
         xDim_ = conditions_.getGridWidth() + 2;
         yDim_ = conditions_.getGridHeight() + 2;
         grid_ = new Cell[xDim_][yDim_];
 
         particles_ = new HashSet<Particle>();
-
-        if (logger_ == null) {
-            logger_ = new Log( new OutputWindow( "Log", null ) );
-            logger_.setDestination( ILog.LOG_TO_WINDOW );
-        }
 
         for (int j = 0; j < yDim_; j++ ) {
             for (int i = 0; i < xDim_; i++ ) {
@@ -393,15 +387,15 @@ public class LiquidEnvironment
                 /*
                 double dist = magnitude * timeStep;
                 if (dist > maxDistance) {
-                        logger_.print("b_vmag="+magnitude + " i="+i+" j="+j + "   " );
+                        log(0, "b_vmag="+magnitude + " i="+i+" j="+j + "   " );
                         double factor =  .001 + maxDistance / dist;
                         vel.scale(factor);
-                        logger_.println("a_vmag="+vel.length());
+                        log(0, "a_vmag="+vel.length());
                 }*/
                 /*
                 while (Math.abs(timeStep * vel.x) > 1.0 || Math.abs(timeStep * vel.y) > 1.0) {
                     timeStep /= 2.0;
-                    System.out.println("vel.x="+vel.x+ ", vel.y="+vel.x +" new timeStep="+timeStep +"    invCellSize="+invCellSize);
+                    log(0, "vel.x="+vel.x+ ", vel.y="+vel.x +" new timeStep="+timeStep +"    invCellSize="+invCellSize);
                 }*/
 
                 double xChange = timeStep * vel.x;
@@ -414,7 +408,7 @@ public class LiquidEnvironment
                 int jj = (int) Math.floor(particle.y);
 
                 if (ii<0 || jj<0 || ii>=grid_.length || jj >= grid_[0].length) {
-                    logger_.println( " i="+i+" j="+j +"    ii="+ii+ "  jj="+jj + " v.len="+vel.length() +" xChange="+xChange +" yChange=" + yChange +" timeStep="+timeStep);
+                    log(0, " i=" + i + " j=" + j + "    ii=" + ii + "  jj=" + jj + " v.len=" + vel.length() + " xChange=" + xChange + " yChange=" + yChange + " timeStep=" + timeStep);
                     if (ii < 0) {
                         particle.x = 0.0;
                         ii = 0;
@@ -510,25 +504,23 @@ public class LiquidEnvironment
         return newTimeStep;
     }
 
-    public int numParticles()
-    {
+    public int numParticles() {
         return particles_.size();
     }
 
-    private void addParticle( double x, double y )
-    {
+    private void addParticle( double x, double y ) {
+
         Particle p = new Particle( x, y, grid_[(int) x][(int) y] );
         particles_.add( p );
         grid_[(int) x][(int) y].incParticles();
     }
 
-    private void addRandomParticles( double x, double y, int numParticles )
-    {
+    private void addRandomParticles( double x, double y, int numParticles )  {
+
         for ( int i = 0; i < numParticles; i++ ) {
             addParticle( x + RANDOM.nextDouble(), y + RANDOM.nextDouble());
         }
     }
-
 
     public void log(int level, String msg) {
         logger_.println(level, LOG_LEVEL, msg);

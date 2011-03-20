@@ -1,4 +1,6 @@
-package com.becker.simulation.fluid;
+package com.becker.simulation.fluid.ui;
+
+import com.becker.simulation.fluid.model.Grid;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,7 +20,7 @@ public class InteractionHandler implements MouseListener, MouseMotionListener {
     private float force_ = DEFAULT_FORCE;
     private float sourceDensity_ = DEFAULT_SOURCE_DENSITY;
     
-    Grid grid_;    
+    Grid grid_;
     
     double scale_;
     

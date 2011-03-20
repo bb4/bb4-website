@@ -1,6 +1,6 @@
-package com.becker.simulation.liquid;
+package com.becker.simulation.liquid.model;
 
-import com.becker.simulation.liquid.*;
+import com.becker.simulation.liquid.model.Cell;
 
 /**
  * A 3x3 block of cells for testing purposes.
