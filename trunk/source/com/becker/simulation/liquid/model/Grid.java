@@ -1,18 +1,12 @@
 package com.becker.simulation.liquid.model;
 
 import com.becker.common.ILog;
-import com.becker.simulation.liquid.config.Conditions;
-import com.becker.simulation.liquid.config.Region;
-import com.becker.simulation.liquid.config.Source;
 
 import javax.vecmath.Vector2d;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Set;
 
 import static com.becker.simulation.common.PhysicsConstants.ATMOSPHERIC_PRESSURE;
-import static com.becker.simulation.common.PhysicsConstants.GRAVITY;
 
 /**
  *  This is the global space containing all the cells, walls, and particles
@@ -93,8 +87,8 @@ public class Grid {
     }
 
     public void setVelocity(int i, int j, Vector2d velocity) {
-        grid_[i][j].setUip( velocity.x );
-        grid_[i][j].setVjp( velocity.y );
+        grid_[i][j].initializeU(velocity.x);
+        grid_[i][j].initializeV(velocity.y);
     }
 
     /**
@@ -136,12 +130,12 @@ public class Grid {
             // left
             Cell n = grid_[1][j];
             grid_[0][j].setPressure( n.getPressure() );
-            grid_[0][j].setVelocityP( 0, n.getVjp() );   // -n.getVjP ???
+            grid_[0][j].initializeVelocity(0, n.getV());   // -n.getVjP ???
             // right
             n = grid_[xDim_ - 2][j];
             grid_[xDim_ - 1][j].setPressure( n.getPressure() );
-            grid_[xDim_ - 1][j].setVelocityP( 0, n.getVjp() );  // -n.getVip()
-            grid_[xDim_ - 2][j].setUip( 0 );
+            grid_[xDim_ - 1][j].initializeVelocity(0, n.getV());  // -n.getVip()
+            grid_[xDim_ - 2][j].initializeU(0);
         }
 
         // top and bottom
@@ -149,12 +143,12 @@ public class Grid {
             // bottom
             Cell n = grid_[i][1];
             grid_[i][0].setPressure( n.getPressure() );
-            grid_[i][0].setVelocityP( n.getUip(), 0 ); // -n.getUip() ???
+            grid_[i][0].initializeVelocity(n.getU(), 0); // -n.getUip() ???
             // top
             n = grid_[i][yDim_ - 2];
             grid_[i][yDim_ - 1].setPressure( n.getPressure() );
-            grid_[i][yDim_ - 1].setVelocityP( n.getUip(), 0 );  // -n.getUip()
-            grid_[i][yDim_ - 2].setVjp( 0 );
+            grid_[i][yDim_ - 1].initializeVelocity(n.getU(), 0);  // -n.getUip()
+            grid_[i][yDim_ - 2].initializeV(0);
         }      
     }
 
@@ -172,12 +166,16 @@ public class Grid {
         for ( j = 1; j < yDim_ - 1; j++ ) {
             for ( i = 1; i < xDim_ - 1; i++ ) {
                 grid_[i][j].updateTildeVelocities( getNeighbors(i,j),
-                        grid_[i + 1][j - 1], grid_[i - 1][j + 1],
+                        grid_[i - 1][j + 1], grid_[i + 1][j - 1],
                         timeStep, fx, fy, VISCOSITY
                 );
             }
         }
-        Cell.swap(); // @@ ugly hack
+        for ( j = 1; j < yDim_ - 1; j++ ) {
+            for ( i = 1; i < xDim_ - 1; i++ ) {
+                grid_[i][j].swap();
+            }
+        }
     }
 
     /**

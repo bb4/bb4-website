@@ -7,218 +7,211 @@ import javax.vecmath.Vector2d;
  *  A region of space containing particles, walls, or liquid.
  *  Adapted from work by Nick Foster.
  *
- *                   ^  vjp_[cur_]     pos v direction
- *                   |
- *              _____________
- *             |             |
- *        <--  |      p      |  --> uip_[cur_]
- *             |             |
- *              -------------
- *                   |
- *                   v
+ *               ^  vjp_[cur_]     (positive v direction)
+ *               |
+ *          _____________
+ *         |            |
+ *    <--  |      p     |  --> uip_[cur_]   (positive u dir)
+ *         |            |
+ *          ------------
+ *               |
+ *               v
  *
- *              |-- dx --|
+ *          |--- dx ---|
  *
  *  @author Barry Becker
  */
 public class Cell {
 
-    /**  4 if 2d, 6 if 3d, 12 if 4d */
+    /**  4 if 2d, 6 if 3d */
     private static final int NUM_CELL_FACES = 4;
 
     private static final double CELL_SIZE = 1.0;
 
     /** type of cell  */
-    private CellStatus status_;
+    private CellStatus status;
 
     /** size of a cell */
-    private final double dx_;
-    private final double dy_;
+    private final double dx;
+    private final double dy;
 
     /** squares of edge lengths */
-    private final double dxSq_;
-    private final double dySq_;
+    private final double dxSq;
+    private final double dySq;
 
     /** pressure at the center of the cell */
-    private double pressure_;
+    private double pressure;
 
-    /**
-     * velocities in x, y directions
-     * defined at the center of each face
-     * uip_ = u(i+0.5, j, k)
-     * vjp_ = v(i, j+0.5, k)
-     */
-    private final double[] uip_ = new double[2];
-    private final double[] vjp_ = new double[2];
+    /** velocities in x, y directions defined at the center of each face */
+    private CellVelocity velocity;
 
-    private int numParticles_;
-
-    /** use this to switch between current and last copies of fields. (hack) */
-    private static int current_;
+    /** Number of particles in this cell */
+    private int numParticles;
 
     /**
      * constructor
      */
     public Cell()  {
-        pressure_ = 0;
-        uip_[0] = uip_[1] = 0;
-        vjp_[0] = vjp_[1] = 0;
+        pressure = 0;
+        velocity = new CellVelocity();
 
-        numParticles_ = 0;
-        status_ = CellStatus.EMPTY;
+        numParticles = 0;
+        status = CellStatus.EMPTY;
 
         // cell dimensions
-        dx_ = dy_ = CELL_SIZE;
-        dxSq_ = dx_ * dx_;
-        dySq_ = dy_ * dy_;
+        dx = dy = CELL_SIZE;
+        dxSq = dx * dx;
+        dySq = dy * dy;
     }
 
     /**
      *  global swap of fields (use with care). (hack)
      */
-    public static void swap()  {
-        current_ = 1 - current_;
+    public void swap()  {
+        velocity.step();
     }
 
     public void setPressure( double p ) {
-        pressure_ = p;
+        pressure = p;
     }
     public double getPressure() {
-        return pressure_;
+        return pressure;
     }
 
-    public void setUip( double u ) {
-        uip_[0] = uip_[1] = u;
+    public void initializeU(double u) {
+        velocity.initializeU(u);
     }
-    public void setVjp( double v ) {
-        vjp_[0] = vjp_[1] = v;
+    public void initializeV(double v) {
+         velocity.initializeV(v);
     }
 
-    public double getUip() {
-        return uip_[current_];
+    public void initializeVelocity(double u, double v) {
+        velocity.initialize(u, v);
     }
-    public double getVjp() {
-        return vjp_[current_];
+
+    public double getU() {
+        return velocity.getU();
+    }
+    public double getV() {
+       return velocity.getV();
     }
 
     public void incParticles() {
-        numParticles_++;
+        numParticles++;
     }
     public void decParticles() {
-        numParticles_--;
+        numParticles--;
+        assert numParticles >=0;
     }
 
     public int getNumParticles() {
-        return numParticles_;
+        return numParticles;
     }
 
     public CellStatus getStatus() {
-        return status_;
+        return status;
     }
 
     public boolean isSurface() {
-        return status_ == CellStatus.SURFACE;
+        return status == CellStatus.SURFACE;
     }
     public boolean isEmpty() {
-        return status_ == CellStatus.EMPTY;
+        return status == CellStatus.EMPTY;
     }
     public boolean isFull() {
-        return status_ == CellStatus.FULL;
+        return status == CellStatus.FULL;
     }
     public boolean isObstacle() {
-        return status_ == CellStatus.OBSTACLE;
+        return status == CellStatus.OBSTACLE;
     }
     public boolean isIsolated() {
-        return status_ == CellStatus.ISOLATED;
+        return status == CellStatus.ISOLATED;
     }
 
     public void setStatus( CellStatus status ) {
-        status_ = status;
+        this.status = status;
     }
 
     /**
      * Compute the cell's new status based on numParticles inside and
      * the status of neighbors.
-     * cXp1 stands for the neighbor cell that is +1 in the x direction.
-     * cYm1 stands for the neighbor cell that is -1 in the y direction.
      * RISK: 1
      */
     public void updateStatus( CellNeighbors neighbors ) {
 
-        assert (numParticles_ >= 0) : "num particles less than 0.";
+        assert (numParticles >= 0) : "num particles less than 0.";
         
-        if ( status_ == CellStatus.OBSTACLE ) {
+        if ( status == CellStatus.OBSTACLE ) {
             // obstacles never change status
         }
-        else if ( numParticles_ == 0 ) {
-            status_ = CellStatus.EMPTY;
+        else if ( numParticles == 0 ) {
+            status = CellStatus.EMPTY;
         }
         else {
             if ( neighbors.allHaveParticles() ) {
-                status_ = CellStatus.FULL;
+                status = CellStatus.FULL;
             }
             else if (neighbors.noneHaveParticles() ) {
                 // warning: not present in original foster code.
-                status_ = CellStatus.ISOLATED;   
+                status = CellStatus.ISOLATED;
             }
             else {
-                status_ = CellStatus.SURFACE;
+                status = CellStatus.SURFACE;
             }
         }
     }
 
     /**
      * compute velocity at next time step given neighboring cells.
-     *         O        top   cXp1Yp1
-     *       left       M       right
-     *      cXm1Yp1   bottom     O
+     *      cXm1Yp1    top
+     *       left       M      right
+     *        0      bottom    cXp1Ym1
      *
      * The formulas here equate to a numerical solution
      * of the Navier-Stokes equation.
      * RISK:5
      */
-    public void updateTildeVelocities( CellNeighbors neighbors,
-                        Cell cXp1Ym1, Cell cXm1Yp1,
-                        double dt, double forceX, double forceY, double viscosity ) {
+    public void updateTildeVelocities(CellNeighbors neighbors,
+                                      Cell cXm1Yp1, Cell cXp1Ym1,
+                                      double dt, double forceX, double forceY, double viscosity ) {
 
-        // only for FULL cells.
-        if ( status_ != CellStatus.FULL ) {
-            uip_[1 - current_] = uip_[current_]; // + dt * forceX;
-            vjp_[1 - current_] = vjp_[current_]; // + dt * forceY;
+        // if not FULL, then the old velocity will be the new.
+        if ( status != CellStatus.FULL ) {
+            velocity.passThrough();
             return;
         }
         assert  (dt > 0.0000001) : "dt got too small";
 
         // u
         // u(i, j) = 0.5*(u(i+0.5, j) + u(i-0.5, j))
-        double u_i = (uip_[current_] + neighbors.getLeft().uip_[current_]) / 2.0;
+        double u_i = (getU() + neighbors.getLeft().getU()) / 2.0;
         
         // u(i+1, j) = 0.5*(u(i+1.5, j) + u(i+0.5, j))
-        double u_ip1 = (neighbors.getRight().uip_[current_] + uip_[current_]) / 2.0;
+        double u_ip1 = (neighbors.getRight().getU() + getU()) / 2.0;
 
         // u(i+0.5, j-0.5) = 0.5*(u(i+0.5, j) + u(i+0.5, j-1))
-        double u_ipjm = (uip_[current_] + neighbors.getTop().uip_[current_]) / 2.0;
+        double u_ipjm = (getU() + neighbors.getBottom().getU()) / 2.0;
 
         // v(i+0.5, j-0.5) = 0.5*(v(i, j-0.5) + v(i+1, j-0.5))
-        double v_ipjm = (neighbors.getTop().vjp_[current_] + cXp1Ym1.vjp_[current_]) / 2.0;
+        double v_ipjm = (neighbors.getBottom().getV() + cXp1Ym1.getV()) / 2.0;
 
         // u(i+0.5, j+0.5) = 0.5*(u(i+0.5, j) + u(i+0.5, j+1))
-        double u_ipjp = (uip_[current_] + neighbors.getBottom().uip_[current_]) / 2.0;
+        double u_ipjp = (getU() + neighbors.getTop().getU()) / 2.0;
 
         // v(i+0.5, j+0.5) = 0.5*(v(i, j+0.5) + v(i+1, j+0.5))
-        double v_ipjp = (vjp_[current_] + neighbors.getRight().vjp_[current_]) / 2.0;
+        double v_ipjp = (getV() + neighbors.getRight().getV()) / 2.0;
 
         if ( !neighbors.getRight().isObstacle() ) {
             double xNume = (u_i * u_i  -  u_ip1 * u_ip1);
             double yNume = (u_ipjm * v_ipjm  -  u_ipjp * v_ipjp);
-            double v1 = (neighbors.getRight().uip_[current_] - 2 * uip_[current_]
-                                 + neighbors.getLeft().uip_[current_]) / dxSq_;
-            double v2 = (neighbors.getBottom().uip_[current_] - 2 * uip_[current_]
-                                 + neighbors.getTop().uip_[current_]) / dySq_;
-            double pf = xNume/ dx_ + yNume / dy_ + forceX
-                               + (pressure_ + neighbors.getRight().getPressure()) / dx_
+            double v1 = (neighbors.getRight().getU() - 2 * getU()
+                                 + neighbors.getLeft().getU()) / dxSq;
+            double v2 = (neighbors.getTop().getU() - 2 * getU()
+                                 + neighbors.getBottom().getU()) / dySq;
+            double pf = xNume/ dx + yNume / dy + forceX
+                               + (pressure + neighbors.getRight().getPressure()) / dx
                                + viscosity * (v1 + v2);
-            double newu =  uip_[current_] + dt * pf;
+            double newu =  getU() + dt * pf;
             /*
             if (Math.abs(pf) > 10) {
                 System.out.println("much bigger x change than expected. oldu ="
@@ -228,33 +221,33 @@ public class Cell {
                         + "\ncXp1=" + cYp1 + " cXm1=" + cYm1
                         + "\ncXp1Ym1=" + cXp1Ym1 + " cXm1Yp1=" + cXm1Yp1);
             } */
-            uip_[1 - current_] = newu;
+            velocity.setNewU(newu);
         }
 
         // v
         // u(i-0.5, j+0.5) = 0.5*(u(i-0.5, j) + u(i-0.5, j+1))
-        double u_imjp = (neighbors.getLeft().uip_[current_] + cXm1Yp1.uip_[current_]) / 2.0;
+        double u_imjp = (neighbors.getLeft().getU() + cXm1Yp1.getU()) / 2.0;
 
         // v(i-0.5, j+0.5) = 0.5*(v(i, j+0.5) + v(i-1, j+0.5))
-        double v_imjp = (vjp_[current_] + neighbors.getTop().vjp_[current_]) / 2.0;
+        double v_imjp = (getV() + neighbors.getBottom().getV()) / 2.0;
 
         // v(i, j) = 0.5*(v(i, j-0.5) + v(i, j+0.5))
-        double v_j = (neighbors.getTop().vjp_[current_] + vjp_[current_]) / 2.0;
+        double v_j = (neighbors.getBottom().getV() + getV()) / 2.0;
 
         // v(i, j+1) = 0.5*(v(i, j+0.5) + v(i, j+1.5) // / 2.0 was not here originally
-        double v_jp1 = (vjp_[current_] + neighbors.getBottom().vjp_[current_]) / 2.0;
+        double v_jp1 = (getV() + neighbors.getTop().getV()) / 2.0;
 
-        if ( !neighbors.getBottom().isObstacle() ) {
+        if ( !neighbors.getTop().isObstacle() ) {
             double xNume = (u_imjp * v_imjp - u_ipjp * v_ipjp);
             double yNume = (v_j * v_j - v_jp1 * v_jp1);
-            double v1 =  (neighbors.getRight().vjp_[current_] - 2 * vjp_[current_]
-                       + neighbors.getLeft().vjp_[current_]) / dxSq_;
-            double v2 =  (neighbors.getBottom().vjp_[current_] - 2 * vjp_[current_]
-                        + neighbors.getTop().vjp_[current_]) / dySq_;
-            double pf = xNume / dx_ + yNume / dy_ + forceY
-                    + (pressure_ - neighbors.getBottom().getPressure()) / dy_
+            double v1 =  (neighbors.getRight().getV() - 2 * getV()
+                       + neighbors.getLeft().getV()) / dxSq;
+            double v2 =  (neighbors.getTop().getV() - 2 * getV()
+                        + neighbors.getBottom().getV()) / dySq;
+            double pf = xNume / dx + yNume / dy + forceY
+                    + (pressure - neighbors.getTop().getPressure()) / dy
                     + viscosity * (v1 + v2);
-            double newv =  vjp_[current_] + dt * pf;
+            double newv =  getV() + dt * pf;
             /*
             if (Math.abs(pf) > 5.0) {
                 System.out.println("much bigger y change than expected. oldv ="
@@ -264,20 +257,8 @@ public class Cell {
                         + "\ncXp1=" + cYp1 + " cXm1=" + cYm1
                         + "\ncXp1Ym1=" + cXp1Ym1 + " cXm1Yp1=" + cXm1Yp1);
             } */
-            vjp_[1 - current_] = newv;
+             velocity.setNewV(newv);
         }
-        /*
-        if (uip_[1 - current_]!=0 || vjp_[1 - current_]!=0) {
-            System.out.println("updateTilde: new vel is:"
-                +uip_[1-current_]+", "+vjp_[1-current_]);
-            System.out.println("updateTilde: u_i="+u_i+" u_ip1="+u_ip1
-                 +" u_ipjm="+u_ipjm+" v_ipjm="+v_ipjm
-                 +"u_ipjp="+u_ipjp+"v_ipjp="+v_ipjp);
-            System.out.println("updateTilde: v_j="+v_j+" v_imjp="
-                 +u_imjp+" v_imjp="+v_imjp+" v_jp1="+v_jp1);
-            System.out.println(this);
-            System.out.println("");
-        }*/
     }
 
     /**
@@ -294,33 +275,33 @@ public class Cell {
         }
 
         // divergence of fluid within the cell.
-        double divergence = (neighbors.getLeft().uip_[current_] - uip_[current_]) / dx_ +
-                (neighbors.getTop().vjp_[current_] - vjp_[current_]) / dy_;
+        double divergence = (neighbors.getLeft().getU() - getU()) / dx +
+                (neighbors.getBottom().getV() - getV()) / dy;
 
-        double b = b0 / (dt * (2.0 / dxSq_ + 2.0 / dySq_));
+        double b = b0 / (dt * (2.0 / dxSq + 2.0 / dySq));
 
         // the change in pressure for a cell.
         double dp = b * divergence;
-        double dpdx = dt *dp / dx_;
-        double dpdy = dt *dp / dy_;
+        double dpdx = dt *dp / dx;
+        double dpdy = dt *dp / dy;
 
         if ( !neighbors.getRight().isObstacle() ) {
-            uip_[current_] += dpdx;
+            velocity.incrementU(dpdx);
         }
 
         if ( !neighbors.getLeft().isObstacle() ) {
-            neighbors.getLeft().uip_[current_] -= dpdx;
-        }
-
-        if ( !neighbors.getBottom().isObstacle() ) {
-            vjp_[current_] += dpdy;
+            neighbors.getLeft().velocity.incrementU(-dpdx);
         }
 
         if ( !neighbors.getTop().isObstacle() ) {
-            neighbors.getTop().vjp_[current_] -= dpdy;
+            velocity.incrementV(dpdy);
         }
 
-        pressure_ += dp;
+        if ( !neighbors.getBottom().isObstacle() ) {
+            neighbors.getBottom().velocity.incrementV(-dpdy);
+        }
+
+        pressure += dp;
         return Math.abs( divergence );
     }
 
@@ -364,21 +345,21 @@ public class Cell {
                                      Cell cXm1, Cell cXm1y, // u
                                      Cell cYm1, Cell cYm1x)  // v
     {
-        assert ( status_ != CellStatus.OBSTACLE
-                      && status_ != CellStatus.EMPTY && numParticles_ >= 0 ) :
-             "Error: interpVelocity cell status=" + status_
-               + " num particles = " + numParticles_ ;
+        assert ( status != CellStatus.OBSTACLE
+                      && status != CellStatus.EMPTY && numParticles >= 0 ) :
+             "Error: interpVelocity cell status=" + status
+               + " num particles = " + numParticles;
 
         double x = particle.x - Math.floor(particle.x);
         double y = particle.y - Math.floor(particle.y);
 
         double xx = (x > 0.5) ? (1.5 - x) : (0.5 + x);
         double yy = (y > 0.5) ? (1.5 - y) : (0.5 + y);
-        double x1 = (1.0 - x) * cXm1.uip_[current_] + x * uip_[current_];
-        double x2 = (1.0 - x) * cXm1y.uip_[current_] + x * cY.uip_[current_];
+        double x1 = (1.0 - x) * cXm1.getU() + x *getU();
+        double x2 = (1.0 - x) * cXm1y.getU() + x * cY.getU();
         double pu = x1 * yy + x2 * (1.0 - yy);
-        double y1 = (1.0 - y) * cYm1.vjp_[current_] + y * vjp_[current_];
-        double y2 = (1.0 - y) * cYm1x.vjp_[current_] + y * cX.vjp_[current_];
+        double y1 = (1.0 - y) * cYm1.getV() + y * getV();
+        double y2 = (1.0 - y) * cYm1x.getV() + y * cX.getV();
         double pv = y1 * xx + y2 * (1.0 - xx);
 
         return new Vector2d(pu, pv);
@@ -403,26 +384,26 @@ public class Cell {
 
         if ( !neighbors.getRight().isEmpty() ) {
             count++;
-            overflow += uip_[current_] / dx_;
+            overflow += getU() / dx;
         }
         if ( !neighbors.getLeft().isEmpty() ) {
             count++;
-            overflow -= neighbors.getLeft().uip_[current_] / dx_;
-        }
-        if ( !neighbors.getBottom().isEmpty() ) {
-            count++;
-            overflow += vjp_[current_] / dy_;
+            overflow -= neighbors.getLeft().getU() / dx;
         }
         if ( !neighbors.getTop().isEmpty() ) {
             count++;
-            overflow -= neighbors.getTop().vjp_[current_] / dy_;
+            overflow += getV() / dy;
+        }
+        if ( !neighbors.getBottom().isEmpty() ) {
+            count++;
+            overflow -= neighbors.getBottom().getV() / dy;
         }
 
         if ( count < NUM_CELL_FACES && Math.abs( overflow ) > 0.0 ) {
             dissipateOverflow( (NUM_CELL_FACES - count), overflow, neighbors );
         }
 
-        pressure_ = pressure0;
+        pressure = pressure0;
     }
 
     /**
@@ -443,43 +424,36 @@ public class Cell {
         }
 
         int count = 0;
-        double overflowX = dx_ * overflow / numSurfaces;
-        double overflowY = dy_ * overflow / numSurfaces;
+        double overflowX = dx * overflow / numSurfaces;
+        double overflowY = dy * overflow / numSurfaces;
 
         if ( neighbors.getRight().isEmpty() ) {
             count++;
-            uip_[current_] = -overflowX;
+            velocity.setCurrentU(-overflowX);
         }
         if (neighbors.getLeft().isEmpty() ) {
            count++;
-           neighbors.getLeft().uip_[current_] = overflowX;
+           neighbors.getLeft().velocity.setCurrentU(overflowX);
         }
 
-        if ( neighbors.getBottom().isEmpty() ) {
-           count++;
-           vjp_[current_] = -overflowY;
-        }
         if ( neighbors.getTop().isEmpty() ) {
+           count++;
+           velocity.setCurrentV(-overflowY);
+        }
+        if ( neighbors.getBottom().isEmpty() ) {
             count++;
-            neighbors.getTop().vjp_[current_] = overflowY;
+            neighbors.getBottom().velocity.setCurrentV(overflowY);
         }
         assert (count == numSurfaces);
-    }
-
-    public void setVelocityP( double u, double v ) {
-        uip_[0] = u;
-        uip_[1] = u;
-        vjp_[0] = v;
-        vjp_[1] = v;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Cell:");
-        sb.append(status_);
-        sb.append(" num particles="+numParticles_);
-        sb.append(" pressure="+pressure_);
-        sb.append(" velocity="+ uip_[current_] +", " + vjp_[current_]);
+        sb.append(status);
+        sb.append(" num particles=").append(numParticles);
+        sb.append(" pressure=").append(pressure);
+        sb.append(" ").append(velocity);
         return sb.toString();
     }
 }

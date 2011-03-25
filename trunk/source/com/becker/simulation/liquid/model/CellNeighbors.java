@@ -1,8 +1,5 @@
 package com.becker.simulation.liquid.model;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
 /**
  *  The cells directly neighboring a given cell.
  *
@@ -40,12 +37,12 @@ public class CellNeighbors {
     }
 
     /** neighbor cell to the top. */
-    public Cell getTop() {
+    public Cell getBottom() {
         return cellYm1;
     }
 
     /** neighbor cell to the bottom. */
-    public Cell getBottom() {
+    public Cell getTop() {
         return cellYp1;
     }
 
@@ -55,8 +52,8 @@ public class CellNeighbors {
     public boolean allHaveParticles() {
        return getRight().getNumParticles() > 0
             && getLeft().getNumParticles() > 0
-            && getTop().getNumParticles() > 0
-            && getBottom().getNumParticles() > 0;
+            && getBottom().getNumParticles() > 0
+            && getTop().getNumParticles() > 0;
     }
 
     /**
@@ -65,7 +62,7 @@ public class CellNeighbors {
     public boolean noneHaveParticles() {
          return getRight().getNumParticles() == 0
             && getLeft().getNumParticles() == 0
-            && getTop().getNumParticles() == 0
-            && getBottom().getNumParticles() == 0;
+            && getBottom().getNumParticles() == 0
+            && getTop().getNumParticles() == 0;
     }
 }
