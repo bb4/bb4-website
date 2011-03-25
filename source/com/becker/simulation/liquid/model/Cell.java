@@ -9,11 +9,11 @@ import javax.vecmath.Vector2d;
  *
  *                   ^  vjp_[cur_]     pos v direction
  *                   |
- *              _______
+ *              _____________
  *             |             |
  *        <--  |      p      |  --> uip_[cur_]
  *             |             |
- *              -----------
+ *              -------------
  *                   |
  *                   v
  *
@@ -143,28 +143,21 @@ public class Cell {
      * cYm1 stands for the neighbor cell that is -1 in the y direction.
      * RISK: 1
      */
-    public void updateStatus( Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 ) {
+    public void updateStatus( CellNeighbors neighbors ) {
 
         assert (numParticles_ >= 0) : "num particles less than 0.";
         
         if ( status_ == CellStatus.OBSTACLE ) {
             // obstacles never change status
-            return;
         }
         else if ( numParticles_ == 0 ) {
             status_ = CellStatus.EMPTY;
         }
         else {
-            if ( cXp1.getNumParticles() > 0
-                    && cXm1.getNumParticles() > 0
-                    && cYp1.getNumParticles() > 0
-                    && cYm1.getNumParticles() > 0 ) {
+            if ( neighbors.allHaveParticles() ) {
                 status_ = CellStatus.FULL;
             }
-            else if ( cXp1.getNumParticles() == 0
-                    && cXm1.getNumParticles() == 0 &&
-                    cYp1.getNumParticles() == 0
-                    && cYm1.getNumParticles() == 0 ) {
+            else if (neighbors.noneHaveParticles() ) {
                 // warning: not present in original foster code.
                 status_ = CellStatus.ISOLATED;   
             }
@@ -176,17 +169,15 @@ public class Cell {
 
     /**
      * compute velocity at next time step given neighboring cells.
-     *         O        cYp1  cXp1Yp1
-     *       cXm1       M       cXp1
-     *     cXm1Yp1  cYm1     O
+     *         O        top   cXp1Yp1
+     *       left       M       right
+     *      cXm1Yp1   bottom     O
      *
      * The formulas here equate to a numerical solution
      * of the Navier-Stokes equation.
      * RISK:5
      */
-    public void updateTildeVelocities(
-                        Cell cXp1, Cell cXm1,
-                        Cell cYp1, Cell cYm1,
+    public void updateTildeVelocities( CellNeighbors neighbors,
                         Cell cXp1Ym1, Cell cXm1Yp1,
                         double dt, double forceX, double forceY, double viscosity ) {
 
@@ -200,32 +191,32 @@ public class Cell {
 
         // u
         // u(i, j) = 0.5*(u(i+0.5, j) + u(i-0.5, j))
-        double u_i = (uip_[current_] + cXm1.uip_[current_]) / 2.0;
+        double u_i = (uip_[current_] + neighbors.getLeft().uip_[current_]) / 2.0;
         
         // u(i+1, j) = 0.5*(u(i+1.5, j) + u(i+0.5, j))
-        double u_ip1 = (cXp1.uip_[current_] + uip_[current_]) / 2.0;
+        double u_ip1 = (neighbors.getRight().uip_[current_] + uip_[current_]) / 2.0;
 
         // u(i+0.5, j-0.5) = 0.5*(u(i+0.5, j) + u(i+0.5, j-1))
-        double u_ipjm = (uip_[current_] + cYm1.uip_[current_]) / 2.0;
+        double u_ipjm = (uip_[current_] + neighbors.getTop().uip_[current_]) / 2.0;
 
         // v(i+0.5, j-0.5) = 0.5*(v(i, j-0.5) + v(i+1, j-0.5))
-        double v_ipjm = (cYm1.vjp_[current_] + cXp1Ym1.vjp_[current_]) / 2.0;
+        double v_ipjm = (neighbors.getTop().vjp_[current_] + cXp1Ym1.vjp_[current_]) / 2.0;
 
         // u(i+0.5, j+0.5) = 0.5*(u(i+0.5, j) + u(i+0.5, j+1))
-        double u_ipjp = (uip_[current_] + cYp1.uip_[current_]) / 2.0;
+        double u_ipjp = (uip_[current_] + neighbors.getBottom().uip_[current_]) / 2.0;
 
         // v(i+0.5, j+0.5) = 0.5*(v(i, j+0.5) + v(i+1, j+0.5))
-        double v_ipjp = (vjp_[current_] + cXp1.vjp_[current_]) / 2.0;
+        double v_ipjp = (vjp_[current_] + neighbors.getRight().vjp_[current_]) / 2.0;
 
-        if ( !cXp1.isObstacle() ) {
+        if ( !neighbors.getRight().isObstacle() ) {
             double xNume = (u_i * u_i  -  u_ip1 * u_ip1);
             double yNume = (u_ipjm * v_ipjm  -  u_ipjp * v_ipjp);
-            double v1 = (cXp1.uip_[current_] - 2 * uip_[current_]
-                                 + cXm1.uip_[current_]) / dxSq_;
-            double v2 = (cYp1.uip_[current_] - 2 * uip_[current_]
-                                 + cYm1.uip_[current_]) / dySq_;
+            double v1 = (neighbors.getRight().uip_[current_] - 2 * uip_[current_]
+                                 + neighbors.getLeft().uip_[current_]) / dxSq_;
+            double v2 = (neighbors.getBottom().uip_[current_] - 2 * uip_[current_]
+                                 + neighbors.getTop().uip_[current_]) / dySq_;
             double pf = xNume/ dx_ + yNume / dy_ + forceX
-                               + (pressure_ + cXp1.getPressure()) / dx_
+                               + (pressure_ + neighbors.getRight().getPressure()) / dx_
                                + viscosity * (v1 + v2);
             double newu =  uip_[current_] + dt * pf;
             /*
@@ -242,26 +233,26 @@ public class Cell {
 
         // v
         // u(i-0.5, j+0.5) = 0.5*(u(i-0.5, j) + u(i-0.5, j+1))
-        double u_imjp = (cXm1.uip_[current_] + cXm1Yp1.uip_[current_]) / 2.0;
+        double u_imjp = (neighbors.getLeft().uip_[current_] + cXm1Yp1.uip_[current_]) / 2.0;
 
         // v(i-0.5, j+0.5) = 0.5*(v(i, j+0.5) + v(i-1, j+0.5))
-        double v_imjp = (vjp_[current_] + cYm1.vjp_[current_]) / 2.0;
+        double v_imjp = (vjp_[current_] + neighbors.getTop().vjp_[current_]) / 2.0;
 
         // v(i, j) = 0.5*(v(i, j-0.5) + v(i, j+0.5))
-        double v_j = (cYm1.vjp_[current_] + vjp_[current_]) / 2.0;
+        double v_j = (neighbors.getTop().vjp_[current_] + vjp_[current_]) / 2.0;
 
         // v(i, j+1) = 0.5*(v(i, j+0.5) + v(i, j+1.5) // / 2.0 was not here originally
-        double v_jp1 = (vjp_[current_] + cYp1.vjp_[current_]) / 2.0;
+        double v_jp1 = (vjp_[current_] + neighbors.getBottom().vjp_[current_]) / 2.0;
 
-        if ( !cYp1.isObstacle() ) {
+        if ( !neighbors.getBottom().isObstacle() ) {
             double xNume = (u_imjp * v_imjp - u_ipjp * v_ipjp);
             double yNume = (v_j * v_j - v_jp1 * v_jp1);
-            double v1 =  (cXp1.vjp_[current_] - 2 * vjp_[current_]
-                       + cXm1.vjp_[current_]) / dxSq_;
-            double v2 =  (cYp1.vjp_[current_] - 2 * vjp_[current_]
-                        + cYm1.vjp_[current_]) / dySq_;
+            double v1 =  (neighbors.getRight().vjp_[current_] - 2 * vjp_[current_]
+                       + neighbors.getLeft().vjp_[current_]) / dxSq_;
+            double v2 =  (neighbors.getBottom().vjp_[current_] - 2 * vjp_[current_]
+                        + neighbors.getTop().vjp_[current_]) / dySq_;
             double pf = xNume / dx_ + yNume / dy_ + forceY
-                    + (pressure_ - cYp1.getPressure()) / dy_
+                    + (pressure_ - neighbors.getBottom().getPressure()) / dy_
                     + viscosity * (v1 + v2);
             double newv =  vjp_[current_] + dt * pf;
             /*
@@ -296,16 +287,15 @@ public class Cell {
      * @return the amount of divergence from the cell that
      * we will need to dissipate.
      */
-    public double updateMassConservation( double b0, double dt,
-                                          Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 )
-    {
+    public double updateMassConservation( double b0, double dt,  CellNeighbors neighbors) {
+
         if ( !isFull() ) {
             return 0;
         }
 
         // divergence of fluid within the cell.
-        double divergence = (cXm1.uip_[current_] - uip_[current_]) / dx_ +
-                (cYm1.vjp_[current_] - vjp_[current_]) / dy_;
+        double divergence = (neighbors.getLeft().uip_[current_] - uip_[current_]) / dx_ +
+                (neighbors.getTop().vjp_[current_] - vjp_[current_]) / dy_;
 
         double b = b0 / (dt * (2.0 / dxSq_ + 2.0 / dySq_));
 
@@ -314,20 +304,20 @@ public class Cell {
         double dpdx = dt *dp / dx_;
         double dpdy = dt *dp / dy_;
 
-        if ( !cXp1.isObstacle() ) {
+        if ( !neighbors.getRight().isObstacle() ) {
             uip_[current_] += dpdx;
         }
 
-        if ( !cXm1.isObstacle() ) {
-            cXm1.uip_[current_] -= dpdx;
+        if ( !neighbors.getLeft().isObstacle() ) {
+            neighbors.getLeft().uip_[current_] -= dpdx;
         }
 
-        if ( !cYp1.isObstacle() ) {
+        if ( !neighbors.getBottom().isObstacle() ) {
             vjp_[current_] += dpdy;
         }
 
-        if ( !cYm1.isObstacle() ) {
-            cYm1.vjp_[current_] -= dpdy;
+        if ( !neighbors.getTop().isObstacle() ) {
+            neighbors.getTop().vjp_[current_] -= dpdy;
         }
 
         pressure_ += dp;
@@ -352,8 +342,8 @@ public class Cell {
      *          3   c   1
      *          4  2/5  6
      *  case 4: particle in lower left.
-     *         X    X    X
-     *        1/3   c    X
+     *         X    X   X
+     *        1/3   c   X
      *        4/6 2/5   X
      *
      * RISK: 1
@@ -397,17 +387,11 @@ public class Cell {
     /**
      * Force no divergence in surface cells, by updating velocities directly.
      * Any overflow will be dissipated.
-     * @param cXp1 cell to the right
-     * @param cXm1 cell to the left
-     * @param cYp1 cell below (?)
-     * @param cYm1 cell above (?)
+     * @param neighbors the cell's immediate neighbors
      * @param pressure0 base pressure to set after dissipating overflow.
      * RISK:1
      */
-    public void updateSurfaceVelocities( 
-                                    Cell cXp1, Cell cXm1,
-                                    Cell cYp1, Cell cYm1,
-                                    double pressure0 ) {
+    public void updateSurfaceVelocities( CellNeighbors neighbors, double pressure0 ) {
 
         // only surface cells can have overflow dissipated.
         if ( !(isSurface() || isIsolated()) ) {
@@ -417,26 +401,25 @@ public class Cell {
         int count = 0;
         double overflow = 0;
 
-        if ( !cXp1.isEmpty() ) {
+        if ( !neighbors.getRight().isEmpty() ) {
             count++;
             overflow += uip_[current_] / dx_;
         }
-        if ( !cXm1.isEmpty() ) {
+        if ( !neighbors.getLeft().isEmpty() ) {
             count++;
-            overflow -= cXm1.uip_[current_] / dx_;
+            overflow -= neighbors.getLeft().uip_[current_] / dx_;
         }
-        if ( !cYp1.isEmpty() ) {
+        if ( !neighbors.getBottom().isEmpty() ) {
             count++;
             overflow += vjp_[current_] / dy_;
         }
-        if ( !cYm1.isEmpty() ) {
+        if ( !neighbors.getTop().isEmpty() ) {
             count++;
-            overflow -= cYm1.vjp_[current_] / dy_;
+            overflow -= neighbors.getTop().vjp_[current_] / dy_;
         }
 
         if ( count < NUM_CELL_FACES && Math.abs( overflow ) > 0.0 ) {
-            dissipateOverflow( (NUM_CELL_FACES - count),
-                                          overflow, cXp1, cXm1, cYp1, cYm1 );
+            dissipateOverflow( (NUM_CELL_FACES - count), overflow, neighbors );
         }
 
         pressure_ = pressure0;
@@ -448,12 +431,12 @@ public class Cell {
      * The overflow is equally distributed to the open adjacent surfaces.
      * @param numSurfaces number of empty adjacent cells. In other
      *     words the number of surfaces we have.
-     * @param overflow the overflow to dissapate out the
+     * @param overflow the overflow to dissipate out the
      *     surface sides that do not have liquid.
      * RISK:3
      */
     private void dissipateOverflow(int numSurfaces, double overflow,
-                                   Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 ) {
+                                   CellNeighbors neighbors) {
 
         if (Math.abs(overflow) > 100) {
             System.out.println("dissipating large overflow ="+overflow);
@@ -463,22 +446,22 @@ public class Cell {
         double overflowX = dx_ * overflow / numSurfaces;
         double overflowY = dy_ * overflow / numSurfaces;
 
-        if ( cXp1.isEmpty() ) {
+        if ( neighbors.getRight().isEmpty() ) {
             count++;
             uip_[current_] = -overflowX;
         }
-        if (cXm1.isEmpty() ) {
+        if (neighbors.getLeft().isEmpty() ) {
            count++;
-           cXm1.uip_[current_] = overflowX;
+           neighbors.getLeft().uip_[current_] = overflowX;
         }
 
-        if ( cYp1.isEmpty() ) {
+        if ( neighbors.getBottom().isEmpty() ) {
            count++;
            vjp_[current_] = -overflowY;
         }
-        if ( cYm1.isEmpty() ) {
+        if ( neighbors.getTop().isEmpty() ) {
             count++;
-            cYm1.vjp_[current_] = overflowY;
+            neighbors.getTop().vjp_[current_] = overflowY;
         }
         assert (count == numSurfaces);
     }
