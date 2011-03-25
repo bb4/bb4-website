@@ -51,14 +51,14 @@ public class TestCell extends TestCase {
         particle = new Particle(1.1, 1.1, cell);
         //verifyParticleVelocity(particle, cb,  new Vector2d(0.0, 0.0));
 
-        cb.get(-1, 1).setVelocityP(1.0, 0.0);  // upper left
-        cb.get(0, 1).setVelocityP(.9, 0.0);     // upper middle
-        cb.get(-1, 0).setVelocityP(.91, 1.0);  // middle left
-        cb.get(0, 0).setVelocityP(0.7, 0.7);   // center
-        cb.get(1, 0).setVelocityP(0.0, 0.4);   // right middle
-        cb.get(-1, -1).setVelocityP(0.5, 0.6);   // left bottom
-        cb.get(0, -1).setVelocityP(0.3, 0.3);    // middle bottom
-        cb.get(1, -1).setVelocityP(.1, 0.0);   // right bottom
+        cb.get(-1, 1).initializeVelocity(1.0, 0.0);  // upper left
+        cb.get(0, 1).initializeVelocity(.9, 0.0);     // upper middle
+        cb.get(-1, 0).initializeVelocity(.91, 1.0);  // middle left
+        cb.get(0, 0).initializeVelocity(0.7, 0.7);   // center
+        cb.get(1, 0).initializeVelocity(0.0, 0.4);   // right middle
+        cb.get(-1, -1).initializeVelocity(0.5, 0.6);   // left bottom
+        cb.get(0, -1).initializeVelocity(0.3, 0.3);    // middle bottom
+        cb.get(1, -1).initializeVelocity(.1, 0.0);   // right bottom
 
         particle = new Particle(1.1, 1.1, cell);  // lower left
         verifyParticleVelocity(particle, cb,  new Vector2d(0.7254, 0.46));
@@ -110,24 +110,24 @@ public class TestCell extends TestCase {
 
         checkTildeVelocities(cb, 0.0, 0.0);
 
-        cell.setVelocityP(1.0, 0);
+        cell.initializeVelocity(1.0, 0);
         checkTildeVelocities(cb, 1.0, 0.0); // was 1.1, 0.1
 
-        cell.setVelocityP(0.0, 1.0);
+        cell.initializeVelocity(0.0, 1.0);
         cell.setPressure(1.0);
         checkTildeVelocities(cb, 0.0, 1.0); // was 0.1, 1.1
 
-        cell.setVelocityP(1.0, 0);
+        cell.initializeVelocity(1.0, 0);
         cb.setAllCellParticles(5);
         cb.setPressures(1.0);
         cell.setPressure(10.0);
         cb.updateCellStatuses();
         checkTildeVelocities(cb, 1.0, 0.0); //2.1996, 1.0);
 
-        cell.setVelocityP(1.0, 0);
+        cell.initializeVelocity(1.0, 0);
         cb.setAllCellParticles(5);
         cb.get(0,1).setPressure(0.8);
-        cb.get(1,0).setVelocityP(0.6,0.3);
+        cb.get(1,0).initializeVelocity(0.6, 0.3);
         cb.updateCellStatuses();
         checkTildeVelocities(cb, 1.0, 0.0);   // 2.15316, 1.01253);
     }
@@ -138,14 +138,13 @@ public class TestCell extends TestCase {
         double fx = 1;
         double fy = 1;
 
-        cell.updateTildeVelocities( cb.get(1,0),  cb.get(-1,0),
-                                    cb.get(0,1),  cb.get(0,-1),
-                                    cb.get(1,-1), cb.get(-1,1),
+        cell.updateTildeVelocities( cb.getCenterNeighbors(),
+                                    cb.get(-1,1), cb.get(1,-1),
                                     DT, fx, fy, VISCOSITY);
-        Cell.swap();
+        cell.swap();
 
-        Assert.assertTrue( "Unxepected values Uip=" + cell.getUip() + ",  Vjp=" + cell.getVjp(),
-                           (cell.getUip() == expectedU) && (cell.getVjp() == expectedV));
+        Assert.assertTrue( "Unxepected values Uip=" + cell.getU() + ",  Vjp=" + cell.getV(),
+                           (cell.getU() == expectedU) && (cell.getV() == expectedV));
     }
 
     public void testMassConservation() {
@@ -154,24 +153,22 @@ public class TestCell extends TestCase {
         Cell cell = cb.get(0, 0);
         double b = 1.7;
 
-        cell.setVelocityP(1.0, 0);
+        cell.initializeVelocity(1.0, 0);
         cb.setAllCellParticles(5);
         cb.setPressures(1.0);
         cell.setPressure(2.0);
         cb.updateCellStatuses();
-        double divergence = cell.updateMassConservation( b, DT,
-                                    cb.get(1,0), cb.get(-1,0), cb.get(0,1), cb.get(0,-1));
+        double divergence = cell.updateMassConservation( b, DT, cb.getCenterNeighbors());
 
         Assert.assertEquals("unexpected div="+divergence, 0.0, divergence);
 
-        cell.setVelocityP(1.0, 0);
+        cell.initializeVelocity(1.0, 0);
         cb.setAllCellParticles(5);
         cb.setPressures(1.0);
         cb.get(1,0).setPressure(2.0);
         cell.setPressure(1.5);
         cb.updateCellStatuses();
-        divergence = cell.updateMassConservation( b, DT,
-                                    cb.get(1,0), cb.get(-1,0), cb.get(0,1), cb.get(0,-1));
+        divergence = cell.updateMassConservation( b, DT, cb.getCenterNeighbors());
 
         Assert.assertEquals("unexpected div="+divergence,
                                          0.0, divergence); // 0.1499999999999999
@@ -207,13 +204,13 @@ public class TestCell extends TestCase {
                 double expRightXVel, double expLeftXVel, double expTopYVel, double expBottomYVel) {
         
         Cell cell = cb.get(0, 0);
-        cell.updateSurfaceVelocities(cb.get(1, 0), cb.get(-1, 0), cb.get(0, 1), cb.get(0, -1), pressure);
+        cell.updateSurfaceVelocities(cb.getCenterNeighbors(), pressure);
 
          Assert.assertEquals("Unexpected pressure.", expectedPressure, cell.getPressure());
-         Assert.assertEquals("Unexpected right x velocity.", expRightXVel, cell.getUip());
-         Assert.assertEquals("Unexpected left x velocity.", expLeftXVel, cb.get(-1, 0).getUip());
-         Assert.assertEquals("Unexpected top velocity.", expTopYVel,  cell.getVjp());
-         Assert.assertEquals("Unexpected bottom x velocity.", expBottomYVel, cb.get(0, 1).getVjp());
+         Assert.assertEquals("Unexpected right x velocity.", expRightXVel, cell.getU());
+         Assert.assertEquals("Unexpected left x velocity.", expLeftXVel, cb.get(-1, 0).getU());
+         Assert.assertEquals("Unexpected top velocity.", expTopYVel,  cell.getV());
+         Assert.assertEquals("Unexpected bottom x velocity.", expBottomYVel, cb.get(0, 1).getV());
     }
 
 }

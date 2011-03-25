@@ -263,8 +263,8 @@ public final class EnvironmentRenderer {
         for ( int j = 0; j < grid.getYDimension(); j++ ) {
             for ( int i = 0; i < grid.getXDimension(); i++ ) {
                 Cell cell = grid.getCell(i, j);
-                double u = cell.getUip();
-                double v = cell.getVjp();
+                double u = cell.getU();
+                double v = cell.getV();
                 int x = (int) (scale_ * i) + OFFSET;
                 int xMid =  (int) (scale_ * (i + 0.5)) + OFFSET;
                 int xLen = (int) (scale_ * i + VELOCITY_SCALE * u) + OFFSET;

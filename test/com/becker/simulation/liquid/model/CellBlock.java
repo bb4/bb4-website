@@ -1,6 +1,5 @@
 package com.becker.simulation.liquid.model;
 
-import com.becker.simulation.liquid.model.Cell;
 
 /**
  * A 3x3 block of cells for testing purposes.
@@ -14,7 +13,7 @@ import com.becker.simulation.liquid.model.Cell;
  *   -------------------------------------
  *    c(-1, 1)  |    c(0, 1)   |  c(0, 1)
  *
- * @author Barry Becker Date: Aug 12, 2006
+ * @author Barry Becker
  */
 class CellBlock {
 
@@ -33,7 +32,7 @@ class CellBlock {
     }
 
     /**
-     * Gets a cell relative to the center cell poistion.
+     * Gets a cell relative to the center cell position.
      * e.g. get(0,0) returns the center cell.
      * @return cell relative to center of the block
      */
@@ -58,11 +57,11 @@ class CellBlock {
     public void setVelocities(double u, double v) {
         for (int i = 0; i<DIM; i++)
            for (int j = 0; j<DIM; j++)
-               block_[i][j].setVelocityP(u, v);
+               block_[i][j].initializeVelocity(u, v);
     }
 
     /**
-     * @param numParticlesPerCell number of particles to add to each cell in the block.
+     * @param numParticles number of particles to add to each cell in the block.
      */
     public void setCenterCellParticles(int numParticles) {
 
@@ -71,7 +70,7 @@ class CellBlock {
     }
 
     /**
-     * Set all the cell particles with numParticlesPerCEll
+     * Set all the cell particles with numParticlesPerCell
      * @param numParticlesPerCell number of particles to add to each cell in the block.
      */
     public void setAllCellParticles(int numParticlesPerCell) {
@@ -124,7 +123,15 @@ class CellBlock {
     public void updateCellStatuses() {
         for (int i = 1; i<DIM-2; i++)
            for (int j = 1; j<DIM-2; j++) 
-               block_[i][j].updateStatus(block_[i+1][j], block_[i-1][j], block_[i][j+1], block_[i][j-1]);
+               block_[i][j].updateStatus(findNeighbors(i, j));
+    }
+
+    public CellNeighbors getCenterNeighbors() {
+        return findNeighbors(2, 2);
+    }
+
+    public CellNeighbors findNeighbors(int i, int j) {
+        return new CellNeighbors(block_[i+1][j], block_[i-1][j], block_[i][j+1], block_[i][j-1]);
     }
 }
 
