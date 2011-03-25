@@ -9,10 +9,10 @@ import com.becker.common.Location;
  */
 public class Region {
 
-    /** starting location for the region */
+    /** starting location for the rectangular region */
     Location start;
 
-    /** optional stopping location for the region */
+    /** optional stopping location for the rectangular region */
     Location stop;
 
     /**

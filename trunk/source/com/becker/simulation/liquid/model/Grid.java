@@ -78,6 +78,11 @@ public class Grid {
         return grid_[i][j];
     }
 
+    public CellNeighbors getNeighbors(int i, int j) {
+        return new CellNeighbors(grid_[i + 1][j],   grid_[i - 1][j],
+                                 grid_[i][j + 1],   grid_[i][j - 1] );
+    }
+
 
     public int getXDimension() {
         return xDim_;
@@ -99,9 +104,7 @@ public class Grid {
         int i, j;
         for ( j = 1; j < yDim_ - 1; j++ ) {
             for ( i = 1; i < xDim_ - 1; i++ ) {
-                grid_[i][j].updateStatus(
-                                grid_[i + 1][j],     grid_[i - 1][j],
-                                grid_[i][j + 1],     grid_[i][j - 1]  );
+                grid_[i][j].updateStatus(getNeighbors(i,j));
             }
         }
     }
@@ -168,9 +171,7 @@ public class Grid {
 
         for ( j = 1; j < yDim_ - 1; j++ ) {
             for ( i = 1; i < xDim_ - 1; i++ ) {
-                grid_[i][j].updateTildeVelocities(
-                        grid_[i + 1][j], grid_[i - 1][j],
-                        grid_[i][j + 1], grid_[i][j - 1],
+                grid_[i][j].updateTildeVelocities( getNeighbors(i,j),
                         grid_[i + 1][j - 1], grid_[i - 1][j + 1],
                         timeStep, fx, fy, VISCOSITY
                 );
@@ -198,9 +199,7 @@ public class Grid {
             for (int j = 1; j < yDim_ - 1; j++ ) {
                 for (int i = 1; i < xDim_ - 1; i++ ) {
                     divergence =
-                            grid_[i][j].updateMassConservation( B0, timeStep,
-                                                             grid_[i + 1][j], grid_[i - 1][j],
-                                                             grid_[i][j + 1], grid_[i][j - 1] );
+                            grid_[i][j].updateMassConservation( B0, timeStep, getNeighbors(i,j));
                     if ( divergence > maxDivergence ) {
                         maxDivergence = divergence;
                     }
@@ -225,8 +224,7 @@ public class Grid {
             for (int i = 1; i < xDim_ - 1; i++ ) {
                 // I think the last arg is atmospheric pressure
                 grid_[i][j].updateSurfaceVelocities(
-                                  grid_[i + 1][j],   grid_[i - 1][j],
-                                  grid_[i][j + 1],   grid_[i][j - 1],  
+                                  getNeighbors(i, j),
                                   ATMOSPHERIC_PRESSURE );
             }
         }

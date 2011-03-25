@@ -181,10 +181,6 @@ public class LiquidEnvironment {
         }
     }
 
-    public int numParticles() {
-        return particles_.size();
-    }
-
     private void addRandomParticles( double x, double y, int numParticles )  {
 
         for ( int i = 0; i < numParticles; i++ ) {
