@@ -1,8 +1,5 @@
 package com.becker.simulation.liquid.model;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
 /**
  *  Keeps track of the current and last velocities for the cell.
  *  The u component heads out of the cell to the left, and

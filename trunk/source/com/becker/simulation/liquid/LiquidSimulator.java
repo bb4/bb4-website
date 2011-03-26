@@ -1,6 +1,5 @@
 package com.becker.simulation.liquid;
 
-import com.becker.common.ILog;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.Parameter;
@@ -11,9 +10,7 @@ import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.liquid.config.ConfigurationEnum;
 import com.becker.simulation.liquid.model.LiquidEnvironment;
 import com.becker.simulation.liquid.rendering.EnvironmentRenderer;
-import com.becker.ui.dialogs.OutputWindow;
 import com.becker.ui.util.GUIUtil;
-import com.becker.ui.util.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,20 +43,13 @@ public class LiquidSimulator extends NewtonianSimulator {
     public LiquidSimulator() {
         super("Liquid");
 
-        environment_ = new LiquidEnvironment( ConfigurationEnum.SPIGOT.getFileName(), createLogger() );
+        environment_ = new LiquidEnvironment( ConfigurationEnum.SPIGOT.getFileName());
         commonInit();
     }
 
     public void loadEnvironment(String configFile) {
-        environment_ = new LiquidEnvironment(configFile, createLogger());
+        environment_ = new LiquidEnvironment(configFile);
         commonInit();
-    }
-
-    private ILog createLogger()  {
-        ILog logger;
-        logger = new Log( new OutputWindow( "Log", null ) );
-        logger.setDestination(ILog.LOG_TO_WINDOW);
-        return logger;
     }
 
     @Override

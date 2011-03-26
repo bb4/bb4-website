@@ -21,6 +21,7 @@ class LiquidDynamicOptions extends JPanel
     private LiquidSimulator liquidSim_;
 
     private static final String VISCOSITY_SLIDER = "Viscosity";
+    private static final String B0_SLIDER = "b0";
     private static final String DYNAMIC_FRICTION_SLIDER = "Dynamic friction";
     private static final String TIMESTEP_SLIDER = "Time Step Size";
 
@@ -54,6 +55,7 @@ class LiquidDynamicOptions extends JPanel
         sliderProps = new SliderProperties[] {
                 //                                       MIN  MAX   INITIAL   SCALE
                 new SliderProperties(VISCOSITY_SLIDER, 0.0, 0.1, LiquidEnvironment.DEFAULT_VISCOSITY, 100),
+                new SliderProperties(B0_SLIDER, 0.0, 10.0, LiquidEnvironment.DEFAULT_B0, 100),
                 new SliderProperties(DYNAMIC_FRICTION_SLIDER, 0.0, 10.0, 0.1, 100),
                 new SliderProperties(TIMESTEP_SLIDER, 0.001, 0.2, 0.01, 1000)};
          return sliderProps;
@@ -71,6 +73,9 @@ class LiquidDynamicOptions extends JPanel
 
         if (sliderName.equals(VISCOSITY_SLIDER)) {
             liquidSim_.getEnvironment().setViscosity(value);
+        }
+        else if (sliderName.equals(B0_SLIDER)) {
+            liquidSim_.getEnvironment().setB0(value);
         }
         else if (sliderName.equals(DYNAMIC_FRICTION_SLIDER)) {
             liquidSim_.setDynamicFriction(value);

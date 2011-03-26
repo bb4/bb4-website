@@ -1,11 +1,9 @@
 package com.becker.simulation.liquid.rendering;
 
 import com.becker.common.ColorMap;
-import com.becker.simulation.liquid.model.Grid;
+import com.becker.simulation.liquid.Logger;
+import com.becker.simulation.liquid.model.*;
 import com.becker.simulation.liquid.rendering.PressureColorMap;
-import com.becker.simulation.liquid.model.Cell;
-import com.becker.simulation.liquid.model.LiquidEnvironment;
-import com.becker.simulation.liquid.model.Particle;
 
 import javax.vecmath.Vector2d;
 import java.awt.*;
@@ -91,7 +89,7 @@ public final class EnvironmentRenderer {
         double time = System.currentTimeMillis();
         
         // make sure all the cell statuses are in a consistent state
-        env_.getGrid().updateCellStatus();
+       env_.getGrid().updateCellStatus();
         
         drawGrid(g);
 
@@ -105,7 +103,7 @@ public final class EnvironmentRenderer {
 
         drawParticles(g);
 
-        if ( LiquidEnvironment.LOG_LEVEL >= 2 ) {
+        if ( Logger.LOG_LEVEL >= 2 ) {
             drawCellSymbols(g);
         }
         
@@ -114,7 +112,7 @@ public final class EnvironmentRenderer {
             drawCellFaceVelocities(g);
 
         double duration = (System.currentTimeMillis() - time) / 100.0;
-        env_.log( 1, "time to render:  (" + duration + ") " );
+        Logger.log( 1, "time to render:  (" + duration + ") " );
     }
 
    /**
@@ -175,10 +173,11 @@ public final class EnvironmentRenderer {
         g.setColor( PARTICLE_VELOCITY_COLOR );
         double[] a_ = new double[2];
         Grid grid = env_.getGrid();
+        VelocityInterpolator interpolator = new VelocityInterpolator(grid);
 
         for (Particle p : env_.getParticles()) {
             if (showVelocities_) {
-                Vector2d vel = grid.findInterpolatedGridVelocity(p);
+                Vector2d vel = interpolator.findVelocity(p);
                 p.get(a_);
                 double x = (scale_ * a_[0]) + OFFSET;
 
