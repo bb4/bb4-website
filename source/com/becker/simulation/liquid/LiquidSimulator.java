@@ -15,6 +15,7 @@ import com.becker.ui.dialogs.OutputWindow;
 import com.becker.ui.util.GUIUtil;
 import com.becker.ui.util.Log;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -29,6 +30,8 @@ public class LiquidSimulator extends NewtonianSimulator {
 
     private LiquidEnvironment environment_;
     private EnvironmentRenderer envRenderer_;
+
+    private LiquidDynamicOptions dynamicOptions_;
 
     /** The initial time step. It may adapt. */
     private static final double INITIAL_TIME_STEP = 0.005;
@@ -98,6 +101,10 @@ public class LiquidSimulator extends NewtonianSimulator {
         return timeStep_;
     }
 
+    public LiquidEnvironment getEnvironment() {
+        return environment_;
+    }
+
 
     @Override
     public void setScale( double scale ) {
@@ -154,6 +161,12 @@ public class LiquidSimulator extends NewtonianSimulator {
     public double getDynamicFriction() {
         // do nothing
         return 0.01;
+    }
+
+    @Override
+    public JPanel createDynamicControls() {
+        dynamicOptions_ = new LiquidDynamicOptions(this);
+        return dynamicOptions_;
     }
 
     @Override

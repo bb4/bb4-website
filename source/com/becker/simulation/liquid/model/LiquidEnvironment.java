@@ -31,14 +31,11 @@ public class LiquidEnvironment {
     /** for debugging */
     public static final int LOG_LEVEL = 0;
 
-    /** density of the liquid in grams per mm^3.  water = 1000 kg/m^3 or .001 g/mm^2  */
-    private static final double DENSITY = 0.001;
-
     /**
      * Viscosity of the liquid. Larger for molasses (.3), smaller for kerosene (.0001)
      * Water is about .001 Ns/m^2 or .01 g/s mm
      */
-    private static final double VISCOSITY = 0.002; //0.001;
+    public static final double DEFAULT_VISCOSITY = 0.002; //0.001;
 
     private static final int NUM_RAND_PARTS = 1;
 
@@ -53,6 +50,9 @@ public class LiquidEnvironment {
 
     /** the time since the start of the simulation  */
     private double time_ = 0.0;
+
+    /** High viscosity becomes like molasses, low like kerosene */
+    private double viscosity = DEFAULT_VISCOSITY;
 
     /** ensure that the runs are the same  */
     private static final Random RANDOM = new Random(1);
@@ -107,6 +107,14 @@ public class LiquidEnvironment {
 
     public Set<Particle> getParticles() {
         return particles_;
+    }
+
+    public void setViscosity(double v) {
+        viscosity = v;
+    }
+
+    public double getViscosity() {
+        return viscosity;
     }
 
     /**

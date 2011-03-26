@@ -182,10 +182,27 @@ public class Cell {
         }
         assert  (dt > 0.0000001) : "dt got too small";
 
-        // u
+        // u(i+0.5, j+0.5) = 0.5*(u(i+0.5, j) + u(i+0.5, j+1))
+        double u_ipjp = (getU() + neighbors.getTop().getU()) / 2.0;
+
+        // v(i+0.5, j+0.5) = 0.5*(v(i, j+0.5) + v(i+1, j+0.5))
+        double v_ipjp = (getV() + neighbors.getRight().getV()) / 2.0;
+
+        double ipjp2 = u_ipjp * v_ipjp;
+
+        calcUTilde(neighbors, cXp1Ym1.getV(), ipjp2, dt, forceX, viscosity);
+        calcVTilde(neighbors, cXm1Yp1.getU(), ipjp2, dt, forceY, viscosity);
+    }
+
+    /**
+     * Update new U component of velocity.
+     */
+    private void calcUTilde(CellNeighbors neighbors, double lowerRightV, double ipjp2,
+                            double dt, double forceX,  double viscosity ) {
+
         // u(i, j) = 0.5*(u(i+0.5, j) + u(i-0.5, j))
         double u_i = (getU() + neighbors.getLeft().getU()) / 2.0;
-        
+
         // u(i+1, j) = 0.5*(u(i+1.5, j) + u(i+0.5, j))
         double u_ip1 = (neighbors.getRight().getU() + getU()) / 2.0;
 
@@ -193,22 +210,17 @@ public class Cell {
         double u_ipjm = (getU() + neighbors.getBottom().getU()) / 2.0;
 
         // v(i+0.5, j-0.5) = 0.5*(v(i, j-0.5) + v(i+1, j-0.5))
-        double v_ipjm = (neighbors.getBottom().getV() + cXp1Ym1.getV()) / 2.0;
+        double v_ipjm = (neighbors.getBottom().getV() + lowerRightV) / 2.0;
 
-        // u(i+0.5, j+0.5) = 0.5*(u(i+0.5, j) + u(i+0.5, j+1))
-        double u_ipjp = (getU() + neighbors.getTop().getU()) / 2.0;
-
-        // v(i+0.5, j+0.5) = 0.5*(v(i, j+0.5) + v(i+1, j+0.5))
-        double v_ipjp = (getV() + neighbors.getRight().getV()) / 2.0;
 
         if ( !neighbors.getRight().isObstacle() ) {
             double xNume = (u_i * u_i  -  u_ip1 * u_ip1);
-            double yNume = (u_ipjm * v_ipjm  -  u_ipjp * v_ipjp);
+            double yNume = (u_ipjm * v_ipjm  -  ipjp2);
             double v1 = (neighbors.getRight().getU() - 2 * getU()
                                  + neighbors.getLeft().getU()) / dxSq;
             double v2 = (neighbors.getTop().getU() - 2 * getU()
                                  + neighbors.getBottom().getU()) / dySq;
-            double pf = xNume/ dx + yNume / dy + forceX
+            double pf = xNume / dx + yNume / dy + forceX
                                + (pressure + neighbors.getRight().getPressure()) / dx
                                + viscosity * (v1 + v2);
             double newu =  getU() + dt * pf;
@@ -223,10 +235,16 @@ public class Cell {
             } */
             velocity.setNewU(newu);
         }
+    }
 
-        // v
+    /**
+     * Update new V component of velocity.
+     */
+    public void calcVTilde(CellNeighbors neighbors, double upperLeftU, double ipjp2,
+                            double dt, double forceY,  double viscosity) {
+
         // u(i-0.5, j+0.5) = 0.5*(u(i-0.5, j) + u(i-0.5, j+1))
-        double u_imjp = (neighbors.getLeft().getU() + cXm1Yp1.getU()) / 2.0;
+        double u_imjp = (neighbors.getLeft().getU() + upperLeftU) / 2.0;
 
         // v(i-0.5, j+0.5) = 0.5*(v(i, j+0.5) + v(i-1, j+0.5))
         double v_imjp = (getV() + neighbors.getBottom().getV()) / 2.0;
@@ -238,7 +256,7 @@ public class Cell {
         double v_jp1 = (getV() + neighbors.getTop().getV()) / 2.0;
 
         if ( !neighbors.getTop().isObstacle() ) {
-            double xNume = (u_imjp * v_imjp - u_ipjp * v_ipjp);
+            double xNume = (u_imjp * v_imjp - ipjp2);
             double yNume = (v_j * v_j - v_jp1 * v_jp1);
             double v1 =  (neighbors.getRight().getV() - 2 * getV()
                        + neighbors.getLeft().getV()) / dxSq;
@@ -257,7 +275,7 @@ public class Cell {
                         + "\ncXp1=" + cYp1 + " cXm1=" + cYm1
                         + "\ncXp1Ym1=" + cXp1Ym1 + " cXm1Yp1=" + cXm1Yp1);
             } */
-             velocity.setNewV(newv);
+            velocity.setNewV(newv);
         }
     }
 
