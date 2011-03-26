@@ -9,6 +9,7 @@ public enum ConfigurationEnum {
 
     SPIGOT("Spigot", "A spigot aimed to the right", getFileBase() + "spigot.xml"),
     BASIC("Basic", "A stream of water into a pool",  getFileBase() + "config1.xml"),
+    FALLING_BLOB("Falling water", "A falling blob of water onto the floor",  getFileBase() + "fallingWater.xml"),
     WATER_WALL_LEFT("Water wall (left)", "An initial wall of water on the left", getFileBase() + "wallOfWaterLeft.xml"),
     WATER_WALL_RIGHT("Water wall (right)", "An initial wall of water on the right", getFileBase() + "wallOfWaterRight.xml"),
     PULSE_LARGE("Pulsing spigot", "Water pulsing out of the spigot", getFileBase() + "pulse.xml"),
