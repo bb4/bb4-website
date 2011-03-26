@@ -16,8 +16,8 @@ public class CellNeighbors {
      * Constructor
      * @param cXp1 cell to the right
      * @param cXm1 cell to the left
-     * @param cYp1 cell below (?)
-     * @param cYm1 cell above (?)
+     * @param cYp1 cell above
+     * @param cYm1 cell below
      */
     public CellNeighbors(Cell cXp1, Cell cXm1,Cell cYp1, Cell cYm1)  {
         cellXp1 = cXp1;
