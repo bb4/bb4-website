@@ -2,8 +2,8 @@ package com.becker.simulation.liquid.rendering;
 
 import com.becker.common.ColorMap;
 import com.becker.simulation.liquid.Logger;
+import com.becker.simulation.liquid.compute.VelocityInterpolator;
 import com.becker.simulation.liquid.model.*;
-import com.becker.simulation.liquid.rendering.PressureColorMap;
 
 import javax.vecmath.Vector2d;
 import java.awt.*;

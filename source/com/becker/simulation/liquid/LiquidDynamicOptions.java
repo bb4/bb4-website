@@ -1,5 +1,6 @@
 package com.becker.simulation.liquid;
 
+import com.becker.simulation.liquid.compute.GridUpdater;
 import com.becker.simulation.liquid.model.LiquidEnvironment;
 import com.becker.simulation.snake.LocomotionParameters;
 import com.becker.simulation.snake.SnakeSimulator;
@@ -21,7 +22,7 @@ class LiquidDynamicOptions extends JPanel
     private LiquidSimulator liquidSim_;
 
     private static final String VISCOSITY_SLIDER = "Viscosity";
-    private static final String B0_SLIDER = "b0";
+    private static final String B0_SLIDER = "Relaxation Coefficient";
     private static final String DYNAMIC_FRICTION_SLIDER = "Dynamic friction";
     private static final String TIMESTEP_SLIDER = "Time Step Size";
 
@@ -54,8 +55,8 @@ class LiquidDynamicOptions extends JPanel
         SliderProperties[] sliderProps;
         sliderProps = new SliderProperties[] {
                 //                                       MIN  MAX   INITIAL   SCALE
-                new SliderProperties(VISCOSITY_SLIDER, 0.0, 0.1, LiquidEnvironment.DEFAULT_VISCOSITY, 100),
-                new SliderProperties(B0_SLIDER, 0.0, 10.0, LiquidEnvironment.DEFAULT_B0, 100),
+                new SliderProperties(VISCOSITY_SLIDER, 0.0, 0.1, GridUpdater.DEFAULT_VISCOSITY, 100),
+                new SliderProperties(B0_SLIDER, 1.0, 2.0, GridUpdater.DEFAULT_B0, 100),
                 new SliderProperties(DYNAMIC_FRICTION_SLIDER, 0.0, 10.0, 0.1, 100),
                 new SliderProperties(TIMESTEP_SLIDER, 0.001, 0.2, 0.01, 1000)};
          return sliderProps;

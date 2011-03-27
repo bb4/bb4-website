@@ -9,6 +9,8 @@ public class CellDimensions {
 
     public static final double CELL_SIZE = 10.0;
 
+    public static final double INVERSE_CELL_SIZE = 1.0 / CellDimensions.CELL_SIZE;
+
     /** size of a cell */
     public final double dx;
     public final double dy;

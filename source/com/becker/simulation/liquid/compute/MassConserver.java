@@ -1,4 +1,8 @@
-package com.becker.simulation.liquid.model;
+package com.becker.simulation.liquid.compute;
+
+import com.becker.simulation.liquid.model.Cell;
+import com.becker.simulation.liquid.model.CellDimensions;
+import com.becker.simulation.liquid.model.CellNeighbors;
 
 /**
  *  Ensures that mass is conserved while processing.
@@ -15,6 +19,8 @@ public class MassConserver {
 
     /**
      * constructor
+     * @param b0 relaxation coefficient.
+     * @param dt delta time.
      */
     public MassConserver(double b0, double dt)  {
 

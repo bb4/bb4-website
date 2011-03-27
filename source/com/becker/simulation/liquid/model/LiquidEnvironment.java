@@ -1,6 +1,7 @@
 package com.becker.simulation.liquid.model;
 
 import com.becker.simulation.liquid.Logger;
+import com.becker.simulation.liquid.compute.GridUpdater;
 import com.becker.simulation.liquid.config.Conditions;
 import com.becker.simulation.liquid.config.Region;
 import com.becker.simulation.liquid.config.Source;
@@ -28,36 +29,22 @@ import java.util.Set;
  */
 public class LiquidEnvironment {
 
-    /**
-     * Viscosity of the liquid. Larger for molasses (.3), smaller for kerosene (.0001)
-     * Water is about .001 Ns/m^2 or .01 g/s mm
-     */
-    public static final double DEFAULT_VISCOSITY = 0.002; //0.001;
-
-    /**   used in mass conservation (how?) */
-    public static final double DEFAULT_B0 = 1.2;  // 1.7
-    private double b0 = DEFAULT_B0;
-
     private static final int NUM_RAND_PARTS = 1;
 
     /** the grid of cells that make up the environment */
     private Grid grid;
 
+    /** Does all the computational processing on the grid */
+    GridUpdater gridUpdater;
 
     /** constraints and conditions from the configuration file. */
     private Conditions conditions;
 
     // the set of particles in this simulation
-    private Set<Particle> particles;
+    private Particles particles;
 
     /** the time since the start of the simulation  */
     private double time = 0.0;
-
-    /** High viscosity becomes like molasses, low like kerosene */
-    private double viscosity = DEFAULT_VISCOSITY;
-
-    /** ensure that the runs are the same  */
-    private static final Random RANDOM = new Random(1);
 
 
     /**
@@ -85,7 +72,8 @@ public class LiquidEnvironment {
         int yDim = conditions.getGridHeight() + 2;
 
         grid = new Grid(xDim, yDim);
-        particles = new HashSet<Particle>();
+        particles = new Particles();
+        gridUpdater = new GridUpdater(grid);
 
         setInitialLiquid();
         grid.setBoundaries();
@@ -104,20 +92,16 @@ public class LiquidEnvironment {
         return grid;
     }
 
-    public Set<Particle> getParticles() {
+    public Particles getParticles() {
         return particles;
     }
 
     public void setViscosity(double v) {
-        this.viscosity = v;
+        gridUpdater.setViscosity(v);
     }
 
     public void setB0(double b0) {
-        this.b0 = b0;
-    }
-
-    public double getB0() {
-        return b0;
+        gridUpdater.setB0(b0);
     }
 
     /**
@@ -130,8 +114,6 @@ public class LiquidEnvironment {
      * @return new new timeStep to use.
      */
     public double stepForward( double timeStep ) {
-
-        GridUpdater gridUpdater = new GridUpdater(grid, b0);
 
         // Update cell status so we can track the surface.
         grid.updateCellStatus();
@@ -160,7 +142,7 @@ public class LiquidEnvironment {
         for (Region region : conditions.getInitialLiquidRegions()) {
             for (int i = region.getStart().getX(); i <= region.getStop().getX(); i++ ) {
                  for (int j = region.getStart().getY(); j <= region.getStop().getY(); j++ ) {
-                     addRandomParticles(i, j, 4 * NUM_RAND_PARTS);
+                     particles.addRandomParticles(i, j, 4 * NUM_RAND_PARTS, grid);
                  }
             }
         }
@@ -188,24 +170,10 @@ public class LiquidEnvironment {
             for (int i = source.getStart().getX(); i <= source.getStop().getX(); i++ ) {
                  for (int j = source.getStart().getY(); j <= source.getStop().getY(); j++ ) {
                      grid.setVelocity(i, j, velocity);
-                     addRandomParticles(i, j, NUM_RAND_PARTS);
+                     particles.addRandomParticles(i, j, NUM_RAND_PARTS, grid);
                  }
             }
         }
     }
 
-    private void addRandomParticles( double x, double y, int numParticles )  {
-
-        for ( int i = 0; i < numParticles; i++ ) {
-            addParticle( x + RANDOM.nextDouble(), y + RANDOM.nextDouble());
-        }
-    }
-
-    private void addParticle( double x, double y ) {
-
-        Cell cell = grid.getCell((int)x, (int)y);
-        Particle p = new Particle( x, y, cell);
-        particles.add( p );
-        cell.incParticles();
-    }
 }

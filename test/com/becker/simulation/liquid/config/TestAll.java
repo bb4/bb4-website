@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
  *
  * @author Barry Becker
  */
-public class TestAllConfig extends TestCase {
+public class TestAll extends TestCase {
 
 
     /**
