@@ -1,6 +1,10 @@
 package com.becker.simulation.liquid.model;
 
+import com.becker.common.format.DefaultNumberFormatter;
+
+import javax.swing.text.NumberFormatter;
 import javax.vecmath.Vector2d;
+import java.text.DecimalFormat;
 
 /**
  *  This is the global space containing all the cells, walls, and particles
@@ -22,6 +26,7 @@ public class Grid {
     /** the grid of cells that make up the environment in x,y (col, row) order */
     private Cell[][] grid_ = null;
 
+    private DecimalFormat formatter = new DecimalFormat("###0.###");
 
     /**
      * Constructor to use if you want the environment based on a config file.
@@ -100,11 +105,11 @@ public class Grid {
             // left
             Cell n = grid_[1][j];
             grid_[0][j].setPressure( n.getPressure() );
-            grid_[0][j].initializeVelocity(0, n.getV());   // -n.getVjP ???
+            grid_[0][j].initializeVelocity(0, n.getV());   // -n.getV ???
             // right
             n = grid_[xDim_ - 2][j];
             grid_[xDim_ - 1][j].setPressure( n.getPressure() );
-            grid_[xDim_ - 1][j].initializeVelocity(0, n.getV());  // -n.getVip()
+            grid_[xDim_ - 1][j].initializeVelocity(0, n.getV());  // -n.getV()
             grid_[xDim_ - 2][j].initializeU(0);
         }
 
@@ -113,12 +118,46 @@ public class Grid {
             // bottom
             Cell n = grid_[i][1];
             grid_[i][0].setPressure( n.getPressure() );
-            grid_[i][0].initializeVelocity(n.getU(), 0); // -n.getUip() ???
+            grid_[i][0].initializeVelocity(n.getU(), 0); // -n.getU() ???
             // top
             n = grid_[i][yDim_ - 2];
             grid_[i][yDim_ - 1].setPressure( n.getPressure() );
-            grid_[i][yDim_ - 1].initializeVelocity(n.getU(), 0);  // -n.getUip()
+            grid_[i][yDim_ - 1].initializeVelocity(n.getU(), 0);  // -n.getU()
             grid_[i][yDim_ - 2].initializeV(0);
         }      
+    }
+
+    public String toString() {
+
+        StringBuilder bldr = new StringBuilder();
+
+        for (int j = yDim_-1; j >=0 ; j-- ) {
+            for (int i = 0; i < xDim_; i++ ) {
+                Cell cell = getCell(i, j);
+                bldr.append("    V=" +format(cell.getV()));
+                bldr.append("    |");
+            }
+            bldr.append("\n");
+            for (int i = 0; i < xDim_; i++ ) {
+                Cell cell = getCell(i, j);
+                bldr.append("P=" + format(cell.getPressure()));
+                bldr.append(" U=" + format(cell.getU()));
+                bldr.append("|");
+            }
+            bldr.append("\n");
+            for (int i = 0; i < xDim_; i++ ) {
+                bldr.append("----------------");
+            }
+            bldr.append("\n");
+        }
+        return bldr.toString();
+    }
+
+    private String format(double num) {
+        StringBuilder fmtNum = new StringBuilder(formatter.format(num));
+        while (fmtNum.length() < 5) {
+            fmtNum.append(' ');
+        }
+        return fmtNum.toString();
     }
 }

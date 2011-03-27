@@ -15,7 +15,7 @@ package com.becker.simulation.liquid.model;
  *
  * @author Barry Becker
  */
-class CellBlock {
+public class CellBlock {
 
     private static final int DIM = 5;
     private final Cell[][] block_;

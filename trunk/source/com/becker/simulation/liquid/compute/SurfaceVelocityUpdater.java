@@ -1,4 +1,8 @@
-package com.becker.simulation.liquid.model;
+package com.becker.simulation.liquid.compute;
+
+import com.becker.simulation.liquid.model.Cell;
+import com.becker.simulation.liquid.model.CellDimensions;
+import com.becker.simulation.liquid.model.CellNeighbors;
 
 /**
  *  Update the velocities for surface cells

@@ -19,7 +19,7 @@ public class TestAll  {
         TestSuite suite =  new TestSuite("All Two Player Game Tests");
 
         suite.addTest(com.becker.game.twoplayer.common.TestAll.suite());
-        //suite.addTest(com.becker.game.twoplayer.common.search.TestAllModel.suite());
+        //suite.addTest(com.becker.game.twoplayer.common.search.TestAll.suite());
         suite.addTest(com.becker.game.twoplayer.blockade.TestAll.suite());
         suite.addTest(com.becker.game.twoplayer.go.TestAll.suite());
         suite.addTest(com.becker.game.twoplayer.pente.TestAll.suite());
