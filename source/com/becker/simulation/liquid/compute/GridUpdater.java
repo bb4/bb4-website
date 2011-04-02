@@ -118,7 +118,7 @@ public class GridUpdater {
      */
     public double updateParticlePosition( double timeStep, Particles particles) {
 
-        ParticlePositionUpdater updater = new ParticlePositionUpdater(grid);
-        return updater.updateParticlePosition(timeStep, particles);
+        ParticleAdvector updater = new ParticleAdvector(grid);
+        return updater.advectParticles(timeStep, particles);
     }
 }

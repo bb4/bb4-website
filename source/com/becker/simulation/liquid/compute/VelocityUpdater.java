@@ -24,9 +24,9 @@ public class VelocityUpdater {
 
     /**
      * compute velocity at next time step given neighboring cells.
-     *      cXm1Yp1    top
-     *       left       M      right
-     *        0      bottom    cXp1Ym1
+     *      cXm1Yp1   nb.top
+     *     nb.left      M      nb.right
+     *        0     nb.bottom   cXp1Ym1
      *
      * The formulas here equate to a numerical solution
      * of the Navier-Stokes equation.

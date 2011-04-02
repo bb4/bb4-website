@@ -7,9 +7,6 @@ import com.becker.simulation.liquid.config.Region;
 import com.becker.simulation.liquid.config.Source;
 
 import javax.vecmath.Vector2d;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
 
 
 /**

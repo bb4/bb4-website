@@ -1,5 +1,7 @@
 package com.becker.simulation.liquid.model;
 
+import static com.becker.simulation.common.PhysicsConstants.ATMOSPHERIC_PRESSURE;
+
 /**
  *  A region of space containing particles, walls, or liquid.
  *  Adapted from work by Nick Foster.
@@ -36,7 +38,7 @@ public class Cell {
      * constructor
      */
     public Cell()  {
-        pressure = 0;
+        pressure = ATMOSPHERIC_PRESSURE;
         velocity = new CellVelocity();
 
         numParticles = 0;
