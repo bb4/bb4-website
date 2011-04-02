@@ -10,7 +10,7 @@ import javax.vecmath.Vector2d;
  *
  *  @author Barry Becker
  */
-public class ParticlePositionUpdater {
+public class ParticleAdvector {
 
     /** the grid of cells that make up the environment */
     private Grid grid ;
@@ -22,7 +22,7 @@ public class ParticlePositionUpdater {
     /**
      * Constructor to use if you want the environment based on a config file.
      */
-    public ParticlePositionUpdater(Grid grid) {
+    public ParticleAdvector(Grid grid) {
 
         this.grid = grid;
         interpolator = new VelocityInterpolator(grid);
@@ -34,7 +34,7 @@ public class ParticlePositionUpdater {
      * RISK: 3
      * @return the current timeStep (it was possible adjusted)
      */
-    public double updateParticlePosition( double timeStep, Particles particles) {
+    public double advectParticles(double timeStep, Particles particles) {
 
         // keep track of the biggest velocity magnitude so we can adjust the timestep appropriately.
         double maxLength = Double.MIN_VALUE;
@@ -53,7 +53,7 @@ public class ParticlePositionUpdater {
 
     /**
      * The velocity of a particle is determined using area weighting interpolation.
-     * @return
+     * @return advect a particle if it is completely under water.
      */
     private double advectParticle(double timeStep, Particle particle) {
 
@@ -178,11 +178,12 @@ public class ParticlePositionUpdater {
         double newTimeStep = timeStep;
         if (increment > maxDistance) {
             newTimeStep /= 2.0;
-            Logger.log(0, "updateParticlePosition: HALVED dt=" + timeStep +" increment="+increment );
+            Logger.log(0, "advectParticles: HALVED dt=" + timeStep +" increment="+increment );
         }
         else if (increment < minDistance) {
             newTimeStep *= 2.0;
-            Logger.log(0, "updateParticlePosition: DOUBLED dt=" + timeStep +" increment="+increment +" maxLength=" + maxLength);
+            Logger.log(0, "advectParticles: DOUBLED dt=" + timeStep
+                    +" increment="+increment +" maxLength=" + maxLength);
         }
         return newTimeStep;
     }
