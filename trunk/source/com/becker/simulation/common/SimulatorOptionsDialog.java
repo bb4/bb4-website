@@ -177,7 +177,6 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
      */
     protected abstract JPanel createCustomParamPanel();
 
-
     protected void ok() {
 
         // set the common rendering and global options
@@ -192,6 +191,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
         simulator_.repaint();
     }
 
+    @Override
     public void actionPerformed( ActionEvent e )  {
 
         Object source = e.getSource();

@@ -8,8 +8,8 @@ package com.becker.simulation.liquid.model;
 public enum CellStatus {
 
     EMPTY('.'),      // no liquid
-    SURFACE('*'),    // has liquid and full cell is adjacent
-    FULL('#'),       // liquid on all sides
+    SURFACE('S'),    // has liquid and full cell is adjacent
+    FULL('F'),       // liquid on all sides
     OBSTACLE('o'),   // solid object (like a wall)
     ISOLATED('I');   // has liquid, but no full cells are adjacent
 

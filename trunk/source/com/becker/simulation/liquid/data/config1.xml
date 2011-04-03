@@ -3,7 +3,7 @@
 <!DOCTYPE environment SYSTEM "http://barrybecker4.com/schema/liquid.dtd">
 
 <environment date="1/9/2009" author="Barry Becker"
-                        gridWidth="26" gridHeight="21" cellSize="10.0" gravity="9.80">
+                        gridWidth="26" gridHeight="21" cellSize="10.0" gravity="-9.80">
 
     <walls>
         <wall start="15,10" stop="15,15" />

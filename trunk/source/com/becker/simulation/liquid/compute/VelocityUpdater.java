@@ -81,7 +81,7 @@ public class VelocityUpdater {
             double v2 = (neighbors.getTop().getU() - 2 * cell.getU()
                                  + neighbors.getBottom().getU()) / dims.dySq;
             double pf = xNume / dims.dx + yNume / dims.dy + forceX
-                               + (cell.getPressure() + neighbors.getRight().getPressure()) / dims.dx
+                               + (cell.getPressure() - neighbors.getLeft().getPressure()) / dims.dx
                                + viscosity * (v1 + v2);
             double newu = cell.getU() + dt * pf;
             /*
@@ -121,9 +121,9 @@ public class VelocityUpdater {
             double v1 =  (neighbors.getRight().getV() - 2 * cell.getV()
                        + neighbors.getLeft().getV()) / dims.dxSq;
             double v2 =  (neighbors.getTop().getV() - 2 * cell.getV()
-                        + neighbors.getBottom().getV()) / dims.dySq;
+                       + neighbors.getBottom().getV()) / dims.dySq;
             double pf = xNume / dims.dx + yNume / dims.dy + forceY
-                    + (cell.getPressure() - neighbors.getTop().getPressure()) / dims.dy
+                    + (cell.getPressure() - neighbors.getBottom().getPressure()) / dims.dy
                     + viscosity * (v1 + v2);
             double newv = cell.getV() + dt * pf;
             /*

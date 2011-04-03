@@ -6,10 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author Barry Becker Date: Nov 5, 2006
+ * @author Barry Becker
  */
 public abstract class NewtonianSimOptionsDialog extends SimulatorOptionsDialog {
-
 
     // rendering option controls
     private JCheckBox drawMeshCheckbox_;
@@ -24,14 +23,12 @@ public abstract class NewtonianSimOptionsDialog extends SimulatorOptionsDialog {
     /**
      * Constructor
      */
-    public NewtonianSimOptionsDialog( JFrame parent, Simulator simulator )
-    {
+    public NewtonianSimOptionsDialog( JFrame parent, Simulator simulator ) {
         super( parent, simulator );
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return "Newtonian Simulation Configuration";
     }
 
@@ -41,20 +38,30 @@ public abstract class NewtonianSimOptionsDialog extends SimulatorOptionsDialog {
 
         NewtonianSimulator sim = (NewtonianSimulator) getSimulator();
 
+        togglesPanel.add(createMeshCheckBox(sim));
+        togglesPanel.add(createVelocitiesCheckBox(sim));
+        togglesPanel.add(createForcesCheckBox(sim));
+    }
+
+    protected JCheckBox createMeshCheckBox(NewtonianSimulator sim) {
         drawMeshCheckbox_ = new JCheckBox( "Show Wireframe", sim.getDrawMesh() );
         drawMeshCheckbox_.setToolTipText( "draw showing the underlying wireframe mesh");
         drawMeshCheckbox_.addActionListener( this );
-        togglesPanel.add( drawMeshCheckbox_ );
+        return drawMeshCheckbox_;
+    }
 
+    protected JCheckBox createVelocitiesCheckBox(NewtonianSimulator sim) {
         showVelocitiesCheckbox_ = new JCheckBox( "Show Velocity Vectors", sim.getShowVelocityVectors());
         showVelocitiesCheckbox_.setToolTipText( "show lines representing velocity vectors on each partical mass" );
         showVelocitiesCheckbox_.addActionListener( this );
-        togglesPanel.add( showVelocitiesCheckbox_ );
+        return showVelocitiesCheckbox_;
+    }
 
+    protected JCheckBox createForcesCheckBox(NewtonianSimulator sim) {
         showForcesCheckbox_ = new JCheckBox( "Show Force Vectors", sim.getShowForceVectors());
         showForcesCheckbox_.setToolTipText( "show lines representing force vectors on each partical mass" );
         showForcesCheckbox_.addActionListener( this );
-        togglesPanel.add( showForcesCheckbox_ );
+        return showForcesCheckbox_;
     }
 
     @Override
@@ -94,7 +101,8 @@ public abstract class NewtonianSimOptionsDialog extends SimulatorOptionsDialog {
         // set the common rendering and global physics options
         simulator.setDrawMesh( drawMeshCheckbox_.isSelected() );
         simulator.setShowVelocityVectors( showVelocitiesCheckbox_.isSelected() );
-        simulator.setShowForceVectors( showForcesCheckbox_.isSelected() );
+        if (showForcesCheckbox_!=null)
+            simulator.setShowForceVectors( showForcesCheckbox_.isSelected() );
 
         double staticFriction = staticFrictionField_.getValue();
         double dynamicFriction =  dynamicFrictionField_.getValue();

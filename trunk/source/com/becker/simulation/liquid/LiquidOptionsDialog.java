@@ -1,6 +1,7 @@
 package com.becker.simulation.liquid;
 
 import com.becker.simulation.common.NewtonianSimOptionsDialog;
+import com.becker.simulation.common.NewtonianSimulator;
 import com.becker.simulation.liquid.config.ConfigurationEnum;
 
 import javax.swing.*;
@@ -17,11 +18,39 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog {
 
      /** type of distribution function to test.   */
     private JComboBox configurationChoiceField_;
+    private JCheckBox showPressureCheckbox_;
+    private JCheckBox showCellStatusCheckbox_;
 
     /** constructor  */
     LiquidOptionsDialog( JFrame parent, LiquidSimulator simulator ) {
         super( parent, simulator );
     }
+
+
+    @Override
+    protected void addAdditionalToggles(JPanel togglesPanel) {
+
+        NewtonianSimulator sim = (NewtonianSimulator) getSimulator();
+        togglesPanel.add(createMeshCheckBox(sim));
+        togglesPanel.add(createVelocitiesCheckBox(sim));
+        togglesPanel.add(createPressureCheckBox(sim));
+        togglesPanel.add(createCellStatusCheckBox(sim));
+    }
+
+    protected JCheckBox createPressureCheckBox(NewtonianSimulator sim) {
+        showPressureCheckbox_ = new JCheckBox( "Show Pressures", sim.getShowForceVectors());
+        showPressureCheckbox_.setToolTipText( "show colors for the different pressures" );
+        showPressureCheckbox_.addActionListener( this );
+        return showPressureCheckbox_;
+    }
+
+    protected JCheckBox createCellStatusCheckBox(NewtonianSimulator sim) {
+        showCellStatusCheckbox_ = new JCheckBox( "Show Cell Status", sim.getShowForceVectors());
+        showCellStatusCheckbox_.setToolTipText( "show status for each of the cells" );
+        showCellStatusCheckbox_.addActionListener( this );
+        return showCellStatusCheckbox_;
+    }
+
 
     @Override
     protected JPanel createCustomParamPanel() {
@@ -50,14 +79,11 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog {
                 new DefaultComboBoxModel(ConfigurationEnum.values()));
         configurationChoice.setToolTipText(ConfigurationEnum.values()[0].getDescription());
         configurationChoice.addActionListener(this);
-
-        LiquidSimulator simulator = (LiquidSimulator) getSimulator();
         return configurationChoice;
     }
     
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         super.actionPerformed(e);
         
         Object source = e.getSource();
@@ -79,6 +105,9 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog {
         ConfigurationEnum selected = (ConfigurationEnum) configurationChoiceField_.getSelectedItem();
 
         simulator.loadEnvironment(selected.getFileName());
+
+        simulator.getRenderingOptions().setShowPressures(showPressureCheckbox_.isSelected());
+        simulator.getRenderingOptions().setShowCellStatus(showCellStatusCheckbox_.isSelected());
 
         super.ok();
     }

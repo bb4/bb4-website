@@ -24,7 +24,7 @@ public class GridUpdater {
      * Viscosity of the liquid. Larger for molasses (.3), smaller for kerosene (.0001)
      * Water is about .001 Ns/m^2 or .01 g/s mm
      */
-    public static final double DEFAULT_VISCOSITY = 0.002;  //0.001;
+    public static final double DEFAULT_VISCOSITY = 0.002;
 
     /** Used in mass conservation (how?) */
     public static final double DEFAULT_B0 = 1.4;  // 1.7
