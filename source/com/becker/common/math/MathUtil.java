@@ -13,7 +13,7 @@ public final class MathUtil {
 
     public static final double EPS = 0.000000000000000001;
     
-    public static final double EPS_MEDIUM = 0.00000000001;
+    public static final double EPS_MEDIUM = 0.0000000001;
     
     public static final double EPS_BIG = 0.26;
 
@@ -105,4 +105,6 @@ public final class MathUtil {
         System.out.println("inverse fun=" +Arrays.toString(invFunc));
         return invFunc;
     }
+
+
 }

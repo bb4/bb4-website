@@ -18,6 +18,9 @@ public class TestAll extends TestCase {
         suite.addTestSuite(VelocityInterpolatorTest.class);
         suite.addTestSuite(MassConserverTest.class);
         suite.addTestSuite(PressureUpdaterTest.class);
+        suite.addTestSuite(VelocityUpdaterTest.class);
+        suite.addTestSuite(SurfaceVelocityUpdaterTest.class);
+        suite.addTestSuite(ParticleAdvectorTest.class);
 
         return suite;
     }

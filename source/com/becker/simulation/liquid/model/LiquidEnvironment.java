@@ -112,6 +112,7 @@ public class LiquidEnvironment {
      */
     public double stepForward( double timeStep ) {
 
+        System.out.println("time=" + time);
         // Update cell status so we can track the surface.
         grid.updateCellStatus();
 
@@ -121,11 +122,15 @@ public class LiquidEnvironment {
         // Compute velocities for all full cells.
         gridUpdater.updateVelocity(timeStep, conditions.getGravity());
 
+        ////System.out.println(grid.toString());
+
         // Compute the pressure for all Full Cells.
         gridUpdater.updatePressure(timeStep);
 
-        // Re-calculate obstacle velocities for Surface cells.
+        // Re-calculate velocities for Surface cells.
         gridUpdater.updateSurfaceVelocity();
+
+        ////System.out.println(grid.toString());
 
         // Update the position of the surface and objects.
         double newTimeStep = gridUpdater.updateParticlePosition(timeStep, particles);

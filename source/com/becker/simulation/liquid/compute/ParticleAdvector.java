@@ -36,7 +36,7 @@ public class ParticleAdvector {
      */
     public double advectParticles(double timeStep, Particles particles) {
 
-        // keep track of the biggest velocity magnitude so we can adjust the timestep appropriately.
+        // keep track of the biggest velocity magnitude so we can adjust the timestep if needed.
         double maxLength = Double.MIN_VALUE;
 
         for (Particle particle : particles)  {
@@ -80,15 +80,6 @@ public class ParticleAdvector {
         // scale the velocity by the cell size so we can assume the cells have unit dims
         vel.scale(CellDimensions.INVERSE_CELL_SIZE);
 
-        /*
-        double dist = magnitude * timeStep;
-        if (dist > maxDistance) {
-                log(0, "b_vmag="+magnitude + " i="+i+" j="+j + "   " );
-                double factor =  .001 + maxDistance / dist;
-                vel.scale(factor);
-                log(0, "a_vmag="+vel.length());
-        }*/
-
         double xChange = timeStep * vel.x;
         double yChange = timeStep * vel.y;
         particle.set( particle.x + xChange, particle.y + yChange );
@@ -106,7 +97,7 @@ public class ParticleAdvector {
         grid.getCell(i, j).decParticles();  // decrement last cell
         particle.setCell( newHomeCell );
 
-        assert ( grid.getCell(i, j).getNumParticles() >= 0): // hitting this
+        assert ( grid.getCell(i, j).getNumParticles() >= 0):
                 "The number of particles in grid[" + i + "][" + j + "] is " + grid.getCell(i, j).getNumParticles();
         assert ( newHomeCell.getNumParticles() >= 0 );
         return vel.length();
@@ -122,25 +113,24 @@ public class ParticleAdvector {
         int ii = (int) Math.floor(particle.x);
         int jj = (int) Math.floor(particle.y);
 
-        if (ii<0 || jj<0 || ii>=grid.getXDimension() || jj >= grid.getYDimension()) {
-            if (ii < 0) {
-                particle.x = 0.0;
-                ii = 0;
-            }
-            if (jj < 0) {
-                particle.y = 0.0;
-                jj = 0;
-            }
-            if (ii >= grid.getXDimension()) {
-                ii = grid.getXDimension() - 1;
-                particle.x = ii;
-
-            }
-            if (jj >= grid.getYDimension()) {
-                jj = grid.getYDimension() - 1;
-                particle.y = jj;
-            }
+        if (ii < 0) {
+            particle.x = 0.0;
+            ii = 0;
         }
+        if (jj < 0) {
+            particle.y = 0.0;
+            jj = 0;
+        }
+        if (ii >= grid.getXDimension()) {
+            ii = grid.getXDimension() - 1;
+            particle.x = ii;
+
+        }
+        if (jj >= grid.getYDimension()) {
+            jj = grid.getYDimension() - 1;
+            particle.y = jj;
+        }
+
 
         // move outside the obstacle if we find ourselves in one
         if ( grid.getCell(ii, jj).getStatus() == CellStatus.OBSTACLE ) {

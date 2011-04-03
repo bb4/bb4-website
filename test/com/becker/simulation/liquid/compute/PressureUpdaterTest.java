@@ -34,10 +34,30 @@ public class PressureUpdaterTest extends TestCase {
                 2, pressureUpdater.getNumIterations());
 
         Cell cell1 = grid.getCell(1, 1);
-        verifyCell(cell1, -50, new Vector2d(0.5, 0.5));
+        verifyCell(cell1, -49.1, new Vector2d(0.5, 0.5));
         Cell cell2 = grid.getCell(1, 2);
-        verifyCell(cell2, 0, new Vector2d(1.0, 1.0));
+        verifyCell(cell2, 0.9, new Vector2d(1.0, 1.0));
     }
+
+
+    public void testPressureUpdateNonUniform() {
+
+        double b0 = 1.0;
+        Grid grid = new NonUniformGrid(DIM, DIM, new Vector2d(1.0, 1.0), CellStatus.FULL);
+        pressureUpdater = new PressureUpdater(grid, b0);
+
+        double maxDiv = pressureUpdater.updatePressure(DT);
+
+        assertEquals("Unexpected divergence", 0.0, maxDiv);
+        assertEquals("Unexpected number of iterations till convergence",
+                2, pressureUpdater.getNumIterations());
+
+        Cell cell1 = grid.getCell(1, 1);
+        verifyCell(cell1, -13.385714285714284, new Vector2d(0.14285714285714285, 0.14285714285714285));
+        Cell cell2 = grid.getCell(1, 2);
+        verifyCell(cell2, 0.9, new Vector2d(0.49120674102731, 0.41098491062604847));
+    }
+
 
 
     public void testPressureUpdateRandom() {
@@ -64,9 +84,9 @@ public class PressureUpdaterTest extends TestCase {
         System.out.println(grid.toString());
 
         Cell cell1 = grid.getCell(1, 1);
-        verifyCell(cell1, 0, new Vector2d(0.0, 0.0));
+        verifyCell(cell1, 0.9, new Vector2d(0.0, 0.0));
         Cell cell2 = grid.getCell(1, 2);
-        verifyCell(cell2, 0, new Vector2d(0.0, 0.0));
+        verifyCell(cell2, 0.9, new Vector2d(0.0, 0.0));
     }
 
     private void verifyCell(Cell cell, double pressure, Vector2d expUV) {

@@ -12,8 +12,8 @@ import javax.vecmath.Vector2d;
  *
  * @author Barry Becker
  */
-public final class LinearUtil
-{
+public final class LinearUtil {
+
     private LinearUtil() {}
 
     /**
@@ -23,8 +23,9 @@ public final class LinearUtil
      * @param initialGuess the initial guess for the solution x, x0
      * @param eps the tolerable error (eg .0000001)
      */
-    public static GVector conjugateGradientSolve( GMatrix matrix, GVector b, GVector initialGuess, double eps )
-    {
+    public static GVector conjugateGradientSolve( GMatrix matrix, GVector b,
+                                                  GVector initialGuess, double eps ) {
+
         GVector x = new GVector( initialGuess );
         GVector tempv = new GVector( initialGuess );
         tempv.mul( matrix, initialGuess );
@@ -70,8 +71,7 @@ public final class LinearUtil
     /**
      *Pretty print the matrix for debugging.
      */
-    public static void printMatrix( GMatrix matrix )
-    {
+    public static void printMatrix( GMatrix matrix ) {
         for ( int i = 0; i < matrix.getNumRow(); i++ ) {
             for ( int j = 0; j < matrix.getNumCol(); j++ ) {
                 double a = matrix.getElement( i, j );
@@ -91,6 +91,14 @@ public final class LinearUtil
         double dx = p2.x - p1.x;
         double dy = p2.y - p1.y;
         return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    /**
+     * Vectors are considered approximately equal if x and y components are within eps of each other.
+     * @return true if approximately equal.
+     */
+    public static boolean appxVectorsEqual(Vector2d vec1, Vector2d vec2, double eps) {
+        return (Math.abs(vec1.x - vec2.x) < eps && Math.abs(vec1.y - vec2.y) < eps);
     }
 }
 

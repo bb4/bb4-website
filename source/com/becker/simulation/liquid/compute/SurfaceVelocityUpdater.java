@@ -5,7 +5,12 @@ import com.becker.simulation.liquid.model.CellDimensions;
 import com.becker.simulation.liquid.model.CellNeighbors;
 
 /**
- *  Update the velocities for surface cells
+ * Update the velocities for surface cells
+ * There are 13 surface conditions.
+ *   1-4) One of the 4 immediate neighbors is empty
+ *   5-8) Two of the 4 immediate neighbors is empty
+ *   9-12) Three of the 4 immediate neighbors is empty
+ *   13) isolated
  *
  *  @author Barry Becker
  */
@@ -34,7 +39,7 @@ public class SurfaceVelocityUpdater {
      * @param neighbors the cell's immediate neighbors
      * RISK:1
      */
-    public void updateSurfaceVelocities(Cell cell, CellNeighbors neighbors ) {
+    public void updateSurfaceVelocities(Cell cell, CellNeighbors neighbors) {
 
         // only surface cells can have overflow dissipated.
         if ( !(cell.isSurface() || cell.isIsolated()) ) {

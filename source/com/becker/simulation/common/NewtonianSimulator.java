@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * Use this for Newtonian physics type simulations.
  *
- * @author Barry Becker Date: Sep 17, 2006
+ * @author Barry Becker
  */
 public abstract class NewtonianSimulator extends Simulator {
 

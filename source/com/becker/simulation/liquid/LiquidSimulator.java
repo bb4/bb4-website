@@ -10,7 +10,9 @@ import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.liquid.config.ConfigurationEnum;
 import com.becker.simulation.liquid.model.LiquidEnvironment;
 import com.becker.simulation.liquid.rendering.EnvironmentRenderer;
+import com.becker.simulation.liquid.rendering.RenderingOptions;
 import com.becker.ui.util.GUIUtil;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -105,23 +107,26 @@ public class LiquidSimulator extends NewtonianSimulator {
         return envRenderer_.getScale();
     }
 
+    public RenderingOptions getRenderingOptions() {
+        return envRenderer_.getRenderingOptions();
+    }
+
     @Override
     public void setShowVelocityVectors( boolean show ) {
-        envRenderer_.setShowVelocities(show);
+        envRenderer_.getRenderingOptions().setShowVelocities(show);
     }
     @Override
     public boolean getShowVelocityVectors() {
-        return envRenderer_.getShowVelocities();
+        return envRenderer_.getRenderingOptions().getShowVelocities();
     }
 
     @Override
     public void setShowForceVectors( boolean show ) {
-        envRenderer_.setShowPressures(show);
     }
 
     @Override
     public boolean getShowForceVectors() {
-        return envRenderer_.getShowPressures();
+        return false;
     }
 
     @Override
