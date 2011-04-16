@@ -1,7 +1,6 @@
 package com.becker.simulation.liquid;
 
-import com.becker.simulation.common.NewtonianSimOptionsDialog;
-import com.becker.simulation.common.NewtonianSimulator;
+import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.liquid.config.ConfigurationEnum;
 
 import javax.swing.*;
@@ -14,12 +13,17 @@ import java.awt.event.ActionEvent;
  *
  * @author Bary Becker
  */
-class LiquidOptionsDialog extends NewtonianSimOptionsDialog {
+class LiquidOptionsDialog extends SimulatorOptionsDialog {
 
-     /** type of distribution function to test.   */
+    /** type of distribution function to test.   */
     private JComboBox configurationChoiceField_;
     private JCheckBox showPressureCheckbox_;
     private JCheckBox showCellStatusCheckbox_;
+
+    private JCheckBox showGridCheckbox_;
+    private JCheckBox showVelocitiesCheckbox_;
+    private JCheckBox useSingleStepModeCheckbox_;
+
 
     /** constructor  */
     LiquidOptionsDialog( JFrame parent, LiquidSimulator simulator ) {
@@ -30,25 +34,36 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog {
     @Override
     protected void addAdditionalToggles(JPanel togglesPanel) {
 
-        NewtonianSimulator sim = (NewtonianSimulator) getSimulator();
-        togglesPanel.add(createMeshCheckBox(sim));
-        togglesPanel.add(createVelocitiesCheckBox(sim));
-        togglesPanel.add(createPressureCheckBox(sim));
-        togglesPanel.add(createCellStatusCheckBox(sim));
-    }
+        LiquidSimulator sim = (LiquidSimulator) getSimulator();
 
-    protected JCheckBox createPressureCheckBox(NewtonianSimulator sim) {
-        showPressureCheckbox_ = new JCheckBox( "Show Pressures", sim.getShowForceVectors());
-        showPressureCheckbox_.setToolTipText( "show colors for the different pressures" );
-        showPressureCheckbox_.addActionListener( this );
-        return showPressureCheckbox_;
-    }
+        showGridCheckbox_ =
+               createCheckBox("Show Wireframe", "draw showing the underlying wireframe mesh",
+                        sim.getRenderingOptions().getShowGrid() );
 
-    protected JCheckBox createCellStatusCheckBox(NewtonianSimulator sim) {
-        showCellStatusCheckbox_ = new JCheckBox( "Show Cell Status", sim.getShowForceVectors());
-        showCellStatusCheckbox_.setToolTipText( "show status for each of the cells" );
-        showCellStatusCheckbox_.addActionListener( this );
-        return showCellStatusCheckbox_;
+        showVelocitiesCheckbox_ =
+                createCheckBox("Show Velocity Vectors",
+                    "show lines representing velocity vectors on each partical mass",
+                    sim.getRenderingOptions().getShowVelocities() );
+
+        showPressureCheckbox_ =
+                createCheckBox("Show Force Vectors",
+                        "show lines representing force vectors on each partical mass",
+                        sim.getRenderingOptions().getShowPressures());
+
+        showCellStatusCheckbox_ =
+                createCheckBox( "Show Cell Status",  "show status for each of the cells" ,
+                                sim.getRenderingOptions().getShowCellStatus());
+
+        useSingleStepModeCheckbox_ =
+                createCheckBox( "Use Single Stepping",
+                                "For debugging is may be useful to press a key to advance each timestep" ,
+                                sim.getSingleStepMode());
+
+        togglesPanel.add(showGridCheckbox_);
+        togglesPanel.add(showVelocitiesCheckbox_);
+        togglesPanel.add(showPressureCheckbox_);
+        togglesPanel.add(showCellStatusCheckbox_);
+        togglesPanel.add(useSingleStepModeCheckbox_);
     }
 
 
@@ -79,6 +94,7 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog {
                 new DefaultComboBoxModel(ConfigurationEnum.values()));
         configurationChoice.setToolTipText(ConfigurationEnum.values()[0].getDescription());
         configurationChoice.addActionListener(this);
+        configurationChoice.setSelectedItem(ConfigurationEnum.getDefaultValue());
         return configurationChoice;
     }
     
@@ -106,9 +122,11 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog {
 
         simulator.loadEnvironment(selected.getFileName());
 
+        simulator.getRenderingOptions().setShowGrid(showGridCheckbox_.isSelected());
+        simulator.getRenderingOptions().setShowVelocities(showVelocitiesCheckbox_.isSelected());
         simulator.getRenderingOptions().setShowPressures(showPressureCheckbox_.isSelected());
         simulator.getRenderingOptions().setShowCellStatus(showCellStatusCheckbox_.isSelected());
-
+        simulator.setSingleStepMode(useSingleStepModeCheckbox_.isSelected());
         super.ok();
     }
 }

@@ -162,7 +162,7 @@ public final class GUIUtil {
             }
 
             assert (url != null || !failIfNotFound):
-                "failed to create url for  "+sPath + " standAlone="+isStandAlone_ +" resourceRoot_="+ RESOURCE_ROOT;
+                "failed to create url for  "+sPath + " standAlone=" + isStandAlone_ + " resourceRoot_=" + RESOURCE_ROOT;
         } catch (MalformedURLException e) {
             System.out.println( sPath + " is not a valid resource or URL" );
             e.printStackTrace();

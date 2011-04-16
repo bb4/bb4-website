@@ -6,6 +6,7 @@ import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.NewtonianSimulator;
+import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.liquid.config.ConfigurationEnum;
 import com.becker.simulation.liquid.model.LiquidEnvironment;
@@ -16,13 +17,17 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Main class for particle liquid simulation.
  *
  * @author Barry Becker
  */
-public class LiquidSimulator extends NewtonianSimulator {
+public class LiquidSimulator extends Simulator implements MouseListener {
 
     private static final String FILE_NAME_BASE =
             ANIMATION_FRAME_FILE_NAME_PREFIX + "liquid/liquidFrame";
@@ -30,6 +35,7 @@ public class LiquidSimulator extends NewtonianSimulator {
     private LiquidEnvironment environment_;
     private EnvironmentRenderer envRenderer_;
 
+    /** These options can be changed while the simulation is running. */
     private LiquidDynamicOptions dynamicOptions_;
 
     /** The initial time step. It may adapt. */
@@ -39,18 +45,21 @@ public class LiquidSimulator extends NewtonianSimulator {
 
     private static final int NUM_OPT_PARAMS = 3;
 
+    private boolean advectionOnly = false;
+
     /**
      * Constructor
      */
     public LiquidSimulator() {
         super("Liquid");
 
-        environment_ = new LiquidEnvironment( ConfigurationEnum.SPIGOT.getFileName());
+        environment_ = new LiquidEnvironment( ConfigurationEnum.getDefaultValue().getFileName());
         commonInit();
     }
 
     public void loadEnvironment(String configFile) {
         environment_ = new LiquidEnvironment(configFile);
+        environment_.setAdvectionOnly(advectionOnly);
         commonInit();
     }
 
@@ -97,7 +106,6 @@ public class LiquidSimulator extends NewtonianSimulator {
         return environment_;
     }
 
-
     @Override
     public void setScale( double scale ) {
         envRenderer_.setScale(scale);
@@ -111,51 +119,26 @@ public class LiquidSimulator extends NewtonianSimulator {
         return envRenderer_.getRenderingOptions();
     }
 
-    @Override
-    public void setShowVelocityVectors( boolean show ) {
-        envRenderer_.getRenderingOptions().setShowVelocities(show);
-    }
-    @Override
-    public boolean getShowVelocityVectors() {
-        return envRenderer_.getRenderingOptions().getShowVelocities();
+    public boolean getSingleStepMode() {
+        return !isAnimating();
     }
 
-    @Override
-    public void setShowForceVectors( boolean show ) {
+    public void setSingleStepMode(boolean singleStep) {
+        setAnimating(!singleStep);
+        if (singleStep)  {
+            addMouseListener(this);
+        }
+        else {
+            removeMouseListener(this);
+        }
     }
 
-    @Override
-    public boolean getShowForceVectors() {
-        return false;
+    public boolean getAdvectionOnly() {
+        return advectionOnly;
     }
-
-    @Override
-    public void setDrawMesh( boolean use ) {
-    }
-    @Override
-    public boolean getDrawMesh() {
-        return false;
-    }
-
-
-    @Override
-    public void setStaticFriction( double staticFriction ) {
-        // do nothing
-    }
-    @Override
-    public double getStaticFriction() {
-        // do nothing
-        return 0.1;
-    }
-
-    @Override
-    public void setDynamicFriction( double dynamicFriction ) {
-       // do nothing
-    }
-    @Override
-    public double getDynamicFriction() {
-        // do nothing
-        return 0.01;
+    public void setAdvectionOnly(boolean advectOnly) {
+        advectionOnly = advectOnly;
+        environment_.setAdvectionOnly(advectOnly);
     }
 
     @Override
@@ -171,7 +154,7 @@ public class LiquidSimulator extends NewtonianSimulator {
         if (GUIUtil.isStandAlone())
             optimizer = new Optimizer( this );
         else
-            optimizer = new Optimizer( this, FileUtil.PROJECT_HOME +"performance/liquid/liquid_optimization.txt" );
+            optimizer = new Optimizer( this, FileUtil.PROJECT_HOME + "performance/liquid/liquid_optimization.txt" );
         Parameter[] params = new Parameter[3];
         ParameterArray paramArray = new ParameterArray( params );
 
@@ -183,7 +166,6 @@ public class LiquidSimulator extends NewtonianSimulator {
     public int getNumParameters() {
         return NUM_OPT_PARAMS;
     }
-
 
     /**
      * *** implements the key method of the Optimizee interface
@@ -210,11 +192,22 @@ public class LiquidSimulator extends NewtonianSimulator {
     @Override
     public void paint( Graphics g ) {
         Graphics2D g2 = (Graphics2D) g;
-        envRenderer_.render(g2 );
+        envRenderer_.render(g2, getWidth(),  getHeight());
     }
 
     @Override
     protected String getFileNameBase() {
         return FILE_NAME_BASE;
     }
+
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("mclick timeStep="+ timeStep_ );
+        environment_.stepForward( timeStep_);
+        this.repaint();
+    }
+
+    public void mousePressed(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
 }

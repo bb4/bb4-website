@@ -1,16 +1,5 @@
 package com.becker.simulation.liquid.rendering;
 
-import com.becker.common.ColorMap;
-import com.becker.simulation.liquid.Logger;
-import com.becker.simulation.liquid.compute.VelocityInterpolator;
-import com.becker.simulation.liquid.model.Cell;
-import com.becker.simulation.liquid.model.Grid;
-import com.becker.simulation.liquid.model.LiquidEnvironment;
-import com.becker.simulation.liquid.model.Particle;
-
-import javax.vecmath.Vector2d;
-import java.awt.*;
-
 /**
  * Liquid Rendering options.
  *
@@ -18,10 +7,10 @@ import java.awt.*;
  */
 public final class RenderingOptions {
 
-    private boolean showVelocities_ = false;
-    private boolean showPressures_ = false;
-    private boolean showCellStatus_ = false;
-
+    private boolean showVelocities_ = true;
+    private boolean showPressures_ = true;
+    private boolean showCellStatus_ = true;
+    private boolean showGrid_ = true;
 
     public RenderingOptions() {
     }
@@ -50,4 +39,11 @@ public final class RenderingOptions {
         return showCellStatus_;
     }
 
+    public void setShowGrid(boolean show) {
+        showGrid_ = show;
+    }
+
+    public boolean getShowGrid() {
+        return showGrid_;
+    }
 }

@@ -10,7 +10,6 @@ import javax.vecmath.Vector2d;
  */
 public class NonUniformGrid extends Grid {
 
-
     /**
      * Constructor.
      */
@@ -32,12 +31,12 @@ public class NonUniformGrid extends Grid {
         for (int j = 1; j < yDim-1; j++ ) {
             for (int i = 1; i < xDim-1; i++ ) {
                 double xDiff = centerX-i;
-                double yDiff = centerX-j;
+                double yDiff = centerY-j;
                 double dist = Math.sqrt(xDiff*xDiff + yDiff*yDiff);
                 double scale = (maxDist - dist)/maxDist;
                 Vector2d vel = new Vector2d(velocity.x*scale, velocity.y*scale);
                 setVelocity(i, j, vel);
-                this.getCell(i, i).setStatus(status);
+                this.getCell(i, j).setStatus(status);
             }
         }
     }

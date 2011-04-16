@@ -38,7 +38,8 @@ public class VelocityInterpolator {
         return interpolateVelocity( particle, grid.getCell(i, j),
                                     grid.getCell(ii, j),    grid.getCell(i, jj),
                                     grid.getCell(i - 1, j), grid.getCell(i - 1, jj), // u
-                                    grid.getCell(i, j - 1), grid.getCell(ii, j - 1));  // v
+                                    grid.getCell(i, j - 1), grid.getCell(ii, j - 1)  // v
+                                  );
     }
 
     /**
@@ -69,7 +70,7 @@ public class VelocityInterpolator {
      *      depending on the position of the particle.   [1]
      * @param cY either one forward or one back in the y direction
      *       depending on the position of the particle.    [2]
-     * @param cXm1  x- 1  (always the cell to the left)      [3]
+     * @param cXm1  x - 1  (always the cell to the left)      [3]
      * @param cXm1y x - 1 and either one forward or one back in the y 
      *       direction depending on the position of the particle. [4]
      * @param cYm1  y - 1  (always the cell to the bottom)       [5]
@@ -80,7 +81,8 @@ public class VelocityInterpolator {
     protected Vector2d interpolateVelocity( Point2d particle, Cell cell,
                                          Cell cX, Cell cY,
                                          Cell cXm1, Cell cXm1y, // u
-                                         Cell cYm1, Cell cYm1x) // v
+                                         Cell cYm1, Cell cYm1x // v
+                                         )
     {
         assert ( !(cell.isObstacle() || cell.isEmpty())) :
              "Error: interpVelocity cell status=" + cell.getStatus()

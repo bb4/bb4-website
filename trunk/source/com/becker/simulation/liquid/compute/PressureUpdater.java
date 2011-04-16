@@ -57,8 +57,8 @@ public class PressureUpdater {
         do {
             // adjust tilde velocities to satisfy mass conservation
             maxDivergence = 0;
-            for (int j = 1; j < grid.getYDimension() - 1; j++ ) {
-                for (int i = 1; i < grid.getXDimension() - 1; i++ ) {
+            for (int j = 1; j < grid.getYDimension()-1; j++ ) {
+                for (int i = 1; i < grid.getXDimension()-1; i++ ) {
                     divergence = conserver.updateMassConservation(grid.getCell(i, j), grid.getNeighbors(i, j));
                     if ( divergence > maxDivergence ) {
                         maxDivergence = divergence;

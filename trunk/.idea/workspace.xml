@@ -8,40 +8,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="7f837598-b78e-4519-945f-e7b7f7021387" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/fallingWaterSmall.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/rendering/RenderingOptions.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/ParticleAdvectorTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/SurfaceVelocityUpdaterTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/VelocityUpdaterTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/becker/simulation/liquid/model/NonUniformGrid.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/Barry.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/Barry.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/simulation/common/BackgroundGridRenderer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/spigotLeft.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/VortexGrid.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/becker.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/becker.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/common/math/LinearUtil.java" afterPath="$PROJECT_DIR$/source/com/becker/common/math/LinearUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/common/math/MathUtil.java" afterPath="$PROJECT_DIR$/source/com/becker/common/math/MathUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ant/common.properties" afterPath="$PROJECT_DIR$/ant/common.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/common/concurrency/Parallelizer.java" afterPath="$PROJECT_DIR$/source/com/becker/common/concurrency/Parallelizer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/common/NewtonianSimOptionsDialog.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/common/NewtonianSimOptionsDialog.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/common/NewtonianSimulator.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/common/NewtonianSimulator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/common/SimulatorOptionsDialog.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/common/SimulatorOptionsDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/fluid/ui/FluidSimulator.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/fluid/ui/FluidSimulator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidDynamicOptions.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidDynamicOptions.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidOptionsDialog.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidOptionsDialog.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidSimulator.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidSimulator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/GridUpdater.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/GridUpdater.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/ParticleAdvector.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/ParticleAdvector.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/PressureUpdater.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/PressureUpdater.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/SurfaceVelocityUpdater.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/SurfaceVelocityUpdater.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/VelocityInterpolator.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/VelocityInterpolator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/VelocityUpdater.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/VelocityUpdater.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/config/ConfigurationEnum.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/config/ConfigurationEnum.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/config1.xml" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/config1.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/fallingWater.xml" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/fallingWater.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/pulse_small.xml" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/pulse_small.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/pulse_smallest.xml" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/pulse_smallest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/spigot.xml" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/spigot.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/wallOfWaterLeft.xml" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/wallOfWaterLeft.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/wallOfWaterRight.xml" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/wallOfWaterRight.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/CellStatus.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/CellStatus.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/LiquidEnvironment.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/LiquidEnvironment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/Particles.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/Particles.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/rendering/EnvironmentRenderer.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/rendering/EnvironmentRenderer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/MassConserverTest.java" afterPath="$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/MassConserverTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/PressureUpdaterTest.java" afterPath="$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/PressureUpdaterTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/TestAll.java" afterPath="$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/TestAll.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/liquid/rendering/RenderingOptions.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/rendering/RenderingOptions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/simulation/snake/SnakeSimulator.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/snake/SnakeSimulator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/ui/animation/AnimationComponent.java" afterPath="$PROJECT_DIR$/source/com/becker/ui/animation/AnimationComponent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/ui/util/GUIUtil.java" afterPath="$PROJECT_DIR$/source/com/becker/ui/util/GUIUtil.java" />
+      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\simulation\liquid\data\pulse.xml" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/pulse_large.xml" />
+      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\simulation\liquid\data\spigot.xml" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/spigotRight.xml" />
+      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\test\com\becker\simulation\liquid\model\NonUniformGrid.java" afterPath="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/NonUniformGrid.java" />
     </list>
     <list id="f156c665-549e-4227-a588-09fe7dde4dd3" name="Failed commit: Default (3)" comment="try to remove corrupt dir." />
     <list id="205c041e-69b6-43e2-8a4d-a6606d9a31ad" name="Failed commit: Default" comment="some refactoring of common through intellij. Used structure 101 too." />
@@ -106,32 +102,6 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/VelocityUpdater.java" line="117" class="com.becker.simulation.liquid.compute.VelocityUpdater" package="com.becker.simulation.liquid.compute">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/MassConserver.java" line="44" class="com.becker.simulation.liquid.compute.MassConserver" package="com.becker.simulation.liquid.compute">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
     </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
@@ -179,113 +149,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GridUpdater.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/GridUpdater.java">
+      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ant/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="38" selection-start="3525" selection-end="3525" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LiquidSimulator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidSimulator.java">
+      <file leaf-file-name="common.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ant/common.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="13" selection-start="909" selection-end="909" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LiquidEnvironment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/model/LiquidEnvironment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="130" column="25" selection-start="3646" selection-end="3646" vertical-scroll-proportion="0.0">
+            <state line="36" column="0" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config1.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/data/config1.xml">
+      <file leaf-file-name="RDSimulator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDSimulator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="589" selection-end="589" vertical-scroll-proportion="0.0">
+            <state line="41" column="55" selection-start="1206" selection-end="1206" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnvironmentRenderer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/rendering/EnvironmentRenderer.java">
+      <file leaf-file-name="GrayScottController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/algorithm/GrayScottController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="267" column="90" selection-start="8799" selection-end="8799" vertical-scroll-proportion="0.0">
+            <state line="106" column="43" selection-start="3372" selection-end="3372" vertical-scroll-proportion="-14.153846">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SurfaceVelocityUpdater.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/SurfaceVelocityUpdater.java">
+      <file leaf-file-name="Parallelizer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/common/concurrency/Parallelizer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="11" selection-start="1431" selection-end="1431" vertical-scroll-proportion="0.0">
+            <state line="35" column="59" selection-start="1084" selection-end="1084" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestAll.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/com/becker/simulation/liquid/TestAll.java">
+      <file leaf-file-name="RDDynamicOptions.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDDynamicOptions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="13" selection-start="206" selection-end="206" vertical-scroll-proportion="0.0">
+            <state line="20" column="6" selection-start="766" selection-end="766" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MassConserverTest.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/MassConserverTest.java">
+      <file leaf-file-name="RDOptionsDialog.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDOptionsDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="64" selection-start="2641" selection-end="2641" vertical-scroll-proportion="0.71394515">
+            <state line="18" column="138" selection-start="515" selection-end="515" vertical-scroll-proportion="0.21043324">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewtonianSimulator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/NewtonianSimulator.java">
+      <file leaf-file-name="Runtime.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.6.0_24/src.zip!/java/lang/Runtime.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="51" selection-start="228" selection-end="228" vertical-scroll-proportion="0.0">
+            <state line="610" column="22" selection-start="25151" selection-end="25151" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Simulator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/Simulator.java">
+      <file leaf-file-name="Conditions.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/config/Conditions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="22" selection-start="556" selection-end="556" vertical-scroll-proportion="0.0">
+            <state line="181" column="0" selection-start="5773" selection-end="5773" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VelocityUpdater.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/VelocityUpdater.java">
+      <file leaf-file-name="CellNeighbors.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/model/CellNeighbors.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="53" selection-start="1818" selection-end="1818" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Grid.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/model/Grid.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="129" column="18" selection-start="3791" selection-end="3791" vertical-scroll-proportion="0.0">
+            <state line="29" column="16" selection-start="661" selection-end="661" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -308,30 +256,27 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidSimulator.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/common/SimulatorOptionsDialog.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/fallingWater.xml" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/fallingWaterSmall.xml" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/pulse_small.xml" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/pulse_smallest.xml" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/spigot.xml" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/wallOfWaterLeft.xml" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/wallOfWaterRight.xml" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/config1.xml" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/common/NewtonianSimOptionsDialog.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/VelocityUpdater.java" />
         <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/rendering/EnvironmentRenderer.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/config/ConfigurationEnum.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/pulse_large.xml" />
+        <option value="$PROJECT_DIR$/source/com/becker/ui/animation/AnimationComponent.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/rendering/RenderingOptions.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/VortexGrid.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/NonUniformGrid.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidDynamicOptions.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/data/spigotLeft.xml" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidOptions.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidSimulator.java" />
         <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/model/LiquidEnvironment.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/GridUpdater.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/SurfaceVelocityUpdater.java" />
-        <option value="$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/MassConserverTest.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/VelocityInterpolator.java" />
+        <option value="$PROJECT_DIR$/ant/common.properties" />
+        <option value="$PROJECT_DIR$/source/com/becker/common/concurrency/Parallelizer.java" />
       </list>
     </option>
   </component>
   <component name="MavenProjectNavigator">
     <treeState />
-  </component>
-  <component name="MavenRunner">
-    <option name="jreName" value="#JAVA_INTERNAL" />
   </component>
   <component name="ModuleEditorState">
     <option name="LAST_EDITED_MODULE_NAME" />
@@ -416,425 +361,31 @@
       <sortByType ProjectPane="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Favorites">
-        <subPane subId="applets">
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simulation" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="puzzle" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="liquid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="liquid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compute" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simulation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simulation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="liquid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simulation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="liquid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rendering" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simulation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="liquid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simulation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="liquid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compute" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simulation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
+        <subPane subId="ui">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Trunk">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="trunk">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="source">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="com/ui">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
         <subPane>
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1157,31 +708,8 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-        <subPane subId="ui">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="source">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com/ui">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
         <subPane subId="Problems" />
+        <subPane subId="Tests" />
         <subPane subId="Production">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1366,7 +894,6 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-        <subPane subId="Tests" />
         <subPane subId="Project Files">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1974,20 +1501,388 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Favorites">
+        <subPane subId="applets">
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simulation" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="puzzle" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simulation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simulation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reactiondiffusion" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simulation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reactiondiffusion" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="algorithm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="puzzle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="concurrency" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ant" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="432" />
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="432" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="394" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="33" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="424" />
-    <property name="OverrideImplement.combined" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="33" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="424" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
@@ -2010,30 +1905,30 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="RESOURCE_BUNDLE_SPLITTER_PROPORTION" value="0.5" />
-    <property name="options.lastSelected" value="editor.preferences.tabs" />
+    <property name="options.lastSelected" value="editor.preferences.folding" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
-    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
       <recent name="com.becker.game.twoplayer.tictactoe.test" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.becker.simulation.liquid.rendering" />
-      <recent name="com.becker.simulation.liquid.model" />
-      <recent name="com.becker.simulation.liquid.compute" />
       <recent name="com.becker.simulation.liquid" />
-      <recent name="com.becker.simulation.fluid.rendering" />
+      <recent name="com.becker.simulation.liquid.model" />
+      <recent name="com.becker.simulation.common" />
+      <recent name="com.becker.simulation.liquid.rendering" />
+      <recent name="com.becker.simulation.liquid.compute" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\projects\java_projects\trunk\source\com\becker\simulation\liquid\data" />
@@ -2051,19 +1946,19 @@
       <recent name="com.becker.game.twoplayer.go.board" />
       <recent name="com.becker.game.twoplayer.common.search.test.strategy" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="G:\projects\java_projects\trunk\test\com\becker\game\twoplayer\go\cases\board\analysis\scoring" />
-      <recent name="G:\projects\java_projects\trunk\test\com\becker\game\twoplayer\go\cases\board\analysis\eye\information\FalseEye" />
-      <recent name="G:\projects\java_projects\trunk\test\com\becker\game\twoplayer\go\cases\board\analysis\eye\information\E2" />
-      <recent name="G:\projects\java_projects\trunk\test\com\becker\game\twoplayer\go\cases\board\analysis\eye\information\E1" />
-      <recent name="G:\projects\java_projects\trunk\test\com\becker\game\twoplayer\go\cases\board\analysis\group\life" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.becker.simulation.liquid.compute" />
       <recent name="com.becker.simulation.liquid.rendering" />
       <recent name="com.becker.simulation.liquid.model" />
       <recent name="com.becker.simulation.fluid.model" />
       <recent name="com.becker.simulation.fluid.ui" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\projects\java_projects\trunk\test\com\becker\game\twoplayer\go\cases\board\analysis\scoring" />
+      <recent name="G:\projects\java_projects\trunk\test\com\becker\game\twoplayer\go\cases\board\analysis\eye\information\FalseEye" />
+      <recent name="G:\projects\java_projects\trunk\test\com\becker\game\twoplayer\go\cases\board\analysis\eye\information\E2" />
+      <recent name="G:\projects\java_projects\trunk\test\com\becker\game\twoplayer\go\cases\board\analysis\eye\information\E1" />
+      <recent name="G:\projects\java_projects\trunk\test\com\becker\game\twoplayer\go\cases\board\analysis\group\life" />
     </key>
   </component>
   <component name="RunManager" selected="JUnit.TestAll">
@@ -2309,12 +2204,12 @@
       <method />
     </configuration>
     <list size="6">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.TestCandidateMoveAnalyzer" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.TestAll" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.VelocityUpdaterTest" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.ParticleAdvectorTest" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.SurfaceVelocityUpdaterTest" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.MassConserverTest.testMassConservationForFullCellInNonUniformFlow" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.TestAll" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.VelocityUpdaterTest" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.ParticleAdvectorTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.SurfaceVelocityUpdaterTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.MassConserverTest.testMassConservationForFullCellInNonUniformFlow" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.TestCandidateMoveAnalyzer" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -2335,7 +2230,7 @@
     <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
     <option name="FORCE_UPDATE" value="false" />
-    <configuration useDefault="true">C:\Users\Barry\AppData\Roaming\Subversion</configuration>
+    <configuration useDefault="true">C:\Users\becker\AppData\Roaming\Subversion</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
     <supportedVersion>125</supportedVersion>
   </component>
@@ -2382,23 +2277,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="358" y="-12" width="2202" height="1569" extended-state="0" />
-    <editor active="true" />
+    <frame x="22" y="-6" width="2102" height="1544" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13910575" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16526218" sideWeight="0.5968772" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23420866" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15667976" sideWeight="0.8526012" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42228532" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30042315" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32789212" sideWeight="0.0" order="12" side_tool="false" content_ui="tabs" x="147" y="657" width="2264" height="688" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14739884" sideWeight="0.0" order="12" side_tool="false" content_ui="tabs" x="147" y="657" width="2264" height="688" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24171382" sideWeight="0.14914773" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2021645" sideWeight="0.6391459" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39935845" sideWeight="0.61981064" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21301498" sideWeight="0.5968772" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14931238" sideWeight="0.8526012" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48361254" sideWeight="0.0" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40312278" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40312278" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Code explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.328654" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Analyze Dataflow to here" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952926" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -2408,6 +2302,7 @@
       <window_info id="Dependency Cycles" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23420866" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4446033" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30593425" sideWeight="0.66496724" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31170663" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -2428,7 +2323,7 @@
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleanup liquid code. Make y positive be up consistently." />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor tuning after upgrading to i7 2600k." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -2441,7 +2336,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Use apply capture removes and restores in the HashKey." />
     <MESSAGE value="Some small changes after upgrading to Windows 7." />
     <MESSAGE value="Make using the scoreCache a constant option." />
     <MESSAGE value="Add Sierpinski triangle program for Brian." />
@@ -2466,6 +2360,7 @@
     <MESSAGE value="Cleanup liquid code. Added tests." />
     <MESSAGE value="Cleanup liquid code." />
     <MESSAGE value="Cleanup liquid code. Make y positive be up consistently." />
+    <MESSAGE value="Minor tuning after upgrading to i7 2600k." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -2540,108 +2435,100 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/data/config1.xml">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/model/Cell.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="589" selection-end="589" vertical-scroll-proportion="0.0">
+        <state line="81" column="25" selection-start="1841" selection-end="1841" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/model/CellVelocity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="13" selection-start="346" selection-end="346" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/images/go_applet.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/images/galactic_applet.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/images/checkers_applet.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/VelocityInterpolator.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/ParticleAdvector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="355" selection-end="355" vertical-scroll-proportion="0.0">
+        <state line="77" column="39" selection-start="2278" selection-end="2278" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/model/Grid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="16" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/config/ConfigurationEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="97" selection-start="1047" selection-end="1047" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/data/pulse_large.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="521" selection-end="521" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/config/Conditions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="181" column="0" selection-start="5773" selection-end="5773" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/model/CellNeighbors.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="16" selection-start="661" selection-end="661" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ant/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/images/fractalexplorer_applet.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/data/pulse_small.xml">
+    <entry file="file://$PROJECT_DIR$/ant/common.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="79" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0">
+        <state line="36" column="0" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/data/fallingWaterSmall.xml">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDSimulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="67" selection-start="354" selection-end="354" vertical-scroll-proportion="0.0">
+        <state line="41" column="55" selection-start="1206" selection-end="1206" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/data/fallingWater.xml">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/algorithm/GrayScottController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="69" selection-start="356" selection-end="356" vertical-scroll-proportion="0.0">
+        <state line="106" column="43" selection-start="3372" selection-end="3372" vertical-scroll-proportion="-14.153846">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/rendering/EnvironmentRenderer.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_24/src.zip!/java/lang/Runtime.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="267" column="90" selection-start="8799" selection-end="8799" vertical-scroll-proportion="0.0">
+        <state line="610" column="22" selection-start="25151" selection-end="25151" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidSimulator.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/common/concurrency/Parallelizer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="909" selection-end="909" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/model/LiquidEnvironment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="25" selection-start="3646" selection-end="3646" vertical-scroll-proportion="0.0">
+        <state line="35" column="59" selection-start="1084" selection-end="1084" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/GridUpdater.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDDynamicOptions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="38" selection-start="3525" selection-end="3525" vertical-scroll-proportion="0.0">
+        <state line="20" column="6" selection-start="766" selection-end="766" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/compute/SurfaceVelocityUpdater.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDOptionsDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="11" selection-start="1431" selection-end="1431" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/becker/simulation/liquid/TestAll.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="13" selection-start="206" selection-end="206" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/becker/simulation/liquid/compute/MassConserverTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="64" selection-start="2641" selection-end="2641" vertical-scroll-proportion="0.71394515">
+        <state line="18" column="138" selection-start="515" selection-end="515" vertical-scroll-proportion="0.21043324">
           <folding />
         </state>
       </provider>
@@ -2659,6 +2546,11 @@
               </list>
             </option>
           </splitter-proportions>
+        </settings>
+      </state>
+      <state key="Copyright.UI">
+        <settings>
+          <splitter-proportions />
         </settings>
       </state>
       <state key="FacetStructureConfigurable.UI">
@@ -2719,6 +2611,11 @@
               </list>
             </option>
           </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions />
         </settings>
       </state>
     </states>

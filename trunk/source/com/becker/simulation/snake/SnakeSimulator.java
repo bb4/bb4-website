@@ -7,7 +7,9 @@ import com.becker.optimization.parameter.DoubleParameter;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
+import com.becker.simulation.common.BackgroundGridRenderer;
 import com.becker.simulation.common.NewtonianSimulator;
+import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.snake.data.ISnakeData;
 import com.becker.simulation.snake.data.LongSnakeData;
@@ -108,7 +110,7 @@ public class SnakeSimulator extends NewtonianSimulator {
     }
 
     @Override
-    public void setShowVelocityVectors( boolean show ) {
+    public void setShowVelocityVectors(boolean show) {
         snake_.getRenderingParams().setShowVelocityVectors(show);
     }
     @Override
@@ -200,7 +202,8 @@ public class SnakeSimulator extends NewtonianSimulator {
         velocity_ = distanceDelta.length() / (getNumStepsPerFrame() * timeStep_);
         distance_.add( distanceDelta );
 
-        drawGridBackground(g2, gridColor_, CELL_SIZE, XDIM, YDIM, distance_);
+        BackgroundGridRenderer bgRenderer = new BackgroundGridRenderer(gridColor_);
+        bgRenderer.drawGridBackground(g2, CELL_SIZE, XDIM, YDIM, distance_);
 
         // draw the snake on the grid
         snake_.translate( distanceDelta );

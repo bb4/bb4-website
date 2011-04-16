@@ -15,7 +15,7 @@ import java.awt.event.ItemListener;
  */
 public abstract class AnimationComponent extends Container implements Runnable {
 
-    protected boolean animating_ = true;
+    private boolean animating_ = true;
     protected int numStepsPerFrame_ = 1;
     /** previous times in milliseconds. */
     protected long[] previousTimes_;
@@ -58,13 +58,11 @@ public abstract class AnimationComponent extends Container implements Runnable {
      *  for unstable calculations using simple numerical methods (like eulers integration for eg)
      *  this can speed things a lot.
      */
-    public void setNumStepsPerFrame( int num )
-    {
+    public void setNumStepsPerFrame( int num ) {
         numStepsPerFrame_ = num;
     }
 
-    public int getNumStepsPerFrame()
-    {
+    public int getNumStepsPerFrame() {
         return numStepsPerFrame_;
     }
 
@@ -77,8 +75,8 @@ public abstract class AnimationComponent extends Container implements Runnable {
      * Do the timeStepping and rendering in a separate thread
      * so the rest of the GUI does not freeze and can still handle events.
      */
-    public void run()
-    {
+    public void run() {
+
         render();
         while ( animating_ ) {
 
@@ -91,7 +89,7 @@ public abstract class AnimationComponent extends Container implements Runnable {
 
             if (isPaused()) {
                 try {
-                   Thread.sleep(200);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -106,6 +104,20 @@ public abstract class AnimationComponent extends Container implements Runnable {
         }
     }
 
+    protected boolean isAnimating() {
+        return animating_;
+    }
+
+    protected void setAnimating(boolean animating) {
+        if (animating != animating_) {
+            if (animating) {
+                animating_ = true;
+                new Thread( this ).start();
+            } else {
+                animating_ = false;
+            }
+        }
+    }
 
     /**
      *

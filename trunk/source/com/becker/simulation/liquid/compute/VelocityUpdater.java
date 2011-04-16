@@ -17,12 +17,6 @@ public class VelocityUpdater {
     private final CellDimensions dims = new CellDimensions();
 
     /**
-     * constructor
-     */
-    public VelocityUpdater()  {
-    }
-
-    /**
      * compute velocity at next time step given neighboring cells.
      *      cXm1Yp1   nb.top
      *     nb.left      M      nb.right
@@ -81,7 +75,7 @@ public class VelocityUpdater {
             double v2 = (neighbors.getTop().getU() - 2 * cell.getU()
                                  + neighbors.getBottom().getU()) / dims.dySq;
             double pf = xNume / dims.dx + yNume / dims.dy + forceX
-                               + (cell.getPressure() - neighbors.getLeft().getPressure()) / dims.dx
+                               + (cell.getPressure() + neighbors.getLeft().getPressure()) / dims.dx
                                + viscosity * (v1 + v2);
             double newu = cell.getU() + dt * pf;
             /*

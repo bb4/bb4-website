@@ -8,7 +8,6 @@ import com.becker.simulation.liquid.config.Source;
 
 import javax.vecmath.Vector2d;
 
-
 /**
  *  This is the global space containing all the cells, walls, and particles
  *  Assumes an M*N grid of cells.
@@ -43,6 +42,7 @@ public class LiquidEnvironment {
     /** the time since the start of the simulation  */
     private double time = 0.0;
 
+    private boolean advectionOnly = false;
 
     /**
      * Constructor to use if you want the environment based on a config file.
@@ -68,7 +68,7 @@ public class LiquidEnvironment {
         int xDim = conditions.getGridWidth() + 2;
         int yDim = conditions.getGridHeight() + 2;
 
-        grid = new Grid(xDim, yDim);
+        grid = new VortexGrid(xDim, yDim);
         particles = new Particles();
         gridUpdater = new GridUpdater(grid);
 
@@ -101,6 +101,13 @@ public class LiquidEnvironment {
         gridUpdater.setB0(b0);
     }
 
+
+    public boolean getAdvectionOnly() {
+        return advectionOnly;
+    }
+    public void setAdvectionOnly(boolean advectOnly) {
+        advectionOnly = advectOnly;
+    }
     /**
      * Steps the simulation forward in time.
      * If the timestep is too big, inaccuracy and instability will result.
@@ -112,25 +119,24 @@ public class LiquidEnvironment {
      */
     public double stepForward( double timeStep ) {
 
-        System.out.println("time=" + time);
         // Update cell status so we can track the surface.
         grid.updateCellStatus();
 
         // Set up obstacle conditions for the free surface and obstacle cells
         setConstraints();
 
-        // Compute velocities for all full cells.
-        gridUpdater.updateVelocity(timeStep, conditions.getGravity());
+        if (!advectionOnly) {
+            // Compute velocities for all full cells.
+            gridUpdater.updateVelocity(timeStep, conditions.getGravity());
 
-        ////System.out.println(grid.toString());
+            ////System.out.println(grid.toString());
 
-        // Compute the pressure for all Full Cells.
-        gridUpdater.updatePressure(timeStep);
+            // Compute the pressure for all Full Cells.
+            gridUpdater.updatePressure(timeStep);
 
-        // Re-calculate velocities for Surface cells.
-        gridUpdater.updateSurfaceVelocity();
-
-        ////System.out.println(grid.toString());
+            // Re-calculate velocities for Surface cells.
+            gridUpdater.updateSurfaceVelocity();
+        }
 
         // Update the position of the surface and objects.
         double newTimeStep = gridUpdater.updateParticlePosition(timeStep, particles);

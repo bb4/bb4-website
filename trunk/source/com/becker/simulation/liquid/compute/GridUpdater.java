@@ -34,7 +34,7 @@ public class GridUpdater {
 
     private  double viscosity = DEFAULT_VISCOSITY;
 
-    /**  used in mass conservation (how?) */
+    /** used in mass conservation as a relaxation constant */
     private double b0 = DEFAULT_B0;
 
     /**
