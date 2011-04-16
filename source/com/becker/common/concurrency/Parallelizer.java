@@ -32,9 +32,10 @@ public class Parallelizer <T> {
     /**
      * Constructs with default number of threads.
      */
-    public Parallelizer()
-    {
+    public Parallelizer() {
+
         this(DEFAULT_NUM_THREADS);
+        System.out.println("num procs = "+ NUM_PROCESSORS + "num threads = "+ DEFAULT_NUM_THREADS);
     }
 
     /**

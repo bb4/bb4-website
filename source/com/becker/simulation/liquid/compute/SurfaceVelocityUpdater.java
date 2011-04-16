@@ -53,14 +53,17 @@ public class SurfaceVelocityUpdater {
             count++;
             overflow += cell.getU() / dims.dx;
         }
+
         if ( !neighbors.getLeft().isEmpty() ) {
             count++;
             overflow -= neighbors.getLeft().getU() / dims.dx;
         }
+
         if ( !neighbors.getTop().isEmpty() ) {
             count++;
             overflow += cell.getV() / dims.dy;
         }
+
         if ( !neighbors.getBottom().isEmpty() ) {
             count++;
             overflow -= neighbors.getBottom().getV() / dims.dy;
@@ -99,13 +102,13 @@ public class SurfaceVelocityUpdater {
             cell.setU(-overflowX);
         }
         if (neighbors.getLeft().isEmpty() ) {
-           count++;
-           neighbors.getLeft().setU(overflowX);
+            count++;
+            neighbors.getLeft().setU(overflowX);
         }
 
         if ( neighbors.getTop().isEmpty() ) {
-           count++;
-           cell.setV(-overflowY);
+            count++;
+            cell.setV(-overflowY);
         }
         if ( neighbors.getBottom().isEmpty() ) {
             count++;

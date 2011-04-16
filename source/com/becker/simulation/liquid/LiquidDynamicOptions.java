@@ -10,6 +10,8 @@ import com.becker.ui.sliders.SliderProperties;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Dynamic controls for the liquid simulation that will show on the right.
@@ -17,17 +19,17 @@ import java.awt.*;
  * @author Barry Becker
  */
 class LiquidDynamicOptions extends JPanel
-                          implements SliderGroupChangeListener {
+                          implements SliderGroupChangeListener, ActionListener {
 
     private LiquidSimulator liquidSim_;
 
     private static final String VISCOSITY_SLIDER = "Viscosity";
     private static final String B0_SLIDER = "Relaxation Coefficient";
-    private static final String DYNAMIC_FRICTION_SLIDER = "Dynamic friction";
     private static final String TIMESTEP_SLIDER = "Time Step Size";
 
     private SliderGroup sliderGroup_;
 
+    private JCheckBox advectionOnlyCheckBox;
 
     /**
      * Constructor
@@ -45,20 +47,34 @@ class LiquidDynamicOptions extends JPanel
         
         add(sliderGroup_);
 
+        advectionOnlyCheckBox =
+                createCheckBox("Do advection only",
+                    "If checked we will not apply the Navier Stokes solver",
+                    liquidSim_.getAdvectionOnly() );
+        add(advectionOnlyCheckBox);
+
         JPanel fill = new JPanel();
         fill.setPreferredSize(new Dimension(10, 1000));
         add(fill);
     }
 
+
+    protected JCheckBox createCheckBox(String label, String ttip, boolean initialValue) {
+        JCheckBox cb = new JCheckBox(label, initialValue);
+        cb.setToolTipText(ttip);
+        cb.addActionListener(this);
+        return cb;
+    }
+
+
     private SliderProperties[] createSliderProperties() {
 
         SliderProperties[] sliderProps;
         sliderProps = new SliderProperties[] {
-                //                                       MIN  MAX   INITIAL   SCALE
+                //                                      MIN   MAX    INITIAL    SCALE
                 new SliderProperties(VISCOSITY_SLIDER, 0.0, 0.1, GridUpdater.DEFAULT_VISCOSITY, 100),
                 new SliderProperties(B0_SLIDER, 1.0, 2.0, GridUpdater.DEFAULT_B0, 100),
-                new SliderProperties(DYNAMIC_FRICTION_SLIDER, 0.0, 10.0, 0.1, 100),
-                new SliderProperties(TIMESTEP_SLIDER, 0.001, 0.2, 0.01, 1000)};
+                new SliderProperties(TIMESTEP_SLIDER, 0.001, 0.4, 0.01, 1000)};
          return sliderProps;
     }
 
@@ -78,11 +94,14 @@ class LiquidDynamicOptions extends JPanel
         else if (sliderName.equals(B0_SLIDER)) {
             liquidSim_.getEnvironment().setB0(value);
         }
-        else if (sliderName.equals(DYNAMIC_FRICTION_SLIDER)) {
-            liquidSim_.setDynamicFriction(value);
-        }
         else if (sliderName.equals(TIMESTEP_SLIDER)) {
             liquidSim_.setTimeStep(value);
+        }
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == advectionOnlyCheckBox) {
+            liquidSim_.setAdvectionOnly(advectionOnlyCheckBox.isSelected());
         }
     }
 }

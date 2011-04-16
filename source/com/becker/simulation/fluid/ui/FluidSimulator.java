@@ -6,6 +6,7 @@ import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.NewtonianSimulator;
+import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.fluid.model.FluidEnvironment;
 import com.becker.simulation.fluid.rendering.EnvironmentRenderer;
@@ -31,7 +32,7 @@ import java.awt.*;
  *   - force factor
  *   - source_ink factor
  */
-public class FluidSimulator extends NewtonianSimulator  {
+public class FluidSimulator extends Simulator {
 
     public static final String CONFIG_FILE = "com/becker/fluid/initialStateTest.data";
     private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "fluid/fluidFrame";
@@ -138,52 +139,11 @@ public class FluidSimulator extends NewtonianSimulator  {
         return envRenderer_.getScale();
     }
 
-    @Override
     public void setShowVelocityVectors( boolean show ) {
         envRenderer_.setShowVelocities(show);
     }
-    @Override
     public boolean getShowVelocityVectors() {
         return envRenderer_.getShowVelocities();
-    }
-
-    @Override
-    public void setShowForceVectors( boolean show ) {
-    }
-    
-    @Override
-    public boolean getShowForceVectors() {
-         return envRenderer_.getShowPressures();
-    }
-
-    @Override
-    public void setDrawMesh( boolean use ) {
-    }
-    
-    @Override
-    public boolean getDrawMesh() {
-        return false;
-    }
-
-
-    @Override
-    public void setStaticFriction( double staticFriction ) {
-        // do nothing
-    }
-    @Override
-    public double getStaticFriction() {
-        // do nothing
-        return 0.1;
-    }
-
-    @Override
-    public void setDynamicFriction( double dynamicFriction ) {
-       // do nothing
-    }
-    @Override
-    public double getDynamicFriction() {
-        // do nothing
-        return 0.01;
     }
 
     @Override

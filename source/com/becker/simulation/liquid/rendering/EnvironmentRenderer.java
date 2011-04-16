@@ -45,18 +45,27 @@ public final class EnvironmentRenderer {
 
     private RenderingOptions options = new RenderingOptions();
 
-
     LiquidEnvironment env_;
 
     public EnvironmentRenderer(LiquidEnvironment env) {
         env_ = env;
-        setScale(DEFAULT_SCALE);
     }
 
     public void setScale(double scale) {
-        scale_ = DEFAULT_SCALE;
+        scale_ = scale;
         wallLineWidth_ = (float) (scale / 5.0) + 1;
         particleSize_ = (int) (scale / 6.0) + 1;
+    }
+
+    /**
+     * figure out the biggest scale based in on which dimension is bumped up to first
+     */
+    private void determinScaling(int width, int height) {
+
+        Grid grid = env_.getGrid();
+        double proposedXScale = width / grid.getXDimension();
+        double proposedYScale = height / grid.getYDimension();
+        setScale(Math.min(proposedXScale, proposedYScale));
     }
 
     public double getScale() {
@@ -70,14 +79,16 @@ public final class EnvironmentRenderer {
     /**
      * Render the Environment on the screen.
      */
-    public void render(Graphics2D g) {
+    public void render(Graphics2D g, int width, int height) {
 
-       double time = System.currentTimeMillis();
+        double time = System.currentTimeMillis();
+
+        determinScaling(width, height);
+
+        // make sure all the cell statuses are in a consistent state
+        env_.getGrid().updateCellStatus();
         
-       // make sure all the cell statuses are in a consistent state
-       env_.getGrid().updateCellStatus();
-        
-       drawGrid(g);
+        drawGrid(g);
 
        // draw the cells colored by ---pressure--- val
        if (options.getShowPressures()) {
@@ -85,7 +96,7 @@ public final class EnvironmentRenderer {
        }
 
        // draw the ---walls---
-        drawWalls(g);
+       drawWalls(g);
 
        drawParticles(g);
 
@@ -103,7 +114,7 @@ public final class EnvironmentRenderer {
     }
 
     private double getMaxY() {
-       return  scale_ * env_.getGrid().getYDimension();
+       return  scale_ * env_.getGrid().getYDimension() + OFFSET;
     }
 
     /**
@@ -117,16 +128,17 @@ public final class EnvironmentRenderer {
         int yDim = grid.getYDimension();
         int rightEdgePos = (int) (scale_ * xDim);
         int bottomEdgePos = (int) (scale_ * yDim);
+        int maxY = (int)getMaxY();
 
         for (int  j = 0; j < yDim; j++ )   //  -----
         {
             int ypos = (int) (j * scale_);
-            g.drawLine( OFFSET, ypos + OFFSET, rightEdgePos + OFFSET, ypos + OFFSET );
+            g.drawLine( OFFSET, maxY - ypos, rightEdgePos + OFFSET, maxY - ypos );
         }
         for (int i = 0; i < xDim; i++ )    //  ||||
         {
             int xpos = (int) (i * scale_);
-            g.drawLine( xpos + OFFSET, OFFSET, xpos + OFFSET, bottomEdgePos + OFFSET );
+            g.drawLine( xpos + OFFSET, maxY, xpos + OFFSET, maxY - bottomEdgePos );
         }
     }
 
@@ -141,10 +153,10 @@ public final class EnvironmentRenderer {
 
         for (Particle p : env_.getParticles()) {
             p.get(a_);
-            g.setColor(getColorForAge(p.getAge()));
-            double offset = OFFSET - particleSize_/2.0;
-            int y = (int) (maxY - (scale_ * a_[1] + offset));
-            g.fillOval((int) (scale_ * a_[0] + offset), y,
+            g.setColor(getColorForParticle(p));
+            double offset = -particleSize_/2.0;
+            int y = (int) (maxY - (scale_ * a_[1] - offset));
+            g.fillOval((int) (scale_ * a_[0] + offset + OFFSET), y,
                               particleSize_, particleSize_);
         }
 
@@ -153,11 +165,12 @@ public final class EnvironmentRenderer {
         }
     }
 
-    private Color getColorForAge(double age) {
+    private Color getColorForParticle(Particle part) {
 
-        int comp = (int) (256.0 * age / 10.0);
+        int green = ((int)part.getY() % 2) == 0  ? 150 : 50;
+        int comp = (int) (256.0 * part.getAge() / 20.0);
         comp = (comp > 255) ? 255 : comp;
-        return new Color(comp, 90, 255 - comp, 80);
+        return new Color(comp, green, 255 - comp, 80);
     }
 
     private void drawParticleVelocities(Graphics2D g) {
@@ -176,7 +189,7 @@ public final class EnvironmentRenderer {
                 double x = (scale_ * a_[0]) + OFFSET;
 
                 double xLen = x + VELOCITY_SCALE * vel.x;
-                double y = maxY - ((scale_ * a_[1]) + OFFSET);
+                double y = maxY - scale_ * a_[1];
                 double yLen = y - VELOCITY_SCALE * vel.y;
                 g.drawLine( (int)x, (int)y, (int)xLen, (int)yLen);
             }
@@ -193,7 +206,7 @@ public final class EnvironmentRenderer {
         for (int j = 0; j < grid.getYDimension(); j++ ) {
             for (int i = 0; i < grid.getXDimension(); i++ ) {
                 g.setColor( pressureColorMap_.getColorForValue( grid.getCell(i, j).getPressure() ) );
-                g.fillRect( (int) (scale_ * (i)) + OFFSET, (int) (maxY - (scale_ * (j)) + OFFSET),
+                g.fillRect( (int) (scale_ * (i)) + OFFSET, (int) (maxY - scale_ * (j)),
                             (int) scale_, (int) scale_ );
             }
         }
@@ -206,7 +219,7 @@ public final class EnvironmentRenderer {
 
         Stroke wallStroke = new BasicStroke( wallLineWidth_ );
         g.setStroke( wallStroke );
-        double maxY = getMaxY();
+        int maxY = (int)getMaxY();
 
         g.setColor(WALL_COLOR);
         /*
@@ -221,8 +234,8 @@ public final class EnvironmentRenderer {
         }*/
 
         // outer boundary
-        g.drawRect( OFFSET, OFFSET, (int) (env_.getGrid().getXDimension() * scale_),
-                                    (int) (env_.getGrid().getYDimension() * scale_) );
+        g.drawRect(OFFSET, OFFSET, (int) (env_.getGrid().getXDimension() * scale_),
+                                   (int) (env_.getGrid().getYDimension() * scale_));
     }
 
     /**
@@ -239,7 +252,7 @@ public final class EnvironmentRenderer {
         for ( int j = 0; j < grid.getYDimension(); j++ ) {
             for (int  i = 0; i < grid.getXDimension(); i++ ) {
                 int x = (int) (scale_ * i) + OFFSET;
-                int y = (int)(maxY - ((scale_ * j) + OFFSET));
+                int y = (int) (maxY - scale_ * (j + 1));
                 strBuf.setCharAt( 0, grid.getCell(i, j).getStatus().getSymbol() );
                 strBuf.setLength( 1 );
                 //int nump = grid.getCell(i, j).getNumParticles();
@@ -267,9 +280,9 @@ public final class EnvironmentRenderer {
                 int x = (int) (scale_ * i) + OFFSET;
                 int xMid =  (int) (scale_ * (i + 0.5)) + OFFSET;
                 int xLen = (int) (scale_ * i + VELOCITY_SCALE * u) + OFFSET;
-                int y = (int)(maxY - ((scale_ * j) + OFFSET));
-                int yMid =  (int) (maxY - (scale_ * (j + 0.5)) + OFFSET);
-                int yLen = (int) (maxY - (scale_ * j + VELOCITY_SCALE * v + OFFSET))  ;
+                int y = (int)(maxY - scale_ * j);
+                int yMid =  (int) (maxY - (scale_ * (j + 0.5)));
+                int yLen = (int) (maxY - (scale_ * j + VELOCITY_SCALE * v ))  ;
                 g.drawLine( xMid, y, xMid, yLen);
                 g.drawLine( x, yMid, xLen, yMid );
             }

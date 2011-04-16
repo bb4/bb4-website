@@ -31,16 +31,14 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
     private GradientButton startButton_ = new GradientButton();
 
     // constructor
-    public SimulatorOptionsDialog( JFrame parent, Simulator simulator )
-    {
+    public SimulatorOptionsDialog( JFrame parent, Simulator simulator ) {
         super( parent );
         simulator_ = simulator;
         showContent();
     }
 
 
-    public Simulator getSimulator()
-    {
+    public Simulator getSimulator() {
         return simulator_;
     }
 
@@ -79,9 +77,15 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
     }
 
 
+    protected JCheckBox createCheckBox(String label, String ttip, boolean initialValue) {
+        JCheckBox cb = new JCheckBox(label, initialValue);
+        cb.setToolTipText(ttip);
+        cb.addActionListener(this);
+        return cb;
+    }
+
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         initBottomButton( startButton_, "Done", "Use these selections when running the simulation." );
@@ -101,13 +105,11 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return "Simulation Configuration";
     }
 
-    private JPanel createRenderingParamPanel()
-    {
+    private JPanel createRenderingParamPanel() {
         JPanel paramPanel = new JPanel();
         paramPanel.setLayout( new BorderLayout() );
 

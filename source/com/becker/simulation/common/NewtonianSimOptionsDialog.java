@@ -32,7 +32,6 @@ public abstract class NewtonianSimOptionsDialog extends SimulatorOptionsDialog {
         return "Newtonian Simulation Configuration";
     }
 
-
     @Override
     protected void addAdditionalToggles(JPanel togglesPanel) {
 
@@ -44,23 +43,23 @@ public abstract class NewtonianSimOptionsDialog extends SimulatorOptionsDialog {
     }
 
     protected JCheckBox createMeshCheckBox(NewtonianSimulator sim) {
-        drawMeshCheckbox_ = new JCheckBox( "Show Wireframe", sim.getDrawMesh() );
-        drawMeshCheckbox_.setToolTipText( "draw showing the underlying wireframe mesh");
-        drawMeshCheckbox_.addActionListener( this );
+        drawMeshCheckbox_ =
+                createCheckBox("Show Wireframe", "draw showing the underlying wireframe mesh", sim.getDrawMesh() );
         return drawMeshCheckbox_;
     }
 
     protected JCheckBox createVelocitiesCheckBox(NewtonianSimulator sim) {
-        showVelocitiesCheckbox_ = new JCheckBox( "Show Velocity Vectors", sim.getShowVelocityVectors());
-        showVelocitiesCheckbox_.setToolTipText( "show lines representing velocity vectors on each partical mass" );
-        showVelocitiesCheckbox_.addActionListener( this );
+        showVelocitiesCheckbox_ =
+                createCheckBox("Show Velocity Vectors",
+                    "show lines representing velocity vectors on each partical mass",
+                    sim.getShowVelocityVectors() );
         return showVelocitiesCheckbox_;
     }
 
     protected JCheckBox createForcesCheckBox(NewtonianSimulator sim) {
-        showForcesCheckbox_ = new JCheckBox( "Show Force Vectors", sim.getShowForceVectors());
-        showForcesCheckbox_.setToolTipText( "show lines representing force vectors on each partical mass" );
-        showForcesCheckbox_.addActionListener( this );
+        showForcesCheckbox_ =
+                createCheckBox("Show Force Vectors",
+                        "show lines representing force vectors on each partical mass",  sim.getShowForceVectors());
         return showForcesCheckbox_;
     }
 
