@@ -15,7 +15,6 @@ public class RDOptionsDialog extends SimulatorOptionsDialog {
 
     private JCheckBox showProfilingCheckbox_;
     private JCheckBox useParallelRenderingCheckbox_;
-    private JCheckBox synchronizeRenderingCheckbox_;
 
 
     public RDOptionsDialog( JFrame parent, Simulator simulator ) {
@@ -38,17 +37,13 @@ public class RDOptionsDialog extends SimulatorOptionsDialog {
                         sim.getUseOffScreenRendering());
 
         useParallelRenderingCheckbox_ = addCheckBox("Use parallel rendering",
-                        "If you turn this on, your should also turn on synchronized rendering to avoid artifacts",
+                        "Rendering will take advantage of as many cores/threads that are avaialble.",
                         sim.getRenderingOptions().isParallelized());
 
-        synchronizeRenderingCheckbox_ = addCheckBox("Use synchronized rendering",
-                        "You don't need this unless parallelized rendering is also checked.",
-                        sim.getRenderingOptions().isSynchRendering());
 
         panel.add(showProfilingCheckbox_);
         panel.add(offscreenRenderingCheckbox_);
         panel.add(useParallelRenderingCheckbox_);
-        panel.add(synchronizeRenderingCheckbox_);
                
         return panel;
     }
@@ -68,9 +63,6 @@ public class RDOptionsDialog extends SimulatorOptionsDialog {
         }
         else if ( source == useParallelRenderingCheckbox_ ) {
             sim.getRenderingOptions().setParallelized(useParallelRenderingCheckbox_.isSelected());
-        }
-        else if ( source == synchronizeRenderingCheckbox_ ) {
-            sim.getRenderingOptions().setSynchRendering(synchronizeRenderingCheckbox_.isSelected());
         }
     }
 }

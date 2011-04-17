@@ -66,7 +66,7 @@ public class ColorMap {
     /**
      * I don't think we should get a race condition because the static rgb variables are only used in this
      * class and this method is synchronized. I want to avoid creating the rgb arrays each time the method is called.
-     * @param x value to retur color for.
+     * @param x value to return color for.
      * @return interpolated color
      */
     private Color interpolate( double x ) {

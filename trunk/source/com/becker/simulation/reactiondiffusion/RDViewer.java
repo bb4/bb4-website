@@ -67,8 +67,7 @@ public class RDViewer {
         return cmap_;
     }
 
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g )  {
         checkDimensions();
 
         Graphics2D g2 = (Graphics2D) g;
@@ -81,6 +80,7 @@ public class RDViewer {
     private void checkDimensions() {
         int w = FIXED_SIZE_DIM;
         int h = FIXED_SIZE_DIM;
+
         if (!useFixedSize_) {
             w = parent_.getWidth();
             h = parent_.getHeight();

@@ -48,10 +48,8 @@ public class RDSimulator extends Simulator {
     }
 
 
-
     @Override
-    public void setPaused( boolean bPaused )
-    {
+    public void setPaused( boolean bPaused ) {
         super.setPaused(bPaused);
         if (isPaused())   {
             RDProfiler.getInstance().print();

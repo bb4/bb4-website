@@ -1,6 +1,7 @@
 package com.becker.simulation.reactiondiffusion.algorithm;
 
 import com.becker.common.concurrency.Parallelizer;
+import com.becker.simulation.reactiondiffusion.RDProfiler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
  * Makes the GrayScott algorithm run concurrently if setParallelized is set to true.
  * Primary purpose of this class is to handle breaking the algorithm up into concurrent worker threads.
  *
- * Here are some parallelism results using my Core2Duo 6400.
+ * Here are some parallelism results using my Core2Duo 6400 (and later i7 2600k) using fixed size.
  * Without parallelism  8.62 fps
  * With parallelism (but not borders) 10.16 fps
  * With parallelism (and borders in sep thread) 10.36 fps
@@ -23,11 +24,34 @@ import java.util.List;
  * parallel calc       | 23.8     21.1    20.9    20.5
  * n-par calc          | 19.0     17.1            17.0
  * n-par calc/offscreen|                  12.8    12.9
- * par calc/ofscreen   | 17.2     14.2    14.3    14.1
+ * par calc/offscreen   | 17.2     14.2   14.3    14.1
  *
- *    pr/ns : parallel rendering/ no synchronized
- *    npr/ns : no parallel renderin no synch.
- *   * Parallel rendering without synchranization is fast, but has bad renderin artifacts.
+ *   pr/ns : parallel rendering/ no synchronized
+ *   npr/ns : no parallel rendering no synchronization.
+ *   Parallel rendering without synchronization is fast, but has bad rendering artifacts.
+ *
+ * Made some more improvements
+ *   - upgraded to ci7 2600k with 4 cores and 8 threads (hyper-threaded).
+ *   - fixed a bug in Model.commit where I was using arrayCopy instead of just a pointer swap.
+ *   - Modified parallel rendering code so that I compute images and write them quickly
+ *     rather than drawing individual points which needed to be synchronized (set color, then draw point)
+ * Notes
+ *   - The difference between onscreen and offscreen rendering seems negligible.
+ *   - Getting really great CPU utilization of cores - somewhere around 85%.
+ *   - The temperature of the CPU really heats up. Saw max temp of 76C.
+ *
+ *                       par rend          non-par rendering
+ *                      ------------       --------------
+ * parallel calc       |   180 fps             78 fps
+ * n-par calc          |   102 fps             66 fps
+ *
+ * For larger rectanlge than fixed the performance increases seem even better
+ *
+ *                       par rend          non-par rendering
+ *                      ------------       --------------
+ * parallel calc       |   19.5 fps            8.1 fps
+ * n-par calc          |   13.2 fps            6.8 fps
+ *
  *
  * @author Barry Becker
  */
@@ -53,7 +77,7 @@ public final class GrayScottController {
      * @param height height of computational space.
      */
     public GrayScottController(int width, int height) {
-        model_ =  new GrayScottModel(width, height);
+        model_ = new GrayScottModel(width, height);
         algorithm_ = new GrayScottAlgorithm(model_);
         setParallelized(true);
     }
@@ -85,7 +109,7 @@ public final class GrayScottController {
      * Set this to true if you want to run the version
      * that will partition the task of computing the next timeStop
      * into smaller pieces that can be run on different threads.
-     * This should speed thinks up on a multi-core computer.
+     * This should speed things up on a multi-core computer.
      */
     public void setParallelized(boolean parallelized) {
          parallelizer =
@@ -105,14 +129,19 @@ public final class GrayScottController {
     public void timeStep(final double dt) {
 
         int numProcs = parallelizer.getNumThreads();
-        List<Runnable> workers = new ArrayList<Runnable>(numProcs);
+        List<Runnable> workers = new ArrayList<Runnable>(numProcs + 1);
         int range = model_.getWidth() / numProcs;
+        RDProfiler prof = RDProfiler.getInstance();
 
+        prof.startConcurrentCalculationTime();
         for (int i = 0; i < (numProcs - 1); i++) {
             int offset = i * range;
             workers.add(new Worker(1 + offset, offset + range, dt));
         }
-        workers.add(new Worker(range * (numProcs - 1) + 1, model_.getWidth() - 2, dt));
+
+        int minXEdge = range * (numProcs - 1) + 1;
+        int maxXEdge = model_.getWidth() - 2;
+        workers.add(new Worker(minXEdge, maxXEdge, dt));
 
         // also add the border calculations in a separate thread.
         Runnable edgeWorker = new Runnable() {
@@ -124,8 +153,11 @@ public final class GrayScottController {
    
         // blocks until all Callables are done running.
         parallelizer.invokeAllRunnables(workers);
-     
+        prof.stopConcurrentCalculationTime();
+
+        prof.startCommitChangesTime();
         model_.commitChanges();
+        prof.stopCommitChangesTime();
 
         if (requestedNewSize != null) {
              model_.setSize(requestedNewSize);

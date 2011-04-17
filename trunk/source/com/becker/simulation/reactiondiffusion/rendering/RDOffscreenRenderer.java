@@ -1,8 +1,8 @@
 package com.becker.simulation.reactiondiffusion.rendering;
 
 import com.becker.common.ColorMap;
-import com.becker.ui.renderers.OfflineGraphics;
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
+import com.becker.ui.renderers.OfflineGraphics;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;
@@ -29,11 +29,14 @@ public class RDOffscreenRenderer extends RDRenderer {
         offlineGraphics_ = new OfflineGraphics(imageObserver.getSize(), Color.BLACK);
     }
 
-
+    /**
+     * Renders a rectangular strip of pixels.
+     */
     @Override
-    protected void renderPoint(int x, int y, Color color, Graphics2D g2) {
-        offlineGraphics_.setColor(color);
-        offlineGraphics_.drawPoint(x, y);
+    public void renderStrip(int minX, ColorRect rect, Graphics2D g2) {
+
+        Image img = rect.getAsImage();
+        offlineGraphics_.drawImage(img, minX, 0, null);
     }
 
 
