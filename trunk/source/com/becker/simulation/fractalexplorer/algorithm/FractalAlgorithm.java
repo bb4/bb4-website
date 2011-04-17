@@ -4,6 +4,7 @@ import com.becker.common.concurrency.Parallelizer;
 import com.becker.common.math.ComplexNumber;
 import com.becker.common.math.ComplexNumberRange;
 import com.becker.common.profile.ProfilerEntry;
+import com.becker.simulation.fractalexplorer.Profiler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,11 @@ import java.util.List;
  * For core 2 Duo:
  *  - not-parallel 32.4 seconds
  *  - parallel     19.5 seconds
+ *
+ *  For i7 2600k
+ *     original                     after rendering optimization.
+ *  - not-parallel  16.0  seconds         6.1
+ *  - parallel       5.1 seconds          2.1
  * @author Barry Becker
  */
 public abstract class FractalAlgorithm {
@@ -30,13 +36,12 @@ public abstract class FractalAlgorithm {
     /** Manages the worker threads. */
     private Parallelizer<Worker> parallelizer_;
 
-    private ProfilerEntry timer_;
-
     private int maxIterations_ = DEFAULT_MAX_ITERATIONS;
 
     private RowCalculator rowCalculator_;
 
     private boolean restartRequested = false;
+    private boolean wasDone = false;
 
     private History history_ = new History();
 
@@ -107,7 +112,7 @@ public abstract class FractalAlgorithm {
     }
 
     /**
-     * @param timeStep number of rows to comput on this timestep.
+     * @param timeStep number of rows to compute on this timestep.
      * @return true when done computing whole model.
      */
     public boolean timeStep(double timeStep) {
@@ -117,7 +122,7 @@ public abstract class FractalAlgorithm {
             restartRequested = false;
         }
         if (model.isDone()) {
-            stopTiming();
+            showProfileInfoIfDone();
             return true;  // we are done.
         }
 
@@ -126,9 +131,8 @@ public abstract class FractalAlgorithm {
         
         // we calculate a little more each "timestep"
         int currentRow = model.getCurrentRow();
-        if (currentRow == 0) {
-            startTiming();
-        }
+        startProfileTimeIfNeeded(currentRow);
+
 
         int computeToRow = Math.min(model.getHeight(), currentRow + (int)timeStep * numProcs);
 
@@ -170,17 +174,21 @@ public abstract class FractalAlgorithm {
     }
 
 
-    private void startTiming() {
-        timer_ = new ProfilerEntry("Fractal");
-        timer_.start();
+    private void startProfileTimeIfNeeded(int currentRow) {
+        if (currentRow == 0) {
+            Profiler.getInstance().startCalculationTime();
+            wasDone = false;
+        }
     }
 
-    private void stopTiming() {
-         if (timer_ != null) {
-              timer_.stop();
-              timer_.print();
-              timer_ = null;
-         }
+    private void showProfileInfoIfDone() {
+        if (!wasDone) {
+            Profiler prof = Profiler.getInstance();
+            prof.stopCalculationTime();
+            prof.print();
+            prof.resetAll();
+            wasDone = true;
+        }
     }
 
     /**
@@ -200,7 +208,6 @@ public abstract class FractalAlgorithm {
         public void run() {
             computeChunk(fromRow_, toRow_);
         }
-
 
         /**
          * Do a chunk of work (i.e. compute the specified rows)
