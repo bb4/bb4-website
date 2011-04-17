@@ -12,6 +12,7 @@ import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
+import java.awt.image.WritableRaster;
 import java.io.*;
 
 /**
@@ -20,10 +21,9 @@ import java.io.*;
  * @author Barry Becker
  */
 @SuppressWarnings({"StaticMethodOnlyUsedInOneClass"})
-public final class ImageUtil
-{
+public final class ImageUtil {
 
-    // print quality for JPGs. 1.0 is no compression.
+    /** print quality for JPGs. 1.0 is no compression.    */
     private static final float JPG_QUALITY = 0.9f;
 
     public enum ImageType { PNG, JPG }
@@ -33,8 +33,8 @@ public final class ImageUtil
     /**
      * @return a BufferedImage from an Image
      */
-    public static BufferedImage makeBufferedImage( final Image image )
-    {
+    public static BufferedImage makeBufferedImage( final Image image ) {
+
         BufferedImage bImg = new BufferedImage( image.getWidth(null), image.getHeight(null),
                 BufferedImage.TYPE_INT_ARGB );
         Graphics2D g2 = bImg.createGraphics();
@@ -46,8 +46,8 @@ public final class ImageUtil
     /**
      * create an image that is compatible with your hardware
      */
-    public static BufferedImage createCompatibleImage( int width, int height )
-    {
+    public static BufferedImage createCompatibleImage( int width, int height ) {
+
         GraphicsEnvironment local = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice screen = local.getDefaultScreenDevice();
         GraphicsConfiguration configuration = screen.getDefaultConfiguration();
@@ -59,8 +59,8 @@ public final class ImageUtil
      * @param img the image to convert
      * @param type the type of image to create ("jpg" or "png")
      */
-    public static byte[] getImageAsByteArray( Image img, ImageType type )
-    {
+    public static byte[] getImageAsByteArray( Image img, ImageType type ) {
+
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         BufferedOutputStream os = new BufferedOutputStream( bos );
         writeImage( img, os, type );
@@ -74,9 +74,8 @@ public final class ImageUtil
      *  @param out output stream to write to
      *  @param type the type of image to create ("jpg" or "png")
      */
-    public static void writeImage( Image img, BufferedOutputStream out, ImageType type )
-    {
-        //long time = System.currentTimeMillis();
+    public static void writeImage( Image img, BufferedOutputStream out, ImageType type ) {
+
         BufferedImage bi = makeBufferedImage( img );
 
         if ( type == ImageType.JPG ) {
@@ -124,7 +123,6 @@ public final class ImageUtil
         } catch (IOException fne) {
             System.out.println( "IOException error:" + fne.getMessage());
         }
-        //System.out.println("VizUtil: createImage time = "+(System.currentTimeMillis()-time));
     }
 
     /**
@@ -135,8 +133,8 @@ public final class ImageUtil
      * @param img the image to save
      * @param type of image ("jpg" or "png" (default))
      */
-    public static void saveAsImage( String fileName, Image img, ImageType type )
-    {
+    public static void saveAsImage( String fileName, Image img, ImageType type ) {
+
         BufferedOutputStream os = null;
         try {
             String extension = '.' +type.toString().toLowerCase();
@@ -146,7 +144,6 @@ public final class ImageUtil
                 fn += extension;
             }
 
-            //System.out.println("saving as "+  fileName + extension );
             os = new BufferedOutputStream( new FileOutputStream( fn ) );
         } catch (FileNotFoundException fne) {
             System.out.println( "File " + fileName + " not found: " + fne.getMessage());
@@ -155,13 +152,35 @@ public final class ImageUtil
         writeImage( img, os, type );
     }
 
+    /**
+     *
+     * @param pixels one dimension array of pixels where a pixel at x and y can be located with
+     *   3 *(x * height + y )
+     *   Note that there are 4 ints for every pixel (rgb)
+     * @param width
+     * @param height
+     * @return image from the pixel data
+     */
+    public static Image getImageFromPixelArray(int[] pixels, int width, int height) {
+
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        image.setRGB(0, 0, width, height, pixels, 0, width);
+
+
+        //WritableRaster raster = (WritableRaster) image.getData();
+        // xy coordinate of upper left.
+        //raster.setPixels(0, 0, width, height, pixels);
+        //image.setData(raster);
+        return image;
+    }
            
     // temp vars for interpolation
     private static final float[] rgbaL = new float[4];
     private static final float[] rgbaU = new float[4];
     
-    public static Color interpolate( double x, double y, float[]  colorLL, float[] colorLR, float[] colorUL, float[]  colorUR )
-    {      
+    public static Color interpolate( double x, double y, float[]
+                                     colorLL, float[] colorLR, float[] colorUL, float[]  colorUR ) {
+
          rgbaL[0] = (float) (colorLL[0] + x * (colorLR[0] - colorLL[0]));
          rgbaL[1] = (float) (colorLL[1] + x * (colorLR[1] - colorLL[1]));
          rgbaL[2] = (float) (colorLL[2] + x * (colorLR[2] - colorLL[2]));

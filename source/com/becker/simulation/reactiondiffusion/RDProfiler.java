@@ -13,6 +13,8 @@ public class RDProfiler extends Profiler {
 
     protected static final String RENDERING = "rendering";
     protected static final String CALCULATION = "calculation";
+    protected static final String CONCURRENT_CALCULATION = "concurrent_calculation";
+    protected static final String COMMIT_CHANGES = "commit_changes";
 
     private static RDProfiler instance;
 
@@ -34,6 +36,8 @@ public class RDProfiler extends Profiler {
      */
     protected RDProfiler() {
         add(CALCULATION);
+        add(CONCURRENT_CALCULATION, CALCULATION);
+        add(COMMIT_CHANGES, CALCULATION);
         add(RENDERING);
     }
 
@@ -44,7 +48,9 @@ public class RDProfiler extends Profiler {
     @Override
     public void print() {
 
-        if (!isEnabled()) return;
+        if (!isEnabled()) {
+            return;
+        }
         double calcTime = getEntry(CALCULATION).getTimeInSeconds();
         double renderingTime = getEntry(RENDERING).getTimeInSeconds();
         double ratio = calcTime / renderingTime;
@@ -67,6 +73,21 @@ public class RDProfiler extends Profiler {
 
     public void stopCalculationTime() {
         this.stop(CALCULATION);
+    }
+
+    public void startConcurrentCalculationTime() {
+        this.start(CONCURRENT_CALCULATION);
+    }
+
+    public void stopConcurrentCalculationTime() {
+        this.stop(CONCURRENT_CALCULATION);
+    }
+    public void startCommitChangesTime() {
+        this.start(COMMIT_CHANGES);
+    }
+
+    public void stopCommitChangesTime() {
+        this.stop(COMMIT_CHANGES);
     }
 
     public void startRenderingTime() {

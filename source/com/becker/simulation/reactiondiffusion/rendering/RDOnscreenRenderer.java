@@ -18,9 +18,17 @@ public class RDOnscreenRenderer extends RDRenderer {
         super(model, cmap, options);
     }
 
+
+    /**
+     * Renders a rectangular strip of pixels.
+     */
     @Override
-    protected void renderPoint(int x, int y, Color color, Graphics2D g2) {
-        g2.setColor(color);
-        g2.drawLine(x, y, x, y);  // a point
-    }  
+    public void renderStrip(int minX, ColorRect rect, Graphics2D g2) {
+
+        Image img = rect.getAsImage();
+        g2.drawImage(img, minX, 0, null);
+    }
+
+    @Override
+    protected void postRender(Graphics2D g2) {}
 }

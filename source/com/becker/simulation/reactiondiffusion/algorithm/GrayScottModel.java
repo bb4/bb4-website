@@ -21,7 +21,6 @@ public final class GrayScottModel {
     double[][] tmpU;
     double[][] tmpV;
 
-
     private double k_;
     private double f_;
     private double initialK_;
@@ -31,7 +30,7 @@ public final class GrayScottModel {
 
 
     /**
-     * constructor
+     * Constructor
      * @param width width of computational space.
      * @param height height of computational space.
      */
@@ -81,11 +80,17 @@ public final class GrayScottModel {
         return k_;
     }
 
+    /**
+     * Exchange the u, v fields with the tmp versions.
+     */
     public void commitChanges() {
-         for (int x = 0; x < width_; x++) {
-             System.arraycopy(u[x], 0, tmpU[x], 0, height_);
-             System.arraycopy(v[x], 0, tmpV[x], 0, height_);
-        }
+        double[][]  temp = tmpU;
+        tmpU = u;
+        u = temp;
+
+        temp = tmpV;
+        tmpV = v;
+        v = temp;
     }
 
     public double getNeighborSum(double tmp[][], int x, int y) {
@@ -142,7 +147,7 @@ public final class GrayScottModel {
         }
     }
 
-      /**
+    /**
      * Periodic boundary conditions.
      * @return new x value taking into account wrapping boundaries.
      */

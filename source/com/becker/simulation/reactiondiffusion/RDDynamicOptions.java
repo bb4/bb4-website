@@ -19,14 +19,15 @@ import java.awt.event.ActionListener;
  * @author Barry Becker
  */
 class RDDynamicOptions extends JPanel
-                              implements ActionListener, SliderGroupChangeListener {
+                       implements ActionListener, SliderGroupChangeListener {
 
     private GrayScottController gs_;
     private RDSimulator simulator_;
 
     private JCheckBox showU_;
     private JCheckBox showV_;
-    private JCheckBox useConcurrency_;
+    private JCheckBox useComputeConcurrency_;
+    private JCheckBox useRenderingConcurrency_;
     private JCheckBox useFixedSize_;
 
     private static final String K_SLIDER = "K";
@@ -39,7 +40,7 @@ class RDDynamicOptions extends JPanel
     
     private SliderGroup sliderGroup_;
     private static final double MIN_NUM_STEPS = RDSimulator.DEFAULT_STEPS_PER_FRAME/10.0;
-    private static final double MAX_NUM_STEPS = 4.0*RDSimulator.DEFAULT_STEPS_PER_FRAME;
+    private static final double MAX_NUM_STEPS = 10.0 * RDSimulator.DEFAULT_STEPS_PER_FRAME;
 
     private static final SliderProperties[] SLIDER_PROPS = {
         new SliderProperties(K_SLIDER,      0,           0.3,      GrayScottModel.K0,     1000),
@@ -91,22 +92,37 @@ class RDDynamicOptions extends JPanel
         showV_ = new JCheckBox("V Value", renderingOptions.isShowingV());
         showV_.addActionListener(this);
 
-        useConcurrency_ = new JCheckBox("Parallel", gs_.isParallelized());
-        useConcurrency_.setToolTipText(
-                "Take advantage of multiple processors for calculation and rendering if present.");
-        useConcurrency_.addActionListener(this);
+        useComputeConcurrency_ =
+                createCheckBox("Parallel caclulation",
+                               "Take advantage of multiple processors for RD calculation if checked.",
+                               gs_.isParallelized());
 
-        useFixedSize_ = new JCheckBox("Fixed Size", simulator_.getUseFixedSize());
-        useFixedSize_.addActionListener(this);
+        useRenderingConcurrency_ =
+                createCheckBox("Parallel rendering",
+                              "Take advantage of multiple processors for rendering if checked.",
+                              renderingOptions.isParallelized());
+
+        useFixedSize_ =
+                createCheckBox("Fixed Size",
+                               "Use just a small fixed size area for rendering rather than the whole resizable area.",
+                               simulator_.getUseFixedSize());
 
         JPanel checkBoxes = new JPanel(new GridLayout(0, 2));
         checkBoxes.add(showU_);
-        checkBoxes.add(useConcurrency_);
-        checkBoxes.add(showV_);   
+        checkBoxes.add(showV_);
+        checkBoxes.add(useComputeConcurrency_);
+        checkBoxes.add(useRenderingConcurrency_);
         checkBoxes.add(useFixedSize_);
         
         checkBoxes.setBorder(BorderFactory.createEtchedBorder());
         return checkBoxes;
+    }
+
+    private JCheckBox createCheckBox(String label, String tooltip, boolean initiallyChecked)   {
+        JCheckBox cb = new JCheckBox(label, initiallyChecked);
+        cb.setToolTipText(tooltip);
+        cb.addActionListener(this);
+        return cb;
     }
 
 
@@ -127,9 +143,13 @@ class RDDynamicOptions extends JPanel
             renderingOptions.setShowingV(!renderingOptions.isShowingV());
             repaint();
         }
-        else if (e.getSource() == useConcurrency_) {
+        else if (e.getSource() == useComputeConcurrency_) {
             boolean isParallelized = !gs_.isParallelized();
             gs_.setParallelized(isParallelized);
+        }
+        else if (e.getSource() == useRenderingConcurrency_) {
+            boolean isParallelized = !renderingOptions.isParallelized();
+            renderingOptions.setParallelized(isParallelized);
         }
         else if (e.getSource() == useFixedSize_) {
             simulator_.setUseFixedSize(useFixedSize_.isSelected());

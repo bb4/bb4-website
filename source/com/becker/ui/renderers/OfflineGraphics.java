@@ -4,6 +4,7 @@ import com.becker.common.util.ImageUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 
 /**
  * For fast rendering into an offscreen image.
@@ -57,6 +58,11 @@ public class OfflineGraphics  {
     public void drawPoint(int x1, int y1) {
         if (offlineGraphics_ != null)
             offlineGraphics_.drawLine(x1, y1, x1, y1);
+    }
+
+    public void drawImage(Image img, int x, int y, ImageObserver observer) {
+        if (offlineGraphics_ != null)
+            offlineGraphics_.drawImage(img, x, y, observer);
     }
 
     /**

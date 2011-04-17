@@ -29,7 +29,6 @@ public class RDRenderingOptions {
     /** Manages the worker threads. */
     private Parallelizer<RenderWorker> parallelizer_;
 
-    private boolean isSynchRendering_ = false;
 
     static {
         LIGHT_SOURCE_DIR.normalize();
@@ -60,19 +59,6 @@ public class RDRenderingOptions {
         return parallelizer_.getNumThreads() > 1;
     }
 
-    /**
-     * Wihtout synchronized rendering, there will be grainy artifacts because of setColor not necessarily
-     * matching render point call if running in different thread.
-     * @param synch
-     */
-    public void setSynchRendering(boolean synch) {
-        isSynchRendering_ = synch;
-    }
-
-    public boolean isSynchRendering() {
-        return isSynchRendering_;
-    }
-
     public void setHeightScale(double h) {
         heightScale_ = h;
     }
@@ -93,7 +79,6 @@ public class RDRenderingOptions {
         }
         return specular;
     }
-
 
     public boolean isShowingU() {
         return isShowingU_;
