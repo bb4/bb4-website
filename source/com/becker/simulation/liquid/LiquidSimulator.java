@@ -5,7 +5,6 @@ import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
-import com.becker.simulation.common.NewtonianSimulator;
 import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.liquid.config.ConfigurationEnum;
@@ -13,12 +12,9 @@ import com.becker.simulation.liquid.model.LiquidEnvironment;
 import com.becker.simulation.liquid.rendering.EnvironmentRenderer;
 import com.becker.simulation.liquid.rendering.RenderingOptions;
 import com.becker.ui.util.GUIUtil;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
