@@ -15,7 +15,7 @@ import java.awt.event.ItemListener;
  */
 public abstract class AnimationComponent extends Container implements Runnable {
 
-    private boolean animating_ = true;
+    protected boolean animating_ = true;
     protected int numStepsPerFrame_ = 1;
     /** previous times in milliseconds. */
     protected long[] previousTimes_;
