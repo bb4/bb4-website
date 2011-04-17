@@ -165,12 +165,6 @@ public final class ImageUtil {
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         image.setRGB(0, 0, width, height, pixels, 0, width);
-
-
-        //WritableRaster raster = (WritableRaster) image.getData();
-        // xy coordinate of upper left.
-        //raster.setPixels(0, 0, width, height, pixels);
-        //image.setData(raster);
         return image;
     }
            

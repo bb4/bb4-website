@@ -19,7 +19,6 @@ public class FractalExplorer extends Simulator {
     private FractalAlgorithm algorithm_;
     private FractalModel model_;
     private DynamicOptions options_;
-    private FractalRenderer renderer_;
     private ZoomHandler zoomHandler_;
 
     private boolean useFixedSize_ = false;
@@ -53,10 +52,9 @@ public class FractalExplorer extends Simulator {
     @Override
     protected void reset() {
 
-        model_ = new FractalModel();
+        model_ = new FractalModel(new FractalColorMap());
         algorithm_ = new MandelbrotAlgorithm(model_);
 
-        renderer_ = new FractalRenderer(model_, new FractalColorMap());
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
 
         zoomHandler_ = new ZoomHandler(algorithm_);
@@ -83,7 +81,9 @@ public class FractalExplorer extends Simulator {
             if (!useFixedSize_) {
                 model_.setSize(this.getWidth(), this.getHeight());
             }
+
             algorithm_.timeStep( timeStep_ );
+
         }
         return timeStep_;
     }
@@ -92,8 +92,10 @@ public class FractalExplorer extends Simulator {
     public void paint( Graphics g ) {
         super.paint(g);
 
-        renderer_.render(g);
+        Profiler.getInstance().startRenderingTime();
+        g.drawImage(model_.getImage(), 0, 0, null);
         zoomHandler_.render(g, model_.getAspectRatio());
+        Profiler.getInstance().stopRenderingTime();
     }
 
     @Override
@@ -111,6 +113,6 @@ public class FractalExplorer extends Simulator {
     }
 
     public ColorMap getColorMap() {
-        return renderer_.getColorMap();
+        return model_.getColorMap();
     }
 }

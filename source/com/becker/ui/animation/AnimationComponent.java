@@ -149,6 +149,7 @@ public abstract class AnimationComponent extends Container implements Runnable {
         Graphics2D g = (Graphics2D)getGraphics();
         if ( g != null ) {
             Dimension d = getSize();
+
             if ( checkImage( d ) ) {
                 Graphics imageGraphics = image_.getGraphics();
                 // Clear the image background.

@@ -71,6 +71,7 @@ class RDDynamicOptions extends JPanel
         JPanel checkBoxes = createCheckBoxes();
         ContinuousColorLegend legend_ =
                 new ContinuousColorLegend(null, simulator_.getColorMap(), true);
+
         
         add(sliderGroup_);
         add(Box.createVerticalStrut(10));
