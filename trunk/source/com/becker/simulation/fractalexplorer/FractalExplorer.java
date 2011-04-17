@@ -78,8 +78,7 @@ public class FractalExplorer extends Simulator {
     }
 
     @Override
-    public double timeStep()
-    {
+    public double timeStep() {
         if ( !isPaused() ) {
             if (!useFixedSize_) {
                 model_.setSize(this.getWidth(), this.getHeight());
@@ -90,8 +89,7 @@ public class FractalExplorer extends Simulator {
     }
 
     @Override
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         super.paint(g);
 
         renderer_.render(g);

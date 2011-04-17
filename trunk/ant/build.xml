@@ -25,7 +25,6 @@
   <property name="java15" value="${java_home}/java1.5.0_12/jre/bin/java"/>
   <property name="java16" value="${java_home}/jdk1.6.0_24/bin/java"/>
   <property name="java_compiler" value="${java16}"/>
-  <property name="sleepTime" value="100"/>
 
   <!-- Load additional tasks -->
    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
@@ -54,7 +53,7 @@
 
 
   <target name="compile" depends="init" description="Compiles the source code">
-    <javac debug="yes" deprecation="yes" destdir="${classesDir}"
+    <javac debug="yes" deprecation="yes" destdir="${classesDir}"    includeantruntime="false"
         nowarn="no" optimize="yes" srcdir="${sourceDir}" verbose="false"
         executable="${java_home}/bin/javac" compiler="modern" source="1.5">
        <!-- compilerarg value="-Xlint" /   this is nice but adding support for generics is a bit of a rathole.-->
@@ -131,17 +130,6 @@
     </antcall>
   </target>
 
-  <target name="testPente" depends="compile" description=" pente game tests">
-       <echo message="now running Pente tests"/>
-       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
-           <classpath path="${libDir}/junit.jar;${classesDir}"/>
-           <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->
-           <assertions><enable/></assertions>
-           <formatter type="plain"/>
-           <test name="com.becker.game.twoplayer.pente.TestAll" outfile="../test/com/becker/game/twoplayer/pente/penteTestResults"/>
-       </junit>
-  </target>
-
   <target name="executeTicTacToe" description="Run the tic-tac-toe program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
@@ -167,17 +155,6 @@
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
       <param name="args" value="-name blockade -locale ENGLISH"/>
     </antcall>
-  </target>
-
-   <target name="testBlockade" depends="compile" description="Blockade game tests">
-       <echo message="now running BLOCKADE tests"/>
-       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes">
-           <classpath path="${libDir}/junit.jar;${classesDir}"/>
-           <formatter type="plain"/>
-           <!--formatter type="brief" usefile="false" /-->
-          <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->  <!--   for Netbeans debugging-->
-           <test name="com.becker.game.twoplayer.blockade.TestAll" outfile="../test/com/becker/game/twoplayer/blockade/blockadeTestResults"/>
-       </junit>
   </target>
 
   <target name="executeCheckers" description="Run the checkers program">
@@ -397,17 +374,6 @@
       <param name="libPath" value="${libDir}/vecmath.jar"/>
       <param name="args" value="com.becker.simulation.fluid.ui.FluidSimulator"/>
     </antcall>
-  </target>
-
-  <target name="testLiquid" depends="compile" description=" liquid tests" >
-       <echo message="now running LIQUID tests"/>
-       <junit  printsummary="yes" fork="yes"  haltonfailure="no" showoutput="yes" >
-           <classpath path="${classesDir};${libDir}/junit.jar;${libDir}/vecmath.jar"/>
-           <assertions><enable/></assertions>
-           <formatter type="plain"/>
-           <!--formatter type="brief" usefile="false" /-->
-           <test name="com.becker.simulation.liquid.TestAll" outfile="../test/liquid/liquidTestResults"/>
-       </junit>
   </target>
 
   <target name="testSound" depends="compile" description=" sound tests">

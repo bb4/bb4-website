@@ -1,6 +1,7 @@
 package com.becker.simulation.fluid.ui;
 
 import com.becker.simulation.common.NewtonianSimOptionsDialog;
+import com.becker.simulation.common.SimulatorOptionsDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,25 +13,26 @@ import java.awt.event.ActionListener;
  *
  * @author Bary Becker
  */
-class FluidOptionsDialog extends NewtonianSimOptionsDialog
+class FluidOptionsDialog extends SimulatorOptionsDialog
                          implements ActionListener {
 
     FluidOptionsDialog( JFrame parent, FluidSimulator simulator ) {
         super( parent, simulator );
     }
 
+    @Override
     protected JPanel createCustomParamPanel() {
 
         JPanel customParamPanel = new JPanel();
         customParamPanel.setLayout( new BorderLayout() );
 
-        JPanel liquidParamPanel = new JPanel();
-        liquidParamPanel.setLayout( new BoxLayout(liquidParamPanel, BoxLayout.Y_AXIS ) );
-        liquidParamPanel.setBorder(
-                BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Liquid Parameters" ) );
+        JPanel fluidParamPanel = new JPanel();
+        fluidParamPanel.setLayout(new BoxLayout(fluidParamPanel, BoxLayout.Y_AXIS));
+        fluidParamPanel.setBorder(
+                BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Liquid Parameters"));
 
         //FluidSimulator simulator = (FluidSimulator) getSimulator();
-        customParamPanel.add(liquidParamPanel, BorderLayout.NORTH);
+        customParamPanel.add(fluidParamPanel, BorderLayout.NORTH);
 
         return customParamPanel;
     }

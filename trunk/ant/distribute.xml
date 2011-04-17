@@ -102,6 +102,7 @@
         <param name="path" value="game"/>
         <param name="pattern" value="*.xml"/>
       </antcall>
+
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/gameCommon.jar"/>
       <delete dir="${stagingDir}/com"/>
 

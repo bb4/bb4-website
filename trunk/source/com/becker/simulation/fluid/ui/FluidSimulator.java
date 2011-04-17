@@ -5,7 +5,6 @@ import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
-import com.becker.simulation.common.NewtonianSimulator;
 import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.fluid.model.FluidEnvironment;
@@ -25,7 +24,7 @@ import java.awt.*;
  *  change meaning of force vectors checkbox
  *  Should not need to check the show force vector check to see things.
  *  Have the grid resize as the panel resizes
- *  Liquid specific parameters 
+ *  Fluid specific parameters
  *   - number of cells (x,y) - auto-calculate the scale size based on the window size.
  *   - diffusion
  *   - viscosity
@@ -53,14 +52,11 @@ public class FluidSimulator extends Simulator {
 
 
     public FluidSimulator() {
-        super("Liquid");
-        environment_ =  new FluidEnvironment( 110, 140 );
-        commonInit();
+        this(new FluidEnvironment(110, 140));
     }
 
-    public FluidSimulator( FluidEnvironment environment )
-    {
-        super("Liquid");
+    public FluidSimulator( FluidEnvironment environment ) {
+        super("Fuild");;
         environment_ = environment;
         commonInit();
     }
@@ -115,13 +111,11 @@ public class FluidSimulator extends Simulator {
         return TIME_STEP;
     }
 
-
     /**
      * @return  a new recommended time step change.
      */
     @Override
-    public double timeStep()
-    {
+    public double timeStep() {
         if ( !isPaused() ) {
             timeStep_ = environment_.stepForward( timeStep_);
         }
@@ -147,13 +141,13 @@ public class FluidSimulator extends Simulator {
     }
 
     @Override
-    public void doOptimization()
-    {
+    public void doOptimization() {
+
         Optimizer optimizer;
         if (GUIUtil.isStandAlone())
             optimizer = new Optimizer( this );
         else
-            optimizer = new Optimizer( this, FileUtil.PROJECT_HOME +"performance/liquid/liquid_optimization.txt" );
+            optimizer = new Optimizer( this, FileUtil.PROJECT_HOME +"performance/fluid/fluid_optimization.txt" );
         Parameter[] params = new Parameter[3];
         //params[0] = new Parameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" );
         //params[1] = new Parameter( WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" );
@@ -169,15 +163,14 @@ public class FluidSimulator extends Simulator {
         return NUM_OPT_PARAMS;
     }
 
-
     /**
      * *** implements the key method of the Optimizee interface
      *
-     * evaluates the liquids fitness.
+     * evaluates the fluid's fitness.
      */
     @Override
-    public double evaluateFitness( ParameterArray params )
-    {
+    public double evaluateFitness( ParameterArray params ) {
+
         assert false : "not implemented yet";
         return 0.0;
     }
@@ -188,21 +181,18 @@ public class FluidSimulator extends Simulator {
     }
 
     @Override
-    public Color getBackground()
-    {
+    public Color getBackground() {
         return BG_COLOR;
     }
 
     @Override
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         Graphics2D g2 = (Graphics2D) g;
         envRenderer_.render(environment_, g2 );
     }
 
     @Override
-    protected String getFileNameBase()
-    {
+    protected String getFileNameBase() {
         return FILE_NAME_BASE;
     }
 

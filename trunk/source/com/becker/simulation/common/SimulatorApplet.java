@@ -19,7 +19,7 @@ public class SimulatorApplet extends ApplicationApplet {
     private Simulator simulator_ = null;
 
     private static final boolean RUN_OPTIMIZATION = false;
-    private static final String DEFAULT_SIMULATOR = "com.becker.simulation.snake.SnakeSimulator";
+    private static final String DEFAULT_SIMULATOR = "com.becker.simulation.fluid.ui.FluidSimulator";
 
     public  SimulatorApplet() {
         GUIUtil.setStandAlone(true);
@@ -68,7 +68,6 @@ public class SimulatorApplet extends ApplicationApplet {
         if (className == null) {
             return null;
         }
-        System.out.println("about to load: " + className);
         Class simulatorClass = ClassLoaderSingleton.loadClass(className);
         Simulator simulator = null;
 
@@ -109,6 +108,7 @@ public class SimulatorApplet extends ApplicationApplet {
         else if (args.length > 1)
             simulatorClassName = args[1];
 
+        System.out.println("im class="+ simulatorClassName);
         SimulatorApplet applet = new SimulatorApplet(simulatorClassName);
         GUIUtil.showApplet( applet, applet.getTitle() );
     }
