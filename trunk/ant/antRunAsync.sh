@@ -1,6 +1,6 @@
 #!/bin/sh
 # antRunAsync - Wrapper script to run an executable detached in the
-# background from Ant's <exec> task.  This works be redirecting stdin,
+# background from Ant's <exec> task.  This works by redirecting stdin,
 # stdout and stderr so Ant finds them closed and doesn't wait for the
 # program to exit.
 #

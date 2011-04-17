@@ -16,6 +16,7 @@
 
   <!-- the base game applicaiton class -->
   <property name="gameAppClass" value="com.becker.game.common.ui.GameApp"/>
+
   <!-- the jvm to use when executing -->
   <!-- property name="java_home" value="/usr/java/jdk1.5.0_05"/
          property name="java14" value="/usr/java/jdk1.4.2/bin/java"/
