@@ -57,9 +57,9 @@ public class InteractionHandler implements MouseListener, MouseMotionListener {
  
         // apply the change to a convolution kernal area
         int startX = Math.max(1, i - 1);
-        int stopX = Math.min(grid_.getXDim(), i+1);
+        int stopX = Math.min(grid_.getWidth(), i+1);
         int startY = Math.max(1, j - 1);
-        int stopY = Math.min(grid_.getYDim(), j+1);
+        int stopY = Math.min(grid_.getHeight(), j+1);
       
         
         for (int ii=startX; ii<stopX; ii++) {

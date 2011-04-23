@@ -126,7 +126,6 @@ class RDDynamicOptions extends JPanel
         return cb;
     }
 
-
     public void reset() {
         sliderGroup_.reset();
     }

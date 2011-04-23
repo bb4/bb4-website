@@ -1,10 +1,12 @@
 package com.becker.simulation.fluid.model;
 
+import com.becker.simulation.common.RectangularModel;
+
 /**
  * Data behind the Fluid.
  * @author Barry Becker
  */
-public class Grid {
+public class Grid implements RectangularModel {
     
     private int dimX_;
     private int dimY_;
@@ -20,10 +22,9 @@ public class Grid {
         
         dimX_ = dimX;
         dimY_ = dimY;
- 
-	u   =  new float[2][dimX_ + 2][dimY_ + 2];  
-	v     =  new float[2][dimX_ + 2][dimY_ + 2];  
-	dens = new float[2][dimX_ + 2][dimY_ + 2];  
+        u =  new float[2][dimX_ + 2][dimY_ + 2];
+        v =  new float[2][dimX_ + 2][dimY_ + 2];
+        dens = new float[2][dimX_ + 2][dimY_ + 2];
         
         addInitialInkDensity();                
     }
@@ -39,11 +40,11 @@ public class Grid {
     }
 
     
-    public int getXDim() {
+    public int getWidth() {
         return dimX_;
     }
     
-    public int getYDim() {
+    public int getHeight() {
         return dimY_;
     }
     
@@ -52,11 +53,24 @@ public class Grid {
         return u[1][i][j];
     }
     
-     public float getV(int i, int j) {
+    public float getV(int i, int j) {
         return v[1][i][j];
     }
-     
-     public float getDensity(int i, int j) {
+
+    /** used for rendering. */
+    public double getValue(int i, int j) {
+        return getDensity(i, j);
+    }
+
+    public int getCurrentRow() {
+        return getHeight();
+    }
+
+    public int getLastRow() {
+        return 0;
+    }
+
+    public float getDensity(int i, int j) {
         return dens[1][i][j];
     }
     
@@ -69,6 +83,6 @@ public class Grid {
     }
      
      public void incrementDensity(int i, int j, float value) {
-        dens[0][i][j]+= value;        
+        dens[0][i][j] += value;
     }
 }

@@ -2,7 +2,8 @@ package com.becker.simulation.fluid.rendering;
 
 import com.becker.common.ColorMap;
 import com.becker.common.util.ImageUtil;
-import com.becker.simulation.fluid.model.FluidEnvironment;
+import com.becker.simulation.common.ColorRect;
+import com.becker.simulation.common.ModelImage;
 import com.becker.simulation.fluid.model.Grid;
 
 import java.awt.*;
@@ -13,119 +14,159 @@ import java.awt.*;
  *  @author Barry Becker
  */
 public final class EnvironmentRenderer {
+
     // rendering attributes
     private static final Color GRID_COLOR = new Color( 30, 30, 30, 10 );
-    private static final Color VECTOR_COLOR = new Color( 205, 90, 25, 40 );
-    private static final Color WALL_COLOR = new Color( 100, 210, 170, 150 );
-    private static final Color TEXT_COLOR = new Color( 10, 10, 170, 200 );
+    private static final Color VECTOR_COLOR = new Color( 200, 60, 30, 50 );
     
-    /** scales the size of everything   */
-    public static final double DEFAULT_SCALE = 4;
-    private static final double  VECTOR_SCALE = 10.0;
+
+    private static final double  VECTOR_SCALE = 30.0;
     private static final int OFFSET = 10;
-    
-    public static final boolean USE_LINEAR_INTERPOLATION = false;
 
     private static final PressureColorMap PRESSURE_COLOR_MAP = new PressureColorMap();
 
-    private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
+    private RenderingOptions options;
+    Grid grid;
+    private ModelImage modelImage;
 
-    private double scale_ = DEFAULT_SCALE;
+    public EnvironmentRenderer(Grid grid, RenderingOptions options) {
 
-    private boolean showVelocities_ = false;
-    private boolean showPressures_ = true;
-
-
-    public EnvironmentRenderer() {
-       setScale(DEFAULT_SCALE);
+        this.grid = grid;
+        this.options = options;
+        modelImage = new ModelImage(grid, PRESSURE_COLOR_MAP, (int)options.getScale());
     }
     
     public ColorMap getColorMap() {
         return PRESSURE_COLOR_MAP;
     }
 
-    public void setScale(double scale) {
-        scale_ = DEFAULT_SCALE;
+    public RenderingOptions getOptions() {
+        return options;
     }
-
-    public double getScale() {
-        return scale_;
-    }
-
-    public void setShowVelocities(boolean show) {
-        showVelocities_ = show;
-    }
-
-    public boolean getShowVelocities() {
-        return showVelocities_;
-    }
-
-    public void setShowPressures(boolean show) {
-        showPressures_ = show;
-    }
-
-    public boolean getShowPressures() {
-        return showPressures_;
-    }
-
 
     /**
      * Render the Environment on the screen.
      */
-    public void render(FluidEnvironment env, Graphics2D g) {
+    public void render(Graphics2D g) {
 
         // draw the cells colored by ---pressure--- val
-        if (showPressures_) {
-            renderPressure(g, env);
+        if (options.getShowPressures()) {
+            modelImage.setUseLinearInterpolation(options.getUseLinearInterpolation());
+            modelImage.updateImage();
+            //renderPressure(g);
+            g.drawImage(modelImage.getImage(), OFFSET, OFFSET, null);
         }
 
         // outer boundary
-        g.drawRect( OFFSET, OFFSET, (int) (env.getXDim() * scale_), (int) (env.getYDim() * scale_) );
+        double scale = options.getScale();
+        g.drawRect( OFFSET, OFFSET, (int) (grid.getWidth() * scale), (int) (grid.getHeight() * scale) );
 
         // draw the ---velocity--- field (and status)
-        if (showVelocities_) {
-            drawVectors(g, env);
+        if (options.getShowVelocities()) {
+            drawVectors(g);
         }
 
-        drawGrid(env, g);
+        if (options.getShowGrid())  {
+            drawGrid(g);
+        }
     }
 
-    private void drawGrid(FluidEnvironment env, Graphics2D g)    {
+    private void drawGrid(Graphics2D g)    {
         g.setColor( GRID_COLOR );
+        double scale = options.getScale();
 
-        int rightEdgePos = (int) (scale_ * env.getXDim());
-        int bottomEdgePos = (int) (scale_ * env.getYDim());
+        int rightEdgePos = (int) (scale * grid.getWidth());
+        int bottomEdgePos = (int) (scale * grid.getHeight());
 
-        for (int j = 0; j < env.getYDim(); j++ )   //  -----
+        for (int j = 0; j < grid.getHeight(); j++ )   //  -----
         {
-            int ypos = (int) (j * scale_);
+            int ypos = (int) (j * scale);
             g.drawLine( OFFSET, ypos + OFFSET, rightEdgePos + OFFSET, ypos + OFFSET );
         }
-        for (int i = 0; i < env.getXDim(); i++ )    //  ||||
+        for (int i = 0; i < grid.getWidth(); i++ )    //  ||||
         {
-            int xpos = (int) (i * scale_);
+            int xpos = (int) (i * scale);
             g.drawLine( xpos + OFFSET, OFFSET, xpos + OFFSET, bottomEdgePos + OFFSET );
         }
     }
 
-    private void renderPressure(Graphics2D g, FluidEnvironment env) {
-        
-        for (int j = 0; j < env.getYDim(); j++ ) {
-            for (int i = 0; i < env.getXDim(); i++ ) {
-                drawPressureRectangle(i, j, env, g);                
+    /**
+     * This optionally renders to an offscreen image for faster performance.
+     *
+    private void renderPressure(Graphics2D g) {
+
+        for (int j = 0; j < grid.getHeight(); j++ ) {
+            for (int i = 0; i < grid.getWidth(); i++ ) {
+                drawPressureRectangle(i, j, g);
             }
         }
-    }
-    
-    private void drawPressureRectangle(int i, int j, FluidEnvironment env, Graphics2D g) {
-        Grid grid = env.getGrid();
-        
-         int xStart =  (int) ((scale_ * i) + OFFSET);
-        int yStart =  (int) ((scale_ * j) + OFFSET);
-        int scale = (int) scale_;
+    } */
+
+
+    /**
+     * Determine the colors for a rectangular strip of pixels.
+     * @return array of colors that will be used to define an image for quick rendering.
+     *
+    public ColorRect getColorRect(int minX, int maxX) {
+        int ymax = grid.getHeight();
+        int scale = (int)options.getScale();
+
+        ColorRect colorRect = new ColorRect(maxX-minX, ymax);
+        for (int i = minX; i < maxX; i++) {
+            for (int j = 0; j < ymax; j++) {
+
+                int xStart = scale * i;
+                int yStart = scale * j;
+
+                if (options.getUseLinearInterpolation()) {
+
+
+                    float[] colorLL = new float[4];
+                    float[] colorLR = new float[4];
+                    float[] colorUL = new float[4];
+                    float[] colorUR = new float[4];
+                    PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i, j)).getComponents(colorLL);
+                    PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i+1, j)).getComponents(colorLR);
+                    PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i, j+1)).getComponents(colorUL);
+                    PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i+1, j+1)).getComponents(colorUR);
+
+                    for (int xx =0; xx < scale; xx++) {
+                          for (int yy =0; yy < scale; yy++) {
+                             double xrat = (double) xx / scale;
+                             double yrat = (double) yy / scale;
+                             Color c = ImageUtil.interpolate(xrat, yrat, colorLL, colorLR, colorUL, colorUR);
+
+                             colorRect.setColor(xStart + xx, yStart + yy, c);
+                         }
+                    }
+                }
+                else {
+                    colorRect.setColorRect(xStart-minX, yStart, scale, scale,
+                                           PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i, j)));
+                }
+
+            }
+        }
+        return colorRect;
+    } */
+
+    /*
+    public void renderPressureStrip(int minX, ColorRect colorRect, Graphics2D g2) {
+        int scale = (int)options.getScale();
+        Image img = colorRect.getAsImage();
+        g2.drawImage(img, scale * minX + OFFSET, OFFSET, null);
+    } */
+
+    /*
+    private void drawPressureRectangle(int i, int j, Graphics2D g) {
+
+        double scale = options.getScale();
+
+        int xStart =  (int) ((scale * i) + OFFSET);
+        int yStart =  (int) ((scale * j) + OFFSET);
         
         // linear interpolation turns out to be too slow on java 2d (or at least my impl of it)
-        if (USE_LINEAR_INTERPOLATION) {
+        if (options.getUseLinearInterpolation()) {
        
             float[] colorLL = new float[4];
             float[] colorLR = new float[4];
@@ -138,9 +179,9 @@ public final class EnvironmentRenderer {
 
             for (int x =0; x < scale; x++) {
                   for (int y =0; y < scale; y++) {
-                     double xrat = (double) x / scale_;
-                     double yrat = (double) y / scale_;
-                     Color c =  ImageUtil.interpolate(xrat, yrat, colorLL, colorLR, colorUL, colorUR);
+                     double xrat = (double) x / scale;
+                     double yrat = (double) y / scale;
+                     Color c = ImageUtil.interpolate(xrat, yrat, colorLL, colorLR, colorUL, colorUR);
                      g.setColor(c);
                      //g.drawLine(xStart + x, yStart + y, xStart + x, yStart + y);  
                      g.fillRect(xStart + x, yStart + y, 1, 1);     
@@ -149,24 +190,31 @@ public final class EnvironmentRenderer {
 
         } else {
             g.setColor( PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i, j)));
-            g.fillRect(xStart, yStart, scale, scale);
+            g.fillRect(xStart, yStart, (int)scale, (int)scale);
         }
-    }
+    } */
 
 
-    private void drawVectors(Graphics2D g, FluidEnvironment env) {
+    private void drawVectors(Graphics2D g) {
         g.setColor( VECTOR_COLOR );
-        Grid grid = env.getGrid();
-        for ( int j = 0; j < env.getYDim(); j++ ) {
-            for ( int i = 0; i < env.getXDim(); i++ ) {
+        double scale = options.getScale();
+
+        for ( int j = 0; j < grid.getHeight(); j++ ) {
+            for ( int i = 0; i < grid.getWidth(); i++ ) {
                 double u = grid.getU(i, j);
                 double v = grid.getV(i, j);
-                int x = (int) (scale_ * i) + OFFSET;
-                int y = (int) (scale_ * j) + OFFSET;
-                g.drawLine( (int) (scale_ * (i + 0.5)) + OFFSET, y,
-                        (int) (scale_ * (i + 0.5)) + OFFSET, (int) (scale_ * j + VECTOR_SCALE * v) + OFFSET );
-                g.drawLine( x, (int) (scale_ * (j + 0.5)) + OFFSET,
-                        (int) (scale_ * i + VECTOR_SCALE  * u) + OFFSET, (int) (scale_ * (j + 0.5)) + OFFSET );
+                int x = (int) (scale * i) + OFFSET;
+                int y = (int) (scale * j) + OFFSET;
+
+                g.drawLine( x, y,
+                        (int) (scale * i + VECTOR_SCALE  * u) + OFFSET, (int) (scale * j + VECTOR_SCALE * v) + OFFSET );
+
+                /*
+                g.drawLine( (int) (scale * (i + 0.5)) + OFFSET, y,
+                        (int) (scale * (i + 0.5)) + OFFSET, (int) (scale * j + VECTOR_SCALE * v) + OFFSET );
+                g.drawLine( x, (int) (scale * (j + 0.5)) + OFFSET,
+                        (int) (scale * i + VECTOR_SCALE  * u) + OFFSET, (int) (scale * (j + 0.5)) + OFFSET );
+                */
             }
         }
     }

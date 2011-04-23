@@ -3,8 +3,7 @@ package com.becker.simulation.fractalexplorer.algorithm;
 import com.becker.common.concurrency.Parallelizer;
 import com.becker.common.math.ComplexNumber;
 import com.becker.common.math.ComplexNumberRange;
-import com.becker.common.profile.ProfilerEntry;
-import com.becker.simulation.fractalexplorer.Profiler;
+import com.becker.simulation.common.Profiler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,19 +132,19 @@ public abstract class FractalAlgorithm {
         int currentRow = model.getCurrentRow();
         startProfileTimeIfNeeded(currentRow);
 
-
-        int computeToRow = Math.min(model.getHeight(), currentRow + (int)timeStep * numProcs);
+        int height = model.getHeight();
+        int computeToRow = Math.min(height, currentRow + (int)timeStep * numProcs);
 
         int diff = computeToRow - currentRow;
         if (diff == 0) return true;
 
         int chunk = Math.max(1, diff / numProcs);
 
-
         for (int i = 0; i < numProcs; i++) {
-            workers.add(new Worker(currentRow, currentRow + chunk));
+            int nextRow = Math.min(height, currentRow + chunk);
+            workers.add(new Worker(currentRow, nextRow));
             //System.out.println("creating worker ("+i+") to compute " + chunk +" rows.");
-            currentRow += chunk;
+            currentRow = nextRow;
         }
 
         // blocks until all Callables are done running.

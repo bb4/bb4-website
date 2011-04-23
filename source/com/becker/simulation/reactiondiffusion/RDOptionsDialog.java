@@ -28,15 +28,15 @@ public class RDOptionsDialog extends SimulatorOptionsDialog {
 
         RDSimulator sim = (RDSimulator) getSimulator();
 
-        showProfilingCheckbox_ = addCheckBox("Show Profiling Information",
+        showProfilingCheckbox_ = createCheckBox("Show Profiling Information",
                         "If checked, profiling statistics will be displayed in the console when paused.",
                         RDProfiler.getInstance().isEnabled());
 
-        offscreenRenderingCheckbox_ =  addCheckBox("Use offscreen rendering",
+        offscreenRenderingCheckbox_ = createCheckBox("Use offscreen rendering",
                         "If checked, rendering graphics to an offscreen buffer before copying to the screen.",
                         sim.getUseOffScreenRendering());
 
-        useParallelRenderingCheckbox_ = addCheckBox("Use parallel rendering",
+        useParallelRenderingCheckbox_ = createCheckBox("Use parallel rendering",
                         "Rendering will take advantage of as many cores/threads that are avaialble.",
                         sim.getRenderingOptions().isParallelized());
 

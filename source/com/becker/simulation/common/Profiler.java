@@ -1,10 +1,11 @@
-package com.becker.simulation.fractalexplorer;
+package com.becker.simulation.common;
 
 import com.becker.common.util.Util;
 
 
 /**
- * Singleton for RD profiling.
+ * Singleton for simulation profiling.
+ * For all simulation we would like to know calculatin and rendering times.
  *
  * @author Barry Becker
  */
@@ -43,11 +44,16 @@ public class Profiler extends com.becker.common.profile.Profiler {
         if (!isEnabled()) {
             return;
         }
-        double calcTime = getEntry(CALCULATION).getTimeInSeconds();
-        double renderingTime = getEntry(RENDERING).getTimeInSeconds();
-        double ratio = calcTime / renderingTime;
+        double ratio = getCalcTime() / getRenderingTime();
         printMessage("Ratio of calculation to rendering time:" + Util.formatNumber(ratio) );
         super.print();
+    }
+
+    protected double getCalcTime() {
+        return getEntry(CALCULATION).getTimeInSeconds();
+    }
+    protected double getRenderingTime() {
+        return getEntry(RENDERING).getTimeInSeconds();
     }
 
     public void startCalculationTime() {

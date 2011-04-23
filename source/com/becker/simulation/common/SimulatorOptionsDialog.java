@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * @author Barry Becker Date: Sep 18, 2005
+ * @author Barry Becker
  */
 public abstract class SimulatorOptionsDialog extends OptionsDialog {
 
@@ -43,8 +43,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
     }
 
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent()  {
         setResizable( true );
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
@@ -55,8 +54,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
         JPanel globalPhysicalParamPanel = createGlobalPhysicalParamPanel();
         JPanel customParamPanel = createCustomParamPanel();
 
-        // contains the two tabls : options for creating a new game, or loading a saved game
-         JTabbedPane tabbedPanel = new JTabbedPane();
+        JTabbedPane tabbedPanel = new JTabbedPane();
         tabbedPanel.add( "Rendering", renderingParamPanel );
         tabbedPanel.setToolTipTextAt( 0, "change the rendering options for the simulation" );
         if (globalPhysicalParamPanel != null) {
@@ -95,13 +93,6 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
         buttonsPanel.add( cancelButton_ );
 
         return buttonsPanel;
-    }
-
-    protected JCheckBox addCheckBox(String label, String tooltip, boolean initiallySelected) {
-        JCheckBox cb = new JCheckBox(label, initiallySelected);
-        cb.setToolTipText(tooltip);
-        cb.addActionListener(this);
-        return cb;
     }
 
     @Override

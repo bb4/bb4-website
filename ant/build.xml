@@ -371,7 +371,7 @@
   <target name="executeFluid" description="Run the Fluid simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
       <param name="args" value="com.becker.simulation.fluid.ui.FluidSimulator"/>
     </antcall>
   </target>

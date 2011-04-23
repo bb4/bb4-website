@@ -1,11 +1,13 @@
 package com.becker.simulation.fractalexplorer;
 
 import com.becker.common.ColorMap;
+import com.becker.simulation.common.Profiler;
 import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.fractalexplorer.algorithm.FractalAlgorithm;
 import com.becker.simulation.fractalexplorer.algorithm.FractalModel;
 import com.becker.simulation.fractalexplorer.algorithm.MandelbrotAlgorithm;
+import com.becker.simulation.common.ModelImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +20,7 @@ public class FractalExplorer extends Simulator {
 
     private FractalAlgorithm algorithm_;
     private FractalModel model_;
+    private ModelImage modelImage_;
     private DynamicOptions options_;
     private ZoomHandler zoomHandler_;
 
@@ -52,7 +55,8 @@ public class FractalExplorer extends Simulator {
     @Override
     protected void reset() {
 
-        model_ = new FractalModel(new FractalColorMap());
+        model_ = new FractalModel();
+        modelImage_ = new ModelImage(model_, new FractalColorMap());
         algorithm_ = new MandelbrotAlgorithm(model_);
 
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
@@ -83,6 +87,7 @@ public class FractalExplorer extends Simulator {
             }
 
             algorithm_.timeStep( timeStep_ );
+            modelImage_.updateImage();
 
         }
         return timeStep_;
@@ -93,7 +98,7 @@ public class FractalExplorer extends Simulator {
         super.paint(g);
 
         Profiler.getInstance().startRenderingTime();
-        g.drawImage(model_.getImage(), 0, 0, null);
+        g.drawImage(modelImage_.getImage(), 0, 0, null);
         zoomHandler_.render(g, model_.getAspectRatio());
         Profiler.getInstance().stopRenderingTime();
     }
@@ -113,6 +118,6 @@ public class FractalExplorer extends Simulator {
     }
 
     public ColorMap getColorMap() {
-        return model_.getColorMap();
+        return modelImage_.getColorMap();
     }
 }

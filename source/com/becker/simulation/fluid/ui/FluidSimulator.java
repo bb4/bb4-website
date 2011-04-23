@@ -5,10 +5,12 @@ import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
+import com.becker.simulation.common.Profiler;
 import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.fluid.model.FluidEnvironment;
 import com.becker.simulation.fluid.rendering.EnvironmentRenderer;
+import com.becker.simulation.fluid.rendering.RenderingOptions;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
@@ -49,26 +51,28 @@ public class FluidSimulator extends Simulator {
 
     private static final Color BG_COLOR = Color.white;
     private static final int NUM_OPT_PARAMS = 3;
+    private RenderingOptions renderOptions;
 
 
     public FluidSimulator() {
-        this(new FluidEnvironment(110, 140));
+        this(new FluidEnvironment(250, 200));
     }
 
     public FluidSimulator( FluidEnvironment environment ) {
-        super("Fuild");;
+        super("Fuild");
         environment_ = environment;
+        renderOptions = new RenderingOptions();
         commonInit();
     }
 
     private void commonInit() {
         initCommonUI();
-        envRenderer_ = new EnvironmentRenderer();
-        int s = (int) envRenderer_.getScale();
-        setPreferredSize(new Dimension( environment_.getWidth() * s, environment_.getHeight() * s));
+        envRenderer_ = new EnvironmentRenderer(environment_.getGrid(), renderOptions);
+        int scale = (int) envRenderer_.getOptions().getScale();
+        setPreferredSize(new Dimension( environment_.getWidth() * scale, environment_.getHeight() * scale));
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
         
-        handler_ = new InteractionHandler(environment_.getGrid(), envRenderer_.getScale());
+        handler_ = new InteractionHandler(environment_.getGrid(), scale);
         this.addMouseListener(handler_);
         this.addMouseMotionListener(handler_);
     }
@@ -95,6 +99,15 @@ public class FluidSimulator extends Simulator {
     
     public InteractionHandler getInteractionHandler() {
         return handler_;
+    }
+
+    @Override
+    public void setPaused( boolean bPaused ) {
+        super.setPaused(bPaused);
+        if (isPaused())   {
+            Profiler.getInstance().print();
+            Profiler.getInstance().resetAll();
+        }
     }
     
     @Override
@@ -125,19 +138,19 @@ public class FluidSimulator extends Simulator {
 
     @Override
     public void setScale( double scale ) {
-        envRenderer_.setScale(scale);
+        envRenderer_.getOptions().setScale(scale);
 
     }
     @Override
     public double getScale() {
-        return envRenderer_.getScale();
+        return envRenderer_.getOptions().getScale();
     }
 
     public void setShowVelocityVectors( boolean show ) {
-        envRenderer_.setShowVelocities(show);
+        envRenderer_.getOptions().setShowVelocities(show);
     }
     public boolean getShowVelocityVectors() {
-        return envRenderer_.getShowVelocities();
+        return envRenderer_.getOptions().getShowVelocities();
     }
 
     @Override
@@ -149,9 +162,6 @@ public class FluidSimulator extends Simulator {
         else
             optimizer = new Optimizer( this, FileUtil.PROJECT_HOME +"performance/fluid/fluid_optimization.txt" );
         Parameter[] params = new Parameter[3];
-        //params[0] = new Parameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" );
-        //params[1] = new Parameter( WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" );
-        //params[2] = new Parameter( WAVE_PERIOD, 0.5, 9.0, "wave period" );
         ParameterArray paramArray = new ParameterArray( params );
 
         setPaused(false);
@@ -164,8 +174,7 @@ public class FluidSimulator extends Simulator {
     }
 
     /**
-     * *** implements the key method of the Optimizee interface
-     *
+     * part of the Optimizee interface
      * evaluates the fluid's fitness.
      */
     @Override
@@ -175,6 +184,9 @@ public class FluidSimulator extends Simulator {
         return 0.0;
     }
 
+    /**
+     * part of the Optimizee interface
+     */
     @Override
     public double getOptimalFitness() {
         return 0;
@@ -188,7 +200,9 @@ public class FluidSimulator extends Simulator {
     @Override
     public void paint( Graphics g ) {
         Graphics2D g2 = (Graphics2D) g;
-        envRenderer_.render(environment_, g2 );
+        Profiler.getInstance().startRenderingTime();
+        envRenderer_.render(g2);
+        Profiler.getInstance().stopRenderingTime();
     }
 
     @Override
