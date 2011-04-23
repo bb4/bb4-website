@@ -1,7 +1,7 @@
 package com.becker.simulation.reactiondiffusion;
 
-import com.becker.common.profile.Profiler;
 import com.becker.common.util.Util;
+import com.becker.simulation.common.Profiler;
 
 
 /**
@@ -11,8 +11,6 @@ import com.becker.common.util.Util;
  */
 public class RDProfiler extends Profiler {
 
-    protected static final String RENDERING = "rendering";
-    protected static final String CALCULATION = "calculation";
     protected static final String CONCURRENT_CALCULATION = "concurrent_calculation";
     protected static final String COMMIT_CHANGES = "commit_changes";
 
@@ -35,29 +33,21 @@ public class RDProfiler extends Profiler {
      * Private constructor. Use getInstance instead.
      */
     protected RDProfiler() {
-        add(CALCULATION);
+        super();
         add(CONCURRENT_CALCULATION, CALCULATION);
         add(COMMIT_CHANGES, CALCULATION);
-        add(RENDERING);
-    }
 
-    public void initialize() {
-        resetAll();
     }
 
     @Override
     public void print() {
 
-        if (!isEnabled()) {
-            return;
-        }
-        double calcTime = getEntry(CALCULATION).getTimeInSeconds();
-        double renderingTime = getEntry(RENDERING).getTimeInSeconds();
-        double ratio = calcTime / renderingTime;
+        super.print();
+        double calcTime = getCalcTime();
+        double renderingTime = getRenderingTime();
         printMessage("Number of Frames: " + Util.formatNumber(numFrames));
         printMessage("Calculation time per frame (sec):" + Util.formatNumber(calcTime/numFrames));
         printMessage("Rendering time per frame   (sec):" + Util.formatNumber(renderingTime/numFrames));
-        printMessage("Ratio of calculation to rendering time:" + Util.formatNumber(ratio) );
         super.print();
     }
 
@@ -65,14 +55,6 @@ public class RDProfiler extends Profiler {
     public void resetAll()  {
         super.resetAll();
         numFrames = 0;
-    }
-
-    public void startCalculationTime() {
-        this.start(CALCULATION);
-    }
-
-    public void stopCalculationTime() {
-        this.stop(CALCULATION);
     }
 
     public void startConcurrentCalculationTime() {
@@ -88,15 +70,6 @@ public class RDProfiler extends Profiler {
 
     public void stopCommitChangesTime() {
         this.stop(COMMIT_CHANGES);
-    }
-
-    public void startRenderingTime() {
-        this.start(RENDERING);
-    }
-
-    public void stopRenderingTime() {
-        this.stop(RENDERING);
-        numFrames++;
     }
 
 }

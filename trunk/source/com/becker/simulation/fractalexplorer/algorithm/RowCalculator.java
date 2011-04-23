@@ -96,8 +96,8 @@ public class RowCalculator {
                 /*
                 if (increment == N) {
                     // make sure w do not skip over a narrow peninsula
-                    double lastRowValue1 = model.getFractalValue(x - HALF_N, y-1);
-                    double lastRowValue2 = model.getFractalValue(x - 2, y-1);
+                    double lastRowValue1 = model.getValue(x - HALF_N, y-1);
+                    double lastRowValue2 = model.getValue(x - 2, y-1);
                     if (currentValue == 1.0)
                     System.out.println("currentValue=" + currentValue +  " lastRowValue=" + lastRowValue1 + " runLength=" + runLength + " increment=" + increment + " x="+ x);
                     if (currentValue != lastRowValue1 || currentValue != lastRowValue2 ) {
@@ -122,10 +122,10 @@ public class RowCalculator {
             if (runLength > M) {
                 increment = N;
                 for (int xx = x; xx < x+N; xx++) {
-                    model.setFractalValue(xx, y, currentValue);
+                    model.setValue(xx, y, currentValue);
                 } 
             }
-            model.setFractalValue(x, y, currentValue);
+            model.setValue(x, y, currentValue);
             x += increment;
         }
     }
@@ -136,7 +136,7 @@ public class RowCalculator {
     private double computeFractalValueForPosition(int x, int y) {
         ComplexNumber z = algorithm.getComplexPosition(x, y);
         double value = algorithm.getFractalValue(z);
-        model.setFractalValue(x, y, value);
+        model.setValue(x, y, value);
         return value;
     }
 }

@@ -12,7 +12,7 @@ import java.awt.*;
 public final class PressureColorMap extends ColorMap {
 
     private static final double PRESSURE_VALUES[] = {
-            0.0, 0.00001, 0.0001, 0.001, 0.005, 0.01, 0.02, 0.05, .1, 0.5, 2.0
+            0.0, 0.00001, 0.0001, 0.001, 0.005, 0.01, 0.02, 0.04, .1, 0.5, 1.0
     };
 
     private static final Color PRESSURE_COLORS[] = {
@@ -23,8 +23,8 @@ public final class PressureColorMap extends ColorMap {
         new Color( 0, 200, 190, 130 ),
         new Color( 0, 255, 0, 140 ),
         new Color( 150, 255, 0, 190 ),
-        new Color( 250, 230, 0, 230 ),
-        new Color( 255, 100, 0, 230 ),
+        new Color( 250, 230, 30, 230 ),
+        new Color( 255, 150, 0, 230 ),
         new Color( 205, 1, 255, 240 ),
         new Color( 250, 0, 0, 255 )
     };

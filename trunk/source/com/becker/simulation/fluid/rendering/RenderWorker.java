@@ -1,4 +1,4 @@
-package com.becker.simulation.reactiondiffusion.rendering;
+package com.becker.simulation.fluid.rendering;
 
 import com.becker.simulation.common.ColorRect;
 
@@ -12,9 +12,9 @@ public class RenderWorker implements Runnable {
     
     private int minX_, maxX_;
     private Graphics2D g2_;
-    private RDRenderer renderer_;
+    private EnvironmentRenderer renderer_;
 
-    public RenderWorker(int minX, int maxX, RDRenderer renderer, Graphics2D g2) {
+    public RenderWorker(int minX, int maxX, EnvironmentRenderer renderer, Graphics2D g2) {
         minX_ = minX;
         maxX_ = maxX;
         renderer_ = renderer;
@@ -24,6 +24,6 @@ public class RenderWorker implements Runnable {
     public void run() {
 
         ColorRect colorRect = renderer_.getColorRect(minX_, maxX_);
-        renderer_.renderStrip(minX_, colorRect, g2_);
+        renderer_.renderPressureStrip(minX_, colorRect, g2_);
     }
 }
