@@ -1,7 +1,4 @@
-package com.becker.simulation.common;
-
-import javax.vecmath.Vector2d;
-import java.awt.*;
+package com.becker.simulation.common.ui;
 
 /**
  * Use this for Newtonian physics type simulations.

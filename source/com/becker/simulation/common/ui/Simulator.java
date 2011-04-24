@@ -1,4 +1,4 @@
-package com.becker.simulation.common;
+package com.becker.simulation.common.ui;
 
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;

@@ -1,6 +1,6 @@
 package com.becker.simulation.reactiondiffusion.rendering;
 
-import com.becker.simulation.common.ColorRect;
+import com.becker.simulation.common.rendering.ColorRect;
 
 import java.awt.*;
 

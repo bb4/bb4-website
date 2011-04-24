@@ -1,12 +1,12 @@
 package com.becker.simulation.fluid.rendering;
 
 import com.becker.common.ColorMap;
-import com.becker.common.util.ImageUtil;
-import com.becker.simulation.common.ColorRect;
-import com.becker.simulation.common.ModelImage;
+import com.becker.simulation.common.rendering.ModelImage;
 import com.becker.simulation.fluid.model.Grid;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  *  Renders a specified liquid environment.
@@ -20,14 +20,16 @@ public final class EnvironmentRenderer {
     private static final Color VECTOR_COLOR = new Color( 200, 60, 30, 50 );
     
 
-    private static final double  VECTOR_SCALE = 30.0;
+    private static final double  VECTOR_SCALE = 40.0;
     private static final int OFFSET = 10;
 
     private static final PressureColorMap PRESSURE_COLOR_MAP = new PressureColorMap();
 
-    private RenderingOptions options;
-    Grid grid;
+    private Grid grid;
     private ModelImage modelImage;
+    private RenderingOptions options;
+
+
 
     public EnvironmentRenderer(Grid grid, RenderingOptions options) {
 
@@ -51,10 +53,7 @@ public final class EnvironmentRenderer {
 
         // draw the cells colored by ---pressure--- val
         if (options.getShowPressures()) {
-            modelImage.setUseLinearInterpolation(options.getUseLinearInterpolation());
-            modelImage.updateImage();
-            //renderPressure(g);
-            g.drawImage(modelImage.getImage(), OFFSET, OFFSET, null);
+            concurrentRenderPressures(g);
         }
 
         // outer boundary
@@ -69,6 +68,32 @@ public final class EnvironmentRenderer {
         if (options.getShowGrid())  {
             drawGrid(g);
         }
+    }
+
+    /**
+     * If the render options say to use parallelism, then we will render the pressures concurrently.
+     */
+    private void concurrentRenderPressures(Graphics2D g2) {
+
+        int height = grid.getHeight();
+        modelImage.setUseLinearInterpolation(options.getUseLinearInterpolation());
+
+        int numProcs = options.getParallelizer().getNumThreads();
+        List<Runnable> workers = new ArrayList<Runnable>(numProcs);
+        int range = (height / numProcs);
+        for (int i = 0; i < (numProcs - 1); i++) {
+            int offset = i * range;
+            workers.add(new RenderWorker(modelImage, offset, offset + range));
+        }
+        // leftover in the last strip, or all of it if only one processor.
+        int currentRow = range * (numProcs - 1);
+        workers.add(new RenderWorker(modelImage, currentRow, height));
+
+        // blocks until all Callables are done running.
+        options.getParallelizer().invokeAllRunnables(workers);
+
+
+        g2.drawImage(modelImage.getImage(), OFFSET, OFFSET, null);
     }
 
     private void drawGrid(Graphics2D g)    {
@@ -89,110 +114,6 @@ public final class EnvironmentRenderer {
             g.drawLine( xpos + OFFSET, OFFSET, xpos + OFFSET, bottomEdgePos + OFFSET );
         }
     }
-
-    /**
-     * This optionally renders to an offscreen image for faster performance.
-     *
-    private void renderPressure(Graphics2D g) {
-
-        for (int j = 0; j < grid.getHeight(); j++ ) {
-            for (int i = 0; i < grid.getWidth(); i++ ) {
-                drawPressureRectangle(i, j, g);
-            }
-        }
-    } */
-
-
-    /**
-     * Determine the colors for a rectangular strip of pixels.
-     * @return array of colors that will be used to define an image for quick rendering.
-     *
-    public ColorRect getColorRect(int minX, int maxX) {
-        int ymax = grid.getHeight();
-        int scale = (int)options.getScale();
-
-        ColorRect colorRect = new ColorRect(maxX-minX, ymax);
-        for (int i = minX; i < maxX; i++) {
-            for (int j = 0; j < ymax; j++) {
-
-                int xStart = scale * i;
-                int yStart = scale * j;
-
-                if (options.getUseLinearInterpolation()) {
-
-
-                    float[] colorLL = new float[4];
-                    float[] colorLR = new float[4];
-                    float[] colorUL = new float[4];
-                    float[] colorUR = new float[4];
-                    PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i, j)).getComponents(colorLL);
-                    PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i+1, j)).getComponents(colorLR);
-                    PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i, j+1)).getComponents(colorUL);
-                    PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i+1, j+1)).getComponents(colorUR);
-
-                    for (int xx =0; xx < scale; xx++) {
-                          for (int yy =0; yy < scale; yy++) {
-                             double xrat = (double) xx / scale;
-                             double yrat = (double) yy / scale;
-                             Color c = ImageUtil.interpolate(xrat, yrat, colorLL, colorLR, colorUL, colorUR);
-
-                             colorRect.setColor(xStart + xx, yStart + yy, c);
-                         }
-                    }
-                }
-                else {
-                    colorRect.setColorRect(xStart-minX, yStart, scale, scale,
-                                           PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i, j)));
-                }
-
-            }
-        }
-        return colorRect;
-    } */
-
-    /*
-    public void renderPressureStrip(int minX, ColorRect colorRect, Graphics2D g2) {
-        int scale = (int)options.getScale();
-        Image img = colorRect.getAsImage();
-        g2.drawImage(img, scale * minX + OFFSET, OFFSET, null);
-    } */
-
-    /*
-    private void drawPressureRectangle(int i, int j, Graphics2D g) {
-
-        double scale = options.getScale();
-
-        int xStart =  (int) ((scale * i) + OFFSET);
-        int yStart =  (int) ((scale * j) + OFFSET);
-        
-        // linear interpolation turns out to be too slow on java 2d (or at least my impl of it)
-        if (options.getUseLinearInterpolation()) {
-       
-            float[] colorLL = new float[4];
-            float[] colorLR = new float[4];
-            float[] colorUL = new float[4];
-            float[] colorUR = new float[4]; 
-            PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i, j)).getComponents(colorLL);
-            PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i+1, j)).getComponents(colorLR);
-            PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i, j+1)).getComponents(colorUL);
-            PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i+1, j+1)).getComponents(colorUR);
-
-            for (int x =0; x < scale; x++) {
-                  for (int y =0; y < scale; y++) {
-                     double xrat = (double) x / scale;
-                     double yrat = (double) y / scale;
-                     Color c = ImageUtil.interpolate(xrat, yrat, colorLL, colorLR, colorUL, colorUR);
-                     g.setColor(c);
-                     //g.drawLine(xStart + x, yStart + y, xStart + x, yStart + y);  
-                     g.fillRect(xStart + x, yStart + y, 1, 1);     
-                 }
-            }  
-
-        } else {
-            g.setColor( PRESSURE_COLOR_MAP.getColorForValue( grid.getDensity(i, j)));
-            g.fillRect(xStart, yStart, (int)scale, (int)scale);
-        }
-    } */
 
 
     private void drawVectors(Graphics2D g) {

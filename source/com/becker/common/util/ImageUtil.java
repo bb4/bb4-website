@@ -167,10 +167,7 @@ public final class ImageUtil {
         image.setRGB(0, 0, width, height, pixels, 0, width);
         return image;
     }
-           
-    // temp vars for interpolation
-    private static final float[] rgbaL = new float[4];
-    private static final float[] rgbaU = new float[4];
+
 
     /**
      * Interpolate among 4 colors (corresponding to the 4 points on a square)
@@ -178,6 +175,9 @@ public final class ImageUtil {
      */
     public static Color interpolate( double x, double y, float[]
                                      colorLL, float[] colorLR, float[] colorUL, float[]  colorUR ) {
+
+        float[] rgbaL = new float[4];
+        float[] rgbaU = new float[4];
 
         rgbaL[0] = (float) (colorLL[0] + x * (colorLR[0] - colorLL[0]));
         rgbaL[1] = (float) (colorLL[1] + x * (colorLR[1] - colorLL[1]));
@@ -188,7 +188,7 @@ public final class ImageUtil {
         rgbaU[1] = (float) (colorUL[1] + x * (colorUR[1] - colorUL[1]));
         rgbaU[2] = (float) (colorUL[2] + x * (colorUR[2] - colorUL[2]));
         rgbaU[3] = (float) (colorUL[3] + x * (colorUR[3] - colorUL[3]));
-                  
+
         return new Color( (float) (rgbaL[0] + y * (rgbaU[0] - rgbaL[0])),
                           (float) (rgbaL[1] + y * (rgbaU[1] - rgbaL[1])),
                           (float) (rgbaL[2] + y * (rgbaU[2] - rgbaL[2])),

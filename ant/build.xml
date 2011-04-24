@@ -289,7 +289,7 @@
 
   <target name="executeDice" description="Run the Dice simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
       <param name="args" value="com.becker.simulation.dice.DiceSimulator"/>
     </antcall>
@@ -297,7 +297,7 @@
 
   <target name="executeStock" description="Run the Stock simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
       <param name="args" value="com.becker.simulation.stock.StockSimulator"/>
     </antcall>
@@ -305,7 +305,7 @@
 
   <target name="executeGraph" description="Run the Graph simulator">
       <antcall target="executeProgram">
-        <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+        <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
         <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
         <param name="args" value="com.becker.simulation.graphing.GraphSimulator"/>
       </antcall>
@@ -314,7 +314,7 @@
 
   <target name="executeParameterDistribution" description="Run the Parameter Distribution simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
       <param name="args" value="com.becker.simulation.parameter.ParameterSimulator"/>
     </antcall>
@@ -338,7 +338,7 @@
 
   <target name="executeSnake" description="Run the Snake simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
       <param name="args" value="com.becker.simulation.snake.SnakeSimulator"/>
     </antcall>
@@ -346,7 +346,7 @@
 
   <target name="executeReactionDiffusion" description="Run the Reaction Diffusion simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
       <param name="args" value="com.becker.simulation.reactiondiffusion.RDSimulator"/>
     </antcall>
@@ -354,7 +354,7 @@
 
   <target name="executeFractalExplorer" description="Run the Fractal Explorer">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/jai_codec.jar"/>
       <param name="args" value="com.becker.simulation.fractalexplorer.FractalExplorer"/>
     </antcall>
@@ -362,7 +362,7 @@
 
   <target name="executeLiquid" description="Run the Liquid simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
       <param name="args" value="com.becker.simulation.liquid.LiquidSimulator"/>
     </antcall>
@@ -370,7 +370,7 @@
 
   <target name="executeFluid" description="Run the Fluid simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
       <param name="args" value="com.becker.simulation.fluid.ui.FluidSimulator"/>
     </antcall>
@@ -389,7 +389,7 @@
 
    <target name="executeTrebuchet" depends="compile" description="Run the Trebuchet simulator">
      <antcall target="executeProgram">
-       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+       <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
        <param name="libPath" value="${libDir}/vecmath.jar"/>
        <param name="args" value="com.becker.simulation.trebuchet.TrebuchetSimulator"/>
      </antcall>

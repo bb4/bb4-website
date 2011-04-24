@@ -1,7 +1,6 @@
 package com.becker.simulation.fluid.ui;
 
-import com.becker.simulation.common.NewtonianSimOptionsDialog;
-import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 
 import javax.swing.*;
 import java.awt.*;

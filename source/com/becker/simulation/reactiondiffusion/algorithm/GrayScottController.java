@@ -18,6 +18,7 @@ import java.util.List;
  * After more tuning 18 fps (num steps per frame = 10)
  *
  * Using offscreen rendering slowed things by about 10%
+ * These numbers are with Hyperthreading off. The difference compared to hyperthreading off is barely 10%.
  *
  *                       pr/ns  pr/sync  npr/ns  npr/synch
  *                      ------- -------  -------  -------

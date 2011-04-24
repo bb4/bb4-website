@@ -1,7 +1,7 @@
 package com.becker.simulation.snake;
 
 import com.becker.common.math.WaveType;
-import com.becker.simulation.common.NewtonianSimOptionsDialog;
+import com.becker.simulation.common.ui.NewtonianSimOptionsDialog;
 import com.becker.simulation.snake.data.ISnakeData;
 import com.becker.simulation.snake.data.SnakeType;
 import com.becker.ui.components.NumberInput;

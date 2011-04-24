@@ -1,6 +1,6 @@
 package com.becker.simulation.trebuchet;
 
-import com.becker.simulation.common.NewtonianSimOptionsDialog;
+import com.becker.simulation.common.ui.NewtonianSimOptionsDialog;
 import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;

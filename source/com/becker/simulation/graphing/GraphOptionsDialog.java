@@ -4,8 +4,8 @@ package com.becker.simulation.graphing;
 import com.becker.common.math.function.ArrayFunction;
 import com.becker.common.math.function.Function;
 import com.becker.common.math.interplolation.InterpolationMethod;
-import com.becker.simulation.common.Simulator;
-import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.simulation.common.ui.Simulator;
+import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 
 import javax.swing.*;
 import java.awt.*;

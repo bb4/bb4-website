@@ -1,4 +1,4 @@
-package com.becker.simulation.common;
+package com.becker.simulation.common.ui;
 
 import com.becker.common.ClassLoaderSingleton;
 import com.becker.ui.animation.AnimationPanel;
