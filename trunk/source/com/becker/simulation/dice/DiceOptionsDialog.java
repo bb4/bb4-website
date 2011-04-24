@@ -1,8 +1,8 @@
 package com.becker.simulation.dice;
 
 
-import com.becker.simulation.common.Simulator;
-import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.simulation.common.ui.Simulator;
+import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package com.becker.simulation.common;
+package com.becker.simulation.common.rendering;
 
 import com.becker.common.util.ImageUtil;
 

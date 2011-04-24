@@ -1,6 +1,6 @@
 package com.becker.simulation.liquid;
 
-import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.liquid.config.ConfigurationEnum;
 
 import javax.swing.*;

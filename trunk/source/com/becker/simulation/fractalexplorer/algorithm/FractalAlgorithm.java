@@ -121,7 +121,7 @@ public abstract class FractalAlgorithm {
             restartRequested = false;
         }
         if (model.isDone()) {
-            showProfileInfoIfDone();
+            showProfileInfoWhenFinished();
             return true;  // we are done.
         }
 
@@ -180,7 +180,7 @@ public abstract class FractalAlgorithm {
         }
     }
 
-    private void showProfileInfoIfDone() {
+    private void showProfileInfoWhenFinished() {
         if (!wasDone) {
             Profiler prof = Profiler.getInstance();
             prof.stopCalculationTime();

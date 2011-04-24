@@ -77,10 +77,8 @@ public class InteractionHandler implements MouseListener, MouseMotionListener {
          
         // if the left mouse is down, make waves
         if (mouse1Down) {
-            //System.out.println("incrementing by " + FORCE * (currentX - lastX) +" ,  "+FORCE * (currentY - lastY));
             float fu = (float) (weight * force_ * (currentX - lastX) / scale_);
             float fv =  (float) (weight *force_ * (currentY - lastY) / scale_);
-            //System.out.println("fu="+Util.formatNumber(fu) + "  fv="+ Util.formatNumber(fv));
             grid_.incrementU(i, j, fu);
             grid_.incrementV(i, j, fv);               
         }  

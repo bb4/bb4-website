@@ -10,7 +10,6 @@ import com.becker.common.concurrency.Parallelizer;
  */
 public class RenderingOptions {
 
-
     /** scales the size of everything   */
     public static final double DEFAULT_SCALE = 4;
     private double scale = DEFAULT_SCALE;
@@ -45,7 +44,6 @@ public class RenderingOptions {
     public Parallelizer<RenderWorker> getParallelizer() {
         return parallelizer;
     }
-
 
 
     public void setScale(double scale) {

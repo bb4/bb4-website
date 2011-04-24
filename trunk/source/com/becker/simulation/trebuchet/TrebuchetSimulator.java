@@ -6,8 +6,8 @@ import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
-import com.becker.simulation.common.NewtonianSimulator;
-import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.simulation.common.ui.NewtonianSimulator;
+import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;

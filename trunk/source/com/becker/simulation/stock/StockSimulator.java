@@ -4,8 +4,8 @@ import com.becker.common.format.CurrencyFormatter;
 import com.becker.common.math.function.InvertibleFunction;
 import com.becker.common.math.function.LinearFunction;
 import com.becker.common.math.function.LogFunction;
-import com.becker.simulation.common.DistributionSimulator;
-import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.simulation.common.ui.DistributionSimulator;
+import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.ui.renderers.HistogramRenderer;
 
 /**

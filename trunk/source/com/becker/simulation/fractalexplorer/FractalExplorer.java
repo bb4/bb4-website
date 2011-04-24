@@ -2,12 +2,12 @@ package com.becker.simulation.fractalexplorer;
 
 import com.becker.common.ColorMap;
 import com.becker.simulation.common.Profiler;
-import com.becker.simulation.common.Simulator;
-import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.simulation.common.rendering.ModelImage;
+import com.becker.simulation.common.ui.Simulator;
+import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.fractalexplorer.algorithm.FractalAlgorithm;
 import com.becker.simulation.fractalexplorer.algorithm.FractalModel;
 import com.becker.simulation.fractalexplorer.algorithm.MandelbrotAlgorithm;
-import com.becker.simulation.common.ModelImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -87,7 +87,7 @@ public class FractalExplorer extends Simulator {
             }
 
             algorithm_.timeStep( timeStep_ );
-            modelImage_.updateImage();
+            modelImage_.updateImage(model_.getLastRow(), model_.getCurrentRow());
 
         }
         return timeStep_;
