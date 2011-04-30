@@ -28,7 +28,7 @@ public class ValueLatch <T> {
 
     public T getValue() throws InterruptedException {
         done.await();
-        synchronized (this) {
+        synchronized (done) {
             return value;
         }
     }

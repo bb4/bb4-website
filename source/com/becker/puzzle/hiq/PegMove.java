@@ -1,24 +1,25 @@
 package com.becker.puzzle.hiq;
 
 
+import com.becker.common.Location;
+
 /**
  * Definition for a peg jumping another peg.
  * Immutable.
  *@author Barry Becker
  */
-public final class PegMove
-{
-    // the position of the move
-    private byte toRow_;
-    private byte toCol_;
+public final class PegMove {
 
-    private byte fromRow_;
-    private byte fromCol_;
+    /* the position to move to */
+    private Location toPosition;
+
+    /** The position we moved from. */
+    private Location fromPosition;
 
 
     /**
      * create a move object representing a transition on the board.
-     * A naive implmentation might use 4 four  byte integers to store the from and to values.
+     * A naive implementation might use 4 four byte integers to store the from and to values.
      * This would use 16 bytes of memory per move.
      * If we do this, we will quickly run out of memory because fo the vast numbers of moves that must be stored.
      * I will use just 1 byte to store the move information. 
@@ -26,46 +27,43 @@ public final class PegMove
      * I know that a jump is always 2 spaces.
      */
     PegMove( byte fromRow, byte fromCol,
-                      byte destinationRow, byte destinationCol)
-    {
-        fromRow_ = fromRow;
-        fromCol_ = fromCol;
-        toRow_ = destinationRow;
-        toCol_ = destinationCol;
+             byte destinationRow, byte destinationCol) {
+        fromPosition = new Location(fromRow, fromCol);
+        toPosition = new Location(destinationRow, destinationCol);
+    }
+
+    PegMove( Location fromPosition,
+             Location destinationPosition) {
+        this.fromPosition = fromPosition.copy();
+        this.toPosition = destinationPosition.copy();
     }
 
     /**
-     * @return  a deep copy.
+     * @return a deep copy.
      */
-    public PegMove copy()
-    {
-        return new PegMove(fromRow_, fromCol_, toRow_, toCol_);
+    public PegMove copy() {
+        return new PegMove(fromPosition, toPosition);
     }    
 
-    public byte getFromRow()
-    {
-        return fromRow_;
+    public byte getFromRow() {
+        return fromPosition.getRow();
     }
-    public byte getFromCol()
-    {
-        return fromCol_;
+    public byte getFromCol() {
+        return fromPosition.getCol();
     }
 
-    public byte getToRow()
-    {
-        return toRow_;
+    public byte getToRow() {
+        return toPosition.getRow();
     }
-    public byte getToCol()
-    {
-        return toCol_;
+    public byte getToCol() {
+        return toPosition.getCol();
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("from(").append(fromRow_).append(", ").append(fromCol_).append(") to (");
-        s.append(toRow_).append(", ").append(toCol_).append(')');
+        s.append("from(").append(fromPosition).append(") to (");
+        s.append(toPosition).append(')');
         return s.toString();
     }
 }

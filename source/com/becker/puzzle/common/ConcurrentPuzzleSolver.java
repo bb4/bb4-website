@@ -28,7 +28,7 @@ public class ConcurrentPuzzleSolver <P, M> extends BaseConcurrentPuzzleSolver<P,
     private final AtomicInteger taskCount = new AtomicInteger(0);
 
     @Override
-    protected Runnable newTask(P p, M m, PuzzleNode<P, M> n) {
+    protected SolverTask newTask(P p, M m, PuzzleNode<P, M> n) {
         return new CountingSolverTask(p, m, n);
     }
 

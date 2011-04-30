@@ -13,7 +13,7 @@ import java.util.List;
  * Solve the red puzzle using a genetic search algorithm.
  * Solves the puzzle in 3.5 seconds on Core2 duo system (6 generations).
  *
- * @author Barry Becker Date: Aug 6, 2006
+ * @author Barry Becker
  */
 public class GeneticSearchSolver extends RedPuzzleSolver
                                  implements Optimizee, OptimizationListener {

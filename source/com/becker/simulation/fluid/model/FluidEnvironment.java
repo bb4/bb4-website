@@ -17,9 +17,13 @@ public class FluidEnvironment {
     
     public static final double DEFAULT_DIFFUSION_RATE = 0.0f;
     public static final double DEFAULT_VISCOSITY = 0.0f;
+    public static final int DEFAULT_NUM_SOLVER_ITERATIONS = 20;
     
     private double diffusionRate_ = DEFAULT_DIFFUSION_RATE;
     private double viscosity_ = DEFAULT_VISCOSITY;
+
+    private int numSolverIterations = DEFAULT_NUM_SOLVER_ITERATIONS;
+
 
     /**
      * Constructor
@@ -51,6 +55,10 @@ public class FluidEnvironment {
     
     public void setViscosity(double v) {
         viscosity_ = v;
+    }
+
+    public void setNumSolverIterations(int numIterations) {
+        numSolverIterations = numIterations;
     }
 
     /**
@@ -128,7 +136,7 @@ public class FluidEnvironment {
     /**
      * Diffuse the pressure.
      * @param bound
-     * @param prop the cell property to diffuce
+     * @param prop the cell property to diffuse
      * @param diff either diffusion rate or viscosity.
      */
     private void diffuse(Boundary bound, CellProperty prop, double diff, double dt) {
@@ -184,10 +192,10 @@ public class FluidEnvironment {
      */
     private void linearSolve(Boundary bound, double[][] x, double[][] x0, double a, double c) {
 
-       for ( int k=0 ; k < 20 ; k++ ) {
+       for ( int k = 0 ; k < numSolverIterations; k++ ) {
             for ( int i = 1 ; i <= grid.getWidth(); i++ ) {
                 for ( int j = 1 ; j <= grid.getHeight(); j++ ) {
-                    x[i][j] = (x0[i][j] + a*(x[i-1][j]+x0[i+1][j]+x[i][j-1]+x[i][j+1])) / c;
+                    x[i][j] = (x0[i][j] + a * (x[i-1][j] + x0[i+1][j] + x[i][j-1] + x[i][j+1])) / c;
                 }
             }
             grid.setBoundary(bound, x);

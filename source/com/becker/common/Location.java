@@ -11,8 +11,8 @@ import java.io.Serializable;
  *
  * @author Barry Becker
  */
-public class Location implements Serializable
-{
+public class Location implements Serializable {
+
     private static final long serialVersionUID = 1;
     protected byte row_ = 0;
     protected byte col_ = 0;
@@ -49,6 +49,10 @@ public class Location implements Serializable
 
     public int getY() {
         return row_;
+    }
+
+    public Location copy() {
+        return new Location(row_, col_);
     }
 
     /**

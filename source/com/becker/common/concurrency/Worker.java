@@ -18,7 +18,9 @@ package com.becker.common.concurrency;
  *   -Barry
  */
 public abstract class Worker {
-    private Object returnValue_ = null;  // see getValue(), setValue()
+
+    /** value to return. Ssee getValue(), setValue()   */
+    private Object returnValue_ = null;
 
     private final ThreadVar threadVar_;
 
