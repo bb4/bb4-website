@@ -21,17 +21,10 @@ import java.awt.*;
  * Based on work by Jos Stam
  * http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf
  *
- *
  * TODO
- *  change meaning of force vectors checkbox
- *  Should not need to check the show force vector check to see things.
  *  Have the grid resize as the panel resizes
  *  Fluid specific parameters
  *   - number of cells (x,y) - auto-calculate the scale size based on the window size.
- *   - diffusion
- *   - viscosity
- *   - force factor
- *   - source_ink factor
  */
 public class FluidSimulator extends Simulator {
 

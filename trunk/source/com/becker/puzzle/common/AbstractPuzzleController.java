@@ -12,8 +12,7 @@ import java.util.Set;
  */
 public abstract class AbstractPuzzleController<P, M> implements PuzzleController<P, M> {
 
-
-    /** the viewer that can show the curent state. */
+    /** the viewer that can show the current state. */
     protected final Refreshable<P, M> ui_;
 
     /** default solver. */
@@ -28,7 +27,7 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
     }
 
     /**
-     * There are different approaches we can take to solving thepuzzle.
+     * There are different approaches we can take to solving the puzzle.
      *
      * @param algorithm strategy to use for solving the puzzle.
      */
@@ -37,31 +36,30 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
     }
 
     /**
-     * get the solver algoritym..
+     * get the solver algorithm..
      */
     public AlgorithmEnum getAlgorithm() {
         return algorithm_;
     }
 
-
     /**
-     * If it was never seen before add it.
+     * If this puzzle position was never seen before add it.
      * Must be synchronized because some solvers use concurrency.
      * @return true if this position was already seen while searching.
      */
     public synchronized boolean alreadySeen(P position, Set<P> seen) {
 
         boolean visited = true;
-         if (!seen.contains(position)) {
-              visited = false;
-              seen.add(position);
-         }
+        if (!seen.contains(position)) {
+             visited = false;
+             seen.add(position);
+        }
         return visited;
     }
 
     /**
      * Begin the process of solving.
-     * Do it in a seperate worker thread so the UI is not blocked.
+     * Do it in a separate worker thread so the UI is not blocked.
      */
     public void startSolving() {
 

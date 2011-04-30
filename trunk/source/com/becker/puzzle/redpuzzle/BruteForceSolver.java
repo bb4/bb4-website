@@ -9,7 +9,7 @@ import java.util.List;
  * @see GeneticSearchSolver
  * for a potentially better alternative.
  *
- *Solves the puzzle in  10 seconds on Core2Duo sequentially.
+ * Solves the puzzle in  10 seconds on Core2Duo sequentially.
  *
  * @author Barry Becker Date: Aug 6, 2006
  */
@@ -46,7 +46,7 @@ public class BruteForceSolver<P, M> extends RedPuzzleSolver {
      * This implements the main recursive algorithm for solving the red puzzle.
      * @param puzzlePanel will show the pieces as we arrange them.
      * @param pieces the pieces that have yet to be fitted.
-     * @param i insdex of last placed piece. If we have to backtrack, we put it back where we got it.
+     * @param i index of last placed piece. If we have to backtrack, we put it back where we got it.
      * @return true if successfully solved, false if no solution.
      */
     protected PieceList solvePuzzle( Refreshable<PieceList, Piece> puzzlePanel, PieceList pieces, int i ) {

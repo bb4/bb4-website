@@ -2,6 +2,8 @@ package com.becker.puzzle.redpuzzle;
 
 import com.becker.puzzle.common.*;
 
+import java.util.concurrent.ConcurrentMap;
+
 /**
  * Enum for type of solver to employ when solving the puzzle.
  * 
@@ -11,7 +13,8 @@ public enum Algorithm  implements AlgorithmEnum<PieceList, Piece> {
     
     BRUTE_FORCE_ORIGINAL("Brute force (hand crafted)"),  
     BRUTE_FORCE_SEQUENTIAL("Brute force (sequential)"), 
-    BRUTE_FORCE_CONCURRENT("Brute force (concurrent)"), 
+    BRUTE_FORCE_CONCURRENT("Brute force (concurrent)"),
+    BREADTH_FIRST_CONCURRENT("Mostly breath first concurrent"),
     GENETIC_SEARCH("Genetic search");
     
     private String label;
@@ -41,6 +44,8 @@ public enum Algorithm  implements AlgorithmEnum<PieceList, Piece> {
                 return new SequentialPuzzleSolver<PieceList, Piece>(controller, ui);
             case BRUTE_FORCE_CONCURRENT :
                 return new ConcurrentPuzzleSolver<PieceList, Piece>(controller, 0.2f, ui);
+            case BREADTH_FIRST_CONCURRENT :
+                return new ConcurrentPuzzleSolver<PieceList, Piece>(controller, 0.1f, ui);
             case GENETIC_SEARCH :
                 return new GeneticSearchSolver( pieces, ui);
         }

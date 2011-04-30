@@ -37,7 +37,7 @@ public class SudokuSolver {
 
     /**
      * Solves the puzzle.
-     * This implements the main algorithm for solving the red puzzle.
+     * This implements the main algorithm for solving the Sudoku puzzle.
      * @param board the board to show the solution on.
      * @param puzzlePanel the viewer
      * @return true if solved.

@@ -32,6 +32,7 @@ public class FluidDynamicOptions extends JPanel
     private static final String VISC_SLIDER = "Viscosity";
     private static final String FORCE_SLIDER = "Force";    
     private static final String SD_SLIDER = "Source Density";
+    private static final String NUM_ITERATIONS_SLIDER = "Num Solver Iterations";
     private static final String NS_SLIDER = "Num Steps per Frame";
     private static final String TIME_STEP_SLIDER = "Time Step";
 
@@ -41,10 +42,11 @@ public class FluidDynamicOptions extends JPanel
     private static final double MAX_STEPS = 20.0 * FluidSimulator.DEFAULT_STEPS_PER_FRAME;
 
     private static final SliderProperties[] SLIDER_PROPS = {
-        new SliderProperties(DR_SLIDER,      0,       10.0,   FluidEnvironment.DEFAULT_DIFFUSION_RATE,   100.0),
-        new SliderProperties(VISC_SLIDER,    0,       50.0,   FluidEnvironment.DEFAULT_VISCOSITY,        100.0),
-        new SliderProperties(FORCE_SLIDER,   0.01,    30.0,  InteractionHandler.DEFAULT_FORCE,          100.0),
-        new SliderProperties(SD_SLIDER,       0.01,   4.0,   InteractionHandler.DEFAULT_SOURCE_DENSITY,  100.0),
+        new SliderProperties(DR_SLIDER,         0,       10.0,   FluidEnvironment.DEFAULT_DIFFUSION_RATE,   100.0),
+        new SliderProperties(VISC_SLIDER,       0,       50.0,   FluidEnvironment.DEFAULT_VISCOSITY,        100.0),
+        new SliderProperties(FORCE_SLIDER,      0.01,    30.0,  InteractionHandler.DEFAULT_FORCE,          100.0),
+        new SliderProperties(SD_SLIDER,         0.01,     4.0,   InteractionHandler.DEFAULT_SOURCE_DENSITY,  100.0),
+        new SliderProperties(NUM_ITERATIONS_SLIDER,  1,   100,  FluidEnvironment.DEFAULT_NUM_SOLVER_ITERATIONS,  1.0),
         new SliderProperties(NS_SLIDER, MIN_STEPS, MAX_STEPS, FluidSimulator.DEFAULT_STEPS_PER_FRAME,    1.0),
         new SliderProperties(TIME_STEP_SLIDER, 0.001, 0.1,   FluidSimulator.INITIAL_TIME_STEP,        1000.0)
     };
@@ -57,7 +59,6 @@ public class FluidDynamicOptions extends JPanel
         JPanel controlsPanel = new JPanel();
         controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.Y_AXIS));
         this.add(controlsPanel, BorderLayout.CENTER);
-
 
         simulator_ = simulator;
 
@@ -81,8 +82,9 @@ public class FluidDynamicOptions extends JPanel
 
         RenderingOptions renderOpts =  simulator_.getRenderer().getOptions();
 
-        useConcurrentCalculation_ = createCheckBox("Parallel calculation",
-                "Will take advantage of multiple processors for calculation if present.", false);
+        // not yet supported.
+        //useConcurrentCalculation_ = createCheckBox("Parallel calculation",
+        //        "Will take advantage of multiple processors for calculation if present.", false);
 
         useConcurrentRendering_ = createCheckBox("Parallel rendering",
                 "Will take advantage of multiple processors for rendering if present.", renderOpts.isParallelized());
@@ -98,7 +100,7 @@ public class FluidDynamicOptions extends JPanel
 
         JPanel checkBoxes = new JPanel(new GridLayout(0, 2));
 
-        checkBoxes.add(useConcurrentCalculation_);
+        //checkBoxes.add(useConcurrentCalculation_);
         checkBoxes.add(useConcurrentRendering_);
         checkBoxes.add(useLinearInterpolation_);
         checkBoxes.add(showVelocities_);
@@ -165,6 +167,9 @@ public class FluidDynamicOptions extends JPanel
         }
         else if (sliderName.equals(SD_SLIDER)) {
             simulator_.getInteractionHandler().setSourceDensity(value);
+        }
+        else if (sliderName.equals(NUM_ITERATIONS_SLIDER)) {
+            simulator_.getEnvironment().setNumSolverIterations((int)value);
         }
         else if (sliderName.equals(NS_SLIDER)) {
             simulator_.setNumStepsPerFrame((int) value);

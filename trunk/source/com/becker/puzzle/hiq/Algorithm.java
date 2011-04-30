@@ -10,9 +10,9 @@ import com.becker.puzzle.common.*;
 public enum Algorithm implements AlgorithmEnum<PegBoard, PegMove> {
     
     SEQUENTIAL("Solve sequentially"),  
-    CONCURRENT_BREADTH("Solve concurrently (breadth first)"), 
+    CONCURRENT_BREADTH("Solve concurrently (mostly breadth first)"),
     CONCURRENT_DEPTH("Solve concurrently (mostly depth first)"), 
-    CONCURRENT_OPTIMUM("Solve concurrently (optimized)");
+    CONCURRENT_OPTIMUM("Solve concurrently (optimized between depth and breadth search)");
     
     private String label;
     
@@ -38,9 +38,9 @@ public enum Algorithm implements AlgorithmEnum<PegBoard, PegMove> {
             case SEQUENTIAL :
                 return new SequentialPuzzleSolver<PegBoard, PegMove>(controller, ui);
             case CONCURRENT_BREADTH :
-                return new ConcurrentPuzzleSolver<PegBoard, PegMove>(controller, 0.6f, ui);
+                return new ConcurrentPuzzleSolver<PegBoard, PegMove>(controller, 0.4f, ui);
             case CONCURRENT_DEPTH :
-                return new ConcurrentPuzzleSolver<PegBoard, PegMove>(controller, 0.1f, ui);
+                return new ConcurrentPuzzleSolver<PegBoard, PegMove>(controller, 0.12f, ui);
             case CONCURRENT_OPTIMUM :
                 return new ConcurrentPuzzleSolver<PegBoard, PegMove>(controller, 0.2f, ui);
         }

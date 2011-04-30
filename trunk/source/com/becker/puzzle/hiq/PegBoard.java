@@ -20,7 +20,7 @@ public class PegBoard {
      */
     public static final int SYMMETRIES = 8;
     
-    /** maintains the compressed peg position infomation for the board. */
+    /** maintains the compressed peg position information for the board. */
     private int bits_;                // the first 32 positions
     private boolean finalBit_;        // the final, 33rd position
     private boolean nextToFinalBit_;  // the final, 32rd position

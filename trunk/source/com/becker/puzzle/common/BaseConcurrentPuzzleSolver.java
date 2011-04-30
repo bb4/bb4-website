@@ -18,6 +18,9 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author Brian Goetz and Tim Peierls
  */
 public class BaseConcurrentPuzzleSolver<P, M>  implements PuzzleSolver<P, M> {
+
+    private static final int THREAD_POOL_SIZE = 100;
+
     private final PuzzleController<P, M> puzzle;
     private final ExecutorService exec;
 
@@ -41,11 +44,11 @@ public class BaseConcurrentPuzzleSolver<P, M>  implements PuzzleSolver<P, M> {
     }
 
     /**
-     *The amount that you want the search to use depth first or breadth first search.
-     *If factor is 0, then all depth first traversal and not concurrent, if 1 then all breadth first search and not sequential.
-     *If the search is large, it is easier to run out of memory at the extremes.
-     *Must be greater than 0 to have some amount of concurrency used.
-     *@param factor a number between 0 and 1. One being all breadth frist search and not sequential.
+     * The amount that you want the search to use depth first or breadth first search.
+     * If factor is 0, then all depth first traversal and not concurrent, if 1 then all breadth first search and not sequential.
+     * If the search is large, it is easier to run out of memory at the extremes.
+     * Must be greater than 0 to have some amount of concurrency used.
+     * @param factor a number between 0 and 1. One being all breadth first search and not sequential.
      */
     protected void setDepthBreadthFactor(float factor) {
         depthBreadthFactor = factor;
@@ -53,7 +56,7 @@ public class BaseConcurrentPuzzleSolver<P, M>  implements PuzzleSolver<P, M> {
 
     private ExecutorService initThreadPool() {
         //return Executors.newCachedThreadPool();
-        return Executors.newFixedThreadPool(100);
+        return Executors.newFixedThreadPool(THREAD_POOL_SIZE);
     }
 
     public List<M> solve() throws InterruptedException {
@@ -79,21 +82,25 @@ public class BaseConcurrentPuzzleSolver<P, M>  implements PuzzleSolver<P, M> {
         }
     }
 
-    protected Runnable newTask(P p, M m, PuzzleNode<P, M> n) {
+    protected SolverTask newTask(P p, M m, PuzzleNode<P, M> n) {
         return new SolverTask(p, m, n);
     }
 
+    /**
+     * Runnable used to solve a puzzle.
+     */
     protected class SolverTask extends PuzzleNode<P, M> implements Runnable {
         SolverTask(P pos, M move, PuzzleNode<P, M> prev) {
             super(pos, move, prev);
         }
 
         public void run() {
+
             numTries++;
             if (solution.isSet() || puzzle.alreadySeen(position, seen)) {
                 return; // already solved or seen this position
             }
-            if (ui!=null && !solution.isSet()) {
+            if (ui != null && !solution.isSet()) {
 
                 ui.refresh(position, numTries);
             }
@@ -102,7 +109,8 @@ public class BaseConcurrentPuzzleSolver<P, M>  implements PuzzleSolver<P, M> {
             }
             else {
                 for (M m : puzzle.legalMoves(position)) {
-                    Runnable task = newTask(puzzle.move(position, m), m, this);
+                    SolverTask task = newTask(puzzle.move(position, m), m, this);
+
                     // either process the children sequentially or concurrently based on  depthBreadthFactor
                     if (RANDOM.nextFloat() > depthBreadthFactor)
                         task.run();
