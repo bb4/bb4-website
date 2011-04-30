@@ -130,12 +130,6 @@ public final class EnvironmentRenderer {
                 g.drawLine( x, y,
                         (int) (scale * i + VECTOR_SCALE  * u) + OFFSET, (int) (scale * j + VECTOR_SCALE * v) + OFFSET );
 
-                /*
-                g.drawLine( (int) (scale * (i + 0.5)) + OFFSET, y,
-                        (int) (scale * (i + 0.5)) + OFFSET, (int) (scale * j + VECTOR_SCALE * v) + OFFSET );
-                g.drawLine( x, (int) (scale * (j + 0.5)) + OFFSET,
-                        (int) (scale * i + VECTOR_SCALE  * u) + OFFSET, (int) (scale * (j + 0.5)) + OFFSET );
-                */
             }
         }
     }

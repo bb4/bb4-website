@@ -11,9 +11,8 @@ public class Grid implements RectangularModel {
     private int dimX_;
     private int dimY_;
     
-    public float u[][][];
-    public float v[][][];
-    public float dens[][][];
+    CellGrid grid0;
+    CellGrid grid1;
     
     /**
      * Creates a new instance of Grid
@@ -22,23 +21,12 @@ public class Grid implements RectangularModel {
         
         dimX_ = dimX;
         dimY_ = dimY;
-        u =  new float[2][dimX_ + 2][dimY_ + 2];
-        v =  new float[2][dimX_ + 2][dimY_ + 2];
-        dens = new float[2][dimX_ + 2][dimY_ + 2];
-        
-        addInitialInkDensity();                
-    }
 
-    private void addInitialInkDensity() {
-        for ( int i=2; i<dimX_/2; i++) {
-            for ( int j=2; j<dimY_/2; j++) {
-                u[1][i][j] = (float)(0.01 + (float)(Math.cos(0.4*i)+Math.sin(0.3*j))/10.0);
-                v[1][i][j] = (float)(.1 - (float)(Math.sin(.2*i) + Math.sin(0.1 * j)/10.0));
-                dens[1][i][j] = (float)(0.1 -  (float)Math.sin((i + j)/4.0)/10.0);
-            }
-        }
-    }
+        grid0 = new CellGrid(dimX, dimY);
+        grid1 = new CellGrid(dimX, dimY);
 
+        grid1.addInitialInkDensity();
+    }
     
     public int getWidth() {
         return dimX_;
@@ -47,14 +35,21 @@ public class Grid implements RectangularModel {
     public int getHeight() {
         return dimY_;
     }
-    
-    
-    public float getU(int i, int j) {
-        return u[1][i][j];
+
+    public CellGrid getGrid0() {
+        return grid0;
+    }
+
+    public CellGrid getGrid1() {
+        return grid1;
     }
     
-    public float getV(int i, int j) {
-        return v[1][i][j];
+    public double getU(int i, int j) {
+        return grid1.u[i][j];
+    }
+    
+    public double getV(int i, int j) {
+        return grid1.v[i][j];
     }
 
     /** used for rendering. */
@@ -70,19 +65,51 @@ public class Grid implements RectangularModel {
         return 0;
     }
 
-    public float getDensity(int i, int j) {
-        return dens[1][i][j];
+    public double getDensity(int i, int j) {
+        return grid1.density[i][j];
+    }
+
+    /**
+     * Swap x[0] and x[1] arrays
+     */
+    public void swap(CellProperty prop) {
+
+        double[][] temp = grid0.getProperty(prop);
+        grid0.setProperty(prop, grid1.getProperty(prop));
+        grid1.setProperty(prop, temp);
     }
     
-     public void incrementU(int i, int j, float value) {
-        u[0][i][j] += value;
-    }
+     public void incrementU(int i, int j, double value) {
+        grid0.u[i][j] += value;
+     }
     
-     public void incrementV(int i, int j, float value) {
-        v[0][i][j] += value;
+     public void incrementV(int i, int j, double value) {
+        grid0.v[i][j] += value;
     }
      
-     public void incrementDensity(int i, int j, float value) {
-        dens[0][i][j] += value;
+     public void incrementDensity(int i, int j, double value) {
+        grid0.density[i][j] += value;
+    }
+
+    /**
+     * Set a boundary to contain the liquid.
+     * @param b
+     * @param x
+     */
+    public void setBoundary(Boundary b, double[][] x)  {
+
+        for (int i=1 ; i<=dimX_ ; i++ ) {
+            x[i][0] = b==Boundary.HORIZONTAL ? -x[i][1] : x[i][1];
+            x[i][dimY_+1] = b==Boundary.HORIZONTAL ? -x[i][dimY_] : x[i][dimY_];
+        }
+        for (int i=1 ; i<=dimY_ ; i++ ) {
+            x[0][i] = b==Boundary.VERTICAL ? -x[1][i] : x[1][i];
+            x[dimX_+1][i] = b==Boundary.VERTICAL ? -x[dimX_][i] : x[dimX_][i];
+        }
+
+        x[0][ 0] = 0.5f * (x[1][0] + x[0][1]);
+        x[0][dimY_+1] = 0.5f * (x[1][dimY_+1] + x[0][dimY_]);
+        x[dimX_+1][0] = 0.5f * (x[dimX_][0] + x[dimX_+1][1]);
+        x[dimX_+1][dimY_+1] = 0.5f*(x[dimX_][dimY_+1] + x[dimX_+1][dimY_]);
     }
 }

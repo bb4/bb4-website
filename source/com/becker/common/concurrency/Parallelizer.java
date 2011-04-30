@@ -1,3 +1,4 @@
+/** Barry Becker - copyright 2009 */
 package com.becker.common.concurrency;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Parallelizer <T> {
     public static final int NUM_PROCESSORS = Runtime.getRuntime().availableProcessors();
     
     /** Recycle threads so we do not create thousands and eventually run out of memory. */
-    private ExecutorService exec;   
+    private ExecutorService executor;
 
     /**
      * By default, the number of threads we use is equal to the number of processors
@@ -35,7 +36,6 @@ public class Parallelizer <T> {
     public Parallelizer() {
 
         this(DEFAULT_NUM_THREADS);
-        System.out.println("num procs = "+ NUM_PROCESSORS + ";  num threads = "+ DEFAULT_NUM_THREADS);
     }
 
     /**
@@ -46,7 +46,7 @@ public class Parallelizer <T> {
     {
         assert numThreads > 0;
         this.numThreads = numThreads;
-        exec = Executors.newFixedThreadPool(numThreads);   
+        executor = Executors.newFixedThreadPool(numThreads);
     }
     
     public int getNumThreads() {
@@ -87,7 +87,7 @@ public class Parallelizer <T> {
             
         List<Future<T>> f = null;
         try {
-           f =  exec.invokeAll(callables);
+           f =  executor.invokeAll(callables);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
