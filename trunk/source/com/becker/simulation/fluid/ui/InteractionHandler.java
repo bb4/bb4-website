@@ -9,16 +9,15 @@ import java.awt.event.MouseMotionListener;
 /**
  * Handle mouse interactions - converting them in to physical manifestations.
  *
- * Created on September 23, 2007, 7:46 AM
  * @author Barry Becker
  */
 public class InteractionHandler implements MouseListener, MouseMotionListener {
         
-    public static final float DEFAULT_FORCE = 3.0f;
-    public static final float DEFAULT_SOURCE_DENSITY = 1.0f;
+    public static final double DEFAULT_FORCE = 3.0f;
+    public static final double DEFAULT_SOURCE_DENSITY = 1.0f;
     
-    private float force_ = DEFAULT_FORCE;
-    private float sourceDensity_ = DEFAULT_SOURCE_DENSITY;
+    private double force_ = DEFAULT_FORCE;
+    private double sourceDensity_ = DEFAULT_SOURCE_DENSITY;
     
     Grid grid_;
     
@@ -29,7 +28,7 @@ public class InteractionHandler implements MouseListener, MouseMotionListener {
     private boolean mouse1Down, mouse3Down;
     
     /**
-     * 
+     * Constructor
      */
     public InteractionHandler(Grid grid,  double scale) {
         scale_ = scale;
@@ -37,16 +36,16 @@ public class InteractionHandler implements MouseListener, MouseMotionListener {
     }
     
     public void setForce(double force) {
-        force_ = (float) force;
+        force_ = force;
     }
     
     public void setSourceDensity(double sourceDensity) {
-        sourceDensity_ = (float) sourceDensity;
+        sourceDensity_ = sourceDensity;
     }
     
     
     /**
-     * Make waves or add ink 
+     * Make waves or adds ink when dragging depending on the mouse key held down.
      */
     public void mouseDragged(MouseEvent e) {
       
@@ -55,7 +54,7 @@ public class InteractionHandler implements MouseListener, MouseMotionListener {
         int i = (int) (currentX / scale_);
         int j = (int) (currentY / scale_);
  
-        // apply the change to a convolution kernal area
+        // apply the change to a convolution kernel area
         int startX = Math.max(1, i - 1);
         int stopX = Math.min(grid_.getWidth(), i+1);
         int startY = Math.max(1, j - 1);
@@ -64,7 +63,7 @@ public class InteractionHandler implements MouseListener, MouseMotionListener {
         
         for (int ii=startX; ii<stopX; ii++) {
              for (int jj=startY; jj<stopY; jj++) {
-                 float weight = (ii == i && jj == j)? 1.0f : 0.3f;
+                 double weight = (ii == i && jj == j)? 1.0f : 0.3f;
                  applyChange(ii, jj, weight);
              }
         }
@@ -73,12 +72,16 @@ public class InteractionHandler implements MouseListener, MouseMotionListener {
         lastY = currentY;
     }
 
-    private void applyChange(int i, int j, float weight) {
+
+    /**
+     * Make waves or adds ink depending on which mouse key is being held down.
+     */
+    private void applyChange(int i, int j, double weight) {
          
         // if the left mouse is down, make waves
         if (mouse1Down) {
-            float fu = (float) (weight * force_ * (currentX - lastX) / scale_);
-            float fv =  (float) (weight *force_ * (currentY - lastY) / scale_);
+            double fu = (weight * force_ * (currentX - lastX) / scale_);
+            double fv = (weight *force_ * (currentY - lastY) / scale_);
             grid_.incrementU(i, j, fu);
             grid_.incrementV(i, j, fv);               
         }  

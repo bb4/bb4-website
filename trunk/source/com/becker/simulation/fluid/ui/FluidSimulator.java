@@ -47,7 +47,7 @@ public class FluidSimulator extends Simulator {
 
     /** if true it will save all the animation steps to file */
     public static final boolean RECORD_ANIMATION = false;
-    protected static final double TIME_STEP = 0.03;  // initial time step
+    public static final double INITIAL_TIME_STEP = 0.03;  // initial time step
 
     private static final Color BG_COLOR = Color.white;
     private static final int NUM_OPT_PARAMS = 3;
@@ -121,7 +121,7 @@ public class FluidSimulator extends Simulator {
 
     @Override
     protected double getInitialTimeStep() {
-        return TIME_STEP;
+        return INITIAL_TIME_STEP;
     }
 
     /**
@@ -130,6 +130,7 @@ public class FluidSimulator extends Simulator {
     @Override
     public double timeStep() {
         if ( !isPaused() ) {
+            timeStep_ =
             timeStep_ = environment_.stepForward( timeStep_);
         }
         return timeStep_;

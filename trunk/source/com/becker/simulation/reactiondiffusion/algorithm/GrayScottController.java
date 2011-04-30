@@ -129,18 +129,18 @@ public final class GrayScottController {
      */
     public void timeStep(final double dt) {
 
-        int numProcs = parallelizer.getNumThreads();
-        List<Runnable> workers = new ArrayList<Runnable>(numProcs + 1);
-        int range = model_.getWidth() / numProcs;
+        int numThreads = parallelizer.getNumThreads();
+        List<Runnable> workers = new ArrayList<Runnable>(numThreads + 1);
+        int range = model_.getWidth() / numThreads;
         RDProfiler prof = RDProfiler.getInstance();
 
         prof.startConcurrentCalculationTime();
-        for (int i = 0; i < (numProcs - 1); i++) {
+        for (int i = 0; i < (numThreads - 1); i++) {
             int offset = i * range;
             workers.add(new Worker(1 + offset, offset + range, dt));
         }
 
-        int minXEdge = range * (numProcs - 1) + 1;
+        int minXEdge = range * (numThreads - 1) + 1;
         int maxXEdge = model_.getWidth() - 2;
         workers.add(new Worker(minXEdge, maxXEdge, dt));
 

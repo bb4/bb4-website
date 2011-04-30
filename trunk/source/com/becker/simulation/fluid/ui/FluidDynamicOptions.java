@@ -33,6 +33,7 @@ public class FluidDynamicOptions extends JPanel
     private static final String FORCE_SLIDER = "Force";    
     private static final String SD_SLIDER = "Source Density";
     private static final String NS_SLIDER = "Num Steps per Frame";
+    private static final String TIME_STEP_SLIDER = "Time Step";
 
     private SliderGroup sliderGroup_;
     
@@ -41,10 +42,11 @@ public class FluidDynamicOptions extends JPanel
 
     private static final SliderProperties[] SLIDER_PROPS = {
         new SliderProperties(DR_SLIDER,      0,       10.0,   FluidEnvironment.DEFAULT_DIFFUSION_RATE,   100.0),
-        new SliderProperties(VISC_SLIDER,    0,       8.0,   FluidEnvironment.DEFAULT_VISCOSITY,        100.0),
+        new SliderProperties(VISC_SLIDER,    0,       50.0,   FluidEnvironment.DEFAULT_VISCOSITY,        100.0),
         new SliderProperties(FORCE_SLIDER,   0.01,    30.0,  InteractionHandler.DEFAULT_FORCE,          100.0),
         new SliderProperties(SD_SLIDER,       0.01,   4.0,   InteractionHandler.DEFAULT_SOURCE_DENSITY,  100.0),
         new SliderProperties(NS_SLIDER, MIN_STEPS, MAX_STEPS, FluidSimulator.DEFAULT_STEPS_PER_FRAME,    1.0),
+        new SliderProperties(TIME_STEP_SLIDER, 0.001, 0.1,   FluidSimulator.INITIAL_TIME_STEP,        1000.0)
     };
 
 
@@ -151,22 +153,24 @@ public class FluidDynamicOptions extends JPanel
      * one of the sliders was moved.
      */
     public void sliderChanged(int sliderIndex, String sliderName, double value) {
-        
-        float v = (float) value;
+
         if (sliderName.equals(VISC_SLIDER)) {
-            simulator_.getEnvironment().setViscosity(v);
+            simulator_.getEnvironment().setViscosity(value);
         }
         else if (sliderName.equals(DR_SLIDER)) {
-             simulator_.getEnvironment().setDiffusionRate(v);
+             simulator_.getEnvironment().setDiffusionRate(value);
         }   
         else if (sliderName.equals(FORCE_SLIDER)) {
-            simulator_.getInteractionHandler().setForce(v);
+            simulator_.getInteractionHandler().setForce(value);
         }
         else if (sliderName.equals(SD_SLIDER)) {
-            simulator_.getInteractionHandler().setSourceDensity(v);
+            simulator_.getInteractionHandler().setSourceDensity(value);
         }
         else if (sliderName.equals(NS_SLIDER)) {
-            simulator_.setNumStepsPerFrame((int) v);
+            simulator_.setNumStepsPerFrame((int) value);
+        }
+        else if (sliderName.equals(TIME_STEP_SLIDER)) {
+            simulator_.setTimeStep(value);
         }
     }
 
