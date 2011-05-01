@@ -1,12 +1,11 @@
 package com.becker.optimization;
 
-import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * Concrete adapter class for a comparison base Optimizee
  *
- * @author Barry Becker Date: Aug 20, 2006
+ * @author Barry Becker
  */
 public abstract class ComparativeOptimizee implements Optimizee {
 
@@ -20,7 +19,7 @@ public abstract class ComparativeOptimizee implements Optimizee {
     }
 
     public double getOptimalFitness() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return 0;
     }
 
 }

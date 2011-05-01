@@ -21,7 +21,6 @@ public abstract class OptimizerTestCase extends TestCase {
         doTest(OptimizationStrategyType.HILL_CLIMBING);
     }
 
-
     public void testGlobalHillClimbing() {
 
         doTest(OptimizationStrategyType.GLOBAL_HILL_CLIMBING);
@@ -37,7 +36,16 @@ public abstract class OptimizerTestCase extends TestCase {
         doTest(OptimizationStrategyType.GENETIC_SEARCH);
     }
 
+    public void testConcurrentGeneticSearch() {
 
+        doTest(OptimizationStrategyType.CONCURRENT_GENETIC_SEARCH);
+    }
+
+
+    /**
+     * run test for given optimization type
+     * @param optType the optimization type to use.
+     */
     protected abstract void doTest(OptimizationStrategyType optType);
 
     /**

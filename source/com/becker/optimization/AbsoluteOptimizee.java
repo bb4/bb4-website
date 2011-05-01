@@ -24,7 +24,7 @@ public abstract class AbsoluteOptimizee implements Optimizee {
      * @return  optimal fitness value. Terminate search when reached.
      */
     public double getOptimalFitness() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return 0;
     }
 
 }

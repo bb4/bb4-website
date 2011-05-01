@@ -8,9 +8,11 @@ import com.becker.optimization.strategy.OptimizationStrategyType;
 
 /**
  * This is a simple search space to test the optimization package.
- * The problem we will try to so;ve is :
+ * The problem we will try to solve is :
+ *
  *   p1 + p2 + p3 + p4  = 711
  *   p1 * p2 * p3 * p4  = 711000000
+ *
  * Which corresponds to the problem of someone going into a 7-11 and buying 4 things
  * whose sum and product equal $7.11.
  * This problem can be solved analytically by finding the prime factors of 711 and
@@ -19,7 +21,7 @@ import com.becker.optimization.strategy.OptimizationStrategyType;
  * as being the only solution.
  * Our choice of evaluation function to maximize is somewhat arbitrary.
  * I chose to use:
- *  -abs(p1+p2+p3+p4-711)^3  - abs(711000000-p1*p2*p3*p4)
+ *  -abs( p1 + p2 + p3 + p4 - 711)^3  - abs(711000000 - p1 * p2 * p3 * p4)
  * When this function evaluates to 0, we have a solution.
  *
  * @see AnalyticFunctionTestProblem for an easier optimization example.
@@ -51,10 +53,7 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem
     // @@ exp errors.
     private static final double FITNESS_RANGE = 5000000.0;
 
-    //public static enum Variation { STANDARD };
-    //private Variation variation_ = Variation.STANDARD;
-
-
+    /** constructor */
     public SevenElevenTestProblem() {
     }
 

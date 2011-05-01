@@ -59,6 +59,14 @@ public enum OptimizationStrategyType
             return strategy;
         }
     },
+    CONCURRENT_GENETIC_SEARCH ("Uses a concurrent genetic algorithm to search for the best solution.") {
+        @Override
+        public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
+            ConcurrentGeneticSearchStrategy strategy = new ConcurrentGeneticSearchStrategy(optimizee);
+            strategy.setImprovementEpsilon(fitnessRange/100000000.0);
+            return strategy;
+        }
+    },
     STATE_SPACE ("Searches the state space to find an optima.") {
         @Override
         public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
@@ -70,7 +78,7 @@ public enum OptimizationStrategyType
     private String description_;
 
     /**
-     * constructor for optimizatrion type enum
+     * constructor for optimization type enum
      *
      * @param description string description of the optimization strategy.
      */

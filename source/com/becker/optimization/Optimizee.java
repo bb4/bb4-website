@@ -10,8 +10,7 @@ import com.becker.optimization.parameter.ParameterArray;
  *
  *  @author Barry Becker
  */
-public interface Optimizee
-{
+public interface Optimizee {
 
     /**
      *
@@ -24,7 +23,7 @@ public interface Optimizee
     /**
      *  attributes a measure of fitness to the specified set of parameters.
      *  This method must return a value greater than or equal to 0.
-     *  This method is used if evalueateByComparison returns false.
+     *  This method is used if evaluateByComparison returns false.
      *  Higher values imply better fitness.
      *  @param params the set of parameters to misc
      *  @return the fitness measure. The higher the better
@@ -32,7 +31,7 @@ public interface Optimizee
     double evaluateFitness( ParameterArray params );
 
     /**
-     * Compares two sets of parameters.  Used if evaluateByCompariuson returns true.
+     * Compares two sets of parameters.  Used if evaluateByComparison returns true.
      * @return the amount that params1 are better than params2. May be negative if params2 are better than params1.
      */
     double compareFitness( ParameterArray params1, ParameterArray params2 );
