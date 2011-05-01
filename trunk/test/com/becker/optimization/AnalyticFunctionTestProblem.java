@@ -11,7 +11,9 @@ import java.awt.geom.Point2D;
 /**
  * This is a simple search space to test the optimization package.
  * The function we will try to maximize is
+ *
  *   z = 1 - (1 - p1)^2 - (2 - y)^2
+ *
  * Normally we have no idea what the real function is that we are trying to optimize.
  * Nor is a real life function likely to be as well behaved as this one is.
  * This function is very smooth (actually infinitely differentiable) - which is a
@@ -28,8 +30,7 @@ import java.awt.geom.Point2D;
  *
  * @author Barry Becker
  */
-public class AnalyticFunctionTestProblem extends OptimizeeTestProblem
-{
+public class AnalyticFunctionTestProblem extends OptimizeeTestProblem {
 
     private static final double  P1 = 1.0;
     private static final double  P2 = 2.0;
@@ -50,8 +51,8 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem
     private static final double FITNESS_RANGE = 1000.0;
 
     // different types of 3d planar functions that all have the same maximum.
-    // @@ have arrays of expected errorr
-    public static enum Variation { PARABOLA, SINUSOIDAL, ABS_SINUSOIDAL, STEPPED };
+    // @@ have arrays of expected error
+    public enum Variation { PARABOLA, SINUSOIDAL, ABS_SINUSOIDAL, STEPPED };
 
     private Variation variation_ = Variation.PARABOLA;  // default
 
@@ -70,6 +71,7 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem
         return 0.0;
     }
 
+    @Override
     public double getOptimalFitness() {
         return 0;
     }
@@ -141,14 +143,17 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem
         System.out.println( "We expected to get exactly p1 = "+ P1 + " and p2 = " + P2 );
     }
 
+    @Override
     public ParameterArray getInitialGuess() {
         return INITIAL_GUESS;
     }
 
+    @Override
     public ParameterArray getExactSolution() {
         return EXACT_SOLUTION;
     }
 
+    @Override
     public double getFitnessRange() {
         return FITNESS_RANGE;
     }

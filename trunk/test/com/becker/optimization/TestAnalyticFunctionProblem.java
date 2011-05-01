@@ -7,7 +7,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * @author Barry Becker Date: Jun 28, 2006
+ * @author Barry Becker
  */
 public class TestAnalyticFunctionProblem extends OptimizerTestCase {
 
@@ -20,14 +20,15 @@ public class TestAnalyticFunctionProblem extends OptimizerTestCase {
      * Error tolerance for each search strategy and variation of the problem.
      */
     private static final double[][] ERROR_TOLERANCE_PERCENT = {
-        // GLOB_SAMP    G_HILL_CLIMB    HIL_CLIMB       SIM_ANN      TABU         GENETIC    STATE_S
-        {GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, 0.04,       RELAXED_TOL,  0.042,      BASE_TOLERANCE},  // PARABOLA,
-        {GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, 0.04,       RELAXED_TOL,  0.042,     BASE_TOLERANCE},   // SINUSOIDAL,
-        {GLOB_SAMP_TOL, 0.0128,         BASE_TOLERANCE, 0.03,       RELAXED_TOL,  0.03,       BASE_TOLERANCE}, // ABS_SINUSOIDAL
-        {GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, 0.03,       RELAXED_TOL,  0.042,    BASE_TOLERANCE},  // STEPPED
+        // GLOB_SAMP    G_HILL_CLIMB    HIL_CLIMB       SIM_ANN      TABU         GENETIC  CONC_GEN   STATE_S
+        {GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, 0.04,       RELAXED_TOL,  0.042,   0.042,   BASE_TOLERANCE},  // PARABOLA,
+        {GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, 0.04,       RELAXED_TOL,  0.042,   0.042,   BASE_TOLERANCE},  // SINUSOIDAL,
+        {GLOB_SAMP_TOL, 0.0128,         BASE_TOLERANCE, 0.03,       RELAXED_TOL,  0.03,    0.03,    BASE_TOLERANCE},  // ABS_SINUSOIDAL
+        {GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, 0.03,       RELAXED_TOL,  0.042,   0.042,   BASE_TOLERANCE},  // STEPPED
     };
 
 
+    @Override
     protected void doTest(OptimizationStrategyType optType) {
 
         for (AnalyticFunctionTestProblem.Variation v : AnalyticFunctionTestProblem.Variation.values()) {
@@ -45,13 +46,11 @@ public class TestAnalyticFunctionProblem extends OptimizerTestCase {
 
 
 
-
     /**
-     * @return all the junit test caes to run (in this class).
+     * @return all the junit test cases to run (in this class).
      */
     public static Test suite() {
         return new TestSuite(TestAnalyticFunctionProblem.class);
     }
-
 
 }

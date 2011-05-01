@@ -7,13 +7,15 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * @author Barry Becker Date: Jun 28, 2006
+ * @author Barry Becker
  */
 public class TestSevenElevenProblem extends OptimizerTestCase {
 
-    // the tolerances for each for the search strategies.
+    /** the tolerances for each for the search strategies. */
     private static final double[] ERROR_TOLERANCE_PERCENT = {0.005, 0.005, 0.005, 0.005, 0.005, 0.005, 0.005};
 
+
+    @Override
     protected void doTest(OptimizationStrategyType optType) {
 
        OptimizeeTestProblem problem = new SevenElevenTestProblem();
@@ -28,7 +30,7 @@ public class TestSevenElevenProblem extends OptimizerTestCase {
 
 
     /**
-     * @return all the junit test caes to run (in this class).
+     * @return all the junit test cases to run (in this class).
      */
     public static Test suite() {
         return new TestSuite(TestSevenElevenProblem.class);
