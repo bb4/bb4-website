@@ -73,9 +73,8 @@ public class Optimizer
      * @param fitnessRange the approximate range (max-min) of the fitness values
      * @return the soution to the optimization problem.
      */
-    public ParameterArray doOptimization(OptimizationStrategyType optimizationType, ParameterArray params, double fitnessRange )
-    {
-
+    public ParameterArray doOptimization(OptimizationStrategyType optimizationType,
+                                         ParameterArray params, double fitnessRange ) {
 
         OptimizationStrategy optStrategy = optimizationType.getStrategy(optimizee_, fitnessRange);
         if (logger_ != null) {

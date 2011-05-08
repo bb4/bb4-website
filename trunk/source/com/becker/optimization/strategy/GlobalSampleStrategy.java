@@ -11,8 +11,8 @@ import com.becker.optimization.parameter.ParameterArray;
  *
  * @author Barry Becker
  */
-public class GlobalSampleStrategy extends OptimizationStrategy
-{
+public class GlobalSampleStrategy extends OptimizationStrategy {
+
     /** unreasonable to have a sampling rate higher than this.  */
     private static final int MAX_SAMPLE_RATE_X_DIMS = 20000;
 
@@ -27,8 +27,8 @@ public class GlobalSampleStrategy extends OptimizationStrategy
      * No log file specified in this constructor. (use this version if running in unsigned applet).
      * @param optimizee the thing to be optimized.
      */
-    public GlobalSampleStrategy( Optimizee optimizee )
-    {
+    public GlobalSampleStrategy( Optimizee optimizee ) {
+
         super(optimizee);
         samplingRate_ =  DEFAULT_SAMPLE_RATE_X_DIMS / optimizee_.getNumParameters();
     }
@@ -36,10 +36,10 @@ public class GlobalSampleStrategy extends OptimizationStrategy
     /**
      * @param samplingRate the rate at which to sample along each dimension when trying guesses globally.
      */
-    public void setSamplingRate(int samplingRate)
-    {
+    public void setSamplingRate(int samplingRate) {
+
         int maxSample =  MAX_SAMPLE_RATE_X_DIMS / optimizee_.getNumParameters();
-        if (samplingRate<1 || samplingRate >maxSample) {
+        if (samplingRate < 1 || samplingRate > maxSample) {
            assert false: "invalid sampling rate (must be between 1 and " + maxSample + ")  "+samplingRate;
         }
         samplingRate_ = samplingRate;
@@ -85,7 +85,7 @@ public class GlobalSampleStrategy extends OptimizationStrategy
                 double increment = (p.getMaxValue() - p.getMinValue()) / (samplingRate_ + 1.0);
                 p.setValue(increment / 2.0 + index[j] * increment);
             }
-            double fitness = 0.0;
+            double fitness;
             if (optimizee_.evaluateByComparison())
                 fitness = optimizee_.compareFitness( testParams, params );
             else

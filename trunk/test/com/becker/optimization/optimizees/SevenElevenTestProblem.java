@@ -1,7 +1,8 @@
-package com.becker.optimization;
+package com.becker.optimization.optimizees;
 
 import com.becker.common.util.FileUtil;
-import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.Optimizer;
+import com.becker.optimization.parameter.IntegerParameter;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
@@ -20,34 +21,31 @@ import com.becker.optimization.strategy.OptimizationStrategyType;
  *   316, 125, 120, 150
  * as being the only solution.
  * Our choice of evaluation function to maximize is somewhat arbitrary.
- * I chose to use:
- *  -abs( p1 + p2 + p3 + p4 - 711)^3  - abs(711000000 - p1 * p2 * p3 * p4)
  * When this function evaluates to 0, we have a solution.
  *
  * @see AnalyticFunctionTestProblem for an easier optimization example.
  *
  * @author Barry Becker
  */
-public class SevenElevenTestProblem extends OptimizeeTestProblem
-{
-    // define the initialGuess in some bounded region of the 2-dimensional search space.
-    private static final double[] vals    = {100,  200, 200, 200};   // initialGuess
-    private static final double[] minVals = {   1,   1,   1,   1};
-    private static final double[] maxVals = { 708, 708, 708, 708};
-    private static final String[] names   = {"p1", "p2", "p3", "p4"};
+public class SevenElevenTestProblem extends OptimizeeTestProblem {
 
-    private static final double  P1 = 316.0;
-    private static final double  P2 = 125.0;
-    private static final double  P3 = 120.0;
-    private static final double  P4 = 150.0;
-    private static final Parameter[] EXACT_SOLUTION_PARAMS =
-            {new DoubleParameter(P1, 0.0, 1000.0, "p1"),
-             new DoubleParameter(P2, 0.0, 1000.0, "p2"),
-             new DoubleParameter(P3, 0.0, 1000.0, "p3"),
-             new DoubleParameter(P4, 0.0, 1000.0, "p4")};
+  private static final Parameter[] INITIAL_GUESS_PARAMS =  {
+             new IntegerParameter(100, 0, 708, "p1"),
+             new IntegerParameter(200, 0, 708, "p2"),
+             new IntegerParameter(200, 0, 708, "p3"),
+             new IntegerParameter(200, 0, 708, "p4")};
 
-    private static final ParameterArray INITIAL_GUESS = new ParameterArray(vals, minVals, maxVals, names);
+    private static final int  P1 = 316;
+    private static final int  P2 = 125;
+    private static final int  P3 = 120;
+    private static final int  P4 = 150;
+    private static final Parameter[] EXACT_SOLUTION_PARAMS =  {
+             new IntegerParameter(P1, 0, 708, "p1"),
+             new IntegerParameter(P2, 0, 708, "p2"),
+             new IntegerParameter(P3, 0, 708, "p3"),
+             new IntegerParameter(P4, 0, 708, "p4")};
 
+    private static final ParameterArray INITIAL_GUESS = new ParameterArray(INITIAL_GUESS_PARAMS);
     private static final ParameterArray EXACT_SOLUTION = new ParameterArray(EXACT_SOLUTION_PARAMS);
 
     // @@ exp errors.
@@ -70,15 +68,20 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem
     }
 
     /**
+     *  The choice of fitness function here is somewhat arbitrary.
+     *  I chose to use:
+     *    -abs( p1 + p2 + p3 + p4 - 711)^3  - abs(711000000 - p1 * p2 * p3 * p4)
+     *    or
+     *    -abs(711 - sum) - abs(711000000 - product)/1000000
      * @param a the position in the search space given values of p1, p2, p4, p4.
      * @return fitness value
      */
     public double evaluateFitness(ParameterArray a) {
 
         double sum = a.get(0).getValue() + a.get(1).getValue() + a.get(2).getValue() + a.get(3).getValue();
-        double prod = a.get(0).getValue() * a.get(1).getValue() * a.get(2).getValue() * a.get(3).getValue();
+        double product = a.get(0).getValue() * a.get(1).getValue() * a.get(2).getValue() * a.get(3).getValue();
 
-        return  -Math.abs(Math.pow(711 - sum, 3)) - Math.abs(711000000 - prod);
+        return -Math.abs(711.0 - sum) - Math.abs(711000000.0 - product) / 1000000.0;
     }
 
 

@@ -2,218 +2,129 @@ package com.becker.optimization.strategy;
 
 import com.becker.common.util.Util;
 import com.becker.optimization.Optimizee;
-import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 
+import java.util.*;
+
 /**
- *  Hill climbing optimization strategy.
+ * Hill climbing optimization strategy.
  *
  * @author Barry Becker
  */
-public class HillClimbingStrategy extends OptimizationStrategy
-{
+public class HillClimbingStrategy extends OptimizationStrategy {
 
     private static final double INITIAL_JUMP_SIZE = 0.7;
+
+    /** If the dot product of the new gradient with the old is less than this, then decrease the jump size. */
     private static final double MIN_DOT_PRODUCT = 0.3;
+    /** If the dot product of the new gradient with the old is greater than this, then increase the jump size. */
     private static final double MAX_DOT_PRODUCT = 0.98;
 
     /** continue optimization iteration until the improvement in fitness is less than this.  */
     private static final double FITNESS_EPS_PERCENT = 0.0000001;
-    private static final double JUMP_SIZE_EPS = 0.000001;
+    protected static final double JUMP_SIZE_EPS = 0.000000001;
 
     private static final double JUMP_SIZE_INC_FACTOR = 1.3;
-    private static final double JUMP_SIZE_DEC_FACTOR = 0.6;
-
-    // approximate number of steps to take when marching across one of the paramater dimensions.
-    // used to calculate the stepsize in a dimension direction.
-    private static final int NUM_STEPS = 30;
+    protected static final double JUMP_SIZE_DEC_FACTOR = 0.7;
 
 
     /**
      * Constructor
-     * use a harcoded static data interface to initialize.
+     * use a hardcoded static data interface to initialize.
      * so it can be easily run in an applet without using resources.
      * @param optimizee the thing to be optimized.
      */
-    public HillClimbingStrategy( Optimizee optimizee )
-    {
+    public HillClimbingStrategy( Optimizee optimizee ) {
         super(optimizee);
     }
 
 
     /**
-     * finds a local maxima.
+     * Finds a local maxima.
      * Its a bit like newton's method, but in n dimensions.
      * If we make a jump and find that we are worse off than before, we will backtrack and reduce the stepsize so
-     * that we can be quaranteed to improve my some amount on every iteration until the incremental improvement
+     * that we can be guaranteed to improve my some amount on every iteration until the incremental improvement
      * is less than the threshold fitness_eps.
-     *
-     *@@ this method should be parallized.
      *
      * @param params the initial value for the parameters to optimize.
      * @param fitnessRange the approximate absolute value of the fitnessRange.
      * @return the optimized params.
      */
-    public ParameterArray doOptimization( ParameterArray params, double fitnessRange )
-    {
-        int len = params.size();
-        Iteration iter = new Iteration(params);
+    @Override
+    public ParameterArray doOptimization( ParameterArray params, double fitnessRange ) {
+
+        ParameterArray currentParams = params.copy();
+        HillClimbIteration iter = new HillClimbIteration(currentParams);
 
         double jumpSize = INITIAL_JUMP_SIZE;
 
-        boolean evalByComparison = optimizee_.evaluateByComparison();
-        if (!evalByComparison) {
+        if (!optimizee_.evaluateByComparison()) {
             // get the initial baseline fitness value.
-            params.setFitness(optimizee_.evaluateFitness(params));
+            currentParams.setFitness(optimizee_.evaluateFitness(currentParams));
         }
         int numIterations = 0;
-        log(0, params.getFitness(), 0.0, 0.0, params, "initial test");
+        log(0, currentParams.getFitness(), 0.0, 0.0, currentParams, "initial test");
 
-        double improvement = 0;
+        double improvement;
         double fitnessEps = fitnessRange * FITNESS_EPS_PERCENT / 100.0;
-        double oldFitness = params.getFitness();
+        double oldFitness = currentParams.getFitness();
+
+        // Use cache to avoid repeats. This can be a real issue if  we have a discrete problem space.
+        Set<ParameterArray> cache = new HashSet<ParameterArray>();
+        cache.add(currentParams);
 
         // iterate until there is no significant improvement between iterations,
         // of the jumpSize is too small (below some threshold).
         do {
-            System.out.println( "iter=" + numIterations + "  FITNESS ==== " + params.getFitness() + "  -----------------" );
-            //assert ( params.getFitness() >= 0.0): "*** Error the fitness is less than 0!!" ;
+            System.out.println( "iter=" + numIterations + " FITNESS = " + currentParams.getFitness() + "  ---------------");
             double sumOfSqs = 0;
 
-            for ( int i = 0; i < len; i++ ) {
-                ParameterArray testParams = params.copy();
-                sumOfSqs = iter.incSumOfSqs(i, sumOfSqs, optimizee_, params, testParams);
+            for ( int i = 0; i < params.size(); i++ ) {
+                ParameterArray testParams = currentParams.copy();
+                sumOfSqs = iter.incSumOfSqs(i, sumOfSqs, optimizee_, currentParams, testParams);
             }
             double gradLength = Math.sqrt(sumOfSqs);
-            System.out.println("Grad len = "+ gradLength);
+            //System.out.println("Grad numParams = "+ gradLength);
 
-            // now compute the gradient vector that will allow us
-            // to make a quantum leap in the direction of greatest improvement.
-            boolean improved;
-
-            do {
-                improved = true;
-                ParameterArray oldParams = params.copy();
-
-                iter.updateGradient(jumpSize, gradLength);
-                params.add( iter.gradient );
-
-                if (evalByComparison) {
-                    params.setFitness(optimizee_.compareFitness(params, oldParams));
-                    if (params.getFitness() < 0)
-                        improved = false;
-                    else
-                        improvement = params.getFitness();
-                }
-                else {
-                    params.setFitness(optimizee_.evaluateFitness(params));
-                    if (params.getFitness() < oldFitness)
-                        improved = false;
-                    else
-                        improvement = params.getFitness() - oldFitness;
-                }
-                if (!improved) {
-                    // we have not improved, try again with a reduced jump size.
-                    System.out.println( "Warning: the new params are worse so reduce the step size and try again");
-                    log(numIterations, params.getFitness(), jumpSize, Double.NaN, params, "not improved");
-                    params = oldParams;
-                    jumpSize *= JUMP_SIZE_DEC_FACTOR;
-                }
-            } while (!improved && (jumpSize > JUMP_SIZE_EPS) );
+            HillClimbingStep step = new HillClimbingStep(optimizee_, iter, gradLength, cache, jumpSize, oldFitness);
+            currentParams = step.findNextParams(currentParams);
+            jumpSize = step.getJumpSize();
+            improvement = step.getImprovement();
 
             double dotProduct = ParameterArray.dot( iter.gradient, iter.oldGradient );
             double divisor = (ParameterArray.length( iter.gradient ) * ParameterArray.length( iter.oldGradient ));
-            dotProduct = (divisor==0.0) ? 1.0 : dotProduct/divisor;
+            dotProduct = (divisor==0.0) ? 1.0 : dotProduct / divisor;
             numIterations++;
-            log(numIterations, params.getFitness(), jumpSize, dotProduct, params, Util.formatNumber(improvement));
-
-            if (listener_ != null) {
-                listener_.optimizerChanged(params);
-            }
+            log(numIterations, currentParams.getFitness(), jumpSize, dotProduct, currentParams, Util.formatNumber(improvement));
+            notifyOfChange(currentParams);
 
             // if we are headed in pretty much the same direction as last time, then we increase the jumpSize.
-            // if we are headed off in a completely new direction, reduce the jumpsize until we start to stabilize.
+            // if we are headed off in a completely new direction, reduce the jumpSize until we start to stabilize.
             if ( dotProduct > MAX_DOT_PRODUCT )
                 jumpSize *= JUMP_SIZE_INC_FACTOR;
             else if ( dotProduct < MIN_DOT_PRODUCT )
                 jumpSize *= JUMP_SIZE_DEC_FACTOR;
-            System.out.println( "new jumpsize = " + jumpSize );
+            //System.out.println( "new jumpsize = " + jumpSize );
 
-            System.arraycopy(iter.gradient, 0, iter.oldGradient, 0, len);
+            System.arraycopy(iter.gradient, 0, iter.oldGradient, 0, params.size());
 
-            if (!evalByComparison)
-                oldFitness = params.getFitness();
+            if (!optimizee_.evaluateByComparison())
+                oldFitness = currentParams.getFitness();
 
         } while ( (improvement > fitnessEps)
                 && (jumpSize > JUMP_SIZE_EPS)
-                && !isOptimalFitnessReached(params));
+                && !isOptimalFitnessReached(currentParams));
 
-        System.out.println( "The optimized parameters after " + numIterations + " iterations are " + params );
-        return params;
+        System.out.println("The optimized parameters after " + numIterations + " iterations are " + currentParams);
+        System.out.println("Last improvement = " + improvement + " jumpSize=" + jumpSize);
+        return currentParams;
     }
 
-
-    /**
-     * private utility class for maintining the data vecs for the interation.
-     */
-    private static class Iteration {
-
-        double[] delta;
-        double[] fitnessDelta;
-        double[] gradient;
-        double[] oldGradient;
-
-        Iteration(ParameterArray params) {
-            delta = params.createDoubleArray();
-            fitnessDelta = params.createDoubleArray();
-            gradient = params.createDoubleArray();
-            oldGradient = params.createDoubleArray();
-
-            // initiallize the old gradient to the unit vector (any random direction will do)
-            for ( int i = 0; i < params.size(); i++)
-                oldGradient[i] = 1.0;
-            oldGradient = ParameterArray.normalize(oldGradient);
-        }
-
-        /**
-         * Compute the square in one of the iteration directions and add it to the running sum.
-         * @return the sum of squares in one of the iteration directions.
-         */
-        double incSumOfSqs(int i, double sumOfSqs, Optimizee optimizee,
-                           ParameterArray params, ParameterArray testParams) {
-
-            double fwdFitness;
-            double bwdFitness;
-
-            Parameter p = testParams.get( i );
-            // this does the increment and returns the amount incremented (forward).
-            delta[i] = p.increment( NUM_STEPS, 1 );
-
-            if (optimizee.evaluateByComparison())
-                fwdFitness = optimizee.compareFitness( testParams, params );
-            else
-                fwdFitness = optimizee.evaluateFitness( testParams );
-
-            // this checks the fitness on the other side (backwards).
-            p.increment( NUM_STEPS, -1 );
-            p.increment( NUM_STEPS, -1 );
-
-            if (optimizee.evaluateByComparison())
-                bwdFitness = optimizee.compareFitness( testParams, params );
-            else
-                bwdFitness = optimizee.evaluateFitness( testParams );
-
-            fitnessDelta[i] = fwdFitness - bwdFitness;
-            double newSumOfSqs = sumOfSqs + (fitnessDelta[i] * fitnessDelta[i]) / (delta[i] * delta[i]);
-
-            return newSumOfSqs;
-        }
-
-        void updateGradient(double jumpSize, double gradLength) {
-            for ( int i = 0; i < delta.length; i++ ) {
-                gradient[i] = jumpSize * fitnessDelta[i] / (delta[i] * gradLength);
-            }
+    private void notifyOfChange(ParameterArray params) {
+        if (listener_ != null) {
+            listener_.optimizerChanged(params);
         }
 
     }
+
 }

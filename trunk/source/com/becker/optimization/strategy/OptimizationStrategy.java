@@ -11,15 +11,14 @@ import com.becker.optimization.parameter.ParameterArray;
  *
  * This and derived classes uses the strategy design pattern.
  * @see Optimizer
+ * @see Optimizee
  *
  * @author Barry Becker
  */
-public abstract class OptimizationStrategy
-{
-    Optimizee optimizee_;
+public abstract class OptimizationStrategy {
 
-    /** debug level of 0 means no debug info, 3 is all debug info.  */
-    protected static final int DEBUG_LEVEL = 0;
+    /** The thing to be optimized */
+    Optimizee optimizee_;
 
     private Logger logger_;
 
@@ -31,8 +30,7 @@ public abstract class OptimizationStrategy
      * Constructor
      * @param optimizee the thing to be optimized.
      */
-    public OptimizationStrategy( Optimizee optimizee )
-    {
+    public OptimizationStrategy( Optimizee optimizee ) {
         optimizee_ = optimizee;
     }
 
@@ -58,10 +56,9 @@ public abstract class OptimizationStrategy
     public abstract ParameterArray doOptimization(ParameterArray initialParams, double fitnessRange);
 
 
-    public void setListener(OptimizationListener l) {
-        listener_ = l;
+    public void setListener(OptimizationListener listener) {
+        listener_ = listener;
     }
-
 
     /**
      * @param currentBest current best parameter set.

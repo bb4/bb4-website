@@ -20,8 +20,7 @@ public class DoubleParameter extends AbstractParameter
      * @param maxVal the maximum value that this parameter is allowed to take on
      * @param paramName of the parameter
      */
-    public DoubleParameter( double val, double minVal, double maxVal, String paramName )
-    {
+    public DoubleParameter( double val, double minVal, double maxVal, String paramName ) {
         super(val, minVal, maxVal, paramName, false);    
     }
     
@@ -41,8 +40,7 @@ public class DoubleParameter extends AbstractParameter
         return param;
     }
 
-    public Parameter copy()
-    {
+    public Parameter copy() {
         DoubleParameter p =  new DoubleParameter( getValue(), getMinValue(), getMaxValue(), getName() );
         p.setRedistributionFunction(redistributionFunction_);
         return p;

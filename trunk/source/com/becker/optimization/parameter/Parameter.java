@@ -10,8 +10,7 @@ import java.util.Random;
  *
  *  @author Barry Becker
  */
-public interface Parameter
-{
+public interface Parameter {
 
     /**
      * @return the name of the parameter.
@@ -95,7 +94,7 @@ public interface Parameter
     boolean isIntegerOnly();
     
     /**
-     * The class type of the underlying parmeter value (e.g. float.class or int.class)
+     * The class type of the underlying parameter value (e.g. float.class or int.class)
      * @return
      */
     Class getType();
@@ -108,8 +107,8 @@ public interface Parameter
     
     /**
      * A UI control of some type for changing the parameter.
-     * @param listener
-     * @return
+     * @param listener parameter change listener.
+     * @return new parameter widget
      */
     ParameterWidget createWidget(ParameterChangeListener listener);
 }

@@ -2,6 +2,7 @@ package com.becker.optimization.parameter;
 
 import com.becker.common.util.Util;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -89,6 +90,7 @@ public class ParameterArray implements Comparable<ParameterArray> {
 
         ParameterArray pa = new ParameterArray( newParams );
         pa.setFitness(fitness_);
+        pa.setNumSteps(numSteps_);
         return pa;
     }
 
@@ -242,7 +244,7 @@ public class ParameterArray implements Comparable<ParameterArray> {
 
     public String toString()
     {
-        StringBuilder sb = new StringBuilder("fitness="+this.getFitness()+'\n');
+        StringBuilder sb = new StringBuilder("fitness = "+this.getFitness()+'\n');
         sb.append("parameter[0] = ").append(params_[0].toString());
         for ( int i = 1; i < params_.length; i++ ) {
             sb.append( '\n' );
@@ -274,5 +276,22 @@ public class ParameterArray implements Comparable<ParameterArray> {
         if (diff < 0)
             return -1;
         return (diff > 0)? 1 :  0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ParameterArray that = (ParameterArray) o;
+
+        if (!Arrays.equals(params_, that.params_)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return params_ != null ? Arrays.hashCode(params_) : 0;
     }
 }

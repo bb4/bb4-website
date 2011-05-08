@@ -9,8 +9,7 @@ import com.becker.optimization.parameter.ParameterArray;
  *
  * @author Barry Becker
  */
-public class SimulatedAnnealingStrategy extends OptimizationStrategy
-{
+public class SimulatedAnnealingStrategy extends OptimizationStrategy {
 
     // this is the number of iterations in the inner loop divided by the number of dimensions in the search space
     private static final int N = 5;
@@ -25,12 +24,11 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
 
     /**
      * Constructor
-     * use a harcoded static data interface to initialize.
+     * use a hardcoded static data interface to initialize.
      * so it can be easily run in an applet without using resources.
      * @param optimizee the thing to be optimized.
      */
-    public SimulatedAnnealingStrategy( Optimizee optimizee )
-    {
+    public SimulatedAnnealingStrategy( Optimizee optimizee ) {
         super(optimizee);
     }
 
@@ -38,15 +36,14 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
      *
      * @param tempMax the initial temperature at the start of the simulated annealing process (before cooling).
      */
-    public void setMaxTemperature(double tempMax)
-    {
+    public void setMaxTemperature(double tempMax) {
         tempMax_ = tempMax;
     }
 
     /**
      * finds a local maxima.
      *
-     *  The concept is based on the manner in which liquids freeze or metals recrystalize in the process of annealing.
+     *  The concept is based on the manner in which liquids freeze or metals recrystallize in the process of annealing.
      * In an annealing process a initially at high temperature and disordered liquid, is slowly cooled so that the system
      * is approximately in thermodynamic equilibrium at any point in the process. As cooling proceeds, the system becomes
      * more ordered and approaches a "frozen" ground state at T=0. Hence the process can be thought of as an adiabatic
@@ -54,7 +51,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
      * the system may become quenched forming defects or freezing out in metastable states
      * (ie. trapped in a local minimum energy state).
      *
-     * In many ways the algorithm is similar to hillclimbing.
+     * In many ways the algorithm is similar to hill-climbing.
      * The main differences are:
      *  - The next candidate solution is selected randomly within a gaussian neighborhood that shrinks
      *    with the temperature and within the current iteration.
@@ -65,6 +62,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
      * @param fitnessRange the approximate absolute value of the fitnessRange.
      * @return the optimized params.
      */
+     @Override
      public ParameterArray doOptimization( ParameterArray params, double fitnessRange )
      {
          int ct = 0;

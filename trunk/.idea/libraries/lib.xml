@@ -13,6 +13,8 @@
       <root url="jar://$PROJECT_DIR$/lib/vecmath.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/xml-apis.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jhlabs-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/j3dutils.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/j3dcore.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

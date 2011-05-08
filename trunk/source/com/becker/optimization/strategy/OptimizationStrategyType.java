@@ -14,8 +14,8 @@ import com.becker.optimization.Optimizer;
  *
  * @author Barry Becker
  */
-public enum OptimizationStrategyType
-{
+public enum OptimizationStrategyType {
+
     GLOBAL_SAMPLING ("Sparsely sample the space and return the best sample.") {
         @Override
         public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
@@ -91,10 +91,10 @@ public enum OptimizationStrategyType
     }
 
     /**
-     * Create an instance of the strategry to use.
+     * Create an instance of the strategy to use.
      * @param optimizee the thing to optimize.
      * @param fitnessRange the approximate range (max-min) of the fitness values
-     * @return an instance of the strategry to use.
+     * @return an instance of the strategy to use.
      */
     public abstract OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange);
 

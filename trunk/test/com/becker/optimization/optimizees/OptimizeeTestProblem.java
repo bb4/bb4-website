@@ -1,4 +1,4 @@
-package com.becker.optimization;
+package com.becker.optimization.optimizees;
 
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
@@ -6,7 +6,7 @@ import com.becker.optimization.parameter.ParameterArray;
 /**
  * Abstract base class for optimizer test problems.
  *
- * @author Barry Becker Date: Jun 29, 2006
+ * @author Barry Becker
  */
 public abstract class OptimizeeTestProblem implements Optimizee {
 

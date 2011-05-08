@@ -12,18 +12,15 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public class StringParameter extends IntegerParameter
-{
+public class StringParameter extends IntegerParameter {
     private List<String> values_;
 
-    public StringParameter( int index, List<String> values, String paramName)
-    {        
+    public StringParameter( int index, List<String> values, String paramName) {
         super(index, 0, values.size()-1, paramName);  
         values_ = values;
     }
     
-    public StringParameter( Enum val, Enum[] enumValues , String paramName)
-    {        
+    public StringParameter( Enum val, Enum[] enumValues , String paramName) {
         super(val.ordinal(), 0, enumValues.length-1, paramName);    
         List<String> values = new ArrayList<String>(enumValues.length);
         int i = 0;
@@ -33,18 +30,17 @@ public class StringParameter extends IntegerParameter
         values_ = values;        
     }
     
-    public static StringParameter createDiscreteParameter(
-                                                            int index, List<String> values, String paramName, 
-                                                            int[] discreteSpecialValues, double[] specialValueProbabilities) {
+    public static StringParameter createDiscreteParameter(int index, List<String> values, String paramName,
+                                                          int[] discreteSpecialValues,
+                                                          double[] specialValueProbabilities) {
        StringParameter param = new StringParameter(index, values, paramName);
         param.setRedistributionFunction(
                 new DiscreteRedistribution(values.size(), discreteSpecialValues, specialValueProbabilities));    
         return param;
     }
     
-    public static StringParameter createDiscreteParameter(
-                                                            Enum val, Enum[] enumValues, String paramName, 
-                                                            Enum[] specialEnumValues, double[] specialValueProbabilities) {
+    public static StringParameter createDiscreteParameter(Enum val, Enum[] enumValues, String paramName,
+                                                          Enum[] specialEnumValues, double[] specialValueProbabilities) {
        StringParameter param = new StringParameter(val, enumValues, paramName);
        int[] discSpecialValues = new int[specialEnumValues.length];
        for (int i=0; i<specialEnumValues.length; i++ ) {
@@ -58,13 +54,14 @@ public class StringParameter extends IntegerParameter
 
 
 
-    public Parameter copy()
-    {
+    @Override
+    public Parameter copy() {
         StringParameter p = new StringParameter( (int)getValue(), values_, getName() );
         p.setRedistributionFunction(redistributionFunction_);
         return p;
     }
 
+    @Override
     public Object getNaturalValue() {
         return values_.get((int)getValue());
     }
@@ -73,14 +70,17 @@ public class StringParameter extends IntegerParameter
        return values_;
     }
    
+   @Override
    protected boolean isOrdered() {
         return false;
     }
    
+   @Override
    public Class getType() {
         return String.class; 
     }
    
+   @Override
    public ParameterWidget createWidget(ParameterChangeListener listener) {
         return new StringParameterWidget(this, listener);
     }
