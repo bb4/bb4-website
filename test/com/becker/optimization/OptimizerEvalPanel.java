@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @@ add zoom in and zoom out capability based on right click menu.
- * @author Barry Becker Date: Jun 25, 2006
+ * @author Barry Becker
  */
 public class OptimizerEvalPanel extends JPanel implements OptimizationListener {
 

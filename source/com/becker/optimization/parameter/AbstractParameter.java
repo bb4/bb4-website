@@ -10,8 +10,7 @@ import java.util.Random;
  *
  *  @author Barry Becker
  */
-public abstract class AbstractParameter implements Parameter
-{
+public abstract class AbstractParameter implements Parameter {
 
     protected double value_ = 0.0;
     protected double minValue_ = 0.0;
@@ -22,15 +21,46 @@ public abstract class AbstractParameter implements Parameter
     
     protected RedistributionFunction redistributionFunction_;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbstractParameter that = (AbstractParameter) o;
+
+        if (integerOnly_ != that.integerOnly_) return false;
+        if (Double.compare(that.maxValue_, maxValue_) != 0) return false;
+        if (Double.compare(that.minValue_, minValue_) != 0) return false;
+        if (!that.getNaturalValue().equals(getNaturalValue())) return false;
+        if (name_ != null ? !name_.equals(that.name_) : that.name_ != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = getNaturalValue().hashCode();
+        result = (int) (temp ^ (temp >>> 32));
+        temp = minValue_ != +0.0d ? Double.doubleToLongBits(minValue_) : 0L;
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = maxValue_ != +0.0d ? Double.doubleToLongBits(maxValue_) : 0L;
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (name_ != null ? name_.hashCode() : 0);
+        result = 31 * result + (integerOnly_ ? 1 : 0);
+        return result;
+    }
+
     /**
-     *  Constructor
+
+     * Constructor
      * @param val the initial or assign parameter value
      * @param minVal the minimum value that this parameter is allowed to take on
      * @param maxVal the maximum value that this parameter is allowed to take on
      * @param paramName of the parameter
      */
-    public AbstractParameter( double val, double minVal, double maxVal, String paramName )
-    {
+    public AbstractParameter( double val, double minVal, double maxVal, String paramName ) {
         value_ = val;
         minValue_ = minVal;
         maxValue_ = maxVal;
@@ -39,8 +69,8 @@ public abstract class AbstractParameter implements Parameter
         integerOnly_ = false;
     }
 
-    public AbstractParameter( double val, double minVal, double maxVal, String paramName, boolean intOnly )
-    {
+    public AbstractParameter( double val, double minVal, double maxVal,
+                              String paramName, boolean intOnly ) {
         this(val, minVal, maxVal, paramName);
         integerOnly_ = intOnly;
     }
@@ -56,11 +86,11 @@ public abstract class AbstractParameter implements Parameter
      * @param direction 1 for forward, -1 for backward.
      * @return the size of the increment taken
      */
-    public double increment( int numSteps, int direction )
-    {
+    public double increment( int numSteps, int direction ) {
+
         double increment = direction * (getMaxValue() - getMinValue()) / numSteps;
         if (isIntegerOnly()) {
-            increment = Math.max((int) increment, 1);
+            increment = Math.max(Math.round(increment), 1);
         }
         double v = getValue();
         if ( (v+increment > getMaxValue())) {
@@ -78,19 +108,18 @@ public abstract class AbstractParameter implements Parameter
     }
 
     /**
-     * Teak the value of this paramteter a little. If r is big, you may be tweaking it a lot.
+     * Teak the value of this parameter a little. If r is big, you may be tweaking it a lot.
      * 
      * @param r  the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
      *     r is relative to each parameter range (in other words scaled by it).
      */
-    public void tweakValue(double r, Random rand)
-    {           
+    public void tweakValue(double r, Random rand) {
         assert Math.abs(r) < 1.0;
         if (r == 0 ) {
             return;  // no change in the param.
         }
         
-        double change = (rand.nextGaussian()-0.5) * r * getRange();
+        double change = 0.5 * rand.nextGaussian() * r * getRange();
         value_ += change;
         if (value_ > getMaxValue()) {
               value_ = getMaxValue();
@@ -106,8 +135,8 @@ public abstract class AbstractParameter implements Parameter
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
+
         StringBuilder sa = new StringBuilder( getName() );
         sa.append( " =" );
         sa.append( Util.formatNumber(getValue()) );
@@ -117,7 +146,7 @@ public abstract class AbstractParameter implements Parameter
         sa.append( Util.formatNumber(getMaxValue()) );
         sa.append( ']' );  
         if (this.redistributionFunction_ != null) {
-            sa.append( " redistributionFunction="+this.redistributionFunction_);
+            sa.append(" redistributionFunction=").append(this.redistributionFunction_);
         }
         return sa.toString();
     }

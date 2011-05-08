@@ -1,6 +1,8 @@
 package com.becker.optimization;
 
-import com.becker.common.util.FileUtil;
+import com.becker.optimization.optimizees.AnalyticFunctionTestProblem;
+import com.becker.optimization.optimizees.AnalyticVariation;
+import com.becker.optimization.optimizees.OptimizeeTestProblem;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import junit.framework.Test;
@@ -12,38 +14,21 @@ import junit.framework.TestSuite;
 public class TestAnalyticFunctionProblem extends OptimizerTestCase {
 
 
-    private static final double BASE_TOLERANCE = 0.0001;
-    private static final double RELAXED_TOL = 0.001;
-    private static final double GLOB_SAMP_TOL = 0.03;
-
-    /**
-     * Error tolerance for each search strategy and variation of the problem.
-     */
-    private static final double[][] ERROR_TOLERANCE_PERCENT = {
-        // GLOB_SAMP    G_HILL_CLIMB    HIL_CLIMB       SIM_ANN      TABU         GENETIC  CONC_GEN   STATE_S
-        {GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, 0.04,       RELAXED_TOL,  0.042,   0.042,   BASE_TOLERANCE},  // PARABOLA,
-        {GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, 0.04,       RELAXED_TOL,  0.042,   0.042,   BASE_TOLERANCE},  // SINUSOIDAL,
-        {GLOB_SAMP_TOL, 0.0128,         BASE_TOLERANCE, 0.03,       RELAXED_TOL,  0.03,    0.03,    BASE_TOLERANCE},  // ABS_SINUSOIDAL
-        {GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, 0.03,       RELAXED_TOL,  0.042,   0.042,   BASE_TOLERANCE},  // STEPPED
-    };
-
-
     @Override
-    protected void doTest(OptimizationStrategyType optType) {
+    protected void doTest(OptimizationStrategyType optimizationType) {
 
-        for (AnalyticFunctionTestProblem.Variation v : AnalyticFunctionTestProblem.Variation.values()) {
+        for (AnalyticVariation variation : AnalyticVariation.values()) {
 
-            OptimizeeTestProblem problem = new AnalyticFunctionTestProblem(v);
-            String logFile = FileUtil.PROJECT_HOME + "performance/test_optimizer/analytic_" + v + "_optimization.txt";
+            OptimizeeTestProblem problem = new AnalyticFunctionTestProblem(variation);
+            String logFile =  LOG_FILE_HOME + "analytic_" + variation + "_optimization.txt";
 
-            Optimizer optimizer =  new Optimizer(problem, logFile);
+            Optimizer optimizer = new Optimizer(problem, logFile);
 
             ParameterArray initialGuess = problem.getInitialGuess();
-            verifyTest(optType, problem, initialGuess, optimizer, problem.getFitnessRange(),
-                       ERROR_TOLERANCE_PERCENT[v.ordinal()][optType.ordinal()], v.toString());
+            verifyTest(optimizationType, problem, initialGuess, optimizer, problem.getFitnessRange(),
+                    variation.getErrorTolerancePercent(optimizationType), variation.toString());
         }
     }
-
 
 
     /**

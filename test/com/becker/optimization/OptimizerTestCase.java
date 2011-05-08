@@ -1,5 +1,7 @@
 package com.becker.optimization;
 
+import com.becker.common.util.FileUtil;
+import com.becker.optimization.optimizees.OptimizeeTestProblem;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import junit.framework.Assert;
@@ -10,6 +12,14 @@ import junit.framework.TestCase;
  */
 public abstract class OptimizerTestCase extends TestCase {
 
+    /** Where the log files will go */
+    protected static final String LOG_FILE_HOME = FileUtil.PROJECT_HOME + "performance/test_optimizer/";
+
+
+    public void testGlobalHillClimbing() {
+
+        doTest(OptimizationStrategyType.GLOBAL_HILL_CLIMBING);
+    }
 
     public void testGlobalSampling() {
 
@@ -21,10 +31,6 @@ public abstract class OptimizerTestCase extends TestCase {
         doTest(OptimizationStrategyType.HILL_CLIMBING);
     }
 
-    public void testGlobalHillClimbing() {
-
-        doTest(OptimizationStrategyType.GLOBAL_HILL_CLIMBING);
-    }
 
     public void testSimulatedAnnealing() {
 

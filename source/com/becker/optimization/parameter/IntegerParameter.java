@@ -12,10 +12,9 @@ import java.util.Random;
  *
  *  @author Barry Becker
  */
-public class IntegerParameter extends AbstractParameter
-{
-    public IntegerParameter(int val, int minVal, int maxVal, String paramName )
-    {
+public class IntegerParameter extends AbstractParameter {
+
+    public IntegerParameter(int val, int minVal, int maxVal, String paramName ) {
         super((double)val, (double)minVal, (double)maxVal, paramName, true);    
     }
 
@@ -29,9 +28,8 @@ public class IntegerParameter extends AbstractParameter
         return param;
     }
     
-    public Parameter copy()
-    {
-        IntegerParameter p =  new IntegerParameter( (int)getValue(), (int)getMinValue(), (int)getMaxValue(), getName() );
+    public Parameter copy() {
+        IntegerParameter p =  new IntegerParameter( (int)Math.round(getValue()), (int)getMinValue(), (int)getMaxValue(), getName() );
         p.setRedistributionFunction(redistributionFunction_);
         return p;
     }
@@ -42,8 +40,7 @@ public class IntegerParameter extends AbstractParameter
     }
     
     @Override
-    public void tweakValue(double r, Random rand)
-    {      
+    public void tweakValue(double r, Random rand)  {
         if (isOrdered()) {
             super.tweakValue(r, rand);
         }
@@ -79,9 +76,8 @@ public class IntegerParameter extends AbstractParameter
             double v = (value_ - minValue_) / (getRange() + 1.0);
             double rv = redistributionFunction_.getValue(v);
             value = rv * (getRange() + (1.0 - MathUtil.EPS)) + minValue_;
-            //System.out.println("stored="+v + " redistr rv="+rv + " getValue="+value);
         }
-        return (int) value; 
+        return Math.round(value);
     }  
 
     @Override
@@ -90,7 +86,7 @@ public class IntegerParameter extends AbstractParameter
     }
     
     public Object getNaturalValue() {
-        return Integer.valueOf((int)this.getValue());
+        return Math.round(this.getValue());
     }
     
     @Override

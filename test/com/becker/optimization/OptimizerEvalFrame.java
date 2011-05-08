@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 /**
  * Show iteration steps to 2 d solution.
  *
- * @author Barry Becker Date: Jun 25, 2006
+ * @author Barry Becker
  */
 public class OptimizerEvalFrame extends JFrame {
 

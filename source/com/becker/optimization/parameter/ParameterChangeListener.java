@@ -7,5 +7,4 @@ package com.becker.optimization.parameter;
 public interface ParameterChangeListener {
 
     void parameterChanged(Parameter param);
-
 }

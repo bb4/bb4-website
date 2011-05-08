@@ -5,7 +5,7 @@ import com.becker.optimization.parameter.ui.BooleanParameterWidget;
 import com.becker.optimization.parameter.ui.ParameterWidget;
 
 /**
- *  represents a boolean parameter to an algorithm
+ *  Represents a boolean parameter to an algorithm
  *
  *  @author Barry Becker
  */
@@ -17,9 +17,8 @@ public class BooleanParameter extends IntegerParameter
         super(val?1:0, 0, 1, paramName);    
     }
     
-    public static BooleanParameter createSkewedParameter(
-                                                           boolean value, String paramName, 
-                                                           double percentTrue)  {
+    public static BooleanParameter createSkewedParameter(boolean value, String paramName,
+                                                         double percentTrue)  {
         BooleanParameter param = new BooleanParameter(value, paramName);
         param.setRedistributionFunction(new BooleanRedistribution(percentTrue));    
         return param;
@@ -32,17 +31,19 @@ public class BooleanParameter extends IntegerParameter
         p.setRedistributionFunction(redistributionFunction_);
         return p;
     }
-    
+
+    /**
+     * @return true if getValue is odd.
+     */
     @Override
     public Object getNaturalValue() {
-        // true if getValue is odd.
-        return Boolean.valueOf(((int)getValue() % 2) == 1);
-   }
+        return ((int)getValue() % 2) == 1;
+    }
     
-   @Override
-   protected boolean isOrdered() {
+    @Override
+    protected boolean isOrdered() {
         return false;
-   }
+    }
    
     @Override
     public Class getType() {

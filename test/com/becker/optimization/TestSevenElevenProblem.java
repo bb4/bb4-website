@@ -1,6 +1,7 @@
 package com.becker.optimization;
 
-import com.becker.common.util.FileUtil;
+import com.becker.optimization.optimizees.OptimizeeTestProblem;
+import com.becker.optimization.optimizees.SevenElevenTestProblem;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import junit.framework.Test;
@@ -11,8 +12,11 @@ import junit.framework.TestSuite;
  */
 public class TestSevenElevenProblem extends OptimizerTestCase {
 
+    /** default error tolerance. */
+    private static final double TOL = 0.006;
+
     /** the tolerances for each for the search strategies. */
-    private static final double[] ERROR_TOLERANCE_PERCENT = {0.005, 0.005, 0.005, 0.005, 0.005, 0.005, 0.005};
+    private static final double[] ERROR_TOLERANCE_PERCENT = {TOL, TOL, TOL, TOL, TOL, TOL, TOL, TOL};
 
 
     @Override
@@ -20,12 +24,12 @@ public class TestSevenElevenProblem extends OptimizerTestCase {
 
        OptimizeeTestProblem problem = new SevenElevenTestProblem();
        Optimizer optimizer =
-               new Optimizer(problem, FileUtil.PROJECT_HOME + "performance/test_optimizer/sevenEleven_optimization.txt");
+               new Optimizer(problem, LOG_FILE_HOME + "sevenEleven_optimization.txt");
 
        ParameterArray initialGuess = problem.getInitialGuess();
 
        verifyTest(optType, problem, initialGuess, optimizer, problem.getFitnessRange(),
-                  ERROR_TOLERANCE_PERCENT[optType.ordinal()], "");
+                  ERROR_TOLERANCE_PERCENT[optType.ordinal()], "Seven Eleven");
    }
 
 
@@ -35,6 +39,5 @@ public class TestSevenElevenProblem extends OptimizerTestCase {
     public static Test suite() {
         return new TestSuite(TestSevenElevenProblem.class);
     }
-
 
 }
