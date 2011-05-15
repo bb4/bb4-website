@@ -89,7 +89,7 @@ public class Line {
      * @param player1Perspective if true, then the first player just moved.
      * @param pos the position that was just played (symbol).
      * @param minpos starting pattern index in line (usually 0).
-     * @param maxpos last pattern index position in line (usually one less than the line length).
+     * @param maxpos last pattern index position in line (usually one less than the line magnitude).
      * @return the worth of a (vertical, horizontal, left diagonal, or right diagonal) line.
      */
     public int evalLine(boolean player1Perspective, int pos, int minpos, int maxpos)

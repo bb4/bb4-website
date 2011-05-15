@@ -49,6 +49,8 @@
     <pathelement location="${libDir}/commons-codec-1.3.jar"/>
     <pathelement location="${libDir}/rt.jar"/>
     <pathelement location="${libDir}/jhlabs-1.0.1.jar"/>
+    <pathelement location="${libDir}/j3dcore.jar"/>
+    <pathelement location="${libDir}/j3dutils.jar"/>
   </path>
 
 

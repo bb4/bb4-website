@@ -14,7 +14,7 @@ class Run {
 
     /**
      * Constructor.
-     * The runLength is the length of the run within a potential eyespace. It may contain dead enemy stones.
+     * The runLength is the magnitude of the run within a potential eyespace. It may contain dead enemy stones.
      * It is the difference between the endPos and the firstPos.
      * @param firstPos either the starting row or column position.
      *        The postion before is either a friend stone or the edge.

@@ -22,7 +22,7 @@ public class NativeRenderTest {
             graphicsDevice.setFullScreenWindow(frame);
         }
          
-        //int mode = RANDOM.nextInt(displayModes.length);
+        //int mode = RANDOM.nextInt(displayModes.magnitude);
         for (int i=0; i<displayModes.length;  i++) {
             DisplayMode displayMode = displayModes[i];
             System.out.println(i +" "+ displayMode.getWidth() + "x" +

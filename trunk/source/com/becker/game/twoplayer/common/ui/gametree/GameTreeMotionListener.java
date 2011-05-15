@@ -103,7 +103,7 @@ public final class GameTreeMotionListener implements MouseMotionListener {
         chainLength = moveList.size();
         viewer.showMoveSequence( moveList, oldChainLength_, lastNode.getChildMoves() );
 
-        // remember the old chain length so we know how much to back up next time
+        // remember the old chain magnitude so we know how much to back up next time
         oldChainLength_ = chainLength;
 
         // we should throw an event instead of have this dependency.

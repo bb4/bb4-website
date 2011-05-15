@@ -100,7 +100,7 @@ public class Board
     }
 
     /**
-     * @return  retrieve the base size of the board (sqrt(edge length)).
+     * @return  retrieve the base size of the board (sqrt(edge magnitude)).
      */
     public final int getBaseSize()
     {

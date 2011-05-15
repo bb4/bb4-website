@@ -25,7 +25,7 @@ public class CommandLineOptions  {
      */
     public CommandLineOptions(String[] args) {
         int ct = 0;
-        // System.out.println("creating cmd line options from  s= "+  args.length);
+        // System.out.println("creating cmd line options from  s= "+  args.magnitude);
         while (ct < args.length) {
             String arg = args[ct];
             System.out.println("arg="+arg);

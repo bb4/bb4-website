@@ -5,6 +5,8 @@ import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 
+import java.util.List;
+
 
 /**
  *  Global sampling optimization strategy.
@@ -13,13 +15,11 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class GlobalSampleStrategy extends OptimizationStrategy {
 
-    /** unreasonable to have a sampling rate higher than this.  */
-    private static final int MAX_SAMPLE_RATE_X_DIMS = 20000;
+    /** Some number of samples to try.  */
+    private static final int DEFAULT_NUM_SAMPLES = 2000;
 
-    private static final int DEFAULT_SAMPLE_RATE_X_DIMS = 12;
-
-    //the user should set this explicitly.
-    int samplingRate_;
+    /** the user should set this explicitly. */
+    int numSamples_;
 
 
     /**
@@ -30,7 +30,7 @@ public class GlobalSampleStrategy extends OptimizationStrategy {
     public GlobalSampleStrategy( Optimizee optimizee ) {
 
         super(optimizee);
-        samplingRate_ =  DEFAULT_SAMPLE_RATE_X_DIMS / optimizee_.getNumParameters();
+        numSamples_ = DEFAULT_NUM_SAMPLES;
     }
 
     /**
@@ -38,13 +38,9 @@ public class GlobalSampleStrategy extends OptimizationStrategy {
      */
     public void setSamplingRate(int samplingRate) {
 
-        int maxSample =  MAX_SAMPLE_RATE_X_DIMS / optimizee_.getNumParameters();
-        if (samplingRate < 1 || samplingRate > maxSample) {
-           assert false: "invalid sampling rate (must be between 1 and " + maxSample + ")  "+samplingRate;
-        }
-        samplingRate_ = samplingRate;
+        assert samplingRate > 0;
+        numSamples_ = samplingRate;
     }
-
 
     /**
      * Sparsely sample the global space and return the best of the samples.
@@ -64,37 +60,24 @@ public class GlobalSampleStrategy extends OptimizationStrategy {
      * @return best solution found using global sampling.
      */
     @Override
-    public ParameterArray doOptimization( ParameterArray params, double fitnessRange )
-    {
-        int numDims = params.size();
+    public ParameterArray doOptimization( ParameterArray params, double fitnessRange ) {
+
+        List<ParameterArray> samples = params.findGlobalSamples(numSamples_);
         double bestFitness = -Double.MAX_VALUE;
-        ParameterArray testParams = params.copy();
         ParameterArray bestParams = params.copy();
 
-        int i;
-        int[] dims = new int[numDims];
-        for ( i = 0; i < testParams.size(); i++ ) {
-            dims[i] = samplingRate_;
-        }
-        MultiArray samples = new MultiArray( dims );
+        for (ParameterArray sample : samples) {
 
-        for ( i = 0; i < samples.getNumValues(); i++ ) {
-            int[] index = samples.getIndexFromRaw( i );
-            for ( int j = 0; j < testParams.size(); j++ ) {
-                Parameter p = testParams.get( j );
-                double increment = (p.getMaxValue() - p.getMinValue()) / (samplingRate_ + 1.0);
-                p.setValue(increment / 2.0 + index[j] * increment);
-            }
             double fitness;
             if (optimizee_.evaluateByComparison())
-                fitness = optimizee_.compareFitness( testParams, params );
+                fitness = optimizee_.compareFitness( sample, params );
             else
-                fitness = optimizee_.evaluateFitness( testParams );
+                fitness = optimizee_.evaluateFitness( sample );
             //System.out.println( "key = " + hashKey + '\n' + testParams + "\n  fitness=" + fitness );
             if ( fitness > bestFitness ) {
                 bestFitness = fitness;
                 System.out.println("new best = "+fitness);
-                bestParams = testParams.copy();
+                bestParams = sample.copy();
             }
             if (isOptimalFitnessReached(bestParams))
                 break;

@@ -33,13 +33,13 @@ public class Edge {
     /** damping constant  */
     private double damping;
 
-    /** the resting length of the spring  */
+    /** the resting magnitude of the spring  */
     private double restingLength_;
 
     /** usually the effectiveLength_ is the same as restingLength_ except when muscular contraction are happening  */
     private double effectiveLength_;
 
-    /** the current length of the spring */
+    /** the current magnitude of the spring */
     private double length_;
 
     /** these act like temporary variables for some calculations avoiding many object constructions */
@@ -82,12 +82,12 @@ public class Edge {
         damping = d;
         restingLength_ = firstParticle_.distance( secondParticle_ );
         effectiveLength_ = restingLength_;
-        length_ = restingLength_; // current length
+        length_ = restingLength_; // current magnitude
     }
 
     /**
      *  This method simulates the contraction or expansion of a muscle
-     *  the rest length restingLength_ is effectively changed by the contraction factor.
+     *  the rest magnitude restingLength_ is effectively changed by the contraction factor.
      *  @param contraction the amount that the spring model for the edge is contracting
      */
     public void setContraction( double contraction )  {
@@ -100,7 +100,7 @@ public class Edge {
 
     /**
      * The force that the spring edge exerts is k_ times the vector (L-l)p2-p1
-     * where L is the resting length of the edge and l is the current length
+     * where L is the resting magnitude of the edge and l is the current magnitude
      * The official formula in proceedings of Siggraph 1988 p169 is
      *   k(L-l) - D* dl/dt
      * @return the computed force exerted on the particle.

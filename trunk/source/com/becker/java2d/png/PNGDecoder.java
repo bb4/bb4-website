@@ -75,7 +75,7 @@ public class PNGDecoder
         boolean trucking = true;
         while ( trucking ) {
             try {
-                // Read the length.
+                // Read the magnitude.
                 int length = in.readInt();
                 if ( length < 0 )
                     throw new IOException( "Sorry, that file is too long." );

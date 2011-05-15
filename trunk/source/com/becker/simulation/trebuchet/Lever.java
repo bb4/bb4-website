@@ -12,7 +12,7 @@ public class Lever extends RenderablePart {
     private double counterWeightLeverLength_;
     private double slingLeverLength_ ;
 
-    // amount of mass in kg per meter length of the lever
+    // amount of mass in kg per meter magnitude of the lever
     public static final double LEVER_MASS_PER_METER = 2.0;
 
     private static final BasicStroke LEVER_STROKE = new BasicStroke(10.0f);

@@ -92,7 +92,7 @@ public class BoardAnalyzer {
      * If the number of paths returned by this method is less than NUM_HOMES,
      * then there has been an illegal wall pacement, since according to the rules
      * of the game there must always be paths from all pieces to all opponent homes.
-     * If a pawn has reached an opponent home then the path length is 0 and that player won.
+     * If a pawn has reached an opponent home then the path magnitude is 0 and that player won.
      * 
      * @param position position to check shortest paths for.
      * @return the NUM_HOMES shortest paths from toPosition.
@@ -171,7 +171,7 @@ public class BoardAnalyzer {
             Path path = new Path(n); 
             // if the path is not > 0 then then pawn is on the homeBase and the game has been won.
             if (path.getLength() == 0) {
-                GameContext.log(2, "found 0 length path =" + path +" for home "  + n);
+                GameContext.log(2, "found 0 magnitude path =" + path +" for home "  + n);
             }
             paths.add(path);
         }
@@ -280,7 +280,7 @@ public class BoardAnalyzer {
     {
         List<Path> paths1 = findAllOpponentShortestPaths(true);  
         List<Path> paths2 = findAllOpponentShortestPaths(false);    
-       GameContext.log(2, "paths1.length="+paths1.size()+" paths2.length ="+paths2.size() );
+       GameContext.log(2, "paths1.magnitude="+paths1.size()+" paths2.magnitude ="+paths2.size() );
         
         int expectedNumPaths = getExpectedNumPaths();
         return  (paths1.size() < expectedNumPaths || paths2.size() <expectedNumPaths );      

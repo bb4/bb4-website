@@ -10,7 +10,7 @@ public class LongTask {
     private String statMessage;
 
     LongTask(Integer size) {
-        //Compute length of task...
+        //Compute magnitude of task...
         //In a real program, this would figure out
         //the number of bytes to read or whatever.
         lengthOfTask = size.intValue();

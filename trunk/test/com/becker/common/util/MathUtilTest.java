@@ -44,4 +44,8 @@ public class MathUtilTest extends TestCase {
         Assert.assertEquals("3) ", -2, (int)(-2.1));
         Assert.assertEquals("4) ", -2, (int)(-2.9));
     }
+
+    public void testFactorial() {
+        Assert.assertEquals("Unexpected value for 4!", 24.0, MathUtil.factorial(4));
+    }
 }

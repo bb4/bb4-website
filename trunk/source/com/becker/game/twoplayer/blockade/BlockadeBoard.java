@@ -164,7 +164,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * If the number of paths returned by this method is less than NUM_HOMES,
      * then there has been an illegal wall pacement, since according to the rules
      * of the game there must always be paths from all pieces to all opponent homes.
-     * If a pawn has reached an opponent home then the path length is 0 and that player won.
+     * If a pawn has reached an opponent home then the path magnitude is 0 and that player won.
      * 
      * @param position position to check shortest paths for.
      * @return the NUM_HOMES shortest paths from toPosition.

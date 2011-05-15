@@ -12,7 +12,7 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class GlobalHillClimbingStrategy extends OptimizationStrategy {
 
-    private static final int SAMPLING_RATE_FACTOR = 20;
+    private static final int NUM_SAMPLES = 100;
 
     /**
      * Constructor.
@@ -36,7 +36,7 @@ public class GlobalHillClimbingStrategy extends OptimizationStrategy {
 
         GlobalSampleStrategy gsStrategy = new GlobalSampleStrategy(optimizee_);
         // 3 sample points along each dimension
-        gsStrategy.setSamplingRate(SAMPLING_RATE_FACTOR / optimizee_.getNumParameters());
+        gsStrategy.setSamplingRate(NUM_SAMPLES);
 
         // first find a good place to start
         // perhaps we should try several of the better results from global sampling.
