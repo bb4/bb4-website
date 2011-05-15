@@ -1,7 +1,10 @@
 package com.becker.optimization.parameter;
 
+import com.becker.common.math.MultiArray;
+import com.becker.common.math.Vector;
 import com.becker.common.util.Util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -13,7 +16,7 @@ import java.util.Random;
  */
 public class ParameterArray implements Comparable<ParameterArray> {
 
-    protected Parameter[] params_ = null;
+    protected Parameter[] params_;
 
     /** default number of steps to go from the min to the max */
     private static final int STEPS = 10;
@@ -24,7 +27,7 @@ public class ParameterArray implements Comparable<ParameterArray> {
     private double fitness_ = 0;
 
 
-     /** Default constructor */
+    /** Default constructor */
     protected ParameterArray() {}
 
     /**
@@ -49,7 +52,7 @@ public class ParameterArray implements Comparable<ParameterArray> {
             params_[i] = new DoubleParameter(vals[i], minVals[i], maxVals[i], names[i]);
         }
     }
-    
+
     /**
      * Use this constructor if you have mixed types of parameters.
      * @param params
@@ -88,10 +91,15 @@ public class ParameterArray implements Comparable<ParameterArray> {
             newParams[k] = params_[k].copy();
         }
 
-        ParameterArray pa = new ParameterArray( newParams );
+        ParameterArray pa = createInstance();
+        pa.params_ = newParams;
         pa.setFitness(fitness_);
         pa.setNumSteps(numSteps_);
         return pa;
+    }
+
+    protected ParameterArray createInstance() {
+        return new ParameterArray();
     }
 
     /**
@@ -99,6 +107,44 @@ public class ParameterArray implements Comparable<ParameterArray> {
      */
     public Parameter get( int i ) {
         return params_[i];
+    }
+
+    /**
+     * Globally sample the parameter space with a uniform distribution.
+     * @param requestedNumSamples approximate number of samples to retrieve.
+     *   If the problem space is small and requestedNumSamples is large, it may not be possible to return this
+     *   many unique samples.
+     * @return some number of unique samples.
+     */
+    public List<ParameterArray> findGlobalSamples(int requestedNumSamples) {
+        int numDims = size();
+        System.out.println("reqNumSamples=" + requestedNumSamples);
+        int i;
+        int[] dims = new int[numDims];
+        int numSamples = 1;
+        int samplingRate = (int)Math.pow((double)requestedNumSamples, 1.0/numDims);
+        for ( i = 0; i < numDims; i++ ) {
+            dims[i] = samplingRate;
+            numSamples *= dims[i];
+        }
+        System.out.println("dims="+Arrays.toString(dims));
+        MultiArray samples = new MultiArray( dims );
+        List<ParameterArray> globalSamples = new ArrayList<ParameterArray>(numSamples);
+        int ct = 0;
+
+        for ( i = 0; i < samples.getNumValues(); i++ ) {
+            int[] index = samples.getIndexFromRaw( i );
+            ParameterArray nextSample = this.copy();
+
+            for ( int j = 0; j < nextSample.size(); j++ ) {
+                Parameter p = nextSample.get( j );
+                double increment = (p.getMaxValue() - p.getMinValue()) / (samplingRate + 1.0);
+                p.setValue(increment / 2.0 + index[j] * increment);
+            }
+
+            globalSamples.add(nextSample);
+        }
+        return globalSamples;
     }
 
     /**
@@ -119,11 +165,11 @@ public class ParameterArray implements Comparable<ParameterArray> {
      * add a vector of deltas to the parameters.
      * @param vec must be the same size as the parameter list.
      */
-    public void add( double[] vec ) {
+    public void add( Vector vec ) {
 
-        assert ( vec.length == params_.length): "Parameter vec has length " + vec.length + ", expecting " + params_.length ;
+        assert ( vec.size() == params_.length): "Parameter vec has magnitude " + vec.size()+ ", expecting " + params_.length ;
         for ( int i = 0; i < params_.length; i++ ) {
-            params_[i].setValue(params_[i].getValue() + vec[i]);
+            params_[i].setValue(params_[i].getValue() + vec.get(i));
             if ( params_[i].getValue() > params_[i].getMaxValue() ) {
                 System.out.println( "Warning param " + params_[i].getName() +
                         " is exceeding is maximum value. It is being pegged to that maximum of " + params_[i].getMaxValue() );
@@ -156,7 +202,7 @@ public class ParameterArray implements Comparable<ParameterArray> {
     /**
      * @return get a completely random solution in the parameter space.
      */
-     public ParameterArray getRandomSolution() {
+     public ParameterArray getRandomSample() {
          ParameterArray nbr = this.copy();
          for ( int k = 0; k < params_.length; k++ ) {
              Parameter newPar = nbr.get(k);
@@ -169,67 +215,12 @@ public class ParameterArray implements Comparable<ParameterArray> {
      }
 
 
-    // ------------ these methods deal with 1 dimensional double vectors that match the length of the params array ----
     /**
      *
-     * @return a new double array the same length as the parameter list
+     * @return a new double array the same magnitude as the parameter list
      */
-    public double[] createDoubleArray()
-    {
-        return new double[this.size()];
-    }
-
-    /**
-     * @return the dot product of 2 vectors which each must have the same length as the number of parameters.
-     */
-    public static double dot( double[] vec1, double[] vec2 )  {
-        assert (vec1.length == vec2.length):
-                "vec1 has length " + vec1.length + ", and vec2 has length "
-                + vec2.length + " expected both to have the same length ";
-        double dotProduct = 0.0;
-        for ( int i = 0; i < vec1.length; i++ ) {
-            dotProduct += vec1[i] * vec2[i];
-        }
-        return dotProduct;
-    }
-
-    /**
-     * @param vec vector to find length of.
-     * @return length of the vector.
-     */
-    public static double length( double vec[] ) {
-        double sumSq = 0;
-        for (final double newVar : vec) {
-            sumSq += newVar * newVar;
-        }
-        return Math.sqrt( sumSq );
-
-    }
-
-    /**
-     * @param vec
-     * @return a vector in the same direction as vec, but with unit length.
-     */
-    public static double[] normalize( double vec[] )
-    {
-        double len = length( vec );
-        for ( int i = 0; i < vec.length; i++ ) {
-            vec[i] /= len;
-        }
-        return vec;
-    }
-
-    /**
-     * @param vec
-     * @return string form of vec.
-     */
-    public String vecToString( double[] vec )
-    {
-        StringBuilder buf = new StringBuilder( vec[0] + " " );
-        for ( int i = 1; i < params_.length; i++ ) {
-            buf.append(vec[i]).append(" ");
-        }
-        return buf.toString();
+    public Vector asVector()  {
+        return new Vector(this.size());
     }
 
     public void setNumSteps( int numSteps )

@@ -334,7 +334,7 @@ public class GtpTesujisoftGoServer
      */
      private boolean cmdTimeSettings(String[] cmdArray, StringBuffer response) {
 
-         //System.err.println("arg len for time_settings="+ cmdArray.length);
+         //System.err.println("arg len for time_settings="+ cmdArray.magnitude);
          //System.err.println("time_settings = main="+ cmdArray[1] ); //+"  byo_yomi=" + byo_yomi_time +" stones=" + byo_yomi_stones);
          return true;
     }
@@ -346,7 +346,7 @@ public class GtpTesujisoftGoServer
      */
      private boolean cmdTimeLeft(String[] cmdArray, StringBuffer response) {
 
-         //System.err.println("arg len for time_left ="+ cmdArray.length);
+         //System.err.println("arg len for time_left ="+ cmdArray.magnitude);
          //System.err.println("time_left = main="+ cmdArray[1] ); //+"  byo_yomi=" + byo_yomi_time +" stones=" + byo_yomi_stones);
         return true;
     }

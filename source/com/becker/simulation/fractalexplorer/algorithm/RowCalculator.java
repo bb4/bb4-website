@@ -5,13 +5,13 @@ import com.becker.common.math.ComplexNumber;
 
 /**
  * Calculate fractal values for a row.
- * Use run length optimization if specified.
+ * Use run magnitude optimization if specified.
  *
  * @author Barry Becker
  */
 public class RowCalculator {
 
-    /** max run length before we start skipping values. */
+    /** max run magnitude before we start skipping values. */
     private static final int M = 4;
 
     /** Amount to skip until we find a mismatch, then back up this amount. */
@@ -70,11 +70,11 @@ public class RowCalculator {
     /**
      * Computes values for a row.
      * Take advantage of run lengths if turned on.
-     * If using the run length optimization, the results may not be absolutely perfect,
+     * If using the run magnitude optimization, the results may not be absolutely perfect,
      * but anomalies should be very rare.
      * This can give 2x or more speedup when the MAX ITERATIONS is reasonably high.
      *
-     * The run length algorithm works like this.
+     * The run magnitude algorithm works like this.
      * March along until we find a run of M identical values. From that point evaluate only every Nth pixel
      * until we find a different value.
      * When that happens, back up N  pixels and evaluate each one again.

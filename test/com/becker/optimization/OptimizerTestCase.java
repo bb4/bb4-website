@@ -8,7 +8,7 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 /**
- * @author Barry Becker Date: Jun 29, 2006
+ * @author Barry Becker
  */
 public abstract class OptimizerTestCase extends TestCase {
 
@@ -57,8 +57,11 @@ public abstract class OptimizerTestCase extends TestCase {
     /**
      * Give an error if not withing errorThresh of the exact solution.
      */
-    protected static void verifyTest(OptimizationStrategyType optType, OptimizeeTestProblem problem, ParameterArray initialGuess,
-                                   Optimizer optimizer, double fitnessRange, double errorThresh, String title) {
+    protected static void verifyTest(OptimizationStrategyType optType,
+                                     OptimizeeTestProblem problem,
+                                     ParameterArray initialGuess,
+                                     Optimizer optimizer, double fitnessRange,
+                                     double errorThresh, String title) {
 
         ParameterArray solution = optimizer.doOptimization(optType, initialGuess, fitnessRange);
 

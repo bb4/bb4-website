@@ -20,8 +20,7 @@ public enum OptimizationStrategyType {
         @Override
         public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
             GlobalSampleStrategy gsStrategy = new GlobalSampleStrategy(optimizee);
-            // 10 sample points in each dim. 1000 evaluations if 3 dimensions.
-            gsStrategy.setSamplingRate(120 / optimizee.getNumParameters());
+            gsStrategy.setSamplingRate(1000);
             return gsStrategy;
         }
     },

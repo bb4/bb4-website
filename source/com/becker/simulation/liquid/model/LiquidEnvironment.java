@@ -114,7 +114,7 @@ public class LiquidEnvironment {
      * To prevent the instability we halve the timestep until the
      * Courant-Friedrichs-Levy condition is met.
      * In other words a particle should not be able to move more than a single cell
-     * length in a given timestep.
+     * magnitude in a given timestep.
      * @return new new timeStep to use.
      */
     public double stepForward( double timeStep ) {

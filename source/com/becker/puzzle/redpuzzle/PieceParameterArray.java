@@ -124,7 +124,7 @@ public class PieceParameterArray extends ParameterArray {
      * @return get a completely random solution in the parameter space.
      */
     @Override
-    public ParameterArray getRandomSolution()
+    public ParameterArray getRandomSample()
     {
        PieceList pl = new PieceList(pieces_);
        PieceList shuffledPieces = pl.shuffle();

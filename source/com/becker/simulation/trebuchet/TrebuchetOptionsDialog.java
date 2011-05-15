@@ -66,13 +66,13 @@ class TrebuchetOptionsDialog extends NewtonianSimOptionsDialog implements Action
         slingLengthField_ =
                 new NumberInput( "Sling Length  (0.2 short - 3.0 long):  ",
                                  treb.getSlingLength(),
-                                 "This controls the length of the sling.",
+                                 "This controls the magnitude of the sling.",
                                  0.2, 3.0, false);
 
         slingLeverLengthField_ =
                 new NumberInput( "Sling Lever Length  (1.0 short - 5.0 long):  ",
                                  treb.getSlingLeverLength(),
-                                 "This controls length of the lever arm from the fulcrum to the sling attachment point.",
+                                 "This controls magnitude of the lever arm from the fulcrum to the sling attachment point.",
                                  1.0, 5.0, false);
 
         slingReleaseAngleField_ =

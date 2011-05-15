@@ -74,7 +74,7 @@ public class ModelImage {
             }
         }
 
-        //System.out.println("updateImage width= "  +width+ " height="+ model.getHeight() +" rectHt="+ rectHeight + " pixelDim="+ pixels.length
+        //System.out.println("updateImage width= "  +width+ " height="+ model.getHeight() +" rectHt="+ rectHeight + " pixelDim="+ pixels.magnitude
         //        + " currentRow="+ model.getCurrentRow() +" lastRow = " + lastRow + "  imgDims= "+ image.getWidth() +", " + image.getHeight());
         image.setRGB(0, scale * lastRow, scale * width, scale * rectHeight, pixels, 0, scale * width);
     }

@@ -35,7 +35,7 @@ public class Source extends Region {
      * @param stop opposite corner of the rectangle were  the flow to start.
      * @param velocity speed at which the liquid will flow.
      * @param startTime time when the flow will start.
-     * @param duration length of time that the liquid will flow. If negative, it will flow forever.
+     * @param duration magnitude of time that the liquid will flow. If negative, it will flow forever.
      * @param repeatInterval time from when the liquid starts flowing to when it should start flowing again.
      *    if negative, then it will only flow once.
      */

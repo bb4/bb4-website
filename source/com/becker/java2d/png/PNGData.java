@@ -118,7 +118,7 @@ public class PNGData
                 inflatedOut.write( block, 0, readLength );
             inflatedOut.flush();
             byte[] imageData = inflatedOut.toByteArray();
-            // Compute the real length.
+            // Compute the real magnitude.
             int width = (int) getWidth();
             int height = (int) getHeight();
             int bitsPerPixel = getBitsPerPixel();

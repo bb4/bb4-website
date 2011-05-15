@@ -25,7 +25,6 @@ import java.awt.geom.Point2D;
  * is an inverted parabola centered at p1 = 1 and p2 = 2.
  *
  * There are a few variations on the analytic function to choose from, but they all have the same solution.
- *
  * @see SevenElevenTestProblem for somewhat harder example.
  *
  * @author Barry Becker

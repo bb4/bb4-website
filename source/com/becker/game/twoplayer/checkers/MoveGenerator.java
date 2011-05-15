@@ -148,7 +148,7 @@ public class MoveGenerator  {
 
             boolean justKinged = false;   // ?? may be superfluous
             GameContext.log( 2, "calling findJumpMoves on " +
-                    beyondNext + " rowinc=" + rowInc + "length of capturelist=" + mm.captureList.size() );
+                    beyondNext + " rowinc=" + rowInc + "magnitude of capturelist=" + mm.captureList.size() );
             if ( (mm.getPiece().getType() == CheckersPiece.REGULAR_PIECE) &&
                     ((mm.isPlayer1() && mm.getToRow() == CheckersBoard.SIZE)
                     || (!mm.isPlayer1() && mm.getToRow() == 1)) ) {

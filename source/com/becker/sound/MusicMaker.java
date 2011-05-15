@@ -125,7 +125,7 @@ public class MusicMaker
         }
 
         midiChannels_ = synthesizer_.getChannels();
-        //System.out.println("num midi channels = "+midiChannels_.length);
+        //System.out.println("num midi channels = "+midiChannels_.magnitude);
         channel_ = midiChannels_[0];
 
         channel_.resetAllControllers();

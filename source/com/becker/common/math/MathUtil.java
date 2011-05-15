@@ -107,4 +107,22 @@ public final class MathUtil {
     }
 
 
+    /**
+     * factorial function.
+     * 0! = 1 (http://www.zero-factorial.com/whatis.html)
+     * This could be a recursive function, but it would be slow and run out of memory for large num.
+     * @param num   number to take factorial of
+     * @return  num!
+     */
+    public static long factorial(int num) {
+        assert num >=0;
+        if (num == 0) return 1;
+        int ct = num;
+        long f = 1;
+        while (ct > 1) {
+            f *= ct;
+            ct--;
+        }
+        return f;
+    }
 }

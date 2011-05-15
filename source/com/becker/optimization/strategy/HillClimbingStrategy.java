@@ -38,7 +38,6 @@ public class HillClimbingStrategy extends OptimizationStrategy {
         super(optimizee);
     }
 
-
     /**
      * Finds a local maxima.
      * Its a bit like newton's method, but in n dimensions.
@@ -84,16 +83,16 @@ public class HillClimbingStrategy extends OptimizationStrategy {
                 sumOfSqs = iter.incSumOfSqs(i, sumOfSqs, optimizee_, currentParams, testParams);
             }
             double gradLength = Math.sqrt(sumOfSqs);
-            //System.out.println("Grad numParams = "+ gradLength);
+            //System.out.println("Gradient magnitude = "+ gradLength);
 
-            HillClimbingStep step = new HillClimbingStep(optimizee_, iter, gradLength, cache, jumpSize, oldFitness);
+            HillClimbingStep step =
+                    new HillClimbingStep(optimizee_, iter, gradLength, cache, jumpSize, oldFitness);
             currentParams = step.findNextParams(currentParams);
             jumpSize = step.getJumpSize();
             improvement = step.getImprovement();
 
-            double dotProduct = ParameterArray.dot( iter.gradient, iter.oldGradient );
-            double divisor = (ParameterArray.length( iter.gradient ) * ParameterArray.length( iter.oldGradient ));
-            dotProduct = (divisor==0.0) ? 1.0 : dotProduct / divisor;
+            double dotProduct = iter.calcDotProduct();
+
             numIterations++;
             log(numIterations, currentParams.getFitness(), jumpSize, dotProduct, currentParams, Util.formatNumber(improvement));
             notifyOfChange(currentParams);
@@ -106,7 +105,7 @@ public class HillClimbingStrategy extends OptimizationStrategy {
                 jumpSize *= JUMP_SIZE_DEC_FACTOR;
             //System.out.println( "new jumpsize = " + jumpSize );
 
-            System.arraycopy(iter.gradient, 0, iter.oldGradient, 0, params.size());
+            iter.gradient.copyFrom(iter.oldGradient);
 
             if (!optimizee_.evaluateByComparison())
                 oldFitness = currentParams.getFitness();
@@ -126,5 +125,4 @@ public class HillClimbingStrategy extends OptimizationStrategy {
         }
 
     }
-
 }

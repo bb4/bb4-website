@@ -16,7 +16,7 @@ public class ColorMap {
 
     /**
      * give a list of (increasing) values and colors to map to.
-     * the 2 arrays must be of the same length.
+     * the 2 arrays must be of the same magnitude.
      * Colors will be linearly interpolated as appropriate
      * @param values a monotonically increasing sequence of numbers.
      * @param colors a corresponding set of colors to map to.

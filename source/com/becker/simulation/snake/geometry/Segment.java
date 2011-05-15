@@ -356,7 +356,7 @@ public class Segment {
                 change_.scale( timeStep );
 
                 if ( change_.length() > 100.0 ) {
-                    //System.out.println("becoming unstable vel mag="+change_.length());
+                    //System.out.println("becoming unstable vel mag="+change_.magnitude());
                     unstable = true;
                 }
                 vel_.add( change_ );

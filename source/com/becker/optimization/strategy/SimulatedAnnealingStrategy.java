@@ -4,6 +4,9 @@ import com.becker.common.util.Util;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
 
+import java.util.Random;
+import java.util.RandomAccess;
+
 /**
  * Simulated annealing optimization strategy.
  *
@@ -11,16 +14,17 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class SimulatedAnnealingStrategy extends OptimizationStrategy {
 
-    // this is the number of iterations in the inner loop divided by the number of dimensions in the search space
+    /** The number of iterations in the inner loop divided by the number of dimensions in the search space  */
     private static final int N = 5;
-    private static final int NUM_TEMP_ITERATIONS = 8;
-    // the amount to drop the temperature on each temperature iteration.
+    private static final int NUM_TEMP_ITERATIONS = 10;
+    /** the amount to drop the temperature on each temperature iteration.   */
     private static final double TEMP_DROP_FACTOR = 0.5;
 
-    // the client should really set the tempMax using setTemperatureMax before running.
-    private static final double DEFAULT_TEMP_MAX = 1000;
+    /** the client should really set the tempMax using setTemperatureMax before running. */
+    private static final double DEFAULT_TEMP_MAX = 10000;
     private double tempMax_ = DEFAULT_TEMP_MAX;
 
+    private static Random RAND = new Random(0);
 
     /**
      * Constructor
@@ -63,12 +67,11 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
      * @return the optimized params.
      */
      @Override
-     public ParameterArray doOptimization( ParameterArray params, double fitnessRange )
-     {
+     public ParameterArray doOptimization( ParameterArray params, double fitnessRange ) {
+
          int ct = 0;
          double temperature = tempMax_;
          double tempMin = tempMax_ / Math.pow(2.0, NUM_TEMP_ITERATIONS);
-
 
          double currentFitness = 0.0;
          if (!optimizee_.evaluateByComparison())
@@ -86,12 +89,12 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
              do {
                  // select a new point in the nbrhood of our current location
                  // The nbrhood we select from has a radius of r.
-                 //double r = (tempMax/5.0+temperature) / (8.0*(N/5.0+ct)*tempMax);
-                 double r = (temperature) / ((N+ct)*tempMax_);
+                 // double r = (tempMax/5.0+temperature) / (8.0*(N/5.0+ct)*tempMax);
+                 double r = temperature / ((N + ct) * tempMax_);
                  ParameterArray newParams = params.getRandomNeighbor(r);
                  double dist = params.distance(newParams);
 
-                 double deltaFitness = 0.0;
+                 double deltaFitness;
                  double newFitness = 0.0;
                  if (optimizee_.evaluateByComparison())
                      deltaFitness = optimizee_.compareFitness(newParams, params);
@@ -100,23 +103,25 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
                      deltaFitness = newFitness - currentFitness;
                  }
 
-                 double probability = Math.pow(Math.E, deltaFitness/temperature);
-                 if ((deltaFitness > 0) ||
-                    (Math.random() < probability))  {
+                 double probability = Math.pow(Math.E, deltaFitness/tempMax_);
+                 boolean useWorseSolution = RAND.nextDouble() < probability;
+
+                 if (deltaFitness > 0 || useWorseSolution )  {
                      // we always select the solution if it has a better fitness,
                      // but we only select a worse solution if the second term evaluates to true.
-                     if ((deltaFitness < 0) &&Math.random() < probability) {
-                         System.out.println( "*** selected worse solution prob="+probability );
+                     if (deltaFitness < 0 && useWorseSolution) {
+                         System.out.println( "*** selected worse solution prob="+probability);
                      }
                      params = newParams;
                      currentFitness = newFitness;
                  }
-                 if (currentFitness > bestFitness)    {
+                 if (currentFitness > bestFitness) {
                      bestFitness = currentFitness;
                      bestParams = params.copy();
                  }
 
-                 System.out.println("T="+temperature+" ct="+ct+" dist="+dist+" deltaFitness="+deltaFitness+"  currentFitness = "+currentFitness );
+                 System.out.println("T="+temperature+" ct="+ct+" dist="+dist+" deltaFitness="
+                         + deltaFitness+"  currentFitness = "+currentFitness );
                  log(ct, currentFitness, r, dist, params, Util.formatNumber(temperature));
 
                  ct++;

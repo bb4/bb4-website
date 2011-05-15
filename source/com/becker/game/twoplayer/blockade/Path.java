@@ -74,7 +74,7 @@ public class Path {
     }
     
     /**
-     *@return the length of the path.
+     *@return the magnitude of the path.
      */
     public int getLength() {
         return elements_.size();
@@ -110,7 +110,7 @@ public class Path {
      */
     @Override
     public String toString() {
-        if (elements_.isEmpty()) return "Path has 0 length";
+        if (elements_.isEmpty()) return "Path has 0 magnitude";
         
         StringBuilder bldr = new StringBuilder(32);
         for (BlockadeMove move: elements_) {

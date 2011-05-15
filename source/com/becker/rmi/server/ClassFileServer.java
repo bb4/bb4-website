@@ -56,7 +56,7 @@ public class ClassFileServer extends ClassServer {
                   path.replace('.', File.separatorChar) + ".class");
         int length = (int)(f.length());
         if (length == 0) {
-            throw new IOException("File length is zero: " + path);
+            throw new IOException("File magnitude is zero: " + path);
         } else {
             FileInputStream fin = new FileInputStream(f);
             DataInputStream in = new DataInputStream(fin);
