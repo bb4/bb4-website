@@ -3,6 +3,7 @@ package com.becker.optimization.optimizees;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.IntegerParameter;
+import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
@@ -45,8 +46,8 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem {
              new IntegerParameter(P3, 0, 708, "p3"),
              new IntegerParameter(P4, 0, 708, "p4")};
 
-    private static final ParameterArray INITIAL_GUESS = new ParameterArray(INITIAL_GUESS_PARAMS);
-    private static final ParameterArray EXACT_SOLUTION = new ParameterArray(EXACT_SOLUTION_PARAMS);
+    private static final ParameterArray INITIAL_GUESS = new NumericParameterArray(INITIAL_GUESS_PARAMS);
+    private static final ParameterArray EXACT_SOLUTION = new NumericParameterArray(EXACT_SOLUTION_PARAMS);
 
     // @@ exp errors.
     private static final double FITNESS_RANGE = 5000000.0;

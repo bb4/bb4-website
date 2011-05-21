@@ -5,15 +5,14 @@ import com.becker.optimization.parameter.ParameterArray;
 
 
 /**
- *  This interface needs to be implemented for any object you wish to have optimized
- *  Optimization of a class is done by the Optimizer class (following the delegation design patter)
+ *  This interface needs to be implemented for any object you wish to have optimized.
+ *  Optimization of a class is done by the Optimizer class (following the delegation design pattern).
  *
  *  @author Barry Becker
  */
 public interface Optimizee {
 
     /**
-     *
      * If true is returned then compareFitness will be used and evaluateFitness will not
      * otherwise the reverse will be true.
      * @return return true if we evaluate the fitness by comparison
@@ -42,7 +41,7 @@ public interface Optimizee {
     double getOptimalFitness();
 
     /**
-     *
+     * Num parameters or length of search vector.
      * @return the number of parameters in the search space.
      */
     int getNumParameters();

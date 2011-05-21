@@ -3,6 +3,7 @@ package com.becker.game.common;
 
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -18,7 +19,7 @@ public class GameWeightsStub extends GameWeights {
 
 
     public GameWeightsStub() {
-        super(new ParameterArray(PARAMS));
+        super(new NumericParameterArray(PARAMS));
     }
 
 }

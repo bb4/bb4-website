@@ -4,6 +4,7 @@ import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
@@ -35,7 +36,7 @@ public class SnakeSimulator extends NewtonianSimulator {
             new DoubleParameter( LocomotionParameters.WAVE_PERIOD, 0.5, 9.0, "wave period" ),
     };
     
-    private static final ParameterArray INITIAL_PARAMS = new ParameterArray( PARAMS);
+    private static final ParameterArray INITIAL_PARAMS = new NumericParameterArray( PARAMS);
 
     private Snake snake_ = new Snake(new LongSnakeData());
 

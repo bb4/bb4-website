@@ -52,6 +52,27 @@ public class Vector {
     }
 
     /**
+     * Find the normalized dot product with range [-1, 1].
+     * @param b
+     * @return the normalized dot product.
+     */
+    public double normalizedDot(Vector b) {
+        double magB = b.magnitude();
+        double magThis = this.magnitude();
+        double divisor = magThis * magB;
+        divisor = (divisor == 0) ? 1.0 : divisor;
+        double dot = this.dot(b);
+        double normalizedDotProduct = dot / divisor;
+
+        //assert normalizedDotProduct > -1 && normalizedDotProduct < 1 :  "Dot product, " + normalizedDotProduct +", was outside expected range. Dot=" + dot + " div="+ divisor;
+        if (!(normalizedDotProduct > -1 && normalizedDotProduct < 1 )){
+            System.out.println("Dot product, " + normalizedDotProduct +", was oustside expected range. Dot=" + dot + " div="+ divisor +"\nthis=" + this + "\nb="+ b);
+        }
+
+        return normalizedDotProduct;
+    }
+
+    /**
      * @param factor amount to scale by.
      * @return this Vector, scaled by a constant factor
      */
@@ -90,10 +111,10 @@ public class Vector {
 
     /** @return magnitude of the vector. */
     public double magnitude() {
-        double sum = 0.0;
+        double sumOfSquares = 0.0;
         for (int i = 0; i < size(); i++)
-            sum += this.data[i] * this.data[i];
-        return sum;
+            sumOfSquares += this.data[i] * this.data[i];
+        return Math.sqrt(sumOfSquares);
     }
 
     /**

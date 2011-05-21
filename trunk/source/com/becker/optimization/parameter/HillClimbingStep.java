@@ -1,7 +1,6 @@
-package com.becker.optimization.strategy;
+package com.becker.optimization.parameter;
 
 import com.becker.optimization.Optimizee;
-import com.becker.optimization.parameter.ParameterArray;
 
 import java.util.Set;
 
@@ -22,6 +21,13 @@ public class HillClimbingStep  {
     private double improvement;
     private double oldFitness;
     private boolean improved;
+
+    /** continue optimization iteration until the improvement in fitness is less than this.  */
+    protected static final double JUMP_SIZE_EPS = 0.000000001;
+
+    public static final double JUMP_SIZE_INC_FACTOR = 1.3;
+    public static final double JUMP_SIZE_DEC_FACTOR = 0.7;
+
 
     /**
      * Constructor
@@ -52,22 +58,22 @@ public class HillClimbingStep  {
      * @param params the initial value for the parameters to optimize.
      * @return the parameters to try next.
      */
-    public ParameterArray findNextParams(ParameterArray params) {
+    public NumericParameterArray findNextParams(NumericParameterArray params) {
 
-        ParameterArray currentParams = params;
+        NumericParameterArray currentParams = params;
 
         do {
             currentParams = findNextCandidateParams(currentParams);
 
-        } while (!improved && (jumpSize > HillClimbingStrategy.JUMP_SIZE_EPS) );
+        } while (!improved && (jumpSize > JUMP_SIZE_EPS) );
 
         return currentParams;
     }
 
-    private ParameterArray findNextCandidateParams(ParameterArray params) {
+    private NumericParameterArray findNextCandidateParams(NumericParameterArray params) {
         improved = true;
-        ParameterArray currentParams = params;
-        ParameterArray oldParams = currentParams.copy();
+        NumericParameterArray currentParams = params;
+        NumericParameterArray oldParams = currentParams.copy();
 
         iter_.updateGradient(jumpSize, gradLength);
         //System.out.println("gradient = " + Arrays.toString(iter.gradient));
@@ -88,17 +94,17 @@ public class HillClimbingStep  {
 
         if (optimizee_.evaluateByComparison()) {
             currentParams.setFitness(optimizee_.compareFitness(currentParams, oldParams));
-            if (currentParams.getFitness() < 0)
+            if (currentParams.getFitness() < 0)  {
                 improved = false;
-            else
-                improvement = currentParams.getFitness();
+            }
+            improvement = currentParams.getFitness();
         }
         else {
             currentParams.setFitness(optimizee_.evaluateFitness(currentParams));
-            if (currentParams.getFitness() <= oldFitness)
+            if (currentParams.getFitness() <= oldFitness) {
                 improved = false;
-            else
-                improvement = currentParams.getFitness() - oldFitness;
+            }
+            improvement = currentParams.getFitness() - oldFitness;
         }
 
         if (!improved) {
@@ -107,7 +113,7 @@ public class HillClimbingStep  {
                 // we have not improved, try again with a reduced jump size.
                 //System.out.println( "Warning: the new params are worse so reduce the step size and try again");
                 //log(numIterations, currentParams.getFitness(), jumpSize, Double.NaN, currentParams, "not improved");
-                jumpSize *= HillClimbingStrategy.JUMP_SIZE_DEC_FACTOR;
+                jumpSize *= JUMP_SIZE_DEC_FACTOR;
             }
         }
         return currentParams;

@@ -1,6 +1,7 @@
 package com.becker.optimization.optimizees;
 
 import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -18,14 +19,14 @@ public class AnalyticFunctionConsts {
             {new DoubleParameter(P1, 0.0, 3.0, "p1"),
              new DoubleParameter(P2, 0.0, 3.0, "p2")};
 
-    public static final ParameterArray EXACT_SOLUTION = new ParameterArray(EXACT_SOLUTION_PARAMS);
+    public static final ParameterArray EXACT_SOLUTION = new NumericParameterArray(EXACT_SOLUTION_PARAMS);
 
     // define the initialGuess in some bounded region of the 2-dimensional search space.
     private static final double[] vals    = {  6.81,  7.93};   // initialGuess
     private static final double[] minVals = {-20.0, -20.0};
     private static final double[] maxVals = { 20.0,  20.0};
     private static final String[] names   = {"p1",   "p2"};
-    public static final ParameterArray INITIAL_GUESS = new ParameterArray(vals, minVals, maxVals, names);
+    public static final ParameterArray INITIAL_GUESS = new NumericParameterArray(vals, minVals, maxVals, names);
 
 
     public static final double BASE_TOLERANCE = 0.0001;
@@ -33,5 +34,5 @@ public class AnalyticFunctionConsts {
     /** Really relax this one because we do not expect it to ever get that close */
     public static final double GLOB_SAMP_TOL = 0.03;
 
-    private AnalyticFunctionConsts() {};
+    private AnalyticFunctionConsts() {}
 }
