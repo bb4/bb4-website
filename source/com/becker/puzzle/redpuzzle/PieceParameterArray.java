@@ -1,6 +1,7 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.parameter.PermutedParameterArray;
 
 /**
  * The parameter array to use when searching (using optimization) to find a red puzzle solution.
@@ -10,7 +11,7 @@ import com.becker.optimization.parameter.ParameterArray;
  *
  * @author Barry Becker Date: Aug 6, 2006
  */
-public class PieceParameterArray extends ParameterArray {
+public class PieceParameterArray extends PermutedParameterArray {
 
     private PieceList pieces_ ;
     private static final int NUM_PIECES = 9;
@@ -35,8 +36,7 @@ public class PieceParameterArray extends ParameterArray {
      * @return the random nbr (potential solution).
      */
     @Override
-    public ParameterArray getRandomNeighbor(double radius)
-    {
+    public PermutedParameterArray getRandomNeighbor(double radius) {
         PieceList pieces = new PieceList(pieces_);
 
         int numSwaps = 1;   //Math.max(1, (int) (rad * 2.0));
@@ -124,8 +124,7 @@ public class PieceParameterArray extends ParameterArray {
      * @return get a completely random solution in the parameter space.
      */
     @Override
-    public ParameterArray getRandomSample()
-    {
+    public ParameterArray getRandomSample() {
        PieceList pl = new PieceList(pieces_);
        PieceList shuffledPieces = pl.shuffle();
        return new PieceParameterArray(shuffledPieces);
@@ -143,14 +142,12 @@ public class PieceParameterArray extends ParameterArray {
      * @return the number of parameters in the array.
      */
     @Override
-    public int size()
-    {
+    public int size() {
         return pieces_.size();
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return pieces_.toString();
     }
 
@@ -158,8 +155,7 @@ public class PieceParameterArray extends ParameterArray {
      * @return  the parameters in a string of Comma Separated Values.
      */
     @Override
-    public String toCSVString()
-    {
+    public String toCSVString() {
         return toString();
     }
 

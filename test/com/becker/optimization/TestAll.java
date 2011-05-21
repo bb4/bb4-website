@@ -6,14 +6,12 @@ import junit.framework.TestSuite;
 
 
 /**
- * Master test suire to test all aspects the optimization package.
+ * Master test suite to test all aspects the optimization package.
  *
  * @author Barry Becker
  */
 
 public class TestAll extends TestCase {
-
-
 
     public static Test suite() {
         TestSuite suite =  new TestSuite("All Optimization Strategy Tests");

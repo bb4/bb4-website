@@ -2,6 +2,7 @@ package com.becker.game.common;
 
 
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
+import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -59,7 +60,7 @@ public class GameWeights
             defaultVals[i] = SCALE * defaultWeights[i];
             maxVals[i] = SCALE * maxWeights[i];
         }
-        defaultWeights_ =  new ParameterArray(defaultVals, minVals, maxVals, names);
+        defaultWeights_ = new NumericParameterArray(defaultVals, minVals, maxVals, names);
 
         names_ = names;
         descriptions_ = descriptions;

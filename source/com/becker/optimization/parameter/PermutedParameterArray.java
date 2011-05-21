@@ -2,6 +2,8 @@ package com.becker.optimization.parameter;
 
 import com.becker.common.math.MathUtil;
 import com.becker.common.math.Vector;
+import com.becker.optimization.Improvement;
+import com.becker.optimization.Optimizee;
 
 import java.lang.UnsupportedOperationException;
 import java.util.*;
@@ -127,18 +129,6 @@ public class PermutedParameterArray extends ParameterArray {
     }
 
     /**
-     * Permute on the max index.
-     * {@inheritDoc}
-     */
-    @Override
-    public void add( Vector vec ) {
-
-        System.out.println("attempting to add " +vec);
-        //throw new UnsupportedOperationException("can't add a vec to a PermutedParameterArray");
-    }
-
-
-    /**
      * Create a new permutation that is not too distant from what we have now.
      * @paramm radius a indication of the amount of variation to use. 0 is none, 3 is a lot.
      *   Change Math.min(1, 10 * radius * N/100) of the entries, where N is the number of params
@@ -149,7 +139,7 @@ public class PermutedParameterArray extends ParameterArray {
 
         if (size() <= 1) return this;
 
-        int numToSwap = Math.max(1, (int)(10.0 * radius * this.size() / 100.0));
+        int numToSwap = Math.max(1, (int)(10.0 * radius * size() / 100.0));
 
         PermutedParameterArray nbr = (PermutedParameterArray)this.copy();
         for ( int k = 0; k < numToSwap; k++ ) {
@@ -165,8 +155,6 @@ public class PermutedParameterArray extends ParameterArray {
 
         return nbr;
     }
-
-
 
     /**
      * Globally sample the parameter space.
@@ -207,10 +195,45 @@ public class PermutedParameterArray extends ParameterArray {
     }
 
     /**
+     * {@inheritDoc}
+     * Try swapping parameters randomly until we find an improvement (if we can);
+     */
+    @Override
+    public Improvement findIncrementalImprovement(Optimizee optimizee, double jumpSize,
+                                                  Improvement lastImprovement, Set<ParameterArray> cache) {
+        int maxTries = 1000;
+        int numTries = 0;
+        double fitnessDelta;
+        Improvement improvement = new Improvement(this, 0, jumpSize);
+
+        do {
+            PermutedParameterArray nbr = getRandomNeighbor(jumpSize);
+            fitnessDelta = 0;
+
+            if (!cache.contains(nbr)) {
+                cache.add(nbr);
+                if (optimizee.evaluateByComparison()) {
+                    fitnessDelta = optimizee.compareFitness(nbr, this);
+                } else {
+                    double fitness = optimizee.evaluateFitness(nbr);
+                    fitnessDelta = getFitness() - fitness;
+                    nbr.setFitness(fitness);
+                }
+
+                improvement = new Improvement(nbr, fitnessDelta, jumpSize);
+            }
+            numTries++;
+
+        }  while (fitnessDelta <= 0 && numTries < maxTries);
+
+        return improvement;
+    }
+
+    /**
      * @return get a completely random solution in the parameter space.
      */
     @Override
-    public PermutedParameterArray getRandomSample() {
+    public ParameterArray getRandomSample() {
 
         List<Parameter> theParams = Arrays.asList(params_);
         Collections.shuffle(theParams, RANDOM);

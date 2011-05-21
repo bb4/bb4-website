@@ -3,6 +3,7 @@ package com.becker.simulation.trebuchet;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
 import com.becker.optimization.Optimizer;
+import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
@@ -100,7 +101,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
         //params[0] = new Parameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" );
         //params[1] = new Parameter( WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" );
         //params[2] = new Parameter( WAVE_PERIOD, 0.5, 9.0, "wave period" );
-        ParameterArray paramArray = new ParameterArray( params );
+        ParameterArray paramArray = new NumericParameterArray( params );
 
         setPaused(false);
         optimizer.doOptimization(  OptimizationStrategyType.GENETIC_SEARCH, paramArray, 0.3);
