@@ -127,13 +127,14 @@ public class PermutedParameterArray extends ParameterArray {
     }
 
     /**
-     *
+     * Permute on the max index.
      * {@inheritDoc}
      */
     @Override
     public void add( Vector vec ) {
 
-        throw new UnsupportedOperationException("can't add a vec to a PermutedParameterArray");
+        System.out.println("attempting to add " +vec);
+        //throw new UnsupportedOperationException("can't add a vec to a PermutedParameterArray");
     }
 
 

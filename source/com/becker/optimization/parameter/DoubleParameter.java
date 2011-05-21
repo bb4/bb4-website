@@ -10,8 +10,13 @@ import com.becker.optimization.parameter.ui.ParameterWidget;
  *
  *  @author Barry Becker
  */
-public class DoubleParameter extends AbstractParameter
-{
+public class DoubleParameter extends AbstractParameter {
+
+    /**
+     * approximate number of steps to take when marching across one of the parameter dimensions.
+     * used to calculate the stepsize in a dimension direction.
+     */
+    private static final int NUM_STEPS = 30;
 
     /**
      *  Constructor
@@ -44,6 +49,31 @@ public class DoubleParameter extends AbstractParameter
         DoubleParameter p =  new DoubleParameter( getValue(), getMinValue(), getMaxValue(), getName() );
         p.setRedistributionFunction(redistributionFunction_);
         return p;
+    }
+
+    /**
+     * increments the parameter based on the number of steps to get from one end of the range to the other.
+     * If we are already at the max end of the range, then we can only move in the other direction if at all.
+     * @param direction 1 for forward, -1 for backward.
+     * @return the size of the increment taken
+     */
+    public double incrementByEps(int direction ) {
+
+        double increment = direction * (getMaxValue() - getMinValue()) / NUM_STEPS;
+
+        double v = getValue();
+        if ( (v+increment > getMaxValue())) {
+            value_ = getMaxValue();
+            return 0;
+        }
+        else if (v+increment < getMinValue())  {
+            value_ = getMinValue();
+            return 0;
+        }
+        else {
+            value_ = (v + increment);
+            return increment;
+        }
     }
 
     public Object getNaturalValue() {

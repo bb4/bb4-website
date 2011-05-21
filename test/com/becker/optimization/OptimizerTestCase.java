@@ -16,19 +16,9 @@ public abstract class OptimizerTestCase extends TestCase {
     protected static final String LOG_FILE_HOME = FileUtil.PROJECT_HOME + "performance/test_optimizer/";
 
 
-    public void testGlobalHillClimbing() {
-
-        doTest(OptimizationStrategyType.GLOBAL_HILL_CLIMBING);
-    }
-
     public void testGlobalSampling() {
 
         doTest(OptimizationStrategyType.GLOBAL_SAMPLING);
-    }
-
-    public void testHillClimbing() {
-
-        doTest(OptimizationStrategyType.HILL_CLIMBING);
     }
 
 
@@ -46,6 +36,18 @@ public abstract class OptimizerTestCase extends TestCase {
 
         doTest(OptimizationStrategyType.CONCURRENT_GENETIC_SEARCH);
     }
+
+
+    public void testHillClimbing() {
+
+        doTest(OptimizationStrategyType.HILL_CLIMBING);
+    }
+
+    public void testGlobalHillClimbing() {
+
+        doTest(OptimizationStrategyType.GLOBAL_HILL_CLIMBING);
+    }
+
 
 
     /**

@@ -13,6 +13,7 @@ import java.util.*;
  */
 public class HillClimbingStrategy extends OptimizationStrategy {
 
+    /** make steps of this size toward the local maxima, until we need something else. */
     private static final double INITIAL_JUMP_SIZE = 0.7;
 
     /** If the dot product of the new gradient with the old is less than this, then decrease the jump size. */
@@ -83,7 +84,6 @@ public class HillClimbingStrategy extends OptimizationStrategy {
                 sumOfSqs = iter.incSumOfSqs(i, sumOfSqs, optimizee_, currentParams, testParams);
             }
             double gradLength = Math.sqrt(sumOfSqs);
-            //System.out.println("Gradient magnitude = "+ gradLength);
 
             HillClimbingStep step =
                     new HillClimbingStep(optimizee_, iter, gradLength, cache, jumpSize, oldFitness);
@@ -123,6 +123,5 @@ public class HillClimbingStrategy extends OptimizationStrategy {
         if (listener_ != null) {
             listener_.optimizerChanged(params);
         }
-
     }
 }

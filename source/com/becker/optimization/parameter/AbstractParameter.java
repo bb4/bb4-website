@@ -80,34 +80,6 @@ public abstract class AbstractParameter implements Parameter {
     }
 
     /**
-     * increments the parameter based on the number of steps to get from one end of the range to the other.
-     * If we are already at the max end of the range, then we can only move in the other direction if at all.
-     * @param numSteps of steps to get from one end of the range to the other
-     * @param direction 1 for forward, -1 for backward.
-     * @return the size of the increment taken
-     */
-    public double increment( int numSteps, int direction ) {
-
-        double increment = direction * (getMaxValue() - getMinValue()) / numSteps;
-        if (isIntegerOnly()) {
-            increment = Math.max(Math.round(increment), 1);
-        }
-        double v = getValue();
-        if ( (v+increment > getMaxValue())) {
-            value_ = getMaxValue();
-            return 0;
-        }
-        else if (v+increment < getMinValue())  {
-            value_ = getMinValue();
-            return 0;
-        }
-        else {
-            value_ = (v + increment);
-            return increment;
-        }
-    }
-
-    /**
      * Teak the value of this parameter a little. If r is big, you may be tweaking it a lot.
      * 
      * @param r  the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
