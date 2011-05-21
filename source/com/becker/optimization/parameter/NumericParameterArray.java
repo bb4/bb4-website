@@ -122,7 +122,8 @@ public class NumericParameterArray extends ParameterArray {
     public Improvement findIncrementalImprovement(Optimizee optimizee, double jumpSize,
                                                   Improvement lastImprovement, Set<ParameterArray> cache) {
 
-        double oldFitness = -Double.MAX_VALUE;
+        NumericParameterArray currentParams = this;
+        double oldFitness = currentParams.getFitness();
         Vector oldGradient = null;
         if (lastImprovement != null) {
             oldFitness = lastImprovement.getParams().getFitness();
@@ -131,7 +132,7 @@ public class NumericParameterArray extends ParameterArray {
 
         HillClimbIteration iter = new HillClimbIteration(this, oldGradient);
 
-        NumericParameterArray currentParams = this;
+
         double sumOfSqs = 0;
 
         for ( int i = 0; i < size(); i++ ) {
@@ -148,7 +149,7 @@ public class NumericParameterArray extends ParameterArray {
         // the improvement may be negative, meaning it did not improve.
         double improvement = step.getImprovement();
 
-        double dotProduct = iter.calcDotProduct();
+        double dotProduct = iter.gradient.normalizedDot(iter.oldGradient);
         jumpSize = findNewJumpSize(jumpSize, dotProduct);
 
         iter.gradient.copyFrom(iter.oldGradient);
@@ -165,10 +166,12 @@ public class NumericParameterArray extends ParameterArray {
     private double findNewJumpSize(double jumpSize, double dotProduct) {
         // if we are headed in pretty much the same direction as last time, then we increase the jumpSize.
         // if we are headed off in a completely new direction, reduce the jumpSize until we start to stabilize.
-        if ( dotProduct > MAX_DOT_PRODUCT )
+        if ( dotProduct > MAX_DOT_PRODUCT ) {
             jumpSize *= HillClimbingStep.JUMP_SIZE_INC_FACTOR;
-        else if ( dotProduct < MIN_DOT_PRODUCT )
+        }
+        else if ( dotProduct < MIN_DOT_PRODUCT ){
             jumpSize *= HillClimbingStep.JUMP_SIZE_DEC_FACTOR;
+        }
         System.out.println( "dotProduct = " + dotProduct + " new jumpsize = " + jumpSize );
         return jumpSize;
     }

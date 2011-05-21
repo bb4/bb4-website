@@ -39,6 +39,7 @@ public class HillClimbingStep  {
                             double jumpSize, double oldFitness) {
         optimizee_ = optimizee;
         iter_ = iter;
+        this.improvement = 0;
         this.gradLength = gradLength;
         this.cache = cache;
         this.jumpSize = jumpSize;
@@ -61,11 +62,14 @@ public class HillClimbingStep  {
     public NumericParameterArray findNextParams(NumericParameterArray params) {
 
         NumericParameterArray currentParams = params;
+        int maxTries = 100;
+        int numTries = 0;
 
         do {
             currentParams = findNextCandidateParams(currentParams);
+            numTries++;
 
-        } while (!improved && (jumpSize > JUMP_SIZE_EPS) );
+        } while (!improved && (jumpSize > JUMP_SIZE_EPS) && numTries < maxTries );
 
         return currentParams;
     }
@@ -76,7 +80,7 @@ public class HillClimbingStep  {
         NumericParameterArray oldParams = currentParams.copy();
 
         iter_.updateGradient(jumpSize, gradLength);
-        //System.out.println("gradient = " + Arrays.toString(iter.gradient));
+        System.out.println("gradient = " + iter_.gradient + " jumpSize="+ jumpSize);
         currentParams = currentParams.copy();
         currentParams.add( iter_.gradient );
         double gaussRadius = 0.01;

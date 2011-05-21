@@ -30,7 +30,7 @@ public class TestSevenElevenProblem extends OptimizerTestCase {
 
        verifyTest(optType, problem, initialGuess, optimizer, problem.getFitnessRange(),
                   ERROR_TOLERANCE_PERCENT[optType.ordinal()], "Seven Eleven");
-   }
+    }
 
 
     /**

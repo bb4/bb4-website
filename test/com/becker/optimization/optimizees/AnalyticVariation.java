@@ -70,7 +70,6 @@ public enum AnalyticVariation {
 
         /**
          *  This version introduces a bit of step function noise.
-         *
          */
         @Override
         public double evaluateFitness(ParameterArray a) {
