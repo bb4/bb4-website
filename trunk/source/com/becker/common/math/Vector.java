@@ -64,10 +64,8 @@ public class Vector {
         double dot = this.dot(b);
         double normalizedDotProduct = dot / divisor;
 
-        //assert normalizedDotProduct > -1 && normalizedDotProduct < 1 :  "Dot product, " + normalizedDotProduct +", was outside expected range. Dot=" + dot + " div="+ divisor;
-        if (!(normalizedDotProduct > -1 && normalizedDotProduct < 1 )){
-            System.out.println("Dot product, " + normalizedDotProduct +", was oustside expected range. Dot=" + dot + " div="+ divisor +"\nthis=" + this + "\nb="+ b);
-        }
+        assert normalizedDotProduct >= -1 && normalizedDotProduct <= 1 :
+                "Dot product, " + normalizedDotProduct +", was outside expected range. Dot=" + dot + " div="+ divisor;
 
         return normalizedDotProduct;
     }

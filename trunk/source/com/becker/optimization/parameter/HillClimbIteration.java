@@ -39,16 +39,6 @@ class HillClimbIteration {
         }
     }
 
-    double calcDotProduct() {
-        double dotProduct = gradient.normalizedDot(oldGradient);
-
-        if (!(dotProduct > -1 && dotProduct < 1 ))  {
-            System.out.println("Dot product, " + dotProduct +", was oustide expected range. ");
-        }
-        return dotProduct;
-    }
-
-
     /**
      * Compute the squares in one of the iteration directions and add it to the running sum.
      * @return the sum of squares in one of the iteration directions.
@@ -81,10 +71,12 @@ class HillClimbIteration {
      */
     private double findFitnessDelta(Optimizee optimizee, ParameterArray params, ParameterArray testParams) {
         double incFintess;
-        if (optimizee.evaluateByComparison())
+        if (optimizee.evaluateByComparison()) {
             incFintess = optimizee.compareFitness( testParams, params );
-        else
+        }
+        else{
             incFintess = optimizee.evaluateFitness( testParams );
+        }
         return incFintess;
     }
 

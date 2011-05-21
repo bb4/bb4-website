@@ -8,11 +8,12 @@ import com.becker.optimization.strategy.OptimizationStrategyType;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import javax.rmi.PortableRemoteObject;
+
 /**
  * @author Barry Becker
  */
 public class TestAnalyticFunctionProblem extends OptimizerTestCase {
-
 
     @Override
     protected void doTest(OptimizationStrategyType optimizationType) {
@@ -25,11 +26,12 @@ public class TestAnalyticFunctionProblem extends OptimizerTestCase {
             Optimizer optimizer = new Optimizer(problem, logFile);
 
             ParameterArray initialGuess = problem.getInitialGuess();
+
+            System.out.println("--- " + variation.toString() + " ------------------------------");
             verifyTest(optimizationType, problem, initialGuess, optimizer, problem.getFitnessRange(),
                     variation.getErrorTolerancePercent(optimizationType), variation.toString());
         }
     }
-
 
     /**
      * @return all the junit test cases to run (in this class).
@@ -37,5 +39,4 @@ public class TestAnalyticFunctionProblem extends OptimizerTestCase {
     public static Test suite() {
         return new TestSuite(TestAnalyticFunctionProblem.class);
     }
-
 }
