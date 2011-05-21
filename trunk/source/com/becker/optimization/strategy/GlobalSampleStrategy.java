@@ -16,7 +16,7 @@ import java.util.List;
 public class GlobalSampleStrategy extends OptimizationStrategy {
 
     /** Some number of samples to try.  */
-    private static final int DEFAULT_NUM_SAMPLES = 2000;
+    private static final int DEFAULT_NUM_SAMPLES = 10000;
 
     /** the user should set this explicitly. */
     int numSamples_;

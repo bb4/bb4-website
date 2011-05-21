@@ -12,7 +12,7 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class GlobalHillClimbingStrategy extends OptimizationStrategy {
 
-    private static final int NUM_SAMPLES = 100;
+    private static final int NUM_SAMPLES = 10000;
 
     /**
      * Constructor.

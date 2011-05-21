@@ -18,14 +18,13 @@ public interface Parameter {
     String getName(); 
 
     /**
-     * increments the parameter based on the number of steps to get from one end of the range to the other.
+     * increments the parameter a little bit in the specified direction.
      * If we are already at the max end of the range, then we increment in a negative direction.
-     * @param numSteps of steps to get from one end of the range to the other.
      * 
      * @param direction 1 for forward, -1 for backward.
      * @return the size of the increment taken
      */
-    double increment( int numSteps, int direction);
+    double incrementByEps(int direction);
    
     /**
      * Modify the value of this parameter by a little bit.

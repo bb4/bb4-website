@@ -11,12 +11,6 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 class HillClimbIteration {
 
-    /**
-     * approximate number of steps to take when marching across one of the parameter dimensions.
-     * used to calculate the stepsize in a dimension direction.
-     */
-    private static final int NUM_STEPS = 30;
-
     Vector delta;
     Vector fitnessDelta;
     Vector gradient;
@@ -29,8 +23,9 @@ class HillClimbIteration {
         oldGradient = params.asVector();
 
         // initialize the old gradient to the unit vector (any random direction will do)
-        for ( int i = 0; i < params.size(); i++)
+        for ( int i = 0; i < params.size(); i++) {
             oldGradient.set(i, 1.0);
+        }
         oldGradient = oldGradient.normalize();
     }
 
@@ -52,7 +47,7 @@ class HillClimbIteration {
 
         Parameter p = testParams.get( i );
         // this does the increment and returns the amount incremented (forward).
-        delta.set(i, p.increment(NUM_STEPS, 1));
+        delta.set(i, p.incrementByEps(1));
 
         if (optimizee.evaluateByComparison())
             fwdFitness = optimizee.compareFitness( testParams, params );
@@ -60,8 +55,7 @@ class HillClimbIteration {
             fwdFitness = optimizee.evaluateFitness( testParams );
 
         // this checks the fitness on the other side (backwards).
-        p.increment( NUM_STEPS, -1 );
-        p.increment( NUM_STEPS, -1 );
+        p.incrementByEps(-1);
 
         if (optimizee.evaluateByComparison())
             bwdFitness = optimizee.compareFitness( testParams, params );

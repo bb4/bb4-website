@@ -7,7 +7,8 @@ import java.util.Set;
 
 
 /**
- * Hill climbing optimization strategy.
+ * A step in the Hill climbing optimization strategy.
+ * Hopefully heads in the right direction.
  *
  * @author Barry Becker
  */
