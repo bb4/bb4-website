@@ -27,7 +27,6 @@ public class TestAnalyticFunctionProblem extends OptimizerTestCase {
 
             ParameterArray initialGuess = problem.getInitialGuess();
 
-            System.out.println("--- " + variation.toString() + " ------------------------------");
             verifyTest(optimizationType, problem, initialGuess, optimizer, problem.getFitnessRange(),
                     variation.getErrorTolerancePercent(optimizationType), variation.toString());
         }

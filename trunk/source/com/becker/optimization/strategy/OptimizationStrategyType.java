@@ -40,7 +40,7 @@ public enum OptimizationStrategyType {
         @Override
         public OptimizationStrategy getStrategy(Optimizee optimizee, double fitnessRange) {
             SimulatedAnnealingStrategy strategy = new SimulatedAnnealingStrategy(optimizee);
-            strategy.setMaxTemperature(fitnessRange/20.0);
+            strategy.setMaxTemperature(fitnessRange/10.0);
             return strategy;
         }
     },

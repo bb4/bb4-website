@@ -25,7 +25,7 @@ public enum AnalyticVariation {
         @Override
         public double getErrorTolerancePercent(OptimizationStrategyType opt) {
             return getErrorTolerancePercent(opt, new double[] {
-                    GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, 0.04,  RELAXED_TOL,  0.042,   0.042, BASE_TOLERANCE
+                    GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, GLOB_SAMP_TOL,  0,  GLOB_SAMP_TOL,   GLOB_SAMP_TOL, BASE_TOLERANCE
             });
         }
     },

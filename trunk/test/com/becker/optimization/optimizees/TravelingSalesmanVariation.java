@@ -36,8 +36,15 @@ public enum TravelingSalesmanVariation {
         }
 
         @Override
+        public double getShortestPathLength() {
+            return 6.0;
+        }
+
+        @Override
         public PermutedParameterArray getExactSolution() {
-            return createSolution(new int[] {0, 2, 1, 3});
+            PermutedParameterArray solution =  createSolution(new int[] {0, 2, 1, 3});
+            solution.setFitness(getShortestPathLength());
+            return solution;
         }
 
         @Override
@@ -47,7 +54,7 @@ public enum TravelingSalesmanVariation {
 
         @Override
         public double evaluateFitness(ParameterArray a) {
-            return computeFitnessFromMatrix(a, COST_MATRIX, 12);
+            return getShortestPathLength() - computeCost(a, COST_MATRIX);
         }
 
         @Override
@@ -61,6 +68,7 @@ public enum TravelingSalesmanVariation {
         /**
          * This version is a bit more realistic.
          * Se http://www.tilburguniversity.edu/research/institutes-and-research-groups/center/staff/haemers/reader10ico.pdf
+         *       B,  E,  H,  N,  T
          */
         private final double[][] COST_MATRIX =  {
                 {0, 54, 48, 92, 24},
@@ -76,8 +84,15 @@ public enum TravelingSalesmanVariation {
         }
 
         @Override
+        public double getShortestPathLength() {
+            return 207.0;
+        }
+
+        @Override
         public PermutedParameterArray getExactSolution() {
-            return createSolution(new int[] {2, 4, 0, 1, 3});
+            PermutedParameterArray solution = createSolution(new int[] {2, 4, 0, 1, 3});
+            solution.setFitness(getShortestPathLength());
+            return solution;
         }
 
         @Override
@@ -87,7 +102,7 @@ public enum TravelingSalesmanVariation {
 
         @Override
         public double evaluateFitness(ParameterArray a) {
-            return computeFitnessFromMatrix(a, COST_MATRIX, 207);
+            return getShortestPathLength() - computeCost(a, COST_MATRIX);
         }
 
         @Override
@@ -118,6 +133,8 @@ public enum TravelingSalesmanVariation {
     /** Approximate value of maxCost - minCost */
     public abstract double getFitnessRange();
 
+    public abstract double getShortestPathLength();
+
     /**
      * Evaluate fitness for the analytics function.
      * @param a the position on the parabolic surface given the specified values of p1 and p2
@@ -129,10 +146,9 @@ public enum TravelingSalesmanVariation {
      * We assume that the parameter array contains 0 based integers
      * @param params
      * @param matrix
-     * @param optimalCost
      * @return the total cost of the path represented by param.
      */
-    protected double computeFitnessFromMatrix(ParameterArray params, double[][] matrix, double optimalCost) {
+    protected double computeCost(ParameterArray params, double[][] matrix) {
         double totalCost = 0;
         Parameter lastLocation = params.get(0);
 
@@ -143,7 +159,7 @@ public enum TravelingSalesmanVariation {
         }
         // and back home again
         totalCost +=  matrix[(int)lastLocation.getValue()][(int)params.get(0).getValue()];
-        return optimalCost - totalCost ;
+        return totalCost ;
     }
 
     /**

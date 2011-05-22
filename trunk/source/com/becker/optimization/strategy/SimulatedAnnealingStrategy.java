@@ -17,6 +17,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
     /** The number of iterations in the inner loop divided by the number of dimensions in the search space  */
     private static final int N = 5;
     private static final int NUM_TEMP_ITERATIONS = 10;
+
     /** the amount to drop the temperature on each temperature iteration.   */
     private static final double TEMP_DROP_FACTOR = 0.5;
 
@@ -48,11 +49,11 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
      * finds a local maxima.
      *
      *  The concept is based on the manner in which liquids freeze or metals recrystallize in the process of annealing.
-     * In an annealing process a initially at high temperature and disordered liquid, is slowly cooled so that the system
+     * In an annealing process, an initially at high temperature and disordered liquid, is slowly cooled so that the system
      * is approximately in thermodynamic equilibrium at any point in the process. As cooling proceeds, the system becomes
      * more ordered and approaches a "frozen" ground state at T=0. Hence the process can be thought of as an adiabatic
-     * approach to the lowest energy state. If the initial temperature of the system is too low or cooling is too fast,
-     * the system may become quenched forming defects or freezing out in metastable states
+     * approach to the lowest energy state. If the initial temperature of the system is too low, or cooling is too fast,
+     * the system may become quenched, forming defects or freezing out in metastable states
      * (ie. trapped in a local minimum energy state).
      *
      * In many ways the algorithm is similar to hill-climbing.
@@ -96,21 +97,24 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
 
                  double deltaFitness;
                  double newFitness = 0.0;
-                 if (optimizee_.evaluateByComparison())
+                 if (optimizee_.evaluateByComparison()) {
                      deltaFitness = optimizee_.compareFitness(newParams, params);
+                 }
                  else {
                      newFitness = optimizee_.evaluateFitness(newParams);
+                     newParams.setFitness(newFitness);
                      deltaFitness = newFitness - currentFitness;
                  }
 
-                 double probability = Math.pow(Math.E, deltaFitness/tempMax_);
+                 double probability = Math.pow(Math.E, deltaFitness / temperature);
                  boolean useWorseSolution = RAND.nextDouble() < probability;
 
                  if (deltaFitness > 0 || useWorseSolution )  {
                      // we always select the solution if it has a better fitness,
-                     // but we only select a worse solution if the second term evaluates to true.
+                     // but we sometimes select a worse solution if the second term evaluates to true.
                      if (deltaFitness < 0 && useWorseSolution) {
-                         System.out.println( "*** selected worse solution prob="+probability);
+                         System.out.println( "*** selected worse solution prob="
+                                 + probability + " delta=" + deltaFitness +" / temp=" + temperature);
                      }
                      params = newParams;
                      currentFitness = newFitness;
@@ -129,9 +133,9 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
              ct = 0;
              // keep halving the temperature until it reaches tempMin
              temperature *= TEMP_DROP_FACTOR;
-         } while (temperature > tempMin);
+         } while (temperature > tempMin && !isOptimalFitnessReached(params));
 
-         System.out.println("T="+temperature+"  currentFitness = "+bestFitness );
+         System.out.println("T="+temperature+"  currentFitness = " + bestFitness );
          log(ct, currentFitness, 0, 0, bestParams, Util.formatNumber(temperature));
 
          return bestParams;
