@@ -216,11 +216,13 @@ public class PermutedParameterArray extends ParameterArray {
                     fitnessDelta = optimizee.compareFitness(nbr, this);
                 } else {
                     double fitness = optimizee.evaluateFitness(nbr);
-                    fitnessDelta = getFitness() - fitness;
+                    fitnessDelta = fitness - getFitness();
                     nbr.setFitness(fitness);
                 }
 
-                improvement = new Improvement(nbr, fitnessDelta, jumpSize);
+                if (fitnessDelta > 0) {
+                    improvement = new Improvement(nbr, fitnessDelta, jumpSize);
+                }
             }
             numTries++;
 

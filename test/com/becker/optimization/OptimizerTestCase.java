@@ -21,7 +21,6 @@ public abstract class OptimizerTestCase extends TestCase {
         doTest(OptimizationStrategyType.GLOBAL_SAMPLING);
     }
 
-
     public void testSimulatedAnnealing() {
 
         doTest(OptimizationStrategyType.SIMULATED_ANNEALING);
@@ -37,7 +36,6 @@ public abstract class OptimizerTestCase extends TestCase {
         doTest(OptimizationStrategyType.CONCURRENT_GENETIC_SEARCH);
     }
 
-
     public void testHillClimbing() {
 
         doTest(OptimizationStrategyType.HILL_CLIMBING);
@@ -47,7 +45,6 @@ public abstract class OptimizerTestCase extends TestCase {
 
         doTest(OptimizationStrategyType.GLOBAL_HILL_CLIMBING);
     }
-
 
 
     /**
@@ -68,7 +65,7 @@ public abstract class OptimizerTestCase extends TestCase {
         ParameterArray solution = optimizer.doOptimization(optType, initialGuess, fitnessRange);
 
         double error = problem.getError(solution);
-        Assert.assertTrue(title +"\nAllowable error exceeded using "+ optType
+        Assert.assertTrue("*** " + title +" ***\nAllowable error exceeded using "+ optType
                           + ". \nError = "+error + "\n The Test Solution was "+ solution
                           +"\n but we expected to get something very close to the exact solution:\n "
                           + problem.getExactSolution(),
