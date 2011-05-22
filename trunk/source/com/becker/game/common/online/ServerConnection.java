@@ -74,6 +74,7 @@ public class ServerConnection implements IServerConnection {
 
     /**
      * Open a socket to the server to listen for, and send information.
+     * Consider using executor framework.
      * @param port to open the connection on.
      */
     void createListenSocket(int port) {

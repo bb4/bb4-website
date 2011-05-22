@@ -2,10 +2,8 @@ package com.becker.optimization.parameter;
 
 import com.becker.common.math.MultiArray;
 import com.becker.common.math.Vector;
-import com.becker.common.util.Util;
 import com.becker.optimization.Improvement;
 import com.becker.optimization.Optimizee;
-import com.sun.org.apache.bcel.internal.generic.IMPDEP1;
 
 import java.util.*;
 

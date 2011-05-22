@@ -24,7 +24,7 @@ public class Game {
     }
     
     
-    public static final void pause(int millis) {
+    public static void pause(int millis) {
         try {
             Thread.currentThread().sleep(millis);
         } catch (InterruptedException e) { }

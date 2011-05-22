@@ -8,8 +8,7 @@ package com.becker.common.concurrency;
  *
  * http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html
  *
- * You must invoke start() on the Worker after
- * creating it.
+ * You must invoke start() on the Worker after creating it.
  * ----
  *   I have modified the original Worker class so that it no longer
  * depends on Swing (hence the new name). I sometimes want to use this
@@ -19,7 +18,7 @@ package com.becker.common.concurrency;
  */
 public abstract class Worker {
 
-    /** value to return. Ssee getValue(), setValue()   */
+    /** value to return. See getValue(), setValue()   */
     private Object returnValue_ = null;
 
     private final ThreadVar threadVar_;

@@ -25,8 +25,9 @@ import java.util.List;
  *
  * Manages the tables for the game room.
  * Has a GameController for each table.
+ * Consider using executor framework to manage threads.
  *
- * @author Barry Becker Date: May 14, 2006
+ * @author Barry Becker
  */
 public class OnlineGameServer  {
 
