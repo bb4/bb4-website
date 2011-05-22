@@ -6,12 +6,11 @@ import com.becker.simulation.common.ui.DistributionSimulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.ui.renderers.HistogramRenderer;
 
-
 /**
- * Simluates the rolling of N number of M sided dice lots of times
+ * Simulates the rolling of N number of M sided dice lots of times
  * to see what kind of distribution of numbers you get.
  * 
- * @author Barry Becker Date: Feb 4, 2007
+ * @author Barry Becker
  */
 public class DiceSimulator extends DistributionSimulator {
 
@@ -55,8 +54,7 @@ public class DiceSimulator extends DistributionSimulator {
         return total;
     }
 
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         final DiceSimulator sim = new DiceSimulator();
         sim.setNumDice(3);
         sim.setNumSides(6);

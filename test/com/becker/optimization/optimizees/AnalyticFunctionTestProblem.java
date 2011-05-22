@@ -31,14 +31,17 @@ import java.awt.geom.Point2D;
  */
 public class AnalyticFunctionTestProblem extends OptimizeeTestProblem {
 
-
     private static final double FITNESS_RANGE = 1000.0;
 
     private AnalyticVariation variation_ = AnalyticVariation.PARABOLA;
 
-
+    /** Constructor */
     public AnalyticFunctionTestProblem(AnalyticVariation v) {
         variation_ = v;
+    }
+
+    public String getName() {
+        return variation_.name();
     }
 
     // we evaluate directly not by comparing with a different trial.
@@ -90,11 +93,10 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem {
      * This finds the solution for the above optimization problem.
      */
     public static void main(String[] args) {
-        AnalyticVariation v = AnalyticVariation.ABS_SINUSOIDAL;
+        AnalyticVariation v = AnalyticVariation.STEPPED;
         OptimizeeTestProblem testProblem = new AnalyticFunctionTestProblem(v);
         Optimizer optimizer =
                 new Optimizer(testProblem, FileUtil.PROJECT_HOME + "performance/test_optimizer/poly_optimization.txt");
-
 
         OptimizerEvalFrame oef = new OptimizerEvalFrame(optimizer, new Point2D.Double(1.0, 2.0));
         oef.setVisible(true);

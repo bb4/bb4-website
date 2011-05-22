@@ -28,8 +28,8 @@ import com.becker.optimization.strategy.OptimizationStrategyType;
  *
  * @author Barry Becker
  */
-public class Optimizer
-{
+public class Optimizer {
+
     Optimizee optimizee_;
 
     // debug level of 0 means no debug info, 3 is all debug info.
@@ -46,8 +46,7 @@ public class Optimizer
      * No log file specified in this constructor. (use this version if running in unsigned applet).
      * @param optimizee the thing to be optimized.
      */
-    public Optimizer( Optimizee optimizee )
-    {
+    public Optimizer( Optimizee optimizee ) {
         optimizee_ = optimizee;
     }
 
@@ -56,8 +55,7 @@ public class Optimizer
      * @param optimizee the thing to be optimized.
      * @param optimizationLogFile the file that will record the results
      */
-    public Optimizer( Optimizee optimizee, String optimizationLogFile )
-    {
+    public Optimizer( Optimizee optimizee, String optimizationLogFile ) {
         optimizee_ = optimizee;
         logger_ = new Logger(optimizationLogFile);
     }
@@ -65,6 +63,7 @@ public class Optimizer
     public Optimizee getOptimizee() {
         return optimizee_;
     }
+
     /**
      * This method will construct an optimization strategy object of the specified type and run it.
      *

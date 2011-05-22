@@ -8,8 +8,8 @@ import java.awt.*;
 import java.util.Random;
 
 /**
- * Simluates the the generation of a historgram based on
- * some stochastic processs.
+ * Simulates the the generation of a histogram based on
+ * some stochastic process.
  * 
  * @author Barry Becker
  */

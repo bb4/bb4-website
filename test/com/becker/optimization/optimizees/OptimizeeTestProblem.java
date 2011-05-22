@@ -21,10 +21,6 @@ public abstract class OptimizeeTestProblem implements Optimizee {
      */
     public abstract ParameterArray getInitialGuess();
 
-    public int getNumParameters() {
-        return getInitialGuess().size();
-    }
-
     /**
      *
      * @param sol solution

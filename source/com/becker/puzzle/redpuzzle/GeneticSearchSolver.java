@@ -64,6 +64,9 @@ public class GeneticSearchSolver extends RedPuzzleSolver
         return moves;
     }
 
+    public String getName() {
+         return "Genetic Search Solver for Red Puzzle";
+    }
 
     /**
      * terminate the solver if we find a solution with this fitness.
@@ -98,10 +101,6 @@ public class GeneticSearchSolver extends RedPuzzleSolver
     public double compareFitness(ParameterArray params1, ParameterArray params2) {
         assert false : "compareFitness not used since we evaluate in an absolute way.";
         return 0;
-    }
-
-    public int getNumParameters() {
-        return pieces_.size();
     }
 
     /**

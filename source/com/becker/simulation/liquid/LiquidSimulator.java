@@ -159,24 +159,17 @@ public class LiquidSimulator extends Simulator implements MouseListener {
         optimizer.doOptimization(OptimizationStrategyType.GENETIC_SEARCH, paramArray, 0.3);
     }
 
-    @Override
-    public int getNumParameters() {
-        return NUM_OPT_PARAMS;
-    }
-
     /**
      * *** implements the key method of the Optimizee interface
      *
      * evaluates the liquids fitness.
      */
     @Override
-    public double evaluateFitness( ParameterArray params )
-    {
+    public double evaluateFitness( ParameterArray params ) {
         assert false : "not implemented yet";
         return 0.0;
     }
 
-    @Override
     public double getOptimalFitness() {
         return 0;
     }
