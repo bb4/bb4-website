@@ -72,6 +72,7 @@ public class HillClimbingStrategy extends OptimizationStrategy {
             improvement = currentParams.findIncrementalImprovement(optimizee_, jumpSize, improvement, cache);
 
             numIterations++;
+            currentParams = improvement.getParams();
             notifyOfChange(currentParams);
 
         } while ( (improvement.getImprovement() > fitnessEps)

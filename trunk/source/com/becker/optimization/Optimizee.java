@@ -12,6 +12,9 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public interface Optimizee {
 
+    /** @return the name of the thing to be optimized */
+    String getName();
+
     /**
      * If true is returned then compareFitness will be used and evaluateFitness will not
      * otherwise the reverse will be true.
@@ -39,10 +42,4 @@ public interface Optimizee {
      * if non-0, then we terminate when the fitness reaches this value.
      */
     double getOptimalFitness();
-
-    /**
-     * Num parameters or length of search vector.
-     * @return the number of parameters in the search space.
-     */
-    int getNumParameters();
 }

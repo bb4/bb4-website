@@ -23,6 +23,10 @@ public class TravelingSalesmanTestProblem extends OptimizeeTestProblem {
         variation_ = variation;
     }
 
+    public String getName() {
+        return "Traveling Salesman Problem";
+    }
+
     /**
      * we evaluate directly not by comparing with a different trial.
      */

@@ -68,6 +68,9 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem {
         return 0.0;
     }
 
+    public String getName() {
+        return "Zeven Eleven Problem";
+    }
     /**
      *  The choice of fitness function here is somewhat arbitrary.
      *  I chose to use:

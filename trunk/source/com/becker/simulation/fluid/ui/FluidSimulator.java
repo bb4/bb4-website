@@ -163,11 +163,6 @@ public class FluidSimulator extends Simulator {
         optimizer.doOptimization(OptimizationStrategyType.GENETIC_SEARCH, paramArray, 0.3);
     }
 
-    @Override
-    public int getNumParameters() {
-        return NUM_OPT_PARAMS;
-    }
-
     /**
      * part of the Optimizee interface
      * evaluates the fluid's fitness.
@@ -177,14 +172,6 @@ public class FluidSimulator extends Simulator {
 
         assert false : "not implemented yet";
         return 0.0;
-    }
-
-    /**
-     * part of the Optimizee interface
-     */
-    @Override
-    public double getOptimalFitness() {
-        return 0;
     }
 
     @Override

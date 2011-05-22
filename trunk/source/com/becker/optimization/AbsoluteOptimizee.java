@@ -13,9 +13,9 @@ public abstract class AbsoluteOptimizee implements Optimizee {
         return false;
     }
 
-    // not used by AbsoluteOptimizees
+    /** {@inheritDoc} */
     public double compareFitness(ParameterArray params1, ParameterArray params2) {
-        return 0;
+        return evaluateFitness(params1) - evaluateFitness(params2);
     }
 
     /**

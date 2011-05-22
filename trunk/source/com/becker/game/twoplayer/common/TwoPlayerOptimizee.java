@@ -21,13 +21,16 @@ class TwoPlayerOptimizee implements Optimizee {
         controller_ = controller;
     }
 
+    public String getName() {
+        return "TwoPlayer Game" ;
+    }
+
     /**
      * If true is returned, then compareFitness will be used and evaluateFitness will not
      * otherwise the reverse will be true.
      * @return return true if we evaluate the fitness by comparison
      */
-    public boolean  evaluateByComparison()
-    {
+    public boolean  evaluateByComparison() {
         return true;
     }
 
@@ -39,20 +42,12 @@ class TwoPlayerOptimizee implements Optimizee {
      * @param params the set of parameters to misc
      * @return the fitness measure. The higher the better
      */
-    public double evaluateFitness( ParameterArray params )
-    {
+    public double evaluateFitness( ParameterArray params ) {
        return 0.0;
     }
 
     public double getOptimalFitness() {
         return 0;
-    }
-
-    /**
-     * @return the number of factors we take into consideration when optimizing.
-     */
-    public int getNumParameters() {
-        return controller_.getComputerWeights().getDefaultWeights().size();
     }
 
     /**

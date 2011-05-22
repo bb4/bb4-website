@@ -177,11 +177,6 @@ public class SnakeSimulator extends NewtonianSimulator {
     }
 
     @Override
-    public int getNumParameters() {
-        return INITIAL_PARAMS.size();
-    }
-
-    @Override
     public double timeStep() {
         if ( !isPaused() ) {
             timeStep_ = snake_.stepForward( timeStep_ );

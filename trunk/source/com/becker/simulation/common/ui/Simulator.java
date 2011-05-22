@@ -2,6 +2,7 @@ package com.becker.simulation.common.ui;
 
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.FalseEyeInformation;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.ui.animation.AnimationComponent;
@@ -24,7 +25,7 @@ public abstract class Simulator extends AnimationComponent
     protected static final String CONFIG_FILE_PATH_PREFIX = FileUtil.PROJECT_HOME + "source/com/becker/simulation/";
     protected static final String ANIMATION_FRAME_FILE_NAME_PREFIX = FileUtil.PROJECT_HOME + "temp/animations/simulation/";
 
-    // debug level of 0 means no debug info, 3 is all debug info
+    /** debug level of 0 means no debug info, 3 is all debug info */
     public static final int DEBUG_LEVEL = 0;
 
     protected SimulatorOptionsDialog optionsDialog_ = null;
@@ -85,7 +86,7 @@ public abstract class Simulator extends AnimationComponent
                 final Simulator simulator = optionsDialog_.getSimulator();
                 final boolean oldPauseVal = simulator.isPaused();
                 simulator.setPaused( true );
-                final boolean canceled = optionsDialog_.showDialog();
+                optionsDialog_.showDialog();
                 simulator.setPaused( oldPauseVal );
             }
         } );
@@ -144,42 +145,33 @@ public abstract class Simulator extends AnimationComponent
     }
 
     @Override
-    protected String getStatusMessage()
-    {
+    protected String getStatusMessage() {
         return "frames/second=" + Util.formatNumber( getFrameRate() );
     }
 
 
-    // the next 2 methods implement the unused methods of the optimizee interface.
+    // the next methods implement the unused methods of the optimizee interface.
     // Simulators must implement evaluateFitness ///
 
-    /**
-     * If true is returned then compareFitness will be used and evaluateFitness will not
-     * otherwise the reverse will be true.
-     * @return return true if we evaluate the fitness by comparison
-     */
-    public boolean  evaluateByComparison()
-     {
-         return false;
-     }
-
-    public double compareFitness( ParameterArray params1, ParameterArray params2 )
-    {
-        return 0.0;
+    public void doOptimization() {
+       System.out.println("not implemented for this simulator");
     }
 
+    public boolean evaluateByComparison() {
+        return false;
+    }
+
+
+    /**
+     * part of the Optimizee interface
+     */
     public double getOptimalFitness() {
         return 0;
     }
 
-
-    public void doOptimization()
-    {
-       System.out.println("not implemented for this simulator");
-    }
-
-    public int getNumParameters() {
-        return 0;
+    /** {@inheritDoc} */
+    public double compareFitness(ParameterArray params1, ParameterArray params2) {
+        return evaluateFitness(params1) - evaluateFitness(params2);
     }
 
     /**
