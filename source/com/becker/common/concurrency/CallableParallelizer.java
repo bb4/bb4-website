@@ -1,4 +1,4 @@
-/** Barry Becker - copyright 2009 */
+/** Barry Becker - copyright 2009-2011 */
 package com.becker.common.concurrency;
 
 import java.util.Collection;

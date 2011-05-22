@@ -66,6 +66,7 @@ public class Server extends JFrame {
             ClientWorker w;
             try {
                 w = new ClientWorker(server_.accept(), textArea_);
+                // should use executor framework here.
                 Thread t = new Thread(w);
                 t.start();
             }

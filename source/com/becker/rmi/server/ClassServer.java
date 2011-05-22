@@ -135,8 +135,7 @@ public abstract class ClassServer implements Runnable {
     /**
      * Create a new thread to listen.
      */
-    private void newListener()
-    {
+    private void newListener() {
 	(new Thread(this)).start();
     }
 
@@ -145,8 +144,7 @@ public abstract class ClassServer implements Runnable {
      * parsing the HTML header.
      */
     private static String getPath(DataInputStream in)
-	throws IOException
-    {
+	throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String line = reader.readLine();
         String path = "";

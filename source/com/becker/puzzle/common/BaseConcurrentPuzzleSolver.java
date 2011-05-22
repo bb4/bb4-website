@@ -32,6 +32,11 @@ public class BaseConcurrentPuzzleSolver<P, M>  implements PuzzleSolver<P, M> {
     private float depthBreadthFactor = 0.4f;
     private static final Random RANDOM = new Random(1);
 
+    /**
+     * Constructor
+     * @param puzzle the puzzle instance to solve.
+     * @param ui shows visible state
+     */
     public BaseConcurrentPuzzleSolver(PuzzleController<P, M> puzzle, Refreshable<P, M> ui) {
         this.ui = ui;
         this.puzzle = puzzle;

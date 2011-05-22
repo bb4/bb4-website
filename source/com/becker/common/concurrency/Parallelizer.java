@@ -1,4 +1,4 @@
-/** Barry Becker - copyright 2009 */
+/** Barry Becker - copyright 2009-2011 */
 package com.becker.common.concurrency;
 
 import java.util.ArrayList;
@@ -32,36 +32,20 @@ public class Parallelizer <T> extends CallableParallelizer<T> {
         // convert the runnables to callables so the invokeAll api works
         List<Callable<T>> callables = new ArrayList<Callable<T>>(workers.size());
         for (Runnable r : workers) {
-            callables.add(new Worker(r));
+            callables.add(Executors.callable(r, (T)null));
         }
         
         List<Future<T>> futures =  invokeAll(callables);   
         
         for (Future<T> f : futures) {
             try {
+                // blocks until the result is available.
                 f.get();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Parallelizer.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ExecutionException ex) {
                 Logger.getLogger(Parallelizer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-    }
-
-    /**
-     * Simple decorator class to convert a Runnable to a Callable.
-     */
-    private class Worker implements Callable<T> {
-      
-        private Runnable runnable;
-        
-        public Worker(Runnable r) {
-            runnable = r;
-        }
-        
-        public T call() {
-            runnable.run(); 
-            return null;
         }
     }
 }
