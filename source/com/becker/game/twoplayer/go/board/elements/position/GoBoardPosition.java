@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board.elements.position;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.IGoMember;
@@ -187,7 +187,7 @@ public final class GoBoardPosition extends BoardPosition
      */
     @Override
     public String getDescription() {
-        return super.getDescription()+ " score:"+Util.formatNumber(scoreContribution_);
+        return super.getDescription()+ " score:"+ FormatUtil.formatNumber(scoreContribution_);
     }
 
     /**
@@ -195,7 +195,7 @@ public final class GoBoardPosition extends BoardPosition
      */
     @Override
     public String toString() {
-        return super.toString()+ " s:"+Util.formatNumber(scoreContribution_) + " hc:"+hashCode();
+        return super.toString()+ " s:"+ FormatUtil.formatNumber(scoreContribution_) + " hc:"+hashCode();
     }
 
     public double getScoreContribution() {

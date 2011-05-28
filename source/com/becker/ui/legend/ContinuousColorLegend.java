@@ -1,8 +1,8 @@
 package com.becker.ui.legend;
 
 import com.becker.common.ColorMap;
+import com.becker.common.format.FormatUtil;
 import com.becker.common.math.NiceNumbers;
-import com.becker.common.util.Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -407,18 +407,18 @@ public class ContinuousColorLegend extends JPanel {
             
             g2.setColor(Color.black);
             g2.setFont(LABEL_FONT);
-            g2.drawString(Util.formatNumber(getMin()), 2, 10);
+            g2.drawString(FormatUtil.formatNumber(getMin()), 2, 10);
             for (int i = 1; i < numVals - 2; i++) {
                 double xpos = rat * (values[i] - getMin());
-                String label = Util.formatNumber(values[i]);
+                String label = FormatUtil.formatNumber(values[i]);
                 g2.drawString(label, (int) xpos, 10);
             }
-            String maxLabel = Util.formatNumber(getMax());
+            String maxLabel = FormatUtil.formatNumber(getMax());
             Rectangle2D bounds = g2.getFont().getStringBounds(maxLabel, frc);
             double maxLabelWidth = bounds.getWidth();
             if (values.length > 2) {
                 double xpos = rat * (values[numVals - 2] - getMin());
-                String label = Util.formatNumber(values[numVals - 2]);
+                String label = FormatUtil.formatNumber(values[numVals - 2]);
                 if ((width - xpos) > (maxLabelWidth + (LABEL_SPACING >> 1))) {
                     g2.drawString(label, (int) xpos, 10);
                 }

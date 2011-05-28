@@ -1,4 +1,4 @@
-package com.becker.common;
+package com.becker.common.util;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,6 +1,6 @@
 package com.becker.apps.misc.sedit;
 
-import com.becker.common.Base64Codec;
+import com.becker.common.util.Base64Codec;
 import com.becker.ui.file.ExtensionFileFilter;
 import com.becker.ui.file.FileChooserUtil;
 import com.becker.ui.util.GUIUtil;

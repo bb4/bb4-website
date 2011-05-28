@@ -1,11 +1,10 @@
 package com.becker.optimization.strategy;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
 
 import java.util.Random;
-import java.util.RandomAccess;
 
 /**
  * Simulated annealing optimization strategy.
@@ -126,7 +125,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
 
                  System.out.println("T="+temperature+" ct="+ct+" dist="+dist+" deltaFitness="
                          + deltaFitness+"  currentFitness = "+currentFitness );
-                 log(ct, currentFitness, r, dist, params, Util.formatNumber(temperature));
+                 log(ct, currentFitness, r, dist, params, FormatUtil.formatNumber(temperature));
 
                  ct++;
              } while (ct < N * params.size() && !isOptimalFitnessReached(params));
@@ -136,7 +135,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
          } while (temperature > tempMin && !isOptimalFitnessReached(params));
 
          System.out.println("T="+temperature+"  currentFitness = " + bestFitness );
-         log(ct, currentFitness, 0, 0, bestParams, Util.formatNumber(temperature));
+         log(ct, currentFitness, 0, 0, bestParams, FormatUtil.formatNumber(temperature));
 
          return bestParams;
      }

@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 
 /**
  * For debugging purposes we want to keep more detail on what composes the overall score.
@@ -43,11 +43,11 @@ public class PositionalScore {
 
     public String getDescription(double worth, double captureScore, double territoryDelta, double scaleFactor)  {
         StringBuilder buf =
-                new StringBuilder("<html>Breakdown for <b>value</b> = "+ Util.formatNumber(worth));
+                new StringBuilder("<html>Breakdown for <b>value</b> = "+ FormatUtil.formatNumber(worth));
         buf.append("<br>");
-        buf.append("captureScore=").append(Util.formatNumber(captureScore)).append("<br>");
-        buf.append("territoryDelta=").append(Util.formatNumber(territoryDelta)).append("<br>");
-        buf.append("scaleFactor=").append(Util.formatNumber(scaleFactor)).append("<br>");
+        buf.append("captureScore=").append(FormatUtil.formatNumber(captureScore)).append("<br>");
+        buf.append("territoryDelta=").append(FormatUtil.formatNumber(territoryDelta)).append("<br>");
+        buf.append("scaleFactor=").append(FormatUtil.formatNumber(scaleFactor)).append("<br>");
         buf.append(toString(true));
         buf.append("</html>");
         return buf.toString();
@@ -70,7 +70,7 @@ public class PositionalScore {
     }
 
     private String format(double num) {
-        // Util.formatNumber(num);
+        // FormatUtil.formatNumber(num);
         return Double.toString(num);
     }
 }

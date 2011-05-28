@@ -1,7 +1,7 @@
 package com.becker.ui.animation;
 
+import com.becker.common.format.FormatUtil;
 import com.becker.common.util.ImageUtil;
-import com.becker.common.util.Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -214,7 +214,7 @@ public abstract class AnimationComponent extends Container implements Runnable {
      *message to show in the status bar at the bottom
      */
     protected String getStatusMessage() {
-        return Util.formatNumber( getFrameRate() ) + " fps";
+        return FormatUtil.formatNumber(getFrameRate()) + " fps";
     }
 
     public double getFrameRate() {

@@ -1,6 +1,6 @@
 package com.becker.puzzle.redpuzzle;
 
-import com.becker.common.util.Util;
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.sound.MusicMaker;
 
@@ -48,7 +48,7 @@ final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece>
         super.refresh(pieces, numTries);
         if ((animationSpeed_ < MAX_ANIM_SPEED)) {
             // give it a chance to repaint.
-            Util.sleep(8 * MAX_ANIM_SPEED / animationSpeed_); 
+            ThreadUtil.sleep(8 * MAX_ANIM_SPEED / animationSpeed_);
         }
     }
 
@@ -56,10 +56,10 @@ final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece>
     public void finalRefresh(List<Piece> path, PieceList pieces, long numTries, long millis) {  
         super.finalRefresh(path, pieces, numTries, millis);
         if (animationSpeed_ < MAX_ANIM_SPEED-1) {
-            Util.sleep(10 * MAX_ANIM_SPEED / animationSpeed_);
+            ThreadUtil.sleep(10 * MAX_ANIM_SPEED / animationSpeed_);
         }
         else {
-            Util.sleep(20);
+            ThreadUtil.sleep(20);
         }
     }    
     

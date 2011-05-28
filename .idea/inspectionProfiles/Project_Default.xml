@@ -56,7 +56,9 @@
     <inspection_tool class="CollectionAddedToSelf" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ConditionSignal" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ConditionalExpressionWithIdenticalBranches" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="ConfusingElse" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="ConfusingElse" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="reportWhenNoStatementFollow" value="false" />
+    </inspection_tool>
     <inspection_tool class="ConstructorCount" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="m_limit" value="5" />
     </inspection_tool>
@@ -202,7 +204,9 @@
       <option name="m_ignoreJavadoc" value="false" />
     </inspection_tool>
     <inspection_tool class="UnnecessaryInterfaceModifier" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="UnnecessaryJavaDocLink" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="UnnecessaryJavaDocLink" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoreInlineLinkToSuper" value="false" />
+    </inspection_tool>
     <inspection_tool class="UnusedAssignment" enabled="true" level="INFO" enabled_by_default="true">
       <option name="REPORT_PREFIX_EXPRESSIONS" value="false" />
       <option name="REPORT_POSTFIX_EXPRESSIONS" value="true" />

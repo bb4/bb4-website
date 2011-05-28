@@ -57,16 +57,15 @@ public class IntegerParameter extends AbstractParameter {
         return true;
     }
 
-
     /**
      * increments the parameter based on the number of steps to get from one end of the range to the other.
      * If we are already at the max end of the range, then we can only move in the other direction if at all.
      * @param direction 1 for forward, -1 for backward.
      * @return the size of the increment taken
      */
-    public double incrementByEps(int direction ) {
+    public double incrementByEps(Direction direction ) {
 
-        double increment = 1;
+        double increment = direction.getMultiplier();
         value_ = getValue() + increment;
         return increment;
     }

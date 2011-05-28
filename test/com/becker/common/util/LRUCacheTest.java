@@ -1,8 +1,9 @@
-package com.becker.common;
+package com.becker.common.util;
 
 
-import com.becker.common.LRUCache;
+import com.becker.common.util.LRUCache;
 import java.util.Map;
+
 import junit.framework.TestCase;
 
 /**

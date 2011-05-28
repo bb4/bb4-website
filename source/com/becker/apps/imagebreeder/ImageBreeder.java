@@ -19,7 +19,7 @@ public class ImageBreeder
 
     private BufferedImage imageToBreed;
 
-    private Parallelizer parallelizer = new Parallelizer();
+    private Parallelizer<BufferedImage> parallelizer = new Parallelizer<BufferedImage>();
 
     private Map<BufferedImage, List<Parameter>> imgToParamsMap;
 
@@ -49,7 +49,7 @@ public class ImageBreeder
 
         imgToParamsMap.clear();
 
-        List<Callable> filterTasks = new ArrayList<Callable>(numChildImages);
+        List<Callable<BufferedImage>> filterTasks = new ArrayList<Callable<BufferedImage>>(numChildImages);
         for (int i=0; i<numChildImages; i++) {
             filterTasks.add(new Worker(metaOp));
         }
@@ -71,7 +71,6 @@ public class ImageBreeder
     public Map<BufferedImage, List<Parameter>> getImgToParamsMap() {
         return imgToParamsMap;
     }
-
 
     /**
      * Runs one of the chunks.

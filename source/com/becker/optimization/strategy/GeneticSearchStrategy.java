@@ -1,6 +1,6 @@
 package com.becker.optimization.strategy;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -147,7 +147,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             System.out.println("stopped because we made no IMPROVEMENT");
         }
         System.out.println("----------------------- done -------------------");
-        log(ct, currentBest.getFitness(), 0, 0, currentBest, Util.formatNumber(ct));
+        log(ct, currentBest.getFitness(), 0, 0, currentBest, FormatUtil.formatNumber(ct));
         return currentBest;
     }
 

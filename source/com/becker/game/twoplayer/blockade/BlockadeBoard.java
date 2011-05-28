@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.blockade;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.common.AbstractGameProfiler;
 import com.becker.game.common.GameProfiler;
 import com.becker.game.common.Move;

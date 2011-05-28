@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.poker.ui;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.card.Card;
 import com.becker.game.card.Suit;
 import com.becker.game.common.GameContext;

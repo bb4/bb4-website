@@ -5,32 +5,27 @@ package com.becker.common;
  *
  * @author Barry Becker
  */
-
 public class ClassLoaderSingleton {
     private static ClassLoaderSingleton cls_;
     private static ClassLoader loader_;
 
-    // private constructor
-    private ClassLoaderSingleton()
-    {
+    /** private constructor */
+    private ClassLoaderSingleton() {
         loader_ = Thread.currentThread().getContextClassLoader();
     }
 
-    public static synchronized ClassLoader getClassLoader()
-    {
+    public static synchronized ClassLoader getClassLoader() {
         if (cls_==null) {
             cls_ = new ClassLoaderSingleton();
         }
         return loader_;
     }
     
-    
     /**
      * @param className  the class to load.
      * @return  the loaded class.
      */
-    public static Class loadClass(String className)
-    {
+    public static Class loadClass(String className){
         return loadClass(className, null);
     }
 
@@ -39,8 +34,7 @@ public class ClassLoaderSingleton {
      * @param defaultClassName  the backup class to load if className does not exist.
      * @return  the loaded class.
      */
-    public static Class loadClass(String className, String defaultClassName)
-    {
+    public static Class loadClass(String className, String defaultClassName) {
         Class theClass = null;
         try {
             //System.out.println( "about to load "+className );

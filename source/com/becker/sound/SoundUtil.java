@@ -8,7 +8,7 @@ import java.net.URL;
 
 
 /**
- * Util methods for playing sound files.
+ * FormatUtil methods for playing sound files.
  * @author Barry Becker
  */
 public final class SoundUtil {

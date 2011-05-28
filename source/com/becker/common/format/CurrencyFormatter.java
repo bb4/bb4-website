@@ -1,7 +1,5 @@
 package com.becker.common.format;
 
-import com.becker.common.util.Util;
-
 /**
  * @author Barry Becker
  */
@@ -11,7 +9,7 @@ public class CurrencyFormatter implements INumberFormatter {
     }
 
     public String format(double number) {
-        String formattedNumber = Util.formatNumber(number);
+        String formattedNumber = FormatUtil.formatNumber(number);
         return  "$" + formattedNumber;
     }
 

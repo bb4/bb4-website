@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common;
 
-import com.becker.common.Location;
-import com.becker.common.util.Util;
+import com.becker.common.geometry.Location;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.common.board.Board;
@@ -279,8 +279,8 @@ public class TwoPlayerMove extends Move {
         StringBuilder s = new StringBuilder();
 
         s.append( player1_ ? P1 : P2 );
-        s.append(" val:").append(Util.formatNumber(getValue()));
-        s.append(" inhrtd:").append(Util.formatNumber(inheritedValue_));
+        s.append(" val:").append(FormatUtil.formatNumber(getValue()));
+        s.append(" inhrtd:").append(FormatUtil.formatNumber(inheritedValue_));
         if (piece_ != null)  {
             s.append(" piece: ").append(piece_.toString());
         }

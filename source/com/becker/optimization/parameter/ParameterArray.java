@@ -1,6 +1,6 @@
 package com.becker.optimization.parameter;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.optimization.Improvement;
 import com.becker.optimization.Optimizee;
 
@@ -142,9 +142,9 @@ public abstract class ParameterArray implements Comparable<ParameterArray> {
     {
         StringBuilder sb = new StringBuilder("");
         for ( int i = 0; i < params_.length-1; i++ ) {
-            sb.append(Util.formatNumber(params_[i].getValue())).append(", ");
+            sb.append(FormatUtil.formatNumber(params_[i].getValue())).append(", ");
         }
-        sb.append(Util.formatNumber(params_[params_.length-1].getValue()) );
+        sb.append(FormatUtil.formatNumber(params_[params_.length - 1].getValue()) );
         return sb.toString();
     }
 

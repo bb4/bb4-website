@@ -1,4 +1,4 @@
-package com.becker.common;
+package com.becker.common.geometry;
 
 import java.awt.geom.Point2D;
 import java.io.Serializable;

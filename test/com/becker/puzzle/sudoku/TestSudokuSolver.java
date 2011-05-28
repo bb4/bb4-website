@@ -7,7 +7,7 @@ import junit.framework.*;
  */
 public class TestSudokuSolver extends TestCase {
 
-    public void testCase1() {
+    public void testCaseSimpleSample() {
 
         SudokuSolver solver = new SudokuSolver();
         boolean solved = solver.solvePuzzle(new Board(Data.SAMPLE1));
@@ -15,7 +15,8 @@ public class TestSudokuSolver extends TestCase {
         Assert.assertTrue( "Did not solve SAMPLE1 successfully", solved);
     }
 
-    public void testNegativeCase1() {
+    /** negative test case */
+    public void testImpossiblePuzzle() {
 
         SudokuSolver solver = new SudokuSolver();
         boolean solved = solver.solvePuzzle(new Board(Data.SAMPLE2));
@@ -24,6 +25,7 @@ public class TestSudokuSolver extends TestCase {
     }
 
 
+    /** The large tests takes a long time because of the exponential growth with the size of the puzzle. */
     public void testGenerateAndSolve() {
         // super exponential run time
         generateAndSolve(2, 1);  // 16  cells       32 ms

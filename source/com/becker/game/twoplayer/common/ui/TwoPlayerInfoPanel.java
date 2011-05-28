@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.player.PlayerList;
@@ -101,7 +101,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
             moveNumLabel_.setText( controller_.getNumMoves() + " " );
             WinProbabilityCaclulator calc = new WinProbabilityCaclulator();
             String formattedPropability =
-                    Util.formatNumber(calc.getChanceOfPlayer1Winning(getController().getMoveList().copy()));
+                    FormatUtil.formatNumber(calc.getChanceOfPlayer1Winning(getController().getMoveList().copy()));
             chanceOfWinningLabel_.setText(  formattedPropability + ' ' );
         }
     }

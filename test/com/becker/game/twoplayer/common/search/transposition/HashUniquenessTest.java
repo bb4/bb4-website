@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.search.transposition;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.GamePiece;

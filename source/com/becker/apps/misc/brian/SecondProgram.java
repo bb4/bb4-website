@@ -1,6 +1,6 @@
 package com.becker.apps.misc.brian;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 
 
 /**
@@ -22,9 +22,9 @@ public final class SecondProgram  {
         do {
 
 
-            String sqrt =  Util.formatNumber(Math.sqrt(count));
-            //String square = Util.formatNumber(count * count);
-            //String power2 = Util.formatNumber(Math.pow(2, count));
+            String sqrt =  FormatUtil.formatNumber(Math.sqrt(count));
+            //String square = FormatUtil.formatNumber(count * count);
+            //String power2 = FormatUtil.formatNumber(Math.pow(2, count));
 
             System.out.println("The square root of "+ count +" = "+ sqrt);
             //                   " \t   while " + count + " * " + count +" = " + square +

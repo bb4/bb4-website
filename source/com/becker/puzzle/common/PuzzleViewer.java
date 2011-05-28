@@ -1,6 +1,6 @@
 package com.becker.puzzle.common;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 
 import javax.swing.*;
 import java.util.List;
@@ -36,7 +36,7 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
         float time = (float)millis / 1000.0f;
         status_ = "Did not find solution.";
         if (path != null)  {
-            status_ = "Found solution in " + Util.formatNumber(time) +" seconds. "
+            status_ = "Found solution in " + FormatUtil.formatNumber(time) +" seconds. "
                     + createStatusMessage(numTries);
             System.out.println(status_);
         }
@@ -54,13 +54,13 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
      * @return some text to show in the status bar.
      */
     protected String createStatusMessage(long numTries) {
-        String msg = "\nNumber of tries :" + Util.formatNumber(numTries); 
+        String msg = "\nNumber of tries :" + FormatUtil.formatNumber(numTries);
         // I think this might be an expensive operation so don't do it every time
         if (Math.random() <.05) {
             totalMem_ = Runtime.getRuntime().totalMemory()/1000;
             freeMem_ = Runtime.getRuntime().freeMemory()/1000;   
         } 
-        msg += " Memory used = "+ Util.formatNumber(totalMem_ - freeMem_) +"k";
+        msg += " Memory used = "+ FormatUtil.formatNumber(totalMem_ - freeMem_) +"k";
         return msg;
     }
         

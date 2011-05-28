@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.common.math.Range;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.GamePiece;

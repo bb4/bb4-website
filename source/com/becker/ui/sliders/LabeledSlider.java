@@ -1,6 +1,6 @@
 package com.becker.ui.sliders;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -129,7 +129,7 @@ public class LabeledSlider extends JPanel implements ChangeListener {
     }
     
     private String getLabelText() {
-        String val = showAsInteger_? Integer.toString((int) getValue()) : Util.formatNumber(getValue());
+        String val = showAsInteger_? Integer.toString((int) getValue()) : FormatUtil.formatNumber(getValue());
         return labelText_ + ": " +  val;
     }
 

@@ -1,6 +1,6 @@
 package com.becker.simulation.reactiondiffusion;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.simulation.common.Profiler;
 
 
@@ -45,9 +45,9 @@ public class RDProfiler extends Profiler {
         super.print();
         double calcTime = getCalcTime();
         double renderingTime = getRenderingTime();
-        printMessage("Number of Frames: " + Util.formatNumber(numFrames));
-        printMessage("Calculation time per frame (sec):" + Util.formatNumber(calcTime/numFrames));
-        printMessage("Rendering time per frame   (sec):" + Util.formatNumber(renderingTime/numFrames));
+        printMessage("Number of Frames: " + FormatUtil.formatNumber(numFrames));
+        printMessage("Calculation time per frame (sec):" + FormatUtil.formatNumber(calcTime / numFrames));
+        printMessage("Rendering time per frame   (sec):" + FormatUtil.formatNumber(renderingTime / numFrames));
         super.print();
     }
 

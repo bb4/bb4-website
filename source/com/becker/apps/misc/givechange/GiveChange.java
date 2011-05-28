@@ -1,6 +1,6 @@
 package com.becker.apps.misc.givechange;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public final class GiveChange
 
         do {
             System.out.println( "Enter a number of cents for which to compute ideal change "+
-                    "[0 - "+Util.formatNumber(max) +"]:" );
+                    "[0 - "+ FormatUtil.formatNumber(max) +"]:" );
             
             InputStreamReader  inp = new InputStreamReader(System.in);
             BufferedReader br = new BufferedReader(inp);
@@ -80,7 +80,7 @@ public final class GiveChange
             long num = remainingCents / VALUE[i];
             if (num != 0)  {
                // put an s at the end if there are 0 or >1 coins of this type
-                System.out.println("  "+ Util.formatNumber(num) + ' ' + (num==1 ? COIN_NAME[i] : COINS_NAME[i]) );
+                System.out.println("  "+ FormatUtil.formatNumber(num) + ' ' + (num==1 ? COIN_NAME[i] : COINS_NAME[i]) );
                 remainingCents -= num * VALUE[i];     // shorthand for remainingCents = remainingCents - num * VALUE[i];
                 // or equivalently, you could say
                 //remainingCents %= VALUE[i];         // shorthand for remainingCents = remainingCents % VALUE[i];

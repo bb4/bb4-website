@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;

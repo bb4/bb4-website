@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.ui.gametree;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -65,7 +65,7 @@ class MoveDetailsPanel extends JPanel {
         StringBuilder sBuf = new StringBuilder("<html>");
         sBuf.append("<font size=\"+1\" color=\"").append(ColorUtil.getHTMLColorFromColor(c)).
                 append("\" bgcolor=\"#99AA99>\">").append(entity).append(passSuffix).append("</font><br>");
-        sBuf.append("Static value = ").append(Util.formatNumber(m.getValue())).append("<br>");
+        sBuf.append("Static value = ").append(FormatUtil.formatNumber(m.getValue())).append("<br>");
 
         sBuf.append(lastNode.toString());
 

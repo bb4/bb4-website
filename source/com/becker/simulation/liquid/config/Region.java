@@ -1,6 +1,6 @@
 package com.becker.simulation.liquid.config;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 
 /**
  * Represents a region of something (like a source sink, or liquid block) in the simulation.

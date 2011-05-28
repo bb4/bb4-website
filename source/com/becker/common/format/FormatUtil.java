@@ -1,17 +1,17 @@
-package com.becker.common.util;
+package com.becker.common.format;
 
 import java.text.DecimalFormat;
 
 /**
- * Miscelaneous commonly used static utility methods.
+ * Miscellaneous commonly used static utility methods.
  */
-public final class Util {
+public final class FormatUtil {
     
     private static final DecimalFormat expFormat_ = new DecimalFormat("0.###E0");
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");
     private static final DecimalFormat intFormat_ = new DecimalFormat("#,###");
 
-    private Util() {}
+    private FormatUtil() {}
 
 
     /**
@@ -69,19 +69,6 @@ public final class Util {
      */
     public static String formatNumber(int num) {
         return intFormat_.format(num);
-    }
-
-    /**
-     * Cause this thread to sleep for specified amount of time while other threads run.
-     */
-    public static void sleep(int millis) {
-        if (millis > 0) {
-            try {
-                Thread.sleep(millis);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 }

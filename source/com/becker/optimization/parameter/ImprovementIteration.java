@@ -9,7 +9,7 @@ import com.becker.optimization.parameter.ParameterArray;
 /**
  * private utility class for maintaining the data vectors for the iteration.
  */
-class HillClimbIteration {
+class ImprovementIteration {
 
     Vector delta;
     Vector fitnessDelta;
@@ -21,7 +21,7 @@ class HillClimbIteration {
      * @param params current parameters
      * @param oldGradient the old steepest ascent gradietn if we know it.
      */
-    HillClimbIteration(NumericParameterArray params, Vector oldGradient) {
+    ImprovementIteration(NumericParameterArray params, Vector oldGradient) {
         delta = params.asVector();
         fitnessDelta = params.asVector();
         gradient = params.asVector();
@@ -51,14 +51,14 @@ class HillClimbIteration {
 
         Parameter p = testParams.get( i );
         // increment forward.
-        delta.set(i, p.incrementByEps(1));
+        delta.set(i, p.incrementByEps(Direction.FORWARD));
 
         fwdFitness = findFitnessDelta(optimizee, params, testParams);
 
         // revert the increment
-        p.incrementByEps(-1);
+        p.incrementByEps(Direction.BACKWARD);
         // this checks the fitness on the other side (backwards).
-        p.incrementByEps(-1);
+        p.incrementByEps(Direction.BACKWARD);
 
         bwdFitness = findFitnessDelta(optimizee, params, testParams);
 

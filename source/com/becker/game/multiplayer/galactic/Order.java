@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.galactic;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 
 import javax.vecmath.Vector2d;

@@ -1,7 +1,7 @@
 package com.becker.common.profile;
 
 import com.becker.common.ILog;
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -100,6 +100,6 @@ public class ProfilerEntry {
 
     private String getFormattedTime() {
         double seconds = getTimeInSeconds();
-        return  "Time for " + name_ + " : " + Util.formatNumber(seconds) + " seconds";
+        return  "Time for " + name_ + " : " + FormatUtil.formatNumber(seconds) + " seconds";
     }
 }

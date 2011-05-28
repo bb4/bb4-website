@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.elements.group;
 
-import com.becker.common.Box;
-import com.becker.common.util.Util;
+import com.becker.common.geometry.Box;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
@@ -327,8 +327,8 @@ public final class GoGroup extends GoSet
             sb.append(eyes.toString()).append(newline);
         // make sure that the health and eyes are up to date
         //calculateHealth();
-        sb.append("abs health=").append(Util.formatNumber(groupAnalyzer_.getAbsoluteHealth()));
-        sb.append(" rel health=").append(Util.formatNumber(groupAnalyzer_.getRelativeHealth()));
+        sb.append("abs health=").append(FormatUtil.formatNumber(groupAnalyzer_.getAbsoluteHealth()));
+        sb.append(" rel health=").append(FormatUtil.formatNumber(groupAnalyzer_.getRelativeHealth()));
         sb.append(" group Liberties=").append(groupAnalyzer_.getNumLiberties(null)).append('\n');
         return sb.toString();
     }

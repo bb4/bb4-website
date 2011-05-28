@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.E1Information;
@@ -537,15 +537,15 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
             System.out.println("               \t\t-----\t-----");
             System.out.println("black liberties    \t "+ expectedNumberOfBlackLiberties +"\t " + numBlackLiberties + errorMarker(libertiesOK));
             System.out.println("white liberties    \t "+ expectedNumberOfWhiteLiberties +"\t " + numWhiteLiberties + errorMarker(libertiesOK) );
-            System.out.println("black eye potential\t" + expectedBlackEyePotential + "\t " + Util.formatNumber(bPotential) + errorMarker(bEyePotentialOK));
-            System.out.println("white eye potential\t" + expectedWhiteEyePotential + "\t " + Util.formatNumber(wPotential) + errorMarker(wEyePotentialOK));
+            System.out.println("black eye potential\t" + expectedBlackEyePotential + "\t " + FormatUtil.formatNumber(bPotential) + errorMarker(bEyePotentialOK));
+            System.out.println("white eye potential\t" + expectedWhiteEyePotential + "\t " + FormatUtil.formatNumber(wPotential) + errorMarker(wEyePotentialOK));
 
-            System.out.println("black health      \t" + expectedBlackHealth + "\t " + Util.formatNumber(bah) + errorMarker(bHealthOK));
-            System.out.println("white health      \t" + expectedWhiteHealth + "\t " + Util.formatNumber(wah) + errorMarker(wHealthOK));
+            System.out.println("black health      \t" + expectedBlackHealth + "\t " + FormatUtil.formatNumber(bah) + errorMarker(bHealthOK));
+            System.out.println("white health      \t" + expectedWhiteHealth + "\t " + FormatUtil.formatNumber(wah) + errorMarker(wHealthOK));
 
-            System.out.println("absAbs health diff \t" + expectedAbsAbsHealthDifference + "\t " + Util.formatNumber(daah) + errorMarker(absAbsDifOK));
-            System.out.println("absolute health diff\t" + expectedAbsHealthDifference + "\t " + Util.formatNumber(dah) + errorMarker(absDifOK));
-            System.out.println("relative health diff \t" + expectedRelHealthDifference + "\t " + Util.formatNumber(drh) + errorMarker(relDifOK));
+            System.out.println("absAbs health diff \t" + expectedAbsAbsHealthDifference + "\t " + FormatUtil.formatNumber(daah) + errorMarker(absAbsDifOK));
+            System.out.println("absolute health diff\t" + expectedAbsHealthDifference + "\t " + FormatUtil.formatNumber(dah) + errorMarker(absDifOK));
+            System.out.println("relative health diff \t" + expectedRelHealthDifference + "\t " + FormatUtil.formatNumber(drh) + errorMarker(relDifOK));
 
             System.out.println("black eyes: "+ blackHealthAnalyzer.getEyes(board));
             System.out.println("white eyes: "+ whiteHealthAnalyzer.getEyes(board));

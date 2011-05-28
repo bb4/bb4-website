@@ -76,7 +76,7 @@ public class SudokuGenerator {
 
         List<Integer> candidates = board.getCellCandidates(position);
 
-        if (position % 7 == 0) {
+        if (position % 7 == 0 && ppanel_ != null) {
             ppanel_.repaint();
         }
 

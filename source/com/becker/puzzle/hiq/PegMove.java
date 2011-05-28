@@ -1,7 +1,7 @@
 package com.becker.puzzle.hiq;
 
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 
 /**
  * Definition for a peg jumping another peg.

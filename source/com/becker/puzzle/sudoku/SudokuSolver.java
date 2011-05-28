@@ -1,6 +1,6 @@
 package com.becker.puzzle.sudoku;
 
-import com.becker.common.util.Util;
+import com.becker.common.concurrency.ThreadUtil;
 
 import java.awt.*;
 
@@ -68,7 +68,7 @@ public class SudokuSolver {
 
     private void refreshWithDelay(Container puzzlePanel, int relativeDelay) {
         refresh(puzzlePanel);
-        Util.sleep(relativeDelay * delay_);
+        ThreadUtil.sleep(relativeDelay * delay_);
     }
 
 
@@ -76,6 +76,6 @@ public class SudokuSolver {
         if (puzzlePanel == null || delay_ == 0)
             return;
         puzzlePanel.repaint();
-        Util.sleep(5);  // give it a chance to repaint.
+        ThreadUtil.sleep(5);  // give it a chance to repaint.
     }
 }

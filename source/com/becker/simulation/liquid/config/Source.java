@@ -1,6 +1,6 @@
 package com.becker.simulation.liquid.config;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 
 import javax.vecmath.Vector2d;
 

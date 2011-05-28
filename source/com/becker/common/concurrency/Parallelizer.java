@@ -35,8 +35,9 @@ public class Parallelizer <T> extends CallableParallelizer<T> {
             callables.add(Executors.callable(r, (T)null));
         }
         
-        List<Future<T>> futures =  invokeAll(callables);   
-        
+        List<Future<T>> futures = invokeAll(callables);
+
+        // consider using ExecutorCompletionService
         for (Future<T> f : futures) {
             try {
                 // blocks until the result is available.
