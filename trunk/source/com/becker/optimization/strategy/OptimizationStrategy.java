@@ -72,4 +72,10 @@ public abstract class OptimizationStrategy {
         return optimalFitnessReached;
     }
 
+
+    protected void notifyOfChange(ParameterArray params) {
+        if (listener_ != null) {
+            listener_.optimizerChanged(params);
+        }
+    }
 }

@@ -5,21 +5,22 @@ import com.becker.common.math.Vector;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
+import com.jhlabs.image.Gradient;
 
 /**
  * private utility class for maintaining the data vectors for the iteration.
  */
 class ImprovementIteration {
 
-    Vector delta;
-    Vector fitnessDelta;
-    Vector gradient;
-    Vector oldGradient;
+    private Vector delta;
+    private Vector fitnessDelta;
+    private Vector gradient;
+    private Vector oldGradient;
 
     /**
      * Constructor
      * @param params current parameters
-     * @param oldGradient the old steepest ascent gradietn if we know it.
+     * @param oldGradient the old steepest ascent gradient if we know it.
      */
     ImprovementIteration(NumericParameterArray params, Vector oldGradient) {
         delta = params.asVector();
@@ -37,6 +38,14 @@ class ImprovementIteration {
             }
             this.oldGradient = this.oldGradient.normalize();
         }
+    }
+
+    Vector getGradient() {
+        return gradient;
+    }
+
+    Vector getOldGradient() {
+        return oldGradient;
     }
 
     /**

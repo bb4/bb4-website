@@ -14,8 +14,8 @@ import java.util.Random;
 public class SimulatedAnnealingStrategy extends OptimizationStrategy {
 
     /** The number of iterations in the inner loop divided by the number of dimensions in the search space  */
-    private static final int N = 5;
-    private static final int NUM_TEMP_ITERATIONS = 10;
+    private static final int N = 10;
+    private static final int NUM_TEMP_ITERATIONS = 20;
 
     /** the amount to drop the temperature on each temperature iteration.   */
     private static final double TEMP_DROP_FACTOR = 0.5;
@@ -24,10 +24,11 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
     private static final double DEFAULT_TEMP_MAX = 10000;
     private double tempMax_ = DEFAULT_TEMP_MAX;
 
-    private static Random RAND = new Random(0);
+    /** deterministic randomness */
+    private static final Random RAND = new Random(0);
 
     /**
-     * Constructor
+     * Constructor.
      * use a hardcoded static data interface to initialize.
      * so it can be easily run in an applet without using resources.
      * @param optimizee the thing to be optimized.
@@ -67,77 +68,90 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
      * @return the optimized params.
      */
      @Override
-     public ParameterArray doOptimization( ParameterArray params, double fitnessRange ) {
+    public ParameterArray doOptimization( ParameterArray params, double fitnessRange ) {
 
-         int ct = 0;
-         double temperature = tempMax_;
-         double tempMin = tempMax_ / Math.pow(2.0, NUM_TEMP_ITERATIONS);
+        int ct = 0;
+        double temperature = tempMax_;
+        double tempMin = tempMax_ / Math.pow(2.0, NUM_TEMP_ITERATIONS);
 
-         double currentFitness = 0.0;
-         if (!optimizee_.evaluateByComparison())
-             currentFitness = optimizee_.evaluateFitness(params);
+        if (!optimizee_.evaluateByComparison()) {
+            double currentFitness = optimizee_.evaluateFitness(params);
+            params.setFitness(currentFitness);
+        }
 
-         // store the best solution we found at any given temperature iteration and use that as the initial
-         // start of the next temperature iteration.
-         ParameterArray bestParams = params.copy();
-         double bestFitness = currentFitness;
+        // store the best solution we found at any given temperature iteration and use that as the initial
+        // start of the next temperature iteration.
+        ParameterArray bestParams = params.copy();
+        ParameterArray currentParams;
 
-         do {  // temperature iteration (temperature drops each time through)
-             params = bestParams;
-             currentFitness = bestFitness;
+        do { // temperature iteration (temperature drops each time through)
+             currentParams = bestParams;
 
              do {
-                 // select a new point in the nbrhood of our current location
-                 // The nbrhood we select from has a radius of r.
-                 // double r = (tempMax/5.0+temperature) / (8.0*(N/5.0+ct)*tempMax);
-                 double r = temperature / ((N + ct) * tempMax_);
-                 ParameterArray newParams = params.getRandomNeighbor(r);
-                 double dist = params.distance(newParams);
+                 currentParams = findNeighbor(currentParams, ct, temperature, fitnessRange);
 
-                 double deltaFitness;
-                 double newFitness = 0.0;
-                 if (optimizee_.evaluateByComparison()) {
-                     deltaFitness = optimizee_.compareFitness(newParams, params);
+                 if (currentParams.getFitness() > bestParams.getFitness()) {
+                     bestParams = currentParams.copy();
+                     notifyOfChange(bestParams);
                  }
-                 else {
-                     newFitness = optimizee_.evaluateFitness(newParams);
-                     newParams.setFitness(newFitness);
-                     deltaFitness = newFitness - currentFitness;
-                 }
-
-                 double probability = Math.pow(Math.E, deltaFitness / temperature);
-                 boolean useWorseSolution = RAND.nextDouble() < probability;
-
-                 if (deltaFitness > 0 || useWorseSolution )  {
-                     // we always select the solution if it has a better fitness,
-                     // but we sometimes select a worse solution if the second term evaluates to true.
-                     if (deltaFitness < 0 && useWorseSolution) {
-                         System.out.println( "*** selected worse solution prob="
-                                 + probability + " delta=" + deltaFitness +" / temp=" + temperature);
-                     }
-                     params = newParams;
-                     currentFitness = newFitness;
-                 }
-                 if (currentFitness > bestFitness) {
-                     bestFitness = currentFitness;
-                     bestParams = params.copy();
-                 }
-
-                 System.out.println("T="+temperature+" ct="+ct+" dist="+dist+" deltaFitness="
-                         + deltaFitness+"  currentFitness = "+currentFitness );
-                 log(ct, currentFitness, r, dist, params, FormatUtil.formatNumber(temperature));
-
                  ct++;
-             } while (ct < N * params.size() && !isOptimalFitnessReached(params));
+
+             } while (ct < N * currentParams.size() && !isOptimalFitnessReached(currentParams));
+
              ct = 0;
-             // keep halving the temperature until it reaches tempMin
+             // keep Reducing the temperature until it reaches tempMin
              temperature *= TEMP_DROP_FACTOR;
-         } while (temperature > tempMin && !isOptimalFitnessReached(params));
 
-         System.out.println("T="+temperature+"  currentFitness = " + bestFitness );
-         log(ct, currentFitness, 0, 0, bestParams, FormatUtil.formatNumber(temperature));
+        } while (temperature > tempMin && !isOptimalFitnessReached(currentParams));
 
-         return bestParams;
-     }
+        System.out.println("T=" + temperature + "  currentFitness = " + bestParams.getFitness());
+        log(ct, bestParams.getFitness(), 0, 0, bestParams, FormatUtil.formatNumber(temperature));
+
+        return bestParams;
+    }
+
+    /**
+     * Select a new point in the neighborhood of our current location
+     * The neighborhood we select from has a radius of r.
+     * @param params current location in the parameter space.
+     * @param ct iteration count.
+     * @param temperature current temperature. Gets cooler with every successive temperature iteration.
+     * @return  neighboring point that is hopefully better than params.
+     */
+     private ParameterArray findNeighbor(ParameterArray params, int ct, double temperature, double fitnessRange) {
+
+        //double r = (tempMax_/5.0+temperature) / (8.0*(N/5.0+ct)*tempMax_);
+        double r = temperature / ((N + ct) * tempMax_);
+        ParameterArray newParams = params.getRandomNeighbor(r);
+        double dist = params.distance(newParams);
+
+        double deltaFitness;
+        double newFitness;
+        if (optimizee_.evaluateByComparison()) {
+            deltaFitness = optimizee_.compareFitness(newParams, params);
+        }
+        else {
+            newFitness = optimizee_.evaluateFitness(newParams);
+            newParams.setFitness(newFitness);
+            deltaFitness = newFitness - params.getFitness();
+        }
+
+        double probability = Math.pow(Math.E, tempMax_ * deltaFitness / temperature);
+        boolean useWorseSolution = RAND.nextDouble() < probability;
+
+        if (deltaFitness > 0 || useWorseSolution )  {
+            // we always select the solution if it has a better fitness,
+            // but we sometimes select a worse solution if the second term evaluates to true.
+            if (deltaFitness < 0 && useWorseSolution) {
+                System.out.println( "*** selected worse solution with prob="
+                        + probability + " delta=" + deltaFitness +" / temp=" + temperature);
+            }
+            params = newParams;
+        }
+        //System.out.println("T="+temperature+" ct="+ct+" dist="+dist+" deltaFitness="
+        //        + deltaFitness+"  currentFitness = "+ params.getFitness() );
+        log(ct, params.getFitness(), r, dist, params, FormatUtil.formatNumber(temperature));
+        return params;
+    }
 
 }

@@ -85,9 +85,4 @@ public class HillClimbingStrategy extends OptimizationStrategy {
         return currentParams;
     }
 
-    private void notifyOfChange(ParameterArray params) {
-        if (listener_ != null) {
-            listener_.optimizerChanged(params);
-        }
-    }
 }
