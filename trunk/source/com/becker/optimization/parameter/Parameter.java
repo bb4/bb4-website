@@ -21,10 +21,10 @@ public interface Parameter {
      * increments the parameter a little bit in the specified direction.
      * If we are already at the max end of the range, then we increment in a negative direction.
      * 
-     * @param direction 1 for forward, -1 for backward.
+     * @param direction eitehr forward, or backward.
      * @return the size of the increment taken
      */
-    double incrementByEps(int direction);
+    double incrementByEps(Direction direction);
    
     /**
      * Modify the value of this parameter by a little bit.

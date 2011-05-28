@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy.integration;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -142,7 +142,7 @@ public abstract class AbstractStrategyTst extends TestCase {
         // an extra check to make sure the calculation does not take too long.
         double elapsed = (float)(System.currentTimeMillis() - time) / 1000.0;
         assertTrue("Took too long: " + elapsed, elapsed < 1.0);
-        System.out.println("TOTAL TIME = " + Util.formatNumber( elapsed));
+        System.out.println("TOTAL TIME = " + FormatUtil.formatNumber(elapsed));
     }
 
     public void verifyMove(Progress prog, boolean player1, ExpectedMoveMatrix expectedMoves, String desc) {

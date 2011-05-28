@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.concurrency.Worker;
-import com.becker.common.util.Util;
 import com.becker.game.common.Move;
 
 /**
@@ -39,7 +39,7 @@ class TwoPlayerSearchWorker {
                 // make the move even though we did not finish computing it
                 controller_.get2PlayerViewer().computerMoved((Move)worker_.get());
             }
-            Util.sleep(100);
+            ThreadUtil.sleep(100);
         }
     }
 

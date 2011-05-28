@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.pente.ui;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.ui.viewer.GameBoardViewer;

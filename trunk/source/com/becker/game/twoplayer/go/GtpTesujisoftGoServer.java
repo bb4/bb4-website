@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;

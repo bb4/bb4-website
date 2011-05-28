@@ -1,18 +1,18 @@
 package com.becker.optimization;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.optimization.parameter.ParameterArray;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Logger for use with optimzer algorithms.
+ * Logger for use with optimizer algorithms.
  *
  * @author Barry Becker
  */
-public class Logger
-{
+public class Logger {
+
     protected String sLogFile_ ;
     public static final String SEPARATOR = ",\t";
 
@@ -65,9 +65,9 @@ public class Logger
     {
         String sep = Optimizer.SEPARATOR;
         String rowText = iteration + sep
-                       + Util.formatNumber(fitness) + sep
-                       + Util.formatNumber(jumpSize) + sep
-                       + Util.formatNumber(distance) + sep
+                       + FormatUtil.formatNumber(fitness) + sep
+                       + FormatUtil.formatNumber(jumpSize) + sep
+                       + FormatUtil.formatNumber(distance) + sep
                        + params.toCSVString() + sep
                        + comment;
 

@@ -45,7 +45,8 @@ class CallableParallelizer<T> {
         this.numThreads = numThreads;
         executor = Executors.newFixedThreadPool(numThreads);
     }
-    
+
+    /** @return number of threads in the executor thread pool. */
     public int getNumThreads() {
         return numThreads;
     }

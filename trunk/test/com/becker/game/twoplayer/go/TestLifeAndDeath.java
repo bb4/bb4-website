@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.move.GoMove;

@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
@@ -47,7 +47,7 @@ public class GameOverMessage {
             }
             args[1] = winningPlayer.getName();
             args[2] = Integer.toString(controller_.getNumMoves());
-            args[3] = Util.formatNumber(controller_.getStrengthOfWin());
+            args[3] = FormatUtil.formatNumber(controller_.getStrengthOfWin());
             text = formatter.format(args);
 
             assert(!losingPlayer.hasWon()) : "Both players should not win. Players=" + players;

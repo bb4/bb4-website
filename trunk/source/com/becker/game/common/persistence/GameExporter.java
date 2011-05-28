@@ -1,6 +1,6 @@
 package com.becker.game.common.persistence;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.common.Move;
 import com.becker.game.common.board.IBoard;
 import com.becker.game.common.ui.SgfFileFilter;

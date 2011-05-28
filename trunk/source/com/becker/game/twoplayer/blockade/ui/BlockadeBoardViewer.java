@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.blockade.ui;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.ui.viewer.GameBoardRenderer;

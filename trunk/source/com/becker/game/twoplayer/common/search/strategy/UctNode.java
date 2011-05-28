@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -135,7 +135,7 @@ public class UctNode {
         NodeAttributes attributes = new NodeAttributes();
         attributes.put("visits", Integer.toString(numVisits));
         attributes.put("wins", Float.toString(numWins));
-        attributes.put("winRate", Util.formatNumber(getWinRate()));
+        attributes.put("winRate", FormatUtil.formatNumber(getWinRate()));
         return attributes;
     }
 
@@ -155,7 +155,7 @@ public class UctNode {
      */
     private void printTree(String indent, int parentVisits) {
         System.out.println(indent + this.toString()
-                + " uct=" + Util.formatNumber(this.calculateUctValue(1.0, parentVisits)));
+                + " uct=" + FormatUtil.formatNumber(this.calculateUctValue(1.0, parentVisits)));
         if (hasChildren()) {
             for (UctNode child : this.getChildren()) {
                 child.printTree(indent + "  ", this.numVisits);

@@ -1,7 +1,7 @@
 package com.becker.simulation.trebuchet;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.util.FileUtil;
-import com.becker.common.util.Util;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.Parameter;
@@ -62,16 +62,19 @@ public class TrebuchetSimulator extends NewtonianSimulator
         this.render();
     }
 
+    @Override
     protected void reset() {
         final Trebuchet trebuchet = new Trebuchet();
         commonInit( trebuchet );
     }
 
+    @Override
     public Color getBackground()
     {
         return BACKGROUND_COLOR;
     }
 
+    @Override
     public JPanel createTopControls()
     {
          JPanel controls = super.createTopControls();
@@ -90,6 +93,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
         return controls;
     }
 
+    @Override
     public void doOptimization()
     {
         Optimizer optimizer;
@@ -111,16 +115,19 @@ public class TrebuchetSimulator extends NewtonianSimulator
         return NUM_PARAMS;
     }
 
+    @Override
     protected double getInitialTimeStep() {
         return TIME_STEP;
     }
 
 
+    @Override
     protected SimulatorOptionsDialog createOptionsDialog() {
          return new TrebuchetOptionsDialog( frame_, this );
     }
 
 
+    @Override
     public double timeStep()
     {
         if ( !isPaused() ) {
@@ -129,6 +136,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
         return timeStep_;
     }
 
+    @Override
     public void paint( Graphics g )
     {
         Graphics2D g2 = (Graphics2D) g;
@@ -147,47 +155,59 @@ public class TrebuchetSimulator extends NewtonianSimulator
 
 
 
+    @Override
     public void setScale( double scale ) {
         trebuchet_.setScale(scale);
     }
+    @Override
     public double getScale() {
         return trebuchet_.getScale();
     }
 
+    @Override
     public void setShowVelocityVectors( boolean show ) {
         RenderablePart.setShowVelocityVectors(show);
     }
+    @Override
     public boolean getShowVelocityVectors() {
         return RenderablePart.getShowVelocityVectors();
     }
 
+    @Override
     public void setShowForceVectors( boolean show ) {
         RenderablePart.setShowForceVectors(show);
     }
+    @Override
     public boolean getShowForceVectors() {
         return RenderablePart.getShowForceVectors();
     }
 
+    @Override
     public void setDrawMesh( boolean use ) {
         //trebuchet_.setDrawMesh(use);
     }
+    @Override
     public boolean getDrawMesh() {
         //return trebuchet_.getDrawMesh();
         return false;
     }
 
 
+    @Override
     public void setStaticFriction( double staticFriction ) {
         // do nothing
     }
+    @Override
     public double getStaticFriction() {
         // do nothing
         return 0.1;
     }
 
+    @Override
     public void setDynamicFriction( double dynamicFriction ) {
        // do nothing
     }
+    @Override
     public double getDynamicFriction() {
         // do nothing
         return 0.01;
@@ -217,6 +237,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
      * The measure is purely based on its velocity.
      * If the trebuchet becomes unstable, then 0.0 is returned.
      */
+    @Override
     public double evaluateFitness( ParameterArray params )
     {
         //trebuchet_.setWaveSpeed( params.get( 0 ).value );
@@ -230,7 +251,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
 
         while ( stable && improved ) {
             // let it run for a while
-            Util.sleep( 1000 + (int) (3000 / (1.0 + 0.2 * ct)));
+            ThreadUtil.sleep(1000 + (int) (3000 / (1.0 + 0.2 * ct)));
 
             ct++;
             //stable = trebuchet_.isStable();

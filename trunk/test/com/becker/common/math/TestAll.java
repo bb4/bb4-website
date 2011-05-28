@@ -1,4 +1,4 @@
-package com.becker.common.util;
+package com.becker.common.math;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -8,14 +8,15 @@ import junit.framework.TestSuite;
  *
  * @author Barry Becker
  */
-public class TestAllUtil  {
+public class TestAll {
 
 
     public static Test suite() {
 
-        TestSuite suite =  new TestSuite("All Util Tests");
+        TestSuite suite =  new TestSuite("All MAth Tests");
 
         suite.addTestSuite(MathUtilTest.class);
+        suite.addTestSuite(NiceNumbersTest.class);
 
         return suite;
     }

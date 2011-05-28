@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.common.Box;
+import com.becker.common.geometry.Box;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;

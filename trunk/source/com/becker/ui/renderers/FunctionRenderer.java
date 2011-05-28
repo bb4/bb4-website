@@ -1,10 +1,10 @@
 package com.becker.ui.renderers;
 
 import com.becker.common.format.DefaultNumberFormatter;
+import com.becker.common.format.FormatUtil;
 import com.becker.common.format.INumberFormatter;
 import com.becker.common.math.Range;
 import com.becker.common.math.function.Function;
-import com.becker.common.util.Util;
 
 import java.awt.*;
 
@@ -100,8 +100,8 @@ public class FunctionRenderer {
         g2.drawLine(MARGIN-1,         height_- MARGIN -1,
                     MARGIN-1 + width_, height_ - MARGIN -1);
 
-        g2.drawString("max = " + Util.formatNumber(yRange.getMax()), MARGIN/3, MARGIN -2);
-        g2.drawString("min = " + Util.formatNumber(yRange.getMin()), MARGIN/3, height_ - MARGIN );
+        g2.drawString("max = " + FormatUtil.formatNumber(yRange.getMax()), MARGIN/3, MARGIN -2);
+        g2.drawString("min = " + FormatUtil.formatNumber(yRange.getMin()), MARGIN/3, height_ - MARGIN );
     }
 
     /**

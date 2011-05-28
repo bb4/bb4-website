@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
@@ -118,7 +118,7 @@ class ComputerMoveProgress {
             if (strategy == null) return;
             int percentDone = strategy.getPercentDone();
             progressBar_.setValue( percentDone );
-            String numMoves = Util.formatNumber(strategy.getNumMovesConsidered());
+            String numMoves = FormatUtil.formatNumber(strategy.getNumMovesConsidered());
             String note = GameContext.getLabel("MOVES_CONSIDERED") + ' '
                    + numMoves + "  ("+ percentDone +"%)";
 

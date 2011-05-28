@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.tictactoe;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.SearchableHelper;

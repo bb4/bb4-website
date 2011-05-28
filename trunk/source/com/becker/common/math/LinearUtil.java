@@ -1,6 +1,6 @@
 package com.becker.common.math;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
@@ -78,7 +78,7 @@ public final class LinearUtil {
                 if ( a == 0 )
                     System.out.print( "  0  " );
                 else
-                    System.out.print( Util.formatNumber( a ) + ' ' );
+                    System.out.print( FormatUtil.formatNumber(a) + ' ' );
             }
             System.out.println();
         }

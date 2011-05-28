@@ -1,6 +1,6 @@
 package com.becker.simulation.common;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 
 
 /**
@@ -45,7 +45,7 @@ public class Profiler extends com.becker.common.profile.Profiler {
             return;
         }
         double ratio = getCalcTime() / getRenderingTime();
-        printMessage("Ratio of calculation to rendering time:" + Util.formatNumber(ratio) );
+        printMessage("Ratio of calculation to rendering time:" + FormatUtil.formatNumber(ratio) );
         super.print();
     }
 

@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.common.ColorMap;
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
@@ -297,6 +297,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         long numNodes = drawTree(root_, g2);
 
         g2.setColor(Color.BLACK);
-        g2.drawString("Nodes = " + Util.formatNumber(numNodes), MARGIN + width_ - 120 , MARGIN + 10);
+        g2.drawString("Nodes = " + FormatUtil.formatNumber(numNodes), MARGIN + width_ - 120 , MARGIN + 10);
     }
 }

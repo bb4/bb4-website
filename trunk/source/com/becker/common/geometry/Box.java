@@ -1,4 +1,4 @@
-package com.becker.common;
+package com.becker.common.geometry;
 
 
 /**

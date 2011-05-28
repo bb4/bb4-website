@@ -1,4 +1,4 @@
-package com.becker.common;
+package com.becker.common.math;
 
 import com.becker.common.math.NiceNumbers;
 import junit.framework.*;

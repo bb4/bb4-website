@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.common.IGameController;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;

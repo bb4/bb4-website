@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
+import com.becker.common.format.FormatUtil;
 import com.becker.common.util.FileUtil;
-import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
@@ -107,7 +107,7 @@ public class GoTestCase extends TestCase {
         GoMove m = (GoMove) controller_.getLastMove();
 
         double elapsedTime = (System.currentTimeMillis() - time) / 1000.0;
-        System.out.println("got " + m + " in " + Util.formatNumber(elapsedTime) + " seconds.");
+        System.out.println("got " + m + " in " + FormatUtil.formatNumber(elapsedTime) + " seconds.");
         return m;
     }
 

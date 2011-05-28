@@ -1,10 +1,10 @@
 package com.becker.ui.renderers;
 
 import com.becker.common.format.DefaultNumberFormatter;
+import com.becker.common.format.FormatUtil;
 import com.becker.common.format.INumberFormatter;
 import com.becker.common.math.function.InvertibleFunction;
 import com.becker.common.math.function.LinearFunction;
-import com.becker.common.util.Util;
 
 import java.awt.*;
 
@@ -125,9 +125,9 @@ public class HistogramRenderer {
         g2.drawLine(MARGIN-1,         height_- MARGIN -1,
                     MARGIN-1 + width, height_ - MARGIN -1);
 
-        g2.drawString("Height = " + Util.formatNumber(maxHeight), MARGIN/3, MARGIN -2);
-        g2.drawString("Number trials = " + Util.formatNumber(sum_), width_ - 300, MARGIN -2);
-        g2.drawString("Mean = " + Util.formatNumber(mean_), width_ - 130, MARGIN -2);
+        g2.drawString("Height = " + FormatUtil.formatNumber(maxHeight), MARGIN/3, MARGIN -2);
+        g2.drawString("Number trials = " + FormatUtil.formatNumber(sum_), width_ - 300, MARGIN -2);
+        g2.drawString("Mean = " + FormatUtil.formatNumber(mean_), width_ - 130, MARGIN -2);
 
         // draw a vertical line for the mean
         int meanXpos = (int)(MARGIN  + (double)width * xFunction_.getValue(mean_) / numBars_ + barWidth_/2);

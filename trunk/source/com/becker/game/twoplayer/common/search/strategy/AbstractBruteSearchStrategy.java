@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -170,7 +170,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
                                           int i, int selectedValue, SearchWindow window) {
         if (hasGameTree()) {
             NodeAttributes attributes = new NodeAttributes();
-            attributes.put("value", Util.formatNumber(selectedValue) );
+            attributes.put("value", FormatUtil.formatNumber(selectedValue) );
             attributes.put("window", window.toString());
             attributes.pruned = true;
             attributes.put("pruned", "(value outside window)");
@@ -188,8 +188,8 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
         NodeAttributes attributes = null;
         if (hasGameTree()) {
             attributes = new NodeAttributes();
-            attributes.put("value", Util.formatNumber(theMove.getValue()) );
-            attributes.put("inhVal", Util.formatNumber(theMove.getInheritedValue()) );
+            attributes.put("value", FormatUtil.formatNumber(theMove.getValue()) );
+            attributes.put("inhVal", FormatUtil.formatNumber(theMove.getInheritedValue()) );
             attributes.put("window", window.toString());
         }
         return addNodeToTree(parent, theMove, attributes);

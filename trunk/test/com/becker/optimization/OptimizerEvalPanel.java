@@ -1,15 +1,13 @@
 package com.becker.optimization;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import javax.vecmath.Point2d;
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +94,7 @@ public class OptimizerEvalPanel extends JPanel implements OptimizationListener {
         g2.setColor(Color.BLACK);
         g2.drawOval(currentPoint.x,  currentPoint.y, POINT_RADIUS, POINT_RADIUS);
 
-        String label = "(" + Util.formatNumber(rawPoint.x) + ", " + Util.formatNumber(rawPoint.y) + ")";
+        String label = "(" + FormatUtil.formatNumber(rawPoint.x) + ", " + FormatUtil.formatNumber(rawPoint.y) + ")";
         g2.drawString(label, currentPoint.x - 20, currentPoint.y + 6);
     }
 

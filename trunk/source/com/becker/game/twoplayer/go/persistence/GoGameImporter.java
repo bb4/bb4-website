@@ -4,7 +4,7 @@ import ca.dj.jigo.sgf.Point;
 import ca.dj.jigo.sgf.SGFGame;
 import ca.dj.jigo.sgf.SGFLoader;
 import ca.dj.jigo.sgf.tokens.*;
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.player.PlayerList;

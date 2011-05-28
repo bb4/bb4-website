@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;

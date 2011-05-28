@@ -92,7 +92,6 @@ public final class EnvironmentRenderer {
         // blocks until all Callables are done running.
         options.getParallelizer().invokeAllRunnables(workers);
 
-
         g2.drawImage(modelImage.getImage(), OFFSET, OFFSET, null);
     }
 

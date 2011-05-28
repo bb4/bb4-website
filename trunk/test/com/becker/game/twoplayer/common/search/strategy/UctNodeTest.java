@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.Location;
-import com.becker.common.util.Util;
+import com.becker.common.geometry.Location;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
@@ -207,7 +207,7 @@ public class UctNodeTest extends TestCase  {
                 }
                 for (double eeRatio = 0; eeRatio<=2.0; eeRatio += 0.5) {
                     double v = uctNode.calculateUctValue(eeRatio, parentVisits);
-                    System.out.println("t"+parentVisits + "\tt" + numVisits + "\tt"+uctNode.getWinRate() +"\tt" + eeRatio + "\t"  + Util.formatNumber(v));
+                    System.out.println("t"+parentVisits + "\tt" + numVisits + "\tt"+uctNode.getWinRate() +"\tt" + eeRatio + "\t"  + FormatUtil.formatNumber(v));
                 }
             }
         }

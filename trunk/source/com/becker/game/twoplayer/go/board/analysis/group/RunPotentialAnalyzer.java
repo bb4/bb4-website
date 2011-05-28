@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.common.Location;
-import com.becker.common.MutableLocation;
+import com.becker.common.geometry.Location;
+import com.becker.common.geometry.MutableLocation;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;

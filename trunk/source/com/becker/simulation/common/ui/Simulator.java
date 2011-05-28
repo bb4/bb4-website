@@ -1,8 +1,7 @@
 package com.becker.simulation.common.ui;
 
+import com.becker.common.format.FormatUtil;
 import com.becker.common.util.FileUtil;
-import com.becker.common.util.Util;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.FalseEyeInformation;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.ui.animation.AnimationComponent;
@@ -146,7 +145,7 @@ public abstract class Simulator extends AnimationComponent
 
     @Override
     protected String getStatusMessage() {
-        return "frames/second=" + Util.formatNumber( getFrameRate() );
+        return "frames/second=" + FormatUtil.formatNumber(getFrameRate());
     }
 
 

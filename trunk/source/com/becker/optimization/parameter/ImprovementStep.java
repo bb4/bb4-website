@@ -11,10 +11,10 @@ import java.util.Set;
  *
  * @author Barry Becker
  */
-public class HillClimbingStep  {
+public class ImprovementStep {
 
     private Optimizee optimizee_;
-    private HillClimbIteration iter_;
+    private ImprovementIteration iter_;
     private double gradLength;
     private Set<ParameterArray> cache;
     private double jumpSize;
@@ -35,8 +35,8 @@ public class HillClimbingStep  {
      * so it can be easily run in an applet without using resources.
      * @param optimizee the thing to be optimized.
      */
-    public HillClimbingStep(Optimizee optimizee, HillClimbIteration iter, double gradLength, Set<ParameterArray> cache,
-                            double jumpSize, double oldFitness) {
+    public ImprovementStep(Optimizee optimizee, ImprovementIteration iter, double gradLength, Set<ParameterArray> cache,
+                           double jumpSize, double oldFitness) {
         optimizee_ = optimizee;
         iter_ = iter;
         this.improvement = 0;
@@ -86,12 +86,10 @@ public class HillClimbingStep  {
         double gaussRadius = 0.01;
         boolean sameParams = false;
 
-        // for problems with discrete params, we want to avoid testing the same candidate over again. */
+        // for problems with integer params, we want to avoid testing the same candidate over again. */
         while (cache.contains(currentParams)) {
             sameParams = true;
             currentParams = currentParams.getRandomNeighbor(gaussRadius);
-            //System.out.println("Cache hit. Nbr=" + currentParams + " rad="
-            // + gaussRadius + " jumpSize="+jumpSize + " numInCache="+ cache.size());
             gaussRadius *= 2;
         }
         cache.add(currentParams);

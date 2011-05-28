@@ -1,7 +1,7 @@
 package com.becker.simulation.snake;
 
+import com.becker.common.format.FormatUtil;
 import com.becker.common.util.FileUtil;
-import com.becker.common.util.Util;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.DoubleParameter;
 import com.becker.optimization.parameter.NumericParameterArray;
@@ -220,7 +220,7 @@ public class SnakeSimulator extends NewtonianSimulator {
 
     @Override
     protected String getStatusMessage() {
-        return super.getStatusMessage() + "    velocity=" + Util.formatNumber( velocity_ );
+        return super.getStatusMessage() + "    velocity=" + FormatUtil.formatNumber(velocity_);
     }
 
     /**

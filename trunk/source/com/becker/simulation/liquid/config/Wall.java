@@ -1,6 +1,6 @@
 package com.becker.simulation.liquid.config;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;

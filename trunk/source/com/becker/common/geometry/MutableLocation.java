@@ -1,4 +1,4 @@
-package com.becker.common;
+package com.becker.common.geometry;
 
 /**
  * Represents a location location of something in byte coordinates.

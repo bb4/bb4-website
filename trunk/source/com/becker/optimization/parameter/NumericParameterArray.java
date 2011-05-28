@@ -128,8 +128,7 @@ public class NumericParameterArray extends ParameterArray {
             oldGradient = lastImprovement.getGradient();
         }
 
-        HillClimbIteration iter = new HillClimbIteration(this, oldGradient);
-
+        ImprovementIteration iter = new ImprovementIteration(this, oldGradient);
 
         double sumOfSqs = 0;
 
@@ -139,8 +138,8 @@ public class NumericParameterArray extends ParameterArray {
         }
         double gradLength = Math.sqrt(sumOfSqs);
 
-        HillClimbingStep step =
-                new HillClimbingStep(optimizee, iter, gradLength, cache, jumpSize, oldFitness);
+        ImprovementStep step =
+                new ImprovementStep(optimizee, iter, gradLength, cache, jumpSize, oldFitness);
         currentParams = step.findNextParams(currentParams);
 
         jumpSize = step.getJumpSize();
@@ -151,7 +150,6 @@ public class NumericParameterArray extends ParameterArray {
         jumpSize = findNewJumpSize(jumpSize, dotProduct);
 
         iter.gradient.copyFrom(iter.oldGradient);
-        System.out.println("IMP="+ improvement);
 
         return new Improvement(currentParams, improvement, jumpSize, iter.gradient);
     }
@@ -165,10 +163,10 @@ public class NumericParameterArray extends ParameterArray {
         // if we are headed in pretty much the same direction as last time, then we increase the jumpSize.
         // if we are headed off in a completely new direction, reduce the jumpSize until we start to stabilize.
         if ( dotProduct > MAX_DOT_PRODUCT ) {
-            jumpSize *= HillClimbingStep.JUMP_SIZE_INC_FACTOR;
+            jumpSize *= ImprovementStep.JUMP_SIZE_INC_FACTOR;
         }
         else if ( dotProduct < MIN_DOT_PRODUCT ){
-            jumpSize *= HillClimbingStep.JUMP_SIZE_DEC_FACTOR;
+            jumpSize *= ImprovementStep.JUMP_SIZE_DEC_FACTOR;
         }
         System.out.println( "dotProduct = " + dotProduct + " new jumpsize = " + jumpSize );
         return jumpSize;
@@ -212,7 +210,7 @@ public class NumericParameterArray extends ParameterArray {
     }
 
     /**
-     * @paramm radius the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
+     * @param radius the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
      *     (relative to each parameter range).
      * @return the random nbr.
      */

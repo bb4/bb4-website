@@ -1,6 +1,6 @@
 package com.becker.ui.sliders;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -117,9 +117,9 @@ public class SliderGroup extends JPanel implements ChangeListener {
     private String getSliderTitle(int index, int value) {
         String title = sliderProps_[index].getName() + " : " ;
         if (sliderProps_[index].getScale() == 1.0) {
-            return  title+ Util.formatNumber(value);
+            return  title+ FormatUtil.formatNumber(value);
         } else {
-            return  title + Util.formatNumber((double)value/sliderProps_[index].getScale());
+            return  title + FormatUtil.formatNumber((double) value / sliderProps_[index].getScale());
         }
     }
 

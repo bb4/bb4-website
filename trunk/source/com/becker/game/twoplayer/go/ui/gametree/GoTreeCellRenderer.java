@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.ui.gametree;
 
 import com.becker.common.ColorMap;
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.ui.gametree.GameTreeCellRenderer;
@@ -118,7 +118,7 @@ public final class GoTreeCellRenderer extends GameTreeCellRenderer {
     private int drawStringValue(String prefix, int value, int offset, Graphics2D g2) {
 
         Color c = getColorMap().getColorForValue(value);
-        String text = prefix + Util.formatNumber(value);
+        String text = prefix + FormatUtil.formatNumber(value);
         g2.setColor(c);
         int width = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         g2.fillRect(offset, 1, width + 2 * TEXT_MARGIN, 10);

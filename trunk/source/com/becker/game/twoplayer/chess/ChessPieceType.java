@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.chess;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.common.Move;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;

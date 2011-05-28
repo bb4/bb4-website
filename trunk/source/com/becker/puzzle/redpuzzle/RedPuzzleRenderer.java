@@ -1,6 +1,6 @@
 package com.becker.puzzle.redpuzzle;
 
-import com.becker.common.util.Util;
+import com.becker.common.format.FormatUtil;
 import com.becker.puzzle.common.PuzzleRenderer;
 
 import java.awt.*;
@@ -123,7 +123,7 @@ public class RedPuzzleRenderer extends PuzzleRenderer<PieceList> {
         g.setColor( TEXT_COLOR );
         g.setFont( TEXT_FONT );
         Integer num = p.getNumber();
-        g.drawString( Util.formatNumber(num), xpos + THIRD_SIZE, ypos + THIRD_SIZE );
+        g.drawString( FormatUtil.formatNumber(num), xpos + THIRD_SIZE, ypos + THIRD_SIZE );
     }
 
 

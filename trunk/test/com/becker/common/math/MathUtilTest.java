@@ -1,4 +1,4 @@
-package com.becker.common.util;
+package com.becker.common.math;
 
 import junit.framework.*;
 import com.becker.common.math.MathUtil;

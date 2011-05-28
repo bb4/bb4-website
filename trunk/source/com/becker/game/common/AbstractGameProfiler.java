@@ -1,7 +1,7 @@
 package com.becker.game.common;
 
+import com.becker.common.format.FormatUtil;
 import com.becker.common.profile.Profiler;
-import com.becker.common.util.Util;
 
 /**
  * Keep track of timing info for different game searching aspects.
@@ -56,7 +56,7 @@ public abstract class AbstractGameProfiler extends Profiler {
         GameContext.log( 0, "----------------------------------------------------------------------------------\n" );
         GameContext.log( 0, "There were " + numMovesConsidered + " moves considered.\n" );
         GameContext.log( 0, "The total time for the computer to move was : " +
-                Util.formatNumber((float)totalTime/1000) + " seconds.\n" );
+                FormatUtil.formatNumber((float) totalTime / 1000) + " seconds.\n" );
         print();
     }
 

@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.search.examples;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 
 /**

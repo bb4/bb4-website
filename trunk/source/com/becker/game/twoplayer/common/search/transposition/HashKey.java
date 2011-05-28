@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.search.transposition;
 
-import com.becker.common.Location;
+import com.becker.common.geometry.Location;
 
 /**
  * As an experiment to see the sequence of moves that led to a certain hash key,
