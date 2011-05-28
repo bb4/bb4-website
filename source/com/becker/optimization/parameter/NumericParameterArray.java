@@ -142,16 +142,16 @@ public class NumericParameterArray extends ParameterArray {
                 new ImprovementStep(optimizee, iter, gradLength, cache, jumpSize, oldFitness);
         currentParams = step.findNextParams(currentParams);
 
-        jumpSize = step.getJumpSize();
+        double newJumpSize = step.getJumpSize();
         // the improvement may be negative, meaning it did not improve.
         double improvement = step.getImprovement();
 
-        double dotProduct = iter.gradient.normalizedDot(iter.oldGradient);
-        jumpSize = findNewJumpSize(jumpSize, dotProduct);
+        double dotProduct = iter.getGradient().normalizedDot(iter.getOldGradient());
+        newJumpSize = findNewJumpSize(jumpSize, dotProduct);
 
-        iter.gradient.copyFrom(iter.oldGradient);
+        iter.getGradient().copyFrom(iter.getOldGradient());
 
-        return new Improvement(currentParams, improvement, jumpSize, iter.gradient);
+        return new Improvement(currentParams, improvement, newJumpSize, iter.getGradient());
     }
 
     /**
@@ -162,14 +162,15 @@ public class NumericParameterArray extends ParameterArray {
     private double findNewJumpSize(double jumpSize, double dotProduct) {
         // if we are headed in pretty much the same direction as last time, then we increase the jumpSize.
         // if we are headed off in a completely new direction, reduce the jumpSize until we start to stabilize.
+        double newJumpSize = jumpSize;
         if ( dotProduct > MAX_DOT_PRODUCT ) {
-            jumpSize *= ImprovementStep.JUMP_SIZE_INC_FACTOR;
+            newJumpSize *= ImprovementStep.JUMP_SIZE_INC_FACTOR;
         }
         else if ( dotProduct < MIN_DOT_PRODUCT ){
-            jumpSize *= ImprovementStep.JUMP_SIZE_DEC_FACTOR;
+            newJumpSize *= ImprovementStep.JUMP_SIZE_DEC_FACTOR;
         }
         System.out.println( "dotProduct = " + dotProduct + " new jumpsize = " + jumpSize );
-        return jumpSize;
+        return newJumpSize;
     }
 
     /**

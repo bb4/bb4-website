@@ -12,7 +12,9 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public interface Optimizee {
 
-    /** @return the name of the thing to be optimized */
+    /**
+     * @return the name of the thing to be optimized
+     */
     String getName();
 
     /**
@@ -40,6 +42,7 @@ public interface Optimizee {
 
     /**
      * if non-0, then we terminate when the fitness reaches this value.
+     * @return the best (largest) expected fitness value.
      */
     double getOptimalFitness();
 }

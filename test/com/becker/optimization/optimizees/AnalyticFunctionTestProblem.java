@@ -62,18 +62,6 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem {
         return variation_.evaluateFitness(a);
     }
 
-
-    private static void doTest(OptimizationStrategyType optType, ParameterArray initialGuess, Optimizer optimizer, AnalyticVariation v) {
-
-        ParameterArray solution = optimizer.doOptimization(optType, initialGuess, FITNESS_RANGE);
-
-        System.out.println( "\n************************************************************************" );
-        System.out.println( "The solution to the (" + v + ") Polynomial Test Problem using "
-                            + optType + " is :\n" + solution);
-        System.out.println( "Which evaluates to: "+ optimizer.getOptimizee().evaluateFitness(solution));
-        System.out.println( "We expected to get exactly p1 = "+ AnalyticFunctionConsts.P1 + " and p2 = " + AnalyticFunctionConsts.P2 );
-    }
-
     @Override
     public ParameterArray getInitialGuess() {
         return AnalyticFunctionConsts.INITIAL_GUESS;
@@ -88,26 +76,5 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem {
     public double getFitnessRange() {
         return FITNESS_RANGE;
     }
-
-    /**
-     * This finds the solution for the above optimization problem.
-     */
-    public static void main(String[] args) {
-        AnalyticVariation v = AnalyticVariation.STEPPED;
-        OptimizeeTestProblem testProblem = new AnalyticFunctionTestProblem(v);
-        Optimizer optimizer =
-                new Optimizer(testProblem, FileUtil.PROJECT_HOME + "performance/test_optimizer/poly_optimization.txt");
-
-        OptimizerEvalFrame oef = new OptimizerEvalFrame(optimizer, new Point2D.Double(1.0, 2.0));
-        oef.setVisible(true);
-
-        ParameterArray initialGuess = testProblem.getInitialGuess();
-
-        doTest(OptimizationStrategyType.HILL_CLIMBING, initialGuess, optimizer, v);
-        //for (OptimizationStrategyType type : OptimizationStrategyType.values()) {
-        //    doTest(type, initialGuess, optimizer);
-        //}
-    }
-
 
 }

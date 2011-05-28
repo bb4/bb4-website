@@ -9,11 +9,9 @@ import com.becker.optimization.parameter.ui.ParameterWidget;
  *
  *  @author Barry Becker
  */
-public class BooleanParameter extends IntegerParameter
-{
+public class BooleanParameter extends IntegerParameter {
 
-    public BooleanParameter( boolean val,  String paramName )
-    {
+    public BooleanParameter( boolean val,  String paramName )  {
         super(val?1:0, 0, 1, paramName);    
     }
     
@@ -25,8 +23,7 @@ public class BooleanParameter extends IntegerParameter
     }
 
     @Override
-    public Parameter copy()
-    {
+    public Parameter copy() {
         BooleanParameter p =  new BooleanParameter( (Boolean)getNaturalValue(), getName() );
         p.setRedistributionFunction(redistributionFunction_);
         return p;

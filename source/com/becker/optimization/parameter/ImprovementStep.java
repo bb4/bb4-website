@@ -55,7 +55,6 @@ public class ImprovementStep {
     }
 
     /**
-     *
      * @param params the initial value for the parameters to optimize.
      * @return the parameters to try next.
      */
@@ -74,15 +73,20 @@ public class ImprovementStep {
         return currentParams;
     }
 
+    /**
+     * Consider a nearby neighbor of the passed in params to see if it will yield improvement.
+     * @param params parameter set to find neighbor of.
+     * @return nearby location.
+     */
     private NumericParameterArray findNextCandidateParams(NumericParameterArray params) {
         improved = true;
         NumericParameterArray currentParams = params;
         NumericParameterArray oldParams = currentParams.copy();
 
         iter_.updateGradient(jumpSize, gradLength);
-        System.out.println("gradient = " + iter_.gradient + " jumpSize="+ jumpSize);
+        //System.out.println("gradient = " + iter_.gradient + " jumpSize="+ jumpSize);
         currentParams = currentParams.copy();
-        currentParams.add( iter_.gradient );
+        currentParams.add( iter_.getGradient() );
         double gaussRadius = 0.01;
         boolean sameParams = false;
 
@@ -90,7 +94,7 @@ public class ImprovementStep {
         while (cache.contains(currentParams)) {
             sameParams = true;
             currentParams = currentParams.getRandomNeighbor(gaussRadius);
-            gaussRadius *= 2;
+            gaussRadius *= 1.5;
         }
         cache.add(currentParams);
 
