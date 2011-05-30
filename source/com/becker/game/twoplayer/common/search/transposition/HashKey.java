@@ -10,7 +10,7 @@ import com.becker.common.geometry.Location;
  */
 public class HashKey {
 
-    private Long key;
+    private volatile Long key;
 
     /**
      * Create the static table of random numbers to use for the Hash from a sample board.
@@ -52,12 +52,10 @@ public class HashKey {
         return key;
     }
 
-
     @Override
     public int hashCode() {
         return key.hashCode();
     }
-
 
     public String toString() {
         return Long.toBinaryString(key);

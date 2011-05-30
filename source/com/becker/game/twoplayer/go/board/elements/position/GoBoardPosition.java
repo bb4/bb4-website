@@ -101,7 +101,7 @@ public final class GoBoardPosition extends BoardPosition
     /**
      * @param eye the eye owner this space is to be assigned to
      */
-    public void setEye( IGoEye eye ) {
+    public void setEye(IGoEye eye ) {
         eye_ = eye;
     }
 

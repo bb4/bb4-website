@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.transposition;
 
+import ca.dj.jigo.sgf.tokens.SourceToken;
 import com.becker.common.geometry.Location;
 
 import java.util.LinkedList;
@@ -36,8 +37,15 @@ public class HistoricalHashKey extends HashKey {
     public void applyMove(Location move, long specialNumber) {
         super.applyMove(move, specialNumber);
 
-        keyHistory.add(specialNumber);
-        moveHistory.add("{" + move.toString() + specialNumber + "}");
+        if (keyHistory.contains(specialNumber)) {
+            int index = keyHistory.indexOf(specialNumber);
+            keyHistory.remove(index);
+            moveHistory.remove(index);
+        }
+        else {
+            keyHistory.add(specialNumber);
+            moveHistory.add("{" + (move==null?"ko":move.toString()) + " " + specialNumber + "}");
+        }
     }
 
     @Override
@@ -58,7 +66,7 @@ public class HistoricalHashKey extends HashKey {
         return currentKey;
     }
 
-
+    @Override
     public String toString() {
 
         StringBuilder bldr = new StringBuilder();

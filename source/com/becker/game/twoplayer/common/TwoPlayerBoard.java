@@ -68,9 +68,9 @@ public abstract class TwoPlayerBoard extends Board {
 
 
     /**
-     * The index of the state for tihs position.
+     * The index of the state for this position.
      * Perhaps this would be better abstract.
-     * @return The index of the state for tihs position.
+     * @return The index of the state for this position.
      */
     public int getStateIndex(BoardPosition pos) {
         if (!pos.isOccupied()) {

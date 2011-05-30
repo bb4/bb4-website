@@ -7,17 +7,17 @@ package com.becker.game.twoplayer.go.board.analysis.group;
  */
 class Run {
 
-    int firstPos;
-    int endPos;
-    int max;
-    boolean boundedByFriends;
+    private int firstPos;
+    private int endPos;
+    private int max;
+    private boolean boundedByFriends;
 
     /**
      * Constructor.
      * The runLength is the magnitude of the run within a potential eyespace. It may contain dead enemy stones.
      * It is the difference between the endPos and the firstPos.
      * @param firstPos either the starting row or column position.
-     *        The postion before is either a friend stone or the edge.
+     *        The position before is either a friend stone or the edge.
      * @param endPos one past the other other extreme edge of the run.
      *     This position is either a friend stone or the edge (actually one past the last line).
      * @param max the last valid location before the edge.

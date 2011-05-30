@@ -335,8 +335,10 @@ public class ProcessingOperators
          params.add(new BooleanParameter(true, "useColor"));
          Enum[] specValues = {CellularFilter.GridType.RANDOM};
          double[] specValueProbs = {0.6};
-         params.add(StringParameter.createDiscreteParameter(
-                                 CellularFilter.GridType.RANDOM, CellularFilter.GridType.values(), "gridType",  specValues, specValueProbs));
+         params.add(
+             StringParameter.createDiscreteParameter(
+                         CellularFilter.GridType.RANDOM,
+                         CellularFilter.GridType.values(), "gridType",  specValues, specValueProbs));
          params.add(new IntegerParameter(1, 1, 20, "turbulence"));       
          params.add(new DoubleParameter(0.0, 0.0, 1.0, "F1"));
          params.add(new DoubleParameter(0.0, 0.0, 1.0, "F2"));
@@ -370,7 +372,7 @@ public class ProcessingOperators
              0.001,  0.040,  0.010,  0.010,  0.001,  
          };                                                          
          params.add(StringParameter.createDiscreteParameter(
-                                 OperationType.MULTIPLY, OperationType.values(), "operation",  specValues, specValueProbs));
+                          OperationType.MULTIPLY, OperationType.values(), "operation",  specValues, specValueProbs));
         
          params.add(new DoubleParameter(0.8, 0.1, 3.0, "amount"));
          params.add(new DoubleParameter(32, 4, 128, "scale"));

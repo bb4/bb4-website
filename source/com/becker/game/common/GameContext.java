@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * Manage game context info such as logging, debugging, resources, and profiling.
- * @@ Pehaps use java properties? config file?
+ * @@ Perhaps use java properties or config file?
  *
  * @author Barry Becker
  */

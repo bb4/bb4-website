@@ -18,7 +18,7 @@ public class ErrorFunction implements InvertibleFunction {
     * The gaussian error function table.
     * See http://eceweb.uccs.edu/Wickert/ece3610/lecture_notes/erf_tables.pdf
     * for values of x  = 0.0, 0.1, ... MAX_ERROR_FUNCTION_TABLE_VALUE
-    * @@ try plotting this in log scale.
+    * Try plotting this in log scale to help understanding.
     */
     private static final double[] ERROR_FUNCTION = {
          0.0000000,   0.0563721,   0.11246296,  0.16800,   0.2227026,  0.27633,    0.3286268,    0.37938,    0.4283924,   0.47548,     0.5204999,    0.56332,     0.6038561,    0.64203,    0.6778012,     0.71116,        0.7421008,       0.77067,        0.7969081,       0.82089,

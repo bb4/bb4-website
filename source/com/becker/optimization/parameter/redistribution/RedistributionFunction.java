@@ -4,7 +4,7 @@ import com.becker.common.math.function.Function;
 
 /**
  * Responsible for defining the probability distribution for selecting random parameter values.
- * Derived classes will defin the different sorts of redistribution functions.
+ * Derived classes will define the different sorts of redistribution functions.
  * 
  * @author Barry Becker
  */

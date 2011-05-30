@@ -20,9 +20,9 @@ public class LRUCache<K,V> {
      * The <i>load factor</i> is a measure of how full the hash table is allowed to
      * get before its capacity is automatically increased.  75% in this case.
      */
-    private static final float   hashTableLoadFactor = 0.75f;
+    private static final float hashTableLoadFactor = 0.75f;
 
-    private LinkedHashMap<K,V>  map;
+    private LinkedHashMap<K,V> map;
     private int cacheSize;
 
     /**
@@ -60,8 +60,8 @@ public class LRUCache<K,V> {
      * @param key    the key with which the specified value is to be associated.
      * @param value  a value to be associated with the specified key.
      */
-    public synchronized void put (K key, V value) {
-       map.put (key,value); }
+    public synchronized void put(K key, V value) {
+       map.put(key,value); }
 
     /**
      * Clears the cache.

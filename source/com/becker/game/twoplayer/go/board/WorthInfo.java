@@ -12,11 +12,12 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
 import static com.becker.game.twoplayer.go.GoController.WIN_THRESHOLD;
 
 /**
- * For statically evaluating the current state of a GoBoard.
+ * All the stuff used to compute the worth.
+ * temp class used for debugging.
  *
  * @author Barry Becker
  */
-public class WorthCalculator {
+public class WorthInfo {
 
     /** a lookup table of scores to attribute to the board positions when calculating the worth. */
     private PositionalScoreAnalyzer positionalScorer_;
@@ -24,7 +25,7 @@ public class WorthCalculator {
     /**
      * Constructor.
      */
-    public WorthCalculator(int numRows, int numCols) {
+    public WorthInfo(int numRows, int numCols) {
 
         positionalScorer_ = new PositionalScoreAnalyzer(numRows, numCols);
     }

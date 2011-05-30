@@ -32,7 +32,7 @@ public abstract class ParameterWidget extends JPanel {
      * Make sure that the UI reflects the current parameter value, in case it has changed underneath
      */
     public void refresh() {
-        // temporarly turn of notification to listeners so that we do not update listeners when
+        // temporarily turn of notification to listeners so that we do not update listeners when
         // we modify our own internal state.
         notificationEnabled = false;
         refreshInternal();
