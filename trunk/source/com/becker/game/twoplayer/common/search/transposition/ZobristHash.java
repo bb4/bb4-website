@@ -44,7 +44,6 @@ public final class ZobristHash {
      */
     public ZobristHash(TwoPlayerBoard board, int randomSeed, boolean includeHistory) {
 
-
         this.board = board;
         this.includeHistory = includeHistory;
         injectRandom(new Random(randomSeed));
@@ -63,7 +62,7 @@ public final class ZobristHash {
     }
 
     public void applyMoveNumber(int number) {
-          currentKey.applyMove(null, number);
+        currentKey.applyMove(null, number);
     }
 
     /** for unit testing only so we get repeatable tests. */

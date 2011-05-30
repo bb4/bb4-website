@@ -154,7 +154,7 @@ public class GoSearchable extends TwoPlayerSearchable {
     }
 
     /**
-     *  If we have a cached worth value for this board position, then use that.
+     *  If we have a cached worth value for this board position, then use that instead of recomputing it.
      *  @return statically evaluated value for the board.
      */
     public int cachedWorth( Move lastMove, ParameterArray weights ) {
@@ -170,13 +170,13 @@ public class GoSearchable extends TwoPlayerSearchable {
         int worth = worthCalculator_.worth(getBoard(), lastMove, weights);
 
         if (cachedScore == null) {
-            scoreCache_.put(getHashKey(), new ScoreEntry(worth, getBoard().toString()));
+            scoreCache_.put(key, new ScoreEntry(worth, getBoard().toString()));
         }
         else {
             if (cachedScore.getScore() == worth) {
-                System.out.println("matched");
+                System.out.println("matched as expected");
             } else {
-                System.out.println("\ncachedScore "+cachedScore +" for key=" + getHashKey()
+                System.out.println("\ncachedScore " + cachedScore + "\nfor key=" + getHashKey()
                   +"\ndid not match "+ worth + " for \n" + getBoard().toString());
                 System.out.flush();
             }

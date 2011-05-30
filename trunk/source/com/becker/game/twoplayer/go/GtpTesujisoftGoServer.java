@@ -268,10 +268,9 @@ public class GtpTesujisoftGoServer
             response.append("Invalid number of handicap stones");
             return false;
         }
-        StringBuffer pointList = new StringBuffer(128);
-        for (int i = 0; i < moves.size(); ++i)
-        {
-            GoMove pos = (GoMove) moves.get(i);
+        StringBuilder pointList = new StringBuilder(128);
+        for (Object move : moves) {
+            GoMove pos = (GoMove) move;
             Point point = new Point(pos.getToCol(), pos.getToRow());
             if (pointList.length() > 0)
                 pointList.append(' ');

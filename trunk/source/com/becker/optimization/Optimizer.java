@@ -70,7 +70,7 @@ public class Optimizer {
      * @param optimizationType the type of search to perform
      * @param params the initialGuess at the solution. Also defines the bounds of the search space.
      * @param fitnessRange the approximate range (max-min) of the fitness values
-     * @return the soution to the optimization problem.
+     * @return the solution to the optimization problem.
      */
     public ParameterArray doOptimization(OptimizationStrategyType optimizationType,
                                          ParameterArray params, double fitnessRange ) {

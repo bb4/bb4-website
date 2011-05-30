@@ -96,7 +96,6 @@ public class NumericParameterArray extends ParameterArray {
         System.out.println("dims="+Arrays.toString(dims));
         MultiArray samples = new MultiArray( dims );
         List<ParameterArray> globalSamples = new ArrayList<ParameterArray>(numSamples);
-        int ct = 0;
 
         for ( i = 0; i < samples.getNumValues(); i++ ) {
             int[] index = samples.getIndexFromRaw( i );
@@ -147,7 +146,7 @@ public class NumericParameterArray extends ParameterArray {
         double improvement = step.getImprovement();
 
         double dotProduct = iter.getGradient().normalizedDot(iter.getOldGradient());
-        newJumpSize = findNewJumpSize(jumpSize, dotProduct);
+        newJumpSize = findNewJumpSize(newJumpSize, dotProduct);
 
         iter.getGradient().copyFrom(iter.getOldGradient());
 

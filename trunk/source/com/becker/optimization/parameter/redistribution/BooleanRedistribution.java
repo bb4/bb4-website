@@ -18,8 +18,8 @@ public class BooleanRedistribution extends DiscreteRedistribution {
          
         super(2, SPECIAL_VALUES, getSpecialValueProbs(percentTrue));              
     }
-    
-    private static final double[] getSpecialValueProbs(double percentTrue) {
+
+    private static double[] getSpecialValueProbs(double percentTrue) {
         double[] probs = new double[2];
         probs[0] = percentTrue;
         probs[1] = 1.0 - percentTrue;

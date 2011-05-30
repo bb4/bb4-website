@@ -23,9 +23,9 @@ public class UniformRedistribution extends AbstractRedistributionFunction {
 
     /**
      * If you have just a purely uniform distribution you do not need to add any redistribution function as that is the default.
-     * Use this function thoug, if you have uniform except for a few special values.
+     * Use this function though, if you have uniform except for a few special values.
      * If the sum of all special value probabilities is equal to one, then no non-special values are ever selected.
-     * @param specialValues certain values that are more likely to occur than other regualr values. (must be in increasing order)
+     * @param specialValues certain values that are more likely to occur than other regular values. (must be in increasing order)
      * @param specialValueProbabilities sum of all special value probabilities must be less than or equal to one.
      */
     public UniformRedistribution(double[] specialValues, double[] specialValueProbabilities) {
@@ -36,6 +36,7 @@ public class UniformRedistribution extends AbstractRedistributionFunction {
         initializeFunction();
     }
 
+    @Override
     protected void initializeFunction() {
         int len = specialValues.length;
         assert(len >0): "must have at least one special value " +
@@ -90,7 +91,7 @@ public class UniformRedistribution extends AbstractRedistributionFunction {
              }
             specialProbabilityTotal += specialValueProbabilities[i];
         }
-        //assert (specialProbabilityTotal < 1.0) : "Sum of special probabilities is not lesst than one. It was " + specialProbabilityTotal;
+        //assert (specialProbabilityTotal < 1.0) : "Sum of special probabilities is not less than one. It was " + specialProbabilityTotal;
         verifyInRange(specialProbabilityTotal);
         return specialProbabilityTotal;
     }

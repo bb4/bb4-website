@@ -53,8 +53,9 @@ public class BoardValidator {
         for ( int i = 1; i <= board_.getNumRows(); i++ )  {
             for ( int j = 1; j <= board_.getNumCols(); j++ ) {
                 GoBoardPosition space = (GoBoardPosition) board_.getPosition( i, j );
-                if ( space.isOccupied() )
+                if ( space.isOccupied() )  {
                     groups.confirmStoneInValidGroup(space);
+                }
             }
         }
     }

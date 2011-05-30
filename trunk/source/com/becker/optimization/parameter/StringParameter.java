@@ -23,7 +23,7 @@ public class StringParameter extends IntegerParameter {
     public StringParameter( Enum val, Enum[] enumValues , String paramName) {
         super(val.ordinal(), 0, enumValues.length-1, paramName);    
         List<String> values = new ArrayList<String>(enumValues.length);
-        int i = 0;
+
         for (Enum v: enumValues) {
             values.add(v.toString());
         }
@@ -52,8 +52,6 @@ public class StringParameter extends IntegerParameter {
         return param;
     }
 
-
-
     @Override
     public Parameter copy() {
         StringParameter p = new StringParameter( (int)getValue(), values_, getName() );
@@ -66,12 +64,12 @@ public class StringParameter extends IntegerParameter {
         return values_.get((int)getValue());
     }
     
-   public List<String> getStringValues() {
+    public List<String> getStringValues() {
        return values_;
     }
-   
-   @Override
-   protected boolean isOrdered() {
+
+    @Override
+    protected boolean isOrdered() {
         return false;
     }
    

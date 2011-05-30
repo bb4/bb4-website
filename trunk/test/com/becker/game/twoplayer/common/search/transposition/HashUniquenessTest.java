@@ -34,8 +34,9 @@ public class HashUniquenessTest extends TestCase {
     }
 
    /**
-    * We will play every possible tic tac toe move and verify that the zobrist hashes generated for unique board positions are unique.
-    * In theory it is possible that there are collisions, but i n practice it should be exceedingly rare.
+    * We will play every possible tic tac toe move and verify that the zobrist hashes generated
+    * for unique board positions are unique.
+    * In theory, it is possible that there are collisions, but i n practice it should be exceedingly rare.
     * To simplify the number of total moves we will just consider the 2 spaces in the upper left of the ttt board.
     */
     public void testNoCacheStatisticsTwoByOneBoard() {
@@ -81,7 +82,6 @@ public class HashUniquenessTest extends TestCase {
         playAllMoves(0);
         verifyScoreCacheStats(980364, 6045);
     }
-
 
     private void verifyScoreCacheStats(int expHits, int expMisses) {
         System.out.println("scoreCache =" + scoreCache.toString());

@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.common.search.transposition;
 
 
-import com.becker.game.twoplayer.tictactoe.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -19,7 +18,8 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Transposition Tests");
 
         suite.addTestSuite(ZobristHashTest.class);
-        //suite.addTestSuite(HashUniquenessTest.class);
+        suite.addTestSuite(HashUniquenessTest.class);
+        suite.addTestSuite(HashGoUniquenessTest.class);
 
         return suite;
     }

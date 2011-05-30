@@ -14,7 +14,7 @@ public abstract class AbstractParameter implements Parameter {
 
     protected double value_ = 0.0;
     protected double minValue_ = 0.0;
-    protected double maxValue_ = 0.0;
+    private double maxValue_ = 0.0;
     private double range_ = 0.0;
     private String name_ = null;
     private boolean integerOnly_ = false;

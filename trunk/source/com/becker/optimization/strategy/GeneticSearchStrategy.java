@@ -34,18 +34,19 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
     /** this prevents us from running forever.  */
     private static final int MAX_ITERATIONS = 100;
 
-    // stop when the avg population score does not improve by better than this
+    /** stop when the avg population score does not improve by better than this  */
     private static final double DEFAULT_IMPROVEMENT_EPS = 0.000000000001;
 
-    //
+    /** radius to look for neighbors in  */
     private double nbrRadius_ = NBR_RADIUS;
 
-    // this is the number of members to be maintained in the population at any time.
+    /** this is the number of members to be maintained in the population at any time. */
     private int populationSize_;
 
+    /** If crossover breeding of genetic material is used. */
     private boolean useCrossOver_ = false;
 
-    // if we don't improve by at least this amount between iterations, terminate.
+    /** if we don't improve by at least this amount between iterations, terminate.  */
     protected double improvementEpsilon_ = DEFAULT_IMPROVEMENT_EPS;
 
 

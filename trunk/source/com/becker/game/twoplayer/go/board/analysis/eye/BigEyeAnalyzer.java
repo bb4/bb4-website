@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Determine properties about a big eye on the board.
- * This analyizer is only used by the EyeTypeAnalyzer.
+ * This analyzer is only used by the EyeTypeAnalyzer.
  * It classifies eyes that are not false eye and have between 2 and 8 spaces_.
  * Some of those spaces_ may have enemy stones in them.
  * See EyeTypeAnalyzer
