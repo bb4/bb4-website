@@ -94,6 +94,8 @@ class AbsoluteHealthCalculator {
      * @return the overall health of the group independent of nbr groups.
      */
     public float calculateAbsoluteHealth(GoBoard board) {
+
+
         if (eyeCache_.isValid()) {
             GameContext.log(1, "cache valid. Returning health=" + absoluteHealth_);
             return absoluteHealth_;
@@ -144,8 +146,9 @@ class AbsoluteHealthCalculator {
      * @return the number of liberties that the group has
      */
     public GoBoardPositionSet getLiberties(GoBoard board) {
+        // XXX AA possible cause of indeterminism..
         if (eyeCache_.isValid()) {
-             return cachedLiberties_;
+            return cachedLiberties_;
         }
         GoBoardPositionSet liberties = new GoBoardPositionSet();
         for (IGoString str : group_.getMembers()) {
@@ -156,9 +159,9 @@ class AbsoluteHealthCalculator {
     }
 
     /**
-     * If nothing cached, this may not be accurate.
+     * Get number of liberties for our groups. If nothing cached, this may not be accurate.
      * @param board if null, then the number of liberties returned is just what is in the cache and may not be accurate.
-     * @return number of cached liberties if board is null, else exact number of liberties.
+     * @return number of cached liberties if board is null, else exact number of liberties for group.
      */
     public int getNumLiberties(GoBoard board) {
         if (board == null) {

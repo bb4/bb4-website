@@ -35,12 +35,14 @@ public final class ZobristHash {
      */
     public ZobristHash(TwoPlayerBoard board) {
 
-        this(board, 0, false);
+        this(board, 0, true);  // always false unless debugging.
     }
 
     /**
      * Create the static table of random numbers to use for the Hash from a sample board.
      * @param board game board
+     * @param randomSeed having a fixed random seeds allows for the same sequence of random number each time.
+     * @param includeHistory if true a lot of debug information is included in the key. Don't use in production.
      */
     public ZobristHash(TwoPlayerBoard board, int randomSeed, boolean includeHistory) {
 
@@ -122,9 +124,6 @@ public final class ZobristHash {
     private void applyPositionToKey(Location location, int stateIndex) {
 
         currentKey.applyMove(location, randomNumberTable_[location.getRow()-1][location.getCol()-1][stateIndex]);
-
-        //currentKey ^= randomNumberTable_[location.getRow()-1][location.getCol()-1][stateIndex];
-        //return currentKey;
     }
 
 }

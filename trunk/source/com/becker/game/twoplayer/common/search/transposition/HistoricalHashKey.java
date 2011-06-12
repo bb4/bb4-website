@@ -20,8 +20,7 @@ public class HistoricalHashKey extends HashKey {
      * Create the static table of random numbers to use for the Hash from a sample board.
      */
     public HistoricalHashKey() {
-        moveHistory = new LinkedList<String>();
-        keyHistory = new LinkedList<Long>();
+        init();
     }
 
     /**
@@ -31,6 +30,27 @@ public class HistoricalHashKey extends HashKey {
      */
     public HistoricalHashKey(Long key) {
         super(key);
+        init();
+    }
+
+    private void init() {
+        moveHistory = new LinkedList<String>();
+        keyHistory = new LinkedList<Long>();
+    }
+
+    /**
+     * copy constructor
+     */
+    public HistoricalHashKey(HashKey key) {
+        this(key.getKey());
+    }
+
+    @Override
+    public HashKey copy() {
+        HistoricalHashKey keyCopy =  new HistoricalHashKey(this);
+        keyCopy.moveHistory.addAll(this.moveHistory);
+        keyCopy.keyHistory.addAll(this.keyHistory);
+        return keyCopy;
     }
 
     @Override
@@ -44,7 +64,7 @@ public class HistoricalHashKey extends HashKey {
         }
         else {
             keyHistory.add(specialNumber);
-            moveHistory.add("{" + (move==null?"ko":move.toString()) + " " + specialNumber + "}");
+            moveHistory.add("{" + (move == null ? "ko" : move.toString()) + " " + specialNumber + "}");
         }
     }
 

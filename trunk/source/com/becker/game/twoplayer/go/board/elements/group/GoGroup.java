@@ -62,6 +62,11 @@ public final class GoGroup extends GoSet
         }       
     }
 
+    /**
+     *
+     * @param stones
+     * @param stone  the new stone to add to the group.
+     */
     private void assimilateStone(GoBoardPositionList stones, GoBoardPosition stone) {
         assert stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_ :
                 "Stones in group must all be owned by the same player. stones=" + stones;
@@ -219,7 +224,7 @@ public final class GoGroup extends GoSet
     }
 
     /**
-     * set the health of strings in this group
+     * Set the health of strings in this group
      * @param health the health of the group
      */
     public void updateTerritory( float health ) {

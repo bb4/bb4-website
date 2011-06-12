@@ -14,7 +14,7 @@ import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 import java.util.Iterator;
 
 /**
- *  describes a change in state from one board
+ *  Describes a change in state from one board
  *  position to the next in a Go game.
  *
  *  @author Barry Becker
@@ -62,8 +62,8 @@ public class GoMove extends TwoPlayerMove {
     }
 
     /**
-     * factory method for creating a passing move
-     * @return new passing move
+     * factory method for creating a resignation move
+     * @return new resignation move
      */
     public static GoMove createResignationMove(boolean player1) {
         GoMove m = new GoMove( new Location(1, 1), 0, null );
@@ -73,8 +73,8 @@ public class GoMove extends TwoPlayerMove {
     }
 
     /**
-     * check if the current move is suicidal.
-     * suicidal moves (ones that kill your own pieces) are illegal.
+     * Check if the current move is suicidal.
+     * Suicidal moves (ones that kill your own pieces) are illegal.
      * Usually a move is suicidal if you play on your last liberty.
      * However, if you kill an enemy string by playing on your last liberty,
      * then it is legal.
@@ -155,10 +155,10 @@ public class GoMove extends TwoPlayerMove {
 
     /**
      * I would like to avoid this setter.
-     * @param captures
+     * @param captures captures to set. We make a defensive copy of them.
      */
-    public void setCaptures(GoCaptureList captures) {
-        captureList_ = captures;
+    public synchronized void setCaptures(GoCaptureList captures) {
+        captureList_ = captures.copy();
     }
 
     public GoCaptureList getCaptures() {

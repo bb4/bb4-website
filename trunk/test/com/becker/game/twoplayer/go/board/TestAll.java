@@ -13,7 +13,7 @@ public class TestAll {
     private TestAll() {}
 
     /**
-     * @return all the junit test caes to run (in this class)
+     * @return all the junit test cases to run (in this class)
      */
     public static Test suite() {
 
@@ -25,6 +25,8 @@ public class TestAll {
 
         suite.addTestSuite(TestGoBoard.class);
         suite.addTestSuite(TestGroupFinding.class);
+        suite.addTestSuite(TestWorthCalculator3.class);
+        suite.addTestSuite(TestWorthCalculator5.class);
 
         return suite;
     }

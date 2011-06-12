@@ -29,6 +29,17 @@ public class HashKey {
         this.key = key;
     }
 
+    /**
+     * copy constructor
+     */
+    public HashKey(HashKey key) {
+        this(key.getKey());
+    }
+
+    public HashKey copy() {
+        return new HashKey(this);
+    }
+
     public void applyMove(Location move, long specialNumber) {
         // note ^ is XOR (exclusive OR) in java.
         key ^= specialNumber;

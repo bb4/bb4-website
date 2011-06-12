@@ -9,6 +9,7 @@ import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.group.GoGroupSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 import com.becker.game.twoplayer.go.board.elements.string.GoString;
 import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
@@ -33,6 +34,7 @@ public final class GoBoard extends TwoPlayerBoard {
     /** This is a set of active groups. Groups are composed of strings. */
     private GoGroupSet groups_;
 
+    /** Handicap stones are on the star points, unless the board is very small */
     private HandicapStones handicap_;
 
     private BoardUpdater boardUpdater_;
@@ -270,6 +272,7 @@ public final class GoBoard extends TwoPlayerBoard {
      * @return the estimated difference in territory between the 2 sides.
      */
     public float updateTerritory(boolean isEndOfGame) {
+        clearScores();
         return territoryAnalyzer_.updateTerritory(isEndOfGame);
     }
 
@@ -298,6 +301,24 @@ public final class GoBoard extends TwoPlayerBoard {
            }
         }
         return numStones;
+    }
+
+    /**
+     * Clear whatever cached score state we might have before recomputing.
+     */
+    private void clearScores() {
+        // we should be able to just sum all the position scores now.
+        for ( int i = 1; i <= getNumRows(); i++ )  {
+           for ( int j = 1; j <= getNumCols(); j++ ) {
+               GoBoardPosition pos = (GoBoardPosition)getPosition(i, j);
+               pos.setScoreContribution(0);
+
+               if (pos.isOccupied()) {
+                   GoStone stone = ((GoStone)pos.getPiece());
+                   stone.setHealth(0);
+               }
+           }
+        }
     }
 
     /**

@@ -170,14 +170,23 @@ public class GoSearchable extends TwoPlayerSearchable {
         int worth = worthCalculator_.worth(getBoard(), lastMove, weights);
 
         if (cachedScore == null) {
-            scoreCache_.put(key, new ScoreEntry(worth, getBoard().toString()));
+            scoreCache_.put(key, new ScoreEntry(key, worth, getBoard().toString(), worthCalculator_.getInfo()));
         }
         else {
-            if (cachedScore.getScore() == worth) {
-                System.out.println("matched as expected");
-            } else {
-                System.out.println("\ncachedScore " + cachedScore + "\nfor key=" + getHashKey()
-                  +"\ndid not match "+ worth + " for \n" + getBoard().toString());
+            if (cachedScore.getScore() != worth) {
+                StringBuilder bldr = new StringBuilder();
+                bldr.append("\ncachedScore ").
+                        append(cachedScore).
+                        //append("\nfor key=").
+                        //append(getHashKey()).
+                        append("\ndid not match ").
+                        append(worth).append(" for \n").
+                        append(getBoard().toString()).
+                        append("\ncurrent info: ").
+                        append(worthCalculator_.getInfo()).
+                        append("using current key=").
+                        append(getHashKey());
+                System.out.println(bldr.toString());
                 System.out.flush();
             }
         }
@@ -223,9 +232,10 @@ public class GoSearchable extends TwoPlayerSearchable {
             for (BoardPosition pos : goMove.getCaptures()) {
                 hash.applyMove(pos.getLocation(), getBoard().getStateIndex(pos));
             }
+            // this is needed to disambiguate ko's.  Perhaps we should only do it when there is a ko.
+            hash.applyMoveNumber(getNumMoves() + goMove.getNumCaptures());
         }
-        // this is needed to disambiguate ko's.
-        hash.applyMoveNumber(getNumMoves());
+
     }
 
     /**

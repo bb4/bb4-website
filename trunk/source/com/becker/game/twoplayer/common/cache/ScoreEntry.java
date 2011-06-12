@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.common.cache;
 
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
+import com.becker.game.twoplayer.go.board.WorthInfo;
 
 /**
  * Holds the score and the board state
@@ -9,9 +10,10 @@ import com.becker.game.twoplayer.common.search.transposition.HashKey;
  */
 public class ScoreEntry {
 
+    private HashKey key;
     private int score;
     private String boardDesc;
-    private HashKey key;
+    private WorthInfo info;
 
     public ScoreEntry(int score, String boardDesc) {
         this.score = score;
@@ -19,10 +21,11 @@ public class ScoreEntry {
     }
 
     /** only use this for debugging. normally we do not store the key */
-    public ScoreEntry(int score, String boardDesc, HashKey key) {
+    public ScoreEntry(HashKey key,int score, String boardDesc, WorthInfo info) {
+        this.key = key;
         this.score = score;
         this.boardDesc = boardDesc;
-        this.key = key;
+        this.info = info;
     }
 
     public int getScore() {
@@ -30,6 +33,6 @@ public class ScoreEntry {
     }
 
     public String toString() {
-        return "Cached score="+ score +" for\n" + boardDesc + "\nhashKey used: " + key;
+        return "Cached scoreEntry (for key="+ key +")\n = "+ score +" for\n" + boardDesc  + "\n info="+ info;
     }
 }

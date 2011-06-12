@@ -45,7 +45,6 @@ public class BoardPosition {
         return new BoardPosition(this);
     }
 
-
     /**
      * constructor
      * @param loc -  location on the board.
