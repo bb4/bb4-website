@@ -146,7 +146,7 @@ class AbsoluteHealthCalculator {
      * @return the number of liberties that the group has
      */
     public GoBoardPositionSet getLiberties(GoBoard board) {
-        // XXX AA possible cause of indeterminism..
+        // XXX AA possible cause of indeterminism.
         if (eyeCache_.isValid()) {
             return cachedLiberties_;
         }
