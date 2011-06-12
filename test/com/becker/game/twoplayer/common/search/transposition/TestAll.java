@@ -19,7 +19,8 @@ public class TestAll extends TestCase {
 
         suite.addTestSuite(ZobristHashTest.class);
         suite.addTestSuite(HashUniquenessTest.class);
-        suite.addTestSuite(HashGoUniquenessTest.class);
+        suite.addTestSuite(HashGo9x9UniquenessTest.class);
+        suite.addTestSuite(HashGo5x5UniquenessTest.class);
 
         return suite;
     }

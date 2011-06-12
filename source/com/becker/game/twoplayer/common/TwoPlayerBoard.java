@@ -73,11 +73,12 @@ public abstract class TwoPlayerBoard extends Board {
      * @return The index of the state for this position.
      */
     public int getStateIndex(BoardPosition pos) {
-        if (!pos.isOccupied()) {
-            return 0;
-        } else {
+        assert pos.isOccupied() : "this should only be called on occupied positions";
+        //if (!pos.isOccupied()) {
+        //    return 0;
+        //} else {
             return pos.getPiece().isOwnedByPlayer1()? 1:2;
-        }
+        //}
     }
 
     @Override

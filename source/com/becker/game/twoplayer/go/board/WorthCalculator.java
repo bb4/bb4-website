@@ -5,6 +5,7 @@ import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.analysis.GameStageBoostCalculator;
 import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -20,6 +21,8 @@ public class WorthCalculator {
 
     /** a lookup table of scores to attribute to the board positions when calculating the worth. */
     private PositionalScoreAnalyzer positionalScorer_;
+
+    private WorthInfo info;
 
     /**
      * Constructor.
@@ -82,24 +85,36 @@ public class WorthCalculator {
         board.updateTerritory(false);
 
         PositionalScore totalScore = new PositionalScore();
+        PositionalScore[][] positionScores = new PositionalScore[board.getNumRows()][board.getNumCols()];
         for (int row = 1; row <= board.getNumRows(); row++ ) {
             for (int col = 1; col <= board.getNumCols(); col++ ) {
 
                 PositionalScore s =
                     positionalScorer_.determineScoreForPosition(board, row, col, gameStageBoost, weights);
+                positionScores[row-1][col-1] = s;
                 totalScore.incrementBy(s);
             }
         }
 
         double territoryDelta = board.getTerritoryDelta();
         double captureScore = getCaptureScore(board, weights);
-        double worth = scaleFactor * (totalScore.getPositionScore() + captureScore + territoryDelta);
+        double positionalScore = totalScore.getPositionScore();
+        double worth = scaleFactor * (positionalScore + captureScore + territoryDelta);
 
         if (GameContext.getDebugMode() > 0)  {
             String desc = totalScore.getDescription(worth, captureScore, territoryDelta, scaleFactor);
             ((TwoPlayerMove) lastMove).setScoreDescription(desc);
         }
+        int blackCap = board.getNumCaptures( true );
+        int whiteCap = board.getNumCaptures( false );
+        this.info =
+                new WorthInfo(gameStageBoost, territoryDelta, captureScore, blackCap, whiteCap,
+                              positionalScore, positionScores, ((GoMove)lastMove).getCaptures(), worth, board.getMoveList().copy());
         return worth;
+    }
+
+    public WorthInfo getInfo() {
+        return info;
     }
 
     /**

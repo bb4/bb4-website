@@ -101,7 +101,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
 
     /**
      * takes back the most recent move.
-     * @param m  move to undo
+     * @param m move to undo
      */
     public void undoInternalMove( TwoPlayerMove m ) {
         TwoPlayerMove lastMove = (TwoPlayerMove)moveList_.getLastMove();
@@ -109,7 +109,12 @@ public abstract class TwoPlayerSearchable implements Searchable {
                 + moveList_+" was not equal to the last move ("+lastMove+"). all move=" + getBoard().getMoveList();
 
         Location loc = m.getToLocation();
-        hash.applyMove(loc, getBoard().getStateIndex(getBoard().getPosition(loc)));
+
+        if (!m.isPassingMove())
+        {
+            hash.applyMove(loc, getBoard().getStateIndex(getBoard().getPosition(loc)));
+        }
+
         getBoard().undoMove();
     }
 

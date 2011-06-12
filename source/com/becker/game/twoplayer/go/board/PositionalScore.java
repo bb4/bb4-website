@@ -2,6 +2,8 @@ package com.becker.game.twoplayer.go.board;
 
 import com.becker.common.format.FormatUtil;
 
+import javax.swing.*;
+
 /**
  * For debugging purposes we want to keep more detail on what composes the overall score.
  * @author Barry Becker 
@@ -59,18 +61,18 @@ public class PositionalScore {
 
     public String toString(boolean htmlForm) {
         StringBuilder buf = new StringBuilder();
-        String sep = htmlForm ? "<br>" : "\n";
-        buf.append("overall positionScore=").append(format(positionScore_)).append(sep);
+        String sep = htmlForm ? "<br>" : "\t";
+        buf.append("  Overall positionScore=").append(format(positionScore_)).append(sep);
         buf.append("  deadStoneScore=").append(format(deadStoneScore)).append(sep);
         buf.append("  eyeSpaceScore=").append(format(eyeSpaceScore)).append(sep);
         buf.append("  badShapeScore=").append(format(badShapeScore)).append(sep);
         buf.append("  posScore=").append(format(posScore)).append(sep);
         buf.append("  healthScore=").append(format(healthScore));
+        buf.append("\n");
         return buf.toString();
     }
 
     private String format(double num) {
-        // FormatUtil.formatNumber(num);
-        return Double.toString(num);
+        return FormatUtil.formatNumber(num);
     }
 }

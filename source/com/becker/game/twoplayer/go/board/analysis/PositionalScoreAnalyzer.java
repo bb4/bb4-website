@@ -9,7 +9,7 @@ import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
- * Used to keep track of evaluating a measure of score pased only on values at positions.
+ * Used to keep track of evaluating a measure of score passed only on values at positions.
  *
  * @author Barry Becker
  */
@@ -69,7 +69,6 @@ public final class PositionalScoreAnalyzer {
                 // default neutral value
                 positionalScore[row][col] = 0.0f;
 
-
                 int lineNo = Math.min(rowmin, colmin);
                 if (lineNo < LINE_VALS.length) {
                     if (rowmin == colmin)  {
@@ -110,9 +109,10 @@ public final class PositionalScoreAnalyzer {
      */
     private void updateEyePointScore(PositionalScore score, GoBoardPosition position) {
 
+        // was 2, but one works better.
         double scoreForPosition = position.getEye().isOwnedByPlayer1()? 1.0 : -1.0;
         if (position.isOccupied()) {
-            score.deadStoneScore = scoreForPosition;   // was 2, but one woks better.
+            score.deadStoneScore = scoreForPosition;
         }
         else {
             score.eyeSpaceScore = scoreForPosition;
@@ -123,10 +123,9 @@ public final class PositionalScoreAnalyzer {
      * Normalize each of the scores by the game weights.
      */
     private void updateNormalizedOccupiedPositionScore(GoBoard board, PositionalScore score, GoBoardPosition position,
-                                                      ParameterArray weights, double positionalScore,
-                                                      double gameStageBoost) {
+                                                       ParameterArray weights, double positionalScore,
+                                                       double gameStageBoost) {
         GoStone stone = (GoStone)position.getPiece();
-
 
         int side = position.getPiece().isOwnedByPlayer1()? 1: -1;
         double badShapeWt = weights.get(GoWeights.BAD_SHAPE_WEIGHT_INDEX).getValue();

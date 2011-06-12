@@ -125,6 +125,7 @@ public final class GoMoveGenerator {
      * @return true of this is an immediate take-back (not allowed in go - see "rule of ko")
      */
     public static boolean isTakeBack( int row, int col, GoMove lastMove, GoBoard board ) {
+
         if ( lastMove == null ) return false;
 
         CaptureList captures = lastMove.getCaptures();

@@ -71,55 +71,55 @@ public class GoCaptureList extends CaptureList {
      */
     @Override
     public void removeFromBoard( Board board ) {
-        GoBoard b = (GoBoard) board;
+        GoBoard goBoard = (GoBoard) board;
         for (BoardPosition c : this) {
             GoBoardPosition capStone = (GoBoardPosition) c;
             GoBoardPosition stoneOnBoard =
-                (GoBoardPosition) b.getPosition(capStone.getLocation());
-            stoneOnBoard.clear(b);
+                (GoBoardPosition) goBoard.getPosition(capStone.getLocation());
+            stoneOnBoard.clear(goBoard);
         }
 
-        adjustStringLiberties(b);
+        adjustStringLiberties(goBoard);
     }
 
     /**
-     * restore the captured pieces on the board.
+     * Restore the captured pieces on the board.
      */
     @Override
     public void restoreOnBoard( Board board )  {
-        GoBoard b = (GoBoard) board;
-        super.modifyCaptures( b, false );
+        GoBoard goBoard = (GoBoard) board;
+        super.modifyCaptures( goBoard, false );
 
         GameContext.log(3, "GoMove: restoring these captures: " + this);
 
-        GoBoardPositionLists strings = getRestoredStringList(b);  // XXX should remove
-        adjustStringLiberties(b);
+        GoBoardPositionLists strings = getRestoredStringLists(goBoard);  // XXX should remove
+        adjustStringLiberties(goBoard);
 
         // XXX should remove next lines
-        IGoGroup group = getRestoredGroup(strings, b);
+        IGoGroup group = getRestoredGroup(strings, goBoard);
 
-        assert ( group!=null): "no group was formed when restoring "
-                + this + " the list of strings was "+strings;
-        b.getGroups().add( group );
+        assert ( group!=null ): "no group was formed when restoring "
+                + this + " the list of strings was " + strings;
+        goBoard.getGroups().add( group );
     }
 
 
     /**
-     * update the liberties of the surrounding strings.
+     * Update the liberties of the surrounding strings.
      */
-    public void adjustStringLiberties(GoBoard b) {
+    public void adjustStringLiberties(GoBoard board) {
         for (BoardPosition capture : this) {
             GoBoardPosition captured = (GoBoardPosition) capture;
-            GoBoardPosition newLiberty = (GoBoardPosition) b.getPosition(captured.getLocation());
-            b.adjustLiberties(newLiberty);
+            GoBoardPosition newLiberty = (GoBoardPosition) board.getPosition(captured.getLocation());
+            board.adjustLiberties(newLiberty);
         }
     }
 
     /**
      * There may have been more than one string in the captureList
-     * @return list of strings that were restored ont he board.
+     * @return list of strings that were restored on the board.
      */
-    private GoBoardPositionLists getRestoredStringList( GoBoard b ) {
+    private GoBoardPositionLists getRestoredStringLists(GoBoard b) {
 
         GoBoardPositionList restoredList = getRestoredList(b);
         GoBoardPositionLists strings = new GoBoardPositionLists();

@@ -113,7 +113,7 @@ public class MoveList extends ArrayList<Move> {
     /**
      * Randomly get one of the top n moves and ignore the rest.
      * The moves are assumed ordered.
-     * @param percentLessThanBestThresh randomly get one of the moves whos score is
+     * @param percentLessThanBestThresh randomly get one of the moves who's score is
      * not more than this percent less that the first..
      * @return a random move from the list.
      */
@@ -135,7 +135,7 @@ public class MoveList extends ArrayList<Move> {
         StringBuilder bldr = new StringBuilder();
         int ct = 1;
         for (Move m : this) {
-            bldr.append(ct).append(") ").append(m.toString());
+            bldr.append(ct++).append(") ").append(m.toString()).append("\n");
         }
         return bldr.toString();
     }

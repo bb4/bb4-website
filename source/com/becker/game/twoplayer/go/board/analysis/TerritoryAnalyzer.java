@@ -15,6 +15,7 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORING;
 
 /**
+ * Analyzes territory on board.
  *
  * @author Barry Becker
  */
@@ -74,10 +75,12 @@ public class TerritoryAnalyzer {
     }
 
     /**
-     * @return  the estimate for a single position.
+     * @return the estimate for a single position.
      */
-    private float getTerritoryEstimateForPosition(GoBoardPosition pos, boolean forPlayer1, boolean isEndOfGame) {
-        double val = isEndOfGame?  (forPlayer1? 1.0 : -1.0) : pos.getScoreContribution() ;
+    private float getTerritoryEstimateForPosition(GoBoardPosition pos, boolean forPlayer1,
+                                                  boolean isEndOfGame) {
+
+        double val = isEndOfGame ? (forPlayer1? 1.0 : -1.0) : pos.getScoreContribution() ;
         float territoryEstimate = 0;
 
         // the territory estimate will always be positive for both sides.
@@ -126,7 +129,7 @@ public class TerritoryAnalyzer {
         prof.startUpdateTerritory();
 
         float delta = calcAbsoluteHealth();
-        delta = calcRelativeHealth(prof, delta);
+        delta = calcRelativeHealth(prof, delta);   // XXX big cause of nondeterministic behavior.
 
         prof.startUpdateEmpty();
         delta += updateEmptyRegions(isEndOfGame);
@@ -160,8 +163,7 @@ public class TerritoryAnalyzer {
     }
 
     /**
-     *
-     * @param initDelta  initial value.
+     * @param initDelta initial value.
      * @return total health of all stones in all groups in relative terms.
      */
     private float calcRelativeHealth(GoProfiler prof, float initDelta) {
@@ -198,7 +200,7 @@ public class TerritoryAnalyzer {
         if ((ratio > EMPTY_REGION_EDGE_THRESH) || isEndOfGame) {
             edgeOffset = 0;
         }
-        int min = 1+edgeOffset;
+        int min = 1 + edgeOffset;
         int rMax = board_.getNumRows() - edgeOffset;
         int cMax = board_.getNumCols() - edgeOffset;
         Box box = new Box(min, min, rMax, cMax);
@@ -217,7 +219,7 @@ public class TerritoryAnalyzer {
     }
 
     /**
-     * Update diff?Score for the who string connected to pos and mark it visited.
+     * Update diffScore for the string connected to pos and mark it visited.
      * If pos is in an eye, update the score contribution for that eye space.
      * @return diffScore value.
      */
