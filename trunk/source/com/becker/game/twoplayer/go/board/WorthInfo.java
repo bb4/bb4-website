@@ -24,16 +24,16 @@ import static com.becker.game.twoplayer.go.GoController.WIN_THRESHOLD;
  */
 public class WorthInfo {
 
-    public double gameStageBoost;
-    public double territoryDelta;
-    public double captureScore;
-    public int blackCap;
-    public int whiteCap;
-    public double positionalScore;
-    PositionalScore[][] positionalScores;
-    CaptureList captures;
-    public double worth;
-    public MoveList moves;
+    private double gameStageBoost;
+    private double territoryDelta;
+    private double captureScore;
+    private int blackCap;
+    private int whiteCap;
+    private double positionalScore;
+    private PositionalScore[][] positionalScores;
+    private CaptureList captures;
+    private double worth;
+    private MoveList moves;
 
     /**
      * Constructor.

@@ -33,7 +33,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
 
     /**
      * Initialize the subtype information.
-     * Vital points are encoded as a floating point number of the form <num nobi neighbors>.<num neighbor neigbors>
+     * Vital points are encoded as a floating point number of the form <num nobi neighbors>.<num neighbor neighbors>
      * where the number of neighbor neighbors is the total of all the nobie neighbors nobi neighbors.
      * For example the encoded vital point for a pyramid shaped eye is 3.03 because
      *  - the central key point position has 3 neighbors and
