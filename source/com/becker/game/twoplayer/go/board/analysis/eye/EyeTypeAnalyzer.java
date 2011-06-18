@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis.eye;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
@@ -22,11 +23,13 @@ public class EyeTypeAnalyzer {
     private IGoEye eye_;
     private GoBoard board_;
     private NeighborAnalyzer nbrAnalyzer_;
+    private GroupAnalyzer groupAnalyzer_;
 
     
-    public EyeTypeAnalyzer(IGoEye eye, GoBoard board) {
+    public EyeTypeAnalyzer(IGoEye eye, GoBoard board, GroupAnalyzer analyzer) {
         eye_ = eye;
         board_ = board;
+        groupAnalyzer_ = analyzer;
         nbrAnalyzer_ = new NeighborAnalyzer(board);
     }
       
@@ -128,7 +131,7 @@ public class EyeTypeAnalyzer {
 
     /**
      *
-     * @return true of the enemy piece on the diagoanal is relatively strong and there are groups stones adjacent.
+     * @return true of the enemy piece on the diagonal is relatively strong and there are group stones adjacent.
      */
     private boolean qualifiedOpponentDiagonal(int rowOffset, int colOffset, int r, int c, boolean groupP1)
     {
@@ -141,6 +144,6 @@ public class EyeTypeAnalyzer {
 
         return (pos1.isOccupied() && (pos1.getPiece().isOwnedByPlayer1() == groupP1) &&
                 pos2.isOccupied() && (pos2.getPiece().isOwnedByPlayer1() == groupP1) &&
-                eye_.isEnemy(diagPos));
+                groupAnalyzer_.isTrueEnemy(diagPos));
     }
 }

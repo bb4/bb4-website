@@ -1,12 +1,9 @@
 package com.becker.game.twoplayer.go.board.elements.group;
 
 import com.becker.common.geometry.Box;
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.IGoSet;
-import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
@@ -22,15 +19,18 @@ public interface IGoGroup extends IGoSet {
 
     GoStringSet getMembers();
 
-    float getAbsoluteHealth();
+    //float getAbsoluteHealth();
 
     boolean isOwnedByPlayer1();
 
+    void addChangeListener(GroupChangeListener listener);
+    void removeChangeListener(GroupChangeListener listener);
+
     int getNumStones();
 
-    GoEyeSet getEyes(GoBoard board);
+    //GoEyeSet getEyes(GoBoard board);
 
-    float getRelativeHealth(GoBoard board, boolean useCachedValue);
+    //float getRelativeHealth(GoBoard board, boolean useCachedValue);
 
     boolean containsStone(GoBoardPosition stone);
 
@@ -38,15 +38,15 @@ public interface IGoGroup extends IGoSet {
 
     GoBoardPositionSet getStones();
 
-    float calculateAbsoluteHealth( GoBoard board);
+    //float calculateAbsoluteHealth( GoBoard board);
 
-    float calculateRelativeHealth( GoBoard board);
+    //float calculateRelativeHealth( GoBoard board);
 
     void updateTerritory( float health );
 
     Box findBoundingBox();
 
-    boolean isStoneMuchWeaker(GoStone stone);
+    //boolean isStoneMuchWeaker(GoStone stone);
 
     String toHtml();
 }

@@ -198,13 +198,12 @@ public class GoString extends GoSet
      * return the set of liberty positions that the string has
      * @param board
      */
-    @Override
     public final GoBoardPositionSet getLiberties(GoBoard board) {
         return libertyAnalyzer_.getLiberties();
     }
 
     /**
-     * If the libertyPos is occupied, then we subract this liberty, else add it.
+     * If the libertyPos is occupied, then we subtract this liberty, else add it.
      * @param libertyPos  position to check for liberty
      */
     public void changedLiberty(GoBoardPosition libertyPos) {
@@ -232,10 +231,10 @@ public class GoString extends GoSet
         assert (group_ != null): "group for "+this+" is null";
         assert (pos.isOccupied()): "pos not occupied: ="+pos;
         GoStone stone = (GoStone)pos.getPiece();
-        boolean stoneMuchWeaker = getGroup().isStoneMuchWeaker(stone);
+        //boolean stoneMuchWeaker = getGroup().isStoneMuchWeaker(stone);
 
         assert (getGroup().isOwnedByPlayer1() == isOwnedByPlayer1()): getGroup() + " string=" + this;
-        return ((stone.isOwnedByPlayer1() != isOwnedByPlayer1() && !stoneMuchWeaker));
+        return stone.isOwnedByPlayer1() != isOwnedByPlayer1(); // && !stoneMuchWeaker);
     }
     
     /**

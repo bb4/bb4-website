@@ -13,6 +13,9 @@ import com.becker.game.twoplayer.common.cache.ScoreCache;
 import com.becker.game.twoplayer.common.cache.ScoreEntry;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
+import com.becker.game.twoplayer.go.board.analysis.BoardEvaluator;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.move.GoMoveGenerator;
 import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
@@ -22,7 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * For searching go games search space.
+ * For searching go game's search space.
  *
  * @author Barry Becker
  */
@@ -38,7 +41,8 @@ public class GoSearchable extends TwoPlayerSearchable {
 
     private ScoreCache scoreCache_;
 
-    private WorthCalculator worthCalculator_;
+    private BoardEvaluator boardEvaluator_;
+
 
 
     /**
@@ -65,9 +69,14 @@ public class GoSearchable extends TwoPlayerSearchable {
         return (GoBoard) board_;
     }
 
+    /** don't really want to expose this, but renderer needs it */
+    public GroupAnalyzer getGroupAnalyzer(IGoGroup group) {
+        return boardEvaluator_.getGroupAnalyzer(group);
+    }
+
     private void init() {
         deadStoneUpdater_ = new DeadStoneUpdater(getBoard());
-        worthCalculator_ = new WorthCalculator(getBoard().getNumRows(), getBoard().getNumCols());
+        boardEvaluator_ = new BoardEvaluator(getBoard());
     }
 
     @Override
@@ -124,7 +133,7 @@ public class GoSearchable extends TwoPlayerSearchable {
     private void doFinalBookKeeping() {
 
         getProfiler().startCalcWorth();
-        getBoard().updateTerritory(true);
+        boardEvaluator_.updateTerritory(true);
 
         //we should not call this twice
         if (getNumDeadStonesOnBoard(true)  > 0 || getNumDeadStonesOnBoard(false) > 0) {
@@ -149,7 +158,7 @@ public class GoSearchable extends TwoPlayerSearchable {
         if (USE_SCORE_CACHING) {
             return cachedWorth(lastMove, weights);
         } else {
-            return worthCalculator_.worth(getBoard(), lastMove, weights);
+            return boardEvaluator_.worth(lastMove, weights);
         }
     }
 
@@ -167,10 +176,10 @@ public class GoSearchable extends TwoPlayerSearchable {
         //    return cachedScore.getScore();
         //}
 
-        int worth = worthCalculator_.worth(getBoard(), lastMove, weights);
+        int worth = boardEvaluator_.worth(lastMove, weights);
 
         if (cachedScore == null) {
-            scoreCache_.put(key, new ScoreEntry(key, worth, getBoard().toString(), worthCalculator_.getInfo()));
+            scoreCache_.put(key, new ScoreEntry(key, worth, getBoard().toString(), boardEvaluator_.getWorthInfo()));
         }
         else {
             if (cachedScore.getScore() != worth) {
@@ -183,7 +192,7 @@ public class GoSearchable extends TwoPlayerSearchable {
                         append(worth).append(" for \n").
                         append(getBoard().toString()).
                         append("\ncurrent info: ").
-                        append(worthCalculator_.getInfo()).
+                        append(boardEvaluator_.getWorthInfo()).
                         append("using current key=").
                         append(getHashKey());
                 System.out.println(bldr.toString());
@@ -284,7 +293,7 @@ public class GoSearchable extends TwoPlayerSearchable {
         if ( m == null )
             return 0;
 
-        return getBoard().getTerritoryEstimate(forPlayer1, false);
+        return boardEvaluator_.getTerritoryEstimate(forPlayer1, false);
     }
 
 
@@ -322,7 +331,7 @@ public class GoSearchable extends TwoPlayerSearchable {
      * @return the actual score (each empty space counts as one)
      */
     public int getTerritory( boolean forPlayer1 ) {
-        return getBoard().getTerritoryEstimate(forPlayer1, true);
+        return boardEvaluator_.getTerritoryEstimate(forPlayer1, true);
     }
 
     /**

@@ -5,6 +5,7 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeTypeAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
@@ -39,12 +40,12 @@ public class GoEye extends GoString implements IGoEye
      * Constructor.
      * Create a new eye shape containing the specified list of stones/spaces
      */
-    public GoEye( GoBoardPositionList spaces, GoBoard board, IGoGroup g ) {
+    public GoEye( GoBoardPositionList spaces, GoBoard board, IGoGroup g, GroupAnalyzer groupAnalyzer) {
         super( spaces, board );
         group_ = g;
         ownedByPlayer1_ = g.isOwnedByPlayer1();
 
-        EyeTypeAnalyzer eyeAnalyzer = new EyeTypeAnalyzer(this, board);
+        EyeTypeAnalyzer eyeAnalyzer = new EyeTypeAnalyzer(this, board, groupAnalyzer);
         information_ = eyeAnalyzer.determineEyeInformation();
         status_ = information_.determineStatus(this, board);
         initializePositionCounts(board);
@@ -59,7 +60,7 @@ public class GoEye extends GoString implements IGoEye
     }
 
     public String getEyeTypeName() {
-        if (information_ ==null)
+        if (information_ == null)
             return "unknown eye type";
         return information_.getTypeName();
     }
@@ -112,11 +113,11 @@ public class GoEye extends GoString implements IGoEye
             return false;
         }
         GoStone stone = (GoStone)pos.getPiece();
-        boolean weaker = g.isStoneMuchWeaker(stone);
+        //boolean weaker = g.isStoneMuchWeaker(stone);
 
         assert (g.isOwnedByPlayer1() == isOwnedByPlayer1()):
                  "Bad group ownership for eye="+ this +". Owning Group="+g;
-        return (stone.isOwnedByPlayer1() != isOwnedByPlayer1() && !weaker);
+        return (stone.isOwnedByPlayer1() != isOwnedByPlayer1()); // && !weaker);
     }
     
     /**

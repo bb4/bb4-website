@@ -1,20 +1,7 @@
 package com.becker.game.twoplayer.go.board;
 
-import ca.dj.jigo.sgf.tokens.SourceToken;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.CaptureList;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.go.board.analysis.GameStageBoostCalculator;
-import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
-import com.becker.game.twoplayer.go.options.GoWeights;
-import com.becker.optimization.parameter.ParameterArray;
-
-import java.util.Arrays;
-
-import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
-import static com.becker.game.twoplayer.go.GoController.WIN_THRESHOLD;
 
 /**
  * All the stuff used to compute the worth.

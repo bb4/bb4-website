@@ -1,10 +1,12 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.go.board.analysis.GameStageBoostCalculator;
-import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoProfiler;
+import com.becker.game.twoplayer.go.board.PositionalScore;
+import com.becker.game.twoplayer.go.board.WorthInfo;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.optimization.parameter.ParameterArray;
@@ -19,17 +21,22 @@ import static com.becker.game.twoplayer.go.GoController.WIN_THRESHOLD;
  */
 public class WorthCalculator {
 
+    private GoBoard board_;
+
     /** a lookup table of scores to attribute to the board positions when calculating the worth. */
     private PositionalScoreAnalyzer positionalScorer_;
+
+    private TerritoryAnalyzer territoryAnalyzer;
 
     private WorthInfo info;
 
     /**
      * Constructor.
      */
-    public WorthCalculator(int numRows, int numCols) {
-
-        positionalScorer_ = new PositionalScoreAnalyzer(numRows, numCols);
+    public WorthCalculator(GoBoard board, TerritoryAnalyzer terrAnalyzer) {
+        board_ = board;
+        territoryAnalyzer = terrAnalyzer;
+        positionalScorer_ = new PositionalScoreAnalyzer(board.getNumRows(), board.getNumCols());
     }
 
     /**
@@ -39,9 +46,9 @@ public class WorthCalculator {
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
-    public int worth(GoBoard board, Move lastMove, ParameterArray weights) {
+    public int worth(Move lastMove, ParameterArray weights) {
         GoProfiler.getInstance().startCalcWorth();
-        double worth = calculateWorth(board, lastMove, weights);
+        double worth = calculateWorth(board_, lastMove, weights);
 
         GameContext.log(3, "GoController.worth: worth="+worth);
         if ( worth < -WIN_THRESHOLD ) {
@@ -82,7 +89,7 @@ public class WorthCalculator {
         double gameStageBoost = gameStageBoostCalc_.getGameStageBoost(board.getMoveList().getNumMoves());
 
         // Update status of groups and stones on the board. Expensive. Changes board state.
-        board.updateTerritory(false);
+        territoryAnalyzer.updateTerritory(false);
 
         PositionalScore totalScore = new PositionalScore();
         PositionalScore[][] positionScores = new PositionalScore[board.getNumRows()][board.getNumCols()];
@@ -96,7 +103,7 @@ public class WorthCalculator {
             }
         }
 
-        double territoryDelta = board.getTerritoryDelta();
+        double territoryDelta = territoryAnalyzer.getTerritoryDelta();
         double captureScore = getCaptureScore(board, weights);
         double positionalScore = totalScore.getPositionScore();
         double worth = scaleFactor * (positionalScore + captureScore + territoryDelta);
@@ -113,7 +120,7 @@ public class WorthCalculator {
         return worth;
     }
 
-    public WorthInfo getInfo() {
+    public WorthInfo getWorthInfo() {
         return info;
     }
 

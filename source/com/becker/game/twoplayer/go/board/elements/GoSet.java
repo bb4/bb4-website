@@ -1,8 +1,6 @@
 package com.becker.game.twoplayer.go.board.elements;
 
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 
 import java.util.Set;
 
@@ -24,13 +22,6 @@ public abstract class GoSet implements IGoSet {
     protected GoSet() {
         initializeMembers();
     }
-
-    /**
-     * Get the number of liberties (open surrounding spaces)
-     * @param board go board
-     * @return the liberties/positions for the set.
-     */
-    public abstract GoBoardPositionSet getLiberties(GoBoard board);
 
     /**
      * @return  true if set is owned by player one

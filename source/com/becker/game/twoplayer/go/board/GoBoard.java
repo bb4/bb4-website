@@ -5,7 +5,6 @@ import com.becker.game.common.Move;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.go.board.analysis.CornerChecker;
-import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.group.GoGroupSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
@@ -38,8 +37,6 @@ public final class GoBoard extends TwoPlayerBoard {
     private HandicapStones handicap_;
 
     private BoardUpdater boardUpdater_;
-
-    private TerritoryAnalyzer territoryAnalyzer_;
 
 
     /**
@@ -94,7 +91,6 @@ public final class GoBoard extends TwoPlayerBoard {
 
     private void init(CaptureCounts capCounts) {
         boardUpdater_ = new BoardUpdater(this, capCounts);
-        territoryAnalyzer_ = new TerritoryAnalyzer(this);
     }
 
     @Override
@@ -247,33 +243,6 @@ public final class GoBoard extends TwoPlayerBoard {
 
     public int getNumCaptures(boolean player1StonesCaptured) {
         return boardUpdater_.getNumCaptures(player1StonesCaptured);
-    }
-
-    /**
-     * @see TerritoryAnalyzer#getTerritoryDelta
-     * @return change in territorial score
-     */
-    public float getTerritoryDelta() {
-        return territoryAnalyzer_.getTerritoryDelta();
-    }
-
-    /**
-     * Get estimate of territory for specified player.
-     * @param forPlayer1 the player to get the estimate for
-     * @param isEndOfGame then we need the estimate to be more accurate.
-     * @return estimate of size of territory for specified player.
-     */
-    public int getTerritoryEstimate( boolean forPlayer1, boolean isEndOfGame) {
-        return territoryAnalyzer_.getTerritoryEstimate(forPlayer1, isEndOfGame);
-    }
-
-    /**
-     * @see TerritoryAnalyzer#updateTerritory
-     * @return the estimated difference in territory between the 2 sides.
-     */
-    public float updateTerritory(boolean isEndOfGame) {
-        clearScores();
-        return territoryAnalyzer_.updateTerritory(isEndOfGame);
     }
 
     /**

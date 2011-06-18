@@ -14,6 +14,8 @@ class EyeHealthEvaluator {
 
     private IGoGroup group_;
     private GoBoard board_;
+    private GroupAnalyzerMap analyzerMap_;
+
 
     private static final float BEST_TWO_EYED_HEALTH = 1.0f;
     private static final float BEST_ALMOST_TWO_EYED_HEALTH = 0.94f;
@@ -22,9 +24,10 @@ class EyeHealthEvaluator {
     /**
      * Constructor
      */
-    public EyeHealthEvaluator(IGoGroup group, GoBoard board) {
+    public EyeHealthEvaluator(IGoGroup group, GoBoard board, GroupAnalyzerMap analyzerMap) {
         group_ = group;
         board_ = board;
+        analyzerMap_ = analyzerMap;
     }
 
     /**
@@ -55,7 +58,7 @@ class EyeHealthEvaluator {
         float health;
 
         GoProfiler.getInstance().startBensonsCheck();
-        LifeAnalyzer analyzer = new LifeAnalyzer(group_, board);
+        LifeAnalyzer analyzer = new LifeAnalyzer(group_, board, analyzerMap_);
         if (analyzer.isUnconditionallyAlive()) {
             // in addition to this, the individual strings will get a score of side (ie +/- 1).
             health = BEST_TWO_EYED_HEALTH * side;

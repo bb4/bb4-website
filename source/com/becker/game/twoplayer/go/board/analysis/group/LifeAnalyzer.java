@@ -34,15 +34,17 @@ public final class LifeAnalyzer {
     private Map<IGoString, GoEyeList> stringEyeNbrMap;
 
     private NeighborAnalyzer nbrAnalyzer_;
+    private GroupAnalyzerMap analyzerMap_;
 
     /**
      * Constructor.
      * @param group the group to analyze for unconditional life.
      * @param board board on which the group exists.
      */
-    public LifeAnalyzer(IGoGroup group, GoBoard board) {
+    public LifeAnalyzer(IGoGroup group, GoBoard board, GroupAnalyzerMap analyzerMap) {
         group_ = group;
         board_ = board;
+        analyzerMap_ = analyzerMap;
         nbrAnalyzer_ = new NeighborAnalyzer(board);
     }
 
@@ -55,7 +57,7 @@ public final class LifeAnalyzer {
     public boolean isUnconditionallyAlive() {
         initMaps();
 
-        GoEyeSet eyes = group_.getEyes(board_);
+        GoEyeSet eyes = analyzerMap_.getAnalyzer(group_).getEyes(board_);
         findNeighborStringSetsForEyes(eyes);
         createVitalEyeSets(eyes);
 
@@ -220,7 +222,7 @@ public final class LifeAnalyzer {
      * all its neighbors are unconditional life candidates still.
      */
     private void initializeEyeLife() {
-        for (IGoEye eye : group_.getEyes(board_)) {
+        for (IGoEye eye : analyzerMap_.getAnalyzer(group_).getEyes(board_)) {
             eye.setUnconditionallyAlive(true);
             for (IGoString nbrStr : eyeStringNbrMap.get(eye)) {
                 if (!(nbrStr.isUnconditionallyAlive())) {
