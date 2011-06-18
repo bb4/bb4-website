@@ -28,7 +28,7 @@ public class MoveEvaluatorTest extends TestCase  {
 
     /**
      * common initialization for all go test cases.
-     * Override setOptionOverides if you want different search parameters.
+     * Override setOptionOverrides if you want different search parameters.
      */
     @Override
     protected void setUp() throws Exception {

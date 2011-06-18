@@ -13,15 +13,14 @@ import com.becker.optimization.parameter.ParameterArray;
  *
  * @author Barry Becker
 */
-public class MoveEvaluator 
-{
+public class MoveEvaluator  {
+
     private TwoPlayerBoard board_;
     private Patterns patterns_;
-
     private LineFactory lineFactory_;
 
     /**
-     *  Constructor
+     * Constructor
      */
     public MoveEvaluator(TwoPlayerBoard board, Patterns patterns) {
         patterns_ = patterns;
@@ -61,7 +60,7 @@ public class MoveEvaluator
     }
 
     /**
-     * @return the difference in worth after making a move campared with before.
+     * @return the difference in worth after making a move compared with before.
      */
     private int findStraightValueDifference(int row, int col,
                        int numMax, ParameterArray weights, Direction dir) {
@@ -89,8 +88,7 @@ public class MoveEvaluator
         }
 
         int position = currentPos - start;
-        int diff = line.computeValueDifference(position);
-        return diff;
+        return line.computeValueDifference(position);
     }
 
     /**

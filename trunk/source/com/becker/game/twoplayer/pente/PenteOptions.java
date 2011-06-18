@@ -26,8 +26,7 @@ public class PenteOptions extends TwoPlayerOptions {
     private static final int DEFAULT_MIN_BEST_MOVES = 5;
 
 
-    public PenteOptions() {
-    }
+    public PenteOptions() {}
 
     @Override
     protected SearchOptions createDefaultSearchOptions() {
