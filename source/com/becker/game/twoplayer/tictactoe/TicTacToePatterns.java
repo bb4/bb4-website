@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.tictactoe;
 
-import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.pente.Patterns;
 
 /**
@@ -10,8 +9,7 @@ import com.becker.game.twoplayer.pente.Patterns;
  *
  *  @author Barry Becker
  */
-public final class TicTacToePatterns extends Patterns
-{
+public final class TicTacToePatterns extends Patterns {
 
     public static final int WIN_RUN_LENGTH = 3;
 
@@ -27,7 +25,7 @@ public final class TicTacToePatterns extends Patterns
     };
 
     public TicTacToePatterns() {
-        initialize();
+        initializePatterns();
     }
 
      /**
@@ -56,15 +54,5 @@ public final class TicTacToePatterns extends Patterns
     @Override
     protected int getWeightIndex(int i) {
         return weightIndex[i];
-    }
-
-     @Override
-     protected String getPatternFile() {
-        return  GameContext.GAME_ROOT + "tictactoe/TicTacToe.patterns1.dat";
-    }
-
-    @Override
-    protected String getExportFile() {
-        return GameContext.GAME_ROOT + "tictactoe/TicTacToe.export.dat";
     }
 }

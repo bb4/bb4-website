@@ -1,8 +1,5 @@
 package com.becker.game.twoplayer.pente;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.pente.Patterns;
-
 /**
  *  Simple patterns for use with unit tests.
  *
@@ -20,7 +17,7 @@ public final class StubPatterns extends Patterns
     };
 
     public StubPatterns() {
-        initialize();
+        initializePatterns();
     }
 
      /**
@@ -50,15 +47,5 @@ public final class StubPatterns extends Patterns
     @Override
     protected int getWeightIndex(int i) {
         return weightIndex[i];
-    }
-
-     @Override
-     protected String getPatternFile() {
-        return  null;
-    }
-
-    @Override
-    protected String getExportFile() {
-        return null;
     }
 }

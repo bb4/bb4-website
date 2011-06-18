@@ -97,14 +97,4 @@ public class PentePatterns extends Patterns
     protected int getWeightIndex(int i) {
         return WEIGHT_INDEX[i];
     }
-
-     @Override
-     protected String getPatternFile() {
-        return  GameContext.GAME_ROOT + "pente/Pente.patterns1.dat";
-    }
-
-    @Override
-    protected String getExportFile() {
-        return GameContext.GAME_ROOT + "pente/Pente.export.dat";
-    }
 }
