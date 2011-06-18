@@ -25,6 +25,7 @@ class GroupEyeCache {
     EyeSpaceAnalyzer eyeAnalyzer_;
     EyePotentialAnalyzer potentialAnalyzer_;
 
+
     /**
      * Set this to true when the eyes need to be recalculated.
      * It must be set to true if the group has changed in any way.
@@ -35,11 +36,11 @@ class GroupEyeCache {
     /**
      * Constructor
      */
-    public GroupEyeCache(IGoGroup group) {
+    public GroupEyeCache(IGoGroup group, GroupAnalyzerMap analyzerMap) {
         eyes_ = new GoEyeSet();
         isValid_ = false;
-        eyeAnalyzer_ = new EyeSpaceAnalyzer(group);
-        potentialAnalyzer_ = new EyePotentialAnalyzer(group);
+        eyeAnalyzer_ = new EyeSpaceAnalyzer(group, analyzerMap);
+        potentialAnalyzer_ = new EyePotentialAnalyzer(group, analyzerMap);
     }
 
     /**

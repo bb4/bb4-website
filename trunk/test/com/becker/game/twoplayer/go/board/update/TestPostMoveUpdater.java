@@ -3,10 +3,13 @@ package com.becker.game.twoplayer.go.board.update;
 import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.group.GoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 import com.becker.game.twoplayer.go.board.move.GoMove;
+import com.becker.puzzle.common.PuzzleSolver;
 
 
 /**
@@ -17,7 +20,6 @@ public class TestPostMoveUpdater extends GoTestCase {
     private static final String PREFIX = "board/update/";
 
     GoBoard board;
-
 
     public void testTrivialMove() {
 
@@ -75,6 +77,7 @@ public class TestPostMoveUpdater extends GoTestCase {
     private void verifyStats(UpdateStats stats) {
         GoMove move = (GoMove) board.getMoveList().getLastMove();
         GoBoardPosition pos = (GoBoardPosition) board.getPosition(move.getToLocation());
+        GroupAnalyzer groupAnalyzer = new GroupAnalyzer(pos.getGroup(), new GroupAnalyzerMap());
 
         assertEquals("Unexpected captures",
                 stats.expCaptures, move.getCaptures().size());
@@ -87,10 +90,10 @@ public class TestPostMoveUpdater extends GoTestCase {
         assertEquals("Unexpected number of strings in group",
                 stats.expNumStringsInGroup, pos.getGroup().size());
         assertEquals("Unexpected number eyes in group",
-                stats.expNumEyesInGroup, pos.getGroup().getEyes(board).size());
+                stats.expNumEyesInGroup, groupAnalyzer.getEyes(board).size());
         assertEquals("Unexpected number of groups",
                 stats.expGroupsOnBoard, board.getGroups().size());
         assertEquals("The group is new so should be valid",
-                stats.expValid, ((GoGroup)pos.getGroup()).isValid());
+                stats.expValid, groupAnalyzer.isValid());
     }
 }

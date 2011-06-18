@@ -1,17 +1,22 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
+import com.becker.common.format.FormatUtil;
+import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
+import com.becker.game.twoplayer.go.board.elements.group.GroupChangeListener;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoStone;
+
+import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORING;
 
 /**
  * Analyzes a group to determine how alive it is, and also find other properties like eyes and liberties.
  *
  * @author Barry Becker
  */
-public class GroupAnalyzer {
+public class GroupAnalyzer implements GroupChangeListener {
 
     /** The group of go stones that we are analyzing. */
     private IGoGroup group_;
@@ -31,14 +36,27 @@ public class GroupAnalyzer {
     /** cached absolute health to avoid needless recalculation. */
     private float absoluteHealth_;
 
+    private GroupAnalyzerMap analyzerMap_;
+
     /**
      * Constructor.
      * @param group group to analyze.
      */
-    public GroupAnalyzer(IGoGroup group) {
+    public GroupAnalyzer(IGoGroup group, GroupAnalyzerMap analyzerMap) {
         group_ = group;
-        absHealthCalculator_ = new AbsoluteHealthCalculator(group);
+        analyzerMap_ = analyzerMap;
+        absHealthCalculator_ = new AbsoluteHealthCalculator(group, analyzerMap_);
         stoneInGroupAnalyzer_ = new StoneInGroupAnalyzer(group);
+        group.addChangeListener(this);
+    }
+
+    /**
+     * Called when the group we are maintaining info about changes.
+     * It changes by having stones added or removed.
+     */
+    public void groupChanged() {
+
+        invalidate();
     }
 
     /**
@@ -49,6 +67,26 @@ public class GroupAnalyzer {
         //    assert false :  "Getting stale absolute health = " + absoluteHealth_;
         //}
         return absoluteHealth_;
+    }
+
+    /**
+     * We try to use the cached relative health value if we can.
+     * @param board needed to calculate new value if not cached
+     * @param useCachedValue if true, just return the cached value instead of checking for validity.
+     *   Only do this if you are sure the value returned does not have to be perfectly accurate.
+     * @return relative health
+     */
+    public float getRelativeHealth(GoBoard board, boolean useCachedValue) {
+        if (!USE_RELATIVE_GROUP_SCORING) {
+            return getAbsoluteHealth();
+        }
+        if (isValid() || useCachedValue) {
+            if (!isValid())
+                GameContext.log(3, "using cached relative health when not valid");
+            return getRelativeHealth();
+        }
+        GameContext.log(0, "stale abs health. recalculating relative health");
+        return calculateRelativeHealth(board);
     }
 
     /**
@@ -71,27 +109,11 @@ public class GroupAnalyzer {
     }
 
     /**
-     * Get the number of liberties that the group has.
-     * @return the number of liberties that the group has
-     */
-    public GoBoardPositionSet getLiberties(GoBoard board) {
-        return absHealthCalculator_.getLiberties(board);
-    }
-
-    /**
      * If nothing cached, this may not be accurate.
      * @return number of cached liberties.
      */
     public int getNumLiberties(GoBoard board) {
-        return absHealthCalculator_.getNumLiberties(board);
-    }
-
-    /**
-     * Calculate the number of stones in the group.
-     * @return number of stones in the group.
-     */
-    public int getNumStones() {
-       return absHealthCalculator_.getNumStones();
+        return group_.getNumLiberties(board);
     }
 
     /**
@@ -107,7 +129,20 @@ public class GroupAnalyzer {
     }
 
     /**
-     * used only for test. Remove when tested thru AbsoluteGroupHealthCalc
+     * @return true if the piece is an enemy of the set owner.
+     *  If the difference in health between the stones is great, then they are not really enemies
+     *  because one of them is dead.
+     */
+    public boolean isTrueEnemy(GoBoardPosition pos) {
+        assert (pos.isOccupied());
+        GoStone stone = (GoStone)pos.getPiece();
+        boolean muchWeaker = isStoneMuchWeakerThanGroup(stone);
+
+        return ( stone.isOwnedByPlayer1() != group_.isOwnedByPlayer1() && !muchWeaker);
+    }
+
+    /**
+     * used only for test. Remove when tested through AbsoluteGroupHealthCalc
      * @return eye potential
      */
     public float getEyePotential() {
@@ -130,7 +165,7 @@ public class GroupAnalyzer {
             calculateAbsoluteHealth(board);
         }
 
-        RelativeHealthCalculator relativeCalculator = new RelativeHealthCalculator(group_);
+        RelativeHealthCalculator relativeCalculator = new RelativeHealthCalculator(group_, analyzerMap_);
         relativeHealth_ = relativeCalculator.calculateRelativeHealth(board, absoluteHealth_);
 
         return relativeHealth_;
@@ -143,7 +178,7 @@ public class GroupAnalyzer {
     @Override
     public Object clone() throws CloneNotSupportedException {
         Object clone = super.clone();
-        ((GroupAnalyzer)clone).absHealthCalculator_ = new AbsoluteHealthCalculator(group_);
+        ((GroupAnalyzer)clone).absHealthCalculator_ = new AbsoluteHealthCalculator(group_, analyzerMap_);
         return clone;
     }
 
@@ -151,6 +186,25 @@ public class GroupAnalyzer {
      * @return true if the stone is much weaker than the group
      */
     public boolean isStoneMuchWeakerThanGroup(GoStone stone) {
-        return stoneInGroupAnalyzer_.isStoneMuchWeakerThanGroup(stone);
+        return stoneInGroupAnalyzer_.isStoneMuchWeakerThanGroup(stone, getAbsoluteHealth());
+    }
+
+    /**
+     * @return string form.
+     */
+    public String toString() {
+
+        String newline = "\n";
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(group_.toString());
+        GoEyeSet eyes = getEyes(null);
+        if (eyes!=null && !eyes.isEmpty())
+            sb.append(eyes.toString()).append(newline);
+        // make sure that the health and eyes are up to date
+        sb.append("abs health=").append(FormatUtil.formatNumber(getAbsoluteHealth()));
+        sb.append(" rel health=").append(FormatUtil.formatNumber(getRelativeHealth()));
+        sb.append(" group Liberties=").append(getNumLiberties(null)).append('\n');
+        return sb.toString();
     }
 }

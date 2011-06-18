@@ -31,12 +31,14 @@ class EyeSpaceAnalyzer {
     private Box boundingBox_;
 
     private NeighborAnalyzer nbrAnalyzer_;
+    private GroupAnalyzerMap analyzerMap_;
 
     /**
      * Constructor.
      */
-    public EyeSpaceAnalyzer(IGoGroup group) {
+    public EyeSpaceAnalyzer(IGoGroup group, GroupAnalyzerMap analyzerMap) {
         group_ = group;
+        analyzerMap_ = analyzerMap;
     }
 
     public void setBoard(GoBoard board) {
@@ -68,6 +70,7 @@ class EyeSpaceAnalyzer {
     private GoEyeSet findEyeFromCandidates(GoBoardPositionLists candidateEyeLists) {
         GoEyeSet eyes = new GoEyeSet();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
+        GroupAnalyzer groupAnalyzer = analyzerMap_.getAnalyzer(group_);
 
         for ( int r = boundingBox_.getMinRow(); r <= boundingBox_.getMaxRow(); r++ ) {
             for ( int c = boundingBox_.getMinCol(); c <= boundingBox_.getMaxCol(); c++ ) {
@@ -83,7 +86,7 @@ class EyeSpaceAnalyzer {
                     // make sure this is a real eye.
                     // this method checks that opponent stones don't border it.
                     if ( confirmEye( eyeSpaces) ) {
-                        GoEye eye =  new GoEye( eyeSpaces, board_, group_ );
+                        GoEye eye =  new GoEye( eyeSpaces, board_, group_, groupAnalyzer);
                         eyes.add( eye );
                     }
                     else {
@@ -176,11 +179,13 @@ class EyeSpaceAnalyzer {
             IGoString groupString = group_.getMembers().iterator().next();
 
             Iterator it = list.iterator();
+            GroupAnalyzer groupAnalyzer = analyzerMap_.getAnalyzer(group_);
+
             while (it.hasNext()) {
                 GoBoardPosition p = (GoBoardPosition)it.next();
                 if (p.isOccupied()) {
                     // if its a very weak opponent (ie dead) then don't exclude it from the list
-                    if (!groupString.isEnemy(p))  {
+                    if (!groupAnalyzer.isTrueEnemy(p))  {
                         p.setVisited(false);
                         it.remove();  // remove it from the list
                     }
@@ -211,12 +216,13 @@ class EyeSpaceAnalyzer {
             return false;
 
         IGoString groupString = group_.getMembers().iterator().next();
+        GroupAnalyzer groupAnalyzer = analyzerMap_.getAnalyzer(group_);
 
         for (GoBoardPosition position : eyeList) {
             IGoString string = position.getString();
 
             if (position.isOccupied()) {
-                if (string.size() > 6 && groupString.isEnemy(position)) {
+                if (string.size() > 6 && groupAnalyzer.isTrueEnemy(position)) {
                     return false;  // then not eye
                 }
             }

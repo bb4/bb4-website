@@ -4,6 +4,8 @@ import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
@@ -48,12 +50,13 @@ public class TestBigEyeAnalyzer extends GoTestCase {
                               boolean isInCorner, boolean isOnEdge) {
 
         IGoGroup group = getBiggestGroup(isBlack);
+        GroupAnalyzer groupAnalyzer = new GroupAnalyzer(group, new GroupAnalyzerMap());
 
-        GoEyeSet eyes = group.getEyes(board);
+        GoEyeSet eyes = groupAnalyzer.getEyes(board);
 
         assertEquals("The group\n" + group + "\n did not have one eye",
                 1, eyes.size());
-        IGoEye firstEye = group.getEyes(board).iterator().next();
+        IGoEye firstEye = groupAnalyzer.getEyes(board).iterator().next();
 
         BigEyeAnalyzer eyeAnalyzer = new BigEyeAnalyzer(firstEye);
 

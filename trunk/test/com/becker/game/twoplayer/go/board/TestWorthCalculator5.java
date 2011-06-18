@@ -40,7 +40,7 @@ public class TestWorthCalculator5 extends WorthCalculatorBase {
         Move move = controller_.undoLastMove();
         controller_.makeMove(move);
 
-        int actWorth = calculator.worth(board, move, WEIGHTS.getDefaultWeights());
+        int actWorth = calculator.worth(move, WEIGHTS.getDefaultWeights());
 
         Assert.assertEquals("Unexpected worth.", 33, actWorth);
     }

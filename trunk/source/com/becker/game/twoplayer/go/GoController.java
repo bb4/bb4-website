@@ -135,7 +135,7 @@ public final class GoController extends TwoPlayerController {
      * @return the actual amount of territory for the specified player (each empty space counts as one)
      */
     public int getTerritory( boolean forPlayer1 ) {
-        return((GoBoard) getBoard()).getTerritoryEstimate(forPlayer1, true);
+        return ((GoSearchable)getSearchable()).getTerritory(forPlayer1);
     }
 
     /**

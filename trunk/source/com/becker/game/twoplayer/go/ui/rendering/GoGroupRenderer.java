@@ -6,10 +6,11 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.go.board.BoardValidator;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
-import com.becker.game.twoplayer.go.board.elements.group.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
@@ -41,7 +42,7 @@ final class GoGroupRenderer {
      * so that we don't have to recompute them if they have not changed.
      * Is this optimization needed? Is it dangerous?
      */
-    private static final Map<GoGroup, GroupRegion> hmRegionCache_ = new HashMap<GoGroup, GroupRegion>();
+    private static final Map<IGoGroup, GroupRegion> hmRegionCache_ = new HashMap<IGoGroup, GroupRegion>();
 
     private ColorMap colormap_;
     private final float cellSize_;
@@ -50,6 +51,9 @@ final class GoGroupRenderer {
     private Graphics2D g2_;
 
 
+    /**
+     * Constructor
+     */
     public GoGroupRenderer(GoBoard board, ColorMap colormap, float cellSize,
                             int margin, Graphics2D g2)  {
         board_ = board;
@@ -59,19 +63,18 @@ final class GoGroupRenderer {
         g2_ = g2;
     }
 
-
     /**
      * draw debugging information about the group like its border and eye shapes.
      */
-    public void drawGroupDecoration(GoGroup group) {
+    public void drawGroupDecoration(IGoGroup group, GroupAnalyzer groupAnalyzer) {
 
         GroupRegion cachedRegion = hmRegionCache_.get(group);
 
-        if ( !group.isValid() || cachedRegion == null || cellSize_ != cachedRegion.cellSize ) {
+        if ( !groupAnalyzer.isValid() || cachedRegion == null || cellSize_ != cachedRegion.cellSize ) {
 
             // the colormap will show red if close to dead,
             // so reverse the health value for the other player
-            double h = (group.getRelativeHealth(board_, true));
+            double h = (groupAnalyzer.getRelativeHealth(board_, true));
             if (!group.isOwnedByPlayer1())  {
                 h = -h;
             }
@@ -87,8 +90,8 @@ final class GoGroupRenderer {
 
         fillInRegion(cachedRegion);
 
-        if (!group.getEyes(board_).isEmpty())   {
-            drawEyes(group.getEyes(board_));
+        if (!groupAnalyzer.getEyes(board_).isEmpty())   {
+            drawEyes(groupAnalyzer.getEyes(board_));
         }
     }
 

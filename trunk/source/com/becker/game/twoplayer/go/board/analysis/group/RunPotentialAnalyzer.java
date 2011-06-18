@@ -15,16 +15,17 @@ class RunPotentialAnalyzer {
 
     /** We will analyze the potential of a run within this string. */
     private IGoString groupString_;
-
     private GoBoard board_;
+    private GroupAnalyzerMap analyzerMap_;
 
 
     /**
      * Constructor.
      */
-    public RunPotentialAnalyzer(IGoString groupString, GoBoard board) {
+    public RunPotentialAnalyzer(IGoString groupString, GoBoard board, GroupAnalyzerMap analyzerMap) {
         groupString_ = groupString;
         board_ = board;
+        analyzerMap_ = analyzerMap;
     }
 
     /**
@@ -62,8 +63,9 @@ class RunPotentialAnalyzer {
     }
 
     private boolean containsEnemy(boolean ownedByPlayer1, GoBoardPosition space) {
+        GroupAnalyzer groupAnalyzer = analyzerMap_.getAnalyzer(groupString_.getGroup());
         return space.isOccupied() && space.getPiece().isOwnedByPlayer1() != ownedByPlayer1
-                && groupString_.isEnemy(space);
+                && groupAnalyzer.isTrueEnemy(space);
     }
 
     private boolean inRun(Location pos, int maxRow, int maxCol, GoBoardPosition space, boolean ownedByPlayer1) {

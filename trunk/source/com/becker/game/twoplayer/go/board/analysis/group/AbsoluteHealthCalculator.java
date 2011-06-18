@@ -5,7 +5,6 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 /**
@@ -36,20 +35,16 @@ class AbsoluteHealthCalculator {
     /** Maintains cache of this groups eyes. */
     private GroupEyeCache eyeCache_;
 
-    /**
-     * This is the cached number of liberties.
-     * It updates whenever something has changed.
-     */
-    private GoBoardPositionSet cachedLiberties_;
-
+    private GroupAnalyzerMap analyzerMap_;
 
     /**
      * Constructor
      * @param group the group to analyze
      */
-    public AbsoluteHealthCalculator(IGoGroup group) {
+    public AbsoluteHealthCalculator(IGoGroup group, GroupAnalyzerMap analyzerMap) {
         group_ = group;
-        eyeCache_ = new GroupEyeCache(group);
+        analyzerMap_ = analyzerMap;
+        eyeCache_ = new GroupEyeCache(group, analyzerMap_);
     }
 
     /**
@@ -101,15 +96,15 @@ class AbsoluteHealthCalculator {
             return absoluteHealth_;
         }
 
-        int numLiberties = getNumLiberties(board);
+        int numLiberties = group_.getNumLiberties(board);
 
         // we multiply by a +/- sign depending on the side
         float side = group_.isOwnedByPlayer1() ? 1.0f : -1.0f;
 
         // first come up with some approximation for the health so update eyes can be done more accurately.
         float numEyes = eyeCache_.calcNumEyes();
-        int numStones = getNumStones();
-        EyeHealthEvaluator eyeEvaluator = new EyeHealthEvaluator(group_, board);
+        int numStones = group_.getNumStones();
+        EyeHealthEvaluator eyeEvaluator = new EyeHealthEvaluator(group_, board, analyzerMap_);
 
         absoluteHealth_ = eyeEvaluator.determineHealth(side, numEyes, numLiberties, numStones);
 
@@ -139,35 +134,6 @@ class AbsoluteHealthCalculator {
      */
     public GoEyeSet getEyes(GoBoard board) {
         return eyeCache_.getEyes(board);
-    }
-
-    /**
-     * Get the number of liberties that the group has.
-     * @return the number of liberties that the group has
-     */
-    public GoBoardPositionSet getLiberties(GoBoard board) {
-        // XXX AA possible cause of indeterminism.
-        if (eyeCache_.isValid()) {
-            return cachedLiberties_;
-        }
-        GoBoardPositionSet liberties = new GoBoardPositionSet();
-        for (IGoString str : group_.getMembers()) {
-            liberties.addAll(str.getLiberties(board));
-        }
-        cachedLiberties_ = liberties;
-        return liberties;
-    }
-
-    /**
-     * Get number of liberties for our groups. If nothing cached, this may not be accurate.
-     * @param board if null, then the number of liberties returned is just what is in the cache and may not be accurate.
-     * @return number of cached liberties if board is null, else exact number of liberties for group.
-     */
-    public int getNumLiberties(GoBoard board) {
-        if (board == null) {
-            return cachedLiberties_ == null ? 0 :cachedLiberties_.size();
-        }
-        return getLiberties(board).size();
     }
 
     /**

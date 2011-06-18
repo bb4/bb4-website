@@ -10,6 +10,8 @@ import com.becker.game.twoplayer.go.board.elements.position.GoStone;
  */
 public class TestStoneInGroupAnalyzer extends GoTestCase {
 
+    private static final float PRESUMED_GROUP_HEALTH = 0.2f;
+
     public void testDeadWhiteStoneInLiveBlackGroupIsMuchWeaker() {
 
         // a black group that is mostly alive
@@ -64,6 +66,6 @@ public class TestStoneInGroupAnalyzer extends GoTestCase {
 
     private void verifyStoneStrength(GoStone stone, IGoGroup group, boolean weaker) {
         StoneInGroupAnalyzer analyzer = new StoneInGroupAnalyzer(group);
-        assertEquals(weaker, analyzer.isStoneMuchWeakerThanGroup(stone));
+        assertEquals(weaker, analyzer.isStoneMuchWeakerThanGroup(stone, PRESUMED_GROUP_HEALTH));
     }
 }

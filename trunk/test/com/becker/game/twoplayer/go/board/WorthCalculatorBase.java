@@ -2,9 +2,11 @@ package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.WorthCalculator;
+import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.WorthCalculator;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.options.GoWeights;
+import gui.Board;
 import junit.framework.Assert;
 
 /**
@@ -29,20 +31,20 @@ public abstract class WorthCalculatorBase extends GoTestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        int size = controller_.getBoard().getNumRows();
-        calculator = new WorthCalculator(size, size);
+        GoBoard board = (GoBoard) controller_.getBoard();
+        GroupAnalyzerMap analyzerMap = new GroupAnalyzerMap();
+        TerritoryAnalyzer terrAnalyzer = new TerritoryAnalyzer(board, analyzerMap);
+        calculator = new WorthCalculator(board, terrAnalyzer);
     }
 
 
     protected void verifyWorth(String file, int expWorth) {
 
         restore(PREFIX  + file);
-        GoBoard board = (GoBoard)controller_.getBoard();
 
         Move move = controller_.getLastMove();
-        int actWorth = calculator.worth(board, move, WEIGHTS.getDefaultWeights());
+        int actWorth = calculator.worth(move, WEIGHTS.getDefaultWeights());
 
-        //controller_.undoLastMove();
 
         Assert.assertEquals("Unexpected worth.", expWorth, actWorth);
     }
@@ -55,16 +57,15 @@ public abstract class WorthCalculatorBase extends GoTestCase {
     protected void compareWorths(String game1, String game2, int expWorth) {
 
         restore(PREFIX  + game1);
-        GoBoard board = (GoBoard)controller_.getBoard();
 
         Move move = controller_.getLastMove();
-        int actWorthA = calculator.worth(board, move, WEIGHTS.getDefaultWeights());
+        int actWorthA = calculator.worth(move, WEIGHTS.getDefaultWeights());
 
         controller_.reset();
         restore(PREFIX + game2);
 
         move = controller_.getLastMove();
-        int actWorthB = calculator.worth(board, move, WEIGHTS.getDefaultWeights());
+        int actWorthB = calculator.worth(move, WEIGHTS.getDefaultWeights());
 
         Assert.assertEquals("Unexpected worth for A.", expWorth, actWorthA);
         Assert.assertEquals("Unexpected worth for B.", expWorth, actWorthB);

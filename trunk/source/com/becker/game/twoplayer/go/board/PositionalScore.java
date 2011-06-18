@@ -2,8 +2,6 @@ package com.becker.game.twoplayer.go.board;
 
 import com.becker.common.format.FormatUtil;
 
-import javax.swing.*;
-
 /**
  * For debugging purposes we want to keep more detail on what composes the overall score.
  * @author Barry Becker 

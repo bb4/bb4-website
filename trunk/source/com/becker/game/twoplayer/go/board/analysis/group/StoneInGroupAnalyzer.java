@@ -35,8 +35,8 @@ public class StoneInGroupAnalyzer {
     /**
      * @return true if the stone is much weaker than the group
      */
-    public boolean isStoneMuchWeakerThanGroup(GoStone stone) {
-        return isStoneWeakerThanGroup(stone, DIFFERENCE_THRESHOLD);
+    public boolean isStoneMuchWeakerThanGroup(GoStone stone, float absoluteHealth) {
+        return isStoneWeakerThanGroup(stone, DIFFERENCE_THRESHOLD, absoluteHealth);
     }
 
     /**
@@ -44,8 +44,7 @@ public class StoneInGroupAnalyzer {
      * @param threshold
      * @return return true of the stone is greater than threshold weaker than the group.
      */
-    private boolean isStoneWeakerThanGroup(GoStone stone, float threshold) {
-        float groupHealth = group_.getAbsoluteHealth();
+    private boolean isStoneWeakerThanGroup(GoStone stone, float threshold, float groupHealth) {
 
         // for purposes of determining relative weakness. Don't allow the outer group to go out of its living range.
         if (group_.isOwnedByPlayer1() &&  groupHealth < MIN_LIFE_THRESH) {

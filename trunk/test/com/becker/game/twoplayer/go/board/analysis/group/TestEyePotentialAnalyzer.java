@@ -178,7 +178,7 @@ public class TestEyePotentialAnalyzer extends GoTestCase {
         int size = group.getNumStones();
         Assert.assertEquals("Unexpected size of test group.", expectedSizeOfGroup, size);
 
-        EyePotentialAnalyzer analyzer = new EyePotentialAnalyzer(group);
+        EyePotentialAnalyzer analyzer = new EyePotentialAnalyzer(group, new GroupAnalyzerMap());
         analyzer.setBoard((GoBoard) controller_.getBoard());
         float eyePotential = analyzer.calculateEyePotential();
 

@@ -1,12 +1,9 @@
 package com.becker.game.twoplayer.go.board.elements.group;
 
 import com.becker.common.geometry.Box;
-import com.becker.common.format.FormatUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.GoSet;
-import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
@@ -15,8 +12,8 @@ import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 import java.util.Iterator;
-
-import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORING;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *  A GoGroup is composed of a loosely connected set of one or more same color strings.
@@ -32,19 +29,27 @@ public final class GoGroup extends GoSet
     /** a set of same color strings that are in the group. */
     private GoStringSet members_;
 
-    /** Responsible for determining how alive or dead the group is. */
-    private GroupAnalyzer groupAnalyzer_;
+    /**
+     * This is the cached number of liberties.
+     * It updates whenever something has changed.
+     */
+    private GoBoardPositionSet cachedLiberties_;
+
+    /** listeners to notify in the event that we change. */
+    private List<GroupChangeListener> changeListeners;
+
 
     /**
      * Constructor. Create a new group containing the specified string.
      * @param string make the group from this string.
      */
     public GoGroup(IGoString string) {
-        commonInit();
+
         ownedByPlayer1_ = string.isOwnedByPlayer1();
          
         getMembers().add( string );
-        string.setGroup( this );        
+        string.setGroup( this );
+        commonInit();
     }
 
     /**
@@ -55,15 +60,40 @@ public final class GoGroup extends GoSet
      * @param stones list of stones to create a group from.
      */
     public GoGroup( GoBoardPositionList stones ) {
-        commonInit();
+
         ownedByPlayer1_ = (stones.getFirst()).getPiece().isOwnedByPlayer1();
         for (GoBoardPosition stone : stones) {
             assimilateStone(stones, stone);
-        }       
+        }
+        commonInit();
+    }
+
+    private void commonInit() {
+       changeListeners = new LinkedList<GroupChangeListener>();
+    }
+
+    public void addChangeListener(GroupChangeListener listener) {
+        changeListeners.add(listener);
+    }
+
+    public void removeChangeListener(GroupChangeListener listener) {
+         changeListeners.remove(listener);
+    }
+
+
+    /**
+     * @return true if the piece is an enemy of the set owner.
+     *  If the difference in health between the stones is great, then they are not really enemies
+     *  because one of them is dead.
+     */
+    @Override
+    public boolean isEnemy( GoBoardPosition pos) {
+        assert (pos.isOccupied());
+        GoStone stone = (GoStone)pos.getPiece();
+        return stone.isOwnedByPlayer1() != isOwnedByPlayer1(); // && !muchWeaker);
     }
 
     /**
-     *
      * @param stones
      * @param stone  the new stone to add to the group.
      */
@@ -80,10 +110,6 @@ public final class GoGroup extends GoSet
             getMembers().add(string);
         }
         string.setGroup(this);
-    }
-
-    private void commonInit()  {
-        groupAnalyzer_ = new GroupAnalyzer(this);
     }
 
     /**
@@ -133,7 +159,7 @@ public final class GoGroup extends GoSet
         }
         string.setGroup( this );
         getMembers().add( string );
-        groupAnalyzer_.invalidate();
+        broadcastChange();
     }
 
     /**
@@ -150,59 +176,34 @@ public final class GoGroup extends GoSet
             return;
         }
         getMembers().remove( string );
-        groupAnalyzer_.invalidate();
+        broadcastChange();
     }
 
     /**
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
      */
-    @Override
     public GoBoardPositionSet getLiberties(GoBoard board) {
-        return groupAnalyzer_.getLiberties(board);
+
+        if (board == null) {
+            return cachedLiberties_;
+        }
+
+        GoBoardPositionSet liberties = new GoBoardPositionSet();
+        for (IGoString str : getMembers()) {
+            liberties.addAll(str.getLiberties(board));
+        }
+        cachedLiberties_ = liberties;
+        return liberties;
     }
 
+    /**
+     * Get number of liberties for our groups. If nothing cached, this may not be accurate.
+     * @param board if null, then the number of liberties returned is just what is in the cache and may not be accurate.
+     * @return number of cached liberties if board is null, else exact number of liberties for group.
+     */
     public int getNumLiberties(GoBoard board) {
         return getLiberties(board).size();
-    }
-
-    /**
-     * Calculate the number of stones in the group.
-     * @return number of stones in the group.
-     */
-    public int getNumStones() {
-        return groupAnalyzer_.getNumStones();
-    }
-    
-    public float calculateAbsoluteHealth( GoBoard board) {
-        return groupAnalyzer_.calculateAbsoluteHealth(board);
-    }
-    
-    public float calculateRelativeHealth( GoBoard board) {
-        return groupAnalyzer_.calculateRelativeHealth(board);
-    }
-    
-    public float getAbsoluteHealth() {
-        return groupAnalyzer_.getAbsoluteHealth();
-    }
-
-    /**
-     * We try to use the cached relative health value if we can.
-     * @param board needed to calculate new value if not cached
-     * @param useCachedValue if true, just return the cached value instead of checking for validity.
-     * @return relative health
-     */
-    public float getRelativeHealth(GoBoard board, boolean useCachedValue) {
-        if (!USE_RELATIVE_GROUP_SCORING) {
-            return getAbsoluteHealth();
-        }
-        if (groupAnalyzer_.isValid() || useCachedValue) {
-            if (!groupAnalyzer_.isValid())
-                GameContext.log(3, "using cached relative health when not valid");
-            return groupAnalyzer_.getRelativeHealth();
-        }
-        GameContext.log(0, "stale abs health. recalculating relative health");
-        return groupAnalyzer_.calculateRelativeHealth(board);
     }
 
     /**
@@ -215,12 +216,14 @@ public final class GoGroup extends GoSet
         }
         return stones;
     }
-    
+
+
     /**
-     * @return  set of eyes currently identified for this group.
+     * Calculate the number of stones in the group.
+     * @return number of stones in the group.
      */
-    public GoEyeSet getEyes(GoBoard board) {
-        return groupAnalyzer_.getEyes(board);
+    public int getNumStones() {
+       return getStones().size();
     }
 
     /**
@@ -237,10 +240,6 @@ public final class GoGroup extends GoSet
         }
     }
 
-    public boolean isValid() {
-        return groupAnalyzer_.isValid();
-    }
-
     /**
      * returns true if this group contains the specified stone
      * @param stone the stone to check for containment of
@@ -252,20 +251,6 @@ public final class GoGroup extends GoSet
                 return true;
         }
         return false;
-    }
-
-    /**
-     * @return true if the piece is an enemy of the set owner.
-     *  If the difference in health between the stones is great, then they are not really enemies
-     *  because one of them is dead.
-     */
-    @Override
-    public boolean isEnemy( GoBoardPosition pos) {
-        assert (pos.isOccupied());
-        GoStone stone = (GoStone)pos.getPiece();
-        boolean muchWeaker = isStoneMuchWeaker(stone);
-
-        return ( stone.isOwnedByPlayer1() != ownedByPlayer1_  && !muchWeaker);
     }
 
     /**
@@ -327,21 +312,15 @@ public final class GoGroup extends GoSet
             sb.append(',').append(newline).append("    ").append(p.toString());
         }
         sb.append(newline).append('}');
-        GoEyeSet eyes = getEyes(null);
-        if (eyes!=null && !eyes.isEmpty())
-            sb.append(eyes.toString()).append(newline);
-        // make sure that the health and eyes are up to date
-        //calculateHealth();
-        sb.append("abs health=").append(FormatUtil.formatNumber(groupAnalyzer_.getAbsoluteHealth()));
-        sb.append(" rel health=").append(FormatUtil.formatNumber(groupAnalyzer_.getRelativeHealth()));
-        sb.append(" group Liberties=").append(groupAnalyzer_.getNumLiberties(null)).append('\n');
         return sb.toString();
     }
 
     /**
-     * @return true if the stone is much weaker than the group
+     * Notify our listeners (if any) that we have changed
      */
-    public boolean isStoneMuchWeaker(GoStone stone) {
-        return groupAnalyzer_.isStoneMuchWeakerThanGroup(stone);
+    private void broadcastChange() {
+        for (GroupChangeListener listener : changeListeners) {
+            listener.groupChanged();
+        }
     }
 }

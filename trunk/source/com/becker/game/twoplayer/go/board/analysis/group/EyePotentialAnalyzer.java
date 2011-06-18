@@ -21,13 +21,14 @@ class EyePotentialAnalyzer {
     /** bounding box around our group that we are analyzing. */
     private Box boundingBox_;
 
+    private GroupAnalyzerMap analyzerMap_;
 
     /**
      * Constructor.
      */
-    public EyePotentialAnalyzer(IGoGroup group) {
+    public EyePotentialAnalyzer(IGoGroup group, GroupAnalyzerMap analyzerMap) {
         group_ = group;
-
+        analyzerMap_ = analyzerMap;
     }
 
     public void setBoard(GoBoard board) {
@@ -82,7 +83,7 @@ class EyePotentialAnalyzer {
     private float getTotalRowPotentials(IGoString groupString, int rMin, int rMax, int cMin, int cMax) {
 
         float totalPotential = 0;
-        RunPotentialAnalyzer runAnalyzer = new RunPotentialAnalyzer(groupString, board_);
+        RunPotentialAnalyzer runAnalyzer = new RunPotentialAnalyzer(groupString, board_, analyzerMap_);
 
         for ( int r = rMin; r <= rMax; r++ ) {
             totalPotential += runAnalyzer.getRunPotential(new Location(r, cMin), 0, 1, rMax, cMax);
@@ -96,7 +97,7 @@ class EyePotentialAnalyzer {
     private float getTotalColumnPotentials(IGoString groupString, int rMin, int rMax, int cMin, int cMax) {
 
         float totalPotential = 0;
-        RunPotentialAnalyzer runAnalyzer = new RunPotentialAnalyzer(groupString, board_);
+        RunPotentialAnalyzer runAnalyzer = new RunPotentialAnalyzer(groupString, board_, analyzerMap_);
 
         for ( int c = cMin; c <= cMax; c++ ) {
             totalPotential += runAnalyzer.getRunPotential(new Location(rMin, c), 1, 0, rMax, cMax);

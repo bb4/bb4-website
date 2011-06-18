@@ -492,8 +492,10 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         IGoGroup wg = getBiggestGroup(false);
 
         GoBoard board = (GoBoard) controller_.getBoard();
-        GroupAnalyzer blackHealthAnalyzer = new GroupAnalyzer(bg);
-        GroupAnalyzer whiteHealthAnalyzer = new GroupAnalyzer(wg);
+
+        GroupAnalyzerMap analyzerMap = new GroupAnalyzerMap();
+        GroupAnalyzer blackHealthAnalyzer = new GroupAnalyzer(bg, analyzerMap);
+        GroupAnalyzer whiteHealthAnalyzer = new GroupAnalyzer(wg, analyzerMap);
 
         double bah = blackHealthAnalyzer.calculateAbsoluteHealth(board);
         double wah = whiteHealthAnalyzer.calculateAbsoluteHealth(board);

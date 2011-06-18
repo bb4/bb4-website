@@ -5,6 +5,8 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 import com.becker.game.twoplayer.go.board.elements.group.GoGroup;
@@ -100,14 +102,15 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
                               boolean isInCorner, boolean isOnEdge, GroupType groupType) {
 
         IGoGroup group = getGroupToCheck(isBlack, groupType, board);
+        GroupAnalyzer groupAnalyzer = new GroupAnalyzer(group, new GroupAnalyzerMap());
 
-        GoEyeSet eyes = group.getEyes(board);
+        GoEyeSet eyes = groupAnalyzer.getEyes(board);
 
         assertEquals("The group\n" + group + "\n did not have one eye.",
                 1, eyes.size());
-        IGoEye firstEye = group.getEyes(board).iterator().next();
+        IGoEye firstEye = groupAnalyzer.getEyes(board).iterator().next();
 
-        EyeTypeAnalyzer eyeAnalyzer = new EyeTypeAnalyzer(firstEye, board);
+        EyeTypeAnalyzer eyeAnalyzer = new EyeTypeAnalyzer(firstEye, board, groupAnalyzer);
         EyeInformation information = eyeAnalyzer.determineEyeInformation();
         String eyeColor = isBlack? "black" : "white";
         assertEquals("Unexpected information found for " + eyeColor + " eye.",

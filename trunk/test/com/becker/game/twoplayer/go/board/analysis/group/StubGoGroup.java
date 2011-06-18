@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 import com.becker.common.geometry.Box;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
+import com.becker.game.twoplayer.go.board.elements.group.GroupChangeListener;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
@@ -33,6 +34,14 @@ public class StubGoGroup implements IGoGroup {
 
     public boolean isOwnedByPlayer1() {
         return isOwnedByPlayer1;
+    }
+
+    public void addChangeListener(GroupChangeListener listener) {
+        throw new NotImplementedException();
+    }
+
+    public void removeChangeListener(GroupChangeListener listener) {
+        throw new NotImplementedException();
     }
 
     public void addMember(IGoString string) {

@@ -4,13 +4,11 @@ import com.becker.common.geometry.Box;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoProfiler;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionLists;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.position.*;
 
 import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORING;
 
@@ -37,13 +35,16 @@ public class TerritoryAnalyzer {
 
     private NeighborAnalyzer nbrAnalyzer_;
 
+    private GroupAnalyzerMap analyzerMap_;
+
     /**
      * Constructor
      * @param board board to analyze
      */
-    public TerritoryAnalyzer(GoBoard board)  {
+    public TerritoryAnalyzer(GoBoard board, GroupAnalyzerMap analyzerMap)  {
         board_ = board;
         nbrAnalyzer_ = new NeighborAnalyzer(board);
+        analyzerMap_ = analyzerMap;
     }
     
     public float getTerritoryDelta() {
@@ -98,7 +99,7 @@ public class TerritoryAnalyzer {
             assert(piece != null);
             if (group != null) {
                 // add credit for probable captured stones.
-                double relHealth = group.getRelativeHealth(board_, isEndOfGame);
+                double relHealth = analyzerMap_.getAnalyzer(group).getRelativeHealth(board_, isEndOfGame);
                 if (forPlayer1 && !piece.isOwnedByPlayer1() && relHealth >= 0) {
                     territoryEstimate += val;
                 }
@@ -125,11 +126,13 @@ public class TerritoryAnalyzer {
      */
     public float updateTerritory(boolean isEndOfGame) {
 
+        clearScores();
+
         GoProfiler prof = GoProfiler.getInstance();
         prof.startUpdateTerritory();
 
         float delta = calcAbsoluteHealth();
-        delta = calcRelativeHealth(prof, delta);   // XXX big cause of nondeterministic behavior.
+        delta = calcRelativeHealth(prof, delta);   // XXX big cause of non-deterministic behavior.
 
         prof.startUpdateEmpty();
         delta += updateEmptyRegions(isEndOfGame);
@@ -138,6 +141,26 @@ public class TerritoryAnalyzer {
         prof.stopUpdateTerritory();
         territoryDelta_ = delta;
         return delta;
+    }
+
+
+
+    /**
+     * Clear whatever cached score state we might have before recomputing.
+     */
+    private void clearScores() {
+        // we should be able to just sum all the position scores now.
+        for ( int i = 1; i <= board_.getNumRows(); i++ )  {
+           for ( int j = 1; j <= board_.getNumCols(); j++ ) {
+               GoBoardPosition pos = (GoBoardPosition)board_.getPosition(i, j);
+               pos.setScoreContribution(0);
+
+               if (pos.isOccupied()) {
+                   GoStone stone = ((GoStone)pos.getPiece());
+                   stone.setHealth(0);
+               }
+           }
+        }
     }
 
     /**
@@ -151,7 +174,7 @@ public class TerritoryAnalyzer {
 
         for (IGoGroup g : board_.getGroups()) {
 
-            float health = g.calculateAbsoluteHealth(board_);
+            float health = analyzerMap_.getAnalyzer(g).calculateAbsoluteHealth(board_);
 
             if (!USE_RELATIVE_GROUP_SCORING) {
                 g.updateTerritory(health);
@@ -171,7 +194,7 @@ public class TerritoryAnalyzer {
         if (USE_RELATIVE_GROUP_SCORING) {
             prof.startRelativeTerritory();
             for (IGoGroup g : board_.getGroups()) {
-                float health = g.calculateRelativeHealth(board_);
+                float health = analyzerMap_.getAnalyzer(g).calculateRelativeHealth(board_);
                 g.updateTerritory(health);
                 delta += health * g.getNumStones();
             }
@@ -263,7 +286,7 @@ public class TerritoryAnalyzer {
 
         for (GoBoardPosition stone : stones) {           
             IGoGroup group = stone.getString().getGroup();
-            totalScore += group.getRelativeHealth(board_, false);
+            totalScore += analyzerMap_.getAnalyzer(group).getRelativeHealth(board_, false);
         }
         return totalScore/stones.size();
     } 

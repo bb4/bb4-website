@@ -20,12 +20,15 @@ class RelativeHealthCalculator {
     /** The group of go stones that we are analyzing. */
     private IGoGroup group_;
 
+    private GroupAnalyzerMap analyzerMap_;
+
     /**
      * Constructor
      * @param group the group to analyze
      */
-    public RelativeHealthCalculator(IGoGroup group) {
+    public RelativeHealthCalculator(IGoGroup group, GroupAnalyzerMap analyzerMap) {
         group_ = group;
+        analyzerMap_ = analyzerMap;
     }
 
     /**
@@ -58,7 +61,7 @@ class RelativeHealthCalculator {
         if (weakestGroup != null)  {
             double proportionWithEnemyNbrs = findProportionWithEnemyNbrs(groupStones);
 
-            double diff = absoluteHealth + weakestGroup.getAbsoluteHealth();
+            double diff = absoluteHealth + analyzerMap_.getAnalyzer(weakestGroup).getAbsoluteHealth();
             // @@ should use a weight to help determine how much to give a boost.
 
             // must be bounded by -1 and 1
@@ -84,7 +87,7 @@ class RelativeHealthCalculator {
         GoGroup weakestGroup = null;
         for (Object egroup : enemyNbrGroups) {
             GoGroup enemyGroup = (GoGroup)egroup;
-            double h = enemyGroup.getAbsoluteHealth();
+            double h = analyzerMap_.getAnalyzer(enemyGroup).getAbsoluteHealth();
             if ((side * h) > (side * weakestHealth)) {
                 weakestHealth = h;
                 weakestGroup = enemyGroup;
