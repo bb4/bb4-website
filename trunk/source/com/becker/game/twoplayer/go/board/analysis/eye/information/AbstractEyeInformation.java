@@ -10,8 +10,7 @@ import java.util.Arrays;
  *
  * @author Barry Becker
  */
-public abstract class AbstractEyeInformation implements EyeInformation
-{
+public abstract class AbstractEyeInformation implements EyeInformation {
     public boolean hasLifeProperty() {
         return false;
     }
