@@ -8,24 +8,16 @@ import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.optimization.parameter.ParameterArray;
 
-
 /**
- * Representation of a Go Game Board
- * There are a lot of data structures to organize the state of the pieces.
- * For example, we update strings, and groups (and eventually armies) after each move.
- * After updating we can use these structures to estimate territory for each side.
+ * Responsible for evaluating groups and territory on a go board.
  *
- * Could move many methods to StringFinder and GroupFinder classes.
  * @author Barry Becker
  */
 public final class BoardEvaluator {
 
     private WorthCalculator worthCalculator_;
-
     private TerritoryAnalyzer territoryAnalyzer_;
-
     private GroupAnalyzerMap analyzerMap_;
-
 
     /**
      *  Constructor.
@@ -37,24 +29,21 @@ public final class BoardEvaluator {
         worthCalculator_ = new WorthCalculator(board, territoryAnalyzer_);
     }
 
+    /**
+     * @return the worth of the board from player1's perspective
+     */
     public int worth(Move lastMove, ParameterArray weights) {
         return worthCalculator_.worth(lastMove, weights);
     }
 
+    /** Used only for debugging to understand how the worth was calculated. */
     public WorthInfo getWorthInfo() {
         return worthCalculator_.getWorthInfo();
     }
 
-    /** don't really want to expose this */
+    /** don't really want to expose this, but need for rendering. */
     public GroupAnalyzer getGroupAnalyzer(IGoGroup group) {
         return analyzerMap_.getAnalyzer(group);
-    }
-
-    /**
-     * @return change in territorial score
-     */
-    public float getTerritoryDelta() {
-        return territoryAnalyzer_.getTerritoryDelta();
     }
 
     /**
@@ -70,7 +59,7 @@ public final class BoardEvaluator {
     /**
      * @return the estimated difference in territory between the 2 sides.
      */
-    public float updateTerritory(boolean isEndOfGame) {
-        return territoryAnalyzer_.updateTerritory(isEndOfGame);
+    public float updateTerritoryAtEndOfGame() {
+        return territoryAnalyzer_.updateTerritory(true);
     }
 }

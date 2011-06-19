@@ -50,6 +50,10 @@ public class GroupAnalyzer implements GroupChangeListener {
         group.addChangeListener(this);
     }
 
+    public IGoGroup getGroup() {
+        return group_;
+    }
+
     /**
      * Called when the group we are maintaining info about changes.
      * It changes by having stones added or removed.
@@ -182,10 +186,11 @@ public class GroupAnalyzer implements GroupChangeListener {
         return clone;
     }
 
+
     /**
      * @return true if the stone is much weaker than the group
      */
-    public boolean isStoneMuchWeakerThanGroup(GoStone stone) {
+    private boolean isStoneMuchWeakerThanGroup(GoStone stone) {
         return stoneInGroupAnalyzer_.isStoneMuchWeakerThanGroup(stone, getAbsoluteHealth());
     }
 

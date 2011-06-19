@@ -24,7 +24,6 @@ import java.util.List;
  * Defines everything the computer needs to know to play Go.
  *
  * @see package.html for more info.
- * @see GoBoard
  * @author Barry Becker
  */
 public final class GoController extends TwoPlayerController {
@@ -134,12 +133,12 @@ public final class GoController extends TwoPlayerController {
      * @param forPlayer1  true if for player one (black)
      * @return the actual amount of territory for the specified player (each empty space counts as one)
      */
-    public int getTerritory( boolean forPlayer1 ) {
-        return ((GoSearchable)getSearchable()).getTerritory(forPlayer1);
+    public int getFinalTerritory(boolean forPlayer1) {
+        return ((GoSearchable)getSearchable()).getFinalTerritory(forPlayer1);
     }
 
     /**
-     * return the game board back to its initial opening state.
+     * Restore the game board back to its initial opening state.
      */
     @Override
     public void reset() {

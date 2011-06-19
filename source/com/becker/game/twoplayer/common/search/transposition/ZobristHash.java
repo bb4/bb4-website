@@ -35,7 +35,7 @@ public final class ZobristHash {
      */
     public ZobristHash(TwoPlayerBoard board) {
 
-        this(board, 0, true);  // always false unless debugging.
+        this(board, 0, false);  // always false unless debugging.
     }
 
     /**

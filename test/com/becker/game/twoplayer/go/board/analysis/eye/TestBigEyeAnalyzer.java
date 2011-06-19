@@ -22,10 +22,6 @@ public class TestBigEyeAnalyzer extends GoTestCase {
     private static final String PATH_PREFIX = "board/analysis/eye/";
 
 
-    protected String getPathPrefix() {
-        return PATH_PREFIX;
-    }
-
     public void testE111223() {
 
         restore(PATH_PREFIX + "BigEye_E111223");

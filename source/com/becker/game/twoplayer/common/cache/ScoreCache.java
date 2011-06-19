@@ -18,7 +18,7 @@ import com.becker.game.twoplayer.common.search.transposition.HashKey;
 public class ScoreCache extends LRUCache<HashKey, ScoreEntry> {
 
     /** Size of the table. If bigger, will take longer before we have to recycle positions. */
-    private static final int MAX_ENTRIES = 1000000;
+    private static final int MAX_ENTRIES = 100000;
 
     private int cacheHits = 0;
     private int cacheMisses = 0;

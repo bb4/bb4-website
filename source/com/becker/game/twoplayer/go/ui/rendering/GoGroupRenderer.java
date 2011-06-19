@@ -66,8 +66,9 @@ final class GoGroupRenderer {
     /**
      * draw debugging information about the group like its border and eye shapes.
      */
-    public void drawGroupDecoration(IGoGroup group, GroupAnalyzer groupAnalyzer) {
+    public void drawGroupDecoration(GroupAnalyzer groupAnalyzer) {
 
+        IGoGroup group = groupAnalyzer.getGroup();
         GroupRegion cachedRegion = hmRegionCache_.get(group);
 
         if ( !groupAnalyzer.isValid() || cachedRegion == null || cellSize_ != cachedRegion.cellSize ) {

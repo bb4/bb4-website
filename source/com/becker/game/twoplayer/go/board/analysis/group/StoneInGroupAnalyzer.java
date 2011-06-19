@@ -31,7 +31,6 @@ public class StoneInGroupAnalyzer {
         group_ = group;
     }
 
-
     /**
      * @return true if the stone is much weaker than the group
      */
@@ -46,24 +45,35 @@ public class StoneInGroupAnalyzer {
      */
     private boolean isStoneWeakerThanGroup(GoStone stone, float threshold, float groupHealth) {
 
-        // for purposes of determining relative weakness. Don't allow the outer group to go out of its living range.
-        if (group_.isOwnedByPlayer1() &&  groupHealth < MIN_LIFE_THRESH) {
-            groupHealth = MIN_LIFE_THRESH;
-        } else if (!group_.isOwnedByPlayer1() && groupHealth > -MIN_LIFE_THRESH) {
-            groupHealth = -MIN_LIFE_THRESH;
-        }
+        float constrainedGroupHealth = getConstrainedGroupHealth(groupHealth);
+
         float stoneHealth = stone.getHealth();
         boolean muchWeaker;
         if (stone.isOwnedByPlayer1())  {
             assert (!group_.isOwnedByPlayer1());
 
-            muchWeaker = (-groupHealth - stoneHealth > threshold);
+            muchWeaker = (-constrainedGroupHealth - stoneHealth > threshold);
         }
         else {
             assert (group_.isOwnedByPlayer1());
-            muchWeaker = (groupHealth + stoneHealth > threshold);
+            muchWeaker = (constrainedGroupHealth + stoneHealth > threshold);
         }
 
         return muchWeaker;
+    }
+
+    /**
+     * for purposes of determining relative weakness. Don't allow the outer group to go out of its living range.
+     * @param rawGroupHealth  original group health value
+     * @return group health constrained to between +/- MIN_LIFE_THRESH
+     */
+    private float getConstrainedGroupHealth(float rawGroupHealth) {
+        float health = rawGroupHealth;
+         if (group_.isOwnedByPlayer1() &&  rawGroupHealth < MIN_LIFE_THRESH) {
+            health = MIN_LIFE_THRESH;
+        } else if (!group_.isOwnedByPlayer1() && rawGroupHealth > -MIN_LIFE_THRESH) {
+            health = -MIN_LIFE_THRESH;
+        }
+        return health;
     }
 }
