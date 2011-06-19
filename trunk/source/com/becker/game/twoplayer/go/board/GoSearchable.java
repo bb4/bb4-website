@@ -33,16 +33,13 @@ public class GoSearchable extends TwoPlayerSearchable {
 
     /** Size of group that needs to be in atari before we consider a group urgent. */
     private static final int CRITICAL_GROUP_SIZE = 3;
-
-    private static final boolean USE_SCORE_CACHING = false;
+    private static final boolean USE_SCORE_CACHING = true;
 
     /** keeps track of dead stones.  */
     private DeadStoneUpdater deadStoneUpdater_;
 
     private ScoreCache scoreCache_;
-
     private BoardEvaluator boardEvaluator_;
-
 
 
     /**
@@ -133,7 +130,7 @@ public class GoSearchable extends TwoPlayerSearchable {
     private void doFinalBookKeeping() {
 
         getProfiler().startCalcWorth();
-        boardEvaluator_.updateTerritory(true);
+        boardEvaluator_.updateTerritoryAtEndOfGame();
 
         //we should not call this twice
         if (getNumDeadStonesOnBoard(true)  > 0 || getNumDeadStonesOnBoard(false) > 0) {
@@ -172,6 +169,7 @@ public class GoSearchable extends TwoPlayerSearchable {
         // Why doesn't playing with caching give same results as without?
         HashKey key = getHashKey();
         ScoreEntry cachedScore = scoreCache_.get(key);
+        ///////// comment this to do debugging
         //if (cachedScore != null) {
         //    return cachedScore.getScore();
         //}
@@ -298,22 +296,12 @@ public class GoSearchable extends TwoPlayerSearchable {
 
 
     /**
-     * @param player1 if true, then the score for player one is returned else player2's score is returned
-     * @return the score (larger is better regardless of player)
+     * Call this at the end of the game when we need to try to get an accurate score.
+     * @param forPlayer1  true if player one (black)
+     * @return the actual score (each empty space counts as one)
      */
-    public double getFinalScore(boolean player1) {
-        int numDead = getNumDeadStonesOnBoard(player1);
-        int totalCaptures = numDead + getNumCaptures(!player1);
-        int p1Territory = getTerritory(player1);
-
-        String side = (player1? "black":"white");
-        GameContext.log(1, "----");
-        GameContext.log(1, "final score for "+ side);
-        GameContext.log(2, "getNumCaptures(" + side + ")=" + getNumCaptures(player1));
-        GameContext.log(2, "num dead " + side + " stones on board: "+ numDead);
-        GameContext.log(2, "getTerritory(" + side + ")="+p1Territory);
-        GameContext.log(0, "terr + totalEnemyCaptures="+ (p1Territory + totalCaptures));
-        return p1Territory + totalCaptures;
+    public int getFinalTerritory(boolean forPlayer1) {
+        return boardEvaluator_.getTerritoryEstimate(forPlayer1, true);
     }
 
     /**
@@ -326,12 +314,22 @@ public class GoSearchable extends TwoPlayerSearchable {
     }
 
     /**
-     * Call this at the end of the game when we need to try to get an accurate score.
-     * @param forPlayer1  true if player one (black)
-     * @return the actual score (each empty space counts as one)
+     * @param player1 if true, then the score for player one is returned else player2's score is returned
+     * @return the score (larger is better regardless of player)
      */
-    public int getTerritory( boolean forPlayer1 ) {
-        return boardEvaluator_.getTerritoryEstimate(forPlayer1, true);
+    public double getFinalScore(boolean player1) {
+        int numDead = getNumDeadStonesOnBoard(player1);
+        int totalCaptures = numDead + getNumCaptures(!player1);
+        int p1Territory = getFinalTerritory(player1);
+
+        String side = (player1? "black":"white");
+        GameContext.log(1, "----");
+        GameContext.log(1, "final score for "+ side);
+        GameContext.log(2, "getNumCaptures(" + side + ")=" + getNumCaptures(player1));
+        GameContext.log(2, "num dead " + side + " stones on board: "+ numDead);
+        GameContext.log(2, "getTerritory(" + side + ")="+p1Territory);
+        GameContext.log(0, "terr + totalEnemyCaptures="+ (p1Territory + totalCaptures));
+        return p1Territory + totalCaptures;
     }
 
     /**

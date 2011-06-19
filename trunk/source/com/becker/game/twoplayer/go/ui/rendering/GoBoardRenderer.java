@@ -5,6 +5,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.IGameController;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.ui.viewer.GameBoardRenderer;
+import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
@@ -155,10 +156,10 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
         // draw the group borders
         if ( GameContext.getDebugMode() > 0 ) {
             GoGroupRenderer groupRenderer = new GoGroupRenderer(board, COLORMAP, (float) cellSize_, getMargin(), g2);
-            GoSearchable searchable = ((GoSearchable)((GoController) controller).getSearchable());
+            GoSearchable searchable = ((GoSearchable)((TwoPlayerController) controller).getSearchable());
             for (IGoGroup group : board.getGroups()) {
 
-                groupRenderer.drawGroupDecoration(group, searchable.getGroupAnalyzer(group));
+                groupRenderer.drawGroupDecoration(searchable.getGroupAnalyzer(group));
             }
         }
 

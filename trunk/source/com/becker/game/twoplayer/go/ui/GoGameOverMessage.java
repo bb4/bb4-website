@@ -48,8 +48,8 @@ final class GoGameOverMessage extends GameOverMessage {
         message += p1Name +' '+ STONES_CAPTURED + blackCaptures +'\n';
         message += p2Name +' '+ STONES_CAPTURED + whiteCaptures +"\n\n";
 
-        int blackTerritory = gc.getTerritory(true);
-        int whiteTerritory = gc.getTerritory(false);
+        int blackTerritory = gc.getFinalTerritory(true);
+        int whiteTerritory = gc.getFinalTerritory(false);
         message += p1Name +' '+ TERRITORY + blackTerritory +'\n';
         message += p2Name +' '+ TERRITORY + whiteTerritory +"\n\n";
 

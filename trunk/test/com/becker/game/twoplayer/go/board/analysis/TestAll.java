@@ -22,6 +22,7 @@ public class TestAll {
         //suite.addTest(suite());
         suite.addTest(com.becker.game.twoplayer.go.board.analysis.eye.TestAll.suite());
         suite.addTest(com.becker.game.twoplayer.go.board.analysis.neighbor.TestAll.suite());
+        suite.addTest(com.becker.game.twoplayer.go.board.analysis.group.TestAll.suite());
 
         suite.addTestSuite(TestStringShapeAnalyzer.class);
         suite.addTestSuite(TestShapeAnalyzer.class);

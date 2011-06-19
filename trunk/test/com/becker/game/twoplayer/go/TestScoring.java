@@ -49,8 +49,8 @@ public class TestScoring extends GoTestCase {
 
         updateLifeAndDeath(PATH_PREFIX + scoringProblem);
 
-        int blackTerrEst = controller_.getTerritory(true);
-        int whiteTerrEst = controller_.getTerritory(false);
+        int blackTerrEst = controller_.getFinalTerritory(true);
+        int whiteTerrEst = controller_.getFinalTerritory(false);
         GoSearchable searchable = (GoSearchable) controller_.getSearchable();
         int numBlackCaptures = searchable.getNumCaptures(true);
         int numWhiteCaptures = searchable.getNumCaptures(false);

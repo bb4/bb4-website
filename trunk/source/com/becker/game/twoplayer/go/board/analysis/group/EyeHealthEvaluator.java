@@ -16,7 +16,6 @@ class EyeHealthEvaluator {
     private GoBoard board_;
     private GroupAnalyzerMap analyzerMap_;
 
-
     private static final float BEST_TWO_EYED_HEALTH = 1.0f;
     private static final float BEST_ALMOST_TWO_EYED_HEALTH = 0.94f;
     private static final float BEST_ONE_EYED_HEALTH = 0.89f;
@@ -203,7 +202,7 @@ class EyeHealthEvaluator {
     }
 
     /*
-     * @return health for multi-stone groupe iwth less than 5 liberties.
+     * @return health for multi-stone group with less than 5 liberties.
      */
     private float calcMultiStoneHealth(float side, int numLiberties) {
         float health = 0;
