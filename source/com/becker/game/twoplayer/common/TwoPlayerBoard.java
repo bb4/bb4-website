@@ -74,11 +74,7 @@ public abstract class TwoPlayerBoard extends Board {
      */
     public int getStateIndex(BoardPosition pos) {
         assert pos.isOccupied() : "this should only be called on occupied positions";
-        //if (!pos.isOccupied()) {
-        //    return 0;
-        //} else {
-            return pos.getPiece().isOwnedByPlayer1()? 1:2;
-        //}
+        return pos.getPiece().isOwnedByPlayer1()? 1:2;
     }
 
     @Override

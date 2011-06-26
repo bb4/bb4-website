@@ -35,7 +35,7 @@ public final class SecondProgram  {
 
         }  while (count <= 1000);
 
-        long numSeconds = (System.currentTimeMillis() - t) / 1000;
+        double numSeconds = (System.currentTimeMillis() - t) / 1000.0;
         System.out.println("Time =" + numSeconds);
 
         System.out.println("DONE!");

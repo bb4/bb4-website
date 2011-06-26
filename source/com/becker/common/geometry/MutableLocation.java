@@ -10,7 +10,6 @@ package com.becker.common.geometry;
  */
 public final class MutableLocation extends Location {
 
-
     /**
      * Constructs a new Location at the given coordinates.
      *

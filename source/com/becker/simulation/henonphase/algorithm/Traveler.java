@@ -2,6 +2,7 @@ package com.becker.simulation.henonphase.algorithm;
 
 import org.igoweb.igoweb.client.gtp.X;
 
+import javax.print.attribute.standard.PagesPerMinute;
 import java.awt.*;
 
 /**
@@ -10,19 +11,35 @@ import java.awt.*;
  */
 public class Traveler {
 
-    public Color color;
-    private double angle;
+    private Color color;
+    private TravelerParams params;
 
     // current position
-    public double x;
-    public double y;
+    private double x;
+    private double y;
+
+    // last position
+    private double lastX;
+    private double lastY;
 
 
-    public Traveler(double origX, double origY, Color color, double angle) {
+    public Traveler(double origX, double origY, Color color, TravelerParams params) {
         this.color = color;
-        this.angle = angle;
+        this.params = params;
         x = origX;
         y = origY;
+        lastX = x;
+        lastY = y;
+    }
+
+    public double getX() {return x;}
+    public double getY() {return y;}
+
+    public double getLastX() {return lastX;}
+    public double getLastY() {return lastY;}
+
+    public Color getColor() {
+        return color;
     }
 
     /**
@@ -30,9 +47,12 @@ public class Traveler {
      */
     public void increment() {
 
-        double sin = Math.sin(angle);
-        double cos = Math.cos(angle);
-        double term = y - x * x;       // offset and multiplier
+        lastX = x;
+        lastY = y;
+
+        double sin = Math.sin(params.getAngle());
+        double cos = Math.cos(params.getAngle());
+        double term = params.getMultiplier() * y + params.getOffset() - x * x;
 
         double temp = x * cos - term * sin;
         y = x * sin + term * cos;

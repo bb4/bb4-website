@@ -66,8 +66,9 @@ public class HenonColorMap2 extends ColorMap {
         new Color(160, 156, 132, ALPHA)
     };
 
-    public HenonColorMap2() {
+    public HenonColorMap2(int alpha) {
         super(VALUES, COLORS);
+        this.setGlobalAlpha(alpha);
     }
    /*
     //color[] goodcolor = {#000000, #6b6556, #a09c84, #908b7c, #79746e,

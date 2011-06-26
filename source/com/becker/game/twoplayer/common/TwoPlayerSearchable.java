@@ -50,14 +50,6 @@ public abstract class TwoPlayerSearchable implements Searchable {
     public TwoPlayerSearchable(TwoPlayerSearchable searchable) {
 
         this((TwoPlayerBoard)searchable.getBoard().copy(), (PlayerList)searchable.players_.clone(), searchable.options_);
-        /*
-        HashKey key1 = searchable.getHashKey(); // sometimes incorrect because it does not contain the full movelist.    .
-        HashKey key2 = this.getHashKey();  // correct
-
-        assert key1.equals(key2) : "Original key=" + key1 +  " for\n"
-              + searchable.getBoard() + " different from key=" + key2 + " for copied \n" + this.getBoard()
-              +"\n orig b1 moves="+ searchable.getBoard().getMoveList() + "\nb2 moves=" + this.getBoard().getMoveList();
-        */
     }
 
     public TwoPlayerBoard getBoard() {
@@ -117,7 +109,6 @@ public abstract class TwoPlayerSearchable implements Searchable {
 
         getBoard().undoMove();
     }
-
 
     /**
      * Evaluates from player 1's perspective

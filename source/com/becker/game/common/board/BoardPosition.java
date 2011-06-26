@@ -2,7 +2,6 @@ package com.becker.game.common.board;
 
 import com.becker.common.geometry.Location;
 
-
 /**
  *  the BoardPosition describes the physical marker at a location on the board.
  *  It may be empty if there is no piece there.
@@ -17,7 +16,6 @@ public class BoardPosition {
 
     /** the piece to display at this position. Null if the position is unoccupied. */
     protected GamePiece piece_;
-
 
     /**
      * constructor
@@ -77,7 +75,7 @@ public class BoardPosition {
     }
     
     /**
-     *override hashcode if you override equals
+     * override hashcode if you override equals
      */
     @Override
     public int hashCode() {

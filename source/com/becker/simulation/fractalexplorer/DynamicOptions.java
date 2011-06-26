@@ -26,9 +26,7 @@ class DynamicOptions extends JPanel
     private JCheckBox useRunLengthOptimization_;
     private JButton backButton_;
 
-    private static final String ITER_SLIDER = "Max Iterations";
-    //private static final String BH_SLIDER = "Bump Height";
-    //private static final String SH_SLIDER = "Specular Highlight";
+    private static final String ITER_SLIDER = "Max Iterations";;
     private static final String TIMESTEP_SLIDER = "Num Rows per Frame";
 
     private SliderGroup sliderGroup_;
@@ -37,8 +35,6 @@ class DynamicOptions extends JPanel
 
     private static final SliderProperties[] SLIDER_PROPS = {
         new SliderProperties(ITER_SLIDER,      100,           10000,      FractalAlgorithm.DEFAULT_MAX_ITERATIONS,   1),
-        //new SliderProperties(BH_SLIDER,     0,          30.0,     0.0,               10),
-        //new SliderProperties(SH_SLIDER,     0,          1.0,      0.0,               100),
         new SliderProperties(TIMESTEP_SLIDER,  MIN_NUM_STEPS,   MAX_NUM_STEPS,   FractalExplorer.INITIAL_TIME_STEP, 1),
     };
 
@@ -78,8 +74,6 @@ class DynamicOptions extends JPanel
     }
     
     private JPanel createCheckBoxes() {
-     
-        //RDRenderingOptions renderingOptions = simulator_.getRenderingOptions();
 
         useConcurrency_ = new JCheckBox("Parallel", algorithm_.isParallelized());
         useConcurrency_.setToolTipText(
@@ -136,17 +130,6 @@ class DynamicOptions extends JPanel
         if (sliderName.equals(ITER_SLIDER)) {
             algorithm_.setMaxIterations((int)value);
         }
-        /*
-        else if (sliderName.equals(BH_SLIDER)) {
-            simulator_.getRenderingOptions().setHeightScale(value);
-            sliderGroup_.setEnabled(SH_SLIDER, value > 0);
-        }
-        else if (sliderName.equals(SH_SLIDER)) {
-            simulator_.getRenderingOptions().setSpecular(value);
-        }
-        else if (sliderName.equals(NS_SLIDER)) {
-            simulator_.setNumStepsPerFrame((int) value);
-        } */
         else if (sliderName.equals(TIMESTEP_SLIDER)) {
             simulator_.setTimeStep(value);
         }

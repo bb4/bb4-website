@@ -18,7 +18,7 @@ import com.becker.game.common.Move;
 public interface IBoard {
 
     /**
-     *  Reset the board to its initial starting state .
+     *  Reset the board to its initial starting state.
      */
     void reset();
 

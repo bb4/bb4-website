@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.search;
 
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 
-
 /**
  * Manages alpha and beta - the search window thresholds.
  *
@@ -13,7 +12,7 @@ public class SearchWindow {
     /** A lower bound on the inherited value that will eventually be found. */
     public int alpha;
 
-    /** An uper bound on the inherited value that will eventually be found. */
+    /** An upper bound on the inherited value that will eventually be found. */
     public int beta;
 
     /**
@@ -24,7 +23,7 @@ public class SearchWindow {
     }
 
     /**
-     * init with min and max valeus of the range.
+     * init with min and max values of the range.
      * @param minimum min value for range
      * @param maximum max value for range
      */
@@ -46,7 +45,7 @@ public class SearchWindow {
     }
 
     /**
-     * @return  the difference between the alpha nad beta values.  Returns negative infinity of alpha > beta.
+     * @return the difference between the alpha nad beta values.  Returns negative infinity of alpha > beta.
      */
     public int getExtent() {
         if (alpha > beta) {
@@ -74,8 +73,7 @@ public class SearchWindow {
 
         SearchWindow that = (SearchWindow) o;
 
-        if (beta != that.beta) return false;
-        return alpha == that.alpha;
+        return beta == that.beta && alpha == that.alpha;
 
     }
 

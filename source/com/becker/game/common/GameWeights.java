@@ -13,8 +13,8 @@ import com.becker.optimization.parameter.ParameterArray;
  *
  * @author Barry Becker
  */
-public class GameWeights
-{
+public class GameWeights {
+
     /** scores computed from weights are assumed to be between [0 and ASSUMED_WINNING_VALUE] for player1 */
     protected static final double ASSUMED_WINNING_VALUE = 1024;
 

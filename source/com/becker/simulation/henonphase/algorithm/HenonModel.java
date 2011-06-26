@@ -15,48 +15,60 @@ import java.util.List;
  */
 public class HenonModel  {
 
-    public int width;
-    public int height;
+    private final int width;
+    private final int height;
 
     /** offline rendering is fast  */
-    private OfflineGraphics offlineGraphics_;
+    private final OfflineGraphics offlineGraphics_;
 
-    private List<Traveler> travelers;
+    private final List<Traveler> travelers;
     private int numTravelors;
-    private double angle;
+    private TravelerParams params;
 
     private boolean useUniformSeeds = true;
+    private boolean connectPoints = false;
+    private ColorMap cmap_;
 
 
-    public HenonModel(int width, int height, double angle, boolean uniformSeeds, int numTraverlors) {
+    public HenonModel(int width, int height, TravelerParams params,
+                      boolean uniformSeeds, boolean connectPoints, int numTravelors, ColorMap cmap) {
 
         this.width = width;
         this.height = height;
-        this.angle = angle;
-        this.numTravelors = numTraverlors;
+        this.params = params;
+        this.numTravelors = numTravelors;
         this.useUniformSeeds = uniformSeeds;
+        this.connectPoints = connectPoints;
+        this.cmap_ = cmap;
 
-        travelers = new ArrayList<Traveler>(numTravelors);
+        travelers = new ArrayList<Traveler>(this.numTravelors);
         offlineGraphics_ = new OfflineGraphics(new Dimension(width, height), Color.BLACK);
+    }
+
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
     }
 
     public void reset() {
 
         travelers.clear();
 
-        double inc = 1.0/numTravelors;
+        double inc = 1.0 / numTravelors;
         double xpos = 0.0;
-        ColorMap cmap = new HenonColorMap();
+
         for (int i=0; i < numTravelors; i++) {
 
             if (useUniformSeeds) {
-                Color color = cmap.getColorForValue(xpos);
-                travelers.add(new Traveler(xpos, 0, color, angle));
+                Color color = cmap_.getColorForValue(xpos);
+                travelers.add(new Traveler(xpos, 0, color, params));
             }
             else {
                 double randXPos = Math.random();
-                Color color = cmap.getColorForValue(randXPos);
-                travelers.add(new Traveler(randXPos, 0, color, angle));
+                Color color = cmap_.getColorForValue(randXPos);
+                travelers.add(new Traveler(randXPos, 0, color, params));
             }
             xpos += inc;
         }
@@ -66,35 +78,31 @@ public class HenonModel  {
         return offlineGraphics_.getOfflineImage();
     }
 
-
     /**
      * @param numSteps  number of steps to increment each traveler
      */
     public void increment(int numSteps) {
 
-        for (Traveler traveler : travelers) {
+        for (final Traveler traveler : travelers) {
 
-            offlineGraphics_.setColor(traveler.color);
+            offlineGraphics_.setColor(traveler.getColor());
 
             for (int i=0; i< numSteps; i++)   {
-                int xpos = (int)(width * (traveler.x/2.0 + 0.5));
-                int ypos = (int)(height * (traveler.y/2.0 + 0.5));
-                offlineGraphics_.drawPoint(xpos, ypos);
+                int xpos = (int)(width * (traveler.getX()/2.0 + 0.5));
+                int ypos = (int)(height * (traveler.getY()/2.0 + 0.5));
+
+                if (connectPoints) {
+                    int xposLast = (int)(width * (traveler.getLastX()/2.0 + 0.5));
+                    int yposLast = (int)(height * (traveler.getLastY()/2.0 + 0.5));
+
+                    offlineGraphics_.drawLine(xposLast, yposLast, xpos, ypos);
+                }
+                else {
+                    offlineGraphics_.drawPoint(xpos, ypos);
+                }
+
                 traveler.increment();
             }
-        }
-    }
-    public void increment() {
-
-        for (Traveler traveler : travelers) {
-
-            int xpos = (int)(width * (traveler.x/2.0 + 0.5));
-            int ypos = (int)(height * (traveler.y/2.0 + 0.5));
-
-            offlineGraphics_.setColor(traveler.color);
-            offlineGraphics_.drawPoint(xpos, ypos);
-
-            traveler.increment();
         }
     }
 

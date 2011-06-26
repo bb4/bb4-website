@@ -20,8 +20,7 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
 /**
  * This is an abstract base class for a two player Game Controller.
  * It contains the key logic for 2 player zero sum games with perfect information.
- * Some examples include chess, checkers, go, othello, pente, blockade,
- * mancala, nine-mens morris, etc.
+ * Some examples include chess, checkers, go, othello, pente, blockade, mancala, nine-mens morris, etc.
  * It implements Optimizee because the games derived from this class
  * can be optimized to improve their playing ability.
  *
@@ -381,5 +380,4 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     protected abstract Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options);
-
 }

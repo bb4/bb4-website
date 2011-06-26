@@ -5,7 +5,6 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 
-
 /**
  *  the Board describes the physical layout of the game.
  *  It is an abstract class that provides a common implementation for many of the

@@ -7,10 +7,7 @@ import com.becker.game.common.plugin.GamePlugin;
 import com.becker.game.common.plugin.PluginManager;
 import com.becker.sound.MusicMaker;
 import com.becker.ui.util.Log;
-
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 /**
  * Manage game context info such as logging, debugging, resources, and profiling.
@@ -18,9 +15,7 @@ import java.util.Set;
  *
  * @author Barry Becker
  */
-public final class GameContext
-{
-    private static Set<String> commonMessageKeys_ = new HashSet<String>();
+public final class GameContext {
 
     /** logger object. Use console by default. */
     private static ILog logger_ = new Log();
@@ -36,7 +31,6 @@ public final class GameContext
 
 
     static {
-
         log(1, "initing sound." );
 
         if ( useSound_ ) {
@@ -190,6 +184,7 @@ public final class GameContext
 
     /**
      * Looks up an {@link LocaleType} for a given locale name.
+     * @param name name of the locale to get localeType for
      * @param finf fail if not found.
      * @return locale
      * @throws Error if the name is not a member of the enumeration
