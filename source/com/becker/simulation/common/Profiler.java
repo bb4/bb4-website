@@ -5,7 +5,7 @@ import com.becker.common.format.FormatUtil;
 
 /**
  * Singleton for simulation profiling.
- * For all simulation we would like to know calculatin and rendering times.
+ * For all simulation we would like to know calculation and rendering times.
  *
  * @author Barry Becker
  */
@@ -45,6 +45,8 @@ public class Profiler extends com.becker.common.profile.Profiler {
             return;
         }
         double ratio = getCalcTime() / getRenderingTime();
+        printMessage("-----------------");
+        printMessage("Total time = " + (getCalcTime() + getRenderingTime()));
         printMessage("Ratio of calculation to rendering time:" + FormatUtil.formatNumber(ratio) );
         super.print();
     }

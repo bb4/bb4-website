@@ -22,7 +22,7 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.information.EyeTyp
 * Mostly test that the scoring of groups works correctly.
 * @author Barry Becker
 */
-public class TestGroupHealthAnalyzer extends GoTestCase {
+public class TestAbsoluteHealthAnalyzer extends GoTestCase {
 
     private static final String PREFIX = "board/analysis/grouphealth/";
 
@@ -581,7 +581,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     private void verifyEyes(GoEyeSet eyes, EyeInformation[] expectedEyes, boolean black)
     {
         String color = black? "black" : "white";
-        Assert.assertEquals("unequal numbers of "+color+" eyes", expectedEyes.length, eyes.size());
+        Assert.assertEquals("unequal numbers of " + color + " eyes", expectedEyes.length, eyes.size());
         if (eyes.size() > 0)
         {
             int i = 0;

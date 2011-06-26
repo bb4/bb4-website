@@ -362,6 +362,14 @@
     </antcall>
   </target>
 
+  <target name="executeHenonPhaseExplorer" description="Run the Henon Phase Explorer">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.henonphase.HenonPhaseExplorer"/>
+    </antcall>
+  </target>
+
   <target name="executeLiquid" description="Run the Liquid simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>

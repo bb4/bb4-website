@@ -60,6 +60,11 @@ public class OfflineGraphics  {
             offlineGraphics_.drawLine(x1, y1, x1, y1);
     }
 
+    public void drawRect(int x1, int y1, int width, int height) {
+        if (offlineGraphics_ != null)
+            offlineGraphics_.drawRect(x1, y1, x1, y1);
+    }
+
     public void drawImage(Image img, int x, int y, ImageObserver observer) {
         if (offlineGraphics_ != null)
             offlineGraphics_.drawImage(img, x, y, observer);
