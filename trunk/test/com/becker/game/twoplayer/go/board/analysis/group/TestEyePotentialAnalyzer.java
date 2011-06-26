@@ -114,21 +114,20 @@ public class TestEyePotentialAnalyzer extends GoTestCase {
     public void testEyePotential_FourSpacesOneInside() {
         restoreGame("four_space_eye_one_inside");
         verifyBlackEyePotential(14, 1.5f);
-        verifyWhiteEyePotential(13, 1.31f);
+        verifyWhiteEyePotential(13, 1.154f); // was 1.31
     }
 
     public void testEyePotential_FourSpacesTwoInside() {
         restoreGame("four_space_eye_two_inside");
-        verifyBlackEyePotential(14, 1.64f);
-        verifyWhiteEyePotential(13, 1.31f);
+        verifyBlackEyePotential(14, 1.45f);    // was 1.64
+        verifyWhiteEyePotential(13, 1.06f);    // was 1.31
     }
 
     public void testEyePotential_FourSpacesThreeInside() {
         restoreGame("four_space_eye_three_inside");
-        verifyBlackEyePotential(14, 1.64f);
-        verifyWhiteEyePotential(13, 1.31f);
+        verifyBlackEyePotential(14, 1.397f);    // was 1.64
+        verifyWhiteEyePotential(13, 0.988f);    // was 1.31
     }
-
 
     public void testEyePotential_ThreeOneSpaceJumps() {
         restoreGame("three_one_space_jumps");

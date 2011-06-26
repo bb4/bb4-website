@@ -103,7 +103,8 @@ class AbsoluteHealthCalculator {
         // first come up with some approximation for the health so update eyes can be done more accurately.
         float numEyes = eyeCache_.calcNumEyes();
         int numStones = group_.getNumStones();
-        EyeHealthEvaluator eyeEvaluator = new EyeHealthEvaluator(group_, board, analyzerMap_);
+        LifeAnalyzer lifeAnalyzer = new LifeAnalyzer(group_, board, analyzerMap_);
+        EyeHealthEvaluator eyeEvaluator = new EyeHealthEvaluator(lifeAnalyzer);
 
         absoluteHealth_ = eyeEvaluator.determineHealth(side, numEyes, numLiberties, numStones);
 

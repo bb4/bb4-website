@@ -1,7 +1,8 @@
-package com.becker.simulation.fractalexplorer;
+package com.becker.simulation.henonphase;
 
 import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
+import com.becker.simulation.fractalexplorer.FractalExplorer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +12,7 @@ import java.awt.event.ActionEvent;
  */
 public class OptionsDialog extends SimulatorOptionsDialog {
 
-    public OptionsDialog( JFrame parent, Simulator simulator ) {
+    public OptionsDialog(JFrame parent, Simulator simulator) {
         super(parent, simulator);
     }
 
@@ -20,7 +21,7 @@ public class OptionsDialog extends SimulatorOptionsDialog {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        FractalExplorer sim = (FractalExplorer) getSimulator();
+        HenonPhaseExplorer sim = (HenonPhaseExplorer) getSimulator();
                
         return panel;
     }
@@ -30,6 +31,6 @@ public class OptionsDialog extends SimulatorOptionsDialog {
     public void actionPerformed( ActionEvent e ) {
         super.actionPerformed(e);
         Object source = e.getSource();
-        FractalExplorer sim = (FractalExplorer) getSimulator();
+        HenonPhaseExplorer sim = (HenonPhaseExplorer) getSimulator();
     }
 }

@@ -1,9 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoProfiler;
-import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 
 
 /**
@@ -12,9 +10,7 @@ import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
  */
 class EyeHealthEvaluator {
 
-    private IGoGroup group_;
-    private GoBoard board_;
-    private GroupAnalyzerMap analyzerMap_;
+    private LifeAnalyzer lifeAnalyzer_;
 
     private static final float BEST_TWO_EYED_HEALTH = 1.0f;
     private static final float BEST_ALMOST_TWO_EYED_HEALTH = 0.94f;
@@ -23,10 +19,8 @@ class EyeHealthEvaluator {
     /**
      * Constructor
      */
-    public EyeHealthEvaluator(IGoGroup group, GoBoard board, GroupAnalyzerMap analyzerMap) {
-        group_ = group;
-        board_ = board;
-        analyzerMap_ = analyzerMap;
+    public EyeHealthEvaluator(LifeAnalyzer lifeAnalyzer) {
+        lifeAnalyzer_ = lifeAnalyzer;
     }
 
     /**
@@ -36,7 +30,7 @@ class EyeHealthEvaluator {
         float health;
 
         if ( numEyes >= 2.0 )  {
-           health = calcTwoEyedHealth(side, board_);
+           health = calcTwoEyedHealth(side);
         }
         else if (numEyes >= 1.5) {
             health = calcAlmostTwoEyedHealth(side, numLiberties);
@@ -53,12 +47,11 @@ class EyeHealthEvaluator {
     /**
      * @return the health of a group that has 2 eyes.
      */
-    private float calcTwoEyedHealth(float side, GoBoard board) {
+    private float calcTwoEyedHealth(float side) {
         float health;
 
         GoProfiler.getInstance().startBensonsCheck();
-        LifeAnalyzer analyzer = new LifeAnalyzer(group_, board, analyzerMap_);
-        if (analyzer.isUnconditionallyAlive()) {
+        if (lifeAnalyzer_.isUnconditionallyAlive()) {
             // in addition to this, the individual strings will get a score of side (ie +/- 1).
             health = BEST_TWO_EYED_HEALTH * side;
         }
@@ -117,7 +110,7 @@ class EyeHealthEvaluator {
     private static float calcOneEyedHealth(float side, int numLiberties) {
         float health = 0;
         if (numLiberties > 6)  {
-            health = side * Math.min(BEST_ONE_EYED_HEALTH, (1.03f - 20.0f/(numLiberties + 20.0f)));
+            health = side * Math.min(BEST_ONE_EYED_HEALTH, (1.03f - 20.0f / (numLiberties + 20.0f)));
         }
         else  {  // numLiberties<=5
             switch (numLiberties) {
@@ -135,13 +128,13 @@ class EyeHealthEvaluator {
                     health = -side * 0.3f;
                     break;
                 case 3:
-                    health = -side * 0.2f;
+                    health = -side * 0.1f;
                     break;
                 case 4:
-                    health = -side * 0.05f;
+                    health = side * 0.01f;
                     break;
                 case 5:
-                    health = side * 0.01f;
+                    health = side * 0.05f;
                     break;
                 case 6:
                     health = side * 0.19f;
@@ -153,9 +146,9 @@ class EyeHealthEvaluator {
     }
 
     /**
-     *  @return the health of a group that has no eyes.
+     * @return the health of a group that has no eyes.
      */
-    float calcNoEyeHealth(float side, int numLiberties, int numStones) {
+    private float calcNoEyeHealth(float side, int numLiberties, int numStones) {
 
         if ( numLiberties > 5 )  {
             return side * Math.min(0.8f, (1.2f - 46.0f/(numLiberties+40.0f)));
@@ -179,7 +172,7 @@ class EyeHealthEvaluator {
                 health = -side;
                 break;
             case 1:
-                health = -side * 0.6f;
+                health = -side * 0.7f;
                 break;
             case 2:
                 // @@ consider seki situations where the adjacent enemy group also has no eyes.

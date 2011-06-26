@@ -22,7 +22,7 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public final class LifeAnalyzer {
+public class LifeAnalyzer {
 
     private IGoGroup group_;
     private GoBoard board_;
@@ -35,6 +35,9 @@ public final class LifeAnalyzer {
 
     private NeighborAnalyzer nbrAnalyzer_;
     private GroupAnalyzerMap analyzerMap_;
+
+    /** called only by derived classes */
+    protected LifeAnalyzer() {}
 
     /**
      * Constructor.

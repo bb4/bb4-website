@@ -54,8 +54,8 @@ public abstract class AnimationComponent extends Container implements Runnable {
     }
 
     /**
-     * set the number of timesteps to computer for every frame of animation
-     *  for unstable calculations using simple numerical methods (like eulers integration for eg)
+     * set the number of time steps to computer for every frame of animation
+     *  for unstable calculations using simple numerical methods (like Eulers integration for eg)
      *  this can speed things a lot.
      */
     public void setNumStepsPerFrame( int num ) {
@@ -89,7 +89,7 @@ public abstract class AnimationComponent extends Container implements Runnable {
 
             if (isPaused()) {
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
