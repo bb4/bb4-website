@@ -15,7 +15,7 @@ public class HenonColorMap extends ColorMap {
     private static final double MIN_VALUE = 0;
     private static final  double MAX_VALUE = 1.0;
     private static final  double RANGE = MAX_VALUE - MIN_VALUE;
-    private static final int ALPHA = 200;
+    private static final int ALPHA = 10;
 
     private static final double[] VALUES = {
           MIN_VALUE,
@@ -39,7 +39,8 @@ public class HenonColorMap extends ColorMap {
         Color.BLACK
     };
 
-    public HenonColorMap() {
+    public HenonColorMap(int alpha) {
         super(VALUES, COLORS);
+        this.setGlobalAlpha(alpha);
     }
 }

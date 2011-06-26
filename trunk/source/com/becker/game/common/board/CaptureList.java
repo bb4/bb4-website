@@ -12,8 +12,6 @@ import java.util.LinkedList;
  */
 public class CaptureList extends LinkedList<BoardPosition> {
 
-    private static final long serialVersionUID = 0L;
-
     public CaptureList() {
     }
 

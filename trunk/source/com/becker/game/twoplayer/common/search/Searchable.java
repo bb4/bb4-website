@@ -9,7 +9,6 @@ import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.optimization.parameter.ParameterArray;
 
-
 /**
  * This is the interface that all game controllers should implement if they want to allow searching.
  * One purpose of this interface is to limit the TwoPlayerController methods available to search.

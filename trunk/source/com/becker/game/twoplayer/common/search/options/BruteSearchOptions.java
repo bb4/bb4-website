@@ -4,7 +4,7 @@ import com.becker.game.twoplayer.common.search.SearchWindow;
 
 /**
  * The options for search strategies that use brute-force minimax search like MiniMax, NegaMax, NegaScout,
- * and alsot the memory and aspiration variations of these strategies.
+ * and also the memory and aspiration variations of these strategies.
  * These methods usually use a search window to do pruning of tree branches.
  *
  * @author Barry Becker

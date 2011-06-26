@@ -1,6 +1,9 @@
 package com.becker.simulation.henonphase;
 
+import com.becker.common.format.FormatUtil;
 import com.becker.simulation.henonphase.algorithm.HenonAlgorithm;
+import com.becker.simulation.henonphase.algorithm.Traveler;
+import com.becker.simulation.henonphase.algorithm.TravelerParams;
 import com.becker.ui.legend.ContinuousColorLegend;
 import com.becker.ui.sliders.SliderGroup;
 import com.becker.ui.sliders.SliderGroupChangeListener;
@@ -24,21 +27,31 @@ class DynamicOptions extends JPanel
     private JCheckBox useConcurrency_;
     private JCheckBox useFixedSize_;
     private JCheckBox useUniformSeeds_;
+    private JCheckBox connectPoints_;
 
     private static final String PHASE_ANGLE_SLIDER = "Phase Angle";
+    private static final String MULTIPLIER_SLIDER = "Multiplier";
+    private static final String OFFSET_SLIDER = "Offset";
+    private static final String ALPHA_SLIDER = "Alpha";
     private static final String NUM_TRAVELORS_SLIDER = "Num Travelor Particles";
     private static final String ITER_PER_FRAME_SLIDER = "Num Iterations per Frame";
     private static final String ITER_SLIDER = "Max Iterations";
 
     private SliderGroup sliderGroup_;
+    private JTextArea formulaText_;
+
+    private TravelerParams currentParams = new TravelerParams() ;
 
 
     private static final SliderProperties[] SLIDER_PROPS = {
 
-        new SliderProperties(PHASE_ANGLE_SLIDER,     0,    2.0 * Math.PI,    HenonAlgorithm.DEFAULT_PHASE_ANGLE,  1000.0),
+        new SliderProperties(PHASE_ANGLE_SLIDER,   0,    2.0 * Math.PI,    TravelerParams.DEFAULT_PHASE_ANGLE,  1000.0),
+        new SliderProperties(MULTIPLIER_SLIDER,   0.9,    1.1,    TravelerParams.DEFAULT_MULTIPLIER,  1000.0),
+        new SliderProperties(OFFSET_SLIDER,     -0.2,    0.2,    TravelerParams.DEFAULT_OFFSET,  1000.0),
+        new SliderProperties(ALPHA_SLIDER,     1,    255,    100),
         new SliderProperties(NUM_TRAVELORS_SLIDER,  1,  10000,    HenonAlgorithm.DEFAULT_NUM_TRAVELERS),
-        new SliderProperties(ITER_PER_FRAME_SLIDER,  1,  HenonAlgorithm.DEFAULT_MAX_ITERATIONS/10, HenonAlgorithm.DEFAULT_FRAME_ITERATIONS),
-        new SliderProperties(ITER_SLIDER,      100,           100000,      HenonAlgorithm.DEFAULT_MAX_ITERATIONS),
+        new SliderProperties(ITER_PER_FRAME_SLIDER, 1,  HenonAlgorithm.DEFAULT_MAX_ITERATIONS/10, HenonAlgorithm.DEFAULT_FRAME_ITERATIONS),
+        new SliderProperties(ITER_SLIDER,        100,     100000,    HenonAlgorithm.DEFAULT_MAX_ITERATIONS),
     };
 
 
@@ -58,7 +71,7 @@ class DynamicOptions extends JPanel
         sliderGroup_.addSliderChangeListener(this);
 
         ContinuousColorLegend legend_ =
-                new ContinuousColorLegend(null, simulator_.getColorMap(), true);
+                new ContinuousColorLegend(null, algorithm_.getColorMap(), true);
 
         JPanel checkBoxes = createCheckBoxes();
         add(sliderGroup_);
@@ -66,15 +79,13 @@ class DynamicOptions extends JPanel
         add(checkBoxes);
         add(Box.createVerticalStrut(10));
         add(legend_);
-
         JPanel fill = new JPanel();
-        fill.setPreferredSize(new Dimension(10, 1000));
+        fill.setPreferredSize(new Dimension(1, 1000));
         add(fill);
+        add(createFormulaText());
     }
     
     private JPanel createCheckBoxes() {
-     
-        //RDRenderingOptions renderingOptions = simulator_.getRenderingOptions();
 
         useConcurrency_ = new JCheckBox("Parallel", algorithm_.isParallelized());
         useConcurrency_.setToolTipText(
@@ -87,16 +98,57 @@ class DynamicOptions extends JPanel
         useUniformSeeds_ = new JCheckBox("Uniform seeds", algorithm_.getUseUniformSeeds());
         useUniformSeeds_.addActionListener(this);
 
+        connectPoints_ = new JCheckBox("Connect points", algorithm_.getConnectPoints());
+        connectPoints_.addActionListener(this);
+
         JPanel checkBoxes = new JPanel(new GridLayout(0, 1));
 
-        checkBoxes.add(useConcurrency_);
+        //checkBoxes.add(useConcurrency_);
         checkBoxes.add(useFixedSize_);
         checkBoxes.add(useUniformSeeds_);
+        checkBoxes.add(connectPoints_);
         
         checkBoxes.setBorder(BorderFactory.createEtchedBorder());
         return checkBoxes;
     }
 
+
+    private JPanel createFormulaText() {
+
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new BorderLayout());
+
+        formulaText_ = new JTextArea();
+        formulaText_.setEditable(false);
+        formulaText_.setBackground(getBackground());
+        updateFormulaText();
+
+        textPanel.add(formulaText_, BorderLayout.CENTER);
+        return textPanel;
+    }
+
+    private void updateFormulaText() {
+
+        StringBuilder text = new StringBuilder();
+
+        text.append("term = ");
+        if (currentParams.isDefaultMultiplier()) {
+            text.append(FormatUtil.formatNumber(currentParams.getMultiplier())).append(" * ");
+        }
+        text.append("y");
+
+        if (currentParams.isDefaultOffset()) {
+            text.append(" + ").append(FormatUtil.formatNumber(currentParams.getOffset()));
+        }
+        text.append(" - x * x");
+
+        text.append("\n");
+        String angle = FormatUtil.formatNumber(currentParams.getAngle());
+        text.append("x' = x * cos(").append(angle).append(") - term * sin(").append(angle).append(")\n");
+        text.append("y' = x * sin(").append(angle).append(") + term * cos(").append(angle).append(")");
+
+        formulaText_.setText(text.toString());
+    }
 
     public void reset() {
         sliderGroup_.reset();
@@ -106,7 +158,6 @@ class DynamicOptions extends JPanel
      * One of the buttons was pressed.
      */
     public void actionPerformed(ActionEvent e) {
-        //RDRenderingOptions renderingOptions = simulator_.getRenderingOptions();
 
         if (e.getSource() == useConcurrency_) {
             boolean isParallelized = !algorithm_.isParallelized();
@@ -118,6 +169,9 @@ class DynamicOptions extends JPanel
         else if (e.getSource() == useUniformSeeds_) {
             algorithm_.toggleUseUniformSeeds();
         }
+        else if (e.getSource() == connectPoints_) {
+            algorithm_.toggleConnectPoints();
+        }
     }
 
     /**
@@ -125,18 +179,32 @@ class DynamicOptions extends JPanel
      */
     public void sliderChanged(int sliderIndex, String sliderName, double value) {
 
-        if (sliderName.equals(ITER_SLIDER)) {
-            algorithm_.setMaxIterations((int)value);
+        if (sliderName.equals(PHASE_ANGLE_SLIDER)) {
+            currentParams = new TravelerParams(value, currentParams.getMultiplier(), currentParams.getOffset());
+            algorithm_.setTravelerParams(currentParams);
+            updateFormulaText();
         }
-
-        else if (sliderName.equals(PHASE_ANGLE_SLIDER)) {
-            algorithm_.setPhaseAngle(value);
+        else if (sliderName.equals(MULTIPLIER_SLIDER)) {
+            currentParams = new TravelerParams(currentParams.getAngle(), value, currentParams.getOffset());
+            algorithm_.setTravelerParams(currentParams);
+            updateFormulaText();
+        }
+        else if (sliderName.equals(OFFSET_SLIDER)) {
+            currentParams =  new TravelerParams(currentParams.getAngle(), currentParams.getMultiplier(), value);
+            algorithm_.setTravelerParams(currentParams);
+            updateFormulaText();
+        }
+        else if (sliderName.equals(ALPHA_SLIDER)) {
+            algorithm_.setAlpha((int) value);
         }
         else if (sliderName.equals(NUM_TRAVELORS_SLIDER)) {
-            algorithm_.setNumTravelors((int)value);
+            algorithm_.setNumTravelors((int) value);
         }
         else if (sliderName.equals(ITER_PER_FRAME_SLIDER)) {
-            algorithm_.setStepsPerFrame((int)value);
+            algorithm_.setStepsPerFrame((int) value);
+        }
+        else if (sliderName.equals(ITER_SLIDER)) {
+            algorithm_.setMaxIterations((int)value);
         }
     }
 

@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.common.search.options;
 
 /**
  * The options for search strategies that use brute-force minimax search like MiniMax, NegaMax, NegaScout,
- * and alsot the memory and aspiration variations of these strategies.
+ * and also the memory and aspiration variations of these strategies.
  * These methods usually use a search window to do pruning of tree branches.
  *
  * @author Barry Becker
@@ -15,7 +15,7 @@ public class MonteCarloSearchOptions {
     /** Ratio of exploration to exploitation of good moves. */
     private static final double DEFAULT_EXPLORE_EXPLOIT_RATIO = 1.0;
 
-    /** Default numbe rof random moves to look-ahead when playing a random game. */
+    /** Default number of random moves to look-ahead when playing a random game. */
     private static final int DEFAULT_RANDOM_LOOKAHEAD = 20;
 
     private int maxSimulations_ = DEFAULT_MAX_SIMULATIONS;

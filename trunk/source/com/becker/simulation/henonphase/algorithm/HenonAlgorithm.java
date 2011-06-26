@@ -1,5 +1,6 @@
 package com.becker.simulation.henonphase.algorithm;
 
+import com.becker.common.ColorMap;
 import com.becker.common.concurrency.Parallelizer;
 import com.becker.simulation.common.Profiler;
 
@@ -16,10 +17,9 @@ import java.util.List;
  */
 public class HenonAlgorithm {
 
-    public static final int DEFAULT_MAX_ITERATIONS = 5000;
-    public static final int DEFAULT_FRAME_ITERATIONS = 50;
-    public static final double DEFAULT_PHASE_ANGLE = 4.995; // Math.PI * Math.random();
-    public static final int DEFAULT_NUM_TRAVELERS = 1000;
+    public static final int DEFAULT_MAX_ITERATIONS = 1000;
+    public static final int DEFAULT_FRAME_ITERATIONS = 10;
+    public static final int DEFAULT_NUM_TRAVELERS = 400;
 
     private HenonModel model;
 
@@ -33,30 +33,42 @@ public class HenonAlgorithm {
     private boolean restartRequested = false;
 
     private static final int DEFAULT_SIZE = 300;
-    private double angle = DEFAULT_PHASE_ANGLE;
+    private TravelerParams params = new TravelerParams();
     private boolean useUniformSeeds = true;
+    private boolean connectPoints = false;
     private int numTravelors = DEFAULT_NUM_TRAVELERS;
     private boolean finished = false;
 
+    private ColorMap cmap;
+    private int alpha = 200;
 
 
     public HenonAlgorithm() {
 
-        model = new HenonModel(DEFAULT_SIZE, DEFAULT_SIZE, angle, useUniformSeeds, numTravelors);
+        cmap = new HenonColorMap(alpha);
+        model = new HenonModel(DEFAULT_SIZE, DEFAULT_SIZE, params, useUniformSeeds, connectPoints, numTravelors, cmap);
         setParallelized(true);
     }
 
     public void setSize(int width, int height)  {
 
-        if (width != model.width || height != model.height)   {
+        if (width != model.getWidth() || height != model.getHeight())   {
             requestRestart(width, height);
         }
     }
 
-    public void setPhaseAngle(double newAngle) {
-        if (newAngle != angle)   {
-            angle = newAngle;
-            requestRestart(model.width, model.height);
+    public void setTravelerParams(TravelerParams newParams) {
+        if (!newParams.equals(params))   {
+            params = newParams;
+            requestRestart(model.getWidth(), model.getHeight());
+        }
+    }
+
+    public void setAlpha(int newAlpha) {
+        if (newAlpha != alpha) {
+            alpha = newAlpha;
+            cmap = new HenonColorMap(newAlpha);
+            requestRestart(model.getWidth(), model.getHeight());
         }
     }
 
@@ -65,38 +77,47 @@ public class HenonAlgorithm {
     }
 
     public void toggleUseUniformSeeds() {
-
         useUniformSeeds = !useUniformSeeds;
-        requestRestart(model.width, model.height);
+        requestRestart(model.getWidth(), model.getHeight());
+    }
+
+    public boolean getConnectPoints() {
+        return connectPoints;
+    }
+
+    public void toggleConnectPoints() {
+        connectPoints = !connectPoints;
+        requestRestart(model.getWidth(), model.getHeight());
     }
 
     public void setNumTravelors(int newNumTravelors) {
         if (newNumTravelors != numTravelors)  {
             numTravelors= newNumTravelors;
-            requestRestart(model.width, model.height);
+            requestRestart(model.getWidth(), model.getHeight());
         }
     }
 
     public void setMaxIterations(int value) {
         if (value != maxIterations_)  {
             maxIterations_ = value;
-            requestRestart(model.width, model.height);
+            requestRestart(model.getWidth(), model.getHeight());
         }
     }
-
-
 
     public void setStepsPerFrame(int numSteps) {
         if (numSteps != numStepsPerFrame)
         {
             numStepsPerFrame = numSteps;
-            requestRestart(model.width, model.height);
+            requestRestart(model.getWidth(), model.getHeight());
         }
     }
 
+    public ColorMap getColorMap() {
+        return cmap;
+    }
 
     private void requestRestart(int width, int height) {
-        model = new HenonModel(width, height, angle, useUniformSeeds, numTravelors);
+        model = new HenonModel(width, height, params, useUniformSeeds, connectPoints, numTravelors, cmap);
         restartRequested = true;
     }
 
@@ -147,7 +168,6 @@ public class HenonAlgorithm {
 
         return false;
     }
-
 
     private void showProfileInfo() {
         if (!finished) {

@@ -11,8 +11,9 @@ import java.util.List;
  * @author Barry Becker
  */
 public class ColorMap {
+
     final private List<Double> values_;
-    final private List<Color> colors_;
+    private List<Color> colors_;
 
     /**
      * give a list of (increasing) values and colors to map to.
@@ -61,6 +62,21 @@ public class ColorMap {
 
         double x = (double) i - 1.0 + (value - values_.get(i - 1)) / (values_.get(i) - values_.get(i - 1));
         return interpolate( x );
+    }
+
+    /**
+     * Set the opacity for all the colors in the map.
+     * If they were set independently before, than that information will be lost.
+     * @param alpha the new opacity value (0 is totally transparent, 255 is totally opaque).
+     */
+    public synchronized void setGlobalAlpha(int alpha) {
+        List<Color> newColors = new ArrayList<Color>();
+
+        for (Color c : colors_) {
+            newColors.add(new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha));
+        }
+        colors_.clear();
+        colors_ = newColors;
     }
 
     /**

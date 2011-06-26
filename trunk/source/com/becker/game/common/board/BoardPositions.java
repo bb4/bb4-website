@@ -4,7 +4,7 @@ import com.becker.common.geometry.Location;
 import com.becker.game.common.GameContext;
 
 /**
- *  Represents the array of possitions on the board.
+ *  Represents the array of positions on the board.
  *  Assumes an M*N grid.
  *  Legal positions are [1, numRows_][1, numCols_]
  *

@@ -22,7 +22,6 @@ public class BestMoveFinder {
         searchOptions_ = searchOptions;
     }
 
-
     /**
      * Take the list of all possible next moves and return just the top bestPercentage of them 
      * (or minBestMoves moves, whichever is greater).

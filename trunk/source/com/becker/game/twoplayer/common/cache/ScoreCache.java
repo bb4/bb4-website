@@ -27,7 +27,6 @@ public class ScoreCache extends LRUCache<HashKey, ScoreEntry> {
         super(MAX_ENTRIES);
     }
 
-
     /**
      * @return the number of times we were able to retrieve a stored move that was useful to us.
      */

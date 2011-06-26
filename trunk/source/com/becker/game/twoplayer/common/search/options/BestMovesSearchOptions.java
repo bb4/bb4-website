@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.common.search.options;
 
 /**
  * The options for search strategies that use brute-force minimax search like MiniMax, NegaMax, NegaScout,
- * and alsot the memory and aspiration variations of these strategies.
+ * and also the memory and aspiration variations of these strategies.
  * These methods usually use a search window to do pruning of tree branches.
  *
  * @author Barry Becker
@@ -15,7 +15,7 @@ public class BestMovesSearchOptions {
     /** No matter what the percentBestMoves is we should not prune if less than this number. */
     private static final int DEFAULT_MIN_BEST_MOVES = 10;
 
-    /** Select best movest whos values is no less than this percent less than the highest value in the set. */
+    /** Select best moves whose value is no less than this percent less than the highest value in the set. */
     private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 60;
 
     private int bestPercentage_ = DEFAULT_PERCENTAGE_BEST_MOVES;
@@ -23,18 +23,16 @@ public class BestMovesSearchOptions {
     private int percentLessThanBestThreshold_ = DEFAULT_PERCENT_LESS_THAN_BEST_THRESH;
 
 
-
     /**
      * Default Constructor
      */
     public BestMovesSearchOptions() {}
 
-
     /**
      * Constructor
      * @param bestPercentage default number of best moves to consider at each ply.
      * @param minBestMoves we will never consider fewer than this many moves when searching.
-     * @param percentLessThanBestThresh Select best movest whos values is no less than this percent less
+     * @param percentLessThanBestThresh Select best moves whose values is no less than this percent less
      *  than the highest value in the set
      */
     public BestMovesSearchOptions(int bestPercentage, int minBestMoves, int percentLessThanBestThresh) {
@@ -55,7 +53,6 @@ public class BestMovesSearchOptions {
     public int getDefaultPercentLessThanBestThresh() {
         return DEFAULT_PERCENT_LESS_THAN_BEST_THRESH;
     }
-
 
     /**
      * @return  the percentage of top moves considered at each ply

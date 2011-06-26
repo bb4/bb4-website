@@ -18,7 +18,6 @@ import com.becker.game.twoplayer.go.board.update.CaptureCounts;
 
 import java.util.List;
 
-
 /**
  * Representation of a Go Game Board
  * There are a lot of data structures to organize the state of the pieces.
@@ -37,7 +36,6 @@ public final class GoBoard extends TwoPlayerBoard {
     private HandicapStones handicap_;
 
     private BoardUpdater boardUpdater_;
-
 
     /**
      *  Constructor.

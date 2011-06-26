@@ -294,7 +294,6 @@ public class GoSearchable extends TwoPlayerSearchable {
         return boardEvaluator_.getTerritoryEstimate(forPlayer1, false);
     }
 
-
     /**
      * Call this at the end of the game when we need to try to get an accurate score.
      * @param forPlayer1  true if player one (black)

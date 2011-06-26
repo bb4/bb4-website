@@ -6,7 +6,7 @@ import com.becker.game.common.Move;
 
 /**
  * Searches for the next computer move in a separate thread.
- *                                                                                                      O
+ *
  * @author Barry Becker
  */
 class TwoPlayerSearchWorker {

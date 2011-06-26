@@ -37,7 +37,6 @@ public class ClassLoaderSingleton {
     public static Class loadClass(String className, String defaultClassName) {
         Class theClass = null;
         try {
-            //System.out.println( "about to load "+className );
             theClass = Class.forName(className);
         }
         catch (ClassNotFoundException e) {
