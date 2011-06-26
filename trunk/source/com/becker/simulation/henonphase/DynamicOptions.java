@@ -87,10 +87,11 @@ class DynamicOptions extends JPanel
     
     private JPanel createCheckBoxes() {
 
+        /*
         useConcurrency_ = new JCheckBox("Parallel", algorithm_.isParallelized());
         useConcurrency_.setToolTipText(
                 "Take advantage of multiple processors for calculation and rendering if present.");
-        useConcurrency_.addActionListener(this);
+        useConcurrency_.addActionListener(this);    */
 
         useFixedSize_ = new JCheckBox("Fixed Size", simulator_.getUseFixedSize());
         useFixedSize_.addActionListener(this);
@@ -159,11 +160,12 @@ class DynamicOptions extends JPanel
      */
     public void actionPerformed(ActionEvent e) {
 
+        /*
         if (e.getSource() == useConcurrency_) {
             boolean isParallelized = !algorithm_.isParallelized();
             algorithm_.setParallelized(isParallelized);
-        }
-        else if (e.getSource() == useFixedSize_) {
+        } */
+        if (e.getSource() == useFixedSize_) {
             simulator_.setUseFixedSize(useFixedSize_.isSelected());
         }
         else if (e.getSource() == useUniformSeeds_) {

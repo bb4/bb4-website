@@ -1,12 +1,9 @@
 package com.becker.simulation.henonphase.algorithm;
 
 import com.becker.common.ColorMap;
-import com.becker.common.concurrency.Parallelizer;
 import com.becker.simulation.common.Profiler;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Abstract implementation common to all Henon Phase algorithms.
@@ -20,34 +17,30 @@ public class HenonAlgorithm {
     public static final int DEFAULT_MAX_ITERATIONS = 1000;
     public static final int DEFAULT_FRAME_ITERATIONS = 10;
     public static final int DEFAULT_NUM_TRAVELERS = 400;
+    private static final int DEFAULT_SIZE = 300;
 
     private HenonModel model;
 
-    /** Manages the worker threads. */
-    private Parallelizer<Worker> parallelizer_;
-
+    // should extract these into ModelParams class
+    private int numTravelors = DEFAULT_NUM_TRAVELERS;
     private int maxIterations_ = DEFAULT_MAX_ITERATIONS;
-    private int iterations_ = 0;
     private int numStepsPerFrame = DEFAULT_FRAME_ITERATIONS;
-
-    private boolean restartRequested = false;
-
-    private static final int DEFAULT_SIZE = 300;
-    private TravelerParams params = new TravelerParams();
+    private TravelerParams travelorParams = new TravelerParams();
     private boolean useUniformSeeds = true;
     private boolean connectPoints = false;
-    private int numTravelors = DEFAULT_NUM_TRAVELERS;
-    private boolean finished = false;
+    private int alpha = 200;
 
     private ColorMap cmap;
-    private int alpha = 200;
+
+    private boolean restartRequested = false;
+    private boolean finished = false;
+    private int iterations_ = 0;
 
 
     public HenonAlgorithm() {
 
         cmap = new HenonColorMap(alpha);
-        model = new HenonModel(DEFAULT_SIZE, DEFAULT_SIZE, params, useUniformSeeds, connectPoints, numTravelors, cmap);
-        setParallelized(true);
+        model = new HenonModel(DEFAULT_SIZE, DEFAULT_SIZE, travelorParams, useUniformSeeds, connectPoints, numTravelors, cmap);
     }
 
     public void setSize(int width, int height)  {
@@ -58,8 +51,8 @@ public class HenonAlgorithm {
     }
 
     public void setTravelerParams(TravelerParams newParams) {
-        if (!newParams.equals(params))   {
-            params = newParams;
+        if (!newParams.equals(travelorParams))   {
+            travelorParams = newParams;
             requestRestart(model.getWidth(), model.getHeight());
         }
     }
@@ -117,21 +110,8 @@ public class HenonAlgorithm {
     }
 
     private void requestRestart(int width, int height) {
-        model = new HenonModel(width, height, params, useUniformSeeds, connectPoints, numTravelors, cmap);
+        model = new HenonModel(width, height, travelorParams, useUniformSeeds, connectPoints, numTravelors, cmap);
         restartRequested = true;
-    }
-
-    public boolean isParallelized() {
-        return (parallelizer_.getNumThreads() > 1);
-    }
-
-
-    public void setParallelized(boolean parallelized) {
-        if (parallelizer_ == null || parallelized != isParallelized()) {
-
-            parallelizer_ =
-                 parallelized ? new Parallelizer<Worker>() : new Parallelizer<Worker>(1);
-        }
     }
 
     public BufferedImage getImage() {
@@ -156,15 +136,8 @@ public class HenonAlgorithm {
             return true;  // we are done.
         }
 
-        int numProcs = parallelizer_.getNumThreads();
-        List<Runnable> workers = new ArrayList<Runnable>(numProcs);
-
         model.increment(numStepsPerFrame);
         iterations_ += numStepsPerFrame;
-
-
-        // blocks until all Callables are done running.
-        // parallelizer_.invokeAllRunnables(workers);
 
         return false;
     }
@@ -176,25 +149,6 @@ public class HenonAlgorithm {
             prof.stopCalculationTime();
             prof.print();
             prof.resetAll();
-        }
-    }
-
-    /**
-     * Runs one of the chunks.
-     */
-    private class Worker implements Runnable {
-
-        public Worker(int fromRow, int toRow) {
-        }
-
-        public void run() {
-            computeChunk();
-        }
-
-        /**
-         * Do a chunk of work (i.e. compute the specified rows)
-         */
-        private void computeChunk() {
         }
     }
 }

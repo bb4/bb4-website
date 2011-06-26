@@ -18,15 +18,16 @@ public class HenonModel  {
     private final int width;
     private final int height;
 
+    private int numTravelors;
+    private TravelerParams params;
+    private boolean useUniformSeeds = true;
+    private boolean connectPoints = false;
+
+    private final List<Traveler> travelers;
+
     /** offline rendering is fast  */
     private final OfflineGraphics offlineGraphics_;
 
-    private final List<Traveler> travelers;
-    private int numTravelors;
-    private TravelerParams params;
-
-    private boolean useUniformSeeds = true;
-    private boolean connectPoints = false;
     private ColorMap cmap_;
 
 
