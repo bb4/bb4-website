@@ -17,7 +17,7 @@ public class TestGoString extends GoTestCase {
     public void testStringConstruction() {
 
         GoBoardPosition stone = new GoBoardPosition(4, 4, null, new GoStone(true, 0.5f));
-        GoBoard board = new GoBoard(9, 9, 0);
+        GoBoard board = new GoBoard(9, 0);
         GoString string = new GoString(stone, board);
 
         assertFalse(string.isUnconditionallyAlive());

@@ -168,7 +168,7 @@ public class GtpTesujisoftGoServer
     }
 
     private void initSize(int size) {
-        controller_ = new GoController(size, size, 0);
+        controller_ = new GoController(size, 0);
         SearchOptions options = controller_.getTwoPlayerOptions().getSearchOptions();
 
         options.getBruteSearchOptions().setAlphaBeta(true);

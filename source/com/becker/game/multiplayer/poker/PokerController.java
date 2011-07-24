@@ -103,27 +103,27 @@ public class PokerController extends MultiGameController
      * after that, they can change manually to get different players.
      */
     @Override
-    protected void initPlayers()
-    {
-        //
-        if (players_ == null) {
+    protected void initPlayers() {
+
+        if (getPlayers() == null) {
             // create the default players. One human and one robot.
-            players_ = new PlayerList();
+            PlayerList players = new PlayerList();
 
 
-            players_.add(PokerPlayer.createPokerPlayer("Player 1",
-                                       100, MultiGamePlayer.getNewPlayerColor(players_), true));
+            players.add(PokerPlayer.createPokerPlayer("Player 1",
+                                       100, MultiGamePlayer.getNewPlayerColor(players), true));
 
 
-            players_.add(PokerPlayer.createPokerPlayer("Player 2",
-                                       100, PokerPlayer.getNewPlayerColor(players_), false));
-            players_.get(1).setName(players_.get(1).getName()+'('+((PokerRobotPlayer)players_.get(1)).getType()+')');
+            players.add(PokerPlayer.createPokerPlayer("Player 2",
+                                       100, PokerPlayer.getNewPlayerColor(players), false));
+            players.get(1).setName(players.get(1).getName()+'('+((PokerRobotPlayer)players.get(1)).getType()+')');
+            setPlayers(players);
         }
 
         dealCardsToPlayers(5);
         currentPlayerIndex_ = 0;
         
-        ((PokerTable)getBoard()).initPlayers(players_);
+        ((PokerTable)getBoard()).initPlayers(getPlayers());
     }
 
     /**
@@ -133,8 +133,8 @@ public class PokerController extends MultiGameController
     private void dealCardsToPlayers(int numCardsToDealToEachPlayer) {
          // give the default players some cards.
         List<Card> deck = Card.newDeck();
-        assert (players_ != null) : "No players! (players_ is null)";
-        for (Player p : players_) {
+        assert (getPlayers() != null) : "No players! (players_ is null)";
+        for (Player p : getPlayers()) {
             if (deck.size() < numCardsToDealToEachPlayer) {
                 // ran out of cards. start a new shuffled deck.
                 deck = Card.newDeck();
@@ -158,7 +158,7 @@ public class PokerController extends MultiGameController
     void anteUp() {
         // get players to ante up, if they have not already
         if (this.getPotValue() == 0) {
-            for (final Player p : players_) {
+            for (final Player p : getPlayers()) {
                 PokerPlayer player = ((PokerPlayer) p);
                 // if a player does not have enough money to ante up, he is out of the game
                 player.contributeToPot(this, ((PokerOptions)getOptions()).getAnte());
@@ -396,9 +396,9 @@ public class PokerController extends MultiGameController
     protected int advanceToNextPlayerIndex()
     {
         playIndex_++;
-        currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
+        currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
         while (((PokerPlayer)getPlayer(currentPlayerIndex_)).hasFolded())
-            currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
+            currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
 
         return currentPlayerIndex_;
     }

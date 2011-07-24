@@ -14,7 +14,7 @@ public class HashGo5x5UniquenessTest extends HashGoBase {
 
     @Override
     public GoBoard createBoard() {
-        return new GoBoard(5, 5, 0);
+        return new GoBoard(5, 0);
     }
 
     /**

@@ -20,7 +20,7 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
 /**
  * This is an abstract base class for a two player Game Controller.
  * It contains the key logic for 2 player zero sum games with perfect information.
- * Some examples include chess, checkers, go, othello, pente, blockade, mancala, nine-mens morris, etc.
+ * Some examples include chess, checkers, go, othello, pente, blockade, Mmncala, nine-mens morris, etc.
  * It implements Optimizee because the games derived from this class
  * can be optimized to improve their playing ability.
  *
@@ -39,13 +39,10 @@ public abstract class TwoPlayerController extends GameController {
      */
     protected GameWeights weights_;
 
-    /** the method the computer will use for searching for the next move.  */
-    private SearchStrategy strategy_;
-
     /** if this becomes non-null, we will fill in the game tree for display in a UI. */
     private IGameTreeViewable gameTreeViewer_;
 
-    /** Worker represents a separate thread for computing the next move. */
+    /** Worker represents a separate thread for finding the next move. */
     private TwoPlayerSearchWorker worker_;
 
     /** Capable of searching for the best next move */
@@ -56,7 +53,7 @@ public abstract class TwoPlayerController extends GameController {
      * Construct the game controller.
      */
     public TwoPlayerController() {
-        createPlayers();
+        setPlayers(createPlayers());
         worker_ = new TwoPlayerSearchWorker(this);
     }
 
@@ -94,7 +91,7 @@ public abstract class TwoPlayerController extends GameController {
         worker_.interrupt();
         super.reset();
         searchable_ = null;
-        createPlayers();
+        getPlayers().reset();
         player1sTurn_ = true;
     }
 
@@ -130,23 +127,19 @@ public abstract class TwoPlayerController extends GameController {
     /**
      * create the 2 players.
      */
-    private void createPlayers() {
-        if (getPlayers() == null) {
-            PlayerList players = new PlayerList();
-            players.add(new Player(getTwoPlayerOptions().getPlayerName(true), null, true));
-            players.add(new Player(getTwoPlayerOptions().getPlayerName(false), null, false));
-            setPlayers(players);
-        }
-        else {
-            getPlayers().reset();
-        }
+    private PlayerList createPlayers() {
+
+         PlayerList players = new PlayerList();
+         players.add(new Player(getTwoPlayerOptions().getPlayerName(true), null, true));
+         players.add(new Player(getTwoPlayerOptions().getPlayerName(false), null, false));
+         return players;
     }
 
     /**
      * @return the search strategy to use to find the next move.
      */
     public final SearchStrategy getSearchStrategy() {
-       return strategy_;
+       return getSearchable().getSearchStrategy();
     }
 
     /**
@@ -189,7 +182,7 @@ public abstract class TwoPlayerController extends GameController {
     @Override
     public Move undoLastMove() {
         TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
-        getSearchable().undoInternalMove(lastMove); //(TwoPlayerMove) board_.undoMove();
+        getSearchable().undoInternalMove(lastMove);
         if (lastMove != null) {
             player1sTurn_ = lastMove.isPlayer1();
         }
@@ -215,7 +208,7 @@ public abstract class TwoPlayerController extends GameController {
         ParameterArray weights;
         player1sTurn_ = player1;
 
-        getProfiler().startProfiling();
+
 
         assert (!getMoveList().isEmpty()) : "Error: null before search";
         TwoPlayerMove move = (TwoPlayerMove) getMoveList().getLastMove();
@@ -226,32 +219,14 @@ public abstract class TwoPlayerController extends GameController {
         if ( gameTreeViewer_ != null ) {
             gameTreeViewer_.resetTree(lastMove);
         }
-        TwoPlayerMove selectedMove = searchForNextMove(weights, lastMove);
+        TwoPlayerMove selectedMove = getSearchable().searchForNextMove(weights, lastMove, gameTreeViewer_);
 
         if ( selectedMove != null ) {
             makeMove( selectedMove);
             GameContext.log( 2, "computer move :" + selectedMove.toString() );
         }
 
-        getProfiler().stopProfiling(strategy_.getNumMovesConsidered());
-
         return selectedMove;
-    }
-
-    /**
-     * **** SEARCH ******
-     * @return the best move to use as the next move.
-     */
-    private TwoPlayerMove searchForNextMove(ParameterArray weights, TwoPlayerMove lastMove) {
-        strategy_ = getTwoPlayerOptions().getSearchOptions().getSearchStrategy(getSearchable(), weights);
-
-        SearchTreeNode root = null;
-        if (gameTreeViewer_ != null) {
-            strategy_.setGameTreeEventListener(gameTreeViewer_);
-            root = gameTreeViewer_.getRootNode();
-        }
-
-        return strategy_.search( lastMove, root );
     }
 
     /**
@@ -288,7 +263,7 @@ public abstract class TwoPlayerController extends GameController {
      * @throws AssertionError thrown if something bad happened while searching.
      */
     public boolean requestComputerMove(boolean player1ToMove) throws AssertionError {
-        return requestComputerMove(player1ToMove, this.getPlayers().allPlayersComputer()/*getTwoPlayerOptions().isAutoOptimize()*/);
+        return requestComputerMove(player1ToMove, getPlayers().allPlayersComputer());
     }
 
     /**
@@ -334,6 +309,7 @@ public abstract class TwoPlayerController extends GameController {
         getSearchStrategy().pause();
         GameContext.log(1, "search strategy paused." );
     }
+
 
     public boolean isPaused()  {
         return getSearchStrategy().isPaused();

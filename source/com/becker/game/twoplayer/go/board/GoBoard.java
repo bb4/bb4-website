@@ -39,13 +39,12 @@ public final class GoBoard extends TwoPlayerBoard {
 
     /**
      *  Constructor.
-     *  @param numRows num rows
-     *  @param numCols num cols
+     *  @param size The dimension (i.e. the number rows and columns). Must be square.
      *  @param numHandicapStones number of black handicap stones to initialize with.
      */
-    public GoBoard( int numRows, int numCols, int numHandicapStones ) {
+    public GoBoard( int size, int numHandicapStones ) {
 
-        setSize( numRows, numCols );
+        setSize( size, size );
         setHandicap(numHandicapStones);
 
         init(new CaptureCounts());

@@ -166,7 +166,7 @@ public class ZobristHashTest extends TestCase {
     }
 
     public void testGoHash()  {
-        GoBoard board = new GoBoard(5, 5, 0);
+        GoBoard board = new GoBoard(5, 0);
         board.makeMove(new GoMove(new Location(3, 3), 0, new GoStone(true)));
         board.makeMove(new GoMove(new Location(1, 3), 0, new GoStone(false)));
         hash = createZHash(board);

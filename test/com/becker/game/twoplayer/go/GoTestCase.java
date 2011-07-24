@@ -49,7 +49,7 @@ public class GoTestCase extends TestCase {
         GameContext.loadGameResources("go");
         GameContext.setDebugMode(DEBUG_LEVEL);
 
-        controller_ = new GoController(getBoardSize(), getBoardSize(), 0);
+        controller_ = new GoController(getBoardSize(), 0);
 
         TwoPlayerOptions options = controller_.getTwoPlayerOptions();
         setOptionOverrides(options.getSearchOptions());

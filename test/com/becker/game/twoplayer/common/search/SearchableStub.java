@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.common.search;
 
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.common.AbstractSearchable;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
@@ -16,44 +17,36 @@ import com.becker.optimization.parameter.ParameterArray;
  *
  * @author Barry Becker
  */
-public class SearchableStub implements Searchable {
+public class SearchableStub extends AbstractSearchable {
 
-    SearchOptions searchOptions_;
-    MoveList moves_;
+    protected SearchStrategy strategy_;
 
     public SearchableStub(SearchOptions options) {
-        searchOptions_ = options;
-        moves_ = new MoveList();
+        super(new MoveList(), options);
     }
 
     public SearchableStub(SearchableStub stub) {
         this(stub.getSearchOptions());
-        moves_ = new MoveList(stub.getMoveList());
+        moveList_ = new MoveList(stub.getMoveList());
     }
 
     public Searchable copy() {
         return new SearchableStub(this);
     }
     
-    /** 
-     * {@inheritDoc}
-     */
-    public SearchOptions getSearchOptions() {
-        return searchOptions_;
-    }
 
     /**
      * {@inheritDoc}
      */
     public void makeInternalMove( TwoPlayerMove m )  {
-        moves_.add(m);
+        moveList_.add(m);
     }
 
     /**
      * {@inheritDoc}
      */
     public void undoInternalMove( TwoPlayerMove m ) {
-        moves_.removeLast();
+        moveList_.removeLast();
     }
 
     /**
@@ -71,17 +64,8 @@ public class SearchableStub implements Searchable {
         return lastMove.getValue();
     }
 
-
     public TwoPlayerBoard getBoard() {
         return null;
-    }
-
-    public MoveList getMoveList() {
-        return moves_;
-    }
-
-    public int getNumMoves() {
-        return moves_.size();
     }
 
 
@@ -120,7 +104,7 @@ public class SearchableStub implements Searchable {
      */
     public HashKey getHashKey() {
         HashKey key = new HashKey();
-        for (Move m : moves_) {
+        for (Move m : moveList_) {
             //key += m.hashCode();
             key.applyMove(((TwoPlayerMove)m).getToLocation(), m.hashCode());
         }

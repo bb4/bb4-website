@@ -7,14 +7,14 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import java.util.Set;
 
 /**
- *  A GoEye is composed of a strongly connected set of empty spaces (and possible some dead enemy stones).
+ *  A collection of GoMembers of some type (e.g. strings, stones, groups, etc).
  *
  *  @author Barry Becker
  */
 public interface IGoSet extends IGoMember {
 
     /**
-     * @return the hashSet containing the members
+     * @return the Set containing the members
      */
     Set<? extends IGoMember> getMembers();
 
@@ -30,12 +30,12 @@ public interface IGoSet extends IGoMember {
 
     /**
      * Mark all members unvisited.
-     * @param visited whether or not the string members should be marked visited or unvisited.
+     * @param visited whether or not the members should be marked visited or unvisited.
      */
     void setVisited(boolean visited);
 
     /**
-     * @return the number of elements in the string
+     * @return the number of elements in the set
      */
     int size();
 

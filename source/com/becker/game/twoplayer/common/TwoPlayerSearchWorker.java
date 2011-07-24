@@ -53,37 +53,37 @@ class TwoPlayerSearchWorker {
      */
      public boolean requestComputerMove(final boolean isPlayer1, boolean synchronous) throws AssertionError {
 
-        worker_ = new Worker() {
+         worker_ = new Worker() {
 
-            private Move move_ = null;
+             private Move move_ = null;
 
-            @Override
-            public Object construct() {
-                processing_ = true;
+             @Override
+             public Object construct() {
+                 processing_ = true;
 
-                move_ = controller_.findComputerMove( isPlayer1 );
+                 move_ = controller_.findComputerMove( isPlayer1 );
 
-                return move_;
-            }
+                 return move_;
+             }
 
-            @Override
-            public void finished() {
-                processing_ = false;
-                if (controller_.get2PlayerViewer() != null)  {
-                    controller_.get2PlayerViewer().computerMoved(move_);
-                }
-            }
-        };
+              @Override
+              public void finished() {
+                  processing_ = false;
+                  if (controller_.get2PlayerViewer() != null)  {
+                      controller_.get2PlayerViewer().computerMoved(move_);
+                  }
+              }
+         };
 
-        worker_.start();
+         worker_.start();
 
-        if (synchronous) {
-            // this blocks until the value is available..
-            TwoPlayerMove m = (TwoPlayerMove)worker_.get();
-            return controller_.getSearchable().done( m, true );
-        }
-        return false;
-    }
+         if (synchronous) {
+              // this blocks until the value is available.
+              TwoPlayerMove m = (TwoPlayerMove)worker_.get();
+              return controller_.getSearchable().done( m, true );
+         }
+         return false;
+     }
 
     /**
      *  @return true if the viewer is currently processing (i.e. searching)

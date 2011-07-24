@@ -51,7 +51,7 @@ public class TestWorthCalculator5 extends WorthCalculatorBase {
      */
     public void testSamePositionFromDifferentPathsEqual() {
 
-        compareWorths("worth5x5_A", "worth5x5_B", -61);
+        compareWorths("worth5x5_A", "worth5x5_B", -70); // -61);
     }
 
 }

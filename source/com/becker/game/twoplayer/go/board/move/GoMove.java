@@ -1,10 +1,13 @@
 package com.becker.game.twoplayer.go.board.move;
 
 import com.becker.common.geometry.Location;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.board.CaptureList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NobiNeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoStone;
@@ -128,11 +131,35 @@ public class GoMove extends TwoPlayerMove {
     }
 
     /**
+     * It's a ko if its a single stone string, it captured exactly one stone, and it has one liberty.
+     * @param board
+     * @return true if this move is part of a ko fight sequence.
+     */
+    public boolean isKo(GoBoard board) {
+
+        if (getNumCaptures() == 1) {
+            //GoBoardPosition capture = (GoBoardPosition) getCaptures().getFirst();
+            GoBoardPosition pos = (GoBoardPosition) board.getPosition(getToLocation());
+
+            NeighborAnalyzer nbrAnal = new NeighborAnalyzer(board);
+            GoBoardPositionSet enemyNbrs = nbrAnal.getNobiNeighbors(pos, isPlayer1(), NeighborType.ENEMY);
+            int numEnemyNbrs = enemyNbrs.size();
+
+            if (numEnemyNbrs == 3
+                    || board.isOnEdge(pos) && numEnemyNbrs == 2
+                    || board.isInCorner(pos) && numEnemyNbrs == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * returns true if the specified move caused one or more opponent groups to be in atari
      *
      * @return a number > 0 if the move m caused an atari. The number gives the number of stones in atari.
      */
-    public int causesAtari( GoBoard board ) {
+    public int numStonesAtaried(GoBoard board) {
         if ( isPassingMove() )
             return 0; // a pass cannot cause an atari
 
@@ -157,7 +184,7 @@ public class GoMove extends TwoPlayerMove {
      * I would like to avoid this setter.
      * @param captures captures to set. We make a defensive copy of them.
      */
-    public synchronized void setCaptures(GoCaptureList captures) {
+    public void setCaptures(GoCaptureList captures) {
         captureList_ = captures.copy();
     }
 

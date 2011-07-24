@@ -25,13 +25,11 @@ class GroupEyeCache {
     EyeSpaceAnalyzer eyeAnalyzer_;
     EyePotentialAnalyzer potentialAnalyzer_;
 
-
     /**
      * Set this to true when the eyes need to be recalculated.
      * It must be set to true if the group has changed in any way.
       */
     private boolean isValid_ = false;
-
 
     /**
      * Constructor

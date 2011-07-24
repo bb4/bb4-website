@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.go.board;
 
-import com.becker.game.common.AbstractGameProfiler;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
@@ -16,6 +15,7 @@ import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.game.twoplayer.go.board.analysis.BoardEvaluator;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.move.GoMoveGenerator;
 import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
@@ -31,7 +31,10 @@ import java.util.List;
  */
 public class GoSearchable extends TwoPlayerSearchable {
 
-    /** Size of group that needs to be in atari before we consider a group urgent. */
+    /**
+     * Size of group that needs to be in atari before we consider a group urgent.
+     * Perhaps this should be one.
+     */
     private static final int CRITICAL_GROUP_SIZE = 3;
     private static final boolean USE_SCORE_CACHING = true;
 
@@ -77,7 +80,7 @@ public class GoSearchable extends TwoPlayerSearchable {
     }
 
     @Override
-    protected AbstractGameProfiler getProfiler() {
+    protected GoProfiler getProfiler() {
         return GoProfiler.getInstance();
     }
 
@@ -239,10 +242,11 @@ public class GoSearchable extends TwoPlayerSearchable {
             for (BoardPosition pos : goMove.getCaptures()) {
                 hash.applyMove(pos.getLocation(), getBoard().getStateIndex(pos));
             }
-            // this is needed to disambiguate ko's.  Perhaps we should only do it when there is a ko.
-            hash.applyMoveNumber(getNumMoves() + goMove.getNumCaptures());
+            // this is needed to disambiguate ko's.
+            if (goMove.isKo(getBoard())) {
+                hash.applyMoveNumber(getNumMoves() + goMove.getNumCaptures());
+            }
         }
-
     }
 
     /**
@@ -343,18 +347,32 @@ public class GoSearchable extends TwoPlayerSearchable {
         Iterator<Move> it = moves.iterator();
         while ( it.hasNext() ) {
             GoMove move = (GoMove) it.next();
-            if ( move.getNumCaptures() == 0 || lastMovePlayed.causesAtari(getBoard()) > 0 ) {
-                it.remove();
+
+            // urgent if we capture or atari other stones.
+            boolean isUrgent = move.getNumCaptures() > 0 || putsGroupInAtari(lastMovePlayed);
+            if (isUrgent) {
+                move.setUrgent(true);
             }
             else {
-                move.setUrgent(true);
+                it.remove();
             }
         }
         return moves;
     }
 
     /**
-     * True if the specified move caused one or more opponent pieces to become jeopardized
+     * Determine if the last move caused atari on another group (without putting ourselves in atari).
+     * @param lastMovePlayed last position just played.
+     * @return true if the lastMovePlayed puts the lastPositions string in atari.
+     */
+    private boolean putsGroupInAtari(GoMove lastMovePlayed) {
+        GoBoardPosition lastPos = (GoBoardPosition) getBoard().getPosition(lastMovePlayed.getToLocation());
+        return (lastMovePlayed.numStonesAtaried(getBoard()) >= CRITICAL_GROUP_SIZE
+                && lastPos.getString().getNumLiberties(getBoard()) > 1);
+    }
+
+    /**
+     * True if the specified move caused CRITICAL_GROUP_SIZE or more opponent pieces to become jeopardized
      * For go, if the specified move caused a sufficiently large group of stones to become in atari, then we return true.
      *
      * @return true if the last move created a big change in the score
@@ -362,7 +380,7 @@ public class GoSearchable extends TwoPlayerSearchable {
     @Override
     public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights) {
 
-        return (( (GoMove)lastMove ).causesAtari(getBoard()) > CRITICAL_GROUP_SIZE);
+        return (( (GoMove)lastMove ).numStonesAtaried(getBoard()) >= CRITICAL_GROUP_SIZE);
     }
 
     /**

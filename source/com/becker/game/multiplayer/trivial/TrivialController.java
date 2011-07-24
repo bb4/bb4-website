@@ -55,20 +55,21 @@ public class TrivialController extends MultiGameController
     {
         // we just init the first time.
         // After that, they can change manually to get different players.
-        if (players_ == null) {
+        if (getPlayers() == null) {
             // create the default players. One human and one robot.
-            players_ = new PlayerList();
+            PlayerList players = new PlayerList();
 
-            players_.add(TrivialPlayer.createTrivialPlayer("Player 1",
-                                  MultiGamePlayer.getNewPlayerColor(players_), true));
+            players.add(TrivialPlayer.createTrivialPlayer("Player 1",
+                                  MultiGamePlayer.getNewPlayerColor(players), true));
 
-            players_.add(TrivialPlayer.createTrivialPlayer("Player 2",
-                                  TrivialPlayer.getNewPlayerColor(players_), false));
-            players_.get(1).setName(players_.get(1).getName()+'('+((TrivialRobotPlayer)players_.get(1)).getType()+')');
+            players.add(TrivialPlayer.createTrivialPlayer("Player 2",
+                                  TrivialPlayer.getNewPlayerColor(players), false));
+            players.get(1).setName(players.get(1).getName()+'('+((TrivialRobotPlayer)players.get(1)).getType()+')');
+            setPlayers(players);
         }
 
         currentPlayerIndex_ = 0;
-        ((TrivialTable)getBoard()).initPlayers(players_, this);
+        ((TrivialTable)getBoard()).initPlayers(getPlayers(), this);
     }
 
 
@@ -86,7 +87,7 @@ public class TrivialController extends MultiGameController
     {
       
         int numPlayersStillHidden = 0;
-        for (Player p : players_) {
+        for (Player p : getPlayers()) {
             TrivialPlayer tp  = null;
             if (p.isSurrogate()) {
                 tp = (TrivialPlayer)((SurrogateMultiPlayer) p).getPlayer();
@@ -132,7 +133,7 @@ public class TrivialController extends MultiGameController
         MultiGamePlayer player;
         do {            
             // if the current player has revealed, then advance to the next player.                     
-            currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
+            currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
             player = getPlayer(currentPlayerIndex_);
             if (player.isSurrogate()) {
                 player = ((SurrogateMultiPlayer)player).getPlayer();

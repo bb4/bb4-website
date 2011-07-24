@@ -67,8 +67,8 @@ public class WorthCalculator {
      * Statically evaluate the board position.
      *     The most naive thing we could do here is to simply return the sum of the captures
      * for player1 - sum of the captures for player2. However for go, since search is not likely to
-     * be that useful given the huge branch factor, we need to heavily rely on a sophisticated evaluation.
-     *     So what we do is have every space on the board have a score representing
+     * be that useful given the huge branch factor, we need to rely heavily on sophisticated evaluation.
+     *     We have every space on the board have a score representing
      * how strongly it is controlled by player1 (black).  If the score is 1.00, then that
      * position is inside or part of an unconditionally alive group owned by player1 (black)
      * or it is inside a dead white group.
@@ -76,8 +76,6 @@ public class WorthCalculator {
      * or black's dead group. A blank dame might have a score
      * of 0. A white stone might have a positive score if its part of a white group
      * which is considered mostly dead.
-     *
-     * If this exact board position has been evaluated before we should be able to look it up in a cache.
      *
      * @return statically evaluated value of the board.
      */

@@ -83,9 +83,6 @@ class AbsoluteHealthCalculator {
      * how many times the opponent plays (see Dave Benson 1977).
      *  http://senseis.xmp.net/?BensonsAlgorithm
      *
-     * @@ need expert advice to make this work well.
-     * @@ make the constants parameters and optimize them.
-     *
      * @return the overall health of the group independent of nbr groups.
      */
     public float calculateAbsoluteHealth(GoBoard board) {

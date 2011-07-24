@@ -41,11 +41,10 @@ public abstract class GoSet implements IGoSet {
      * @return the hashSet containing the members
      */
     public abstract Set<? extends IGoMember> getMembers();
-    
-    protected abstract void initializeMembers();
 
     /**
-     *  @return true if the piece is an enemy of the set owner
+     * Some initialization of the set members.
      */
-    public abstract boolean isEnemy(GoBoardPosition p);
+    protected abstract void initializeMembers();
+
 }

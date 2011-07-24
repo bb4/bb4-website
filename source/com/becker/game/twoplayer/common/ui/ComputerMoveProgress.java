@@ -29,8 +29,6 @@ class ComputerMoveProgress {
     /** becomes true when stepping through the search.   */
     private boolean stepping_ = false;
 
-
-
     /**
      * Constructor.
      */
@@ -94,10 +92,11 @@ class ComputerMoveProgress {
      * resume computation
      */
     public final void continueProcessing()  {
+        /*
         if (controller_.getSearchStrategy()!=null) {
             timer_.setDelay(PROGRESS_UPDATE_DELAY);
             controller_.getSearchStrategy().continueProcessing();
-        }
+        } */
     }
 
     public void cleanup() {

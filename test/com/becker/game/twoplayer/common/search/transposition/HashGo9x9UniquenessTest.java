@@ -16,7 +16,7 @@ public class HashGo9x9UniquenessTest extends HashGoBase {
 
     @Override
     public GoBoard createBoard() {
-        return new GoBoard(9, 9, 0);
+        return new GoBoard(9, 0);
     }
 
     public void testBoard9x9Uniqueness()  {

@@ -56,7 +56,8 @@ class RelativeHealthCalculator {
         // the default if there is no weakest group.
         float relativeHealth = absoluteHealth;
         GoBoardPositionSet groupStones = group_.getStones();
-        GoGroup weakestGroup = findWeakestGroup(board, groupStones);
+        WeakestGroupFinder finder = new WeakestGroupFinder(analyzerMap_, board);
+        GoGroup weakestGroup = finder.findWeakestGroup(groupStones);
 
         if (weakestGroup != null)  {
             double proportionWithEnemyNbrs = findProportionWithEnemyNbrs(groupStones);
@@ -70,30 +71,6 @@ class RelativeHealthCalculator {
         }
         groupStones.unvisitPositions();
         return relativeHealth;
-    }
-
-    /**
-     * @return the weakest bordering enemy group.
-     */
-    private GoGroup findWeakestGroup(GoBoard board, GoBoardPositionSet groupStones) {
-
-        Set enemyNbrGroups = getEnemyGroupNeighbors(board, groupStones);
-
-        // we multiply by a +/- sign depending on the side
-        float side = group_.isOwnedByPlayer1()? 1.0f : -1.0f;
-
-        // of these enemy groups which is the weakest?
-        double weakestHealth = -side;
-        GoGroup weakestGroup = null;
-        for (Object egroup : enemyNbrGroups) {
-            GoGroup enemyGroup = (GoGroup)egroup;
-            double h = analyzerMap_.getAnalyzer(enemyGroup).getAbsoluteHealth();
-            if ((side * h) > (side * weakestHealth)) {
-                weakestHealth = h;
-                weakestGroup = enemyGroup;
-            }
-        }
-        return weakestGroup;
     }
 
     /**

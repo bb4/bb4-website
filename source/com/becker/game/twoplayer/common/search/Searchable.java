@@ -6,12 +6,14 @@ import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
+import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
- * This is the interface that all game controllers should implement if they want to allow searching.
- * One purpose of this interface is to limit the TwoPlayerController methods available to search.
+ * Implementations of this interface allow searching for successive moves in a two player game.
  * The SearchStrategy classes call methods of this interface to do their search.
  * @see TwoPlayerController for the default implementation of this interface
  *
@@ -34,6 +36,17 @@ public interface Searchable {
      * @param m move to undo.
      */
     void undoInternalMove( TwoPlayerMove m );
+
+    /**
+     * @return the current strategy used for searching.
+     */
+    SearchStrategy getSearchStrategy();
+
+    /**
+     * **** SEARCH ******
+     * @return the best move to use as the next move.
+     */
+    TwoPlayerMove searchForNextMove(ParameterArray weights, TwoPlayerMove lastMove, IGameTreeViewable treeViewer);
 
     /**
      * Given a move, determine whether the game is over.
@@ -87,6 +100,10 @@ public interface Searchable {
     /** The current board state. */
     TwoPlayerBoard getBoard();
 
+    /**
+     * List of moves made so far.
+     * @return list of moves made on the board.
+     */
     MoveList getMoveList();
     
     /**

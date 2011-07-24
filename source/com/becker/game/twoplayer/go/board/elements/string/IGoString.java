@@ -24,13 +24,21 @@ public interface IGoString extends IGoSet {
      */
     IGoGroup getGroup();
 
+    /**
+     *
+     * @param pos position to test for inclusion in this string
+     * @return true if the specified position is a member of this string.
+     */
     boolean contains(GoBoardPosition pos);
 
+    /**
+     * @return true if this string is unconditionally alive according to Benson's algorithm.
+     */
     boolean isUnconditionallyAlive();
 
     void setUnconditionallyAlive(boolean unconditionallyAlive);
 
-    void remove( GoBoardPosition stone, GoBoard board);
+    void remove(GoBoardPosition stone, GoBoard board);
 
     void updateTerritory( float health );
 

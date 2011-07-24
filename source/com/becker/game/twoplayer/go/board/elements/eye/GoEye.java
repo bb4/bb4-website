@@ -14,16 +14,15 @@ import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 import com.becker.game.twoplayer.go.board.elements.string.GoString;
 
 /**
- *  A GoEye is composed of a strongly connected set of empty spaces (and possible some dead enemy stones).
+ *  A GoEye is composed of a strongly connected set of empty spaces (and possibly some dead enemy stones).
  *  By strongly connected I mean nobi connections only.
  *  A GoEye may be one of several different eye types enumerated below
- *  Some convenience operations for eyes are contained in this class
  *  A group needs 2 provably true eyes to live.
  *
  *  @author Barry Becker
  */
-public class GoEye extends GoString implements IGoEye
-{
+public class GoEye extends GoString implements IGoEye {
+
     /** A set of positions that are in the eye space. Need not be empty. */
     private GoBoardPositionSet members_;
     
@@ -38,7 +37,9 @@ public class GoEye extends GoString implements IGoEye
 
     /**
      * Constructor.
-     * Create a new eye shape containing the specified list of stones/spaces
+     * Immutable after construction.
+     * Create a new eye shape containing the specified list of stones/spaces.
+     * Some of the spaces may be occupied by dead opponent stones.
      */
     public GoEye( GoBoardPositionList spaces, GoBoard board, IGoGroup g, GroupAnalyzer groupAnalyzer) {
         super( spaces, board );
@@ -102,7 +103,8 @@ public class GoEye extends GoString implements IGoEye
     /**
      *  @return true if the piece is an enemy of the string owner.
      *  If the difference in health between the stones is great, then they are not really enemies
-     *  because one of them is dead.
+     *  because one of them is dead. I used to do the "much weaker" test here but the group health
+     *  info is not guaranteed to be updated yet.
      */
     @Override
     public boolean isEnemy(GoBoardPosition pos)
@@ -113,7 +115,6 @@ public class GoEye extends GoString implements IGoEye
             return false;
         }
         GoStone stone = (GoStone)pos.getPiece();
-        //boolean weaker = g.isStoneMuchWeaker(stone);
 
         assert (g.isOwnedByPlayer1() == isOwnedByPlayer1()):
                  "Bad group ownership for eye="+ this +". Owning Group="+g;
@@ -123,6 +124,7 @@ public class GoEye extends GoString implements IGoEye
     /**
      * Add a space to the eye string.
      * The space is either blank or a dead enemy stone.
+     * Called only during initial construction.
      */
     @Override
     protected void addMemberInternal(GoBoardPosition space, GoBoard board) {
@@ -141,7 +143,8 @@ public class GoEye extends GoString implements IGoEye
             pos.setEye(null);
             pos.setVisited(false);
         }
-         setGroup(null);
+        setGroup(null);
+        getMembers().clear();
     }
 
     @Override
