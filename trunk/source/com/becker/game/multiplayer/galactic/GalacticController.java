@@ -76,23 +76,24 @@ public class GalacticController extends MultiGameController
     {
         // we just init the first time.
         // After that, they can change manually to get different players.
-        if (players_ == null) {
+        if (getPlayers() == null) {
             // create the default players. One human and one robot.
-            players_ = new PlayerList();
+            PlayerList players = new PlayerList();
 
             Planet homePlanet = new Planet('A', GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(5, 5));
-            players_.add(GalacticPlayer.createGalacticPlayer("Admiral 1",
-                                      homePlanet, MultiGamePlayer.getNewPlayerColor(players_), true));
-            homePlanet.setOwner((GalacticPlayer)players_.get(0));
+            players.add(GalacticPlayer.createGalacticPlayer("Admiral 1",
+                                      homePlanet, MultiGamePlayer.getNewPlayerColor(players), true));
+            homePlanet.setOwner((GalacticPlayer)players.get(0));
 
             homePlanet = new Planet('B', GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(10, 10));
-            players_.add(GalacticPlayer.createGalacticPlayer("Admiral 2",
-                                      homePlanet, MultiGamePlayer.getNewPlayerColor(players_), false));
-            homePlanet.setOwner((GalacticPlayer)players_.get(1));
+            players.add(GalacticPlayer.createGalacticPlayer("Admiral 2",
+                                      homePlanet, MultiGamePlayer.getNewPlayerColor(players), false));
+            homePlanet.setOwner((GalacticPlayer)players.get(1));
+            setPlayers(players);
         }
         currentPlayerIndex_ = 0;
         
-        ((Galaxy)getBoard()).initPlanets(players_, (GalacticOptions)getOptions());
+        ((Galaxy)getBoard()).initPlanets(getPlayers(), (GalacticOptions)getOptions());
     }
 
     /**
@@ -129,7 +130,7 @@ public class GalacticController extends MultiGameController
         
        GalacticPlayer winner = null;
         double maxCriteria = -1.0;
-        for (final Player newVar : players_) {
+        for (final Player newVar : getPlayers()) {
             GalacticPlayer player = (GalacticPlayer) newVar;
             List planets = Galaxy.getPlanets(player);
             double criteria = planets.size() + (double) player.getTotalNumShips() / 100000000000.0;
@@ -191,7 +192,7 @@ public class GalacticController extends MultiGameController
     @Override
     protected int advanceToNextPlayerIndex()
     {
-        currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
+        currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
         return currentPlayerIndex_;
     }
 

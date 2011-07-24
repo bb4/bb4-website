@@ -102,7 +102,6 @@ public class GoGroupSet extends LinkedHashSet<IGoGroup> {
         }
     }
 
-
     /**
      * confirm that the stones in this group are not contained in any other group.
      */

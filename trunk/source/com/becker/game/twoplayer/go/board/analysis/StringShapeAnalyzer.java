@@ -87,8 +87,7 @@ public class StringShapeAnalyzer {
     }
     
     
-    private static int getBadShapeAux( BoardPosition nearbySpace, boolean player1 )
-    {
+    private static int getBadShapeAux( BoardPosition nearbySpace, boolean player1 ) {
         if (nearbySpace.isUnoccupied()) {
             return EMPTY_TRIANGLE_PENALTY;
         } 

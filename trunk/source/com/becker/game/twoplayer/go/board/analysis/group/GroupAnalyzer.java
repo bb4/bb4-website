@@ -67,9 +67,7 @@ public class GroupAnalyzer implements GroupChangeListener {
      * @return health score independent of neighboring groups.
      */
     public float getAbsoluteHealth() {
-        //if (!isValid()) {
-        //    assert false :  "Getting stale absolute health = " + absoluteHealth_;
-        //}
+
         return absoluteHealth_;
     }
 

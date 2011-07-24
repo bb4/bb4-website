@@ -19,18 +19,11 @@ public interface IGoGroup extends IGoSet {
 
     GoStringSet getMembers();
 
-    //float getAbsoluteHealth();
-
     boolean isOwnedByPlayer1();
 
     void addChangeListener(GroupChangeListener listener);
-    void removeChangeListener(GroupChangeListener listener);
 
     int getNumStones();
-
-    //GoEyeSet getEyes(GoBoard board);
-
-    //float getRelativeHealth(GoBoard board, boolean useCachedValue);
 
     boolean containsStone(GoBoardPosition stone);
 
@@ -38,15 +31,9 @@ public interface IGoGroup extends IGoSet {
 
     GoBoardPositionSet getStones();
 
-    //float calculateAbsoluteHealth( GoBoard board);
-
-    //float calculateRelativeHealth( GoBoard board);
-
     void updateTerritory( float health );
 
     Box findBoundingBox();
-
-    //boolean isStoneMuchWeaker(GoStone stone);
 
     String toHtml();
 }

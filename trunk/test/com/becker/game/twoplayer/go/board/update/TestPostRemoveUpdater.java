@@ -13,16 +13,13 @@ import com.becker.game.twoplayer.go.board.move.GoMove;
  */
 public class TestPostRemoveUpdater extends GoTestCase {
 
-    /** instance under test */
-    private PostRemoveUpdater removeUpdater;
-
     private CaptureCounts captureCounts  = new CaptureCounts();
 
     public void testTrivialRemove() {
 
-        GoBoard board = new GoBoard(5, 5, 0);
+        GoBoard board = new GoBoard(5, 0);
 
-        removeUpdater = new PostRemoveUpdater(board, captureCounts);
+        PostRemoveUpdater removeUpdater = new PostRemoveUpdater(board, captureCounts);
 
         // a black move on a virgin board.
         Location location = new Location(2, 2);

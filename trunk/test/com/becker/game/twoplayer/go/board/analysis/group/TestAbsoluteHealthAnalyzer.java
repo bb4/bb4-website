@@ -581,6 +581,11 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
     private void verifyEyes(GoEyeSet eyes, EyeInformation[] expectedEyes, boolean black)
     {
         String color = black? "black" : "white";
+        if (expectedEyes.length != eyes.size()) {
+            String sideColor = black ? "black" : "white";
+            System.out.println("We expected " + sideColor +" eyes to be " + expectedEyes + ",\n");
+            System.out.println("but we got "+ eyes);
+        }
         Assert.assertEquals("unequal numbers of " + color + " eyes", expectedEyes.length, eyes.size());
         if (eyes.size() > 0)
         {

@@ -217,7 +217,6 @@ public final class GoGroup extends GoSet
         return stones;
     }
 
-
     /**
      * Calculate the number of stones in the group.
      * @return number of stones in the group.

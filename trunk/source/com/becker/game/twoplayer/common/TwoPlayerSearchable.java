@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.common;
 import com.becker.common.geometry.Location;
 import com.becker.game.common.*;
 import com.becker.game.common.player.PlayerList;
-import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.game.twoplayer.common.search.transposition.ZobristHash;
@@ -16,12 +15,10 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
  *
  * @author Barry Becker
  */
-public abstract class TwoPlayerSearchable implements Searchable {
+public abstract class TwoPlayerSearchable extends AbstractSearchable {
 
     protected final TwoPlayerBoard board_;
-    protected final SearchOptions options_;
     protected final PlayerList players_;
-    protected final MoveList moveList_;
 
     /** helps to find the best moves. */
     protected final BestMoveFinder bestMoveFinder_;
@@ -35,10 +32,9 @@ public abstract class TwoPlayerSearchable implements Searchable {
      */
     public TwoPlayerSearchable(final TwoPlayerBoard board,  PlayerList players, SearchOptions options) {
 
+        super(board.getMoveList(), options);
         board_ = board;
-        moveList_ = board.getMoveList();
         players_ = players;
-        options_ = options;
 
         hash = new ZobristHash(board_);
         bestMoveFinder_ = new BestMoveFinder(getSearchOptions().getBestMovesSearchOptions());
@@ -54,22 +50,6 @@ public abstract class TwoPlayerSearchable implements Searchable {
 
     public TwoPlayerBoard getBoard() {
         return board_;
-    }
-
-    public int getNumMoves() {
-        return moveList_.getNumMoves();
-    }
-
-    public MoveList getMoveList() {
-        return moveList_;
-    }
-
-    public SearchOptions getSearchOptions() {
-        return options_;
-    }
-
-    protected AbstractGameProfiler getProfiler() {
-        return GameProfiler.getInstance();
     }
 
     /**

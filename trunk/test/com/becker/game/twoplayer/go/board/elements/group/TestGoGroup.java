@@ -19,7 +19,7 @@ public class TestGoGroup extends GoTestCase {
     public void testGroupConstruction() {
 
         GoBoardPosition stone = new GoBoardPosition(4, 4, null, new GoStone(true, 0.5f));
-        GoBoard board = new GoBoard(9, 9, 0);
+        GoBoard board = new GoBoard(9, 0);
         GoString string = new GoString(stone, board);
         GoGroup group = new GoGroup(string);
 

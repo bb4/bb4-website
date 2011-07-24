@@ -23,7 +23,7 @@ public class TestPostMoveUpdater extends GoTestCase {
 
     public void testTrivialMove() {
 
-        board = new GoBoard(5, 5, 0);
+        board = new GoBoard(5, 0);
 
         // a black move on a virgin board.
         Location location = new Location(2, 2);

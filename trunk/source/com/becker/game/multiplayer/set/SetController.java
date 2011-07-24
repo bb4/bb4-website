@@ -162,8 +162,8 @@ public class SetController extends MultiGameController {
             currentPlayerIndex_ = NO_PLAYER_SELECTED;
             return;
         }
-        for (int i = 0; i < players_.size(); i++) {
-            if (player == players_.get(i)) {
+        for (int i = 0; i < getPlayers().size(); i++) {
+            if (player == getPlayers().get(i)) {
                 currentPlayerIndex_ = i;
                 return;
             }
@@ -188,19 +188,20 @@ public class SetController extends MultiGameController {
     @Override
     protected void initPlayers() {
 
-        if (players_ == null) {
+        if (getPlayers() == null) {
             // create the default players. One human and one robot.
-            players_ = new PlayerList();
-            players_.add(SetPlayer.createSetPlayer("Player 1", SetPlayer.getNewPlayerColor(players_), true));
-            players_.add(SetPlayer.createSetPlayer("Player 2", SetPlayer.getNewPlayerColor(players_), false));
-            players_.get(1).setName(players_.get(1).getName()+'('+((SetRobotPlayer)players_.get(1)).getRobotType()+')');
+            PlayerList players = new PlayerList();
+            players.add(SetPlayer.createSetPlayer("Player 1", SetPlayer.getNewPlayerColor(players), true));
+            players.add(SetPlayer.createSetPlayer("Player 2", SetPlayer.getNewPlayerColor(players), false));
+            players.get(1).setName(players.get(1).getName()+'('+((SetRobotPlayer)players.get(1)).getRobotType()+')');
+            setPlayers(players);
         }
     }
 
     @Override
     public MultiGamePlayer getCurrentPlayer() {
         if (currentPlayerIndex_ != NO_PLAYER_SELECTED) {
-            return (MultiGamePlayer)players_.get(currentPlayerIndex_);
+            return (MultiGamePlayer)getPlayers().get(currentPlayerIndex_);
         }
         return null;
     }

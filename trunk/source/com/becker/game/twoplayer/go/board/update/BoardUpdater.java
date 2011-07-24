@@ -34,7 +34,6 @@ public class BoardUpdater {
     }
 
     /**
-     *
      * @return a defensive copy
      */
     public CaptureCounts getCaptureCounts() {

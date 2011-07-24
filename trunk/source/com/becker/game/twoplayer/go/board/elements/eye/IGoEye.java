@@ -7,7 +7,7 @@ import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 
 /**
- *  A GoEye is composed of a strongly connected set of empty spaces (and possible some dead enemy stones).
+ *  A GoEye is composed of a strongly connected set of empty spaces (and possibly some dead enemy stones).
  *
  *  @author Barry Becker
  */
@@ -24,7 +24,7 @@ public interface IGoEye extends IGoSet {
     int getNumEdgePoints();
 
     /**
-     * @return the group that this string belongs to.
+     * @return the group that this eye belongs to.
      */
     IGoGroup getGroup();
 

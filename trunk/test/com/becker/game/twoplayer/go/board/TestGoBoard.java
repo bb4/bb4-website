@@ -73,7 +73,7 @@ public class TestGoBoard extends GoTestCase {
         GoBoard board = (GoBoard)controller_.getBoard();
 
         GoMove m = new GoMove(new Location(4, 4), 0, new GoStone(false));
-        int numInAtari = m.causesAtari(board);
+        int numInAtari = m.numStonesAtaried(board);
         Assert.assertTrue("numInAtri="+numInAtari+" expected="+4, numInAtari == 4);
     }
 
@@ -84,7 +84,7 @@ public class TestGoBoard extends GoTestCase {
         GoMove m = new GoMove(new Location(2, 12), 0, new GoStone(true));
         controller_.makeMove(m);
         GoBoard board = (GoBoard)controller_.getBoard();
-        int numInAtari = m.causesAtari(board);
+        int numInAtari = m.numStonesAtaried(board);
         Assert.assertTrue("numInAtri="+numInAtari+" expected="+12, numInAtari == 12);
     }
 
@@ -98,7 +98,7 @@ public class TestGoBoard extends GoTestCase {
     }
 
     public void testCopy() {
-        GoBoard board = new GoBoard(3, 3, 0);
+        GoBoard board = new GoBoard(3, 0);
         Location center = new Location(2, 2);
         board.makeMove(new GoMove(center, 1, new GoStone(true)));
         GoBoard boardCopy = board.copy();

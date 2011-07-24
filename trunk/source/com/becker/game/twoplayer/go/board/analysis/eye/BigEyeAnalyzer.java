@@ -21,9 +21,6 @@ import java.util.List;
  */
 class BigEyeAnalyzer {
 
-    /** the eye to classify. */
-    private IGoEye eye_;
-
     /** spaces_ in the eye */
     private GoBoardPositionSet spaces_;
 
@@ -32,8 +29,8 @@ class BigEyeAnalyzer {
      * @param eye the eye to analyze
      */
     BigEyeAnalyzer(IGoEye eye) {
-        eye_ = eye;
-        spaces_ = eye_.getMembers();
+
+        spaces_ = eye.getMembers();
         int size = spaces_.size();
         assert ( size > 3 && size < 8 );
     }

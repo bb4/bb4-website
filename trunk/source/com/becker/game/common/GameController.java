@@ -23,7 +23,7 @@ public abstract class GameController
     protected GameViewable viewer_;
 
     /** the list of players actively playing the game, in the order that they move. */
-    protected PlayerList players_;
+    private PlayerList players_;
 
     /** collections of game specific options.  They may be modified through the ui (see GameOptionsDialog)*/
     protected GameOptions gameOptions_;

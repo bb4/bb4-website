@@ -41,7 +41,6 @@ public class GroupAnalyzerMap {
         GroupAnalyzer analyzer = new GroupAnalyzer(group, this);
         analyzerMap.put(group, analyzer);
 
-        //System.out.println("num analyzers in map =" + analyzerMap.numEntries() );
         return analyzer;
     }
 

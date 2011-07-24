@@ -33,8 +33,13 @@ public class TerritoryAnalyzer {
      */
     private static final float EMPTY_REGION_EDGE_THRESH = 0.24f;
 
-    private NeighborAnalyzer nbrAnalyzer_;
+    /**
+     * How much score to attribute to a stone that is in an eye.
+     * I'm really not sure what this should be. Perhaps -0.1 instead of 0.1.
+     */
+    private static final float STONE_IN_EYE_CONTRIB = 0.1f;
 
+    private NeighborAnalyzer nbrAnalyzer_;
     private GroupAnalyzerMap analyzerMap_;
 
     /**
@@ -132,8 +137,9 @@ public class TerritoryAnalyzer {
         prof.startUpdateTerritory();
 
         float delta = calcAbsoluteHealth();
-        delta = calcRelativeHealth(prof, delta);   // XXX big cause of non-deterministic behavior.
-
+        if (USE_RELATIVE_GROUP_SCORING)  {
+            delta = calcRelativeHealth(prof, delta);
+        }
         prof.startUpdateEmpty();
         delta += updateEmptyRegions(isEndOfGame);
         prof.stopUpdateEmpty();
@@ -191,16 +197,16 @@ public class TerritoryAnalyzer {
      */
     private float calcRelativeHealth(GoProfiler prof, float initDelta) {
         float delta = initDelta;
-        if (USE_RELATIVE_GROUP_SCORING) {
-            prof.startRelativeTerritory();
-            for (IGoGroup g : board_.getGroups()) {
-                float health = analyzerMap_.getAnalyzer(g).calculateRelativeHealth(board_);
-                g.updateTerritory(health);
-                delta += health * g.getNumStones();
-            }
 
-            prof.stopRelativeTerritory();
+        prof.startRelativeTerritory();
+        for (IGoGroup g : board_.getGroups()) {
+            float health = analyzerMap_.getAnalyzer(g).calculateRelativeHealth(board_);
+            g.updateTerritory(health);
+            delta += health * g.getNumStones();
         }
+
+        prof.stopRelativeTerritory();
+
         return delta;
     }
 
@@ -272,7 +278,7 @@ public class TerritoryAnalyzer {
             }
         }
         else if (pos.isInEye()) {
-            pos.setScoreContribution(pos.getGroup().isOwnedByPlayer1()? 0.1 : -0.1);
+            pos.setScoreContribution(pos.getGroup().isOwnedByPlayer1()? STONE_IN_EYE_CONTRIB : -STONE_IN_EYE_CONTRIB);
         }
         return diffScore;
     }
@@ -286,7 +292,8 @@ public class TerritoryAnalyzer {
 
         for (GoBoardPosition stone : stones) {           
             IGoGroup group = stone.getString().getGroup();
-            totalScore += analyzerMap_.getAnalyzer(group).getRelativeHealth(board_, false);
+            boolean useChached = false;
+            totalScore += analyzerMap_.getAnalyzer(group).getRelativeHealth(board_, useChached);
         }
         return totalScore/stones.size();
     } 

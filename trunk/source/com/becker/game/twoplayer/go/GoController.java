@@ -34,34 +34,34 @@ public final class GoController extends TwoPlayerController {
     public static final boolean USE_RELATIVE_GROUP_SCORING = true;
 
     /** default num row and columns for a default square go board.   */
-    private static final int DEFAULT_NUM_ROWS = 5;
+    private static final int DEFAULT_SIZE = 5;
 
     /** if difference greater than this, then consider a win. */
     public static final int WIN_THRESHOLD = 2000;
 
     private ScoreCache scoreCache_;
 
-    private BoardOpts boardOpts;
+    private BoardOptions boardOpts;
 
     /**
      * Construct the Go game controller.
      */
     public GoController() {
-        boardOpts = new BoardOpts( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS, 0);
+        boardOpts = new BoardOptions(DEFAULT_SIZE, 0);
     }
 
     /**
      * Construct the Go game controller given dimensions and number of handicap stones.
-     * @param numHandicapStones  0 - 9 handicap stones to show initially.
+     * @param numHandicapStones 0 - 9 handicap stones to show initially.
      */
-    public GoController( int nrows, int ncols, int numHandicapStones ) {
-        boardOpts = new BoardOpts(nrows, ncols, numHandicapStones);
+    public GoController(int size, int numHandicapStones ) {
+        boardOpts = new BoardOptions(size, numHandicapStones);
         initializeData();
     }
 
     @Override
     protected GoBoard createBoard() {
-        return new GoBoard( boardOpts.numRows, boardOpts.numCols, boardOpts.numHandicaps);
+        return new GoBoard(boardOpts.size, boardOpts.numHandicaps);
     }
 
     @Override
@@ -180,13 +180,12 @@ public final class GoController extends TwoPlayerController {
         return new GoSearchable(board, players, options, scoreCache_);
     }
 
-    private class BoardOpts {
-        int numRows, numCols;
+    private class BoardOptions {
+        int size;
         int numHandicaps;
 
-        BoardOpts(int numRows, int numCols, int numHandicaps) {
-            this.numRows = numRows;
-            this.numCols = numCols;
+        BoardOptions(int size, int numHandicaps) {
+            this.size = size;
             this.numHandicaps = numHandicaps;
         }
     }

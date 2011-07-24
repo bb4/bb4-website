@@ -25,7 +25,6 @@ public class StringLibertyAnalyzer {
         initializeLiberties(board, members);
     }
 
-
     private void initializeLiberties(GoBoard board, GoBoardPositionSet members) {
         liberties_ = new GoBoardPositionSet();
 
@@ -34,12 +33,10 @@ public class StringLibertyAnalyzer {
         }
     }
 
-
     /**
      * @return number of liberties that the string has
      */
-    public final GoBoardPositionSet getLiberties()
-    {
+    public final GoBoardPositionSet getLiberties() {
         return liberties_;
     }
 
@@ -60,12 +57,10 @@ public class StringLibertyAnalyzer {
          }
     }
 
-
     /**
      * only add liberties for this stone if they are not already in the set
      */
-    private static void addLiberties( GoBoardPosition stone, GoBoardPositionSet liberties, GoBoard board )
-    {
+    private static void addLiberties( GoBoardPosition stone, GoBoardPositionSet liberties, GoBoard board ) {
         int r = stone.getRow();
         int c = stone.getCol();
         if ( r > 1 )
@@ -83,8 +78,7 @@ public class StringLibertyAnalyzer {
      * @param libertySpace
      * @param liberties
      */
-    private static void addLiberty( BoardPosition libertySpace, GoBoardPositionSet liberties )
-    {
+    private static void addLiberty( BoardPosition libertySpace, GoBoardPositionSet liberties ) {
         // this assumes a HashSet will not allow you to add the same object twice (no dupes)
         if ( libertySpace.isUnoccupied() )
             liberties.add( (GoBoardPosition)libertySpace );

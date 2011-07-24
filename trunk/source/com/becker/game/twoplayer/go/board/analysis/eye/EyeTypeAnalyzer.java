@@ -109,15 +109,16 @@ public class EyeTypeAnalyzer {
     }
 
     /**
+     * Check the diagonals for > 2 of the opponents pieces.
+     * there are 2 cases: both opponent pieces on the same vertical or horizontal, or
+     * the opponents pieces are on the opposite diagonals
      * @return  The number of diagonal points that are occupied by opponent stones (0, 1, or 2)
      */
     private int getNumOpponentDiagonals(GoBoardPosition space, boolean groupP1) {
         int numOppDiag = 0;
         int r = space.getRow();
         int c = space.getCol();
-        // check the diagonals for > 2 of the opponents pieces.
-        // there are 2 cases: both opponent pieces on the same vertical or horizontal, or
-        // the opponents pieces are on the opposite diagonals
+
         if (qualifiedOpponentDiagonal(-1,-1, r,c, groupP1))
             numOppDiag++;
         if (qualifiedOpponentDiagonal(-1, 1, r,c, groupP1))

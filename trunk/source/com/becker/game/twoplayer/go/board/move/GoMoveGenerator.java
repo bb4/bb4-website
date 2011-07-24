@@ -28,8 +28,8 @@ public final class GoMoveGenerator {
     /**
      * Constructor.
      */
-    public GoMoveGenerator(Searchable controller) {
-        searchable_ = controller;
+    public GoMoveGenerator(Searchable searchable) {
+        searchable_ = searchable;
     }
 
     /**
@@ -65,7 +65,6 @@ public final class GoMoveGenerator {
         MoveList moveList = new MoveList();
         int nCols = board.getNumCols();
         int nRows = board.getNumRows();
-        assert (nRows == nCols) : " rows and cols must be the same in go";
 
         CandidateMoveAnalyzer candidateMoves = new CandidateMoveAnalyzer(board);
 
@@ -121,7 +120,7 @@ public final class GoMoveGenerator {
 
     /**
      * It is a take-back move if the proposed move position (row,col) would immediately replace the last captured piece
-     *  and capture the stone that did the capturing.
+     * and capture the stone that did the capturing.
      * @return true of this is an immediate take-back (not allowed in go - see "rule of ko")
      */
     public static boolean isTakeBack( int row, int col, GoMove lastMove, GoBoard board ) {
