@@ -52,7 +52,7 @@ public interface IBoard {
     int getMaxNumMoves();
 
     /**
-     * returns null if there is no game piece at the position specified.
+     * Returns null if the coordinates specified are not on the board.
      * @return the piece at the specified location. Returns null if there is no piece there.
      */
     BoardPosition getPosition( int row, int col );

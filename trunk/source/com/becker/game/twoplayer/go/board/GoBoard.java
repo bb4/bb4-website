@@ -24,7 +24,6 @@ import java.util.List;
  * For example, we update strings, and groups (and eventually armies) after each move.
  * After updating we can use these structures to estimate territory for each side.
  *
- * Could move many methods to StringFinder and GroupFinder classes.
  * @author Barry Becker
  */
 public final class GoBoard extends TwoPlayerBoard {
@@ -35,6 +34,7 @@ public final class GoBoard extends TwoPlayerBoard {
     /** Handicap stones are on the star points, unless the board is very small */
     private HandicapStones handicap_;
 
+    /** Updates the board's structure after making or undoing moves */
     private BoardUpdater boardUpdater_;
 
     /**
@@ -42,7 +42,7 @@ public final class GoBoard extends TwoPlayerBoard {
      *  @param size The dimension (i.e. the number rows and columns). Must be square.
      *  @param numHandicapStones number of black handicap stones to initialize with.
      */
-    public GoBoard( int size, int numHandicapStones ) {
+    public GoBoard(int size, int numHandicapStones ) {
 
         setSize( size, size );
         setHandicap(numHandicapStones);
@@ -95,8 +95,8 @@ public final class GoBoard extends TwoPlayerBoard {
         return new GoBoardPosition(1, 1, null, null);
     }
 
-    public void setHandicap(int handicap) {
-        handicap_ = new HandicapStones(handicap, getNumRows());
+    public void setHandicap(int numHandicapStones) {
+        handicap_ = new HandicapStones(numHandicapStones, getNumRows());
         makeMoves(handicap_.getHandicapMoves());
     }
 
@@ -206,7 +206,7 @@ public final class GoBoard extends TwoPlayerBoard {
             getProfiler().stopMakeMove();
             return true;
         }
-        clearEyes();
+
         boolean valid = super.makeInternalMove( m );
         boardUpdater_.updateAfterMove(m);
 
@@ -229,9 +229,6 @@ public final class GoBoard extends TwoPlayerBoard {
             getProfiler().stopUndoMove();
             return;
         }
-
-        // first make sure that there are no references to obsolete groups.
-        clearEyes();
 
         boardUpdater_.updateAfterRemove(m);
         getProfiler().stopUndoMove();
@@ -267,40 +264,6 @@ public final class GoBoard extends TwoPlayerBoard {
            }
         }
         return numStones;
-    }
-
-    /**
-     * Clear whatever cached score state we might have before recomputing.
-     */
-    private void clearScores() {
-        // we should be able to just sum all the position scores now.
-        for ( int i = 1; i <= getNumRows(); i++ )  {
-           for ( int j = 1; j <= getNumCols(); j++ ) {
-               GoBoardPosition pos = (GoBoardPosition)getPosition(i, j);
-               pos.setScoreContribution(0);
-
-               if (pos.isOccupied()) {
-                   GoStone stone = ((GoStone)pos.getPiece());
-                   stone.setHealth(0);
-               }
-           }
-        }
-    }
-
-    /**
-     * clear all the eyes from all the stones on the board
-     */
-    private void clearEyes() {
-        for ( int i = 1; i <= getNumRows(); i++ ) {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                GoBoardPosition space = (GoBoardPosition)getPosition(i, j);
-                if ( space.isInEye() )     {
-                    // remove reference to the owning group so it can be garbage collected.
-                    space.getEye().clear();
-                    space.setEye(null);
-                }
-            }
-        }
     }
 
     @Override

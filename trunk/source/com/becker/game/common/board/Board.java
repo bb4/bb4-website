@@ -13,7 +13,7 @@ import com.becker.game.common.MoveList;
  *  Legal positions are [1, numRows_][1, numCols_]
  *
  *  Games like pente, go, chess, checkers, go-moku,
- *  shoji, othello, connect4, squares, Stratego, Blockade
+ *  shoji, othello, connect4, squares, Stratego, Blockade fit this pattern.
  *  Other games like Risk, Galactic Empire, or Monopoly and might be supportable in the future.
  *  They are harder because they do not have perfect information (i.e. they use dice).
  *  and have multiple players.
@@ -83,7 +83,7 @@ public abstract class Board implements IBoard {
     }
 
     /**
-     * @return  retrieve the number of cols that the board has.
+     * @return  retrieve the number of columns that the board has.
      */
     public final int getNumCols() {
         return positions_.getNumCols();
@@ -102,16 +102,14 @@ public abstract class Board implements IBoard {
     }
 
     /**
-     * returns null if there is no game piece at the position specified.
-     * @return the piece at the specified location. Returns null if there is no piece there.
+     * {@inheritDoc}
      */
     public final BoardPosition getPosition( int row, int col ) {
         return positions_.getPosition(row, col);
     }
 
     /**
-     * returns null if there is no game piece at the position specified.
-     * @return the piece at the specified location. Returns null if there is no piece there.
+     * {@inheritDoc}
      */
     public final BoardPosition getPosition( Location loc ) {
         return getPosition(loc.getRow(), loc.getCol());
@@ -188,7 +186,7 @@ public abstract class Board implements IBoard {
 
      /**
      * Check the 4 corners
-     * @return true if the specified BoardPosition is on the corder of the board
+     * @return true if the specified BoardPosition is on the corner of the board
      * @param position position to see if in corner of board.
      */
     public boolean isInCorner(BoardPosition position) {

@@ -33,6 +33,10 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     public void update(GoMove move) {
 
         profiler_.startUpdateGroupsAfterRemove();
+
+        // first make sure that there are no references to obsolete groups.
+        clearEyes();
+
         GoBoardPosition stone = (GoBoardPosition) (getBoard().getPosition(move.getToLocation()));
 
         IGoString stringThatItBelongedTo = stone.getString();
