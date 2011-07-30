@@ -12,8 +12,6 @@ import com.becker.game.common.player.PlayerList;
  * public contract. The abstract class may be package private if we don't
  * want to expose it. Other classes may implement this interface without
  * extending the abstract base class.
- *   Another purpose of this interface is to limit the methods available to a
- * given client. We do not want to expose all the GameController methods to the UI client.
  *
  * @see GameController for the abstract implementation of this interface
  * @see Board
@@ -28,7 +26,8 @@ public interface IGameController {
     Board getBoard();
 
     /**
-     * @return the class which shows the current state of the game board. May be null.
+     * @return the class which shows the current state of the game board.
+     * May be null if there is no user visible representation of the game.
      */
     GameViewable getViewer();
 

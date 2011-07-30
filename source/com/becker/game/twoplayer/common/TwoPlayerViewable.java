@@ -5,6 +5,7 @@ import com.becker.game.common.Move;
 
 /**
  * The TwoPlayerController communicates with the viewer via this interface.
+ * It is a restriction of the controller interface.
  * Alternatively we could use RMI or events, but for now the minimal interface is
  * defined here and called directly by the controller.
  *

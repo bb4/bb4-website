@@ -8,59 +8,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="7f837598-b78e-4519-945f-e7b7f7021387" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/AbstractSearchable.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/WeakestGroupFinder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/common/GameController.java" afterPath="$PROJECT_DIR$/source/com/becker/game/common/GameController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/multiplayer/common/MultiGameController.java" afterPath="$PROJECT_DIR$/source/com/becker/game/multiplayer/common/MultiGameController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/multiplayer/galactic/GalacticController.java" afterPath="$PROJECT_DIR$/source/com/becker/game/multiplayer/galactic/GalacticController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/multiplayer/poker/PokerController.java" afterPath="$PROJECT_DIR$/source/com/becker/game/multiplayer/poker/PokerController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/multiplayer/set/SetController.java" afterPath="$PROJECT_DIR$/source/com/becker/game/multiplayer/set/SetController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/multiplayer/trivial/TrivialController.java" afterPath="$PROJECT_DIR$/source/com/becker/game/multiplayer/trivial/TrivialController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerController.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerSearchWorker.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerSearchWorker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerSearchable.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerSearchable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/search/Searchable.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/search/Searchable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/ui/ComputerMoveProgress.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/ui/ComputerMoveProgress.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/GoController.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/GoController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/GtpTesujisoftGoServer.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/GtpTesujisoftGoServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/common/IGameController.java" afterPath="$PROJECT_DIR$/source/com/becker/game/common/IGameController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/common/board/Board.java" afterPath="$PROJECT_DIR$/source/com/becker/game/common/board/Board.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/common/board/IBoard.java" afterPath="$PROJECT_DIR$/source/com/becker/game/common/board/IBoard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerBoard.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerBoard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerViewable.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerViewable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/GoBoard.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/GoBoard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/GoSearchable.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/GoSearchable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/StringLibertyAnalyzer.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/StringLibertyAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/StringShapeAnalyzer.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/StringShapeAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/TerritoryAnalyzer.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/TerritoryAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/WorthCalculator.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/WorthCalculator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/eye/BigEyeAnalyzer.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/eye/BigEyeAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/eye/EyeTypeAnalyzer.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/eye/EyeTypeAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/AbsoluteHealthCalculator.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/AbsoluteHealthCalculator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/EyeSpaceAnalyzer.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/EyeSpaceAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/GroupAnalyzer.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/GroupAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/GroupAnalyzerMap.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/GroupAnalyzerMap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/GroupEyeCache.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/GroupEyeCache.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/RelativeHealthCalculator.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/RelativeHealthCalculator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/GoSet.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/GoSet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/IGoSet.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/IGoSet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/eye/GoEye.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/eye/GoEye.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/eye/IGoEye.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/eye/IGoEye.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/group/GoGroup.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/group/GoGroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/group/GoGroupSet.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/group/GoGroupSet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/group/IGoGroup.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/group/IGoGroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/string/IGoString.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/elements/string/IGoString.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/move/GoMove.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/move/GoMove.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/move/GoMoveGenerator.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/move/GoMoveGenerator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/BoardUpdater.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/BoardUpdater.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/common/search/SearchableStub.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/common/search/SearchableStub.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/common/search/transposition/HashGo5x5UniquenessTest.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/common/search/transposition/HashGo5x5UniquenessTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/common/search/transposition/HashGo9x9UniquenessTest.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/common/search/transposition/HashGo9x9UniquenessTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/common/search/transposition/ZobristHashTest.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/common/search/transposition/ZobristHashTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/GoTestCase.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/GoTestCase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/TestGoBoard.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/TestGoBoard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/TestWorthCalculator5.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/TestWorthCalculator5.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/group/TestAbsoluteHealthAnalyzer.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/group/TestAbsoluteHealthAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/elements/group/TestGoGroup.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/elements/group/TestGoGroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/elements/string/TestGoString.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/elements/string/TestGoString.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/update/TestPostMoveUpdater.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/update/TestPostMoveUpdater.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/update/TestPostRemoveUpdater.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/update/TestPostRemoveUpdater.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostChangeUpdater.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostChangeUpdater.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostMoveUpdater.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostMoveUpdater.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostRemoveUpdater.java" afterPath="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostRemoveUpdater.java" />
     </list>
     <list id="f156c665-549e-4227-a588-09fe7dde4dd3" name="Failed commit: Default (3)" comment="try to remove corrupt dir." />
     <list id="205c041e-69b6-43e2-8a4d-a6606d9a31ad" name="Failed commit: Default" comment="some refactoring of common through intellij. Used structure 101 too." />
@@ -237,82 +196,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TestAll.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/com/becker/game/TestAll.java">
+      <file leaf-file-name="GoBoard.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/GoBoard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="13" selection-start="207" selection-end="207" vertical-scroll-proportion="0.0">
+            <state line="232" column="27" selection-start="7280" selection-end="7280" vertical-scroll-proportion="-18.884615">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestE4Information.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/eye/information/TestE4Information.java">
+      <file leaf-file-name="BoardUpdater.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/BoardUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="0" selection-start="2540" selection-end="2540" vertical-scroll-proportion="0.0">
+            <state line="73" column="29" selection-start="2036" selection-end="2036" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestEyeTypeAnalyzer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/eye/TestEyeTypeAnalyzer.java">
+      <file leaf-file-name="PostRemoveUpdater.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostRemoveUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="22" selection-start="1153" selection-end="1153" vertical-scroll-proportion="0.0">
+            <state line="32" column="91" selection-start="1346" selection-end="1346" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EyeTypeAnalyzer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/eye/EyeTypeAnalyzer.java">
+      <file leaf-file-name="TwoPlayerViewable.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerViewable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="13" selection-start="860" selection-end="860" vertical-scroll-proportion="0.0">
+            <state line="7" column="51" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EyeHealthEvaluator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/EyeHealthEvaluator.java">
+      <file leaf-file-name="IBoard.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/board/IBoard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="6" selection-start="266" selection-end="266" vertical-scroll-proportion="0.0">
+            <state line="54" column="8" selection-start="1737" selection-end="1737" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EyeSpaceAnalyzer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/EyeSpaceAnalyzer.java">
+      <file leaf-file-name="PostMoveUpdater.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostMoveUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="225" column="129" selection-start="9452" selection-end="9452" vertical-scroll-proportion="0.0">
+            <state line="18" column="41" selection-start="839" selection-end="839" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestAll.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/com/becker/TestAll.java">
+      <file leaf-file-name="PostChangeUpdater.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostChangeUpdater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="63" selection-start="715" selection-end="715" vertical-scroll-proportion="0.36503068">
+            <state line="126" column="13" selection-start="4111" selection-end="4111" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestAbsoluteHealthAnalyzer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/group/TestAbsoluteHealthAnalyzer.java">
+      <file leaf-file-name="TwoPlayerBoard.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerBoard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="583" column="58" selection-start="28965" selection-end="28965" vertical-scroll-proportion="0.0">
+            <state line="40" column="39" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestWorthCalculator5.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/TestWorthCalculator5.java">
+      <file leaf-file-name="IGameController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/IGameController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="59" selection-start="1761" selection-end="1761" vertical-scroll-proportion="0.0">
+            <state line="29" column="74" selection-start="978" selection-end="978" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TerritoryAnalyzer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/TerritoryAnalyzer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="133" column="8" selection-start="5520" selection-end="5520" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -339,7 +307,7 @@
       <file leaf-file-name="TwoPlayerController.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="22" selection-start="1633" selection-end="1633" vertical-scroll-proportion="45.153847">
+            <state line="32" column="54" selection-start="1665" selection-end="1665" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -363,10 +331,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameController.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="GameController.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/GameController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="158" column="16" selection-start="4352" selection-end="4352" vertical-scroll-proportion="0.0">
+            <state line="36" column="134" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.3834746">
               <folding />
             </state>
           </provider>
@@ -402,7 +370,7 @@
       <file leaf-file-name="Board.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/board/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="115" column="31" selection-start="3475" selection-end="3475" vertical-scroll-proportion="0.0">
+            <state line="191" column="35" selection-start="5413" selection-end="5413" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -425,22 +393,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/ui/ComputerMoveProgress.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerController.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/search/Searchable.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/AbstractSearchable.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerSearchable.java" />
-        <option value="$PROJECT_DIR$/test/com/becker/game/twoplayer/common/search/SearchableStub.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/game/multiplayer/common/MultiGameController.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/game/multiplayer/set/SetController.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/game/multiplayer/galactic/GalacticController.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/game/multiplayer/poker/PokerController.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/game/multiplayer/trivial/TrivialController.java" />
         <option value="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/TestWorthCalculator5.java" />
         <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/eye/EyeTypeAnalyzer.java" />
         <option value="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/group/TestAbsoluteHealthAnalyzer.java" />
         <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/EyeSpaceAnalyzerBak.java" />
         <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/EyeSpaceAnalyzer.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/BoardUpdater.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostMoveUpdater.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostChangeUpdater.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/GoBoard.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostRemoveUpdater.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerViewable.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/common/board/IBoard.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/common/board/Board.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerBoard.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/common/IGameController.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/game/common/GameController.java" />
       </list>
     </option>
   </component>
@@ -530,101 +498,31 @@
       <sortByType ProjectPane="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
+      <pane id="Scope">
+        <subPane subId="ui">
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            <PATH_ELEMENT USER_OBJECT="Trunk">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="trunk">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            <PATH_ELEMENT USER_OBJECT="source">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            <PATH_ELEMENT USER_OBJECT="com/ui">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-      </pane>
-      <pane id="Scope">
         <subPane>
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -947,31 +845,8 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-        <subPane subId="ui">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="source">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com/ui">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
         <subPane subId="Problems" />
+        <subPane subId="Tests" />
         <subPane subId="Production">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1156,7 +1031,6 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-        <subPane subId="Tests" />
         <subPane subId="Project Files">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1764,6 +1638,100 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1792,566 +1760,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="update" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="elements" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="elements" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="string" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="elements" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="group" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="group" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eye" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eye" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="information" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="search" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="search" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="transposition" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="source" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -2550,278 +1958,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="group" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="go" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eye" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="twoplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="multiplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trivial" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="multiplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="set" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="multiplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="poker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="multiplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="galactic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="multiplayer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -2879,60 +2015,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="board" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gogui7.1.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gogui7.1.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2983,17 +2065,17 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="432" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="394" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="33" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="OverrideImplement.combined" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="424" />
-    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
@@ -3020,15 +2102,15 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
-    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -3300,11 +2382,11 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Application.GCFProgram" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.TestCandidateMoveAnalyzer" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.TestWorthCalculator5" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.TestAbsoluteHealthAnalyzer" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.TestAbsoluteHealthAnalyzer.testAbsHealth2" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.TestAll" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TestWorthCalculator5" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.TestAbsoluteHealthAnalyzer" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.TestAbsoluteHealthAnalyzer.testAbsHealth2" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TestAll" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.TestCandidateMoveAnalyzer" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -3394,23 +2476,23 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="174" y="-2" width="2282" height="1567" extended-state="1" />
-    <editor active="true" />
+    <frame x="174" y="-2" width="2282" height="1567" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13910575" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14530686" sideWeight="0.69552875" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31014904" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14530686" sideWeight="0.67139816" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3517192" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30042315" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32860184" sideWeight="0.9995256" order="12" side_tool="false" content_ui="tabs" x="147" y="657" width="2264" height="688" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32860184" sideWeight="0.9995256" order="12" side_tool="false" content_ui="tabs" x="147" y="657" width="2264" height="688" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24171382" sideWeight="0.14914773" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2021645" sideWeight="0.6391459" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39935845" sideWeight="0.61981064" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19855596" sideWeight="0.69552875" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19855596" sideWeight="0.67139816" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48361254" sideWeight="0.0" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30447125" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30404463" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Code explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.328654" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Analyze Dataflow to here" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952926" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -3560,93 +2642,30 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/TestAll.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostMoveUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="13" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0">
+        <state line="18" column="41" selection-start="839" selection-end="839" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/eye/information/TestE4Information.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostChangeUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="0" selection-start="2540" selection-end="2540" vertical-scroll-proportion="0.0">
+        <state line="126" column="13" selection-start="4111" selection-end="4111" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/common/MultiGameController.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/GoBoard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="195" column="27" selection-start="6105" selection-end="6105" vertical-scroll-proportion="0.0">
+        <state line="232" column="27" selection-start="7280" selection-end="7280" vertical-scroll-proportion="-18.884615">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/eye/TestEyeTypeAnalyzer.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/BoardUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="22" selection-start="1153" selection-end="1153" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/set/SetController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="165" column="38" selection-start="4297" selection-end="4297" vertical-scroll-proportion="-16.384615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/eye/EyeTypeAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="13" selection-start="860" selection-end="860" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/galactic/GalacticController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="194" column="68" selection-start="6873" selection-end="6873" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/analysis/group/EyeHealthEvaluator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="6" selection-start="266" selection-end="266" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/poker/PokerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="400" column="72" selection-start="12517" selection-end="12517" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/group/TestAbsoluteHealthAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="583" column="58" selection-start="28965" selection-end="28965" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/trivial/TrivialController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="49" selection-start="3555" selection-end="3555" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/WorthCalculatorBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="0" selection-start="2180" selection-end="2180" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/becker/game/TestAll.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="13" selection-start="207" selection-end="207" vertical-scroll-proportion="0.0">
+        <state line="73" column="29" selection-start="2036" selection-end="2036" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -3658,9 +2677,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/board/update/PostRemoveUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="91" selection-start="1346" selection-end="1346" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/group/TestAbsoluteHealthAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="583" column="58" selection-start="28965" selection-end="28965" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerViewable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="51" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/TestWorthCalculator5.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="59" selection-start="1761" selection-end="1761" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/board/IBoard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="8" selection-start="1737" selection-end="1737" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/board/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="191" column="35" selection-start="5413" selection-end="5413" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerBoard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="39" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/com/becker/TestAll.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="63" selection-start="715" selection-end="715" vertical-scroll-proportion="0.36503068">
+        <state line="13" column="13" selection-start="327" selection-end="327" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/IGameController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="74" selection-start="978" selection-end="978" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="54" selection-start="1665" selection-end="1665" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/GameController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="134" selection-start="1191" selection-end="1191" vertical-scroll-proportion="0.3834746">
           <folding />
         </state>
       </provider>

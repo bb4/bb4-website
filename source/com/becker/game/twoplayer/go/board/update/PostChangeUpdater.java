@@ -119,4 +119,21 @@ public abstract class PostChangeUpdater {
         }
         board_.setGroups(newGroups);
     }
+
+
+    /**
+     * clear all the eyes from all the stones on the board
+     */
+    protected void clearEyes() {
+        for ( int i = 1; i <= board_.getNumRows(); i++ ) {
+            for ( int j = 1; j <= board_.getNumCols(); j++ ) {
+                GoBoardPosition space = (GoBoardPosition)board_.getPosition(i, j);
+                if ( space.isInEye() )     {
+                    // remove reference to the owning group so it can be garbage collected.
+                    space.getEye().clear();
+                    space.setEye(null);
+                }
+            }
+        }
+    }
 }

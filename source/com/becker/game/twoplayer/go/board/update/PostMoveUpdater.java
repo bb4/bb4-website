@@ -34,6 +34,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
     @Override
     public void update(GoMove move) {
 
+        clearEyes();
         GoBoardPosition stone = (GoBoardPosition) (getBoard().getPosition(move.getToLocation()));
 
         board_.adjustLiberties(stone);

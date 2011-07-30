@@ -38,7 +38,7 @@ public abstract class TwoPlayerBoard extends Board {
         if ( !m.isPassOrResignation() ) {
             BoardPosition pos = getPosition(m.getToLocation());
             assert(m.getPiece() != null) : "moves piece was null :" + m;
-            pos.setPiece(m.getPiece());  // need copy?  I don't think so.
+            pos.setPiece(m.getPiece());
             GamePiece piece = pos.getPiece();
             assert (piece != null):
                     "The piece was " + piece + ". Moved to " + m.getToRow() + ", " + m.getToCol();

@@ -19,7 +19,7 @@ public abstract class GameController
     /** the board has the layout of the pieces. */
     private Board board_;
 
-    /** sometimes we want to draw directly to the ui while thinking (for debugging purposes) . */
+    /** Use this to draw directly to the ui while thinking (for debugging purposes) . */
     protected GameViewable viewer_;
 
     /** the list of players actively playing the game, in the order that they move. */
