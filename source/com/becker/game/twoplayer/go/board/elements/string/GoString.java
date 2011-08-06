@@ -223,10 +223,7 @@ public class GoString extends GoSet
 
     /**
      *  @return true if the piece at the specified position is an enemy of the string owner
-     *  If the difference in health between the stones is great, then they are not really enemies
-     *  because one of them is dead.
      */
-    @Override
     public boolean isEnemy(GoBoardPosition pos) {
         assert (group_ != null): "group for "+this+" is null";
         assert (pos.isOccupied()): "pos not occupied: ="+pos;

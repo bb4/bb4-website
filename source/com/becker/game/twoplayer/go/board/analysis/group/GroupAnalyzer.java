@@ -119,7 +119,7 @@ public class GroupAnalyzer implements GroupChangeListener {
     }
 
     /**
-     * @return  set of eyes currently identified for this group.
+     * @return set of eyes currently identified for this group.
      */
     public GoEyeSet getEyes(GoBoard board) {
         return absHealthCalculator_.getEyes(board);

@@ -181,19 +181,18 @@ public class BoardPositions {
         return bldr.toString();
     }
 
-     /**
+    /**
      * Check the 4 corners
      * @return true if the specified BoardPosition is on the corder of the board
      * @param position position to see if in corner of board.
      */
     public boolean isInCorner(BoardPosition position)  {
 
-        return ((position.getRow()==1 && position.getCol()==1) ||
-                (position.getRow()== getNumRows() && position.getCol()== getNumCols()) ||
-                (position.getRow()== getNumRows()  && position.getCol()==1) ||
-                (position.getRow()==1 && position.getCol()== getNumCols()));
+        return ((position.getRow() == 1 && position.getCol() == 1) ||
+                (position.getRow()== getNumRows() && position.getCol() == getNumCols()) ||
+                (position.getRow()== getNumRows() && position.getCol() == 1) ||
+                (position.getRow() == 1 && position.getCol() == getNumCols()));
     }
-    
 
     /**
      * Corner points are also on the edge.
@@ -202,7 +201,7 @@ public class BoardPositions {
      */
     public boolean isOnEdge(BoardPosition position)  {
 
-        return (position.getRow()==1 || position.getRow()== getNumRows()
-                || position.getCol()==1 || position.getCol()== getNumCols());
+        return (position.getRow() == 1 || position.getRow() == getNumRows()
+                || position.getCol() == 1 || position.getCol() == getNumCols());
     }
 }

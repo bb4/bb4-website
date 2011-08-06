@@ -184,7 +184,7 @@ public abstract class Board implements IBoard {
         return positions_.toString();
     }
 
-     /**
+    /**
      * Check the 4 corners
      * @return true if the specified BoardPosition is on the corner of the board
      * @param position position to see if in corner of board.

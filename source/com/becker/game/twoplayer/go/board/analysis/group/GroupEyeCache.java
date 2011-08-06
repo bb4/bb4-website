@@ -50,8 +50,8 @@ class GroupEyeCache {
     }
 
     /**
-     * compute how many eyes (connected internal blank areas) this group has.
-     * the eyes are either false eyes or true (or big or territorial) eyes.
+     * Compute how many eyes (connected internal blank areas) this group has.
+     * The eyes are either false eyes or true (or big or territorial) eyes.
      * Also update eyePotential (a measure of how good the groups ability to make 2 eyes.
      * This method is expensive. That is why the 2 things it computes (eyes and eyePotential) are cached
      * on a per group basis. After this method runs, the cache is valid until something about the group changes.
