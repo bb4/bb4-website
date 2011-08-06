@@ -106,6 +106,31 @@ public class Box {
     }
 
     /**
+     * @param location the location to check if on board.
+     * @return true if location is on this box's border
+     */
+    public boolean isOnEdge(Location location) {
+        return (location.getRow() == bottomRightCorner_.getRow()
+            || location.getRow() == topLeftCorner_.getRow()
+            || location.getCol() == bottomRightCorner_.getCol()
+            || location.getCol() == topLeftCorner_.getCol());
+    }
+
+
+    /**
+     * @param location the location to check if on board.
+     * @return true if location is on this box's border
+     */
+    public boolean isOnCorner(Location location) {
+        return location.equals(bottomRightCorner_)
+                || location.equals(topLeftCorner_)
+                || ((location.getRow() == bottomRightCorner_.getRow()
+                   && location.getCol() == topLeftCorner_.getCol())
+                || (location.getRow() == topLeftCorner_.getRow()
+                   && location.getCol() == bottomRightCorner_.getCol()));
+    }
+
+    /**
      * @param amount amount to expand all borders of the box by.
      * @param maxRow don't go further than this though.
      * @param maxCol don't go further than this though.

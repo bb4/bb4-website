@@ -12,6 +12,8 @@ import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import junit.framework.Assert;
 
+import java.util.Arrays;
+
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E4Information.Eye4Type.E2222;
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E5Information.Eye5Type.E12223;
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E6Information.Eye6Type.E222233;
@@ -220,7 +222,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.17;
-        double wPotential = 0.807; //0.5439
+        double wPotential = 0.54393;
         double blackHealth = -0.3;
         double whiteHealth = -0.05;
         double AbsAbsHealthDiff = 0.25;
@@ -583,10 +585,10 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         String color = black? "black" : "white";
         if (expectedEyes.length != eyes.size()) {
             String sideColor = black ? "black" : "white";
-            System.out.println("We expected " + sideColor +" eyes to be " + expectedEyes + ",\n");
+            System.out.println("We expected " + sideColor +" eyes to be " + Arrays.toString(expectedEyes) + ",\n");
             System.out.println("but we got "+ eyes);
         }
-        Assert.assertEquals("unequal numbers of " + color + " eyes", expectedEyes.length, eyes.size());
+        Assert.assertEquals("unequal numbers of " + color + " eyes. Got " + eyes, expectedEyes.length, eyes.size());
         if (eyes.size() > 0)
         {
             int i = 0;

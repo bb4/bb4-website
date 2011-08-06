@@ -67,8 +67,6 @@ class AbsoluteHealthCalculator {
     }
 
     /**
-     * Performance bottleneck
-     *
      * Calculate the absolute health of a group.
      * All the stones in the group have the same health rating because the
      * group lives or dies as a unit
@@ -130,6 +128,9 @@ class AbsoluteHealthCalculator {
      * @return set of eyes currently identified for this group.
      */
     public GoEyeSet getEyes(GoBoard board) {
+        if (!eyeCache_.isValid())  {
+            calculateAbsoluteHealth(board);
+        }
         return eyeCache_.getEyes(board);
     }
 

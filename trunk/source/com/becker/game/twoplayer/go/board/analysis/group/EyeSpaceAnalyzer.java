@@ -11,7 +11,6 @@ import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionLists;
-import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
 import java.util.Iterator;
 
@@ -60,8 +59,8 @@ class EyeSpaceAnalyzer {
     public GoEyeSet determineEyes() {
 
         assert (board_ != null) : "The board must be set before determining eyes.";
-        GoBoardPositionLists eyeSpaceLists = createEyeSpaceLists();
-        return findEyesFromCandidates(eyeSpaceLists);
+        GoBoardPositionLists excludedEyeSpaceLists = createExcludedLists();
+        return findEyesFromCandidates(excludedEyeSpaceLists);
     }
 
     /**
@@ -72,7 +71,7 @@ class EyeSpaceAnalyzer {
      * then empty spaces there are most likely eyes (but not necessarily).
      * @return list of lists of eye space spaces find real eye from (and to unvisit at the end)
      */
-    private GoBoardPositionLists createEyeSpaceLists() {
+    private GoBoardPositionLists createExcludedLists() {
 
         GoBoardPositionLists lists = new GoBoardPositionLists();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
@@ -83,13 +82,13 @@ class EyeSpaceAnalyzer {
         int cMin = boundingBox_.getMinCol();
         int cMax = boundingBox_.getMaxCol();
 
-        if ( boundingBox_.getMinCol() > 1 ) {
+        if ( cMin > 1 ) {
             for ( int r = rMin; r <= rMax; r++ )  {
                 excludeSeed( (GoBoardPosition) board_.getPosition( r, cMin ),
                         ownedByPlayer1, lists);
             }
         }
-        if ( boundingBox_.getMaxCol() < board_.getNumCols() ) {
+        if ( cMax < board_.getNumCols() ) {
             for ( int r = rMin; r <= rMax; r++ ) {
                 excludeSeed( (GoBoardPosition) board_.getPosition( r, cMax ),
                         ownedByPlayer1, lists);
@@ -126,8 +125,10 @@ class EyeSpaceAnalyzer {
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
         GroupAnalyzer groupAnalyzer = analyzerMap_.getAnalyzer(group_);
 
-        for ( int r = boundingBox_.getMinRow(); r <= boundingBox_.getMaxRow(); r++ ) {
-            for ( int c = boundingBox_.getMinCol(); c <= boundingBox_.getMaxCol(); c++ ) {
+        Box innerBox = createBoxExcludingBorder(boundingBox_);
+        for ( int r = innerBox.getMinRow(); r < innerBox.getMaxRow(); r++ ) {
+            for ( int c = innerBox.getMinCol(); c < innerBox.getMaxCol(); c++ ) {
+
                 // if the empty space is already marked as being an eye, skip
                 GoBoardPosition space = (GoBoardPosition) board_.getPosition( r, c );
                 assert space != null : "pos r="+r +" c="+c;
@@ -138,7 +139,6 @@ class EyeSpaceAnalyzer {
                                                                  boundingBox_  );
                     eyeSpaceLists.add(eyeSpaces);
                     // make sure this is a real eye.
-                    // this method checks that opponent stones don't border it.
                     if ( confirmEye( eyeSpaces) ) {
                         GoEye eye =  new GoEye( eyeSpaces, board_, group_, groupAnalyzer);
                         eyes.add( eye );
@@ -151,6 +151,25 @@ class EyeSpaceAnalyzer {
         }
         eyeSpaceLists.unvisitPositionsInLists();
         return eyes;
+    }
+
+    /**
+     * @param box to reduce by the outside edge.
+     * @return A new bounding box where we shave off the outer edge, unless on the edge of the board.
+     */
+    private Box createBoxExcludingBorder(Box box) {
+        int maxRow = board_.getNumRows();
+        int maxCol = board_.getNumCols();
+
+        int innerMinRow = (box.getMinRow() > 1) ? Math.min(box.getMinRow() + 1, maxRow) : 1;
+        int innerMinCol = (box.getMinCol() > 1) ? Math.min(box.getMinCol() + 1, maxCol) : 1;
+
+        return new Box(
+                innerMinRow,
+                innerMinCol,
+                (box.getMaxRow() < maxRow) ? Math.max(box.getMaxRow(), innerMinRow) : maxRow + 1,
+                (box.getMaxCol() < maxCol) ?  Math.max(box.getMaxCol(), innerMinCol) : maxCol + 1
+        );
     }
 
     /**
@@ -180,10 +199,6 @@ class EyeSpaceAnalyzer {
                     nbrAnalyzer_.findStringFromInitialPosition(space, groupOwnership, false,
                                                                 NeighborType.NOT_FRIEND, boundingBox_);
 
-            // make sure that every occupied stone in the list is a real enemy and not just a dead opponent stone.
-            // compare it with one of the group strings
-            IGoString groupString = group_.getMembers().iterator().next();
-
             Iterator it = exclusionList.iterator();
             GroupAnalyzer groupAnalyzer = analyzerMap_.getAnalyzer(group_);
 
@@ -208,32 +223,59 @@ class EyeSpaceAnalyzer {
      * Check this list of stones to confirm that enemy stones don't border it.
      * If they do, then it is not an eye - return false.
      *
-     * If there are less than 7 stones in the surrounding enemy string, then it does not have an eye
+     * If there are less than MIN_STONES_FOR_EYE stones in the surrounding enemy string, then it does not have an eye
      * and is assumed to be weaker than the surrounding group of the opposite color.
      *
-     * If there are 7 stones or more (in general, fewer on edge),
+     * If there are MIN_STONES_FOR_EYE stones or more (fewer on edge),
      * we need to compare the health of the position relative to the surrounding group
      * to see if it is dead enough to still consider an eye.
      *
      * @param eyeList the candidate string of stones to test for eye status
      * @return true if the list of stones is an eye
      */
-    private boolean confirmEye( GoBoardPositionList eyeList) {
+    private boolean confirmEye(GoBoardPositionList eyeList) {
         if ( eyeList == null )
             return false;
 
-        GroupAnalyzer groupAnalyzer = analyzerMap_.getAnalyzer(group_);
+        //GroupAnalyzer groupAnalyzer = analyzerMap_.getAnalyzer(group_);
 
         for (GoBoardPosition position : eyeList) {
-            IGoString string = position.getString();
+            //IGoString string = position.getString();
 
+            if (boundingBox_.isOnEdge(position.getLocation()) && !withinBorderEdge(position)) {
+                // then the potential eye breaks through to the outside of the group bounds,
+                //so we really cannot consider it eyeList yet, though it likely will be.
+                return false;
+            }
+            /*
             if (position.isOccupied()) {
+
                 if (string.size() >= MIN_STONES_FOR_EYE && groupAnalyzer.isTrueEnemy(position)) {
                     return false;  // then not eye
                 }
-            }
+            }  */
         }
+
         // if we make it here, its a bonafied eye.
         return true;
+    }
+
+    /**
+     * Positions marked E are considered on edge of edge.
+     * Note that we are within the edge border if the position
+     * is both on the bbox corner and the board corner.
+     *
+     *   E****        ******
+     *       *    or  *    *
+     *       E        E    E
+     *
+     * @param position
+     * @return true if on edge of border edge
+     */
+    private boolean withinBorderEdge(GoBoardPosition position) {
+        boolean isOnbboxCorner = boundingBox_.isOnCorner(position.getLocation());
+        boolean isInCorner = board_.isInCorner(position);
+        boolean edgeOfEdge = isOnbboxCorner ^ isInCorner;
+        return board_.isOnEdge(position) && !edgeOfEdge;
     }
 }

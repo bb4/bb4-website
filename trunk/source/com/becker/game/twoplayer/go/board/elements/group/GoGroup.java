@@ -86,7 +86,6 @@ public final class GoGroup extends GoSet
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
-    @Override
     public boolean isEnemy( GoBoardPosition pos) {
         assert (pos.isOccupied());
         GoStone stone = (GoStone)pos.getPiece();
