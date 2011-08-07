@@ -182,7 +182,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         double whiteHealth = -0.1;
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.2;
-        double RelHealthDiff = 0.2;
+        double RelHealthDiff = 0.3;
         verifyHealthDifferences("groupHealth2d", 5, 5, blackEyes, whiteEyes,
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth,
@@ -210,7 +210,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         double wPotential = 0.385;
         double blackHealth = 0.1;
         double whiteHealth = -0.1;
-        double AbsAbsHealthDiff = 0.1;
+        double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.2;
         verifyHealthDifferences("groupHealth2f", 5, 5, blackEyes, whiteEyes,
@@ -274,7 +274,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         double whiteHealth = -0.10;
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.2;
-        double RelHealthDiff = 0.2;
+        double RelHealthDiff = 0.3;
         verifyHealthDifferences("groupHealth3b", 5, 5, blackEyes, whiteEyes,
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth,
@@ -297,22 +297,22 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth4() {
-        EyeInformation[] blackEyes = {};  // should really have a territorial eye here: EyeInformation.TERRITORIAL_EYE
+        EyeInformation[] blackEyes = {};  // should probably have a territorial eye here
         EyeInformation[] whiteEyes = {new E1Information()};
         double bPotential = 1.9;
         double wPotential = 0.877;
         double blackHealth = 0.79;
         double whiteHealth = -0.405;
-        double AbsAbsHealthDiff =0.388;
+        double AbsAbsHealthDiff = 0.388;
         double AbsHealthDiff = 1.11;
-        double RelHealthDiff = 1.11;
+        double RelHealthDiff = 1.56;  //1.11
         verifyHealthDifferences("groupHealth4", 33, 12, blackEyes, whiteEyes,
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth4a() {
-        EyeInformation[] blackEyes = {};  // should really have a territorial eye here: EyeInformation.TERRITORIAL_EYE
+        EyeInformation[] blackEyes = {};  // should really have a territorial eye here.
         EyeInformation[] whiteEyes = {};
         double bPotential = 1.06;
         double wPotential = 0.54;
@@ -327,7 +327,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth4b() {
-        EyeInformation[] blackEyes = {};  // should really have a territorial eye here: EyeInformation.TERRITORIAL_EYE
+        EyeInformation[] blackEyes = {};  // should really have a territorial eye here.
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.788;
         double wPotential = 0.91;
@@ -347,11 +347,11 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.7497;
         double wPotential = 0.6436;
-        double blackHealth = -0.05;
+        double blackHealth = 0.01;
         double whiteHealth = -0.24;
-        double AbsAbsHealthDiff = -0.1;
-        double AbsHealthDiff = 0.2;
-        double RelHealthDiff = 0.2;
+        double AbsAbsHealthDiff = -0.23;
+        double AbsHealthDiff = 0.25;
+        double RelHealthDiff = 0.41;
         verifyHealthDifferences("groupHealth5", 4, 8, blackEyes, whiteEyes,
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth,
@@ -390,7 +390,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth6() {
+    public void testAbsHealth6() {       // seki
         EyeInformation[] blackEyes = {new E1Information()};
         EyeInformation[] whiteEyes = {new E1Information()};
         double bPotential = 0.67;
@@ -399,7 +399,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         double whiteHealth = 0.30;
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = -0.6;
-        double RelHealthDiff = -0.6;
+        double RelHealthDiff = -0.9;
         verifyHealthDifferences("groupHealth6", 2, 2, blackEyes, whiteEyes,
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth,
@@ -447,7 +447,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         double whiteHealth = -0.3;
         double AbsAbsHealthDiff = 0.017;
         double AbsHealthDiff = 0.613;
-        double RelHealthDiff = 0.613;
+        double RelHealthDiff = 0.92;
         verifyHealthDifferences("groupHealth8", 12, 11, blackEyes, whiteEyes,
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth,
@@ -463,7 +463,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         double whiteHealth = -0.22;
         double AbsAbsHealthDiff = 0.22;
         double AbsHealthDiff = 0.663;
-        double RelHealthDiff = 0.683;
+        double RelHealthDiff = 1.0;
         verifyHealthDifferences("groupHealth9", 14, 7, blackEyes, whiteEyes,
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth,
@@ -472,7 +472,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
 
 
 
-    private static final double THRESH = 0.11;
+    private static final double THRESH = 0.10;
     private static final double EPS = 0.01;
 
     /**

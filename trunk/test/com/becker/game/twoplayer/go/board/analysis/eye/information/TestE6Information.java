@@ -116,10 +116,10 @@ public class TestE6Information extends TestEyeTypeAnalyzer {
     }
 
     public void testSixBlackAliveInAtari() {
-        GoBoard b = initializeBoard("six_black_alive_in_atari", 5);
+        GoBoard b = initializeBoard("six_black_alive_in_atari", 4);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE_IN_ATARI);
-        checkWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
+        checkWhiteEye(b, new TerritorialEyeInformation(), EyeStatus.ALIVE);
     }
 
 
