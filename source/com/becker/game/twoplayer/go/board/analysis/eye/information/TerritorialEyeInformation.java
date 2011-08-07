@@ -19,4 +19,8 @@ public class TerritorialEyeInformation extends AbstractEyeInformation {
     public String getTypeName() {
         return "Territorial";
     }
+
+    public String toString() {
+        return getTypeName();
+    }
 }

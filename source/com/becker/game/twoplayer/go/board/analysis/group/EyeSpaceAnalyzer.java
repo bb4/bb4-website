@@ -15,7 +15,7 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionLists
 import java.util.Iterator;
 
 /**
- * Methods related to understanding the eye spaces within a group.
+ * Analyzes the eye spaces within a group to determine if they are real eyes.
  *
  * @author Barry Becker
  */
@@ -31,11 +31,6 @@ class EyeSpaceAnalyzer {
 
     private NeighborAnalyzer nbrAnalyzer_;
     private GroupAnalyzerMap analyzerMap_;
-
-    /**
-     * The minimum stones a groups needs to have for for an eye is 7 if in center, 5 on edge, and 3 in corner.
-     */
-    private static final int MIN_STONES_FOR_EYE  = 3;
 
 
     /**
@@ -59,8 +54,8 @@ class EyeSpaceAnalyzer {
     public GoEyeSet determineEyes() {
 
         assert (board_ != null) : "The board must be set before determining eyes.";
-        GoBoardPositionLists excludedEyeSpaceLists = createExcludedLists();
-        return findEyesFromCandidates(excludedEyeSpaceLists);
+        GoBoardPositionLists excludedSpaceLists = createExcludedLists();
+        return findEyesFromCandidates(excludedSpaceLists);
     }
 
     /**
@@ -117,10 +112,10 @@ class EyeSpaceAnalyzer {
      * There will be some that fill spaces between black and white stones.
      * Don't count these as eyes unless the stones of the opposite color are much weaker -
      * in which case they are assumed dead and hence part of the eye.
-     * @param eyeSpaceLists eye space lists
+     * @param excludedSpaceLists space lists to exclude from consideration because they are outside the group.
      * @return set of eyes in this group
      */
-    private GoEyeSet findEyesFromCandidates(GoBoardPositionLists eyeSpaceLists) {
+    private GoEyeSet findEyesFromCandidates(GoBoardPositionLists excludedSpaceLists) {
         GoEyeSet eyes = new GoEyeSet();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
         GroupAnalyzer groupAnalyzer = analyzerMap_.getAnalyzer(group_);
@@ -137,7 +132,7 @@ class EyeSpaceAnalyzer {
                             nbrAnalyzer_.findStringFromInitialPosition( space, ownedByPlayer1,
                                                                  false, NeighborType.NOT_FRIEND,
                                                                  boundingBox_  );
-                    eyeSpaceLists.add(eyeSpaces);
+                    excludedSpaceLists.add(eyeSpaces);
                     // make sure this is a real eye.
                     if ( confirmEye( eyeSpaces) ) {
                         GoEye eye =  new GoEye( eyeSpaces, board_, group_, groupAnalyzer);
@@ -149,7 +144,7 @@ class EyeSpaceAnalyzer {
                 }
             }
         }
-        eyeSpaceLists.unvisitPositionsInLists();
+        excludedSpaceLists.unvisitPositionsInLists();
         return eyes;
     }
 
@@ -222,38 +217,26 @@ class EyeSpaceAnalyzer {
     /**
      * Check this list of stones to confirm that enemy stones don't border it.
      * If they do, then it is not an eye - return false.
-     *
-     * If there are less than MIN_STONES_FOR_EYE stones in the surrounding enemy string, then it does not have an eye
-     * and is assumed to be weaker than the surrounding group of the opposite color.
-     *
-     * If there are MIN_STONES_FOR_EYE stones or more (fewer on edge),
-     * we need to compare the health of the position relative to the surrounding group
-     * to see if it is dead enough to still consider an eye.
+
+     * I used to attempt to compare the health of the position relative to the surrounding group
+     * to see if it is dead enough to still consider an eye, but then realized there is a chicken-egg
+     * problem in that we don't really know the liveness until we know the eyes.
      *
      * @param eyeList the candidate string of stones to test for eye status
      * @return true if the list of stones is an eye
      */
     private boolean confirmEye(GoBoardPositionList eyeList) {
+
         if ( eyeList == null )
             return false;
 
-        //GroupAnalyzer groupAnalyzer = analyzerMap_.getAnalyzer(group_);
-
         for (GoBoardPosition position : eyeList) {
-            //IGoString string = position.getString();
 
             if (boundingBox_.isOnEdge(position.getLocation()) && !withinBorderEdge(position)) {
                 // then the potential eye breaks through to the outside of the group bounds,
                 //so we really cannot consider it eyeList yet, though it likely will be.
                 return false;
             }
-            /*
-            if (position.isOccupied()) {
-
-                if (string.size() >= MIN_STONES_FOR_EYE && groupAnalyzer.isTrueEnemy(position)) {
-                    return false;  // then not eye
-                }
-            }  */
         }
 
         // if we make it here, its a bonafied eye.
@@ -263,7 +246,7 @@ class EyeSpaceAnalyzer {
     /**
      * Positions marked E are considered on edge of edge.
      * Note that we are within the edge border if the position
-     * is both on the bbox corner and the board corner.
+     * is both on the bounding box corner and the board corner.
      *
      *   E****        ******
      *       *    or  *    *

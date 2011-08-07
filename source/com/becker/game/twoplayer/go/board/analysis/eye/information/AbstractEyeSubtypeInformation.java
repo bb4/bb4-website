@@ -133,7 +133,6 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
         return filledSpaces;
     }
 
-
     /**
      *
      * @return the set of special spaces (vital or end) that have enemy stones in them.
@@ -150,7 +149,6 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
         }
         return specialFilledSpaces;
     }
-
 
     /**
      * When the eye type has the life property, we can only be alive or alive in atari.
