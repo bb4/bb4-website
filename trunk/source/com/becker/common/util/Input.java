@@ -5,6 +5,7 @@ import com.becker.common.format.FormatUtil;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 
 /**
  * @author Barry Becker
@@ -33,7 +34,7 @@ public final class Input {
      * @throws IOException
      */
     public static long getLong(String prompt, long min, long max) throws IOException {
-        long amount = 0;
+        long value = 0;
         boolean valid = false;
 
         do {
@@ -44,14 +45,14 @@ public final class Input {
             String str = br.readLine();
 
             try {
-                amount = Long.parseLong(str);
+                value = Long.parseLong(str);
                 valid = true;
-                if (amount < min ) {
+                if (value < min ) {
                     System.out.println( "You must enter a number greater than "
                             + FormatUtil.formatNumber(min));
                     valid = false;
                 }
-                else if (amount > max) {
+                else if (value > max) {
                     System.out.println( "That number is too big! It must be smaller than "
                             + FormatUtil.formatNumber(max) );
                     valid = false;
@@ -62,8 +63,39 @@ public final class Input {
             }
 
         }  while (!valid);   // give them another change if not valid.
-        return amount;
+        return value;
     }
+
+    /**
+     * Get a potentially huge number from the user.
+     * Continues to ask until a valid number provided.
+     * There is mo limit to the amount of precision.
+     * @param prompt query string to prompt the user for a response.
+     * @return an big integer number
+     * @throws IOException
+     */
+    public static BigInteger getBigInteger(String prompt) throws IOException {
+        BigInteger value = new BigInteger("0");
+        boolean valid = false;
+
+        do {
+            System.out.println( prompt );
+
+            InputStreamReader inp = new InputStreamReader(System.in);
+            BufferedReader br = new BufferedReader(inp);
+            try {
+                value = new BigInteger(br.readLine());
+                valid = true;
+            }
+            catch (NumberFormatException e) {
+                System.out.println("That was not a valid number. Try again.");
+                valid = false;
+            }
+
+        }  while (!valid);
+        return value;
+    }
+
 
     /**
      * Get a string from the user.
