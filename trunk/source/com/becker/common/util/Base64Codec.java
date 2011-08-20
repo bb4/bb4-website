@@ -20,20 +20,13 @@ public final class Base64Codec {
 
     private Base64Codec() {}
 
-    // for character codec
-    private static Base64 charEncoder_ = null;
-   
     /**
      * take a String and compress it.
      * See @decompress for reversing the compression.
      * @param data a string to compress.
      * @return compressed string representation.
      */
-    public static synchronized String compress(final String data )
-    {
-        if (charEncoder_ == null) {            
-            charEncoder_ = new Base64();
-        }
+    public static synchronized String compress( final String data ) {
         
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream( 512 );
         Deflater deflater = new Deflater();
@@ -50,20 +43,18 @@ public final class Base64Codec {
             e.printStackTrace();
         }
 
-        return new String(charEncoder_.encodeBase64( byteOut.toByteArray() ));
+        return new String(Base64.encodeBase64( byteOut.toByteArray() ));
     }
 
     /**
      * take a String and decompress it.
      * @param data the compressed string to decompress.
+     * @return the decompressed string.
      */
-    public static synchronized String decompress( final String data )
-    {
-        if (charEncoder_==null) {
-            charEncoder_ = new Base64();
-        }
+    public static synchronized String decompress( final String data ) {
+
         // convert from string to bytes for decompressing
-        byte[] compressedDat = charEncoder_.decodeBase64( data.getBytes() );  
+        byte[] compressedDat = Base64.decodeBase64( data.getBytes() );
 
         final ByteArrayInputStream in = new ByteArrayInputStream( compressedDat );
         final Inflater inflater = new Inflater();
@@ -88,4 +79,5 @@ public final class Base64Codec {
 
         return sBuf.toString();
     }
+
 }

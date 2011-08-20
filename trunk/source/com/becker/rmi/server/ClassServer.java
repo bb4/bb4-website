@@ -14,6 +14,7 @@
 package com.becker.rmi.server;
 
 import java.io.*;
+import java.lang.ClassNotFoundException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -32,7 +33,7 @@ import java.net.Socket;
  * For loading remote classes, an RMI application can use a concrete
  * subclass of this server in place of an HTTP server. <p>
  *
- * @see com.becker.rmi.server.ClassFileServer
+ * @see ClassFileServer
  */
 public abstract class ClassServer implements Runnable {
 
@@ -43,26 +44,24 @@ public abstract class ClassServer implements Runnable {
      * obtains a class's bytecodes using the method <b>getBytes</b>.
      *
      * @param port the port number
-     * @exception java.io.IOException if the ClassServer could not listen
+     * @exception IOException if the ClassServer could not listen
      *            on <b>port</b>.
      */
-    protected ClassServer(int port) throws IOException
-    {
-	  int port1=port;
+    protected ClassServer(int port) throws IOException {
 	  server = new ServerSocket(port);
 	  newListener();
     }
 
     /**
-     * Returns an array of bytes containing the bytecodes for
+     * Returns an array of bytes containing the byte codes for
      * the class represented by the argument <b>path</b>.
      * The <b>path</b> is a dot separated class name with
      * the ".class" extension removed.
      *
      * @return the bytecodes for the class
-     * @exception java.lang.ClassNotFoundException if the class corresponding
+     * @exception ClassNotFoundException if the class corresponding
      * to <b>path</b> could not be loaded.
-     * @exception java.io.IOException if error occurs reading the class
+     * @exception IOException if error occurs reading the class
      */
     public abstract byte[] getBytes(String path)
 	throws IOException, ClassNotFoundException;
@@ -70,66 +69,65 @@ public abstract class ClassServer implements Runnable {
     /**
      * The "listen" thread that accepts a connection to the
      * server, parses the header to obtain the class file name
-     * and sends back the bytecodes for the class (or error
+     * and sends back the byte codes for the class (or error
      * if the class is not found or the response was malformed).
      */
-    public void run()
-    {
-	Socket socket;
+    public void run() {
+        Socket socket;
 
-	// accept a connection
-	try {
-	    socket = server.accept();
-	} catch (IOException e) {
-	    System.out.println("Class Server died: " + e.getMessage());
-	    e.printStackTrace();
-	    return;
-	}
+        // accept a connection
+        try {
+            socket = server.accept();
+        } catch (IOException e) {
+            System.out.println("Class Server died: " + e.getMessage());
+            e.printStackTrace();
+            return;
+        }
 
-	// create a new thread to accept the next connection
-	newListener();
+        // create a new thread to accept the next connection
+        newListener();
 
-	try {
-	    DataOutputStream out =
-		new DataOutputStream(socket.getOutputStream());
-	    try {
-		// get path to class file from header
-		DataInputStream in =
-		    new DataInputStream(socket.getInputStream());
-		String path = getPath(in);
-		// retrieve bytecodes
-		byte[] bytecodes = getBytes(path);
-		// send bytecodes in response (assumes HTTP/1.0 or later)
-		try {
-		    out.writeBytes("HTTP/1.0 200 OK\r\n");
-		    out.writeBytes("Content-Length: " + bytecodes.length +
-				   "\r\n");
-		    out.writeBytes("Content-Type: application/java\r\n\r\n");
-		    out.write(bytecodes);
-		    out.flush();
-		} catch (IOException ie) {
-		    return;
-		}
+        try {
+            DataOutputStream out =
+            new DataOutputStream(socket.getOutputStream());
+            try {
+            // get path to class file from header
+            DataInputStream in =
+                new DataInputStream(socket.getInputStream());
+            String path = getPath(in);
+            // retrieve bytecodes
+            byte[] bytecodes = getBytes(path);
+            // send bytecodes in response (assumes HTTP/1.0 or later)
+            try {
+                out.writeBytes("HTTP/1.0 200 OK\r\n");
+                out.writeBytes("Content-Length: " + bytecodes.length +
+                       "\r\n");
+                out.writeBytes("Content-Type: application/java\r\n\r\n");
+                out.write(bytecodes);
+                out.flush();
+            } catch (IOException ie) {
+                ie.printStackTrace();
+            }
+            } catch (Exception e) {
+                // write out error response
+                out.writeBytes("HTTP/1.0 400 " + e.getMessage() + "\r\n");
+                out.writeBytes("Content-Type: text/html\r\n\r\n");
+                out.flush();
+            }
 
-	    } catch (Exception e) {
-		// write out error response
-		out.writeBytes("HTTP/1.0 400 " + e.getMessage() + "\r\n");
-		out.writeBytes("Content-Type: text/html\r\n\r\n");
-		out.flush();
-	    }
+        } catch (IOException ex) {
+            // eat exception (could log error to log file, but
+            // write out to stdout for now).
+            System.out.println("error writing response: " + ex.getMessage());
+            ex.printStackTrace();
 
-	} catch (IOException ex) {
-	    // eat exception (could log error to log file, but
-	    // write out to stdout for now).
-	    System.out.println("error writing response: " + ex.getMessage());
-	    ex.printStackTrace();
-
-	} finally {
-	    try {
-		socket.close();
-	    } catch (IOException e) {
-	    }
-	}
+        } finally {
+            try {
+            socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -143,8 +141,7 @@ public abstract class ClassServer implements Runnable {
      * Returns the path to the class file obtained from
      * parsing the HTML header.
      */
-    private static String getPath(DataInputStream in)
-	throws IOException {
+    private static String getPath(DataInputStream in) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String line = reader.readLine();
         String path = "";

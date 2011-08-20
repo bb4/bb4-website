@@ -3,6 +3,7 @@ package com.becker.apps.misc.readnumber;
 import java.math.BigInteger;
 
 /**
+ * Translates a big integer number into english or spoken word.
  * @author Barry Becker
  */
 public class NumberTranslator {
