@@ -7,9 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-
 /**
- * internal calss that represents the timing numbers for a names region of the code.
+ * Represents the timing numbers for a named region of the code.
  *
  * @author Barry Becker
  */
@@ -17,45 +16,42 @@ public class ProfilerEntry {
 
     private static final String INDENT = "    ";
 
-    // the name of this profiler entry
+    /** the name of this profiler entry  */
     private final String name_;
+
     private long startTime_ = 0;
-    // the total time used by this named code section while the app was running
+
+    /** the total time used by this named code section while the app was running  */
     private long totalTime_ = 0;
+
     private final List<ProfilerEntry> children_ = new LinkedList<ProfilerEntry>();
 
-    public ProfilerEntry(String name)
-    {
+    /** Constructor */
+    public ProfilerEntry(String name) {
         name_ = name;
     }
 
-    protected void addChild(ProfilerEntry child)
-    {
+    protected void addChild(ProfilerEntry child) {
         children_.add(child);
     }
 
-    public void start()
-    {
+    public void start() {
         startTime_ = System.currentTimeMillis();
     }
 
-    public void stop()
-    {
+    public void stop() {
         totalTime_ += System.currentTimeMillis() - startTime_;
     }
 
-    public long getTime()
-    {
+    public long getTime() {
         return totalTime_;
     }
 
-    public double getTimeInSeconds()
-    {
+    public double getTimeInSeconds() {
         return (double)totalTime_/1000.0;
     }
 
-    protected void resetAll()
-    {
+    protected void resetAll() {
         totalTime_ = 0;
         for (ProfilerEntry p : children_) {
             p.resetAll();
@@ -96,7 +92,6 @@ public class ProfilerEntry {
     public String toString() {
         return getFormattedTime();
     }
-
 
     private String getFormattedTime() {
         double seconds = getTimeInSeconds();

@@ -13,8 +13,8 @@ import java.util.Map;
  *
  * @author Barry Becker
  */
-public class Profiler
-{
+public class Profiler {
+
     private final Map<String,ProfilerEntry> hmEntries_ = new HashMap<String,ProfilerEntry>();
     private final List<ProfilerEntry> topLevelEntries_ = new LinkedList<ProfilerEntry>();
     private boolean enabled_ = true;
@@ -30,9 +30,9 @@ public class Profiler
      * @param name of the top level entry
      */
     public void add(String name)  {
-        ProfilerEntry e = new ProfilerEntry(name);
-        topLevelEntries_.add(e);
-        hmEntries_.put(name, e);
+        ProfilerEntry entry = new ProfilerEntry(name);
+        topLevelEntries_.add(entry);
+        hmEntries_.put(name, entry);
     }
 
     /**
