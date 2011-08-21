@@ -12,7 +12,7 @@ import com.becker.optimization.parameter.ParameterArray;
 
 /**
  *  This is an abstract base class for a search strategy.
- *  It's sublcasses define the key search algorithms for 2 player zero sum games with perfect information.
+ *  It's subcasses define the key search algorithms for 2 player zero sum games with perfect information.
  *
  *  @author Barry Becker
  */
@@ -158,7 +158,6 @@ public abstract class AbstractSearchStrategy implements SearchStrategy {
             }
             return false;
         } catch (InterruptedException e) {
-            //e.printStackTrace();
             GameContext.log(2, "interrupted" );
             e.printStackTrace();
             return true;

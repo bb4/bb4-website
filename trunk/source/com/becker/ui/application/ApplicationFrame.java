@@ -7,34 +7,29 @@ import java.awt.event.WindowEvent;
 
 /**
  * Boiler plate code for a java application.
+ *
  * @author Barry Becker
  */
-public class ApplicationFrame extends JFrame
-{
+public class ApplicationFrame extends JFrame {
 
     public static final String DEFAULT_TITLE = "ApplicationFrame v1.0";
 
-    public ApplicationFrame()
-    {
+    public ApplicationFrame()  {
         this( DEFAULT_TITLE );
     }
 
-    public ApplicationFrame( String title )
-    {
+    public ApplicationFrame( String title ) {
         super( (title == null) ? DEFAULT_TITLE : title );
         createUI();
     }
 
-    protected void createUI()
-    {
+    protected void createUI() {
         setSize( 500, 400 );
         center();
 
-        addWindowListener( new WindowAdapter()
-        {
+        addWindowListener( new WindowAdapter() {
             @Override
-            public void windowClosing( WindowEvent e )
-            {
+            public void windowClosing( WindowEvent e )  {
                 dispose();
                 System.exit( 0 );
             }
@@ -43,8 +38,7 @@ public class ApplicationFrame extends JFrame
         this.setVisible(true);
     }
 
-    public void center()
-    {
+    public void center()  {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         int x = (screenSize.width - frameSize.width) >> 1;

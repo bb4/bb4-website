@@ -1,5 +1,6 @@
 package com.becker.apps.misc.progressdemo;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.concurrency.Worker;
 
 /** Uses a Worker to perform a time-consuming (and utterly fake) task. */
@@ -70,15 +71,13 @@ public class LongTask {
             //Fake a long task,
             //making a random amount of progress every second.
             while (current < lengthOfTask) {
-                try {
-                    Thread.sleep(1000); //sleep for a second
-                    current += Math.random() * 100; //make some progress
-                    if (current > lengthOfTask) {
-                        current = lengthOfTask;
-                    }
-                    statMessage = "Completed " + current +
-                                  " out of " + lengthOfTask + ".";
-                } catch (InterruptedException e) {}
+                ThreadUtil.sleep(1000); //sleep for a second
+                current += Math.random() * 100; //make some progress
+                if (current > lengthOfTask) {
+                    current = lengthOfTask;
+                }
+                statMessage = "Completed " + current +
+                              " out of " + lengthOfTask + ".";
             }
         }
     }

@@ -9,7 +9,7 @@ import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.ui.renderers.HistogramRenderer;
 
 /**
- * Simluates the N stocks over M time periods (and other options).
+ * Simulates the N stocks over M time periods (and other options).
  * Graphs the resulting distribution of values for the sample.
  *
  * @author Barry Becker

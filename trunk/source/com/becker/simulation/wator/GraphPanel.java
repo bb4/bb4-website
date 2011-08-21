@@ -2,6 +2,9 @@ package com.becker.simulation.wator;
 
 import java.awt.*;
 
+/**
+ * See http://www.leinweb.com/snackbar/wator/
+ */
 public class GraphPanel extends Panel {
 
     private int x;
@@ -16,12 +19,17 @@ public class GraphPanel extends Panel {
     private Color ctab[];
 
     public void init(Color r, Color g, Color b) {
-        int i;
 
         cr = r;
         cg = g;
         cb = b;
         setBackground(cb);
+        initializeBasedOnSize();
+        ctab[0] = Color.black;
+    }
+
+    private void initializeBasedOnSize() {
+        int i;
         x = size().width - 2;
         y = size().height - 2;
         stab = new int[x];
@@ -31,7 +39,6 @@ public class GraphPanel extends Panel {
             stab[i] = ftab[i] = -1;
             ctab[i] = cb;
         }
-        ctab[0] = Color.black;
     }
 
     public void brk() {
@@ -58,6 +65,14 @@ public class GraphPanel extends Panel {
 
         cont = true;
         synchronized (g = getGraphics()) {
+
+            if (x != (size().width - 2) || y != (size().height - 2))
+            {
+                initializeBasedOnSize();
+            }
+            x = size().width - 2;
+            y = size().height - 2;
+
             if ((i = pos + 1) >= x) i = 0;
             ctab[i] = Color.black;
             stab[i] = ftab[i] = -1;

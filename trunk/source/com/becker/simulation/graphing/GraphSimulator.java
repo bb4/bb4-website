@@ -4,7 +4,7 @@ import com.becker.common.math.function.Function;
 import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.ui.animation.AnimationFrame;
-import com.becker.ui.renderers.FunctionRenderer;
+import com.becker.ui.renderers.SingleFunctionRenderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ import java.awt.*;
  */
 public class GraphSimulator extends Simulator {
 
-    FunctionRenderer graph_;
+    SingleFunctionRenderer graph_;
     Function function_;
 
 
@@ -51,7 +51,7 @@ public class GraphSimulator extends Simulator {
 
             function_ = FunctionType.DIAGONAL.function;
         }
-        graph_ = new FunctionRenderer(function_);
+        graph_ = new SingleFunctionRenderer(function_);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.galactic.ui;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.multiplayer.galactic.BattleSimulation;
 import com.becker.game.multiplayer.galactic.Planet;
@@ -22,9 +23,8 @@ import java.util.List;
  * @author Barry Becker
  */
 final class BattleDialog extends OptionsDialog
-                         implements ActionListener
+                         implements ActionListener {
 
-{
     // smaller number means faster battle sequence
     private static final int BATTLE_SPEED = 2000;
     private static final int WIDTH = 300;
@@ -57,8 +57,7 @@ final class BattleDialog extends OptionsDialog
      * @param battle the simulation
      * @param viewer send in the viewer so we can give feedbak about the battle while it is occurring
      */
-    BattleDialog( JFrame parent, BattleSimulation battle, GalaxyViewer viewer )
-    {
+    BattleDialog( JFrame parent, BattleSimulation battle, GalaxyViewer viewer ) {
         super( parent );
         this.setResizable(false);
         this.setModal(true);
@@ -70,8 +69,7 @@ final class BattleDialog extends OptionsDialog
 
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return "Battle Sequence";
     }
 
@@ -79,8 +77,7 @@ final class BattleDialog extends OptionsDialog
      * ui initialization of the tree control.
      */
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
@@ -126,8 +123,7 @@ final class BattleDialog extends OptionsDialog
 
 
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
         JPanel buttonsPanel_=new JPanel( new BorderLayout());
         buttonsPanel_.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
 
@@ -148,8 +144,7 @@ final class BattleDialog extends OptionsDialog
      * @param e
      */
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
 
         Object source = e.getSource();
         if (source == closeButton_) {
@@ -173,8 +168,7 @@ final class BattleDialog extends OptionsDialog
     /**
      * refresh the game tree.
      */
-    void refresh(int attackers, int defenders)
-    {
+    void refresh(int attackers, int defenders) {
         canvas_.setFleetSizes(attackers, defenders);
     }
 
@@ -182,25 +176,21 @@ final class BattleDialog extends OptionsDialog
     /**
      * Canvas for showing the animation ----------------------------------
      */
-    private class BattleCanvas extends Canvas implements Runnable
-    {
+    private class BattleCanvas extends Canvas implements Runnable {
         private int attackers_;
         private int defenders_;
 
-        private BattleCanvas()
-        {
+        private BattleCanvas() {
             //this.setDoubleBuffered(false);
         }
 
-        public void setFleetSizes(int attackers, int defenders)
-        {
+        public void setFleetSizes(int attackers, int defenders) {
             attackers_ = attackers;
             defenders_ = defenders;
             this.paint(this.getGraphics());
         }
 
-        public void run()
-        {
+        public void run() {
              Planet destPlanet = battle_.getPlanet();
              int numAttackShips = battle_.getOrder().getFleetSize();
              int numDefendShips = destPlanet.getNumShips();
@@ -237,12 +227,7 @@ final class BattleDialog extends OptionsDialog
                      }
 
                      refresh(numAttackShips, numDefendShips);
-
-                     try {
-                         Thread.sleep(time);
-                     } catch (InterruptedException e) {
-                         e.printStackTrace();
-                     }
+                     ThreadUtil.sleep(time);
                  }
                  assert(numAttackShips == 0 || numDefendShips == 0):
                          "numAttackShips="+numAttackShips+" numDefendShips="+numDefendShips;
@@ -279,7 +264,7 @@ final class BattleDialog extends OptionsDialog
             drawPlayerRep(g2, attacker, attacker.getColor(), attackers_, title,
                           LEFT_MARGIN, LEFT_IMAGE_MARGIN, ATTACKER_Y);
 
-            GalacticPlayer defender = battle_.getPlanet().getOwner(); // null if nuetral
+            GalacticPlayer defender = battle_.getPlanet().getOwner(); // null if neutral
             Color defenderColor = (defender == null) ? Planet.NEUTRAL_COLOR : defender.getColor();
             String planetName = battle_.getPlanet().getName() + "";
             title = "Defender :"+ ( defender== null ? planetName : defender.getName() + " at "+ planetName);
@@ -287,7 +272,8 @@ final class BattleDialog extends OptionsDialog
                           LEFT_MARGIN, LEFT_IMAGE_MARGIN, DEFENDER_Y);
         }
 
-        private void drawPlayerRep(Graphics2D g2, GalacticPlayer player, Color color, int numShips, String title,
+        private void drawPlayerRep(Graphics2D g2, GalacticPlayer player, Color color,
+                                   int numShips, String title,
                                    int margin, int imageMargin, int yPos) {
 
             if (player != null)

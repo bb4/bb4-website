@@ -25,20 +25,17 @@ public class GraphOptionsDialog extends SimulatorOptionsDialog {
     /**
      * constructor
      */
-    public GraphOptionsDialog( JFrame parent, Simulator simulator )
-    {
+    public GraphOptionsDialog( JFrame parent, Simulator simulator ) {
         super( parent, simulator );
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return "Graph Simulation Configuration";
     }
 
     @Override
-    protected JPanel createCustomParamPanel()
-    {
+    protected JPanel createCustomParamPanel() {
         JPanel paramPanel = new JPanel();
         paramPanel.setLayout(new BorderLayout());
         JPanel innerPanel = new JPanel();
@@ -60,8 +57,7 @@ public class GraphOptionsDialog extends SimulatorOptionsDialog {
     }
 
     @Override
-    protected void ok()
-    {
+    protected void ok() {
         super.ok();
 
         GraphSimulator simulator = (GraphSimulator) getSimulator();

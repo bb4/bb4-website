@@ -1,5 +1,6 @@
 package com.becker.apps.spirograph;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.ui.renderers.OfflineGraphics;
 
 import java.awt.*;
@@ -122,11 +123,7 @@ public class GraphRenderer
     }
 
     private void doSmallDelay() {
-        try {
-            Thread.sleep(state_.getDelayMillis());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        ThreadUtil.sleep(state_.getDelayMillis());
     }   
 
     /**

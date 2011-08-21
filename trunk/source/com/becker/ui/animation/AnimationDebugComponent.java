@@ -6,18 +6,17 @@ import java.awt.event.ActionListener;
 
 public abstract class AnimationDebugComponent
         extends AnimationComponent
-        implements ActionListener
-{
+        implements ActionListener  {
     private boolean runNextStep_ = false;
     protected Button stepButton_ = new Button( "advance to next frame" );
 
-    public AnimationDebugComponent()
-    {
+    public AnimationDebugComponent() {
         stepButton_.addActionListener( this );
     }
 
-    public void run()
-    {
+    @Override
+    public void run() {
+
         while ( animating_ ) {
             if ( runNextStep_ ) {
                 render();
@@ -29,13 +28,11 @@ public abstract class AnimationDebugComponent
         }
     }
 
-    public Button getStepButton()
-    {
+    public Button getStepButton() {
         return stepButton_;
     }
 
-    public void actionPerformed( ActionEvent event )
-    {
+    public void actionPerformed( ActionEvent event ) {
         if ( event.getSource() == stepButton_ )
             runNextStep_ = true;
     }

@@ -1,5 +1,6 @@
 package com.becker.simulation.snake;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.format.FormatUtil;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
@@ -244,12 +245,8 @@ public class SnakeSimulator extends NewtonianSimulator {
         int ct = 0;
 
         while ( stable && improved ) {
-            try {
-                // let the snake run for a while
-                Thread.sleep( 1000 + (int) (3000 / (1.0 + 0.2 * ct)) );
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            // let the snake run for a while
+            ThreadUtil.sleep(1000 + (int) (3000 / (1.0 + 0.2 * ct)));
 
             improved = (velocity_ - oldVelocity) > 0.00001;
 

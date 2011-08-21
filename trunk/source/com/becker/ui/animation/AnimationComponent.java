@@ -1,5 +1,6 @@
 package com.becker.ui.animation;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.format.FormatUtil;
 import com.becker.common.util.ImageUtil;
 
@@ -13,7 +14,8 @@ import java.awt.event.ItemListener;
  * The calculation and animation rendering are done in a separate thread
  * So the rest of the ui does not lock up.
  */
-public abstract class AnimationComponent extends Container implements Runnable {
+public abstract class AnimationComponent extends Container
+                                      implements Runnable {
 
     protected boolean animating_ = true;
     protected int numStepsPerFrame_ = 1;
@@ -48,8 +50,7 @@ public abstract class AnimationComponent extends Container implements Runnable {
         recordAnimation_ = doIt;
     }
 
-    public boolean getRecordAnimation()
-    {
+    public boolean getRecordAnimation() {
         return recordAnimation_;
     }
 
@@ -88,11 +89,9 @@ public abstract class AnimationComponent extends Container implements Runnable {
             }
 
             if (isPaused()) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+                ThreadUtil.sleep(500);
+
             } else {
                 render();
 

@@ -3,6 +3,7 @@
  */
 package com.becker.sound;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.ui.util.GUIUtil;
 
 import javax.sound.sampled.*;
@@ -195,11 +196,8 @@ public class SpeechSynthesizer
     }
     
     private void pause(int delay) {
-        try {
-            Thread.sleep( delay );
-        } catch (Exception e) {
-            e.printStackTrace();            
-        }
+
+        ThreadUtil.sleep(delay);
     }
 
     /*

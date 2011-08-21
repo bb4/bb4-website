@@ -1,5 +1,7 @@
 package com.becker.puzzle.maze;
 
+import com.becker.common.concurrency.ThreadUtil;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -99,12 +101,7 @@ public class MazePanel extends JComponent {
             // this paints just the cell immediately (sorta slow)
             this.paintImmediately( xpos-csized2, ypos-csized2, (int)(2.0*cellSize_), (int)(2.0*cellSize_));
             if (animationSpeed_ < 9) {
-                try {
-                    Thread.sleep(200 / animationSpeed_ - 15);
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                ThreadUtil.sleep(200 / animationSpeed_ - 15);
             }
         }
         else  {

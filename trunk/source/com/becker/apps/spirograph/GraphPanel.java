@@ -1,5 +1,7 @@
 package com.becker.apps.spirograph;
 
+import com.becker.common.concurrency.ThreadUtil;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -100,11 +102,7 @@ public class GraphPanel extends JPanel implements Runnable {
 
     private void waitUntilDoneRendering() {
         while (state_.isRendering()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            ThreadUtil.sleep(100);
         }
     }
 

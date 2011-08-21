@@ -3,6 +3,9 @@ package com.becker.simulation.wator;
 import java.applet.Applet;
 import java.awt.*;
 
+/**
+ * See http://www.leinweb.com/snackbar/wator/
+ */
 public class MapPanel extends Panel {
 
     public int ni;
@@ -10,14 +13,14 @@ public class MapPanel extends Panel {
     public boolean paintflag;
     public Applet that;
 
-    Color cl_rd;
-    Color cl_gn;
-    Color cl_bl;
-    Fish map[][];
-    int x[];
-    int y[];
-    int dx[];
-    int dy[];
+    private Color cl_rd;
+    private Color cl_gn;
+    private Color cl_bl;
+    private Fish map[][];
+    private int x[];
+    private int y[];
+    private int dx[];
+    private int dy[];
 
 
     public MapPanel() {

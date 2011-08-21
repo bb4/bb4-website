@@ -2,6 +2,9 @@ package com.becker.simulation.wator;
 
 import java.util.Random;
 
+/**
+ * See http://www.leinweb.com/snackbar/wator/
+ */
 public class Fish  {
 
     public int i;
