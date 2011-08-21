@@ -25,34 +25,37 @@ public class SliderGroup extends JPanel implements ChangeListener {
     private static final int DEFAULT_MAX = 100;
     private static final int DEFAULT_INITIAL = 50;
 
+    /** Protected constructor so derived class can do its own initialization. */
+    protected SliderGroup() {}
 
     /**
-     *
      * @param sliderNames used for both identification and labels
      */
     public SliderGroup(String[] sliderNames) {
 
         int numSliders = sliderNames.length;
-        SliderProperties[] sliderProps_ = new SliderProperties[numSliders];
+        SliderProperties[] sliderProps = new SliderProperties[numSliders];
 
-      
         for (int i=0; i<numSliders; i++) {
-            sliderProps_[i] = new SliderProperties(sliderNames[i], DEFAULT_MIN, DEFAULT_MAX, DEFAULT_INITIAL);
+            sliderProps[i] = new SliderProperties(sliderNames[i], DEFAULT_MIN, DEFAULT_MAX, DEFAULT_INITIAL);
         }
-        commonInit();
+        commonInit(sliderProps);
     }
 
     public SliderGroup(SliderProperties[] sliderProps) {
-        sliderProps_ = sliderProps;
-        commonInit();
+        commonInit(sliderProps);
     }
 
+    protected SliderProperties[] getSliderProperties() {
+        return sliderProps_;
+    }
 
     /**
      * Initialize sliders with floating point values.
      */
-    private void commonInit() {
+    protected void commonInit(SliderProperties[] sliderProps) {
 
+        sliderProps_ = sliderProps;
         int numSliders = sliderProps_.length;
 
         labels_ = new JLabel[numSliders];

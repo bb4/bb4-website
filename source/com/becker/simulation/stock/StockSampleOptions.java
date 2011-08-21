@@ -2,7 +2,7 @@ package com.becker.simulation.stock;
 
 /**
  * Options for a sample of stocks.
- * Use StockOptionsDialog to set them.
+ * Use PredPreyOptionsDialog to set them.
  *
  * @author Barry Becker
  */

@@ -12,7 +12,7 @@ import java.awt.*;
  */
 public class StockOptionsDialog extends SimulatorOptionsDialog {
 
-    /** number of dice to use.   */
+    /** number of dice to use.  */
     private NumberInput numStocksField_;
 
     /** Number of time periods (for example months or years)  */
@@ -27,7 +27,7 @@ public class StockOptionsDialog extends SimulatorOptionsDialog {
     /** Starting value of each stock in dollars  */
     private NumberInput startingValueField_;
 
-    /** Granularity fo the histogam bins on the x axis.  */
+    /** Granularity fo the histogram bins on the x axis.  */
     private NumberInput xResolutionField_;
 
     /** if true the x axis will have a log scale */

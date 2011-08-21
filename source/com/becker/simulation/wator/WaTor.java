@@ -11,6 +11,8 @@ import java.awt.*;
  * with JDK 1.1.7A and exactly matches the original's disassembler output.
  * Placed in the public domain.  This product is supplied "as is."
  * Lawrence Leinweber, Cleveland, Ohio, U.S.A. 1999.
+ *
+ * See http://www.leinweb.com/snackbar/wator/
  */
 public class WaTor extends Applet implements Runnable {
 
@@ -83,8 +85,8 @@ public class WaTor extends Applet implements Runnable {
                 pn_gf.gen(ni * nj, Fish.nshark, Fish.nfish);
                 synchronized (mutex) {
                     if (!remixflag) {
-                        setnshark(Fish.nshark);
-                        setnfish(Fish.nfish);
+                        setNumShark(Fish.nshark);
+                        setNumFish(Fish.nfish);
                     }
                 }
             }
@@ -112,17 +114,17 @@ public class WaTor extends Applet implements Runnable {
             case Event.SCROLL_PAGE_DOWN:
                 synchronized (mutex) {
                 if (e.target == sb_size)
-                    remixflag = setsize(sb_size.getValue());
+                    remixflag = setSize(sb_size.getValue());
                 if (e.target == sb_nshark)
-                    remixflag = setnshark(sb_nshark.getValue());
+                    remixflag = setNumShark(sb_nshark.getValue());
                 if (e.target == sb_nfish)
-                    remixflag = setnfish(sb_nfish.getValue());
+                    remixflag = setNumFish(sb_nfish.getValue());
                 if (e.target == sb_sbreed)
-                    brkflag = setsbreed(sb_sbreed.getValue());
+                    brkflag = setSharkBreed(sb_sbreed.getValue());
                 if (e.target == sb_fbreed)
-                    brkflag = setfbreed(sb_fbreed.getValue());
+                    brkflag = setFishBreed(sb_fbreed.getValue());
                 if (e.target == sb_starve)
-                    brkflag = setstarve(sb_starve.getValue());
+                    brkflag = setStarve(sb_starve.getValue());
                 }
                 if (remixflag) start();
                 return (true);
@@ -133,6 +135,7 @@ public class WaTor extends Applet implements Runnable {
     @Override
     public void init() {
         super.init();
+        this.setSize(1000, 800);
         pn_mp = new MapPanel();
         pn_mp.that = this;
         setLayout(new GridLayout(2, 1, 10, 10));
@@ -142,7 +145,7 @@ public class WaTor extends Applet implements Runnable {
         pn_tp.setBackground(Color.white);
         pn_sc = new Panel();
         pn_sc.setLayout(new GridLayout(14, 1, 3, 3));
-        pn_tp.add("East", pn_sc);
+        pn_tp.add(pn_sc, BorderLayout.EAST);
         pn_sc.add(lb_size = new Label());
         lb_size.setForeground(pn_mp.getColor(Color.blue));
         pn_sc.add(sb_size = new Scrollbar(0));
@@ -175,13 +178,14 @@ public class WaTor extends Applet implements Runnable {
         pn_gf.init(pn_mp.getColor(Color.red), pn_mp.getColor(Color.green),
                 pn_mp.getColor(Color.blue));
         nshark = nfish = 0;
-        setsize(1);
-        while (ni * nj < 1000) setsize(Math.min(ni, nj) + 1);
-        setnshark(1);
-        setnfish(ni * nj - 1);
-        setsbreed(10);
-        setfbreed(3);
-        setstarve(3);
+        setSize(1);
+        while (ni * nj < 1000)
+            setSize(Math.min(ni, nj) + 1);
+        setNumShark(1);
+        setNumFish(ni * nj - 1);
+        setSharkBreed(10);
+        setFishBreed(3);
+        setStarve(3);
         Fish.seedrnd();
         remixflag = true;
         goflag = true;
@@ -189,7 +193,7 @@ public class WaTor extends Applet implements Runnable {
         start();
     }
 
-    private boolean setsize(int n) {
+    private boolean setSize(int n) {
         int x, y;
 
         x = pn_mp.size().width - 2;
@@ -201,45 +205,45 @@ public class WaTor extends Applet implements Runnable {
         lb_size.setText("Size " + Integer.toString(ni * nj) +
                 " [1-" + Integer.toString(x * y) + "]");
         if (nfish + nshark > ni * nj) {
-            setnfish(ni * nj * nfish / (nfish + nshark));
-            setnshark(ni * nj - nfish);
+            setNumFish(ni * nj * nfish / (nfish + nshark));
+            setNumShark(ni * nj - nfish);
         }
         return (true);
     }
 
-    private boolean setnshark(int n) {
+    private boolean setNumShark(int n) {
         sb_nshark.setValues(n, ni * nj / 10, 0, ni * nj);
         lb_nshark.setText("Sharks " + Integer.toString(n) +
                 " [0-" + Integer.toString(ni * nj) + "]");
         nshark = n;
-        if (nfish + nshark > ni * nj) setnfish(ni * nj - nshark);
+        if (nfish + nshark > ni * nj) setNumFish(ni * nj - nshark);
         return (true);
     }
 
-    private boolean setnfish(int n) {
+    private boolean setNumFish(int n) {
         sb_nfish.setValues(n, ni * nj / 10, 0, ni * nj);
         lb_nfish.setText("Fish " + Integer.toString(n) +
                 " [0-" + Integer.toString(ni * nj) + "]");
         nfish = n;
-        if (nshark + nfish > ni * nj) setnshark(ni * nj - nfish);
+        if (nshark + nfish > ni * nj) setNumShark(ni * nj - nfish);
         return (true);
     }
 
-    private boolean setsbreed(int n) {
+    private boolean setSharkBreed(int n) {
         sb_sbreed.setValues(n, 10, 1, 100);
         lb_sbreed.setText("Shark Breed " + Integer.toString(n) + " [1-100]");
         Fish.sbreed = n;
         return (true);
     }
 
-    private boolean setfbreed(int n) {
+    private boolean setFishBreed(int n) {
         sb_fbreed.setValues(n, 10, 1, 100);
         lb_fbreed.setText("Fish Breed " + Integer.toString(n) + " [1-100]");
         Fish.fbreed = n;
         return (true);
     }
 
-    private boolean setstarve(int n) {
+    private boolean setStarve(int n) {
         sb_starve.setValues(n, 10, 1, 100);
         lb_starve.setText("Shark Starve " + Integer.toString(n) + " [1-100]");
         Fish.sstarve = n;

@@ -4,18 +4,16 @@ import com.becker.ui.application.ApplicationFrame;
 
 import java.awt.*;
 
-public final class AnimationFrame extends ApplicationFrame implements AnimationChangeListener
-{
+public final class AnimationFrame extends ApplicationFrame
+                                  implements AnimationChangeListener {
 
     private Label mStatusLabel;
 
-    public AnimationFrame( AnimationComponent ac )
-    {
+    public AnimationFrame( AnimationComponent ac ) {
         this( ac, null );
     }
 
-    public AnimationFrame( AnimationComponent ac, String title )
-    {
+    public AnimationFrame( AnimationComponent ac, String title ) {
         super( title );
 
         Container contentPane = this.getContentPane();
@@ -31,8 +29,7 @@ public final class AnimationFrame extends ApplicationFrame implements AnimationC
     }
 
 
-    public void statusChanged( String message )
-    {
+    public void statusChanged( String message )  {
         mStatusLabel.setText( message );
     }
 

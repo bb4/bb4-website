@@ -305,6 +305,14 @@
     </antcall>
   </target>
 
+  <target name="executePredPrey" description="Run the Predator/Prey simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.predprey.PredPreySimulator"/>
+    </antcall>
+  </target>
+
   <target name="executeGraph" description="Run the Graph simulator">
       <antcall target="executeProgram">
         <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>

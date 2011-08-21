@@ -4,7 +4,6 @@ import com.becker.common.format.DefaultNumberFormatter;
 import com.becker.common.format.FormatUtil;
 import com.becker.common.format.INumberFormatter;
 import com.becker.common.math.Range;
-import com.becker.common.math.function.Function;
 
 import java.awt.*;
 
@@ -13,33 +12,21 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class FunctionRenderer {
-
-    /** y values for every point on the x axis. */
-    private Function function_;
+public abstract class AbstractFunctionRenderer {
 
     private static final Color BACKGROUND_COLOR = new Color(255, 255, 255);
-    private static final Color LINE_COLOR = new Color(0, 0, 0);
+    private static final Color LABEL_COLOR = Color.BLACK;
 
-    private static final int MARGIN = 24;
+    protected static final int MARGIN = 24;
 
-    private int width_;
-    private int height_;
+    protected int width_;
+    protected int height_;
 
-    private INumberFormatter formatter_ = new DefaultNumberFormatter();
+    protected INumberFormatter formatter_ = new DefaultNumberFormatter();
 
-    private static final int DEFAULT_LABEL_WIDTH = 30;
-    private int maxLabelWidth_ = DEFAULT_LABEL_WIDTH;
+    protected static final int DEFAULT_LABEL_WIDTH = 30;
+    protected int maxLabelWidth_ = DEFAULT_LABEL_WIDTH;
 
-
-    /**
-     * Constructor that assumes no scaling.
-     * @param func the function to plot.
-     */
-    public FunctionRenderer(Function func)
-    {
-        function_ = func;
-    }
 
 
     public void setSize(int width, int height) {
@@ -65,34 +52,15 @@ public class FunctionRenderer {
     }
 
     /** draw the cartesian function */
-    public void paint(Graphics g) {
+    public abstract void paint(Graphics g);
 
-        if (g == null)  return;
-        Graphics2D g2 = (Graphics2D) g;
-
-        Range yRange = getRange();
-        double maxHeight = getRange().getExtent();
-        double scale = (height_ - 2.0 * MARGIN) / maxHeight;
-
-        clearBackground(g2);
-
-        float xpos = MARGIN;
-        int numPoints = getNumXPoints() ;
-
-        g2.setColor(LINE_COLOR);
-        for (int i = 0; i < numPoints;  i++) {
-            double x = (double)i/numPoints;
-            drawLine(g2, scale, MARGIN + i, function_.getValue(x));
-        }
-        drawDecoration(g2, yRange);
-    }
-
-    private int getNumXPoints() {
+    protected int getNumXPoints() {
         return width_ - MARGIN;
     }
 
-    private void drawDecoration(Graphics2D g2, Range yRange) {
+    protected void drawDecoration(Graphics2D g2, Range yRange) {
 
+        g2.setColor(LABEL_COLOR);
         // left y axis
         g2.drawLine(MARGIN-1, height_ - MARGIN,
                     MARGIN-1, MARGIN);
@@ -107,26 +75,17 @@ public class FunctionRenderer {
     /**
      * draw a point
      */
-    private void drawLine(Graphics2D g2, double scale,  float xpos, double ypos) {
+    protected void drawLine(Graphics2D g2, double scale,  float xpos, double ypos) {
         double h = (scale * ypos);
         int top = (int)(height_ - h - MARGIN);
 
         g2.fillOval((int)xpos, top, 3, 3);
     }
 
-    private void clearBackground(Graphics2D g2) {
+    protected void clearBackground(Graphics2D g2) {
         g2.setColor(BACKGROUND_COLOR);
         g2.fillRect( 0, 0, width_, height_ );
     }
 
-    private Range getRange() {
-
-        Range range = new Range();
-        int numPoints = getNumXPoints() ;
-        for (int i = 0; i < numPoints;  i++) {
-            double x = (double)i/numPoints;
-            range.add(function_.getValue(x));
-        }
-        return range;
-    }
+    protected abstract Range getRange();
 }
