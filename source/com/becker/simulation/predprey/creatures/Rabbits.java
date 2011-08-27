@@ -36,6 +36,6 @@ public class Rabbits extends Population {
 
     @Override
     public double getMaxDeathRate() {
-        return 0.5;
+        return 0.1;
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public class PredPreyFunction implements Function {
 
     /** When we get more than this many x values, scroll to the right instead of compressing the domain. */
-    private static final int MAX_X_VALUES = 1000;
+    private static final int MAX_X_VALUES = 500;
 
     /** These parallel arrays define the piecewise function map. */
     protected List<Double> xValues;
@@ -32,7 +32,7 @@ public class PredPreyFunction implements Function {
 
     public void addValue(double x, double y) {
 
-        if (xValues.size() > 500) {
+        if (xValues.size() > MAX_X_VALUES) {
             xValues.remove(0);
             yValues.remove(0);
         }
@@ -61,7 +61,6 @@ public class PredPreyFunction implements Function {
         //    System.out.println("getting xValue=" + xValue + " from \nx=" + xValues.size());
         return getValue(xValue, xValues, yValues);
     }
-
 
     /**
      * get an interpolated y values for a specified x

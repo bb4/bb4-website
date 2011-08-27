@@ -74,7 +74,7 @@ public class LabeledSlider extends JPanel implements ChangeListener {
         slider_.setValue(getPositionFromValue(v));
         
         slider_.setMajorTickSpacing(resolution/10);
-        if (resolution_ >30 && resolution_ < 90) {
+        if (resolution_ > 30 && resolution_ < 90) {
             slider_.setMinorTickSpacing(2);
         }
         else if (resolution_ >= 90 && resolution_ < 900) {
@@ -150,6 +150,6 @@ public class LabeledSlider extends JPanel implements ChangeListener {
     
     @Override
     public String toString() {
-        return "Slider "+ labelText_ + " min="+min_+ " max="+max_ + "  value="+ getValue() + " ratio=" + ratio_;
+        return "Slider " + labelText_ + " min=" + min_+ " max=" + max_ + "  value=" + getValue() + " ratio=" + ratio_;
     }
 }

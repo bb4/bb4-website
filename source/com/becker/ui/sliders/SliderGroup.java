@@ -100,7 +100,7 @@ public class SliderGroup extends JPanel implements ChangeListener {
     public void setSliderValue(int sliderIndex, int value) {
         assert(sliderProps_[sliderIndex].getScale() == 1.0) : "you should call setSliderValue(int, double) if you have a slider with real values";
         sliders_[sliderIndex].setValue(value);
-        labels_[sliderIndex].setText(sliderProps_[sliderIndex].getName() + value);
+        labels_[sliderIndex].setText(getSliderTitle(sliderIndex, value)); //sliderProps_[sliderIndex].getName() + value);
     }
 
     public void setSliderMinimum(int sliderIndex, int min) {
@@ -120,7 +120,7 @@ public class SliderGroup extends JPanel implements ChangeListener {
     private String getSliderTitle(int index, int value) {
         String title = sliderProps_[index].getName() + " : " ;
         if (sliderProps_[index].getScale() == 1.0) {
-            return  title+ FormatUtil.formatNumber(value);
+            return  title + FormatUtil.formatNumber(value);
         } else {
             return  title + FormatUtil.formatNumber((double) value / sliderProps_[index].getScale());
         }
