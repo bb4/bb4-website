@@ -1,6 +1,7 @@
 package com.becker.simulation.predprey;
 
 import com.becker.common.math.function.Function;
+import com.becker.common.math.function.PopulationFunction;
 import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.graphing.GraphOptionsDialog;
@@ -32,9 +33,9 @@ public class PredPreySimulator extends Simulator {
     Foxes foxes;
     Lions lions;
 
-    PredPreyFunction rabbitFunction;
-    PredPreyFunction foxFunction;
-    //PredPreyFunction lionFunction;
+    PopulationFunction rabbitFunction;
+    PopulationFunction foxFunction;
+    //PopulationFunction lionFunction;
 
     DynamicOptions options_;
 
@@ -98,9 +99,9 @@ public class PredPreySimulator extends Simulator {
         rabbits.reset();
         foxes.reset();
 
-        rabbitFunction = new PredPreyFunction(Rabbits.INITIAL_NUM_RABBITS);
-        foxFunction = new PredPreyFunction(Foxes.INITIAL_NUM_FOXES);
-        //lionFunction = new PredPreyFunction(Lions.INITIAL_NUM_LIONS);
+        rabbitFunction = new PopulationFunction(Rabbits.INITIAL_NUM_RABBITS);
+        foxFunction = new PopulationFunction(Foxes.INITIAL_NUM_FOXES);
+        //lionFunction = new PopulationFunction(Lions.INITIAL_NUM_LIONS);
 
         List<Function> functions = new LinkedList<Function>();
         functions.add(rabbitFunction);

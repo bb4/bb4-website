@@ -1,4 +1,4 @@
-package com.becker.simulation.predprey;
+package com.becker.common.math.function;
 
 import com.becker.common.math.Range;
 import com.becker.common.math.function.Function;
@@ -8,9 +8,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Tracks a positive integer over time.
  * @author Barry Becker
  */
-public class PredPreyFunction implements Function {
+public class PopulationFunction implements Function {
 
     /** When we get more than this many x values, scroll to the right instead of compressing the domain. */
     private static final int MAX_X_VALUES = 500;
@@ -23,7 +24,7 @@ public class PredPreyFunction implements Function {
      * Constructor.
      * @param initialYValue y value for x=0
      */
-    public PredPreyFunction(double initialYValue) {
+    public PopulationFunction(double initialYValue) {
         xValues = new ArrayList<Double>();
         yValues = new ArrayList<Double>();
         xValues.add(0.0);
@@ -57,8 +58,6 @@ public class PredPreyFunction implements Function {
      */
     public double getValue(double xValue) {
 
-        //if (xValues.size() >2)
-        //    System.out.println("getting xValue=" + xValue + " from \nx=" + xValues.size());
         return getValue(xValue, xValues, yValues);
     }
 
@@ -92,7 +91,7 @@ public class PredPreyFunction implements Function {
     }
 
     public String toString() {
-        StringBuilder bldr = new StringBuilder("PredPreyFunction: ");
+        StringBuilder bldr = new StringBuilder("PopulationFunction: ");
         for (int i=0; i< xValues.size(); i++) {
             bldr.append("\nx=").append(xValues.get(i)).append(" y=").append(yValues.get(i));
         }

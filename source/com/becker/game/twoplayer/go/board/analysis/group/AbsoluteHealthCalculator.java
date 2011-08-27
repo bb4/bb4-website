@@ -24,7 +24,7 @@ class AbsoluteHealthCalculator {
      * If the health is 1.0 then the group has at least 2 eyes and is unconditionally alive.
      * If the health is -1.0 then there is no way to save the group even if you could
      * play 2 times in a row.
-     * Unconditional life means the group cannot be killed no matter how many times the opponent plays.
+     * Unconditional habitat means the group cannot be killed no matter how many times the opponent plays.
      * A score of near 0 indicates it is very uncertain whether the group will live or die.
      */
     private float absoluteHealth_ = 0;
@@ -76,8 +76,8 @@ class AbsoluteHealthCalculator {
      * the health of surrounding groups. If the health of an opponent bordering group
      * is in worse shape than our own then we get a boost since we can probably
      * kill that group first. See calculateRelativeHealth below.
-     * A perfect 1 (or -1) indicates unconditional life (or death).
-     * This means that the group cannot be killed (or given life) no matter
+     * A perfect 1 (or -1) indicates unconditional habitat (or death).
+     * This means that the group cannot be killed (or given habitat) no matter
      * how many times the opponent plays (see Dave Benson 1977).
      *  http://senseis.xmp.net/?BensonsAlgorithm
      *

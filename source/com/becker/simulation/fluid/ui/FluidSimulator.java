@@ -82,7 +82,6 @@ public class FluidSimulator extends Simulator {
         return fluidOptions_;
     }
 
-    
     public EnvironmentRenderer getRenderer() {
             return envRenderer_;
     }
@@ -108,7 +107,7 @@ public class FluidSimulator extends Simulator {
     protected void reset() {
         // remove the listeners in order to prevent a memory leak.
         this.removeMouseListener(handler_);      
-        this.removeMouseListener(handler_);
+        this.removeMouseMotionListener(handler_);
         environment_.reset();        
         commonInit();
     }
@@ -124,7 +123,6 @@ public class FluidSimulator extends Simulator {
     @Override
     public double timeStep() {
         if ( !isPaused() ) {
-            timeStep_ =
             timeStep_ = environment_.stepForward( timeStep_);
         }
         return timeStep_;

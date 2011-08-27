@@ -21,7 +21,6 @@ public class HenonPhaseExplorer extends Simulator {
 
     private HenonAlgorithm algorithm_;
     private DynamicOptions options_;
-    //private ColorMap cmap_;
 
     private boolean useFixedSize_ = false;
 
@@ -54,7 +53,6 @@ public class HenonPhaseExplorer extends Simulator {
     protected void reset() {
 
         algorithm_ = new HenonAlgorithm();
-        //cmap_ = new HenonColorMap();
 
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
 

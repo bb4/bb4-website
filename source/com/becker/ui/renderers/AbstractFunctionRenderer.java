@@ -22,17 +22,24 @@ public abstract class AbstractFunctionRenderer {
     protected int width_;
     protected int height_;
 
+    private int xOffset_ = 0;
+    private int yOffset_ = 0;
+
     protected INumberFormatter formatter_ = new DefaultNumberFormatter();
 
     protected static final int DEFAULT_LABEL_WIDTH = 30;
     protected int maxLabelWidth_ = DEFAULT_LABEL_WIDTH;
 
 
-
     public void setSize(int width, int height) {
         width_ = width;
         height_ = height;
         int maxNumLabels_ = width_ / maxLabelWidth_;
+    }
+
+    public void setPosition(int xOffset, int yOffset) {
+        xOffset_ = xOffset;
+        yOffset_ = yOffset;
     }
 
     /**
@@ -62,29 +69,44 @@ public abstract class AbstractFunctionRenderer {
 
         g2.setColor(LABEL_COLOR);
         // left y axis
-        g2.drawLine(MARGIN-1, height_ - MARGIN,
-                    MARGIN-1, MARGIN);
+        g2.drawLine(xOffset_ + MARGIN-1, yOffset_ + height_ - MARGIN,
+                    xOffset_ + MARGIN-1, yOffset_ + MARGIN);
         // x axis
-        g2.drawLine(MARGIN-1,         height_- MARGIN -1,
-                    MARGIN-1 + width_, height_ - MARGIN -1);
+        g2.drawLine(xOffset_ + MARGIN-1,        yOffset_ + height_- MARGIN -1,
+                    xOffset_ + MARGIN-1 + width_, yOffset_ + height_ - MARGIN -1);
 
-        g2.drawString("max = " + FormatUtil.formatNumber(yRange.getMax()), MARGIN/3, MARGIN -2);
-        g2.drawString("min = " + FormatUtil.formatNumber(yRange.getMin()), MARGIN/3, height_ - MARGIN );
+        g2.drawString("max = " + FormatUtil.formatNumber(yRange.getMax()),
+                xOffset_ + MARGIN/3, yOffset_ + MARGIN -2);
+        g2.drawString("min = " + FormatUtil.formatNumber(yRange.getMin()),
+                xOffset_ + MARGIN/3, yOffset_ + height_ - MARGIN );
     }
 
     /**
-     * draw a point
+     * draw line composed of points
      */
     protected void drawLine(Graphics2D g2, double scale,  float xpos, double ypos) {
         double h = (scale * ypos);
         int top = (int)(height_ - h - MARGIN);
 
-        g2.fillOval((int)xpos, top, 3, 3);
+        g2.fillOval(xOffset_ + (int)xpos, yOffset_ + top, 3, 3);
+    }
+
+    /**
+     * draw line composed of connected line segments
+     */
+    protected void drawConnectedLine(Graphics2D g2, double scale,  float xpos, double ypos, double lastX, double lastY) {
+        double h = (scale * ypos);
+        int top = (int)(height_ - h - MARGIN);
+
+        double lasth = (scale * lastY);
+        int lastTop = (int)(height_ - lasth - MARGIN);
+
+        g2.drawLine(xOffset_ + (int)xpos, yOffset_ + top, xOffset_ + (int) lastX, yOffset_ + lastTop);
     }
 
     protected void clearBackground(Graphics2D g2) {
         g2.setColor(BACKGROUND_COLOR);
-        g2.fillRect( 0, 0, width_, height_ );
+        g2.fillRect( xOffset_, yOffset_, width_, height_ );
     }
 
     protected abstract Range getRange();
