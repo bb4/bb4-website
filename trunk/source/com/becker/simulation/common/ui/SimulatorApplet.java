@@ -41,6 +41,8 @@ public class SimulatorApplet extends ApplicationApplet {
 
     /**
      * create and initialize the simulation
+     * The top controls define common buttons like start / reset
+     * There is an optional set of dynamic options on the right for modifying the simulation as it runs.
      */
     @Override
     public JPanel createMainPanel() {
@@ -54,13 +56,14 @@ public class SimulatorApplet extends ApplicationApplet {
 
         JPanel animPanel = new AnimationPanel( simulator_ );
         animPanel.add( simulator_.createTopControls(), BorderLayout.NORTH );
+
         JPanel dynamicControls = simulator_.createDynamicControls();
         if (dynamicControls != null) {
             animPanel.add( dynamicControls, BorderLayout.EAST );
         }
 
         simulator_.setVisible(true);
-        //setSize(simulator_.getPreferredSize());
+
         return animPanel;
     }
 

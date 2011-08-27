@@ -9,6 +9,10 @@ public final class AnimationFrame extends ApplicationFrame
 
     private Label mStatusLabel;
 
+    /**
+     * Constructor
+     * @param ac the animation component to show and animate.
+     */
     public AnimationFrame( AnimationComponent ac ) {
         this( ac, null );
     }
@@ -23,6 +27,7 @@ public final class AnimationFrame extends ApplicationFrame
 
         // Listen for the status changes.
         ac.setChangeListener( this );
+
         // Kick off the animation.
         Thread t = new Thread( ac );
         t.start();

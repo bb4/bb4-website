@@ -17,7 +17,7 @@ import java.util.*;
 
 /**
  * Determine if group is pass-alive using
- * Benson's algorithm for unconditional life.
+ * Benson's algorithm for unconditional habitat.
  * see http://senseis.xmp.net/?BensonSAlgorithm
  *
  * @author Barry Becker
@@ -41,7 +41,7 @@ public class LifeAnalyzer {
 
     /**
      * Constructor.
-     * @param group the group to analyze for unconditional life.
+     * @param group the group to analyze for unconditional habitat.
      * @param board board on which the group exists.
      */
     public LifeAnalyzer(IGoGroup group, GoBoard board, GroupAnalyzerMap analyzerMap) {
@@ -222,7 +222,7 @@ public class LifeAnalyzer {
 
     /**
      * For each eye in the group, determine if it is unconditionally alive by verifying that
-     * all its neighbors are unconditional life candidates still.
+     * all its neighbors are unconditional habitat candidates still.
      */
     private void initializeEyeLife() {
         for (IGoEye eye : analyzerMap_.getAnalyzer(group_).getEyes(board_)) {

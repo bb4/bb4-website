@@ -281,6 +281,12 @@
           <param name="jarFile" value="predprey.jar"/>
       </antcall>
 
+      <!-- copy the class files that are needed for habitat sim deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="simulation/habitat"/>
+          <param name="jarFile" value="habitat.jar"/>
+      </antcall>
+
       <!-- copy the class files that are needed for reaction diffusion deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="simulation/reactiondiffusion"/>

@@ -198,7 +198,7 @@ public class SGFLoader
         if( (sgfToken = readToken( st )) != null )
         {
           // Since we found a token that belongs to the "information"
-          // class, it gets a special place in life.
+          // class, it gets a special place in habitat.
           //
           if( sgfToken instanceof InfoToken )
               myGameInfoTokens.add( sgfToken );

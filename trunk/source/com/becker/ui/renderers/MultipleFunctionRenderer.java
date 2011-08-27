@@ -54,7 +54,7 @@ public class MultipleFunctionRenderer extends AbstractFunctionRenderer {
             for (int i = 0; i < numPoints;  i++) {
                 double x = (double)i/numPoints;
                 double y = functions_.get(f).getValue(x);
-                drawLine(g2, scale, MARGIN + i, y, MARGIN + i - 1, lastY);
+                drawConnectedLine(g2, scale, MARGIN + i, y, MARGIN + i - 1, lastY);
                 lastY = y;
 
             }
@@ -62,19 +62,6 @@ public class MultipleFunctionRenderer extends AbstractFunctionRenderer {
         drawDecoration(g2, yRange);
     }
 
-
-    /**
-     * draw a point
-     */
-    protected void drawLine(Graphics2D g2, double scale,  double xpos, double ypos, double lastX, double lastY) {
-        double h = (scale * ypos);
-        int top = (int)(height_ - h - MARGIN);
-
-        double lasth = (scale * lastY);
-        int lastTop = (int)(height_ - lasth - MARGIN);
-
-        g2.drawLine((int)xpos, top, (int) lastX, lastTop);
-    }
 
 
     @Override

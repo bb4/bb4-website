@@ -138,8 +138,6 @@ public abstract class AnimationComponent extends Container
         return toggleButton;
     }
 
-    //public abstract void setSwitch( int item, boolean value );
-
     /**
      * render the animation component as an image
      */

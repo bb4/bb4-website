@@ -31,7 +31,7 @@ public final class DeadStoneUpdater {
     }
 
     /**
-     * Update the final life and death status of all the stones still on the board.
+     * Update the final habitat and death status of all the stones still on the board.
      * This method must only be called once at the end of the game or stones will get prematurely marked as dead.
      * The first can update the health of groups and perhaps remove obviously dead stones.
      */
@@ -45,7 +45,7 @@ public final class DeadStoneUpdater {
                 if (space.isOccupied())  {
                     GoStone stone = (GoStone)space.getPiece();
                     int side = (stone.isOwnedByPlayer1() ? 1: -1);
-                    GameContext.log(1, "life & death: "+space+" health="+stone.getHealth());
+                    GameContext.log(1, "habitat & death: "+space+" health="+stone.getHealth());
                     if (side*stone.getHealth() < 0)  {
                         // then the stone is more dead than alive, so mark it so
                         GameContext.log(0, "setting " + space + " to dead");

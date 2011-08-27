@@ -137,11 +137,11 @@ public class GoSearchable extends TwoPlayerSearchable {
 
         //we should not call this twice
         if (getNumDeadStonesOnBoard(true)  > 0 || getNumDeadStonesOnBoard(false) > 0) {
-            GameContext.log(0, " Error: should not update life and death twice.");
+            GameContext.log(0, " Error: should not update habitat and death twice.");
         }
         // now that we are finally at the end of the game,
-        // update the life and death of all the stones still on the board
-        GameContext.log(1,  "about to update life and death." );
+        // update the habitat and death of all the stones still on the board
+        GameContext.log(1,  "about to update habitat and death." );
         deadStoneUpdater_.determineDeadStones();
         getProfiler().stopCalcWorth();
     }
