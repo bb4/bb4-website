@@ -37,6 +37,10 @@ public class CreatureSliderGroup extends SliderGroup {
         return props;
     }
 
+    public void update() {
+        this.setSliderValue(0, creaturePop_.getPopulation());
+    }
+
     /**
      * One of the sliders was potentially moved.
      * Check for match based on name.
@@ -46,7 +50,7 @@ public class CreatureSliderGroup extends SliderGroup {
         for (SliderProperties props : this.getSliderProperties()) {
             if (sliderName.equals(props.getName()))  {
                 if (sliderName.endsWith(POPULATION_LABEL))  {
-                    creaturePop_.population = (int) value;
+                    creaturePop_.setPopulation( value );
                 }
                 else if (sliderName.endsWith(BIRTH_RATE_LABEL)) {
                     creaturePop_.birthRate = value;

@@ -5,6 +5,7 @@ import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.graphing.GraphOptionsDialog;
 import com.becker.simulation.predprey.creatures.Foxes;
+import com.becker.simulation.predprey.creatures.Lions;
 import com.becker.simulation.predprey.creatures.Population;
 import com.becker.simulation.predprey.creatures.Rabbits;
 import com.becker.simulation.predprey.options.DynamicOptions;
@@ -27,11 +28,13 @@ public class PredPreySimulator extends Simulator {
     MultipleFunctionRenderer graph_;
     long iteration;
 
-    Foxes foxes;
     Rabbits rabbits;
+    Foxes foxes;
+    Lions lions;
 
     PredPreyFunction rabbitFunction;
     PredPreyFunction foxFunction;
+    //PredPreyFunction lionFunction;
 
     DynamicOptions options_;
 
@@ -41,6 +44,7 @@ public class PredPreySimulator extends Simulator {
 
         foxes = new Foxes();
         rabbits = new Rabbits();
+        //lions = new Lions();
 
         initGraph();
     }
@@ -49,6 +53,7 @@ public class PredPreySimulator extends Simulator {
         List<Population> creatures = new ArrayList<Population>();
         creatures.add(foxes);
         creatures.add(rabbits);
+        //creatures.add(lions);
         return creatures;
     }
 
@@ -68,15 +73,21 @@ public class PredPreySimulator extends Simulator {
     public double timeStep() {
         iteration++;
 
-        foxes.population = (int)
-                Math.round(foxes.population * foxes.birthRate
-                           - foxes.population * foxes.deathRate / rabbits.population);
-        rabbits.population = (int)
-                Math.round(rabbits.population * rabbits.birthRate
-                           - foxes.population * rabbits.deathRate * rabbits.population);
+        foxes.setPopulation( foxes.getPopulation() * foxes.birthRate
+                           - foxes.getPopulation() * foxes.deathRate / rabbits.getPopulation());
+        //                   - lions.getPopulation() * foxes.deathRate * foxes.getPopulation());
+        rabbits.setPopulation( rabbits.getPopulation() * rabbits.birthRate
+                             - foxes.getPopulation() * rabbits.deathRate * rabbits.getPopulation());
+        //                    - lions.getPopulation() * rabbits.deathRate * rabbits.getPopulation());
+        //lions.setPopulation( lions.getPopulation() * lions.birthRate
+        //                   - lions.getPopulation() * lions.deathRate / (foxes.getPopulation() + rabbits.getPopulation()));
 
-        rabbitFunction.addValue(iteration, rabbits.population);
-        foxFunction.addValue(iteration, foxes.population);
+
+        rabbitFunction.addValue(iteration, rabbits.getPopulation());
+        foxFunction.addValue(iteration, foxes.getPopulation());
+        //lionFunction.addValue(iteration, lions.getPopulation());
+
+        options_.update();
 
         return timeStep_;
     }
@@ -89,14 +100,17 @@ public class PredPreySimulator extends Simulator {
 
         rabbitFunction = new PredPreyFunction(Rabbits.INITIAL_NUM_RABBITS);
         foxFunction = new PredPreyFunction(Foxes.INITIAL_NUM_FOXES);
+        //lionFunction = new PredPreyFunction(Lions.INITIAL_NUM_LIONS);
 
         List<Function> functions = new LinkedList<Function>();
         functions.add(rabbitFunction);
         functions.add(foxFunction);
+        //functions.add(lionFunction);
 
         List<Color> lineColors = new LinkedList<Color>();
         lineColors.add(Rabbits.COLOR);
         lineColors.add(Foxes.COLOR);
+        //lineColors.add(Lions.COLOR);
 
         graph_ = new MultipleFunctionRenderer(functions, lineColors);
     }

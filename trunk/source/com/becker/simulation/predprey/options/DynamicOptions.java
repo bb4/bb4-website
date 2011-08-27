@@ -43,6 +43,12 @@ public class DynamicOptions extends JPanel
         add(fill);
     }
 
+    public void update() {
+        for (CreatureSliderGroup group : sliderGroups_)  {
+            group.update();
+        }
+    }
+
     public void reset() {
         for (SliderGroup group : sliderGroups_)  {
             group.reset();

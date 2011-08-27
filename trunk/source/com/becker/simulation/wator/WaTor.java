@@ -135,6 +135,7 @@ public class WaTor extends Applet implements Runnable {
     @Override
     public void init() {
         super.init();
+        mutex = new Object();
         this.setSize(1000, 800);
         pn_mp = new MapPanel();
         pn_mp.that = this;
@@ -189,7 +190,7 @@ public class WaTor extends Applet implements Runnable {
         Fish.seedrnd();
         remixflag = true;
         goflag = true;
-        mutex = new Object();
+
         start();
     }
 

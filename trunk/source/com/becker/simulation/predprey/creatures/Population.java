@@ -7,9 +7,13 @@ package com.becker.simulation.predprey.creatures;
  */
 public abstract class Population {
 
-    public int population;
+    private static final long MAX_POPULATION = 100000;
+
     public double birthRate;
     public double deathRate;
+
+    private int population;
+
 
     public Population() {
         reset();
@@ -23,6 +27,18 @@ public abstract class Population {
         deathRate = getInitialDeathRate();
     }
 
+    public int getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(double value) {
+
+        population = (int) Math.max(0, Math.round(value));
+        if (population > MAX_POPULATION)  {
+            population *= 0.8;
+        }
+    }
+
     public abstract int getInitialPopulation();
     public abstract double getInitialBirthRate();
     public abstract double getInitialDeathRate();
@@ -33,7 +49,7 @@ public abstract class Population {
     }
 
     public double getMaxDeathRate() {
-        return 20.0;
+        return 30.0;
     }
 
 }
