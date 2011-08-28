@@ -15,7 +15,7 @@ import java.util.List;
 public class Neighbors {
 
     /** only pursue prey that is this close to us */
-    private static final double SMELL_NEIGHBOR_DISTANCE = 0.05;
+    private static final double SMELL_NEIGHBOR_DISTANCE = 0.1;
 
     public Creature nearestPrey;
     public Creature nearestFriend;

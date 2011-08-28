@@ -23,8 +23,6 @@ public class Creature  {
     /** When this close we are considered on top ot the prey */
     private static final double THRESHOLD_TO_PREY = 0.001;
 
-    private static final Random RANDOM = new Random(1);
-
     private CreatureType type;
 
     private Point2d location;
@@ -49,8 +47,8 @@ public class Creature  {
         this.type = type;
         this.location = location;
 
-        numDaysPregnant = (int) (RANDOM.nextDouble() * type.getGestationPeriod());
-        hunger = (int) (RANDOM.nextDouble() * type.getStarvationThreshold()/2);
+        numDaysPregnant = 0; //(int) (MathUtil.RANDOM.nextDouble() * type.getGestationPeriod()/5);
+        hunger = 0; //(int)(MathUtil.RANDOM.nextDouble() * type.getStarvationThreshold()/6);
 
 
         this.direction = randomDirection();
@@ -61,7 +59,7 @@ public class Creature  {
     }
 
     private double randomDirection() {
-        return 2.0 * Math.PI * RANDOM.nextDouble();
+        return 2.0 * Math.PI * MathUtil.RANDOM.nextDouble();
     }
 
     public Vector2d getVelocity() {
