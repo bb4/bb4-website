@@ -36,6 +36,7 @@ public class Populations extends ArrayList<Population> {
         functionMap = new HashMap<Population, PopulationFunction>();
         grid = new HabitatGrid(20, 15);
 
+        this.clear();
         this.add(Population.createPopulation(CreatureType.GRASS, 40));
         this.add(Population.createPopulation(CreatureType.COW, 10));
         this.add(Population.createPopulation(CreatureType.RAT, 15));

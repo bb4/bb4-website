@@ -1,11 +1,16 @@
 package com.becker.simulation.habitat.creatures;
 
+import ca.dj.jigo.sgf.Point;
+import com.becker.common.math.MathUtil;
+import com.becker.game.common.ui.dialogs.NewGameDialog;
 import com.becker.simulation.habitat.model.Cell;
 import com.becker.simulation.habitat.model.HabitatGrid;
 
+import javax.management.NotificationBroadcasterSupport;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Everything we need to know about a creature.
@@ -18,13 +23,13 @@ public class Creature  {
     /** When this close we are considered on top ot the prey */
     private static final double THRESHOLD_TO_PREY = 0.001;
 
-    /** only pursue prey that is this close to us */
-    private static final double SMELL_PREY_DISTANCE = 0.05;
+    private static final Random RANDOM = new Random(1);
 
     private CreatureType type;
 
     private Point2d location;
-    private Vector2d velocity;
+    private double direction;
+    private double speed;
     private int numDaysPregnant;
 
     /** if becomes too large, then starve */
@@ -34,6 +39,8 @@ public class Creature  {
     //private boolean isRunning;
     /** chasing prey */
     private boolean pursuing;
+    /** not mature (capable of having children) until eaten at least once (and can eat). */
+    private boolean mature;
 
     /**
      * Constructor
@@ -42,17 +49,70 @@ public class Creature  {
         this.type = type;
         this.location = location;
 
-        numDaysPregnant = (int) (Math.random() * type.getGestationPeriod());
-        hunger = (int) (Math.random() * type.getStarvationThreshold()/2);
+        numDaysPregnant = (int) (RANDOM.nextDouble() * type.getGestationPeriod());
+        hunger = (int) (RANDOM.nextDouble() * type.getStarvationThreshold()/2);
 
 
-        this.velocity = randomVelocity();
+        this.direction = randomDirection();
+        this.speed = type.getNormalSpeed();
         alive = true;
+
+        mature = (speed == 0);
     }
 
-    private Vector2d randomVelocity() {
-        double theta = 2.0 * Math.PI * Math.random();
-        return new Vector2d(Math.sin(theta) * type.getNormalSpeed(), Math.cos(theta) * type.getNormalSpeed());
+    private double randomDirection() {
+        return 2.0 * Math.PI * RANDOM.nextDouble();
+    }
+
+    public Vector2d getVelocity() {
+        return new Vector2d(Math.sin(direction) * speed, Math.cos(direction) * speed);
+    }
+
+    public void kill() {
+        alive = false;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public boolean isPursuing() {
+        return pursuing;
+    }
+
+    public String getName() {
+        return type.getName();
+    }
+
+    public CreatureType getType() {
+        return type;
+    }
+
+    public Point2d getLocation() {
+        return location;
+    }
+
+    public double getDirection() {
+        return direction;
+    }
+
+
+    private Point2d computeNewPosition() {
+        Vector2d vel = getVelocity();
+        return new Point2d( absMod(location.getX() + vel.getX()),  absMod(location.getY() + vel.getY()));
+    }
+
+    private double absMod(double value) {
+        double newValue = value % 1.0;
+        return newValue<0 ? 1- newValue :  newValue;
+    }
+
+    public double getSize() {
+        return type.getSize();
+    }
+
+    public String toString() {
+        return getName() + " hunger="  + hunger + " pregnant=" + numDaysPregnant + " alive="+ alive;
     }
 
     /**
@@ -78,43 +138,66 @@ public class Creature  {
                 numDaysPregnant = 0;
             }
         }
+        if (speed > 0) {
+            Neighbors nbrs = new Neighbors(this, grid);
 
-        moveTowardPreyAndEatIfPossible(grid);
+            if (nbrs.nearestPrey != null && nbrs.nearestPrey.isAlive())
+                moveTowardPreyAndEatIfPossible(nbrs.nearestPrey);
+            else {
+                flock(nbrs.flockFriends, nbrs.nearestFriend);
+            }
+            moveToNewLocation(grid);
+        }
+
+
         // else move toward friends and swarm
         return spawn;
     }
 
-    public Vector2d getVelocity() {
-        return velocity;
-    }
+    private void moveTowardPreyAndEatIfPossible(Creature nearestPrey) {
 
-    private void moveTowardPreyAndEatIfPossible(HabitatGrid grid) {
+        //System.out.println(this +" chasing "  + nearestPrey);
+        pursuing = true;
+        speed = type.getMaxSpeed();
+        double distance = nearestPrey.getLocation().distance(location);
 
-        // adjust velocity based on neighbors
-        Cell oldCell = grid.getCellForPosition(location);
-
-        Creature nearestPrey = findNearestPrey(grid);
-
-        if (nearestPrey != null) {
-
-            pursuing = true;
-            double distance = nearestPrey.getLocation().distance(location);
-
-            if (distance < THRESHOLD_TO_PREY) {
-                eat(nearestPrey);
-                //System.out.println(this +" eating "+ nearestPrey);
-                velocity = randomVelocity();
-            }
-            else {
-                velocity = new Vector2d(nearestPrey.getLocation().getX() - location.getX(),
-                                        nearestPrey.getLocation().getY() - location.getY());
-                if (type.getMaxSpeed() < distance) {
-                    velocity.scale(type.getMaxSpeed()/distance);
-                }
+        if (distance < THRESHOLD_TO_PREY) {
+            //System.out.println( this + " about to eat " + nearestPrey);
+            eat(nearestPrey);
+            direction = randomDirection();
+        }
+        else {
+            direction = MathUtil.getDirectionTo(getLocation(), nearestPrey.getLocation());
+            if (distance < type.getMaxSpeed()) {
+                speed = distance;
             }
         }
-        location = computeNewPosition(velocity);
+    }
 
+    /**
+     * Flock with nbrs
+     * Move toward the center of mass of neighbors and turn in same direction as nearest friend.
+     * @param friends
+     */
+    private void flock(List<Creature> friends, Creature nearestFriend) {
+        if (nearestFriend == null)
+            return;
+        Point2d centerOfMass = new Point2d(0, 0);
+
+        for (Creature c : friends) {
+            centerOfMass.add(c.getLocation());
+        }
+        centerOfMass.scale(1.0/friends.size());
+
+        double directionToCOM = MathUtil.getDirectionTo(getLocation(), centerOfMass);
+
+        direction = (nearestFriend.direction + directionToCOM) / 2.0;
+    }
+
+    private void moveToNewLocation(HabitatGrid grid) {
+        location = computeNewPosition();
+
+        Cell oldCell = grid.getCellForPosition(location);
         Cell newCell = grid.getCellForPosition(location) ;
         if (newCell != oldCell) {
             newCell.addCreature(this);
@@ -122,75 +205,15 @@ public class Creature  {
         }
     }
 
-    private Creature findNearestPrey(HabitatGrid grid) {
-
-        if (type.getPreys().size()== 0) {
-            return null;
-        }
-        Creature nearestPrey = null;
-        double nearestDistance = Double.MAX_VALUE;
-
-        List<Cell> cells = grid.getNeighborCells(grid.getCellForPosition(this.getLocation()));
-
-        for (Cell cell : cells) {
-            for (Creature potentialPrey : cell.getCreatures()) {
-                if (type.getPreys().contains(potentialPrey.type)) {
-                    double dist = potentialPrey.getLocation().distance(getLocation());
-                    if (dist < nearestDistance &&  dist < SMELL_PREY_DISTANCE) {
-                        nearestDistance = dist;
-                        nearestPrey = potentialPrey;
-                    }
-                }
-            }
-        }
-        return nearestPrey;
-    }
-
-
     /**
      * @param creature  the creature we will now eat.
      */
-    public void eat(Creature creature) {
+    private void eat(Creature creature) {
         hunger -= creature.type.getNutritionalValue();
         creature.kill();
         hunger = Math.max(0, hunger);
         pursuing = false;
-    }
-
-    public void kill() {
-        alive = false;
-    }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public boolean isPursuing() {
-        return pursuing;
-    }
-
-    public String getName() {
-        return type.getName();
-    }
-
-    public Point2d getLocation() {
-        return location;
-    }
-
-    private Point2d computeNewPosition(Vector2d vel) {
-        return new Point2d( absMod(location.getX() + vel.getX()),  absMod(location.getY() + vel.getY()));
-    }
-
-    private double absMod(double value) {
-        double newValue = value % 1.0;
-        return newValue<0 ? 1- newValue :  newValue;
-    }
-
-    public double getSize() {
-        return type.getSize();
-    }
-
-    public String toString() {
-        return getName() + " hunger="  + hunger + " pregnant=" + numDaysPregnant + " alive="+ alive;
+        speed = type.getNormalSpeed();
+        mature = true;
     }
 }

@@ -1,5 +1,6 @@
 package com.becker.common.math;
 
+import javax.vecmath.Point2d;
 import java.util.Arrays;
 
 
@@ -16,6 +17,8 @@ public final class MathUtil {
     public static final double EPS_MEDIUM = 0.0000000001;
     
     public static final double EPS_BIG = 0.26;
+
+    private static final double PI_2 = Math.PI / 2.0;
 
     private MathUtil() {}
 
@@ -124,5 +127,12 @@ public final class MathUtil {
             ct--;
         }
         return f;
+    }
+
+    public static double getDirectionTo(Point2d fromPoint, Point2d toPoint) {
+        double xDiff = toPoint.getX() - fromPoint.getX();
+        double yDiff = toPoint.getY() - fromPoint.getY();
+
+        return  Math.atan2(yDiff,  xDiff);
     }
 }

@@ -6,6 +6,7 @@ import javax.vecmath.Point2d;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Everything we need to know about a population of a certain kind of creature.
@@ -13,6 +14,8 @@ import java.util.List;
  * @author Barry Becker
  */
 public class Population {
+
+    private static final Random RANDOM = new Random(1);
 
     private CreatureType type;
 
@@ -38,7 +41,7 @@ public class Population {
 
     public void createInitialSet(int num) {
         for (int i=0; i<num; i++) {
-            creatures.add(new Creature(type, new Point2d(Math.random(), Math.random())));
+            creatures.add(new Creature(type, new Point2d(RANDOM.nextDouble(), RANDOM.nextDouble())));
         }
     }
 
@@ -70,8 +73,8 @@ public class Population {
 
             if (spawn) {
                 Point2d loc = creature.getLocation();
-                spawnLocations.add(new Point2d(absMod(loc.getX() + 0.1 * Math.random()),
-                                               absMod(loc.getY() + 0.1 * Math.random())));
+                spawnLocations.add(new Point2d(absMod(loc.getX() + 0.1 * RANDOM.nextDouble()),
+                                               absMod(loc.getY() + 0.1 * RANDOM.nextDouble())));
             }
         }
 
@@ -88,14 +91,18 @@ public class Population {
      * @param grid
      */
     public void removeDead(HabitatGrid grid) {
-         Iterator<Creature> creatureIt = creatures.iterator();
-         while (creatureIt.hasNext())   {
-              Creature creature = creatureIt.next();
+        Iterator<Creature> creatureIt = creatures.iterator();
+        while (creatureIt.hasNext())   {
+             Creature creature = creatureIt.next();
              if (!creature.isAlive()) {
                  creatureIt.remove();
                  grid.getCellForPosition(creature.getLocation()).removeCreature(creature);
              }
-         }
+        }
+        // verify none dead still around
+        for (Creature c : creatures) {
+            assert c.isAlive();
+        }
     }
 
     public CreatureType getType() {

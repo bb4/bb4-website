@@ -69,6 +69,7 @@ public class SliderGroup extends JPanel implements ChangeListener {
             labels_[i] = new JLabel(getSliderTitle(i, intInitial));
             sliders_[i] = new JSlider(JSlider.HORIZONTAL, intMin, intMax, intInitial);
             sliders_[i].addChangeListener(this);
+
         }
         buildUI();
     }
