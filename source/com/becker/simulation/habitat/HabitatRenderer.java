@@ -41,12 +41,25 @@ public class HabitatRenderer  {
         for (Population pop : populations) {
             g2.setColor(pop.getType().getColor());
             for (Creature creature : pop.getCreatures())  {
-                int w = (int) (creature.getSize() * width_ * SIZE_SCALE + 1.0);
-                int h = (int) (creature.getSize() * height_ * SIZE_SCALE + 1.0);
-                g2.fillOval((int)(creature.getLocation().getX() * width_),
-                            (int)(creature.getLocation().getY() * height_),
-                             w, h);
+                drawCreature(creature, g2);
+
             }
+        }
+    }
+
+    private void drawCreature(Creature creature, Graphics2D g2) {
+        int w = (int) (creature.getSize() * width_ * SIZE_SCALE + 1.0);
+        int h = (int) (creature.getSize() * height_ * SIZE_SCALE + 1.0);
+        int centerX = (int)(creature.getLocation().getX() * width_);
+        int centerY = (int)(creature.getLocation().getY() * height_);
+        g2.fillOval(centerX - w/2, centerY - h/2, w, h);
+
+        int vectorEndpointX = (int)(centerX + creature.getVelocity().getX() * width_);
+        int vectorEndpointY = (int)(centerY + creature.getVelocity().getY() * height_);
+        g2.drawLine(centerX, centerY, vectorEndpointX, vectorEndpointY);
+
+        if (creature.isPursuing()) {
+            g2.drawOval(centerX - w, centerY - h, 2*w, 2*h);
         }
     }
 

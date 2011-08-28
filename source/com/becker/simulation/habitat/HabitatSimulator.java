@@ -21,25 +21,23 @@ public class HabitatSimulator extends Simulator {
     /** Number of times greater area to allocate to the habitat compared to the graph. */
     private static final int HABITAT_TO_GRAPH_RATIO = 3;
 
-    HabitatRenderer habitatRenderer_;
-    MultipleFunctionRenderer graphRenderer_;
+    private HabitatRenderer habitatRenderer_;
+    private MultipleFunctionRenderer graphRenderer_;
+    private Populations populations;
+    private DynamicOptions options_;
 
-    Populations populations;
-
-    DynamicOptions options_;
 
     /** Constructor */
     public HabitatSimulator() {
         super("Habitat Simulation");
-
         populations = new Populations();
-
         initialize();
     }
 
     @Override
     protected void reset() {
 
+        populations.initialize();
         initialize();
         options_.reset();
     }

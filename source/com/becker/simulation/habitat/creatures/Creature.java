@@ -1,15 +1,25 @@
 package com.becker.simulation.habitat.creatures;
 
+import com.becker.simulation.habitat.model.Cell;
+import com.becker.simulation.habitat.model.HabitatGrid;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
+import java.util.List;
 
 /**
  * Everything we need to know about a creature.
- * There are many different sorts of creatures.
+ * There are many different sorts of creatures, but they are all represented by instance of this class.
  *
  * @author Barry Becker
  */
 public class Creature  {
+
+    /** When this close we are considered on top ot the prey */
+    private static final double THRESHOLD_TO_PREY = 0.001;
+
+    /** only pursue prey that is this close to us */
+    private static final double SMELL_PREY_DISTANCE = 0.05;
 
     private CreatureType type;
 
@@ -20,6 +30,10 @@ public class Creature  {
     /** if becomes too large, then starve */
     private int hunger;
     private boolean alive;
+    /** set to true if pursued or pursuing. Use maxSpeed when running. */
+    //private boolean isRunning;
+    /** chasing prey */
+    private boolean pursuing;
 
     /**
      * Constructor
@@ -31,15 +45,20 @@ public class Creature  {
         numDaysPregnant = (int) (Math.random() * type.getGestationPeriod());
         hunger = (int) (Math.random() * type.getStarvationThreshold()/2);
 
-        double theta = 2.0 * Math.PI * Math.random();
-        this.velocity = new Vector2d(Math.sin(theta) * type.getMaxSpeed(), Math.cos(theta) * type.getMaxSpeed());
+
+        this.velocity = randomVelocity();
         alive = true;
+    }
+
+    private Vector2d randomVelocity() {
+        double theta = 2.0 * Math.PI * Math.random();
+        return new Vector2d(Math.sin(theta) * type.getNormalSpeed(), Math.cos(theta) * type.getNormalSpeed());
     }
 
     /**
      * @return true if new child spawned
      */
-    public boolean nextDay() {
+    public boolean nextDay(HabitatGrid grid) {
         boolean spawn = false;
         numDaysPregnant++;
         hunger++;
@@ -49,24 +68,105 @@ public class Creature  {
         }
 
         if (numDaysPregnant >= type.getGestationPeriod()) {
-            // spawn new child.
-            spawn = true;
-            numDaysPregnant = 0;
+            // if very hungary, abort the fetus
+            if (hunger > type.getStarvationThreshold() / 2) {
+                numDaysPregnant = 0;
+            }
+            else {
+                // spawn new child.
+                spawn = true;
+                numDaysPregnant = 0;
+            }
         }
 
-        // adjust velocity based on neighbors
-        location = computeNewPosition(velocity);
-
+        moveTowardPreyAndEatIfPossible(grid);
+        // else move toward friends and swarm
         return spawn;
     }
 
-    public void eat(CreatureType type) {
-        hunger -= type.getNutritionalValue();
+    public Vector2d getVelocity() {
+        return velocity;
+    }
+
+    private void moveTowardPreyAndEatIfPossible(HabitatGrid grid) {
+
+        // adjust velocity based on neighbors
+        Cell oldCell = grid.getCellForPosition(location);
+
+        Creature nearestPrey = findNearestPrey(grid);
+
+        if (nearestPrey != null) {
+
+            pursuing = true;
+            double distance = nearestPrey.getLocation().distance(location);
+
+            if (distance < THRESHOLD_TO_PREY) {
+                eat(nearestPrey);
+                //System.out.println(this +" eating "+ nearestPrey);
+                velocity = randomVelocity();
+            }
+            else {
+                velocity = new Vector2d(nearestPrey.getLocation().getX() - location.getX(),
+                                        nearestPrey.getLocation().getY() - location.getY());
+                if (type.getMaxSpeed() < distance) {
+                    velocity.scale(type.getMaxSpeed()/distance);
+                }
+            }
+        }
+        location = computeNewPosition(velocity);
+
+        Cell newCell = grid.getCellForPosition(location) ;
+        if (newCell != oldCell) {
+            newCell.addCreature(this);
+            oldCell.removeCreature(this);
+        }
+    }
+
+    private Creature findNearestPrey(HabitatGrid grid) {
+
+        if (type.getPreys().size()== 0) {
+            return null;
+        }
+        Creature nearestPrey = null;
+        double nearestDistance = Double.MAX_VALUE;
+
+        List<Cell> cells = grid.getNeighborCells(grid.getCellForPosition(this.getLocation()));
+
+        for (Cell cell : cells) {
+            for (Creature potentialPrey : cell.getCreatures()) {
+                if (type.getPreys().contains(potentialPrey.type)) {
+                    double dist = potentialPrey.getLocation().distance(getLocation());
+                    if (dist < nearestDistance &&  dist < SMELL_PREY_DISTANCE) {
+                        nearestDistance = dist;
+                        nearestPrey = potentialPrey;
+                    }
+                }
+            }
+        }
+        return nearestPrey;
+    }
+
+
+    /**
+     * @param creature  the creature we will now eat.
+     */
+    public void eat(Creature creature) {
+        hunger -= creature.type.getNutritionalValue();
+        creature.kill();
         hunger = Math.max(0, hunger);
+        pursuing = false;
+    }
+
+    public void kill() {
+        alive = false;
     }
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public boolean isPursuing() {
+        return pursuing;
     }
 
     public String getName() {
@@ -78,10 +178,19 @@ public class Creature  {
     }
 
     private Point2d computeNewPosition(Vector2d vel) {
-        return new Point2d((location.getX() + vel.getX()) % 1.0, (location.getY() + vel.getY()) % 1.0);
+        return new Point2d( absMod(location.getX() + vel.getX()),  absMod(location.getY() + vel.getY()));
+    }
+
+    private double absMod(double value) {
+        double newValue = value % 1.0;
+        return newValue<0 ? 1- newValue :  newValue;
     }
 
     public double getSize() {
         return type.getSize();
+    }
+
+    public String toString() {
+        return getName() + " hunger="  + hunger + " pregnant=" + numDaysPregnant + " alive="+ alive;
     }
 }

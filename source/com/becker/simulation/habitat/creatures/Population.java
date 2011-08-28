@@ -1,13 +1,14 @@
 package com.becker.simulation.habitat.creatures;
 
+import com.becker.simulation.habitat.model.HabitatGrid;
+
 import javax.vecmath.Point2d;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * Everything we need to know about a population of creatures.
+ * Everything we need to know about a population of a certain kind of creature.
  *
  * @author Barry Becker
  */
@@ -23,6 +24,18 @@ public class Population {
         creatures = new ArrayList<Creature>();
     }
 
+    /**
+     * Factory method to create an initial population of randomly distributed members.
+     * @param type
+     * @param initialSize
+     * @return
+     */
+    public static Population createPopulation(CreatureType type, int initialSize)  {
+        Population pop = new Population(type);
+        pop.createInitialSet(initialSize);
+        return pop;
+    }
+
     public void createInitialSet(int num) {
         for (int i=0; i<num; i++) {
             creatures.add(new Creature(type, new Point2d(Math.random(), Math.random())));
@@ -36,32 +49,53 @@ public class Population {
         return new ArrayList<Creature>(creatures);
     }
 
-    public void nextDay() {
-        List<Point2d> spawnLocations = new ArrayList<Point2d>();
+    /**
+     * Increment to the next day.
+     * Move the creatures around and see if they are close to something to eat.
+     * Have children of gestation period is complete and they have spawned.
+     * @param grid
+     */
+    public void nextDay(HabitatGrid grid) {
 
+        List<Point2d> spawnLocations = new ArrayList<Point2d>();
         Iterator<Creature> creatureIt = creatures.iterator();
-        int numRemoved = 0;
+
+        // Figure out if anything edible nearby.
+        // Eat prey if there are things that we eat nearby.
+
         while (creatureIt.hasNext())   {
             Creature creature = creatureIt.next();
 
-            boolean spawn = creature.nextDay();
+            boolean spawn = creature.nextDay(grid);
 
-            if (!creature.isAlive())  {
-                numRemoved++;
-                creatureIt.remove();
-            }
-            else if (spawn) {
+            if (spawn) {
                 Point2d loc = creature.getLocation();
-                spawnLocations.add(new Point2d(loc.getX() + 0.1 * Math.random(), loc.getY() + 0.1 * Math.random()));
+                spawnLocations.add(new Point2d(absMod(loc.getX() + 0.1 * Math.random()),
+                                               absMod(loc.getY() + 0.1 * Math.random())));
             }
         }
 
-
-        // add new children
-        System.out.println("adding " + spawnLocations.size() + " more " + getName() + " and removed " + numRemoved);
         for (Point2d newLocation : spawnLocations) {
-            creatures.add(new Creature(type, newLocation));
+            Creature newCrtr = new Creature(type, newLocation);
+            creatures.add(newCrtr);
+            grid.getCellForPosition(newLocation).addCreature(newCrtr);
         }
+    }
+
+
+    /**
+     * remove dead after next day is done.
+     * @param grid
+     */
+    public void removeDead(HabitatGrid grid) {
+         Iterator<Creature> creatureIt = creatures.iterator();
+         while (creatureIt.hasNext())   {
+              Creature creature = creatureIt.next();
+             if (!creature.isAlive()) {
+                 creatureIt.remove();
+                 grid.getCellForPosition(creature.getLocation()).removeCreature(creature);
+             }
+         }
     }
 
     public CreatureType getType() {
@@ -76,5 +110,7 @@ public class Population {
         return "Population of " + type.getName();
     }
 
-
+    private double absMod(double value) {
+        return Math.abs(value % 1.0);
+    }
 }
