@@ -1,6 +1,7 @@
 package com.becker.simulation.habitat;
 
 import com.becker.common.concurrency.ThreadUtil;
+import com.becker.common.math.MathUtil;
 import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.graphing.GraphOptionsDialog;
@@ -43,6 +44,7 @@ public class HabitatSimulator extends Simulator {
         this.setPaused(true);
         // wait till actually paused. Not clean, but oh well.
         ThreadUtil.sleep(500);
+        MathUtil.RANDOM.setSeed(1);
         populations.initialize();
         initialize();
         options_.reset();

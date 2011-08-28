@@ -2,6 +2,7 @@ package com.becker.common.math;
 
 import javax.vecmath.Point2d;
 import java.util.Arrays;
+import java.util.Random;
 
 
 /**
@@ -18,7 +19,8 @@ public final class MathUtil {
     
     public static final double EPS_BIG = 0.26;
 
-    private static final double PI_2 = Math.PI / 2.0;
+    public static final Random RANDOM = new Random(1);
+
 
     private MathUtil() {}
 

@@ -1,5 +1,6 @@
 package com.becker.simulation.habitat.creatures;
 
+import com.becker.common.math.MathUtil;
 import com.becker.simulation.habitat.model.HabitatGrid;
 
 import javax.vecmath.Point2d;
@@ -15,7 +16,7 @@ import java.util.Random;
  */
 public class Population {
 
-    private static final Random RANDOM = new Random(1);
+    private static final double SPAWN_RADIUS = 0.05;
 
     private CreatureType type;
 
@@ -41,7 +42,7 @@ public class Population {
 
     public void createInitialSet(int num) {
         for (int i=0; i<num; i++) {
-            creatures.add(new Creature(type, new Point2d(RANDOM.nextDouble(), RANDOM.nextDouble())));
+            creatures.add(new Creature(type, new Point2d(MathUtil.RANDOM.nextDouble(), MathUtil.RANDOM.nextDouble())));
         }
     }
 
@@ -73,8 +74,8 @@ public class Population {
 
             if (spawn) {
                 Point2d loc = creature.getLocation();
-                spawnLocations.add(new Point2d(absMod(loc.getX() + 0.1 * RANDOM.nextDouble()),
-                                               absMod(loc.getY() + 0.1 * RANDOM.nextDouble())));
+                spawnLocations.add(new Point2d(absMod(loc.getX() + SPAWN_RADIUS * MathUtil.RANDOM.nextDouble()),
+                                               absMod(loc.getY() + SPAWN_RADIUS * MathUtil.RANDOM.nextDouble())));
             }
         }
 
