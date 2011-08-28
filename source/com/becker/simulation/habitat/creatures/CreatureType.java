@@ -15,12 +15,12 @@ import java.util.List;
  * @author Barry Becker
  */
 public enum CreatureType {
-                                        // size,   mSpeed,  normpeed, gest, starve, nutr
-    GRASS("grass", new Color(40, 255, 20),    2.0,    0.0,      0.0,    11,    52,     1),
-    COW(  "cow",   new Color(70, 60, 100),   20.0,    0.01,     0.001,  25,    124,    10),
-    RAT(  "rat",   new Color(140, 105, 20),   2.0,    0.005,    0.002,   8,    35,     1),
-    CAT(  "cat",   new Color(0, 195, 220),    5.0,    0.02,     0.005,  14,    72,     4),
-    LION("lion",   new Color(240, 200, 20),   15.0,    0.04,    0.01,   21,    84,     6);
+                                        // size,   mSpeed,  normpeed, gest, starve,  nutr
+    GRASS("grass", new Color(40, 255, 20),    2.0,    0.0,      0.0,    11,    42,     1),
+    COW(  "cow",   new Color(70, 60, 100),   15.0,    0.01,     0.001,  25,    104,    10),
+    RAT(  "rat",   new Color(140, 105, 20),   2.0,    0.005,    0.002,   8,    25,     1),
+    CAT(  "cat",   new Color(0, 195, 220),    5.0,    0.02,     0.005,  14,    52,     4),
+    LION("lion",   new Color(240, 200, 20),   10.0,    0.04,    0.01,   21,    74,     6);
     /* orig
     GRASS("grass", new Color(40, 255, 20),    2.0,    0.0,      0.0,    11,    13,     1),
     COW(  "cow",   new Color(70, 60, 100),   20.0,    0.01,     0.001,  25,    31,    10),
@@ -93,24 +93,49 @@ public enum CreatureType {
         return size;
     }
 
+    public void setSize(double s) {
+        size = s;
+    }
+
+
     public double getNormalSpeed() {
         return normalSpeed;
+    }
+
+    public void setNormalSpeed(double s) {
+        normalSpeed = s;
     }
 
     public double getMaxSpeed() {
         return maxSpeed;
     }
 
+    public void setMaxSpeed(double s) {
+        maxSpeed = s;
+    }
+
     public int getGestationPeriod() {
         return gestationPeriod;
+    }
+
+    public void setGestationPeriod(int g) {
+        gestationPeriod = g;
     }
 
     public int getStarvationThreshold() {
         return starvationThreshold;
     }
 
+    public void setStarvationThreshold(int value) {
+        starvationThreshold = value;
+    }
+
     public int getNutritionalValue() {
         return nutritionalValue;
+    }
+
+    public void setNutritionalValue(int value) {
+        nutritionalValue = value;
     }
 
     public List<CreatureType> getPredators() {

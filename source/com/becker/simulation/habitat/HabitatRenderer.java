@@ -42,7 +42,6 @@ public class HabitatRenderer  {
             g2.setColor(pop.getType().getColor());
             for (Creature creature : pop.getCreatures())  {
                 drawCreature(creature, g2);
-
             }
         }
     }
