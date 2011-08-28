@@ -23,8 +23,7 @@ import java.awt.*;
  *  Currently can't get working because of seg fault (because need to recompile for 64 bit?)
  */
 public class TrebuchetSimulator extends NewtonianSimulator
-                                implements ChangeListener
-{
+                                implements ChangeListener {
 
     private Trebuchet trebuchet_ = null;
 
@@ -40,21 +39,18 @@ public class TrebuchetSimulator extends NewtonianSimulator
     private static final int NUM_PARAMS = 3;
 
 
-    public TrebuchetSimulator()
-    {
+    public TrebuchetSimulator() {
         super("Trebuchet");
         reset();
         this.setPreferredSize(new Dimension( 800, 900));
     }
 
-    public TrebuchetSimulator( Trebuchet trebuchet )
-    {
+    public TrebuchetSimulator( Trebuchet trebuchet ) {
         super("Trebuchet");
         commonInit( trebuchet );
     }
 
-    private void commonInit( Trebuchet trebuchet )
-    {
+    private void commonInit( Trebuchet trebuchet ) {
         trebuchet_ = trebuchet;
         setNumStepsPerFrame(DEFAULT_NUM_STEPS_PER_FRAME);
         this.setBackground(BACKGROUND_COLOR);
@@ -69,14 +65,12 @@ public class TrebuchetSimulator extends NewtonianSimulator
     }
 
     @Override
-    public Color getBackground()
-    {
+    public Color getBackground() {
         return BACKGROUND_COLOR;
     }
 
     @Override
-    public JPanel createTopControls()
-    {
+    public JPanel createTopControls() {
          JPanel controls = super.createTopControls();
 
         JPanel zoomPanel = new JPanel();
@@ -94,8 +88,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
     }
 
     @Override
-    public void doOptimization()
-    {
+    public void doOptimization() {
         Optimizer optimizer;
         if (GUIUtil.isStandAlone())
             optimizer = new Optimizer( this );
@@ -128,8 +121,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
 
 
     @Override
-    public double timeStep()
-    {
+    public double timeStep()  {
         if ( !isPaused() ) {
             timeStep_ = trebuchet_.stepForward( timeStep_ );
         }
@@ -137,8 +129,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
     }
 
     @Override
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setColor( BACKGROUND_COLOR );
@@ -215,8 +206,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
 
 
     // api for setting trebuchet params  /////////////////////////////////
-    public Trebuchet getTrebuchet()
-    {
+    public Trebuchet getTrebuchet() {
         return trebuchet_;
     }
 
@@ -238,8 +228,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
      * If the trebuchet becomes unstable, then 0.0 is returned.
      */
     @Override
-    public double evaluateFitness( ParameterArray params )
-    {
+    public double evaluateFitness( ParameterArray params ) {
         //trebuchet_.setWaveSpeed( params.get( 0 ).value );
         //trebuchet_.setWaveAmplitude( params.get( 1 ).value );
         //trebuchet_.setWavePeriod( params.get( 2 ).value );

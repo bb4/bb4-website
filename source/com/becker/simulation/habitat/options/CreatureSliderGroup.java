@@ -33,9 +33,11 @@ public class CreatureSliderGroup extends SliderGroup {
 
     private SliderProperties[] createSliderProperties()  {
 
-        SliderProperties[] props = new SliderProperties[6];
-
         CreatureType type = creaturePop_.getType();
+        double normSpeed = type.getNormalSpeed();
+        SliderProperties[] props = normSpeed==0? new SliderProperties[4] : new SliderProperties[6];
+
+
         String creatureName = type.getName();
         setBackground(type.getColor());
 
@@ -51,13 +53,13 @@ public class CreatureSliderGroup extends SliderGroup {
         int nutrition = type.getNutritionalValue();
         props[3] = new SliderProperties(creatureName + NUTRITION_LABEL,
                                          1, (int)(MAX_FACTOR * nutrition), nutrition);
-        double normSpeed = type.getNormalSpeed();
-        props[4] = new SliderProperties(creatureName + NORM_SPEED_LABEL,
-                                         0, MAX_FACTOR * normSpeed, normSpeed, 1000.0);
-        double maxSpeed = type.getMaxSpeed();
-        props[5] = new SliderProperties(creatureName + MAX_SPEED_LABEL,
-                                         0, MAX_FACTOR * maxSpeed, maxSpeed, 1000.0);
-
+        if (normSpeed > 0) {
+            props[4] = new SliderProperties(creatureName + NORM_SPEED_LABEL,
+                                             0, MAX_FACTOR * normSpeed, normSpeed, 1000.0);
+            double maxSpeed = type.getMaxSpeed();
+            props[5] = new SliderProperties(creatureName + MAX_SPEED_LABEL,
+                                             0, MAX_FACTOR * maxSpeed, maxSpeed, 1000.0);
+        }
         return props;
     }
 

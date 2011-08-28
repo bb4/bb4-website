@@ -68,6 +68,8 @@ public abstract class AbstractFunctionRenderer {
     protected void drawDecoration(Graphics2D g2, Range yRange) {
 
         g2.setColor(LABEL_COLOR);
+        g2.drawRect(xOffset_, yOffset_, width_, height_);
+
         // left y axis
         g2.drawLine(xOffset_ + MARGIN-1, yOffset_ + height_ - MARGIN,
                     xOffset_ + MARGIN-1, yOffset_ + MARGIN);
