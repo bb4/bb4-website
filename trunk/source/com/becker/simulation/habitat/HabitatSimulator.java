@@ -29,7 +29,9 @@ public class HabitatSimulator extends Simulator {
 
     /** Constructor */
     public HabitatSimulator() {
+
         super("Habitat Simulation");
+        setBackground(Color.WHITE);
         populations = new Populations();
         initialize();
     }
@@ -37,6 +39,7 @@ public class HabitatSimulator extends Simulator {
     @Override
     protected void reset() {
 
+        this.setPaused(true);
         populations.initialize();
         initialize();
         options_.reset();
