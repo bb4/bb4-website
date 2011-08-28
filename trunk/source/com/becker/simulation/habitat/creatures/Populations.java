@@ -2,6 +2,8 @@ package com.becker.simulation.habitat.creatures;
 
 import com.becker.common.math.function.Function;
 import com.becker.common.math.function.PopulationFunction;
+import com.becker.simulation.habitat.model.Cell;
+import com.becker.simulation.habitat.model.HabitatGrid;
 import com.becker.ui.renderers.MultipleFunctionRenderer;
 
 import java.awt.*;
@@ -17,34 +19,39 @@ public class Populations extends ArrayList<Population> {
 
     long dayCount = 0;
 
-    /** asociate population with function*/
+    /** associate population with function*/
     Map<Population, PopulationFunction> functionMap;
 
+    HabitatGrid grid;
+
+    /**
+     * Constructor
+     */
     public Populations() {
 
+        initialize();
+    }
+
+    public void initialize() {
         functionMap = new HashMap<Population, PopulationFunction>();
+        grid = new HabitatGrid(20, 15);
 
-        Population grassPop = new Population(CreatureType.GRASS);
-        grassPop.createInitialSet(30);
-        Population cowPop = new Population(CreatureType.COW);
-        cowPop.createInitialSet(10);
-        Population ratPop = new Population(CreatureType.RAT);
-        ratPop.createInitialSet(20);
-        Population catPop = new Population(CreatureType.CAT);
-        catPop.createInitialSet(6);
-        Population lionPop = new Population(CreatureType.LION);
-        catPop.createInitialSet(2);
+        this.add(Population.createPopulation(CreatureType.GRASS, 40));
+        this.add(Population.createPopulation(CreatureType.COW, 10));
+        this.add(Population.createPopulation(CreatureType.RAT, 15));
+        this.add(Population.createPopulation(CreatureType.CAT, 9));
+        this.add(Population.createPopulation(CreatureType.LION, 4));
 
-        this.add(grassPop);
-        this.add(cowPop);
-        this.add(ratPop);
-        this.add(catPop);
-        this.add(lionPop);
+        updateGridCellCounts();
     }
 
     public void nextDay() {
         for (Population pop : this) {
-            pop.nextDay();
+            pop.nextDay(grid);
+        }
+        // remove any creatures that might have died by starvation or being eaten.
+        for (Population pop : this) {
+            pop.removeDead(grid);
         }
         updateFunctions(dayCount);
         dayCount++;
@@ -70,6 +77,15 @@ public class Populations extends ArrayList<Population> {
 
         for (Population pop : this) {
             functionMap.get(pop).addValue(iteration, pop.getSize());
+        }
+    }
+
+    private void updateGridCellCounts() {
+        for (Population pop : this) {
+            for (Creature c : pop.getCreatures()) {
+                Cell cell = grid.getCellForPosition(c.getLocation());
+                cell.addCreature(c);
+            }
         }
     }
 

@@ -1,5 +1,7 @@
 package com.becker.simulation.habitat.creatures;
 
+import org.igoweb.igoweb.client.gtp.A;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -8,53 +10,71 @@ import java.util.List;
  * Everything we need to know about a creature.
  * There are many different sorts of creatures.
  *
+ * Add more creatures like sheep, fox, chickens, ants, vulture,
+ *
  * @author Barry Becker
  */
 public enum CreatureType {
-                                        // size,   mSpeed,  gest, starve, nutr
-    GRASS("grass", new Color(40, 255, 20),    2.0,    0.0,     3,     0,     1),
-    COW(  "cow",   new Color(70, 60, 100),   30.0,    0.01,   30,    40,    10),
-    RAT(  "rat",   new Color(140, 105, 20),   2.0,    0.005,   5,    6,     2),
-    CAT(  "cat",   new Color(10, 155, 200),   5.0,    0.02,   16,    19,     4),
-    LION("lion",  new Color(230, 210, 10),   20.0,    0.04,   20,     23,    6);
+                                        // size,   mSpeed,  normpeed, gest, starve, nutr
+    GRASS("grass", new Color(40, 255, 20),    2.0,    0.0,      0.0,    11,    52,     1),
+    COW(  "cow",   new Color(70, 60, 100),   20.0,    0.01,     0.001,  25,    124,    10),
+    RAT(  "rat",   new Color(140, 105, 20),   2.0,    0.005,    0.002,   8,    35,     1),
+    CAT(  "cat",   new Color(0, 195, 220),    5.0,    0.02,     0.005,  14,    72,     4),
+    LION("lion",   new Color(240, 200, 20),   15.0,    0.04,    0.01,   21,    84,     6);
+    /* orig
+    GRASS("grass", new Color(40, 255, 20),    2.0,    0.0,      0.0,    11,    13,     1),
+    COW(  "cow",   new Color(70, 60, 100),   20.0,    0.01,     0.001,  25,    31,    10),
+    RAT(  "rat",   new Color(140, 105, 20),   2.0,    0.005,    0.002,   8,    10,     1),
+    CAT(  "cat",   new Color(0, 195, 220),    5.0,    0.02,     0.005,  14,    18,     4),
+    LION("lion",   new Color(240, 200, 20),   15.0,    0.04,    0.01,   21,    21,     6);
+    */
+
 
     private String name;
     private Color color;
     private double size;
+    private double normalSpeed;
     private double maxSpeed;
-    private int gestationPeriod; // when numDaysPregnant = this then reproduce
-    private int starvationThreshold; // when hunger >= this then die.
+
+    /** when numDaysPregnant = this then reproduce */
+    private int gestationPeriod;
+
+    /** when hunger >= this then die. */
+    private int starvationThreshold;
+
     private int nutritionalValue;
 
-    private static final Map<CreatureType, CreatureType[]> predatorMap_ = new HashMap<CreatureType, CreatureType[]>();
-    private static final Map<CreatureType, CreatureType[]> preyMap_ = new HashMap<CreatureType, CreatureType[]>();
+    private static final Map<CreatureType, List<CreatureType>> predatorMap_ = new HashMap<CreatureType, List<CreatureType>>();
+    private static final Map<CreatureType, List<CreatureType>> preyMap_ = new HashMap<CreatureType, List<CreatureType>>();
 
 
     static {
-        predatorMap_.put(GRASS, new CreatureType[] {COW, RAT});
-        predatorMap_.put(COW, new CreatureType[] {LION});
-        predatorMap_.put(RAT, new CreatureType[] {CAT, LION});
-        predatorMap_.put(CAT, new CreatureType[] {LION});
-        predatorMap_.put(LION, new CreatureType[] {});
+        // eaten by relationship
+        predatorMap_.put(GRASS, Arrays.asList(COW, RAT));
+        predatorMap_.put(COW, Arrays.asList(LION));
+        predatorMap_.put(RAT, Arrays.asList(CAT, LION));
+        predatorMap_.put(CAT, Arrays.asList(LION));
+        predatorMap_.put(LION, Collections.EMPTY_LIST);
 
         for (CreatureType creature : values()) {
             List<CreatureType> preys = new ArrayList<CreatureType>();
 
             for (CreatureType potentialprey : values()) {
-                List<CreatureType> preds = Arrays.asList(predatorMap_.get(potentialprey));
+                List<CreatureType> preds = predatorMap_.get(potentialprey);
                 if (preds.contains(creature)) {
                     preys.add(potentialprey);
                 }
             }
-            preyMap_.put(creature, preys.toArray(new CreatureType[preys.size()]));
+            preyMap_.put(creature, preys);
         }
     }
 
-    CreatureType(String name, Color color, double size,
+    CreatureType(String name, Color color, double size, double normlSpeed,
                  double maxSpeed, int gestationPeriod, int starvationTheshold, int nutritionalValue)  {
         this.name = name;
         this.color = color;
         this.size = size;
+        this.normalSpeed = normlSpeed;
         this.maxSpeed = maxSpeed;
         this.gestationPeriod = gestationPeriod;
         this.starvationThreshold = starvationTheshold;
@@ -73,6 +93,10 @@ public enum CreatureType {
         return size;
     }
 
+    public double getNormalSpeed() {
+        return normalSpeed;
+    }
+
     public double getMaxSpeed() {
         return maxSpeed;
     }
@@ -89,12 +113,11 @@ public enum CreatureType {
         return nutritionalValue;
     }
 
-
-    public CreatureType[] getPredators() {
+    public List<CreatureType> getPredators() {
         return predatorMap_.get(this);
     }
 
-    public CreatureType[] getPreys() {
+    public List<CreatureType> getPreys() {
         return preyMap_.get(this);
     }
 
@@ -104,10 +127,7 @@ public enum CreatureType {
 
     /** for testing */
     public static void main(String[] args) {
-        System.out.println("preyMap = " );
-        for (CreatureType creature : values()) {
-            System.out.println(creature + " eats  " + Arrays.toString(preyMap_.get(creature)));
-        }
+        System.out.println("preyMap = " + preyMap_);
     }
 
 }
