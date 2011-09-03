@@ -1,4 +1,4 @@
-package com.becker.puzzle.common;
+package com.becker.puzzle.common.solver;
 
 import java.util.LinkedList;
 import java.util.List;

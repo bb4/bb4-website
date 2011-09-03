@@ -1,9 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.puzzle.sudoku.Board;
 import junit.framework.Assert;
 
 /**

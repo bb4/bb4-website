@@ -1,5 +1,6 @@
 package com.becker.puzzle.sudoku;
 
+import com.becker.puzzle.sudoku.model.Board;
 import junit.framework.*;
 
 /**

@@ -1,6 +1,7 @@
 package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.ThreadUtil;
+import com.becker.puzzle.sudoku.model.Board;
 
 import java.awt.*;
 

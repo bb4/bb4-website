@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku;
+package com.becker.puzzle.sudoku.model;
 
 import java.util.*;
 
@@ -9,8 +9,8 @@ import java.util.*;
  *
  *  @author Barry Becker
  */
-public class Board
-{
+public class Board {
+
     /** the internal data structures representing the game board. */
     protected BigCell bigCells_[][] = null;
 

@@ -1,6 +1,9 @@
 package com.becker.puzzle.hiq;
 
 import com.becker.puzzle.common.*;
+import com.becker.puzzle.common.solver.ConcurrentPuzzleSolver;
+import com.becker.puzzle.common.solver.PuzzleSolver;
+import com.becker.puzzle.common.solver.SequentialPuzzleSolver;
 
 /**
  * Type of HiQ solver to use.

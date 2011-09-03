@@ -1,6 +1,6 @@
 package com.becker.puzzle.redpuzzle;
 
-import com.becker.puzzle.common.PuzzleSolver;
+import com.becker.puzzle.common.solver.PuzzleSolver;
 import com.becker.puzzle.common.Refreshable;
 
 import java.util.List;

@@ -1,5 +1,8 @@
 package com.becker.puzzle.sudoku;
 
+import com.becker.puzzle.sudoku.model.Board;
+import com.becker.puzzle.sudoku.model.Cell;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
