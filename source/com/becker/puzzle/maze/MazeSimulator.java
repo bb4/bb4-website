@@ -1,8 +1,6 @@
 package com.becker.puzzle.maze;
 
 import com.becker.ui.application.ApplicationApplet;
-import com.becker.ui.components.GradientButton;
-import com.becker.ui.components.NumberInput;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
@@ -20,22 +18,9 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener {
 
     MazePanel mazePanel_;
 
-    // the passage thickness in pixels
-    protected static final int PASSAGE_THICKNESS = 40;
-    protected static final int INITIAL_ANIMATION_SPEED = 20;
-
-    protected NumberInput thicknessField_ = null;
-
-    // ui for entering the direction probabilities.
-    protected NumberInput forwardProbField_;
-    protected NumberInput leftProbField_;
-    protected NumberInput rightProbField_;
-    protected NumberInput animationSpeedField_;
-
-    protected GradientButton regenerateButton_;
-    protected GradientButton solveButton_;
-
     protected Dimension oldSize_;
+
+    private TopControlPanel controlPanel_;
 
     // constructor
     public MazeSimulator()
@@ -51,7 +36,7 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
-        JPanel controlsPanel = createControlsPanel();
+        controlPanel_ = new TopControlPanel(this);
 
         JPanel mazePanel = new JPanel( new BorderLayout() );
         mazePanel.add( mazePanel_, BorderLayout.CENTER );
@@ -61,7 +46,7 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener {
                                 BorderFactory.createEmptyBorder( 4, 4, 4, 4 ) )
                 )
         );
-        mainPanel.add( controlsPanel, BorderLayout.NORTH );
+        mainPanel.add( controlPanel_, BorderLayout.NORTH );
         mainPanel.add( mazePanel, BorderLayout.CENTER );
 
         return mainPanel;
@@ -90,50 +75,16 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener {
     }
 
     /**
-     * @return panel containing the maze controls to show at the top.
-     */
-    private JPanel createControlsPanel() {
-        JPanel controlsPanel = new JPanel();
-        thicknessField_ = new NumberInput("Thickness", PASSAGE_THICKNESS,
-                                          "The passage thickness", 2, 200, true);
-        animationSpeedField_ = new NumberInput("Speed", INITIAL_ANIMATION_SPEED,
-                                               "The animation speed (large number is slow).", 1, 100, true);
-
-        forwardProbField_ = new NumberInput("Forward", 0.34,
-                                            "The probability of moving straight forward", 0, 1.0, false);
-        leftProbField_ = new NumberInput("Left", 0.33,
-                                         "The probability of moving left", 0, 1.0, false);
-        rightProbField_ = new NumberInput("Right", 0.33,
-                                          "The probability of moving right", 0, 1.0, false);
-
-        controlsPanel.add( thicknessField_ );
-        controlsPanel.add( animationSpeedField_ );
-        controlsPanel.add( Box.createHorizontalStrut( 15 ) );
-        controlsPanel.add( forwardProbField_ );
-        controlsPanel.add( leftProbField_ );
-        controlsPanel.add( rightProbField_ );
-
-        regenerateButton_ = new GradientButton( "Generate" );
-        regenerateButton_.addActionListener( this );
-        controlsPanel.add( regenerateButton_ );
-
-        solveButton_ = new GradientButton( "Solve" );
-        solveButton_.addActionListener( this );
-        controlsPanel.add( solveButton_ );
-        return controlsPanel;
-    }
-
-    /**
      * called when a button is pressed.
      */
     public void actionPerformed( ActionEvent e )  {
 
         Object source = e.getSource();
 
-        if ( source.hashCode() == regenerateButton_.hashCode() ) {
+        if ( controlPanel_.isRegenerateButton(source)) {
             regenerate();
         }
-        if ( source == solveButton_ ) {
+        if ( controlPanel_.isSolveButton(source)) {
             solve();
         }
     }
@@ -143,30 +94,27 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener {
      * and current size of the panel.
      */
     public void regenerate() {
-        if ( thicknessField_ == null )   {
+        if ( controlPanel_ == null )   {
             return; // not initialized yet
         }
 
-        int thickness = thicknessField_.getIntValue();
+        int thickness = controlPanel_.getThickness();
 
-        double forwardP =forwardProbField_.getValue();
-        double leftP = leftProbField_.getValue();
-        double rightP = rightProbField_.getValue();
+        double forwardP = controlPanel_.getForwardPropability();
+        double leftP = controlPanel_.getLeftProbability();
+        double rightP = controlPanel_.getRightProbability();
 
         double sum = forwardP + leftP + rightP;
-        mazePanel_.setAnimationSpeed( getAnimationSpeed());
+        mazePanel_.setAnimationSpeed(controlPanel_.getAnimationSpeed());
         mazePanel_.setThickness(thickness);
         mazePanel_.generate(thickness, forwardP / sum, leftP / sum, rightP / sum );
     }
 
     public void solve() {
-        mazePanel_.setAnimationSpeed(getAnimationSpeed());
+        mazePanel_.setAnimationSpeed(controlPanel_.getAnimationSpeed());
         mazePanel_.solve();
     }
 
-    private int getAnimationSpeed() {
-        return animationSpeedField_.getIntValue();
-    }
 
     @Override
     public void start() {

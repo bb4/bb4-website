@@ -1,15 +1,16 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.puzzle.common.*;
-
-import java.util.concurrent.ConcurrentMap;
+import com.becker.puzzle.common.solver.ConcurrentPuzzleSolver;
+import com.becker.puzzle.common.solver.PuzzleSolver;
+import com.becker.puzzle.common.solver.SequentialPuzzleSolver;
 
 /**
  * Enum for type of solver to employ when solving the puzzle.
  * 
  * @author Barry Becker
  */
-public enum Algorithm  implements AlgorithmEnum<PieceList, Piece> {
+public enum Algorithm implements AlgorithmEnum<PieceList, Piece> {
     
     BRUTE_FORCE_ORIGINAL("Brute force (hand crafted)"),  
     BRUTE_FORCE_SEQUENTIAL("Brute force (sequential)"), 

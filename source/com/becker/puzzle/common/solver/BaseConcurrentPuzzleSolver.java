@@ -1,4 +1,7 @@
-package com.becker.puzzle.common;
+package com.becker.puzzle.common.solver;
+
+import com.becker.puzzle.common.PuzzleController;
+import com.becker.puzzle.common.Refreshable;
 
 import java.security.AccessControlException;
 import java.util.HashSet;

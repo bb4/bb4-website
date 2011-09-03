@@ -1,6 +1,8 @@
 package com.becker.puzzle.sudoku;
 
 import com.becker.puzzle.common.PuzzleRenderer;
+import com.becker.puzzle.sudoku.model.Board;
+import com.becker.puzzle.sudoku.model.Cell;
 
 import java.awt.*;
 import java.util.Iterator;

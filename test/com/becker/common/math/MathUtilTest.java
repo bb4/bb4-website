@@ -1,7 +1,10 @@
 package com.becker.common.math;
 
+import ca.dj.jigo.sgf.tokens.SourceToken;
 import junit.framework.*;
 import com.becker.common.math.MathUtil;
+
+import javax.vecmath.Point2d;
 
 /**
  * @author Barry Becker Date: Apr 2, 2006
@@ -46,6 +49,20 @@ public class MathUtilTest extends TestCase {
     }
 
     public void testFactorial() {
-        Assert.assertEquals("Unexpected value for 4!", 24.0, MathUtil.factorial(4));
+        Assert.assertEquals("Unexpected value for 4!", 24L, MathUtil.factorial(4));
+    }
+
+    public void testFindAngle() {
+
+
+        Point2d point = new Point2d(1.0, 1.0);
+        for (double x=0; x<2.0*Math.PI; x+=0.1) {
+            Point2d toPoint = new Point2d(point.getX() + Math.cos(x), point.getY() + Math.sin(x));
+            System.out.println("angle to " + toPoint +" is " + MathUtil.getDirectionTo(point, toPoint));
+        }
+        Assert.assertEquals("Unexpected angle.", Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(2.0, 2.0)));
+        Assert.assertEquals("Unexpected angle.", 3.0*Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(0.0, 2.0)));
+        Assert.assertEquals("Unexpected angle.", 5.0*Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(0.0, 0.0)));
+        Assert.assertEquals("Unexpected angle.", -Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(2.0, 0.0)));
     }
 }

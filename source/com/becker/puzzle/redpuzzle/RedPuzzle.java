@@ -21,18 +21,15 @@ import javax.swing.*;
  * @author Barry becker
  */
 public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
-                            implements SliderChangeListener
-{
+                            implements SliderChangeListener {
     
     /** allows you to change the animation speed. */
     private LabeledSlider animSpeedSlider_;
-    
 
     /**
      * Construct the application and set the look and feel.
      */
-    public RedPuzzle() {
-    }
+    public RedPuzzle() {}
 
     @Override
     protected PuzzleViewer<PieceList, Piece> createViewer() {

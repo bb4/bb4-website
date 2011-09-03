@@ -36,8 +36,7 @@ import com.becker.ui.util.GUIUtil;
  * After optimization it  ran in about 3 minutes on a Core2Duo (189 seconds).
  * After parallelizing the algorithm using ConcurrrentPuzzleSolver it is down to 93 seconds on the CoreDuo.
  */
-public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
-{
+public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove> {
     
     /**
      * Construct the application

@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku;
+package com.becker.puzzle.sudoku.model;
 
 import java.util.HashSet;
 import java.util.Set;
