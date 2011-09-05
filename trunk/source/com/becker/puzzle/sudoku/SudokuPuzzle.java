@@ -31,7 +31,7 @@ public final class SudokuPuzzle extends JApplet {
      */
     @Override
     public void init() {
-        puzzlePanel_ = new SudokuPanel(Data.SIMPLE_4);
+        puzzlePanel_ = new SudokuPanel(Data.SIMPLE_9);
         controller_ = new SudokuController(puzzlePanel_);
         topControls_ = new TopControlPanel(controller_);
 

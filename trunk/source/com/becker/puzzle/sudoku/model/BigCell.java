@@ -68,6 +68,7 @@ public class BigCell {
     }
 
     /**
+     * Find the intersection of the row, column, and bigGrid candidates and set it as the candidates for the cell.
      * @param cell cell to check for a unique candidate.
      * @return the unique value for this cell if there is one, else return 0.
      */
@@ -76,11 +77,9 @@ public class BigCell {
         if (cell.getCandidates() == null)  {
             cell.getValue();
         }
-        Candidates cands = cell.getCandidates();
-        cands.addAll(candidates_);
-        cands.retainAll(rowCands);
-        cands.retainAll(colCands);
 
+        Candidates cands = cell.getCandidates();
+        cands.findIntersectionCandidates(candidates_, rowCands, colCands);
 
         if (cands.size() == 1) {
             // if there is only one candidate, then that is the value for this cell.

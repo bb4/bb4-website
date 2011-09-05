@@ -1,11 +1,7 @@
 package com.becker.puzzle.sudoku.model;
 
-import com.sun.org.apache.xpath.internal.operations.Variable;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
@@ -17,11 +13,23 @@ public class Candidates extends ConcurrentSkipListSet<Integer> {
 
     public Candidates() {}
 
+    /**
+     * Convenient for testing.
+     * @param values
+     */
     public Candidates(Integer... values) {
         if (values.length > 0) {
             this.addAll(Arrays.asList(values));
         }
-
     }
 
+    /**
+     * @return the intersection of the 3 specified sets.
+     */
+    public void findIntersectionCandidates(Candidates set1, Candidates set2, Candidates set3)  {
+
+        this.addAll(set1);
+        this.retainAll(set2);
+        this.retainAll(set3);
+    }
 }
