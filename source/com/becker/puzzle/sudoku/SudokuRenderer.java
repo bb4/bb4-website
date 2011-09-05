@@ -2,6 +2,7 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.puzzle.common.PuzzleRenderer;
 import com.becker.puzzle.sudoku.model.Board;
+import com.becker.puzzle.sudoku.model.Candidates;
 import com.becker.puzzle.sudoku.model.Cell;
 
 import java.awt.*;
@@ -82,7 +83,7 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
         int jittered_xpos = xpos + (int)(Math.random() * 3 - 1);
         int jittered_ypos = ypos + (int)(Math.random() * 3 - 1);
         Font font = new Font("Sans Serif", Font.PLAIN, pieceSize >> 1);
-        Font candidateFont = new Font("Sans Serif", Font.PLAIN, pieceSize >> 2);
+        Font candidateFont = new Font("Sans Serif", Font.PLAIN, (pieceSize >> 2) - 2);
         g.setFont(font);
         g.setColor( cell.isOriginal() ? CELL_ORIG_BACKGROUND_COLOR : CELL_BACKGROUND_COLOR );
         g.fillRect( xpos + 1, ypos + 1, pieceSize - 3, pieceSize - 2 );
@@ -93,8 +94,8 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
                     jittered_xpos + (int)(0.8 * s), (int)(jittered_ypos + s * 1.7) );
         }
 
-        // draw the first 4 numbers in the candidate list, if there are any.
-        Set<Integer> candidates = cell.getCandidates();
+        // draw the first 9 numbers in the candidate list, if there are any.
+        Candidates candidates = cell.getCandidates();
         if (candidates != null) {
             g.setColor(CANDIDATE_TEXT_COLOR);
             g.setFont(candidateFont);
@@ -103,26 +104,62 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
         }
     }
 
-    private static void drawHints(Graphics g, Set<Integer> candidates, int x, int y, int scale) {
-        int xOffsetLow =  (int) (0.4 * scale);
-        int xOffsetHi =  (int) (1.5 * scale);
-        int yOffsetLow =  (int) (0.9 * scale);
-        int yOffsetHi =  (int) (2.1 * scale);
+    private static void drawHints(Graphics g, Candidates candidates, int x, int y, int scale) {
+        int xOffsetLow =  (int) (0.3 * scale);
+        int xOffsetMed =  (int) (1.1 * scale);
+        int xOffsetHi =  (int) (1.9 * scale);
+        int yOffsetLow =  (int) (0.7 * scale);
+        int yOffsetMed =  (int) (1.5 * scale);
+        int yOffsetHi =  (int) (2.3 * scale);
         int[][] offsets = {
                 {xOffsetLow, yOffsetLow},
+                {xOffsetMed, yOffsetLow},
                 {xOffsetHi, yOffsetLow},
+                {xOffsetLow, yOffsetMed},
+                {xOffsetMed, yOffsetMed},
+                {xOffsetHi, yOffsetMed},
                 {xOffsetLow, yOffsetHi},
+                {xOffsetMed, yOffsetHi},
                 {xOffsetHi, yOffsetHi}
         };
 
-        synchronized (candidates) {
-            int ct = 0;
-            Iterator<Integer> cit = candidates.iterator();
-            while (cit.hasNext() && ct < 4)  { 
-                g.drawString(Integer.toString(cit.next()), x + offsets[ct][0], y + offsets[ct][1]);
-                ct++;
-            }
+        int ct = 0;
+        Iterator<Integer> cit = candidates.iterator();
+        while (cit.hasNext() && ct < 9)  {
+            g.drawString(getSymbol(cit.next()), x + offsets[ct][0], y + offsets[ct][1]);
+            ct++;
         }
+
+    }
+
+    /**
+     * Get a one character symbol for the value.
+     * @param value
+     * @return
+     */
+    private static String getSymbol(int value) {
+
+        String sValue = "-";
+        switch (value) {
+            case 10 : sValue = "0"; break;
+            case 11 : sValue = "A"; break;
+            case 12 : sValue = "B"; break;
+            case 13 : sValue = "C"; break;
+            case 14 : sValue = "D"; break;
+            case 15 : sValue = "E"; break;
+            case 16 : sValue = "F"; break;
+            case 17 : sValue = "G"; break;
+            case 18 : sValue = "H"; break;
+            case 19 : sValue = "I"; break;
+            case 20 : sValue = "J"; break;
+            case 21 : sValue = "K"; break;
+            case 22 : sValue = "L"; break;
+            case 23 : sValue = "M"; break;
+            case 24 : sValue = "N"; break;
+            case 25 : sValue = "O"; break;
+            default : sValue = Integer.toString(value);
+        }
+        return sValue;
     }
 
 

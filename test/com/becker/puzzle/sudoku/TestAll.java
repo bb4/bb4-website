@@ -15,6 +15,9 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Sudoku Tests");
 
         suite.addTestSuite(TestSudokuSolver.class);
+        suite.addTestSuite(TestSudokuGenerator.class);
+
+        suite.addTest(com.becker.puzzle.sudoku.model.TestAll.suite());
 
         return suite;
     }

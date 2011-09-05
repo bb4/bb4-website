@@ -1,28 +1,45 @@
 package com.becker.puzzle.sudoku;
 
+import com.becker.puzzle.sudoku.data.TestData;
 import com.becker.puzzle.sudoku.model.Board;
 import junit.framework.*;
 
 /**
- * @author Barry Becker Date: Jul 3, 2006
+ * @author Barry Becker
  */
 public class TestSudokuSolver extends TestCase {
 
+    /** instance under test. */
+    SudokuSolver solver;
+
+
+    /**
+     * common initialization for all test cases.
+     */
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        solver = new SudokuSolver();
+    }
+
+
+    @Override
+    protected void tearDown() throws Exception {
+
+        super.tearDown();
+    }
+
     public void testCaseSimpleSample() {
 
-        SudokuSolver solver = new SudokuSolver();
-        boolean solved = solver.solvePuzzle(new Board(Data.SAMPLE1));
-
-        Assert.assertTrue( "Did not solve SAMPLE1 successfully", solved);
+        boolean solved = solver.solvePuzzle(new Board(TestData.SIMPLE_9));
+        Assert.assertTrue( "Did not solve SIMPLE_SAMPLE_9 successfully", solved);
     }
 
     /** negative test case */
     public void testImpossiblePuzzle() {
 
-        SudokuSolver solver = new SudokuSolver();
-        boolean solved = solver.solvePuzzle(new Board(Data.SAMPLE2));
-
-        Assert.assertFalse( "Solved impossible SAMPLE1 puzzle. Should not have.", solved);
+        boolean solved = solver.solvePuzzle(new Board(TestData.INCONSISTENT_9));
+        Assert.assertFalse( "Solved impossible SIMPLE_SAMPLE_9 puzzle. Should not have.", solved);
     }
 
 
@@ -56,7 +73,7 @@ public class TestSudokuSolver extends TestCase {
     }
 
     /**
-     * @return all the junit test caes to run (in this class).
+     * @return all the junit test cases to run (in this class).
      */
     public static Test suite() {
         return new TestSuite(TestSudokuSolver.class);

@@ -3,47 +3,33 @@
   <component name="AnalysisUIOptions">
     <option name="ANALYZE_TEST_SOURCES" value="false" />
     <option name="SCOPE_TYPE" value="2" />
-    <option name="CUSTOM_SCOPE_NAME" value="ui" />
+    <option name="CUSTOM_SCOPE_NAME" value="Hierarchy of com.becker.game.twoplayer.go.board.analysis.group.AbsoluteHealthCalculator" />
     <option name="ANALYSIS_IN_BACKGROUND" value="true" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="7f837598-b78e-4519-945f-e7b7f7021387" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/solver" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/TopControlPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/maze/TopControlPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/TopControlPanel.java" />
+    <list default="true" readonly="true" id="7f837598-b78e-4519-945f-e7b7f7021387" name="Default" comment="Refactor puzzle apps.&#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/data" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/model" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCellArray.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Candidates.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/CandidatesArray.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/ValuesList.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestSudokuGenerator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/data/TestData.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/model/TestAll.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/model/TestBoard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/becker.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/becker.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/common/AbstractPuzzleController.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/AbstractPuzzleController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/common/AlgorithmEnum.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/AlgorithmEnum.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/common/PuzzleApplet.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/PuzzleApplet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/hiq/Algorithm.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/hiq/Algorithm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/hiq/HiQPuzzle.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/hiq/HiQPuzzle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/maze/MazeSimulator.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/maze/MazeSimulator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/redpuzzle/Algorithm.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/redpuzzle/Algorithm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/redpuzzle/RedPuzzle.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/redpuzzle/RedPuzzle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/redpuzzle/RedPuzzleSolver.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/redpuzzle/RedPuzzleSolver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/shuffle/ShufflePuzzle.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/shuffle/ShufflePuzzle.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/Data.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/Data.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuGenerator.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuPanel.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuPuzzle.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuPuzzle.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuRenderer.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuRenderer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuSolver.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuSolver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/common/math/MathUtilTest.java" afterPath="$PROJECT_DIR$/test/com/becker/common/math/MathUtilTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/group/TestEyeHealthEvaluator.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/analysis/group/TestEyeHealthEvaluator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/update/TestPostMoveUpdater.java" afterPath="$PROJECT_DIR$/test/com/becker/game/twoplayer/go/board/update/TestPostMoveUpdater.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCell.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Board.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Board.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Cell.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Cell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestAll.java" afterPath="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestAll.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestSudokuSolver.java" afterPath="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestSudokuSolver.java" />
-      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\puzzle\common\BaseConcurrentPuzzleSolver.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/solver/BaseConcurrentPuzzleSolver.java" />
-      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\puzzle\common\ConcurrentPuzzleSolver.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/solver/ConcurrentPuzzleSolver.java" />
-      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\puzzle\common\PuzzleNode.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/solver/PuzzleNode.java" />
-      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\puzzle\common\PuzzleSolver.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/solver/PuzzleSolver.java" />
-      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\puzzle\common\SequentialPuzzleSolver.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/solver/SequentialPuzzleSolver.java" />
-      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\puzzle\common\ValueLatch.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/common/solver/ValueLatch.java" />
-      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\puzzle\sudoku\BigCell.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCell.java" />
-      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\puzzle\sudoku\Board.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Board.java" />
-      <change type="MOVED" beforePath="E:\projects\java_projects\trunk\source\com\becker\puzzle\sudoku\Cell.java" afterPath="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Cell.java" />
     </list>
     <list id="f156c665-549e-4227-a588-09fe7dde4dd3" name="Failed commit: Default (3)" comment="try to remove corrupt dir." />
     <list id="205c041e-69b6-43e2-8a4d-a6606d9a31ad" name="Failed commit: Default" comment="some refactoring of common through intellij. Used structure 101 too." />
@@ -238,6 +224,19 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Cell.java" line="113" class="com.becker.puzzle.sudoku.model.Cell" package="com.becker.puzzle.sudoku.model">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
     </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
@@ -285,13 +284,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SudokuPuzzle.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuPuzzle.java">
+      <file leaf-file-name="Board.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="19" selection-start="243" selection-end="243" vertical-scroll-proportion="-3.3846154">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="213" column="10" selection-start="5909" selection-end="5909" vertical-scroll-proportion="-31.538462">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SudokuGenerator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuGenerator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="49" selection-start="1283" selection-end="1283" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BigCellArray.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCellArray.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="54" column="25" selection-start="1502" selection-end="1502" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -299,115 +314,90 @@
       <file leaf-file-name="BigCell.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCell.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="13" selection-start="179" selection-end="179" vertical-scroll-proportion="0.0">
+            <state line="82" column="0" selection-start="2312" selection-end="2312" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SudokuController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuController.java">
+      <file leaf-file-name="TestSudokuSolver.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestSudokuSolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="91" selection-start="1294" selection-end="1294" vertical-scroll-proportion="0.0">
+            <state line="9" column="13" selection-start="199" selection-end="199" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SudokuPanel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuPanel.java">
+      <file leaf-file-name="TestBoard.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/com/becker/puzzle/sudoku/model/TestBoard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="19" selection-start="289" selection-end="289" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="113" column="8" selection-start="3908" selection-end="3908" vertical-scroll-proportion="-34.807693">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Board.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Board.java">
+      <file leaf-file-name="CandidatesArray.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/CandidatesArray.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="13" selection-start="246" selection-end="246" vertical-scroll-proportion="0.0">
+            <state line="41" column="49" selection-start="911" selection-end="911" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Cell.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Cell.java">
+      <file leaf-file-name="SudokuPuzzle.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuPuzzle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="13" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
+            <state line="32" column="25" selection-start="679" selection-end="679" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Data.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/Data.java">
+      <file leaf-file-name="Candidates.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Candidates.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="13" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0">
+            <state line="15" column="13" selection-start="457" selection-end="457" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SudokuSolver.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="TestData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/com/becker/puzzle/sudoku/data/TestData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="13" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SudokuSolver.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuSolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="13" selection-start="723" selection-end="723" vertical-scroll-proportion="0.44973546">
+            <state line="59" column="41" selection-start="1526" selection-end="1526" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TopControlPanel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/TopControlPanel.java">
+      <file leaf-file-name="Cell.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Cell.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="5" selection-start="2431" selection-end="2431" vertical-scroll-proportion="0.0">
+            <state line="113" column="0" selection-start="2953" selection-end="2953" vertical-scroll-proportion="0.9654471">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PuzzleRenderer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/common/PuzzleRenderer.java">
+      <file leaf-file-name="ValuesList.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/ValuesList.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="22" selection-start="325" selection-end="325" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PuzzleController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/common/PuzzleController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="17" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Refreshable.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/common/Refreshable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="17" selection-start="176" selection-end="176" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractPuzzleController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/common/AbstractPuzzleController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="22" selection-start="378" selection-end="378" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PuzzleApplet.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/common/PuzzleApplet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="22" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0">
+            <state line="12" column="13" selection-start="253" selection-end="253" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -484,22 +474,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/redpuzzle/Algorithm.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/common/AlgorithmEnum.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/common/PuzzleApplet.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/redpuzzle/RedPuzzle.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/hiq/HiQPuzzle.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/common/TopControlPanel.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/common/solver/BaseConcurrentPuzzleSolver.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/common/solver/PuzzleNode.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/maze/TopControlPanel.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/maze/MazeSimulator.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/shuffle/ShufflePuzzle.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/Board.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Cell.java" />
+        <option value="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/model/TestAll.java" />
+        <option value="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestAll.java" />
+        <option value="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestSudokuGenerator.java" />
+        <option value="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestSudokuSolver.java" />
+        <option value="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/data/TestData.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/Data.java" />
         <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuPuzzle.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuController.java" />
-        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/TopControlPanel.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Candidates.java" />
+        <option value="$PROJECT_DIR$/test/com/becker/puzzle/sudoku/model/TestBoard.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuGenerator.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuSolver.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCell.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCellArray.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Board.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/CandidatesArray.java" />
+        <option value="$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Cell.java" />
       </list>
     </option>
   </component>
@@ -589,6 +579,48 @@
       <sortByType ProjectPane="true" />
     </navigator>
     <panes>
+      <pane id="Favorites">
+        <subPane subId="applets">
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simulation" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="puzzle" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -684,30 +716,6 @@
         </subPane>
       </pane>
       <pane id="Scope">
-        <subPane subId="ui">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="source">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="com/ui">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
         <subPane>
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1030,8 +1038,31 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+        <subPane subId="ui">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Trunk">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="trunk">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="source">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="com/ui">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
         <subPane subId="Problems" />
-        <subPane subId="Tests" />
         <subPane subId="Production">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1216,6 +1247,7 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+        <subPane subId="Tests" />
         <subPane subId="Project Files">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -1823,48 +1855,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites">
-        <subPane subId="applets">
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simulation" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="puzzle" />
-              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2051,7 +2041,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
+              <option name="myItemId" value="puzzle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sudoku" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2073,11 +2071,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
+              <option name="myItemId" value="puzzle" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="math" />
+              <option name="myItemId" value="sudoku" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="becker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2213,133 +2237,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="shuffle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="puzzle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="redpuzzle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="puzzle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maze" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="puzzle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="becker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="math" />
+              <option name="myItemId" value="hiq" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2348,17 +2246,17 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="432" />
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="394" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="432" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="33" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="394" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="424" />
-    <property name="OverrideImplement.combined" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="33" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="424" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
@@ -2385,15 +2283,15 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
-    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -2401,10 +2299,10 @@
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.becker.puzzle.sudoku" />
+      <recent name="com.becker.puzzle.sudoku.model" />
+      <recent name="com.becker.puzzle.sudoku.data" />
       <recent name="com.becker.puzzle.maze" />
       <recent name="com.becker.puzzle.common" />
-      <recent name="com.becker.simulation.habitat.creatures" />
-      <recent name="com.becker.simulation.habitat.model" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\projects\java_projects\trunk\source\com\becker\simulation\life\creatures" />
@@ -2437,61 +2335,39 @@
       <recent name="com.becker.simulation.predprey.creatures" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ShufflePuzzle">
-    <configuration default="false" name="PredPreySimulator" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.becker.simulation.predprey.PredPreySimulator" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+  <component name="RunManager" selected="JUnit.TestBoard">
+    <configuration default="false" name="TestSudokuSolver" type="JUnit" factoryName="JUnit" temporary="true">
+      <module name="Trunk" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="PACKAGE_NAME" value="com.becker.puzzle.sudoku" />
+      <option name="MAIN_CLASS_NAME" value="com.becker.puzzle.sudoku.TestSudokuSolver" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="Trunk" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
       <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="50821" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
       <method />
     </configuration>
-    <configuration default="false" name="CreatureType" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.becker.simulation.habitat.creatures.CreatureType" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="Trunk" />
-      <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="HabitatGrid" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.becker.simulation.habitat.model.HabitatGrid" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="Trunk" />
-      <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="MathUtilTest" type="JUnit" factoryName="JUnit" temporary="true">
+    <configuration default="false" name="TestBoard" type="JUnit" factoryName="JUnit" temporary="true">
       <module name="Trunk" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.becker.common.math" />
-      <option name="MAIN_CLASS_NAME" value="com.becker.common.math.MathUtilTest" />
+      <option name="PACKAGE_NAME" value="com.becker.puzzle.sudoku.model" />
+      <option name="MAIN_CLASS_NAME" value="com.becker.puzzle.sudoku.model.TestBoard" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -2508,19 +2384,81 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="ShufflePuzzle" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.becker.puzzle.shuffle.ShufflePuzzle" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <configuration default="false" name="TestBoard.testFindCellCandidatesForAll" type="JUnit" factoryName="JUnit" temporary="true">
+      <module name="Trunk" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="PACKAGE_NAME" value="com.becker.puzzle.sudoku.model" />
+      <option name="MAIN_CLASS_NAME" value="com.becker.puzzle.sudoku.model.TestBoard" />
+      <option name="METHOD_NAME" value="testFindCellCandidatesForAll" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="Trunk" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
       <envs />
+      <patterns />
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestBoard.testCheckAndSetUniqueValues" type="JUnit" factoryName="JUnit" temporary="true">
+      <module name="Trunk" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.becker.puzzle.sudoku.model" />
+      <option name="MAIN_CLASS_NAME" value="com.becker.puzzle.sudoku.model.TestBoard" />
+      <option name="METHOD_NAME" value="testCheckAndSetUniqueValues" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="50968" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestBoard.testUpdateAndSet" type="JUnit" factoryName="JUnit" temporary="true">
+      <module name="Trunk" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.becker.puzzle.sudoku.model" />
+      <option name="MAIN_CLASS_NAME" value="com.becker.puzzle.sudoku.model.TestBoard" />
+      <option name="METHOD_NAME" value="testUpdateAndSet" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="51359" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -2646,12 +2584,12 @@
       <method />
     </configuration>
     <list size="6">
-      <item index="0" class="java.lang.String" itemvalue="Application.PredPreySimulator" />
-      <item index="1" class="java.lang.String" itemvalue="Application.CreatureType" />
-      <item index="2" class="java.lang.String" itemvalue="Application.HabitatGrid" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.TestCandidateMoveAnalyzer" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.MathUtilTest" />
-      <item index="5" class="java.lang.String" itemvalue="Application.ShufflePuzzle" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.TestCandidateMoveAnalyzer" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TestSudokuSolver" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.TestBoard" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.TestBoard.testFindCellCandidatesForAll" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TestBoard.testCheckAndSetUniqueValues" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.TestBoard.testUpdateAndSet" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -2741,23 +2679,23 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="215" y="-16" width="2163" height="1578" extended-state="0" />
+    <frame x="285" y="10" width="2248" height="1550" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13871196" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34788734" sideWeight="0.99899596" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12732475" sideWeight="0.8" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35031846" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.122364804" sideWeight="0.7083333" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26867816" sideWeight="0.99899596" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34985632" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30042315" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2" sideWeight="0.9995256" order="12" side_tool="false" content_ui="tabs" x="147" y="657" width="2264" height="688" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908705" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29166666" sideWeight="0.94133824" order="12" side_tool="false" content_ui="tabs" x="147" y="657" width="2264" height="688" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902297" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24171382" sideWeight="0.14914773" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2021645" sideWeight="0.6391459" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39935845" sideWeight="0.61981064" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20457797" sideWeight="0.8" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19660862" sideWeight="0.7083333" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48361254" sideWeight="0.0" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39084506" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38146552" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Code explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.328654" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Analyze Dataflow to here" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952926" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -2797,7 +2735,7 @@
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Got habitat working better. Stable at last.&#10;&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor puzzle apps.&#10;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -2810,7 +2748,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Fixed hillcliminb. Tests work too. Now just simulated annealing needs fixing." />
     <MESSAGE value="Fix up concurrency usage a little." />
     <MESSAGE value="Cleanup. Moving files around." />
     <MESSAGE value="Fix simulated annealing test." />
@@ -2835,6 +2772,7 @@
     <MESSAGE value="Got habitat sliders working.&#10;" />
     <MESSAGE value="Got habitat working better.&#10;" />
     <MESSAGE value="Got habitat working better. Stable at last.&#10;&#10;" />
+    <MESSAGE value="Refactor puzzle apps.&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -2907,118 +2845,116 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/maze/TopControlPanel.java">
+    <entry file="file://$PROJECT_DIR$/test/com/becker/puzzle/sudoku/data/TestData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="13" selection-start="482" selection-end="482" vertical-scroll-proportion="0.0">
+        <state line="8" column="13" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/maze/MazeSimulator.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Candidates.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="91" selection-start="803" selection-end="803" vertical-scroll-proportion="-22.23077">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/common/AbstractPuzzleController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="22" selection-start="378" selection-end="378" vertical-scroll-proportion="0.0">
+        <state line="15" column="13" selection-start="457" selection-end="457" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuPanel.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/ValuesList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="19" selection-start="289" selection-end="289" vertical-scroll-proportion="0.0">
+        <state line="12" column="13" selection-start="253" selection-end="253" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/redpuzzle/RedPuzzle.java">
+    <entry file="file://$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestAll.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="19" selection-start="952" selection-end="952" vertical-scroll-proportion="0.0">
+        <state line="16" column="34" selection-start="339" selection-end="339" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/shuffle/Deck2.java">
+    <entry file="file://$PROJECT_DIR$/test/com/becker/puzzle/sudoku/TestSudokuSolver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="223" selection-end="223" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/shuffle/ShufflePuzzle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="54" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/shuffle/Deck.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="99" selection-end="99" vertical-scroll-proportion="0.0">
+        <state line="9" column="13" selection-start="199" selection-end="199" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/Data.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="13" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0">
+        <state line="13" column="24" selection-start="333" selection-end="333" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCell.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_24/src.zip!/java/util/concurrent/ConcurrentSkipListSet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="179" selection-end="179" vertical-scroll-proportion="0.0">
+        <state line="291" column="19" selection-start="11185" selection-end="11185" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Board.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_24/src.zip!/java/util/AbstractCollection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="13" selection-start="246" selection-end="246" vertical-scroll-proportion="0.0">
+        <state line="364" column="19" selection-start="12299" selection-end="12299" vertical-scroll-proportion="0.78812575">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Cell.java">
+    <entry file="file://$PROJECT_DIR$/test/com/becker/puzzle/sudoku/model/TestBoard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="91" selection-start="1294" selection-end="1294" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuPuzzle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="19" selection-start="243" selection-end="243" vertical-scroll-proportion="-3.3846154">
+        <state line="113" column="8" selection-start="3908" selection-end="3908" vertical-scroll-proportion="-34.807693">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/TopControlPanel.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="5" selection-start="2431" selection-end="2431" vertical-scroll-proportion="0.0">
+        <state line="55" column="49" selection-start="1283" selection-end="1283" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/SudokuSolver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="13" selection-start="723" selection-end="723" vertical-scroll-proportion="0.44973546">
+        <state line="59" column="41" selection-start="1526" selection-end="1526" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="0" selection-start="2312" selection-end="2312" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/BigCellArray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="25" selection-start="1502" selection-end="1502" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="213" column="10" selection-start="5909" selection-end="5909" vertical-scroll-proportion="-31.538462">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/CandidatesArray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="49" selection-start="911" selection-end="911" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/sudoku/model/Cell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="113" column="0" selection-start="2953" selection-end="2953" vertical-scroll-proportion="0.9654471">
           <folding />
         </state>
       </provider>

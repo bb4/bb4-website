@@ -1,12 +1,13 @@
 package com.becker.puzzle.sudoku;
 
+import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.model.Board;
 import com.becker.puzzle.sudoku.model.Cell;
 
+import java.security.spec.PSSParameterSpec;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -18,7 +19,6 @@ public class SudokuGenerator {
 
     private int size_;
     private int numCells_;
-    private Random random_;
     private int delay_;
     SudokuPanel ppanel_;
 
@@ -30,7 +30,6 @@ public class SudokuGenerator {
     public SudokuGenerator(int baseSize, SudokuPanel ppanel) {
         size_ = baseSize;
         numCells_ = (int) Math.pow(size_, 4);
-        random_ = new Random();
         ppanel_ = ppanel;
     }
 
@@ -40,7 +39,7 @@ public class SudokuGenerator {
 
 
     public void setRandomSeed(int seed) {
-        random_.setSeed(seed);
+        MathUtil.RANDOM.setSeed(seed);
     }
 
     /**
@@ -50,13 +49,11 @@ public class SudokuGenerator {
 
         // first find a complete solution, b.
         Board b = new Board(size_);
-        System.out.println("gen initial solution");
 
         if (ppanel_ != null)
             ppanel_.setBoard(b);
 
         boolean success = generateSolution(b, 0);
-        System.out.println("done gen initial solution");
         assert success;
 
         Board test = new Board(b);
@@ -77,7 +74,7 @@ public class SudokuGenerator {
             return true;  // board complete now
         }
 
-        List<Integer> candidates = board.getCellCandidates(position);
+        List<Integer> candidates = board.getShuffledCellCandidates(position);
 
         if (position % 7 == 0 && ppanel_ != null) {
             ppanel_.repaint();
@@ -141,7 +138,7 @@ public class SudokuGenerator {
 
     /**
      * @param size the base size (fourth root of the number of cells).
-     * @return the poistions on the board in a random order in a list
+     * @return the positions on the board in a random order in a list .
      */
     private List getRandomPositions(int size) {
         int numPositions = size * size * size * size;
@@ -149,7 +146,7 @@ public class SudokuGenerator {
         for (int i=0; i < numPositions; i++) {
             positionList.add(i);
         }
-        Collections.shuffle(positionList, random_);
+        Collections.shuffle(positionList, MathUtil.RANDOM);
         return positionList;
     }
 
