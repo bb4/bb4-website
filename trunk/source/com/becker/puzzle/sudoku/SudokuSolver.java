@@ -39,6 +39,7 @@ public class SudokuSolver {
     /**
      * Solves the puzzle.
      * This implements the main algorithm for solving the Sudoku puzzle.
+     *
      * @param board the board to show the solution on.
      * @param puzzlePanel the viewer
      * @return true if solved.
@@ -46,24 +47,25 @@ public class SudokuSolver {
     public boolean solvePuzzle(Board board, Container puzzlePanel) {
         boolean solved;
         int ct = 0;
-        // @@ not sure what this should be.
+        // not sure what this should be.
         int maxIterations = 2 * board.getEdgeLength();
 
         do {
             // find missing row and column numbers
-            board.updateCellCandidates();
+            board.updateAndSet();
             refreshWithDelay(puzzlePanel, 1);
             board.checkAndSetUniqueValues();
 
             refreshWithDelay(puzzlePanel, 3);
             board.setNumIterations(++ct);
+
             solved = board.solved();
 
         } while (!solved && ct < maxIterations);
 
         refresh(puzzlePanel);
 
-        // if we get here and solved is not true, we did not find a puzzlePanel
+        // if we get here and solved is not true, we did not find a solution.
         return solved;
     }
 

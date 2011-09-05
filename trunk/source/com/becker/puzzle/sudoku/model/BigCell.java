@@ -1,28 +1,22 @@
 package com.becker.puzzle.sudoku.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * A block of n*n cells in a sudoku puzzle.
  * @author Barry Becker
  */
 public class BigCell {
 
-    /** the internal data structures representing the game board. */
+    /** The internal data structures representing the game board. Row, column order. */
     protected Cell cells_[][] = null;
 
-    /** The number of Cells in the BigCell is n * n.    */
+    /** The number of Cells in the BigCell is n * n.  */
     protected int n_;
 
     /** The number which have not yet been used in this big cell. */
-    private Set<Integer> candidates_;
-
-    private Board board_;
+    private Candidates candidates_;
 
 
-    public BigCell(int size, Board board) {
-        board_ = board;
+    public BigCell(int size) {
 
         assert(size > 1 && size < Board.MAX_SIZE);
         n_ = size;
@@ -33,27 +27,25 @@ public class BigCell {
                cells_[i][j] = new Cell(0, this);
            }
         }
-        candidates_ = new HashSet<Integer>();
+        candidates_ = new Candidates();
     }
 
     /**
      * @return  retrieve the base size of the board - sqrt(edge magnitude).
      */
-    public final int getSize()
-    {
+    public final int getSize() {
         return n_;
     }
 
-    public Board getBoard() {
-        return board_;
-    }
 
-    public void updateCandidates() {
+    public void updateCandidates(Board board) {
+
         candidates_.clear();
         // assume all of them, then remove those that are represented.
-        candidates_.addAll(board_.getValuesList());
-        for (int i = 0; i < n_; i++) {
-           for (int j = 0; j < n_; j++) {
+        candidates_.addAll(board.getValuesList());
+
+        for (int i = 0; i < board.getBaseSize(); i++) {
+           for (int j = 0; j < board.getBaseSize(); j++) {
                int v = cells_[i][j].getValue();
                if (v > 0) {
                   candidates_.remove(v);
@@ -62,7 +54,7 @@ public class BigCell {
         }
     }
 
-    public Set<Integer> getCandidates() {
+    public Candidates getCandidates() {
         return candidates_;
     }
 
@@ -70,33 +62,38 @@ public class BigCell {
      * returns null if there is no game piece at the position specified.
      * @return the piece at the specified location. Returns null if there is no piece there.
      */
-    public final Cell getCell( int row, int col )
-    {
+    public final Cell getCell( int row, int col ) {
         assert ( row >= 0 && row < n_ && col >= 0 && col < n_);
         return cells_[row][col];
     }
 
     /**
-     * @param cell  cell to check for unique candidate.
-     * @return the unique value for this cell if there is one
+     * @param cell cell to check for a unique candidate.
+     * @return the unique value for this cell if there is one, else return 0.
      */
-    public int getUniqueValueForCell(Cell cell) {
-        Set<Integer> cellCandidates = cell.getCandidates();
-        if (cellCandidates == null)
-            return 0; // cell.getValue();
-        if (cellCandidates.size() == 1) {
+    public int getUniqueValueForCell(Cell cell, Candidates rowCands, Candidates colCands) {
+
+        if (cell.getCandidates() == null)  {
+            cell.getValue();
+        }
+        Candidates cands = cell.getCandidates();
+        cands.addAll(candidates_);
+        cands.retainAll(rowCands);
+        cands.retainAll(colCands);
+
+
+        if (cands.size() == 1) {
             // if there is only one candidate, then that is the value for this cell.
-            return cellCandidates.iterator().next();
+            return cands.iterator().next();
         }
         return 0;   // the value is not unique
     }
 
     /**
      * Explicitly clean things up to avoid memory leaks.
-     * The most common way to accidentaly have memory leaks is to leave listeners on objects.
+     * The most common way to accidentally have memory leaks is to leave listeners on objects.
      */
-    public void dispose()
-    {
+    public void dispose() {
         cells_ = null;
     }
 }

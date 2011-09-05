@@ -1,5 +1,6 @@
 package com.becker.puzzle.sudoku.model;
 
+import javax.xml.transform.Source;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,17 +10,18 @@ import java.util.Set;
  */
 public class Cell {
 
-    // must be a number between 1 and nn_
+    /** must be a number between 1 and nn_  */
     private int value_;
 
-    // true if part of the original specification.
+    /** true if part of the original specification.  */
     private boolean original_;
 
-    // the BigCell to which I belong
+    /** the BigCell to which I belong   */
     private BigCell parent_;
 
     /** and, most importantly, the intersection of these.    */
-    private Set<Integer> candidates_ = null;
+    private Candidates candidates_;
+
 
 
     public Cell(int value, BigCell parent) {
@@ -49,7 +51,7 @@ public class Cell {
     public void clearValue() {
         value_ = 0;
         original_ = false;
-        candidates_ = Collections.synchronizedSet(new HashSet<Integer>());
+        candidates_ = new Candidates();
     }
 
     /**
@@ -67,24 +69,28 @@ public class Cell {
             candidates_ = null;
         }
         else {
-            candidates_ = new HashSet<Integer>();
+            candidates_ = new Candidates();
         }
     }
 
-    public Set<Integer> getCandidates() {
-        if (original_)
+    public Candidates getCandidates() {
+        if (original_) {
             assert(candidates_ == null) : candidates_ +" not null";
+        }
         return candidates_;
     }
 
     /**
      * Intersect the parent big cell candidates with the row and column candidates.
      */
-    public void updateCandidates(Set<Integer> rowCandidates, Set<Integer> colCandidates) {
+    public void updateCandidates(Candidates rowCandidates, Candidates colCandidates) {
+
         if (candidates_ == null)
             return;
         candidates_.clear();
-        Set<Integer> bigCellSet = parent_.getCandidates();
+        Candidates bigCellSet = parent_.getCandidates();
+
+        //System.out.println("rowCands=" + rowCandidates + " colCands=" + colCandidates);
         for (Integer candidate : bigCellSet)  {
             if (rowCandidates.contains(candidate) && colCandidates.contains(candidate)) {
                candidates_.add(candidate);
@@ -97,14 +103,16 @@ public class Cell {
      * candidate set first.
      * This should improve performance.
      */
-    public void checkAndSetUniqueValues(Set<Integer> rowCandidates, Set<Integer> colCandidates) {
+    public void checkAndSetUniqueValues(Candidates rowCandidates, Candidates colCandidates) {
 
         if (candidates_ == null) {
             // nothing to do, the final value is already determined.
+            //System.out.println("cands not set yet. final value=" + getValue() +" returning");
             return;
         }
 
-        int unique = parent_.getUniqueValueForCell(this);
+        int unique = parent_.getUniqueValueForCell(this, rowCandidates, colCandidates);
+        //System.out.println("unique="+unique);
         if (unique > 0) {
             // set it and remove from appropriate candidate sets
             setValue(unique);

@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku;
+package com.becker.puzzle.sudoku.data;
 
 /**
  * Some sample sudoku test puzzle data
@@ -6,7 +6,7 @@ package com.becker.puzzle.sudoku;
  *
  * @author Barry Becker
  */
-public class Data {
+public class TestData {
 
     /** simple test of a 4*4 puzzle */
     public static final int[][] SIMPLE_4 = {
@@ -16,9 +16,17 @@ public class Data {
         {0, 0,    0, 0}
     };
 
+    /** simple test of a 4*4 puzzle solved */
+    public static final int[][] SIMPLE_4_SOLVED = {
+        {2, 4,    3, 1},
+        {3, 1,    2, 4},
+        {4, 3,    1, 2},
+        {1, 2,    4, 3}
+    };
+
 
     /** simple test of a 9*9 puzzle */
-    public static final int[][] SIMPLE_SAMPLE_9 = {
+    public static final int[][] SIMPLE_9 = {
         {0, 0, 9,  0, 0, 0,  0, 0, 7},
         {2, 8, 6,  4, 7, 3,  0, 0, 0},
         {0, 0, 0,  5, 9, 0,  0, 0, 0},
@@ -35,7 +43,7 @@ public class Data {
     /** simple test of a 9*9 puzzle
      *(inconsistent. use only for testing)
      */
-    public static final  int[][] INCONSISTENT_SAMPLE = {
+    public static final  int[][] INCONSISTENT_9 = {
         {0, 0, 3,  7, 0, 0,  0, 2, 0},
         {0, 8, 0,  9, 0, 0,  4, 0, 1},
         {0, 9, 0,  0, 2, 1,  0, 6, 3},
@@ -49,7 +57,8 @@ public class Data {
         {4, 0, 0,  7, 0, 5,  1, 0, 0}
     };
 
-    public static final int[][] SAMPLE_16 = {
+    /** Complex 16x16 puzzle from grandma */
+    public static final int[][] COMPLEX_16 = {
         {0, 13, 16, 14,    10, 4, 0, 0,   0, 0, 0, 0,     0, 15, 2, 7},
         {0,  0,  4, 11,     0, 0, 0, 0,   8, 0, 0, 2,     0,  0, 0, 3},
         {0,  0,  9,  0,    16, 0, 3, 0,   0, 0, 0, 0,    14,  0, 0, 6},
@@ -57,7 +66,7 @@ public class Data {
 
         {0, 0, 0, 0,      0,  0,  0, 0,    0, 0, 9, 0,     8, 0, 0, 0},
         {0, 5, 0,  10,    0, 7, 8,  6,     0, 0, 0, 14,    0, 0, 16, 0},
-        {0, 7, 0, 0,      0, 10, 16, 12,  13, 0, 2,  0,    1, 5, 0, 14},                     // 0, 0, 0, 0,
+        {0, 7, 0, 0,      0, 10, 16, 12,  13, 0, 2,  0,    1, 5, 0, 14},
         {0, 4, 0, 12,     5,  0, 11,  9,   0, 0, 0, 6,     10, 0, 3, 0},
 
         {0, 12, 0, 0,     0, 0, 0,  4,    0, 0, 0, 8,    5, 0, 15, 10},
@@ -72,5 +81,5 @@ public class Data {
     };
 
     /** you should never instantiate this static class.  */
-    private Data() {}
+    private TestData() {}
 }
