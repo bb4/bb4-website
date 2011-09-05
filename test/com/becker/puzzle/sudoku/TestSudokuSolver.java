@@ -14,7 +14,7 @@ public class TestSudokuSolver extends TestCase {
 
 
     /**
-     * common initialization for all test cases.
+     * common initialization for all go test cases.
      */
     @Override
     protected void setUp() throws Exception {
@@ -32,14 +32,14 @@ public class TestSudokuSolver extends TestCase {
     public void testCaseSimpleSample() {
 
         boolean solved = solver.solvePuzzle(new Board(TestData.SIMPLE_9));
-        Assert.assertTrue( "Did not solve SIMPLE_SAMPLE_9 successfully", solved);
+        Assert.assertTrue( "Did not solve SIMPLE_9 successfully", solved);
     }
 
     /** negative test case */
     public void testImpossiblePuzzle() {
 
         boolean solved = solver.solvePuzzle(new Board(TestData.INCONSISTENT_9));
-        Assert.assertFalse( "Solved impossible SIMPLE_SAMPLE_9 puzzle. Should not have.", solved);
+        Assert.assertFalse( "Solved impossible SIMPLE_9 puzzle. Should not have.", solved);
     }
 
 
