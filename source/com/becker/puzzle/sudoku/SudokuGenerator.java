@@ -3,6 +3,7 @@ package com.becker.puzzle.sudoku;
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.model.Board;
 import com.becker.puzzle.sudoku.model.Cell;
+import com.becker.puzzle.sudoku.model.ValuesList;
 
 import java.security.spec.PSSParameterSpec;
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class SudokuGenerator {
             return true;  // board complete now
         }
 
-        List<Integer> candidates = board.getShuffledCellCandidates(position);
+        ValuesList candidates = board.getShuffledCellCandidates(position);
 
         if (position % 7 == 0 && ppanel_ != null) {
             ppanel_.repaint();

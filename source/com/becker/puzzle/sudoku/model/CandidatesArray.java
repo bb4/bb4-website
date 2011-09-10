@@ -36,6 +36,10 @@ public class CandidatesArray {
         return candidates_[i];
     }
 
+    public int size() {
+        return candidates_.length;
+    }
+
     public void updateRow(int row, Board board) {
 
         Candidates cands = get(row);
@@ -44,7 +48,6 @@ public class CandidatesArray {
         //System.out.println("update row =" + row);
         for (int j=0; j < board.getEdgeLength(); j++) {
             int v = board.getCell(row, j).getValue();
-
             if (v > 0)  {
                 cands.remove(v);
             }
@@ -59,12 +62,10 @@ public class CandidatesArray {
         //System.out.println("update col =" + col);
         for (int i=0; i < board.getEdgeLength(); i++) {
             int v = board.getCell(i, col).getValue();
-            //System.out.print("v = "+ v +"; " );
             if (v > 0)  {
                 cands.remove(v);
             }
         }
-        //System.out.println("col "+col+"cands after remove="+ cands);
     }
 
 

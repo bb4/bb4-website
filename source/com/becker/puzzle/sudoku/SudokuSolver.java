@@ -54,7 +54,6 @@ public class SudokuSolver {
             // find missing row and column numbers
             board.updateAndSet();
             refreshWithDelay(puzzlePanel, 1);
-            board.checkAndSetUniqueValues();
 
             refreshWithDelay(puzzlePanel, 3);
             board.setNumIterations(++ct);
