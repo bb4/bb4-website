@@ -1,6 +1,8 @@
 package com.becker.puzzle.sudoku.model;
 
 import com.becker.common.math.MathUtil;
+import com.becker.puzzle.sudoku.model.update.LoanRangerUpdater;
+import com.becker.puzzle.sudoku.model.update.StandardCRBUpdater;
 
 import java.util.*;
 
@@ -77,6 +79,18 @@ public class Board {
         bigCells_.reset();
     }
 
+    public CandidatesArray getRowCandidates() {
+        return rowCandidates_;
+    }
+
+    public CandidatesArray getColCandidates() {
+        return colCandidates_;
+    }
+
+    public BigCellArray getBigCells() {
+        return bigCells_;
+    }
+
     /**
      * @return retrieve the base size of the board (sqrt(edge magnitude)).
      */
@@ -100,6 +114,8 @@ public class Board {
     }
 
     /**
+     * @param row 0-nn_-1
+     * @param col 0-nn_-1
      * @return the cell in the bigCellArray at the specified location.
      */
     public final Cell getCell( int row, int col ) {
@@ -107,6 +123,7 @@ public class Board {
     }
 
     /**
+     * @param position a number between 0 and nn_^2
      * @return the cell at the specified position.
      */
     public final Cell getCell( int position ) {
@@ -124,19 +141,20 @@ public class Board {
     /**
      * @return cell candidates in random order for specified position.
      */
-    public List<Integer> getShuffledCellCandidates(int position) {
-        Candidates candidates = findCellCandidates(position);
-        List<Integer> randomCandidates = new ArrayList<Integer>(candidates.size());
-        randomCandidates.addAll(candidates);
-        Collections.shuffle(randomCandidates, MathUtil.RANDOM);
-        return randomCandidates;
+    public ValuesList getShuffledCellCandidates(int position) {
+        return ValuesList.createShuffledList(findCellCandidates(position));
+    }
+
+    private Candidates findCellCandidates(int position) {
+        //System.out.println("position="+position + " div=" + position / nn_);
+        return findCellCandidates(position / nn_, position % nn_);
     }
 
     /**
      * update candidate lists for a specific cell
      * @return cell candidates
      */
-    public Candidates findCellCandidates(int row, int col) {
+     Candidates findCellCandidates(int row, int col) {
 
         rowCandidates_.updateRow(row, this);
         colCandidates_.updateCol(col, this);
@@ -150,36 +168,13 @@ public class Board {
     }
 
     /**
-     * update candidate lists for all cells
+     * update candidate lists for all cells then set the unique values that are determined.
+     * Next check for loan rangers.
      */
     public void updateAndSet() {
 
-        updateCellCandidates();
-        checkAndSetUniqueValues();
-    }
-
-    protected void updateCellCandidates() {
-        for (int row = 0; row < nn_; row++) {
-            rowCandidates_.updateRow(row, this);
-        }
-        for (int col = 0; col < nn_; col++) {
-            colCandidates_.updateCol(col, this);
-        }
-        bigCells_.update(this);
-    }
-    /**
-     * Takes the intersection of the three sets: row, col, bigCell candidates.
-     */
-    public void checkAndSetUniqueValues() {
-        checkAndSetUniqueValues(rowCandidates_, colCandidates_);
-    }
-
-    public void checkAndSetUniqueValues(CandidatesArray rowCands, CandidatesArray colCands) {
-        for (int row = 0; row < nn_; row++) {
-            for (int col = 0; col < nn_; col++) {
-                getCell(row, col).checkAndSetUniqueValues(rowCands.get(row), colCands.get(col));
-            }
-        }
+        new StandardCRBUpdater(this).updateAndSet();
+        new LoanRangerUpdater(this).updateAndSet();
     }
 
     /**
@@ -197,7 +192,6 @@ public class Board {
         numIterations_ = numIterations;
     }
 
-
     public String toString() {
         StringBuilder bldr = new StringBuilder();
         for (int row=0; row < nn_; row++) {
@@ -208,10 +202,5 @@ public class Board {
             bldr.append("\n");
         }
         return bldr.toString();
-    }
-
-    private Candidates findCellCandidates(int position) {
-        //System.out.println("position="+position + " div=" + position / nn_);
-        return findCellCandidates(position / nn_, position % nn_);
     }
 }

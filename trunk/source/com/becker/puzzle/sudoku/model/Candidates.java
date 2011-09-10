@@ -13,6 +13,14 @@ public class Candidates extends ConcurrentSkipListSet<Integer> {
 
     public Candidates() {}
 
+    public Candidates(Candidates cands) {
+        addAll(cands);
+    }
+
+    public Candidates copy() {
+        return new Candidates(this);
+    }
+
     /**
      * Convenient for testing.
      * @param values
@@ -23,8 +31,12 @@ public class Candidates extends ConcurrentSkipListSet<Integer> {
         }
     }
 
+    public Integer getFirst() {
+        return this.iterator().next();
+    }
+
     /**
-     * @return the intersection of the 3 specified sets.
+     *  Intersect ourselves with the 3 specified sets.
      */
     public void findIntersectionCandidates(Candidates set1, Candidates set2, Candidates set3)  {
 

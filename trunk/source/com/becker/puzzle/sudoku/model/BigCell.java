@@ -1,5 +1,9 @@
 package com.becker.puzzle.sudoku.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * A block of n*n cells in a sudoku puzzle.
  * @author Barry Becker
@@ -37,6 +41,21 @@ public class BigCell {
         return n_;
     }
 
+    public CandidatesArray getCandidatesArrayExcluding(int row, int col) {
+
+        List<Candidates> cands = new ArrayList<Candidates>();
+
+        for (int i = 0; i < n_; i++) {
+           for (int j = 0; j < n_; j++) {
+               Candidates c = getCell(i, j).getCandidates();
+               if (!(i==row && j==col) && c!=null) {
+                   cands.add(c);
+               }
+           }
+        }
+        return new CandidatesArray(cands.toArray(new Candidates[cands.size()]));
+    }
+
 
     public void updateCandidates(Board board) {
 
@@ -44,8 +63,8 @@ public class BigCell {
         // assume all of them, then remove those that are represented.
         candidates_.addAll(board.getValuesList());
 
-        for (int i = 0; i < board.getBaseSize(); i++) {
-           for (int j = 0; j < board.getBaseSize(); j++) {
+        for (int i = 0; i < n_; i++) {
+           for (int j = 0; j < n_; j++) {
                int v = cells_[i][j].getValue();
                if (v > 0) {
                   candidates_.remove(v);
@@ -83,7 +102,7 @@ public class BigCell {
 
         if (cands.size() == 1) {
             // if there is only one candidate, then that is the value for this cell.
-            return cands.iterator().next();
+            return cands.getFirst();
         }
         return 0;   // the value is not unique
     }
