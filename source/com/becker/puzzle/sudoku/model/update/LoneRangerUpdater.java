@@ -6,32 +6,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  The Board describes the physical layout of the puzzle.
+ *  Lone rangers are cells that have a candidate (among others) that is unique when
+ *  compared with the other candidates in other cells in that row, column, or bigCell.
  *
  *  @author Barry Becker
  */
-public class LoanRangerUpdater extends AbstractUpdater {
+public class LoneRangerUpdater extends AbstractUpdater {
 
     /**
      * Constructor
      */
-    public LoanRangerUpdater(Board b) {
+    public LoneRangerUpdater(Board b) {
         super(b);
     }
 
     /**
-     * update candidate lists for all cells then set the unique values that are determined.
-     * Next check for loan rangers.
+     * Lone rangers are cells than have a unique candidate. For example, consider these
+     * candidates for cells in a row (or column, or bigCell).
+     * 23 278 13 28 238 23
+     * Then the second cell has 7 as a lone ranger.
      */
     @Override
     public void updateAndSet() {
 
-        checkForLoanRangers();
+        checkForLoneRangers();
     }
 
-
     /** needs more work */
-    private void checkForLoanRangers() {
+    private void checkForLoneRangers() {
 
         int n = board.getBaseSize();
 
@@ -47,9 +49,9 @@ public class LoanRangerUpdater extends AbstractUpdater {
                 Candidates rowCands = board.getRowCandidates().get(row);
                 Candidates colCands = board.getColCandidates().get(col);
 
-                cell.checkAndSetLoanRangers(bigCellCands, rowCellCands, colCellCands, rowCands, colCands);
-                cell.checkAndSetLoanRangers(rowCellCands, bigCellCands, colCellCands, rowCands, colCands);
-                cell.checkAndSetLoanRangers(colCellCands, bigCellCands, rowCellCands, rowCands, colCands);
+                cell.checkAndSetLoneRangers(bigCellCands, rowCellCands, colCellCands, rowCands, colCands);
+                cell.checkAndSetLoneRangers(rowCellCands, bigCellCands, colCellCands, rowCands, colCands);
+                cell.checkAndSetLoneRangers(colCellCands, bigCellCands, rowCellCands, rowCands, colCands);
             }
         }
     }

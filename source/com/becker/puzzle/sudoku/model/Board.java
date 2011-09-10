@@ -1,10 +1,7 @@
 package com.becker.puzzle.sudoku.model;
 
-import com.becker.common.math.MathUtil;
-import com.becker.puzzle.sudoku.model.update.LoanRangerUpdater;
+import com.becker.puzzle.sudoku.model.update.LoneRangerUpdater;
 import com.becker.puzzle.sudoku.model.update.StandardCRBUpdater;
-
-import java.util.*;
 
 /**
  *  The Board describes the physical layout of the puzzle.
@@ -174,7 +171,7 @@ public class Board {
     public void updateAndSet() {
 
         new StandardCRBUpdater(this).updateAndSet();
-        new LoanRangerUpdater(this).updateAndSet();
+        new LoneRangerUpdater(this).updateAndSet();
     }
 
     /**
