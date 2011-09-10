@@ -93,7 +93,7 @@ public class Cell {
     }
 
 
-    public void checkAndSetLoanRangers(CandidatesArray candArray,
+    public void checkAndSetLoneRangers(CandidatesArray candArray,
                                        CandidatesArray candArray1, CandidatesArray candArray2,
                                        Candidates cands1, Candidates cands2) {
 

@@ -4,7 +4,8 @@ import com.becker.puzzle.sudoku.model.Board;
 import com.becker.puzzle.sudoku.model.CandidatesArray;
 
 /**
- *  The Board describes the physical layout of the puzzle.
+ *  CRB stands for Column, Row, Big Cell.
+ *  We scan each for unique values. When we find one we set it permanently in the cell.
  *
  *  @author Barry Becker
  */
@@ -19,7 +20,6 @@ public class StandardCRBUpdater extends AbstractUpdater {
 
     /**
      * update candidate lists for all cells then set the unique values that are determined.
-     * Next check for loan rangers.
      */
     @Override
     public void updateAndSet() {
@@ -37,6 +37,7 @@ public class StandardCRBUpdater extends AbstractUpdater {
         }
         board.getBigCells().update(board);
     }
+
     /**
      * Takes the intersection of the three sets: row, col, bigCell candidates.
      */
