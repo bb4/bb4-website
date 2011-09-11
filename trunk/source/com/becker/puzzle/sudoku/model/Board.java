@@ -36,6 +36,7 @@ public class Board {
         n_ = size;
         nn_ = size * size;
         valuesList_ = new ValuesList(nn_);
+        numIterations_ = 0;
 
         bigCells_ = new BigCellArray(n_);
         rowCandidates_ = new CandidatesArray(nn_);
@@ -74,6 +75,7 @@ public class Board {
         rowCandidates_ = new CandidatesArray(nn_);
         colCandidates_ = new CandidatesArray(nn_);
         bigCells_.reset();
+        numIterations_ = 0;
     }
 
     public CandidatesArray getRowCandidates() {
@@ -185,8 +187,8 @@ public class Board {
         return numIterations_;
     }
 
-    public void setNumIterations(int numIterations) {
-        numIterations_ = numIterations;
+    public void incrementNumIterations() {
+        numIterations_++;
     }
 
     public String toString() {

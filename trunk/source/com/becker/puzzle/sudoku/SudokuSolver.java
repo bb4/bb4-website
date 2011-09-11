@@ -2,8 +2,13 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.sudoku.model.Board;
+import junit.extensions.RepeatedTest;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * This does the hard work of actually solving the puzzle.
@@ -13,23 +18,31 @@ import java.awt.*;
  */
 public class SudokuSolver {
 
+    private Board board_;
     private int delay_;
+
 
     /**
      * Constructor
+     * @param board board to show solution on.
      */
-    public SudokuSolver() {
+    public SudokuSolver(Board board) {
         delay_ = 0;
+        board_ = board;
+    }
+
+    public void setBoard(Board b) {
+        board_ = b;
     }
 
     /**
      * Solves the puzzle.
      * This implements the main algorithm for solving the red puzzle.
-     * @param board board to show solution on.
+     *
      * @return true if solved.
      */
-    public boolean solvePuzzle(Board board) {
-        return solvePuzzle(board, null);
+    public boolean solvePuzzle() {
+        return solvePuzzle(null);
     }
 
     public void setDelay(int delay)  {
@@ -40,27 +53,21 @@ public class SudokuSolver {
      * Solves the puzzle.
      * This implements the main algorithm for solving the Sudoku puzzle.
      *
-     * @param board the board to show the solution on.
      * @param puzzlePanel the viewer
      * @return true if solved.
      */
-    public boolean solvePuzzle(Board board, Container puzzlePanel) {
+    public boolean solvePuzzle(Container puzzlePanel) {
         boolean solved;
-        int ct = 0;
+
         // not sure what this should be.
-        int maxIterations = 2 * board.getEdgeLength();
+        int maxIterations = 2 * board_.getEdgeLength();
+        board_.zeroNumIterations();
 
         do {
-            // find missing row and column numbers
-            board.updateAndSet();
-            refreshWithDelay(puzzlePanel, 1);
-
+            solved = doIteration();
             refreshWithDelay(puzzlePanel, 3);
-            board.setNumIterations(++ct);
 
-            solved = board.solved();
-
-        } while (!solved && ct < maxIterations);
+        } while (!solved && board_.getNumIterations() < maxIterations);
 
         refresh(puzzlePanel);
 
@@ -68,11 +75,17 @@ public class SudokuSolver {
         return solved;
     }
 
+    public boolean doIteration()   {
+        // find missing row and column numbers
+        board_.updateAndSet();
+        board_.incrementNumIterations();
+        return board_.solved();
+    }
+
     private void refreshWithDelay(Container puzzlePanel, int relativeDelay) {
         refresh(puzzlePanel);
         ThreadUtil.sleep(relativeDelay * delay_);
     }
-
 
     private void refresh(Container puzzlePanel) {
         if (puzzlePanel == null || delay_ == 0)

@@ -54,7 +54,6 @@ public final class TopControlPanel extends JPanel
     /**
      * Must execute long tasks in a separate thread,
      * otherwise you don't see the steps of the animation.
-     * @param e
      */
     public void actionPerformed(ActionEvent e) {
 
