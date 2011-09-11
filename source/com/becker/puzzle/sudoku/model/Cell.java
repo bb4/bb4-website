@@ -12,15 +12,20 @@ public class Cell {
     private boolean original_;
 
     /** the BigCell to which I belong   */
-    private BigCell parent_;
+    private BigCell parentBigCell_;
+
+    private CellArray rowCells;
+    private CellArray colCells;
 
     /** and, most importantly, the intersection of these.    */
     private Candidates candidates_;
 
-
+    /**
+     * Constructor.
+     */
     public Cell(int value, BigCell parent) {
         setOriginalValue(value);
-        parent_ = parent;
+        parentBigCell_ = parent;
     }
 
 
@@ -32,6 +37,10 @@ public class Cell {
         return original_;
     }
 
+    public BigCell getParentBigCell() {
+        return parentBigCell_;
+    }
+
     /**
      * once the puzzle is started, you can only assign positive values to values of cells.
      * @param value
@@ -40,6 +49,7 @@ public class Cell {
         assert(value > 0);
         value_ = value;
         original_ = false;
+        candidates_ = null;
     }
 
     public void clearValue() {
@@ -82,7 +92,7 @@ public class Cell {
         if (candidates_ == null)
             return;
         candidates_.clear();
-        Candidates bigCellSet = parent_.getCandidates();
+        Candidates bigCellSet = parentBigCell_.getCandidates();
 
         //System.out.println("rowCands=" + rowCandidates + " colCands=" + colCandidates);
         for (Integer candidate : bigCellSet)  {
@@ -92,37 +102,6 @@ public class Cell {
         }
     }
 
-
-    public void checkAndSetLoneRangers(CandidatesArray candArray,
-                                       CandidatesArray candArray1, CandidatesArray candArray2,
-                                       Candidates cands1, Candidates cands2) {
-
-        if (getCandidates() == null) return;
-
-        Candidates candsCopy = getCandidates().copy();
-
-        int i=0;
-        //System.out.println("starting with "+ candsCopy);
-        while (i<candArray.size() && candsCopy.size() > 0) {
-
-            Candidates c = candArray.get(i++);
-            if (c != null)  {
-                //System.out.println("   removing "+ c);
-                candsCopy.removeAll(c);
-            }
-        }
-        //System.out.println("ending up with " + candsCopy);
-
-        if (candsCopy.size() == 1) {
-            //System.out.println("setting " + candsCopy.getFirst());
-            int unique = candsCopy.getFirst();
-            setValue(unique);
-            updateCandidateListsAfterSet(unique, candArray, candArray1, candArray2);
-            parent_.getCandidates().remove(unique);
-            cands1.remove(unique);
-            cands2.remove(unique);
-        }
-    }
 
     /**
      * @@ Perhaps make a separate pass for setting all the cells that only have one value in the
@@ -136,7 +115,7 @@ public class Cell {
             return;
         }
 
-        int unique = parent_.getUniqueValueForCell(this, rowCandidates, colCandidates);
+        int unique = parentBigCell_.getUniqueValueForCell(this, rowCandidates, colCandidates);
 
         if (unique > 0) {
             // set it and remove from appropriate candidate sets
@@ -146,14 +125,14 @@ public class Cell {
     }
 
     public void updateCandidateListsAfterSet(int unique, Candidates rowCandidates, Candidates colCandidates) {
-        assert(candidates_.contains(unique));
-        candidates_.clear();
-        candidates_ = null;
-        boolean removed1 = parent_.getCandidates().remove(unique);
+        //assert(candidates_.size() == 1 && candidates_.contains(unique));
+        //candidates_.clear();
+        //candidates_ = null;
+        boolean removed1 = parentBigCell_.getCandidates().remove(unique);
         boolean removed2 = rowCandidates.remove(unique);
         boolean removed3 = colCandidates.remove(unique);
 
-        //assert (removed1) : "Invalid Puzzle: Could not remove " + unique + " from " + parent_.getCandidates();
+        //assert (removed1) : "Invalid Puzzle: Could not remove " + unique + " from " + parentBigCell_.getCandidates();
         //assert (removed2) : "Invalid Puzzle: Could not remove " + unique + " from " + rowCandidates;
         //assert (removed3) : "Invalid Puzzle: Could not remove " + unique + " from " + colCandidates;
     }
@@ -162,18 +141,24 @@ public class Cell {
                                              CandidatesArray candArray1,
                                              CandidatesArray candArray2,
                                              CandidatesArray candArray3) {
-        assert(candidates_.contains(unique));
-        candidates_.clear();
-        candidates_ = null;
+        //assert(candidates_.contains(unique));
+        //candidates_.clear();
+        //candidates_ = null;
 
         for (int i=0; i<candArray1.size(); i++) {
-            candArray1.get(i).remove(unique);
+            Candidates cands1 = candArray1.get(i);
+            cands1.remove(unique);
+            //assert(cands1.size() > 1) :  cands1;
         }
         for (int i=0; i<candArray2.size(); i++) {
-            candArray2.get(i).remove(unique);
+            Candidates cands2 = candArray2.get(i);
+            cands2.remove(unique);
+            //assert(cands2.size() > 1) :  cands2;
         }
         for (int i=0; i<candArray3.size(); i++) {
-            candArray3.get(i).remove(unique);
+            Candidates cands3 = candArray3.get(i);
+            cands3.remove(unique);
+            //assert(cands3.size() > 1) :  cands3;
         }
     }
 

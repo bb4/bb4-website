@@ -4,6 +4,7 @@ import com.becker.puzzle.sudoku.model.Board;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * Draws the current best solution to the puzzle in a panel.
@@ -12,10 +13,12 @@ import java.awt.*;
  *  @author Barry Becker
  */
 public final class SudokuPanel extends JPanel
-{
+                               implements MouseListener  {
     private Board board_;
 
     private SudokuRenderer renderer_;
+
+    private SudokuSolver solver_;
 
     private int delay_;
 
@@ -32,6 +35,8 @@ public final class SudokuPanel extends JPanel
      */
     SudokuPanel(Board b) {
         board_ = b;
+        solver_ = new SudokuSolver(board_);
+        //this.addMouseListener(this);
     }
 
     /**
@@ -45,6 +50,7 @@ public final class SudokuPanel extends JPanel
 
     public void setBoard(Board b) {
         board_ = b;
+        solver_.setBoard(b);
     }
 
     public void setDelay(int delay) {
@@ -52,10 +58,25 @@ public final class SudokuPanel extends JPanel
     }
 
     public void startSolving() {
-        SudokuSolver solver = new SudokuSolver();
-        solver.setDelay(delay_);
-        boolean solved = solver.solvePuzzle(board_, this);
 
+        solver_.setDelay(delay_);
+        boolean solved = solver_.solvePuzzle(this);
+
+        showMessage(solved);
+    }
+
+    /*
+    public void doIteration() {
+
+        boolean solved = solver_.doIteration();
+        this.repaint();
+
+        if (solved || board_.getNumIterations() > 20) {
+            showMessage(solved);
+        }
+    }*/
+
+    private void showMessage(boolean solved) {
         if ( solved )
             System.out.println( "The final solution is shown. the number of iterations was:" + board_.getNumIterations() );
         else
@@ -84,5 +105,16 @@ public final class SudokuPanel extends JPanel
         super.paintComponents( g );
         renderer_.render(g, board_, "", this.getWidth(), this.getHeight());
     }
+
+
+    public void mouseClicked(MouseEvent e) {
+
+       //doIteration();
+    }
+
+    public void mousePressed(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
 }
 

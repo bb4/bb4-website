@@ -94,12 +94,13 @@ public class SudokuGenerator {
 
     private Board generateByRemoving(Board solution) {
 
-        if (ppanel_ != null)
+        if (ppanel_ != null) {
             ppanel_.setBoard(solution);
+        }
 
         List positionList = getRandomPositions(size_);
         // we need a solver to verify that we can still deduce the original
-        SudokuSolver solver = new SudokuSolver();
+        SudokuSolver solver = new SudokuSolver(solution);
         solver.setDelay(delay_/20);
 
         int len = size_ * size_;
@@ -131,7 +132,8 @@ public class SudokuGenerator {
             ppanel_.repaint();
         }
 
-        if (!solver.solvePuzzle(solution, null)) {
+        solver.setBoard(solution);
+        if (!solver.solvePuzzle(null)) {
             // put it back since it cannot be solved without this positions value
             c.setOriginalValue(value);
         }

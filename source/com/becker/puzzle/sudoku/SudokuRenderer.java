@@ -34,9 +34,7 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
     /**
      * Constructor
      */
-    public SudokuRenderer()
-    {
-    }
+    public SudokuRenderer() {}
 
     /**
      * This renders the current state of the Board to the screen.
@@ -90,7 +88,7 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
 
         g.setColor( cell.isOriginal() ? CELL_ORIG_TEXT_COLOR : CELL_TEXT_COLOR );
         if (cell.getValue() > 0) {
-            g.drawString( Integer.toString(cell.getValue()),
+            g.drawString( getSymbol(cell.getValue()),
                     jittered_xpos + (int)(0.8 * s), (int)(jittered_ypos + s * 1.7) );
         }
 
