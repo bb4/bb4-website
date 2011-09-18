@@ -17,7 +17,7 @@ public class BigCellArray {
      * Constructor
      * @param size this size of the row (small grid dim squared).
      */
-    public BigCellArray(int size) {
+    public BigCellArray(int size, ValuesList values) {
 
         size_ = size;
         sizeSq_ = size * size;
@@ -25,7 +25,7 @@ public class BigCellArray {
 
         for (int i=0; i<size; i++) {
            for (int j=0; j<size; j++) {
-               bigCells_[i][j] = new BigCell(size);
+               bigCells_[i][j] = new BigCell(size, values);
            }
         }
     }
@@ -44,28 +44,11 @@ public class BigCellArray {
         return bigCells_[row / size_][ col / size_].getCell(row % size_, col % size_);
     }
 
-    public void update(Board board) {
+    public void update(ValuesList values) {
         for (int i=0; i<size_; i++) {
             for (int j=0; j<size_; j++) {
-                getBigCell(i, j).updateCandidates(board);
+                getBigCell(i, j).updateCandidates(values);
             }
-        }
-    }
-
-    public void reset() {
-        for (int i=0; i<size_; i++) {
-           for (int j=0; j<size_; j++) {
-               bigCells_[i][j].getCandidates().clear();
-           }
-        }
-
-        for (int i=0; i<sizeSq_; i++) {
-           for (int j=0; j<sizeSq_; j++) {
-               Cell c = getCell(i, j);
-               if (!c.isOriginal()) {
-                   c.clearValue();
-               }
-           }
         }
     }
 
@@ -94,5 +77,15 @@ public class BigCellArray {
             }
         }
         return true;
+    }
+
+    public String toString() {
+        StringBuilder bldr = new StringBuilder();
+        for (int row=0; row < size_; row++) {
+           for (int col=0; col < size_; col++) {
+                bldr.append("cands("+row+", " +col+")="+getBigCell(row, col).getCandidates()).append("\n");
+            }
+        }
+        return bldr.toString();
     }
 }

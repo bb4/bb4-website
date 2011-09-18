@@ -13,21 +13,29 @@ public class Cell {
 
     /** the BigCell to which I belong   */
     private BigCell parentBigCell_;
+    private CellArray rowCells_;
+    private CellArray colCells_;
 
-    private CellArray rowCells;
-    private CellArray colCells;
 
-    /** and, most importantly, the intersection of these.    */
+    /** and, most importantly, the intersection of these.   */
     private Candidates candidates_;
 
     /**
      * Constructor.
      */
-    public Cell(int value, BigCell parent) {
+    public Cell(int value, BigCell parent, ValuesList values) {
         setOriginalValue(value);
         parentBigCell_ = parent;
+        candidates_ = new Candidates(values);
     }
 
+    public void setRowCells(CellArray rowCells) {
+        rowCells_ = rowCells;
+    }
+
+    public void setColCells(CellArray colCells) {
+        colCells_ = colCells;
+    }
 
     public int getValue() {
         return value_;
@@ -35,10 +43,6 @@ public class Cell {
 
     public boolean isOriginal() {
         return original_;
-    }
-
-    public BigCell getParentBigCell() {
-        return parentBigCell_;
     }
 
     /**
@@ -50,16 +54,46 @@ public class Cell {
         value_ = value;
         original_ = false;
         candidates_ = null;
-    }
-
-    public void clearValue() {
-        value_ = 0;
-        original_ = false;
-        candidates_ = new Candidates();
+        parentBigCell_.remove(value_);
+        rowCells_.remove(value_);
+        colCells_.remove(value_);
     }
 
     /**
-     * once the puzzle is started, you can only assign positive values to values of cells.
+     * set the value back to unset and add the old value to the list of candidates
+     * The value should only be added bak to row/col/bigCell candidates if the value is not already set
+     * for respective row/col/bigCell.
+     */
+    public void clearValue() {
+        if (value_ == 0) return;
+
+        int value = value_;
+        value_ = 0;
+        original_ = false;
+
+        rowCells_.add(value);
+        colCells_.add(value);
+        parentBigCell_.add(value);
+
+        if (candidates_ == null) {
+            candidates_ = new Candidates();
+        }
+        candidates_.add(value);
+    }
+
+    /**
+     * The value is not available if it is already set in another cell in the roe, col, orbigCell.
+     * @param value  value to check
+     * @return true if the value is available to restore in the cell.
+     */
+    public boolean isAvailable(int value) {
+        return (parentBigCell_.isAvailable(value)
+                && rowCells_.isAvailable(value)
+                && colCells_.isAvailable(value));
+    }
+
+    /**
+     * Once the puzzle is started, you can only assign positive values to values of cells.
      * @param value
      */
     public void setOriginalValue(int value) {
@@ -70,96 +104,54 @@ public class Cell {
         original_ = value > 0;
 
         if (original_)  {
+            parentBigCell_.remove(value);
+            rowCells_.remove(value);
+            colCells_.remove(value);
             candidates_ = null;
-        }
-        else {
-            candidates_ = new Candidates();
         }
     }
 
     public Candidates getCandidates() {
-        if (original_) {
-            assert(candidates_ == null) : candidates_ +" not null";
-        }
         return candidates_;
+    }
+
+    /**
+     * Only add to our candidates list if this cell has not yet been decided.
+     * @param value
+     */
+    public void addCandidateValue(int value) {
+        if (candidates_ != null) {
+            candidates_.add(value);
+        }
+    }
+
+    public void removeCandidateValue(int value) {
+        assert value > 0;
+        if (candidates_ != null) {
+            candidates_.remove(value);
+        }
     }
 
     /**
      * Intersect the parent big cell candidates with the row and column candidates.
      */
-    public void updateCandidates(Candidates rowCandidates, Candidates colCandidates) {
-
-        if (candidates_ == null)
-            return;
-        candidates_.clear();
-        Candidates bigCellSet = parentBigCell_.getCandidates();
-
-        //System.out.println("rowCands=" + rowCandidates + " colCands=" + colCandidates);
-        for (Integer candidate : bigCellSet)  {
-            if (rowCandidates.contains(candidate) && colCandidates.contains(candidate)) {
-               candidates_.add(candidate);
-           }
-        }
-    }
-
-
-    /**
-     * @@ Perhaps make a separate pass for setting all the cells that only have one value in the
-     * candidate set first.
-     * This should improve performance.
-     */
-    public void checkAndSetUniqueValues(Candidates rowCandidates, Candidates colCandidates) {
+    public void updateCandidates() {
 
         if (candidates_ == null) {
-            // nothing to do, the final value is already determined.
             return;
         }
+        candidates_.clear();
+        candidates_.addAll(parentBigCell_.getCandidates());
+        candidates_.retainAll(rowCells_.getCandidates());
+        candidates_.retainAll(colCells_.getCandidates());
 
-        int unique = parentBigCell_.getUniqueValueForCell(this, rowCandidates, colCandidates);
-
-        if (unique > 0) {
-            // set it and remove from appropriate candidate sets
+        if (candidates_.size() == 1) {
+            int unique = candidates_.getFirst();
             setValue(unique);
-            updateCandidateListsAfterSet(unique, rowCandidates, colCandidates);
         }
     }
 
-    public void updateCandidateListsAfterSet(int unique, Candidates rowCandidates, Candidates colCandidates) {
-        //assert(candidates_.size() == 1 && candidates_.contains(unique));
-        //candidates_.clear();
-        //candidates_ = null;
-        boolean removed1 = parentBigCell_.getCandidates().remove(unique);
-        boolean removed2 = rowCandidates.remove(unique);
-        boolean removed3 = colCandidates.remove(unique);
-
-        //assert (removed1) : "Invalid Puzzle: Could not remove " + unique + " from " + parentBigCell_.getCandidates();
-        //assert (removed2) : "Invalid Puzzle: Could not remove " + unique + " from " + rowCandidates;
-        //assert (removed3) : "Invalid Puzzle: Could not remove " + unique + " from " + colCandidates;
+    public String toString() {
+         return "cell candidates = "+ candidates_;
     }
-
-    public void updateCandidateListsAfterSet(int unique,
-                                             CandidatesArray candArray1,
-                                             CandidatesArray candArray2,
-                                             CandidatesArray candArray3) {
-        //assert(candidates_.contains(unique));
-        //candidates_.clear();
-        //candidates_ = null;
-
-        for (int i=0; i<candArray1.size(); i++) {
-            Candidates cands1 = candArray1.get(i);
-            cands1.remove(unique);
-            //assert(cands1.size() > 1) :  cands1;
-        }
-        for (int i=0; i<candArray2.size(); i++) {
-            Candidates cands2 = candArray2.get(i);
-            cands2.remove(unique);
-            //assert(cands2.size() > 1) :  cands2;
-        }
-        for (int i=0; i<candArray3.size(); i++) {
-            Candidates cands3 = candArray3.get(i);
-            cands3.remove(unique);
-            //assert(cands3.size() > 1) :  cands3;
-        }
-    }
-
 }

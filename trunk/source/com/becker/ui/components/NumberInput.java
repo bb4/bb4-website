@@ -21,7 +21,7 @@ public class NumberInput extends JPanel
 
 
     /**
-     * Often the iniial value cannot be set when initializing the content of a dialog.
+     * Often the initial value cannot be set when initializing the content of a dialog.
      * This uses a default of 0 until the real default can be set with setInitialValue.
      * @param labelText label for the number input element
      */

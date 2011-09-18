@@ -40,34 +40,6 @@ public class CandidatesArray {
         return candidates_.length;
     }
 
-    public void updateRow(int row, Board board) {
-
-        Candidates cands = get(row);
-        cands.clear();
-        cands.addAll(board.getValuesList());
-        //System.out.println("update row =" + row);
-        for (int j=0; j < board.getEdgeLength(); j++) {
-            int v = board.getCell(row, j).getValue();
-            if (v > 0)  {
-                cands.remove(v);
-            }
-        }
-    }
-
-    public void updateCol(int col, Board board) {
-
-        Candidates cands = get(col);
-        cands.clear();
-        cands.addAll(board.getValuesList());
-        //System.out.println("update col =" + col);
-        for (int i=0; i < board.getEdgeLength(); i++) {
-            int v = board.getCell(i, col).getValue();
-            if (v > 0)  {
-                cands.remove(v);
-            }
-        }
-    }
-
 
     public String toString() {
        return Arrays.toString(candidates_);

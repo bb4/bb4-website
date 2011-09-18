@@ -1,5 +1,7 @@
 package com.becker.puzzle.sudoku.model;
 
+import org.omg.PortableInterceptor.SUCCESSFUL;
+
 import java.util.Arrays;
 
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -31,17 +33,11 @@ public class Candidates extends ConcurrentSkipListSet<Integer> {
         }
     }
 
-    public Integer getFirst() {
-        return this.iterator().next();
+    public Candidates(ValuesList values) {
+        this.addAll(values);
     }
 
-    /**
-     *  Intersect ourselves with the 3 specified sets.
-     */
-    public void findIntersectionCandidates(Candidates set1, Candidates set2, Candidates set3)  {
-
-        this.addAll(set1);
-        this.retainAll(set2);
-        this.retainAll(set3);
+    public Integer getFirst() {
+        return this.iterator().next();
     }
 }

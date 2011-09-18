@@ -28,7 +28,6 @@ public final class SudokuController {
         puzzlePanel_ = panel;
     }
 
-
     public void generatePuzzle(final int delay, final int size) {
         Worker worker = new Worker() {
 

@@ -2,6 +2,8 @@ package com.becker.puzzle.sudoku.model.update;
 
 import com.becker.puzzle.sudoku.model.Board;
 import com.becker.puzzle.sudoku.model.CandidatesArray;
+import com.becker.puzzle.sudoku.model.CellArrays;
+import com.becker.puzzle.sudoku.model.ValuesList;
 
 /**
  *  CRB stands for Column, Row, Big Cell.
@@ -29,26 +31,22 @@ public class StandardCRBUpdater extends AbstractUpdater {
     }
 
     protected void updateCellCandidates() {
-        for (int row = 0; row < board.getEdgeLength(); row++) {
-            board.getRowCandidates().updateRow(row, board);
-        }
-        for (int col = 0; col < board.getEdgeLength(); col++) {
-            board.getColCandidates().updateCol(col, board);
-        }
-        board.getBigCells().update(board);
+
+        ValuesList values = board.getValuesList();
+        board.getRowCells().updateAll(values);
+        board.getColCells().updateAll(values);
+
+        board.getBigCells().update(values);
     }
 
     /**
      * Takes the intersection of the three sets: row, col, bigCell candidates.
      */
     private void checkAndSetUniqueValues() {
-        checkAndSetUniqueValues(board.getRowCandidates(), board.getColCandidates());
-    }
 
-    protected void checkAndSetUniqueValues(CandidatesArray rowCands, CandidatesArray colCands) {
         for (int row = 0; row < board.getEdgeLength(); row++) {
             for (int col = 0; col < board.getEdgeLength(); col++) {
-                board.getCell(row, col).checkAndSetUniqueValues(rowCands.get(row), colCands.get(col));
+                board.getCell(row, col).updateCandidates();
             }
         }
     }

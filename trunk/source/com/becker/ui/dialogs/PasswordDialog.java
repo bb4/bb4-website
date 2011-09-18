@@ -14,7 +14,7 @@ import java.awt.event.KeyListener;
  * @author Barry Becker
  */
 public class PasswordDialog extends AbstractDialog
-                                                implements ActionListener, KeyListener {
+                            implements ActionListener, KeyListener {
 
     private static final String DEFAULT_PASSWORD = "hello123";
     private String password_;
@@ -47,10 +47,8 @@ public class PasswordDialog extends AbstractDialog
      * initiallize the dialogs ui
      */
     @Override
-    public JPanel createDialogContent()
-    {
+    public JPanel createDialogContent() {
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        //this.setLocationRelativeTo( parent_ );
         this.setResizable(false);
         this.setModal( true );
         setTitle("Enter the top secret password");

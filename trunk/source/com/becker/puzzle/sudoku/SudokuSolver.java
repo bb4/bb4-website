@@ -2,13 +2,8 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.sudoku.model.Board;
-import junit.extensions.RepeatedTest;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 /**
  * This does the hard work of actually solving the puzzle.
@@ -20,7 +15,6 @@ public class SudokuSolver {
 
     private Board board_;
     private int delay_;
-
 
     /**
      * Constructor
@@ -61,7 +55,7 @@ public class SudokuSolver {
 
         // not sure what this should be.
         int maxIterations = 2 * board_.getEdgeLength();
-        board_.zeroNumIterations();
+        //System.out.println("starting num iterations " + board_.getNumIterations());
 
         do {
             solved = doIteration();
@@ -69,6 +63,7 @@ public class SudokuSolver {
 
         } while (!solved && board_.getNumIterations() < maxIterations);
 
+        //System.out.println("solved="+ solved +" numIter="+board_.getNumIterations() +" max="+ maxIterations);
         refresh(puzzlePanel);
 
         // if we get here and solved is not true, we did not find a solution.

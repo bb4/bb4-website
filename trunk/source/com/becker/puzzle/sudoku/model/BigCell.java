@@ -1,7 +1,6 @@
 package com.becker.puzzle.sudoku.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ public class BigCell {
     private Candidates candidates_;
 
 
-    public BigCell(int size) {
+    public BigCell(int size, ValuesList values) {
 
         assert(size > 1 && size < Board.MAX_SIZE);
         n_ = size;
@@ -28,10 +27,10 @@ public class BigCell {
         cells_ = new Cell[n_][n_];
         for (int i=0; i<n_; i++) {
            for (int j=0; j<n_; j++) {
-               cells_[i][j] = new Cell(0, this);
+               cells_[i][j] = new Cell(0, this, values);
            }
         }
-        candidates_ = new Candidates();
+        candidates_ = new Candidates(values);
     }
 
     /**
@@ -41,6 +40,41 @@ public class BigCell {
         return n_;
     }
 
+    /** a value has been set, so we need to remove it from all the candidate lists. */
+    public void remove(int unique) {
+        candidates_.remove(unique);
+        for (int i=0; i<n_; i++) {
+           for (int j=0; j<n_; j++) {
+               getCell(i, j).removeCandidateValue(unique);
+           }
+        }
+    }
+
+    /** add to the bigCell candidate list and each cells candidates for cells not yet set in stone. */
+    public void add(int value) {
+        for (int i=0; i<n_; i++) {
+           for (int j=0; j<n_; j++) {
+               Cell cell = getCell(i, j);
+               if (cell.isAvailable(value)) {
+                   cell.addCandidateValue(value);
+               }
+           }
+        }
+        candidates_.add(value);
+    }
+
+    boolean isAvailable(int value) {
+        for (int i=0; i<n_; i++) {
+            for (int j=0; j<n_; j++) {
+                if (getCell(i, j).getValue() == value) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /** Get all the candidate lists for all the cells in the bigCell except the one specified. */
     public CandidatesArray getCandidatesArrayExcluding(int row, int col) {
 
         List<Candidates> cands = new ArrayList<Candidates>();
@@ -57,11 +91,12 @@ public class BigCell {
     }
 
 
-    public void updateCandidates(Board board) {
+    public void updateCandidates(ValuesList values) {
 
+        //candidates_ = new Candidates(values);  // try this way
         candidates_.clear();
         // assume all of them, then remove those that are represented.
-        candidates_.addAll(board.getValuesList());
+        candidates_.addAll(values);
 
         for (int i = 0; i < n_; i++) {
            for (int j = 0; j < n_; j++) {
@@ -84,34 +119,5 @@ public class BigCell {
     public final Cell getCell( int row, int col ) {
         assert ( row >= 0 && row < n_ && col >= 0 && col < n_);
         return cells_[row][col];
-    }
-
-    /**
-     * Find the intersection of the row, column, and bigGrid candidates and set it as the candidates for the cell.
-     * @param cell cell to check for a unique candidate.
-     * @return the unique value for this cell if there is one, else return 0.
-     */
-    public int getUniqueValueForCell(Cell cell, Candidates rowCands, Candidates colCands) {
-
-        if (cell.getCandidates() == null)  {
-            cell.getValue();
-        }
-
-        Candidates cands = cell.getCandidates();
-        cands.findIntersectionCandidates(candidates_, rowCands, colCands);
-
-        if (cands.size() == 1) {
-            // if there is only one candidate, then that is the value for this cell.
-            return cands.getFirst();
-        }
-        return 0;   // the value is not unique
-    }
-
-    /**
-     * Explicitly clean things up to avoid memory leaks.
-     * The most common way to accidentally have memory leaks is to leave listeners on objects.
-     */
-    public void dispose() {
-        cells_ = null;
     }
 }

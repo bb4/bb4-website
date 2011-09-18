@@ -7,8 +7,7 @@ import java.awt.*;
  *
  * @author Barry becker
  */
-public final class SpeedSelector extends Choice
-{
+public final class SpeedSelector extends Choice {
 
     private String[] speedChoices_ = {
         "As fast as possible",
