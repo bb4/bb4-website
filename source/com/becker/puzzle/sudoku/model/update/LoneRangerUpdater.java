@@ -46,8 +46,8 @@ public class LoneRangerUpdater extends AbstractUpdater {
                 CandidatesArray rowCellCands = getCandidatesArrayForRowExcludingCol(row, col);
                 CandidatesArray colCellCands = getCandidatesArrayForColExcludingRow(row, col);
 
-                Candidates rowCands = board.getRowCandidates().get(row);
-                Candidates colCands = board.getColCandidates().get(col);
+                Candidates rowCands = board.getRowCells().get(row).getCandidates();
+                Candidates colCands = board.getColCells().get(col).getCandidates();
 
                 checkAndSetLoneRangers(bigCellCands, rowCellCands, colCellCands, rowCands, colCands, cell);
                 checkAndSetLoneRangers(rowCellCands, bigCellCands, colCellCands, rowCands, colCands, cell);
@@ -105,6 +105,7 @@ public class LoneRangerUpdater extends AbstractUpdater {
             //System.out.println("setting " + candsCopy.getFirst());
             int unique = candsCopy.getFirst();
             cell.setValue(unique);
+            /*
             cell.updateCandidateListsAfterSet(unique, candArray, candArray1, candArray2);
             cell.getParentBigCell().getCandidates().remove(unique);
             //assert(cell.getParentBigCell().getCandidates().size()>1):  "parent="+ cell.getParentBigCell();
@@ -112,6 +113,7 @@ public class LoneRangerUpdater extends AbstractUpdater {
             //assert(cands1.size() > 1) :  cands1;
             cands2.remove(unique);
             //assert(cands2.size() > 1) :  cands2;
+            */
         }
     }
 }

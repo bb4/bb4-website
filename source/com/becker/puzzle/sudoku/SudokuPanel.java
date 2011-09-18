@@ -108,7 +108,6 @@ public final class SudokuPanel extends JPanel
 
 
     public void mouseClicked(MouseEvent e) {
-
        //doIteration();
     }
 

@@ -7,8 +7,7 @@ import java.awt.*;
  *
  * @author Barry becker
  */
-public final class SizeSelector extends Choice
-{
+public final class SizeSelector extends Choice {
 
     private String[] boardSizeMenuItems_ = {
         "4 cells on a side",

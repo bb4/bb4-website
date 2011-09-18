@@ -16,9 +16,9 @@ public class Board {
 
     static final int MAX_SIZE = 9;
 
-    // row and col candidates for every row and col.
-    protected CandidatesArray rowCandidates_;
-    protected CandidatesArray colCandidates_;
+    // row and col cells for every row and col.
+    protected CellArrays rowCells_;
+    protected CellArrays colCells_;
 
     /** the internal data structures representing the game board. */
     protected BigCellArray bigCells_;
@@ -36,11 +36,7 @@ public class Board {
         n_ = size;
         nn_ = size * size;
         valuesList_ = new ValuesList(nn_);
-        numIterations_ = 0;
-
-        bigCells_ = new BigCellArray(n_);
-        rowCandidates_ = new CandidatesArray(nn_);
-        colCandidates_ = new CandidatesArray(nn_);
+        reset();
     }
 
     /**
@@ -72,18 +68,18 @@ public class Board {
      * Non original values become 0.
      */
     public void reset() {
-        rowCandidates_ = new CandidatesArray(nn_);
-        colCandidates_ = new CandidatesArray(nn_);
-        bigCells_.reset();
+        bigCells_ = new BigCellArray(n_, valuesList_);
+        rowCells_ = CellArrays.createRowCellArrays(this);
+        colCells_ = CellArrays.createColCellArrays(this);
         numIterations_ = 0;
     }
 
-    public CandidatesArray getRowCandidates() {
-        return rowCandidates_;
+    public CellArrays getRowCells() {
+        return rowCells_;
     }
 
-    public CandidatesArray getColCandidates() {
-        return colCandidates_;
+    public CellArrays getColCells() {
+        return colCells_;
     }
 
     public BigCellArray getBigCells() {
@@ -126,6 +122,7 @@ public class Board {
      * @return the cell at the specified position.
      */
     public final Cell getCell( int position ) {
+        //System.out.println("position = " + position + " position / nn_=" + position / nn_ + " position % nn_=" + position % nn_);
         return getCell(position / nn_, position % nn_);
     }
 
@@ -141,29 +138,24 @@ public class Board {
      * @return cell candidates in random order for specified position.
      */
     public ValuesList getShuffledCellCandidates(int position) {
-        return ValuesList.createShuffledList(findCellCandidates(position));
+        Candidates cands = findCellCandidates(position);
+        if (cands == null) {
+            return new ValuesList();
+        }
+        return ValuesList.createShuffledList(cands);
     }
 
     private Candidates findCellCandidates(int position) {
         //System.out.println("position="+position + " div=" + position / nn_);
-        return findCellCandidates(position / nn_, position % nn_);
+        return getCandidates(position / nn_, position % nn_);
     }
 
     /**
-     * update candidate lists for a specific cell
+     * find candidate lists for a specific cell.
      * @return cell candidates
      */
-     Candidates findCellCandidates(int row, int col) {
-
-        rowCandidates_.updateRow(row, this);
-        colCandidates_.updateCol(col, this);
-        getBigCell(row / n_, col / n_).updateCandidates(this);
-
-        // find the cell candidates (intersection of above lists)
-        Cell c = getCell(row, col);
-        //System.out.println("rowCandidates_.get("+row+")=" + rowCandidates_.get(row) + " col=" + col);
-        c.updateCandidates(rowCandidates_.get(row), colCandidates_.get(col));
-        return c.getCandidates();
+     Candidates getCandidates(int row, int col) {
+        return getCell(row, col).getCandidates();
     }
 
     /**
@@ -179,7 +171,7 @@ public class Board {
     /**
      * @return the complete set of allowable values (1,... nn);
      */
-    protected ValuesList getValuesList() {
+    public ValuesList getValuesList() {
         return valuesList_;
     }
 
@@ -192,7 +184,7 @@ public class Board {
     }
 
     public String toString() {
-        StringBuilder bldr = new StringBuilder();
+        StringBuilder bldr = new StringBuilder("\n");
         for (int row=0; row < nn_; row++) {
             for (int col=0; col < nn_; col++) {
                 bldr.append(getCell(row, col).getValue());
@@ -200,6 +192,37 @@ public class Board {
             }
             bldr.append("\n");
         }
+        bldr.append("rowCells=\n" + rowCells_);
+        //bldr.append("colCells=\n" + colCells_);
+        bldr.append("bigCells =\n" + getBigCells());
         return bldr.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Board board = (Board) o;
+        if (n_ != board.n_) return false;
+        if (nn_ != board.nn_) return false;
+
+        for (int row=0; row < nn_; row++) {
+            for (int col=0; col < nn_; col++) {
+                if (this.getCell(row, col).getValue() != board.getCell(row, col).getValue() ) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = n_;
+        result = 31 * result + nn_;
+        result = 31 * result + (rowCells_ != null ? rowCells_.hashCode() : 0);
+        return result;
     }
 }
