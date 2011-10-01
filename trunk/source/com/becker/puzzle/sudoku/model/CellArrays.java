@@ -1,11 +1,10 @@
 package com.becker.puzzle.sudoku.model;
 
-import ca.dj.jigo.sgf.tokens.SizeToken;
 
 import java.util.Arrays;
 
 /**
- *  All the array of cells for all the rows or columns in the puzzle.
+ *  All the arrays of cells for all the rows or columns in the puzzle.
  *
  *  @author Barry Becker
  */

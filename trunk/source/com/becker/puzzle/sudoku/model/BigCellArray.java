@@ -11,21 +11,18 @@ public class BigCellArray {
     private BigCell[][] bigCells_;
 
     private int size_;
-    private int sizeSq_;
 
     /**
      * Constructor
-     * @param size this size of the row (small grid dim squared).
      */
-    public BigCellArray(int size, ValuesList values) {
+    public BigCellArray(Board board) {
 
-        size_ = size;
-        sizeSq_ = size * size;
-        bigCells_ = new BigCell[size][size];
+        size_ = board.getBaseSize();
+        bigCells_ = new BigCell[size_][size_];
 
-        for (int i=0; i<size; i++) {
-           for (int j=0; j<size; j++) {
-               bigCells_[i][j] = new BigCell(size, values);
+        for (int i=0; i<size_; i++) {
+           for (int j=0; j<size_; j++) {
+               bigCells_[i][j] = new BigCell(board, size_ * i, size_ * j);
            }
         }
     }
@@ -36,12 +33,10 @@ public class BigCellArray {
     }
 
     /**
-     * returns null if there is no game piece at the position specified.
-     * @return the piece at the specified location. Returns null if there is no piece there.
+     * @return the size of the edge of a big cell. e.g. 3 for a typical board.
      */
-    public final Cell getCell( int row, int col ) {
-        assert ( row >= 0 && row < sizeSq_ && col >= 0 && col < sizeSq_);
-        return bigCells_[row / size_][ col / size_].getCell(row % size_, col % size_);
+    public int getSize() {
+        return size_;
     }
 
     public void update(ValuesList values) {
@@ -52,38 +47,11 @@ public class BigCellArray {
         }
     }
 
-    /**
-     * @return true if all the cells have been filled in with a value (even if not a valid solution).
-     */
-    public boolean isFilledIn() {
-        for (int row = 0; row < sizeSq_; row++) {
-            for (int col = 0; col < sizeSq_; col++) {
-                Cell c = getCell(row, col);
-                if (c.getValue() <= 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public boolean hasNoCandidates() {
-        for (int row=0; row < sizeSq_; row++) {
-            for (int col=0; col < sizeSq_; col++) {
-                Cell c = getCell(row, col);
-                if (c.getCandidates() != null) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public String toString() {
         StringBuilder bldr = new StringBuilder();
         for (int row=0; row < size_; row++) {
            for (int col=0; col < size_; col++) {
-                bldr.append("cands("+row+", " +col+")="+getBigCell(row, col).getCandidates()).append("\n");
+               bldr.append("cands(").append(row).append(", ").append(col).append(")=").append(getBigCell(row, col).getCandidates()).append("\n");
             }
         }
         return bldr.toString();

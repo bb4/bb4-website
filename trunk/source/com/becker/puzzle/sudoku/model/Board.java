@@ -1,13 +1,5 @@
 package com.becker.puzzle.sudoku.model;
 
-import com.becker.puzzle.sudoku.model.update.AbstractUpdater;
-import com.becker.puzzle.sudoku.model.update.LoneRangerUpdater;
-import com.becker.puzzle.sudoku.model.update.StandardCRBUpdater;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
-
 /**
  *  The Board describes the physical layout of the puzzle.
  *
@@ -20,6 +12,8 @@ public class Board {
     protected int nn_;  // n times n
 
     static final int MAX_SIZE = 9;
+
+    private Cell[][] cells_;
 
     // row and col cells for every row and col.
     protected CellArrays rowCells_;
@@ -73,7 +67,13 @@ public class Board {
      * Non original values become 0.
      */
     public void reset() {
-        bigCells_ = new BigCellArray(n_, valuesList_);
+        cells_ = new Cell[nn_][nn_];
+        for (int i=0; i<nn_; i++)  {
+           for (int j=0; j<nn_; j++) {
+               cells_[i][j] = new Cell(0, valuesList_);
+           }
+        }
+        bigCells_ = new BigCellArray(this);
         rowCells_ = CellArrays.createRowCellArrays(this);
         colCells_ = CellArrays.createColCellArrays(this);
         numIterations_ = 0;
@@ -112,7 +112,7 @@ public class Board {
     /**
      * @return the bigCell at the specified location.
      */
-    public final BigCell getBigCell( int row, int col ) {
+    public final BigCell getBigCell(int row, int col) {
 
         return bigCells_.getBigCell(row, col);
     }
@@ -122,8 +122,8 @@ public class Board {
      * @param col 0-nn_-1
      * @return the cell in the bigCellArray at the specified location.
      */
-    public final Cell getCell( int row, int col ) {
-        return bigCells_.getCell(row, col);
+    public final Cell getCell(int row, int col) {
+        return cells_[row][col];
     }
 
     /**
@@ -139,11 +139,34 @@ public class Board {
      */
     public boolean solved() {
 
-        return bigCells_.isFilledIn() && bigCells_.hasNoCandidates();
+        return isFilledIn() && hasNoCandidates();
     }
 
-    private Candidates findCellCandidates(int position) {
-        return getCandidates(position / nn_, position % nn_);
+    /**
+     * @return true if all the cells have been filled in with a value (even if not a valid solution).
+     */
+    private boolean isFilledIn() {
+        for (int row = 0; row < nn_; row++) {
+            for (int col = 0; col < nn_; col++) {
+                Cell c = getCell(row, col);
+                if (c.getValue() <= 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean hasNoCandidates() {
+        for (int row=0; row < nn_; row++) {
+            for (int col=0; col < nn_; col++) {
+                Cell c = getCell(row, col);
+                if (c.getCandidates() != null) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -183,25 +206,6 @@ public class Board {
         bldr.append("bigCells =\n").append(getBigCells());
         return bldr.toString();
     }
-
-
-    public boolean deepEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Board board = (Board) o;
-
-        for (int row=0; row < nn_; row++) {
-            for (int col=0; col < nn_; col++) {
-                if (this.getCell(row, col).equals(board.getCell(row, col))) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
 
     @Override
     public boolean equals(Object o) {
