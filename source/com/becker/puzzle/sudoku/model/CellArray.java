@@ -62,7 +62,7 @@ public class CellArray {
     }
 
     public void remove(int unique) {
-        candidates_.remove(unique);
+        candidates_.safeRemove(unique);
         for (int j=0; j < size(); j++) {
             getCell(j).removeCandidateValue(unique);
         }
@@ -70,7 +70,7 @@ public class CellArray {
 
     /**
      * We can only add the value if none of our cells already have it set.
-     * @param value
+     * @param value value to add to cells candidate list and that of rows/cols/bigCell if possible.
      */
     public void add(int value) {
 
@@ -83,6 +83,7 @@ public class CellArray {
         candidates_.add(value);
     }
 
+    /** @return true only if none of our cells already have the specified value. */
     public boolean isAvailable(int value) {
         for (int j=0; j < size(); j++) {
             if (getCell(j).getValue() == value) {

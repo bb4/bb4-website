@@ -4,6 +4,7 @@ import com.becker.puzzle.common.PuzzleRenderer;
 import com.becker.puzzle.sudoku.model.Board;
 import com.becker.puzzle.sudoku.model.Candidates;
 import com.becker.puzzle.sudoku.model.Cell;
+import com.becker.puzzle.sudoku.model.ValueConverter;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -88,7 +89,7 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
 
         g.setColor( cell.isOriginal() ? CELL_ORIG_TEXT_COLOR : CELL_TEXT_COLOR );
         if (cell.getValue() > 0) {
-            g.drawString( getSymbol(cell.getValue()),
+            g.drawString(ValueConverter.getSymbol(cell.getValue()),
                     jittered_xpos + (int)(0.8 * s), (int)(jittered_ypos + s * 1.7) );
         }
 
@@ -124,40 +125,10 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
         int ct = 0;
         Iterator<Integer> cit = candidates.iterator();
         while (cit.hasNext() && ct < 9)  {
-            g.drawString(getSymbol(cit.next()), x + offsets[ct][0], y + offsets[ct][1]);
+            g.drawString(ValueConverter.getSymbol(cit.next()), x + offsets[ct][0], y + offsets[ct][1]);
             ct++;
         }
 
-    }
-
-    /**
-     * Get a one character symbol for the value.
-     * @param value
-     * @return
-     */
-    private static String getSymbol(int value) {
-
-        String sValue = "-";
-        switch (value) {
-            case 10 : sValue = "0"; break;
-            case 11 : sValue = "A"; break;
-            case 12 : sValue = "B"; break;
-            case 13 : sValue = "C"; break;
-            case 14 : sValue = "D"; break;
-            case 15 : sValue = "E"; break;
-            case 16 : sValue = "F"; break;
-            case 17 : sValue = "G"; break;
-            case 18 : sValue = "H"; break;
-            case 19 : sValue = "I"; break;
-            case 20 : sValue = "J"; break;
-            case 21 : sValue = "K"; break;
-            case 22 : sValue = "L"; break;
-            case 23 : sValue = "M"; break;
-            case 24 : sValue = "N"; break;
-            case 25 : sValue = "O"; break;
-            default : sValue = Integer.toString(value);
-        }
-        return sValue;
     }
 
 

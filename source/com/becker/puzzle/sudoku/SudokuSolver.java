@@ -2,8 +2,13 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.sudoku.model.Board;
+import com.becker.puzzle.sudoku.model.BoardUpdater;
+import com.becker.puzzle.sudoku.model.update.LoneRangerUpdater;
+import com.becker.puzzle.sudoku.model.update.StandardCRBUpdater;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * This does the hard work of actually solving the puzzle.
@@ -14,6 +19,7 @@ import java.awt.*;
 public class SudokuSolver {
 
     private Board board_;
+    private BoardUpdater updater_;
     private int delay_;
 
     /**
@@ -23,10 +29,17 @@ public class SudokuSolver {
     public SudokuSolver(Board board) {
         delay_ = 0;
         board_ = board;
+        Class [] classes = new Class[] {StandardCRBUpdater.class, LoneRangerUpdater.class};
+        updater_ = new BoardUpdater(Arrays.asList(classes));
     }
 
     public void setBoard(Board b) {
         board_ = b;
+    }
+
+    /** used to set custom updater if you want something other than the default */
+    public void setUpdater(BoardUpdater updater) {
+        updater_ = updater;
     }
 
     /**
@@ -72,7 +85,7 @@ public class SudokuSolver {
 
     public boolean doIteration()   {
         // find missing row and column numbers
-        board_.updateAndSet();
+        updater_.updateAndSet(board_);
         board_.incrementNumIterations();
         return board_.solved();
     }

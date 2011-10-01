@@ -29,14 +29,6 @@ public class Cell {
         candidates_ = new Candidates(values);
     }
 
-    public void setRowCells(CellArray rowCells) {
-        rowCells_ = rowCells;
-    }
-
-    public void setColCells(CellArray colCells) {
-        colCells_ = colCells;
-    }
-
     public int getValue() {
         return value_;
     }
@@ -54,15 +46,17 @@ public class Cell {
         value_ = value;
         original_ = false;
         candidates_ = null;
+
         parentBigCell_.remove(value_);
         rowCells_.remove(value_);
         colCells_.remove(value_);
     }
 
     /**
-     * set the value back to unset and add the old value to the list of candidates
-     * The value should only be added bak to row/col/bigCell candidates if the value is not already set
+     * Set the value back to unset and add the old value to the list of candidates
+     * The value should only be added back to row/col/bigCell candidates if the value is not already set
      * for respective row/col/bigCell.
+     * Clear value should be the inverse of setValue.
      */
     public void clearValue() {
         if (value_ == 0) return;
@@ -75,14 +69,13 @@ public class Cell {
         colCells_.add(value);
         parentBigCell_.add(value);
 
-        if (candidates_ == null) {
-            candidates_ = new Candidates();
-        }
+        assert candidates_ == null;
+        candidates_ = new Candidates();
         candidates_.add(value);
     }
 
     /**
-     * The value is not available if it is already set in another cell in the roe, col, orbigCell.
+     * The value is not available if it is already set in another cell in the row, col, or bigCell.
      * @param value  value to check
      * @return true if the value is available to restore in the cell.
      */
@@ -125,15 +118,18 @@ public class Cell {
         }
     }
 
-    public void removeCandidateValue(int value) {
+    public boolean removeCandidateValue(int value) {
         assert value > 0;
+        boolean removed = false;
         if (candidates_ != null) {
-            candidates_.remove(value);
+            removed = candidates_.remove(value);
         }
+        return removed;
     }
 
     /**
      * Intersect the parent big cell candidates with the row and column candidates.
+     * If after doing the intersection, we have only one value, then set it on the cell.
      */
     public void updateCandidates() {
 
@@ -151,7 +147,35 @@ public class Cell {
         }
     }
 
+    void setRowCells(CellArray rowCells) {
+        rowCells_ = rowCells;
+    }
+
+    void setColCells(CellArray colCells) {
+        colCells_ = colCells;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cell cell = (Cell) o;
+
+        if (value_ != cell.value_) return false;
+        if (candidates_ != null ? !candidates_.equals(cell.candidates_) : cell.candidates_ != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = value_;
+        result = 31 * result + (candidates_ != null ? candidates_.hashCode() : 0);
+        return result;
+    }
+
     public String toString() {
-         return "cell candidates = "+ candidates_;
+         return "Cell value=" + getValue() + "  candidates = "+ candidates_;
     }
 }

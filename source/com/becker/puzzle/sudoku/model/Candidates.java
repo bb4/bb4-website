@@ -1,9 +1,6 @@
 package com.becker.puzzle.sudoku.model;
 
-import org.omg.PortableInterceptor.SUCCESSFUL;
-
 import java.util.Arrays;
-
 import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
@@ -39,5 +36,22 @@ public class Candidates extends ConcurrentSkipListSet<Integer> {
 
     public Integer getFirst() {
         return this.iterator().next();
+    }
+
+
+    public boolean safeRemove(Object v) {
+        if (!this.contains(v)) {
+            throw new IllegalStateException("Cannot remove " + v + " from candidates = " + this);
+        }
+        return super.remove(v);
+    }
+
+
+    public String toString() {
+        StringBuilder bldr = new StringBuilder("[");
+        for (int v : this) {
+            bldr.append(ValueConverter.getSymbol(v)).append(",");
+        }
+        return bldr.substring(0, bldr.length()-1) + "]";
     }
 }

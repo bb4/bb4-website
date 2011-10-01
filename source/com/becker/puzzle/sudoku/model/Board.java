@@ -1,7 +1,12 @@
 package com.becker.puzzle.sudoku.model;
 
+import com.becker.puzzle.sudoku.model.update.AbstractUpdater;
 import com.becker.puzzle.sudoku.model.update.LoneRangerUpdater;
 import com.becker.puzzle.sudoku.model.update.StandardCRBUpdater;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
 
 /**
  *  The Board describes the physical layout of the puzzle.
@@ -100,6 +105,10 @@ public class Board {
         return nn_;
     }
 
+    public final int getNumCells() {
+        return nn_ * nn_;
+    }
+
     /**
      * @return the bigCell at the specified location.
      */
@@ -122,7 +131,6 @@ public class Board {
      * @return the cell at the specified position.
      */
     public final Cell getCell( int position ) {
-        //System.out.println("position = " + position + " position / nn_=" + position / nn_ + " position % nn_=" + position % nn_);
         return getCell(position / nn_, position % nn_);
     }
 
@@ -134,19 +142,7 @@ public class Board {
         return bigCells_.isFilledIn() && bigCells_.hasNoCandidates();
     }
 
-    /**
-     * @return cell candidates in random order for specified position.
-     */
-    public ValuesList getShuffledCellCandidates(int position) {
-        Candidates cands = findCellCandidates(position);
-        if (cands == null) {
-            return new ValuesList();
-        }
-        return ValuesList.createShuffledList(cands);
-    }
-
     private Candidates findCellCandidates(int position) {
-        //System.out.println("position="+position + " div=" + position / nn_);
         return getCandidates(position / nn_, position % nn_);
     }
 
@@ -156,16 +152,6 @@ public class Board {
      */
      Candidates getCandidates(int row, int col) {
         return getCell(row, col).getCandidates();
-    }
-
-    /**
-     * update candidate lists for all cells then set the unique values that are determined.
-     * Next check for loan rangers.
-     */
-    public void updateAndSet() {
-
-        new StandardCRBUpdater(this).updateAndSet();
-        new LoneRangerUpdater(this).updateAndSet();
     }
 
     /**
@@ -187,16 +173,35 @@ public class Board {
         StringBuilder bldr = new StringBuilder("\n");
         for (int row=0; row < nn_; row++) {
             for (int col=0; col < nn_; col++) {
-                bldr.append(getCell(row, col).getValue());
+                bldr.append(ValueConverter.getSymbol(getCell(row, col).getValue()));
                 bldr.append(" ");
             }
             bldr.append("\n");
         }
-        bldr.append("rowCells=\n" + rowCells_);
+        bldr.append("rowCells=\n").append(rowCells_);
         //bldr.append("colCells=\n" + colCells_);
-        bldr.append("bigCells =\n" + getBigCells());
+        bldr.append("bigCells =\n").append(getBigCells());
         return bldr.toString();
     }
+
+
+    public boolean deepEquals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Board board = (Board) o;
+
+        for (int row=0; row < nn_; row++) {
+            for (int col=0; col < nn_; col++) {
+                if (this.getCell(row, col).equals(board.getCell(row, col))) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
 
     @Override
     public boolean equals(Object o) {

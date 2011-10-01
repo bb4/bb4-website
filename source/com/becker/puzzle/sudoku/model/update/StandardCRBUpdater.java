@@ -35,7 +35,6 @@ public class StandardCRBUpdater extends AbstractUpdater {
         ValuesList values = board.getValuesList();
         board.getRowCells().updateAll(values);
         board.getColCells().updateAll(values);
-
         board.getBigCells().update(values);
     }
 
