@@ -1,9 +1,6 @@
 package com.becker.puzzle.sudoku.model.update;
 
-import com.becker.puzzle.sudoku.model.Board;
-import com.becker.puzzle.sudoku.model.CandidatesArray;
-import com.becker.puzzle.sudoku.model.CellArrays;
-import com.becker.puzzle.sudoku.model.ValuesList;
+import com.becker.puzzle.sudoku.model.*;
 
 /**
  *  CRB stands for Column, Row, Big Cell.
@@ -45,7 +42,12 @@ public class StandardCRBUpdater extends AbstractUpdater {
 
         for (int row = 0; row < board.getEdgeLength(); row++) {
             for (int col = 0; col < board.getEdgeLength(); col++) {
-                board.getCell(row, col).updateCandidates();
+                Cell cell = board.getCell(row, col);
+                Candidates cands = cell.getCandidates();
+                if (cands!=null && cands.size() == 1) {
+                    int unique = cands.getFirst();
+                    cell.setValue(unique);
+                }
             }
         }
     }

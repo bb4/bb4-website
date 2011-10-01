@@ -34,12 +34,6 @@ public class ValuesList extends ArrayList<Integer> {
         return ValuesList.createShuffledList(cands);
     }
 
-    public static ValuesList createShuffledList(int sizeSq) {
-        ValuesList randomList = new ValuesList(sizeSq);
-        Collections.shuffle(randomList, MathUtil.RANDOM);
-        return randomList;
-    }
-
     public static ValuesList createShuffledList(Candidates cands) {
         ValuesList randomList = new ValuesList(cands);
         Collections.shuffle(randomList, MathUtil.RANDOM);

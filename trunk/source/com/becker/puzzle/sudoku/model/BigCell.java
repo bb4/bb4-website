@@ -43,36 +43,11 @@ public class BigCell {
     /** a value has been set, so we need to remove it from all the candidate lists. */
     public void remove(int unique) {
         candidates_.safeRemove(unique);
-        for (int i=0; i<n_; i++) {
-           for (int j=0; j<n_; j++) {
-               getCell(i, j).removeCandidateValue(unique);
-           }
-        }
     }
 
     /** add to the bigCell candidate list and each cells candidates for cells not yet set in stone. */
     public void add(int value) {
-        for (int i=0; i<n_; i++) {
-           for (int j=0; j<n_; j++) {
-               Cell cell = getCell(i, j);
-               if (cell.isAvailable(value)) {
-                   cell.addCandidateValue(value);
-               }
-           }
-        }
         candidates_.add(value);
-    }
-
-    boolean isAvailable(int value) {
-        assert value > 0;
-        for (int i=0; i<n_; i++) {
-            for (int j=0; j<n_; j++) {
-                if (getCell(i, j).getValue() == value) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     /** @return all the candidate lists for all the cells in the bigCell except the one specified. */
@@ -92,11 +67,12 @@ public class BigCell {
     }
 
 
+    /**
+     * assume all of them, then remove those that are represented.
+     */
     public void updateCandidates(ValuesList values) {
 
-        //candidates_ = new Candidates(values);  // try this way
         candidates_.clear();
-        // assume all of them, then remove those that are represented.
         candidates_.addAll(values);
 
         for (int i = 0; i < n_; i++) {

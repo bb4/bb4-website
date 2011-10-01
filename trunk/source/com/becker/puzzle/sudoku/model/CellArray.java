@@ -63,9 +63,6 @@ public class CellArray {
 
     public void remove(int unique) {
         candidates_.safeRemove(unique);
-        for (int j=0; j < size(); j++) {
-            getCell(j).removeCandidateValue(unique);
-        }
     }
 
     /**
@@ -73,24 +70,7 @@ public class CellArray {
      * @param value value to add to cells candidate list and that of rows/cols/bigCell if possible.
      */
     public void add(int value) {
-
-        for (int j=0; j < size(); j++) {
-            Cell cell = getCell(j);
-            if (cell.isAvailable(value))  {
-                cell.addCandidateValue(value);
-            }
-        }
         candidates_.add(value);
-    }
-
-    /** @return true only if none of our cells already have the specified value. */
-    public boolean isAvailable(int value) {
-        for (int j=0; j < size(); j++) {
-            if (getCell(j).getValue() == value) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public int size() {
@@ -98,20 +78,18 @@ public class CellArray {
     }
 
     /**
-     * Make sure that the candidates for this cell are all values less the values from the other cells in this array.
+     * Assume all of them, then remove the values that are represented.
      */
     public void updateEntries(int entry, ValuesList values) {
 
-        Candidates cands = getCell(entry).getCandidates();
-        if (cands == null) return;
-        cands.clear();
-        cands.addAll(values);
+        candidates_.clear();
+        candidates_.addAll(values);
 
-        for (int j=0; j < size(); j++) {
-            int v = getCell(j).getValue();
-            if (v > 0)  {
-                cands.remove(v);
-            }
+        for (int i = 0; i < size(); i++) {
+           int v = cells_[i].getValue();
+           if (v > 0) {
+              candidates_.remove(v);
+           }
         }
     }
 

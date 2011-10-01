@@ -70,7 +70,7 @@ public class Board {
         cells_ = new Cell[nn_][nn_];
         for (int i=0; i<nn_; i++)  {
            for (int j=0; j<nn_; j++) {
-               cells_[i][j] = new Cell(0, valuesList_);
+               cells_[i][j] = new Cell(0);
            }
         }
         bigCells_ = new BigCellArray(this);
