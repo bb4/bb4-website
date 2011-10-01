@@ -16,6 +16,8 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Sudoku model Tests");
 
         suite.addTestSuite(TestBoard.class);
+        suite.addTestSuite(TestCell.class);
+        suite.addTestSuite(TestBoardUpdater.class);
 
         return suite;
     }
