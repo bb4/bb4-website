@@ -94,6 +94,7 @@ public class TestCell extends TestCase {
         Assert.assertEquals("Unexpectedly not the same ", origBoard, board);
     }
 
+    /*
     public void testIsAvailable4() {
         Board origBoard = new Board(TestData.SIMPLE_4);
         board = new Board(origBoard);
@@ -132,7 +133,7 @@ public class TestCell extends TestCase {
             System.out.println((i)+" avail=" + cell.isAvailable(i));
             //Assert.assertEquals((i) + "Not available", expectedAvailability[i-1], cell.isAvailable(i));
         }
-    }
+    }  */
 
 
     /**

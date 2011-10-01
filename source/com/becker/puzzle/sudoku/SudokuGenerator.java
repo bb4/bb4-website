@@ -50,7 +50,6 @@ public class SudokuGenerator {
     public Board generatePuzzleBoard() {
 
         Board board = new Board(size_);
-        //System.out.println("initial board=" + board);
 
         if (ppanel_ != null)  {
             ppanel_.setBoard(board);
@@ -100,7 +99,6 @@ public class SudokuGenerator {
             }
             refresh();
             //System.out.println(indent(position) + "BACKTRACKING clearing cell pos="+position+" " + cell  + " shuffledValues=" + shuffledValues +" current="+ value );
-            // add back
             cell.clearValue();
             refresh();
         }

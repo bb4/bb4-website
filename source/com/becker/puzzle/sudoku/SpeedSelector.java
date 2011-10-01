@@ -27,7 +27,7 @@ public final class SpeedSelector extends Choice {
     }
 
     /**
-     * @return  the delay for selected speeed.
+     * @return  the delay for selected speed.
      */
     public int getSelectedDelay() {
         switch (this.getSelectedIndex())  {
