@@ -46,12 +46,9 @@ public class LoneRangerUpdater extends AbstractUpdater {
                 CandidatesArray rowCellCands = getCandidatesArrayForRowExcludingCol(row, col);
                 CandidatesArray colCellCands = getCandidatesArrayForColExcludingRow(row, col);
 
-                Candidates rowCands = board.getRowCells().get(row).getCandidates();
-                Candidates colCands = board.getColCells().get(col).getCandidates();
-
-                checkAndSetLoneRangers(bigCellCands, rowCellCands, colCellCands, rowCands, colCands, cell);
-                checkAndSetLoneRangers(rowCellCands, bigCellCands, colCellCands, rowCands, colCands, cell);
-                checkAndSetLoneRangers(colCellCands, bigCellCands, rowCellCands, rowCands, colCands, cell);
+                checkAndSetLoneRangers(bigCellCands, cell);
+                checkAndSetLoneRangers(rowCellCands, cell);
+                checkAndSetLoneRangers(colCellCands, cell);
             }
         }
     }
@@ -82,38 +79,24 @@ public class LoneRangerUpdater extends AbstractUpdater {
 
 
     private void checkAndSetLoneRangers(CandidatesArray candArray,
-                                        CandidatesArray candArray1, CandidatesArray candArray2,
-                                        Candidates cands1, Candidates cands2, Cell cell) {
+                                        Cell cell) {
 
         if (cell.getCandidates() == null) return;
 
         Candidates candsCopy = cell.getCandidates().copy();
 
         int i=0;
-        //System.out.println("starting with "+ candsCopy);
         while (i<candArray.size() && candsCopy.size() > 0) {
 
             Candidates c = candArray.get(i++);
             if (c != null)  {
-                //System.out.println("   removing "+ c);
                 candsCopy.removeAll(c);
             }
         }
-        //System.out.println("ending up with " + candsCopy);
 
         if (candsCopy.size() == 1) {
-            //System.out.println("setting " + candsCopy.getFirst());
             int unique = candsCopy.getFirst();
             cell.setValue(unique);
-            /*
-            cell.updateCandidateListsAfterSet(unique, candArray, candArray1, candArray2);
-            cell.getParentBigCell().getCandidates().remove(unique);
-            //assert(cell.getParentBigCell().getCandidates().size()>1):  "parent="+ cell.getParentBigCell();
-            cands1.remove(unique);
-            //assert(cands1.size() > 1) :  cands1;
-            cands2.remove(unique);
-            //assert(cands2.size() > 1) :  cands2;
-            */
         }
     }
 }

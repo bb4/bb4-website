@@ -10,21 +10,21 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public abstract class AbstractUpdater {
+public abstract class AbstractUpdater implements IUpdater {
 
     /** the sudoku board   */
     protected Board board;
 
     /**
      * Constructor
+     * @param board the board to update
      */
-    public AbstractUpdater(Board b) {
-        board = b;
+    public AbstractUpdater(Board board) {
+        this.board = board;
     }
 
     /**
-     * update candidate lists for all cells then set the unique values that are determined.
-     * Next check for loan rangers.
+     * {@inheritDoc}
      */
     public abstract void updateAndSet();
 

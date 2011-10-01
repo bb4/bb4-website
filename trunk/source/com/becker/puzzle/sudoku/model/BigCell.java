@@ -42,7 +42,7 @@ public class BigCell {
 
     /** a value has been set, so we need to remove it from all the candidate lists. */
     public void remove(int unique) {
-        candidates_.remove(unique);
+        candidates_.safeRemove(unique);
         for (int i=0; i<n_; i++) {
            for (int j=0; j<n_; j++) {
                getCell(i, j).removeCandidateValue(unique);
@@ -64,6 +64,7 @@ public class BigCell {
     }
 
     boolean isAvailable(int value) {
+        assert value > 0;
         for (int i=0; i<n_; i++) {
             for (int j=0; j<n_; j++) {
                 if (getCell(i, j).getValue() == value) {
@@ -74,7 +75,7 @@ public class BigCell {
         return true;
     }
 
-    /** Get all the candidate lists for all the cells in the bigCell except the one specified. */
+    /** @return all the candidate lists for all the cells in the bigCell except the one specified. */
     public CandidatesArray getCandidatesArrayExcluding(int row, int col) {
 
         List<Candidates> cands = new ArrayList<Candidates>();

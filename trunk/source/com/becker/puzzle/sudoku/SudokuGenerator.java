@@ -1,6 +1,5 @@
 package com.becker.puzzle.sudoku;
 
-import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.model.Board;
 import com.becker.puzzle.sudoku.model.Cell;
@@ -18,10 +17,17 @@ import java.util.List;
 public class SudokuGenerator {
 
     private int size_;
-    private int numCells_;
     private int delay_;
-    SudokuPanel ppanel_;
+    private SudokuPanel ppanel_;
+    private long totalCt;
 
+    /**
+     * Use this Constructor if you do not need to show the board in a UI.
+     * @param baseSize 4, 9, or 16
+     */
+    public SudokuGenerator(int baseSize) {
+        this(baseSize, null);
+    }
     /**
      * Constructor
      * @param baseSize 4, 9, or 16
@@ -29,24 +35,20 @@ public class SudokuGenerator {
      */
     public SudokuGenerator(int baseSize, SudokuPanel ppanel) {
         size_ = baseSize;
-        numCells_ = (int) Math.pow(size_, 4);
         ppanel_ = ppanel;
+        totalCt = 0;
     }
 
     public void setDelay(int delay) {
         delay_ = delay;
     }
 
-    public void setRandomSeed(int seed) {
-        MathUtil.RANDOM.setSeed(seed);
-    }
-
     /**
+     * find a complete consistent solution.
      * @return generated random board
      */
     public Board generatePuzzleBoard() {
 
-        // first find a complete solution, b.
         Board board = new Board(size_);
         //System.out.println("initial board=" + board);
 
@@ -54,50 +56,63 @@ public class SudokuGenerator {
             ppanel_.setBoard(board);
         }
 
-        boolean success = generateSolution(board, 0);
-        assert success : "We were not able to generate a consistent board "+ board;
+        boolean success = generateSolution(board);
 
-        //System.out.println("Initial testBoard solved=" + board);
+        assert success : "We were not able to generate a consistent board "+ board + "numCombinations examined = " + totalCt;
 
         // now start removing values until we cannot deduce the final solution from it.
         // for every position (in random order) if we can remove it, do so.
         return generateByRemoving(board);
     }
 
+    protected boolean generateSolution(Board board) {
+        return generateSolution(board, 0);
+    }
+
+
     /**
-     * Recursive method to generate the sudoku board.
+     * Recursive method to generate a completely solved, consistent sudoku board.
+     * If at any point we find that we have an inconsistent/unsolvable board, then backtrack.
      * @param board the currently generated board (may be partial)
      * @return whether or not the current board is consistent.
      */
     protected boolean generateSolution(Board board, int position) {
 
         // base case of the recursion
-        if (position == numCells_)  {
+        if (position == board.getNumCells())  {
             // board completely solved now
             return true;
         }
 
-        ValuesList shuffledValues = board.getShuffledCellCandidates(position);
-        //assert shuffledValues.size() > 0 : "No shuffled values";
-
-        //if (position % 7 == 0 && ppanel_ != null) {
-            refresh();
-        //}
-
         Cell cell = board.getCell(position);
+        ValuesList shuffledValues = ValuesList.getShuffledCandidates(cell.getCandidates());
+
+        refresh();
+
+        //System.out.println(indent(position) + " num="+ shuffledValues.size());
         for (int value : shuffledValues) {
+
             cell.setValue(value);
             //System.out.println("board after setting shuffled value = " + value +" \n"  + board);
+            totalCt++;
             if (generateSolution(board, position + 1)) {
                 return true;
             }
             refresh();
+            //System.out.println(indent(position) + "BACKTRACKING clearing cell pos="+position+" " + cell  + " shuffledValues=" + shuffledValues +" current="+ value );
             cell.clearValue();
-            //System.out.println("BACKTRACKING clearing cell "+position+"=" + cell  + " shuffledValues=" + shuffledValues +" current="+ value);
             refresh();
         }
 
         return false;
+    }
+
+    private String indent(int len) {
+        StringBuilder bldr = new StringBuilder();
+        for (int i=0; i<len; i++) {
+            bldr.append(' ');
+        }
+        return bldr.toString();
     }
 
     private void refresh() {

@@ -23,8 +23,21 @@ public class ValuesList extends ArrayList<Integer> {
         }
     }
 
-    private ValuesList(Candidates cands) {
+    protected ValuesList(Candidates cands) {
         this.addAll(cands);
+    }
+
+    public static ValuesList getShuffledCandidates(Candidates cands)  {
+        if (cands == null) {
+            return new ValuesList();
+        }
+        return ValuesList.createShuffledList(cands);
+    }
+
+    public static ValuesList createShuffledList(int sizeSq) {
+        ValuesList randomList = new ValuesList(sizeSq);
+        Collections.shuffle(randomList, MathUtil.RANDOM);
+        return randomList;
     }
 
     public static ValuesList createShuffledList(Candidates cands) {
