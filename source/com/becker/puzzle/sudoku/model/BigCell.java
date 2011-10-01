@@ -19,18 +19,18 @@ public class BigCell {
     private Candidates candidates_;
 
 
-    public BigCell(int size, ValuesList values) {
+    public BigCell(Board board, int rowOffset, int colOffset) {
 
-        assert(size > 1 && size < Board.MAX_SIZE);
-        n_ = size;
+        n_ = board.getBaseSize();
 
         cells_ = new Cell[n_][n_];
         for (int i=0; i<n_; i++) {
            for (int j=0; j<n_; j++) {
-               cells_[i][j] = new Cell(0, this, values);
+               cells_[i][j] = board.getCell(rowOffset + i, colOffset + j);
+               cells_[i][j].setParent(this);
            }
         }
-        candidates_ = new Candidates(values);
+        candidates_ = new Candidates(board.getValuesList());
     }
 
     /**

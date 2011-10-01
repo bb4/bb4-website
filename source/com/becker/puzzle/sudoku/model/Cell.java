@@ -23,10 +23,13 @@ public class Cell {
     /**
      * Constructor.
      */
-    public Cell(int value, BigCell parent, ValuesList values) {
+    public Cell(int value, ValuesList values) {
         setOriginalValue(value);
-        parentBigCell_ = parent;
         candidates_ = new Candidates(values);
+    }
+
+    public void setParent(BigCell parent) {
+        parentBigCell_ = parent;
     }
 
     public int getValue() {
@@ -39,7 +42,7 @@ public class Cell {
 
     /**
      * once the puzzle is started, you can only assign positive values to values of cells.
-     * @param value
+     * @param value the value to set permanently in the cell (at least until cleared).
      */
     public void setValue(int value) {
         assert(value > 0);

@@ -100,6 +100,7 @@ public class SudokuGenerator {
             }
             refresh();
             //System.out.println(indent(position) + "BACKTRACKING clearing cell pos="+position+" " + cell  + " shuffledValues=" + shuffledValues +" current="+ value );
+            // add back
             cell.clearValue();
             refresh();
         }
