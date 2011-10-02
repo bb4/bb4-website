@@ -3,6 +3,7 @@ package com.becker.puzzle.sudoku;
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.sudoku.model.Board;
 import com.becker.puzzle.sudoku.model.BoardUpdater;
+import com.becker.puzzle.sudoku.model.update.BigCellScoutUpdater;
 import com.becker.puzzle.sudoku.model.update.LoneRangerUpdater;
 import com.becker.puzzle.sudoku.model.update.StandardCRBUpdater;
 
@@ -29,7 +30,11 @@ public class SudokuSolver {
     public SudokuSolver(Board board) {
         delay_ = 0;
         board_ = board;
-        Class [] classes = new Class[] {StandardCRBUpdater.class, LoneRangerUpdater.class};
+        Class [] classes = new Class[] {
+             StandardCRBUpdater.class,
+             LoneRangerUpdater.class,
+             BigCellScoutUpdater.class
+        };
         updater_ = new BoardUpdater(Arrays.asList(classes));
     }
 

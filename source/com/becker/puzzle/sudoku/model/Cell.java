@@ -35,6 +35,10 @@ public class Cell {
         return original_;
     }
 
+    public boolean isParent(BigCell bigCell) {
+        return bigCell == parentBigCell_;
+    }
+
     /**
      * once the puzzle is started, you can only assign positive values to values of cells.
      * @param value the value to set permanently in the cell (at least until cleared).

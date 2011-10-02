@@ -94,48 +94,6 @@ public class TestCell extends TestCase {
         Assert.assertEquals("Unexpectedly not the same ", origBoard, board);
     }
 
-    /*
-    public void testIsAvailable4() {
-        Board origBoard = new Board(TestData.SIMPLE_4);
-        board = new Board(origBoard);
-
-        cell = board.getCell(1, 1);
-        System.out.println("b="+board);
-
-        boolean[] expectedAvailability = new boolean[] {true, false, false, false};
-        for (int i=1; i<board.getEdgeLength() + 1; i++)  {
-            Assert.assertEquals(i + "Not available", expectedAvailability[i-1], cell.isAvailable(i));
-        }
-    }
-
-    public void testIsAvailable9_44() {
-        Board origBoard = new Board(TestData.SIMPLE_9);
-        board = new Board(origBoard);
-
-        cell = board.getCell(4, 4);
-        System.out.println("b="+board);
-
-        boolean[] expectedAvailability = new boolean[] {false, true, true, false, false, false, false, false, false};
-        for (int i=1; i<board.getEdgeLength() + 1; i++)  {
-            Assert.assertEquals((i) + "Not available", expectedAvailability[i-1], cell.isAvailable(i));
-        }
-    }
-
-    public void testIsAvailable9_32() {
-        Board origBoard = new Board(TestData.SIMPLE_9);
-        board = new Board(origBoard);
-
-        cell = board.getCell(3, 2);
-        System.out.println("b="+board);
-
-        boolean[] expectedAvailability = new boolean[] {false, false, true, false, false, false, true, false, false};
-        for (int i=1; i<board.getEdgeLength() + 1; i++)  {
-            System.out.println((i)+" avail=" + cell.isAvailable(i));
-            //Assert.assertEquals((i) + "Not available", expectedAvailability[i-1], cell.isAvailable(i));
-        }
-    }  */
-
-
     /**
      * @return all the junit test cases to run (in this class).
      */

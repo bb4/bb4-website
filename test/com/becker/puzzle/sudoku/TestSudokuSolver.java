@@ -69,8 +69,8 @@ public class TestSudokuSolver extends TestCase {
         // super exponential run time
         generateAndSolve(2);  // 16  cells       32 ms
         generateAndSolve(3);  // 81  cells      265 ms
-        //generateAndSolve(4);  // 256 cells    2,077 ms
-        //generateAndSolve(5);  // 625 cells  687,600 ms
+        generateAndSolve(4);  // 256 cells    2,077 ms
+        generateAndSolve(5);  // 625 cells  687,600 ms
     }
 
 
