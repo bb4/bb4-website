@@ -54,7 +54,7 @@ public class TestSudokuGenerator extends TestCase {
         assertEquals("Unexpected generated board", expBoard, board);
     }
 
-    /** works only half the time!
+    /** works only half the time!    */
     public void testGenerateInitialSolution4Many() {
 
         List<Boolean> passed = new ArrayList<Boolean>();
@@ -65,9 +65,8 @@ public class TestSudokuGenerator extends TestCase {
             System.out.println(board);
             passed.add(board != null);
         }
-        System.out.println("-----passed="+passed);
         //assertNotNull("Could not create a consistent board", board);
-    }  */
+    }
 
     public void testGenerateInitialSolution4() {
 

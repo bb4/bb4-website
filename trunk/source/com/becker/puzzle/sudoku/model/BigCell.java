@@ -1,7 +1,6 @@
 package com.becker.puzzle.sudoku.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * A block of n*n cells in a sudoku puzzle.
@@ -66,7 +65,6 @@ public class BigCell {
         return new CandidatesArray(cands.toArray(new Candidates[cands.size()]));
     }
 
-
     /**
      * assume all of them, then remove those that are represented.
      */
@@ -83,6 +81,46 @@ public class BigCell {
                }
            }
         }
+    }
+
+    /**
+     * If this bigCell has a row (0, n_-1) that has the only cells with candidates for value,
+     * then return that row, else return -1.
+     * @param value
+     * @return ro (0 to n-1) if found, else -1
+     */
+    public int findUniqueRowFor(int value) {
+        Set<Integer> rows = new HashSet<Integer>();
+        for (int i = 0; i < n_; i++)  {
+            for (int j = 0; j < n_; j++) {
+                Candidates cands = getCell(i, j).getCandidates();
+                if (cands!=null && cands.contains(value)) {
+                    rows.add(i);
+                    break;
+                }
+            }
+        }
+        return (rows.size() == 1) ? rows.iterator().next() : -1;
+    }
+
+    /**
+     * If this bigCell has a row (0, n_-1) that has the only cells with candidates for value,
+     * then return that col, else return -1.
+     * @param value
+     * @return ro (0 to n-1) if found, else -1
+     */
+    public int findUniqueColFor(int value) {
+        Set<Integer> cols = new HashSet<Integer>();
+        for (int j = 0; j < n_; j++)  {
+            for (int i = 0; i < n_; i++) {
+                Candidates cands = getCell(i, j).getCandidates();
+                if (cands!=null && cands.contains(value)) {
+                    cols.add(j);
+                    break;
+                }
+            }
+        }
+        return (cols.size() == 1) ? cols.iterator().next() : -1;
     }
 
     public Candidates getCandidates() {

@@ -32,7 +32,7 @@ public class LoneRangerUpdater extends AbstractUpdater {
         checkForLoneRangers();
     }
 
-    /** needs more work */
+    /** Look for lone rangers in row, col, and bigCell */
     private void checkForLoneRangers() {
 
         int n = board.getBaseSize();

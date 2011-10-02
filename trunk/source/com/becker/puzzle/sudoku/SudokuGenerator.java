@@ -98,7 +98,8 @@ public class SudokuGenerator {
                 return true;
             }
             refresh();
-            //System.out.println(indent(position) + "BACKTRACKING clearing cell pos="+position+" " + cell  + " shuffledValues=" + shuffledValues +" current="+ value );
+            //System.out.println(indent(position) + "BACKTRACKING clearing cell pos="+position+" "
+            // + cell  + " shuffledValues=" + shuffledValues +" current="+ value );
             cell.clearValue();
             refresh();
         }
