@@ -43,7 +43,7 @@ public class NakedSubsetUpdater extends AbstractUpdater {
 
         checkNakedSubsetInRows();
         checkNakedSubsetInCols();
-        //checkNakedSubsetInBigCells();
+        checkNakedSubsetInBigCells();
     }
 
     private void checkNakedSubsetInRows() {
@@ -60,17 +60,27 @@ public class NakedSubsetUpdater extends AbstractUpdater {
         }
     }
 
-    private void checkNakedSubset(CellArray cells) {
+    private void checkNakedSubsetInBigCells() {
+
+        for (int i=0; i<board.getBaseSize(); i++) {
+            for (int j=0; j<board.getBaseSize(); j++) {
+
+                checkNakedSubset(board.getBigCell(i, j));
+            }
+        }
+    }
+
+    private void checkNakedSubset(CellSet cells) {
         Candidates foundSubset = null;
         Set<Integer> matches = null;
 
-        for (int i=0; i<cells.size(); i++) {
+        for (int i=0; i<cells.numCells(); i++) {
             Candidates cands = cells.getCell(i).getCandidates();
             matches = new HashSet<Integer>();
             matches.add(i);
             if (cands != null)  {
                 int n = cands.size();
-                for (int j=0; j<cells.size(); j++) {
+                for (int j=0; j<cells.numCells(); j++) {
                     Candidates cands2 = cells.getCell(j).getCandidates();
                     if (j!=i && cands2!=null && cands.containsAll(cands2)) {
                        matches.add(j);
@@ -84,7 +94,7 @@ public class NakedSubsetUpdater extends AbstractUpdater {
         }
 
         if (foundSubset != null) {
-            for (int i=0; i<cells.size(); i++) {
+            for (int i=0; i<cells.numCells(); i++) {
                 Cell cell = cells.getCell(i);
                 if (!matches.contains(i) && cell.getCandidates() != null) {
                     cell.getCandidates().removeAll(foundSubset);

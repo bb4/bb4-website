@@ -7,7 +7,7 @@ import java.util.Arrays;
  *
  *  @author Barry Becker
  */
-public class CellArray {
+public class CellArray implements CellSet {
 
     /** candidate sets for a row or col.   */
     private Cell[] cells_;
@@ -63,7 +63,7 @@ public class CellArray {
 
     public void remove(int unique) {
         candidates_.safeRemove(unique);
-        for (int i=0; i < size(); i++) {
+        for (int i=0; i < numCells(); i++) {
             cells_[i].remove(unique);
         }
     }
@@ -77,19 +77,19 @@ public class CellArray {
         clearCaches();
     }
 
-    public int size() {
+    public int numCells() {
         return cells_.length;
     }
 
     /**
      * Assume all of them, then remove the values that are represented.
      */
-    public void updateEntries(int entry, ValuesList values) {
+    public void updateCandidates(ValuesList values) {
 
         candidates_.clear();
         candidates_.addAll(values);
 
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < numCells(); i++) {
            int v = cells_[i].getValue();
            if (v > 0) {
               candidates_.remove(v);
@@ -98,7 +98,7 @@ public class CellArray {
     }
 
     private void clearCaches() {
-       for (int i=0; i < size(); i++) {
+       for (int i=0; i < numCells(); i++) {
             cells_[i].clearCache();
        }
     }

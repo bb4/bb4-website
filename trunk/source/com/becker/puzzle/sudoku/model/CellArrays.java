@@ -49,7 +49,7 @@ public class CellArrays {
     public void updateAll(ValuesList values) {
 
         for (int entry = 0; entry < size; entry++) {
-            cellArrays_[entry].updateEntries(entry, values);
+            cellArrays_[entry].updateCandidates(values);
         }
     }
 
