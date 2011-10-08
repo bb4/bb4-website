@@ -16,6 +16,8 @@ public class Cell {
     private CellArray rowCells_;
     private CellArray colCells_;
 
+    private Candidates cachedCandidates;
+
     /**
      * Constructor.
      */
@@ -51,6 +53,7 @@ public class Cell {
         parentBigCell_.remove(value_);
         rowCells_.remove(value_);
         colCells_.remove(value_);
+        clearCache();
     }
 
     /**
@@ -69,6 +72,7 @@ public class Cell {
         rowCells_.add(value);
         colCells_.add(value);
         parentBigCell_.add(value);
+        clearCache();
     }
 
     /**
@@ -89,6 +93,10 @@ public class Cell {
         }
     }
 
+    public void clearCache() {
+        cachedCandidates = null;
+    }
+
     /**
      * Intersect the parent big cell candidates with the row and column candidates.
      * [If after doing the intersection, we have only one value, then set it on the cell. ]
@@ -96,11 +104,20 @@ public class Cell {
     public Candidates getCandidates() {
 
         if (value_ > 0) return null;
-        Candidates candidates = new Candidates();
-        candidates.addAll(parentBigCell_.getCandidates());
-        candidates.retainAll(rowCells_.getCandidates());
-        candidates.retainAll(colCells_.getCandidates());
+
+        Candidates candidates;
+        if (cachedCandidates != null)  {
+            candidates = cachedCandidates;
+        }
+        else {
+            candidates = new Candidates();
+            candidates.addAll(parentBigCell_.getCandidates());
+            candidates.retainAll(rowCells_.getCandidates());
+            candidates.retainAll(colCells_.getCandidates());
+            cachedCandidates = candidates;
+        }
         return candidates;
+
     }
 
     void setRowCells(CellArray rowCells) {

@@ -42,11 +42,13 @@ public class BigCell {
     /** a value has been set, so we need to remove it from all the candidate lists. */
     public void remove(int unique) {
         candidates_.safeRemove(unique);
+        clearCaches();
     }
 
     /** add to the bigCell candidate list and each cells candidates for cells not yet set in stone. */
     public void add(int value) {
         candidates_.add(value);
+        clearCaches();
     }
 
     /** @return all the candidate lists for all the cells in the bigCell except the one specified. */
@@ -134,5 +136,13 @@ public class BigCell {
     public final Cell getCell( int row, int col ) {
         assert ( row >= 0 && row < n_ && col >= 0 && col < n_);
         return cells_[row][col];
+    }
+
+    private void clearCaches() {
+        for (int j = 0; j < n_; j++)  {
+            for (int i = 0; i < n_; i++) {
+                getCell(i, j).clearCache();
+            }
+        }
     }
 }

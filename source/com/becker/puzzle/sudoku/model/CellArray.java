@@ -63,6 +63,7 @@ public class CellArray {
 
     public void remove(int unique) {
         candidates_.safeRemove(unique);
+        clearCaches();
     }
 
     /**
@@ -71,6 +72,7 @@ public class CellArray {
      */
     public void add(int value) {
         candidates_.add(value);
+        clearCaches();
     }
 
     public int size() {
@@ -91,6 +93,12 @@ public class CellArray {
               candidates_.remove(v);
            }
         }
+    }
+
+    private void clearCaches() {
+       for (int i=0; i < size(); i++) {
+            cells_[i].clearCache();
+       }
     }
 
     public String toString() {

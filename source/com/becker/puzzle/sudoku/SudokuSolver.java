@@ -73,7 +73,6 @@ public class SudokuSolver {
 
         // not sure what this should be.
         int maxIterations = 2 * board_.getEdgeLength();
-        //System.out.println("starting num iterations " + board_.getNumIterations());
 
         do {
             solved = doIteration();
@@ -81,7 +80,6 @@ public class SudokuSolver {
 
         } while (!solved && board_.getNumIterations() < maxIterations);
 
-        //System.out.println("solved="+ solved +" numIter="+board_.getNumIterations() +" max="+ maxIterations);
         refresh(puzzlePanel);
 
         // if we get here and solved is not true, we did not find a solution.

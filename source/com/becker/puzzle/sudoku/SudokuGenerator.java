@@ -1,5 +1,6 @@
 package com.becker.puzzle.sudoku;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.model.Board;
 import com.becker.puzzle.sudoku.model.Cell;
@@ -118,7 +119,7 @@ public class SudokuGenerator {
     private void refresh() {
         if (ppanel_!=null)  {
             ppanel_.repaint();
-            //ThreadUtil.sleep(50);
+            ThreadUtil.sleep(delay_);
         }
     }
 
