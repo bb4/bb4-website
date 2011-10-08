@@ -12,14 +12,10 @@ import java.awt.event.*;
  *
  *  @author Barry Becker
  */
-public final class SudokuPanel extends JPanel
-                               implements MouseListener  {
+public final class SudokuPanel extends JPanel {
     private Board board_;
-
     private SudokuRenderer renderer_;
-
     private SudokuSolver solver_;
-
     private int delay_;
 
     /**
@@ -36,7 +32,6 @@ public final class SudokuPanel extends JPanel
     SudokuPanel(Board b) {
         board_ = b;
         solver_ = new SudokuSolver(board_);
-        //this.addMouseListener(this);
     }
 
     /**
@@ -64,17 +59,6 @@ public final class SudokuPanel extends JPanel
 
         showMessage(solved);
     }
-
-    /*
-    public void doIteration() {
-
-        boolean solved = solver_.doIteration();
-        this.repaint();
-
-        if (solved || board_.getNumIterations() > 20) {
-            showMessage(solved);
-        }
-    }*/
 
     private void showMessage(boolean solved) {
         if ( solved )
@@ -105,15 +89,5 @@ public final class SudokuPanel extends JPanel
         super.paintComponents( g );
         renderer_.render(g, board_, "", this.getWidth(), this.getHeight());
     }
-
-
-    public void mouseClicked(MouseEvent e) {
-       //doIteration();
-    }
-
-    public void mousePressed(MouseEvent e) {}
-    public void mouseReleased(MouseEvent e) {}
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseExited(MouseEvent e) {}
 }
 

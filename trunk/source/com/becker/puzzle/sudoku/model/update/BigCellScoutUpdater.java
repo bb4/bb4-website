@@ -75,7 +75,6 @@ public class BigCellScoutUpdater extends AbstractUpdater {
     private void checkIfCanSetOutsideCellValue(int value, Cell cell) {
         Candidates cands = cell.getCandidates();
         if (cands != null && cands.size() == 2 && cands.contains(value)) {
-            System.out.println("cands at cell=" + cell + " and v="+ value +" are "  + cands);
             for (int candValue : cands) {
 
                 if (candValue != value) {
