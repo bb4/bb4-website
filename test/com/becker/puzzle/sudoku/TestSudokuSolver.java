@@ -40,9 +40,15 @@ public class TestSudokuSolver extends TestCase {
     /** negative test case */
     public void testImpossiblePuzzle() {
 
-        solver = new SudokuSolver(new Board(TestData.INCONSISTENT_9));
-        boolean solved = solver.solvePuzzle();
-        Assert.assertFalse( "Solved impossible SIMPLE_9 puzzle. Should not have.", solved);
+        try {
+            solver = new SudokuSolver(new Board(TestData.INCONSISTENT_9));
+            //solver.solvePuzzle();
+            fail();
+        }
+        catch (IllegalStateException e) {
+            // success
+        }
+        //Assert.assertFalse( "Solved impossible SIMPLE_9 puzzle. Should not have.", solved);
     }
 
     public void testGenerateAndSolve2() {
@@ -70,7 +76,7 @@ public class TestSudokuSolver extends TestCase {
         generateAndSolve(2);  // 16  cells       32 ms
         generateAndSolve(3);  // 81  cells      265 ms
         generateAndSolve(4);  // 256 cells    2,077 ms
-        generateAndSolve(5);  // 625 cells  687,600 ms
+        //generateAndSolve(5);  // 625 cells  687,600 ms
     }
 
 

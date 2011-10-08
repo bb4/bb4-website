@@ -41,7 +41,8 @@ public class Candidates extends ConcurrentSkipListSet<Integer> {
 
     public boolean safeRemove(Object v) {
         if (!this.contains(v)) {
-            throw new IllegalStateException("Cannot remove " + v + " from candidates = " + this);
+            System.out.println("Cannot remove " + v + " from candidates = " + this);
+            //throw new IllegalStateException("Cannot remove " + v + " from candidates = " + this);
         }
         return super.remove(v);
     }

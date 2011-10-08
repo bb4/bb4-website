@@ -63,7 +63,9 @@ public class CellArray {
 
     public void remove(int unique) {
         candidates_.safeRemove(unique);
-        clearCaches();
+        for (int i=0; i < size(); i++) {
+            cells_[i].remove(unique);
+        }
     }
 
     /**
