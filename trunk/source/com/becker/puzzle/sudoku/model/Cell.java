@@ -93,6 +93,12 @@ public class Cell {
         }
     }
 
+    public void remove(int value) {
+        if (cachedCandidates != null) {
+            cachedCandidates.remove(value);
+        }
+    }
+
     public void clearCache() {
         cachedCandidates = null;
     }

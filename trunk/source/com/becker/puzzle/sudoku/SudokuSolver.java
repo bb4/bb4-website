@@ -5,6 +5,7 @@ import com.becker.puzzle.sudoku.model.Board;
 import com.becker.puzzle.sudoku.model.BoardUpdater;
 import com.becker.puzzle.sudoku.model.update.BigCellScoutUpdater;
 import com.becker.puzzle.sudoku.model.update.LoneRangerUpdater;
+import com.becker.puzzle.sudoku.model.update.NakedSubsetUpdater;
 import com.becker.puzzle.sudoku.model.update.StandardCRBUpdater;
 
 import java.awt.*;
@@ -33,7 +34,8 @@ public class SudokuSolver {
         Class [] classes = new Class[] {
              StandardCRBUpdater.class,
              LoneRangerUpdater.class,
-             BigCellScoutUpdater.class
+             BigCellScoutUpdater.class,
+             NakedSubsetUpdater.class
         };
         updater_ = new BoardUpdater(Arrays.asList(classes));
     }

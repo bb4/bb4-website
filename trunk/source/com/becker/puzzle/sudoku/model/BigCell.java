@@ -42,7 +42,11 @@ public class BigCell {
     /** a value has been set, so we need to remove it from all the candidate lists. */
     public void remove(int unique) {
         candidates_.safeRemove(unique);
-        clearCaches();
+        for (int j = 0; j < n_; j++)  {
+            for (int i = 0; i < n_; i++) {
+                getCell(i, j).remove(unique);
+            }
+        }
     }
 
     /** add to the bigCell candidate list and each cells candidates for cells not yet set in stone. */
