@@ -6,7 +6,7 @@ import java.util.*;
  * A block of n*n cells in a sudoku puzzle.
  * @author Barry Becker
  */
-public class BigCell {
+public class BigCell implements CellSet {
 
     /** The internal data structures representing the game board. Row, column order. */
     protected Cell cells_[][] = null;
@@ -30,6 +30,10 @@ public class BigCell {
            }
         }
         candidates_ = new Candidates(board.getValuesList());
+    }
+
+    public int numCells() {
+        return n_*n_;
     }
 
     /**
@@ -131,6 +135,10 @@ public class BigCell {
 
     public Candidates getCandidates() {
         return candidates_;
+    }
+
+    public Cell getCell(int position) {
+        return getCell(position / n_, position % n_);
     }
 
     /**
