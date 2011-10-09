@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku.model;
+package com.becker.puzzle.sudoku.model.board;
 
 import java.util.Arrays;
 
@@ -25,7 +25,7 @@ public class CellArray implements CellSet {
         cells_ = new Cell[size];
     }
 
-    public static CellArray createRowCellArray(int row, Board board) {
+    static CellArray createRowCellArray(int row, Board board) {
         CellArray cells = new CellArray(board.getEdgeLength());
         cells.candidates_.addAll(board.getValuesList());
         for (int i=0; i<board.getEdgeLength(); i++) {
@@ -39,7 +39,7 @@ public class CellArray implements CellSet {
         return cells;
     }
 
-    public static CellArray createColCellArray(int col, Board board) {
+    static CellArray createColCellArray(int col, Board board) {
         CellArray cells = new CellArray(board.getEdgeLength());
         cells.candidates_.addAll(board.getValuesList());
         for (int i=0; i<board.getEdgeLength(); i++) {

@@ -2,15 +2,13 @@ package com.becker.puzzle.sudoku.model;
 
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.data.TestData;
+import com.becker.puzzle.sudoku.model.board.Board;
+import com.becker.puzzle.sudoku.model.board.Candidates;
+import com.becker.puzzle.sudoku.model.board.Cell;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import sun.text.normalizer.IntTrie;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Barry Becker
@@ -65,7 +63,7 @@ public class TestCell extends TestCase {
         Assert.assertEquals("Unexpected bigCell 0,0 cands", new Candidates(2, 3), board.getBigCell(0, 0).getCandidates());
     }
 
-    /** Set an inappropriate illegal value and verify exception thrown */
+    /** Set an inappropriate illegal value and verify exception thrown
     public void testSetValueInvalid() {
         board = new Board(TestData.SIMPLE_4);
         cell = board.getCell(1, 1);
@@ -79,7 +77,7 @@ public class TestCell extends TestCase {
         } catch (IllegalStateException e) {
             // success
         }
-    }
+    }  */
 
     /** Calling clear on a cell should undo a set. */
     public void testClearReversesSet() {

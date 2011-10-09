@@ -2,16 +2,12 @@ package com.becker.puzzle.sudoku.model;
 
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.data.TestData;
+import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.model.update.LoneRangerUpdater;
 import com.becker.puzzle.sudoku.model.update.StandardCRBUpdater;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Barry Becker

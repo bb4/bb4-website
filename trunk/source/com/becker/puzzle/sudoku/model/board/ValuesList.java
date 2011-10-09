@@ -1,7 +1,6 @@
-package com.becker.puzzle.sudoku.model;
+package com.becker.puzzle.sudoku.model.board;
 
 import com.becker.common.math.MathUtil;
-import sun.awt.SunHints;
 
 import java.util.*;
 

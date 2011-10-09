@@ -1,6 +1,9 @@
 package com.becker.puzzle.sudoku.model.update;
 
-import com.becker.puzzle.sudoku.model.*;
+import com.becker.puzzle.sudoku.model.board.Board;
+import com.becker.puzzle.sudoku.model.board.Candidates;
+import com.becker.puzzle.sudoku.model.board.Cell;
+import com.becker.puzzle.sudoku.model.board.CellSet;
 
 import java.util.HashSet;
 import java.util.Set;

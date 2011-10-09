@@ -1,8 +1,7 @@
 package com.becker.puzzle.sudoku;
 
 import com.becker.common.math.MathUtil;
-import com.becker.puzzle.sudoku.model.Board;
-import junit.framework.Assert;
+import com.becker.puzzle.sudoku.model.board.Board;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -59,7 +58,7 @@ public class TestSudokuGenerator extends TestCase {
 
         List<Boolean> passed = new ArrayList<Boolean>();
 
-        for (int i=10; i<30; i++)  {
+        for (int i=10; i<10; i++)  {
             MathUtil.RANDOM.setSeed(i);
             Board board = generateInitialSolution(4);
             System.out.println(board);

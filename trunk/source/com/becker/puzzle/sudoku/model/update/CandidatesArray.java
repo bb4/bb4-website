@@ -1,6 +1,6 @@
-package com.becker.puzzle.sudoku.model;
+package com.becker.puzzle.sudoku.model.update;
 
-import ca.dj.jigo.sgf.tokens.SourceToken;
+import com.becker.puzzle.sudoku.model.board.Candidates;
 
 import java.util.*;
 

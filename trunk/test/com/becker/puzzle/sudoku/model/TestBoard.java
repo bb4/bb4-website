@@ -2,12 +2,14 @@ package com.becker.puzzle.sudoku.model;
 
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.data.TestData;
+import com.becker.puzzle.sudoku.model.board.Board;
+import com.becker.puzzle.sudoku.model.board.Candidates;
+import com.becker.puzzle.sudoku.model.board.ValuesList;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import javax.xml.bind.SchemaOutputResolver;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -56,7 +58,7 @@ public class TestBoard extends TestCase {
         boolean valid = true;
         for (int i=0; i<board.getEdgeLength(); i++) {
             for (int j=0; j<board.getEdgeLength(); j++) {
-                Candidates cands = board.getCandidates(i, j);
+                Candidates cands = board.getCell(i, j).getCandidates();
                 if (expCands[i][j] != cands) valid = false;
             }
         }
@@ -65,7 +67,7 @@ public class TestBoard extends TestCase {
         }
         for (int i=0; i<board.getEdgeLength(); i++) {
             for (int j=0; j<board.getEdgeLength(); j++) {
-                Candidates cands = board.getCandidates(i, j);
+                Candidates cands = board.getCell(i, j).getCandidates();
                 Assert.assertEquals( "Did find correct candidates for cell row=" + i + " j="+ j,
                     expCands[i][j], cands);
             }

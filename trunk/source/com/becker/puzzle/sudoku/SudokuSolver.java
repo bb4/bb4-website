@@ -1,7 +1,7 @@
 package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.ThreadUtil;
-import com.becker.puzzle.sudoku.model.Board;
+import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.model.BoardUpdater;
 import com.becker.puzzle.sudoku.model.update.BigCellScoutUpdater;
 import com.becker.puzzle.sudoku.model.update.LoneRangerUpdater;
@@ -10,7 +10,6 @@ import com.becker.puzzle.sudoku.model.update.StandardCRBUpdater;
 
 import java.awt.*;
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * This does the hard work of actually solving the puzzle.

@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku.model;
+package com.becker.puzzle.sudoku.model.board;
 
 import java.util.*;
 
@@ -57,22 +57,6 @@ public class BigCell implements CellSet {
     public void addCandidate(int value) {
         candidates_.add(value);
         clearCaches();
-    }
-
-    /** @return all the candidate lists for all the cells in the bigCell except the one specified. */
-    public CandidatesArray getCandidatesArrayExcluding(int row, int col) {
-
-        List<Candidates> cands = new ArrayList<Candidates>();
-
-        for (int i = 0; i < n_; i++) {
-           for (int j = 0; j < n_; j++) {
-               Candidates c = getCell(i, j).getCandidates();
-               if ((i!=row || j!=col) && c!=null) {
-                   cands.add(c);
-               }
-           }
-        }
-        return new CandidatesArray(cands.toArray(new Candidates[cands.size()]));
     }
 
     /**
