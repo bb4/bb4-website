@@ -1,9 +1,10 @@
-package com.becker.puzzle.sudoku.model.update;
+package com.becker.puzzle.sudoku.model.update.updaters;
 
 import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.model.board.Candidates;
 import com.becker.puzzle.sudoku.model.board.Cell;
 import com.becker.puzzle.sudoku.model.board.ValuesList;
+import com.becker.puzzle.sudoku.model.update.AbstractUpdater;
 
 /**
  *  CRB stands for Column, Row, Big Cell.

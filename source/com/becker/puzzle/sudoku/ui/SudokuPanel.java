@@ -64,7 +64,7 @@ public final class SudokuPanel extends JPanel {
         if ( solved )
             System.out.println( "The final solution is shown. the number of iterations was:" + board_.getNumIterations() );
         else
-            System.out.println( "This puzzle is not solvable!" ); // guaranteed not to happen
+            System.out.println( "This puzzle is not solvable!" );
     }
 
     public void generateNewPuzzle(int size) {
