@@ -6,9 +6,6 @@ package com.becker.puzzle.sudoku.model;
  */
 public class ValueConverter {
 
-    private ValueConverter() {
-    }
-
     /**
      * Get a one character symbol for the value.
      * @param value
@@ -39,4 +36,47 @@ public class ValueConverter {
         return sValue;
     }
 
+    /**
+     * Get the integer value for the specified symbol.
+     * @param symbol
+     * @param maxValue maximum allowed value
+     * @return integer value
+     * @throws IllegalArgumentException if not a valid symbol for the puzzle.
+     */
+    public static int getValue(char symbol, int maxValue) {
+
+        int value;
+        Character upperSymb = Character.toString(symbol).toUpperCase().charAt(0);
+
+        switch (upperSymb) {
+            case 'X' : value = 10; break;
+            case 'A' : value = 11; break;
+            case 'B' : value = 12; break;
+            case 'C' : value = 13; break;
+            case 'D' : value = 14; break;
+            case 'E' : value = 15; break;
+            case 'F' : value = 16; break;
+            case 'G' : value = 17; break;
+            case 'H' : value = 18; break;
+            case 'I' : value = 19; break;
+            case 'J' : value = 20; break;
+            case 'K' : value = 21; break;
+            case 'L' : value = 22; break;
+            case 'M' : value = 23; break;
+            case 'N' : value = 24; break;
+            case 'O' : value = 25; break;
+            default :
+                try {
+                    value = Integer.parseInt(Character.toString(symbol));
+                } catch (NumberFormatException nfe) {
+                    throw new IllegalArgumentException("Invalid: " + symbol);
+                }
+        }
+        if (value==0 || value > maxValue) {
+            throw new IllegalArgumentException("Invalid: " + symbol);
+        }
+        return value;
+    }
+
+    private ValueConverter() {}
 }

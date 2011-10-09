@@ -10,13 +10,6 @@ import java.awt.*;
  * @author Barry Becker
  */
 public abstract class PuzzleRenderer<P> {
-    /**
-     * private constructor because this class is a singleton.
-     * Use getPieceRenderer instead.
-     */
-    public PuzzleRenderer()
-    {
-    }
 
     /**
      * This renders the current state of the Board to the screen.
@@ -32,7 +25,6 @@ public abstract class PuzzleRenderer<P> {
             g.drawString( line, x, y + offset );
         }
     }
-
 }
 
 

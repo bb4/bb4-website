@@ -1,5 +1,6 @@
 package com.becker.puzzle.sudoku.ui;
 
+import com.becker.common.geometry.Location;
 import com.becker.puzzle.sudoku.SudokuGenerator;
 import com.becker.puzzle.sudoku.SudokuSolver;
 import com.becker.puzzle.sudoku.model.board.Board;
@@ -13,34 +14,50 @@ import java.awt.*;
  *
  *  @author Barry Becker
  */
-public final class SudokuPanel extends JPanel {
+public final class SudokuPanel extends JPanel
+                               implements RepaintListener {
 
-    private Board board_;
     private SudokuRenderer renderer_;
+    private UserInputListener inputListener;
 
     /**
      * Constructor. Pass in data for initial Sudoku problem.
      */
     SudokuPanel(int[][] initialData) {
         this(new Board(initialData));
-        renderer_ = new SudokuRenderer();
     }
 
     /**
      * Constructor.
      */
-    SudokuPanel(Board b) {
-        board_ = b;
+    private SudokuPanel(Board b) {
+        renderer_ = new SudokuRenderer(b);
+        inputListener = new UserInputListener(renderer_);
+        inputListener.addRepaintListener(this);
+        addMouseListener(inputListener);
+        addKeyListener(inputListener);
     }
 
     public void setBoard(Board b) {
-        board_ = b;
+        renderer_.setBoard(b);
     }
-
 
     public void setShowCandidates(boolean show) {
         renderer_.setShowCandidates(show);
         repaint();
+    }
+
+    /** Mark the users values as correct or not. */
+    public void validatePuzzle() {
+        inputListener.validateValues(getSolvedPuzzle());
+        repaint();
+    }
+
+    private Board getSolvedPuzzle()  {
+         SudokuSolver solver = new SudokuSolver();
+         Board boardCopy = new Board(getBoard());
+         solver.solvePuzzle(boardCopy);
+         return boardCopy;
     }
 
     /**
@@ -48,30 +65,40 @@ public final class SudokuPanel extends JPanel {
      * @param initialData starting values.
      */
     public void reset(int[][] initialData) {
-        board_ = new Board(initialData);
+        renderer_.setBoard(new Board(initialData));
         repaint();
     }
 
     public void startSolving(SudokuSolver solver) {
-        boolean solved = solver.solvePuzzle(board_, this);
+        boolean solved = solver.solvePuzzle(getBoard(), this);
         showMessage(solved);
+        inputListener.clear();
     }
 
     private void showMessage(boolean solved) {
         if ( solved )
-            System.out.println( "The final solution is shown. the number of iterations was:" + board_.getNumIterations() );
+            System.out.println( "The final solution is shown. the number of iterations was:" + getBoard().getNumIterations() );
         else
-            System.out.println( "This puzzle is not solvable!" );
+            System.out.println("This puzzle is not solvable!");
     }
 
     public void generateNewPuzzle(SudokuGenerator generator) {
 
-        board_ = generator.generatePuzzleBoard();
+        inputListener.clear();
+        renderer_.setBoard(generator.generatePuzzleBoard());
         repaint();
     }
 
     public Board getBoard() {
-        return board_;
+        return renderer_.getBoard();
+    }
+
+    public void valueEntered() {
+        repaint();
+    }
+
+    public void cellSelected(Location location) {
+        repaint();
     }
 
     /**
@@ -82,7 +109,10 @@ public final class SudokuPanel extends JPanel {
     protected void paintComponent( Graphics g ) {
 
         super.paintComponents( g );
-        renderer_.render(g, board_, "", this.getWidth(), this.getHeight());
+        renderer_.render(g, inputListener.getUserEnteredValues(),
+                         inputListener.getCurrentCellLocation(), getWidth(), getHeight());
+        // without this we do not get key events.
+        requestFocus();
     }
 }
 

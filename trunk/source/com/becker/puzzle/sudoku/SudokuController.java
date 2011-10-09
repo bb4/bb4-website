@@ -1,6 +1,7 @@
 package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.Worker;
+import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.ui.SudokuPanel;
 
 import java.awt.*;
@@ -17,7 +18,6 @@ public final class SudokuController {
 
     /**
      * Construct the application and set the look and feel.
-     * @@ make the panel passed in implement a generic interface.
      */
     public SudokuController(SudokuPanel panel) {
         puzzlePanel_ = panel;
@@ -66,5 +66,9 @@ public final class SudokuController {
             }
         };
         worker.start();
+    }
+
+    public void validatePuzzle() {
+        puzzlePanel_.validatePuzzle();
     }
 }

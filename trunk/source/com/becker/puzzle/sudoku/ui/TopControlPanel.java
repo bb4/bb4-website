@@ -2,6 +2,8 @@ package com.becker.puzzle.sudoku.ui;
 
 import com.becker.game.twoplayer.go.board.analysis.eye.information.FalseEyeInformation;
 import com.becker.puzzle.sudoku.SudokuController;
+import com.becker.puzzle.sudoku.SudokuSolver;
+import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
@@ -53,8 +55,8 @@ public final class TopControlPanel extends JPanel
         generateButton_ = new GradientButton("Generate");
         generateButton_.addActionListener(this);
 
-        //validateButton_ = new GradientButton("Validate");
-        //validateButton_.addActionListener(this);
+        validateButton_ = new GradientButton("Validate");
+        validateButton_.addActionListener(this);
 
         solveButton_ = new GradientButton("Solve");
         solveButton_.addActionListener(this);
@@ -63,7 +65,7 @@ public final class TopControlPanel extends JPanel
         sizeSelector_.addItemListener(this);
 
         rowOne.add(generateButton_);
-        //rowOne.add(validateButton_);
+        rowOne.add(validateButton_);
         rowOne.add(solveButton_);
         rowOne.add(sizeSelector_);
         rowOne.add(Box.createHorizontalGlue());
@@ -104,11 +106,12 @@ public final class TopControlPanel extends JPanel
         if (src == generateButton_)  {
             generatePuzzle(speedSelector_.getSelectedDelay());
         }
+        else if (src == validateButton_) {
+            controller_.validatePuzzle();
+            // figure out which user values are right or wrong.
+        }
         else if (src == solveButton_)  {
             solvePuzzle();
-        }
-        else if (src == validateButton_) {
-             solvePuzzle(); // todo
         }
         else if (src == showCandidatesCheckBox_) {
              controller_.setShowCandidates(showCandidatesCheckBox_.isSelected());
@@ -118,12 +121,14 @@ public final class TopControlPanel extends JPanel
     private void generatePuzzle(final int delay) {
         controller_.generatePuzzle(delay, sizeSelector_.getSelectedSize());
         solveButton_.setEnabled(true);
+        validateButton_.setEnabled(true);
     }
 
     /** */
     private void solvePuzzle() {
         controller_.solvePuzzle(speedSelector_.getSelectedDelay());
         solveButton_.setEnabled(false);
+        validateButton_.setEnabled(false);
     }
 
     /**
