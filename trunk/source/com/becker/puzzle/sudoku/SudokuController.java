@@ -49,7 +49,7 @@ public final class SudokuController {
             @Override
             public Object construct() {
                 puzzlePanel_.setDelay(delay);
-                puzzlePanel_.startSolving();  // comment for single stepping
+                puzzlePanel_.startSolving();
                 return null;
             }
 

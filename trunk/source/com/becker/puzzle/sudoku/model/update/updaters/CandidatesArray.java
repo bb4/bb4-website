@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku.model.update;
+package com.becker.puzzle.sudoku.model.update.updaters;
 
 import com.becker.puzzle.sudoku.model.board.Candidates;
 

@@ -127,9 +127,7 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
             g.drawString(ValueConverter.getSymbol(cit.next()), x + offsets[ct][0], y + offsets[ct][1]);
             ct++;
         }
-
     }
-
 
     /**
      * draw the borders around each piece.
@@ -158,5 +156,4 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
             g2.drawLine( xpos, MARGIN, xpos, bottomEdgePos );
         }
     }
-
 }
