@@ -1,0 +1,42 @@
+package com.becker.puzzle.sudoku.ui;
+
+import com.becker.common.geometry.Location;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * A user entered value and it cell location.
+ * @author Barry Becker
+ */
+public class UserValue {
+    private Location location;
+    private int value;
+    private boolean isValid = false;
+    private boolean isValidated = false;
+
+
+    public UserValue(Location location, int value) {
+        this.location = location;
+        this.value = value;
+        this.isValidated = false;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+        isValidated = true;
+    }
+
+    public boolean isValidated() {
+        return isValidated;
+    }
+
+}
