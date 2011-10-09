@@ -31,20 +31,26 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
     private static final Stroke CELL_STROKE = new BasicStroke(0.5f);
     private static final Stroke BIG_CELL_STROKE = new BasicStroke(3.0f);
 
+    private boolean showCandidates = false;
+    private int pieceSize;
+
     /**
      * Constructor
      */
     public SudokuRenderer() {}
 
+    public void setShowCandidates(boolean show) {
+         showCandidates = show;
+    }
+
     /**
      * This renders the current state of the Board to the screen.
      */
     @Override
-    public void render(Graphics g, Board board, String status, int width, int height )
-    {
+    public void render(Graphics g, Board board, String status, int width, int height )  {
 
         int minEdge = (Math.min(width, height) - 20 - MARGIN);
-        int pieceSize = minEdge / board.getEdgeLength();
+        pieceSize = minEdge / board.getEdgeLength();
         // erase what's there and redraw.
         g.setColor( BACKGROUND_COLOR );
         g.fillRect( 0, 0, width, height );
@@ -54,7 +60,6 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
                 MARGIN, MARGIN - 24 );
 
         int len =  board.getEdgeLength();
-
         int xpos, ypos;
 
         for ( int i = 0; i < len; i++ ) {
@@ -64,24 +69,24 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
                 xpos = MARGIN + j * pieceSize;
                 ypos = MARGIN + i * pieceSize;
 
-                drawCell(g, c, xpos, ypos, pieceSize);
+                drawCell(g, c, xpos, ypos);
             }
         }
-        drawCellBoundaryGrid(g, len, pieceSize);
+        drawCellBoundaryGrid(g, len);
     }
 
 
     /**
      * Draw a cell at the specified location.
      */
-    private static void drawCell(Graphics g, Cell cell, int xpos, int ypos, int pieceSize) {
+    private void drawCell(Graphics g, Cell cell, int xpos, int ypos) {
 
-        int s = (int) (pieceSize * 0.4);
+        int s = getScale(pieceSize);
 
         int jittered_xpos = xpos + (int)(Math.random() * 3 - 1);
         int jittered_ypos = ypos + (int)(Math.random() * 3 - 1);
         Font font = new Font("Sans Serif", Font.PLAIN, pieceSize >> 1);
-        Font candidateFont = new Font("Sans Serif", Font.PLAIN, (pieceSize >> 2) - 2);
+
         g.setFont(font);
         g.setColor( cell.isOriginal() ? CELL_ORIG_BACKGROUND_COLOR : CELL_BACKGROUND_COLOR );
         g.fillRect( xpos + 1, ypos + 1, pieceSize - 3, pieceSize - 2 );
@@ -93,16 +98,26 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
         }
 
         // draw the first 9 numbers in the candidate list, if there are any.
-        Candidates candidates = cell.getCandidates();
-        if (candidates != null) {
-            g.setColor(CANDIDATE_TEXT_COLOR);
-            g.setFont(candidateFont);
-
-            drawHints(g, candidates, xpos, ypos, s);
+        if (showCandidates) {
+            drawCandidates(g, cell.getCandidates(), xpos, ypos);
         }
     }
 
-    private static void drawHints(Graphics g, Candidates candidates, int x, int y, int scale) {
+    private void drawCandidates(Graphics g,Candidates candidates, int xpos, int ypos) {
+
+        if (candidates != null ) {
+            g.setColor(CANDIDATE_TEXT_COLOR);
+            Font candidateFont = new Font("Sans Serif", Font.PLAIN, (pieceSize >> 2) - 2);
+            g.setFont(candidateFont);
+
+            drawHints(g, candidates, xpos, ypos, getScale(pieceSize));
+        }
+    }
+
+    private int getScale(int pieceSize) {
+       return (int) (pieceSize * 0.4);
+    }
+    private void drawHints(Graphics g, Candidates candidates, int x, int y, int scale) {
         int xOffsetLow =  (int) (0.3 * scale);
         int xOffsetMed =  (int) (1.1 * scale);
         int xOffsetHi =  (int) (1.9 * scale);
@@ -132,7 +147,7 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
     /**
      * draw the borders around each piece.
      */
-    private static void drawCellBoundaryGrid(Graphics g, int edgeLen, int pieceSize) {
+    private void drawCellBoundaryGrid(Graphics g, int edgeLen) {
 
         Graphics2D g2 = (Graphics2D) g;
         int xpos, ypos;

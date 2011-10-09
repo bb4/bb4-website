@@ -14,10 +14,9 @@ import java.awt.*;
  *  @author Barry Becker
  */
 public final class SudokuPanel extends JPanel {
+
     private Board board_;
     private SudokuRenderer renderer_;
-    private SudokuSolver solver_;
-    private int delay_;
 
     /**
      * Constructor. Pass in data for initial Sudoku problem.
@@ -32,7 +31,16 @@ public final class SudokuPanel extends JPanel {
      */
     SudokuPanel(Board b) {
         board_ = b;
-        solver_ = new SudokuSolver(board_);
+    }
+
+    public void setBoard(Board b) {
+        board_ = b;
+    }
+
+
+    public void setShowCandidates(boolean show) {
+        renderer_.setShowCandidates(show);
+        repaint();
     }
 
     /**
@@ -44,19 +52,8 @@ public final class SudokuPanel extends JPanel {
         repaint();
     }
 
-    public void setBoard(Board b) {
-        board_ = b;
-        solver_.setBoard(b);
-    }
-
-    public void setDelay(int delay) {
-        delay_ = delay;
-        solver_.setDelay(delay_);
-    }
-
-    public void startSolving() {
-
-        boolean solved = solver_.solvePuzzle(this);
+    public void startSolving(SudokuSolver solver) {
+        boolean solved = solver.solvePuzzle(board_, this);
         showMessage(solved);
     }
 
@@ -67,11 +64,9 @@ public final class SudokuPanel extends JPanel {
             System.out.println( "This puzzle is not solvable!" );
     }
 
-    public void generateNewPuzzle(int size) {
-        SudokuGenerator generator = new SudokuGenerator(size, this);
-        generator.setDelay(delay_);
-        board_ = generator.generatePuzzleBoard();
+    public void generateNewPuzzle(SudokuGenerator generator) {
 
+        board_ = generator.generatePuzzleBoard();
         repaint();
     }
 

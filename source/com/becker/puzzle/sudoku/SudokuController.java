@@ -23,14 +23,20 @@ public final class SudokuController {
         puzzlePanel_ = panel;
     }
 
+    public void setShowCandidates(boolean show) {
+        puzzlePanel_.setShowCandidates(show);
+    }
+
     public void generatePuzzle(final int delay, final int size) {
         Worker worker = new Worker() {
 
             @Override
             public Object construct() {
                 puzzlePanel_.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                puzzlePanel_.setDelay(delay);
-                puzzlePanel_.generateNewPuzzle(size);
+
+                SudokuGenerator generator = new SudokuGenerator(size, puzzlePanel_);
+                generator.setDelay(delay);
+                puzzlePanel_.generateNewPuzzle(generator);
                 return null;
             }
 
@@ -48,8 +54,9 @@ public final class SudokuController {
 
             @Override
             public Object construct() {
-                puzzlePanel_.setDelay(delay);
-                puzzlePanel_.startSolving();
+                SudokuSolver solver = new SudokuSolver();
+                solver.setDelay(delay);
+                puzzlePanel_.startSolving(solver);
                 return null;
             }
 
