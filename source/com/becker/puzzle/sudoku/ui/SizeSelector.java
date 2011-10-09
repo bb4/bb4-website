@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku;
+package com.becker.puzzle.sudoku.ui;
 
 import java.awt.*;
 

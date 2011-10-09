@@ -1,5 +1,7 @@
-package com.becker.puzzle.sudoku;
+package com.becker.puzzle.sudoku.ui;
 
+import com.becker.puzzle.sudoku.SudokuGenerator;
+import com.becker.puzzle.sudoku.SudokuSolver;
 import com.becker.puzzle.sudoku.model.board.Board;
 
 import javax.swing.*;
