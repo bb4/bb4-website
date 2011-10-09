@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku;
+package com.becker.puzzle.sudoku.ui;
 
 import com.becker.puzzle.common.PuzzleRenderer;
 import com.becker.puzzle.sudoku.model.board.Board;

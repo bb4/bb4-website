@@ -1,11 +1,9 @@
-package com.becker.puzzle.sudoku;
+package com.becker.puzzle.sudoku.ui;
 
-import com.becker.common.concurrency.Worker;
+import com.becker.puzzle.sudoku.SudokuController;
 import com.becker.ui.components.GradientButton;
-import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;

@@ -5,6 +5,7 @@ import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.model.board.Cell;
 import com.becker.puzzle.sudoku.model.board.ValuesList;
+import com.becker.puzzle.sudoku.ui.SudokuPanel;
 
 import java.util.Collections;
 import java.util.List;

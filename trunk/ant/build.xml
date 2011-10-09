@@ -475,7 +475,7 @@
 
   <target name="executeSudoku" depends="compile" description=" run the Sudoku solver">
      <echo message="now executing Sudoku"/>
-     <java classname="com.becker.puzzle.sudoku.SudokuPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+     <java classname="com.becker.puzzle.sudoku.ui.SudokuPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
   </target>

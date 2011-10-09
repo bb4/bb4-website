@@ -1,5 +1,7 @@
-package com.becker.puzzle.sudoku;
+package com.becker.puzzle.sudoku.ui;
 
+import com.becker.puzzle.sudoku.Data;
+import com.becker.puzzle.sudoku.SudokuController;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
@@ -31,7 +33,7 @@ public final class SudokuPuzzle extends JApplet {
      */
     @Override
     public void init() {
-        puzzlePanel_ = new SudokuPanel(Data.SAMPLE_16);
+        puzzlePanel_ = new SudokuPanel(Data.SIMPLE_9);
         controller_ = new SudokuController(puzzlePanel_);
         topControls_ = new TopControlPanel(controller_);
 
