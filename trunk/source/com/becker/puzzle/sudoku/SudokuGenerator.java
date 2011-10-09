@@ -58,6 +58,7 @@ public class SudokuGenerator {
         }
 
         boolean success = generateSolution(board);
+        if (ppanel_ != null) ppanel_.repaint();
 
         assert success : "We were not able to generate a consistent board "+ board + "numCombinations examined = " + totalCt;
 
@@ -97,24 +98,16 @@ public class SudokuGenerator {
             if (generateSolution(board, position + 1)) {
                 return true;
             }
-            refresh();
             cell.clearValue();
-            //refresh();
         }
 
         return false;
     }
 
-    private String indent(int len) {
-        StringBuilder bldr = new StringBuilder();
-        for (int i=0; i<len; i++) {
-            bldr.append(' ');
-        }
-        return bldr.toString();
-    }
-
     private void refresh() {
-        if (delay_ >=0 && ppanel_!=null)  {
+        if (ppanel_ == null) return;
+
+        if (delay_ >=0 )  {
             ppanel_.repaint();
             ThreadUtil.sleep(delay_);
         }
@@ -133,7 +126,7 @@ public class SudokuGenerator {
 
         List positionList = getRandomPositions(size_);
         // we need a solver to verify that we can still deduce the original
-        SudokuSolver solver = new SudokuSolver(board);
+        SudokuSolver solver = new SudokuSolver();
         solver.setDelay(delay_);
 
         int len = size_ * size_;
@@ -165,8 +158,7 @@ public class SudokuGenerator {
         }
 
         Board copy = new Board(board);  // try to avoid this
-        solver.setBoard(copy);
-        if (!solver.solvePuzzle(ppanel_)) {
+        if (!solver.solvePuzzle(copy, ppanel_)) {
             // put it back since it cannot be solved without this positions value
             cell.setOriginalValue(value);
         }

@@ -15,22 +15,15 @@ import java.awt.*;
  */
 public class SudokuSolver {
 
-    private Board board_;
     private BoardUpdater updater_;
     private int delay_;
 
     /**
      * Constructor
-     * @param board board to show solution on.
      */
-    public SudokuSolver(Board board) {
+    public SudokuSolver() {
         delay_ = 0;
-        board_ = board;
         updater_ = new DefaultBoardUpdater();
-    }
-
-    public void setBoard(Board b) {
-        board_ = b;
     }
 
     /** used to set custom updater if you want something other than the default */
@@ -44,8 +37,8 @@ public class SudokuSolver {
      *
      * @return true if solved.
      */
-    public boolean solvePuzzle() {
-        return solvePuzzle(null);
+    public boolean solvePuzzle(Board board) {
+        return solvePuzzle(board, null);
     }
 
     public void setDelay(int delay)  {
@@ -56,20 +49,21 @@ public class SudokuSolver {
      * Solves the puzzle.
      * This implements the main algorithm for solving the Sudoku puzzle.
      *
+     * @param board puzzle to solve
      * @param puzzlePanel the viewer
      * @return true if solved.
      */
-    public boolean solvePuzzle(Container puzzlePanel) {
+    public boolean solvePuzzle(Board board, Container puzzlePanel) {
         boolean solved;
 
         // not sure what this should be.
-        int maxIterations = 2 * board_.getEdgeLength();
+        int maxIterations = 2 * board.getEdgeLength();
 
         do {
-            solved = doIteration();
+            solved = doIteration(board);
             refreshWithDelay(puzzlePanel, 3);
 
-        } while (!solved && board_.getNumIterations() < maxIterations);
+        } while (!solved && board.getNumIterations() < maxIterations);
 
         refresh(puzzlePanel);
 
@@ -77,11 +71,11 @@ public class SudokuSolver {
         return solved;
     }
 
-    public boolean doIteration()   {
+    public boolean doIteration(Board board)   {
         // find missing row and column numbers
-        updater_.updateAndSet(board_);
-        board_.incrementNumIterations();
-        return board_.solved();
+        updater_.updateAndSet(board);
+        board.incrementNumIterations();
+        return board.solved();
     }
 
     private void refreshWithDelay(Container puzzlePanel, int relativeDelay) {
