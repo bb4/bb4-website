@@ -1,4 +1,6 @@
-package com.becker.puzzle.sudoku.model;
+package com.becker.puzzle.sudoku.model.board;
+
+import com.becker.puzzle.sudoku.model.ValueConverter;
 
 /**
  *  The Board describes the physical layout of the puzzle.
@@ -170,14 +172,6 @@ public class Board {
     }
 
     /**
-     * find candidate lists for a specific cell.
-     * @return cell candidates
-     */
-     Candidates getCandidates(int row, int col) {
-        return getCell(row, col).getCandidates();
-    }
-
-    /**
      * @return the complete set of allowable values (1,... nn);
      */
     public ValuesList getValuesList() {
@@ -190,21 +184,6 @@ public class Board {
 
     public void incrementNumIterations() {
         numIterations_++;
-    }
-
-    public String toString() {
-        StringBuilder bldr = new StringBuilder("\n");
-        for (int row=0; row < nn_; row++) {
-            for (int col=0; col < nn_; col++) {
-                bldr.append(ValueConverter.getSymbol(getCell(row, col).getValue()));
-                bldr.append(" ");
-            }
-            bldr.append("\n");
-        }
-        bldr.append("rowCells=\n").append(rowCells_);
-        //bldr.append("colCells=\n" + colCells_);
-        bldr.append("bigCells =\n").append(getBigCells());
-        return bldr.toString();
     }
 
     @Override
@@ -233,5 +212,20 @@ public class Board {
         result = 31 * result + nn_;
         result = 31 * result + (rowCells_ != null ? rowCells_.hashCode() : 0);
         return result;
+    }
+
+    public String toString() {
+        StringBuilder bldr = new StringBuilder("\n");
+        for (int row=0; row < nn_; row++) {
+            for (int col=0; col < nn_; col++) {
+                bldr.append(ValueConverter.getSymbol(getCell(row, col).getValue()));
+                bldr.append(" ");
+            }
+            bldr.append("\n");
+        }
+        bldr.append("rowCells=\n").append(rowCells_);
+        //bldr.append("colCells=\n" + colCells_);
+        bldr.append("bigCells =\n").append(getBigCells());
+        return bldr.toString();
     }
 }

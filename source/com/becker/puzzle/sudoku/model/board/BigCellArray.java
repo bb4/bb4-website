@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku.model;
+package com.becker.puzzle.sudoku.model.board;
 
 /**
  *  An array of sets of integers representing the candidates for the cells in a row or column.

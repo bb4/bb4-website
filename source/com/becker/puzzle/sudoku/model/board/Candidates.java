@@ -1,4 +1,6 @@
-package com.becker.puzzle.sudoku.model;
+package com.becker.puzzle.sudoku.model.board;
+
+import com.becker.puzzle.sudoku.model.ValueConverter;
 
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentSkipListSet;

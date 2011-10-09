@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku.model;
+package com.becker.puzzle.sudoku.model.board;
 
 
 import java.util.Arrays;

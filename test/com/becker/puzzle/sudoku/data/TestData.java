@@ -1,5 +1,7 @@
 package com.becker.puzzle.sudoku.data;
 
+import com.becker.puzzle.sudoku.Data;
+
 /**
  * Some sample sudoku test puzzle data
  * @@ make these into separate date files eventually an move to test.
@@ -58,27 +60,8 @@ public class TestData {
     };
 
     /** Complex 16x16 puzzle from grandma */
-    public static final int[][] COMPLEX_16 = {
-        {0, 13, 16, 14,    10, 4, 0, 0,   0, 0, 0, 0,     0, 15, 2, 7},
-        {0,  0,  4, 11,     0, 0, 0, 0,   8, 0, 0, 2,     0,  0, 0, 3},
-        {0,  0,  9,  0,    16, 0, 3, 0,   0, 0, 0, 0,    14,  0, 0, 6},
-        {6 , 0,  0,  0,     0, 0, 0, 11,  0, 3,  13, 0,   12, 0, 0, 5},
+    public static final int[][] COMPLEX_16 = Data.SAMPLE_16;
 
-        {0, 0, 0, 0,      0,  0,  0, 0,    0, 0, 9, 0,     8, 0, 0, 0},
-        {0, 5, 0,  10,    0, 7, 8,  6,     0, 0, 0, 14,    0, 0, 16, 0},
-        {0, 7, 0, 0,      0, 10, 16, 12,  13, 0, 2,  0,    1, 5, 0, 14},
-        {0, 4, 0, 12,     5,  0, 11,  9,   0, 0, 0, 6,     10, 0, 3, 0},
-
-        {0, 12, 0, 0,     0, 0, 0,  4,    0, 0, 0, 8,    5, 0, 15, 10},
-        {0, 0, 11, 13,    7, 9, 5, 10,    0, 0, 0, 4,    16, 0, 0, 0 },
-        {14, 10, 0, 0,    0, 0, 0, 0,     0, 0, 0, 3,    0, 0, 0, 12},
-        {0, 0, 0, 16,     0, 0, 2, 0,     0, 0, 1, 0,    0, 6, 14, 0},
-
-        {9, 0, 13, 0,     0, 0, 0, 0,     0, 0, 0, 0,     0, 8, 0, 0},
-        {0, 0, 7, 4,      2, 13, 6, 16,   0, 0, 0, 0,     0, 0, 0, 11},
-        {0, 3, 0, 0,      0, 14, 0, 0,    0, 5, 0, 0,     6, 0, 0, 4},
-        {2, 0, 0, 6,      11, 0, 0, 0,    12, 0, 0, 0,    9, 0, 7, 16}
-    };
 
     /** you should never instantiate this static class.  */
     private TestData() {}

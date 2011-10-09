@@ -2,7 +2,7 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.data.TestData;
-import com.becker.puzzle.sudoku.model.Board;
+import com.becker.puzzle.sudoku.model.board.Board;
 import junit.framework.*;
 
 /**
@@ -40,16 +40,22 @@ public class TestSudokuSolver extends TestCase {
     /** negative test case */
     public void testImpossiblePuzzle() {
 
-        try {
-            solver = new SudokuSolver(new Board(TestData.INCONSISTENT_9));
-            //solver.solvePuzzle();
-            fail();
-        }
-        catch (IllegalStateException e) {
-            // success
-        }
-        //Assert.assertFalse( "Solved impossible SIMPLE_9 puzzle. Should not have.", solved);
+        solver = new SudokuSolver(new Board(TestData.INCONSISTENT_9));
+        boolean solved = solver.solvePuzzle();
+
+        Assert.assertFalse( "Solved impossible SIMPLE_9 puzzle. Should not have.", solved);
     }
+
+
+    /** negative test case */
+    public void testSolving16x16Puzzle() {
+
+        solver = new SudokuSolver(new Board(TestData.COMPLEX_16));
+        boolean solved = solver.solvePuzzle();
+
+        Assert.assertTrue("Unexpected could not solve 16x16 puzzle.", solved);
+    }
+
 
     public void testGenerateAndSolve2() {
 
@@ -69,14 +75,13 @@ public class TestSudokuSolver extends TestCase {
 
     }
 
-
     /** The large tests takes a long time because of the exponential growth with the size of the puzzle. */
     public void testGenerateAndSolve() {
         // super exponential run time
         generateAndSolve(2);  // 16  cells       32 ms
         generateAndSolve(3);  // 81  cells      265 ms
-        generateAndSolve(4);  // 256 cells    2,077 ms
-        //generateAndSolve(5);  // 625 cells  687,600 ms
+        // generateAndSolve(4);  // 256 cells    2,077 ms
+        // generateAndSolve(5);  // 625 cells  687,600 ms    too slow
     }
 
 

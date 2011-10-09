@@ -1,10 +1,9 @@
 package com.becker.puzzle.sudoku;
 
-import com.becker.puzzle.sudoku.model.Board;
+import com.becker.puzzle.sudoku.model.board.Board;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 /**
  * Draws the current best solution to the puzzle in a panel.

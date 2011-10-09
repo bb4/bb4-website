@@ -1,14 +1,13 @@
 package com.becker.puzzle.sudoku;
 
 import com.becker.puzzle.common.PuzzleRenderer;
-import com.becker.puzzle.sudoku.model.Board;
-import com.becker.puzzle.sudoku.model.Candidates;
-import com.becker.puzzle.sudoku.model.Cell;
+import com.becker.puzzle.sudoku.model.board.Board;
+import com.becker.puzzle.sudoku.model.board.Candidates;
 import com.becker.puzzle.sudoku.model.ValueConverter;
+import com.becker.puzzle.sudoku.model.board.Cell;
 
 import java.awt.*;
 import java.util.Iterator;
-import java.util.Set;
 
 /**
  * Renders the the sudoku puzzle onscreen.

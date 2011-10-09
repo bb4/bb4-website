@@ -1,9 +1,6 @@
 package com.becker.puzzle.sudoku.model.update;
 
-import com.becker.puzzle.sudoku.model.Board;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.becker.puzzle.sudoku.model.board.Board;
 
 /**
  *  The Board describes the physical layout of the puzzle.

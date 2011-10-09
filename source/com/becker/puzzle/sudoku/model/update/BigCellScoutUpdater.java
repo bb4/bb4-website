@@ -1,6 +1,9 @@
 package com.becker.puzzle.sudoku.model.update;
 
-import com.becker.puzzle.sudoku.model.*;
+import com.becker.puzzle.sudoku.model.board.BigCell;
+import com.becker.puzzle.sudoku.model.board.Board;
+import com.becker.puzzle.sudoku.model.board.Candidates;
+import com.becker.puzzle.sudoku.model.board.Cell;
 
 /**
  *  If there is a row or column within a bigCell that uniquely contains a value in its cell candidate  lists,

@@ -2,9 +2,9 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.math.MathUtil;
-import com.becker.puzzle.sudoku.model.Board;
-import com.becker.puzzle.sudoku.model.Cell;
-import com.becker.puzzle.sudoku.model.ValuesList;
+import com.becker.puzzle.sudoku.model.board.Board;
+import com.becker.puzzle.sudoku.model.board.Cell;
+import com.becker.puzzle.sudoku.model.board.ValuesList;
 
 import java.util.Collections;
 import java.util.List;

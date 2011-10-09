@@ -1,6 +1,6 @@
 package com.becker.puzzle.sudoku.model.update;
 
-import com.becker.puzzle.sudoku.model.*;
+import com.becker.puzzle.sudoku.model.board.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class LoneRangerUpdater extends AbstractUpdater {
                 Cell cell = board.getCell(row, col);
 
                 BigCell bigCell = board.getBigCell(row / n, col / n);
-                CandidatesArray bigCellCands = bigCell.getCandidatesArrayExcluding(row % n, col % n);
+                CandidatesArray bigCellCands = getCandidatesArrayExcluding(bigCell, row % n, col % n);
                 CandidatesArray rowCellCands = getCandidatesArrayForRowExcludingCol(row, col);
                 CandidatesArray colCellCands = getCandidatesArrayForColExcludingRow(row, col);
 
@@ -51,6 +51,24 @@ public class LoneRangerUpdater extends AbstractUpdater {
                 checkAndSetLoneRangers(colCellCands, cell);
             }
         }
+    }
+
+
+    /** @return all the candidate lists for all the cells in the bigCell except the one specified. */
+    private CandidatesArray getCandidatesArrayExcluding(BigCell bigCell, int row, int col) {
+
+        List<Candidates> cands = new ArrayList<Candidates>();
+
+        int n = bigCell.getSize();
+        for (int i = 0; i <n; i++) {
+           for (int j = 0; j < n; j++) {
+               Candidates c = bigCell.getCell(i, j).getCandidates();
+               if ((i != row || j != col) && c != null) {
+                   cands.add(c);
+               }
+           }
+        }
+        return new CandidatesArray(cands.toArray(new Candidates[cands.size()]));
     }
 
     private CandidatesArray getCandidatesArrayForRowExcludingCol(int row, int col) {
@@ -78,8 +96,7 @@ public class LoneRangerUpdater extends AbstractUpdater {
     }
 
 
-    private void checkAndSetLoneRangers(CandidatesArray candArray,
-                                        Cell cell) {
+    private void checkAndSetLoneRangers(CandidatesArray candArray, Cell cell) {
 
         if (cell.getCandidates() == null) return;
 
