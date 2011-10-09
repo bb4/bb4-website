@@ -2,9 +2,9 @@ package com.becker.puzzle.sudoku.model;
 
 
 /**
- *  An array of cells for a row or column in the puzzle.
+ * An array of cells in a row column or bigCell in the puzzle.
  *
- *  @author Barry Becker
+ * @author Barry Becker
  */
 public interface CellSet {
 
@@ -12,9 +12,9 @@ public interface CellSet {
 
     Candidates getCandidates();
 
-    void remove(int unique);
+    void removeCandidate(int unique);
 
-    void add(int value);
+    void addCandidate(int value);
 
     int numCells();
 

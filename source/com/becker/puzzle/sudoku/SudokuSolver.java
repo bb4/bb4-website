@@ -96,14 +96,17 @@ public class SudokuSolver {
     }
 
     private void refreshWithDelay(Container puzzlePanel, int relativeDelay) {
-        refresh(puzzlePanel);
-        ThreadUtil.sleep(relativeDelay * delay_);
+        if (delay_ >= 0)  {
+            refresh(puzzlePanel);
+            ThreadUtil.sleep(relativeDelay * delay_);
+        }
     }
 
     private void refresh(Container puzzlePanel) {
-        if (puzzlePanel == null || delay_ == 0)
+
+        if (puzzlePanel == null || delay_ < 0)
             return;
         puzzlePanel.repaint();
-        ThreadUtil.sleep(5);  // give it a chance to repaint.
+        ThreadUtil.sleep(10 + delay_);  // give it a chance to repaint.
     }
 }

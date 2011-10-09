@@ -17,7 +17,7 @@ public class BigCell implements CellSet {
     /** The number which have not yet been used in this big cell. */
     private Candidates candidates_;
 
-
+    /** Constructor */
     public BigCell(Board board, int rowOffset, int colOffset) {
 
         n_ = board.getBaseSize();
@@ -33,18 +33,18 @@ public class BigCell implements CellSet {
     }
 
     public int numCells() {
-        return n_*n_;
+        return n_ * n_;
     }
 
     /**
-     * @return  retrieve the base size of the board - sqrt(edge magnitude).
+     * @return retrieve the base size of the board - sqrt(edge magnitude).
      */
     public final int getSize() {
         return n_;
     }
 
     /** a value has been set, so we need to remove it from all the candidate lists. */
-    public void remove(int unique) {
+    public void removeCandidate(int unique) {
         candidates_.safeRemove(unique);
         for (int j = 0; j < n_; j++)  {
             for (int i = 0; i < n_; i++) {
@@ -54,7 +54,7 @@ public class BigCell implements CellSet {
     }
 
     /** add to the bigCell candidate list and each cells candidates for cells not yet set in stone. */
-    public void add(int value) {
+    public void addCandidate(int value) {
         candidates_.add(value);
         clearCaches();
     }
@@ -67,7 +67,7 @@ public class BigCell implements CellSet {
         for (int i = 0; i < n_; i++) {
            for (int j = 0; j < n_; j++) {
                Candidates c = getCell(i, j).getCandidates();
-               if (!(i==row && j==col) && c!=null) {
+               if ((i!=row || j!=col) && c!=null) {
                    cands.add(c);
                }
            }
