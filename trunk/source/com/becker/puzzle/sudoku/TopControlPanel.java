@@ -85,7 +85,7 @@ public final class TopControlPanel extends JPanel
     public void itemStateChanged(ItemEvent e) {
 
         if (e.getSource() == sizeSelector_)  {
-            generatePuzzle(10);
+            generatePuzzle(speedSelector_.getSelectedDelay());
         }
     }
 }

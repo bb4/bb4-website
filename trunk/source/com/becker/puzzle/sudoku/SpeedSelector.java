@@ -9,8 +9,11 @@ import java.awt.*;
  */
 public final class SpeedSelector extends Choice {
 
-    private String[] speedChoices_ = {
-        "As fast as possible",
+    private static final int DEFAULT_SELECTION = 1;
+
+    private static final String[] SPEED_CHOICES = {
+        "Fastest (no animation)",
+        "Fastest with animation",
         "Medium speed",
         "Slow speed",
         "Extremely slow"
@@ -20,10 +23,10 @@ public final class SpeedSelector extends Choice {
      * Constructor.
      */
     public SpeedSelector() {
-        for (final String item : speedChoices_) {
+        for (final String item : SPEED_CHOICES) {
             add(item);
         }
-        select(0);
+        select(DEFAULT_SELECTION);
     }
 
     /**
@@ -31,10 +34,11 @@ public final class SpeedSelector extends Choice {
      */
     public int getSelectedDelay() {
         switch (this.getSelectedIndex())  {
-            case 0 : return 0;
-            case 1 : return 10;
-            case 2 : return 50;
-            case 3 : return 400;
+            case 0 : return -1;
+            case 1 : return 0;
+            case 2 : return 10;
+            case 3 : return 50;
+            case 4 : return 400;
             default: assert false : " undexpected index";
         }
         return 0;

@@ -89,20 +89,16 @@ public class SudokuGenerator {
 
         refresh();
 
-        //System.out.println(indent(position) + " num="+ shuffledValues.size());
         for (int value : shuffledValues) {
 
             cell.setValue(value);
-            //System.out.println("board after setting shuffled value = " + value +" \n"  + board);
             totalCt++;
             if (generateSolution(board, position + 1)) {
                 return true;
             }
             refresh();
-            //System.out.println(indent(position) + "BACKTRACKING clearing cell pos="+position+" "
-            // + cell  + " shuffledValues=" + shuffledValues +" current="+ value );
             cell.clearValue();
-            refresh();
+            //refresh();
         }
 
         return false;
@@ -117,7 +113,7 @@ public class SudokuGenerator {
     }
 
     private void refresh() {
-        if (ppanel_!=null)  {
+        if (delay_ >=0 && ppanel_!=null)  {
             ppanel_.repaint();
             ThreadUtil.sleep(delay_);
         }
@@ -137,7 +133,7 @@ public class SudokuGenerator {
         List positionList = getRandomPositions(size_);
         // we need a solver to verify that we can still deduce the original
         SudokuSolver solver = new SudokuSolver(board);
-        solver.setDelay(delay_/20);
+        solver.setDelay(delay_);
 
         int len = size_ * size_;
         int last = len * len;
@@ -145,15 +141,11 @@ public class SudokuGenerator {
         for (int i=0; i < len; i++) {
             int pos = (Integer) positionList.get(i) - 1;
             board.getCell(pos).clearValue();
-            //System.out.println(""+positionList.subList(0, i+1) +" cleared");
         }
-        //System.out.println("after clearing first " + len + "("+positionList.subList(0, len)+") board="+ board);
 
         for (int i=len; i < last; i++) {
             int pos = (Integer) positionList.get(i) - 1;
             tryRemovingValue(pos, board, solver);
-            //System.out.println("solution with "+positionList.subList(0, i+1) +" cleared" + board);
-            //solution.reset();
         }
       
         return board;

@@ -48,14 +48,14 @@ public class NakedSubsetUpdater extends AbstractUpdater {
 
     private void checkNakedSubsetInRows() {
         for (int i=0; i<board.getEdgeLength(); i++) {
-            CellArray row = board.getRowCells().get(i);
+            CellSet row = board.getRowCells().get(i);
             checkNakedSubset(row);
         }
     }
 
     private void checkNakedSubsetInCols() {
         for (int i=0; i<board.getEdgeLength(); i++) {
-            CellArray col = board.getColCells().get(i);
+            CellSet col = board.getColCells().get(i);
             checkNakedSubset(col);
         }
     }

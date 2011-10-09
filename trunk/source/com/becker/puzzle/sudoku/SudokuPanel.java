@@ -50,13 +50,12 @@ public final class SudokuPanel extends JPanel {
 
     public void setDelay(int delay) {
         delay_ = delay;
+        solver_.setDelay(delay_);
     }
 
     public void startSolving() {
 
-        solver_.setDelay(delay_);
         boolean solved = solver_.solvePuzzle(this);
-
         showMessage(solved);
     }
 

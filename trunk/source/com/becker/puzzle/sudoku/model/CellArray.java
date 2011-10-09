@@ -33,7 +33,7 @@ public class CellArray implements CellSet {
             cell.setRowCells(cells);
             cells.cells_[i] = cell;
             if (cell.getValue() > 0) {
-                cells.remove(cell.getValue());
+                cells.removeCandidate(cell.getValue());
             }
         }
         return cells;
@@ -47,7 +47,7 @@ public class CellArray implements CellSet {
             cell.setColCells(cells);
             cells.cells_[i] = cell;
             if (cell.getValue() > 0) {
-                cells.remove(cell.getValue());
+                cells.removeCandidate(cell.getValue());
             }
         }
         return cells;
@@ -61,7 +61,7 @@ public class CellArray implements CellSet {
         return candidates_;
     }
 
-    public void remove(int unique) {
+    public void removeCandidate(int unique) {
         candidates_.safeRemove(unique);
         for (int i=0; i < numCells(); i++) {
             cells_[i].remove(unique);
@@ -72,7 +72,7 @@ public class CellArray implements CellSet {
      * We can only add the value if none of our cells already have it set.
      * @param value value to add to cells candidate list and that of rows/cols/bigCell if possible.
      */
-    public void add(int value) {
+    public void addCandidate(int value) {
         candidates_.add(value);
         clearCaches();
     }

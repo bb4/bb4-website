@@ -13,8 +13,8 @@ public class Cell {
 
     /** the BigCell to which I belong   */
     private BigCell parentBigCell_;
-    private CellArray rowCells_;
-    private CellArray colCells_;
+    private CellSet rowCells_;
+    private CellSet colCells_;
 
     private Candidates cachedCandidates;
 
@@ -50,9 +50,9 @@ public class Cell {
         value_ = value;
         original_ = false;
 
-        parentBigCell_.remove(value_);
-        rowCells_.remove(value_);
-        colCells_.remove(value_);
+        parentBigCell_.removeCandidate(value_);
+        rowCells_.removeCandidate(value_);
+        colCells_.removeCandidate(value_);
         clearCache();
     }
 
@@ -69,9 +69,9 @@ public class Cell {
         value_ = 0;
         original_ = false;
 
-        rowCells_.add(value);
-        colCells_.add(value);
-        parentBigCell_.add(value);
+        rowCells_.addCandidate(value);
+        colCells_.addCandidate(value);
+        parentBigCell_.addCandidate(value);
         clearCache();
     }
 
@@ -87,9 +87,9 @@ public class Cell {
         original_ = value > 0;
 
         if (original_)  {
-            parentBigCell_.remove(value);
-            rowCells_.remove(value);
-            colCells_.remove(value);
+            parentBigCell_.removeCandidate(value);
+            rowCells_.removeCandidate(value);
+            colCells_.removeCandidate(value);
         }
     }
 
