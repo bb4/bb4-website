@@ -147,8 +147,6 @@ public class UctStrategy extends AbstractSearchStrategy {
 
         int numRandMoves = searchable.getNumMoves() - startNumMoves;
         if (numRandMoves >= numRandomLookAhead || searchable.done(lastMove, false)) {
-            // GoGameExporter exporter = new GoGameExporter((GoBoard)searchable.getBoard());
-            // exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + startNumMoves + "_" + lastMove.hashCode(), null);
             int score = searchable.worth(lastMove, weights_);
             lastMove.setValue(score);
             return WinProbabilityCaclulator.getChanceOfPlayer1Winning(score);

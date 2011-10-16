@@ -1,7 +1,8 @@
+/** Copyright by Barry G. Becker, 2000-2011.
+ *  Licensed under MIT License: http://www.opensource.org/licenses/mit-license.php */
 package com.becker.optimization;
 
 import com.becker.optimization.parameter.ParameterArray;
-
 
 
 /**

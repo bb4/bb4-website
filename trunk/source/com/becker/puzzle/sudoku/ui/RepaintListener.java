@@ -15,4 +15,6 @@ public interface RepaintListener {
     void valueEntered();
 
     void cellSelected(Location location);
+
+    void requestValidation();
 }

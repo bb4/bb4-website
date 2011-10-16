@@ -50,14 +50,15 @@ public final class SudokuPanel extends JPanel
     /** Mark the users values as correct or not. */
     public void validatePuzzle() {
         inputListener.validateValues(getSolvedPuzzle());
+        inputListener.useCorrectEntriesAsOriginal(getBoard());
         repaint();
     }
 
     private Board getSolvedPuzzle()  {
-         SudokuSolver solver = new SudokuSolver();
-         Board boardCopy = new Board(getBoard());
-         solver.solvePuzzle(boardCopy);
-         return boardCopy;
+        SudokuSolver solver = new SudokuSolver();
+        Board boardCopy = new Board(getBoard());
+        solver.solvePuzzle(boardCopy);
+        return boardCopy;
     }
 
     /**
@@ -99,6 +100,10 @@ public final class SudokuPanel extends JPanel
 
     public void cellSelected(Location location) {
         repaint();
+    }
+
+    public void requestValidation() {
+        validatePuzzle();
     }
 
     /**

@@ -19,7 +19,7 @@ import com.becker.game.twoplayer.common.search.SearchWindow;
 public class TranspositionTable extends LRUCache<HashKey, Entry> {
 
     /** Size of the table. If bigger, will take longer before we have to recycle positions. */
-    private static final int MAX_ENTRIES = 1000000;
+    private static final int MAX_ENTRIES = 100000;
 
     private int cacheHits = 0;
     private int cacheNearHits = 0;

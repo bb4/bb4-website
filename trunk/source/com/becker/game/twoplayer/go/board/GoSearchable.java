@@ -171,7 +171,8 @@ public class GoSearchable extends TwoPlayerSearchable {
         // Try turning off all forms of go caching.
         // Why doesn't playing with caching give same results as without?
         HashKey key = getHashKey();
-        ScoreEntry cachedScore = scoreCache_.get(key);
+        // uncomment this to do caching.
+        //ScoreEntry cachedScore = scoreCache_.get(key);
         ///////// comment this to do debugging
         //if (cachedScore != null) {
         //    return cachedScore.getScore();
@@ -179,7 +180,7 @@ public class GoSearchable extends TwoPlayerSearchable {
 
         int worth = boardEvaluator_.worth(lastMove, weights);
 
-        if (cachedScore == null) {
+        /* if (cachedScore == null) {
             scoreCache_.put(key, new ScoreEntry(key, worth, getBoard().toString(), boardEvaluator_.getWorthInfo()));
         }
         else {
@@ -199,7 +200,7 @@ public class GoSearchable extends TwoPlayerSearchable {
                 System.out.println(bldr.toString());
                 System.out.flush();
             }
-        }
+        } */
         return worth;
     }
 
