@@ -1,5 +1,6 @@
 package com.becker.puzzle.sudoku.model.board;
 
+import com.becker.common.geometry.Location;
 import com.becker.puzzle.sudoku.model.ValueConverter;
 
 /**
@@ -126,6 +127,10 @@ public class Board {
      */
     public final Cell getCell(int row, int col) {
         return cells_[row][col];
+    }
+
+    public final Cell getCell(Location location) {
+        return cells_[location.getRow()][location.getCol()];
     }
 
     /**

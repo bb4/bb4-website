@@ -23,13 +23,15 @@ public class SudokuRenderer implements CellLocator {
     private static final Color CELL_ORIG_TEXT_COLOR = Color.BLACK;
     private static final Color CELL_TEXT_COLOR = Color.BLUE;
 
-    private static final Color CELL_ORIG_BACKGROUND_COLOR = new Color(235, 235, 248);
-    private static final Color CELL_BACKGROUND_COLOR = new Color(245, 245, 255, 200);
+    private static final Color CELL_ORIG_BACKGROUND_COLOR = new Color(225, 225, 238, 200);
+    private static final Color CELL_BACKGROUND_COLOR = new Color(245, 245, 255, 100);
     private static final Color CELL_FOCUS_COLOR = new Color(255, 250, 200);
 
     private static final Color USER_VALUE_COLOR = new Color(155, 5, 40);
-    private static final Color USER_VALUE_CORRECT_COLOR = new Color(0, 255, 0);
+    private static final Color USER_VALUE_CORRECT_COLOR = new Color(0, 200, 0);
     private static final Color USER_VALUE_WRONG_COLOR = new Color(255, 10, 0);
+    private static final Color BIG_X_COLOR = new Color(255, 0, 0, 50);
+    private static final Stroke BIG_X_STROKE = new BasicStroke(10, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
     private static final Color GRID_COLOR = new Color(10, 0, 100);
 
     private static final Color TEXT_COLOR = new Color(0, 10, 10);
@@ -69,6 +71,7 @@ public class SudokuRenderer implements CellLocator {
     public void render(Graphics g, UserEnteredValues userEnteredValues, Location currentFocusLocation,
                        int width, int height)  {
 
+        Graphics2D g2 = (Graphics2D) g;
         int minEdge = (Math.min(width, height) - 20 - MARGIN);
         pieceSize = minEdge / board_.getEdgeLength();
         // erase what's there and redraw.
@@ -92,7 +95,7 @@ public class SudokuRenderer implements CellLocator {
                 xpos = MARGIN + j * pieceSize;
                 ypos = MARGIN + i * pieceSize;
 
-                drawCell(g, c, xpos, ypos, userEnteredValues.get(i, j));
+                drawCell(g2, c, xpos, ypos, userEnteredValues.get(i, j));
             }
         }
         drawCellBoundaryGrid(g, len);
@@ -102,14 +105,13 @@ public class SudokuRenderer implements CellLocator {
 
         int row = (int)((point.getY() - MARGIN) / pieceSize);
         int col = (int)((point.getX() - MARGIN) / pieceSize);
-
         return new Location(row, col);
     }
 
     /**
      * Draw a cell at the specified location.
      */
-    private void drawCell(Graphics g, Cell cell, int xpos, int ypos, UserValue userValue) {
+    private void drawCell(Graphics2D g2, Cell cell, int xpos, int ypos, UserValue userValue) {
 
         int s = getScale(pieceSize);
 
@@ -117,36 +119,55 @@ public class SudokuRenderer implements CellLocator {
         int jittered_ypos = ypos + (int)(Math.random() * 3 - 1);
         Font font = new Font("Sans Serif", Font.PLAIN, pieceSize >> 1);
 
-        g.setFont(font);
-        g.setColor( cell.isOriginal() ? CELL_ORIG_BACKGROUND_COLOR : CELL_BACKGROUND_COLOR );
-        g.fillRect( xpos + 1, ypos + 1, pieceSize - 3, pieceSize - 2 );
+        g2.setFont(font);
+        g2.setColor( cell.isOriginal() ? CELL_ORIG_BACKGROUND_COLOR : CELL_BACKGROUND_COLOR );
+        g2.fillRect( xpos + 1, ypos + 1, pieceSize - 3, pieceSize - 2 );
 
-        g.setColor( cell.isOriginal() ? CELL_ORIG_TEXT_COLOR : CELL_TEXT_COLOR );
-        if (cell.getValue() > 0) {
-            g.drawString(ValueConverter.getSymbol(cell.getValue()),
+        if (userValue != null) {
+            drawUserValue(g2, userValue, s, xpos, ypos);
+        }
+        else if (cell.getValue() > 0) {
+            g2.setColor( cell.isOriginal() ? CELL_ORIG_TEXT_COLOR : CELL_TEXT_COLOR );
+            g2.drawString(ValueConverter.getSymbol(cell.getValue()),
                     jittered_xpos + (int) (0.8 * s), (int) (jittered_ypos + s * 1.7));
         }
-        else if (userValue != null) {
-            drawUserValue(g, userValue, s, xpos, ypos);
-        }
+
 
         // draw the first 9 numbers in the candidate list, if there are any.
         if (showCandidates) {
-            drawCandidates(g, cell.getCandidates(), xpos, ypos);
+            drawCandidates(g2, cell.getCandidates(), xpos, ypos);
         }
     }
 
-    private void drawUserValue(Graphics g, UserValue userValue, int s, int xpos, int ypos) {
+    private void drawUserValue(Graphics2D g2, UserValue userValue, int s, int xpos, int ypos) {
 
         if (userValue.isValidated()) {
-            g.setColor(userValue.isValid() ? USER_VALUE_CORRECT_COLOR : USER_VALUE_WRONG_COLOR);
+            if (userValue.isValid()) {
+                g2.setColor(USER_VALUE_CORRECT_COLOR);
+
+            }
+            else {
+                drawBigX(g2, s, xpos, ypos);
+                g2.setColor(USER_VALUE_WRONG_COLOR);
+            }
         }
         else {
-            g.setColor(USER_VALUE_COLOR);
+            g2.setColor(USER_VALUE_COLOR);
         }
 
-        g.drawString(ValueConverter.getSymbol(userValue.getValue()),
+        g2.drawString(ValueConverter.getSymbol(userValue.getValue()),
                 xpos + (int)(0.8 * s), (int)(ypos + s * 1.7) );
+    }
+
+    private void drawBigX(Graphics2D g2, int s, int xpos, int ypos) {
+        g2.setColor(BIG_X_COLOR);
+        g2.setStroke(BIG_X_STROKE);
+        int leftX = xpos + (int)(0.15*s);
+        int rightX = xpos + (int)(2.3*s);
+        int bottomY = ypos + (int)(2.45*s);
+        int topY = ypos + (int)(0.1*s);
+        g2.drawLine(leftX, topY, rightX, bottomY);
+        g2.drawLine(rightX, topY, leftX, bottomY);
     }
 
     private void drawCandidates(Graphics g, Candidates candidates, int xpos, int ypos) {
