@@ -20,8 +20,11 @@ public final class GameContext {
     /** logger object. Use console by default. */
     private static ILog logger_ = new Log();
 
-    /** use sound effects if true. */
-    private static boolean useSound_ = true;
+    /**
+     * Use sound effects if true.
+     * Probably need to turn this off when deploying in applet form to avoid security errors.
+     */
+    private static final boolean useSound_ = false;
 
     /** this is a singleton. It generates the sounds. */
     private static MusicMaker musicMaker_ = null;
@@ -61,32 +64,28 @@ public final class GameContext {
     /**
      * @return the level of debugging in effect
      */
-    public static int getDebugMode()
-    {
+    public static int getDebugMode() {
         return debug_;
     }
 
     /**
      * @param debug
      */
-    public static void setDebugMode( int debug )
-    {
+    public static void setDebugMode( int debug ) {
         debug_ = debug;
     }
 
     /**
      * @return true if profiling stats are being shown after every move
      */
-    public static boolean isProfiling()
-    {
+    public static boolean isProfiling() {
         return profiling_;
     }
 
     /**
      * @param prof whether or not to turn on profiling
      */
-    public static void setProfiling( boolean prof )
-    {
+    public static void setProfiling( boolean prof ) {
         profiling_ = prof;
     }
 
@@ -94,8 +93,7 @@ public final class GameContext {
     /**
      * @param logger the logging device. Determines where the output goes.
      */
-    public static void setLogger( ILog logger )
-    {
+    public static void setLogger( ILog logger ) {
         assert logger != null;
         logger_ = logger;
     }
@@ -103,42 +101,28 @@ public final class GameContext {
     /**
      * @return the logging device to use.
      */
-    public static ILog getLogger()
-    {
+    public static ILog getLogger() {
         return logger_;
     }
 
     /**
      * log a message using the internal logger object
      */
-    public static void log( int logLevel, String message )
-    {
+    public static void log( int logLevel, String message ) {
             logger_.print( logLevel, getDebugMode(), message );
-    }
-
-    /**
-     * @param useSound if true, then sound effects will be used when moving
-     */
-    public static void setUseSound( boolean useSound )
-    {
-        if ( useSound_ )
-            getMusicMaker().stopAllSounds();
-        useSound_ = useSound;
     }
 
     /**
      * @return  true if sound is not turned off.
      */
-    public static boolean getUseSound()
-    {
+    public static boolean getUseSound() {
         return useSound_;
     }
 
     /**
      * @return use this to add cute sound effects.
      */
-    public static synchronized MusicMaker getMusicMaker()
-    {
+    public static synchronized MusicMaker getMusicMaker() {
         if ( musicMaker_ == null ) {
             musicMaker_ = new MusicMaker();
         }
@@ -151,8 +135,7 @@ public final class GameContext {
      * be loaded for the game specified.
      * @param gameName the current game
      */
-    public static void loadGameResources(String gameName)
-    {
+    public static void loadGameResources(String gameName) {
         log(1, "loadGameResources gameName=" + gameName);
         GamePlugin plugin = PluginManager.getInstance().getPlugin(gameName);
         log(1, "plugin = " + plugin);
@@ -169,8 +152,7 @@ public final class GameContext {
      * set the current locale and load the cutpoints for it.
      * @param locale
      */
-    public static void setLocale(LocaleType locale)
-    {
+    public static void setLocale(LocaleType locale) {
         messageContext_.setLocale(locale);
     }
 
@@ -198,8 +180,7 @@ public final class GameContext {
         return RANDOM;
     }
 
-    public static void setRandomSeed(int seed)
-    {
+    public static void setRandomSeed(int seed) {
         RANDOM = new Random(seed);
     }
 }

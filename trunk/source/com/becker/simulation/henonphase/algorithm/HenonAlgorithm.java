@@ -18,17 +18,21 @@ public class HenonAlgorithm {
     public static final int DEFAULT_FRAME_ITERATIONS = 10;
     public static final int DEFAULT_NUM_TRAVELERS = 400;
     private static final int DEFAULT_SIZE = 300;
+    private static final int DEFAULT_ALPHA = 200;
+    private static final boolean DEFAULT_UNIFORM_SEEDS = true;
+    private static final boolean DEFAULT_CONNECT_POINTS = false;
+
 
     private HenonModel model;
 
     // should extract these into ModelParams class
-    private int numTravelors = DEFAULT_NUM_TRAVELERS;
-    private int maxIterations_ = DEFAULT_MAX_ITERATIONS;
-    private int numStepsPerFrame = DEFAULT_FRAME_ITERATIONS;
-    private TravelerParams travelorParams = new TravelerParams();
-    private boolean useUniformSeeds = true;
-    private boolean connectPoints = false;
-    private int alpha = 200;
+    private int numTravelors;
+    private int maxIterations_;
+    private int numStepsPerFrame;
+    private TravelerParams travelorParams;
+    private boolean useUniformSeeds;
+    private boolean connectPoints;
+    private int alpha;
 
     private ColorMap cmap;
 
@@ -38,9 +42,7 @@ public class HenonAlgorithm {
 
 
     public HenonAlgorithm() {
-
-        cmap = new HenonColorMap(alpha);
-        model = new HenonModel(DEFAULT_SIZE, DEFAULT_SIZE, travelorParams, useUniformSeeds, connectPoints, numTravelors, cmap);
+        reset();
     }
 
     public void setSize(int width, int height)  {
@@ -48,6 +50,18 @@ public class HenonAlgorithm {
         if (width != model.getWidth() || height != model.getHeight())   {
             requestRestart(width, height);
         }
+    }
+
+    public void reset() {
+        numTravelors = DEFAULT_NUM_TRAVELERS;
+        maxIterations_ = DEFAULT_MAX_ITERATIONS;
+        numStepsPerFrame = DEFAULT_FRAME_ITERATIONS;
+        travelorParams = new TravelerParams();
+        useUniformSeeds = DEFAULT_UNIFORM_SEEDS;
+        connectPoints = DEFAULT_CONNECT_POINTS;
+        alpha = DEFAULT_ALPHA;
+        cmap = new HenonColorMap(alpha);
+        model = new HenonModel(DEFAULT_SIZE, DEFAULT_SIZE, travelorParams, useUniformSeeds, connectPoints, numTravelors, cmap);
     }
 
     public void setTravelerParams(TravelerParams newParams) {

@@ -5,16 +5,18 @@ import com.becker.puzzle.sudoku.model.update.IUpdater;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.security.AccessControlException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Responsible for updating a board given a list of updaters to apply.
- *
+ * Unfortunately we cannot use reflection in an applet without making is a signed applet
+ * (or have signed jars in the case of webstart), so we use NonReflectiveBoardUpdater in deployed version.
  * @author Barry Becker
  */
-public class BoardUpdater {
+public class ReflectiveBoardUpdater implements IBoardUpdater {
 
     private List<Class> updaterClasses;
 
@@ -22,17 +24,17 @@ public class BoardUpdater {
      * Constructor
      * @param updaterClasses the updater classes to use when updating the board during an interaction of the solver.
      */
-    public BoardUpdater(List<Class> updaterClasses) {
+    public ReflectiveBoardUpdater(List<Class> updaterClasses) {
         this.updaterClasses = updaterClasses;
     }
 
 
-    public BoardUpdater(Class ... classes) {
+    public ReflectiveBoardUpdater(Class... classes) {
         updaterClasses = Arrays.asList(classes);
     }
 
     /**
-     * update candidate lists for all cells then set the unique values that are determined.
+     * Update candidate lists for all cells then set the unique values that are determined.
      * First create the updaters using reflection, then apply them.
      */
     public void updateAndSet(Board board) {
@@ -57,8 +59,8 @@ public class BoardUpdater {
             Constructor ctor = null;
             try {
                 ctor = clazz.getDeclaredConstructor(Board.class);
-                ctor.setAccessible(true);
                 try {
+                    ctor.setAccessible(true);
                     IUpdater updater = (IUpdater)ctor.newInstance(board);
                     updaters.add(updater);
                 } catch (InstantiationException e) {
@@ -67,7 +69,10 @@ public class BoardUpdater {
                     throw new IllegalStateException("Could not access constructor of " + clazz.getName(), e);
                 } catch (InvocationTargetException e) {
                     throw new IllegalStateException("Could not invoke constructor of " + clazz.getName(), e);
+                } catch (AccessControlException e) {
+                    System.out.println("allowing access when should not");
                 }
+
             } catch (NoSuchMethodException e) {
                 throw new IllegalStateException("Could not find constructor for " + clazz.getName(), e);
             }

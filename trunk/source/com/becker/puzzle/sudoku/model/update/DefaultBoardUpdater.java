@@ -9,7 +9,7 @@ import java.util.Arrays;
  *
  * @author Barry Becker
  */
-public class DefaultBoardUpdater extends BoardUpdater {
+public class DefaultBoardUpdater extends ReflectiveBoardUpdater {
 
     private static final Class[] UPDATERS =  {
          StandardCRBUpdater.class,

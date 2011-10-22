@@ -2,7 +2,7 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.sudoku.model.board.Board;
-import com.becker.puzzle.sudoku.model.update.BoardUpdater;
+import com.becker.puzzle.sudoku.model.update.ReflectiveBoardUpdater;
 import com.becker.puzzle.sudoku.model.update.*;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ import java.awt.*;
  */
 public class SudokuSolver {
 
-    private BoardUpdater updater_;
+    private IBoardUpdater updater_;
     private int delay_;
 
     /**
@@ -23,11 +23,11 @@ public class SudokuSolver {
      */
     public SudokuSolver() {
         delay_ = 0;
-        updater_ = new DefaultBoardUpdater();
+        updater_ = new NonReflectiveBoardUpdater();
     }
 
     /** used to set custom updater if you want something other than the default */
-    public void setUpdater(BoardUpdater updater) {
+    public void setUpdater(ReflectiveBoardUpdater updater) {
         updater_ = updater;
     }
 
