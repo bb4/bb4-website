@@ -79,10 +79,15 @@
       </antcall>
 
       <!-- copy the class files that are needed for simulation programs . Produces simulation.jar-->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/common"/>
-          <param name="jarFile" value="simulation.jar"/>
-      </antcall>
+      <copy todir="${stagingDir}">
+          <fileset dir="${classesDir}">
+            <include name="com/becker/simulation/common/**/*.class"/>
+            <include name="com/becker/simulation/graphing/**/*.class"/>
+          </fileset>
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/simulation.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
 
       <!-- copy just the core class files that are needed for all the games. Produces gameCommon.jar -->
       <copy todir="${stagingDir}">
@@ -293,10 +298,16 @@
           <param name="jarFile" value="reactiondiffusion.jar"/>
       </antcall>
 
-       <!-- copy the class files that are needed for fractalexplorer deployment -->
+      <!-- copy the class files that are needed for fractalexplorer deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="simulation/fractalexplorer"/>
           <param name="jarFile" value="fractalexplorer.jar"/>
+      </antcall>
+
+      <!-- copy the class files that are needed for henonexplorer deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="simulation/henonphase"/>
+          <param name="jarFile" value="henonexplorer.jar"/>
       </antcall>
 
       <!-- copy the class files that are needed for trebuchet deployment -->

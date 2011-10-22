@@ -5,7 +5,6 @@ import com.becker.simulation.common.Profiler;
 import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.henonphase.algorithm.HenonAlgorithm;
-import com.becker.simulation.henonphase.algorithm.HenonColorMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,6 +44,7 @@ public class HenonPhaseExplorer extends Simulator {
     }
 
     private void commonInit() {
+        algorithm_ = new HenonAlgorithm();
         initCommonUI();  
         reset();
     }
@@ -52,11 +52,12 @@ public class HenonPhaseExplorer extends Simulator {
     @Override
     protected void reset() {
 
-        algorithm_ = new HenonAlgorithm();
-
+        algorithm_.reset();
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
 
-        if (options_ != null) options_.reset();
+        if (options_ != null) {
+            options_.reset();
+        }
     }
 
     @Override

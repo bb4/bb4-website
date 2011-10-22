@@ -191,7 +191,7 @@ public class LiquidSimulator extends Simulator implements MouseListener {
     }
 
     public void mouseClicked(MouseEvent e) {
-        System.out.println("mclick timeStep="+ timeStep_ );
+        //System.out.println("mclick timeStep="+ timeStep_ );
         environment_.stepForward( timeStep_);
         this.repaint();
     }

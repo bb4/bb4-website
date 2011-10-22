@@ -3,7 +3,7 @@ package com.becker.puzzle.sudoku.model;
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.data.TestData;
 import com.becker.puzzle.sudoku.model.board.Board;
-import com.becker.puzzle.sudoku.model.update.BoardUpdater;
+import com.becker.puzzle.sudoku.model.update.ReflectiveBoardUpdater;
 import com.becker.puzzle.sudoku.model.update.updaters.LoneRangerUpdater;
 import com.becker.puzzle.sudoku.model.update.updaters.StandardCRBUpdater;
 import junit.framework.Test;
@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
 public class TestBoardUpdater extends TestCase {
 
     /** instance under test */
-    BoardUpdater updater;
+    ReflectiveBoardUpdater updater;
     Board board;
 
     @Override
@@ -28,7 +28,7 @@ public class TestBoardUpdater extends TestCase {
 
     public void testUpdateAndSetStandardCRB() {
 
-        updater = new BoardUpdater(StandardCRBUpdater.class);
+        updater = new ReflectiveBoardUpdater(StandardCRBUpdater.class);
         updater.updateAndSet(board);
 
         int[][] expectedSetValues = {
@@ -43,7 +43,7 @@ public class TestBoardUpdater extends TestCase {
 
     public void testUpdateAndSetStandardCRBAndLoneRanger() {
 
-        updater = new BoardUpdater(StandardCRBUpdater.class, LoneRangerUpdater.class);
+        updater = new ReflectiveBoardUpdater(StandardCRBUpdater.class, LoneRangerUpdater.class);
         updater.updateAndSet(board);
 
         int[][] expectedSetValues = {
@@ -57,7 +57,7 @@ public class TestBoardUpdater extends TestCase {
 
     public void testUpdateAndSetLoneRangerAndStandardCRB() {
 
-        updater = new BoardUpdater(LoneRangerUpdater.class, StandardCRBUpdater.class);
+        updater = new ReflectiveBoardUpdater(LoneRangerUpdater.class, StandardCRBUpdater.class);
         updater.updateAndSet(board);
 
         int[][] expectedSetValues = {
@@ -71,7 +71,7 @@ public class TestBoardUpdater extends TestCase {
 
     public void testUpdateAndSetLoneRangerOnly() {
 
-        updater = new BoardUpdater(LoneRangerUpdater.class);
+        updater = new ReflectiveBoardUpdater(LoneRangerUpdater.class);
         updater.updateAndSet(board);
 
         int[][] expectedSetValues = {

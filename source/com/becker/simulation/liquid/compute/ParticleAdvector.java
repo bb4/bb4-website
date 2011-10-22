@@ -168,11 +168,11 @@ public class ParticleAdvector {
         double newTimeStep = timeStep;
         if (increment > maxDistance) {
             newTimeStep /= 2.0;
-            Logger.log(0, "advectParticles: HALVED dt=" + timeStep +" increment="+increment );
+            Logger.log(1, "advectParticles: HALVED dt=" + timeStep +" increment="+increment );
         }
         else if (increment < minDistance) {
             newTimeStep *= 2.0;
-            Logger.log(0, "advectParticles: DOUBLED dt=" + timeStep
+            Logger.log(1, "advectParticles: DOUBLED dt=" + timeStep
                     +" increment="+increment +" maxLength=" + maxLength);
         }
         return newTimeStep;

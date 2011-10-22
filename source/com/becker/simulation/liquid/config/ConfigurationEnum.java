@@ -40,7 +40,7 @@ public enum ConfigurationEnum {
     }
 
     public static ConfigurationEnum getDefaultValue() {
-        return FALLING_BLOB_SMALL;
+        return PULSE_LARGE;
     }
 
     public String getFileName() {
