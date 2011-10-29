@@ -34,7 +34,7 @@ public class PenteBoard extends TwoPlayerBoard {
         candidateMoves_ = pb.candidateMoves_.clone();
     }
 
-
+    @Override
     public PenteBoard copy() {
         return new PenteBoard(this);
     }

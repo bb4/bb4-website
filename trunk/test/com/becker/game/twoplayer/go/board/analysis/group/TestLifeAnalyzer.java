@@ -11,7 +11,7 @@ import junit.framework.Assert;
  */
 public class TestLifeAnalyzer extends GoTestCase {
 
-    private static final String PREFIX = "board/analysis/group/habitat/";
+    private static final String PREFIX = "board/analysis/group/life/";
 
     // test for unconditional habitat
     public void testUnconditionalLife1() {

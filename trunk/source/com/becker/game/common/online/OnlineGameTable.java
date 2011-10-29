@@ -93,7 +93,7 @@ public class OnlineGameTable implements Serializable {
             return "-";
         }
         for (Player p : players_) {
-            buf.append(p.getName() + ", ");
+            buf.append(p.getName()).append(", ");
         }
         return buf.substring(0, buf.length() - 2);
     }
@@ -152,8 +152,8 @@ public class OnlineGameTable implements Serializable {
     public String toString()
     {
         StringBuilder buf = new StringBuilder(20);
-        buf.append("Name: " + name_ + '\n');
-        buf.append("Players:\n"+ getPlayersString() + '\n');
+        buf.append("Name: ").append(name_).append('\n');
+        buf.append("Players:\n").append(getPlayersString()).append('\n');
         return buf.toString();
     }
 

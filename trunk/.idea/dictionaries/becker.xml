@@ -16,6 +16,7 @@
       <w>indices</w>
       <w>liveness</w>
       <w>maxima</w>
+      <w>negamax</w>
       <w>nobi</w>
       <w>offscreen</w>
       <w>opacities</w>

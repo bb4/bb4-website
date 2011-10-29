@@ -122,7 +122,7 @@ public class Galaxy extends Board
      * @param player  (if null return all planets in the galaxy)
      * @return the planets owned by the specified player.
      */
-    public static List getPlanets(GalacticPlayer player)
+    public static List<Planet> getPlanets(GalacticPlayer player)
     {
         if (player==null)
             return getPlanets();

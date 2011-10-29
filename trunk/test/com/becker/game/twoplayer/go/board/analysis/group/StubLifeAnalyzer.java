@@ -39,6 +39,7 @@ public final class StubLifeAnalyzer extends LifeAnalyzer {
      *
      * @return true if unconditionally alive
      */
+    @Override
     public boolean isUnconditionallyAlive() {
         return isUnconditionallyAlive;
     }

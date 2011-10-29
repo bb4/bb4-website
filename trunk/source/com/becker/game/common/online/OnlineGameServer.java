@@ -152,7 +152,7 @@ public class OnlineGameServer  {
 
                 while (true) {
 
-                    // recieve the serialized commands that are sent and process them.
+                    // receive the serialized commands that are sent and process them.
                     GameCommand cmd = (GameCommand) iStream_.readObject();
 
                     // we got a change to the tables, update internal structure and broadcast new list.
@@ -202,9 +202,13 @@ public class OnlineGameServer  {
         @Override
         protected void finalize() {
             try {
+               super.finalize();
                oStream_.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+            catch (Throwable t) {
+                t.printStackTrace();
             }
         }
 

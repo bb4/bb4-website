@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!-- JNLP File for {title} -->
     <jnlp spec="1.0+"
-        codebase="http://{codebase}/games">
+        codebase="http://{codebase}/games" href="{name}_{locale}.jnlp">
         <information>
             <title>{title}</title>
             <vendor>TesujiSoft - Barry G. Becker</vendor>
             <!--homepage href="http://tesujisoft.no-ip.com/game_programs.html"/ -->
-            <homepage href="http://{codebase}/applet_index_en.html"/>
+            <homepage href="http://{codebase}/applet_index_{locale}.html"/>
             <description>{description}</description>
             <description kind="short">{title}</description>
             <icon href="go_icon.gif"/>

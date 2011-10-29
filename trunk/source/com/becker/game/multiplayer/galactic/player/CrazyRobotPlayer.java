@@ -18,15 +18,13 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class CrazyRobotPlayer extends GalacticRobotPlayer
-{
+public class CrazyRobotPlayer extends GalacticRobotPlayer {
 
     private static final int NUM_ICONS = 6;
     private static int iconIndexCounter_ = 0;
 
 
-    public CrazyRobotPlayer(String name, Planet homePlanet, Color color, ImageIcon icon)
-    {
+    public CrazyRobotPlayer(String name, Planet homePlanet, Color color, ImageIcon icon) {
         super(name, homePlanet, color);
         if (icon != null) {
             icon_ = icon;
@@ -41,21 +39,18 @@ public class CrazyRobotPlayer extends GalacticRobotPlayer
      * @return the current list of this Robot's orders.
      */
     @Override
-    public List makeOrders(Galaxy galaxy, int numYearsRemaining)
-    {
+    public List<Order> makeOrders(Galaxy galaxy, int numYearsRemaining) {
         List<Order> newOrders = new ArrayList<Order>();
 
-        List ownedPlanets = Galaxy.getPlanets(this);
-        Iterator it = ownedPlanets.iterator();
-        while (it.hasNext()) {
-            Planet origin = (Planet)it.next();
-            if (origin.getNumShips()>200)
+        List<Planet> ownedPlanets = Galaxy.getPlanets(this);
+        for (Planet origin : ownedPlanets) {
+            if (origin.getNumShips() > 200)
                 newOrders.addAll(getOrders(origin, 6, 20, numYearsRemaining));
-            else if (origin.getNumShips()>100)
+            else if (origin.getNumShips() > 100)
                 newOrders.addAll(getOrders(origin, 5, 10, numYearsRemaining));
-            else if (origin.getNumShips()>50)
+            else if (origin.getNumShips() > 50)
                 newOrders.addAll(getOrders(origin, 3, 5, numYearsRemaining));
-            else if (origin.getNumShips()>20)
+            else if (origin.getNumShips() > 20)
                 newOrders.addAll(getOrders(origin, 1, 3, numYearsRemaining));
             // else do nothing.
         }
@@ -63,7 +58,6 @@ public class CrazyRobotPlayer extends GalacticRobotPlayer
 
         return orders_;
     }
-
 
 }
 

@@ -19,6 +19,7 @@ public class MtdNegaMaxSearchStrategyTest extends NegaMaxMemorySearchStrategyTes
     /**
      * Look ahead one level and get the best move.
      */
+    @Override
     public void testOneLevelLookAheadPlayer1Search() {
         bruteSearchOptions.setLookAhead(1);
         verifyResult(new OneLevelGameTreeExample(true, getEvaluationPerspective()),

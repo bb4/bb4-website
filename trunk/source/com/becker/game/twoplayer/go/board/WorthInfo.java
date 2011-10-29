@@ -46,17 +46,14 @@ public class WorthInfo {
      */
     public String toString() {
         StringBuilder bldr = new StringBuilder();
-        bldr.append("gameStageBoost=" + gameStageBoost  +" territoryDelta=" + territoryDelta
-                + " captureScore=" + captureScore + "(b="+ blackCap + " w="+ whiteCap + ") positionalScore="+positionalScore
-                + (captures!=null? " captures=" + captures  : "")
-                + " worth=" + worth + " \nposScores:\n");
+        bldr.append("gameStageBoost=").append(gameStageBoost).append(" territoryDelta=").append(territoryDelta).append(" captureScore=").append(captureScore).append("(b=").append(blackCap).append(" w=").append(whiteCap).append(") positionalScore=").append(positionalScore).append(captures != null ? " captures=" + captures : "").append(" worth=").append(worth).append(" \nposScores:\n");
         for (PositionalScore[] posScoreRow : positionalScores ) {
             for (PositionalScore pscore : posScoreRow) {
                 bldr.append(pscore);
             }
             bldr.append("\n");
         }
-        bldr.append("moves=" + moves);
+        bldr.append("moves=").append(moves);
         bldr.append("\n");
 
         return bldr.toString();

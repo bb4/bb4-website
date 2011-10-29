@@ -25,8 +25,8 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
     /** if true, then use alpha-beta pruning. */
     final boolean alphaBeta_;
 
-    /** If true, then use additional qeiscent search to extent the search tree for urgent moves. */
-    final boolean quiescence_;
+    /** If true, then use additional queiscent search to extent the search tree for urgent moves. */
+    private final boolean quiescence_;
 
     /** the number of plys to look ahead when searching. */
     final int lookAhead_;

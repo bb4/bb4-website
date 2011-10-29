@@ -110,8 +110,8 @@ public class GalacticPlayer extends MultiGamePlayer
         if (orders==null)
             return;
         orders_.clear();
-        for (int i=0; i<orders.size(); i++) {
-            orders_.add(orders.get(i));
+        for (Order order : orders) {
+            orders_.add(order);
         }
     }
 

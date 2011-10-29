@@ -51,6 +51,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
         boardAnalyzer_ = new BoardAnalyzer(this);
     }
 
+    @Override
     public BlockadeBoard copy() {
         return new BlockadeBoard(this);
     }

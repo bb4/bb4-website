@@ -83,6 +83,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * set an optional progress bar for showing progress as the computer thinks about its next move.
      */
+    @Override
     public void setProgressBar(JProgressBar progressBar) {
         moveProgress_.setProgressBar(progressBar);
     }

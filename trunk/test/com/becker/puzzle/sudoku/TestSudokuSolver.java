@@ -32,16 +32,16 @@ public class TestSudokuSolver extends TestCase {
 
     public void testCaseSimpleSample() {
 
-        solver = new SudokuSolver(new Board(TestData.SIMPLE_9));
-        boolean solved = solver.solvePuzzle();
+        solver = new SudokuSolver();
+        boolean solved = solver.solvePuzzle(new Board(TestData.SIMPLE_9));
         Assert.assertTrue( "Did not solve SIMPLE_9 successfully", solved);
     }
 
     /** negative test case */
     public void testImpossiblePuzzle() {
 
-        solver = new SudokuSolver(new Board(TestData.INCONSISTENT_9));
-        boolean solved = solver.solvePuzzle();
+        solver = new SudokuSolver();
+        boolean solved = solver.solvePuzzle(new Board(TestData.INCONSISTENT_9));
 
         Assert.assertFalse( "Solved impossible SIMPLE_9 puzzle. Should not have.", solved);
     }
@@ -50,8 +50,8 @@ public class TestSudokuSolver extends TestCase {
     /** negative test case */
     public void testSolving16x16Puzzle() {
 
-        solver = new SudokuSolver(new Board(TestData.COMPLEX_16));
-        boolean solved = solver.solvePuzzle();
+        solver = new SudokuSolver();
+        boolean solved = solver.solvePuzzle(new Board(TestData.COMPLEX_16));
 
         Assert.assertTrue("Unexpected could not solve 16x16 puzzle.", solved);
     }
@@ -99,9 +99,9 @@ public class TestSudokuSolver extends TestCase {
     }
 
     public void solve(Board board) {
-        SudokuSolver solver = new SudokuSolver(board);
+        SudokuSolver solver = new SudokuSolver();
         long start = System.currentTimeMillis();
-        boolean solved = solver.solvePuzzle();
+        boolean solved = solver.solvePuzzle(board);
         System.out.println("Time to solve was "+ (System.currentTimeMillis() - start));
         Assert.assertTrue("Unexpectedly not solved.", solved);
     }

@@ -64,6 +64,7 @@ public final class GoBoard extends TwoPlayerBoard {
         init(board.boardUpdater_.getCaptureCounts());
     }
 
+    @Override
     public synchronized GoBoard copy() {
 
         getProfiler().startCopyBoard();

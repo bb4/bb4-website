@@ -37,7 +37,7 @@ public abstract class AbstractGameProfiler extends Profiler {
 
     /**
      * Stop profiling and report the stats.
-     * @param numMovesConsidered the number of moves considered duering search.
+     * @param numMovesConsidered the number of moves considered during search.
      */
     public void stopProfiling(long numMovesConsidered) {
         if ( GameContext.isProfiling() ) {

@@ -133,7 +133,7 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
     public String toString()  {
         StringBuilder bldr = new StringBuilder("Tables:\n");
         for (OnlineGameTable t : this) {
-             bldr.append(t + "\n");
+            bldr.append(t).append("\n");
         }
         return bldr.toString();
     }

@@ -187,9 +187,9 @@ public class Planet extends GamePiece {
         StringBuilder sb = new StringBuilder("Planet: "+type_+newLine);
 
         if (getOwner()!=null)
-            sb.append("Owner: "+this.getOwner().getName()+newLine);
-        sb.append("production:"+getProductionCapacity()+newLine);
-        sb.append("Num ships: "+getNumShips());
+            sb.append("Owner: ").append(this.getOwner().getName()).append(newLine);
+        sb.append("production:").append(getProductionCapacity()).append(newLine);
+        sb.append("Num ships: ").append(getNumShips());
         return sb.toString();
     }
 

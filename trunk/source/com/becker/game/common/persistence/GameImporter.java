@@ -46,8 +46,7 @@ public abstract class GameImporter {
         GameContext.log( 1, "move sequence= " + moveSequence );
         controller_.reset();
 
-        for (Move aMoveSequence : moveSequence) {
-            Move m = aMoveSequence;
+        for (Move m : moveSequence) {
             GameContext.log(1, "now making:" + m);
             controller_.makeMove(m);
         }

@@ -86,8 +86,8 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
 
     /**
      * We only need to consider the non-habitat property status.
-     * @param eye
-     * @param board
+     * @param eye eye
+     * @param board   board
      * @return status of the eye shape.
      */
     public EyeStatus determineStatus(IGoEye eye, GoBoard board) {

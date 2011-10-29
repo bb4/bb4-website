@@ -57,18 +57,15 @@ public class PokerPlayerRenderer extends GamePieceRenderer
     private PokerPlayerRenderer()
     {}
 
-    public static GamePieceRenderer getRenderer()
-    {
+    public static GamePieceRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new PokerPlayerRenderer();
         return renderer_;
     }
 
     @Override
-    protected int getPieceSize(int cellSize, GamePiece piece)
-    {
-        int pieceSize = (int) (0.85f * cellSize * 2);
-        return pieceSize;
+    protected int getPieceSize(int cellSize, GamePiece piece) {
+        return (int) (0.85f * cellSize * 2);
     }
 
     @Override
@@ -84,8 +81,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer
      * @param position the position of the piece to render
      */
     @Override
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
-    {
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b) {
         PokerPlayerMarker playerMarker = (PokerPlayerMarker)position.getPiece();
         if (playerMarker == null)
             return; // nothing to render
@@ -176,8 +172,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer
      *  Draw the card face up.
      */
     private static void renderFaceUpCard(Graphics2D g2, int x, int y,
-                                         int cellSize, int cardArc, Card c)
-    {
+                                         int cellSize, int cardArc, Card c) {
         Font font = POKER_CHIP_FONT.deriveFont((float) cellSize /
                     TwoPlayerBoardRenderer.MINIMUM_CELL_SIZE  * POKER_CARD_FONT_SIZE);
 
