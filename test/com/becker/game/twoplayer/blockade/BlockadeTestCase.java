@@ -78,10 +78,4 @@ public class BlockadeTestCase extends TestCase {
                           m.getToRow() == row && m.getToCol() == col);
     }
 
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
 }

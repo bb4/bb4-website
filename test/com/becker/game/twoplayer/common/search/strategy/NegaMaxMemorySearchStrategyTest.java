@@ -17,6 +17,7 @@ public class NegaMaxMemorySearchStrategyTest extends NegaMaxSearchStrategyTest {
     }
 
     // suspect result
+    @Override
     public void testTwoLevelQuiescenseABPlayer2Search() {
         bruteSearchOptions.setLookAhead(2);
         bruteSearchOptions.setQuiescence(true);
@@ -25,10 +26,12 @@ public class NegaMaxMemorySearchStrategyTest extends NegaMaxSearchStrategyTest {
         verifyResult(eg, getTwoLevelQuiescenseABPlayer2Result());
     }
 
+    @Override
     protected SearchResult getTwoLevelQuiescenseABPlayer1Result() {
         return new SearchResult("0", 3, 4);
     }
     // Suspect result. Shou;d be "1" 4 or close to it.
+    @Override
     protected SearchResult getTwoLevelQuiescenseABPlayer2Result() {
         return new SearchResult("0", 2, 9);  // seems wrong
     }

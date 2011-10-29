@@ -134,8 +134,7 @@ class SolutionPanel extends JPanel
      */
     private void highlight(List<Card> set, boolean highlight) {
         if (set == null) return;
-        for (int j=0; j<set.size(); j++) {
-            Card c = set.get(j);
+        for (Card c : set) {
             c.setHighlighted(highlight);
             //viewer_.highlightCard(c, highlight);
         }

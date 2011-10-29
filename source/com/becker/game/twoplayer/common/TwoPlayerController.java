@@ -208,8 +208,6 @@ public abstract class TwoPlayerController extends GameController {
         ParameterArray weights;
         player1sTurn_ = player1;
 
-
-
         assert (!getMoveList().isEmpty()) : "Error: null before search";
         TwoPlayerMove move = (TwoPlayerMove) getMoveList().getLastMove();
         TwoPlayerMove lastMove = move.copy();

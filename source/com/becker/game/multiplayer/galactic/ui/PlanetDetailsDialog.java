@@ -32,9 +32,7 @@ final class PlanetDetailsDialog extends AbstractDialog
     public PlanetDetailsDialog( JFrame parent, GameBoardViewer boardViewer )
     {
         super( parent );
-        GameBoardViewer boardViewer_=boardViewer;
         GameController controller_=boardViewer.getController();
-        Board board_=controller_.getBoard();
         showContent();
     }
 

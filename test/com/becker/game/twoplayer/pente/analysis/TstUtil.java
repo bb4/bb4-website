@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class TstUtil {
 
+    private TstUtil() {}
+
     public static LineRecorder createLine(String linePattern, Patterns patterns, ParameterArray weights) {
         LineRecorder line = new LineRecorder(patterns, weights);
         for (int i=0; i<linePattern.length(); i++) {
@@ -52,6 +54,4 @@ public class TstUtil {
         }
         return bldr.toString();
     }
-
-
 }

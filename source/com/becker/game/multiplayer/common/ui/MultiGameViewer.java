@@ -118,8 +118,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
      * Many multiplayer games don't use this.
      * @param lastMove the move to show (but now record)
      */
-    public Move createMove(Move lastMove)
-    {
+    public Move createMove(Move lastMove) {
         // unused for now
         return null;
     }
@@ -128,11 +127,10 @@ public abstract class MultiGameViewer extends GameBoardViewer
      * show who won the round and dispurse the pot.
      * Don't show anything by default.
      */
-    public void showRoundOver() {};
+    public void showRoundOver() {}
 
 
-    public void highlightPlayer(Player player, boolean highlighted)
-    {
+    public void highlightPlayer(Player player, boolean highlighted) {
         // player.setHighlighted(highlighted);
         this.refresh();
     }
@@ -141,8 +139,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
      * @return the tooltip for the panel given a mouse event
      */
     @Override
-    public String getToolTipText( MouseEvent e )
-    {
+    public String getToolTipText( MouseEvent e ) {
         Location loc = getBoardRenderer().createLocation(e);
         StringBuilder sb = new StringBuilder( "<html><font=-3>" );
 

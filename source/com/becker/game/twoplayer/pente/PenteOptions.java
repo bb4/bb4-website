@@ -14,10 +14,10 @@ public class PenteOptions extends TwoPlayerOptions {
 
     
     /** initial look ahead factor. */
-    private static final int DEFAULT_LOOK_AHEAD = 4;
+    private static final int DEFAULT_LOOK_AHEAD = 6;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
-    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 70;
+    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 80;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. not used. */
     private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 0;

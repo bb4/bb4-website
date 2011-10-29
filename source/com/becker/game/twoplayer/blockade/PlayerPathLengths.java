@@ -74,8 +74,8 @@ public class PlayerPathLengths {
     public String toString() {
         StringBuilder bldr = new StringBuilder();
         bldr.append("PlayerPathLengths:");
-        bldr.append("\n\r player1:" + getPathLengthsForPlayer(true));
-        bldr.append("\n\r player2:" + getPathLengthsForPlayer(false));
+        bldr.append("\n\r player1:").append(getPathLengthsForPlayer(true));
+        bldr.append("\n\r player2:").append(getPathLengthsForPlayer(false));
         return bldr.toString();        
     }
     

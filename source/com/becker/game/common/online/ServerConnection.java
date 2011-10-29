@@ -179,8 +179,8 @@ public class ServerConnection implements IServerConnection {
 
                     // we got a change to the tables on the server, update our client listeners.
                     int num = changeListeners_.size();
-                    for (int i=0; i<num; i++)
-                        changeListeners_.get(i).handleServerUpdate(cmd);
+                    for (OnlineChangeListener aChangeListeners_ : changeListeners_)
+                        aChangeListeners_.handleServerUpdate(cmd);
 
                 }
                 catch (IOException e) {

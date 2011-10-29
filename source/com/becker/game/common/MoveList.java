@@ -30,7 +30,7 @@ public class MoveList extends ArrayList<Move> {
      * Copies the constituent moves as well.
      * @return a deep copy of the movelist.
      */
-    public synchronized MoveList copy() {
+    public MoveList copy() {
         MoveList copiedList = new MoveList();
         synchronized (lock) {
             for (Move m : this) {
@@ -65,7 +65,7 @@ public class MoveList extends ArrayList<Move> {
         if ( isEmpty() ) {
             return null;
         }
-        return get(this.size()-1);
+        return get(size()-1);
     }
 
     public Move removeLast() {

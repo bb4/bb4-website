@@ -56,7 +56,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     /**
      * Verify move that was found using search strategy under test.
      * @param example  game tree to use
-     * @param expectedSearchResult collection of info regardin ght edsearch result.
+     * @param expectedSearchResult collection of info regarding the dsearch result.
      */
     protected void verifyResult(GameTreeExample example, SearchResult expectedSearchResult) {
 

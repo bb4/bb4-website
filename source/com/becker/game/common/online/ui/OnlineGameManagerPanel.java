@@ -4,6 +4,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.GameViewable;
 import com.becker.game.common.online.GameCommand;
+import com.becker.game.common.online.IServerConnection;
 import com.becker.game.common.online.OnlineChangeListener;
 
 import javax.swing.*;
@@ -22,25 +23,23 @@ import java.awt.event.ActionListener;
  * @author Barry Becker Date: May 14, 2006
  */
 public abstract class OnlineGameManagerPanel extends JPanel
-                                                                             implements OnlineChangeListener, ActionListener {
-
+                                             implements OnlineChangeListener, ActionListener {
 
     /** the options get set directly on the game controller that is passed in. */
     protected GameController controller_;
-    private GameViewable viewer_;
     // typically the dlg that we live in. Called when table ready to play.
     protected ChangeListener gameStartedListener_;
 
 
     protected OnlineGameManagerPanel(GameViewable viewer, ChangeListener dlg) {
 
-        viewer_ = viewer;
         controller_ = viewer.getController();
         gameStartedListener_ = dlg;
 
-        assert (controller_.getServerConnection() != null) :
+        IServerConnection connection = controller_.getServerConnection();
+        assert (connection != null) :
                 "You should not create this dlg without first verifying that online play is available.";
-        controller_.getServerConnection().addOnlineChangeListener(this);
+        connection.addOnlineChangeListener(this);
 
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
 

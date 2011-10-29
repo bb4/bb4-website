@@ -153,10 +153,10 @@ public class Order
     public String toString()
     {
         StringBuilder sb = new StringBuilder(50);
-        sb.append("Target: "+destination_+'\n');
-        sb.append("Fleet size: "+fleetSize_+'\n');
-        sb.append("Location: "+currentLocation_+'\n');
-        sb.append("Owner: "+owner_+'\n');
+        sb.append("Target: ").append(destination_).append('\n');
+        sb.append("Fleet size: ").append(fleetSize_).append('\n');
+        sb.append("Location: ").append(currentLocation_).append('\n');
+        sb.append("Owner: ").append(owner_).append('\n');
         return sb.toString();
     }
 }

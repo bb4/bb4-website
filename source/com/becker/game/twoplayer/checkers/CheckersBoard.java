@@ -28,6 +28,7 @@ public class CheckersBoard extends TwoPlayerBoard {
         super(b);
     }
 
+    @Override
     public CheckersBoard copy() {
         return new CheckersBoard(this);        
     }
@@ -43,11 +44,13 @@ public class CheckersBoard extends TwoPlayerBoard {
 
     protected void fillRows() {
        int i;
-        for ( i = 1; i <= 3; i++ )
+        for ( i = 1; i <= 3; i++ )  {
             fillRow( i, i % TWO, true );
+        }
 
-        for ( i = 6; i <= 8; i++ )
+        for ( i = 6; i <= 8; i++ ) {
             fillRow( i, i % TWO, false );
+        }
     }
 
     /**

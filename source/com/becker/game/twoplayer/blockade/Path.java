@@ -114,7 +114,7 @@ public class Path {
         
         StringBuilder bldr = new StringBuilder(32);
         for (BlockadeMove move: elements_) {
-            bldr.append('[' + move.toString() +"],");
+            bldr.append('[').append(move.toString()).append("],");
         }
         // remove trailing comma
         bldr.deleteCharAt(bldr.length() -1);

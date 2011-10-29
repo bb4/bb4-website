@@ -163,10 +163,10 @@ public abstract class PokerPlayer extends MultiGamePlayer
     @Override
     protected String additionalInfo() {
         StringBuilder sb = new StringBuilder();
-        if (getHand() != null) {            
-            sb.append(" Hand: "+getHand());
+        if (getHand() != null) {
+            sb.append(" Hand: ").append(getHand());
         }
-        sb.append(" Money: "+cash_);
+        sb.append(" Money: ").append(cash_);
         return sb.toString();
     }
 

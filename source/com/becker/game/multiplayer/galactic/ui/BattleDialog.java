@@ -55,7 +55,7 @@ final class BattleDialog extends OptionsDialog
      * constructor - create the Battle dialog.
      * @param parent frame to display relative to
      * @param battle the simulation
-     * @param viewer send in the viewer so we can give feedbak about the battle while it is occurring
+     * @param viewer send in the viewer so we can give feedback about the battle while it is occurring
      */
     BattleDialog( JFrame parent, BattleSimulation battle, GalaxyViewer viewer ) {
         super( parent );
