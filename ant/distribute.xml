@@ -531,13 +531,6 @@
     </foreach>
   </target>
 
-
-  <target name="substitute_in_indexfile">
-    <propertycopy from="${item}.${locale}.${token}" name="newValue"/>
-    <!--echo message="Substitute ${newValue} for ${item}.${token} in ${replaceFile}"/-->
-    <replace file="${replaceFile}" token="{${item}.${token}}" value="${newValue}"/>
-  </target>
-
   <target name="tr_substitute">
     <propertycopy from="appletIndexFile.${locale}" name="appletIndexFileForLocale"/>
     <property name="appName" value="${token}"/>
@@ -547,13 +540,37 @@
     <replace file="${distributionDir}/${appletIndexFileForLocale}" token="{${token}TR}" value="${TRTemplate}"/>
   </target>
 
+  <target name="substitute_in_indexfile" >
+    <if>
+       <isset property="${item}.${locale}.${token}"/>
+       <then>
+         <propertycopy from="${item}.${locale}.${token}" name="newValue"/>
+       </then>
+       <else>
+          <echo message="Substitute default in indexFile ${token}"/>
+          <propertycopy from="${token}" name="newValue"/>
+       </else>
+    </if>
+
+    <!--echo message="Substitute ${newValue} for ${item}.${token} in ${replaceFile}"/-->
+    <replace file="${replaceFile}" token="{${item}.${token}}" value="${newValue}"/>
+  </target>
+
 
   <target name="substitute">
-    <propertycopy from="${applet}.${locale}.${token}" name="newValue"/>
+    <if>
+       <isset property="${applet}.${locale}.${token}"/>
+       <then>
+         <propertycopy from="${applet}.${locale}.${token}" name="newValue" />
+       </then>
+       <else>
+          <echo message="Substitute with default ${token}"/>
+          <propertycopy from="${token}" name="newValue"/>
+       </else>
+    </if>
     <!--echo message="Substitute ${applet}.${locale}.${token} = ${newValue} for ${token} in ${replaceFile}"/-->
     <replace file="${replaceFile}" token="{${token}}" value="${newValue}"/>
   </target>
-
 
   <!-- copies specified files to both classes dir and staging dir -->
   <target name="copyResources">
