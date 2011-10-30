@@ -1,9 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.liquid.model;
 
-import com.becker.common.format.DefaultNumberFormatter;
-
-import javax.swing.text.NumberFormatter;
 import javax.vecmath.Vector2d;
 import java.text.DecimalFormat;
 

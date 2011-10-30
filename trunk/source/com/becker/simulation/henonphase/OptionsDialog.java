@@ -3,7 +3,6 @@ package com.becker.simulation.henonphase;
 
 import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
-import com.becker.simulation.fractalexplorer.FractalExplorer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

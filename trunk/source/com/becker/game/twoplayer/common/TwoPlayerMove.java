@@ -1,8 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common;
 
-import com.becker.common.geometry.Location;
 import com.becker.common.format.FormatUtil;
+import com.becker.common.geometry.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.common.board.Board;

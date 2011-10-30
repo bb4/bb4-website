@@ -3,9 +3,6 @@ package com.becker.puzzle.sudoku.ui;
 
 import com.becker.common.geometry.Location;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A user entered value and it cell location.
  * @author Barry Becker

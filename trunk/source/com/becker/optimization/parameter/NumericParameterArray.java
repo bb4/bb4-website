@@ -6,7 +6,10 @@ import com.becker.common.math.Vector;
 import com.becker.optimization.Improvement;
 import com.becker.optimization.Optimizee;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 /**
  *  represents a 1 dimensional array of parameters

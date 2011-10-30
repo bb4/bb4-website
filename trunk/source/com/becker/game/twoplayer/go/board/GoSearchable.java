@@ -10,7 +10,6 @@ import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerSearchable;
 import com.becker.game.twoplayer.common.cache.ScoreCache;
-import com.becker.game.twoplayer.common.cache.ScoreEntry;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.game.twoplayer.go.board.analysis.BoardEvaluator;

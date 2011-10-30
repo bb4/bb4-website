@@ -1,9 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.strategy;
 
-import com.becker.common.math.MultiArray;
 import com.becker.optimization.Optimizee;
-import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 
 import java.util.List;

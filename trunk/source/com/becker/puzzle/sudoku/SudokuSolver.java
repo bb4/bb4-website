@@ -3,8 +3,9 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.sudoku.model.board.Board;
+import com.becker.puzzle.sudoku.model.update.IBoardUpdater;
+import com.becker.puzzle.sudoku.model.update.NonReflectiveBoardUpdater;
 import com.becker.puzzle.sudoku.model.update.ReflectiveBoardUpdater;
-import com.becker.puzzle.sudoku.model.update.*;
 
 import java.awt.*;
 

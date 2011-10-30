@@ -6,8 +6,6 @@ import com.becker.game.common.Move;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 
-import javax.lang.model.element.PackageElement;
-
 /**
  * Defines the structure of the checkers board and the pieces on it.
  *

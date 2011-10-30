@@ -10,7 +10,6 @@ import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
-import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**

@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.sudoku.model.update;
 
-import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.model.update.updaters.BigCellScoutUpdater;
 import com.becker.puzzle.sudoku.model.update.updaters.LoneRangerUpdater;
@@ -9,7 +8,6 @@ import com.becker.puzzle.sudoku.model.update.updaters.NakedSubsetUpdater;
 import com.becker.puzzle.sudoku.model.update.updaters.StandardCRBUpdater;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

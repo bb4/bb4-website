@@ -2,7 +2,6 @@
 package com.becker.puzzle.sudoku;
 
 import com.becker.common.concurrency.Worker;
-import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.ui.SudokuPanel;
 
 import java.awt.*;

@@ -2,8 +2,6 @@
 package com.becker.simulation.fluid.model;
 
 
-import javax.swing.*;
-
 /**
  * Data behind the Fluid.
  * @author Barry Becker

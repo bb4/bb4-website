@@ -1,17 +1,12 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.maze;
 
-import com.becker.ui.application.ApplicationApplet;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.NumberInput;
-import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 /**
  * A maze generator and solver

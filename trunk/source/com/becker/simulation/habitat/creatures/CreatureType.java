@@ -1,8 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.habitat.creatures;
 
-import org.igoweb.igoweb.client.gtp.A;
-
 import java.awt.*;
 import java.util.*;
 import java.util.List;

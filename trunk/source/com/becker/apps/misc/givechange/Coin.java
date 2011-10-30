@@ -1,13 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.apps.misc.givechange;
 
-import com.becker.common.format.FormatUtil;
-import com.becker.common.util.Input;
-
-import javax.xml.soap.Name;
-import java.io.IOException;
-
-
 /**
  * An enum representing the different coins.
  *

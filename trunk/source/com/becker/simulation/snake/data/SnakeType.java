@@ -1,10 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.snake.data;
 
-import com.becker.common.math.function.ArrayFunction;
-import com.becker.common.math.function.ErrorFunction;
-import com.becker.common.math.function.Function;
-
 /**
  * Different types of snakes to test.
  *

@@ -3,7 +3,8 @@ package com.becker.puzzle.sudoku.model.board;
 
 import com.becker.common.math.MathUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *  The list of values in a bigCell (or row or column).

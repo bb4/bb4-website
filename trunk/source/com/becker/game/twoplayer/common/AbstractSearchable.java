@@ -1,7 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common;
 
-import com.becker.game.common.*;
+import com.becker.game.common.AbstractGameProfiler;
+import com.becker.game.common.GameProfiler;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;

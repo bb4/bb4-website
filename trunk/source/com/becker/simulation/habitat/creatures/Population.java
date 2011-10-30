@@ -8,7 +8,6 @@ import javax.vecmath.Point2d;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Everything we need to know about a population of a certain kind of creature.

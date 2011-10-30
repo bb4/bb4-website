@@ -2,10 +2,8 @@
 package com.becker.common.math.function;
 
 import com.becker.common.math.Range;
-import com.becker.common.math.function.Function;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

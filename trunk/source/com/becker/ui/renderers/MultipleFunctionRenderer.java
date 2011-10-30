@@ -5,7 +5,6 @@ import com.becker.common.math.Range;
 import com.becker.common.math.function.Function;
 
 import java.awt.*;
-import java.awt.Color;
 import java.util.List;
 
 /**

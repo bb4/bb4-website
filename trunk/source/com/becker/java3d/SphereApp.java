@@ -1,18 +1,18 @@
 package com.becker.java3d;
 
-import java.awt.*;
-import java.applet.Applet;
-
-import javax.media.j3d.*;
-import javax.vecmath.*;
-
 import com.sun.j3d.utils.applet.MainFrame;
-import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.ColorCube;
-import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.picking.behaviors.PickRotateBehavior;
 import com.sun.j3d.utils.universe.SimpleUniverse;
+
+import javax.media.j3d.*;
+import javax.vecmath.Color3f;
+import javax.vecmath.Color4f;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3f;
+import java.applet.Applet;
+import java.awt.*;
 
 /**
  * Initialize Java3D and show a sphere.
