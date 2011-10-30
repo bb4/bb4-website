@@ -1,8 +1,5 @@
 package com.becker;
 
-import com.becker.common.CommandLineOptionsTest;
-import com.becker.common.function.TestAllFunction;
-import com.becker.common.interpolation.TestAllInterpolation;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

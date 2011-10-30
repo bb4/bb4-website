@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.checkers;
 
+import ca.dj.jigo.sgf.tokens.SourceToken;
 import com.becker.common.geometry.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
@@ -21,23 +22,40 @@ public class MoveGenerator  {
     private CheckersSearchable searchable_;
     private CheckersBoard board_;
 
-    private MoveList moveList_;
+
     private ParameterArray weights_;
 
     /**
      * Construct the Checkers game controller.
      * @param searchable
-     * @param moveList add the potential moves to this existing list.
      * @param weights to use.
      */
-    public MoveGenerator(CheckersSearchable searchable, MoveList moveList,
-                         ParameterArray weights) {
+    public MoveGenerator(CheckersSearchable searchable, ParameterArray weights) {
         searchable_ = searchable;
         board_ = (CheckersBoard) searchable_.getBoard();
-        moveList_ = moveList;
         weights_ = weights;
     }
 
+    public MoveList generateMoves(TwoPlayerMove lastMove) {
+
+        int j, row,col;
+        boolean player1 = (lastMove == null) || !(lastMove.isPlayer1());
+        MoveList moveList = new MoveList();
+
+        // scan through the board positions. For each each piece of the current player's,
+        // add all the moves that it can make.
+        for ( row = 1; row <= CheckersBoard.SIZE; row++ ) {
+            int odd = row % 2;
+            for ( j = 1; j <= CheckersBoard.SIZE/2; j++ ) {
+                col = 2 * j - odd;
+                BoardPosition p = board_.getPosition( row, col );
+                if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {
+                    addMoves(p, lastMove, moveList);
+                }
+            }
+        }
+        return moveList;
+    }
 
     /**
      * Find all the moves a piece p can make and insert them into moveList.
@@ -45,22 +63,22 @@ public class MoveGenerator  {
      * @param p the piece to check.
      * @return the number of moves added.
      */
-    public int addMoves( BoardPosition p, TwoPlayerMove lastMove) {
+    public int addMoves( BoardPosition p, TwoPlayerMove lastMove, MoveList moveList) {
 
         int direction = -1;
         if ( p.getPiece().isOwnedByPlayer1() )
             direction = 1;
 
         int numMovesAdded = 0;
-        int initialNumMoves = moveList_.size();
+        int initialNumMoves = moveList.size();
         // check left and right forward diagonals
-        numMovesAdded += addMovesForDirection( p, direction, -1, lastMove );
-        numMovesAdded += addMovesForDirection( p, direction, 1, lastMove);
+        numMovesAdded += addMovesForDirection( p, direction, -1, lastMove, moveList);
+        numMovesAdded += addMovesForDirection( p, direction, 1, lastMove, moveList);
 
         // if its a KING we need to check the other direction too
         CheckersPiece piece = (CheckersPiece) p.getPiece();
         if ( piece.isKing() ) {
-            numMovesAdded += addMovesForKing(p, lastMove, direction, numMovesAdded, initialNumMoves);
+            numMovesAdded += addMovesForKing(p, lastMove, direction, numMovesAdded, initialNumMoves, moveList);
         }
         return numMovesAdded;
     }
@@ -73,25 +91,28 @@ public class MoveGenerator  {
      * @return the number of moves added
      */
     private int addMovesForDirection( BoardPosition pos,
-                                      int rowInc, int colInc, TwoPlayerMove lastMove ) {
+                                      int rowInc, int colInc, TwoPlayerMove lastMove, MoveList moveList) {
         BoardPosition next = board_.getPosition( pos.getRow() + rowInc, pos.getCol() + colInc );
-        if ( next!=null && next.isUnoccupied() ) {
-            addSimpleMove(pos, rowInc, colInc, lastMove);
-            // only one move added
-            return 1;
-        }
-        // if just a simple move was not possible, we check for jump(s)
-        BoardPosition beyondNext = board_.getPosition( pos.getRow() + 2 * rowInc, pos.getCol() + 2 * colInc );
-        if ( next!=null && next.isOccupied() &&
-               (next.getPiece().isOwnedByPlayer1() != pos.getPiece().isOwnedByPlayer1()) &&
-                beyondNext!=null && beyondNext.isUnoccupied()) {
-            return addJumpMoves(pos, rowInc, lastMove, next, beyondNext);
+        if (next!=null)
+        {
+            if (next.isUnoccupied()) {
+                addSimpleMove(pos, rowInc, colInc, lastMove, moveList);
+                // only one move added
+                return 1;
+            }
+            // if just a simple move was not possible, we check for jump(s)
+            BoardPosition beyondNext = board_.getPosition( pos.getRow() + 2 * rowInc, pos.getCol() + 2 * colInc );
+            if (next.isOccupied() &&
+                (next.getPiece().isOwnedByPlayer1() != pos.getPiece().isOwnedByPlayer1()) &&
+                 beyondNext!=null && beyondNext.isUnoccupied()) {
+                return addJumpMoves(pos, rowInc, lastMove, next, beyondNext, moveList);
+            }
         }
         return 0; // no moves added
     }
 
 
-    private void addSimpleMove(BoardPosition pos, int rowInc, int colInc, TwoPlayerMove lastMove) {
+    private void addSimpleMove(BoardPosition pos, int rowInc, int colInc, TwoPlayerMove lastMove, MoveList moveList) {
         CheckersMove m;
         int val = 0;
         if ( lastMove != null ) {
@@ -102,22 +123,20 @@ public class MoveGenerator  {
                                      null, val, pos.getPiece().copy() );
 
         // no need to evaluate it since there were no captures
-        moveList_.add( m );
+        moveList.add( m );
     }
 
 
     private int addJumpMoves(BoardPosition pos, int rowInc, TwoPlayerMove lastMove,
-                             BoardPosition next, BoardPosition beyondNext) {
+                             BoardPosition next, BoardPosition beyondNext, MoveList moveList) {
        CheckersMove m;
        CaptureList capture = new CaptureList();
        capture.add( next.copy() );
-       // make it blank so a king doesn't loop back and take it again.
-       // next.setPiece(null);
        m = CheckersMove.createMove( pos.getLocation(), beyondNext.getLocation(),
                                     capture, lastMove.getValue(), pos.getPiece().copy() );
 
        List<CheckersMove> jumps = findJumpMoves( beyondNext, rowInc, m, weights_ );
-       moveList_.addAll( jumps );
+       moveList.addAll( jumps );
 
        return jumps.size();
    }
@@ -134,7 +153,7 @@ public class MoveGenerator  {
         BoardPosition next = board_.getPosition( current.getRow() + rowInc, current.getCol() + colInc );
         BoardPosition beyondNext = board_.getPosition( current.getRow() + 2 * rowInc, current.getCol() + 2 * colInc );
         // if the adjacent square is an opponent's piece, and the space beyond it
-        // is empty, and we have not already capture this peice, then take another jump.
+        // is empty, and we have not already capture this piece, then take another jump.
         boolean opponentAdjacent =
                 next!=null && next.isOccupied() && (next.getPiece().isOwnedByPlayer1() != m.isPlayer1());
         if ( opponentAdjacent
@@ -157,8 +176,9 @@ public class MoveGenerator  {
                 mm.setPiece(new CheckersPiece(mm.isPlayer1(), CheckersPiece.KING));
                 GameContext.log( 2, "KINGED: " + mm );
             }
-            else
+            else  {
                 mm.kinged = false;
+            }
 
             List<CheckersMove> list;
             // we cannot make more jumps if we just got kinged.
@@ -223,10 +243,10 @@ public class MoveGenerator  {
      * @return number of king moves added.
      */
     private int addMovesForKing(BoardPosition p, TwoPlayerMove lastMove,
-                                int direction, int numMovesAdded, int initialNumMoves) {
+                                int direction, int numMovesAdded, int initialNumMoves, MoveList moveList) {
         int numKingMoves = 0;
-        numKingMoves += addMovesForDirection( p, -direction, -1, lastMove);
-        numKingMoves += addMovesForDirection( p, -direction, 1, lastMove);
+        numKingMoves += addMovesForDirection( p, -direction, -1, lastMove, moveList);
+        numKingMoves += addMovesForDirection( p, -direction, 1, lastMove, moveList);
 
         // we also need to verify that we are not cycling over previous moves (not allowed).
         // check moves in the list against the move 4 moves back if the same, we must remove it
@@ -239,19 +259,14 @@ public class MoveGenerator  {
                 int i = 0;
 
                 while ( i < numKingMoves ) {
-                    CheckersMove m = (CheckersMove)moveList_.get( initialNumMoves + numMovesAdded + i );
+                    CheckersMove m = (CheckersMove)moveList.get( initialNumMoves + numMovesAdded + i );
                     GameContext.log( 1, "lastMove="+ lastMove);
                     assert ( m.isPlayer1() == moveToCheck.isPlayer1()):
                             "player ownership not equal comparing \n"+m+" with \n"+moveToCheck;
-                    if ( m.captureList == null &&
-                            m.getToRow() == moveToCheck.getToRow() &&
-                            m.getToCol() == moveToCheck.getToCol() &&
-                            m.getFromRow() == moveToCheck.getFromRow() &&
-                            m.getFromCol() == moveToCheck.getFromCol() &&
-                            m.getPiece().getType() == moveToCheck.getPiece().getType() ) {
+                    if ( m.captureList == null &&  m.equals(moveToCheck)) {
                         GameContext.log(0, "found a cycle. new score = " + m.getValue() +
                                 " old score=" + moveToCheck.getValue() + " remove move= " + m );
-                        moveList_.remove( m );
+                        moveList.remove( m );
                         numKingMoves--;
                         break;
                     }

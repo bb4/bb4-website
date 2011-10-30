@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.checkers;
 
+import ca.dj.jigo.sgf.tokens.SourceToken;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.BoardPosition;
@@ -9,6 +10,8 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerSearchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.optimization.parameter.ParameterArray;
+
+import javax.xml.transform.Source;
 
 import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
@@ -40,24 +43,11 @@ public class CheckersSearchable extends TwoPlayerSearchable {
      */
     public MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights) {
 
-        MoveList moveList = new MoveList();
-        int j, row,col;
+        MoveGenerator generator = new MoveGenerator(this, weights);
+        boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
 
-        boolean player1 = (lastMove == null) || !(lastMove.isPlayer1());
-        MoveGenerator generator = new MoveGenerator(this, moveList, weights);
+        MoveList moveList = generator.generateMoves(lastMove);
 
-        // scan through the board positions. For each each piece of the current player's,
-        // add all the moves that it can make.
-        for ( row = 1; row <= CheckersController.NUM_ROWS; row++ ) {
-            int odd = row % 2;
-            for ( j = 1; j <= 4; j++ ) {
-                col = 2 * j - odd;
-                BoardPosition p = board_.getPosition( row, col );
-                if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {
-                    generator.addMoves( p, lastMove);
-                }
-            }
-        }
         return bestMoveFinder_.getBestMoves( player1, moveList);
     }
 
@@ -66,14 +56,16 @@ public class CheckersSearchable extends TwoPlayerSearchable {
      * If we are at maxMoves, the one with a greater value of pieces wins.
      * If the count of pieces is the same, then it is a draw.
      *
-     * @param m the move to check
+     * @param m the move to check. If null that implies there was no last move because we are out of moves.
      * @param recordWin if true then the controller state will record wins
      * @return true if the game is over.
      */
     @Override
     public boolean done( TwoPlayerMove m, boolean recordWin ) {
-        if (m == null)
+        if (m == null)  {
+            System.out.println("done because m is null");
             return true;
+        }
 
         boolean won = (Math.abs( m.getValue() ) >= WINNING_VALUE);
 
@@ -83,7 +75,9 @@ public class CheckersSearchable extends TwoPlayerSearchable {
             else
                 players_.getPlayer2().setWon(true);
         }
+
         if ( getNumMoves() >= getBoard().getMaxNumMoves() ) {
+            System.out.println("getNumMoves()="+getNumMoves() + " getBoard().getMaxNumMoves()=" + getBoard().getMaxNumMoves());
             won = true;
             if ( recordWin ) {
                 if ( Math.abs( m.getValue() ) >= 0 )
@@ -98,7 +92,7 @@ public class CheckersSearchable extends TwoPlayerSearchable {
     /**
      *  The primary way of computing the score for checkers is to just add up the pieces
      *  Kings should count more heavily. How much more is determined by the weights.
-     *  We also give a slight bonus for advancement of non-kings to incent them to
+     *  We also give a slight bonus for advancement of non-kings to incentivize them to
      *  become kings.
      *  note: lastMove is not used
      *  @return the value of the current board position
@@ -111,15 +105,15 @@ public class CheckersSearchable extends TwoPlayerSearchable {
         float posScore = 0;
         float negScore = 0;
 
-        for ( row = 1; row <= CheckersController.NUM_ROWS; row++ ) {
+        for ( row = 1; row <= CheckersBoard.SIZE; row++ ) {
             odd = row % 2;
-            for ( int j = 1; j <= 4; j++ ) {
+            for ( int j = 1; j <= CheckersBoard.SIZE/2; j++ ) {
                 col = 2 * j - odd;
                 BoardPosition p = getBoard().getPosition( row, col );
                 if ( p.isOccupied() ) {
                     CheckersPiece piece = (CheckersPiece) p.getPiece();
                     boolean isPlayer1 = piece.isOwnedByPlayer1();
-                    int advancement = isPlayer1? row : CheckersController.NUM_ROWS - row;
+                    int advancement = isPlayer1? row : CheckersBoard.SIZE - row;
                     int pieceScore = calcPieceScore(piece.isKing(), advancement, weights);
                     if (isPlayer1)
                         posScore += pieceScore;
@@ -128,6 +122,7 @@ public class CheckersSearchable extends TwoPlayerSearchable {
                 }
             }
         }
+
         if ( posScore == 0 ) {
             // then there are no more of player 1's pieces
             return -WINNING_VALUE;
@@ -138,7 +133,6 @@ public class CheckersSearchable extends TwoPlayerSearchable {
         }
         return (int)(posScore + negScore);
     }
-
 
     /**
      *

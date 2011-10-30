@@ -79,7 +79,7 @@ public abstract class TwoPlayerController extends GameController {
         return (TwoPlayerOptions) getOptions();
     }
 
-    public TwoPlayerViewable get2PlayerViewer() {
+    public TwoPlayerViewable getTwoPlayerViewer() {
        return (TwoPlayerViewable)viewer_;
     }
 
@@ -338,6 +338,7 @@ public abstract class TwoPlayerController extends GameController {
      */
     public boolean isDone() {
         TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
+        assert lastMove!=null;
         return getSearchable().done(lastMove, false);
     }
 

@@ -12,6 +12,7 @@ import com.becker.game.twoplayer.checkers.CheckersController;
 import com.becker.game.twoplayer.checkers.CheckersSearchable;
 import com.becker.game.twoplayer.checkers.MoveGenerator;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import go.Move;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -133,16 +134,13 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
         CheckersBoardViewer viewer = (CheckersBoardViewer)viewer_;
         CheckersController controller = (CheckersController)viewer.getController();
 
-        MoveList possibleMoveList = new MoveList();
-
         TwoPlayerMove lastMove = (TwoPlayerMove)controller.getLastMove();
         MoveGenerator generator =
-                new MoveGenerator((CheckersSearchable)controller.getSearchable(), possibleMoveList,
+                new MoveGenerator((CheckersSearchable)controller.getSearchable(),
                                   controller.getComputerWeights().getDefaultWeights());
 
-        // it doesn't matter which set of wts are pass in here since we just need
-        // a list of valid moves, so use default weights.
-        generator.addMoves(position, lastMove);
+        MoveList possibleMoveList = new MoveList();
+        generator.addMoves(position, lastMove, possibleMoveList);
         return possibleMoveList;
     }
 

@@ -33,11 +33,11 @@ class TwoPlayerSearchWorker {
     public void interrupt() {
         if (isProcessing()) {
             controller_.pause();
-            if (worker_!=null) {
+            if (worker_ != null) {
                 worker_.interrupt();
                 processing_ = false;
                 // make the move even though we did not finish computing it
-                controller_.get2PlayerViewer().computerMoved((Move)worker_.get());
+                controller_.getTwoPlayerViewer().computerMoved((Move)worker_.get());
             }
             ThreadUtil.sleep(100);
         }
@@ -51,11 +51,11 @@ class TwoPlayerSearchWorker {
      * @return true if the game is over
      * @throws AssertionError  if something bad happened while searching.
      */
-     public boolean requestComputerMove(final boolean isPlayer1, boolean synchronous) throws AssertionError {
+     public boolean requestComputerMove(final boolean isPlayer1, final boolean synchronous) throws AssertionError {
 
          worker_ = new Worker() {
 
-             private Move move_ = null;
+             private Move move_;
 
              @Override
              public Object construct() {
@@ -69,8 +69,8 @@ class TwoPlayerSearchWorker {
               @Override
               public void finished() {
                   processing_ = false;
-                  if (controller_.get2PlayerViewer() != null)  {
-                      controller_.get2PlayerViewer().computerMoved(move_);
+                  if (controller_.getTwoPlayerViewer() != null)  {
+                      controller_.getTwoPlayerViewer().computerMoved(move_);
                   }
               }
          };
@@ -78,9 +78,9 @@ class TwoPlayerSearchWorker {
          worker_.start();
 
          if (synchronous) {
-              // this blocks until the value is available.
-              TwoPlayerMove m = (TwoPlayerMove)worker_.get();
-              return controller_.getSearchable().done( m, true );
+             // this blocks until the value is available.
+             TwoPlayerMove m = (TwoPlayerMove)worker_.get();
+             return controller_.getSearchable().done( m, true );
          }
          return false;
      }
