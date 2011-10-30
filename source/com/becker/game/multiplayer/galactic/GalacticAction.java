@@ -1,3 +1,4 @@
+/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.multiplayer.galactic;
 
 import com.becker.game.common.player.PlayerAction;
@@ -10,10 +11,10 @@ import java.util.List;
  */
 public class GalacticAction extends PlayerAction {
     
-     // a list of outstanding Orders
+     /** a list of outstanding Orders */
      private List<Order> orders_;
      
-     
+     /** Constructor */
      public GalacticAction(String playerName, List<Order> orders) {
          super(playerName);
          orders_ = orders;
