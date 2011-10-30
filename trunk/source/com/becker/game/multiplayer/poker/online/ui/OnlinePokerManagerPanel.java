@@ -1,3 +1,4 @@
+/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.multiplayer.poker.online.ui;
 
 import com.becker.game.common.GameViewable;
