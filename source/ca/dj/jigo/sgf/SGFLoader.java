@@ -21,7 +21,11 @@ package ca.dj.jigo.sgf;
 
 import ca.dj.jigo.sgf.tokens.*;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.List;
 

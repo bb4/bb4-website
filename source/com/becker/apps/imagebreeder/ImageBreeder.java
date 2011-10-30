@@ -6,7 +6,11 @@ import com.becker.java2d.imageproc.MetaImageOp;
 import com.becker.optimization.parameter.Parameter;
 
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 

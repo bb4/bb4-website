@@ -5,7 +5,11 @@ import com.becker.optimization.parameter.BooleanParameter;
 import com.becker.optimization.parameter.DoubleParameter;
 import com.becker.optimization.parameter.IntegerParameter;
 import com.becker.optimization.parameter.Parameter;
-import com.becker.optimization.parameter.redistribution.*;
+import com.becker.optimization.parameter.redistribution.BooleanRedistribution;
+import com.becker.optimization.parameter.redistribution.DiscreteRedistribution;
+import com.becker.optimization.parameter.redistribution.GaussianRedistribution;
+import com.becker.optimization.parameter.redistribution.RedistributionFunction;
+import com.becker.optimization.parameter.redistribution.UniformRedistribution;
 
 /**
  * Different types of parameter distributions to test.

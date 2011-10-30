@@ -3,7 +3,11 @@ package com.becker.simulation.reactiondiffusion;
 
 import com.becker.common.ColorMap;
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottController;
-import com.becker.simulation.reactiondiffusion.rendering.*;
+import com.becker.simulation.reactiondiffusion.rendering.RDColorMap;
+import com.becker.simulation.reactiondiffusion.rendering.RDOffscreenRenderer;
+import com.becker.simulation.reactiondiffusion.rendering.RDOnscreenRenderer;
+import com.becker.simulation.reactiondiffusion.rendering.RDRenderer;
+import com.becker.simulation.reactiondiffusion.rendering.RDRenderingOptions;
 
 import java.awt.*;
 

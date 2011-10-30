@@ -1,7 +1,11 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.multiplayer.common;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameOptions;
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.online.IServerConnection;
 import com.becker.game.common.online.ServerConnection;
