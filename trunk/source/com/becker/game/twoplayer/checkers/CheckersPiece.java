@@ -11,7 +11,7 @@ import com.becker.game.common.board.GamePiece;
  */
 public class CheckersPiece extends GamePiece {
 
-    /** the basic kinds of pieces: REGULAR_PIECE, KING. */
+    /** the basic kinds of pieces: REGULAR_PIECE or KING. */
     public static final char KING = 'X';
 
     public CheckersPiece( boolean player1, char type ) {

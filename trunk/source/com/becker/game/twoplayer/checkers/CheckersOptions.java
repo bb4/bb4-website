@@ -6,7 +6,6 @@ import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
- *
  * @author Barry Becker
  */
 public class CheckersOptions extends TwoPlayerOptions {

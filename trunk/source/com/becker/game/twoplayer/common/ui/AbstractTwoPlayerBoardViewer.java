@@ -224,7 +224,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
 
     /**
      * Called when the controller has found the computer's move (usually after a long asynchronous search).
-     *  The runnable body will run on the event-dispatch thread when the search has completed.
+     * The runnable body will run on the event-dispatch thread when the search has completed.
      * @param m the move that was selected by the computer.
      */
     public void computerMoved(final Move m) {
@@ -394,6 +394,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         private final Move lastMove;
 
         public PostMoveCleanup(Move lastMOve) {
+            assert lastMOve != null;
             this.lastMove = lastMOve;
         }
 

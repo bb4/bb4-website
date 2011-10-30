@@ -5,6 +5,8 @@ import com.becker.game.common.Move;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 
+import javax.lang.model.element.PackageElement;
+
 /**
  * Defines the structure of the checkers board and the pieces on it.
  *
@@ -43,12 +45,13 @@ public class CheckersBoard extends TwoPlayerBoard {
     }
 
     protected void fillRows() {
-       int i;
-        for ( i = 1; i <= 3; i++ )  {
+        int i;
+        int pieceRows = SIZE > 7 ? 2 : 1;
+        for ( i = 1; i <= (1 + pieceRows); i++ )  {
             fillRow( i, i % TWO, true );
         }
 
-        for ( i = 6; i <= 8; i++ ) {
+        for ( i = SIZE-pieceRows; i <= SIZE; i++ ) {
             fillRow( i, i % TWO, false );
         }
     }
@@ -58,7 +61,7 @@ public class CheckersBoard extends TwoPlayerBoard {
      */
     private void fillRow( int row, int odd, boolean player1 ) {
         
-        for ( int j = 1; j <= 4; j++ )
+        for ( int j = 1; j <= SIZE/2; j++ )
             setPosition(new BoardPosition(row, (TWO * j - odd),
                                           new CheckersPiece(player1, CheckersPiece.REGULAR_PIECE)));
     }
@@ -71,7 +74,7 @@ public class CheckersBoard extends TwoPlayerBoard {
 
         super.setSize(numRows, numCols);
         if ( numRows != SIZE || numCols != SIZE) {
-            GameContext.log(0,  "Can't change the size of a checkers/chess board. It must be 8x8" );
+            GameContext.log(0,  "Can't change the size of a checkers/chess board. It must be " + SIZE + "x" + SIZE );
         }
     }
 
@@ -79,7 +82,7 @@ public class CheckersBoard extends TwoPlayerBoard {
      * If a checkers game has more than this many moves, then we assume it is a draw.
      */
     public int getMaxNumMoves() {
-        return 220;
+        return 4 * SIZE * SIZE;
     }
 
     /**
@@ -130,8 +133,7 @@ public class CheckersBoard extends TwoPlayerBoard {
     }
 
     /**
-     * The index of the state for tihs position.
-     * @return The index of the state for tihs position.
+     * @return The index of the state for this position.
      */
     @Override
     public int getStateIndex(BoardPosition pos) {

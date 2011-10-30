@@ -5,6 +5,7 @@ import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.player.PlayerList;
+import com.becker.game.twoplayer.checkers.CheckersBoard;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerSearchable;
@@ -54,14 +55,14 @@ public class ChessSearchable extends TwoPlayerSearchable {
         double score = 0;
 
         // evaluate the board after the move has been made
-        for ( row = 1; row <= ChessController.NUM_ROWS; row++ ) {
-            for ( col = 1; col <= ChessController.NUM_COLS; col++ ) {
+        for ( row = 1; row <= CheckersBoard.SIZE; row++ ) {
+            for ( col = 1; col <= CheckersBoard.SIZE; col++ ) {
                 BoardPosition pos = getBoard().getPosition( row, col );
                 if ( pos.isOccupied() ) {
                     ChessPiece piece = (ChessPiece)pos.getPiece();
                     int side = piece.isOwnedByPlayer1() ? 1 : -1;
                     int advancement =
-                            (piece.isOwnedByPlayer1() ? pos.getRow()-1 : (ChessController.NUM_ROWS - pos.getRow()-1));
+                            (piece.isOwnedByPlayer1() ? pos.getRow()-1 : (CheckersBoard.SIZE - pos.getRow()-1));
                     score += piece.getWeightedScore(side, pos, weights, advancement);
                 }
             }
@@ -81,8 +82,8 @@ public class ChessSearchable extends TwoPlayerSearchable {
 
        // scan through the board positions. For each each piece of the current player's,
        // add all the moves that it can make.
-       for ( row = 1; row <= ChessController.NUM_ROWS; row++ ) {
-           for ( col = 1; col <= ChessController.NUM_COLS; col++ ) {
+       for ( row = 1; row <= CheckersBoard.SIZE; row++ ) {
+           for ( col = 1; col <= CheckersBoard.SIZE; col++ ) {
                BoardPosition pos = getBoard().getPosition(row, col);
                if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == player1 ) {
                    addMoves( pos, moveList, lastMove, weights);
