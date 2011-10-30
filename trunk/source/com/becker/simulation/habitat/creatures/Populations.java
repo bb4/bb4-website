@@ -8,8 +8,11 @@ import com.becker.simulation.habitat.model.HabitatGrid;
 import com.becker.ui.renderers.MultipleFunctionRenderer;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Create populations for all our creatures.

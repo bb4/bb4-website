@@ -2,7 +2,11 @@ package com.becker.java2d.examples;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.awt.print.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 public class PageFormatMania
 {

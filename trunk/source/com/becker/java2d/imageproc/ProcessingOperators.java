@@ -1,13 +1,21 @@
 package com.becker.java2d.imageproc;
 
-import com.becker.optimization.parameter.*;
+import com.becker.optimization.parameter.BooleanParameter;
+import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.parameter.IntegerParameter;
+import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.StringParameter;
 import com.jhlabs.image.*;
 
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.awt.image.LookupOp;
 import java.awt.image.ShortLookupTable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A set of  available image processing operations.

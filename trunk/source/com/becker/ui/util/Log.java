@@ -4,7 +4,11 @@ package com.becker.ui.util;
 import com.becker.common.ILog;
 import com.becker.ui.dialogs.OutputWindow;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Provide support for general logging.

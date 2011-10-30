@@ -15,7 +15,11 @@ import gtp.GtpServer;
 import utils.Options;
 import utils.StringUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 /**

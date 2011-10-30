@@ -3,7 +3,11 @@ package com.becker.java2d.examples;
 import com.becker.java2d.print.PatchworkComponent;
 
 import java.awt.*;
-import java.awt.print.*;
+import java.awt.print.Book;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 public class Booker
 {
