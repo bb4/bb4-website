@@ -13,8 +13,6 @@ public class AxesSynch extends JApplet {
 
     ResizableAppletPanel resizablePanel_ = null;
 
-    private AxesPanel axesPanel_;
-
     // constructor
     public AxesSynch() {
         commonInit();
@@ -34,8 +32,8 @@ public class AxesSynch extends JApplet {
     }
 
     private JPanel createMainPanel() {
-        axesPanel_ = new AxesPanel();
-        axesPanel_.setBorder(BorderFactory.createEtchedBorder());
+        AxesPanel axesPanel = new AxesPanel();
+        axesPanel.setBorder(BorderFactory.createEtchedBorder());
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
@@ -43,11 +41,11 @@ public class AxesSynch extends JApplet {
         JPanel controlsPanel = new JPanel();
         controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.X_AXIS));
 
-        JPanel axesPanel = new JPanel(new BorderLayout());
-        axesPanel.add( controlsPanel, BorderLayout.NORTH );
-        axesPanel.add( axesPanel_, BorderLayout.CENTER );
+        JPanel axesPanelContainer = new JPanel(new BorderLayout());
+        axesPanelContainer.add(controlsPanel, BorderLayout.NORTH);
+        axesPanelContainer.add(axesPanel, BorderLayout.CENTER);
 
-        mainPanel.add( axesPanel, BorderLayout.NORTH );
+        mainPanel.add( axesPanelContainer, BorderLayout.NORTH );
 
         return mainPanel;
     }

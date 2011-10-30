@@ -1,4 +1,4 @@
-/** Copyright by Barry G. Becker, 2000-2005. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2004. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.apps.aikido;
 
 import com.becker.common.util.FileUtil;
@@ -15,7 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
  * Instructions for creating an Aikido technique app:
  *   1. fill in the <aikdo_technique>.xml file. Its dtd is hierarchy.dtd.  It assumes one root.
  *   2. Take pictures corresponding to nodes in hierarchy using camcorder or other digital camera.
@@ -25,7 +24,6 @@ import java.util.List;
  *   4. upload technique_builder.html, all_techniques.html and corresponding images to website.
  *
  * @author Barry Becker
- * Date: Oct 15, 2004
  */
 public class AikidoAppGenerator {
 
@@ -102,15 +100,13 @@ public class AikidoAppGenerator {
      * @param node
      * @param doc
      */
-    private static String genJSForNode(Node node, Document doc)
-    {
+    private static String genJSForNode(Node node, Document doc) {
         // first print the img and label for the node, then next ptrs for all children,
         // then do the same for all its children
         StringBuilder buf = new StringBuilder();
         NodeInfo nodeInfo = new NodeInfo(node.getAttributes());
         if (nodeInfo.id == null)  {
             System.out.println("null id for "+node.getNodeName()+' '+node.getNodeValue());
-            //return  "";
         }
 
         NodeList children = node.getChildNodes();
@@ -471,7 +467,7 @@ public class AikidoAppGenerator {
     }
 
     /**
-     * Auto generate all elementsbased on the XML file.
+     * Auto generate all elements based on the XML file.
      *
      * @param document
      * @param fileName
@@ -491,8 +487,7 @@ public class AikidoAppGenerator {
 
 
     /**
-     *  convenient inner class for storing info about the node
-     *
+     * Convenient inner class for storing info about the node
      */
     private static class  NodeInfo {
         String id;
