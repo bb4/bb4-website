@@ -1,3 +1,4 @@
+/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.common.rendering;
 
 import com.becker.common.util.ImageUtil;
