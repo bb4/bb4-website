@@ -2,7 +2,6 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.common.GameController;
-import com.becker.game.common.board.Board;
 import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.AbstractDialog;

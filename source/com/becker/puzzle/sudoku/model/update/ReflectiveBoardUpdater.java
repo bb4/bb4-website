@@ -2,7 +2,6 @@
 package com.becker.puzzle.sudoku.model.update;
 
 import com.becker.puzzle.sudoku.model.board.Board;
-import com.becker.puzzle.sudoku.model.update.IUpdater;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

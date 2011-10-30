@@ -2,8 +2,6 @@
 package com.becker.apps.misc.factorize.factorizers;
 
 import com.becker.common.profile.SimpleProfiler;
-import com.becker.game.common.ui.dialogs.NewGameDialog;
-import sun.security.util.BigInt;
 
 import java.io.IOException;
 import java.math.BigDecimal;

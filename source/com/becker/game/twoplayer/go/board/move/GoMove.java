@@ -2,13 +2,10 @@
 package com.becker.game.twoplayer.go.board.move;
 
 import com.becker.common.geometry.Location;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.board.CaptureList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
-import com.becker.game.twoplayer.go.board.analysis.neighbor.NobiNeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoStone;

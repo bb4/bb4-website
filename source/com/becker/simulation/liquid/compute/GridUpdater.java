@@ -2,7 +2,8 @@
 package com.becker.simulation.liquid.compute;
 
 import com.becker.simulation.liquid.Logger;
-import com.becker.simulation.liquid.model.*;
+import com.becker.simulation.liquid.model.Grid;
+import com.becker.simulation.liquid.model.Particles;
 
 import javax.vecmath.Vector2d;
 

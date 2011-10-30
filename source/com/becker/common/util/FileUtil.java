@@ -1,11 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.util;
 
-import com.becker.common.ClassLoaderSingleton;
-
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Miscellaneous commonly used file related static utility methods.

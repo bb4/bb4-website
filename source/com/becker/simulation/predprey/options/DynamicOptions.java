@@ -7,9 +7,8 @@ import com.becker.ui.sliders.SliderGroup;
 import com.becker.ui.sliders.SliderGroupChangeListener;
 
 import javax.swing.*;
-
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**

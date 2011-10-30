@@ -1,7 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.sudoku.model.update.updaters;
 
-import com.becker.puzzle.sudoku.model.board.*;
+import com.becker.puzzle.sudoku.model.board.BigCell;
+import com.becker.puzzle.sudoku.model.board.Board;
+import com.becker.puzzle.sudoku.model.board.Candidates;
+import com.becker.puzzle.sudoku.model.board.Cell;
 import com.becker.puzzle.sudoku.model.update.AbstractUpdater;
 
 import java.util.ArrayList;

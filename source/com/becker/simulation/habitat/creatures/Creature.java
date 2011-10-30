@@ -1,17 +1,13 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.habitat.creatures;
 
-import ca.dj.jigo.sgf.Point;
 import com.becker.common.math.MathUtil;
-import com.becker.game.common.ui.dialogs.NewGameDialog;
 import com.becker.simulation.habitat.model.Cell;
 import com.becker.simulation.habitat.model.HabitatGrid;
 
-import javax.management.NotificationBroadcasterSupport;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Everything we need to know about a creature.

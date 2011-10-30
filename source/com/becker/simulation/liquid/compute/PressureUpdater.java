@@ -1,14 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.liquid.compute;
 
-import com.becker.simulation.liquid.Logger;
 import com.becker.simulation.liquid.model.Grid;
-import com.becker.simulation.liquid.model.Particle;
-
-import javax.vecmath.Vector2d;
-import java.util.Set;
-
-import static com.becker.simulation.common.PhysicsConstants.ATMOSPHERIC_PRESSURE;
 
 /**
  *  Iterates, conserving mass, until the pressure stabilizes.

@@ -2,7 +2,6 @@
 package com.becker.game.twoplayer.pente.data;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.pente.Patterns;
 import com.becker.game.twoplayer.pente.PentePatterns;
 
 import java.io.*;

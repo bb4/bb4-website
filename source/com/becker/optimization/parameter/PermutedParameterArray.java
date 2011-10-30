@@ -2,11 +2,9 @@
 package com.becker.optimization.parameter;
 
 import com.becker.common.math.MathUtil;
-import com.becker.common.math.Vector;
 import com.becker.optimization.Improvement;
 import com.becker.optimization.Optimizee;
 
-import java.lang.UnsupportedOperationException;
 import java.util.*;
 
 /**

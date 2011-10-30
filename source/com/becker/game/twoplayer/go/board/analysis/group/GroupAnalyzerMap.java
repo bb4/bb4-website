@@ -4,9 +4,6 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 import com.becker.common.util.LRUCache;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 
-import java.util.Map;
-import java.util.WeakHashMap;
-
 
 /**
  * Maintains a map from groups to GroupAnalyzers.

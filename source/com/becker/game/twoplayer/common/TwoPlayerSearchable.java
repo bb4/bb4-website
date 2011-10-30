@@ -2,7 +2,8 @@
 package com.becker.game.twoplayer.common;
 
 import com.becker.common.geometry.Location;
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;

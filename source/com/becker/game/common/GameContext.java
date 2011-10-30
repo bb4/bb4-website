@@ -8,6 +8,7 @@ import com.becker.game.common.plugin.GamePlugin;
 import com.becker.game.common.plugin.PluginManager;
 import com.becker.sound.MusicMaker;
 import com.becker.ui.util.Log;
+
 import java.util.Random;
 
 /**

@@ -5,14 +5,14 @@ import com.becker.common.geometry.Location;
 import com.becker.puzzle.sudoku.model.ValueConverter;
 import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.model.board.Cell;
-import com.sun.org.apache.xpath.internal.operations.Variable;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Draws the current best solution to the puzzle in a panel.

@@ -1,9 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.pente;
 
-import com.becker.game.common.GameContext;
-
-
 /**
  *  Encapsulates the domain knowledge for Pente.
  *  Its primary client is the PenteController class.

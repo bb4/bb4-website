@@ -2,7 +2,7 @@
 package com.becker.puzzle.maze;
 
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.List;
 
 /**

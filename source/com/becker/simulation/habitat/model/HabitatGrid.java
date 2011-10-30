@@ -1,8 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.habitat.model;
 
-import ca.dj.jigo.sgf.tokens.SourceToken;
-
 import javax.vecmath.Point2d;
 import java.util.ArrayList;
 import java.util.List;

@@ -2,9 +2,6 @@
 package com.becker.simulation.liquid;
 
 import com.becker.simulation.liquid.compute.GridUpdater;
-import com.becker.simulation.liquid.model.LiquidEnvironment;
-import com.becker.simulation.snake.LocomotionParameters;
-import com.becker.simulation.snake.SnakeSimulator;
 import com.becker.ui.sliders.SliderGroup;
 import com.becker.ui.sliders.SliderGroupChangeListener;
 import com.becker.ui.sliders.SliderProperties;

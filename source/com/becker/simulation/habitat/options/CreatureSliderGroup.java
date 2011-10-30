@@ -6,8 +6,6 @@ import com.becker.simulation.habitat.creatures.Population;
 import com.becker.ui.sliders.SliderGroup;
 import com.becker.ui.sliders.SliderProperties;
 
-import java.awt.*;
-
 /**
  * Represents a set of sliders to associate with a creature population.
  *

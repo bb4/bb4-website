@@ -13,7 +13,6 @@ import com.becker.game.twoplayer.checkers.CheckersController;
 import com.becker.game.twoplayer.checkers.CheckersSearchable;
 import com.becker.game.twoplayer.checkers.MoveGenerator;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import go.Move;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;

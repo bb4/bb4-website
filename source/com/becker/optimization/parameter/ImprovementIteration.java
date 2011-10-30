@@ -4,9 +4,6 @@ package com.becker.optimization.parameter;
 
 import com.becker.common.math.Vector;
 import com.becker.optimization.Optimizee;
-import com.becker.optimization.parameter.Parameter;
-import com.becker.optimization.parameter.ParameterArray;
-import com.jhlabs.image.Gradient;
 
 /**
  * private utility class for maintaining the data vectors for the iteration.

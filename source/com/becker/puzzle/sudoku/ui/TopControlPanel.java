@@ -1,14 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.sudoku.ui;
 
-import com.becker.game.twoplayer.go.board.analysis.eye.information.FalseEyeInformation;
 import com.becker.puzzle.sudoku.SudokuController;
-import com.becker.puzzle.sudoku.SudokuSolver;
-import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;

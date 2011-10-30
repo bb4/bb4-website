@@ -6,7 +6,7 @@ import com.becker.simulation.common.rendering.ModelImage;
 import com.becker.simulation.fluid.model.Grid;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**

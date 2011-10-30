@@ -5,7 +5,8 @@ import com.becker.optimization.Improvement;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Hill climbing optimization strategy.

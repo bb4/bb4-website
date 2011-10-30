@@ -3,7 +3,6 @@ package com.becker.simulation.henonphase;
 
 import com.becker.common.format.FormatUtil;
 import com.becker.simulation.henonphase.algorithm.HenonAlgorithm;
-import com.becker.simulation.henonphase.algorithm.Traveler;
 import com.becker.simulation.henonphase.algorithm.TravelerParams;
 import com.becker.ui.legend.ContinuousColorLegend;
 import com.becker.ui.sliders.SliderGroup;

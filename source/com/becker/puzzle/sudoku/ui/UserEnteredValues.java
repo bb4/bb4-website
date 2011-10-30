@@ -4,7 +4,6 @@ package com.becker.puzzle.sudoku.ui;
 import com.becker.common.geometry.Location;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A map of user entered values.

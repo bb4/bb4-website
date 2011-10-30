@@ -1,11 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.fractalexplorer.algorithm;
 
-import com.becker.common.ColorMap;
 import com.becker.simulation.common.RectangularModel;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Nothing but a big matrix to hold the resulting values.

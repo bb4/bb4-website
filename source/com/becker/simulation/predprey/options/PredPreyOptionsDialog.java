@@ -6,7 +6,6 @@ import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.predprey.PredPreySimulator;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * @author Barry Becker
