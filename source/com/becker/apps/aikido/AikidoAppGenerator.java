@@ -1,3 +1,4 @@
+/** Copyright by Barry G. Becker, 2000-2005. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.apps.aikido;
 
 import com.becker.common.util.FileUtil;
@@ -28,9 +29,11 @@ import java.util.List;
  */
 public class AikidoAppGenerator {
 
-    // if in debug mode then we do the following things differently
-    // 1) in the all techniques page, show the ids instead of the cutpoints, and make the images bigger.
-    // 2) when replacing refs, don't substitute the whole subtree, just the subtree root node.
+    /**
+     * if in debug mode then we do the following things differently
+     * 1) in the all techniques page, show the ids instead of the cut-points, and make the images bigger.
+     * 2) when replacing refs, don't substitute the whole subtree, just the subtree root node.
+     */
     private static final boolean DEBUG_MODE = false;
 
     private static String imgPath_ = null;
@@ -41,7 +44,7 @@ public class AikidoAppGenerator {
 
     /**
      * Used to be /projects/javascript_projects/aikido_builder/,
-     * but I need everything in the PROJECT_HOME to be self contained and transferrable.
+     * but I need everything in the PROJECT_HOME to be self contained and transferable.
      */
     private static final String RESULT_PATH = FileUtil.PROJECT_HOME + "/dist/aikido_builder/";
 
@@ -503,17 +506,15 @@ public class AikidoAppGenerator {
                  label = null;
             }
             else {
-                if (attribMap!=null) {
-                    for (int i=0; i<attribMap.getLength(); i++) {
-                        Node attr = attribMap.item(i);
-                        if ("id".equals(attr.getNodeName())) {
-                            id = attr.getNodeValue();
-                            // the id gets reused for the image name
-                            img = imgPath_ + attr.getNodeValue() + IMG_SUFFIX;
-                        }
-                        else if ("label".equals(attr.getNodeName()))
-                            label = attr.getNodeValue();
+                for (int i=0; i<attribMap.getLength(); i++) {
+                    Node attr = attribMap.item(i);
+                    if ("id".equals(attr.getNodeName())) {
+                        id = attr.getNodeValue();
+                        // the id gets reused for the image name
+                        img = imgPath_ + attr.getNodeValue() + IMG_SUFFIX;
                     }
+                    else if ("label".equals(attr.getNodeName()))
+                        label = attr.getNodeValue();
                 }
             }
         }
