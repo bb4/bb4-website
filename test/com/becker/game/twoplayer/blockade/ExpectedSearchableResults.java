@@ -87,7 +87,6 @@ public class ExpectedSearchableResults {
         createMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 5), new BlockadeBoardPosition(3, 5))),
         createMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 5), new BlockadeBoardPosition(5, 5))),
         createMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(9, 3))),
-        createMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(11, 3))),
         createMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(9, 6))),
         createMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(10, 5))),
         createMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(8, 7))),
@@ -115,10 +114,6 @@ public class ExpectedSearchableResults {
         createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 4), new BlockadeBoardPosition(5, 4))),
         createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 5), new BlockadeBoardPosition(3, 5))),
         createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 5), new BlockadeBoardPosition(5, 5))),
-        createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 2))),
-        createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 2))),
-        createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(9, 3))),
-        createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(11, 3))),
         createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(10, 5))),
         createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(8, 7))),
         createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 11), new BlockadeBoardPosition(6, 10))),
@@ -129,17 +124,11 @@ public class ExpectedSearchableResults {
         createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(5, 9), new BlockadeBoardPosition(5, 10))),
         createMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 9), new BlockadeBoardPosition(3, 10))),
         createMove(10,4,  10,2, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(7, 10))),
-        createMove(10,4,  9,5, 312, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(9, 6))),
-        createMove(10,4,  9,5, 360, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(9, 6))),
-        createMove(10,4,  9,5, 360, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 8), new BlockadeBoardPosition(9, 8))),
-        createMove(10,4,  9,5, 360, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 7), new BlockadeBoardPosition(9, 7))),
         createMove(10,4,  9,5, 384, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(7, 10))),
-        createMove(10,4,  10,2, 392, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 2))),
-        createMove(10,4,  10,2, 392, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 2))),
         createMove(10,4,  10,2, 424, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(7, 9))),
         createMove(10,4,  10,2, 424, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(7, 10))),
         createMove(10,4,  9,5, 528, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(7, 9))),
-        createMove(10,4,  9,5, 528, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(7, 10)))
+        createMove(10,4,  9,5, 528, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(7, 10))),
     };
 
      static final BlockadeMove[] EXPECTED_TOP_MIDDLE_GAME_MOVES_P1 =  {
@@ -164,10 +153,7 @@ public class ExpectedSearchableResults {
         createMove(10,4,  10,2, 96, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 8), new BlockadeBoardPosition(3, 9))),
         createMove(7,9,  7,11, 112, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(9, 10))),
         createMove(10,4,  10,2, 136, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(9, 10))),
-        createMove(7,9,  7,11, 144, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 4))),
-        createMove(7,9,  7,11, 144, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 4))),
-        createMove(7,9,  7,11, 144, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(7, 10))),
-        createMove(10,4,  10,2, 168, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 4))),
+        createMove(7,9,  7,11, 144, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 4)))
     };
 
 
@@ -187,7 +173,6 @@ public class ExpectedSearchableResults {
         createMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(8, 5))),
         createMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 8), new BlockadeBoardPosition(9, 8))),
         createMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(13, 4), new BlockadeBoardPosition(12, 4))),
-        createMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(12, 4), new BlockadeBoardPosition(12, 5))),
         createMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 7), new BlockadeBoardPosition(1, 8))),
         createMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 1), new BlockadeBoardPosition(4, 1))),
     };
@@ -195,13 +180,7 @@ public class ExpectedSearchableResults {
     static final BlockadeMove[] EXPECTED_TOP_END_GAME_MOVES_P1 = {
         createMove(11,3,  11,4, -4096, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(9, 6))),
         createMove(11,3,  11,4, -4096, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(10, 5))),
-        createMove(11,3,  11,4, -4096, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(9, 6))),
-        createMove(11,3,  11,4, -4096, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(8, 5))),
-            /*
-        createMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 1), new BlockadeBoardPosition(4, 1))),
-        createMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 7), new BlockadeBoardPosition(1, 8))),
-        createMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(12, 4), new BlockadeBoardPosition(12, 5))),
-        createMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(13, 4), new BlockadeBoardPosition(12, 4))),*/
+        createMove(11,3,  11,4, -4096, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(9, 6)))
     };
 
 
@@ -266,10 +245,7 @@ public class ExpectedSearchableResults {
         createMove(8,3,  10,3, 32, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(8, 9))),
         createMove(8,3,  10,3, 32, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 9), new BlockadeBoardPosition(12, 10))),
         createMove(3,10,  1,10, 24, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 4), new BlockadeBoardPosition(11, 4))),
-        createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 8), new BlockadeBoardPosition(9, 8))),
-        createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(9, 6))),
         createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(7, 6))),
-        createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 7), new BlockadeBoardPosition(9, 7))),
         createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 5), new BlockadeBoardPosition(9, 5))),
         createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 5), new BlockadeBoardPosition(8, 6))),
         createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 4), new BlockadeBoardPosition(9, 5))),
@@ -294,51 +270,45 @@ public class ExpectedSearchableResults {
         createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 7), new BlockadeBoardPosition(12, 7))),
         createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 8), new BlockadeBoardPosition(12, 8))),
         createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 10), new BlockadeBoardPosition(14, 10))),
-        createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 10), new BlockadeBoardPosition(12, 10))),
-        createMove(8,3,  10,3, -32, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(11, 3))),
-        createMove(8,3,  10,3, -64, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(9, 3))),
-        createMove(8,3,  10,3, -192, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 4), new BlockadeBoardPosition(11, 4))),
+        createMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 10), new BlockadeBoardPosition(12, 10)))
     };
 
      static final BlockadeMove[] EXPECTED_TOP_MIDDLE_GAME_MOVES_P2 =  {
          createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 9), new BlockadeBoardPosition(14, 9))),
-         createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 11), new BlockadeBoardPosition(11, 10))),
-         createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 11), new BlockadeBoardPosition(12, 10))),
-         createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 11), new BlockadeBoardPosition(9, 10))),
-         createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 11), new BlockadeBoardPosition(10, 10))),
-         createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 11), new BlockadeBoardPosition(8, 10))),
-         createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 9), new BlockadeBoardPosition(14, 9))),
-         createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 11), new BlockadeBoardPosition(11, 10))),
-         createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 11), new BlockadeBoardPosition(12, 10))),
-         createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 11), new BlockadeBoardPosition(9, 10))),
-         createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 11), new BlockadeBoardPosition(10, 10))),
-         createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 11), new BlockadeBoardPosition(8, 10))),
-         createMove(3,10,  1,10, 288, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 9), new BlockadeBoardPosition(12, 8))),
-         createMove(3,10,  1,10, 288, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 9), new BlockadeBoardPosition(11, 8))),
-         createMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 1), new BlockadeBoardPosition(14, 1))),
-         createMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 1), new BlockadeBoardPosition(12, 2))),
-         createMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 1), new BlockadeBoardPosition(7, 1))),
-         createMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 2), new BlockadeBoardPosition(8, 1))),
-         //createMove(3,10,  1,10, 184, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(8, 9))),
+        createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 11), new BlockadeBoardPosition(11, 10))),
+        createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 11), new BlockadeBoardPosition(12, 10))),
+        createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 11), new BlockadeBoardPosition(9, 10))),
+        createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 11), new BlockadeBoardPosition(10, 10))),
+        createMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 11), new BlockadeBoardPosition(8, 10))),
+        createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 9), new BlockadeBoardPosition(14, 9))),
+        createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 11), new BlockadeBoardPosition(11, 10))),
+        createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 11), new BlockadeBoardPosition(12, 10))),
+        createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 11), new BlockadeBoardPosition(9, 10))),
+        createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 11), new BlockadeBoardPosition(10, 10))),
+        createMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 11), new BlockadeBoardPosition(8, 10))),
+        createMove(3,10,  1,10, 288, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 9), new BlockadeBoardPosition(12, 8))),
+        createMove(3,10,  1,10, 288, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 9), new BlockadeBoardPosition(11, 8))),
+        createMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 1), new BlockadeBoardPosition(14, 1))),
+        createMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 1), new BlockadeBoardPosition(12, 2))),
+        createMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 1), new BlockadeBoardPosition(7, 1))),
     };
 
     static final BlockadeMove[] EXPECTED_ALL_END_GAME_MOVES_P2 = {
-        createMove(5,8,  4,8, 2000, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
-        createMove(5,8,  4,8, 2000, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))),
-        createMove(5,8,  4,8, 2000, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
-        createMove(8,3,  9,2, -182, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
-        createMove(8,3,  9,2, -186, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
-        createMove(8,3,  9,2, -186, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4)))
+        createMove(5,8,  4,8, 4096, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
+        createMove(5,8,  4,8, 4096, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))),
+        createMove(5,8,  4,8, 4096, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
+        createMove(8,3,  9,2, -1504, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
+        createMove(8,3,  9,2, -1536, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
     };
 
     static final BlockadeMove[] EXPECTED_TOP_END_GAME_MOVES_P2 = {
-        createMove(5,8,  4,8, 2000, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
-        createMove(5,8,  4,8, 2000, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))),
-        /*createMove(5,8,  4,8, 2000, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
-        createMove(8,3,  9,2, -182, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
-        createMove(8,3,  9,2, -186, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
-        createMove(8,3,  9,2, -186, PLAYER1_PIECE, new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4)))   */
+        createMove(5,8,  4,8, 4096, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
+        createMove(5,8,  4,8, 4096, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))),
+        createMove(5,8,  4,8, 4096, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
+        createMove(8,3,  9,2, -1504, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
+        createMove(8,3,  9,2, -1536, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
     };
+
     
     private static BlockadeMove createMove(int r1, int c1, int r2, int c2, int val, GamePiece piece, BlockadeWall wall) {
         return new BlockadeMove(new Location(r1, c1), new Location(r2, c2), val, piece, wall);

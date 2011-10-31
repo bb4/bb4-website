@@ -53,7 +53,7 @@ public class MoveGeneratorTest extends BlockadeTestCase {
         MoveGenerator generator = new MoveGenerator(controller_.getComputerWeights().getDefaultWeights(), board);
 
         List moves = generator.generateMoves(lastMove);
-        int expectedNumMoves = 64;
+        int expectedNumMoves = 56;
         assertTrue("Expected there to be "+expectedNumMoves+" moves but got " +moves.size() +" moves="+ moves, moves.size() == expectedNumMoves);
     }
 
@@ -79,7 +79,7 @@ public class MoveGeneratorTest extends BlockadeTestCase {
         MoveGenerator generator = new MoveGenerator(controller_.getComputerWeights().getDefaultWeights(), board);
         List moves = generator.generateMoves(lastMove);
 
-        int expectedNumMoves = 66;
+        int expectedNumMoves = 60;
         assertTrue("Expected there to be "+expectedNumMoves+" moves but got " +moves.size() +" moves="+ moves, moves.size() == expectedNumMoves);
     }
 
