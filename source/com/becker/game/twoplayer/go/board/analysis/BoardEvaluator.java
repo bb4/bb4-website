@@ -2,6 +2,9 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.common.Move;
+import com.becker.game.twoplayer.common.cache.ScoreCache;
+import com.becker.game.twoplayer.common.cache.ScoreEntry;
+import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.WorthInfo;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
@@ -16,35 +19,94 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public final class BoardEvaluator {
 
+    private static final boolean USE_SCORE_CACHING = false;
+
+    private GoBoard board_;
     private WorthCalculator worthCalculator_;
     private TerritoryAnalyzer territoryAnalyzer_;
     private GroupAnalyzerMap analyzerMap_;
+    private ScoreCache scoreCache_;
 
     /**
      *  Constructor.
      */
-    public BoardEvaluator(GoBoard board) {
+    public BoardEvaluator(GoBoard board, ScoreCache cache) {
 
+        board_ = board;
         analyzerMap_ = new GroupAnalyzerMap();
         territoryAnalyzer_ = new TerritoryAnalyzer(board, analyzerMap_);
         worthCalculator_ = new WorthCalculator(board, territoryAnalyzer_);
+        scoreCache_ = cache;
     }
 
     /**
      * @return the worth of the board from player1's perspective
      */
-    public int worth(Move lastMove, ParameterArray weights) {
-        return worthCalculator_.worth(lastMove, weights);
+    public int worth(Move lastMove, ParameterArray weights, HashKey hashKey) {
+
+        if (USE_SCORE_CACHING) {
+            return cachedWorth(lastMove, weights, hashKey);
+        } else {
+            return worthCalculator_.worth(lastMove, weights);
+        }
     }
 
+    /**
+     *  If we have a cached worth value for this board position, then use that instead of recomputing it.
+     *  @return statically evaluated value for the board.
+     */
+    private int cachedWorth( Move lastMove, ParameterArray weights, HashKey key) {
+
+        // Try turning off all forms of go caching.
+        // Why doesn't playing with caching give same results as without?
+        //HashKey key = getHashKey();
+
+        // uncomment this to do caching.
+        ScoreEntry cachedScore = scoreCache_.get(key);
+        ///////// comment this to do debugging
+        //if (cachedScore != null) {
+        //    return cachedScore.getScore();
+        //}
+
+        int worth = worthCalculator_.worth(lastMove, weights);
+
+        if (cachedScore == null) {
+            scoreCache_.put(key, new ScoreEntry(key, worth, board_.toString(), getWorthInfo()));
+        }
+        else {
+            if (cachedScore.getScore() != worth) {
+                StringBuilder bldr = new StringBuilder();
+                bldr.append("\ncachedScore ").
+                        append(cachedScore).
+                        //append("\nfor key=").
+                        //append(getHashKey()).
+                        append("\ndid not match ").
+                        append(worth).append(" for \n").
+                        append(board_.toString()).
+                        append("\ncurrent info: ").
+                        append(getWorthInfo()).
+                        append("using current key=").
+                        append(key);
+                System.out.println(bldr.toString());
+                System.out.flush();
+            }
+        }
+        return worth;
+    }
+
+
     /** Used only for debugging to understand how the worth was calculated. */
-    public WorthInfo getWorthInfo() {
+    WorthInfo getWorthInfo() {
         return worthCalculator_.getWorthInfo();
     }
 
     /** don't really want to expose this, but need for rendering. */
     public GroupAnalyzer getGroupAnalyzer(IGoGroup group) {
         return analyzerMap_.getAnalyzer(group);
+    }
+
+    public ScoreCache getCache() {
+        return scoreCache_;
     }
 
     /**
