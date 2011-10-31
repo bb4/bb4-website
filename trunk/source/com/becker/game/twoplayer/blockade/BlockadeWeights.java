@@ -9,8 +9,11 @@ import com.becker.game.common.GameWeights;
  *
  * @author Barry Becker Date: Feb 11, 2007
  */
-class BlockadeWeights extends GameWeights {
+public class BlockadeWeights extends GameWeights {
 
+    public static final int CLOSEST_WEIGHT_INDEX = 0;
+    public static final int SECOND_CLOSEST_WEIGHT_INDEX = 1;
+    public static final int FURTHEST_WEIGHT_INDEX = 2;
 
     /**
      * Use these weights if no others are provided.
@@ -36,11 +39,7 @@ class BlockadeWeights extends GameWeights {
         "Weight to associate with the shortest path to the furthest opponent home"
     };
 
-    static final int CLOSEST_WEIGHT_INDEX = 0;
-    static final int SECOND_CLOSEST_WEIGHT_INDEX = 1;
-    static final int FURTHEST_WEIGHT_INDEX = 2;
-
-
+    /** Constructor */
     public BlockadeWeights() {
         super( DEFAULT_WEIGHTS, MIN_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
     }

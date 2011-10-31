@@ -2,9 +2,9 @@
 package com.becker.game.twoplayer.blockade.persistence;
 
 import com.becker.game.common.Move;
-import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.blockade.BlockadeController;
-import com.becker.game.twoplayer.blockade.BlockadeMove;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 
 /**
@@ -49,7 +49,7 @@ public class BlockadeGameExporter extends TwoPlayerGameExporter {
         // also print the wall placement if there is one
         if (m.getWall() != null) {
             buf.append("wall");           
-            for (BlockadeBoardPosition pos : m.getWall().getPositions()) {               
+            for (BlockadeBoardPosition pos : m.getWall().getPositions()) {
                 serializePosition(pos.getLocation(), buf);
             }
         }

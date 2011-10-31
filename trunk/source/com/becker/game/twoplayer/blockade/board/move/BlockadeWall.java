@@ -1,5 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.blockade;
+package com.becker.game.twoplayer.blockade.board.move;
+
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 
 import java.util.HashSet;
 import java.util.Iterator;

@@ -5,7 +5,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
-import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 
 import java.awt.*;

@@ -1,5 +1,8 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.blockade;
+/** Copyright by Barry G. Becker, 2007-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+package com.becker.game.twoplayer.blockade.board;
+
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.Iterator;
@@ -9,7 +12,6 @@ import java.util.List;
 /**
  * A path that connects a pawn to an opponent home base.
  * Each element of the path is a BlockadeMove
- * Created on May 12, 2007, 5:41 AM
  *
  * @author Barry Becker
  */
@@ -51,7 +53,6 @@ public class Path {
     
     
     /**
-     * @param wall
      * @return true if the wall is blocking the paths.
      */
     public boolean isBlockedByWall(BlockadeWall wall, BlockadeBoard b)

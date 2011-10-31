@@ -1,9 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.blockade;
+package com.becker.game.twoplayer.blockade.board;
 
 import com.becker.common.geometry.Location;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 
 import java.util.List;
 

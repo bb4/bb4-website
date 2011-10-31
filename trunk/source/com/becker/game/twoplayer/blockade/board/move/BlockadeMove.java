@@ -1,8 +1,11 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.blockade;
+package com.becker.game.twoplayer.blockade.board.move;
 
 import com.becker.common.geometry.Location;
 import com.becker.game.common.board.GamePiece;
+import com.becker.game.twoplayer.blockade.board.Direction;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 import java.util.Iterator;
@@ -121,6 +124,7 @@ public class BlockadeMove extends TwoPlayerMove {
     /**
      * Check to see if a given wall blocks the move.
      * We assume the move is valid (eg does not move off the board or anything like that).
+     * @@ do  we need to place the wall and then remove it at the end?
      * @param wall to see if blocking our move.
      * @param board
      * @return  true if the wall blocks this move.
@@ -129,6 +133,7 @@ public class BlockadeMove extends TwoPlayerMove {
     public boolean isMoveBlockedByWall(BlockadeWall wall, BlockadeBoard board) {
         // We assume that this wall does not interfere with other walls as that would be invalid.
         boolean blocked = false;
+        board.addWall(wall);
 
         int fromRow = getFromRow();
         int fromCol = getFromCol();
@@ -194,13 +199,14 @@ public class BlockadeMove extends TwoPlayerMove {
                 break;
             case SOUTH_EAST :
                 south = start.getNeighbor(Direction.SOUTH, board); 
-                east = start.getNeighbor(Direction.EAST, board); 
+                east = start.getNeighbor(Direction.EAST, board);
                 if (!((start.isEastOpen() && east.isSouthOpen()) ||
                      (start.isSouthOpen() && south.isEastOpen()) ) )  {
                     blocked = true;
                 }
                 break;
         }
+        board.removeWall(wall);
 
         return blocked;
     }

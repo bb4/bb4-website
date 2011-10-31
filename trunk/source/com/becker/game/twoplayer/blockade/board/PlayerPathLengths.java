@@ -1,7 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.blockade;
+package com.becker.game.twoplayer.blockade.board;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.blockade.BlockadeWeights;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**

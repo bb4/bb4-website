@@ -11,10 +11,10 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.GamePiece;
-import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.blockade.BlockadeController;
-import com.becker.game.twoplayer.blockade.BlockadeMove;
-import com.becker.game.twoplayer.blockade.BlockadeWall;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 import com.becker.game.twoplayer.blockade.persistence.tokens.BlockadeMoveToken;
 import com.becker.game.twoplayer.blockade.persistence.tokens.Player1BlockadeMoveToken;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
@@ -107,8 +107,8 @@ public class BlockadeGameImporter extends TwoPlayerGameImporter {
                                                        new BlockadeBoardPosition(mvToken.getWallPoint2().y, mvToken.getWallPoint2().x));
 
          return BlockadeMove.createMove(new Location(mvToken.getFromY(), mvToken.getFromX()),
-                                                     new Location( mvToken.getToY(), mvToken.getToX()),
-                                                     0, new GamePiece(player1), wall);
+                 new Location(mvToken.getToY(), mvToken.getToX()),
+                 0, new GamePiece(player1), wall);
     }
 
 }

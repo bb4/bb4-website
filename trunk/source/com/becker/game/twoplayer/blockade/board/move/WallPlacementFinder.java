@@ -1,10 +1,14 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.blockade;
+// Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+package com.becker.game.twoplayer.blockade.board.move;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.MoveList;
-import com.becker.game.common.board.BoardPosition;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.Direction;
+import com.becker.game.twoplayer.blockade.board.Path;
+import com.becker.game.twoplayer.blockade.board.PlayerPathLengths;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -16,100 +20,20 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class MoveGenerator {
+public class WallPlacementFinder {
 
     private BlockadeBoard board_;
+    private List<Path> opponentPaths_;
     private ParameterArray weights_;
 
-    public MoveGenerator(ParameterArray weights, BlockadeBoard board) {
+    /**
+     * Constructor
+     */
+    public WallPlacementFinder(BlockadeBoard board, List<Path> opponentPaths, ParameterArray weights) {
 
         board_ = board;
         weights_ = weights;
-    }
-
-    /**
-     * First find the opponent's shortest paths.
-     * Then For each piece of the current player's NUM_HOME pieces, add a move that represents a step along
-     * its shortest paths to the opponent homes and all reasonable wall placements.
-     * To limit the number of wall placements we will restrict possibilities to those positions which
-     * effect one of the *opponents* shortest paths.
-     * @param lastMove
-     * @return list of generated moves.
-     */
-    public MoveList generateMoves(TwoPlayerMove lastMove) {
-
-        MoveList moveList = new MoveList();
-        boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
-
-        //  There must be NUM_HOMES squared of them (unless the player won).
-        // There is one path from every piece to every opponent home (i.e. n*n)
-        List<Path> opponentPaths = board_.findAllOpponentShortestPaths(player1);
-
-        List<BoardPosition> pawnLocations = new LinkedList<BoardPosition>();
-        for ( int row = 1; row <= board_.getNumRows(); row++ ) {
-            for ( int col = 1; col <= board_.getNumCols(); col++ ) {
-                BoardPosition p = board_.getPosition( row, col );
-                if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {
-                    pawnLocations.add(p);
-                    addMoves( p, moveList, opponentPaths, weights_ );
-                }
-            }
-        }
-        if (moveList.isEmpty())
-            GameContext.log(1, "There aren't any moves to consider for lastMove="+lastMove
-                    +" Complete movelist ="+board_.getMoveList() + " \nThe pieces are at:" + pawnLocations);
-
-        return moveList;
-    }
-
-
-
-    /**
-     * Find all the moves a piece can make from position p, and insert them into moveList.
-     *
-     * @param p the piece to check from its new location.
-     * @param moveList add the potential moves to this existing list.
-     * @param weights to use.
-     * @return the number of moves added.
-     */
-    private int addMoves( BoardPosition p, MoveList moveList, List<Path> opponentPaths, ParameterArray weights) {
-        int numMovesAdded = 0;
-
-        // first find the NUM_HOMES shortest paths for p.
-        List<Path> paths = board_.findShortestPaths((BlockadeBoardPosition)p);
-
-        // for each of these paths, add possible wall positions.
-        // Take the first move from each shortest path and add the wall positions to it.
-        for (Path path : paths) {
-            if (path.getLength() > 0) {
-                 BlockadeMove firstStep = path.get(0);
-                 // make the move
-                 board_.makeMove(firstStep);
-
-                 // after making the first move, the shortest paths may have changed somewhat.
-                 // unfortunately, I think we need to recalculate them.
-                 BlockadeBoardPosition newPos =
-                         (BlockadeBoardPosition) board_.getPosition(firstStep.getToRow(), firstStep.getToCol());
-                 List<Path> ourPaths = board_.findShortestPaths(newPos);
-
-                 List<BlockadeMove> wallMoves = findWallPlacementsForMove(firstStep, ourPaths, opponentPaths, weights);
-                 GameContext.log(2, "num wall placements for Move = " + wallMoves.size());
-                 board_.undoMove();
-
-                 // iterate through the wallMoves and add only the ones that are not there already
-                 for (BlockadeMove wallMove : wallMoves) {
-                     if (!moveList.contains(wallMove)) {
-                         moveList.add(wallMove);
-                     }
-                 }
-                 numMovesAdded += wallMoves.size();
-            }
-            else {
-                GameContext.log(1, "one of the paths was empty : " + paths);
-            }
-        }
-
-        return numMovesAdded;
+        opponentPaths_ = opponentPaths;
     }
 
     /**
@@ -118,22 +42,19 @@ public class MoveGenerator {
      * @@ optimize
      * @param firstStep the move to find wall placements for.
      * @param paths our shortest paths.
-     * @param opponentPaths the opponent shortest paths.
      * @return all move variations on firstStep based on different wall placements.
      */
-    private List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep,
-                                                         List<Path> paths, List<Path> opponentPaths,
-                                                         ParameterArray weights) {
+    public List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep, List<Path> paths) {
         List<BlockadeMove> moves = new LinkedList<BlockadeMove>();
 
         // is it true that the set of walls we could add for any constant set
         // of opponent paths is always the same regardless of firstStep?
         // I think its only true as long as firstStep is not touching any of those opponent paths
-        GameContext.log(2, firstStep+"\nopaths="+opponentPaths+"\n [[");
+        GameContext.log(2, firstStep + "\nopaths="+opponentPaths_ + "\n [[");
 
-        for (Path opponentPath: opponentPaths) {
+        for (Path opponentPath: opponentPaths_) {
             assert (opponentPath != null):
-                "Opponent path was null. There are "+opponentPaths.size()+" oppenent paths.";
+                "Opponent path was null. There are "+opponentPaths_.size()+" oppenent paths.";
             for (int j = 0; j < opponentPath.getLength(); j++) {
                 // if there is no wall currently interfering with this wall placement,
                 // and it does not impact a friendly path,
@@ -155,7 +76,7 @@ public class MoveGenerator {
                 // typically 0-4 walls
                 assert walls.size() <=4:"num walls = " + walls.size();
                 for (BlockadeWall wall: walls) {
-                    addMoveWithWallPlacement(firstStep, wall, weights, moves);
+                    addMoveWithWallPlacement(firstStep, wall, weights_, moves);
                }
            }
            if (moves.isEmpty()) {
@@ -167,7 +88,7 @@ public class MoveGenerator {
 
         // if no move was added add the more with no wall placement
         if (moves.isEmpty()) {
-           addMoveWithWallPlacement(firstStep, null, weights, moves);
+           addMoveWithWallPlacement(firstStep, null, weights_, moves);
         }
 
         return moves;
@@ -319,7 +240,7 @@ public class MoveGenerator {
      * @return wallsList list of walls that are blocking paths.
      */
     private List<BlockadeWall> getBlockedWalls(List<BlockadeWall> wallsToCheck, List<Path> paths,
-                                                                             List<BlockadeWall> wallsList)  {
+                                               List<BlockadeWall> wallsList)  {
         for (BlockadeWall wall : wallsToCheck) {
             if (wall != null && !arePathsBlockedByWall(paths, wall, board_))
                 wallsList.add(wall);

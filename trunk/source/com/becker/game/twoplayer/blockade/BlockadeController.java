@@ -4,6 +4,8 @@ package com.becker.game.twoplayer.blockade;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.player.PlayerList;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.becker.game.twoplayer.blockade.persistence.BlockadeGameExporter;
 import com.becker.game.twoplayer.blockade.persistence.BlockadeGameImporter;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
@@ -30,7 +32,6 @@ public class BlockadeController extends TwoPlayerController {
     /** the default Blockade board is 14 by 11 */
     private static final int NUM_ROWS = 14;
     private static final int NUM_COLS = 11;
-
 
     /**
      *  Construct the Blockade game controller.

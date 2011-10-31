@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.blockade;
+package com.becker.game.twoplayer.blockade.board;
 
 import com.becker.common.geometry.Location;
 import com.becker.game.common.AbstractGameProfiler;
@@ -7,7 +7,9 @@ import com.becker.game.common.GameProfiler;
 import com.becker.game.common.Move;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
-import com.becker.game.twoplayer.blockade.analysis.BoardAnalyzer;
+import com.becker.game.twoplayer.blockade.board.analysis.BoardAnalyzer;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 
 import java.util.List;
@@ -171,8 +173,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @param position position to check shortest paths for.
      * @return the NUM_HOMES shortest paths from toPosition.
      */
-    public List<Path> findShortestPaths( BlockadeBoardPosition position ) 
-    {
+    public List<Path> findShortestPaths( BlockadeBoardPosition position )  {
         return boardAnalyzer_.findShortestPaths(position);
     }
 
@@ -184,8 +185,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @param location where the wall is to be placed.
      * @return an error string if the wall is not a legal placement on the board.
      */
-    public String checkLegalWallPlacement(BlockadeWall wall, Location location)
-    {
+    public String checkLegalWallPlacement(BlockadeWall wall, Location location) {
         return boardAnalyzer_.checkLegalWallPlacement(wall, location);
     }
     
@@ -200,13 +200,11 @@ public class BlockadeBoard extends TwoPlayerBoard {
     }
 
     
-    void addWall(BlockadeWall wall)
-    {
+    public void addWall(BlockadeWall wall) {
         showWall(wall, true);
     }
 
-    void removeWall(BlockadeWall wall)
-    {
+    public void removeWall(BlockadeWall wall) {
         showWall(wall, false);
     }
 
@@ -214,9 +212,8 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * shows or hides this wall on the game board.
      * @param show whether to show or hide the wall.
      */
-    private void showWall(BlockadeWall wall, boolean show)
-    {
-        Set positions  = wall.getPositions();
+    private void showWall(BlockadeWall wall, boolean show) {
+        Set positions = wall.getPositions();
         if (!positions.isEmpty())
            assert (positions.size()==2): "positions="+positions;
         for (Object position : positions) {

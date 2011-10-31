@@ -1,4 +1,4 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2004-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.go.board.move;
 
 import com.becker.common.geometry.Location;
@@ -24,7 +24,7 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public final class GoMoveGenerator {
 
-    private Searchable searchable_;
+    private final Searchable searchable_;
 
     /**
      * Constructor.
@@ -60,7 +60,7 @@ public final class GoMoveGenerator {
      * @return all possible reasonable next moves. We try to limit to reasonable moves as best we can, but that
      * is difficult without static evaluation. At least no illegal moves will be returned.
      */
-    public final MoveList generatePossibleMoves(TwoPlayerMove lastMove) {
+    final MoveList generatePossibleMoves(TwoPlayerMove lastMove) {
 
         GoBoard board = (GoBoard) searchable_.getBoard();
         MoveList moveList = new MoveList();
