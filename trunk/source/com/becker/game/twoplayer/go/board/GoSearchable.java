@@ -11,7 +11,6 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerSearchable;
 import com.becker.game.twoplayer.common.cache.ScoreCache;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
-import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.game.twoplayer.go.board.analysis.BoardEvaluator;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
@@ -36,12 +35,11 @@ public class GoSearchable extends TwoPlayerSearchable {
      * Perhaps this should be one.
      */
     private static final int CRITICAL_GROUP_SIZE = 3;
-    private static final boolean USE_SCORE_CACHING = true;
+
 
     /** keeps track of dead stones.  */
     private DeadStoneUpdater deadStoneUpdater_;
 
-    private ScoreCache scoreCache_;
     private BoardEvaluator boardEvaluator_;
 
 
@@ -50,14 +48,12 @@ public class GoSearchable extends TwoPlayerSearchable {
      */
     public GoSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options, ScoreCache cache) {
         super(board, players, options);
-        scoreCache_ = cache;
-        init();
+        init(cache);
     }
 
     public GoSearchable(GoSearchable searchable) {
         super(searchable);
-        scoreCache_ = searchable.scoreCache_;
-        init();
+        init(searchable.getScoreCache());
     }
 
     public GoSearchable copy() {
@@ -69,14 +65,18 @@ public class GoSearchable extends TwoPlayerSearchable {
         return (GoBoard) board_;
     }
 
+    public ScoreCache getScoreCache() {
+        return boardEvaluator_.getCache();
+    }
+
     /** don't really want to expose this, but renderer needs it */
     public GroupAnalyzer getGroupAnalyzer(IGoGroup group) {
         return boardEvaluator_.getGroupAnalyzer(group);
     }
 
-    private void init() {
+    private void init(ScoreCache cache) {
         deadStoneUpdater_ = new DeadStoneUpdater(getBoard());
-        boardEvaluator_ = new BoardEvaluator(getBoard());
+        boardEvaluator_ = new BoardEvaluator(getBoard(), cache);
     }
 
     @Override
@@ -155,53 +155,7 @@ public class GoSearchable extends TwoPlayerSearchable {
     @Override
     public int worth( Move lastMove, ParameterArray weights ) {
 
-        if (USE_SCORE_CACHING) {
-            return cachedWorth(lastMove, weights);
-        } else {
-            return boardEvaluator_.worth(lastMove, weights);
-        }
-    }
-
-    /**
-     *  If we have a cached worth value for this board position, then use that instead of recomputing it.
-     *  @return statically evaluated value for the board.
-     */
-    public int cachedWorth( Move lastMove, ParameterArray weights ) {
-
-        // Try turning off all forms of go caching.
-        // Why doesn't playing with caching give same results as without?
-        HashKey key = getHashKey();
-        // uncomment this to do caching.
-        //ScoreEntry cachedScore = scoreCache_.get(key);
-        ///////// comment this to do debugging
-        //if (cachedScore != null) {
-        //    return cachedScore.getScore();
-        //}
-
-        int worth = boardEvaluator_.worth(lastMove, weights);
-
-        /* if (cachedScore == null) {
-            scoreCache_.put(key, new ScoreEntry(key, worth, getBoard().toString(), boardEvaluator_.getWorthInfo()));
-        }
-        else {
-            if (cachedScore.getScore() != worth) {
-                StringBuilder bldr = new StringBuilder();
-                bldr.append("\ncachedScore ").
-                        append(cachedScore).
-                        //append("\nfor key=").
-                        //append(getHashKey()).
-                        append("\ndid not match ").
-                        append(worth).append(" for \n").
-                        append(getBoard().toString()).
-                        append("\ncurrent info: ").
-                        append(boardEvaluator_.getWorthInfo()).
-                        append("using current key=").
-                        append(getHashKey());
-                System.out.println(bldr.toString());
-                System.out.flush();
-            }
-        } */
-        return worth;
+        return boardEvaluator_.worth(lastMove, weights, getHashKey());
     }
 
     /**
