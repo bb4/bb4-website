@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.server.GtpTesujisoftGoServer;
 import org.igoweb.kgs.client.gtp.GtpClient;
 import org.igoweb.kgs.client.gtp.Options;
 
@@ -15,8 +16,6 @@ import java.io.PrintStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 
 /**
  * Use this class to connect to KGS using lib/kgsGtp.jar and have my Tesujisoft go engine play on KGS.

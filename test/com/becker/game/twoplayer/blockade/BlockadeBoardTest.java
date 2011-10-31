@@ -103,7 +103,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
          restore("whitebox/moveList1");
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
 
-         // for each position on the board. determine the possible movelist for each player
+         // for each position on the board. determine the possible move list for each player
          int numRows = board.getNumRows();
          int numCols = board.getNumCols();
          for ( int row = 1; row <= numRows; row++ ) {

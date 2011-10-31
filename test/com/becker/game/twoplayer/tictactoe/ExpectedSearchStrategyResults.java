@@ -8,8 +8,8 @@ import com.becker.game.twoplayer.common.search.strategy.integration.ExpectedMove
 import com.becker.game.twoplayer.common.search.strategy.integration.MoveInfo;
 
 /**
- * Expected generated moves for search tests for both MiniMax and NegaMax algorthms since
- * the should produce identiacal resutls in all cases (just the implementation is a little different).
+ * Expected generated moves for search tests for both MiniMax and NegaMax algorithms since
+ * the should produce identical results in all cases (just the implementation is a little different).
  * @author Barry Becker
  */
 public class ExpectedSearchStrategyResults {
