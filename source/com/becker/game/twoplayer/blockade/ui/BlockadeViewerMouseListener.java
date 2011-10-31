@@ -9,11 +9,11 @@ import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.game.common.ui.viewer.ViewerMouseListener;
-import com.becker.game.twoplayer.blockade.BlockadeBoard;
-import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.blockade.BlockadeController;
-import com.becker.game.twoplayer.blockade.BlockadeMove;
-import com.becker.game.twoplayer.blockade.BlockadeWall;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;

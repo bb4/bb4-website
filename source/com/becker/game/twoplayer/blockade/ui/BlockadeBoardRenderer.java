@@ -7,9 +7,9 @@ import com.becker.game.common.IGameController;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.ui.viewer.GameBoardRenderer;
-import com.becker.game.twoplayer.blockade.BlockadeBoard;
-import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
-import com.becker.game.twoplayer.blockade.BlockadeWall;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 

@@ -15,7 +15,7 @@ import com.becker.sound.MusicMaker;
 public class BlockadeOptions extends TwoPlayerOptions {
 
     /** initial look ahead factor. */
-    private static final int DEFAULT_LOOK_AHEAD = 2;
+    private static final int DEFAULT_LOOK_AHEAD = 3;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
     private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 50;

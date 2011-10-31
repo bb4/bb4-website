@@ -1,10 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.blockade.ui;
 
-import com.becker.game.twoplayer.blockade.BlockadeBoard;
-import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
-import com.becker.game.twoplayer.blockade.BlockadeMove;
-import com.becker.game.twoplayer.blockade.Path;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.Path;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -44,7 +44,7 @@ final class PathRenderer {
      * @param pos the starting position of the current pawn.
      * @param b game board
      */
-    static void drawShortestPaths(Graphics2D g2, BlockadeBoardPosition pos, BlockadeBoard b, int cellSize)    
+    static void drawShortestPaths(Graphics2D g2, BlockadeBoardPosition pos, BlockadeBoard b, int cellSize)
     {
         BasicStroke pathStroke = 
                 new BasicStroke((float)cellSize * PATH_WIDTH_RATIO, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
@@ -83,7 +83,7 @@ final class PathRenderer {
         BlockadeMove m = null;
         float offset = 0;
         while (it.hasNext()) {
-            m = (BlockadeMove)it.next();            
+            m = (BlockadeMove)it.next();
             offset = (m.isPlayer1() ?  PLAYER1_PATH_OFFSET :  PLAYER2_PATH_OFFSET) ;            
             x[ct] = calcPosition(m.getFromCol(), offset, cellSize);
             y[ct] = calcPosition(m.getFromRow(), offset, cellSize); 
