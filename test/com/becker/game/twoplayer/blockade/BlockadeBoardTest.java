@@ -4,6 +4,13 @@ package com.becker.game.twoplayer.blockade;
 import com.becker.common.geometry.Location;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.Path;
+import com.becker.game.twoplayer.blockade.board.PathLengths;
+import com.becker.game.twoplayer.blockade.board.PlayerPathLengths;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 import junit.framework.*;
 import com.becker.game.common.*;
 
@@ -323,7 +330,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
         BlockadeWall wall2 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(12, 6), (BlockadeBoardPosition) board.getPosition(12, 7));
 
         BlockadeMove move1 = BlockadeMove.createMove(new Location(8, 11), new Location(6, 11), 1 /*0.1*/, piece2, wall2);
-        BlockadeMove move2 = BlockadeMove.createMove(new Location(12,6), new Location(10, 6),  1 /*0.1*/, piece1, wall1);
+        BlockadeMove move2 = BlockadeMove.createMove(new Location(12, 6), new Location(10, 6), 1 /*0.1*/, piece1, wall1);
 
         controller_.makeMove(move1);
         controller_.makeMove(move2);

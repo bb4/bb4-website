@@ -4,6 +4,11 @@ package com.becker.game.twoplayer.blockade;
 import com.becker.common.geometry.Location;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
+import com.becker.game.twoplayer.blockade.board.move.MoveGenerator;
 
 import java.util.List;
 

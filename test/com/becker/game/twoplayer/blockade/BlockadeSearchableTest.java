@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.blockade;
 
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
