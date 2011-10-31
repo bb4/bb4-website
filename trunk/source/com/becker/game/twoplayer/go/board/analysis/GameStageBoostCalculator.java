@@ -2,7 +2,7 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
 /**
- * Used to keep track of evaluating a measure of score pased only on values at positions.
+ * Used to keep track of evaluating a measure of score passed only on values at positions.
  *
  * @author Barry Becker
  */

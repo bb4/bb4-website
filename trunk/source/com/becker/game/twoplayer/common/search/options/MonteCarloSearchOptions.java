@@ -62,14 +62,14 @@ public class MonteCarloSearchOptions {
      * The larger this is (bigger than 1) the closer to uniform search we get (i.e exploration).
      * The smaller it is (less than 1) the more selective the search becomes (i.e. we exploit the known good moves).
      * There needs to be a balance.
-     * @return the ratio of exploraration to exploitation.
+     * @return the ratio of exploration to exploitation.
      */
     public double getExploreExploitRatio() {
          return exploreExploitRatio_;
     }
 
     /**
-     * @param ratio the ratio of exploraration to exploitation.
+     * @param ratio the ratio of exploration to exploitation.
      */
     public void setExploreExploitRatio(double ratio) {
          exploreExploitRatio_ = ratio;

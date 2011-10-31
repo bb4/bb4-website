@@ -80,7 +80,7 @@ public final class GoTreeCellRenderer extends GameTreeCellRenderer {
     }
 
     /**
-     * Draw a nice icon to show whos move it corresponds to
+     * Draw a nice icon to show who's move it corresponds to
      */
     private void drawStoneIcon(boolean isPlayer1, Graphics2D g2) {
         if (isPlayer1)  {
@@ -91,7 +91,7 @@ public final class GoTreeCellRenderer extends GameTreeCellRenderer {
     }
 
     /**
-     * Draw the inhertied value, the base value, and the move(with its attributes) to the right of the icon.
+     * Draw the inherited value, the base value, and the move(with its attributes) to the right of the icon.
      */
     private void drawMoveText(TwoPlayerMove move, Graphics2D g2) {
 

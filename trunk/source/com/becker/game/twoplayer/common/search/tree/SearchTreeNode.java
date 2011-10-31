@@ -68,26 +68,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     }
 
     /**
-     * See if the specified move is already a child.
-     * @param theMove specified move to check
-     * @return the corresponding search node if it is a child.
-     */
-    public SearchTreeNode hasChild(TwoPlayerMove theMove) {
-
-        int numKids = children==null ? 0 :children.size();
-        Enumeration enumeration = children();
-        StringBuilder moves = new StringBuilder();
-        while (enumeration.hasMoreElements()) {
-            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
-            moves.append(node).append("\n");
-            if (theMove.equals(node.getUserObject())) {
-                return node;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Show nodes corresponding to pruned branches in the game tree (if one is used).
      *
      * @param list list of moves that resulted in pruned branches.

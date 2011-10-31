@@ -236,7 +236,7 @@ public class GoString extends GoSet
     }
     
     /**
-     * make sure all the stones in the string are visted/unvisited as specified.
+     * make sure all the stones in the string are visited/unvisited as specified.
      */
     public final void setVisited(boolean visited) {
         for (GoBoardPosition stone : getMembers()) {

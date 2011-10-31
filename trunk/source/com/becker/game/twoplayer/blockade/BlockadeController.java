@@ -20,7 +20,7 @@ import java.util.List;
  * Todo items
  *   - Restrict to N vertical and N horizontal walls, or allow not to place a wall.
  *     (perhaps only allow wall placements up to (xdim*ydim)/4 walls for each player)
- *   - computer moves only one space instead of two. Computer not winning at end whne one space more required.
+ *   - computer moves only one space instead of two. Computer not winning at end when one space more required.
  *   - The winner should win as soon as he lands on an opponent base and not have to wait to place the wall.
  *
  * @author Barry Becker
@@ -69,7 +69,7 @@ public class BlockadeController extends TwoPlayerController {
 
     /**
      * Measure is determined by the score (amount of territory)
-     * If called before the end of the game it just reutrns 0 - same as it does in the case of a tie.
+     * If called before the end of the game it just returns 0 - same as it does in the case of a tie.
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
     @Override

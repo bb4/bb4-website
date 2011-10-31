@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * The BlockadeBoardPosition describes the physical markers at a location on the board.
  * It can be empty or occupied. If occupied, then one of the BlockadePieces is there and it has an owner.
- * BlockadeBoardPosistions may have BlockadeWalls present when unoccupied.
+ * BlockadeBoardPositions may have BlockadeWalls present when unoccupied.
  *
  * @see BlockadeBoard
  * @author Barry Becker

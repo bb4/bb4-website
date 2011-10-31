@@ -72,7 +72,7 @@ public class BruteSearchOptions {
     }
 
     /**
-     * @param look the number of plys to look ahaead.
+     * @param look the number of plys to look ahead.
      */
     public final void setLookAhead( int look ) {
         lookAhead_ = look;

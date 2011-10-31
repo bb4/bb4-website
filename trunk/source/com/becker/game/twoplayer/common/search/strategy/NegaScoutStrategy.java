@@ -15,7 +15,7 @@ import com.becker.optimization.parameter.ParameterArray;
  * and iterative deepening.
  * See http://en.wikipedia.org/wiki/Negascout
  *
- *  psudo code:<pre>
+ *  psuedo code:<pre>
  *  int negascout(node, depth, α, β) {
  *     if node is a terminal node or depth = 0 {
  *         return the heuristic value of node

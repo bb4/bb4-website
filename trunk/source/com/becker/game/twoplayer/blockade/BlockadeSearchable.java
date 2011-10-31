@@ -17,7 +17,7 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
 
 /**
  * For searching the blockade tree.
- * Could extract moveGenerator and moveEvalutator.
+ * Could extract moveGenerator and moveEvaluator.
  *
  *
  * @author Barry Becker

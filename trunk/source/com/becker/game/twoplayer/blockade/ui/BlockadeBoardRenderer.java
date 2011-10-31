@@ -14,7 +14,7 @@ import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 
 import java.awt.*;
-import java.util.Iterator;
+
 import java.util.Set;
 
 /**
@@ -24,8 +24,8 @@ import java.util.Set;
  *
  * @author Barry Becker
  */
-public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
-{
+public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer {
+
     private static GameBoardRenderer renderer_;
 
     /** wall that gets dragged around until the player places it.   */
@@ -35,13 +35,11 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    protected BlockadeBoardRenderer()
-    {
+    protected BlockadeBoardRenderer() {
         pieceRenderer_ = BlockadePieceRenderer.getRenderer();
     }
 
-    public static GameBoardRenderer getRenderer()
-    {
+    public static GameBoardRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new BlockadeBoardRenderer();
         return renderer_;
@@ -56,8 +54,7 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
     }
 
     @Override
-    protected int getPreferredCellSize()
-    {
+    protected int getPreferredCellSize() {
         return 24;
     }
 
@@ -76,8 +73,7 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
      * @param yp y position
      * @return wall index corresponding to specified position.
      */
-    public int getWallIndexForPosition(int xp, int yp, Location loc, BlockadeBoard b)
-    {
+    public int getWallIndexForPosition(int xp, int yp, Location loc, BlockadeBoard b) {
         int numRows = b.getNumRows();
         int numCols = b.getNumCols();
         float x = (float)xp/cellSize_ - (int)(xp / cellSize_);
@@ -114,8 +110,7 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
 
     @Override
     protected void drawBackground( Graphics g, Board b, int startPos, int rightEdgePos, int bottomEdgePos,
-                                   int panelWidth, int panelHeight)
-    {
+                                   int panelWidth, int panelHeight) {
         super.drawBackground(g, b, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight);
 
         BlockadeBoard bb = (BlockadeBoard)b;
@@ -127,8 +122,7 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
     /**
      * Draw the home bases for the specified player.
      */
-    private void drawHomeBases(Graphics g, BlockadeBoard board, boolean player1)
-    {
+    private void drawHomeBases(Graphics g, BlockadeBoard board, boolean player1) {
         // draw the home bases
         BoardPosition[] homes = player1? board.getPlayer1Homes() : board.getPlayer2Homes();
 
@@ -146,8 +140,7 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
 
 
     @Override
-    protected void drawMarkers( IGameController controller, Graphics2D g2 )
-    {
+    protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
         BlockadeBoard board = (BlockadeBoard)controller.getBoard();
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();
@@ -174,11 +167,9 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
         if ( draggedWall_ != null ) {
             // first remember the walls currently there (if any) so they can be restored.
             Set<BlockadeBoardPosition> hsPositions = draggedWall_.getPositions();
-            Iterator it = hsPositions.iterator();
-            while (it.hasNext())  {
-                BlockadeBoardPosition pos = (BlockadeBoardPosition)it.next();
+            for (BlockadeBoardPosition pos : hsPositions) {
                 boolean vertical = draggedWall_.isVertical();
-                BlockadeWall cWall = vertical? pos.getEastWall() : pos.getSouthWall() ;
+                BlockadeWall cWall = vertical ? pos.getEastWall() : pos.getSouthWall();
 
                 // temporarily set the dragged wall long enough to render it.
                 if (vertical)
@@ -186,7 +177,7 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
                 else
                     pos.setSouthWall(draggedWall_);
 
-                BlockadePieceRenderer.renderWallAtPosition1( g2,  pos, cellSize, getMargin() );
+                BlockadePieceRenderer.renderWallAtPosition1(g2, pos, cellSize, getMargin());
 
                 // restore the actual wall
                 if (vertical)
@@ -196,7 +187,6 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
             }
         }
     }
-
 
 }
 

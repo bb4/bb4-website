@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  *  This is an abstract base class for all minimax based brute force search strategy.
- *  It's sublcasses define the key search algorithms for 2 player zero sum games with perfect information.
+ *  It's subclasses define the key search algorithms for 2 player zero sum games with perfect information.
  *
  *  @author Barry Becker
  */
@@ -26,7 +26,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
     /** if true, then use alpha-beta pruning. */
     final boolean alphaBeta_;
 
-    /** If true, then use additional queiscent search to extent the search tree for urgent moves. */
+    /** If true, then use additional quiescent search to extent the search tree for urgent moves. */
     private final boolean quiescence_;
 
     /** the number of plys to look ahead when searching. */
@@ -132,7 +132,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
     /**
      * This continues the search in situations where the board position is not stable.
      * For example, perhaps we are in the middle of a piece exchange (chess), or a large group is in atari (go).
-     * @return best quescent move
+     * @return best quiescent move
      */
     TwoPlayerMove quiescentSearch(TwoPlayerMove lastMove,
                                             int depth, SearchWindow window, SearchTreeNode parent) {

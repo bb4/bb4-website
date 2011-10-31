@@ -123,7 +123,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
     /**
       * Blockade pieces can move 1 or 2 spaces in any direction.
       * However, only in rare cases would you ever want to move only 1 space.
-      * For example, move 1 space to land on a home base, or in preparation to jump an oppponent piece.
+      * For example, move 1 space to land on a home base, or in preparation to jump an opponent piece.
       * They may jump over opponent pieces that are in the way (but they do not capture it).
       * The wall is ignored for the purposes of this method.
       *     Moves are only allowed if the candidate position is unoccupied (unless a home base) and if
@@ -164,7 +164,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * Find the shortest paths from the specified position to opponent homes.
      * We use DefaultMutableTreeNodes to represent nodes in the path.
      * If the number of paths returned by this method is less than NUM_HOMES,
-     * then there has been an illegal wall pacement, since according to the rules
+     * then there has been an illegal wall placement, since according to the rules
      * of the game there must always be paths from all pieces to all opponent homes.
      * If a pawn has reached an opponent home then the path magnitude is 0 and that player won.
      * 
@@ -291,7 +291,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
 
     /**
      * The index of the state for this position.
-     * @return The index of the state for tihs position.
+     * @return The index of the state for this position.
      */
     @Override
     public  int getStateIndex(BoardPosition pos) {

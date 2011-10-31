@@ -107,7 +107,7 @@ public class Path {
     }
     
     /**
-     *Stringify list path.
+     * Serialize list path.
      */
     @Override
     public String toString() {

@@ -23,7 +23,7 @@ public class BlockadeOptions extends TwoPlayerOptions {
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
     private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 0;
 
-    /** for any given ply never consider less taht this many moves. */
+    /** for any given ply never consider less that this many moves. */
     private static final int DEFAULT_MIN_BEST_MOVES = 5;
 
     private static final String DEFAULT_TONE = MusicMaker.APPLAUSE;
