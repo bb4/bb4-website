@@ -33,7 +33,7 @@ public interface ISearchableHelper {
 
     /**
      * @param progress how far into the game are we.
-     * @param player1 true if player one has just palyed.
+     * @param player1 true if player one has just played.
      * @return get the game file corresponding to the given amount of progress and the specified player.
      */
     String getTestFile(Progress progress, boolean  player1);

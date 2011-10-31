@@ -517,12 +517,12 @@
   </target>
   
   <target name="GoGui" depends="compile">
-    <echo message="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
+    <echo message="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.server.GtpTesujisoftGoServer"/>
     <antcall target="executeProgram2">
       <param name="className" value="gogui.Main"/>
       <param name="libPath" value="${libDir}/gogui7.1.jar"/>
       <param name="arg1" value="-program"/>
-      <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
+      <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.server.GtpTesujisoftGoServer"/>
     </antcall>
   </target>
 

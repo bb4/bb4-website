@@ -1,100 +1,62 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go;
+// Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+package com.becker.game.twoplayer.go.server;
 
 import com.becker.common.geometry.Location;
-import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
+import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.options.GoOptions;
 import go.Point;
 import gtp.GtpServer;
-import utils.Options;
 import utils.StringUtils;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.List;
 
 /**
  * This class wraps the GoController and provides an interface to a GTP based controller (front end ui).
- * GoGui is typically the controller I have used, but it could be any GTP based UI.
- * 
- * This wraps my Tesujisoft go engine so that a client program can use it.
- * If you want to have the Tesujisoft go engine play on KGS use GtpKgsTesujisoftGoClient.
  *
  * The key commands are:
  *   boardSize
  *   clear_board
  *   gen_move
  *   play
- * 
- * Inherits the ability to connect a Go program supporting GTP to a socket from GtpServer.
- *
- * @@ implement req_genmove
- * @@ implement final_status_list
+ *   @@ implement req_genmove
+ *   @@ implement final_status_list
  *
  *  @author Barry Becker
  */
-public class GtpTesujisoftGoServer
-    extends GtpServer
-{
+public class CommandHandler {
 
     /** Delay every command (seconds) */
     private int delay_;
-
     private int boardSize_;
-
-    private Thread thread_;
-
     private GoController controller_;
 
+
     /**
-     * the allowed GTP commands (most are required, some are optional)
+     * Constructor
+     * Load the resources for the go game, and initialize it.
+     * @@ pass in log?
+     * @throws Exception
      */
-    private enum Command {boardsize, clear_board, echo, echo_err, fixed_handicap,
-                         final_score, final_status_list, genmove, gogui_interrupt,
-                         list_commands, known_command, komi, name, play,
-                         protocol_version, reg_genmove, time_settings, time_left, undo, quit,
-                         tesujisoft_bwboard, tesujisoft_delay, tesujisoft_invalid,
-                         version}
+    public CommandHandler() throws Exception {
 
-
-    public GtpTesujisoftGoServer(InputStream in, OutputStream out, PrintStream logger)
-        throws Exception
-    {
-        super(in, out, logger);
-
-        // this will load the resources for the specified game.
         GameContext.loadGameResources("go");
         GameContext.setDebugMode(0);
-
         initSize(19);
-
-        thread_ = Thread.currentThread();
     }
 
-    /** where does this get set?
-    public int getPort() {
-        assert false; // dont call
-        return 0;
-    } */
+    public boolean handleCommand(String cmdLine, StringBuffer response) {
 
-    @Override
-    public boolean handleCommand(String cmdLine, StringBuffer response)
-    {
         String[] cmdArray = StringUtils.tokenize(cmdLine);
         String cmdStr = cmdArray[0];
         boolean status = true;
         // log("handling command="+ cmdStr);
 
-        Command cmd = Command.valueOf(cmdStr);
+        GTPCommand cmd = GTPCommand.valueOf(cmdStr);
 
         switch (cmd) {
             case boardsize :
@@ -144,7 +106,7 @@ public class GtpTesujisoftGoServer
             case protocol_version :
                 response.append('2'); break;
             case known_command :
-                Command.valueOf(cmdArray[1]); break;
+                GTPCommand.valueOf(cmdArray[1]); break;
             case list_commands :
                 listCommands(response);
                 break;
@@ -165,13 +127,6 @@ public class GtpTesujisoftGoServer
         return status;
     }
 
-
-    @Override
-    public void interruptCommand()
-    {
-        thread_.interrupt();
-    }
-
     private void initSize(int size) {
         controller_ = new GoController(size, 0);
         SearchOptions options = controller_.getTwoPlayerOptions().getSearchOptions();
@@ -186,20 +141,19 @@ public class GtpTesujisoftGoServer
 
     private void bwBoard(StringBuffer response) {
         response.append('\n');
-        for (int x = 0; x < boardSize_; ++x)
-        {
-            for (int y = 0; y < boardSize_; ++y)
+        for (int x = 0; x < boardSize_; ++x) {
+            for (int y = 0; y < boardSize_; ++y)  {
                 response.append(Math.random() > 0.5 ? "B " : "W ");
+            }
             response.append('\n');
         }
     }
 
     private boolean cmdBoardsize(String[] cmdArray, StringBuffer response) {
-        IntegerArgument argument = parseIntegerArgument(cmdArray, response);
+        GtpServer.IntegerArgument argument = GtpServer.parseIntegerArgument(cmdArray, response);
         if (argument == null)
             return false;
-        if (argument.m_integer < 1 || argument.m_integer > 100)
-        {
+        if (argument.m_integer < 1 || argument.m_integer > 100) {
             response.append("Invalid size");
             return false;
         }
@@ -213,15 +167,13 @@ public class GtpTesujisoftGoServer
     }
 
     private boolean cmdDelay(String[] cmdArray, StringBuffer response) {
-        IntegerArgument argument = parseIntegerArgument(cmdArray, response);
-        if (argument == null)
-        {
+        GtpServer.IntegerArgument argument = GtpServer.parseIntegerArgument(cmdArray, response);
+        if (argument == null) {
             response.delete(0, response.length());
             response.append(delay_);
             return true;
         }
-        if (argument.m_integer < 0)
-        {
+        if (argument.m_integer < 0)  {
             response.append("Argument must be positive");
             return false;
         }
@@ -230,8 +182,8 @@ public class GtpTesujisoftGoServer
     }
 
     private static void listCommands(StringBuffer response) {
-        for (int i=0; i<Command.values().length; i++) {
-            response.append(Command.values()[i]).append("\n");
+        for (int i=0; i<GTPCommand.values().length; i++) {
+            response.append(GTPCommand.values()[i]).append("\n");
         }
     }
 
@@ -256,10 +208,13 @@ public class GtpTesujisoftGoServer
         return true;
     }
 
-
+    /**
+     *
+     * @return
+     */
     private boolean cmdFixedHandicap(String[] cmdArray, StringBuffer response) {
-        IntegerArgument argument =
-            parseIntegerArgument(cmdArray, response);
+        GtpServer.IntegerArgument argument =
+            GtpServer.parseIntegerArgument(cmdArray, response);
         if (argument == null)
              return false;
 
@@ -268,8 +223,7 @@ public class GtpTesujisoftGoServer
 
         List moves = controller_.getMoveList();
 
-        if  (moves == null || moves.size() == 0)
-        {
+        if  (moves == null || moves.size() == 0) {
             response.append("Invalid number of handicap stones");
             return false;
         }
@@ -300,13 +254,15 @@ public class GtpTesujisoftGoServer
     }
 
     private void cmdInvalid() {
-        printInvalidResponse("This is an invalid GTP response.\n" +
+
+        System.err.println("This is an invalid GTP response.\n" +
                              "It does not start with a status character.\n");
+        //printInvalidResponse("*");  // m_out
     }
 
     private boolean cmdPlay(String[] cmdArray, StringBuffer response) {
-        ColorPointArgument argument =
-            parseColorPointArgument(cmdArray, response, boardSize_);
+        GtpServer.ColorPointArgument argument =
+            GtpServer.parseColorPointArgument(cmdArray, response, boardSize_);
         if (argument == null)
             return false;
 
@@ -321,8 +277,8 @@ public class GtpTesujisoftGoServer
     }
 
     private boolean cmdKomi(String[] cmdArray, StringBuffer response) {
-        DoubleArgument argument =
-            parseDoubleArgument(cmdArray, response);
+        GtpServer.DoubleArgument argument =
+            GtpServer.parseDoubleArgument(cmdArray, response);
         if (argument == null)
              return false;
 
@@ -333,107 +289,49 @@ public class GtpTesujisoftGoServer
 
     /**
      * Arguments: int main_time, int byo_yomi_time, int byo_yomi_stones
-     *Fails:     syntax error
+     * Fails:     syntax error
      * Returns:   nothing
      */
-     private boolean cmdTimeSettings(String[] cmdArray, StringBuffer response) {
+    private boolean cmdTimeSettings(String[] cmdArray, StringBuffer response) {
 
          //System.err.println("arg len for time_settings="+ cmdArray.magnitude);
          //System.err.println("time_settings = main="+ cmdArray[1] ); //+"  byo_yomi=" + byo_yomi_time +" stones=" + byo_yomi_stones);
          return true;
     }
 
-     /**
+    /**
      * Arguments: int main_time, int byo_yomi_time, int byo_yomi_stones
      *Fails:     syntax error
      * Returns:   nothing
      */
-     private boolean cmdTimeLeft(String[] cmdArray, StringBuffer response) {
+    private boolean cmdTimeLeft(String[] cmdArray, StringBuffer response) {
 
-         //System.err.println("arg len for time_left ="+ cmdArray.magnitude);
-         //System.err.println("time_left = main="+ cmdArray[1] ); //+"  byo_yomi=" + byo_yomi_time +" stones=" + byo_yomi_stones);
+        //System.err.println("arg len for time_left ="+ cmdArray.magnitude);
+        //System.err.println("time_left = main="+ cmdArray[1] ); //+"  byo_yomi=" + byo_yomi_time +" stones=" + byo_yomi_stones);
         return true;
     }
 
     private boolean cmdUndo(StringBuffer response) {
         Move m = controller_.undoLastMove();
-        if (m==null) {
+        if (m == null) {
             response.append("cannot undo");
             return false;
         }
         return true;
     }
 
-    private static void echo(String cmdLine, StringBuffer response)
-    {
+    private static void echo(String cmdLine, StringBuffer response) {
         int index = cmdLine.indexOf(" ");
         if (index < 0)
             return;
         response.append(cmdLine.substring(index + 1));
     }
 
-    private static void echoErr(String cmdLine)
-    {
+    private static void echoErr(String cmdLine) {
         int index = cmdLine.indexOf(" ");
         if (index < 0)
             return;
         System.err.println(cmdLine.substring(index + 1));
-    }
-
-
-//----------------------------------------------------------------------------
-
-    public static void main(String[] args)
-    {
-        try
-        {
-            String[] options = {
-                "config:",
-                "help",
-                "log",
-                "version"
-            };
-            Options opt = Options.parse(args, options);
-            if (opt.isSet("help"))
-            {
-                String helpText =
-                    "Usage: java -classpath "+
-                        FileUtil.PROJECT_HOME +
-                        "/classes com.becker.game.twoplayer.go.GtpTesujisoftGoServer [options]\n" +
-                        '\n' +
-                    "-config       config file\n" +
-                    "-help         display this help and exit\n" +
-                    "-log file     log GTP stream to file\n" +
-                    "-version      print version and exit\n";
-                System.out.print(helpText);
-                return;
-            }
-            if (opt.isSet("version"))
-            {
-                System.out.println("GtpTesujisoft " + GoController.VERSION);
-                return;
-            }
-            PrintStream log = null;
-            if (opt.isSet("log"))
-            {
-                File file = new File(opt.getString("log"));
-                log = new PrintStream(new FileOutputStream(file));
-            }
-            else {
-                String logFile = FileUtil.getHomeDir() + "/temp/" + "log.txt";
-                File file = new File(logFile);
-                log = new PrintStream(new FileOutputStream(file));
-            }
-
-            GtpTesujisoftGoServer gtpTSGoServer = new GtpTesujisoftGoServer(System.in, System.out, log);
-            gtpTSGoServer.mainLoop();
-            log.close();
-        }
-        catch (Throwable t)
-        {
-            StringUtils.printException(t);
-            System.exit(-1);
-        }
     }
 }
 

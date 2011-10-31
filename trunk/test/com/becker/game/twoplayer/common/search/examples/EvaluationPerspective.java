@@ -10,12 +10,12 @@ public enum EvaluationPerspective {
 
     /**
      * Always evaluate from player ones point of view.
-     * This is done for minimax for examle.
+     * This is done for minimax for example.
      */
     ALWAYS_PLAYER1,
 
     /**
-     * At a given level, evaluate the potential moves according to the player whos turn it is.
+     * At a given level, evaluate the potential moves according to the player who's turn it is.
      */
     CURRENT_PLAYER
 }

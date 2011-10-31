@@ -6,8 +6,8 @@ import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 
 /**
  * A simple game tree for testing quiescent search to a maximum depth.
- * cu subscipt = cause urgency
- * u subscript indicates an urgetn move.
+ * cu subscript = cause urgency
+ * u subscript indicates an urgent move.
  *
  *                 ____  [6]  _____
  *                /                \

@@ -4,7 +4,7 @@ package com.becker.game.twoplayer.common.search.strategy.integration;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 /**
- * Meta informatino about a move made during search.
+ * Meta information about a move made during search.
  *
  * @author Barry Becker
  */
