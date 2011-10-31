@@ -43,7 +43,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
     /**
      *  The primary way of computing the score for Chess is to just add up the pieces
      *  Kings should count more heavily. How much more is determined by the weights.
-     *  We also give a slight bonus for advancement of non-kings to incent them to
+     *  We also give a slight bonus for advancement of non-kings to incentivize them to
      *  become kings.
      *  note: lastMove is not used
      *  @return the value of the current board position

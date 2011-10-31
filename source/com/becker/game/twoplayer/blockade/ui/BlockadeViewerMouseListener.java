@@ -254,7 +254,7 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
      * If there is a piece at the destination already, or destination is out of bounds,
      * then return without doing anything.
      * @param destp position to move to.
-     * @return true if this is not a valie move.
+     * @return true if this is not a valid move.
      */
     private boolean customCheckFails(BoardPosition destp)
     {

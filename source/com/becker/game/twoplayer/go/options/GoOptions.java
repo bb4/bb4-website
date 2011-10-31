@@ -25,7 +25,7 @@ public class GoOptions extends TwoPlayerOptions {
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. Not used for go */
     private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 60;
 
-    /** for any given ply never consider less taht this many moves. */
+    /** for any given ply never consider less that this many moves. */
     private static final int DEFAULT_MIN_BEST_MOVES = 6;
 
 

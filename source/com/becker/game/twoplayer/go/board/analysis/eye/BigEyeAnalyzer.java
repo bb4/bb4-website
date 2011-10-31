@@ -44,7 +44,7 @@ class BigEyeAnalyzer {
      *
      * The pattern formed by the sorted list of neighbor counts uniquely determines the type.
      *
-     * @return the eye type determined based on the properties and nbrs of the positions in the spaces_ list.
+     * @return the eye type determined based on the properties and neighbors of the positions in the spaces_ list.
      */
     EyeInformation determineEyeInformation()
     {

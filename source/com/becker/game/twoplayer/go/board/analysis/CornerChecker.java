@@ -24,7 +24,7 @@ public final class CornerChecker
     /**
      * Corner triples are the 3 points closest to a corner
      * @param position position to see if in corner of board.
-     * @return true if the specified BoardPosition is on the corder of the board
+     * @return true if the specified BoardPosition is on the corner of the board
      */
     public boolean isCornerTriple(BoardPosition position) {
         return (isULCornerTriple(position) || isURCornerTriple(position)

@@ -71,7 +71,7 @@ public final class GoBoardPosition extends BoardPosition
     }
 
     /**
-     * @param string  the string owner we are assignign to this stone.
+     * @param string  the string owner we are assign to this stone.
      */
     public void setString( IGoString string ) {
         string_ = string;

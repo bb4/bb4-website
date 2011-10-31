@@ -63,7 +63,7 @@ public class ChessMove extends TwoPlayerMove
 
     /**
      * factory method for getting new moves.
-     * I used to use recylced objects, but it did not seem to improve performance so I dropped it.
+     * I used to use recycled objects, but it did not seem to improve performance so I dropped it.
      * @return new chess move
      */
     public static ChessMove createMove( Location origin, Location destination,

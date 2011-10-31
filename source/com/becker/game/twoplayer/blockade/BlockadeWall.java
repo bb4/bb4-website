@@ -93,7 +93,7 @@ public class BlockadeWall
     
     /**
      * @return either the top/north or the left/west board position 
-     *  depending on whether this is a vertical or horizotnal wall, respectively.
+     *  depending on whether this is a vertical or horizontal wall, respectively.
      */
     public BlockadeBoardPosition getFirstPosition() {
         Iterator<BlockadeBoardPosition> it = positions_.iterator();

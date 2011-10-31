@@ -175,7 +175,7 @@ class GoSGFLoader extends SGFLoader {
     // else if (tokenName.equals("HA") )
     //    token = new HandicapToken();
 
-    // these token names appear in the IGS test files, but I don't know what they are for, or they just arent that useful.
+    // these token names appear in the IGS test files, but I don't know what they are for, or they just aren't that useful.
     // see http://www.red-bean.com/sgf/proplist_t.html
     // ST  Style           root	      number (range: 0-3)
     // OT  Overtime        game-info        simpletext

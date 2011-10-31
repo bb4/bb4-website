@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Defines the structure of the Chess board and the pieces on it.
- * Chess is played on a ChekersBoard so we derive from that.
+ * Chess is played on a CheckersBoard so we derive from that.
  * @see CheckersBoard
  *
  * @author Barry Becker
@@ -193,7 +193,7 @@ public class ChessBoard extends CheckersBoard {
     }
 
     /**
-     * The index of the state for tihs position.
+     * The index of the state for this position.
      * Perhaps this would be better abstract.
      * @return The index of the state for tihs position.
      */

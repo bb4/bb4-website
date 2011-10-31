@@ -427,8 +427,7 @@ public class GtpTesujisoftGoServer
 
             GtpTesujisoftGoServer gtpTSGoServer = new GtpTesujisoftGoServer(System.in, System.out, log);
             gtpTSGoServer.mainLoop();
-            if (log != null)
-                log.close();
+            log.close();
         }
         catch (Throwable t)
         {

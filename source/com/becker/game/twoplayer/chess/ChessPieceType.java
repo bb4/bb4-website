@@ -179,7 +179,7 @@ public enum ChessPieceType {
     }
     
     /**
-     * find all the posible moves that this piece can make.
+     * find all the possible moves that this piece can make.
      * If checkingChecks is true then moves that lead to a king capture are not allowed.
      *
      * @param board  the board we are examining
