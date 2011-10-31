@@ -26,6 +26,7 @@ public class BlockadeOptions extends TwoPlayerOptions {
     /** for any given ply never consider less that this many moves. */
     private static final int DEFAULT_MIN_BEST_MOVES = 5;
 
+    /** Default sound when moving */
     private static final String DEFAULT_TONE = MusicMaker.APPLAUSE;
 
 
