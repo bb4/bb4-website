@@ -14,13 +14,11 @@ import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.go.board.analysis.BoardEvaluator;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.board.move.GoMoveGenerator;
+import com.becker.game.twoplayer.go.board.move.UrgentMoveGenerator;
 import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
 import com.becker.optimization.parameter.ParameterArray;
-
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -29,13 +27,6 @@ import java.util.List;
  * @author Barry Becker
  */
 public class GoSearchable extends TwoPlayerSearchable {
-
-    /**
-     * Size of group that needs to be in atari before we consider a group urgent.
-     * Perhaps this should be one.
-     */
-    private static final int CRITICAL_GROUP_SIZE = 3;
-
 
     /** keeps track of dead stones.  */
     private DeadStoneUpdater deadStoneUpdater_;
@@ -295,35 +286,8 @@ public class GoSearchable extends TwoPlayerSearchable {
      */
     public final MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights) {
 
-        MoveList moves = generateMoves(lastMove, weights);
-        GoMove lastMovePlayed = (GoMove) lastMove;
-
-        // just keep the moves that take captures
-        Iterator<Move> it = moves.iterator();
-        while ( it.hasNext() ) {
-            GoMove move = (GoMove) it.next();
-
-            // urgent if we capture or atari other stones.
-            boolean isUrgent = move.getNumCaptures() > 0 || putsGroupInAtari(lastMovePlayed);
-            if (isUrgent) {
-                move.setUrgent(true);
-            }
-            else {
-                it.remove();
-            }
-        }
-        return moves;
-    }
-
-    /**
-     * Determine if the last move caused atari on another group (without putting ourselves in atari).
-     * @param lastMovePlayed last position just played.
-     * @return true if the lastMovePlayed puts the lastPositions string in atari.
-     */
-    private boolean putsGroupInAtari(GoMove lastMovePlayed) {
-        GoBoardPosition lastPos = (GoBoardPosition) getBoard().getPosition(lastMovePlayed.getToLocation());
-        return (lastMovePlayed.numStonesAtaried(getBoard()) >= CRITICAL_GROUP_SIZE
-                && lastPos.getString().getNumLiberties(getBoard()) > 1);
+        UrgentMoveGenerator generator = new UrgentMoveGenerator(getBoard());
+        return generator.generateUrgentMoves(generateMoves(lastMove, weights), lastMove);
     }
 
     /**
@@ -334,8 +298,7 @@ public class GoSearchable extends TwoPlayerSearchable {
      */
     @Override
     public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights) {
-
-        return (( (GoMove)lastMove ).numStonesAtaried(getBoard()) >= CRITICAL_GROUP_SIZE);
+        return UrgentMoveGenerator.inJeopardy((GoMove)lastMove, getBoard());
     }
 
     /**
