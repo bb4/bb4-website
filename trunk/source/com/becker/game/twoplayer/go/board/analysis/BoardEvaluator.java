@@ -19,6 +19,7 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public final class BoardEvaluator {
 
+    /** If true, we attempt to hang onto worth values for board positions that we have see before. */
     private static final boolean USE_SCORE_CACHING = false;
 
     private GoBoard board_;
@@ -94,9 +95,11 @@ public final class BoardEvaluator {
         return worth;
     }
 
-
-    /** Used only for debugging to understand how the worth was calculated. */
-    WorthInfo getWorthInfo() {
+    /**
+     * Used only for debugging to understand how the worth was calculated.
+     * @return the worthInfo from the calculator.
+     */
+    private WorthInfo getWorthInfo() {
         return worthCalculator_.getWorthInfo();
     }
 
