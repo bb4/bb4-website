@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.go.board.analysis;
 
+import ca.dj.jigo.sgf.tokens.SourceToken;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.cache.ScoreCache;
 import com.becker.game.twoplayer.common.cache.ScoreEntry;
@@ -12,6 +13,8 @@ import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.optimization.parameter.ParameterArray;
 
+import javax.xml.transform.Source;
+
 /**
  * Responsible for evaluating groups and territory on a go board.
  *
@@ -20,7 +23,7 @@ import com.becker.optimization.parameter.ParameterArray;
 public final class BoardEvaluator {
 
     /** If true, we attempt to hang onto worth values for board positions that we have see before. */
-    private static final boolean USE_SCORE_CACHING = false;
+    private static final boolean USE_SCORE_CACHING = true;
 
     private GoBoard board_;
     private WorthCalculator worthCalculator_;
@@ -54,18 +57,17 @@ public final class BoardEvaluator {
 
     /**
      *  If we have a cached worth value for this board position, then use that instead of recomputing it.
+     *  Why doesn't playing with caching give same results as without? I think its because we can arrive at
+     *  identical board positions from different routes and they have different scores (may be related to ko)
      *  @return statically evaluated value for the board.
      */
     private int cachedWorth( Move lastMove, ParameterArray weights, HashKey key) {
-
-        // Try turning off all forms of go caching.
-        // Why doesn't playing with caching give same results as without?
-        //HashKey key = getHashKey();
 
         // uncomment this to do caching.
         ScoreEntry cachedScore = scoreCache_.get(key);
         ///////// comment this to do debugging
         //if (cachedScore != null) {
+        //    System.out.println("scoreCache_="+scoreCache_);
         //    return cachedScore.getScore();
         //}
 

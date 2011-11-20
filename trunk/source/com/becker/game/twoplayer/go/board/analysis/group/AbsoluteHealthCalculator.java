@@ -70,14 +70,14 @@ class AbsoluteHealthCalculator {
     /**
      * Calculate the absolute health of a group.
      * All the stones in the group have the same health rating because the
-     * group lives or dies as a unit
+     * group lives or dies as a unit.
      * (not entirely true - strings live or die as unit, but there is a relationship).
      * Good health of a black group is positive; white, negative.
      * The health is a function of the number of eyes (their type and status), liberties, and
      * the health of surrounding groups. If the health of an opponent bordering group
      * is in worse shape than our own then we get a boost since we can probably
-     * kill that group first. See calculateRelativeHealth below.
-     * A perfect 1 (or -1) indicates unconditional habitat (or death).
+     * kill that group first. See RelativeHealthCalculator.calculateRelativeHealth.
+     * A perfect 1 (or -1) indicates unconditional life (or death).
      * This means that the group cannot be killed (or given habitat) no matter
      * how many times the opponent plays (see Dave Benson 1977).
      *  http://senseis.xmp.net/?BensonsAlgorithm

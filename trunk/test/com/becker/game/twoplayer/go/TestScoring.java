@@ -17,19 +17,19 @@ public class TestScoring extends GoTestCase {
     private static final double TOLERANCE = 5;
 
     public void testScoring1() {
-        checkScoring("problem_score1", 0, 0, 0, 0, 74, 57);
+        checkScoring("problem_score1", 0, 0, 0, 0, 93, 76);
     }
 
     public void testScoring55a() {
-        checkScoring("problem_score55a", 0, 0, 0, 7, 17, 0);
+        checkScoring("problem_score55a", 0, 0, 0, 7, 16, 9); // 0, 0, 0, 7, 17, 0);
     }
 
     public void testScoring55b() {
-        checkScoring("problem_score55b", 0, 2, 0, 6, 14, 0);
+        checkScoring("problem_score55b", 0, 2, 0, 6, 14, 11);  // 0, 2, 0, 6, 14, 0);
     }
 
     public void testScoring2() {
-        checkScoring("problem_score2", 0, 0, 3, 0, 58, 57);
+        checkScoring("problem_score2", 0, 0, 3, 0, 85, 84);
     }
 
 

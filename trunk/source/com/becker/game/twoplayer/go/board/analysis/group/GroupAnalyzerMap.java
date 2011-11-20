@@ -2,7 +2,11 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.common.util.LRUCache;
+import com.becker.game.twoplayer.go.board.elements.group.GoGroup;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
+
+import java.util.Map;
+import java.util.WeakHashMap;
 
 
 /**
@@ -13,7 +17,7 @@ import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
  */
 public class GroupAnalyzerMap {
 
-    private LRUCache<IGoGroup, GroupAnalyzer> analyzerMap;
+    private Map<IGoGroup, GroupAnalyzer> analyzerMap;
 
     /**
      * Constructor.
@@ -21,8 +25,8 @@ public class GroupAnalyzerMap {
      * keeps it around when it is no longer on the board.
      */
     public GroupAnalyzerMap() {
-        analyzerMap = new LRUCache<IGoGroup, GroupAnalyzer>(2000);
-                    //new WeakHashMap<IGoGroup, GroupAnalyzer>();
+        analyzerMap =  new WeakHashMap<IGoGroup, GroupAnalyzer>();
+        // new LRUCache<IGoGroup, GroupAnalyzer>(2000);
     }
 
     /**
@@ -40,6 +44,13 @@ public class GroupAnalyzerMap {
         analyzerMap.put(group, analyzer);
 
         return analyzer;
+    }
+
+    public void clear() {
+        //for (GroupAnalyzer ga : analyzerMap.values()) {
+        //     ga.invalidate();
+        //}
+        analyzerMap.clear();
     }
 
 }

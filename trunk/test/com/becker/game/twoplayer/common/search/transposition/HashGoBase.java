@@ -104,6 +104,6 @@ public abstract class HashGoBase extends TestCase {
     }
 
     private ZobristHash createZobristHash() {
-        return new ZobristHash(board, 0, true);
+        return new ZobristHash(board, 0, false);
     }
 }

@@ -16,15 +16,6 @@ public class BoardUpdater {
     private CaptureCounts captureCounts_;
 
     /**
-     * Constructor
-     */
-    public BoardUpdater(GoBoard board) {
-
-        captureCounts_ = new CaptureCounts();
-        initialize(board);
-    }
-
-    /**
      * Essentially a copy constructor. The counts are preserved.
      * @param board board to update
      * @param capCounts current counts so they are not lost.

@@ -25,13 +25,13 @@ import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORI
 public class TerritoryAnalyzer {
 
     private GoBoard board_;
-    
+
     /**
      * The difference between the 2 player's territory.
-     * It is computed as black-white = sum(health of stone i) 
+     * It is computed as black-white = sum(health of stone i)
      */
     private float territoryDelta_ = 0;
-    
+
     /**
      * When the ratio of actual moves to expected moves exceeds this, then
      * take the analysis all the way to the edge of the board.
@@ -56,12 +56,11 @@ public class TerritoryAnalyzer {
         nbrAnalyzer_ = new NeighborAnalyzer(board);
         analyzerMap_ = analyzerMap;
     }
-    
+
     public float getTerritoryDelta() {
         return territoryDelta_;
     }
-  
-            
+
     /**
      * Get an estimate of the territory for the specified player.
      * This estimate is computed by summing all spaces in eyes with dead opponent stones that are still on the board.
@@ -71,8 +70,7 @@ public class TerritoryAnalyzer {
      * @param isEndOfGame use 0 or 1 instead of pos.scoreContribution if true.
      * @return estimate of territory for forPlayer1
      */
-    public int getTerritoryEstimate( boolean forPlayer1, boolean isEndOfGame)
-    {
+    public int getTerritoryEstimate( boolean forPlayer1, boolean isEndOfGame) {
         float territoryEstimate = 0;
 
         // we should be able to just sum all the position scores now.
@@ -151,10 +149,10 @@ public class TerritoryAnalyzer {
 
         prof.stopUpdateTerritory();
         territoryDelta_ = delta;
+        analyzerMap_.clear();  /// need?
+
         return delta;
     }
-
-
 
     /**
      * Clear whatever cached score state we might have before recomputing.

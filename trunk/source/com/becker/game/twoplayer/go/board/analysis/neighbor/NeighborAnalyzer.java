@@ -72,7 +72,7 @@ public class NeighborAnalyzer {
      * This set of stones constitutes a string, but since stones cannot belong to more than
      * one string we must return a List.
      * @param stone he stone from which to begin searching for the string
-     * @param returnToUnvisitedState if true then the stomes will all be marked unvisited when done searching
+     * @param returnToUnvisitedState if true then the stones will all be marked unvisited when done searching
      * @return find string.
      */
     public GoBoardPositionList findStringFromInitialPosition(GoBoardPosition stone,

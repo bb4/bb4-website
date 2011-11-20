@@ -60,7 +60,6 @@ public class GroupAnalyzer implements GroupChangeListener {
      * It changes by having stones added or removed.
      */
     public void groupChanged() {
-
         invalidate();
     }
 

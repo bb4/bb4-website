@@ -13,11 +13,11 @@ import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 public interface EyeInformation
 {
     /**
-     * The habitat property should be regarded as a property slightly below Benson's definition
-     * of unconditional habitat, because if we have an AliveInAtari status for an eye, it might be
+     * The life property should be regarded as a property slightly below Benson's definition
+     * of unconditional life, because if we have an AliveInAtari status for an eye, it might be
      * necessary to play inside the eye, but with the great advantage that detecting it
      * is just a matter of counting neighbours as it will be shown in Section 4.
-     * @return true if the shape has the habitat property
+     * @return true if the shape has the life property
      */
     boolean hasLifeProperty();
 
@@ -26,7 +26,7 @@ public interface EyeInformation
      * @return list of vital points where a point is described by an index created by adding the number of
      * neighbors to (those neighbor's neighbors)/100. so for example, 2.03 means the space has 2 nobi neighbors
      * and those 2 neighbors have a total of 3 neighbors.
-     * Returns an empty array if we have no vitals or the type has the habitat property.
+     * Returns an empty array if we have no vitals or the type has the life property.
      */
     float[] getVitalPoints();
 
@@ -38,7 +38,7 @@ public interface EyeInformation
      * @return list of end points where a point is described by an index created by adding the number of
      * neighbors to (those neighbor's neighbors)/100. so for example, 2.03 means the space has 2 nobi neighbors
      * and those 2 neighbors have a total of 3 neighbors.
-     * Returns an empty array if we have no vitals or the type has the habitat property.
+     * Returns an empty array if we have no vitals or the type has the life property.
      */
     float[] getEndPoints();
 

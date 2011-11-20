@@ -43,7 +43,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      *  For a star shape, the vital point is 4.04.
      *  For three in a row, the vital point is 1.02.
      * 
-     * @param life  true if this shape has the habitat property.
+     * @param life  true if this shape has the life property.
      * @param eyeSize number of spaces in the eye (e.g. 4 for a pyramid eye shape)
      * @param vitalPts Encoded location of the vital points
      */
@@ -86,7 +86,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
     }
 
     /**
-     * We only need to consider the non-habitat property status.
+     * We only need to consider the non-life property status.
      * @param eye eye
      * @param board   board
      * @return status of the eye shape.
@@ -152,7 +152,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
     }
 
     /**
-     * When the eye type has the habitat property, we can only be alive or alive in atari.
+     * When the eye type has the life property, we can only be alive or alive in atari.
      * @return either alive or alive in atari (rare)
      */
     EyeStatus handleSubtypeWithLifeProperty(IGoEye eye, GoBoard board) {

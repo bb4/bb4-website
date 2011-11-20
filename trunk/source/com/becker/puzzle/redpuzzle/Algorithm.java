@@ -19,7 +19,8 @@ public enum Algorithm implements AlgorithmEnum<PieceList, Piece> {
     BRUTE_FORCE_SEQUENTIAL("Brute force (sequential)"), 
     BRUTE_FORCE_CONCURRENT("Brute force (concurrent)"),
     BREADTH_FIRST_CONCURRENT("Mostly breath first concurrent"),
-    GENETIC_SEARCH("Genetic search");
+    GENETIC_SEARCH("Genetic search"),
+    CONCURRENT_GENETIC_SEARCH("Concurrent Genetic search");
     
     private String label;
     
@@ -51,7 +52,9 @@ public enum Algorithm implements AlgorithmEnum<PieceList, Piece> {
             case BREADTH_FIRST_CONCURRENT :
                 return new ConcurrentPuzzleSolver<PieceList, Piece>(controller, 0.1f, ui);
             case GENETIC_SEARCH :
-                return new GeneticSearchSolver( pieces, ui);
+                return new GeneticSearchSolver(pieces, ui, false);
+            case CONCURRENT_GENETIC_SEARCH :
+                return new GeneticSearchSolver(pieces, ui, true);
         }
         return null; //never reached
     }
