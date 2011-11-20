@@ -24,6 +24,9 @@ public final class ZobristHash {
     /** Get random 64bit integers with a seed so things are predictable. */
     private Random RANDOM;
 
+    /** Some random key representing a passing move */
+    private static final long PASS_MOVE_KEY = 3249913293473197278L;
+
     private TwoPlayerBoard board;
 
     private HashKey currentKey;
@@ -62,6 +65,10 @@ public final class ZobristHash {
     public void applyMove(Location move, int stateIndex) {
 
         applyPositionToKey(move, stateIndex);
+    }
+
+    public void applyPassingMove() {
+        currentKey.applyMove(null, PASS_MOVE_KEY);
     }
 
     public void applyMoveNumber(int number) {

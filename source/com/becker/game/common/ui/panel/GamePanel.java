@@ -61,7 +61,7 @@ public abstract class GamePanel extends TexturedPanel
     private ResizableAppletPanel resizablePanel_;
 
     /** font for the undo/redo buttons    */
-    private static final Font STATUS_FONT = new Font( "SansSerif", Font.PLAIN, 10 );
+    private static final Font STATUS_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 10 );
 
     /** A greeting specified using allophones. See SpeechSynthesizer.    */
     protected static final String[] GREETING = {"w|u|d", "y|ouu", "l|ii|k", "t|ouu", "p|l|ay", "aa", "gg|AY|M"};

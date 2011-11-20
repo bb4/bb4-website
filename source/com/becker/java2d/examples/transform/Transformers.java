@@ -1,4 +1,4 @@
-package com.becker.java2d.examples;
+package com.becker.java2d.examples.transform;
 
 import com.becker.ui.application.ApplicationFrame;
 
@@ -7,19 +7,16 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
-public abstract class Transformers extends Component
-{
+public abstract class Transformers extends Component {
     Shape mAxes, mShape;
     int mLength = 54, mArrowLength = 4, mTickSize = 4;
 
-    public Transformers()
-    {
+    public Transformers() {
         mAxes = createAxes();
         mShape = createShape();
     }
 
-    protected Shape createAxes()
-    {
+    protected Shape createAxes() {
         GeneralPath path = new GeneralPath();
 
         // Axes.
@@ -63,14 +60,12 @@ public abstract class Transformers extends Component
         return path;
     }
 
-    protected Shape createShape()
-    {
+    protected Shape createShape() {
         float cm = 72 / 2.54f;
         return new Rectangle2D.Float( cm, cm, 2 * cm, cm );
     }
 
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
 
@@ -101,8 +96,7 @@ public abstract class Transformers extends Component
 
     public abstract AffineTransform getTransform();
 
-    public Frame getFrame()
-    {
+    public Frame getFrame() {
         ApplicationFrame f = new ApplicationFrame( "...more than meets the eye" );
         f.getContentPane().setLayout( new BorderLayout() );
         f.getContentPane().add( this, BorderLayout.CENTER );

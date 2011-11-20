@@ -2,6 +2,7 @@
 package com.becker.puzzle.maze;
 
 import com.becker.common.concurrency.ThreadUtil;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +59,7 @@ public class MazePanel extends JComponent {
         int h = dim.height / thickness;
 
         int fontSize = 2 + ((int) cellSize_ >> 1);
-        textFont_ = new Font("Serif", Font.BOLD, fontSize);
+        textFont_ = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.BOLD, fontSize);
 
         maze_ = new MazeModel(w, h);
     }

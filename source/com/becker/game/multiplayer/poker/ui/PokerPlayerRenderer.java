@@ -197,7 +197,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer
     private static final double CHIP_PILE_WIDTH = 0.9;
     private static final double CHIP_HEIGHT = 0.15;
     private static final int POKER_CHIP_FONT_SIZE = 6;
-    private static final Font POKER_CHIP_FONT = new Font( "Sans-serif", Font.PLAIN, POKER_CHIP_FONT_SIZE );
+    private static final Font POKER_CHIP_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, POKER_CHIP_FONT_SIZE );
 
 
     public void renderChips(Graphics2D g2, Location location, int amount, int cellSize) {

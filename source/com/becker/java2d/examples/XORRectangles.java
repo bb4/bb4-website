@@ -6,17 +6,11 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-public class XORRectangles
-{
-    public static void main( String[] args )
-    {
-        ApplicationFrame f = new ApplicationFrame( "XORRectangles v1.0" )
-        {
-            private int mNumberOfLines = 25;
-            private Color[] mColors = {Color.red, Color.green, Color.blue};
+public class XORRectangles {
+    public static void main( String[] args ) {
+        ApplicationFrame f = new ApplicationFrame( "XORRectangles v1.0" ) {
 
-            public void paint( Graphics g )
-            {
+            public void paint( Graphics g ) {
                 Graphics2D g2 = (Graphics2D) g;
 
                 // Set XOR mode, using white as the XOR color.

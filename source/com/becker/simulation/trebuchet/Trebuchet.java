@@ -2,6 +2,7 @@
 package com.becker.simulation.trebuchet;
 
 import com.becker.common.ILog;
+import com.becker.ui.util.GUIUtil;
 import com.becker.ui.util.Log;
 
 import javax.vecmath.Vector2d;
@@ -22,7 +23,7 @@ import static java.lang.Math.*;
  */
 public class Trebuchet {
 
-    protected static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
+    protected static final Font BASE_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12 );
     protected static final int LOG_LEVEL = 1;
 
     protected static final double MIN_EDGE_ANGLE = 0.3;

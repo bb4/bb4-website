@@ -29,6 +29,8 @@ package com.becker.sound;
  * redistribute the Software for such purposes.
  */
 
+import com.becker.ui.util.GUIUtil;
+
 import javax.sound.midi.*;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -701,7 +703,7 @@ public class MidiSynth extends JPanel {
 
         public JButton createButton(String name, JPanel p, boolean state) {
             JButton b = new JButton(name);
-            b.setFont(new Font("serif", Font.PLAIN, 10));
+            b.setFont(new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 10));
             b.setEnabled(state);
             b.addActionListener(this);
             p.add(b);

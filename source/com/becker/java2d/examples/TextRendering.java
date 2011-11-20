@@ -5,14 +5,11 @@ import com.becker.ui.application.ApplicationFrame;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
-public class TextRendering
-{
-    public static void main( String[] args )
-    {
-        Frame frame = new ApplicationFrame( "TextRendering v1.0" )
-        {
-            public void paint( Graphics g )
-            {
+public class TextRendering {
+
+    public static void main( String[] args ) {
+        Frame frame = new ApplicationFrame( "TextRendering v1.0" ) {
+            public void paint( Graphics g ) {
                 super.paint(g);
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,

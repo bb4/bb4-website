@@ -13,7 +13,7 @@ public class OutputWindow extends AbstractDialog {
 
     protected JTextArea textArea_ = null;
 
-    private static final Font TEXT_FONT = new Font( "Times-Roman", Font.PLAIN, 10 );
+    private static final Font TEXT_FONT = new Font("Times-Roman", Font.PLAIN, 10 );
     private static final Dimension DEFAUT_SIZE = new Dimension( 500, 400 );
     private static final long serialVersionUID = 1234L;
 

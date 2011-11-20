@@ -17,19 +17,35 @@ public class TestScoring extends GoTestCase {
     private static final double TOLERANCE = 5;
 
     public void testScoring1() {
-        checkScoring("problem_score1", 0, 0, 0, 0, 93, 76);
+        checkScoring("problem_score1", 0, 0, 0, 0, 93, 76, -12);
     }
 
     public void testScoring55a() {
-        checkScoring("problem_score55a", 0, 0, 0, 7, 16, 9); // 0, 0, 0, 7, 17, 0);
+        checkScoring("problem_score55a", 0, 0, 0, 7, 16, 9, 452); // 0, 0, 0, 7, 17, 0);
     }
 
     public void testScoring55b() {
-        checkScoring("problem_score55b", 0, 2, 0, 6, 14, 11);  // 0, 2, 0, 6, 14, 0);
+        checkScoring("problem_score55b", 0, 2, 0, 6, 14, 11, 1604);  // 0, 2, 0, 6, 14, 0);
     }
 
     public void testScoring2() {
-        checkScoring("problem_score2", 0, 0, 3, 0, 85, 84);
+        checkScoring("problem_score2", 0, 0, 3, 0, 85, 84, -163);
+    }
+
+    public void testScoringIdentPosition1a() {
+        checkScoring("problem_identPosition1a", 0, 0, 4, 0, 13, 12, -105);
+    }
+
+    public void testScoringIdentPosition1b() {
+        checkScoring("problem_identPosition1b", 0, 0, 4, 0, 13, 12, -105);
+    }
+
+    public void testScoringIdentPosition2a() {
+        checkScoring("problem_identPosition2a", 0, 0, 2, 1, 4, 5, 19);
+    }
+
+    public void testScoringIdentPosition2b() {
+        checkScoring("problem_identPosition2b", 0, 1, 2, 1, 4, 5, 596);
     }
 
 
@@ -46,7 +62,7 @@ public class TestScoring extends GoTestCase {
     private void checkScoring(String scoringProblem,
                         int expectedBlackCapturesSoFar, int expectedWhiteCapturesSoFar,
                         int expectedDeadBlackOnBoard, int expectedDeadWhiteOnBoard,
-                        int expectedBlackTerr, int expectedWhiteTerr) {
+                        int expectedBlackTerr, int expectedWhiteTerr, int expectedFinalWorth) {
 
         updateLifeAndDeath(PATH_PREFIX + scoringProblem);
 
@@ -60,24 +76,29 @@ public class TestScoring extends GoTestCase {
 
         GameContext.log(0, "CaptureCounts :          black = " + numBlackCaptures + "   white = "+ numWhiteCaptures);
         GameContext.log(0, "Territory: black = " + blackTerrEst + "   white = "+ whiteTerrEst);
-        assertTrue(
-                "Unexpected number of black captures. Expected "+expectedBlackCapturesSoFar+" got "+numBlackCaptures,
-                numBlackCaptures == expectedBlackCapturesSoFar);
-        assertTrue(
-                "Unexpected number of white captures. Expected "+expectedWhiteCapturesSoFar+" got "+numWhiteCaptures,
-                numWhiteCaptures == expectedWhiteCapturesSoFar);
-        assertTrue(
-                "Unexpected number of dead black stones on board. Expected "+expectedDeadBlackOnBoard+" got "+numDeadBlack,
-                numDeadBlack == expectedDeadBlackOnBoard);
-        assertTrue(
-                "Unexpected number of dead white stones on board. Expected "+expectedDeadWhiteOnBoard+" got "+numDeadWhite,
-                numDeadWhite == expectedDeadWhiteOnBoard);
+        assertEquals(
+                "Unexpected number of black captures. Expected ",
+                 expectedBlackCapturesSoFar, numBlackCaptures);
+        assertEquals(
+                "Unexpected number of white captures. Expected ",
+                 expectedWhiteCapturesSoFar, numWhiteCaptures);
+        assertEquals(
+                "Unexpected number of dead black stones on board",
+                 expectedDeadBlackOnBoard, numDeadBlack);
+        assertEquals(
+                "Unexpected number of dead white stones on board.",
+                expectedDeadWhiteOnBoard, numDeadWhite);
         assertTrue("The black territory estimate ("+ blackTerrEst +") was not close to "+ expectedBlackTerr,
                           withinBounds(blackTerrEst, expectedBlackTerr));
         assertTrue("The white territory estimate ("+ whiteTerrEst +") was not close to "+ expectedWhiteTerr,
                           withinBounds(whiteTerrEst, expectedWhiteTerr));
         // see if a given move is in jeopardy
         //controller_.inJeopardy();
+
+        int finalWorth = searchable.worth(searchable.getMoveList().getLastMove(),
+                                     controller_.getComputerWeights().getDefaultWeights());
+        assertEquals("Unexpected worth for final move.", expectedFinalWorth, finalWorth);
+
     }
 
     private static boolean withinBounds(int actual, int expected) {

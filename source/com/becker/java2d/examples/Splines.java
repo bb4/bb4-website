@@ -12,20 +12,18 @@ import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.Rectangle2D;
 
-public class DragKing extends ApplicationFrame
-                                    implements MouseListener, MouseMotionListener
-{
-    public static void main( String[] args )
-    {
-        new DragKing();
+public class Splines extends ApplicationFrame
+                      implements MouseListener, MouseMotionListener {
+
+    public static void main( String[] args ) {
+        new Splines();
     }
 
     protected Point2D[] mPoints;
     protected Point2D mSelectedPoint;
 
-    public DragKing()
-    {
-        super( "DragKing v1.0" );
+    public Splines() {
+        super( "Splines v1.0" );
         setSize( 300, 300 );
         //center();
 
@@ -48,12 +46,9 @@ public class DragKing extends ApplicationFrame
         // Listen for mouse events.
         addMouseListener( this );
         addMouseMotionListener( this );
-
-        //setVisible( true );
     }
 
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
 
@@ -98,8 +93,7 @@ public class DragKing extends ApplicationFrame
         }
     }
 
-    protected Shape getControlPoint( Point2D p )
-    {
+    protected Shape getControlPoint( Point2D p ) {
         // Create a small square around the given point.
         int side = 4;
         return new Rectangle2D.Double(
@@ -107,12 +101,9 @@ public class DragKing extends ApplicationFrame
                 side, side );
     }
 
-    public void mouseClicked( MouseEvent me )
-    {
-    }
+    public void mouseClicked( MouseEvent me ) {}
 
-    public void mousePressed( MouseEvent me )
-    {
+    public void mousePressed( MouseEvent me )  {
         mSelectedPoint = null;
         for ( int i = 0; i < mPoints.length; i++ ) {
             Shape s = getControlPoint( mPoints[i] );
@@ -124,27 +115,18 @@ public class DragKing extends ApplicationFrame
         repaint();
     }
 
-    public void mouseReleased( MouseEvent me )
-    {
-    }
+    public void mouseReleased( MouseEvent me ) {}
 
-    public void mouseMoved( MouseEvent me )
-    {
-    }
+    public void mouseMoved( MouseEvent me ) {}
 
-    public void mouseDragged( MouseEvent me )
-    {
+    public void mouseDragged( MouseEvent me ) {
         if ( mSelectedPoint != null ) {
             mSelectedPoint.setLocation( me.getPoint() );
             repaint();
         }
     }
 
-    public void mouseEntered( MouseEvent me )
-    {
-    }
+    public void mouseEntered( MouseEvent me ) {}
 
-    public void mouseExited( MouseEvent me )
-    {
-    }
+    public void mouseExited( MouseEvent me ) {}
 }

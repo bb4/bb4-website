@@ -30,7 +30,7 @@ public class StoryEditorDialog extends AbstractDialog
 
     private SceneEditorPanel sceneEditor;
 
-    private static final Font INSTRUCTION_FONT = new Font("Sans Serif", Font.PLAIN, 10);
+    private static final Font INSTRUCTION_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 10);
 
     private List<Scene>  parentScenes_;
     private ChildTable  childTable_;

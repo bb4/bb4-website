@@ -9,14 +9,12 @@ import java.awt.font.GlyphVector;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class ClipImage extends ApplicationFrame
-{
+public class ClipImage extends ApplicationFrame {
     private Shape mClippingShape;
     
     final BufferedImage image;
     
-    public ClipImage(String title) throws IOException
-    {
+    public ClipImage(String title) throws IOException {
         super(title);
         
         String filename = Utilities.DEFAULT_IMAGE_DIR+ "roa2.jpg";  
@@ -32,8 +30,7 @@ public class ClipImage extends ApplicationFrame
         // in.close();
     }
     
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         Dimension d = getSize();
@@ -43,8 +40,7 @@ public class ClipImage extends ApplicationFrame
         g2.drawImage( image, 0, 0, null );
     }
 
-    private Shape getClippingShape( Graphics2D g2 )
-    {
+    private Shape getClippingShape( Graphics2D g2 ) {
         if ( mClippingShape != null ) return mClippingShape;
         String s = "bella";
         Font font = new Font( "Serif", Font.PLAIN, 32 );
@@ -54,8 +50,7 @@ public class ClipImage extends ApplicationFrame
         return mClippingShape;
     }
             
-    public static void main( String[] args ) throws IOException
-    {
+    public static void main( String[] args ) throws IOException {
         
         
         ClipImage frame = new ClipImage( "ClipImage v1.0" );      
