@@ -134,14 +134,8 @@ public class GoTestCase extends TestCase {
         GameContext.log(0, "finding score for "+problemFile+" ...");
         restore(problemFile);
 
-        // must check the worth of the board once to update the scoreContributions fo empty spaces.
-        //List moves =
-        controller_.getMoveList();
-        //double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true); // need?
-
         // force dead stones to be updated by calling done with resignation move.
         controller_.getSearchable().done(GoMove.createResignationMove(true), true);
-        //controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
     }
 
 

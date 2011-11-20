@@ -5,6 +5,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.online.ui.ChatWindow;
 import com.becker.ui.components.TexturedPanel;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -26,9 +27,9 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     protected JLabel moveNumLabel_;
     protected JLabel playerLabel_;
 
-    private static final Font SECTION_TITLE_FONT = new Font( "SansSerif", Font.BOLD, 12 );
-    private static final Font PLAYER_FONT = new Font( "SansSerif", Font.BOLD, 12 );
-    private static final Font LABEL_FONT = new Font( "SansSerif", Font.PLAIN, 12 );
+    private static final Font SECTION_TITLE_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.BOLD, 12 );
+    private static final Font PLAYER_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.BOLD, 12 );
+    private static final Font LABEL_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12 );
     private static final int DEFAULT_MIN_WIDTH = 210;
     private static final int MAX_HEIGHT = 1000;
 

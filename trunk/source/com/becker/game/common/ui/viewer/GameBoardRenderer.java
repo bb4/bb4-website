@@ -7,6 +7,7 @@ import com.becker.game.common.IGameController;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.ui.themes.BarryTheme;
+import com.becker.ui.util.GUIUtil;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -47,7 +48,7 @@ public abstract class GameBoardRenderer {
     protected Color backgroundColor_ = BACKGROUND_COLOR;
     private Color gridColor_ = GRID_COLOR;
 
-    private static final Font VIEWER_FONT = new Font( "SansSerif", Font.PLAIN, 8 );
+    private static final Font VIEWER_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 8 );
     protected static final Color LAST_MOVE_INDICATOR_COLOR = new Color( 255, 100, 0 );
     protected static final Stroke LAST_MOVE_INDICATOR_STROKE = new BasicStroke(2);
     // dont allow the cells of the game board to get smaller than this

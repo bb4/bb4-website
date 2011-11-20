@@ -1,6 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.apps.misc.colormixer;
 
+import com.becker.ui.util.GUIUtil;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -30,7 +32,7 @@ public class MixPanel extends JPanel {
 
     public static final int NUM_TYPES = 8;
     */
-    private static final Font FONT = new Font(Font.SANS_SERIF, Font.BOLD, 16);
+    private static final Font FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.BOLD, 16);
 
     private Color colorA_;
     private Color colorB_;

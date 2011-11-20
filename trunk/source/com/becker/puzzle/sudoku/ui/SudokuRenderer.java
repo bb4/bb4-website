@@ -6,6 +6,7 @@ import com.becker.puzzle.sudoku.model.ValueConverter;
 import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.model.board.Candidates;
 import com.becker.puzzle.sudoku.model.board.Cell;
+import com.becker.ui.util.GUIUtil;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -115,7 +116,7 @@ public class SudokuRenderer implements CellLocator {
 
         int jittered_xpos = xpos + (int)(Math.random() * 3 - 1);
         int jittered_ypos = ypos + (int)(Math.random() * 3 - 1);
-        Font font = new Font("Sans Serif", Font.PLAIN, pieceSize >> 1);
+        Font font = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, pieceSize >> 1);
 
         g2.setFont(font);
         g2.setColor( cell.isOriginal() ? CELL_ORIG_BACKGROUND_COLOR : CELL_BACKGROUND_COLOR );

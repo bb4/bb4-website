@@ -35,8 +35,9 @@ public final class GUIUtil {
     /** default location of files on the local system unless otherwise specified. */
     public static final String RESOURCE_ROOT = FileUtil.PROJECT_HOME + "source/";
 
+    public static final String DEFAULT_FONT_FAMILY = "Verdana"; //"Ænigma Scrawl 4 BRK"; //"Nyala";//"Raavi";
 
-    // webstart services
+    /** webstart services  */
     private static BasicService basicService_ = null;
 
     /**
@@ -54,7 +55,7 @@ public final class GUIUtil {
     }
 
     /**
-     *  Set the ui looki and feel to my very own.
+     *  Set the ui look and feel to my very own.
      */
     public static void setCustomLookAndFeel()  {
         BarryTheme theme = new BarryTheme();

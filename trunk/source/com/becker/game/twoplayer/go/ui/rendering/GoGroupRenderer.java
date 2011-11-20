@@ -15,6 +15,7 @@ import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
+import com.becker.ui.util.GUIUtil;
 
 import java.awt.*;
 import java.awt.geom.Area;
@@ -376,7 +377,7 @@ final class GoGroupRenderer {
     private void drawEyes(GoEyeSet eyes)
     {
         if ( !eyes.isEmpty() ) {
-            Font font = new Font( "SanSerif", Font.PLAIN, (int) (1.6 * Math.sqrt( cellSize_ ) - 1) );
+            Font font = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, (int) (1.6 * Math.sqrt( cellSize_ ) - 1) );
             g2_.setFont( font );
             g2_.setColor( EYE_TEXT_COLOR );
 

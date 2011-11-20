@@ -6,6 +6,7 @@ import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
 import com.becker.java2d.gradient.RoundGradientPaint;
+import com.becker.ui.util.GUIUtil;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -22,7 +23,7 @@ import java.awt.geom.Point2D;
 public abstract class GamePieceRenderer
 {
 
-    protected static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
+    protected static final Font BASE_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12 );
 
     protected static final Point2D.Double SPEC_HIGHLIGHT_RADIUS = new Point2D.Double( 0, 7 );
 

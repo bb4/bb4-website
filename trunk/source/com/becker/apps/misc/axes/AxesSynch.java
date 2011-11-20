@@ -21,7 +21,7 @@ public class AxesSynch extends JApplet {
         GUIUtil.setCustomLookAndFeel();
 
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        setFont( new Font( "Serif", Font.PLAIN, 14 ) );
+        setFont( new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 14 ) );
 
         JPanel mainPanel = createMainPanel();
 

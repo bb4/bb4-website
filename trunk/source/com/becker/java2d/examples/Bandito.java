@@ -10,15 +10,13 @@ import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
-public class Bandito
-{
-    public static void main( String[] args )
-    {
+public class Bandito {
+
+    public static void main( String[] args ) {
         // Create a frame window to hold everything.
         ApplicationFrame f = new ApplicationFrame( "Bandito v1.0" );
         // Create a SplitImageComponent with the source image.
         String filename = Utilities.DEFAULT_IMAGE_DIR+ "EtholWithRoses.small.jpg"; //"Raphael.jpg";
-        //String filename = "Raphael.jpg";
         SplitImageComponent sic = new SplitImageComponent( filename );
 
         // Create a BandCombineOp.

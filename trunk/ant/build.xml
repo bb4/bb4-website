@@ -504,11 +504,6 @@
      </antcall>
   </target>
 
-
-  <target name="showFonts" depends="compile">
-     <java classname="com.becker.java2d.examples.ShowFonts" classpath="${classesDir}"/>
-  </target>
-
   <target name="kgsTesujisoftGoClient" depends="compile" description="run the Tesujisoft Go engine on KGS.">
      <antcall target="executeProgram">
       <param name="className" value="com.becker.game.twoplayer.go.GtpKgsTesujisoftGoClient"/>

@@ -1,21 +1,20 @@
-package com.becker.java2d.examples;
+package com.becker.java2d.examples.transform;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
-public class TransformersTranslatedRotation
+public class TransformersTranslation
         extends Transformers
 {
     public static void main( String[] args )
     {
-        Transformers t = new TransformersTranslatedRotation();
+        Transformers t = new TransformersTranslation();
         Frame f = t.getFrame();
         f.setVisible( true );
     }
 
     public AffineTransform getTransform()
     {
-        float cm = 72 / 2.54f;
-        return AffineTransform.getRotateInstance( -Math.PI / 6, 3 * cm, 2 * cm );
+        return AffineTransform.getTranslateInstance( 150, 0 );
     }
 }

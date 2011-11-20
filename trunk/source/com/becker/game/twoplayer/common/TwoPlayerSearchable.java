@@ -67,9 +67,11 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
 
         getBoard().makeMove( m );
 
-        if (!m.isPassingMove())  {
-             Location loc = m.getToLocation();
-             hash.applyMove(loc, getBoard().getStateIndex(getBoard().getPosition(loc)));
+        if (m.isPassingMove())  {
+            hash.applyPassingMove();
+        } else {
+            Location loc = m.getToLocation();
+            hash.applyMove(loc, getBoard().getStateIndex(getBoard().getPosition(loc)));
         }
     }
 

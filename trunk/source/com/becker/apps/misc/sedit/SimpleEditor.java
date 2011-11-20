@@ -51,7 +51,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
         editArea = new JTextArea(40, 75);
         editArea.setMargin(new Insets(5, 5, 5, 5));
         editArea.setEditable(true);
-        editArea.setFont(new Font("Helvetica", Font.PLAIN, 12));
+        editArea.setFont(new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12));
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());   

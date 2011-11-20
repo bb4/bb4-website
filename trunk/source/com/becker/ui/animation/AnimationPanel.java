@@ -2,6 +2,8 @@
 package com.becker.ui.animation;
 
 
+import com.becker.ui.util.GUIUtil;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,7 +18,7 @@ public final class AnimationPanel extends JPanel implements AnimationChangeListe
     public AnimationPanel( AnimationComponent ac ) {
 
         setLayout( new BorderLayout() );
-        setFont( new Font( "Serif", Font.PLAIN, 12 ) );
+        setFont( new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12 ) );
 
         this.add( ac, BorderLayout.CENTER );
         this.add( mStatusLabel = new Label(), BorderLayout.SOUTH );

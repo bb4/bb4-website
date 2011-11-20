@@ -8,6 +8,7 @@ import com.becker.simulation.liquid.model.Cell;
 import com.becker.simulation.liquid.model.Grid;
 import com.becker.simulation.liquid.model.LiquidEnvironment;
 import com.becker.simulation.liquid.model.Particle;
+import com.becker.ui.util.GUIUtil;
 
 import javax.vecmath.Vector2d;
 import java.awt.*;
@@ -40,7 +41,7 @@ public final class EnvironmentRenderer {
 
     private static final ColorMap pressureColorMap_ = new PressureColorMap();
 
-    private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
+    private static final Font BASE_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12 );
 
     private double scale_ = DEFAULT_SCALE;
 

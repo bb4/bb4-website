@@ -12,12 +12,11 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
-public class TextBouncer extends AnimationComponent
-{
+public class TextBouncer extends AnimationComponent {
+
     private static final float SHEAR_SCALE = 0.02f;
     
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         String s = "Firenze";
         final int size = 64;
         if ( args.length > 0 ) s = args[0];
@@ -42,8 +41,7 @@ public class TextBouncer extends AnimationComponent
         controls.add( bouncer.createCheckbox( "Axes", TextBouncer.AXES ) );
 
         Panel fontControls = new Panel();
-        choice.addItemListener( new ItemListener()
-        {
+        choice.addItemListener( new ItemListener() {
             public void itemStateChanged( ItemEvent ie )
             {
                 Font font = new Font( choice.getSelectedItem(), Font.PLAIN, size );
@@ -74,8 +72,7 @@ public class TextBouncer extends AnimationComponent
     private float mShearX, mShearY, mShearDeltaX, mShearDeltaY;
     private String mString;
 
-    public TextBouncer( String s, Font f )
-    {
+    public TextBouncer( String s, Font f ) {
         mString = s;
         setFont( f );
         reset();
@@ -84,8 +81,7 @@ public class TextBouncer extends AnimationComponent
         mWidth = (float) bounds.getWidth();
         mHeight = (float) bounds.getHeight();
         // Make sure points are within range.
-        addComponentListener( new ComponentAdapter()
-        {
+        addComponentListener( new ComponentAdapter()  {
             public void componentResized( ComponentEvent ce )
             {
                 Dimension d = getSize();
@@ -150,8 +146,7 @@ public class TextBouncer extends AnimationComponent
         return check;
     }
 
-    public double timeStep()
-    {
+    public double timeStep() {
         Dimension d = getSize();
         if ( mX + mDeltaX < 0 )
             mDeltaX = -mDeltaX;
@@ -177,8 +172,7 @@ public class TextBouncer extends AnimationComponent
         return 0;
     }
 
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         Graphics2D g2 = (Graphics2D) g;
         setAntialiasing( g2 );
         setTransform( g2 );
@@ -189,15 +183,13 @@ public class TextBouncer extends AnimationComponent
         drawAxes( g2 );
     }
 
-    protected void setAntialiasing( Graphics2D g2 )
-    {
+    protected void setAntialiasing( Graphics2D g2 ) {
         if ( mAntialiasing == false ) return;
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON );
     }
 
-    protected void setTransform( Graphics2D g2 )
-    {
+    protected void setTransform( Graphics2D g2 ) {
         Dimension d = getSize();
         int cx = d.width / 2;
         int cy = d.height / 2;
@@ -207,8 +199,7 @@ public class TextBouncer extends AnimationComponent
         g2.translate( -cx, -cy );
     }
 
-    protected void setPaint( Graphics2D g2 )
-    {
+    protected void setPaint( Graphics2D g2 ) {
         if ( mGradient ) {
             GradientPaint gp = new GradientPaint( 0, 0, Color.blue,
                     50, 25, Color.green, true );
@@ -218,8 +209,7 @@ public class TextBouncer extends AnimationComponent
             g2.setPaint( Color.orange );
     }
 
-    protected void drawAxes( Graphics2D g2 )
-    {
+    protected void drawAxes( Graphics2D g2 ) {
         if ( mAxes == false ) return;
         g2.setPaint( getForeground() );
         g2.setStroke( new BasicStroke() );

@@ -14,8 +14,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
-public class Bouncer extends AnimationComponent
-{    
+public class Bouncer extends AnimationComponent {
 
     // Tweakable variables
     private boolean mAntialiasing, mGradient, mOutline;
@@ -65,8 +64,7 @@ public class Bouncer extends AnimationComponent
         } );
     }
 
-    public void setSwitch( int item, boolean value )
-    {
+    public void setSwitch( int item, boolean value ) {
         switch (item) {
             case ANTIALIASING:
                 mAntialiasing = value;
@@ -94,8 +92,7 @@ public class Bouncer extends AnimationComponent
         }
     }
 
-    protected Checkbox createCheckbox( String label, final int item )
-    {
+    protected Checkbox createCheckbox( String label, final int item ) {
         Checkbox check = new Checkbox( label );
         check.addItemListener( new ItemListener()
         {
@@ -107,13 +104,11 @@ public class Bouncer extends AnimationComponent
         return check;
     }
 
-    public String getFileNameBase()
-    {
+    public String getFileNameBase() {
         return "D:/f";
     }
 
-    public double timeStep()
-    {
+    public double timeStep() {
         Dimension d = getSize();
         for ( int i = 0; i < mN; i++ ) {
             boolean xAxis = ((i % 2) == 0);

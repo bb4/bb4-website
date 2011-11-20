@@ -3,6 +3,7 @@ package com.becker.puzzle.redpuzzle;
 
 import com.becker.common.format.FormatUtil;
 import com.becker.puzzle.common.PuzzleRenderer;
+import com.becker.ui.util.GUIUtil;
 
 import java.awt.*;
 
@@ -29,8 +30,8 @@ public class RedPuzzleRenderer extends PuzzleRenderer<PieceList> {
     private static final Color TEXT_COLOR = new Color(0, 0, 0);
     private static final Color BACKGROUND_COLOR = new Color(220, 220, 240);
 
-    private static final Font NUB_FONT = new Font("SansSerif", Font.PLAIN, 12);
-    private static final Font TEXT_FONT = new Font("SansSerif", Font.BOLD, 18);
+    private static final Font NUB_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12);
+    private static final Font TEXT_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.BOLD, 18);
     // put this here to avoid reallocation during rendering.
     private static char[] symb_ = new char[1];
 

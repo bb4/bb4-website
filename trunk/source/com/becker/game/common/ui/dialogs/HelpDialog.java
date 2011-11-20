@@ -30,6 +30,7 @@ public final class HelpDialog extends AbstractDialog implements ActionListener
     private static String comments_ = GameContext.getLabel("AUTHOR");
     private static final String VERSION = GameContext.getLabel("VERSION");
     private static final String COPYRIGHT = GameContext.getLabel("COPYRIGHT");
+    private static final Font FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12 );
 
     private String overviewText_ = null;
 
@@ -54,8 +55,8 @@ public final class HelpDialog extends AbstractDialog implements ActionListener
      * builds the ui.
      */
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent() {
+
         Object[] arg = {gameName_};
         this.setTitle( MessageFormat.format(GameContext.getLabel("ABOUT"), arg));
 
@@ -75,6 +76,7 @@ public final class HelpDialog extends AbstractDialog implements ActionListener
         okButton_.addActionListener( this );
 
         JTextArea overviewTextArea = createOverviewTextArea();
+        overviewTextArea.setFont(FONT);
 
         JPanel summaryPanel = createSummaryPanel();
 

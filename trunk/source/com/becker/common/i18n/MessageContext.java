@@ -11,8 +11,8 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public final class MessageContext
-{
+public final class MessageContext {
+
     public static final LocaleType DEFAULT_LOCALE = LocaleType.ENGLISH;
 
     /** logger object. Use console by default. */
@@ -73,8 +73,7 @@ public final class MessageContext
      * Set or change the current locale.
      * @param locale locale to use
      */
-    public void setLocale(LocaleType locale)
-    {
+    public void setLocale(LocaleType locale) {
         currentLocale_ = locale;
         applicationMessages_ = null;
         initCommonMessages(currentLocale_);
@@ -91,8 +90,7 @@ public final class MessageContext
      * @param key
      * @return  the localized message label
      */
-    public String getLabel(String key)
-    {
+    public String getLabel(String key)  {
         if (commonMessages_ == null)  {
             initCommonMessages(currentLocale_);
         }
@@ -116,8 +114,7 @@ public final class MessageContext
         }
     }
 
-    private void initCommonMessages(LocaleType locale)
-    {
+    private void initCommonMessages(LocaleType locale) {
         commonMessages_ =
             ResourceBundle.getBundle(commonResourcePath_, locale.getLocale());
         Enumeration enum1 = commonMessages_.getKeys();

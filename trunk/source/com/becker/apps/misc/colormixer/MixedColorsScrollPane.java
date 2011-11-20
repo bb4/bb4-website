@@ -21,7 +21,9 @@ public class MixedColorsScrollPane extends JPanel {
         mainPanel_ = new JPanel();
         mainPanel_.setLayout(new BoxLayout(mainPanel_, BoxLayout.Y_AXIS));
         //mainPanel_.setPreferredSize(new Dimension(500, 900));
-        scrollPane_ = new JScrollPane(mainPanel_, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane_ =
+                new JScrollPane(mainPanel_, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                                            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         mixPanels_ = new ArrayList();
 
