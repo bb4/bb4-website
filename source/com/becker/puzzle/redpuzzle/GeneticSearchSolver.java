@@ -28,10 +28,17 @@ public class GeneticSearchSolver extends RedPuzzleSolver
     // the max number of fitting nubs that we can have. The puzzle is solved if this happens.
     public static final double MAX_FITS = 24 + 4 * THREE_FIT_BOOST + FOUR_FIT_BOOST;
 
+    /** either genetic or concurrent genetic strategy. */
+    private OptimizationStrategyType strategy;
 
-    public GeneticSearchSolver(PieceList pieces,  Refreshable<PieceList, Piece> puzzlePanel) {
+
+    /** Constructor */
+    public GeneticSearchSolver(PieceList pieces, Refreshable<PieceList, Piece> puzzlePanel,
+                               boolean useConcurrency) {
         super(pieces);
         puzzlePanel_ = puzzlePanel;
+        strategy = useConcurrency ? OptimizationStrategyType.CONCURRENT_GENETIC_SEARCH :
+                                    OptimizationStrategyType.GENETIC_SEARCH;
     }
 
     /**
@@ -49,8 +56,7 @@ public class GeneticSearchSolver extends RedPuzzleSolver
         optimizer.setListener(this);
 
         ParameterArray solution =
-            optimizer.doOptimization(OptimizationStrategyType.GENETIC_SEARCH,
-                                     initialGuess, SOLVED_THRESH);
+            optimizer.doOptimization(strategy, initialGuess, SOLVED_THRESH);
 
         solution_ = ((PieceParameterArray)solution).getPieceList();
         List<Piece> moves = null;

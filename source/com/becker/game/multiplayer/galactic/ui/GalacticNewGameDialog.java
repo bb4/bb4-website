@@ -9,21 +9,16 @@ import com.becker.game.multiplayer.common.ui.PlayerTable;
 
 import javax.swing.*;
 
-public class GalacticNewGameDialog extends MultiPlayerNewGameDialog
-{
+public class GalacticNewGameDialog extends MultiPlayerNewGameDialog {
 
-
-    public GalacticNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    public GalacticNewGameDialog( JFrame parent, GameViewable viewer ) {
         super( parent, viewer );
     }
-
 
     @Override
     protected PlayerTable createPlayerTable() {
         return  new GalacticPlayerTable( controller_.getPlayers());
     }
-
 
     protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String name) {
         return null;
@@ -32,8 +27,6 @@ public class GalacticNewGameDialog extends MultiPlayerNewGameDialog
     protected GameOptionsDialog createNewGameTableDialog() {
         return null;
     }
-
-
 }
 
 

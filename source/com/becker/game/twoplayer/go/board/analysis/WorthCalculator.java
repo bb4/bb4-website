@@ -85,13 +85,14 @@ public class WorthCalculator {
         // adjust for board size - so worth will be comparable regardless of board size.
         double scaleFactor = 361.0 / Math.pow(board.getNumRows(), 2);
         GameStageBoostCalculator gameStageBoostCalc_= new GameStageBoostCalculator(board.getNumRows());
-        double gameStageBoost = gameStageBoostCalc_.getGameStageBoost(board.getMoveList().getNumMoves());
+        double gameStageBoost = gameStageBoostCalc_.getGameStageBoost(board.getMoveList().getNumMoves());  //// 0.5
 
-        // Update status of groups and stones on the board. Expensive. Changes board state.
+        // Update status of groups and stones on the board. Expensive. // Should not Change board state, but it does.
         territoryAnalyzer.updateTerritory(false);
 
-        PositionalScore totalScore = new PositionalScore();
         PositionalScore[][] positionScores = new PositionalScore[board.getNumRows()][board.getNumCols()];
+        PositionalScore totalScore = new PositionalScore();
+
         for (int row = 1; row <= board.getNumRows(); row++ ) {
             for (int col = 1; col <= board.getNumCols(); col++ ) {
 
@@ -113,9 +114,8 @@ public class WorthCalculator {
         }
         int blackCap = board.getNumCaptures( true );
         int whiteCap = board.getNumCaptures( false );
-        this.info =
-                new WorthInfo(gameStageBoost, territoryDelta, captureScore, blackCap, whiteCap,
-                              positionalScore, positionScores, ((GoMove)lastMove).getCaptures(), worth, board.getMoveList().copy());
+        this.info = new WorthInfo(gameStageBoost, territoryDelta, captureScore, blackCap, whiteCap,
+                             positionalScore, positionScores, ((GoMove)lastMove).getCaptures(), worth, board.getMoveList().copy());
         return worth;
     }
 

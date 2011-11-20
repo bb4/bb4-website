@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.sudoku.model.board;
 
-
 /**
  * An array of cells in a row column or bigCell in the puzzle.
  *

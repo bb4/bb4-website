@@ -91,7 +91,7 @@ public enum EyeType
 
     /**
      *
-     * @return true if the shape has the habitat property
+     * @return true if the shape has the life property
      */
     public abstract EyeInformation getInformation(String name);
 }

@@ -30,8 +30,6 @@ public class SnakeSimulator extends NewtonianSimulator {
     /** the amount to advance the animation in time for each frame in seconds. */
     protected static final int NUM_STEPS_PER_FRAME = 200;
 
-    private SnakeDynamicOptions dynamicOptions_;
-
     private static final Parameter[] PARAMS = {
             new DoubleParameter( LocomotionParameters.WAVE_SPEED, 0.0001, 0.02, "wave speed" ),
             new DoubleParameter( LocomotionParameters.WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" ),
@@ -162,8 +160,7 @@ public class SnakeSimulator extends NewtonianSimulator {
 
     @Override
     public JPanel createDynamicControls() {
-        dynamicOptions_ = new SnakeDynamicOptions(this);
-        return dynamicOptions_;
+        return new SnakeDynamicOptions(this);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.becker.rmi.common;
 
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

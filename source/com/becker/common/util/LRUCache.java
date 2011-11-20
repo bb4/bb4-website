@@ -62,7 +62,9 @@ public class LRUCache<K,V> {
      * @param value  a value to be associated with the specified key.
      */
     public synchronized void put(K key, V value) {
-       map.put(key,value); }
+        map.put(key,value);
+        //System.out.println(this + "num="+numEntries());
+    }
 
     /**
      * Clears the cache.

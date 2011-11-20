@@ -8,7 +8,7 @@ import static com.becker.simulation.trebuchet.TrebuchetConstants.HEIGHT;
 /**
  * A physical piece of an object.
  *
- * @author Barry Becker Date: Sep 25, 2005
+ * @author Barry Becker
  */
 public abstract class RenderablePart {
 
@@ -30,7 +30,7 @@ public abstract class RenderablePart {
     protected static boolean showVelocityVectors_ = true;
     protected static boolean showForceVectors_ = true;
 
-
+    /** Constructor */
     public RenderablePart() {}
 
 
@@ -51,7 +51,6 @@ public abstract class RenderablePart {
         showVelocityVectors_ = showVelocityVectors;
     }
 
-
     public static boolean getShowForceVectors() {
         return showForceVectors_;
     }
@@ -59,7 +58,6 @@ public abstract class RenderablePart {
     public static void setShowForceVectors(boolean showForceVectors) {
         showForceVectors_ = showForceVectors;
     }
-
 
     public static double getAngle() {
         return angle_;
@@ -69,7 +67,6 @@ public abstract class RenderablePart {
         angle_ = angle;
     }
 
-
     public static double getAngularVelocity() {
         return angularVelocity_;
     }
@@ -78,7 +75,5 @@ public abstract class RenderablePart {
         angularVelocity_ = angularVelocity;
     }
 
-
     protected abstract void render(Graphics2D g2, double scale);
-
 }

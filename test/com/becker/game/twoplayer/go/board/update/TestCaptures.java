@@ -4,7 +4,6 @@ package com.becker.game.twoplayer.go.board.update;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 
-
 /**
  * @author Barry Becker
  */
@@ -12,7 +11,6 @@ public class TestCaptures extends GoTestCase {
 
     /** instance under test */
     private CaptureCounts captures;
-
 
     /**
      * common initialization
@@ -28,13 +26,11 @@ public class TestCaptures extends GoTestCase {
         super.tearDown();
     }
 
-
     public void testNoCaptures() {
 
         assertEquals("Unexpected number of black captures" , 0, captures.getNumCaptures(true));
         assertEquals("Unexpected number of white captures" , 0, captures.getNumCaptures(false));
     }
-
 
     public void testIncBlackCaptures() {
 
@@ -56,7 +52,6 @@ public class TestCaptures extends GoTestCase {
         verifyDecrCaptures(false);
     }
 
-
     public void verifyIncCaptures(boolean isPlayer1) {
 
         GoMoveStub move = new GoMoveStub(new GoStone(!isPlayer1));
@@ -70,14 +65,12 @@ public class TestCaptures extends GoTestCase {
         assertEquals("Unexpected number of  "+color+" captures" , 4, captures.getNumCaptures(isPlayer1));
     }
 
-
     public void verifyDecrCaptures(boolean isPlayer1) {
 
         // first add some captures so they can be decremented
         GoMoveStub move = new GoMoveStub(new GoStone(!isPlayer1));
         move.setNumCaptures(3);
         captures.updateCaptures(move, true);
-
 
         move.setNumCaptures(1);
 

@@ -38,7 +38,7 @@
 
   <path id="compile.classpath">
     <pathelement location="${libDir}/oalnf/oalnf.jar"/>
-    <pathelement location="../lib/vecmath.jar.bak"/>
+    <pathelement location="${libDir}/vecmath.jar"/>
     <pathelement location="${libDir}/sun.jar"/>
     <pathelement location="${libDir}/jai_codec.jar"/>
     <pathelement location="${libDir}/jnlp.jar"/>

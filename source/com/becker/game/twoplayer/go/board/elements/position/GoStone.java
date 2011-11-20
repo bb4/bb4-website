@@ -27,7 +27,7 @@ public class GoStone extends GamePiece implements IGoMember {
      */
     private boolean isDead_;
 
-    /** This structure is used to store a detailed breakdown of this stones score. (for debugging). */
+    /** This structure is used to store a detailed breakdown of this stones score. (for debugging only). */
     private PositionalScore positionalScore_ = null;
 
 

@@ -42,7 +42,6 @@ public class TestRun extends GoTestCase {
         verifyPotential(0.3f);
     }
 
-
     public void testRunOneOnEndInternal() {
 
         run = new Run(10, 11, 10, false);
@@ -59,5 +58,4 @@ public class TestRun extends GoTestCase {
 
         assertEquals("Unexpected run potential for " + run , expectedPotential, run.getPotential());
     }
-
 }

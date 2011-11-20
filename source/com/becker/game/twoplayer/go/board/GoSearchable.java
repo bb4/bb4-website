@@ -128,11 +128,11 @@ public class GoSearchable extends TwoPlayerSearchable {
 
         //we should not call this twice
         if (getNumDeadStonesOnBoard(true)  > 0 || getNumDeadStonesOnBoard(false) > 0) {
-            GameContext.log(0, " Error: should not update habitat and death twice.");
+            GameContext.log(0, " Error: should not update life and death twice.");
         }
         // now that we are finally at the end of the game,
-        // update the habitat and death of all the stones still on the board
-        GameContext.log(1,  "about to update habitat and death." );
+        // update the life and death of all the stones still on the board
+        GameContext.log(1,  "about to update life and death." );
         deadStoneUpdater_.determineDeadStones();
         getProfiler().stopCalcWorth();
     }
@@ -188,8 +188,8 @@ public class GoSearchable extends TwoPlayerSearchable {
             for (BoardPosition pos : goMove.getCaptures()) {
                 hash.applyMove(pos.getLocation(), getBoard().getStateIndex(pos));
             }
-            // this is needed to disambiguate ko's.
-            if (goMove.isKo(getBoard())) {
+            // this is needed to disambiguate ko's and positions that have captures.
+            if (goMove.isKo(getBoard()) || goMove.getNumCaptures() > 0) {
                 hash.applyMoveNumber(getNumMoves() + goMove.getNumCaptures());
             }
         }
