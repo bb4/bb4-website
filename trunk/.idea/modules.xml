@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Trunk.iml" filepath="$PROJECT_DIR$/Trunk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jhlabs/jhlabs.iml" filepath="$PROJECT_DIR$/../jhlabs/jhlabs.iml" />
     </modules>
   </component>
 </project>
