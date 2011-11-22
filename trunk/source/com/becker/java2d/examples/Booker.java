@@ -9,10 +9,9 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
-public class Booker
-{
-    public static void main( String[] args )
-    {
+public class Booker {
+
+    public static void main( String[] args ) {
         PrinterJob pj = PrinterJob.getPrinterJob();
         // Create two Printables.
         Component c1 = new PatchworkComponent( "printable1" );
@@ -41,18 +40,15 @@ public class Booker
     }
 }
 
-class BookComponentPrintable
-        implements Printable
-{
+class BookComponentPrintable implements Printable {
+
     private Component mComponent;
 
-    public BookComponentPrintable( Component c )
-    {
+    public BookComponentPrintable( Component c ) {
         mComponent = c;
     }
 
-    public int print( Graphics g, PageFormat pageFormat, int pageIndex )
-    {
+    public int print( Graphics g, PageFormat pageFormat, int pageIndex )  {
         Graphics2D g2 = (Graphics2D) g;
         g2.translate( pageFormat.getImageableX(), pageFormat.getImageableY() );
         mComponent.paint( g2 );
