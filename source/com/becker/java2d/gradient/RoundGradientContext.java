@@ -6,31 +6,25 @@ import java.awt.image.ColorModel;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
-public class RoundGradientContext
-        implements PaintContext
-{
+public class RoundGradientContext implements PaintContext {
     protected Point2D mPoint_;
     protected Point2D mRadius_;
     protected Color mC1_, mC2_;
 
-    public RoundGradientContext( Point2D p, Color c1, Point2D r, Color c2 )
-    {
+    public RoundGradientContext( Point2D p, Color c1, Point2D r, Color c2 ) {
         mPoint_ = p;
         mC1_ = c1;
         mRadius_ = r;
         mC2_ = c2;
     }
 
-    public void dispose()
-    {}
+    public void dispose() {}
 
-    public ColorModel getColorModel()
-    {
+    public ColorModel getColorModel() {
         return ColorModel.getRGBdefault();
     }
 
-    public Raster getRaster( int x, int y, int w, int h )
-    {
+    public Raster getRaster( int x, int y, int w, int h ) {
         WritableRaster raster =
                 getColorModel().createCompatibleWritableRaster( w, h );
 
