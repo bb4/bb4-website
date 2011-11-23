@@ -17,9 +17,10 @@ import java.util.concurrent.Future;
 /**
  * Create a set of images from a single MetaImageOp
  */
-public class ImageBreeder
-{
+public class ImageBreeder {
+
     private MetaImageOp metaOp;
+
     private float variance;
 
     private BufferedImage imageToBreed;
