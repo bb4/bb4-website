@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go.board.analysis.eye;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Barry Becker
  */
-class StubGoEye implements IGoEye {
+public class StubGoEye implements IGoEye {
 
     private GoBoardPositionSet members;
 

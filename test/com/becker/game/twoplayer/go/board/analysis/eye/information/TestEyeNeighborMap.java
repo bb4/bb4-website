@@ -1,9 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go.board.analysis.eye;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 

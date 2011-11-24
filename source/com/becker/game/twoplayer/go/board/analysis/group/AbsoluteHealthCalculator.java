@@ -49,12 +49,13 @@ class AbsoluteHealthCalculator {
     }
 
     /**
-     * @return true if the group has changed (structurally) in any way.
+     * @return false if the group has changed (structurally) in any way.
      */
     public boolean isValid() {
         return eyeCache_.isValid();
     }
 
+    /** for st the eyeCache to be cleared. */
     public void invalidate() {
         eyeCache_.invalidate();
     }
