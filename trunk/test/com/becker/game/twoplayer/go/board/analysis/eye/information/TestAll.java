@@ -28,6 +28,9 @@ public class
         suite.addTestSuite(TestE6Information.class);
         suite.addTestSuite(TestE7Information.class);
 
+        suite.addTestSuite(TestFalseEyeInformation.class);
+        suite.addTestSuite(TestEyeNeighborMap.class);
+
         return suite;
     }
 
