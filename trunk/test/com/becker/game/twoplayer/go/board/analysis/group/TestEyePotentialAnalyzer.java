@@ -167,9 +167,8 @@ public class TestEyePotentialAnalyzer extends GoTestCase {
     }
 
 
-
     /**
-     * Use EyePotentialAnalyzer to find potiential of making eyes.
+     * Use EyePotentialAnalyzer to find potential of making eyes.
      */
     private void verifyEyePotential(boolean forBlackGroup, int expectedSizeOfGroup, float expectedPotential) {
 

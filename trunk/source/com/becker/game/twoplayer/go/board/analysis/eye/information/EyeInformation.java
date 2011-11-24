@@ -10,8 +10,8 @@ import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
  *
  * @author Barry Becker
  */
-public interface EyeInformation
-{
+public interface EyeInformation {
+
     /**
      * The life property should be regarded as a property slightly below Benson's definition
      * of unconditional life, because if we have an AliveInAtari status for an eye, it might be

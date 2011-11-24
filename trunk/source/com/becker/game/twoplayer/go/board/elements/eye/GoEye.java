@@ -147,6 +147,10 @@ public class GoEye extends GoString implements IGoEye {
         setGroup(null);
         getMembers().clear();
     }
+    
+    public String toString() {
+        return new EyeSerializer(this).serialize();
+    }
 
     @Override
     protected String getPrintPrefix() {
