@@ -1,7 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go.board.analysis.group;
+package com.becker.game.twoplayer.go.board.analysis.group.eye;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
+import com.becker.game.twoplayer.go.board.analysis.group.eye.potential.EyePotentialAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
@@ -10,7 +12,7 @@ import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
  * Keep a cache of the eyes in a group because its expensive to recompute them.
  * @author Barry Becker
  */
-class GroupEyeCache {
+public class GroupEyeCache {
 
     /**
      * need 2 true eyes to be unconditionally alive.

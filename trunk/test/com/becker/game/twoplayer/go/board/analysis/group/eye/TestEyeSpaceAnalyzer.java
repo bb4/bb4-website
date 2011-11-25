@@ -1,11 +1,10 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.game.twoplayer.go.board.analysis.group;
+package com.becker.game.twoplayer.go.board.analysis.group.eye;
 
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.E1Information;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
@@ -20,10 +19,10 @@ import java.util.Arrays;
  */
 public class TestEyeSpaceAnalyzer extends GoTestCase {
 
-    private static final String PREFIX = "board/analysis/group/eyespace/";
+    private static final String PREFIX = "board/analysis/group/eye/eyespace/";
 
 
-    public void testEyePotential_SingleIsolatedStone() {
+    public void testEyeSpace_SingleIsolatedStone() {
 
         restoreGame("single_isolated_stone");
 
@@ -31,15 +30,44 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         verifyWhiteEyes(createEyeSet());
     }
 
-    public void testEyePotential_SingleEye() {
+    public void testEyeSpace_SingleEye() {
 
         restoreGame("single_eye");
 
-        IGoEye blackEye = new StubGoEye(true, EyeStatus.NAKADE, new E1Information(), "E1", 0, 0, false, 1);
-        IGoEye whiteEye = new StubGoEye(false, EyeStatus.NAKADE, new E1Information(), "E1", 0, 1, false, 1);
+        IGoEye blackEye = new StubGoEye(true, EyeStatus.NAKADE, new E1Information(), 0, 0, false, 1);
+        IGoEye whiteEye = new StubGoEye(false, EyeStatus.NAKADE, new E1Information(), 0, 1, false, 1);
         verifyBlackEyes(createEyeSet(blackEye));
         verifyWhiteEyes(createEyeSet(whiteEye));
     }
+
+    /**
+     * For black eye we have:
+     *   C
+     *   CEC
+     * and for white we have
+     *   CEC
+     * where C's are counted as being edges as well as corner.
+     */
+    public void testEyeSpace_EyesInCorner() {
+
+        restoreGame("eyes_in_corner");
+
+        IGoEye blackEye = new StubGoEye(true, EyeStatus.ALIVE, EyeType.E6.getInformation("E222233"), 3, 4, false, 6);
+        IGoEye whiteEye = new StubGoEye(false, EyeStatus.UNSETTLED, EyeType.E3.getInformation("E112"), 2, 3, false, 3);
+        verifyBlackEyes(createEyeSet(blackEye));
+        verifyWhiteEyes(createEyeSet(whiteEye));
+    }
+
+    public void testEyeSpace_EyesInCornerComplex() {
+
+        restoreGame("eyes_in_corner_complex");
+
+        IGoEye blackEye = new StubGoEye(true, EyeStatus.ALIVE, EyeType.E7.getInformation("E1122222"), 3, 6, false, 7);
+        IGoEye whiteEye = new StubGoEye(false, EyeStatus.ALIVE, new TerritorialEyeInformation(), 3, 5, false, 8);
+        verifyBlackEyes(createEyeSet(blackEye));
+        verifyWhiteEyes(createEyeSet(whiteEye));
+    }
+
 
 
     private void restoreGame(String file) {
@@ -47,11 +75,11 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
     }
 
     private void verifyBlackEyes(GoEyeSet expectedEyes) {
-        verifyEyePotential(true, expectedEyes);
+        verifyEyes(true, expectedEyes);
     }
 
     private void verifyWhiteEyes(GoEyeSet expectedEyes) {
-        verifyEyePotential(false, expectedEyes);
+        verifyEyes(false, expectedEyes);
     }
 
     
@@ -64,7 +92,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
     /**
      * Use EyeSpaceAnalyzer to find eyes and match against the expected set of eyes.
      */
-    private void verifyEyePotential(boolean forBlackGroup, GoEyeSet expectedEyes) {
+    private void verifyEyes(boolean forBlackGroup, GoEyeSet expectedEyes) {
 
         IGoGroup group = getBiggestGroup(forBlackGroup);
    

@@ -9,8 +9,8 @@ import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
  *
  * @author Barry Becker
  */
-public class E4Information extends AbstractEyeSubtypeInformation
-{
+public class E4Information extends AbstractEyeSubtypeInformation {
+
     /** Different sorts of eye with 4 spaces. */
     public enum Eye4Type {E1122, E1113, E2222}
     private Eye4Type e4Type;

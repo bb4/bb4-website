@@ -1,15 +1,16 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go.board.analysis.group;
+package com.becker.game.twoplayer.go.board.analysis.group.eye;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoProfiler;
+import com.becker.game.twoplayer.go.board.analysis.group.LifeAnalyzer;
 
 
 /**
  * Evaluate the health of a group based on the status of its eye(s).
  * @author Barry Becker
  */
-class EyeHealthEvaluator {
+public class EyeHealthEvaluator {
 
     private LifeAnalyzer lifeAnalyzer_;
 

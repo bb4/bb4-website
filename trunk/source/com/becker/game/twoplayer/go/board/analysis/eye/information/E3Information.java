@@ -10,8 +10,8 @@ import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
  *
  * @author Barry Becker
  */
-public class E3Information extends AbstractEyeSubtypeInformation
-{
+public class E3Information extends AbstractEyeSubtypeInformation {
+
     public E3Information() {
         initialize(false, 3, new float[] {2.02f} );
     }

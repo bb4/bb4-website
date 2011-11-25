@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.game.twoplayer.go.board.analysis.group;
+package com.becker.game.twoplayer.go.board.analysis.group.eye;
 
 import com.becker.common.geometry.Box;
 import com.becker.game.twoplayer.go.board.GoBoard;
@@ -20,27 +20,23 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 /**
  * @author Barry Becker
  */
-public class StubGoEye implements IGoEye {
+class StubGoEye implements IGoEye {
 
     private boolean ownedByPlayer1;
     private EyeStatus status;
     private EyeInformation eyeInfo;
-    private String eyeTypeName;
     private int numCornerPoints;
     private int numEdgePoints;
     private boolean isUncondAlive;
     private int numMembers;
 
-    private static final GoBoardPosition FAKE_POS = new GoBoardPosition(1, 1, null, null);
-
-    public StubGoEye(boolean ownedByPlayer1, EyeStatus status, EyeInformation eyeInfo, String eyeTypeName, 
+    public StubGoEye(boolean ownedByPlayer1, EyeStatus status, EyeInformation eyeInfo,
                      int numCornerPoints, int numEdgePoints, 
                      boolean isUncondAlive, int numMembers) {
         
         this.ownedByPlayer1 = ownedByPlayer1;               
         this.status = status;
         this.eyeInfo = eyeInfo;
-        this.eyeTypeName = eyeTypeName;
         this.numCornerPoints = numCornerPoints;
         this.numEdgePoints = numEdgePoints;
         this.isUncondAlive = isUncondAlive;
@@ -56,7 +52,7 @@ public class StubGoEye implements IGoEye {
     }
 
     public String getEyeTypeName() {
-        return eyeTypeName;
+        return eyeInfo.getTypeName();
     }
 
     public int getNumCornerPoints() {
@@ -115,8 +111,7 @@ public class StubGoEye implements IGoEye {
      */
     public boolean isMatch(IGoEye eye) {
 
-        boolean infoEqual = getInformation().equals(eye.getInformation())
-                        && getEyeTypeName().equals(eye.getEyeTypeName());
+        boolean infoEqual = getInformation().equals(eye.getInformation());
         boolean pointsEqual = getNumCornerPoints() == eye.getNumCornerPoints()
                         && getNumEdgePoints() == eye.getNumEdgePoints();
         boolean match =
