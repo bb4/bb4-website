@@ -15,6 +15,7 @@ import java.util.List;
 public class StubGoEye implements IGoEye {
 
     private GoBoardPositionSet members;
+    boolean visited = false;
 
     public StubGoEye(List<GoBoardPosition> list) {
 
@@ -44,7 +45,7 @@ public class StubGoEye implements IGoEye {
     }
 
     public void setVisited(boolean visited) {
-        throw new UnsupportedOperationException();
+        visited = false;
     }
 
     public EyeInformation getInformation() {
