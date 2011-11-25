@@ -46,9 +46,9 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
     /**
      * For black eye we have:
      *   C
-     *   CEC
+     *   CCE
      * and for white we have
-     *   CEC
+     *   ECC
      * where C's are counted as being edges as well as corner.
      */
     public void testEyeSpace_EyesInCorner() {
@@ -71,6 +71,69 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         verifyWhiteEyes(createEyeSet(whiteEye));
     }
 
+    public void testEyeSpace_TwoEyesUnconditional() {
+
+        restoreGame("two_unconditional_eyes");
+
+        IGoEye blackEye1 = new StubGoEye(true, EyeStatus.NAKADE, EyeType.E1.getInformation("E1"), 0, 0, false, 1);
+        IGoEye blackEye2 = new StubGoEye(true, EyeStatus.NAKADE, EyeType.E1.getInformation("E1"), 1, 1, false, 1);
+        IGoEye whiteEye1 = new StubGoEye(false, EyeStatus.NAKADE, EyeType.E1.getInformation("E1"), 0, 0, false, 1);
+        IGoEye whiteEye2 = new StubGoEye(false, EyeStatus.NAKADE, EyeType.E1.getInformation("E1"), 0, 0, false, 1);
+
+        verifyBlackEyes(createEyeSet(blackEye1, blackEye2));
+        verifyWhiteEyes(createEyeSet(whiteEye1, whiteEye2));
+    }
+
+
+    public void testEyeSpace_TunnelButNoEye() {
+
+        restoreGame("tunnels_no_eyes");
+
+        verifyBlackEyes(createEyeSet());
+        verifyWhiteEyes(createEyeSet());
+    }
+
+    public void testEyeSpace_tunnelButNoEye2() {
+
+        restoreGame("tunnels_no_eyes2");
+
+        verifyBlackEyes(createEyeSet());
+        verifyWhiteEyes(createEyeSet());
+    }
+
+    public void testEyeSpace_tunnelButNoEye3() {
+
+        restoreGame("tunnels_no_eyes2");
+
+        verifyBlackEyes(createEyeSet());
+        verifyWhiteEyes(createEyeSet());
+    }
+
+    public void testEyeSpace_tunnelsWithEyes() {
+
+        restoreGame("tunnels_with_eyes");
+
+        // This eye (if it is one) does not get noticed because it is a really odd edge case.
+        //IGoEye blackEye = new StubGoEye(true, EyeStatus.ALIVE, new TerritorialEyeInformation(), 5, 15, false, 15);
+        IGoEye whiteEye1 = new StubGoEye(false, EyeStatus.ALIVE, new TerritorialEyeInformation(), 3, 5, false, 9);
+        IGoEye whiteEye2 = new StubGoEye(false, EyeStatus.ALIVE, EyeType.E5.getInformation("E11222"), 0, 1, false, 5);
+
+        verifyBlackEyes(createEyeSet());
+        verifyWhiteEyes(createEyeSet(whiteEye1, whiteEye2));
+    }
+
+    public void testEyeSpace_tunnelsWithEyes2() {
+
+        restoreGame("tunnels_with_eyes2");
+
+        IGoEye blackEye = new StubGoEye(true, EyeStatus.ALIVE, new TerritorialEyeInformation(), 4, 14, false, 14);
+        IGoEye whiteEye1 = new StubGoEye(false, EyeStatus.ALIVE, EyeType.E7.getInformation("E1122222"), 3, 5, false, 7);
+        IGoEye whiteEye2 = new StubGoEye(false, EyeStatus.NAKADE, new E1Information(), 0, 0, false, 1);
+        IGoEye whiteEye3 = new StubGoEye(false, EyeStatus.ALIVE, EyeType.E5.getInformation("E11222"), 0, 1, false, 5);
+
+        verifyBlackEyes(createEyeSet(blackEye));
+        verifyWhiteEyes(createEyeSet(whiteEye1, whiteEye2, whiteEye3));
+    }
 
 
     private void restoreGame(String file) {
