@@ -4,7 +4,6 @@ package com.becker.game.twoplayer.go.board.analysis.group.eye;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.analysis.group.LifeAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.group.StubLifeAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.group.eye.EyeHealthEvaluator;
 import junit.framework.Assert;
 
 /**
