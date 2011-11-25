@@ -3,9 +3,9 @@ package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.PositionalScore;
+import com.becker.game.twoplayer.go.options.GoWeights;
 import junit.framework.Assert;
 
 /**

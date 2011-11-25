@@ -1,21 +1,15 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.go.board.analysis.group.eye;
 
-import com.becker.common.geometry.Box;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
 import com.becker.game.twoplayer.go.board.elements.eye.EyeSerializer;
-import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
-import com.becker.game.twoplayer.go.board.elements.group.GroupChangeListener;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.position.GoStone;
-import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
-import com.becker.game.twoplayer.go.board.elements.string.IGoString;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 
 /**
  * @author Barry Becker

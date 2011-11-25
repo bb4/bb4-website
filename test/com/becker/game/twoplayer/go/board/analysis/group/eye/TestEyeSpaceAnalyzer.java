@@ -3,7 +3,10 @@ package com.becker.game.twoplayer.go.board.analysis.group.eye;
 
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.E1Information;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.TerritorialEyeInformation;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
