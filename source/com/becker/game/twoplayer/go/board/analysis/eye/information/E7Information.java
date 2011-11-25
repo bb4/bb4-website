@@ -13,8 +13,8 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
  *
  * @author Barry Becker
  */
-public class E7Information extends AbstractEyeSubtypeInformation
-{
+public class E7Information extends AbstractEyeSubtypeInformation {
+
     /** Different sorts of eye with 7 spaces. */
     public enum Eye7Type {E1122222, E1112223, E1122233, E1111233, E1222223, E1111224, E1112333,
                   E1222333, E1112234, E1112234a, E1112234b, E1222234, E1122224, E2222224}

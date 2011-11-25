@@ -1,7 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go.board.analysis.group;
+package com.becker.game.twoplayer.go.board.analysis.group.eye;
 
 import com.becker.game.twoplayer.go.GoTestCase;
+import com.becker.game.twoplayer.go.board.analysis.group.LifeAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.group.StubLifeAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.group.eye.EyeHealthEvaluator;
 import junit.framework.Assert;
 
 /**
@@ -12,7 +15,7 @@ import junit.framework.Assert;
  */
 public class TestEyeHealthEvaluator extends GoTestCase {
 
-    private static final String PREFIX = "board/analysis/group/potential/";
+    private static final String PREFIX = "board/analysis/group/eye/potential/";
 
     private static final double TOLERANCE = 0.001;
 

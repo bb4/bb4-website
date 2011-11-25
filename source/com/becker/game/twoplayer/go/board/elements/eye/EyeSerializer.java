@@ -35,8 +35,7 @@ public class EyeSerializer  {
         StringBuilder bldr = new StringBuilder("GoEye: ");
         bldr.append(" ownedByPlayer1=").append(eye.isOwnedByPlayer1());
         bldr.append(" status=").append(eye.getStatus());
-        bldr.append(" info=").append(eye.getInformation());
-        bldr.append(" typeName=").append(eye.getEyeTypeName());
+        bldr.append(" info=").append("[").append(eye.getInformation()).append("]");
         bldr.append(" num corner pts=").append(eye.getNumCornerPoints());
         bldr.append(" num edge pts=").append(eye.getNumEdgePoints());
         bldr.append(" UnconditionallyAlive=").append(eye.isUnconditionallyAlive());

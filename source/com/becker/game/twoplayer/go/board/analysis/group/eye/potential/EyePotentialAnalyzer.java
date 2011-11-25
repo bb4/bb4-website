@@ -1,9 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go.board.analysis.group;
+package com.becker.game.twoplayer.go.board.analysis.group.eye.potential;
 
 import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
@@ -12,7 +13,7 @@ import com.becker.game.twoplayer.go.board.elements.string.IGoString;
  *
  * @author Barry Becker
  */
-class EyePotentialAnalyzer {
+public class EyePotentialAnalyzer {
 
     /** The group of go stones that we are analyzing. */
     private IGoGroup group_;

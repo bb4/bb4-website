@@ -2,6 +2,10 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.GoTestCase;
+import com.becker.game.twoplayer.go.board.analysis.group.eye.TestEyeHealthEvaluator;
+import com.becker.game.twoplayer.go.board.analysis.group.eye.potential.TestEyePotentialAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.group.eye.TestEyeSpaceAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.group.eye.potential.TestRun;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -19,14 +23,12 @@ public class TestAll extends GoTestCase {
 
         TestSuite suite =  new TestSuite("Group Tests");
 
-        suite.addTestSuite(TestRun.class);
-        suite.addTestSuite(TestEyePotentialAnalyzer.class);
-        suite.addTestSuite(TestEyeSpaceAnalyzer.class);
+        suite.addTest(com.becker.game.twoplayer.go.board.analysis.group.eye.TestAll.suite());
+
         suite.addTestSuite(TestAbsoluteHealthAnalyzer.class);
         suite.addTestSuite(TestAbsoluteHealthCalculator.class);
         suite.addTestSuite(TestLifeAnalyzer.class);
         suite.addTestSuite(TestStoneInGroupAnalyzer.class);
-        suite.addTestSuite(TestEyeHealthEvaluator.class);
 
         return suite;
     }

@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go.board.analysis.group;
+package com.becker.game.twoplayer.go.board.analysis.group.eye.potential;
 
 /**
  * Figure out the "eye potential" contribution from a horizontal or vertical run within a string.

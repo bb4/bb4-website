@@ -342,7 +342,7 @@ public abstract class TwoPlayerController extends GameController {
      */
     public boolean isDone() {
         TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
-        assert lastMove!=null;
+        //assert lastMove!=null;
         return getSearchable().done(lastMove, false);
     }
 
