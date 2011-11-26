@@ -5,9 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public abstract class AnimationDebugComponent
-        extends AnimationComponent
-        implements ActionListener  {
+public abstract class AnimationDebugComponent extends AnimationComponent
+                                              implements ActionListener  {
+
     private boolean runNextStep_ = false;
     protected Button stepButton_ = new Button( "advance to next frame" );
 

@@ -45,6 +45,5 @@ public class ApplicationFrame extends JFrame {
         int x = (screenSize.width - frameSize.width) >> 1;
         int y = (screenSize.height - frameSize.height) >> 1;
         setLocation( x, y );
- 
     }
 }

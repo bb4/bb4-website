@@ -145,7 +145,7 @@ public final class GUIUtil {
     public static URL getURL(String sPath) {
 
         return getURL(sPath, true);
-     }
+    }
 
     /**
      * @return a URL given the path to an existing file.

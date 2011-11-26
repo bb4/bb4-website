@@ -12,7 +12,6 @@ import java.util.Scanner;
  */
 public class ReadNumberApp {
 
-
     /** A greeting specified using allophones. See SpeechSynthesizer.  */
     private static final String GREETING = "p|l|ee|z e|n|t|er aa nn|u|m|b|er .|.";
     private static final SpeechSynthesizer speech = new SpeechSynthesizer();

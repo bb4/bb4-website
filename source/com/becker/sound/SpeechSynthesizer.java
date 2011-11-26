@@ -5,6 +5,7 @@ package com.becker.sound;
 
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.ui.util.GUIUtil;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -17,88 +18,90 @@ import java.util.StringTokenizer;
 /**
  * See http://www.javaworld.com/javaworld/jw-08-2001/jw-0817-javatalk.html?page=1
  * 
- * The speech engine works by concatenating short sound samples that represent the smallest units of human -- in this case English -- speech. Those sound samples, called allophones, are labeled with a one-, two-, or three-letter identifier. Some identifiers are obvious and some not so obvious, as you can see from the phonetic representation of the word "hello." 
+ * The speech engine works by concatenating short sound samples that represent the smallest
+ * units of human -- in this case English -- speech.
+ * Those sound samples, called allophones, are labeled with a one-, two-, or three-letter identifier.
+ * Some identifiers are obvious and some not so obvious, as you can see from the phonetic
+ * representation of the word "hello."
 
-h -- sounds as you would expect 
-e -- sounds as you would expect 
-l -- sounds as you would expect, but notice that I've reduced a double "l" to a single one 
-oo -- is the sound for "hello," not for "bot," and not for "too" 
+    h -- sounds as you would expect
+    e -- sounds as you would expect
+    l -- sounds as you would expect, but notice that I've reduced a double "l" to a single one
+    oo -- is the sound for "hello," not for "bot," and not for "too"
 
-Here is a list of the available allophones:
+    Here is a list of the available allophones:
 
-a -- as in cat 
-b -- as in cab 
-c -- as in cat 
-d -- as in dot 
-e -- as in bet 
-f -- as in frog 
-g -- as in frog 
-h -- as in hog 
-i -- as in pig 
-j -- as in jig 
-k -- as in keg 
-l -- as in leg 
-m -- as in met 
-n -- as in begin 
-o -- as in not 
-p -- as in pot 
-r -- as in rot 
-s -- as in sat 
-t -- as in sat 
-u -- as in put 
-v -- as in have 
-w -- as in wet 
-y -- as in yet 
-z -- as in zoo 
+    a -- as in cat
+    b -- as in cab
+    c -- as in cat
+    d -- as in dot
+    e -- as in bet
+    f -- as in frog
+    g -- as in frog
+    h -- as in hog
+    i -- as in pig
+    j -- as in jig
+    k -- as in keg
+    l -- as in leg
+    m -- as in met
+    n -- as in begin
+    o -- as in not
+    p -- as in pot
+    r -- as in rot
+    s -- as in sat
+    t -- as in sat
+    u -- as in put
+    v -- as in have
+    w -- as in wet
+    y -- as in yet
+    z -- as in zoo
 
-aa -- as in fake 
-ay -- as in hay 
-ee -- as in bee 
-ii -- as in high 
-oo -- as in go 
+    aa -- as in fake
+    ay -- as in hay
+    ee -- as in bee
+    ii -- as in high
+    oo -- as in go
 
-bb -- variation of b with different emphasis 
-dd -- variation of d with different emphasis 
-ggg -- variation of g with different emphasis 
-hh -- variation of h with different emphasis 
-ll -- variation of l with different emphasis 
-nn -- variation of n with different emphasis 
-rr -- variation of r with different emphasis 
-tt -- variation of t with different emphasis 
-yy -- variation of y with different emphasis 
+    bb -- variation of b with different emphasis
+    dd -- variation of d with different emphasis
+    ggg -- variation of g with different emphasis
+    hh -- variation of h with different emphasis
+    ll -- variation of l with different emphasis
+    nn -- variation of n with different emphasis
+    rr -- variation of r with different emphasis
+    tt -- variation of t with different emphasis
+    yy -- variation of y with different emphasis
 
-ar -- as in car 
-aer -- as in care 
-ch -- as in which 
-ck -- as in check 
-ear -- as in beer 
-er -- as in later 
-err -- as in later (longer sound) 
-ng -- as in feeding 
-or -- as in law 
-ou -- as in zoo 
-ouu -- as in zoo (longer sound) 
-ow -- as in cow 
-oy -- as in boy 
-sh -- as in shut 
-th -- as in thing 
-dth -- as in this 
-uh -- variation of u 
-wh -- as in where 
-zh -- as in Asian 
+    ar -- as in car
+    aer -- as in care
+    ch -- as in which
+    ck -- as in check
+    ear -- as in beer
+    er -- as in later
+    err -- as in later (longer sound)
+    ng -- as in feeding
+    or -- as in law
+    ou -- as in zoo
+    ouu -- as in zoo (longer sound)
+    ow -- as in cow
+    oy -- as in boy
+    sh -- as in shut
+    th -- as in thing
+    dth -- as in this
+    uh -- variation of u
+    wh -- as in where
+    zh -- as in Asian
  */
-public class SpeechSynthesizer
-{
+public class SpeechSynthesizer {
     private SourceDataLine line = null;
     
     /** delay in millis between words. */
-    private static final int DELAY_BETWEEN_WORDS = 150;
+    private static final int DELAY_BETWEEN_WORDS = 100;
 
     /*
      * This method speaks a phonetic word specified on the command line.
      */
-    public static void main( String args[] )
-    {
+    public static void main( String args[] ) {
         SpeechSynthesizer player = new SpeechSynthesizer();
         if ( args.length > 0 ) player.sayPhoneWord( args[0] );
         System.exit( 0 );
@@ -107,17 +110,14 @@ public class SpeechSynthesizer
      /*
      * This method speaks the given phonetic words.
      */
-    public void sayText( String text )
-    {        
+    public void sayText( String text )  {        
         sayPhoneWords( text.split(" "));
     }
-
 
     /*
      * This method speaks the given phonetic words.
      */
-    public void sayPhoneWords( String[] words )
-    {
+    public void sayPhoneWords( String[] words ) {
         for (final String newVar : words) {
             sayPhoneWord(newVar);
         }
@@ -126,8 +126,7 @@ public class SpeechSynthesizer
     /*
      * This method speaks the given phonetic word.
      */
-    public void sayPhoneWord( String word )
-    {
+    public void sayPhoneWord( String word ) {
         // -- set up a dummy byte array for the previous sound --
         byte[] previousSound = null;
 
@@ -137,45 +136,9 @@ public class SpeechSynthesizer
         //System.out.println("about to say: "+ word);
         while ( st.hasMoreTokens() ) {
             // -- construct a file name for the allophone --
-            String thisPhoneFile = st.nextToken();
-            if (thisPhoneFile.equals(",") || thisPhoneFile.equals(".")) {
-                if (thisPhoneFile.equals(",")) {
-                    pause(180);
-                }
-                else {
-                    pause(680);
-                }
-                continue;
-            }
-            thisPhoneFile = "com/becker/sound/allophones/" + thisPhoneFile + ".au";
+            String phoneToken = st.nextToken();
 
-            // -- get the data from the file --
-            byte[] thisSound = getSound( thisPhoneFile );
-            assert (thisSound.length > 0) : "Invalid sound file: "+thisPhoneFile;
-
-            if ( previousSound != null ) {
-                // -- merge the previous allophone with this one if we can --
-                int mergeCount = 0;
-                if ( previousSound.length >= 500 && thisSound.length >= 500 )  {
-                    mergeCount = 500;
-                }
-                for ( int i = 0; i < mergeCount; i++ ) {
-                    previousSound[previousSound.length - mergeCount + i]
-                            = (byte) ((previousSound[previousSound.length - mergeCount + i] + thisSound[i]) / 2);
-                }
-
-                // -- play the previous allophone --
-                playSound( previousSound );
-
-                // -- set the truncated current allophone as previous --
-                byte[] newSound = new byte[thisSound.length - mergeCount];
-                for ( int ii = 0; ii < newSound.length; ii++ ) {
-                    newSound[ii] = thisSound[ii + mergeCount];
-                }
-                previousSound = newSound;
-            }
-            else
-                previousSound = thisSound;
+            previousSound = processPhoneToken(previousSound, phoneToken);
         }
 
         // -- play the final sound and drain the sound channel --
@@ -183,17 +146,74 @@ public class SpeechSynthesizer
         drain();
     }
 
+    /** Speak the next allophone unless it is punctuation, in which case we just pause. */
+    private byte[] processPhoneToken(byte[] previousSound, String phoneToken) {
+
+        if (!pauseForPunctuation(phoneToken)) {
+
+            String phoneFile = "com/becker/sound/allophones/" + phoneToken + ".au";
+
+            // -- get the data from the file --
+            byte[] thisSound = getSound( phoneFile );
+            assert (thisSound.length > 0) : "Invalid sound file: " + phoneFile;
+
+            return sayPhoneToken(previousSound, thisSound);
+        }
+        return previousSound;
+    }
+
+    /** Pause appropriately if we have encountered punctuation. */
+    private boolean pauseForPunctuation(String thisPhoneToken) {
+        if (thisPhoneToken.equals(",") || thisPhoneToken.equals(".")) {
+            if (thisPhoneToken.equals(",")) {
+                pause(180);
+            }
+            else {
+                pause(680);
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    /** 
+     * Speak a single phonetic token
+     * @return the token that was said.
+     */
+    private byte[] sayPhoneToken(byte[] previousSound, byte[] thisSound) {
+        if ( previousSound != null ) {
+            // -- merge the previous allophone with this one if we can --
+            int mergeCount = 0;
+            if ( previousSound.length >= 500 && thisSound.length >= 500 )  {
+                mergeCount = 500;
+            }
+            for ( int i = 0; i < mergeCount; i++ ) {
+                previousSound[previousSound.length - mergeCount + i]
+                        = (byte) ((previousSound[previousSound.length - mergeCount + i] + thisSound[i]) / 2);
+            }
+
+            // -- play the previous allophone --
+            playSound( previousSound );
+
+            // -- set the truncated current allophone as previous --
+            byte[] newSound = new byte[thisSound.length - mergeCount];
+            System.arraycopy(thisSound, mergeCount, newSound, 0, newSound.length);
+            return newSound;
+        }
+        else  {
+            return thisSound;
+        }
+    }
+
     /*
      * This method drains the sound channel.
      */
-    private void drain()
-    {
-        if ( line != null ) 
-        {
+    private void drain() {
+        if ( line != null )  {
             // this used to be just drain, but I added flush to make it work post java 1.5
             line.drain();
             //System.out.println("draining fp=" + line.getFramePosition() + " info=" + line.getLineInfo());       
-            pause(90);
+            pause(50);
             line.flush();
         }
         pause(DELAY_BETWEEN_WORDS);
@@ -207,20 +227,20 @@ public class SpeechSynthesizer
     /*
      * This method plays a sound sample.
      */
-    private void playSound( byte[] data )
-    {
+    private void playSound( byte[] data ) {
         if (data == null) return;
-        if ( data.length > 0 ) line.write( data, 0, data.length );
+        if ( data.length > 0 ) {
+            line.write( data, 0, data.length );
+        }
     }
 
     /*
      * This method reads the file for a single allophone and constructs a byte vector.
      */
-    private byte[] getSound( String sPath )
-    {
+    private byte[] getSound( String sPath ) {
         try {
             //URL url = SpeechSynthesizer.class.getResource( fileName );
-            //System.out.println("getSound sPath=" + sPath);
+            System.out.println("getSound sPath=" + sPath);
             URL url = GUIUtil.getURL(sPath);
             AudioInputStream stream = AudioSystem.getAudioInputStream( url );
             AudioFormat format = stream.getFormat();
