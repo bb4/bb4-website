@@ -2,7 +2,7 @@
 package com.becker.game.twoplayer.common.cache;
 
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
-import com.becker.game.twoplayer.go.board.WorthInfo;
+import com.becker.game.twoplayer.go.board.analysis.WorthInfo;
 
 /**
  * Holds the score and the board state

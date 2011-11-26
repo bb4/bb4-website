@@ -127,7 +127,6 @@ public class BoardPosition {
         return location_;
     }
 
-
     /**
      * Get the euclidean distance from another board position
      * @param position to get the distance from
@@ -136,7 +135,6 @@ public class BoardPosition {
     public final double getDistanceFrom( BoardPosition position ) {
         return location_.getDistanceFrom(position.getLocation());
     }
-
 
     /**
      * @param position to check if neighboring
