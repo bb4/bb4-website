@@ -8,8 +8,8 @@ import com.becker.game.common.board.BoardPosition;
  * Used to check to see if a position is in the corner of the board.
  * @author Barry Becker
  */
-public final class CornerChecker
-{
+public final class CornerChecker {
+
     private int numRows;
     private int numCols;
 

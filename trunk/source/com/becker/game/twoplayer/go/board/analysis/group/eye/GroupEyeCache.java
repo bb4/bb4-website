@@ -25,8 +25,8 @@ public class GroupEyeCache {
     /** measure of how easily the group can make 2 eyes. */
     private float eyePotential_;
 
-    EyeSpaceAnalyzer eyeAnalyzer_;
-    EyePotentialAnalyzer potentialAnalyzer_;
+    private EyeSpaceAnalyzer eyeAnalyzer_;
+    private EyePotentialAnalyzer potentialAnalyzer_;
 
     /**
      * Set this to true when the eyes need to be recalculated.

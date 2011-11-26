@@ -1,8 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.common.util.LRUCache;
-import com.becker.game.twoplayer.go.board.elements.group.GoGroup;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 
 import java.util.Map;

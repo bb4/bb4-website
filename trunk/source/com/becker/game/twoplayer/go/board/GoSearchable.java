@@ -19,6 +19,7 @@ import com.becker.game.twoplayer.go.board.move.GoMoveGenerator;
 import com.becker.game.twoplayer.go.board.move.UrgentMoveGenerator;
 import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
 import com.becker.optimization.parameter.ParameterArray;
+
 import java.util.List;
 
 /**

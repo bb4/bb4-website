@@ -1,19 +1,6 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.go.board.elements.eye;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.eye.EyeTypeAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
-import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
-import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.position.GoStone;
-import com.becker.game.twoplayer.go.board.elements.string.GoString;
-
 /**
  *  Move serialization of eye to separate class for better reuse.
  *
