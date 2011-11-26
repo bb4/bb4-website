@@ -14,11 +14,7 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Determine if group is pass-alive using

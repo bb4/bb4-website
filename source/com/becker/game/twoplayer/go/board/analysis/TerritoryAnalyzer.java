@@ -9,11 +9,7 @@ import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionLists;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.position.GoStone;
+import com.becker.game.twoplayer.go.board.elements.position.*;
 
 import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORING;
 

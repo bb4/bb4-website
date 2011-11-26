@@ -18,7 +18,6 @@ public final class GameStageBoostCalculator {
         this.boardSize = boardSize;
     }
 
-
     /**
      * Opening = 4.5 - 1.0;   middle = 1.0 - 0.5;    end = 0.5
      * See TestGameStageBoostCalculator for more examples
@@ -30,5 +29,4 @@ public final class GameStageBoostCalculator {
         float b = Math.max(0, size2 - (float) numMovesSoFar)/size2;
         return 0.5 + 8.0 * b * b;
     }
-
 }

@@ -28,7 +28,6 @@ public final class PositionalScoreAnalyzer {
         0.1f    // fifth line
     };
 
-
     /**
      * Construct the Go game controller.
      */
@@ -51,7 +50,6 @@ public final class PositionalScoreAnalyzer {
         position.setScoreContribution(score.getPositionScore());
         return score;
     }
-
 
     /**
      * Create the lookup table of scores to attribute to the board positions when calculating the worth.

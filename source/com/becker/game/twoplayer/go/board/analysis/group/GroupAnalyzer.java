@@ -94,7 +94,7 @@ public class GroupAnalyzer implements GroupChangeListener {
     /**
      * @return health score dependent on strength of neighboring groups.
      */
-    public float getRelativeHealth() {
+    float getRelativeHealth() {
         return relativeHealth_;
     }
 

@@ -38,8 +38,7 @@ public class CandidateMoveAnalyzer {
      *
      * @return true if this position is a reasonable next move.
      */
-    public final boolean isCandidateMove( int row, int col )
-    {
+    public final boolean isCandidateMove( int row, int col ) {
         return candidateMoves_[row][col];
     }
 

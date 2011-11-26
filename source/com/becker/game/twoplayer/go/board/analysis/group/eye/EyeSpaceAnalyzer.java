@@ -255,7 +255,7 @@ class EyeSpaceAnalyzer {
      *       *    or  *    *
      *       E        E    E
      *
-     * @param position
+     * @param position the position to check.
      * @return true if on edge of border edge
      */
     private boolean withinBorderEdge(GoBoardPosition position) {

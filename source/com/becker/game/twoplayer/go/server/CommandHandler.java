@@ -13,6 +13,7 @@ import com.becker.game.twoplayer.go.options.GoOptions;
 import go.Point;
 import gtp.GtpServer;
 import utils.StringUtils;
+
 import java.util.List;
 
 /**
