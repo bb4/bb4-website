@@ -6,10 +6,12 @@ import java.util.*;
 /**
  * Map that maintains the order in which the entries are added to it.
  * It does not implement the SortedMap interface but is in some ways similar.
+ * Could probably replace with a LinkedHasMap, but then we would lose the ability
+ * to get an explicitly ordered keyList instead of the implicitly ordered keySet
+ * that a LinkedHashMap returns.
  *
  * @author Barry Becker
  */
-@SuppressWarnings({"SuspiciousMethodCalls"})
 public class OrderedMap<K, V> implements Map<K, V> {
 
      /** maps scene name to the scene */
@@ -44,7 +46,7 @@ public class OrderedMap<K, V> implements Map<K, V> {
     public boolean isEmpty() {
         return keys_.isEmpty();
     }
-
+    
     public boolean containsKey(Object key) {
         return keys_.contains(key);
     }
@@ -91,8 +93,8 @@ public class OrderedMap<K, V> implements Map<K, V> {
     }
 
     /**
-     * Perefer using keyList instead of this method
-     * @return the key in no particular order.
+     * Prefer using keyList instead of this method
+     * @return the keys in no particular order.
      */
     public Set<K> keySet() {
         Set<K> keySet = new HashSet<K>(keys_.size());
@@ -101,8 +103,7 @@ public class OrderedMap<K, V> implements Map<K, V> {
     }
 
     /**
-     * Perefer using keyList instead of this method
-     * @return the key in no particular order.
+     * @return the ordered list of keys.
      */
     public List<K> keyList() {
         return keys_;
