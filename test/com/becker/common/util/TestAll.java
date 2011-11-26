@@ -18,6 +18,7 @@ public class TestAll {
         TestSuite suite =  new TestSuite("All FormatUtil Tests");
 
         suite.addTestSuite(MathUtilTest.class);
+        suite.addTestSuite(OrderedMapTest.class);
         suite.addTestSuite(LRUCacheTest.class);
 
         return suite;
