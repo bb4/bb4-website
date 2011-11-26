@@ -6,7 +6,6 @@ import com.becker.game.twoplayer.common.cache.ScoreCache;
 import com.becker.game.twoplayer.common.cache.ScoreEntry;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.WorthInfo;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;

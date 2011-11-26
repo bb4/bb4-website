@@ -42,8 +42,7 @@ public final class DomUtil {
      * Initialize a dom document structure.
      * @return dom Document
      */
-    public static Document buildDom()
-    {
+    public static Document buildDom() {
         Document document = null;
         DocumentBuilderFactory factory =
         DocumentBuilderFactory.newInstance();

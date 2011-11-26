@@ -7,7 +7,6 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.PositionalScore;
-import com.becker.game.twoplayer.go.board.WorthInfo;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.optimization.parameter.ParameterArray;

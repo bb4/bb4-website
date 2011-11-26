@@ -1,8 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.CaptureList;
+import com.becker.game.twoplayer.go.board.PositionalScore;
 
 /**
  * All the stuff used to compute the worth.
