@@ -373,7 +373,7 @@ public class MidiSynth extends JPanel {
 
 
     /**
-     * Table for 128 general MIDI melody instuments.
+     * Table for 128 general MIDI melody instruments.
      */
     class InstrumentsTable extends JPanel {
 

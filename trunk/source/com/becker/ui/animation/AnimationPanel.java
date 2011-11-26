@@ -7,7 +7,8 @@ import com.becker.ui.util.GUIUtil;
 import javax.swing.*;
 import java.awt.*;
 
-public final class AnimationPanel extends JPanel implements AnimationChangeListener {
+public final class AnimationPanel extends JPanel
+                                  implements AnimationChangeListener {
 
     private Label mStatusLabel;
 
