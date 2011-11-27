@@ -8,6 +8,7 @@ import com.becker.game.common.GameWeights;
 import com.becker.game.common.Move;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.player.PlayerOptions;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
 import com.becker.game.twoplayer.common.search.Searchable;
@@ -133,10 +134,14 @@ public abstract class TwoPlayerController extends GameController {
      */
     protected PlayerList createPlayers() {
 
-         PlayerList players = new PlayerList();
-         players.add(new Player(GameContext.getLabel("PLAYER1"), null, true));
-         players.add(new Player(GameContext.getLabel("PLAYER2"), null, false));
-         return players;
+        PlayerList players = new PlayerList();
+        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER1")), true));
+        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER2")), false));
+        return players;
+    }
+    
+    protected PlayerOptions createPlayerOptions(String playerName) {
+        return new PlayerOptions(playerName, null);
     }
 
     /**
