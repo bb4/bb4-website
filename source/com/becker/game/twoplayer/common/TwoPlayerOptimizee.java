@@ -6,7 +6,7 @@ import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
- * Two sets of gameweights that can be optimized by repetitive play.
+ * Class that can optimize the gameWeights by applying repetitive play.
  *
  * @author Barry Becker
  */

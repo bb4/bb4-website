@@ -38,9 +38,10 @@ public class PentePatterns extends Patterns
         "XX_XX_XXXX", "XX_XXX_XXX", "XX_XXXX_XX", "XX_XXXXXXX", "XXX_X_XXX_", "XXX_X_XXXX", "XXX_XX_XXX", "XXX_XXXXX_", "XXX_XXXXXX"
     };
 
+
     private static final int[] WEIGHT_INDEX = {
         1, 2, 3, 3, 4, 5, 5, 5, 5, 6,
-        7, 4, 6, 7, 9, 5, 6, 7, 7, 7,
+        7, 4, 7, 7, 9, 5, 6, 7, 7, 7,
         8, 9, 5, 5, 7, 7, 10, 5, 5, 6,
         7, 7, 6, 7, 7, 7, 8, 9, 10, 5,
         7, 6, 7, 8, 9, 5, 7, 7, 11, 6,
@@ -95,4 +96,5 @@ public class PentePatterns extends Patterns
     protected int getWeightIndex(int i) {
         return WEIGHT_INDEX[i];
     }
+
 }

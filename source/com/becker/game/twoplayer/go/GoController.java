@@ -24,6 +24,15 @@ import java.util.List;
 /**
  * Defines everything the computer needs to know to play Go.
  *
+ * Urgent todo:
+ *  - gameWeights should be on player
+ *    each player will have a GoGameWeights instance from which one can retrieve the default weights
+ *    or the player specific weights.
+ *  - search options should be on player.
+ *    Move SearchOptions from TwoPlayerOptions to TwoPlayerPlayerOptions (extends PlayerOptions and composite in Player)
+ *  - Update ui so that we can edit the weights and the SearchOptions from the button next to the player in the
+ *    new game dialog instead of the game options dialog.
+ *
  * @see package.html for more info.
  * @author Barry Becker
  */
@@ -77,8 +86,8 @@ public final class GoController extends TwoPlayerController {
     protected PlayerList createPlayers() {
 
          PlayerList players = new PlayerList();
-         players.add(new Player(GameContext.getLabel("BLACK"), null, true));
-         players.add(new Player(GameContext.getLabel("WHITE"), null, false));
+         players.add(new Player(createPlayerOptions(GameContext.getLabel("BLACK")), true));
+         players.add(new Player(createPlayerOptions(GameContext.getLabel("WHITE")), false));
          return players;
     }
 

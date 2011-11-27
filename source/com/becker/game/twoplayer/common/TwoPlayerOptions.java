@@ -10,7 +10,6 @@ import com.becker.sound.MusicMaker;
  * Encapsulate two player options here to keep the TwoPlayerController class mush simpler.
  *
  * @author Barry Becker
- * Date: Aug 20, 2005
  */
 public class TwoPlayerOptions extends GameOptions
  {
@@ -24,9 +23,6 @@ public class TwoPlayerOptions extends GameOptions
     private String autoOptimizeFile_ = null;
 
     private String preferredTone_ = null;
-
-    private String player1Name_ = GameContext.getLabel("PLAYER1");
-    private String player2Name_ = GameContext.getLabel("PLAYER2");
 
     private SearchOptions searchOptions_;
 

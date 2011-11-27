@@ -60,12 +60,24 @@ public class PlayerList extends ArrayList<Player> {
      * @return true if any of the players have won.
      */
     public boolean anyPlayerWon() {
-        for (Player p : this) {
-            if (p.hasWon()) {
+        for (Player player : this) {
+            if (player.hasWon()) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @return the winning player or null if there isn't any yet.
+     */
+    public Player getWinningPlayer() {
+        for (Player player : this) {
+            if (player.hasWon()) {
+                return player;
+            }
+        }
+        return null;
     }
 
     /**

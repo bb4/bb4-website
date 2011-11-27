@@ -28,13 +28,22 @@ public class Player implements Serializable {
 
     /**
      * Constructor.
+     * @param options player options for this new player.
+     * @param isHuman true if human rather than computer player
+     */
+    public Player(PlayerOptions options, boolean isHuman) {
+        options_ = options;
+        type_ = (isHuman) ? HUMAN_PLAYER : COMPUTER_PLAYER;
+    }
+    
+    /**
+     * Constructor.
      * @param name name of the player
      * @param color some color identifying th eplayer in the ui.
      * @param isHuman true if human rather than computer player
      */
     public Player(String name, Color color, boolean isHuman) {
-        options_ = new PlayerOptions(name, color);
-        type_ = (isHuman) ? HUMAN_PLAYER : COMPUTER_PLAYER;
+        this(new PlayerOptions(name, color), isHuman);
     }
 
     public String getName() {
