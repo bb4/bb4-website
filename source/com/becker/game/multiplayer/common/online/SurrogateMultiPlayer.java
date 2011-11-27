@@ -44,7 +44,7 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
         
         if (cmd.getName() == GameCommand.Name.DO_ACTION) {
             PlayerAction action = (PlayerAction) cmd.getArgument();
-            if (action.getPlayerName().equals(name_)) {
+            if (action.getPlayerName().equals(getName())) {
                 GameContext.log(0, "Setting surrogate(" + player_.getName()
                         + ") action="+action + " on "+this+",  Thread=" + Thread.currentThread().getName());
                 player_.setAction(action);          
@@ -66,7 +66,7 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
      */
     @Override
     public synchronized PlayerAction getAction(MultiGameController controller) {
-     
+
         try {
             
             long t1 = System.currentTimeMillis();

@@ -131,11 +131,11 @@ public abstract class TwoPlayerController extends GameController {
     /**
      * create the 2 players.
      */
-    private PlayerList createPlayers() {
+    protected PlayerList createPlayers() {
 
          PlayerList players = new PlayerList();
-         players.add(new Player(getTwoPlayerOptions().getPlayerName(true), null, true));
-         players.add(new Player(getTwoPlayerOptions().getPlayerName(false), null, false));
+         players.add(new Player(GameContext.getLabel("PLAYER1"), null, true));
+         players.add(new Player(GameContext.getLabel("PLAYER2"), null, false));
          return players;
     }
 
