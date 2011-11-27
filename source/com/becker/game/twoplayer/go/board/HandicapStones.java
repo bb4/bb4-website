@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.go.board;
 
+import com.becker.game.common.Move;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
@@ -57,16 +58,15 @@ class HandicapStones {
      * public since we might set if from the options dialog
      * @return handicap stones
      */
-    public List getHandicapMoves()
+    public List<Move> getHandicapMoves()
     {
         assert numHandicapStones_ <= starPoints_.size();
-        List<GoMove> handicapMoves = new ArrayList<GoMove>(numHandicapStones_);
+        List<Move> handicapMoves = new ArrayList<Move>(numHandicapStones_);
 
         for ( int i = 0; i < numHandicapStones_; i++ ) {
             GoBoardPosition hpos = starPoints_.get( i );
 
             GoMove m = new GoMove(hpos.getLocation(), 0, (GoStone)hpos.getPiece());
-                                  new GoStone(hpos.getPiece().isOwnedByPlayer1(), GamePiece.REGULAR_PIECE );
             handicapMoves.add(m);
         }
         return handicapMoves;

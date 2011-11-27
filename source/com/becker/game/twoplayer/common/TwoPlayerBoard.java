@@ -55,9 +55,8 @@ public abstract class TwoPlayerBoard extends Board {
     /**
      * @param moves list of moves to make all at once.
      */
-    protected void makeMoves(List moves) {
-        for (Object m : moves) {
-            Move move = (Move) m;
+    protected void makeMoves(List<Move> moves) {
+        for (Move move : moves) {
             makeMove(move);
         }
     }
