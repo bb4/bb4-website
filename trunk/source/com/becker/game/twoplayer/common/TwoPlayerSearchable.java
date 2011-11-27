@@ -47,7 +47,7 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
      */
     public TwoPlayerSearchable(TwoPlayerSearchable searchable) {
 
-        this((TwoPlayerBoard)searchable.getBoard().copy(), (PlayerList)searchable.players_.clone(), searchable.options_);
+        this(searchable.getBoard().copy(), (PlayerList)searchable.players_.clone(), searchable.options_);
     }
 
     public TwoPlayerBoard getBoard() {
@@ -86,8 +86,7 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
 
         Location loc = m.getToLocation();
 
-        if (!m.isPassingMove())
-        {
+        if (!m.isPassingMove()) {
             hash.applyMove(loc, getBoard().getStateIndex(getBoard().getPosition(loc)));
         }
 
