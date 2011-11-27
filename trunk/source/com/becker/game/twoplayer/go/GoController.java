@@ -67,10 +67,19 @@ public final class GoController extends TwoPlayerController {
 
     @Override
     protected TwoPlayerOptions createOptions() {
-        TwoPlayerOptions options = new GoOptions();
-        options.setPlayerName(true, GameContext.getLabel("BLACK"));
-        options.setPlayerName(false, GameContext.getLabel("WHITE"));
-        return options;
+        return new GoOptions();
+    }
+
+    /**
+     * create the 2 players.
+     */
+    @Override
+    protected PlayerList createPlayers() {
+
+         PlayerList players = new PlayerList();
+         players.add(new Player(GameContext.getLabel("BLACK"), null, true));
+         players.add(new Player(GameContext.getLabel("WHITE"), null, false));
+         return players;
     }
 
     /**

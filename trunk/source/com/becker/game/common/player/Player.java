@@ -11,18 +11,12 @@ import java.io.Serializable;
  *
  * @author Barry Becker
  */
-public class Player implements Serializable
-{
+public class Player implements Serializable {
+
     private static final long serialVersionUID = 1;
 
     private static final int HUMAN_PLAYER = 1;
     private static final int COMPUTER_PLAYER = 2;
-
-    /** name of the pplayer. */
-    protected String name_;
-
-    /** each player has an associated color. */
-    private Color color_;
 
     /** each player is either human or robot. */
     private int type_;
@@ -30,6 +24,7 @@ public class Player implements Serializable
     /** Becomes true if this player has won the game. */
     private boolean hasWon_ = false;
 
+    private PlayerOptions options_;
 
     /**
      * Constructor.
@@ -37,56 +32,48 @@ public class Player implements Serializable
      * @param color some color identifying th eplayer in the ui.
      * @param isHuman true if human rather than computer player
      */
-    public Player(String name, Color color, boolean isHuman)
-    {
-        name_ = name;
-        color_ = color;
+    public Player(String name, Color color, boolean isHuman) {
+        options_ = new PlayerOptions(name, color);
         type_ = (isHuman) ? HUMAN_PLAYER : COMPUTER_PLAYER;
     }
 
-    public String getName()
-    {
-        return name_;
+    public String getName() {
+        return options_.getName();
     }
 
 
-    public void setName( String name )
-    {
-        this.name_ = name;
+    public void setName( String name ) {
+        this.options_.setName(name);
+    } 
+
+
+    public Color getColor() {
+        return options_.getColor();
     }
 
-
-    public Color getColor()
-    {
-        return color_;
-    }
-
-    public void setColor( Color color )
-    {
+    /*
+    public void setColor( Color color ) {
         this.color_ = color;
-    }
+    } */
 
 
-    public boolean isHuman()
-    {
+    public boolean isHuman() {
         return (type_ == HUMAN_PLAYER);
     }
 
-    public void setHuman( boolean human )
-    {
+    public void setHuman( boolean human ) {
         type_ =  (human) ? HUMAN_PLAYER : COMPUTER_PLAYER;
     }
 
-    public boolean hasWon()
-    {
+    public boolean hasWon() {
         return hasWon_;
     }
 
     /**
      * once you have won you cannot return to the not-won state
      */
-    public void setWon(boolean won)
-    {
+    public void setWon(boolean won) {
+        assert !hasWon() : "Trying to change won stat to "+ won +" after already won.";
         hasWon_ = won;
     }
     
@@ -104,15 +91,13 @@ public class Player implements Serializable
     @Override
     public boolean equals(Object p) {
         Player p1 = (Player) p;
-        return (name_.equals(p1.getName()) && isHuman() == p1.isHuman());
+        return (getName().equals(p1.getName()) && isHuman() == p1.isHuman());
     }
 
     @Override
     public int hashCode() {
         int hash = (isHuman() ? 100000000: 0);
-        for (int i = 0; i<name_.length(); i++) {
-            hash += 10*i + name_.charAt(i);
-        }
+        hash += 10 * getName().hashCode();
         return hash;
     }
     
@@ -120,7 +105,7 @@ public class Player implements Serializable
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("[ *").append(name_).append("* ");
+        sb.append("[ *").append(getName()).append("* ");
         if (!isHuman())
             sb.append(" (computer)");
         sb.append(additionalInfo()).append(" ]");
