@@ -1,9 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.math;
 
-import ca.dj.jigo.sgf.tokens.SourceToken;
 import junit.framework.*;
-import com.becker.common.math.MathUtil;
 
 import javax.vecmath.Point2d;
 
@@ -55,15 +53,18 @@ public class MathUtilTest extends TestCase {
 
     public void testFindAngle() {
 
-
         Point2d point = new Point2d(1.0, 1.0);
-        for (double x=0; x<2.0*Math.PI; x+=0.1) {
+        for (double x = 0; x < 2.0 * Math.PI; x += 0.3) {
             Point2d toPoint = new Point2d(point.getX() + Math.cos(x), point.getY() + Math.sin(x));
             System.out.println("angle to " + toPoint +" is " + MathUtil.getDirectionTo(point, toPoint));
         }
-        Assert.assertEquals("Unexpected angle.", Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(2.0, 2.0)));
-        Assert.assertEquals("Unexpected angle.", 3.0*Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(0.0, 2.0)));
-        Assert.assertEquals("Unexpected angle.", 5.0*Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(0.0, 0.0)));
-        Assert.assertEquals("Unexpected angle.", -Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(2.0, 0.0)));
+        Assert.assertEquals("Unexpected angle.",
+                Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(2.0, 2.0)));
+        Assert.assertEquals("Unexpected angle.",
+                3.0*Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(0.0, 2.0)));
+        Assert.assertEquals("Unexpected angle.",
+                5.0*Math.PI/4.0 - 2.0*Math.PI, MathUtil.getDirectionTo(point, new Point2d(0.0, 0.0)));
+        Assert.assertEquals("Unexpected angle.",
+                -Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(2.0, 0.0)));
     }
 }
