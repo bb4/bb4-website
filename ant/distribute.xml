@@ -178,18 +178,6 @@
       <sleep milliseconds="${sleepTime}" />
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy the jigo sgf class files that are needed for go deployment. -->
-      <copy todir="${stagingDir}">
-         <fileset dir="${classesDir}">
-           <include name="ca/dj/jigo/sgf/*.class"/>
-           <include name="ca/dj/jigo/sgf/tokens/*.class"/>
-         </fileset>
-         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy  -->
-      </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/jigo_sgf.jar"/>
-      <sleep milliseconds="${sleepTime}" />
-      <delete dir="${stagingDir}/ca"/>
-
       <!-- copy the class files that are needed for galactic empire deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="game/multiplayer/galactic"/>
