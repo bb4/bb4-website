@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jai_codec.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/sun.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gogui7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kgsGtp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gtpserver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xerces_2_3_0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jnlp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/vecmath.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xml-apis.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jhlabs-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/j3dutils.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/j3dcore.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

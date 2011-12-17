@@ -1,0 +1,16 @@
+Testsuite: com.becker.game.twoplayer.tictactoe.TestAll
+Tests run: 7, Failures: 1, Errors: 0, Time elapsed: 0.215 sec
+
+Testcase: test__OEvaluation took 0.2 sec
+Testcase: test_O_Evaluation took 0.001 sec
+Testcase: test_X_Evaluation took 0 sec
+Testcase: test_XOEvaluation took 0.002 sec
+Testcase: test_OOEvaluation took 0.001 sec
+Testcase: test_XXEvaluation took 0.001 sec
+Testcase: testOOOEvaluation took 0.001 sec
+	FAILED
+[HORIZONTAL] Unexpected worth for move Player 2 val:0 inhrtd:0 piece:p2 x(row=2, colum=3) expected:<-7960> but was:<-8152>
+junit.framework.AssertionFailedError: [HORIZONTAL] Unexpected worth for move Player 2 val:0 inhrtd:0 piece:p2 x(row=2, colum=3) expected:<-7960> but was:<-8152>
+	at com.becker.game.twoplayer.tictactoe.MoveEvaluationTest.verifyResult(TestMoveEvaluation.java:135)
+	at com.becker.game.twoplayer.tictactoe.MoveEvaluationTest.testOOOEvaluation(TestMoveEvaluation.java:90)
+

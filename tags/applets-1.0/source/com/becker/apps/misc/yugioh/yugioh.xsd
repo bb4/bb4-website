@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!-- note: if you modify this file, you must upload it again to barrybecker4.com/schema -->
+
+  <xsd:element name="yugioh">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="monsterCard" maxOccurs="unbounded" />
+        <xsd:element ref="magicCard"   maxOccurs="unbounded" />
+      </xsd:sequence>
+      <!--xsd:attribute name="xsi:noNamespaceSchemaLocation" type="xsd:string"/-->
+    </xsd:complexType>
+
+  </xsd:element>
+
+  <xsd:element name="monsterCard">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="name"      type="xsd:string" />
+        <xsd:element name="id"        type="idType" />
+        <xsd:element name="attribute" type="monsterAttribute" />
+        <xsd:element name="stars"     type="starsType" />
+        <xsd:element name="category"  type="categoryType" />
+        <xsd:element name="attack"    type="yugiNumber" />
+        <xsd:element name="defense"   type="yugiNumber" />
+        <xsd:element name="characteristics" type="characteristicsType" />
+        <xsd:element name="description"  type="xsd:string" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+   <xsd:element name="magicCard">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="name"      type="xsd:string" />
+        <xsd:element name="id"        type="idType" />
+        <xsd:element name="attribute" type="magicAttribute" />
+        <xsd:element name="icon"      type="iconType" />
+        <xsd:element name="description"  type="xsd:string" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+
+    <xsd:simpleType name="monsterAttribute">
+      <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="Wind"/>
+        <xsd:enumeration value="Earth"/>
+        <xsd:enumeration value="Water"/>
+        <xsd:enumeration value="Fire"/>
+        <xsd:enumeration value="Light"/>
+        <xsd:enumeration value="Dark"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="magicAttribute">
+      <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="Trap"/>
+        <xsd:enumeration value="Spell"/>
+        <xsd:enumeration value="Magic"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="starsType">
+      <xsd:restriction base="xsd:integer">
+        <xsd:minInclusive value="0"/>
+        <xsd:maxInclusive value="12"/>
+     </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="idType">
+      <xsd:restriction base="xsd:string">
+        <xsd:pattern value="[A-Z0-9]{3,4}-[A-Z]{0,2}\d{3}" />
+      </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="categoryType">
+      <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="Aqua"/>
+        <xsd:enumeration value="Beast"/>
+        <xsd:enumeration value="Beast-Warrior"/>
+        <xsd:enumeration value="Dinosaur"/>
+        <xsd:enumeration value="Dragon"/>
+        <xsd:enumeration value="Fairy"/>
+        <xsd:enumeration value="Fiend"/>
+        <xsd:enumeration value="Fish"/>
+        <xsd:enumeration value="Insect"/>
+        <xsd:enumeration value="Machine"/>
+        <xsd:enumeration value="Plant"/>
+        <xsd:enumeration value="Pyro"/>
+        <xsd:enumeration value="Reptile"/>
+        <xsd:enumeration value="Rock"/>
+        <xsd:enumeration value="Spellcaster"/>
+        <xsd:enumeration value="Thunder"/>
+        <xsd:enumeration value="Sea Serpent"/>
+        <xsd:enumeration value="Warrior"/>
+        <xsd:enumeration value="Winged Beast"/>
+        <xsd:enumeration value="Zombie"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="yugiNumber">
+      <xsd:union>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+            <xsd:maxInclusive value="10000"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="?"/>
+            <xsd:enumeration value="??"/>
+            <xsd:enumeration value="???"/>
+            <xsd:enumeration value="????"/>
+            <xsd:enumeration value="Infinity"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:union>
+    </xsd:simpleType>
+
+    <xsd:complexType name="characteristicsType">
+      <xsd:choice maxOccurs="4" >
+        <xsd:element name="Fusion"    type="empty"/>
+        <xsd:element name="Ritual"    type="empty" />
+        <xsd:element name="Union"     type="empty" />
+        <xsd:element name="Toon"      type="empty" />
+        <xsd:element name="Spirit"    type="empty" />
+        <xsd:element name="Effect">
+          <xsd:complexType>
+            <xsd:attribute name="type" type="effectType" use="required"/>
+          </xsd:complexType>
+         </xsd:element>
+      </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="empty" />
+
+    <xsd:simpleType name="effectType">
+      <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="normal"/>
+        <xsd:enumeration value="flip"/>
+        <xsd:enumeration value="continuous"/>
+        <xsd:enumeration value="ignition"/>
+        <xsd:enumeration value="trigger"/>
+        <xsd:enumeration value="multi-trigger"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="iconType">
+      <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="equip"/>
+        <xsd:enumeration value="field"/>
+        <xsd:enumeration value="quickPlay"/>
+        <xsd:enumeration value="ritual"/>
+        <xsd:enumeration value="continuous"/>
+        <xsd:enumeration value="counter"/>
+        <xsd:enumeration value="normal"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>
