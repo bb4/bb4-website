@@ -268,7 +268,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     protected void checkMoveListAgainstExpected(String title, TwoPlayerMove[] expectedMoves,
                                                 MoveList moves) {
         if (expectedMoves.length != moves.size()) {
-            printMoves( title, moves);
+            printMoves(title, moves);
         }
 
         assertEquals("Unexpected number of generated moves.",

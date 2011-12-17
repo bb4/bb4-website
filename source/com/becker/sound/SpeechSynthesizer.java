@@ -240,7 +240,6 @@ public class SpeechSynthesizer {
     private byte[] getSound( String sPath ) {
         try {
             //URL url = SpeechSynthesizer.class.getResource( fileName );
-            System.out.println("getSound sPath=" + sPath);
             URL url = GUIUtil.getURL(sPath);
             AudioInputStream stream = AudioSystem.getAudioInputStream( url );
             AudioFormat format = stream.getFormat();

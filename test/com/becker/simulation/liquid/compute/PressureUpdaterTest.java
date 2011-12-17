@@ -41,6 +41,7 @@ public class PressureUpdaterTest extends TestCase {
     }
 
 
+    /** Currently failing */
     public void testPressureUpdateNonUniform() {
 
         double b0 = 1.0;
@@ -58,8 +59,6 @@ public class PressureUpdaterTest extends TestCase {
         Cell cell2 = grid.getCell(1, 2);
         verifyCell(cell2, 0.9, new Vector2d(0.49120674102731, 0.41098491062604847));
     }
-
-
 
     public void testPressureUpdateRandom() {
 
