@@ -49,6 +49,7 @@
     <pathelement location="${libDir}/commons-codec-1.3.jar"/>
     <pathelement location="${libDir}/rt.jar"/>
     <pathelement location="${libDir}/jhlabs-1.0.1.jar"/>
+    <pathelement location="${libDir}/jigo-1.0.jar"/>
     <pathelement location="${libDir}/j3dcore.jar"/>
     <pathelement location="${libDir}/j3dutils.jar"/>
   </path>
@@ -81,27 +82,18 @@
   <target name="clean" depends="init" description="Cleans out all the existing compiled classes and ${distributionDir}">
      <delete dir="${classesDir}"/>
      <delete dir="${distributionDir}"/>
-     <ant antfile="rmi.xml" inheritall="true" target="rmi_clean"/>
   </target>
 
   <target name="init">
      <mkdir dir="${classesDir}"/>
      <mkdir dir="${distributionDir}"/>
      <mkdir dir="${distributionGameDir}"/>
-     <ant antfile="rmi.xml" inheritall="true" target="rmi_init"/>
   </target>
 
 
   <target name="deploy" depends="compile" 
       description="deploys the built jar files to the ${distributionDir} dir so they can be bulk copied to a website">
       <ant antfile="distribute.xml" inheritall="true" target="distribute"/>
-  </target>
-
-
-  <target name="deployRMI" depends="compile"
-      description="deploys rmi client and server stubs to ${rmiClientDir} and ${rmiServerDir} dirs">
-      <ant antfile="rmi.xml" inheritall="true" target="deployRMIClient"/>
-      <ant antfile="rmi.xml" inheritall="true" target="deployRMIServer"/>
   </target>
 
   <target name="testCommon" depends="compile" description="common tests">
@@ -257,7 +249,7 @@
   <target name="executeGo" description="Run the go program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/gtpserver.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/gtpserver.jar;${libDir}/jigo-1.0.jar;"/>
       <param name="args" value="-name go -locale ENGLISH"/>
     </antcall>
   </target>
