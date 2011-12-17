@@ -86,6 +86,9 @@ public abstract class InterpolatorTstBase extends TestCase {
         catch (ArrayIndexOutOfBoundsException e) {
             // Success
         }
+        catch (AssertionError e)  {
+            // Success  (this way if assertions are enabled).
+        }
     }
 
     public void testInterpolateOutOfRangeFar() {
@@ -98,6 +101,9 @@ public abstract class InterpolatorTstBase extends TestCase {
         catch (ArrayIndexOutOfBoundsException e) {
             // Success
         }
+        catch (AssertionError e)  {
+            // Success  (this way if assertions are enabled).
+        }
     }
 
     public void testInterpolateOutOfRangeNegative() {
@@ -109,6 +115,9 @@ public abstract class InterpolatorTstBase extends TestCase {
         }
         catch (ArrayIndexOutOfBoundsException e) {
             // Success
+        }
+        catch (AssertionError e)  {
+            // Success  (this way if assertions are enabled).
         }
     }
 }

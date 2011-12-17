@@ -20,7 +20,7 @@ public class PenteWeights extends GameWeights {
 
     /** These defaults may be overridden in by the user in the UI. */
     private static final double[] DEFAULT_WEIGHTS = {
-        0.0,    0.0,    0.0,    0.5,     2.0,     6.0,      JEOPARDY_WEIGHT/2,     JEOPARDY_WEIGHT/2 + 2,    JEOPARDY_WEIGHT *2 + 30,
+        0.0,    0.0,    0.0,    0.5,     2.0,     8.0,      JEOPARDY_WEIGHT,     JEOPARDY_WEIGHT + 7.0,    ASSUMED_WINNING_VALUE,
         2 * ASSUMED_WINNING_VALUE,  2 * ASSUMED_WINNING_VALUE,  2 * ASSUMED_WINNING_VALUE
     };
 
@@ -47,8 +47,8 @@ public class PenteWeights extends GameWeights {
         "Closed three in a row (XXX)",                    // 2
         "Three in a row with chance to make 4 (_XXX or X_XX)",   // 3
         "Can be blocked after next move (_X_X, X_X_X)",               // 4
-        "Chance to have sure win after next move (_XX_, _X_X_, _X_XX, _XX_X)",  // 5
-        "Likely win after next move (_XXX_, _X_XX_, _X_XX_X ...)",                   // 6
+        "Chance to have win after next move (_XX_, _X_X_, _X_XX, _XX_X)",  // 5
+        "Likely win if play next (_XXX_, _X_XX_, _X_XX_X ...)",                   // 6
         "Guaranteed to win on next move (_XXXX, X_XXX, XX_XX, _X_XXX, _XX_XX, _XXX_X, ...)",  // 7
         "Guaranteed win even if not moving next (_XXXX_, _XXXX_X, ...)",              // 8
         "Already won. open ended 4b in a row (with options)",                    // 9

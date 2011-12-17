@@ -79,10 +79,10 @@ public class Player implements Serializable {
     }
 
     /**
-     * once you have won you cannot return to the not-won state
+     * Once you have won you should not return to the not-won state
+     * unless you are starting a new game.
      */
     public void setWon(boolean won) {
-        assert !hasWon() : "Trying to change won stat to "+ won +" after already won.";
         hasWon_ = won;
     }
     
