@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="deploy" name="RMI">
+  <description>usage: ant {task}
+  </description>
+
+  <property file="common.properties"/>
+  <!-- place where compiled classes go. images and resources also get copied here -->
+  <property name="classesDir" value="../classes"/>
+
+  <!-- these properties are for the RMI tasks -->
+  <property name="rmiClientDir" value="../rmi_client"/>
+  <property name="rmiServerDir" value="../rmi_server"/>
+  <property name="rmiPort" value="2018"/>
+
+  <target name="rmi_clean" description="Cleans out all the existing compiled classes and $(distributionDir}">
+    <delete dir="${rmiClientDir}"/>
+    <delete dir="${rmiServerDir}"/>
+  </target>
+
+  <target name="rmi_init">
+    <mkdir dir="${rmiClientDir}"/>
+    <mkdir dir="${rmiServerDir}"/>
+  </target>
+
+
+  <target name="deployRMIClient"
+      description="deploys rmi client stubs to ${rmiClientDir} dir so they can be accessed via rmi">
+
+    <!-- distribute stub file(s) and class files for the RMI client -->
+    <copy todir="${rmiClientDir}">
+      <fileset dir="${classesDir}">
+        <include name="com/becker/rmi/client/Pi.class"/> <!-- this includes ComputeEngine_stub.class -->
+      </fileset>
+      <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+    </copy>
+  </target>
+
+  <target name="deployRMIServer"
+      description="deploys rmi server stubs to ${rmiServerDir} dir so they can be accessed via rmi">
+
+    <!-- create stub file(s) -->
+    <rmic classname="com.becker.rmi.server.ComputeEngine" stubversion="1.2" debug="yes" base="${classesDir}" >
+      <!--classpath refid="compile.classpath"/-->
+    </rmic>
+    <!-- distribute stub file(s) and class files for the RMI server -->
+    <copy todir="${rmiServerDir}">
+      <fileset dir="${classesDir}">
+        <include name="com/becker/rmi/server/*.class"/> <!-- this includes ComputeEngine_stub.class -->
+      </fileset>
+      <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+    </copy>
+  </target>
+
+  <!-- use these next 2 tasks to run rmi. Run the server on one machine and the client on another. -->
+  <target name="startRMIServer" depends="deployRMIServer" description=" run the RMI Server">
+    <echo message="now starting rmiregistry and executing compute engine"/>
+    <!-- first start the rmiregistry. This does an asynchronous exec. -->
+    <exec executable="antRunAsync.bat" vmlauncher="false" failonerror="false">
+        <env key="ANTRUN_OUTPUT" value="g:/projects/java_projects/trunk/temp/ant_rmi.output"/>
+        <arg line="rmiregistry 2003"></arg>
+    </exec>
+
+    <sleep seconds="2" />
+    <echo message="done starting rmi registry."/>
+    
+    <java classname="com.becker.rmi.server.ComputeEngine" classpath="${classesDir};${rmiServerDir}" fork="true">
+      <jvmarg value="-Djava.rmi.server.codebase=file:/${rmiServerDir}"/>
+      <jvmarg value="-Djava.rmi.server.hostname=${hostname}"/>
+      <jvmarg value="-Djava.security.policy=java.policy"/>
+      <jvmarg value="-Xms128M"/>
+      <jvmarg value="-Xmx256M"/>
+      <arg value="${hostname}"/>
+      <arg value="${rmiPort}"/>
+    </java>
+    <echo message="done starting rmi compute server."/>
+  </target>
+
+  <target name="startRMIClient" depends="deployRMIClient" description=" run the RMI Client to execute a task on the server">
+    <echo message="now starting the rmi client"/>
+    <java classname="com.becker.rmi.client.ComputePi" classpath="${classesDir};${rmiClientDir}" fork="true">
+      <jvmarg value="-Djava.rmi.server.codebase=file:/${rmiClientDir}"/>
+      <jvmarg value="-Djava.security.policy=java.policy"/>
+      <jvmarg value="-Xms32M"/>
+      <jvmarg value="-Xmx64M"/>
+      <arg value="${hostname}"/>   <!-- hostname -->
+      <arg value="${rmiPort}"/>       <!-- rmi port number -->
+      <arg value="5000"/>      <!-- number of decimal places to compute pi to -->
+    </java>
+    <echo message="done starting rmi compute server."/>
+  </target>
+
+
+</project>
