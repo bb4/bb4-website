@@ -17,7 +17,7 @@ import com.becker.game.common.*;
 import java.util.*;
 
 /**
- * @author Barry Becker Date: Mar 3, 2007
+ * @author Barry Becker
  */
 public class BlockadeBoardTest extends BlockadeTestCase {
 
@@ -166,62 +166,62 @@ public class BlockadeBoardTest extends BlockadeTestCase {
     }
 
     private static final BlockadeMove[][] moves1 =  {
-                {
-                    createMove(6,4, 8,4, new GamePiece(false)),
-                    createMove(8,4, 10,4,  null),
-                    createMove(10,4,  11,5, null),
-                    createMove(11,5,  11,7, null),
-                    createMove(11,7,  11,8, null),
-                },
-                {
-                    createMove(6,4,  8,4,  new GamePiece(false)),
-                    createMove(8,4,  10,4, null),
-                    createMove(10,4,  10,2, null),
-                    createMove(10,2,  11,3, null),
-                    createMove(11,3,  11,4, null),
-                },
-                {
-                    createMove(8,8,  10,8,  new GamePiece(false)),
-                    createMove(10,8,  11,9, null),
-                    createMove(11,9,  11,8, null),
-                },
-                {
-                    createMove(8,8,  10,8, new GamePiece(false)),
-                    createMove(10,8,  10,6, null),
-                    createMove(10,6,  12,6, null),
-                    createMove(12,6,  13,5, null),
-                    createMove(13,5,  12,4, null),
-                    createMove(12,4,  11,4, null),
-                },           
+        {
+            createMove(6,4, 8,4, new GamePiece(false)),
+            createMove(8,4, 10,4,  null),
+            createMove(10,4,  11,5, null),
+            createMove(11,5,  11,7, null),
+            createMove(11,7,  11,8, null),
+        },
+        {
+            createMove(6,4,  8,4,  new GamePiece(false)),
+            createMove(8,4,  10,4, null),
+            createMove(10,4,  10,2, null),
+            createMove(10,2,  11,3, null),
+            createMove(11,3,  11,4, null),
+        },
+        {
+            createMove(8,8,  10,8,  new GamePiece(false)),
+            createMove(10,8,  11,9, null),
+            createMove(11,9,  11,8, null),
+        },
+        {
+            createMove(8,8,  10,8, new GamePiece(false)),
+            createMove(10,8,  10,6, null),
+            createMove(10,6,  12,6, null),
+            createMove(12,6,  13,5, null),
+            createMove(13,5,  12,4, null),
+            createMove(12,4,  11,4, null),
+        },
     };
 
 
     private static final BlockadeMove[][] moves2 =  {
-            {
-                createMove(8,3,  6,3, new GamePiece(true)),
-                createMove(6,3,  5,4, null),
-                createMove(5,4,  4,4, null),
-            },
-            {
-                createMove(8,3,  6,3, new GamePiece(true)),
-                createMove(6,3,  5,4, null),
-                createMove(5,4,  4,4, null),
-                createMove(4,4,  4,6, null),
-                createMove(4,6,  4,8, null),
-            },
-            {
-                createMove(9,8,  8,9, new GamePiece(true)),
-                createMove(8,9,  6,9, null),
-                createMove(6,9,  4,9, null),
-                createMove(4,9,  4,8, null),
-            },
-            {
-                createMove(9,8,  7,8, new GamePiece(true)),
-                createMove(7,8,  7,6, null),
-                createMove(7,6,  7,4, null),
-                createMove(7,4,  5,4, null),
-                createMove(5,4,  4,4, null),
-            }
+        {
+            createMove(8,3,  6,3, new GamePiece(true)),
+            createMove(6,3,  5,4, null),
+            createMove(5,4,  4,4, null),
+        },
+        {
+            createMove(8,3,  6,3, new GamePiece(true)),
+            createMove(6,3,  5,4, null),
+            createMove(5,4,  4,4, null),
+            createMove(4,4,  4,6, null),
+            createMove(4,6,  4,8, null),
+        },
+        {
+            createMove(9,8,  8,9, new GamePiece(true)),
+            createMove(8,9,  6,9, null),
+            createMove(6,9,  4,9, null),
+            createMove(4,9,  4,8, null),
+        },
+        {
+            createMove(9,8,  7,8, new GamePiece(true)),
+            createMove(7,8,  7,6, null),
+            createMove(7,6,  7,4, null),
+            createMove(7,4,  5,4, null),
+            createMove(5,4,  4,4, null),
+        }
     };
 
     private static BlockadeMove createMove(int r1, int c1, int r2, int c2, GamePiece piece) {
@@ -321,19 +321,19 @@ public class BlockadeBoardTest extends BlockadeTestCase {
 
      public void testShortestPaths2() {
 
-        restore("whitebox/noMoves2");
+         restore("whitebox/noMoves2");
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
 
-        GamePiece piece1 = new GamePiece(true); // player 1
-        GamePiece piece2 = new GamePiece(false);  // player 2
-        BlockadeWall wall1 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(8, 10), (BlockadeBoardPosition) board.getPosition(9, 10));
-        BlockadeWall wall2 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(12, 6), (BlockadeBoardPosition) board.getPosition(12, 7));
+         GamePiece piece1 = new GamePiece(true); // player 1
+         GamePiece piece2 = new GamePiece(false);  // player 2
+         BlockadeWall wall1 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(8, 10), (BlockadeBoardPosition) board.getPosition(9, 10));
+         BlockadeWall wall2 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(12, 6), (BlockadeBoardPosition) board.getPosition(12, 7));
 
-        BlockadeMove move1 = BlockadeMove.createMove(new Location(8, 11), new Location(6, 11), 1 /*0.1*/, piece2, wall2);
-        BlockadeMove move2 = BlockadeMove.createMove(new Location(12, 6), new Location(10, 6), 1 /*0.1*/, piece1, wall1);
+         BlockadeMove move1 = BlockadeMove.createMove(new Location(8, 11), new Location(6, 11), 1 /*0.1*/, piece2, wall2);
+         BlockadeMove move2 = BlockadeMove.createMove(new Location(12, 6), new Location(10, 6), 1 /*0.1*/, piece1, wall1);
 
-        controller_.makeMove(move1);
-        controller_.makeMove(move2);
+         controller_.makeMove(move1);
+         controller_.makeMove(move2);
 
          PlayerPathLengths pLengths = board.findPlayerPathLengths(move2);
          GameContext.log(1, pLengths.toString());

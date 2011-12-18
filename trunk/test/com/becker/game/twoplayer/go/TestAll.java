@@ -20,11 +20,11 @@ public class TestAll {
         // mostly integration tests.
         suite.addTest(com.becker.game.twoplayer.go.board.TestAll.suite());
         suite.addTestSuite(TestScoring.class);
-        ////suite.addTestSuite(TestLifeAndDeath.class);
+        suite.addTestSuite(TestLifeAndDeath.class);
 
         // these 2 can take really long.
-        ////suite.addTest(TestProblemCollections.suite());
-        ////suite.addTestSuite(TestKiseido2002.class);
+        suite.addTest(TestProblemCollections.suite());
+        suite.addTestSuite(TestKiseido2002.class);
 
         return suite;
     }
