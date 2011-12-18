@@ -15,6 +15,7 @@
       <root url="jar://$PROJECT_DIR$/lib/jhlabs-1.0.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/j3dutils.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/j3dcore.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jigo-1.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

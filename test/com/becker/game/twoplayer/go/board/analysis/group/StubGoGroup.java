@@ -11,7 +11,6 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * @author Barry Becker
@@ -26,7 +25,6 @@ public class StubGoGroup implements IGoGroup {
         this.absHealth= absHealth;
         this.isOwnedByPlayer1 = isOwnedByPlayer1;
         this.numStones = numStones;
-
     }
 
     public float getAbsoluteHealth() {
@@ -38,39 +36,39 @@ public class StubGoGroup implements IGoGroup {
     }
 
     public void addChangeListener(GroupChangeListener listener) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public void removeChangeListener(GroupChangeListener listener) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public void addMember(IGoString string) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public GoStringSet getMembers() {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public boolean isEnemy(GoBoardPosition pos) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public void setVisited(boolean visited) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public int size() {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public GoBoardPositionSet getLiberties(GoBoard board) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public int getNumLiberties(GoBoard board) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public int getNumStones() {
@@ -78,46 +76,46 @@ public class StubGoGroup implements IGoGroup {
     }
 
     public GoEyeSet getEyes(GoBoard board) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public float getRelativeHealth(GoBoard board, boolean useCachedValue) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public boolean containsStone(GoBoardPosition stone) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public void remove(IGoString string) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public GoBoardPositionSet getStones() {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public float calculateAbsoluteHealth(GoBoard board) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public float calculateRelativeHealth(GoBoard board) {
-       throw new NotImplementedException();
+       throw new UnsupportedOperationException();
     }
 
     public void updateTerritory(float health) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public Box findBoundingBox() {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public boolean isStoneMuchWeaker(GoStone stone) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     public String toHtml() {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 }

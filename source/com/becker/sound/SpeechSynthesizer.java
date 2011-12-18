@@ -5,7 +5,6 @@ package com.becker.sound;
 
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.ui.util.GUIUtil;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;

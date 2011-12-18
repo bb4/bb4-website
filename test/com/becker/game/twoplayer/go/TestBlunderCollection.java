@@ -25,9 +25,9 @@ public class TestBlunderCollection extends GoTestCase {
     @Override
     protected void setOptionOverrides(SearchOptions options) {
         options.getBruteSearchOptions().setAlphaBeta(true);
-        options.getBruteSearchOptions().setLookAhead(2);
+        options.getBruteSearchOptions().setLookAhead(1); // should be 2 or more
         options.getBestMovesSearchOptions().setPercentageBestMoves(80);
-        options.getBruteSearchOptions().setQuiescence(true);
+        options.getBruteSearchOptions().setQuiescence(false); //true);
         options.setSearchStrategyMethod(SearchStrategyType.NEGASCOUT_W_MEMORY);
     }
 
