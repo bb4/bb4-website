@@ -8,6 +8,8 @@ import com.becker.common.math.function.ErrorFunction;
 import com.becker.common.math.function.Function;
 import com.becker.common.math.function.FunctionInverter;
 
+import java.util.Arrays;
+
 /**
  * Convert the uniform distribution to a normal (gaussian) one.
  * @author Barry Becker
@@ -17,7 +19,7 @@ public class GaussianRedistribution extends AbstractRedistributionFunction {
     private double mean;
     private double stdDeviation;
     
-    private static final int NUM_MAP_VALUES = 1000;
+    private static final int NUM_MAP_VALUES = 10;
     private static final double SQRT2 = Math.sqrt(2.0);
 
     private Function errorFunction;
@@ -52,7 +54,8 @@ public class GaussianRedistribution extends AbstractRedistributionFunction {
         // reallocate the part that is missing.
         int numMapValsm1 = NUM_MAP_VALUES-1;
         for (int i=1; i<NUM_MAP_VALUES; i++) {
-            double aliasAllocation =  -lowMissing * (double)(numMapValsm1-i)/numMapValsm1 +  highMissing * (double)i/numMapValsm1;
+            double aliasAllocation =
+                    -lowMissing * (double)(numMapValsm1-i)/numMapValsm1 +  highMissing * (double)i/numMapValsm1;
             cdfFunction[i] += aliasAllocation;
             if (cdfFunction[i] > 1.0 && i<NUM_MAP_VALUES-1) {
                 cdfFunction[i] = 1.0 - MathUtil.EPS;

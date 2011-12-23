@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author Barry Becker Date: 2007
+ * @author Barry Becker
  */
 public class ParameterOptionsDialog extends SimulatorOptionsDialog {
 
@@ -19,22 +19,19 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
     /**
      * constructor
      */ 
-    public ParameterOptionsDialog( JFrame parent, Simulator simulator )
-    {
+    public ParameterOptionsDialog( JFrame parent, Simulator simulator ) {
         super( parent, simulator );
         ParameterSimulator psim = (ParameterSimulator) getSimulator();
-        showRedistribution_ .setSelected(psim.isShowRedistribution());
+        showRedistribution_.setSelected(psim.isShowRedistribution());
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return "Parameter Simulation Configuration";
     }
 
     @Override
-    protected JPanel createCustomParamPanel()
-    {
+    protected JPanel createCustomParamPanel() {
         JPanel paramPanel = new JPanel();
         paramPanel.setLayout(new BorderLayout());
         JPanel innerPanel = new JPanel();
@@ -56,8 +53,7 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
     }
 
     @Override
-    protected void ok()
-    {
+    protected void ok() {
         super.ok();
 
         ParameterSimulator simulator = (ParameterSimulator) getSimulator();

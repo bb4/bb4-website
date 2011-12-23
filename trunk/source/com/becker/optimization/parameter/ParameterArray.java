@@ -4,6 +4,7 @@ package com.becker.optimization.parameter;
 import com.becker.common.format.FormatUtil;
 import com.becker.optimization.Improvement;
 import com.becker.optimization.Optimizee;
+import com.becker.optimization.parameter.types.Parameter;
 
 import java.util.Arrays;
 import java.util.List;

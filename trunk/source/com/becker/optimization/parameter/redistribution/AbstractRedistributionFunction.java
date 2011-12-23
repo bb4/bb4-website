@@ -14,9 +14,8 @@ public abstract class AbstractRedistributionFunction implements RedistributionFu
     protected InvertibleFunction redistributionFunction;
     
     /**
-     * 
-     * @param value
-     * @return
+     * @param value x value
+     * @return the value for the function at position value.
      */
     public double getValue(double value) {
         verifyInRange(value);
@@ -28,9 +27,8 @@ public abstract class AbstractRedistributionFunction implements RedistributionFu
     }
     
     /**
-     * 
      * @param value
-     * @return
+     * @return the inverse of the specified value.
      */
     public double getInverseFunctionValue(double value) {
         verifyInRange(value);

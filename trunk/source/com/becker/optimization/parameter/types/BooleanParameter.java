@@ -1,19 +1,20 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.optimization.parameter;
+package com.becker.optimization.parameter.types;
 
+import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.redistribution.BooleanRedistribution;
 import com.becker.optimization.parameter.ui.BooleanParameterWidget;
 import com.becker.optimization.parameter.ui.ParameterWidget;
 
 /**
- *  Represents a boolean parameter to an algorithm
+ *  Represents a boolean parameter to an algorithm.
  *
  *  @author Barry Becker
  */
 public class BooleanParameter extends IntegerParameter {
 
     public BooleanParameter( boolean val,  String paramName )  {
-        super(val?1:0, 0, 1, paramName);    
+        super(val ? 1 : 0, 0, 1, paramName);
     }
     
     public static BooleanParameter createSkewedParameter(boolean value, String paramName,

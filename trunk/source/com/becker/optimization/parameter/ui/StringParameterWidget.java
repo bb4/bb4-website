@@ -1,9 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.parameter.ui;
 
-import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.ParameterChangeListener;
-import com.becker.optimization.parameter.StringParameter;
+import com.becker.optimization.parameter.types.StringParameter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * Discrete set of dropdown values.
  * @author Barry Becker
  */
 public class StringParameterWidget extends ParameterWidget implements ActionListener {
@@ -28,15 +28,15 @@ public class StringParameterWidget extends ParameterWidget implements ActionList
     @Override
     protected void addChildren() {
              
-           // create a dropdown
-            StringParameter sparam = (StringParameter) parameter;
-            dropdown = new JComboBox(sparam.getStringValues().toArray());
-            dropdown.setName(parameter.getName());
-            dropdown.setMaximumSize(new Dimension(200, 20));
-            //System.out.println("values= " + sparam.getStringValues().toArray());
-            dropdown.setToolTipText(parameter.getName());          
-            dropdown.addActionListener(this);  
-            add(dropdown, BorderLayout.CENTER);                     
+        // create a dropdown
+        StringParameter sparam = (StringParameter) parameter;
+        dropdown = new JComboBox(sparam.getStringValues().toArray());
+        dropdown.setName(parameter.getName());
+        dropdown.setMaximumSize(new Dimension(200, 20));
+        //System.out.println("values= " + sparam.getStringValues().toArray());
+        dropdown.setToolTipText(parameter.getName());
+        dropdown.addActionListener(this);
+        add(dropdown, BorderLayout.CENTER);
     }
     
      /**

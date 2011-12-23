@@ -1,10 +1,10 @@
 package com.becker.java2d.imageproc;
 
-import com.becker.optimization.parameter.BooleanParameter;
-import com.becker.optimization.parameter.DoubleParameter;
-import com.becker.optimization.parameter.IntegerParameter;
-import com.becker.optimization.parameter.Parameter;
-import com.becker.optimization.parameter.StringParameter;
+import com.becker.optimization.parameter.types.BooleanParameter;
+import com.becker.optimization.parameter.types.DoubleParameter;
+import com.becker.optimization.parameter.types.Parameter;
+import com.becker.optimization.parameter.types.IntegerParameter;
+import com.becker.optimization.parameter.types.StringParameter;
 import com.jhlabs.image.*;
 
 import java.awt.image.ConvolveOp;
@@ -380,7 +380,7 @@ public class ProcessingOperators
              0.001,  0.040,  0.010,  0.010,  0.001,  
          };                                                          
          params.add(StringParameter.createDiscreteParameter(
-                          OperationType.MULTIPLY, OperationType.values(), "operation",  specValues, specValueProbs));
+                 OperationType.MULTIPLY, OperationType.values(), "operation", specValues, specValueProbs));
         
          params.add(new DoubleParameter(0.8, 0.1, 3.0, "amount"));
          params.add(new DoubleParameter(32, 4, 128, "scale"));

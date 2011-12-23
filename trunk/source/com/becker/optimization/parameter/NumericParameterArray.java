@@ -5,6 +5,8 @@ import com.becker.common.math.MultiArray;
 import com.becker.common.math.Vector;
 import com.becker.optimization.Improvement;
 import com.becker.optimization.Optimizee;
+import com.becker.optimization.parameter.types.DoubleParameter;
+import com.becker.optimization.parameter.types.Parameter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
