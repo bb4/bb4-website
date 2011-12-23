@@ -61,7 +61,7 @@ public class ErrorFunction implements InvertibleFunction {
        double sign = (x >= 0)? 1.0 : -1.0;
        if (Math.abs(x) > MAX_ERROR_FUNCTION_TABLE_VALUE) {
 
-           double v = (1.0 -  (100.0 - Math.abs(x) )* MathUtil.EPS_MEDIUM);
+           double v = (1.0 -  (100.0 - Math.abs(x) ) * MathUtil.EPS_MEDIUM);
            if (x > 50) {
                System.out.println("erf("+x+")="+ v);
            }

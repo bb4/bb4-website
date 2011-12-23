@@ -2,6 +2,7 @@
 package com.becker.common.math;
 
 import javax.vecmath.Point2d;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -18,7 +19,7 @@ public final class MathUtil {
     
     public static final double EPS_MEDIUM = 0.0000000001;
     
-    public static final double EPS_BIG = 0.26;
+    public static final double EPS_BIG = 0.0001;
 
     public static final Random RANDOM = new Random(1);
 
@@ -64,54 +65,27 @@ public final class MathUtil {
         }
         return result;
     }
-    
+
     /**
-     * Creates an inverse of the function specified
-     * assuming that function func is monotonic and maps [xRange] into [yRange]
-     * @param func
-     * @param xRange
-     * @return inverse error functin for specified range
+     * Implementation of c(m,n)
+     * @param m  total number of items
+     * @param n  number of items to choose where order does not matter
+     * @return number of combinations
      */
-    public static double[] createInverseFunction(double[] func, Range xRange) {
-        int len = func.length;
-        int lenm1 = len - 1;
-
-        double[] invFunc = new double[len];
-        int j = 0;
-        double xMax = xRange.getMax();
-        assert (func[lenm1] == 1.0) : func[lenm1] + " was not = 1.0";
-        for (int i=0; i<len; i++) {     
-            double xval = (double)i/lenm1;
-            while (j<lenm1 && func[j] <= xval) {
-                j++;
-            }
-            assert (xval<=func[j]+EPS): xval + " was not less than " + func[j] 
-                    +". That means the function was not monotonic as we assumed.";
-            invFunc[i] = xRange.getMin(); 
-            if (j>0)
-            {
-                double fm1 = func[j-1];
-                assert(xval>=fm1);
-                double denom = func[j] - fm1;
-                double nume = xval - fm1;
-                assert denom >=0;
-                if (denom == 0) {
-                    assert nume == 0;
-                    denom = 1.0;
-                }
-                double y = (((double)(j-1) + nume/denom)/ (double)lenm1);
-                //System.out.println("i="+i+" j=" + j +"  func[j]="+ func[j]  +" nume=" + nume + " denom="+denom +" lenm1=" + lenm1 + " y="+y + " xval="+xval);
-                invFunc[i] = xRange.getMin() + y * xRange.getExtent();
-                assert (invFunc[i]<xMax + EPS_BIG): invFunc[i] + " was not less than " + xMax;                 
-            }
+    public static BigInteger combination(int m, int n) {
+        int diff = m-n;
+        BigInteger numerator;
+        BigInteger denominator;
+        if (n > diff) {
+            numerator = MathUtil.bigPermutation(m, n);
+            denominator = MathUtil.bigFactorial(diff);
+        } else {
+            numerator =  MathUtil.bigPermutation(m, diff);
+            denominator = MathUtil.bigFactorial(n);
         }
-        assert (invFunc[lenm1]>xMax - EPS_BIG): invFunc[lenm1] + " was not greater than " + xMax; 
-        invFunc[lenm1] = xMax;
         
-        System.out.println("inverse fun=" +Arrays.toString(invFunc));
-        return invFunc;
+        return numerator.divide(denominator);
     }
-
 
     /**
      * factorial function.
@@ -128,6 +102,64 @@ public final class MathUtil {
         while (ct > 1) {
             f *= ct;
             ct--;
+        }
+        return f;
+    }
+
+    /**
+     * factorial function.
+     * 0! = 1 (http://www.zero-factorial.com/whatis.html)
+     * This could be a recursive function, but it would be slow and run out of memory for large num.
+     * @param num   number to take factorial of
+     * @return  num!
+     */
+    public static BigInteger bigFactorial(int num) {
+        assert num >=0;
+        if (num == 0) return BigInteger.ONE;
+        BigInteger ct = new BigInteger(Integer.toString(num));
+        BigInteger f = BigInteger.ONE;
+        while (ct.compareTo(BigInteger.ONE) > 0) {
+            f = f.multiply(ct);
+            ct = ct.subtract(BigInteger.ONE);
+        }
+        return f;
+    }
+    
+    /**
+     * permutation function computes a!/b!.
+     * 0! = 1 (http://www.zero-factorial.com/whatis.html)
+     * @param a number of items to select from
+     * @param b number of items to select order being important.
+     * @return a!/b!
+     */
+    public static long permutation(int a, int b) {
+        assert a > 0; 
+        assert b > a; 
+        long f = a;
+        int anew = a-1;
+        while (anew > b) {
+           f *= anew;
+           anew--;
+        }
+        return f;
+    }
+    
+    /**
+     * permutation function computes a!/b!.
+      * 0! = 1 (http://www.zero-factorial.com/whatis.html)
+      * @param a number of items to select from
+      * @param b number of items to select order being important.
+      * @return a!/b!
+     */
+    public static BigInteger bigPermutation(int a, int b) {
+        assert a > 0; 
+        assert b > a; 
+        BigInteger f = new BigInteger(Integer.toString(a));
+        int anew = a-1;
+        //BigInteger anew = new BigInteger(a-1);
+        while (anew>b) {
+           f = f.multiply(new BigInteger(Integer.toString(anew)));
+           anew--;
         }
         return f;
     }
