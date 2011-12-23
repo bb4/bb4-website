@@ -1,9 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.optimizees;
 
-import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.parameter.types.DoubleParameter;
 import com.becker.optimization.parameter.NumericParameterArray;
-import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**

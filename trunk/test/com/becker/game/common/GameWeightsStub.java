@@ -2,11 +2,9 @@
 package com.becker.game.common;
 
 
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
-import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.parameter.types.DoubleParameter;
 import com.becker.optimization.parameter.NumericParameterArray;
-import com.becker.optimization.parameter.Parameter;
-import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.parameter.types.Parameter;
 
 /**
  * Stub GameWeights for testing

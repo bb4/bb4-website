@@ -1,10 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.parameter;
 
-import com.becker.optimization.Optimizer;
-import com.becker.optimization.optimizees.OptimizeeTestProblem;
-import com.becker.optimization.strategy.OptimizationStrategyType;
-import junit.framework.Assert;
+import com.becker.optimization.parameter.types.IntegerParameter;
+import com.becker.optimization.parameter.types.Parameter;
 import junit.framework.TestCase;
 
 /**
