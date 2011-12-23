@@ -4,6 +4,7 @@ package com.becker.optimization.parameter;
 
 import com.becker.common.math.Vector;
 import com.becker.optimization.Optimizee;
+import com.becker.optimization.parameter.types.Parameter;
 
 /**
  * private utility class for maintaining the data vectors for the iteration.

@@ -1,7 +1,7 @@
 package com.becker.java2d.imageproc;
 
-import com.becker.optimization.parameter.BooleanParameter;
-import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.types.BooleanParameter;
+import com.becker.optimization.parameter.types.Parameter;
 
 import java.awt.image.BufferedImageOp;
 import java.lang.reflect.InvocationTargetException;

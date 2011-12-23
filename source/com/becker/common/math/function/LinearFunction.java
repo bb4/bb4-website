@@ -4,7 +4,7 @@ package com.becker.common.math.function;
 import com.becker.common.math.Range;
 
 /**
- * The function scales and offsets a value
+ * The function defines a line. It scales and offsets values.
  *
  * @author Barry Becker
  */

@@ -8,7 +8,6 @@ package com.becker.optimization.parameter.redistribution;
  */
 public class BooleanRedistribution extends DiscreteRedistribution {
 
- 
     private static final int[] SPECIAL_VALUES = {0, 1};
     
     /**

@@ -1,6 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.optimization.parameter;
+package com.becker.optimization.parameter.types;
 
+import com.becker.optimization.parameter.Direction;
+import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.redistribution.GaussianRedistribution;
 import com.becker.optimization.parameter.redistribution.UniformRedistribution;
 import com.becker.optimization.parameter.ui.DoubleParameterWidget;
@@ -60,7 +62,7 @@ public class DoubleParameter extends AbstractParameter {
         double increment = direction.getMultiplier() * (getMaxValue() - getMinValue()) / NUM_STEPS;
 
         double v = getValue();
-        if ( (v+increment > getMaxValue())) {
+        if ( (v + increment > getMaxValue())) {
             value_ = getMaxValue();
             return 0;
         }

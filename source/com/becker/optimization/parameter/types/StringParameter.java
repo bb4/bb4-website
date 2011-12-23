@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.optimization.parameter;
+package com.becker.optimization.parameter.types;
 
+import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.redistribution.DiscreteRedistribution;
 import com.becker.optimization.parameter.ui.ParameterWidget;
 import com.becker.optimization.parameter.ui.StringParameterWidget;

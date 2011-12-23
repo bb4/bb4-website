@@ -3,13 +3,15 @@ package com.becker.simulation.parameter;
 
 import com.becker.common.math.function.InvertibleFunction;
 import com.becker.common.math.function.LinearFunction;
-import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.types.Parameter;
 import com.becker.simulation.common.ui.DistributionSimulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.ui.renderers.HistogramRenderer;
 
 /**
- * to see what kind of distribution of numbers you get.
+ * To see what kind of distribution of numbers you get.
+ * If showRedistribution is true, then the plot should show uniform because
+ * the redistribution of a function applied to that function should be uniform.
  * 
  * @author Barry Becker
  */
@@ -17,7 +19,7 @@ public class ParameterSimulator extends DistributionSimulator {
 
     private static final int NUM_DOUBLE_BINS = 1000;
 
-    // init with some default
+    /** initialize with some default */
     private Parameter parameter_ = ParameterDistributionType.values()[0].getParameter();
 
     private boolean showRedistribution_ = true;
@@ -42,6 +44,7 @@ public class ParameterSimulator extends DistributionSimulator {
 
     @Override
     protected void initHistogram() {
+
         if (parameter_.isIntegerOnly()) {
             data_ = new int[(int)parameter_.getRange() + 1];
             histogram_ = new HistogramRenderer(data_);
@@ -49,7 +52,11 @@ public class ParameterSimulator extends DistributionSimulator {
         else {
             data_ = new int[NUM_DOUBLE_BINS];
 
-            InvertibleFunction xFunc = new LinearFunction(NUM_DOUBLE_BINS/parameter_.getRange(), -parameter_.getMinValue());
+            double scale = NUM_DOUBLE_BINS / parameter_.getRange();
+            double offset = -parameter_.getMinValue();
+            //System.out.println("new Lin scale = " +scale + " off="+ offset);
+            InvertibleFunction xFunc = new LinearFunction(scale, offset);
+
             histogram_ = new HistogramRenderer(data_, xFunc);
         }                
     }
@@ -61,29 +68,22 @@ public class ParameterSimulator extends DistributionSimulator {
     
     @Override
     protected double getXPositionToIncrement() {
+
         if (showRedistribution_) {
             parameter_.randomizeValue(random_);  
         }
         else {
-            double scale = parameter_.isIntegerOnly()?  parameter_.getRange() + 1.0 : parameter_.getRange();
+            //System.out.println("parameter_.getRange()="+parameter_.getRange());
+            //double scale = parameter_.isIntegerOnly()?  parameter_.getRange() +1.0 : parameter_.getRange();
+            double scale = parameter_.getRange();
             double v = parameter_.getMinValue() + random_.nextDouble() * scale;
             parameter_.setValue(v);
         }
 
         return parameter_.getValue();
-        /*
-        int xpos;
-        if (parameter_.isIntegerOnly()) {
-            xpos = (int) parameter_.getValue();
-        }
-        else {
-            xpos =  (int)((NUM_DOUBLE_BINS-1) * parameter_.getValue() / parameter_.getRange());
-        }
-        return xpos;  */
     }
 
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         final ParameterSimulator sim = new ParameterSimulator();
         runSimulation(sim);
     }

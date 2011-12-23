@@ -1,6 +1,6 @@
 package com.becker.java2d.imageproc;
 
-import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.ui.ParameterWidget;
 

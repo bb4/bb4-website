@@ -60,7 +60,7 @@ public final class LinearUtil {
             error = norm * norm;
             //System.out.println("xi = "+x.toString());
             iteration++;
-            System.out.println( "the error for iteration " + iteration + " is : " + error );
+            //System.out.println( "the error for iteration " + iteration + " is : " + error );
         } while ( error > eps && iteration < 8 );
 
         if ( error > eps || Double.isNaN( error ) || Double.isInfinite( error ) )  // something went wrong

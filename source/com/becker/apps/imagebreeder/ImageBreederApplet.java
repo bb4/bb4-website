@@ -5,7 +5,7 @@ import com.becker.java2d.Utilities;
 import com.becker.java2d.imageproc.MetaImageOp;
 import com.becker.java2d.imageproc.ParameterPanel;
 import com.becker.java2d.imageproc.ProcessingOperators;
-import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.types.Parameter;
 import com.becker.ui.application.ApplicationApplet;
 import com.becker.ui.components.ImageListPanel;
 import com.becker.ui.components.ImageSelectionListener;

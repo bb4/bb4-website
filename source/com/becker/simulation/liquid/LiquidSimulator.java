@@ -4,7 +4,7 @@ package com.becker.simulation.liquid;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.NumericParameterArray;
-import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.ui.Simulator;
