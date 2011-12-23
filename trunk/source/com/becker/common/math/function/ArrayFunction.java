@@ -30,7 +30,7 @@ public class ArrayFunction implements InvertibleFunction {
      * @parma interpolationMethod
      */
     public ArrayFunction(double[] func, InterpolationMethod interpMethod) {
-        this(func, MathUtil.createInverseFunction(func, new Range(0, 1.0)), interpMethod);
+        this(func, new FunctionInverter(func).createInverseFunction(new Range(0, 1.0)), interpMethod);
     }
     
     /**

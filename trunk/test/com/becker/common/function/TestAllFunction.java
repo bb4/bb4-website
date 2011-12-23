@@ -16,6 +16,7 @@ public class TestAllFunction {
         TestSuite suite =  new TestSuite("All Function Tests");
 
         suite.addTestSuite(ErrorFunctionTest.class);
+        suite.addTestSuite(FunctionInverterTest.class);
 
         return suite;
     }

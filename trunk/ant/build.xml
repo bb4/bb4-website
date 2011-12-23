@@ -49,28 +49,14 @@
   <target name="compile" depends="init" description="Compiles the source code">
     <javac debug="yes" deprecation="yes" destdir="${classesDir}"  includeantruntime="false"
         nowarn="no" optimize="yes" srcdir="${sourceDir}" verbose="false"
-        executable="${java_home}/bin/javac" compiler="modern" source="1.5">
+        executable="${java_home}/bin/javac" compiler="modern" source="1.6">
        <!-- compilerarg value="-Xlint" /   this is nice but adding support for generics is a bit of a rathole.-->
        <classpath refid="compile.classpath"/>
     </javac>
     <!-- use ant deploy to copy the resources to the classes dir -->
   </target>
 
-
-  <target name="game metrics" depends="compile"
-      description="calculate metrics (e.g. lines of code) for all the source files in the project">
-    <javancss srcdir="${sourceDir}/com/becker/game"
-         generateReport="true"
-         packageMetrics="true"
-         classMetrics="false"
-         functionMetrics="false"
-         outputfile="../performance/javancss_metrics.txt"
-         format="plain">
-      <include name="**/*.java"/>
-    </javancss>
-  </target>
-
-  <target name="clean" depends="init" description="Cleans out all the existing compiled classes and ${distributionDir}">
+  <target name="clean" description="Cleans out all the existing compiled classes and ${distributionDir}">
      <delete dir="${classesDir}"/>
      <delete dir="${distributionDir}"/>
   </target>
@@ -83,7 +69,7 @@
 
 
   <target name="deploy" depends="compile" 
-      description="deploys the built jar files to the ${distributionDir} dir so they can be bulk copied to a website">
+      description="deploys the built jars, html, and jnlp files to the ${distributionDir} dir so they can be bulk copied to a website">
       <ant antfile="distribute.xml" inheritall="true" target="distribute"/>
   </target>
 
@@ -257,12 +243,6 @@
            <!-- test name="com.becker.game.twoplayer.go.test.TestEyes" outfile="../test/go/goTestResults"/-->
        </junit>
   </target>
-
-  <!--target name="executeColorMixer" description="Run the color mixer tool">
-    <antcall target="executeProgram">
-      <param name="className" value="com.becker.misc.colormixer.ColorMixer"/>
-    </antcall>
-  </target-->
 
   <target name="executeImageBreeder" description="Run the Image Breeder">
     <antcall target="executeProgram">

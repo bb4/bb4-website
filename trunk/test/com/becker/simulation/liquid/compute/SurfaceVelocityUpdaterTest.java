@@ -3,8 +3,6 @@ package com.becker.simulation.liquid.compute;
 
 import com.becker.simulation.liquid.model.*;
 import junit.framework.TestCase;
-import sun.print.PSPrinterJob;
-
 import javax.vecmath.Vector2d;
 
 import static com.becker.simulation.common.PhysicsConstants.ATMOSPHERIC_PRESSURE;

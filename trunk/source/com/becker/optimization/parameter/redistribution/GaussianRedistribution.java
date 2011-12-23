@@ -6,6 +6,7 @@ import com.becker.common.math.Range;
 import com.becker.common.math.function.ArrayFunction;
 import com.becker.common.math.function.ErrorFunction;
 import com.becker.common.math.function.Function;
+import com.becker.common.math.function.FunctionInverter;
 
 /**
  * Convert the uniform distribution to a normal (gaussian) one.
@@ -59,9 +60,11 @@ public class GaussianRedistribution extends AbstractRedistributionFunction {
         }
         double max = cdfFunction[NUM_MAP_VALUES-1];
         assert(max > 0.9 && max <1.01);
+
         cdfFunction[NUM_MAP_VALUES-1] = 1.0;
         Range xRange = new Range(0.0, 1.0);
-        functionMap = MathUtil.createInverseFunction(cdfFunction, xRange);
+        FunctionInverter inverter = new FunctionInverter(cdfFunction);
+        functionMap = inverter.createInverseFunction(xRange);
         redistributionFunction = new ArrayFunction(functionMap, cdfFunction);
     }
     

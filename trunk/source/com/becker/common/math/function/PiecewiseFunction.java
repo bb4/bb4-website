@@ -14,8 +14,7 @@ public class PiecewiseFunction implements InvertibleFunction {
     /** These parallel arrays define the piecewise function map. */
     protected double[] xValues;
     protected double[] yValues;
-    
-    
+
     /**
      * Constructor.
      * @param xVals
@@ -26,7 +25,6 @@ public class PiecewiseFunction implements InvertibleFunction {
         yValues = yVals;     
         assert xValues.length == yValues.length;
     }
-  
     
     /**
      * 
