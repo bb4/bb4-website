@@ -3,10 +3,7 @@ package com.becker.optimization.optimizees;
 
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
-import com.becker.optimization.parameter.IntegerParameter;
-import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.parameter.PermutedParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 
 /**

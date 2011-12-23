@@ -18,6 +18,8 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Optimization Strategy Tests");
 
         //suite.addTest(TestAnalyticFunctionProblem.suite());
+        suite.addTest(com.becker.optimization.parameter.TestAll.suite());
+
         suite.addTestSuite(TestAnalyticFunctionProblem.class);
         suite.addTestSuite(TestTravelingSalesmanProblem.class);
         suite.addTestSuite(TestSevenElevenProblem.class);

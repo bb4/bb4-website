@@ -2,7 +2,7 @@
 package com.becker.optimization;
 
 import com.becker.common.format.FormatUtil;
-import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 
 import javax.swing.*;
