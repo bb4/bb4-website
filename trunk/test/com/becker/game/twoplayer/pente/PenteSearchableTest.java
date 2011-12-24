@@ -28,8 +28,8 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
      * @return an initial move by player one.
      */
     @Override
-    protected  TwoPlayerMove createInitialMove() {
-        return  TwoPlayerMove.createMove(5, 5,   0, new GamePiece(true));
+    protected TwoPlayerMove createInitialMove() {
+        return TwoPlayerMove.createMove(5, 5,   0, new GamePiece(true));
     }
 
     /** at the very start only the center move is a candidate move */

@@ -13,7 +13,6 @@ import com.becker.game.twoplayer.go.board.PositionalScore;
  */
 public class WorthInfo {
 
-    private double gameStageBoost;
     private double territoryDelta;
     private double captureScore;
     private int blackCap;
@@ -27,10 +26,10 @@ public class WorthInfo {
     /**
      * Constructor.
      */
-    public WorthInfo(double gameStageBoost, double territoryDelta,
-                     double captureScore, int blackCap, int whiteCap, double positionalScore, PositionalScore[][] positionalScores,
+    public WorthInfo(double territoryDelta,
+                     double captureScore, int blackCap, int whiteCap,
+                     double positionalScore, PositionalScore[][] positionalScores,
                      CaptureList captures, double worth, MoveList moves) {
-        this.gameStageBoost = gameStageBoost;
         this.territoryDelta = territoryDelta;
         this.captureScore = captureScore;
         this.blackCap = blackCap;
@@ -48,7 +47,11 @@ public class WorthInfo {
      */
     public String toString() {
         StringBuilder bldr = new StringBuilder();
-        bldr.append("gameStageBoost=").append(gameStageBoost).append(" territoryDelta=").append(territoryDelta).append(" captureScore=").append(captureScore).append("(b=").append(blackCap).append(" w=").append(whiteCap).append(") positionalScore=").append(positionalScore).append(captures != null ? " captures=" + captures : "").append(" worth=").append(worth).append(" \nposScores:\n");
+        bldr.append(" territoryDelta=").append(territoryDelta).append(" captureScore=")
+                .append(captureScore).append("(b=").append(blackCap).append(" w=")
+                .append(whiteCap).append(") positionalScore=").append(positionalScore)
+                .append(captures != null ? " captures=" + captures : "").append(" worth=")
+                .append(worth).append(" \nposScores:\n");
         for (PositionalScore[] posScoreRow : positionalScores ) {
             for (PositionalScore pscore : posScoreRow) {
                 bldr.append(pscore);

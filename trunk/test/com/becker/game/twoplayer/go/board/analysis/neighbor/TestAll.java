@@ -19,7 +19,6 @@ public class TestAll extends GoTestCase {
 
         TestSuite suite =  new TestSuite("Neighbor Tests");
 
-        suite.addTestSuite(TestGameStateBoostCalculator.class);
         suite.addTestSuite(TestNeighborAnalyzer.class);
         suite.addTestSuite(TestNobiNeighborAnalyzer.class);
         suite.addTestSuite(TestStringNeighborAnalyzer.class);
