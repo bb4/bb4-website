@@ -18,7 +18,7 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public final class BoardEvaluator {
 
-    /** If true, we attempt to hang onto worth values for board positions that we have see before. */
+    /** If true, we attempt to hang onto worth values for board positions that we have already see before. */
     private static final boolean USE_SCORE_CACHING = true;
 
     private GoBoard board_;

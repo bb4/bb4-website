@@ -83,7 +83,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
 
         GoBoard board = (GoBoard)controller_.getBoard();
 
-        scoreAnalyzer_ = new PositionalScoreAnalyzer(board.getNumRows(), board.getNumCols());
+        scoreAnalyzer_ = new PositionalScoreAnalyzer(board.getNumRows());
     }
 
     /**
