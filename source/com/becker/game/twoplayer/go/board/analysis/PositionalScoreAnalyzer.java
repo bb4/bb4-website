@@ -17,22 +17,14 @@ import com.becker.optimization.parameter.ParameterArray;
 public final class PositionalScoreAnalyzer {
 
     /** a lookup table of scores to attribute to the board positions when calculating the worth */
-    private final float[][] positionalScore_;
+    private final PositionalScoreArray positionalScores_;
 
-    /** we assign a value to a stone based on the line on which it falls when calculating worth. */
-    private static final float[] LINE_VALS = {
-       -0.5f,   // first line
-        0.1f,   // second line
-        1.0f,   // third line
-        0.9f,   // fourth line
-        0.1f    // fifth line
-    };
 
     /**
      * Construct the Go game controller.
      */
-    public PositionalScoreAnalyzer(int numRows, int numCols) {
-        positionalScore_ = createPositionalScoreArray(numRows, numCols);
+    public PositionalScoreAnalyzer(int numRows) {
+        positionalScores_ = PositionalScoreArray.getArray(numRows);
     }
 
     /**
@@ -44,43 +36,12 @@ public final class PositionalScoreAnalyzer {
                                                      ParameterArray weights) {
 
         GoBoardPosition position = (GoBoardPosition) board.getPosition(row, col);
-        double positionalScore = positionalScore_[row][col];
-        PositionalScore score = calcPositionalScore(board, position, weights, positionalScore, gameStageBoost);
+        double positionalScore = positionalScores_.getValue(row, col);
+        PositionalScore score =
+            calcPositionalScore(board, position, weights, positionalScore, gameStageBoost);
 
         position.setScoreContribution(score.getPositionScore());
         return score;
-    }
-
-    /**
-     * Create the lookup table of scores to attribute to the board positions when calculating the worth.
-     * These weights are counted more heavily at te beginning of the game.
-     * @return lookup of position scores.
-     */
-    private float[][] createPositionalScoreArray(int numRows, int numCols) {
-
-        int row, col, rowmin, colmin;
-        float[][] positionalScore = new float[numRows + 1][numCols + 1];
-
-        for ( row = 1; row <= numRows; row++ ) {
-            rowmin = Math.min( row, numRows - row + 1 );
-            for ( col = 1; col <= numCols; col++ ) {
-                colmin = Math.min( col, numCols - col + 1 );
-                // default neutral value
-                positionalScore[row][col] = 0.0f;
-
-                int lineNo = Math.min(rowmin, colmin);
-                if (lineNo < LINE_VALS.length) {
-                    if (rowmin == colmin)  {
-                        // corners get emphasized
-                        positionalScore[row][col] = 1.5f * (LINE_VALS[lineNo - 1]);
-                    }
-                    else {
-                        positionalScore[row][col] = LINE_VALS[lineNo - 1];
-                    }
-                }
-            }
-        }
-        return positionalScore;
     }
 
     /**
@@ -121,9 +82,10 @@ public final class PositionalScoreAnalyzer {
     /**
      * Normalize each of the scores by the game weights.
      */
-    private void updateNormalizedOccupiedPositionScore(GoBoard board, PositionalScore score, GoBoardPosition position,
-                                                       ParameterArray weights, double positionalScore,
-                                                       double gameStageBoost) {
+    private void updateNormalizedOccupiedPositionScore(
+            GoBoard board, PositionalScore score, GoBoardPosition position,
+            ParameterArray weights, double positionalScore, double gameStageBoost) {
+
         GoStone stone = (GoStone)position.getPiece();
 
         int side = position.getPiece().isOwnedByPlayer1()? 1: -1;

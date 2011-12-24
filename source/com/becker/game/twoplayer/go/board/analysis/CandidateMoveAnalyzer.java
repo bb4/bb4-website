@@ -9,6 +9,8 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
  * Creates a set of reasonable next moves for a given player.
  * In theory, all empties should be considered, but in practice, we keep
  * a shorter list of reasonable moves lest things get intractable.
+ * Immutable.
+ *
  * @author Barry Becker
  */
 public class CandidateMoveAnalyzer {
@@ -62,8 +64,7 @@ public class CandidateMoveAnalyzer {
      * Fill a 2 stone wide strip on the 3rd and 4rth lines of the board.
      * This includes the star points and many others as candidates to consider
      */
-    private void initialize()
-    {
+    private void initialize() {
         for (int i = 3; i <= size_ - 2; i++ ) {
              tryToAddCandidateMove(board_.getPosition(i, 3));
              tryToAddCandidateMove(board_.getPosition(i, 4));
@@ -87,8 +88,7 @@ public class CandidateMoveAnalyzer {
      * this method splats a footprint of trues around the current moves.
      * later we look for empty spots that are true for candidate moves
      */
-    private void determineAdjacentCandidates()
-    {
+    private void determineAdjacentCandidates() {
         for (int i = 1; i <= size_; i++ ) {
             for (int j = 1; j <= size_; j++ ) {
                 GoBoardPosition pos = (GoBoardPosition) board_.getPosition(i,j);
@@ -103,8 +103,7 @@ public class CandidateMoveAnalyzer {
      * This method splats a footprint of trues around the specified move.
      * @param stone
      */
-    private void addCandidateMoves( GoBoardPosition stone )
-    {
+    private void addCandidateMoves( GoBoardPosition stone ) {
         int startrow = Math.max( stone.getRow() - CANDIDATE_MOVE_OFFSET, 1 );
         int stoprow = Math.min( stone.getRow() + CANDIDATE_MOVE_OFFSET, size_ );
         int startcol = Math.max( stone.getCol() - CANDIDATE_MOVE_OFFSET, 1 );

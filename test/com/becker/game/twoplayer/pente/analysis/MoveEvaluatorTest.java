@@ -44,13 +44,19 @@ public class MoveEvaluatorTest extends TestCase  {
 
     /**
      * This will fail if exceptions are on when running test.
+     * Verify error if piece is not where last move was played.
      */
     //@Test(expected=IllegalArgumentException.class) junit 4 only
     public void testInvalidEvaluation() {
 
-        initRow(board, 1, "___");
-        Move lastMove = TwoPlayerMove.createMove(1, 1, 0, new GamePiece(true));
-        checkResultLines(lastMove, new String[] {"______", "______", "_", "______"});
+        try {
+            initRow(board, 1, "___");
+            Move lastMove = TwoPlayerMove.createMove(1, 1, 0, new GamePiece(true));
+            checkResultLines(lastMove, new String[] {"______", "______", "_", "______"});
+            fail("did not exppect to get here");
+        } catch (AssertionError e) {
+            // success
+        }
     }
 
     public void testX__Evaluation() {
@@ -150,7 +156,6 @@ public class MoveEvaluatorTest extends TestCase  {
 
 
     /**
-     *
      * The 4 expected lines are - | / \
      */
     private void checkResultLines(Move lastMove, String[] expectedLines) {

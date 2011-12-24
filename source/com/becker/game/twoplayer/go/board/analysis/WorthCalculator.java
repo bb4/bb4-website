@@ -36,7 +36,7 @@ public class WorthCalculator {
     public WorthCalculator(GoBoard board, TerritoryAnalyzer terrAnalyzer) {
         board_ = board;
         territoryAnalyzer = terrAnalyzer;
-        positionalScorer_ = new PositionalScoreAnalyzer(board.getNumRows(), board.getNumCols());
+        positionalScorer_ = new PositionalScoreAnalyzer(board.getNumRows());
     }
 
     /**
@@ -84,7 +84,7 @@ public class WorthCalculator {
         // adjust for board size - so worth will be comparable regardless of board size.
         double scaleFactor = 361.0 / Math.pow(board.getNumRows(), 2);
         GameStageBoostCalculator gameStageBoostCalc_= new GameStageBoostCalculator(board.getNumRows());
-        double gameStageBoost = gameStageBoostCalc_.getGameStageBoost(board.getMoveList().getNumMoves());  //// 0.5
+        double gameStageBoost =  gameStageBoostCalc_.getGameStageBoost(board.getMoveList().getNumMoves());
 
         // Update status of groups and stones on the board. Expensive. // Should not Change board state, but it does.
         territoryAnalyzer.updateTerritory(false);
