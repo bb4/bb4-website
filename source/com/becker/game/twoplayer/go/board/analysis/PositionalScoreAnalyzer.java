@@ -16,6 +16,13 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public final class PositionalScoreAnalyzer {
 
+    /**
+     * I used to pass this in as a parameter and have it vary with how far along into the game we are,
+     * but I am trying to eliminate scores that might vary for the same position.
+     * Identical positions could have different number of moves because of captures and kos.
+     */
+    private static final double GAME_STAGE_BOOST = 0.5;
+
     /** a lookup table of scores to attribute to the board positions when calculating the worth */
     private final PositionalScoreArray positionalScores_;
 
@@ -28,17 +35,15 @@ public final class PositionalScoreAnalyzer {
     }
 
     /**
-     * @param gameStageBoost weight differently based on how far into the game we are
      * @param weights game weights
      * @return accumulated totalScore so far.
      */
-    public PositionalScore determineScoreForPosition(GoBoard board, int row, int col, double gameStageBoost,
-                                                     ParameterArray weights) {
+    public PositionalScore determineScoreForPosition(GoBoard board, int row, int col, ParameterArray weights) {
 
         GoBoardPosition position = (GoBoardPosition) board.getPosition(row, col);
         double positionalScore = positionalScores_.getValue(row, col);
         PositionalScore score =
-            calcPositionalScore(board, position, weights, positionalScore, gameStageBoost);
+            calcPositionalScore(board, position, weights, positionalScore);
 
         position.setScoreContribution(score.getPositionScore());
         return score;
@@ -47,8 +52,8 @@ public final class PositionalScoreAnalyzer {
     /**
      * @return the score contribution from a single point on the board
      */
-    private PositionalScore calcPositionalScore(GoBoard board, GoBoardPosition position, ParameterArray weights,
-                                                double positionalScore, double gameStageBoost) {
+    private PositionalScore calcPositionalScore(GoBoard board,
+           GoBoardPosition position, ParameterArray weights, double positionalScore) {
 
         PositionalScore score = new PositionalScore();
 
@@ -56,7 +61,7 @@ public final class PositionalScoreAnalyzer {
             updateEyePointScore(score, position);
         }
         else if (position.isOccupied()) {
-            updateNormalizedOccupiedPositionScore(board, score, position, weights, positionalScore, gameStageBoost);
+            updateNormalizedOccupiedPositionScore(board, score, position, weights, positionalScore);
         }
 
         score.calcPositionScore();
@@ -84,7 +89,7 @@ public final class PositionalScoreAnalyzer {
      */
     private void updateNormalizedOccupiedPositionScore(
             GoBoard board, PositionalScore score, GoBoardPosition position,
-            ParameterArray weights, double positionalScore, double gameStageBoost) {
+            ParameterArray weights, double positionalScore) {
 
         GoStone stone = (GoStone)position.getPiece();
 
@@ -100,7 +105,7 @@ public final class PositionalScoreAnalyzer {
                 -(side * shapeAnalyzer.formsBadShape(position) * badShapeWt) / totalWeight;
 
         // Usually a very low weight is assigned to where stone is played unless we are at the start of the game.
-        score.posScore = side * positionalWt * gameStageBoost * positionalScore / totalWeight;
+        score.posScore = side * positionalWt * GAME_STAGE_BOOST * positionalScore / totalWeight;
         score.healthScore = healthWt * stone.getHealth() / totalWeight;
 
         if (GameContext.getDebugMode() > 1)  {

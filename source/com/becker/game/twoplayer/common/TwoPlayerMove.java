@@ -7,6 +7,9 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.GamePiece;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 
 /**
  *  This base class describes a change in state from one board

@@ -254,13 +254,15 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
                 searchable.inJeopardy(null, weights());
         assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
 
+        TwoPlayerMove lastMove = createInitialMove();
+        searchable.makeInternalMove(lastMove);
         actualInJeopardy =
-                searchable.inJeopardy(createInitialMove(),
+                searchable.inJeopardy(lastMove,
                                       getController().getComputerWeights().getPlayer2Weights());
         assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
 
+        // todo
         // load a typical game in the middle and verify a move that does not put anything in jeopardy.
-
         // load a critical game in the middle and verify a move that does put the other player in jeopardy.
     }
 

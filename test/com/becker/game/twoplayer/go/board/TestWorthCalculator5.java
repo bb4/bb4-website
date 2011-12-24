@@ -28,7 +28,7 @@ public class TestWorthCalculator5 extends WorthCalculatorBase {
 
     /** verify that we get the expected worth value. */
     public void testFindSimpleWorth() {
-        verifyWorth("worth5x5", 33);
+        verifyWorth("worth5x5", 30); //33);
     }
 
 
@@ -43,7 +43,7 @@ public class TestWorthCalculator5 extends WorthCalculatorBase {
 
         int actWorth = calculator.worth(move, WEIGHTS.getDefaultWeights());
 
-        Assert.assertEquals("Unexpected worth.", 33, actWorth);
+        Assert.assertEquals("Unexpected worth.", 30, actWorth);
     }
 
     /**
@@ -52,7 +52,7 @@ public class TestWorthCalculator5 extends WorthCalculatorBase {
      */
     public void testSamePositionFromDifferentPathsEqual() {
 
-        compareWorths("worth5x5_A", "worth5x5_B", -70); // -61);
+        compareWorths("worth5x5_A", "worth5x5_B", -64); //-70); // -61);
     }
 
 }
