@@ -4,11 +4,9 @@ package com.becker.game.twoplayer.go.board.analysis;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.WorthCalculator;
+import com.becker.game.twoplayer.go.board.analysis.territory.TerritoryAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.options.GoWeights;
-import gui.Board;
 import junit.framework.Assert;
 
 /**
@@ -35,8 +33,7 @@ public abstract class WorthCalculatorBase extends GoTestCase {
 
         GoBoard board = (GoBoard) controller_.getBoard();
         GroupAnalyzerMap analyzerMap = new GroupAnalyzerMap();
-        TerritoryAnalyzer terrAnalyzer = new TerritoryAnalyzer(board, analyzerMap);
-        calculator = new WorthCalculator(board, terrAnalyzer);
+        calculator = new WorthCalculator(board, analyzerMap);
     }
 
 
