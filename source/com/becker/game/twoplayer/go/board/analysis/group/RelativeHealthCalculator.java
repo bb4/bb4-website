@@ -79,7 +79,7 @@ class RelativeHealthCalculator {
      * this gives us an indication of how surrounded we are.
      * If we are very surrounded then we give a big boost for being stronger or weaker than a nbr.
      * If we are not very surrounded then we don't give much of a boost because there are other
-     * ways to make habitat (i.e. run out/away).
+     * ways to make life (i.e. run out/away).
      * @return proportion of our group stones with enemy neighbors.
      */
     private double findProportionWithEnemyNbrs(GoBoardPositionSet groupStones) {

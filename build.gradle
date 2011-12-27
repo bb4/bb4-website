@@ -1,0 +1,94 @@
+// Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+
+// This is an experimental gradle build file for all the applets.
+// Soon I hope to split this large project up into smaller projects.
+// Perhaps an alternative is to create the different jars using different source sets.
+
+apply plugin: 'java'
+apply plugin:'application'
+apply plugin: 'project-reports'
+
+// simple task test at root level. Why don't the other top level tasks show up?
+task hello  { task->println "Project name === $task.project.name"}
+
+repositories {
+    //mavenCentral()
+    maven {
+        url "http://repo1.maven.org/maven2/"
+        //url "http://repository.jboss.org/maven2/"
+    }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.8.2'
+    compile files('lib/commons-codec-1.3.jar',
+                  'lib/jai_codec.jar',
+                  'lib/kgsGtp.jar',
+                  'lib/gogui7.1.jar',
+                  'lib/j3dcore.jar',
+                  'lib/j3dutils.jar',
+                  'lib/jhlabs-1.0.1.jar',
+                  'lib/jigo-1.0.jar',
+                  'lib/sun.jar',
+                  'lib/vecmath.jar',
+                  'lib/serces_2_3_0.jar',
+                  'lib/xml-apis.jar',
+                  'lib/jnlp.jar'
+                  )
+    //execExample1.dependsOn compile  // does not work
+    //compile 'com.sun.media:jai-codec:1.1.3'
+    //compile 'javax.media:jai-core:1.1.3'
+}
+
+version = '1.0'
+
+defaultTasks 'build'
+
+task deployJar(type: Jar, dependsOn: compileJava) {
+    from sourceSets.main.output
+}
+
+jar {
+    manifest.attributes provider: 'gradle'
+}
+
+// simple task test
+//task hello << { task->println "Project name === $task.project.name"}
+
+// all my projects use this directory layout.
+sourceSets {
+    main {
+        java {
+            srcDir 'source'
+        }
+        resources {
+            srcDir 'source'
+        }
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+        resources {
+            srcDir 'test'
+        }
+    }
+    /*
+    gameSrc {
+          set.java.srcDirs = ["source/com/becker/game"]
+          set.resources.srcDirs = ["source/com/becker/game"]
+    }
+
+    main {
+         set.java.srcDirs = ["source/com/becker/common", "source/com/becker/java2d",
+                    "source/com/becker/optimization", "source/com/becker/sound", "source/com/becker/ui"]
+         set.resources.srcDirs = ["source/com/becker/common", "source/com/becker/java2d",
+                    "source/com/becker/optimization", "source/com/becker/sound", "source/com/becker/ui"]
+    }
+    test {
+         set.java.srcDirs = ["test"]
+         set.resources.srcDirs = ["test"]
+    }*/
+}
+
+

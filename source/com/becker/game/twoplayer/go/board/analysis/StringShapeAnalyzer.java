@@ -48,7 +48,7 @@ public class StringShapeAnalyzer {
     }
 
     /**
-     *  There are 3 empty triangle cases based on where the sote is:
+     *  There are 3 empty triangle cases based on where the stone is:
      *       adj1    diag   X       XX     X
      *       space adj2    XX     X      XX
      *
