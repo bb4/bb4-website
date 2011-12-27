@@ -48,7 +48,7 @@ public class GoString extends GoSet
         getMembers().add( stone );
         stone.setString( this );
         group_ = null;
-        libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
+        libertyAnalyzer_ = new StringLibertyAnalyzer(board, this);
     }
 
     /**
@@ -64,7 +64,7 @@ public class GoString extends GoSet
         for (GoBoardPosition pos : stones) {
             addMemberInternal(pos, board);
         }
-        libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
+        libertyAnalyzer_ = new StringLibertyAnalyzer(board, this);
     }
     
     /**
@@ -101,11 +101,11 @@ public class GoString extends GoSet
      */
     public void addMember( GoBoardPosition stone, GoBoard board) {
         addMemberInternal(stone, board);
-        libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
+        libertyAnalyzer_.invalidate();
     }
 
     /**
-     * add a stone to the string
+     * Add a stone to the string
      */
     protected void addMemberInternal(GoBoardPosition stone, GoBoard board) {
         assert ( stone.isOccupied()): "trying to add empty space to string. stone=" + stone ;
@@ -152,10 +152,10 @@ public class GoString extends GoSet
                 myString.remove(stone, board);
             }
             stone.setString(null);
-            addMemberInternal( stone, board);
+            addMemberInternal(stone, board);
         }
         stringMembers.clear();
-        libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
+        libertyAnalyzer_.invalidate();
     }
 
     /**
@@ -165,21 +165,7 @@ public class GoString extends GoSet
      */
     public final void remove( GoBoardPosition stone, GoBoard board ) {
         removeInternal(stone);
-        libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
-    }
-
-    /**
-     * remove a set (List) of stones from this string.
-     * Its an error if the argument is not a proper substring.
-     * @param stones stones to remove (error if not a proper substring)
-     */
-    public final void remove( Collection<GoBoardPosition> stones, GoBoard board )
-    {
-        for (GoBoardPosition stone : stones) {
-            removeInternal(stone);
-        }
-        libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
-        assert ( size() > 0 );
+        libertyAnalyzer_.invalidate();
     }
 
     void removeInternal(GoBoardPosition stone ) {
@@ -208,7 +194,7 @@ public class GoString extends GoSet
      * @param libertyPos  position to check for liberty
      */
     public void changedLiberty(GoBoardPosition libertyPos) {
-        libertyAnalyzer_.changedLiberty(libertyPos);
+        libertyAnalyzer_.invalidate();
     }
 
     /**

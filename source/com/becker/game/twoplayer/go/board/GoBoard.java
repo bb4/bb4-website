@@ -9,6 +9,7 @@ import com.becker.game.twoplayer.go.board.analysis.CornerChecker;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.group.GoGroupSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.string.GoString;
 import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
@@ -71,6 +72,13 @@ public final class GoBoard extends TwoPlayerBoard {
         GoBoard b = new GoBoard(this);
         getProfiler().stopCopyBoard();
         return b;
+    }
+
+    /** Used in unit tests to initialize a board when we do not want to bother loading a file */
+    public void setPositions(GoBoardPositionList list) {
+        for (GoBoardPosition position : list) {
+            setPosition(position);
+        }
     }
 
     /**

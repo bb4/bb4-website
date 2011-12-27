@@ -25,6 +25,8 @@ public class TestAll {
         suite.addTest(com.becker.game.twoplayer.go.board.analysis.neighbor.TestAll.suite());
         suite.addTest(com.becker.game.twoplayer.go.board.analysis.group.TestAll.suite());
 
+        suite.addTestSuite(TestWorthCalculator3.class);
+        suite.addTestSuite(TestWorthCalculator5.class);
         suite.addTestSuite(TestStringShapeAnalyzer.class);
         suite.addTestSuite(TestShapeAnalyzer.class);
         suite.addTestSuite(TestCandidateMoveAnalyzer.class);

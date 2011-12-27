@@ -28,6 +28,13 @@ public class TestGoString extends GoTestCase {
     }
 
 
+    public void testStringLiberties() {
+        GoBoardPosition stone = new GoBoardPosition(4, 4, null, new GoStone(true, 0.5f));
+        GoBoard board = new GoBoard(9, 0);
+        GoString string = new GoString(stone, board);
+
+        assertEquals("Unexpected number fo liberties", 4, string.getNumLiberties(board));
+    }
 
     public static Test suite() {
         return new TestSuite(TestGoString.class);
