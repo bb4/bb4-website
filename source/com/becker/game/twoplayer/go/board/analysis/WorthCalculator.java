@@ -7,6 +7,9 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.PositionalScore;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
+import com.becker.game.twoplayer.go.board.analysis.territory.TerritoryAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.territory.TerritoryUpdater;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.optimization.parameter.ParameterArray;
@@ -22,19 +25,17 @@ import static com.becker.game.twoplayer.go.GoController.WIN_THRESHOLD;
 public class WorthCalculator {
 
     private GoBoard board_;
-
-
-
     private TerritoryAnalyzer territoryAnalyzer;
-
+    private TerritoryUpdater territoryUpdater;
     private WorthInfo info;
 
     /**
      * Constructor.
      */
-    public WorthCalculator(GoBoard board, TerritoryAnalyzer terrAnalyzer) {
+    public WorthCalculator(GoBoard board, GroupAnalyzerMap analyzerMap) {
         board_ = board;
-        territoryAnalyzer = terrAnalyzer;
+        territoryAnalyzer = new TerritoryAnalyzer(board, analyzerMap);
+        territoryUpdater = new TerritoryUpdater(board, analyzerMap);
     }
 
     /**
@@ -53,12 +54,22 @@ public class WorthCalculator {
             // then the margin is too great the losing player should resign
             return -WINNING_VALUE;
         }
-        else if ( worth > WIN_THRESHOLD ) {
+        if ( worth > WIN_THRESHOLD ) {
             // then the margin is too great the losing player should resign
             return WINNING_VALUE;
         }
         GoProfiler.getInstance().stopCalcWorth();
         return (int) worth;
+    }
+
+    /**
+     * Get estimate of territory for specified player.
+     * @param forPlayer1 the player to get the estimate for
+     * @param isEndOfGame then we need the estimate to be more accurate.
+     * @return estimate of size of territory for specified player.
+     */
+    public int getTerritoryEstimate(boolean forPlayer1, boolean isEndOfGame) {
+        return territoryAnalyzer.getTerritoryEstimate(forPlayer1, isEndOfGame);
     }
 
     /**
@@ -83,7 +94,7 @@ public class WorthCalculator {
         double scaleFactor = 361.0 / Math.pow(board.getNumRows(), 2);
 
         // Update status of groups and stones on the board. Expensive. // Should not Change board state, but it does.
-        territoryAnalyzer.updateTerritory(false);
+        territoryUpdater.updateTerritory(false);
 
         PositionalScore[][] positionScores = new PositionalScore[board.getNumRows()][board.getNumCols()];
         PositionalScore totalScore = PositionalScore.createZeroScore();
@@ -100,7 +111,7 @@ public class WorthCalculator {
             }
         }
 
-        double territoryDelta = territoryAnalyzer.getTerritoryDelta();
+        double territoryDelta = territoryUpdater.getTerritoryDelta();
         double captureScore = getCaptureScore(board, weights);
         double positionalScore = totalScore.getPositionScore();
         double worth = scaleFactor * (positionalScore + captureScore + territoryDelta);
@@ -118,6 +129,13 @@ public class WorthCalculator {
 
     public WorthInfo getWorthInfo() {
         return info;
+    }
+
+    /**
+     * @return the estimated difference in territory between the 2 sides.
+     */
+    public float updateTerritoryAtEndOfGame() {
+        return territoryUpdater.updateTerritory(true);
     }
 
     /**

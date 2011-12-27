@@ -23,7 +23,6 @@ public final class BoardEvaluator {
 
     private GoBoard board_;
     private WorthCalculator worthCalculator_;
-    private TerritoryAnalyzer territoryAnalyzer_;
     private GroupAnalyzerMap analyzerMap_;
     private ScoreCache scoreCache_;
 
@@ -34,8 +33,7 @@ public final class BoardEvaluator {
 
         board_ = board;
         analyzerMap_ = new GroupAnalyzerMap();
-        territoryAnalyzer_ = new TerritoryAnalyzer(board, analyzerMap_);
-        worthCalculator_ = new WorthCalculator(board, territoryAnalyzer_);
+        worthCalculator_ = new WorthCalculator(board, analyzerMap_);
         scoreCache_ = cache;
     }
 
@@ -117,13 +115,13 @@ public final class BoardEvaluator {
      * @return estimate of size of territory for specified player.
      */
     public int getTerritoryEstimate(boolean forPlayer1, boolean isEndOfGame) {
-        return territoryAnalyzer_.getTerritoryEstimate(forPlayer1, isEndOfGame);
+        return worthCalculator_.getTerritoryEstimate(forPlayer1, isEndOfGame);
     }
 
     /**
      * @return the estimated difference in territory between the 2 sides.
      */
     public float updateTerritoryAtEndOfGame() {
-        return territoryAnalyzer_.updateTerritory(true);
+        return worthCalculator_.updateTerritoryAtEndOfGame();
     }
 }
