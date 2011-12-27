@@ -1,9 +1,12 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.blockade;
 
+import com.becker.common.geometry.Location;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
@@ -28,7 +31,9 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
      */
     @Override
     protected  TwoPlayerMove createInitialMove() {
-        return BlockadeMove.createMove(5, 5,   0, new GamePiece(true));
+        return new BlockadeMove(new Location(5, 5), new Location(5, 5),
+                                0, new GamePiece(true),
+                                new BlockadeWall(new BlockadeBoardPosition(1, 1), new BlockadeBoardPosition(2, 1)));
     }
 
 

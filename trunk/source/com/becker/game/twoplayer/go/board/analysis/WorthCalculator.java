@@ -23,8 +23,7 @@ public class WorthCalculator {
 
     private GoBoard board_;
 
-    /** a lookup table of scores to attribute to the board positions when calculating the worth. */
-    private PositionalScoreAnalyzer positionalScorer_;
+
 
     private TerritoryAnalyzer territoryAnalyzer;
 
@@ -36,7 +35,6 @@ public class WorthCalculator {
     public WorthCalculator(GoBoard board, TerritoryAnalyzer terrAnalyzer) {
         board_ = board;
         territoryAnalyzer = terrAnalyzer;
-        positionalScorer_ = new PositionalScoreAnalyzer(board.getNumRows());
     }
 
     /**
@@ -88,13 +86,15 @@ public class WorthCalculator {
         territoryAnalyzer.updateTerritory(false);
 
         PositionalScore[][] positionScores = new PositionalScore[board.getNumRows()][board.getNumCols()];
-        PositionalScore totalScore = new PositionalScore();
+        PositionalScore totalScore = PositionalScore.createZeroScore();
+
+        PositionalScoreAnalyzer positionalScorer = new PositionalScoreAnalyzer(board);
 
         for (int row = 1; row <= board.getNumRows(); row++ ) {
             for (int col = 1; col <= board.getNumCols(); col++ ) {
 
                 PositionalScore s =
-                    positionalScorer_.determineScoreForPosition(board, row, col, weights);
+                    positionalScorer.determineScoreForPosition(row, col, weights);
                 positionScores[row-1][col-1] = s;
                 totalScore.incrementBy(s);
             }

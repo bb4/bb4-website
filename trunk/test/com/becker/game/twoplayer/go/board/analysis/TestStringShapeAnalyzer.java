@@ -23,12 +23,16 @@ public class TestStringShapeAnalyzer extends GoTestCase {
         checkShape(10, 8, 1);
         checkShape(11, 8, 1);
         checkShape(11, 9, 1);
-
-        checkShape(4, 9, 3);
-        checkShape(5, 9, 6);
-        checkShape(5, 10, 6);
-        checkShape(6, 10, 3);
     }
+
+    public void testShape2() {
+            restore("shape/problem_shape1");
+
+            checkShape(4, 9, 3);
+            checkShape(5, 9, 6);
+            checkShape(5, 10, 6);
+            checkShape(6, 10, 3);
+        }
 
     private void checkShape(int r, int c, int expectedShapeScore) {
         GoBoard board = (GoBoard)controller_.getBoard();

@@ -6,10 +6,11 @@ import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.PositionalScore;
 import com.becker.game.twoplayer.go.options.GoWeights;
+import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.Assert;
 
 /**
- *Test that candidate moves can be generated appropriately.
+ * Test positional score analysis.
  *
  * @author Barry Becker
  */
@@ -18,54 +19,112 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
     /** we can just reuse one of the other file sets */
     private static final String PREFIX = "board/analysis/scoring/";
 
-    private static final GoWeights GO_WEIGHTS = new GoWeights();
+    private GoWeights goWeights;
 
     private PositionalScoreAnalyzer scoreAnalyzer_;
 
-    private static final double TOLERANCE = 0.01;
+    private static final double TOLERANCE = 0.001;
 
-
-    public void testPositionalScoreNoEye() {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        goWeights = new GoWeights();
+        ParameterArray params = goWeights.getPlayer1Weights();
+        for (int i=0; i<params.size(); i++) {
+            params.get(i).setValue(2.0);
+        }
+        
+        goWeights.setPlayer1Weights(params);
+    }
+    
+    /**
+     *  | XO
+     *  | X
+     *  |
+     *  |     O
+     */
+    public void testOccupiedPositionalScoreNoEye() {
 
         initializeBoard("positional_score_no_eye");
 
-        PositionalScore totalScore = new PositionalScore();
-                                                                //     deads  es  badShp  posScore health
-        verifyPositionalScore(new Location(2,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.02109f, 0.0f/*0.0645f*/), totalScore);
-        verifyPositionalScore(new Location(2,3), createPositionalScore(0.0f, 0.0f, 0.0f, -0.014f, 0.0f/*-0.0645f*/), totalScore);
-        verifyPositionalScore(new Location(3,3), createPositionalScore(0.0f, 0.0f, 0.0f, 0.0f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(3,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.01406f, 0.0f/*0.0645f*/), totalScore);
+        PositionalScore totalScore = PositionalScore.createZeroScore();
+                                                                            //    badShp  posScore health
+        verifyPositionalScore(new Location(2,2), PositionalScore.createOccupiedScore(0.0, 0.025, 0.0), totalScore);
+        verifyPositionalScore(new Location(2,3), PositionalScore.createOccupiedScore(0.0, -0.016667, 0.0), totalScore);
+        verifyPositionalScore(new Location(3,3), PositionalScore.createOccupiedScore(0.0, 0.0, 0.0), totalScore);
+        verifyPositionalScore(new Location(3,2), PositionalScore.createOccupiedScore(0.0, 0.01667, 0.0), totalScore);
 
-        verifyScoresEqual(createPositionalScore(0.0f, 0.0f, 0.0f, 0.021093f, 0.0f/*0.0645f*/), totalScore);
+        verifyScoresEqual(PositionalScore.createOccupiedScore(0.0, 0.025, 0.0), totalScore);
         Assert.assertEquals("Unexpected final position score.  ",
-                0.021093/*0.108*/, totalScore.getPositionScore(), TOLERANCE);
+                0.025, totalScore.getPositionScore(), TOLERANCE);
+    }
+    
+    public void testOverallPositionalScoreNoEye() {
+
+        initializeBoard("positional_score_no_eye");
+        verifyExpectedOverallScore(0.025f);
     }
 
-    public void testPositionalScoreStoneInEye() {
+    /**
+     *  |   X
+     *  |  OX
+     *  |XXXX
+     *  |
+     *  |                  O
+     */
+    public void testOccupiedPositionalScoreStoneInEye() {
 
         initializeBoard("positional_score_stone_in_eye");
 
-        PositionalScore totalScore = new PositionalScore();
-        verifyPositionalScore(new Location(2,2), createPositionalScore(0.0f, /*1?*/0.0f, 0.0f, 0.0f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(2,3), createPositionalScore(0.0f/*2.0f*/, 0.0f, 0.0f, /*0.0*/-0.01406f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(3,2), createPositionalScore(0.0f, 0.0f, 0.0f, 0.01406f, 0.0f/*0.5875f*/), totalScore);
-        verifyPositionalScore(new Location(3,3), createPositionalScore(0.0f, 0.0f, 0.0f, 0.2109375f, 0.0f/*0.5875f*/), totalScore);
+        PositionalScore totalScore = PositionalScore.createZeroScore();
+                                                                         //    badShp  posScore health
+        verifyPositionalScore(new Location(2,2), PositionalScore.createOccupiedScore(0.0, 0.0, 0.0), totalScore);
+        verifyPositionalScore(new Location(2,3), PositionalScore.createOccupiedScore(0.0, -0.01667, 0.0), totalScore);
+        verifyPositionalScore(new Location(3,2), PositionalScore.createOccupiedScore(0.0, 0.01667, 0.0), totalScore);
+        verifyPositionalScore(new Location(3,3), PositionalScore.createOccupiedScore(0.0, 0.25, 0.0), totalScore);
 
-        verifyScoresEqual(createPositionalScore(0.0f/*2.0f*/, 0.0f/*1.0f*/, 0.0f, 0.21093f/*.45f*/, 0.0f/*1.175f*/), totalScore);
+        verifyScoresEqual(PositionalScore.createOccupiedScore(0.0, 0.25, 0.0), totalScore);
         Assert.assertEquals("Unexpected final position score.  ",
-                0.21093/*4.625*/, totalScore.getPositionScore(), TOLERANCE);
+                0.25, totalScore.getPositionScore(), TOLERANCE);
     }
 
-    private PositionalScore createPositionalScore(float deadStoneScore, float eyeSpaceScore,
-                                                  float badShapeScore, float posScore, float healthScore) {
-        PositionalScore score = new PositionalScore();
-        score.badShapeScore = badShapeScore;
-        score.deadStoneScore = deadStoneScore;
-        score.healthScore = healthScore;
-        score.eyeSpaceScore = eyeSpaceScore;
-        score.posScore = posScore;
-        score.calcPositionScore();
-        return score;
+    public void testOverallPositionalScoreInEye() {
+
+        initializeBoard("positional_score_stone_in_eye");
+        verifyExpectedOverallScore(-0.0666667f);
+    }
+
+    /**
+     *  | X    OO |
+     *  |XXX   O O|
+     *  |  X   OO |
+     *  |XX
+     */
+    public void testOccupiedPositionalAlive() {
+
+        initializeBoard("positional_score_alive");
+
+        PositionalScore totalScore = PositionalScore.createZeroScore();
+                                                                           //       badShp  posScore health
+        verifyPositionalScore(new Location(2,2), PositionalScore.createOccupiedScore(-1.0f, 0.025f, 0.0f), totalScore);
+        verifyPositionalScore(new Location(2,3), PositionalScore.createOccupiedScore(-0.666667f, .01666667f, 0.0f), totalScore);
+        verifyPositionalScore(new Location(3,3), PositionalScore.createOccupiedScore(-0.333333f, 0.25f, 0.0f), totalScore);
+        verifyPositionalScore(new Location(3,2), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
+
+        verifyPositionalScore(new Location(8,2), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
+        verifyPositionalScore(new Location(8,3), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
+        verifyPositionalScore(new Location(9,3), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
+        verifyPositionalScore(new Location(9,2), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
+
+        verifyScoresEqual(PositionalScore.createOccupiedScore(-2.0f, 0.2917f, 0.0f), totalScore);
+        Assert.assertEquals("Unexpected final position score.  ",
+                -1.7083f, totalScore.getPositionScore(), TOLERANCE);
+    }
+
+    public void testOverallPositionalScoreAlive() {
+
+        initializeBoard("positional_score_alive");
+        verifyExpectedOverallScore(-0.975f);
     }
 
     /**
@@ -76,33 +135,46 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
         restore(PREFIX + file);
 
         GoBoard board = (GoBoard)controller_.getBoard();
-
-        scoreAnalyzer_ = new PositionalScoreAnalyzer(board.getNumRows());
+        scoreAnalyzer_ = new PositionalScoreAnalyzer(board);
     }
 
     /**
      * Verify candidate move generation.
      */
-    private void  verifyPositionalScore(Location loc, PositionalScore expScore, PositionalScore totalScore) {
+    private void verifyPositionalScore(Location loc, PositionalScore expScore, PositionalScore totalScore) {
 
         PositionalScore actScore =
-                scoreAnalyzer_.determineScoreForPosition((GoBoard)controller_.getBoard(),
-                                              loc.getRow(), loc.getCol(),
-                                              GO_WEIGHTS.getDefaultWeights());
+                scoreAnalyzer_.determineScoreForPosition(loc.getRow(), loc.getCol(),
+                        goWeights.getPlayer1Weights());
         verifyScoresEqual(expScore, actScore);
         totalScore.incrementBy(actScore);
     }
 
     private void verifyScoresEqual(PositionalScore expScore, PositionalScore actScore) {
         Assert.assertEquals("Unexpected eye space score. " + actScore,
-                expScore.eyeSpaceScore, actScore.eyeSpaceScore, TOLERANCE);
+                expScore.getEyeSpaceScore(), actScore.getEyeSpaceScore(), TOLERANCE);
         Assert.assertEquals("Unexpected posScore. " + actScore,
-                expScore.posScore, actScore.posScore, TOLERANCE);
+                expScore.getPosScore(), actScore.getPosScore(), TOLERANCE);
         Assert.assertEquals("Unexpected badShape score. " + actScore,
-                expScore.badShapeScore, actScore.badShapeScore, TOLERANCE);
+                expScore.getBadShapeScore(), actScore.getBadShapeScore(), TOLERANCE);
         Assert.assertEquals("Unexpected deadStone score.  " + actScore,
-                expScore.deadStoneScore, actScore.deadStoneScore, TOLERANCE);
+                expScore.getDeadStoneScore(), actScore.getDeadStoneScore(), TOLERANCE);
         Assert.assertEquals("Unexpected health score.  " + actScore,
-                expScore.healthScore, actScore.healthScore, TOLERANCE);
+                expScore.getHealthScore(), actScore.getHealthScore(), TOLERANCE);
+    }
+
+
+    private void verifyExpectedOverallScore(float expectedScore)  {
+
+        int size = controller_.getBoard().getNumCols();
+
+        PositionalScore score = PositionalScore.createZeroScore();
+
+        for (int row=1; row<=size; row++) {
+            for (int col=1; col<=size; col++) {
+               score.incrementBy(scoreAnalyzer_.determineScoreForPosition(row, col, goWeights.getPlayer1Weights()));
+            }
+        }
+        assertEquals(expectedScore, score.getPositionScore(), TOLERANCE);
     }
 }

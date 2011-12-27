@@ -50,14 +50,14 @@ public abstract class ParameterTst extends TestCase {
     
     public void testIncrementByEpsForward() {
         parameter.incrementByEps(Direction.FORWARD);
-        assertApproxEquals("Unexpected eps forward",
-                expectedForwardEpsChange(), parameter.getValue());
+        assertEquals("Unexpected eps forward",
+                expectedForwardEpsChange(), parameter.getValue(), MathUtil.EPS_MEDIUM);
     }
     
     public void testIncrementByEpsBackward() {
         parameter.incrementByEps(Direction.BACKWARD);
-        assertApproxEquals("Unexpected eps backward",
-                expectedBackwardEpsChange(), parameter.getValue());
+        assertEquals("Unexpected eps backward",
+                expectedBackwardEpsChange(), parameter.getValue(), MathUtil.EPS_MEDIUM);
     }
     
     protected boolean expectedIsIntegerOnly() {
@@ -71,10 +71,4 @@ public abstract class ParameterTst extends TestCase {
     protected abstract Object expectedNaturalValue();
     protected abstract double expectedForwardEpsChange();
     protected abstract double expectedBackwardEpsChange();
-
-    private static void assertApproxEquals(String msg, double exp, double act) {
-        if (Math.abs(exp - act) > MathUtil.EPS_MEDIUM)  {
-            assertEquals(msg, exp, act);
-        }
-    }
 }
