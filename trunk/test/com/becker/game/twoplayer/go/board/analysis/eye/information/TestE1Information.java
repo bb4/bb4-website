@@ -32,9 +32,4 @@ public class TestE1Information extends TestEyeTypeAnalyzer {
         checkBlackEye(b, new E1Information(), EyeStatus.NAKADE);
         checkWhiteEye(b, new E1Information(), EyeStatus.NAKADE);
     }
-
-
-    public static Test suite() {
-        return new TestSuite(TestE1Information.class);
-    }
 }

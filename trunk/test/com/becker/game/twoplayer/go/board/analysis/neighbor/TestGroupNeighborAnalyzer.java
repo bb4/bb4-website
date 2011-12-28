@@ -165,7 +165,7 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
 
     private void initializeAnalyzer(String file) {
         restore(PREFIX +file);
-        board_ = (GoBoard)controller_.getBoard();
+        board_ = getBoard();
         groupAnalyzer_ = new GroupNeighborAnalyzer(board_);
     }
 

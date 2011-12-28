@@ -32,8 +32,4 @@ public class TestE2Information extends TestEyeTypeAnalyzer {
         checkBlackEye(b, new E2Information(), EyeStatus.NAKADE);
         checkWhiteEye(b, new E2Information(), EyeStatus.NAKADE);
     }
-
-    public static Test suite() {
-        return new TestSuite(TestE2Information.class);
-    }
 }

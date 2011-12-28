@@ -136,9 +136,4 @@ public class TestE6Information extends TestEyeTypeAnalyzer {
     //////   E111124
     //////   E111133
 
-
-
-    public static Test suite() {
-        return new TestSuite(TestE6Information.class);
-    }
 }

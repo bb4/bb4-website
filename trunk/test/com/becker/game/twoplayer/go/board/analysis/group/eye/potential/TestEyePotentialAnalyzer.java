@@ -179,7 +179,7 @@ public class TestEyePotentialAnalyzer extends GoTestCase {
         Assert.assertEquals("Unexpected size of test group.", expectedSizeOfGroup, size);
 
         EyePotentialAnalyzer analyzer = new EyePotentialAnalyzer(group, new GroupAnalyzerMap());
-        analyzer.setBoard((GoBoard) controller_.getBoard());
+        analyzer.setBoard(getBoard());
         float eyePotential = analyzer.calculateEyePotential();
 
         Assert.assertEquals("Unexpected group eye potential", expectedPotential, eyePotential, TOLERANCE);

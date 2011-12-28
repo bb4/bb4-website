@@ -42,11 +42,8 @@ public class TestGoBoard extends GoTestCase {
         restore(PREFIX  + file);
 
         GoMove move = new GoMove(moveLocation, 0, new GoStone(true));
-
-        GoBoard board = (GoBoard)controller_.getBoard();
-
+        GoBoard board = getBoard();
         int numWhiteStonesBefore = board.getNumStones(false);
-
         controller_.makeMove(move);
 
         int numWhiteStonesAfter = board.getNumStones(false);
@@ -71,10 +68,9 @@ public class TestGoBoard extends GoTestCase {
 
     public void testCausedAtari1() {
         restore(PREFIX + "causedAtari1");
-        GoBoard board = (GoBoard)controller_.getBoard();
 
         GoMove m = new GoMove(new Location(4, 4), 0, new GoStone(false));
-        int numInAtari = m.numStonesAtaried(board);
+        int numInAtari = m.numStonesAtaried(getBoard());
         Assert.assertTrue("numInAtri="+numInAtari+" expected="+4, numInAtari == 4);
     }
 
@@ -112,8 +108,7 @@ public class TestGoBoard extends GoTestCase {
                                       int bRow, int bCol, int expectedBlackLiberties,
                                       int wRow, int wCol, int expectedWhiteLiberties) {
         restore(PREFIX + file);
-
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
 
         GoBoardPosition pos = (GoBoardPosition)board.getPosition(bRow, bCol);
         int numGroupLiberties = pos.getGroup().getLiberties(board).size();

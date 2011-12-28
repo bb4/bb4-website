@@ -66,7 +66,7 @@ public class TestPostMoveUpdater extends GoTestCase {
 
         GoMove move = new GoMove(moveLocation, 0, new GoStone(true));
 
-        board = (GoBoard)controller_.getBoard();
+        board = getBoard();
         controller_.makeMove(move);
 
         verifyStats(stats);

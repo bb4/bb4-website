@@ -35,14 +35,4 @@ public class TestEscapeCaptureCollection extends GoTestCase {
         GoMove m = getNextMove(PREFIX + "escape_capture.13", false);
         verifyExpected(m, 13, 5);
     }*/
-
-
-    /**
-     * @return all the junit test caes to run (in this class)
-     */
-    public static Test suite() {
-        return new TestSuite(TestEscapeCaptureCollection.class);
-    }
-
-
 }

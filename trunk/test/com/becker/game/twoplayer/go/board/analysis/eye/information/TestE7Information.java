@@ -30,8 +30,4 @@ public class TestE7Information extends TestEyeTypeAnalyzer {
     
     // TODO
 
-
-    public static Test suite() {
-        return new TestSuite(TestE5Information.class);
-    }
 }

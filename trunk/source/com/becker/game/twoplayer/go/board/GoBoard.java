@@ -74,11 +74,8 @@ public final class GoBoard extends TwoPlayerBoard {
         return b;
     }
 
-    /** Used in unit tests to initialize a board when we do not want to bother loading a file */
-    public void setPositions(GoBoardPositionList list) {
-        for (GoBoardPosition position : list) {
-            setPosition(position);
-        }
+    void setPosition(GoBoardPosition pos) {
+        super.setPosition(pos);
     }
 
     /**

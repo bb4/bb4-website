@@ -88,7 +88,7 @@ public class TestLifeAnalyzer extends GoTestCase {
         int size = group.getNumStones();
         Assert.assertEquals("Unexpected size of test group.", expectedSizeOfGroup, size);
 
-        LifeAnalyzer analyzer = new LifeAnalyzer(group, (GoBoard) controller_.getBoard(), new GroupAnalyzerMap());
+        LifeAnalyzer analyzer = new LifeAnalyzer(group, getBoard(), new GroupAnalyzerMap());
         boolean unconditionallyAlive = analyzer.isUnconditionallyAlive();
 
         if (expectedUnconditionalyAlive) {

@@ -116,7 +116,7 @@ public abstract class Board implements IBoard {
         return getPosition(loc.getRow(), loc.getCol());
     }
 
-    protected final void setPosition(BoardPosition pos) {
+    protected void setPosition(BoardPosition pos) {
         positions_.setPosition(pos);
     }
 

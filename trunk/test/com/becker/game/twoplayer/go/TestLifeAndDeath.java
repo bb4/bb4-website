@@ -5,6 +5,7 @@ import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.move.GoMove;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -111,10 +112,20 @@ public class TestLifeAndDeath extends GoTestCase {
                 Arrays.toString(acceptableMoves), pass);
     }
 
-    /**
-     * @return all the junit test caes to run (in this class)
-     */
-    public static Test suite() {
-        return new TestSuite(TestLifeAndDeath.class);
+    private static void verifyExpected(GoMove m, int row, int col) {
+
+        Assert.assertTrue("Was expecting " + row + ", " + col + ", but instead got " + m,
+                isExpected(m, row, col));
     }
+
+    private static boolean isExpected(GoMove m, Location loc) {
+
+        return isExpected(m, m.getToRow(), loc.getCol());
+    }
+
+    private static boolean isExpected(GoMove m, int row, int col) {
+
+        return m.getToRow() == row && m.getToCol() == col;
+    }
+
 }

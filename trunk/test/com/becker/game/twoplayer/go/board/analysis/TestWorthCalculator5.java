@@ -16,18 +16,15 @@ public class TestWorthCalculator5 extends WorthCalculatorBase {
         return 5;
     }
 
-
     /** verify that we get the expected worth value. */
     public void testFindSimpleWorth() {
         verifyWorth("worth5x5", 30); //33);
     }
 
-
     /** verify that we get the expected worth value after a move redo. */
     public void testFindWorthAfterRedo() {
 
         restore(PREFIX  + "worth5x5");
-        GoBoard board = (GoBoard)controller_.getBoard();
 
         Move move = controller_.undoLastMove();
         controller_.makeMove(move);

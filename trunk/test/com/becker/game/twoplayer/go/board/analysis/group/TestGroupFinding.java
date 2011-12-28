@@ -83,7 +83,7 @@ public class TestGroupFinding extends GoTestCase {
 
     private GoBoard initializeBoard(String file) {
         restore(PREFIX  + file);
-        return (GoBoard)controller_.getBoard();
+        return getBoard();
     }
 
     private void verifyGroupNeighbors(GoBoard board, Location loc, int expectedNumNeighbors)  {

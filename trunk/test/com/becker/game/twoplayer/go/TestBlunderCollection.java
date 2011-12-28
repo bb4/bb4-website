@@ -53,13 +53,4 @@ public class TestBlunderCollection extends GoTestCase {
         GoMove m = getNextMove(PREFIX + "blunder.14", false);
         verifyExpected(m, 17, 10); //  2, 12); // B12
     }  */
-
-    /**
-     * @return all the junit test caes to run (in this class)
-     */
-    public static Test suite() {
-        return new TestSuite(TestBlunderCollection.class);
-    }
-
-
 }

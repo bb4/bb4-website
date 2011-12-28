@@ -35,15 +35,10 @@ public class TestStringShapeAnalyzer extends GoTestCase {
         }
 
     private void checkShape(int r, int c, int expectedShapeScore) {
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
         GoBoardPosition position = (GoBoardPosition)board.getPosition(r, c);
         StringShapeAnalyzer sa = new StringShapeAnalyzer(board);
         int n = sa.formsBadShape(position);
         assertTrue("Expected "+expectedShapeScore+" but got "+n+" for "+position, n == expectedShapeScore);
-    }
-
-
-    public static Test suite() {
-        return new TestSuite(TestStringShapeAnalyzer.class);
     }
 }

@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoBoardConfigurator;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.position.GoStone;
@@ -14,13 +15,13 @@ import com.becker.game.twoplayer.go.board.elements.string.GoString;
  */
 public class TestStringLibertyAnalyzer extends GoTestCase {
 
-    private GoBoard board;
+    private GoBoardConfigurator boardConfig;
    
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        board = new GoBoard(9, 0);     
+        boardConfig = new GoBoardConfigurator(9, 0);
     }
     
     public void testSingleStoneLiberties() {
@@ -117,10 +118,11 @@ public class TestStringLibertyAnalyzer extends GoTestCase {
     private void verifyNumberOfLibertiesWithOther(int expectedNumber,
                                GoBoardPositionList list, GoBoardPositionList otherList) {
 
+        GoBoard board = boardConfig.getBoard();
         GoString string = new GoString(list, board);
-        board.setPositions(list);
+        boardConfig.setPositions(list);
         if (otherList != null) {
-            board.setPositions(otherList);
+            boardConfig.setPositions(otherList);
         }
         StringLibertyAnalyzer analyzer = new StringLibertyAnalyzer(board, string);
         assertEquals("Unexpected number of liberties",

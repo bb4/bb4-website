@@ -4,6 +4,7 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoBoardConfigurator;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import junit.framework.Assert;
@@ -76,9 +77,9 @@ public class TestNobiNeighborAnalyzer extends GoTestCase {
     private void verifyOccupiedNobiNbrs(String file, Location[] empties, int expectedNumOccupiedNbrs) {
         restore(PREFIX +file);
 
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
         nobiAnalyzer_ = new NobiNeighborAnalyzer(board);
-        GoBoardPositionList emptyList = createPositionList(empties);
+        GoBoardPositionList emptyList = GoBoardConfigurator.createPositionList(empties);
 
         int numOccupiedNbrs = nobiAnalyzer_.findOccupiedNobiNeighbors(emptyList).size();
 
@@ -91,7 +92,7 @@ public class TestNobiNeighborAnalyzer extends GoTestCase {
                                 int expectedNumNbrs) {
         restore(PREFIX +file);
 
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
         nobiAnalyzer_ = new NobiNeighborAnalyzer(board);
         GoBoardPosition pos = (GoBoardPosition) board.getPosition(row, col);
 

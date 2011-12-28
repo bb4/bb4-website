@@ -66,9 +66,4 @@ public class TestFalseEyeInformation extends TestEyeTypeAnalyzer {
         checkCornerBlackEye(b, new FalseEyeInformation(), EyeStatus.NAKADE);
         checkEdgeWhiteEye(b, new FalseEyeInformation(), EyeStatus.NAKADE);
     }
-
-
-    public static Test suite() {
-        return new TestSuite(TestFalseEyeInformation.class);
-    }
 }

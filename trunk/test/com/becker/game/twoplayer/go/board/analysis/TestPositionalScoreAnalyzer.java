@@ -134,7 +134,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
     protected void initializeBoard(String file) {
         restore(PREFIX + file);
 
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
         scoreAnalyzer_ = new PositionalScoreAnalyzer(board);
     }
 
@@ -166,7 +166,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
 
     private void verifyExpectedOverallScore(float expectedScore)  {
 
-        int size = controller_.getBoard().getNumCols();
+        int size = getBoard().getNumRows();
 
         PositionalScore score = PositionalScore.createZeroScore();
 

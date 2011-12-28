@@ -29,7 +29,7 @@ public class TestShapeAnalyzer extends GoTestCase {
     public void verifyBadShape(String file, int row, int col, int expected) {
         restore(PREFIX + file);
 
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
         GoBoardPosition pos = (GoBoardPosition)board.getPosition(row, col);
         StringShapeAnalyzer sa = new StringShapeAnalyzer(board);
         int badShapeScore = sa.formsBadShape(pos);
