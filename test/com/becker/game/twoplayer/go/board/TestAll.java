@@ -1,8 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.go.board;
 
-import com.becker.game.twoplayer.go.board.analysis.TestWorthCalculator3;
-import com.becker.game.twoplayer.go.board.analysis.TestWorthCalculator5;
+import com.becker.game.twoplayer.go.board.analysis.group.TestGroupFinding;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -27,7 +26,6 @@ public class TestAll {
         suite.addTest(com.becker.game.twoplayer.go.board.update.TestAll.suite());
 
         suite.addTestSuite(TestGoBoard.class);
-        suite.addTestSuite(TestGroupFinding.class);
 
         return suite;
     }

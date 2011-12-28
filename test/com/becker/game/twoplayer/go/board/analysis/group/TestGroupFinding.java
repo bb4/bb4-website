@@ -1,8 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.common.geometry.Location;
 import com.becker.game.twoplayer.go.GoTestCase;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
@@ -10,7 +11,7 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import java.util.List;
 
 /**
- * Check that we can identifiy groups on the board.
+ * Check that we can identify groups on the board.
  * @author Barry Becker
  */
 public class TestGroupFinding extends GoTestCase {
