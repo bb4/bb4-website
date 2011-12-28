@@ -235,28 +235,6 @@ public class GoString extends GoSet
     }
 
     /**
-     * @return  a string representation for the string.
-     */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder( getPrintPrefix() );
-        sb.append(" UA=").append(isUnconditionallyAlive()).append(" ");
-        Iterator it = getMembers().iterator();
-        if ( it.hasNext() ) {
-            GoBoardPosition p = (GoBoardPosition) it.next();
-            sb.append( p.toString() );
-        }
-        while ( it.hasNext() ) {
-            GoBoardPosition p = (GoBoardPosition) it.next();
-            sb.append( ", " );
-            sb.append( p.toString() );
-        }
-        sb.append( ')' );
-        return sb.toString();
-    }
-
-
-    /**
      * @return true if unconditionally alive.
      */
     public boolean isUnconditionallyAlive() {
@@ -279,21 +257,26 @@ public class GoString extends GoSet
     }
 
     /**
-     * Confirm that all the stones in the string have the same ownership as the string
-     * we throw and error if this is not true
+     * @return  a string representation for the string.
      */
-    public final void confirmValid( GoBoard b ) {
-        Iterator<GoBoardPosition> it = getMembers().iterator();
-        NeighborAnalyzer na = new NeighborAnalyzer(b);
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder( getPrintPrefix() );
+        sb.append(" UA=").append(isUnconditionallyAlive()).append(" ");
+        Iterator it = getMembers().iterator();
         if ( it.hasNext() ) {
-            List list = na.findStringFromInitialPosition(it.next(), true);
-            // confirm that all member_ stones are in the string
-            while ( it.hasNext() ) {
-                GoBoardPosition s = it.next();
-                assert ( list.contains( s )): list + " does not contain " + s + ". getMembers() =" + getMembers() ;
-            }
+            GoBoardPosition p = (GoBoardPosition) it.next();
+            sb.append( p.toString() );
         }
+        while ( it.hasNext() ) {
+            GoBoardPosition p = (GoBoardPosition) it.next();
+            sb.append( ", " );
+            sb.append( p.toString() );
+        }
+        sb.append( ')' );
+        return sb.toString();
     }
+
 }
 
 

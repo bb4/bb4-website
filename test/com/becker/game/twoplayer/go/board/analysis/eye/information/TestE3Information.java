@@ -102,9 +102,4 @@ public class TestE3Information extends TestEyeTypeAnalyzer {
         checkBlackEye(b, new E3Information(), EyeStatus.UNSETTLED);
         //checkWhiteEye(b, new E3Information(), EyeStatus.UNSETTLED); can't make in atari
     }
-
-
-    public static Test suite() {
-        return new TestSuite(TestE3Information.class);
-    }
 }

@@ -27,7 +27,7 @@ public class TestBigEyeAnalyzer extends GoTestCase {
 
         restore(PATH_PREFIX + "BigEye_E111223");
 
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
         checkEyeType(board, EyeType.E6.getInformation("E111223"), true, true, true);
     }
 
@@ -35,7 +35,7 @@ public class TestBigEyeAnalyzer extends GoTestCase {
 
         restore(PATH_PREFIX + "BigEye_E111223b");
 
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
         checkEyeType(board, EyeType.E6.getInformation("E111223"), true, true, true);
     }
 
@@ -67,11 +67,4 @@ public class TestBigEyeAnalyzer extends GoTestCase {
         assertEquals("Corner status unexpected", isInCorner, information.isInCorner(firstEye));
         assertEquals("Edge status unexpected", isOnEdge, information.isOnEdge(firstEye));
     }
-
-
-    public static Test suite() {
-        return new TestSuite(TestBigEyeAnalyzer.class);
-    }
-
-
 }

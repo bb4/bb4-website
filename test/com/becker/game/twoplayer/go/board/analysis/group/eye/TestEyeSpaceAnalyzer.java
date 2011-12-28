@@ -163,7 +163,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         IGoGroup group = getBiggestGroup(forBlackGroup);
    
         EyeSpaceAnalyzer analyzer = new EyeSpaceAnalyzer(group, new GroupAnalyzerMap());
-        analyzer.setBoard((GoBoard) controller_.getBoard());
+        analyzer.setBoard(getBoard());
         GoEyeSet eyes = analyzer.determineEyes();
 
         boolean matched = compareEyeSets(expectedEyes, eyes);

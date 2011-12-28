@@ -147,9 +147,4 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
         checkBlackEye(b, new E4Information(E2222.toString()), EyeStatus.UNSETTLED);
         checkWhiteEye(b, new E4Information(E2222.toString()), EyeStatus.UNSETTLED);
     }
-
-
-    public static Test suite() {
-        return new TestSuite(TestE4Information.class);
-    }
 }

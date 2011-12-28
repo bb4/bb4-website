@@ -51,7 +51,7 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
         System.out.println("finding eyes for " + eyesProblemFile + "...");
         restore(getPathPrefix() + eyesProblemFile);
 
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
 
         // consider the 2 biggest groups
         Set<IGoGroup> groups = board.getGroups();
@@ -138,7 +138,7 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
      */
     protected IGoGroup getSurroundedGroup(boolean isBlack, GoBoard board) {
 
-        Set<IGoGroup> groups = ((GoBoard) controller_.getBoard()).getGroups();
+        Set<IGoGroup> groups = getBoard().getGroups();
         IGoGroup surroundedGroup = null;
 
         for (IGoGroup group : groups) {
@@ -151,10 +151,5 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
             }
         }
         return surroundedGroup;
-    }
-
-
-    public static Test suite() {
-        return new TestSuite(TestEyeTypeAnalyzer.class);
     }
 }

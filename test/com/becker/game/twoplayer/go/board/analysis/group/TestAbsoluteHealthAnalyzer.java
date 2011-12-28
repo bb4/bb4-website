@@ -494,7 +494,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         IGoGroup bg = getBiggestGroup(true);
         IGoGroup wg = getBiggestGroup(false);
 
-        GoBoard board = (GoBoard) controller_.getBoard();
+        GoBoard board = getBoard();
 
         GroupAnalyzerMap analyzerMap = new GroupAnalyzerMap();
         GroupAnalyzer blackHealthAnalyzer = new GroupAnalyzer(bg, analyzerMap);
@@ -581,8 +581,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
         return (OK?"":"      *Error*");
     }
 
-    private void verifyEyes(GoEyeSet eyes, EyeInformation[] expectedEyes, boolean black)
-    {
+    private void verifyEyes(GoEyeSet eyes, EyeInformation[] expectedEyes, boolean black) {
         String color = black? "black" : "white";
         if (expectedEyes.length != eyes.size()) {
             String sideColor = black ? "black" : "white";
@@ -590,8 +589,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
             System.out.println("but we got "+ eyes);
         }
         Assert.assertEquals("unequal numbers of " + color + " eyes. Got " + eyes, expectedEyes.length, eyes.size());
-        if (eyes.size() > 0)
-        {
+        if (eyes.size() > 0) {
             int i = 0;
             for (IGoEye eye : eyes) {
                 EyeInformation eyeInformation = eye.getInformation();
@@ -600,6 +598,10 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                 i++;
             }
         }
+    }
+
+    private static boolean approximatelyEqual(double value, double expectedValue, double thresh) {
+        return (Math.abs(value - expectedValue) < thresh);
     }
 
 }

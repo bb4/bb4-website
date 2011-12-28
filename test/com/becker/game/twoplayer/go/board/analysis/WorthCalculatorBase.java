@@ -31,11 +31,10 @@ public abstract class WorthCalculatorBase extends GoTestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        GoBoard board = (GoBoard) controller_.getBoard();
+        GoBoard board = getBoard();
         GroupAnalyzerMap analyzerMap = new GroupAnalyzerMap();
         calculator = new WorthCalculator(board, analyzerMap);
     }
-
 
     protected void verifyWorth(String file, int expWorth) {
 
@@ -67,6 +66,4 @@ public abstract class WorthCalculatorBase extends GoTestCase {
         Assert.assertEquals("Unexpected worth for A.", expWorth, actWorthA);
         Assert.assertEquals("Unexpected worth for B.", expWorth, actWorthB);
     }
-
-
 }

@@ -2,9 +2,10 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.common.geometry.Location;
-import com.becker.game.twoplayer.go.GoTestCase;
+import com.becker.game.twoplayer.go.board.GoBoardConfigurator;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import junit.framework.TestCase;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * @author Barry Becker
  */
-public class TestEyeNeighborMap extends GoTestCase {
+public class TestEyeNeighborMap extends TestCase {
 
     private EyeNeighborMap nbrMap;
 
@@ -28,7 +29,8 @@ public class TestEyeNeighborMap extends GoTestCase {
 
     public void testSingleEyeSpace() {
 
-        IGoEye eye = new StubGoEye(createPositionList(new Location[] {new Location(2, 2)}));
+        IGoEye eye =
+                new StubGoEye(GoBoardConfigurator.createPositionList(new Location[]{new Location(2, 2)}));
         nbrMap = new EyeNeighborMap(eye);
 
         assertEquals("unexpected size", 1, nbrMap.keySet().size());
@@ -37,7 +39,7 @@ public class TestEyeNeighborMap extends GoTestCase {
     public void testTwoSpaceEye() {
 
         Location[] positions = new Location[] {new Location(2, 2), new Location(2, 3)};
-        IGoEye eye = new StubGoEye(createPositionList(positions));
+        IGoEye eye = new StubGoEye(GoBoardConfigurator.createPositionList(positions));
         nbrMap = new EyeNeighborMap(eye);
 
         assertEquals("unexpected size", 2, nbrMap.keySet().size());
@@ -49,7 +51,7 @@ public class TestEyeNeighborMap extends GoTestCase {
     public void testDisjointEye() {
 
         Location[] positions = new Location[] {new Location(2, 2), new Location(3, 3)};
-        IGoEye eye = new StubGoEye(createPositionList(positions));
+        IGoEye eye = new StubGoEye(GoBoardConfigurator.createPositionList(positions));
         try{
             nbrMap = new EyeNeighborMap(eye);
             fail();
@@ -62,7 +64,7 @@ public class TestEyeNeighborMap extends GoTestCase {
     public void testThreeSpaceEye() {
 
         Location[] positions = new Location[] {new Location(2, 2), new Location(2, 3), new Location(3, 3)};
-        List<GoBoardPosition> spaces = createPositionList(positions);
+        List<GoBoardPosition> spaces = GoBoardConfigurator.createPositionList(positions);
         IGoEye eye = new StubGoEye(spaces);
         nbrMap = new EyeNeighborMap(eye);
 
@@ -73,7 +75,7 @@ public class TestEyeNeighborMap extends GoTestCase {
 
     public void testRabbittySixEye() {
 
-        List<GoBoardPosition> spaces = createPositionList(RABBITY_SIX);
+        List<GoBoardPosition> spaces = GoBoardConfigurator.createPositionList(RABBITY_SIX);
         IGoEye eye = new StubGoEye(spaces);
         nbrMap = new EyeNeighborMap(eye);
 
@@ -82,10 +84,9 @@ public class TestEyeNeighborMap extends GoTestCase {
         verifyNumEyeNbrs( new int[]{2, 2, 1, 4, 2, 1}, spaces); 
     }
 
-
     public void testRabbittySixSpecialPoints() {
 
-        List<GoBoardPosition> spaces = createPositionList(RABBITY_SIX);
+        List<GoBoardPosition> spaces = GoBoardConfigurator.createPositionList(RABBITY_SIX);
         IGoEye eye = new StubGoEye(spaces);
         nbrMap = new EyeNeighborMap(eye);
 
@@ -100,9 +101,9 @@ public class TestEyeNeighborMap extends GoTestCase {
         verifyNumEyeNbrs( new int[]{2, 2, 1, 4, 2, 1}, spaces);
     }
 
-    public void testBockOfSixEye() {
+    public void testBlockOfSixEye() {
 
-        List<GoBoardPosition> spaces = createPositionList(BLOCK_OF_SIX);
+        List<GoBoardPosition> spaces = GoBoardConfigurator.createPositionList(BLOCK_OF_SIX);
         IGoEye eye = new StubGoEye(spaces);
         nbrMap = new EyeNeighborMap(eye);
 

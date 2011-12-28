@@ -210,9 +210,4 @@ public class TestE5Information extends TestEyeTypeAnalyzer {
         checkBlackEye(b, new E5Information(E12223.toString()), EyeStatus.UNSETTLED);
         checkWhiteEye(b, new E5Information(E12223.toString()), EyeStatus.UNSETTLED);
     }
-
-
-    public static Test suite() {
-        return new TestSuite(TestE5Information.class);
-    }
 }

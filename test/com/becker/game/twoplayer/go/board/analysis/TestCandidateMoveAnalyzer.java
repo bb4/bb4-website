@@ -64,7 +64,7 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
     private void verifyCandidateMoves(String file, int expNumCandidates, List<Location> expCandidates) {
         restore(PREFIX + file);
 
-        GoBoard board = (GoBoard) controller_.getBoard();
+        GoBoard board = getBoard();
         CandidateMoveAnalyzer cma = new CandidateMoveAnalyzer(board);
 
         int actNumCandidates = cma.getNumCandidates();

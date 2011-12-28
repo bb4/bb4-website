@@ -23,15 +23,17 @@ class WeakestGroupFinder {
     /**
      * Constructor
      */
-    public WeakestGroupFinder(GroupAnalyzerMap analyzerMap, GoBoard board) {
+    public WeakestGroupFinder(GoBoard board, GroupAnalyzerMap analyzerMap) {
 
         this.board = board;
         this.analyzerMap = analyzerMap;
     }
 
     /**
+     * Given a set of same color stones, find the weakest enemy group that is bordering it.
      * @param groupStones the stones to find the weakest bordering neighbor of.
-     * @return the weakest bordering enemy group.
+     *            Note: we assume that the groupStones all have the same color.
+     * @return the weakest bordering enemy group. Returns null if no group found.
      */
     public GoGroup findWeakestGroup(GoBoardPositionSet groupStones) {
 
@@ -41,8 +43,9 @@ class WeakestGroupFinder {
         // we multiply by a +/- sign depending on the side
         float side = isPlayer1? 1.0f : -1.0f;
 
-        // of these enemy groups which is the weakest?
+        // initialize to strongest value, then anything will be weaker.
         double weakestHealth = -side;
+
         GoGroup weakestGroup = null;
         for (Object egroup : enemyNbrGroups) {
             GoGroup enemyGroup = (GoGroup)egroup;

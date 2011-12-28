@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoSearchable;
+import com.becker.game.twoplayer.go.board.move.GoMove;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -17,11 +18,11 @@ public class TestScoring extends GoTestCase {
     private static final double TOLERANCE = 5;
 
     public void testScoring1() {
-        checkScoring("problem_score1", 0, 0, 0, 0, 93, 76, -12);
+        checkScoring("problem_score1", 0, 0, 0, 0, 93, 76, -7);  // -12);
     }
 
     public void testScoring55a() {
-        checkScoring("problem_score55a", 0, 0, 0, 7, 16, 9, 452); // 0, 0, 0, 7, 17, 0);
+        checkScoring("problem_score55a", 0, 0, 0, 7, 16, 9, 400); // 0, 0, 0, 7, 17, 0);
     }
 
     public void testScoring55b() {
@@ -29,15 +30,15 @@ public class TestScoring extends GoTestCase {
     }
 
     public void testScoring2() {
-        checkScoring("problem_score2", 0, 0, 3, 0, 85, 84, -163);
+        checkScoring("problem_score2", 0, 0, 3, 0, 85, 84, -138);
     }
 
     public void testScoringIdentPosition1a() {
-        checkScoring("problem_identPosition1a", 0, 0, 4, 0, 13, 12, -105);
+        checkScoring("problem_identPosition1a", 0, 0, 4, 0, 13, 12, -94);
     }
 
     public void testScoringIdentPosition1b() {
-        checkScoring("problem_identPosition1b", 0, 0, 4, 0, 13, 12, -105);
+        checkScoring("problem_identPosition1b", 0, 0, 4, 0, 13, 12, -94);
     }
 
     public void testScoringIdentPosition2a() {
@@ -101,11 +102,15 @@ public class TestScoring extends GoTestCase {
 
     }
 
-    private static boolean withinBounds(int actual, int expected) {
-        return (actual > (expected - TOLERANCE) && actual < (expected + TOLERANCE));
+    protected void updateLifeAndDeath(String problemFile) {
+        GameContext.log(0, "finding score for " + problemFile + " ...");
+        restore(problemFile);
+
+        // force dead stones to be updated by calling done with resignation move.
+        controller_.getSearchable().done(GoMove.createResignationMove(true), true);
     }
 
-    public static Test suite() {
-        return new TestSuite(TestScoring.class);
+    private static boolean withinBounds(int actual, int expected) {
+        return (actual > (expected - TOLERANCE) && actual < (expected + TOLERANCE));
     }
 }

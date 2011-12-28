@@ -51,4 +51,7 @@ public class GroupAnalyzerMap {
         analyzerMap.clear();
     }
 
+    public String toString() {
+        return analyzerMap.toString();
+    }
 }

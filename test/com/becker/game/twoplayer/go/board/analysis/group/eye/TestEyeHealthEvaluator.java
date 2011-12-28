@@ -8,7 +8,7 @@ import junit.framework.Assert;
 
 /**
  * Verify that we come up with reasonable eye potential values (likelihood of making eyes in the group).
- * Needs more cases.
+ * @todo Needs more cases.
  *
  * @author Barry Becker
  */

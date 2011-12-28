@@ -15,5 +15,4 @@ public class TestWorthCalculator3 extends WorthCalculatorBase {
 
         compareWorths("worth3x3_A", "worth3x3_B", -151); // -163
     }
-
 }

@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.move.GoMove;
+import com.becker.ui.file.GenericFileFilter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -65,7 +66,6 @@ public class TestKiseido2002 extends GoTestCase {
     }
     */
 
-
     /**
      * Verify that we can load all the files with the specified pattern
      * @param problemPattern
@@ -95,9 +95,14 @@ public class TestKiseido2002 extends GoTestCase {
 
         assertTrue(true);
     }
+      
+    /**
+     * @param directory
+     * @param pattern
+     * @return all the files matching the supplied pattern in the specified directory
+     */
+    protected static String[] getFilesMatching(String directory, String pattern) {
 
-
-    public static Test suite() {
-        return new TestSuite(TestKiseido2002.class);
+        return GenericFileFilter.getFilesMatching(GoTestCase.EXTERNAL_TEST_CASE_DIR + directory, pattern);
     }
 }

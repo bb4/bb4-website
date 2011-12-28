@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.go;
 
-import com.becker.common.geometry.Location;
 import com.becker.common.format.FormatUtil;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
@@ -10,26 +9,22 @@ import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.ui.file.GenericFileFilter;
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import java.util.Set;
 
 /**
- * Base class for all Go test cases.
- * @@ merge with BlockadeTestCase.
+ * Base class for all Go test cases. Most of this code could be moved to GoBoardConfigurator
  *
  * @author Barry Becker
  */
 public class GoTestCase extends TestCase {
 
     /** moved all test cases here so they are not included in the jar and do not need to be searched   */
-    private static final String EXTERNAL_TEST_CASE_DIR =
+    public static final String EXTERNAL_TEST_CASE_DIR =
             FileUtil.getHomeDir() + "test/com/becker/game/twoplayer/go/cases/";
 
     private static final String SGF_EXTENSION = ".sgf";
@@ -55,7 +50,6 @@ public class GoTestCase extends TestCase {
         TwoPlayerOptions options = controller_.getTwoPlayerOptions();
         setOptionOverrides(options.getSearchOptions());
     }
-
 
     @Override
     protected void tearDown() throws Exception {
@@ -83,23 +77,17 @@ public class GoTestCase extends TestCase {
     protected int getBoardSize() {
         return 13;
     }
+    
+    protected GoBoard getBoard() {
+       return (GoBoard) controller_.getBoard();
+    }
 
     protected void restore(String problemFile) {
         controller_.restoreFromFile(EXTERNAL_TEST_CASE_DIR + problemFile + SGF_EXTENSION);
     }
 
-
-    /**
-     * @param pattern
-     * @return all the files matching the supplied pattern in the specified directory
-     */
-    protected static String[] getFilesMatching(String directory, String pattern) {
-
-        return GenericFileFilter.getFilesMatching(EXTERNAL_TEST_CASE_DIR + directory, pattern);
-    }
-
     protected GoMove getNextMove(String problemFile, boolean blackPlays) {
-        System.out.println("finding next move for "+problemFile+" ...");
+        System.out.println("finding next move for " + problemFile + " ...");
         long time = System.currentTimeMillis();
         restore(problemFile);
         //System.out.println("problem restored.");
@@ -112,40 +100,13 @@ public class GoTestCase extends TestCase {
         return m;
     }
 
-    protected static void verifyExpected(GoMove m, int row, int col) {
-
-        Assert.assertTrue("Was expecting "+ row +", "+ col +", but instead got "+m,
-                      isExpected(m, row, col));
-    }
-
-
-    protected static boolean isExpected(GoMove m, Location loc) {
-
-        return isExpected(m, m.getToRow(), loc.getCol());
-    }
-
-    protected static boolean isExpected(GoMove m, int row, int col) {
-
-        return m.getToRow() == row && m.getToCol() == col;
-    }
-
-
-    protected void updateLifeAndDeath(String problemFile) {
-        GameContext.log(0, "finding score for "+problemFile+" ...");
-        restore(problemFile);
-
-        // force dead stones to be updated by calling done with resignation move.
-        controller_.getSearchable().done(GoMove.createResignationMove(true), true);
-    }
-
-
     /**
      * @param isBlack true if black
      * @return the biggest black group if black is true else biggest white group.
      */
     protected IGoGroup getBiggestGroup(boolean isBlack) {
 
-        Set<IGoGroup> groups = ((GoBoard) controller_.getBoard()).getGroups();
+        Set<IGoGroup> groups = getBoard().getGroups();
         IGoGroup biggestGroup = null;
 
         for (IGoGroup group : groups) {
@@ -157,18 +118,5 @@ public class GoTestCase extends TestCase {
             }
         }
         return biggestGroup;
-    }
-
-    protected GoBoardPositionList createPositionList(Location[] positions) {
-
-        GoBoardPositionList spaces = new GoBoardPositionList();
-        for (Location pos : positions) {
-            spaces.add(new GoBoardPosition(pos.getRow(), pos.getCol(), null, null));
-        }
-        return spaces;
-    }
-
-    protected static boolean approximatelyEqual(double value, double expectedValue, double thresh) {
-        return (Math.abs(value - expectedValue) < thresh);
     }
 }

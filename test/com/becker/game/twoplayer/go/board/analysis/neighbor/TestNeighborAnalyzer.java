@@ -78,7 +78,7 @@ public class TestNeighborAnalyzer extends GoTestCase {
     private void verifyGroupNbrs(String file, int row, int col, int expectedNumSameNbrs, int expectedNumNbrs) {
         restore(PREFIX +file);
 
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
         nbrAnalyzer_ = new NeighborAnalyzer(board);
         GoBoardPosition pos = (GoBoardPosition)board.getPosition(row, col);
         int numSameNbrs = nbrAnalyzer_.findGroupNeighbors(pos, true).size();
@@ -92,7 +92,7 @@ public class TestNeighborAnalyzer extends GoTestCase {
 
         String file = "occupiedNbrs1";
         restore(PREFIX + file);
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = getBoard();
 
         GoBoardPositionList empties = new GoBoardPositionList();
         empties.add((GoBoardPosition)board.getPosition(3, 3));

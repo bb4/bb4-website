@@ -58,6 +58,7 @@ public class TerritoryUpdater {
 
         GoProfiler prof = GoProfiler.getInstance();
         prof.startUpdateTerritory();
+        analyzerMap_.clear();  /// need?
 
         float delta = calcAbsoluteHealth();
         if (USE_RELATIVE_GROUP_SCORING)  {
@@ -72,7 +73,6 @@ public class TerritoryUpdater {
 
         prof.stopUpdateTerritory();
         territoryDelta_ = delta;
-        analyzerMap_.clear();  /// need?
 
         return delta;
     }
