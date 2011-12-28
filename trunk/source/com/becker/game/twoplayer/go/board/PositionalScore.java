@@ -80,9 +80,9 @@ public class PositionalScore {
         StringBuilder buf =
                 new StringBuilder("<html>Breakdown for <b>value</b> = "+ FormatUtil.formatNumber(worth));
         buf.append("<br>");
-        buf.append("captureScore=").append(FormatUtil.formatNumber(captureScore)).append("<br>");
-        buf.append("territoryDelta=").append(FormatUtil.formatNumber(territoryDelta)).append("<br>");
-        buf.append("scaleFactor=").append(FormatUtil.formatNumber(scaleFactor)).append("<br>");
+        buf.append("captureScore=").append(format(captureScore)).append("<br>");
+        buf.append("territoryDelta=").append(format(territoryDelta)).append("<br>");
+        buf.append("scaleFactor=").append(format(scaleFactor)).append("<br>");
         buf.append(toString(true));
         buf.append("</html>");
         return buf.toString();

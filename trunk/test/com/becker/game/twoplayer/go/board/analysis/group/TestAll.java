@@ -25,6 +25,7 @@ public class TestAll extends GoTestCase {
         suite.addTestSuite(TestAbsoluteHealthCalculator.class);
         suite.addTestSuite(TestLifeAnalyzer.class);
         suite.addTestSuite(TestStoneInGroupAnalyzer.class);
+        suite.addTestSuite(TestGroupFinding.class);
 
         return suite;
     }
