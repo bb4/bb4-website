@@ -2,7 +2,7 @@
 package com.becker.game.twoplayer.checkers.ui;
 
 import com.becker.game.common.GameViewable;
-import com.becker.game.twoplayer.common.ui.TwoPlayerNewGameDialog;
+import com.becker.game.twoplayer.common.ui.dialogs.TwoPlayerNewGameDialog;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

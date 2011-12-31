@@ -1,9 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.go.ui;
+package com.becker.game.twoplayer.go.ui.dialogs;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameViewable;
-import com.becker.game.twoplayer.common.ui.TwoPlayerNewGameDialog;
+import com.becker.game.twoplayer.common.ui.dialogs.PlayerAssignmentPanel;
+import com.becker.game.twoplayer.common.ui.dialogs.TwoPlayerNewGameDialog;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.ui.components.NumberInput;
@@ -11,16 +12,15 @@ import com.becker.ui.components.NumberInput;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionListener {
+public final class GoNewGameDialog extends TwoPlayerNewGameDialog
+                                implements ActionListener {
 
     /** must not initialize to null */
     private NumberInput handicapField_;
 
-    private static final String BLACK_IS = GameContext.getLabel("BLACK_IS");
-    private static final String WHITE_IS = GameContext.getLabel("WHITE_IS");
 
     /** constructor */
-    GoNewGameDialog( JFrame parent, GameViewable viewer ) {
+    public GoNewGameDialog( JFrame parent, GameViewable viewer ) {
         super( parent, viewer );
     }
 
@@ -38,13 +38,8 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
     }
 
     @Override
-    protected String getPlayer1Label() {
-        return BLACK_IS;
-    }
-
-    @Override
-    protected String getPlayer2Label() {
-        return WHITE_IS;
+    protected PlayerAssignmentPanel createPlayerAssignmentPanel() {
+        return new GoPlayerAssignmentPanel(get2PlayerController(), parent_);
     }
 
     @Override

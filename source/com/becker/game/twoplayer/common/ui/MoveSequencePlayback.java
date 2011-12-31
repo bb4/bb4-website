@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Helps to play back a sequence of moves on the board.
  *
- *  @author Barry Becker
+ * @author Barry Becker
  */
 class MoveSequencePlayback {
 

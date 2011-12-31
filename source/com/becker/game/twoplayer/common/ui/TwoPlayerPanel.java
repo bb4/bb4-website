@@ -27,15 +27,15 @@ import java.awt.event.ActionListener;
  *  new game, undo, redo, options, and help.
  * It puts the game board viewer in a scrollable pane on the left.
  * There is an info window on the right that gives statistics about the current game state.
- * There is a brogress bar at the bottom that shows whenever the computer is thinking.
+ * There is a progress bar at the bottom that shows whenever the computer is thinking.
  *
  * This class is the main panel in the applet or application.
- * It contains everything related to acutally playing the board game.
+ * It contains everything related to actually playing the board game.
  *
  *  @author Barry Becker
  */
 public abstract class TwoPlayerPanel extends GamePanel
-                                implements ActionListener, GameChangedListener {
+                                  implements ActionListener, GameChangedListener {
 
     /** for showing progress while the computer thinks. */
     private JProgressBar progressBar_;
@@ -70,8 +70,7 @@ public abstract class TwoPlayerPanel extends GamePanel
     }
 
     @Override
-    protected JPanel createBottomDecorationPanel()
-    {
+    protected JPanel createBottomDecorationPanel() {
         progressBar_ = createProgressBar();
         boardViewer_.setProgressBar(progressBar_);
 
@@ -83,8 +82,7 @@ public abstract class TwoPlayerPanel extends GamePanel
         return progressPanel;
     }
 
-    JProgressBar createProgressBar()
-    {
+    JProgressBar createProgressBar()  {
         JProgressBar progressBar = new JProgressBar();
         progressBar.setOpaque(false);
         // show only when used
@@ -103,8 +101,7 @@ public abstract class TwoPlayerPanel extends GamePanel
      * @return  the dialog used to specify various game options and parameters.
      */
     @Override
-    protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller )
-    {
+    protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller ) {
         return new TwoPlayerOptionsDialog( parent, controller );
     }
 
@@ -113,27 +110,23 @@ public abstract class TwoPlayerPanel extends GamePanel
      * but it also has its own (view only) viewer that is used to show any particular node in the game tree.
      * @return the new game tree dialog
      */
-    protected GameTreeDialog createGameTreeDialog()
-    {
+    protected GameTreeDialog createGameTreeDialog() {
         AbstractTwoPlayerBoardViewer v = (AbstractTwoPlayerBoardViewer)createBoardViewer();
         v.setViewOnly( true ); // we don't want it to recieve click events
         return new GameTreeDialog( null, v, new GameTreeCellRenderer((TwoPlayerPieceRenderer)v.getPieceRenderer()) );
     }
-
 
     /**
      *  Take the root from the treeDialog and set it on the TwoPlayerController so it can
      * create the tree and allow the treeDialog to show it when the
      * change event happens.
      */
-    private void showGameTreeDialog()
-    {
+    private void showGameTreeDialog() {
          treeDialog_.reset();
          boardViewer_.addGameChangedListener( treeDialog_ );
          get2PlayerController().setGameTreeViewable( treeDialog_.getGameTreeViewable() );
          treeDialog_.setVisible(true);
     }
-
 
     /**
      * handle button click actions.
@@ -142,8 +135,7 @@ public abstract class TwoPlayerPanel extends GamePanel
      * super.actionPerformed(e);
      */
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         AbstractTwoPlayerBoardViewer v = (AbstractTwoPlayerBoardViewer)boardViewer_;
 

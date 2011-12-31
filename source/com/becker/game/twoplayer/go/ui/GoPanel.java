@@ -11,6 +11,7 @@ import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 import com.becker.game.twoplayer.common.ui.gametree.GameTreeDialog;
+import com.becker.game.twoplayer.go.ui.dialogs.GoNewGameDialog;
 import com.becker.game.twoplayer.go.ui.gametree.GoTreeCellRenderer;
 
 import javax.swing.*;
@@ -21,21 +22,18 @@ import java.awt.event.ActionEvent;
  *
  *  @author Barry Becker
  */
-public final class GoPanel extends TwoPlayerPanel
-{
+public final class GoPanel extends TwoPlayerPanel {
 
     /**
      * Construct the panel.
      */
-    public GoPanel()
-    {}
+    public GoPanel() {}
 
     /**
      * @return the title for the applet/application window
      */
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("GO");
     }
 
@@ -44,27 +42,23 @@ public final class GoPanel extends TwoPlayerPanel
      * @return the game board viewer
      */
     @Override
-    protected GameBoardViewer createBoardViewer()
-    {
+    protected GameBoardViewer createBoardViewer() {
         return new GoBoardViewer();
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )  {
         return new GoNewGameDialog( parent, viewer );
     }
 
     @Override
-    protected GameInfoPanel createInfoPanel(GameController controller)
-    {
+    protected GameInfoPanel createInfoPanel(GameController controller) {
         return new GoInfoPanel( controller );
     }
 
 
     @Override
-    protected GameTreeDialog createGameTreeDialog()
-    {
+    protected GameTreeDialog createGameTreeDialog() {
         AbstractTwoPlayerBoardViewer v =(AbstractTwoPlayerBoardViewer)createBoardViewer();
         v.setViewOnly( true ); // we don't want it to receive click events
         return new GameTreeDialog( null, v, new GoTreeCellRenderer());
@@ -79,21 +73,18 @@ public final class GoPanel extends TwoPlayerPanel
      * Display the help dialog to give instructions
      */
     @Override
-    protected void showHelpDialog()
-    {
+    protected void showHelpDialog() {
         String name = getTitle();
         String comments = GameContext.getLabel("GO_COMMENTS");
         String overview = GameContext.getLabel("GO_OVERVIEW");
         showHelpDialog( name, comments, overview );
     }
 
-
     /**
      * handle the pass button and the regular ones too.
      */
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         if ( source == ((GoToolBar)toolBar_).getPassButton() ) {
             ((GoBoardViewer) boardViewer_).pass();
@@ -103,7 +94,6 @@ public final class GoPanel extends TwoPlayerPanel
         }
         super.actionPerformed( e );
     }
-
 }
 
 
