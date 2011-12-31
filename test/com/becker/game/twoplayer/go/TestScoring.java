@@ -2,8 +2,11 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
 import com.becker.game.twoplayer.go.board.GoSearchable;
 import com.becker.game.twoplayer.go.board.move.GoMove;
+import com.becker.game.twoplayer.go.options.GoWeights;
+import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -13,32 +16,32 @@ import junit.framework.TestSuite;
 public class TestScoring extends GoTestCase {
 
     private static final String PATH_PREFIX = "scoring/";
-    
+
     /** give some leeway on the territory estimate since its a heuristic. */
     private static final double TOLERANCE = 5;
 
     public void testScoring1() {
-        checkScoring("problem_score1", 0, 0, 0, 0, 93, 76, -7);  // -12);
+        checkScoring("problem_score1", 0, 0, 0, 0, 74, 57, -7);
     }
 
-    public void testScoring55a() {
-        checkScoring("problem_score55a", 0, 0, 0, 7, 16, 9, 400); // 0, 0, 0, 7, 17, 0);
+    public void testScoring55a() { //                 bt, wt, finalWorth
+        checkScoring("problem_score55a", 0, 0, 0, 7,  16,  1,   400);
     }
 
-    public void testScoring55b() {
-        checkScoring("problem_score55b", 0, 2, 0, 6, 14, 11, 1604);  // 0, 2, 0, 6, 14, 0);
+    public void testScoring55b() { //                 bt, wt,  finalWorth
+        checkScoring("problem_score55b", 0, 2, 0, 6,   14, 2,  1604);  // 0, 2, 0, 6, 14, 0);
     }
 
-    public void testScoring2() {
-        checkScoring("problem_score2", 0, 0, 3, 0, 85, 84, -138);
+    public void testScoring2() { //                bt, wt,  finalWorth
+        checkScoring("problem_score2", 0, 0, 3, 0, 58, 60,  -138);
     }
 
-    public void testScoringIdentPosition1a() {
-        checkScoring("problem_identPosition1a", 0, 0, 4, 0, 13, 12, -94);
+    public void testScoringIdentPosition1a() { //           bt, wt,  finalWorth
+        checkScoring("problem_identPosition1a", 0, 0, 4, 0,  5, 7, -94); //13, 12, -94);
     }
 
     public void testScoringIdentPosition1b() {
-        checkScoring("problem_identPosition1b", 0, 0, 4, 0, 13, 12, -94);
+        checkScoring("problem_identPosition1b", 0, 0, 4, 0, 5, 7, -94); //13, 12, -94);
     }
 
     public void testScoringIdentPosition2a() {
