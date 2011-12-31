@@ -44,7 +44,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
      * @return a table of players
      */
     @Override
-    protected JPanel createPlayerPanel()
+    protected JPanel createPlayerAssignmentPanel()
     {
         JPanel playerPanel = new JPanel(new BorderLayout());
         playerPanel.setBorder(

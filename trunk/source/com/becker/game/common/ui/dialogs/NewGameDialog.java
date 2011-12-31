@@ -64,7 +64,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
-        playLocalPanel_ = createPlayLocalPanel();
+        playLocalPanel_ = createNewLocalGamePanel();
 
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -84,11 +84,10 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         return null; // nothing if no online play supported
     }
 
-    protected JPanel createPlayLocalPanel()
-    {
+    protected JPanel createNewLocalGamePanel() {
         JPanel playLocalPanel = new JPanel();
         playLocalPanel.setLayout( new BoxLayout( playLocalPanel, BoxLayout.Y_AXIS ) );
-        JPanel playerPanel = createPlayerPanel();
+        JPanel playerPanel = createPlayerAssignmentPanel();
         JPanel boardParamPanel = createBoardParamPanel();
         JPanel customPanel = createCustomPanel();
 
@@ -102,12 +101,11 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         return playLocalPanel;
     }
 
-    protected abstract JPanel createPlayerPanel();
+    protected abstract JPanel createPlayerAssignmentPanel();
 
 
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         startButton_ = new GradientButton();
