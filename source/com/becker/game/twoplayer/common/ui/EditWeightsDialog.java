@@ -18,8 +18,7 @@ import java.awt.event.ActionEvent;
  *
  * @author Barry Becker
  */
-class EditWeightsDialog extends OptionsDialog
-{
+class EditWeightsDialog extends OptionsDialog {
 
     private final ParameterArray weights_;
     private final GameWeights gameWeights_;
@@ -34,8 +33,7 @@ class EditWeightsDialog extends OptionsDialog
     private static final Dimension WEIGHT_PANEL_DIM = new Dimension( 900, 25 );
 
     // constructor
-    EditWeightsDialog( JFrame parent, ParameterArray weights, GameWeights gameWeights )
-    {
+    EditWeightsDialog(JFrame parent, ParameterArray weights, GameWeights gameWeights) {
         super( parent );
 
         // make a copy of the weights so we can cancel if desired
@@ -45,14 +43,12 @@ class EditWeightsDialog extends OptionsDialog
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("EDIT_WEIGHTS");
     }
 
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BoxLayout( mainPanel, BoxLayout.Y_AXIS ) );
 
@@ -69,8 +65,7 @@ class EditWeightsDialog extends OptionsDialog
     }
 
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         okButton_ = new GradientButton();
@@ -83,8 +78,7 @@ class EditWeightsDialog extends OptionsDialog
         return buttonsPanel;
     }
 
-    private JPanel createWeightsPanel()
-    {
+    private JPanel createWeightsPanel() {
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
         p.setBorder( BorderFactory.createEtchedBorder() );
@@ -115,8 +109,7 @@ class EditWeightsDialog extends OptionsDialog
         weightsPanel_.add( Box.createVerticalGlue() ); // fill extra space at the bottom
     }
 
-    private void ok()
-    {
+    private void ok() {
         int len = weights_.size();
         String sErrors = "";
         for ( int i = 0; i < len; i++ ) {
@@ -135,8 +128,7 @@ class EditWeightsDialog extends OptionsDialog
 
 
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         super.actionPerformed(e);
         Object source = e.getSource();
         if ( source == okButton_ ) {

@@ -10,32 +10,28 @@ import java.awt.event.ActionListener;
  *
  * @author Barry Becker
  */
-public abstract class OptionsDialog extends AbstractDialog implements ActionListener
-{
+public abstract class OptionsDialog extends AbstractDialog implements ActionListener {
 
-    protected static final String COLON = " : ";
+    public static final String COLON = " : ";
 
     /**
      *  constructor  (use this constructor if possible)
      *  @param parent the parent component so we know how to place ourselves
      */
-    public OptionsDialog( JFrame parent )
-    {
+    public OptionsDialog( JFrame parent ) {
         super( parent );
 
         commonInit();
     }
 
-    public OptionsDialog()
-    {
+    public OptionsDialog() {
         commonInit();
     }
 
     /**
      * initialize the dialogs ui
      */
-    public void commonInit()
-    {
+    public void commonInit() {
  
         this.setResizable(false);
         setTitle( getTitle() );
