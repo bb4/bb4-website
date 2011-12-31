@@ -363,7 +363,6 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         refresh();
     }
 
-
     /**
      * @return   the message to display at the completion of the game.
      */
@@ -371,7 +370,6 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     protected String getGameOverMessage() {
         return new GameOverMessage(get2PlayerController()).getText();
     }
-
 
     /**
      * @return the cached game board if we are in the middle of processing.

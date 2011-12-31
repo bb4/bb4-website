@@ -16,8 +16,7 @@ import java.text.DecimalFormat;
  * This allows us to more cleanly separate the client pieces from the server. *
  * @author Barry Becker
  */
-public class TwoPlayerPieceRenderer extends GamePieceRenderer
-{
+public class TwoPlayerPieceRenderer extends GamePieceRenderer {
 
     /** there must be one of these for each derived class too. */
     private static GamePieceRenderer renderer_ = null;
@@ -70,7 +69,6 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
          return  new Color( playerColor.getRed(), playerColor.getGreen(), playerColor.getBlue(),
                            255 - piece.getTransparency() );
     }
-
 
     /**
      * @return color for annotation text (if any).

@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.game.twoplayer.common.ui;
+package com.becker.game.twoplayer.common.ui.dialogs;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameWeights;
@@ -132,7 +132,7 @@ public class PlayerAssignmentPanel extends JPanel
         EditWeightsDialog editWtsDlg = new EditWeightsDialog(parent, weights, gameWeights );
 
         editWtsDlg.setLocationRelativeTo(this.parent);
-        editWtsDlg.setModal( true );
+        editWtsDlg.setModal(true);
         editWtsDlg.setVisible(true);
         return false;
     }

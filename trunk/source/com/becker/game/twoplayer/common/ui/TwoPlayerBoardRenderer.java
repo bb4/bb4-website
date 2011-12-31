@@ -14,8 +14,7 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public abstract class TwoPlayerBoardRenderer extends GameBoardRenderer
-{
+public abstract class TwoPlayerBoardRenderer extends GameBoardRenderer {
 
     /**
      * private constructor because this class is a singleton.
@@ -25,8 +24,8 @@ public abstract class TwoPlayerBoardRenderer extends GameBoardRenderer
     {}
 
     @Override
-    protected void drawLastMoveMarker(Graphics2D g2, IGameController controller)
-    {
+    protected void drawLastMoveMarker(Graphics2D g2, IGameController controller) {
+
         TwoPlayerMove last = (TwoPlayerMove)controller.getBoard().getMoveList().getLastMove();
         // this draws a small indicator on the last move to show where it was played
         if ( last != null ) {
@@ -38,6 +37,5 @@ public abstract class TwoPlayerBoardRenderer extends GameBoardRenderer
             g2.drawOval( xpos, ypos, cellSize - 2, cellSize - 2 );
         }
     }
-
 }
 

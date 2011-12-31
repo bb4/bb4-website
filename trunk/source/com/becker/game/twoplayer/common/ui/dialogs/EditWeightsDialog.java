@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.common.ui;
+package com.becker.game.twoplayer.common.ui.dialogs;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameWeights;
