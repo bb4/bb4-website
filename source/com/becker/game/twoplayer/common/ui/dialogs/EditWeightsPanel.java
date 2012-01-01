@@ -18,64 +18,39 @@ import java.awt.event.ActionEvent;
  *
  * @author Barry Becker
  */
-class EditWeightsDialog extends OptionsDialog {
+class EditWeightsPanel extends JPanel {
 
     private final ParameterArray weights_;
     private final GameWeights gameWeights_;
-    private JTextField[] weightFields_ = null;
+    private JTextField[] weightFields_;
 
-    private GradientButton okButton_;
-
-     private JPanel weightsPanel_;
+    private JPanel weightsPanel_;
 
     private static final Dimension LABEL_DIM = new Dimension( 200, 20 );
     private static final Dimension FIELD_DIM = new Dimension( 100, 20 );
     private static final Dimension WEIGHT_PANEL_DIM = new Dimension( 900, 25 );
 
-    // constructor
-    EditWeightsDialog(JFrame parent, ParameterArray weights, GameWeights gameWeights) {
-        super( parent );
+    /** constructor */
+    EditWeightsPanel(ParameterArray weights, GameWeights gameWeights) {
 
         // make a copy of the weights so we can cancel if desired
         weights_ = weights;  // this does not make a copy.
         gameWeights_ = gameWeights;
-        showContent();
+        initialize();
     }
 
-    @Override
-    public String getTitle() {
-        return GameContext.getLabel("EDIT_WEIGHTS");
-    }
 
-    @Override
-    protected JComponent createDialogContent() {
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout( new BoxLayout( mainPanel, BoxLayout.Y_AXIS ) );
+    protected void initialize() {
+
+        setLayout( new BoxLayout(this, BoxLayout.Y_AXIS ) );
 
         JLabel instructLabel = new JLabel( GameContext.getLabel("EDIT_WTS_BELOW") );
         weightsPanel_= createWeightsPanel();
         initWeightsPanel();
         JScrollPane scrollPane_=new JScrollPane( weightsPanel_ );
 
-        mainPanel.add( instructLabel );
-        mainPanel.add( scrollPane_ );
-        mainPanel.add( createButtonsPanel() );
-
-        return mainPanel;
-    }
-
-    @Override
-    protected JPanel createButtonsPanel() {
-        JPanel buttonsPanel = new JPanel( new FlowLayout() );
-
-        okButton_ = new GradientButton();
-        initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("ACCEPT_WTS") );
-        initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL_EDITS") );
-
-        buttonsPanel.add( okButton_ );
-        buttonsPanel.add( cancelButton_ );
-
-        return buttonsPanel;
+        add( instructLabel );
+        add( scrollPane_ );
     }
 
     private JPanel createWeightsPanel() {
@@ -109,32 +84,24 @@ class EditWeightsDialog extends OptionsDialog {
         weightsPanel_.add( Box.createVerticalGlue() ); // fill extra space at the bottom
     }
 
-    private void ok() {
+    public void ok() {
         int len = weights_.size();
         String sErrors = "";
         for ( int i = 0; i < len; i++ ) {
             double v = Double.parseDouble( weightFields_[i].getText() );
             Parameter p = weights_.get(i);
-            if ( v<p.getMinValue())
+            if ( v<p.getMinValue())  {
                 sErrors += v+" is too small for "+p.getName()+". The min vlaue of "+p.getMinValue()+" will be used.\n";
-            else if (v>p.getMaxValue())
+            }
+            else if (v>p.getMaxValue()) {
                 sErrors += v+" is too big for "+p.getName()+". The max value of "+p.getMaxValue()+" will be used.\n";
-            else
+            }
+            else {
                 weights_.get(i).setValue(v);
+            }
         }
         if (sErrors.length() >1)
             JOptionPane.showMessageDialog(this, sErrors, "Parameters Out of Range", JOptionPane.WARNING_MESSAGE);
-    }
-
-
-    @Override
-    public void actionPerformed( ActionEvent e ) {
-        super.actionPerformed(e);
-        Object source = e.getSource();
-        if ( source == okButton_ ) {
-            ok();
-            dispose();
-        }
     }
 }
 

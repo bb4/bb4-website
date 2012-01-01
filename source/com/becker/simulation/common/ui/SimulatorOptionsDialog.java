@@ -21,7 +21,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
     private JCheckBox antialiasingCheckbox_;
     private JCheckBox recordAnimationCheckbox_;
 
-    // aniumation param options controls
+    // animation param options controls
     private NumberInput timeStepField_;
     private NumberInput numStepsPerFrameField_;
     private NumberInput scaleField_;
@@ -57,16 +57,16 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
 
         JTabbedPane tabbedPanel = new JTabbedPane();
         tabbedPanel.add( "Rendering", renderingParamPanel );
-        tabbedPanel.setToolTipTextAt( 0, "change the rendering options for the simulation" );
+        tabbedPanel.setToolTipTextAt( 0, "Change the rendering options for the simulation" );
         if (globalPhysicalParamPanel != null) {
             tabbedPanel.add( "Animation", globalPhysicalParamPanel );
             tabbedPanel.setToolTipTextAt( 0,
-                    "change the animation and physical constants controlling the simulation" );
+                    "Change the animation and physical constants controlling the simulation" );
         }
         
         tabbedPanel.add( "Custom", customParamPanel );
         tabbedPanel.setToolTipTextAt( tabbedPanel.getTabCount()-1,
-                "change the custom options for the simulation" );
+                "Change the custom options for the simulation" );
         tabbedPanel.setSelectedComponent(customParamPanel);
 
         mainPanel.add( tabbedPanel, BorderLayout.CENTER );
