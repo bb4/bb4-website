@@ -49,8 +49,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     /**
      *  constructor
      */
-    protected NewGameDialog( JFrame parent, GameViewable viewer)
-    {
+    protected NewGameDialog( JFrame parent, GameViewable viewer) {
         super( parent );
         controller_ = viewer.getController();
         board_ = controller_.getBoard();
@@ -59,8 +58,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     }
 
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
