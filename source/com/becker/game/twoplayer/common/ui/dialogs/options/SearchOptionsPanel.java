@@ -19,7 +19,7 @@ import java.awt.event.ItemListener;
  *
  * @author Barry Becker
  */
-class SearchOptionsPanel extends JPanel
+public class SearchOptionsPanel extends JPanel
                          implements ItemListener {
 
     /** search algorithm radio button group */
@@ -34,7 +34,7 @@ class SearchOptionsPanel extends JPanel
     private boolean initialized = false;
 
     /** constructor */
-    SearchOptionsPanel(TwoPlayerController controller) {
+    public SearchOptionsPanel(TwoPlayerController controller) {
 
         controller_ = controller;
         setName(GameContext.getLabel("ALGORITHM"));

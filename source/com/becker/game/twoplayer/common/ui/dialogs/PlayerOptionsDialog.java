@@ -3,6 +3,8 @@ package com.becker.game.twoplayer.common.ui.dialogs;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameWeights;
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.ui.dialogs.options.SearchOptionsPanel;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.OptionsDialog;
@@ -21,17 +23,17 @@ class PlayerOptionsDialog extends OptionsDialog {
 
     private GradientButton okButton_;
 
-    private JPanel searchOptionsPanel;
+    private SearchOptionsPanel searchOptionsPanel;
     private EditWeightsPanel weightsPanel;
     
     private ParameterArray weights;
-    private GameWeights gameWeights;
+    private TwoPlayerController controller;
 
     /**  constructor  */
-    PlayerOptionsDialog(JFrame parent, ParameterArray weights, GameWeights gameWeights) {
+    PlayerOptionsDialog(JFrame parent, TwoPlayerController controller, ParameterArray weights) {
         super( parent );
         this.weights = weights;
-        this.gameWeights = gameWeights;
+        this.controller = controller;
         showContent();
     }
 
@@ -50,9 +52,9 @@ class PlayerOptionsDialog extends OptionsDialog {
 
         // contains tabs for search, and weights
         JTabbedPane tabbedPanel = new JTabbedPane();
-        //tabbedPanel.setPreferredSize(new Dimension(450, 350));
 
-        searchOptionsPanel = new JPanel(); //new SearchOptionsPanel();
+        GameWeights gameWeights = controller.getComputerWeights();
+        searchOptionsPanel = new SearchOptionsPanel(controller);
         weightsPanel = new EditWeightsPanel(weights, gameWeights);
 
         tabbedPanel.add( GameContext.getLabel("SEARCH_OPTIONS"), searchOptionsPanel );
