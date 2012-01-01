@@ -4,6 +4,7 @@ package com.becker.game.twoplayer.common.search.strategy;
 import com.becker.game.common.GameWeights;
 import com.becker.game.common.GameWeightsStub;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.SearchableStub;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
@@ -27,8 +28,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        TwoPlayerOptions options = createTwoPlayerGameOptions();
-        searchOptions = options.getSearchOptions();
+        searchOptions = createSearchOptions();
     }
 
     protected SearchStrategy createSearchStrategy() {
@@ -44,10 +44,10 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     /**
      * @return default search options for all games
      */
-    public TwoPlayerOptions createTwoPlayerGameOptions() {
-        TwoPlayerOptions opts =  new TwoPlayerOptions();
-        opts.getSearchOptions().getBestMovesSearchOptions().setPercentageBestMoves(100);
-        opts.getSearchOptions().getBestMovesSearchOptions().setPercentLessThanBestThresh(0);
+    public SearchOptions createSearchOptions() {
+        SearchOptions opts =  new SearchOptions();
+        opts.getBestMovesSearchOptions().setPercentageBestMoves(100);
+        opts.getBestMovesSearchOptions().setPercentLessThanBestThresh(0);
         return opts;
     }
 

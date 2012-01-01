@@ -4,6 +4,7 @@ package com.becker.game.twoplayer.blockade;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.player.PlayerOptions;
 import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.becker.game.twoplayer.blockade.persistence.BlockadeGameExporter;
@@ -14,6 +15,7 @@ import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -55,7 +57,12 @@ public class BlockadeController extends TwoPlayerController {
 
     @Override
     protected TwoPlayerOptions createOptions() {
-        return new BlockadeOptions();
+        return new TwoPlayerOptions();
+    }
+
+    @Override
+    protected PlayerOptions createPlayerOptions(String playerName, Color color) {
+        return new BlockadePlayerOptions(playerName, color);
     }
 
     /**

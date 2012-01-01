@@ -14,7 +14,6 @@ import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 
 import java.awt.*;
-
 import java.util.Set;
 
 /**

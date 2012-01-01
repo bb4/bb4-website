@@ -4,12 +4,14 @@ package com.becker.game.twoplayer.chess;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.player.PlayerOptions;
 import com.becker.game.twoplayer.checkers.CheckersController;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
+import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
 
@@ -70,7 +72,12 @@ public class ChessController extends CheckersController {
 
     @Override
     protected TwoPlayerOptions createOptions() {
-        return new ChessOptions();
+        return new TwoPlayerOptions();
+    }
+
+    @Override
+    protected PlayerOptions createPlayerOptions(String playerName, Color color) {
+        return new ChessPlayerOptions(playerName, color);
     }
 
     /**

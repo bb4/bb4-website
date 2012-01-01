@@ -4,9 +4,9 @@ package com.becker.game.twoplayer.blockade.board.move;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.BoardPosition;
-import com.becker.game.twoplayer.blockade.board.Path;
 import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
 import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.Path;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
 

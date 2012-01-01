@@ -1,17 +1,21 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.checkers;
 
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;
 import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
+import java.awt.*;
+
 /**
  * @author Barry Becker
  */
-public class CheckersOptions extends TwoPlayerOptions {
+public class CheckersPlayerOptions extends TwoPlayerPlayerOptions {
 
-    public CheckersOptions() {}
+    public CheckersPlayerOptions(String name, Color color) {
+        super(name, color);
+    }
 
     @Override
     protected SearchOptions createDefaultSearchOptions() {

@@ -1,17 +1,19 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.pente;
 
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;
 import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.MonteCarloSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
+import java.awt.*;
+
 /**
  *
  * @author Barry Becker
  */
-public class PenteOptions extends TwoPlayerOptions {
+public class PentePlayerOptions extends TwoPlayerPlayerOptions {
 
     
     /** initial look ahead factor. */
@@ -27,7 +29,9 @@ public class PenteOptions extends TwoPlayerOptions {
     private static final int DEFAULT_MIN_BEST_MOVES = 5;
 
 
-    public PenteOptions() {}
+    public PentePlayerOptions(String name, Color color) {
+       super(name, color);
+    }
 
     @Override
     protected SearchOptions createDefaultSearchOptions() {

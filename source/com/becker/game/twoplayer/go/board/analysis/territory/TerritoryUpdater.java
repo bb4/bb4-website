@@ -5,7 +5,8 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.position.*;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 
 import static com.becker.game.twoplayer.go.GoController.USE_RELATIVE_GROUP_SCORING;
 

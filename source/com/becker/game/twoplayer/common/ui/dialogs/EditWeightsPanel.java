@@ -3,14 +3,11 @@ package com.becker.game.twoplayer.common.ui.dialogs;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameWeights;
-import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.ui.components.GradientButton;
-import com.becker.ui.dialogs.OptionsDialog;
+import com.becker.optimization.parameter.types.Parameter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 /**
  * Allow for editing the polynomial weights used in the static

@@ -1,16 +1,18 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.tictactoe;
 
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;
 import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.MonteCarloSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
+import java.awt.*;
+
 /**
  * @author Barry Becker
  */
-public class TicTacToeOptions extends TwoPlayerOptions {
+public class TicTacToePlayerOptions extends TwoPlayerPlayerOptions {
 
     /** initial look ahead factor. */
     private static final int DEFAULT_LOOK_AHEAD = 4;
@@ -25,7 +27,9 @@ public class TicTacToeOptions extends TwoPlayerOptions {
     private static final int DEFAULT_MIN_BEST_MOVES = 4;
 
 
-    public TicTacToeOptions() {}
+    public TicTacToePlayerOptions(String name, Color color) {
+        super(name, color);
+    }
 
     @Override
     protected SearchOptions createDefaultSearchOptions() {

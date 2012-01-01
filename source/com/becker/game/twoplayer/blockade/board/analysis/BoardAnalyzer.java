@@ -9,7 +9,6 @@ import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
 import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.blockade.board.Path;
 import com.becker.game.twoplayer.blockade.board.PlayerPathLengths;
-import com.becker.game.twoplayer.blockade.board.analysis.PossibleMoveAnalyzer;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 

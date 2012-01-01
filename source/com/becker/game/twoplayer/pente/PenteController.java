@@ -4,6 +4,7 @@ package com.becker.game.twoplayer.pente;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.player.PlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -47,7 +48,12 @@ public class PenteController extends TwoPlayerController {
 
     @Override
     protected TwoPlayerOptions createOptions() {
-        return new PenteOptions();
+        return new TwoPlayerOptions();
+    }
+
+    @Override
+    protected PlayerOptions createPlayerOptions(String playerName, Color color) {
+        return new PentePlayerOptions(playerName, color);
     }
 
     /**
