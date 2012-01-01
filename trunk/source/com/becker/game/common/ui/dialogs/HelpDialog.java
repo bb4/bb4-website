@@ -19,8 +19,8 @@ import java.text.MessageFormat;
  *
  * @author Barry Becker
  */
-public final class HelpDialog extends AbstractDialog implements ActionListener
-{
+public final class HelpDialog extends AbstractDialog
+                              implements ActionListener {
 
     private final GradientButton okButton_ = new GradientButton();
     private static final long serialVersionUID = 0L;
@@ -41,8 +41,7 @@ public final class HelpDialog extends AbstractDialog implements ActionListener
      * @param comments supplementary info
      * @param text game specific instructions to display.
      */
-    public HelpDialog( JFrame parent, String gameName, String comments, String text)
-    {
+    public HelpDialog( JFrame parent, String gameName, String comments, String text) {
         super( parent );
 
         gameName_ = gameName;
@@ -100,8 +99,7 @@ public final class HelpDialog extends AbstractDialog implements ActionListener
     /**
      * @return the body overview text area.
      */
-    private JTextArea createOverviewTextArea()
-    {
+    private JTextArea createOverviewTextArea() {
 
         final JTextArea overviewTextArea = new JTextArea();
         overviewTextArea.setText( overviewText_ );
@@ -118,8 +116,7 @@ public final class HelpDialog extends AbstractDialog implements ActionListener
         return overviewTextArea;
     }
 
-    private JPanel createSummaryPanel()
-    {
+    private JPanel createSummaryPanel() {
         final JPanel summaryPanel = new JPanel();
 
         summaryPanel.setLayout( new BorderLayout() );
@@ -149,8 +146,7 @@ public final class HelpDialog extends AbstractDialog implements ActionListener
 
 
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         super.actionPerformed(e);
         if ( e.getSource() == okButton_ ) {
             cancel();

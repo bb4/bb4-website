@@ -23,8 +23,7 @@ import java.awt.event.WindowEvent;
  *
  * @author Barry Becker
  */
-public abstract class NewGameDialog extends OptionsDialog implements ChangeListener
-{
+public abstract class NewGameDialog extends OptionsDialog implements ChangeListener {
     /**
      * the options get set directly on the game controller that is passed in.
      */
@@ -89,12 +88,15 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         JPanel boardParamPanel = createBoardParamPanel();
         JPanel customPanel = createCustomPanel();
 
-        if (playerPanel != null)
+        if (playerPanel != null) {
             playLocalPanel.add( playerPanel );
-        if (boardParamPanel != null)
+        }
+        if (boardParamPanel != null)   {
             playLocalPanel.add( boardParamPanel );
-        if (customPanel != null )
+        }
+        if (customPanel != null )  {
             playLocalPanel.add( customPanel );
+        }
 
         return playLocalPanel;
     }

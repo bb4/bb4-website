@@ -26,8 +26,7 @@ import java.awt.event.ItemListener;
  * @author Barry Becker
  */
 public abstract class GameOptionsDialog extends OptionsDialog
-                                        implements ItemListener
-{
+                                        implements ItemListener {
     /**
      * the options get set directly on the game controller that is passed in.
      */
