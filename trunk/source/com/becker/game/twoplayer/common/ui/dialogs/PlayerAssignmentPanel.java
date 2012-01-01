@@ -129,8 +129,8 @@ public class PlayerAssignmentPanel extends JPanel
      *  @return return true if canceled
      */
     private boolean showEditWeightsDialog( ParameterArray weights ) {
-        GameWeights gameWeights = controller.getComputerWeights();
-        PlayerOptionsDialog editWtsDlg = new PlayerOptionsDialog(parent, weights, gameWeights );
+
+        PlayerOptionsDialog editWtsDlg = new PlayerOptionsDialog(parent, controller, weights );
 
         editWtsDlg.setLocationRelativeTo(this.parent);
         editWtsDlg.setModal(true);
