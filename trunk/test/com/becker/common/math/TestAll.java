@@ -14,9 +14,10 @@ public class TestAll {
 
     public static Test suite() {
 
-        TestSuite suite =  new TestSuite("All MAth Tests");
+        TestSuite suite =  new TestSuite("All Math Tests");
 
         suite.addTestSuite(MathUtilTest.class);
+        suite.addTestSuite(NiceNumberRounderTest.class);
         suite.addTestSuite(NiceNumbersTest.class);
 
         return suite;

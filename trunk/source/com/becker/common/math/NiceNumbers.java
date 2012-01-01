@@ -1,4 +1,3 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.math;
 
 import java.text.DecimalFormat;
@@ -6,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Calculate nice round numbered cutpoints for a given range.
+ * Calculate nice round numbered intervals for a range.
  * You can choose loose or tight labeling.
  * (derived from a Graphics Gems 1 article by Paul Heckbert)
  *
@@ -14,14 +13,17 @@ import java.util.List;
  */
 public final class NiceNumbers {
 
-    /** We will never show a range less than this */
+    /** Never show a range less than this */
     private static final double MIN_RANGE = 1.0E-10;
 
-    /** Used in calculating log base 10. */
-    private static final double LOG10SCALE = 1.0 / Math.log(10.0);
-
+    /** Default way to show the numbers as labels */
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###.##");
 
+    /**
+     * Don't allow the label to get closer to each other than this.
+     * This is to prevent the min or max label from overwriting one of the nice cut-points.
+     */
+    private static final double LABEL_PROXIMITY_THRESH = 0.2;
 
     /**
      * private constructor since all methods are static.
@@ -29,24 +31,14 @@ public final class NiceNumbers {
     private NiceNumbers() {}
 
     /**
-     * @param min lower end of tickmark range.
-     * @param max upper end of tickmark range.
-     * @param maxTicks  upper limit on number of cutponts to return.
-     * @return an array of no more than maxTikcks nice cutpoints for the given interval.
-     */
-    public static double[] getCutPoints(double min, double max, int maxTicks) {
-        return getCutPoints(min, max, maxTicks, false);
-    }
-
-    private static final double LABEL_PROXIMITY_THRESH = 0.2;
-
-    /**
      * labels for the found cutpoints.
+     * @param range tickmark range.
      * @return cut point labels
      */
-    public static String[] getCutPointLabels(double min, double max, int maxTicks, boolean useTightLabeling) {
-        double [] cutPoints  = getCutPoints(min, max, maxTicks, useTightLabeling);
-        DECIMAL_FORMAT.setMaximumFractionDigits(getNumberOfFractionDigits(min, max, maxTicks));
+    public static String[] getCutPointLabels(Range range, int maxTicks, boolean useTightLabeling) {
+
+        double [] cutPoints = getCutPoints(range, maxTicks, useTightLabeling);
+        DECIMAL_FORMAT.setMaximumFractionDigits(getNumberOfFractionDigits(range, maxTicks));
 
         int len = cutPoints.length;
         String[] labels = new String[len];
@@ -57,42 +49,52 @@ public final class NiceNumbers {
     }
 
     /**
+     * Get the cut point values.
+     * @param range tickmark range.
+     * @param maxTicks  upper limit on number of cutponts to return.
+     * @return an array of no more than maxTicks nice cutpoints for the given interval.
+     */
+    public static double[] getCutPoints(Range range, int maxTicks) {
+        return getCutPoints(range, maxTicks, false);
+    }
+
+    /**
      * Finds loos or tight labeling for a range of data (depending on the value of useTightLabeling)
      * See Graphics Gems Vol ! p61.
-     * @param minimum lower end of tickmark range.
-     * @param maximum upper end of tickmark range.
-     * @param maxTicks  upper limit on number of cutponts to return.
+     * @param range tickmark range.
+     * @param maxTicks  upper limit on number of cutpoints to return.
      * @param useTightLabeling if false then loose labeling is used.
      * @return the cutpoints
      */
-    public static double[] getCutPoints(double minimum, double maximum, int maxTicks, boolean useTightLabeling) {
+    public static double[] getCutPoints(Range range, int maxTicks, boolean useTightLabeling) {
 
-        checkArgs(minimum, maximum);
-        if (MIN_RANGE >= maximum - minimum) {
+        checkArgs(range);
+        Range finalRange = new Range(range);
+        if (MIN_RANGE >= range.getExtent()) {
             // avoid having only 1 label
-            maximum = minimum + MIN_RANGE;
+            finalRange.add(range.getMin() + MIN_RANGE);
         }
 
         List<Double> positions = new ArrayList<Double>(10);
 
-        if (MIN_RANGE > Math.abs(maximum - minimum)) {
-            positions.add(minimum);
+        if (MIN_RANGE > finalRange.getExtent()) {
+            positions.add(finalRange.getMin());
         } else {
-            double range = roundNumber(maximum - minimum, false);
-            double d = roundNumber(range / (maxTicks - 1), true);
-            double min = Math.floor(minimum / d) * d;
-            double max = Math.ceil(maximum / d) * d;
+            double extent = NiceNumberRounder.round(finalRange.getExtent(), false);
+            double d = NiceNumberRounder.round(extent / (maxTicks - 1), true);
+            double min = Math.floor(finalRange.getMin() / d) * d;
+            double max = Math.ceil(finalRange.getMax() / d) * d;
 
             if (useTightLabeling) {
-                positions.add(checkSmallNumber(minimum));
-                // this logic is to prevent the min or max label from overwriting one of the nice cut-points.
+                positions.add(checkSmallNumber(finalRange.getMin()));
+
                 double initialInc = d;
-                double pct = (min + d - minimum) / d;
+                double pct = (min + d - finalRange.getMin()) / d;
                 if (LABEL_PROXIMITY_THRESH > pct) {
                     initialInc = 2 * d;
                 }
                 double finalInc = 0.5 * d;
-                pct = (maximum - (max - d)) / d;
+                pct = (finalRange.getMax() - (max - d)) / d;
                 if (LABEL_PROXIMITY_THRESH > pct) {
                     finalInc = 1.5 * d;
                 }
@@ -101,7 +103,7 @@ public final class NiceNumbers {
                     double val = checkSmallNumber(x);
                     positions.add(val);
                 }
-                positions.add(checkSmallNumber(maximum));
+                positions.add(checkSmallNumber(finalRange.getMax()));
             } else {
                 double stop = max + 0.5 * d;
                 for (double x = min; x < stop; x += d) {
@@ -120,72 +122,34 @@ public final class NiceNumbers {
 
 
     /**
-     *
-     * @param min value.
-     * @param max value.
+     * Find the number of fractional digits to show in the nice numbers.
+     * @param range range to check.
      * @param maxTicks no more than this many cutpoints.
-     * @return Recommended number of fractional digits to display the cutpoints eg. 0, 1, 2, etc.
+     * @return Recommended number of fractional digits to display.
+     *     The cutpoints eg. 0, 1, 2, etc.
      */
-    public static int getNumberOfFractionDigits(double min, double max, int maxTicks) {
-        checkArgs(min, max);
-        double max1 = max;
-        if (Math.abs(max - min) <= MIN_RANGE) {
-            max1 = min + MIN_RANGE;
+    public static int getNumberOfFractionDigits(Range range, int maxTicks) {
+        checkArgs(range);
+        double max1 = range.getMax();
+        if (range.getExtent() <= MIN_RANGE) {
+            max1 = range.getMin() + MIN_RANGE;
         }
 
-        double range = roundNumber(max1 - min, false);
-        double d = roundNumber(range / (maxTicks - 1), true);
-        return (int) Math.max(-Math.floor(log10(d)), 0);
+        double extent = NiceNumberRounder.round(max1 - range.getMin(), false);
+        double d = NiceNumberRounder.round(extent / (maxTicks - 1), true);
+
+        return (int) Math.max( -Math.floor(MathUtil.log10(d)), 0);
     }
 
     /**
-     * Find a "nice" number approximately equal to x.
-     * Round the number if round = 1, take ceiling if round = 0.
-     * corresponds to nicenum in graphics gems (page 659).
-     * @param x
-     * @param round
-     * @return
+     * Verify that the min and max are valid.
+     * @param range range to check for NaN values.
      */
-    private static double roundNumber(double x, boolean round) {
-        double exp = Math.floor(log10(x));
-        // f will be between 1 and 10.
-        double f = x / exp10(exp);
-        double nf;
-
-        if (round) {
-            if (f < 1.5) {
-                nf = 1.0;
-            } else if (f < 3.0) {
-                nf = 2.0;
-            } else if (f < 7.0) {
-                nf = 5.0;
-            } else {
-                nf = 10.0;
-            }
-        } else {
-            if (f < 1.0) {
-                nf = 1.0;
-            } else if (f <= 2.0) {
-                nf = 2.0;
-            } else if (f < 5.0) {
-                nf = 5.0;
-            } else {
-                nf = 10.0;
-            }
-        }
-        return nf * exp10(exp);
-    }
-
-    /**
-     * Verify tha tthe min and max are valid.
-     * @param min  range value.
-     * @param max  range value.
-     */
-    private static void checkArgs(double min, double max) {
-        if (Double.isNaN(min) || Double.isInfinite(min)) {
+    private static void checkArgs(Range range) {
+        if (Double.isNaN(range.getMin()) || Double.isInfinite(range.getMin())) {
             throw new IllegalArgumentException("min is not a number");
         }
-        if (Double.isNaN(max) || Double.isInfinite(max)) {
+        if (Double.isNaN(range.getMax()) || Double.isInfinite(range.getMax())) {
             throw new IllegalArgumentException("max is not a number");
         }
     }
@@ -196,14 +160,5 @@ public final class NiceNumbers {
         }
 
         return value;
-    }
-
-
-    private static double log10(double val) {
-        return Math.log(val) * LOG10SCALE;
-    }
-
-    private static double exp10(double val) {
-        return Math.exp(val / LOG10SCALE);
     }
 }

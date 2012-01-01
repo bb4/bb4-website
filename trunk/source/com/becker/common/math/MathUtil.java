@@ -23,8 +23,28 @@ public final class MathUtil {
 
     public static final Random RANDOM = new Random(1);
 
+    /** Used in calculating log base 10. */
+    private static final double LOG10SCALE = 1.0 / Math.log(10.0);
 
+    /** private constructor for static util class */
     private MathUtil() {}
+
+
+    /**
+     * @param val the value to find log base 10 of.
+     * @return log base 10 of the specified value.
+     */
+    public static double log10(double val) {
+        return Math.log(val) * LOG10SCALE;
+    }
+
+    /**
+     * @param val the value to find 10 to the power of
+     * @return 10 to the val power.
+     */
+    public static double exp10(double val) {
+        return Math.pow(10.0, val);
+    }
 
     /**
      * @return the greatest common divisor of 2 longs (may be negative).
@@ -134,7 +154,7 @@ public final class MathUtil {
      */
     public static long permutation(int a, int b) {
         assert a > 0; 
-        assert b > a; 
+        assert a > b;
         long f = a;
         int anew = a-1;
         while (anew > b) {
@@ -153,7 +173,7 @@ public final class MathUtil {
      */
     public static BigInteger bigPermutation(int a, int b) {
         assert a > 0; 
-        assert b > a; 
+        assert a > b;
         BigInteger f = new BigInteger(Integer.toString(a));
         int anew = a-1;
         //BigInteger anew = new BigInteger(a-1);
