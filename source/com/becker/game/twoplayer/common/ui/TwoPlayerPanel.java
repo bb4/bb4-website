@@ -102,7 +102,7 @@ public abstract class TwoPlayerPanel extends GamePanel
      */
     @Override
     protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller ) {
-        return new TwoPlayerOptionsDialog( parent, controller );
+        return new TwoPlayerOptionsDialog( parent, (TwoPlayerController) controller);
     }
 
     /**

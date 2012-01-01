@@ -1,0 +1,154 @@
+/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+package com.becker.game.twoplayer.common.ui.dialogs.options;
+
+import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.SearchAttribute;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
+import com.becker.ui.components.RadioButtonPanel;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+/**
+ * The algorithm tab - allows selecting two player search options.
+ *
+ * @author Barry Becker
+ */
+class SearchOptionsPanel extends JPanel
+                         implements ItemListener {
+
+    /** search algorithm radio button group */
+    private JRadioButton[] strategyButtons_;
+    private SearchStrategyType algorithm_;
+    
+    private BruteSearchOptionsPanel bruteOptionsPanel_;
+    private MonteCarloOptionsPanel monteCarloOptionsPanel_;
+    private BestMovesOptionsPanel bestMovesOptionsPanel_;
+    
+    private TwoPlayerController controller_;
+    private boolean initialized = false;
+
+    /** constructor */
+    SearchOptionsPanel(TwoPlayerController controller) {
+
+        controller_ = controller;
+        setName(GameContext.getLabel("ALGORITHM"));
+        initialize();
+    }
+
+    protected void initialize() {
+
+        SearchOptions searchOptions = getSearchOptions();
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(),
+                GameContext.getLabel("PERFORMANCE_OPTIONS")));
+
+        JLabel label = new JLabel( "     " );  // initial space
+        label.setAlignmentX( Component.LEFT_ALIGNMENT );
+        add(label);
+
+        // radio buttons for which search algorithm to use
+        JLabel algorithmLabel = new JLabel( GameContext.getLabel("SELECT_SEARCH_ALGORITHM") );
+        algorithmLabel.setAlignmentX( Component.LEFT_ALIGNMENT );
+        add(algorithmLabel);
+
+        add(createStrategyRadioButtons());
+
+        bruteOptionsPanel_ = new BruteSearchOptionsPanel(searchOptions.getBruteSearchOptions());
+        monteCarloOptionsPanel_ = new MonteCarloOptionsPanel(searchOptions.getMonteCarloSearchOptions());
+        bestMovesOptionsPanel_ = new BestMovesOptionsPanel(searchOptions.getBestMovesSearchOptions());
+
+        add(bruteOptionsPanel_);
+        add(monteCarloOptionsPanel_);
+        add(bestMovesOptionsPanel_);
+        showOptionsBasedOnAlgorithm();
+        initialized = true;
+    }
+
+
+    public TwoPlayerOptions getOptions() {
+
+        TwoPlayerOptions options = (TwoPlayerOptions) controller_.getOptions();
+        SearchOptions searchOptions = getSearchOptions();
+
+        bruteOptionsPanel_.updateBruteOptionsOptions();
+        monteCarloOptionsPanel_.updateMonteCarloOptionsOptions();
+        bestMovesOptionsPanel_.updateBestMovesOptions();
+
+        searchOptions.setSearchStrategyMethod(getSelectedStrategy(searchOptions.getSearchStrategyMethod()));
+        //options.setShowGameTree(gameTreeCheckbox_.isSelected() );
+        return options;
+    }
+
+
+    /**
+     * @return Radio buttons for selecting the strategy.
+     */
+    private JPanel createStrategyRadioButtons() {
+        JPanel p = new JPanel();
+        p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
+
+        SearchOptions searchOptions = getSearchOptions();
+
+        ButtonGroup buttonGroup = new ButtonGroup();
+        int numStrategies = SearchStrategyType.values().length;
+        strategyButtons_ = new JRadioButton[numStrategies];
+
+        algorithm_ = searchOptions.getSearchStrategyMethod();
+        for (int i=0; i<numStrategies; i++) {
+            SearchStrategyType alg = SearchStrategyType.values()[i];
+            strategyButtons_[i] = new JRadioButton(alg.getLabel());
+            strategyButtons_[i].setToolTipText(alg.getTooltip());
+            strategyButtons_[i].addItemListener(this);
+            p.add( new RadioButtonPanel( strategyButtons_[i], buttonGroup, algorithm_ == alg ));
+        }
+        return p;
+    }
+
+    private SearchOptions getSearchOptions() {
+        TwoPlayerOptions options = (TwoPlayerOptions) controller_.getOptions();
+        return  options.getSearchOptions();
+    }
+
+
+    /**
+     * Invoked when a radio button has changed its selection state.
+     */
+    public void itemStateChanged( ItemEvent e ) {
+        //super.itemStateChanged(e);
+        algorithm_ = getSelectedStrategy(getSearchOptions().getSearchStrategyMethod());
+        if (initialized)   {
+            showOptionsBasedOnAlgorithm();
+        }
+    }
+
+    private void showOptionsBasedOnAlgorithm() {
+
+        boolean bruteForceStrategy = algorithm_.hasAttribute(SearchAttribute.BRUTE_FORCE);
+        bruteOptionsPanel_.setVisible(bruteForceStrategy);
+        monteCarloOptionsPanel_.setVisible(!bruteForceStrategy);
+    }
+
+    private SearchStrategyType getSelectedStrategy(SearchStrategyType defaultStrategy) {
+        int numStrategies = SearchStrategyType.values().length;
+        for (int i=0; i<numStrategies; i++) {
+            if (strategyButtons_[i].isSelected()) {
+                return SearchStrategyType.values()[i];
+            }
+        }
+        return defaultStrategy;
+    }
+
+    public void ok() {
+        assert false;
+    }
+
+}
+

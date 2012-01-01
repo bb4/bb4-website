@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
+ * Allow the user to enter a top secret password to gain access to restricted content.
  *
  * @author Barry Becker
  */
@@ -43,9 +44,8 @@ public class PasswordDialog extends AbstractDialog
         showContent();
     }
 
-
     /**
-     * initiallize the dialogs ui
+     * initialize the dialogs ui
      */
     @Override
     public JPanel createDialogContent() {
@@ -94,8 +94,7 @@ public class PasswordDialog extends AbstractDialog
 
 
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         super.actionPerformed(e);
         Object source = e.getSource();
 
