@@ -4,7 +4,7 @@ package com.becker.common.math;
 import junit.framework.*;
 
 import javax.vecmath.Point2d;
-//import static junit.framework.Assert.assertEquals;
+//import static junit.framework.assertEquals;
 
 /**
  * @author Barry Becker Date: Apr 2, 2006

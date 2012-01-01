@@ -11,6 +11,7 @@ public class Range {
     private double min_;
     private double max_;
 
+    /** Default constructor */
     public Range() {
         this(Double.MAX_VALUE, -Double.MAX_VALUE);
     }
@@ -23,6 +24,12 @@ public class Range {
     public Range(double minimum, double maximum) {
         min_ = minimum;
         max_ = maximum;
+    }
+
+    /** Copy constructor */
+    public Range(Range range) {
+        min_ = range.getMin();
+        max_ = range.getMax();
     }
 
     /**
@@ -59,6 +66,10 @@ public class Range {
         }
     }
 
+    /** 
+     * The extend of the range. 
+     * @return the max minus the min.
+     */
     public double getExtent() {
         if (min_ > max_) {
             return Double.NaN;
@@ -66,7 +77,7 @@ public class Range {
         return (max_ - min_);
     }
 
-    /*
+    /**
      * @return true if the range is completely contained by us.
      */
     public boolean inRange(Range range) {

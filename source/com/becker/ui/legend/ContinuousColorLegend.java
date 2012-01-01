@@ -4,6 +4,7 @@ package com.becker.ui.legend;
 import com.becker.common.ColorMap;
 import com.becker.common.format.FormatUtil;
 import com.becker.common.math.NiceNumbers;
+import com.becker.common.math.Range;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,13 +36,11 @@ public class ContinuousColorLegend extends JPanel {
     private static final Color EDIT_BAR_BG = new Color(255, 255, 255, 180);
     private static final BasicStroke MARKER_STROKE = new BasicStroke(0.5f);
 
-
     /**
      * By default the min and max come from the colormap min and max
      * in some cases, such as synchronizing with another map, you may want to adjust them.
      */
-    private double min_;
-    private double max_;
+    private Range range_;
 
     private LegendEditBar legendEditBar_;
     private boolean isEditable_ = false;
@@ -57,10 +56,13 @@ public class ContinuousColorLegend extends JPanel {
     public ContinuousColorLegend(String title, ColorMap colormap, boolean editable)  {
         title_ = title;
         colormap_ = colormap;
-        min_ = colormap_.getMinValue();
-        max_ = colormap_.getMaxValue();
+        range_ = new Range(colormap_.getMinValue(), colormap_.getMaxValue());
         isEditable_ = editable;
         initUI();
+    }
+    
+    public Range getRange() {
+        return range_;
     }
 
     private void initUI() {
@@ -122,25 +124,25 @@ public class ContinuousColorLegend extends JPanel {
     }
 
     public double getMin() {
-        return min_;
+        return range_.getMin();
     }
 
     public void setMin(double min) {
-        assert(min < max_) : "Min=\"+min+\" cannot be greater than the max=\"+max_;";
-        min_ = min;
+        assert(min < range_.getMax()) : "Min=" + min + " cannot be greater than the max=" + range_.getMax();
+        range_ = new Range(min, range_.getMax());
     }
 
     public double getMax() {
-        return max_;
+        return range_.getMax();
     }
 
     public void setMax(double max) {
-        assert(max > min_) :"Max="+max+" cannot be less than the min="+min_;
-        max_ = max;
+        assert(max > range_.getMin()) :"Max=" + max + " cannot be less than the min=" + range_.getMin();
+        range_ = new Range(range_.getMin(), max);
     }
 
     public double getRangeExtent() {
-        return max_ - min_;
+        return range_.getExtent();
     }
 
     private void refresh() {
@@ -180,7 +182,6 @@ public class ContinuousColorLegend extends JPanel {
             legend2.setMin( -meanProp * legend2.getMax() / (1.0 - meanProp));
         }
     }
-
 
 
     /** -------------- these inner classes are used to draw the interactive legend  --------------- */
@@ -399,9 +400,9 @@ public class ContinuousColorLegend extends JPanel {
             FontRenderContext frc = g2.getFontRenderContext();
 
             int desiredTicks = this.getWidth() / LABEL_SPACING;
+            
             double[] values =
-                      NiceNumbers.getCutPoints(getMin(), getMax(), 2 + desiredTicks, true);
-
+                      NiceNumbers.getCutPoints(getRange(), 2 + desiredTicks, true);
 
             g2.setColor(this.getBackground());  // was white
             int width = this.getWidth();
