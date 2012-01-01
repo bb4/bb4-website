@@ -11,6 +11,7 @@ import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.ui.components.ColorInputPanel;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.NumberInput;
+import com.becker.ui.components.RadioButtonPanel;
 import com.becker.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;
@@ -187,13 +188,13 @@ public abstract class GameOptionsDialog extends OptionsDialog
         p.add( logLabel );
 
         ButtonGroup buttonGroup = new ButtonGroup();
-        consoleOutputButton_ = new JRadioButton( GameContext.getLabel("CONSOLE") );
-        windowOutputButton_ = new JRadioButton( GameContext.getLabel("SEPARATE_WINDOW"));
-        fileOutputButton_ = new JRadioButton( GameContext.getLabel("THIS_FILE") );
+        consoleOutputButton_ = createRadioButton("CONSOLE");
+        windowOutputButton_ = createRadioButton("SEPARATE_WINDOW");
+        fileOutputButton_ = createRadioButton("THIS_FILE");
 
-        p.add( createRadioButtonPanel( consoleOutputButton_, buttonGroup, true ) );
-        p.add( createRadioButtonPanel( windowOutputButton_, buttonGroup, false ) );
-        p.add( createRadioButtonPanel( fileOutputButton_, buttonGroup, false ) );
+        p.add( new RadioButtonPanel( consoleOutputButton_, buttonGroup, true ) );
+        p.add( new RadioButtonPanel( windowOutputButton_, buttonGroup, false ) );
+        p.add( new RadioButtonPanel( fileOutputButton_, buttonGroup, false ) );
         logDestination_ = GameContext.getLogger().getDestination();
         switch (logDestination_) {
             case ILog.LOG_TO_CONSOLE:
@@ -208,6 +209,12 @@ public abstract class GameOptionsDialog extends OptionsDialog
             default : assert false : "invalid destination : " + logDestination_;
         }
     }
+    
+    protected JRadioButton createRadioButton(String messageKey) {
+        JRadioButton button = new JRadioButton( GameContext.getLabel(messageKey) );
+        button.addItemListener(this);
+        return button;
+    }
 
     protected void addProfileCheckBox(JPanel p)  {
         // show profile info option
@@ -216,24 +223,6 @@ public abstract class GameOptionsDialog extends OptionsDialog
         profileCheckbox_.addActionListener( this );
         profileCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
         p.add( profileCheckbox_ );
-    }
-
-
-    protected JPanel createRadioButtonPanel( JRadioButton radioButton, ButtonGroup buttonGroup, boolean selected ) {
-        JPanel panelEntry = new JPanel( new BorderLayout() );
-        panelEntry.setAlignmentX( Component.LEFT_ALIGNMENT );
-
-        radioButton.setSelected( selected );
-        radioButton.addItemListener( this );
-        buttonGroup.add( radioButton );
-
-        JLabel l = new JLabel( "    " );
-        l.setBackground( new Color( 255, 255, 255, 0 ) );
-        panelEntry.add( l, BorderLayout.WEST );  // indent it
-
-        panelEntry.add( radioButton );
-
-        return panelEntry;
     }
 
     /**
