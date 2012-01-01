@@ -4,6 +4,7 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.player.PlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
@@ -15,10 +16,12 @@ import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoSearchable;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.options.GoOptions;
+import com.becker.game.twoplayer.go.options.GoPlayerOptions;
 import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.game.twoplayer.go.persistence.GoGameImporter;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -77,9 +80,14 @@ public final class GoController extends TwoPlayerController {
     protected PlayerList createPlayers() {
 
          PlayerList players = new PlayerList();
-         players.add(new Player(createPlayerOptions(GameContext.getLabel("BLACK")), true));
-         players.add(new Player(createPlayerOptions(GameContext.getLabel("WHITE")), false));
+         players.add(new Player(createPlayerOptions(GameContext.getLabel("BLACK"), null), true));
+         players.add(new Player(createPlayerOptions(GameContext.getLabel("WHITE"), null), false));
          return players;
+    }
+    
+    @Override
+    protected PlayerOptions createPlayerOptions(String playerName, Color color) {
+        return new GoPlayerOptions(playerName); 
     }
 
     /**

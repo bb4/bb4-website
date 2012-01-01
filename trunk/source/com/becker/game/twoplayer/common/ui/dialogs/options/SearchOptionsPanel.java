@@ -2,8 +2,6 @@
 package com.becker.game.twoplayer.common.ui.dialogs.options;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.SearchAttribute;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
@@ -30,20 +28,18 @@ public class SearchOptionsPanel extends JPanel
     private MonteCarloOptionsPanel monteCarloOptionsPanel_;
     private BestMovesOptionsPanel bestMovesOptionsPanel_;
     
-    private TwoPlayerController controller_;
+    private SearchOptions searchOptions_;
     private boolean initialized = false;
 
     /** constructor */
-    public SearchOptionsPanel(TwoPlayerController controller) {
+    public SearchOptionsPanel(SearchOptions options) {
 
-        controller_ = controller;
+        searchOptions_ = options;
         setName(GameContext.getLabel("ALGORITHM"));
         initialize();
     }
 
     protected void initialize() {
-
-        SearchOptions searchOptions = getSearchOptions();
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createTitledBorder(
@@ -61,9 +57,9 @@ public class SearchOptionsPanel extends JPanel
 
         add(createStrategyRadioButtons());
 
-        bruteOptionsPanel_ = new BruteSearchOptionsPanel(searchOptions.getBruteSearchOptions());
-        monteCarloOptionsPanel_ = new MonteCarloOptionsPanel(searchOptions.getMonteCarloSearchOptions());
-        bestMovesOptionsPanel_ = new BestMovesOptionsPanel(searchOptions.getBestMovesSearchOptions());
+        bruteOptionsPanel_ = new BruteSearchOptionsPanel(searchOptions_.getBruteSearchOptions());
+        monteCarloOptionsPanel_ = new MonteCarloOptionsPanel(searchOptions_.getMonteCarloSearchOptions());
+        bestMovesOptionsPanel_ = new BestMovesOptionsPanel(searchOptions_.getBestMovesSearchOptions());
 
         add(bruteOptionsPanel_);
         add(monteCarloOptionsPanel_);
@@ -73,18 +69,14 @@ public class SearchOptionsPanel extends JPanel
     }
 
 
-    public TwoPlayerOptions getOptions() {
-
-        TwoPlayerOptions options = (TwoPlayerOptions) controller_.getOptions();
-        SearchOptions searchOptions = getSearchOptions();
-
+    public SearchOptions getOptions() {
         bruteOptionsPanel_.updateBruteOptionsOptions();
         monteCarloOptionsPanel_.updateMonteCarloOptionsOptions();
         bestMovesOptionsPanel_.updateBestMovesOptions();
 
-        searchOptions.setSearchStrategyMethod(getSelectedStrategy(searchOptions.getSearchStrategyMethod()));
+        searchOptions_.setSearchStrategyMethod(getSelectedStrategy(searchOptions_.getSearchStrategyMethod()));
         //options.setShowGameTree(gameTreeCheckbox_.isSelected() );
-        return options;
+        return searchOptions_;
     }
 
 
@@ -95,13 +87,12 @@ public class SearchOptionsPanel extends JPanel
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
 
-        SearchOptions searchOptions = getSearchOptions();
 
         ButtonGroup buttonGroup = new ButtonGroup();
         int numStrategies = SearchStrategyType.values().length;
         strategyButtons_ = new JRadioButton[numStrategies];
 
-        algorithm_ = searchOptions.getSearchStrategyMethod();
+        algorithm_ = searchOptions_.getSearchStrategyMethod();
         for (int i=0; i<numStrategies; i++) {
             SearchStrategyType alg = SearchStrategyType.values()[i];
             strategyButtons_[i] = new JRadioButton(alg.getLabel());
@@ -112,18 +103,12 @@ public class SearchOptionsPanel extends JPanel
         return p;
     }
 
-    private SearchOptions getSearchOptions() {
-        TwoPlayerOptions options = (TwoPlayerOptions) controller_.getOptions();
-        return  options.getSearchOptions();
-    }
-
-
     /**
      * Invoked when a radio button has changed its selection state.
      */
     public void itemStateChanged( ItemEvent e ) {
         //super.itemStateChanged(e);
-        algorithm_ = getSelectedStrategy(getSearchOptions().getSearchStrategyMethod());
+        algorithm_ = getSelectedStrategy(searchOptions_.getSearchStrategyMethod());
         if (initialized)   {
             showOptionsBasedOnAlgorithm();
         }
@@ -147,7 +132,7 @@ public class SearchOptionsPanel extends JPanel
     }
 
     public void ok() {
-        assert false;
+        getOptions();
     }
 
 }

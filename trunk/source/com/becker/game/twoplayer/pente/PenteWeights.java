@@ -20,13 +20,14 @@ public class PenteWeights extends GameWeights {
 
     /** These defaults may be overridden in by the user in the UI. */
     private static final double[] DEFAULT_WEIGHTS = {
-        0.0,    0.0,    0.0,    0.5,     2.0,     8.0,      JEOPARDY_WEIGHT,     JEOPARDY_WEIGHT + 7.0,    ASSUMED_WINNING_VALUE,
+        0.0,    0.0,    0.0,    0.5,     2.0,     8.0,
+        JEOPARDY_WEIGHT,     JEOPARDY_WEIGHT + 7.0, 2 * ASSUMED_WINNING_VALUE,
         2 * ASSUMED_WINNING_VALUE,  2 * ASSUMED_WINNING_VALUE,  2 * ASSUMED_WINNING_VALUE
     };
 
     /** Don't allow the weights to exceed these maximum values. Upper limit. */
     private static final double[] MAX_WEIGHTS = {
-        10.0,  10.0,  10.0,  20.0,  40.0,  40.0,  200.0,  200.0,  ASSUMED_WINNING_VALUE,
+        10.0,  10.0,  10.0,  20.0,  40.0,  40.0,  200.0,  200.0,  2 * ASSUMED_WINNING_VALUE,
         3 * ASSUMED_WINNING_VALUE,  4 * ASSUMED_WINNING_VALUE,  5 * ASSUMED_WINNING_VALUE
     };
 

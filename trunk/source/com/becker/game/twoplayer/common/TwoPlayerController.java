@@ -1,11 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.GameController;
-import com.becker.game.common.GameOptions;
-import com.becker.game.common.GameWeights;
-import com.becker.game.common.Move;
+import com.becker.game.common.*;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.player.PlayerOptions;
@@ -19,6 +15,8 @@ import com.becker.optimization.Optimizee;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
+
+import java.awt.*;
 
 import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
@@ -130,18 +128,18 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     /**
-     * create the 2 players.
+     * @return the 2 players.
      */
     protected PlayerList createPlayers() {
 
         PlayerList players = new PlayerList();
-        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER1")), true));
-        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER2")), false));
+        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER1"), Color.RED), true));
+        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER2"), Color.BLUE), false));
         return players;
     }
     
-    protected PlayerOptions createPlayerOptions(String playerName) {
-        return new PlayerOptions(playerName, null);
+    protected PlayerOptions createPlayerOptions(String playerName, Color color) {
+        return new TwoPlayerPlayerOptions(playerName, color);
     }
 
     /**
@@ -357,7 +355,9 @@ public abstract class TwoPlayerController extends GameController {
 
     public Searchable getSearchable() {
         if (searchable_ == null) {
-            SearchOptions options = ((TwoPlayerOptions) getOptions()).getSearchOptions();
+            SearchOptions options =
+                    ((TwoPlayerPlayerOptions) getCurrentPlayer().getOptions()).getSearchOptions();
+
             searchable_ = createSearchable((TwoPlayerBoard)getBoard(), getPlayers(),  options);
         }
         return searchable_;

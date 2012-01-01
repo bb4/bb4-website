@@ -3,11 +3,14 @@ package com.becker.game.twoplayer.checkers;
 
 import com.becker.game.common.MoveList;
 import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.player.PlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
+
+import java.awt.*;
 
 /**
  * Defines how the computer should play checkers.
@@ -38,7 +41,12 @@ public class CheckersController extends TwoPlayerController {
 
     @Override
     protected TwoPlayerOptions createOptions() {
-        return new CheckersOptions();
+        return new TwoPlayerOptions();
+    }
+
+    @Override
+    protected PlayerOptions createPlayerOptions(String playerName, Color color) {
+        return new CheckersPlayerOptions(playerName, color);
     }
 
     /**

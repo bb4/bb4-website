@@ -11,7 +11,7 @@ import com.becker.game.twoplayer.common.search.SearchableHelper;
 public class BlockadeHelper extends SearchableHelper {
 
     public TwoPlayerOptions createTwoPlayerGameOptions() {
-        return new BlockadeOptions();
+        return new TwoPlayerOptions();
     }
 
     public TwoPlayerController createController() {

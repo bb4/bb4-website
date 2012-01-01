@@ -11,7 +11,7 @@ import com.becker.game.twoplayer.common.search.SearchableHelper;
 public class PenteHelper extends SearchableHelper {
 
     public TwoPlayerOptions createTwoPlayerGameOptions() {
-        return new PenteOptions();
+        return new TwoPlayerOptions();
     }
 
     public TwoPlayerController createController() {

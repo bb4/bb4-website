@@ -4,6 +4,7 @@ package com.becker.game.twoplayer.go.server;
 import com.becker.common.geometry.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.GoController;
@@ -130,7 +131,8 @@ public class CommandHandler {
 
     private void initSize(int size) {
         controller_ = new GoController(size, 0);
-        SearchOptions options = controller_.getTwoPlayerOptions().getSearchOptions();
+        SearchOptions options =
+            ( (TwoPlayerPlayerOptions)controller_.getCurrentPlayer().getOptions() ).getSearchOptions();
 
         options.getBruteSearchOptions().setAlphaBeta(true);
         options.getBruteSearchOptions().setLookAhead(2);

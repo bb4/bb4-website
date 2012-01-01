@@ -4,7 +4,6 @@ package com.becker.game.twoplayer.go.board.elements.string;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.StringLibertyAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.GoSet;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
@@ -12,9 +11,7 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  *  A GoString is composed of a strongly connected set of one or more same color stones.

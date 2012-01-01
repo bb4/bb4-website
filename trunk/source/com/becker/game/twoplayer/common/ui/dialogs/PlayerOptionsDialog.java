@@ -3,8 +3,12 @@ package com.becker.game.twoplayer.common.ui.dialogs;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameWeights;
+import com.becker.game.common.player.Player;
 import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.ui.dialogs.options.SearchOptionsPanel;
+import com.becker.game.twoplayer.go.options.GoPlayerOptions;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.OptionsDialog;
@@ -28,12 +32,20 @@ class PlayerOptionsDialog extends OptionsDialog {
     
     private ParameterArray weights;
     private TwoPlayerController controller;
+    private Player player;
 
-    /**  constructor  */
-    PlayerOptionsDialog(JFrame parent, TwoPlayerController controller, ParameterArray weights) {
+    /** Constructor  */
+    PlayerOptionsDialog(JFrame parent, TwoPlayerController controller, boolean showForPlayer1) {
         super( parent );
-        this.weights = weights;
+        
         this.controller = controller;
+        GameWeights gameWeights = controller.getComputerWeights();
+        ParameterArray weights = 
+                showForPlayer1? gameWeights.getPlayer1Weights() : gameWeights.getPlayer2Weights();
+
+        player = controller.getPlayers().get(showForPlayer1?0:1);
+        this.weights = weights;
+        
         showContent();
     }
 
@@ -48,13 +60,15 @@ class PlayerOptionsDialog extends OptionsDialog {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
-        System.out.println("created mainPanel...");
-
         // contains tabs for search, and weights
         JTabbedPane tabbedPanel = new JTabbedPane();
 
         GameWeights gameWeights = controller.getComputerWeights();
-        searchOptionsPanel = new SearchOptionsPanel(controller);
+        
+        SearchOptions searchOptions =
+                ((TwoPlayerPlayerOptions)player.getOptions()).getSearchOptions();
+
+        searchOptionsPanel = new SearchOptionsPanel(searchOptions);
         weightsPanel = new EditWeightsPanel(weights, gameWeights);
 
         tabbedPanel.add( GameContext.getLabel("SEARCH_OPTIONS"), searchOptionsPanel );
@@ -83,7 +97,7 @@ class PlayerOptionsDialog extends OptionsDialog {
 
     private void ok() {
 
-        //searchOptionsPanel.ok();
+        searchOptionsPanel.ok();
         weightsPanel.ok();
     }
 

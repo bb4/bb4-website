@@ -2,20 +2,14 @@
 package com.becker.game.twoplayer.common.ui.dialogs.options;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GameController;
 import com.becker.game.common.GameOptions;
 import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.SearchAttribute;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.ui.components.RadioButtonPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 /**
@@ -27,7 +21,6 @@ import java.awt.event.ItemListener;
 public class TwoPlayerOptionsDialog extends GameOptionsDialog
                                     implements ActionListener, ItemListener {
 
-    private SearchOptionsPanel searchOptionsPanel_;
     private JCheckBox gameTreeCheckbox_;
 
     /**
@@ -47,16 +40,20 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     @Override
     public GameOptions getOptions() {
 
-        TwoPlayerOptions options = searchOptionsPanel_.getOptions();
+        TwoPlayerOptions options = getTwoPlayerOptions();
 
         options.setShowGameTree(gameTreeCheckbox_.isSelected() );
         return options;
     }
     
+    private TwoPlayerOptions getTwoPlayerOptions() {
+        return (TwoPlayerOptions)controller_.getOptions();
+    }
+    
     @Override
     protected JPanel createControllerParamPanel() {
-        searchOptionsPanel_ = new SearchOptionsPanel(get2PlayerController());
-        return searchOptionsPanel_;
+        
+        return new JPanel();
     }
 
     /**

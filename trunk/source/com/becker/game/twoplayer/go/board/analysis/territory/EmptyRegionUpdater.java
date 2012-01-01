@@ -7,7 +7,10 @@ import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.position.*;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionLists;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 
 /**
  * Updates the empty regions on the board at the end of the game.

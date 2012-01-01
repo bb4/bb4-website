@@ -8,9 +8,9 @@ import com.becker.game.common.ui.panel.GameChangedListener;
 import com.becker.game.common.ui.panel.GamePanel;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.ui.dialogs.options.TwoPlayerOptionsDialog;
 import com.becker.game.twoplayer.common.ui.gametree.GameTreeCellRenderer;
 import com.becker.game.twoplayer.common.ui.gametree.GameTreeDialog;
-import com.becker.game.twoplayer.common.ui.dialogs.options.TwoPlayerOptionsDialog;
 import com.becker.ui.components.TexturedPanel;
 import com.becker.ui.themes.BarryTheme;
 

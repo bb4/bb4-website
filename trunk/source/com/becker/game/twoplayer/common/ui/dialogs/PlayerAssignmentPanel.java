@@ -125,19 +125,6 @@ public class PlayerAssignmentPanel extends JPanel
         return p;
     }
 
-    /**
-     *  @return return true if canceled
-     */
-    private boolean showEditWeightsDialog( ParameterArray weights ) {
-
-        PlayerOptionsDialog editWtsDlg = new PlayerOptionsDialog(parent, controller, weights );
-
-        editWtsDlg.setLocationRelativeTo(this.parent);
-        editWtsDlg.setModal(true);
-        editWtsDlg.setVisible(true);
-        return false;
-    }
-
     protected void ok() {
         PlayerList players = controller.getPlayers();
         players.getPlayer1().setHuman( human1Button_.isSelected() );
@@ -146,7 +133,7 @@ public class PlayerAssignmentPanel extends JPanel
 
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
-        GameWeights gameWeights = controller.getComputerWeights();
+
 
         if (source == computer1Button_ ) {
             editOptions1Button_.setEnabled(true);
@@ -160,11 +147,25 @@ public class PlayerAssignmentPanel extends JPanel
             editOptions2Button_.setEnabled(false);
         }
         else if ( source == editOptions1Button_) {
-            showEditWeightsDialog(gameWeights.getPlayer1Weights());
+            showEditWeightsDialog(true);
         }
         else if ( source == editOptions2Button_) {
-            showEditWeightsDialog(gameWeights.getPlayer2Weights());
+            showEditWeightsDialog(false);
         }
+    }
+
+
+    /**
+     *  @return return true if canceled
+     */
+    private boolean showEditWeightsDialog(boolean showForPlayer1) {
+
+        PlayerOptionsDialog editWtsDlg = new PlayerOptionsDialog(parent, controller, showForPlayer1 );
+
+        editWtsDlg.setLocationRelativeTo(parent);
+        editWtsDlg.setModal(true);
+        editWtsDlg.setVisible(true);
+        return false;
     }
 
     public void setBothComputerPlayers() {

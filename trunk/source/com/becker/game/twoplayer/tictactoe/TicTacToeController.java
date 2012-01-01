@@ -2,11 +2,14 @@
 package com.becker.game.twoplayer.tictactoe;
 
 import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.player.PlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.pente.PenteController;
+
+import java.awt.*;
 
 /**
  * Defines everything the computer needs to know to play TicTacToe.
@@ -29,8 +32,13 @@ public class TicTacToeController extends PenteController {
 
     @Override
     protected TwoPlayerOptions createOptions() {
-        return new TicTacToeOptions();
-    } 
+        return new TwoPlayerOptions();
+    }
+
+    @Override
+    protected PlayerOptions createPlayerOptions(String playerName, Color color) {
+        return new TicTacToePlayerOptions(playerName, color);
+    }
 
     /**
      *  this gets the game specific patterns and weights

@@ -6,8 +6,8 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.common.ui.viewer.ViewerMouseListener;
-import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.blockade.BlockadeController;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 
 import java.awt.event.MouseEvent;

@@ -60,11 +60,9 @@ public class Player implements Serializable {
         return options_.getColor();
     }
 
-    /*
-    public void setColor( Color color ) {
-        this.color_ = color;
-    } */
-
+    public PlayerOptions getOptions() {
+        return options_;
+    }
 
     public boolean isHuman() {
         return (type_ == HUMAN_PLAYER);

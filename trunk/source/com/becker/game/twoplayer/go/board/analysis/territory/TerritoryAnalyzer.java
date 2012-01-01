@@ -5,7 +5,7 @@ import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import com.becker.game.twoplayer.go.board.elements.position.*;
+import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 
 /**
  * Analyzes territory on board.
