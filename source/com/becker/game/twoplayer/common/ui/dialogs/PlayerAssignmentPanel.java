@@ -134,7 +134,6 @@ public class PlayerAssignmentPanel extends JPanel
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
 
-
         if (source == computer1Button_ ) {
             editOptions1Button_.setEnabled(true);
         }
@@ -172,7 +171,7 @@ public class PlayerAssignmentPanel extends JPanel
         computer1Button_.setSelected(checked);
         computer2Button_.setSelected(checked);
         editOptions1Button_.setEnabled(!checked);
-        editOptions2Button_.setEnabled( !checked );
+        editOptions2Button_.setEnabled(!checked);
         human1Button_.setEnabled(!checked);
         computer1Button_.setEnabled(!checked);
         human2Button_.setEnabled(!checked);

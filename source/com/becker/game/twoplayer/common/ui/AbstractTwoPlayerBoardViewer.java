@@ -196,7 +196,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         setCursor( waitCursor_ );
 
         try {
-            moveProgress_.doComputerMove(isPlayer1);
+            return moveProgress_.doComputerMove(isPlayer1);
         }
         catch  (AssertionError ae) {
             // if any errors occur during search, I want to save the state of the game to
@@ -244,7 +244,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         TwoPlayerController c = get2PlayerController();
         assert c == evt.getController();
 
-        // note: we don't show the winner dialog if we are optimizing the weights.
+        // note: we don't show the winner dialog if we are having the computer play against itself.
         if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true)
                 && !c.getTwoPlayerOptions().isAutoOptimize()) {
             showWinnerDialog();
@@ -260,25 +260,25 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * let the computer go next if one of the players is a computer.
      *
-     * @param m the current move
+     * @param move the current move
      * @return false if the game is at an end, otherwise return true
      */
-     public final boolean continuePlay( TwoPlayerMove m ) {
-         boolean done = false;
+     public final boolean continuePlay( TwoPlayerMove move ) {
+         boolean done;
          TwoPlayerController controller = get2PlayerController();
          if (controller.getPlayers().allPlayersComputer()) {
              refresh();
-             doComputerMove( !m.isPlayer1() );
+             done = doComputerMove(!move.isPlayer1());
          }
          else {
              if ( controller.isPlayer1sTurn() ) {
                  assert !controller.isProcessing();
-                 done = manMoves( m );
+                 done = manMoves( move );
                  if ( !controller.getPlayers().getPlayer2().isHuman() && !done )
                      doComputerMove( false );
              }
              else { // player 2s turn
-                 done = manMoves( m );
+                 done = manMoves( move );
                  if ( !controller.getPlayers().getPlayer1().isHuman() && !done )
                      doComputerMove( true );
              }

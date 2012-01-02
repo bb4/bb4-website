@@ -52,7 +52,7 @@ class ComputerMoveProgress {
      * We animate these types of moves so the human player does not get disoriented.
      *
      * @param isPlayer1 if the computer player now moving is player 1.
-     * @return done always returns false unless auto optimizing
+     * @return true if done. Always returns false unless auto optimizing
      */
     boolean doComputerMove( boolean isPlayer1 ) {
 

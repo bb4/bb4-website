@@ -71,7 +71,6 @@ public class ChessSearchable extends TwoPlayerSearchable {
         return (int)score;
     }
 
-
     /**
      *  generate all possible next moves.
      */
