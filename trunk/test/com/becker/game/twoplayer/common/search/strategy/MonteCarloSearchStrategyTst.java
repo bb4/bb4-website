@@ -7,6 +7,7 @@ import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 import com.becker.game.twoplayer.common.search.examples.*;
 import com.becker.game.twoplayer.common.search.options.MonteCarloSearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -30,12 +31,12 @@ public abstract class MonteCarloSearchStrategyTst extends AbstractSearchStrategy
     * @return default search options for all games
     */
    @Override
-   public TwoPlayerOptions createTwoPlayerGameOptions() {
-       TwoPlayerOptions opts =  super.createTwoPlayerGameOptions();
+   public SearchOptions createSearchOptions() {
+       SearchOptions opts =  super.createSearchOptions();
        // consider all moves (effectively)
-       opts.getSearchOptions().getBestMovesSearchOptions().setMinBestMoves(100);
+       opts.getBestMovesSearchOptions().setMinBestMoves(100);
        
-       MonteCarloSearchOptions options = opts.getSearchOptions().getMonteCarloSearchOptions();
+       MonteCarloSearchOptions options = opts.getMonteCarloSearchOptions();
        options.setExploreExploitRatio(1.0);
        options.setMaxSimulations(10);
        return opts;

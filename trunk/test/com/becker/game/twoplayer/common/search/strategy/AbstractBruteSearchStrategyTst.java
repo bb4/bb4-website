@@ -3,7 +3,9 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.common.GameWeights;
 import com.becker.game.common.GameWeightsStub;
+import com.becker.game.common.player.Player;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.SearchableStub;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
@@ -35,9 +37,10 @@ public abstract class AbstractBruteSearchStrategyTst extends AbstractSearchStrat
      * @return default search options for all games
      */
     @Override
-    public TwoPlayerOptions createTwoPlayerGameOptions() {
-        TwoPlayerOptions opts =  super.createTwoPlayerGameOptions();
-        BruteSearchOptions options = opts.getSearchOptions().getBruteSearchOptions();
+    public SearchOptions createSearchOptions() {
+
+        SearchOptions opts =  super.createSearchOptions();
+        BruteSearchOptions options = opts.getBruteSearchOptions();
         options.setLookAhead(3);
         options.setAlphaBeta(false);
         options.setQuiescence(false);

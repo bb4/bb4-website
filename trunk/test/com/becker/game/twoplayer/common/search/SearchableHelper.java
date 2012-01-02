@@ -2,6 +2,7 @@
 package com.becker.game.twoplayer.common.search;
 
 import com.becker.common.util.FileUtil;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
  * Created by IntelliJ IDEA. User: becker Date: Dec 31, 2009 Time: 7:32:13 AM To change this template use File |
@@ -14,6 +15,10 @@ public abstract class SearchableHelper implements ISearchableHelper {
             FileUtil.getHomeDir() +"/test/com/becker/game/twoplayer/";
 
     private static final String SGF_EXTENSION = ".sgf";
+
+    public SearchOptions createSearchOptions() {
+        return new SearchOptions();
+    }
 
     public String getTestFile(String problemFileBase) {
         return getTestCaseDir() + problemFileBase + SGF_EXTENSION;

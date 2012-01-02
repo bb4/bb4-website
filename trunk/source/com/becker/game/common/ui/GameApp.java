@@ -22,8 +22,8 @@ import java.awt.event.WindowEvent;
  * @see GamePanel
  * @author Barry Becker
  */
-public class GameApp
-{
+public class GameApp {
+
     private JFrame frame_;
 
     static {

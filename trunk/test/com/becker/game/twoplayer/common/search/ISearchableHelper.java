@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.common.search;
 
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
  * Created by IntelliJ IDEA. User: becker Date: Dec 31, 2009 Time: 7:32:13 AM To change this template use File |
@@ -14,7 +15,7 @@ public interface ISearchableHelper {
      * Create the game options
      * @return 2 player options for use when testing..
      */
-    TwoPlayerOptions createTwoPlayerGameOptions();
+    SearchOptions createSearchOptions();
 
     /**
      * @return the controller containing the searchable to test.

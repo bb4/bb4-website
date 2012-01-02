@@ -42,4 +42,10 @@ public class TwoPlayerPlayerOptions extends PlayerOptions {
     public SearchOptions getSearchOptions() {
         return searchOptions_;
     }
+
+    /** Used by unit tests to set desired search options. */
+    public void setSearchOptions(SearchOptions options) {
+        searchOptions_ = options;
+    }
+            
 }

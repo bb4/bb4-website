@@ -99,7 +99,7 @@ public class NegaScoutStrategyTest extends NegaScoutStrategyTst {
     @Override
     protected ExpectedMoveMatrix getExpectedFourLevelBest20PercentMoves() {
         return new ExpectedMoveMatrix(
-             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 61),
+             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE), 61),   // as 61
              new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 49),
              new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 18),
              new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 26),

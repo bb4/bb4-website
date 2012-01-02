@@ -3,9 +3,10 @@ package com.becker.game.twoplayer.common.search.strategy.integration;
 
 import com.becker.common.format.FormatUtil;
 import com.becker.game.common.board.GamePiece;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
 import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;
 import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
@@ -41,9 +42,16 @@ public abstract class AbstractStrategyTst extends TestCase {
         super.setUp();
         helper = createSearchableHelper();
         controller = helper.createController();
-        TwoPlayerOptions options = helper.createTwoPlayerGameOptions();
-        searchOptions = options.getSearchOptions();
-        controller.setOptions(options);
+
+        initializeSearchOptions();
+    }
+
+    private void initializeSearchOptions() {
+
+        searchOptions = helper.createSearchOptions();
+        PlayerList players = controller.getPlayers();
+        ((TwoPlayerPlayerOptions) players.getPlayer1().getOptions()).setSearchOptions(searchOptions);
+        ((TwoPlayerPlayerOptions) players.getPlayer2().getOptions()).setSearchOptions(searchOptions);
     }
 
     protected BruteSearchOptions getBruteSearchOptions() {
@@ -97,6 +105,7 @@ public abstract class AbstractStrategyTst extends TestCase {
     public void testFourLevelBest20PercentSearch() {
         getBruteSearchOptions().setLookAhead(4);
         getBestMovesOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setMinBestMoves(4);
         verifyMoves("FourLevelBest20Percent", getExpectedFourLevelBest20PercentMoves());
     }
 

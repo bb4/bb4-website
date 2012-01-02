@@ -4,9 +4,11 @@ package com.becker.game.twoplayer.common.search;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;
 import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
@@ -27,6 +29,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     private static final int DEFAULT_BEST_PERCENTAGE = 100;
 
     private TwoPlayerController controller;
+    private SearchOptions searchOptions_;
 
     /**
      * common initialization for all go test cases.
@@ -38,20 +41,28 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
         System.out.println("helper = " + helper);
         searchable = getController().getSearchable();
 
-        TwoPlayerOptions options = createDefaultOptions();
-        controller.setOptions(options);
+        setPlayerSearchOptions();
 
         GameContext.setDebugMode(getDebugLevel());
     }
+
+    private void setPlayerSearchOptions() {
+
+        searchOptions_ = createDefaultOptions();
+        PlayerList players = controller.getPlayers();
+        ((TwoPlayerPlayerOptions) players.getPlayer1().getOptions()).setSearchOptions(searchOptions_);
+        ((TwoPlayerPlayerOptions) players.getPlayer2().getOptions()).setSearchOptions(searchOptions_);
+    }
+
     @Override
     protected abstract ISearchableHelper createSearchableHelper();
 
-    protected TwoPlayerOptions createDefaultOptions() {
-        TwoPlayerOptions options = helper.createTwoPlayerGameOptions();
-        options.getSearchOptions().getBestMovesSearchOptions().setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
-        options.getSearchOptions().getBestMovesSearchOptions().setPercentLessThanBestThresh(0);
-        options.getSearchOptions().getBestMovesSearchOptions().setMinBestMoves(2);
-        BruteSearchOptions sOptions = options.getSearchOptions().getBruteSearchOptions();
+    protected SearchOptions createDefaultOptions() {
+        SearchOptions options = helper.createSearchOptions();
+        options.getBestMovesSearchOptions().setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
+        options.getBestMovesSearchOptions().setPercentLessThanBestThresh(0);
+        options.getBestMovesSearchOptions().setMinBestMoves(2);
+        BruteSearchOptions sOptions = options.getBruteSearchOptions();
         sOptions.setLookAhead(DEFAULT_LOOKAHEAD);
         sOptions.setAlphaBeta(true);
 
@@ -88,11 +99,11 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     }
 
     protected SearchOptions getSearchOptions() {
-        return getTwoPlayerOptions().getSearchOptions();
+        return searchOptions_;
     }
 
     protected BestMovesSearchOptions getBestMovesOptions() {
-        return getTwoPlayerOptions().getSearchOptions().getBestMovesSearchOptions();
+        return searchOptions_.getBestMovesSearchOptions();
     }
 
     /** verify that we can retrieve the lookahead value. */
