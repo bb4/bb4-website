@@ -6,6 +6,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.IGameController;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.player.PlayerList;
 import com.becker.ui.themes.BarryTheme;
 import com.becker.ui.util.GUIUtil;
 
@@ -51,13 +52,13 @@ public abstract class GameBoardRenderer {
     private static final Font VIEWER_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 8 );
     protected static final Color LAST_MOVE_INDICATOR_COLOR = new Color( 255, 100, 0 );
     protected static final Stroke LAST_MOVE_INDICATOR_STROKE = new BasicStroke(2);
-    // dont allow the cells of the game board to get smaller than this
+    // don't allow the cells of the game board to get smaller than this
     public static final int MINIMUM_CELL_SIZE = 8;
     private static final short DRAG_TRANSPARENCY = 170;
 
     /**
      * private constructor because this class is a singleton.
-     * Use getPieceRenderer instead.
+     * Use getBoardRenderer instead.
      */
     protected GameBoardRenderer()  {}
 
@@ -170,7 +171,6 @@ public abstract class GameBoardRenderer {
         return cellSize_;
     }
 
-
     /**
      * Clear the background so old pieces are erased.
      */
@@ -238,8 +238,7 @@ public abstract class GameBoardRenderer {
     /**
      * Draw the pieces and possibly other game markers for both players.
      */
-    protected void drawMarkers( IGameController controller, Graphics2D g2 )
-    {
+    protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
         Board board = controller.getBoard();
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();

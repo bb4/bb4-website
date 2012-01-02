@@ -20,8 +20,7 @@ public abstract class TwoPlayerBoardRenderer extends GameBoardRenderer {
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    protected TwoPlayerBoardRenderer()
-    {}
+    protected TwoPlayerBoardRenderer()  {}
 
     @Override
     protected void drawLastMoveMarker(Graphics2D g2, IGameController controller) {

@@ -20,8 +20,7 @@ import java.awt.geom.Point2D;
  * @see GameBoardViewer
  * @author Barry Becker
  */
-public abstract class GamePieceRenderer
-{
+public abstract class GamePieceRenderer {
 
     protected static final Font BASE_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12 );
 
@@ -57,8 +56,7 @@ public abstract class GamePieceRenderer
     }
 
 
-    protected static Point getPosition(BoardPosition position, int cellSize, int pieceSize, int margin)
-    {
+    protected static Point getPosition(BoardPosition position, int cellSize, int pieceSize, int margin) {
         int offset = (cellSize - pieceSize) >> 1;
         position_.x = margin + cellSize*(position.getCol()-1) + offset;
         position_.y = margin + cellSize*(position.getRow()-1) + offset;
@@ -70,14 +68,13 @@ public abstract class GamePieceRenderer
     }
 
    /**
-     * this draws the actual piece at this location (if there is one).
-     * Uses the RoundGradientFill from Knudsen to put a specular highlight on the stone.
-     *
-     * @param g2 graphics context
-     * @param position the position of the piece to render
-     */
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
-    {
+    * this draws the actual piece at this location (if there is one).
+    * Uses the RoundGradientFill from Knudsen to put a specular highlight on the stone.
+    *
+    * @param g2 graphics context
+    * @param position the position of the piece to render
+    */
+   public void render(Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b) {
         GamePiece piece = position.getPiece();
         // if there is no piece, then nothing to render
         if (piece == null)
@@ -106,7 +103,7 @@ public abstract class GamePieceRenderer
             g2.setFont( BASE_FONT );
             g2.drawString( piece.getAnnotation(), pos.x + 2*offset, pos.y + 3*offset);
         }
-    }
+   }
 
 }
 

@@ -12,8 +12,8 @@ import com.becker.game.twoplayer.pente.ui.PenteBoardRenderer;
  *
  * @author Barry Becker
  */
-class TicTacToeBoardRenderer extends PenteBoardRenderer
-{
+class TicTacToeBoardRenderer extends PenteBoardRenderer {
+
     private static GameBoardRenderer renderer_;
 
     /**
