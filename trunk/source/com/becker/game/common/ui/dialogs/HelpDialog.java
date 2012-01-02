@@ -91,7 +91,6 @@ public final class HelpDialog extends AbstractDialog
         bottomButtonPanel.add( okButton_, null );
         overviewPanel.add( bottomButtonPanel, BorderLayout.SOUTH );
         overviewPanel.add( summaryPanel, BorderLayout.NORTH );
-        //overviewPanel.setMaximumSize(new Dimension(500,800));
 
         return overviewPanel;
     }

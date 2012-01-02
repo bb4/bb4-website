@@ -66,6 +66,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     protected JComponent createDialogContent()  {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
+
         // contains tabs for Algorithm, Debugging, and Look and Feel
         JTabbedPane tabbedPanel = new JTabbedPane();
 
@@ -76,8 +77,9 @@ public abstract class GameOptionsDialog extends OptionsDialog
 
         JPanel buttonsPanel = createButtonsPanel();
 
-        if (controllerParamPanel!=null)
+        if (controllerParamPanel!=null)  {
             tabbedPanel.add( controllerParamPanel.getName(), controllerParamPanel );
+        }
         tabbedPanel.add( GameContext.getLabel("DEBUG"), debugParamPanel );
         tabbedPanel.add( GameContext.getLabel("LOOK_AND_FEEL"), lookAndFeelParamPanel );
         tabbedPanel.add( GameContext.getLabel("LOCALE"), localePanel );
@@ -269,6 +271,9 @@ public abstract class GameOptionsDialog extends OptionsDialog
                                                     gridColorButton_);
         p.add( boardColorPanel );
         p.add( gridColorPanel );
+        JPanel spacer = new JPanel();
+        spacer.setPreferredSize(new Dimension(100, 1));
+        p.add( spacer );
 
         return p;
     }
