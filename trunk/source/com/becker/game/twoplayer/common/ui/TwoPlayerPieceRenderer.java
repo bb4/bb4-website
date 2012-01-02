@@ -21,6 +21,7 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer {
     /** there must be one of these for each derived class too. */
     private static GamePieceRenderer renderer_ = null;
 
+    // We should move the color options to the PlayerOptions class so they can be customized.
     private static final Color DEFAULT_PLAYER1_COLOR = new Color( 230, 100, 255);
     private static final Color DEFAULT_PLAYER2_COLOR = new Color( 100, 220, 255);
 
@@ -44,7 +45,6 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer {
             renderer_ = new TwoPlayerPieceRenderer();
         return renderer_;
     }
-
 
     /**
      *  @return color the player1 pieces should be. Ignored if using icons to represent the pieces.

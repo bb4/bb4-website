@@ -133,11 +133,12 @@ public abstract class TwoPlayerController extends GameController {
     protected PlayerList createPlayers() {
 
         PlayerList players = new PlayerList();
-        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER1"), Color.RED), true));
-        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER2"), Color.BLUE), false));
+        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER1"), null), true));
+        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER2"), null), false));
         return players;
     }
-    
+
+    /** color is ignored right now. Comes from the piece renderer */
     protected PlayerOptions createPlayerOptions(String playerName, Color color) {
         return new TwoPlayerPlayerOptions(playerName, color);
     }
@@ -164,7 +165,7 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     /**
-     * If called before the end of the game it just reutrns 0 - same as it does in the case of a tie.
+     * If called before the end of the game it just returns 0 - same as it does in the case of a tie.
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
     @Override

@@ -12,8 +12,8 @@ import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
  *
  * @author Barry Becker
  */
-public class PenteBoardRenderer extends TwoPlayerBoardRenderer
-{
+public class PenteBoardRenderer extends TwoPlayerBoardRenderer {
+
     private  static GameBoardRenderer renderer_;
 
 
@@ -21,13 +21,11 @@ public class PenteBoardRenderer extends TwoPlayerBoardRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    protected PenteBoardRenderer()
-    {
+    protected PenteBoardRenderer(){
         pieceRenderer_ = TwoPlayerPieceRenderer.getRenderer();
     }
 
-    public static GameBoardRenderer getRenderer()
-    {
+    public static GameBoardRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new PenteBoardRenderer();
         return renderer_;

@@ -38,12 +38,11 @@ class PlayerOptionsDialog extends OptionsDialog {
         super( parent );
         
         this.controller = controller;
-        GameWeights gameWeights = controller.getComputerWeights();
-        ParameterArray weights = 
-                showForPlayer1? gameWeights.getPlayer1Weights() : gameWeights.getPlayer2Weights();
+        player = controller.getPlayers().get(showForPlayer1 ? 0 : 1);
 
-        player = controller.getPlayers().get(showForPlayer1?0:1);
-        this.weights = weights;
+        GameWeights gameWeights = controller.getComputerWeights();
+        this.weights =
+                showForPlayer1? gameWeights.getPlayer1Weights() : gameWeights.getPlayer2Weights();
         
         showContent();
     }

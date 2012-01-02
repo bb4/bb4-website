@@ -36,7 +36,6 @@ public class PlayerOptions implements Serializable {
         return name_;
     }
 
-
     public void setName( String name ) {
         this.name_ = name;
     }

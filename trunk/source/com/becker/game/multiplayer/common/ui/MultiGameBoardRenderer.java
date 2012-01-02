@@ -14,8 +14,7 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public abstract class MultiGameBoardRenderer extends GameBoardRenderer
-{
+public abstract class MultiGameBoardRenderer extends GameBoardRenderer {
 
     private static final Color DEFAULT_GRID_COLOR = Color.GRAY;
     private static final Color DEFAULT_TABLE_COLOR = new Color(190, 160, 110);
@@ -25,19 +24,16 @@ public abstract class MultiGameBoardRenderer extends GameBoardRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    protected MultiGameBoardRenderer()
-    {
+    protected MultiGameBoardRenderer() {
         setGridColor(DEFAULT_GRID_COLOR);
     }
 
     @Override
-    protected int getPreferredCellSize()
-    {
+    protected int getPreferredCellSize() {
         return 8;
     }
 
-    Color getDefaultTableColor()
-    {
+    Color getDefaultTableColor()  {
         return DEFAULT_TABLE_COLOR;
     }
 
@@ -45,18 +41,15 @@ public abstract class MultiGameBoardRenderer extends GameBoardRenderer
      * whether or not to draw the pieces on cell centers or vertices (like go or pente, but not like checkers).
      */
     @Override
-    protected boolean offsetGrid()
-    {
+    protected boolean offsetGrid()  {
         return true;
-
     }
 
     /**
      * Draw the background and a depiction of a circular game table.
      * Used only by games with a table (like poker)
      */
-    protected void drawTable(Graphics g, Board board, int panelWidth, int panelHeight )
-    {
+    protected void drawTable(Graphics g, Board board, int panelWidth, int panelHeight ) {
         g.setColor( backgroundColor_ );
         int width = board.getNumCols() * getCellSize();
         int height = board.getNumRows() * getCellSize();

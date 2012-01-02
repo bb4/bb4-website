@@ -12,8 +12,7 @@ import com.becker.game.twoplayer.tictactoe.TicTacToeController;
  *
  *  @author Barry Becker
  */
-public class TicTacToeBoardViewer extends PenteBoardViewer
-{
+public class TicTacToeBoardViewer extends PenteBoardViewer {
 
     /**
       *  Constructor

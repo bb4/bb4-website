@@ -92,7 +92,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer
         Point pos = getPosition(position, cellSize, pieceSize, margin);
         Ellipse2D circle = new Ellipse2D.Float( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
         int hlOffset = (int) (pieceSize / 2.3 + 0.5);  //spec highlight offset
-        Color c= getPieceColor(playerMarker);
+        Color c = getPieceColor(playerMarker);
 
         RoundGradientPaint rgp = new RoundGradientPaint(
                 pos.x + hlOffset, pos.y + hlOffset, Color.white, SPEC_HIGHLIGHT_RADIUS, c );
