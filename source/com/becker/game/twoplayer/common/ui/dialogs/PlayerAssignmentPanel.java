@@ -48,7 +48,7 @@ public class PlayerAssignmentPanel extends JPanel
 
     protected void initialize() {
 
-        this.setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -82,7 +82,7 @@ public class PlayerAssignmentPanel extends JPanel
         panel.add(secondP);
 
         add(panel, BorderLayout.CENTER );
-        add(new Panel(), BorderLayout.WEST);
+        add(new Panel(), BorderLayout.EAST);
     }
 
 
@@ -153,7 +153,6 @@ public class PlayerAssignmentPanel extends JPanel
             showEditWeightsDialog(false);
         }
     }
-
 
     /**
      *  @return return true if canceled

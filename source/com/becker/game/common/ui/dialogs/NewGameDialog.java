@@ -65,7 +65,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
 
         JPanel buttonsPanel = createButtonsPanel();
 
-        // add the tabs
+        // add the tabs. Tabs because there may be local or remote games.
         tabbedPanel_ = new JTabbedPane();
         tabbedPanel_.add( GameContext.getLabel("NEW_GAME"), playLocalPanel_ );
         tabbedPanel_.setToolTipTextAt( 0, GameContext.getLabel("NEW_GAME_TIP") );

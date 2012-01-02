@@ -47,13 +47,14 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
     @Override
     protected JPanel createNewLocalGamePanel() {
         JPanel playLocalPanel = new JPanel();
-        playLocalPanel.setLayout( new BoxLayout( playLocalPanel, BoxLayout.Y_AXIS ) );
+        playLocalPanel.setLayout(new BoxLayout(playLocalPanel, BoxLayout.Y_AXIS ) );
+
         playersPanel_ = createPlayerAssignmentPanel();
         JPanel optimizationPanel = createOptimizationPanel();
         JPanel boardParamPanel = createBoardParamPanel();
         JPanel customPanel = createCustomPanel();
 
-        playLocalPanel.add( playersPanel_ );
+        playLocalPanel.add(playersPanel_ );
         playLocalPanel.add( optimizationPanel );
         playLocalPanel.add( boardParamPanel );
         if ( customPanel != null )

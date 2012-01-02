@@ -190,7 +190,7 @@ public abstract class GamePanel extends TexturedPanel
         //start and initialize a new game with the default options
         boardViewer_.startNewGame();
 
-        // Intro speech
+        // Intro speech. Applets sometimes throw security exceptions for this.
         if ( GameContext.getUseSound() ) {
             // This works for arbitrary strings, but is not as nice sounding as the pre-generated wav file.
             /* npe in applet (why?) */
@@ -247,7 +247,7 @@ public abstract class GamePanel extends TexturedPanel
     protected final void showHelpDialog( String gameName, String comments, String overview ) {
         
         HelpDialog dlg = new HelpDialog( null, gameName, comments, overview );
-        //dlg.setLocationRelativeTo( this );
+        dlg.setLocationRelativeTo( this );
         dlg.setModal( true );
         dlg.setVisible( true );
     }

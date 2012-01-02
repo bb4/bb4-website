@@ -38,7 +38,6 @@ public class GameToolBar extends TexturedToolBar {
     public GameToolBar(ImageIcon texture, ActionListener listener) {
         super(texture, listener);
         init();
-
     }
 
     private void init() {
@@ -70,8 +69,7 @@ public class GameToolBar extends TexturedToolBar {
     /**
       * override to add your own game dependent buttons to the toolbar.
       */
-    protected void addCustomToolBarButtons()
-    {}
+    protected void addCustomToolBarButtons() {}
 
     public JButton getNewGameButton() { return newGameButton_; }
     public JButton getUndoButton() { return undoButton_; }
@@ -83,5 +81,4 @@ public class GameToolBar extends TexturedToolBar {
     protected boolean hasUndoRedo() {
         return true;
     }
-
 }
