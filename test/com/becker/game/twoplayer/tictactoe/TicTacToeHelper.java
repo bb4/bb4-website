@@ -14,15 +14,15 @@ public class TicTacToeHelper extends SearchableHelper {
     /**
      * @return default search options for all games
      */
-    public TwoPlayerOptions createTwoPlayerGameOptions() {
-        TwoPlayerOptions opts =  new TicTacToeOptions();
-        SearchOptions options = opts.getSearchOptions();
+    @Override
+    public SearchOptions createSearchOptions() {
+        SearchOptions options = new SearchOptions();
         options.getBruteSearchOptions().setLookAhead(2);
         options.getBruteSearchOptions().setAlphaBeta(true);
         options.getBestMovesSearchOptions().setPercentLessThanBestThresh(0);
         options.getBestMovesSearchOptions().setPercentageBestMoves(100);
         options.getBruteSearchOptions().setQuiescence(false);
-        return opts;
+        return options;
     }
 
     public TwoPlayerController createController() {

@@ -4,7 +4,9 @@ package com.becker.game.twoplayer.go;
 import com.becker.common.format.FormatUtil;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
+import com.becker.game.common.player.Player;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.GoBoard;
@@ -47,8 +49,10 @@ public class GoTestCase extends TestCase {
 
         controller_ = new GoController(getBoardSize(), 0);
 
-        TwoPlayerOptions options = controller_.getTwoPlayerOptions();
-        setOptionOverrides(options.getSearchOptions());
+        for (Player player : controller_.getPlayers()) {
+            SearchOptions searchOptions = ((TwoPlayerPlayerOptions) player.getOptions()).getSearchOptions();
+            setOptionOverrides(searchOptions);
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.util.FileUtil;
+import com.becker.game.common.player.Player;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
@@ -36,13 +37,14 @@ public class BlockadeTestCase extends TestCase {
 
         controller_ = new BlockadeController();
 
-        TwoPlayerOptions options = controller_.getTwoPlayerOptions();
-        SearchOptions sOptions = options.getSearchOptions();
-        sOptions.getBruteSearchOptions().setAlphaBeta(true);
-        sOptions.getBruteSearchOptions().setLookAhead(3);
-        sOptions.getBestMovesSearchOptions().setPercentageBestMoves(100);
-        //sOptions.setQuiescence(true); // takes too long if on
-        sOptions.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
+        for (Player player : controller_.getPlayers())  {
+            SearchOptions sOptions = ((TwoPlayerPlayerOptions)player.getOptions()).getSearchOptions();
+            sOptions.getBruteSearchOptions().setAlphaBeta(true);
+            sOptions.getBruteSearchOptions().setLookAhead(3);
+            sOptions.getBestMovesSearchOptions().setPercentageBestMoves(100);
+            //sOptions.setQuiescence(true); // takes too long if on
+            sOptions.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
+        }
     }
 
     protected void restore(String problemFile) {
