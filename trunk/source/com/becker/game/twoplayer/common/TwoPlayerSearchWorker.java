@@ -70,7 +70,8 @@ class TwoPlayerSearchWorker {
               @Override
               public void finished() {
                   processing_ = false;
-                  if (controller_.getTwoPlayerViewer() != null)  {
+                  // move_ could be null if there was no legal move
+                  if (controller_.getTwoPlayerViewer() != null && move_ != null)  {
                       controller_.getTwoPlayerViewer().computerMoved(move_);
                   }
               }

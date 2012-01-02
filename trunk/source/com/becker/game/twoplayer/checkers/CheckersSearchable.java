@@ -14,7 +14,6 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
 
 /**
  * Defines how the computer should play checkers.
- * Extract moveEvaluator.
  *
  * @author Barry Becker
  */
@@ -53,21 +52,21 @@ public class CheckersSearchable extends TwoPlayerSearchable {
      * If we are at maxMoves, the one with a greater value of pieces wins.
      * If the count of pieces is the same, then it is a draw.
      *
-     * @param m the move to check. If null that implies there was no last move because we are out of moves.
+     * @param move the move to check. If null that implies there was no last move because we are out of moves.
      * @param recordWin if true then the controller state will record wins
      * @return true if the game is over.
      */
     @Override
-    public boolean done( TwoPlayerMove m, boolean recordWin ) {
-        if (m == null)  {
-            System.out.println("done because m is null");
+    public boolean done( TwoPlayerMove move, boolean recordWin ) {
+        if (move == null)  {
+            System.out.println("done because move is null");
             return true;
         }
 
-        boolean won = (Math.abs( m.getValue() ) >= WINNING_VALUE);
+        boolean won = (Math.abs( move.getValue() ) >= WINNING_VALUE);
 
         if ( won && recordWin ) {
-            if ( m.isPlayer1() )
+            if ( move.isPlayer1() )
                 players_.getPlayer1().setWon(true);
             else
                 players_.getPlayer2().setWon(true);
@@ -77,7 +76,7 @@ public class CheckersSearchable extends TwoPlayerSearchable {
             System.out.println("getNumMoves()="+getNumMoves() + " getBoard().getMaxNumMoves()=" + getBoard().getMaxNumMoves());
             won = true;
             if ( recordWin ) {
-                if ( Math.abs( m.getValue() ) >= 0 )
+                if ( Math.abs( move.getValue() ) >= 0 )
                     players_.getPlayer1().setWon(true);
                 else
                     players_.getPlayer2().setWon(true);

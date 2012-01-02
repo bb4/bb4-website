@@ -4,6 +4,7 @@ package com.becker.game.twoplayer.common;
 import com.becker.common.geometry.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
+import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.transposition.HashKey;
@@ -114,12 +115,16 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
         if (moveList_.getNumMoves() == 0) {
             return false;
         }
-        if (moveList_.getNumMoves() > 0 && lastMove == null) {
-            GameContext.log(0, "Game is over because there are no more moves");
-            return true;
-        }
         if (players_.anyPlayerWon()) {
             GameContext.log(0, "Game over because one of the players has won.");
+            return true;
+        }
+        if (moveList_.getNumMoves() > 0 && lastMove == null) {
+            Player currentPlayer = getCurrentPlayer();
+            GameContext.log(0, "Game is over because there are no more moves for player " + currentPlayer);
+            if (recordWin) {
+                currentPlayer.setWon(true);
+            }
             return true;
         }
 
@@ -134,6 +139,11 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
         boolean maxMovesExceeded = moveList_.getNumMoves() >= getBoard().getMaxNumMoves();
 
         return (maxMovesExceeded || won);
+    }
+
+    private Player getCurrentPlayer()  {
+        TwoPlayerMove move =  (TwoPlayerMove) moveList_.getLastMove();
+        return move.isPlayer1() ? players_.getPlayer2() : players_.getPlayer1();
     }
 
     /**
