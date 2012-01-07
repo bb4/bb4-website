@@ -22,7 +22,7 @@ import java.awt.event.ActionEvent;
  *
  * @author Barry Becker
  */
-class PlayerOptionsDialog extends OptionsDialog {
+public class PlayerOptionsDialog extends OptionsDialog {
 
     private GradientButton okButton_;
 
@@ -34,7 +34,7 @@ class PlayerOptionsDialog extends OptionsDialog {
     private Player player;
 
     /** Constructor  */
-    PlayerOptionsDialog(JFrame parent, TwoPlayerController controller, boolean showForPlayer1) {
+    public PlayerOptionsDialog(JFrame parent, TwoPlayerController controller, boolean showForPlayer1) {
         super( parent );
         
         this.controller = controller;

@@ -18,8 +18,8 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-final class OrdersDialog extends OptionsDialog 
-{
+final class OrdersDialog extends OptionsDialog  {
+
     private GalacticPlayer player_;
     //private Galaxy galaxy_;
     private GradientButton addOrderButton_;
@@ -51,8 +51,7 @@ final class OrdersDialog extends OptionsDialog
     }
 
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent() {
         setResizable( true );
 
         JPanel buttonsPanel = createButtonsPanel();
@@ -97,17 +96,15 @@ final class OrdersDialog extends OptionsDialog
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("CURRENT_ORDERS_TITLE");
     }
 
     /**
-     *  create the OK Cancel buttons that go at the botton
+     *  create the OK Cancel buttons that go at the button
      */
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         okButton_ = new GradientButton();
@@ -120,19 +117,17 @@ final class OrdersDialog extends OptionsDialog
         return buttonsPanel;
     }
 
-
     /**
      *
      * @return  the orders in the table
      */
-    public List<Order> getOrders()
-    {
+    public List<Order> getOrders() {
         return ordersTable_.getOrders();
     }
 
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
+
         Object source = e.getSource();
 
         if (source == okButton_) {
@@ -158,8 +153,7 @@ final class OrdersDialog extends OptionsDialog
     /**
      * add another row to the end of the table.
      */
-    private void addOrder()
-    {
+    private void addOrder()  {
         // open a dlg to get an order
         OrderDialog orderDialog =
                 new OrderDialog(player_, ordersTable_.getCurrentOutGoingShips(), numYearsRemaining_);

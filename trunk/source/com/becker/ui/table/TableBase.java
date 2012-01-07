@@ -10,10 +10,10 @@ import java.util.List;
 /**
  * This represents a generic table, with a set of columns and tooltips for those column headers.
  *
- * @author Barry Becker Date: Jan 13, 2007
+ * @author Barry Becker
  */
-public abstract class TableBase
-{
+public abstract class TableBase {
+
     protected JTable table_;
 
     /** information data information about each column and its header. */
@@ -34,7 +34,7 @@ public abstract class TableBase
 
     /**
      * constructor
-     * @param rows to initializet the rows in the table with.
+     * @param rows to initialize the rows in the table with.
      */
     public TableBase(List rows, TableColumnMeta[] columnMeta)
     {
@@ -81,7 +81,7 @@ public abstract class TableBase
     protected abstract void addRow(Object row);
 
     /**
-     * override to assign specific tooltips, widths, rederers andneditors on a per column basis.
+     * override to assign specific tooltips, widths, renderers and editors on a per column basis.
      * @param columnMeta
      */
     protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
