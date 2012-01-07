@@ -1,0 +1,88 @@
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+package com.becker.game.twoplayer.comparison.ui;
+
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameViewable;
+import com.becker.game.common.ui.dialogs.GameOptionsDialog;
+import com.becker.game.common.ui.dialogs.HelpDialog;
+import com.becker.game.common.ui.dialogs.NewGameDialog;
+import com.becker.game.common.ui.panel.*;
+import com.becker.game.common.ui.viewer.GameBoardViewer;
+import com.becker.ui.components.ResizableAppletPanel;
+import com.becker.ui.components.TexturedPanel;
+import com.becker.ui.dialogs.OutputWindow;
+import com.becker.ui.util.GUIUtil;
+import com.becker.ui.util.Log;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
+/**
+ * Allows comparing the performance of two player games played against each other
+ * with different search strategies.
+ * There are two main tabs
+ *  1) configuration tab - allows you to define what search strategies will be used
+ *  2) comparison table tab - Compares all the search strategies played off against each
+ *    other using the specified two player game.
+ *
+ *  @author Barry Becker
+ */
+public class GameComparisonPanel extends JPanel
+                                 implements ActionListener {
+
+    
+    private JTabbedPane tabbedPane;
+    private JPanel comparisonConfigurationPanel;
+    private JPanel comparisonGridPanel;
+
+    /**
+     * Constructor
+     */
+    public GameComparisonPanel() {
+        initGui();
+    }
+
+    /**
+     *  UIComponent initialization.
+     */
+    protected void initGui() {
+
+        this.setLayout( new BorderLayout() );
+
+        tabbedPane = new JTabbedPane();
+
+        comparisonConfigurationPanel = new JPanel();
+        comparisonConfigurationPanel.setName("Configuration");
+        
+        comparisonGridPanel = new JPanel();
+        comparisonGridPanel.setName("Comparison");
+             
+        tabbedPane.add(comparisonConfigurationPanel);
+        tabbedPane.setToolTipTextAt( 0,
+                "Configure the search strategies to compete against each other");
+        //tabbedPane.addChangeListener(this);
+        tabbedPane.add(comparisonGridPanel);
+        tabbedPane.setToolTipTextAt( 0,
+                "Shows the results of the two player game competing against itself with specified search strategies");
+      
+        this.add(tabbedPane, BorderLayout.CENTER );
+    }
+
+    /**
+     * handle button click actions.
+     * If you add your own custom buttons, you should override this, but be sure the first line is
+     * <P>
+     * super.actionPerformed(e);
+     */
+    public void actionPerformed( ActionEvent e ) {
+        Object source = e.getSource();
+        if ( source == null ) {
+       
+        }
+    }
+}

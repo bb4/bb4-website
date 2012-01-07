@@ -15,25 +15,27 @@ public class GamePlugin {
 
     private final String name_;
     private final String label_;
+    private final PluginType type_;
     private final String msgBundleBase_;
     private final String panelClass_;
     private final String controllerClass_;
     private final boolean isDefault_;
 
     /**
-     *
+     * Constructor
      * @param name of the plugin game
      * @param label user visible title for the game
+     * @param type one of the PluginTypes.
      * @param msgBundleBase place to get localized strings from for this game.
      * @param panelClass
      * @param controllerClass
      * @param isDefault if true, show this game initially.
      */
-    public GamePlugin(String name, String label, String msgBundleBase,
-                      String panelClass, String controllerClass,
-                      boolean isDefault) {
+    public GamePlugin(String name, String label, PluginType type, String msgBundleBase,
+                      String panelClass, String controllerClass, boolean isDefault) {
         name_ = name;
         label_ = label;
+        type_ = type;
         msgBundleBase_ = msgBundleBase;
         panelClass_ = panelClass;
         controllerClass_ = controllerClass;
@@ -47,6 +49,10 @@ public class GamePlugin {
 
     public String getLabel() {
         return label_;
+    }
+
+    public PluginType getType() {
+        return type_;
     }
 
     public String getMsgBundleBase() {

@@ -1,54 +1,60 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.common.ui;
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+package com.becker.game.twoplayer.comparison;
 
 import com.becker.common.CommandLineOptions;
 import com.becker.common.i18n.LocaleType;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.PluginManager;
 import com.becker.game.common.ui.menu.FileMenu;
-import com.becker.game.common.ui.menu.GameMenu;
-import com.becker.game.common.ui.panel.GamePanel;
+import com.becker.game.twoplayer.comparison.ui.GameComparisonMenu;
+import com.becker.game.twoplayer.comparison.ui.GameComparisonPanel;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 
 /**
- * This is the application frame wrapper for the game programs.
- * It contains a GamePanel corresponding to the game you have selected to play.
- * If you specify a game class as an argument, then you do not get a menu of all possible games to play.
+ * This application allows you to run any of the two player games
+ * against each other using different search strategies.
+ * The can work well for integration testing and performance testing of
+ * the different search strategies when applied to all the different two player games.
  *
- * @see GamePanel
  * @author Barry Becker
  */
-public class GameApp {
+public class GameComparisonApp {
 
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 600;
-
+    private static final int WIDTH = 1200;
+    private static final int HEIGHT = 900;
+    
     private JFrame frame_;
+    private GameComparisonPanel gameComparisonPanel;
 
+    
     /**
      * Game application constructor.
      * @param initialGame the initial game to show.
      */
-    private GameApp(String initialGame) {
+    private GameComparisonApp(String initialGame) {
 
         GUIUtil.setCustomLookAndFeel();
 
         frame_ = new JFrame();
+       
         addMenuBar(initialGame);
 
         frame_.setBounds(200, 200, WIDTH, HEIGHT);
         // display the frame
         frame_.setVisible(true);
         frame_.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        
+        gameComparisonPanel = new GameComparisonPanel();
+        frame_.getContentPane().add(gameComparisonPanel);
     }
 
     /**
      * Add a top level menu to allow changing to a different game from the one currently displayed.
      */
     private void addMenuBar(String initialGame) {
-        GameMenu gameMenu = new GameMenu(frame_, initialGame);
+        GameComparisonMenu gameMenu = new GameComparisonMenu(frame_, initialGame);
         JMenu fileMenu = new FileMenu(gameMenu);
        
         JMenuBar menubar = new JMenuBar();
@@ -95,7 +101,7 @@ public class GameApp {
             }
         }
 
-        new GameApp(gameName);
+        new GameComparisonApp(gameName);
     }
 
 }

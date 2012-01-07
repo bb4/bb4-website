@@ -192,7 +192,7 @@ public class ExpectedSearchableResults {
 
 
     static final TwoPlayerMove[] EXPECTED_TOP_END_GAME_MOVES_P2 = {
-            /*
+        /*
         TwoPlayerMove.createMove(new Location(4, 7), 8164, PLAYER2_PIECE),
         TwoPlayerMove.createMove(new Location(3, 3), 4128, PLAYER2_PIECE),
         TwoPlayerMove.createMove(new Location(7, 3), 4096, PLAYER2_PIECE),
@@ -208,7 +208,8 @@ public class ExpectedSearchableResults {
     };
 
     static final TwoPlayerMove[] EXPECTED_URGENT_MOVES_P1 = {
-        TwoPlayerMove.createMove(new Location(4, 3), 8192, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(4, 3), 8224, PLAYER1_PIECE),
+        //TwoPlayerMove.createMove(new Location(4, 7), 7844, PLAYER1_PIECE),
     };
 
     static final TwoPlayerMove[] EXPECTED_URGENT_MOVES_P2 = {

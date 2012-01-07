@@ -19,7 +19,7 @@ import java.util.Enumeration;
 /**
  * Import the state of a game from a file.
  *
- * @author Barry Becker Date: Oct 28, 2006
+ * @author Barry Becker
  */
 public abstract class GameImporter {
 

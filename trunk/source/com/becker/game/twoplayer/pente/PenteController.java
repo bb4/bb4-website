@@ -67,8 +67,7 @@ public class PenteController extends TwoPlayerController {
     /**
      * the first move of the game (made by the computer)
      */
-    public void computerMovesFirst()
-    {
+    public void computerMovesFirst() {
         int delta = getWinRunLength() - 1;
         int c = (int) (GameContext.random().nextFloat() * (getBoard().getNumCols() - 2 * delta) + delta + 1);
         int r = (int) (GameContext.random().nextFloat() * (getBoard().getNumRows() - 2 * delta) + delta + 1);

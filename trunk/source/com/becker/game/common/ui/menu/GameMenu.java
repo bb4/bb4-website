@@ -9,6 +9,7 @@ import com.becker.game.common.ui.panel.IGamePanel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * The standard main menu for all game programs.
@@ -17,7 +18,7 @@ import java.awt.event.ActionListener;
  */
 public class GameMenu extends AbstractGameMenu implements ActionListener  {
 
-    private JFrame frame_;
+    protected JFrame frame_;
 
     /**
      * Game application constructor
@@ -29,12 +30,16 @@ public class GameMenu extends AbstractGameMenu implements ActionListener  {
 
         frame_ = frame;
 
-        for (GamePlugin gamePlugin : PluginManager.getInstance().getPlugins()) {
+        for (GamePlugin gamePlugin : getPlugins()) {
             String gameNameLabel = (gamePlugin.getLabel());
             add(createMenuItem(gameNameLabel));
         }
 
         showGame(initialGame);
+    }
+    
+    protected List<GamePlugin> getPlugins() {
+        return PluginManager.getInstance().getPlugins();
     }
 
     /**
@@ -47,19 +52,24 @@ public class GameMenu extends AbstractGameMenu implements ActionListener  {
         showGame(PluginManager.getInstance().getPluginFromLabel(item.getText()).getName());
     }
 
-    public JComponent getGameComponent() {
-        return (JComponent)gamePanel_;
+    public void open() {
+        gamePanel_.openGame();
     }
 
-    public IGamePanel getGamePanel() {
-        return gamePanel_;
+    public void save() {
+        gamePanel_.saveGame();
+    }
+
+    @Override
+    public JComponent getGameComponent() {
+        return (JComponent)gamePanel_;
     }
 
     /**
      * Show the game panel for the specified game
      * @param gameName name of the game to show in the frame.
      */
-    private void showGame(String gameName) {
+    protected void showGame(String gameName) {
         // this will load the resources for the specified game.
         GameContext.loadGameResources(gameName);
 
