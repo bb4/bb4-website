@@ -57,10 +57,10 @@ public class FileMenu extends JMenu implements ActionListener {
     public void actionPerformed( ActionEvent e )  {
         JMenuItem item = (JMenuItem) e.getSource();
         if (item == openItem_)  {
-            gameMenu_.getGamePanel().openGame();
+            gameMenu_.open();
         }
         else if (item == saveItem_) {
-            gameMenu_.getGamePanel().saveGame();
+            gameMenu_.save();
         }
         else if (item == saveImageItem_) {
             GUIUtil.saveSnapshot(gameMenu_.getGameComponent(), FileUtil.getHomeDir());

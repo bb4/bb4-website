@@ -37,7 +37,7 @@ public class PluginManager {
     private PluginManager() {
 
         URL url = GUIUtil.getURL(PLUGINS_FILE);
-        GameContext.log(1, "about to parse url="+url +"\n plugin file location="+PLUGINS_FILE);
+        GameContext.log(1, "about to parse url="+url +"\n plugin file location=" + PLUGINS_FILE);
         Document xmlDocument = DomUtil.parseXML(url);
 
         initializePlugins(xmlDocument);
@@ -85,6 +85,8 @@ public class PluginManager {
     private GamePlugin createPlugin(Node node) {
         String name = DomUtil.getAttribute(node, "name");
         String msgKey = DomUtil.getAttribute(node, "msgKey");
+        String typeStr = DomUtil.getAttribute(node, "type");
+        PluginType type = PluginType.valueOf(typeStr);
         String msgBundleBase = DomUtil.getAttribute(node, "msgBundleBase");
 
         String label = GameContext.getLabel(msgKey);
@@ -93,7 +95,8 @@ public class PluginManager {
         String controllerClass =  DomUtil.getAttribute(node, "controllerClass");
         String def = DomUtil.getAttribute(node, "default", "false");
         boolean isDefault = Boolean.parseBoolean(def);
-        return new GamePlugin(name, label, msgBundleBase, panelClass, controllerClass, isDefault);
+        return new GamePlugin(name, label, type, msgBundleBase,
+                              panelClass, controllerClass, isDefault);
     }
 
     public static PluginManager getInstance() {
@@ -105,6 +108,20 @@ public class PluginManager {
 
     public List<GamePlugin> getPlugins() {
         return plugins_;
+    }
+
+    /**
+     * @param type type of plugins to get.
+     * @return a list of plugins filtered by the specified type.
+     */
+    public List<GamePlugin> getPlugins(PluginType type) {
+        List<GamePlugin> plugins = new ArrayList<GamePlugin>();
+        for (GamePlugin plugin : plugins_) {
+            if (plugin.getType() == type)  {
+                plugins.add(plugin);
+            }
+        }
+        return plugins;
     }
 
     public GamePlugin getPlugin(String name) {

@@ -142,7 +142,7 @@ public abstract class GameController
      * @param fileName file to load from
      */
     public void restoreFromFile( String fileName) {
-        GameContext.log(0,  "Error: restoreFromFile("+fileName+") not implemented yet" );
+        GameContext.log(0,  "Error: restoreFromFile(" + fileName + ") not implemented yet" );
     }
 
     /**

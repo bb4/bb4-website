@@ -20,14 +20,15 @@ public class PenteWeights extends GameWeights {
 
     /** These defaults may be overridden in by the user in the UI. */
     private static final double[] DEFAULT_WEIGHTS = {
-        0.0,    0.0,    0.0,    0.5,     2.0,     8.0,
-        JEOPARDY_WEIGHT,     JEOPARDY_WEIGHT + 7.0, 2 * ASSUMED_WINNING_VALUE,
-        2 * ASSUMED_WINNING_VALUE,  2 * ASSUMED_WINNING_VALUE,  2 * ASSUMED_WINNING_VALUE
+        0.0,    0.0,    0.0,    0.5,    2.0,    8.0,
+        JEOPARDY_WEIGHT,     JEOPARDY_WEIGHT + 7.0, ASSUMED_WINNING_VALUE,
+        2.1 * ASSUMED_WINNING_VALUE,  2.1 * ASSUMED_WINNING_VALUE,  3 * ASSUMED_WINNING_VALUE
     };
 
     /** Don't allow the weights to exceed these maximum values. Upper limit. */
     private static final double[] MAX_WEIGHTS = {
-        10.0,  10.0,  10.0,  20.0,  40.0,  40.0,  200.0,  200.0,  2 * ASSUMED_WINNING_VALUE,
+        10.0,   10.0,   10.0,    20.0,    40.0,  80.0,
+        200.0,         200.0,      2 * ASSUMED_WINNING_VALUE,
         3 * ASSUMED_WINNING_VALUE,  4 * ASSUMED_WINNING_VALUE,  5 * ASSUMED_WINNING_VALUE
     };
 
@@ -52,10 +53,10 @@ public class PenteWeights extends GameWeights {
         "Likely win if play next (_XXX_, _X_XX_, _X_XX_X ...)",                   // 6
         "Guaranteed to win on next move (_XXXX, X_XXX, XX_XX, _X_XXX, _XX_XX, _XXX_X, ...)",  // 7
         "Guaranteed win even if not moving next (_XXXX_, _XXXX_X, ...)",              // 8
-        "Already won. open ended 4b in a row (with options)",                    // 9
-        "Already won. Arrangements of 5 in a row weight",                    // 10
-        "Already won. Arrangements of 6 in a row weight",                // 11
-        "Already won. Arrangements of 7 in a row weight"            // 12
+        "Already won. Arrangements of 5 in a row weight ?//Open ended 4b in a row (with options)?",                       // 9
+        "Already won. Arrangements of 6 in a row weight",                    // 10
+        "Already won. Arrangements of 7 in a row weight",                // 11
+        "Already won. Arrangements of 8 in a row weight"            // 12
     };
 
     public PenteWeights() {
