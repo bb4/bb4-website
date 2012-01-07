@@ -1,26 +1,11 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.GameController;
-import com.becker.game.common.GameViewable;
-import com.becker.game.common.ui.dialogs.GameOptionsDialog;
-import com.becker.game.common.ui.dialogs.HelpDialog;
-import com.becker.game.common.ui.dialogs.NewGameDialog;
-import com.becker.game.common.ui.panel.*;
-import com.becker.game.common.ui.viewer.GameBoardViewer;
-import com.becker.ui.components.ResizableAppletPanel;
-import com.becker.ui.components.TexturedPanel;
-import com.becker.ui.dialogs.OutputWindow;
-import com.becker.ui.util.GUIUtil;
-import com.becker.ui.util.Log;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 /**
  * Allows comparing the performance of two player games played against each other
@@ -56,7 +41,7 @@ public class GameComparisonPanel extends JPanel
 
         tabbedPane = new JTabbedPane();
 
-        comparisonConfigurationPanel = new JPanel();
+        comparisonConfigurationPanel = new ConfigurationPanel();
         comparisonConfigurationPanel.setName("Configuration");
         
         comparisonGridPanel = new JPanel();

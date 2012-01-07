@@ -11,33 +11,31 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class PlayerTableModel extends DefaultTableModel
-{
+public class PlayerTableModel extends DefaultTableModel {
+
     private boolean editable_;
     private static final long serialVersionUID = 0;
 
-    public PlayerTableModel(Object[][] data, Object[] columnNames, boolean editable)
-    {
+    public PlayerTableModel(Object[][] data, Object[]
+                            columnNames, boolean editable) {
         super(data, columnNames);
         editable_ = editable;
     }
 
-    public PlayerTableModel(Object[] columnNames, int rowCount, boolean editable)
-    {
+    public PlayerTableModel(Object[] columnNames, int rowCount,
+                            boolean editable) {
         super(columnNames, rowCount);
         editable_ = editable;
     }
 
     @Override
-    public Class getColumnClass(int col)
-    {
+    public Class getColumnClass(int col) {
         List v = (List)dataVector.elementAt(0);
         return v.get(col).getClass();
     }
 
     @Override
-    public boolean isCellEditable(int row, int column)
-    {
+    public boolean isCellEditable(int row, int column) {
         return editable_;
     }
 }

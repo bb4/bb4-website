@@ -25,8 +25,8 @@ import java.util.Map;
  *
  * @author Barry Becker
  */
-class OrdersTable extends TableBase
-{
+class OrdersTable extends TableBase {
+
     private List<Order> lastOrders_;
 
     private static final int ORIGIN_INDEX = 0;
@@ -62,8 +62,7 @@ class OrdersTable extends TableBase
      * constructor
      * @param orders to initialize the rows in the table with.
      */
-    public OrdersTable(List<Order> orders)
-    {
+    public OrdersTable(List<Order> orders)  {
         super(orders, columnNames_);
     
          lastOrders_ = orders;
@@ -90,8 +89,8 @@ class OrdersTable extends TableBase
     /**
      * @return  the players represented by rows in the table
      */
-    public List<Order> getOrders()
-    {
+    public List<Order> getOrders() {
+
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
         List<Order> orders = new ArrayList<Order>(nRows);
@@ -123,11 +122,9 @@ class OrdersTable extends TableBase
 
 
     /**
-     *
      * @return total outgoing ships for new orders (excluding existing)
      */
-    Map getCurrentOutGoingShips()
-    {
+    Map getCurrentOutGoingShips() {
         Map<Planet,Integer> outgoingMap = new HashMap<Planet,Integer>();
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
@@ -149,8 +146,7 @@ class OrdersTable extends TableBase
         return outgoingMap;
     }
 
-    private PlayerTableModel getPlayerModel()
-    {
+    private PlayerTableModel getPlayerModel() {
         return (PlayerTableModel)getModel();
     }
 
@@ -159,8 +155,7 @@ class OrdersTable extends TableBase
      * @param order to add
      */
     @Override
-    public void addRow(Object order)
-    {
+    public void addRow(Object order) {
         Order o = (Order)order;
         Object d[] = new Object[NUM_COLS];
         d[ORIGIN_INDEX] = o.getOrigin().getName();
