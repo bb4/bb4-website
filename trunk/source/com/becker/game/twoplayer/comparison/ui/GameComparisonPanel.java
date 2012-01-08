@@ -3,8 +3,11 @@ package com.becker.game.twoplayer.comparison.ui;
 
 
 import com.becker.game.twoplayer.comparison.ui.configuration.ConfigurationPanel;
+import com.becker.game.twoplayer.comparison.ui.grid.ComparisonGridPanel;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,12 +23,11 @@ import java.awt.event.ActionListener;
  *  @author Barry Becker
  */
 public class GameComparisonPanel extends JPanel
-                                 implements ActionListener {
-
+                                 implements ActionListener, ChangeListener {
     
     private JTabbedPane tabbedPane;
-    private JPanel comparisonConfigurationPanel;
-    private JPanel comparisonGridPanel;
+    private ConfigurationPanel comparisonConfigurationPanel;
+    private ComparisonGridPanel comparisonGridPanel;
 
     /**
      * Constructor
@@ -46,13 +48,13 @@ public class GameComparisonPanel extends JPanel
         comparisonConfigurationPanel = new ConfigurationPanel();
         comparisonConfigurationPanel.setName("Configuration");
         
-        comparisonGridPanel = new JPanel();
+        comparisonGridPanel = new ComparisonGridPanel();
         comparisonGridPanel.setName("Comparison");
              
         tabbedPane.add(comparisonConfigurationPanel);
-        tabbedPane.setToolTipTextAt( 0,
+        tabbedPane.setToolTipTextAt(0,
                 "Configure the search strategies to compete against each other");
-        //tabbedPane.addChangeListener(this);
+        tabbedPane.addChangeListener(this);
         tabbedPane.add(comparisonGridPanel);
         tabbedPane.setToolTipTextAt( 0,
                 "Shows the results of the two player game competing against itself with specified search strategies");
@@ -70,6 +72,14 @@ public class GameComparisonPanel extends JPanel
         Object source = e.getSource();
         if ( source == null ) {
        
+        }
+    }
+
+    public void stateChanged(ChangeEvent e) {
+      
+        int index = tabbedPane.getSelectedIndex();
+        if (index == 1) {
+            comparisonGridPanel.setOptionsList(comparisonConfigurationPanel.getConfigurations());
         }
     }
 }
