@@ -7,7 +7,7 @@ import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.AbstractDialog;
 
 import javax.swing.*;
-
+import java.awt.*;
 
 
 /**
@@ -15,8 +15,7 @@ import javax.swing.*;
  *
  * @author Barry Becker
  */
-final class PlanetDetailsDialog extends AbstractDialog
-{
+final class PlanetDetailsDialog extends AbstractDialog {
 
     private final JPanel mainPanel_ = new JPanel();
 
@@ -29,8 +28,7 @@ final class PlanetDetailsDialog extends AbstractDialog
      * @param parent frame to display relative to
      * @param boardViewer
      */
-    public PlanetDetailsDialog( JFrame parent, GameBoardViewer boardViewer )
-    {
+    public PlanetDetailsDialog(Component parent, GameBoardViewer boardViewer ) {
         super( parent );
         GameController controller_=boardViewer.getController();
         showContent();
@@ -41,8 +39,7 @@ final class PlanetDetailsDialog extends AbstractDialog
      * ui initialization of the tree control.
      */
     @Override
-    protected JComponent createDialogContent()
-    {   
+    protected JComponent createDialogContent() {
         return new JPanel();
     }
 

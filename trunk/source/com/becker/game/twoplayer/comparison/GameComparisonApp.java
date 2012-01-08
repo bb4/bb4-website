@@ -42,12 +42,12 @@ public class GameComparisonApp {
         addMenuBar(initialGame);
 
         frame_.setBounds(200, 200, WIDTH, HEIGHT);
+        gameComparisonPanel = new GameComparisonPanel();
+        frame_.getContentPane().add(gameComparisonPanel);
+
         // display the frame
         frame_.setVisible(true);
         frame_.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        
-        gameComparisonPanel = new GameComparisonPanel();
-        frame_.getContentPane().add(gameComparisonPanel);
     }
 
     /**

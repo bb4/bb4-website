@@ -49,11 +49,11 @@ public final class GameTreeDialog extends AbstractDialog
 
     /**
      * constructor - create the tree dialog.
-     * @param parent frame to display relative to
+     * @param parent component to display relative to
      * @param boardViewer
      * @param cellRenderer how to render cells in text tree view.
      */
-    public GameTreeDialog(JFrame parent, AbstractTwoPlayerBoardViewer boardViewer,
+    public GameTreeDialog(Component parent, AbstractTwoPlayerBoardViewer boardViewer,
                           GameTreeCellRenderer cellRenderer) {
         super( parent );
         initialize(boardViewer, cellRenderer);

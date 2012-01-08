@@ -63,8 +63,7 @@ final class ConfigurationPanel extends JPanel
     }
 
     /**
-     *
-     * @return  the orders in the table
+     * @return  the options list in the table
      */
     public List<SearchOptions> getConfigurations() {
         return configTable_.getSearchOptions();
@@ -73,7 +72,6 @@ final class ConfigurationPanel extends JPanel
     public void actionPerformed(ActionEvent e) {
 
         Object source = e.getSource();
-
 
         if (source == addConfigButton_) {
             addConfiguration();
@@ -90,12 +88,8 @@ final class ConfigurationPanel extends JPanel
      * add another row to the end of the table.
      */
     private void addConfiguration()  {
-        // open a dlg to get an order
-        PlayerOptionsDialog optionsDialog =
-                new PlayerOptionsDialog(null, null, true);
 
-        optionsDialog.setLocation((int)(this.getLocation().getX() + 40), (int)(this.getLocation().getY() +170));
-
+        SearchOptionsDialog optionsDialog = new SearchOptionsDialog(this);
         boolean canceled = optionsDialog.showDialog();
 
         if ( !canceled ) { // newGame a game with the newly defined options

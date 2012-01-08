@@ -129,7 +129,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      *  UIComponent initialization.
      */
-    protected void initGui(JFrame parent) {
+    protected void initGui(Component parent) {
 
         JPanel mainPanel = new JPanel( new BorderLayout() );
 
@@ -219,12 +219,12 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * @return the dialog used for configuring a new game to play.
      */
-    protected abstract NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer );
+    protected abstract NewGameDialog createNewGameDialog(Component parent, GameViewable viewer );
 
     /**
      * @return  the dialog used to specify various game options and parameters.
      */
-    protected abstract GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller );
+    protected abstract GameOptionsDialog createOptionsDialog(Component parent, GameController controller );
 
     /**
      * @return the panel shown on the right hand side that displays statistics about the current game state.

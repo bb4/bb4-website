@@ -5,13 +5,13 @@ import com.becker.game.common.GameViewable;
 import com.becker.game.twoplayer.common.ui.dialogs.TwoPlayerNewGameDialog;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class PenteNewGameDialog extends TwoPlayerNewGameDialog implements ActionListener
-{
+public class PenteNewGameDialog extends TwoPlayerNewGameDialog
+                                implements ActionListener {
 
-    public PenteNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    public PenteNewGameDialog(Component parent, GameViewable viewer ) {
         super( parent, viewer );
     }
 

@@ -8,14 +8,14 @@ import com.becker.game.multiplayer.common.ui.PlayerTable;
 import com.becker.game.multiplayer.trivial.online.ui.OnlineTrivialManagerPanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Barry Becker
  */
-public class TrivialNewGameDialog extends MultiPlayerNewGameDialog
-{
+public class TrivialNewGameDialog extends MultiPlayerNewGameDialog {
 
-    public TrivialNewGameDialog( JFrame parent, GameViewable viewer ) {
+    public TrivialNewGameDialog(Component parent, GameViewable viewer ) {
         super( parent, viewer );
     }
 

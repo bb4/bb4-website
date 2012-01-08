@@ -27,6 +27,16 @@ public class TextInput extends JPanel {
     /**
      * @param labelText label for the number input element
      * @param initialValue the value to use if nothing else if entered. shows in the ui.
+     * @param numColumns width of text field.
+     */
+    public TextInput( String labelText, String initialValue, int numColumns ) {
+        this(labelText, initialValue);
+        this.setColumns(numColumns);
+    }
+
+    /**
+     * @param labelText label for the number input element
+     * @param initialValue the value to use if nothing else if entered. shows in the ui.
      */
     public TextInput( String labelText, String initialValue ) {
         textField_ = new JTextField(initialValue);

@@ -19,7 +19,7 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
     /**
      * constructor
      */ 
-    public ParameterOptionsDialog( JFrame parent, Simulator simulator ) {
+    public ParameterOptionsDialog(Component parent, Simulator simulator ) {
         super( parent, simulator );
         ParameterSimulator psim = (ParameterSimulator) getSimulator();
         showRedistribution_.setSelected(psim.isShowRedistribution());

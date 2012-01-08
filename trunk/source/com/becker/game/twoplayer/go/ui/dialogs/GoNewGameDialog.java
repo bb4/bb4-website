@@ -10,6 +10,7 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public final class GoNewGameDialog extends TwoPlayerNewGameDialog
@@ -20,7 +21,7 @@ public final class GoNewGameDialog extends TwoPlayerNewGameDialog
 
 
     /** constructor */
-    public GoNewGameDialog( JFrame parent, GameViewable viewer ) {
+    public GoNewGameDialog( Component parent, GameViewable viewer ) {
         super( parent, viewer );
     }
 

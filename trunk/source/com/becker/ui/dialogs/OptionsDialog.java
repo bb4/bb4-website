@@ -2,6 +2,7 @@
 package com.becker.ui.dialogs;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -10,7 +11,8 @@ import java.awt.event.ActionListener;
  *
  * @author Barry Becker
  */
-public abstract class OptionsDialog extends AbstractDialog implements ActionListener {
+public abstract class OptionsDialog extends AbstractDialog
+                                    implements ActionListener {
 
     public static final String COLON = " : ";
 
@@ -18,7 +20,7 @@ public abstract class OptionsDialog extends AbstractDialog implements ActionList
      *  constructor  (use this constructor if possible)
      *  @param parent the parent component so we know how to place ourselves
      */
-    public OptionsDialog( JFrame parent ) {
+    public OptionsDialog( Component parent ) {
         super( parent );
 
         commonInit();

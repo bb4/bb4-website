@@ -8,15 +8,14 @@ import com.becker.game.multiplayer.common.ui.PlayerTable;
 import com.becker.game.multiplayer.poker.online.ui.OnlinePokerManagerPanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Barry Becker
  */
-public class PokerNewGameDialog extends MultiPlayerNewGameDialog
-{
+public class PokerNewGameDialog extends MultiPlayerNewGameDialog {
 
-    public PokerNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    public PokerNewGameDialog(Component parent, GameViewable viewer ) {
         super( parent, viewer );
     }
 
@@ -36,8 +35,7 @@ public class PokerNewGameDialog extends MultiPlayerNewGameDialog
      * we don't allow them to change the dimensions of the board in poker since its not played on a grid.
      */
     @Override
-    protected JPanel createBoardParamPanel()
-    {
+    protected JPanel createBoardParamPanel() {
         return null;
     }
 

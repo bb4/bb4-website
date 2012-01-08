@@ -8,7 +8,7 @@ import com.becker.game.multiplayer.common.ui.TallyDialog;
 import com.becker.game.multiplayer.galactic.GalacticController;
 
 import javax.swing.*;
-
+import java.awt.*;
 
 
 /**
@@ -20,15 +20,13 @@ import javax.swing.*;
  *
  * @author Barry Becker
  */
-final class GalacticTallyDialog extends TallyDialog
-{
+final class GalacticTallyDialog extends TallyDialog {
     /**
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
      * @param controller
      */
-    GalacticTallyDialog( JFrame parent, GalacticController controller )
-    {
+    GalacticTallyDialog(Component parent, GalacticController controller ) {
         super( parent, controller );
     }
 
@@ -43,8 +41,7 @@ final class GalacticTallyDialog extends TallyDialog
      * @return the player with the most planets (num ships used only as a tie breaker).
      */
     @Override
-    public MultiGamePlayer findWinner(PlayerList players)
-    {
+    public MultiGamePlayer findWinner(PlayerList players) {
         return controller_.determineWinner();        
     }
 

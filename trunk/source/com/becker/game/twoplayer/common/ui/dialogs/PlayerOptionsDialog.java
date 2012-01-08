@@ -34,7 +34,7 @@ public class PlayerOptionsDialog extends OptionsDialog {
     private Player player;
 
     /** Constructor  */
-    public PlayerOptionsDialog(JFrame parent, TwoPlayerController controller, boolean showForPlayer1) {
+    public PlayerOptionsDialog(Component parent, TwoPlayerController controller, boolean showForPlayer1) {
         super( parent );
         
         this.controller = controller;

@@ -10,6 +10,7 @@ import com.becker.game.multiplayer.galactic.Galaxy;
 import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 
@@ -20,8 +21,7 @@ import java.awt.event.ItemListener;
  * @author Barry Becker
  */
 class GalacticOptionsDialog extends MultiGameOptionsDialog
-                            implements ActionListener, ItemListener
-{
+                            implements ActionListener, ItemListener {
 
     // game params
     private NumberInput numPlanets_;
@@ -32,8 +32,7 @@ class GalacticOptionsDialog extends MultiGameOptionsDialog
 
 
     // constructor
-    GalacticOptionsDialog( JFrame parent, GameController controller )
-    {
+    GalacticOptionsDialog( Component parent, GameController controller ) {
         super( parent, controller);
     }
 
@@ -42,8 +41,8 @@ class GalacticOptionsDialog extends MultiGameOptionsDialog
      * @return galactic game optiosn tab panel.
      */
     @Override
-    protected JComponent[] getControllerParamComponents()
-    {
+    protected JComponent[] getControllerParamComponents() {
+
         GalacticOptions options = (GalacticOptions)controller_.getOptions();
 
         numPlanets_ =  new NumberInput( GameContext.getLabel("NUMBER_OF_PLANETS"), options.getNumPlanets(),

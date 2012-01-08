@@ -11,6 +11,7 @@ import com.becker.game.common.ui.panel.GamePanel;
 import com.becker.game.common.ui.viewer.GameBoardViewer;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *  This class defines the main UI for the Galactic Empire game applet.
@@ -42,13 +43,13 @@ public class GalacticPanel extends GamePanel
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
+    protected NewGameDialog createNewGameDialog(Component parent, GameViewable viewer )
     {
         return new GalacticNewGameDialog( parent, viewer );
     }
 
     @Override
-    protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller )
+    protected GameOptionsDialog createOptionsDialog(Component parent, GameController controller )
     {
         return new GalacticOptionsDialog( parent, controller );
     }

@@ -19,9 +19,9 @@ import java.awt.event.ActionListener;
  *
  * @author Barry Becker
  */
-public abstract class MultiPlayerNewGameDialog extends NewGameDialog
-                                               implements ActionListener, ListSelectionListener
-{
+public abstract class MultiPlayerNewGameDialog
+                extends NewGameDialog
+                implements ActionListener, ListSelectionListener {
 
     // add / remove players
     private GradientButton addButton_;
@@ -33,8 +33,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
     /**
      * Constructor.
      */
-    protected MultiPlayerNewGameDialog( JFrame parent, GameViewable viewer)
-    {
+    protected MultiPlayerNewGameDialog( Component parent, GameViewable viewer) {
         super( parent, viewer);
         this.setResizable(true);
     }
@@ -44,8 +43,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
      * @return a table of players
      */
     @Override
-    protected JPanel createPlayerAssignmentPanel()
-    {
+    protected JPanel createPlayerAssignmentPanel() {
         JPanel playerPanel = new JPanel(new BorderLayout());
         playerPanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
@@ -88,8 +86,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
      * panel which allows changin board specific properties.
      */
     @Override
-    protected JPanel createBoardParamPanel()
-    {
+    protected JPanel createBoardParamPanel() {
         return null;
     }
 
@@ -98,8 +95,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
      * the configuration specified.
      */
     @Override
-    protected void ok()
-    {
+    protected void ok() {
         Component selectedTab = tabbedPanel_.getSelectedComponent();
         if (selectedTab == playLocalPanel_)  {
             controller_.setPlayers(playerTable_.getPlayers());
@@ -108,8 +104,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
     }
 
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         super.actionPerformed(e);
         Object source = e.getSource();
 
@@ -128,8 +123,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
      * Called when rows are selected/deselected in the player table.
      * @param event
      */
-    public void valueChanged(ListSelectionEvent event)
-    {
+    public void valueChanged(ListSelectionEvent event) {
         MultiGameOptions options = (MultiGameOptions) controller_.getOptions();
         boolean enabled = playerTable_.getTable().getSelectedRowCount() > 0
                           && playerTable_.getModel().getRowCount() > options.getMinNumPlayers();

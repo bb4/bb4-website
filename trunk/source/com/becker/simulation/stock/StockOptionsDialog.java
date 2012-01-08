@@ -42,7 +42,7 @@ public class StockOptionsDialog extends SimulatorOptionsDialog {
     /**
      * constructor
      */
-    public StockOptionsDialog( JFrame parent, Simulator simulator )
+    public StockOptionsDialog(Component parent, Simulator simulator )
     {
         super( parent, simulator );
         options_ = new StockSampleOptions();

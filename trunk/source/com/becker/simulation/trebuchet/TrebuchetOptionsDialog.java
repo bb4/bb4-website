@@ -27,7 +27,7 @@ class TrebuchetOptionsDialog extends NewtonianSimOptionsDialog implements Action
 
 
     // constructor
-    TrebuchetOptionsDialog( JFrame parent, TrebuchetSimulator simulator ) {
+    TrebuchetOptionsDialog(Component parent, TrebuchetSimulator simulator ) {
         super( parent, simulator );
     }
 

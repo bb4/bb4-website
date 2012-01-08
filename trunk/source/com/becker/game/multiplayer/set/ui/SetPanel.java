@@ -13,6 +13,7 @@ import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.game.multiplayer.set.SetController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -43,19 +44,17 @@ public class SetPanel extends GamePanel
     }
 
     @Override
-    protected GameBoardViewer createBoardViewer()
-    {
+    protected GameBoardViewer createBoardViewer() {
         return new SetGameViewer();
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
-    {
-        return new SetNewGameDialog( parent, viewer );
+    protected NewGameDialog createNewGameDialog(Component parent, GameViewable viewer ) {
+        return new SetNewGameDialog(parent, viewer );
     }
 
     @Override
-    protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller )
+    protected GameOptionsDialog createOptionsDialog(Component parent, GameController controller )
     {
         return new SetOptionsDialog( parent, controller );
     }

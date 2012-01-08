@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
  */
 public abstract class SimulatorOptionsDialog extends OptionsDialog {
 
-    // the options get set directly on the snake simulator object that is passed in
+    /** the options get set directly on the snake simulator object that is passed in */
     private Simulator simulator_;
 
     // rendering option controls
@@ -32,7 +32,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
     private GradientButton startButton_ = new GradientButton();
 
     // constructor
-    public SimulatorOptionsDialog( JFrame parent, Simulator simulator ) {
+    public SimulatorOptionsDialog( Component parent, Simulator simulator ) {
         super( parent );
         simulator_ = simulator;
         showContent();

@@ -26,7 +26,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     /**
      * Constructor
      */
-    public TwoPlayerOptionsDialog( JFrame parent, TwoPlayerController controller ) {
+    public TwoPlayerOptionsDialog(Component parent, TwoPlayerController controller ) {
         super( parent, controller);
     }
 

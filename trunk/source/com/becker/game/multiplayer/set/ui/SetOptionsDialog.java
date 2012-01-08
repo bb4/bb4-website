@@ -9,6 +9,7 @@ import com.becker.game.multiplayer.set.SetOptions;
 import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 
@@ -19,16 +20,14 @@ import java.awt.event.ItemListener;
  * @author Barry Becker
  */
 class SetOptionsDialog extends MultiGameOptionsDialog
-        implements ActionListener, ItemListener
-{
+        implements ActionListener, ItemListener {
 
     private NumberInput initialNumCards_;
 
     /**
      * Constructor
      */
-    SetOptionsDialog( JFrame parent, GameController controller )
-    {
+    SetOptionsDialog(Component parent, GameController controller ) {
         super( parent, controller);
     }
 
@@ -37,8 +36,7 @@ class SetOptionsDialog extends MultiGameOptionsDialog
      * @return Set game options tab panel.
      */
     @Override
-    protected JComponent[] getControllerParamComponents()
-    {
+    protected JComponent[] getControllerParamComponents() {
         SetOptions options = (SetOptions) controller_.getOptions();
 
         initialNumCards_ =

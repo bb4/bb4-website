@@ -33,8 +33,8 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
     /**
      * constructor
      */
-    protected TwoPlayerNewGameDialog( JFrame parent, GameViewable viewer ) {
-        super( parent, viewer );    
+    protected TwoPlayerNewGameDialog(Component parent, GameViewable viewer ) {
+        super(parent, viewer );
     }
 
     protected TwoPlayerController get2PlayerController() {

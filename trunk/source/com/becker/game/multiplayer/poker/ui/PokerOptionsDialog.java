@@ -9,6 +9,7 @@ import com.becker.game.multiplayer.poker.PokerOptions;
 import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 
@@ -19,8 +20,7 @@ import java.awt.event.ItemListener;
  * @author Barry Becker
  */
 public class PokerOptionsDialog extends MultiGameOptionsDialog
-                         implements ActionListener, ItemListener
-{
+                                implements ActionListener, ItemListener {
     private NumberInput ante_;
     private NumberInput initialChips_;
     private NumberInput maxAbsoluteRaise_;
@@ -28,9 +28,8 @@ public class PokerOptionsDialog extends MultiGameOptionsDialog
     /**
      * Constructor
      */
-    public PokerOptionsDialog( JFrame parent, GameController controller )
-    {
-        super( parent, controller);
+    public PokerOptionsDialog(Component parent, GameController controller ) {
+        super(parent, controller);
     }
 
     /**

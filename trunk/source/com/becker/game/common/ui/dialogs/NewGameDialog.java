@@ -48,7 +48,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     /**
      *  constructor
      */
-    protected NewGameDialog( JFrame parent, GameViewable viewer) {
+    protected NewGameDialog(Component parent, GameViewable viewer) {
         super( parent );
         controller_ = viewer.getController();
         board_ = controller_.getBoard();

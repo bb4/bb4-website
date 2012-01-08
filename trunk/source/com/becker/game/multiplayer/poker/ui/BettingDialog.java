@@ -21,8 +21,7 @@ import java.text.NumberFormat;
  * Allow the user to specify a poker action
  * @author Barry Becker
  */
-public final class BettingDialog extends ActionDialog
-{
+public final class BettingDialog extends ActionDialog {
 
     private GradientButton foldButton_;
     private GradientButton callButton_;    // call or check
@@ -36,8 +35,7 @@ public final class BettingDialog extends ActionDialog
      * constructor - create the tree dialog.
      * @param pc pokerController
      */
-    public BettingDialog(PokerController pc, Component parent)
-    {
+    public BettingDialog(PokerController pc, Component parent) {
         super(pc, parent);
         callAmount_ = ((PokerPlayer)player_).getCallAmount(pc);
         contributeAmount_ = 0;

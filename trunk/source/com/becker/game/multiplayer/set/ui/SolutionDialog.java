@@ -18,8 +18,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class SolutionDialog extends OptionsDialog
-{
+public class SolutionDialog extends OptionsDialog {
     private static final long serialVersionUID = 0L;
 
     private GradientButton okButton_ = new GradientButton();
@@ -31,8 +30,7 @@ public class SolutionDialog extends OptionsDialog
     /**
      *  Constructor
      */
-    public SolutionDialog(JFrame parent, SetController controller )
-    {
+    public SolutionDialog(Component parent, SetController controller ) {
         super( parent);
 
         controller_ = controller;
@@ -41,8 +39,7 @@ public class SolutionDialog extends OptionsDialog
     }
 
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
@@ -62,15 +59,14 @@ public class SolutionDialog extends OptionsDialog
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("SETS_ON_BOARD");
     }
 
     /** create the OK Cancel buttons that go at the botton  */
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
+
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("OK") );
@@ -83,8 +79,7 @@ public class SolutionDialog extends OptionsDialog
     /**
      * ok button pressed.
      */
-    void ok()
-    {
+    void ok() {
         solutionPanel_.closed();
         this.setVisible( false );
     }
@@ -93,8 +88,7 @@ public class SolutionDialog extends OptionsDialog
      * called when a button has been pressed
      */
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e )  {
         Object source = e.getSource();
         if ( source == okButton_ ) {
             ok();

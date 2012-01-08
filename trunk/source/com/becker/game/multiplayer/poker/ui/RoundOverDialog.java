@@ -19,8 +19,8 @@ import java.text.NumberFormat;
  *
  * @author Barry Becker
  */
-class RoundOverDialog extends OptionsDialog
-{
+class RoundOverDialog extends OptionsDialog {
+
     private GradientButton closeButton_;
 
     private PokerPlayer winner_;
@@ -32,8 +32,7 @@ class RoundOverDialog extends OptionsDialog
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
      */
-    public RoundOverDialog( JFrame parent, PokerPlayer winner, int winnings )
-    {
+    public RoundOverDialog(Component parent, PokerPlayer winner, int winnings ) {
         super( parent );
         winner_ = winner;
         winnings_ = winnings;
