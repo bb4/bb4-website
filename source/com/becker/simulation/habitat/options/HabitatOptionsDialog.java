@@ -6,13 +6,14 @@ import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.habitat.HabitatSimulator;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Barry Becker
  */
 public class HabitatOptionsDialog extends SimulatorOptionsDialog {
 
-    public HabitatOptionsDialog(JFrame parent, Simulator simulator) {
+    public HabitatOptionsDialog(Component parent, Simulator simulator) {
         super(parent, simulator);
     }
 

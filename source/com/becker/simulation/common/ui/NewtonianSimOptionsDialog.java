@@ -24,7 +24,7 @@ public abstract class NewtonianSimOptionsDialog extends SimulatorOptionsDialog {
     /**
      * Constructor
      */
-    public NewtonianSimOptionsDialog( JFrame parent, Simulator simulator ) {
+    public NewtonianSimOptionsDialog(Component parent, Simulator simulator ) {
         super( parent, simulator );
     }
 

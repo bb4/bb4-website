@@ -11,14 +11,15 @@ import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
 import com.becker.game.twoplayer.pente.ui.PentePanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *  This class defines the main UI for the TicTacToe game applet or application.
  *
  *  @author Barry Becker
  */
-public class TicTacToePanel extends PentePanel
-{
+public class TicTacToePanel extends PentePanel {
+
     /**
      *  Construct the panel.
      */
@@ -26,26 +27,22 @@ public class TicTacToePanel extends PentePanel
 
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return  GameContext.getLabel("TICTACTOE_TITLE");
     }
 
     @Override
-    protected GameBoardViewer createBoardViewer()
-    {
+    protected GameBoardViewer createBoardViewer() {
         return new TicTacToeBoardViewer();
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    protected NewGameDialog createNewGameDialog(Component parent, GameViewable viewer ) {
         return new TicTacToeNewGameDialog( parent, viewer );
     }
 
     @Override
-    protected GameInfoPanel createInfoPanel(GameController controller)
-    {
+    protected GameInfoPanel createInfoPanel(GameController controller) {
         return new TwoPlayerInfoPanel( controller );  
     }
 
@@ -53,8 +50,7 @@ public class TicTacToePanel extends PentePanel
      * Display the help dialog to give instructions
      */
     @Override
-    protected void showHelpDialog()
-    {
+    protected void showHelpDialog() {
         String name = getTitle();
         String comments = GameContext.getLabel("TICTACTOE_TITLE");
         String overview = GameContext.getLabel("TICTACTOE_OVERVIEW");

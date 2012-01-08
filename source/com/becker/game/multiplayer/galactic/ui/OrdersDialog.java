@@ -38,7 +38,7 @@ final class OrdersDialog extends OptionsDialog  {
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
      */
-    OrdersDialog( JFrame parent, GalacticPlayer player, int numYearsRemaining)
+    OrdersDialog(Component parent, GalacticPlayer player, int numYearsRemaining)
     {
         super(parent);
         player_ = player;

@@ -5,6 +5,7 @@ import com.becker.game.common.GameViewable;
 import com.becker.game.twoplayer.common.ui.dialogs.TwoPlayerNewGameDialog;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -12,12 +13,11 @@ import java.awt.event.ActionListener;
  *
  *  @author Barry Becker
  */
-class CheckersNewGameDialog extends TwoPlayerNewGameDialog implements ActionListener
-{
+class CheckersNewGameDialog extends TwoPlayerNewGameDialog
+                            implements ActionListener {
 
-    // constructor
-    public CheckersNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    /** constructor  */
+    public CheckersNewGameDialog( Component parent, GameViewable viewer ) {
         super( parent, viewer );
     }
 

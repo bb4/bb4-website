@@ -55,7 +55,7 @@ public abstract class TwoPlayerPanel extends GamePanel
      *  UIComponent initialization.
      */
     @Override
-    protected void initGui(JFrame parent) {
+    protected void initGui(Component parent) {
         super.initGui(parent);
 
         // we create a separate controller for the TreeDialog so it can browse without
@@ -101,8 +101,8 @@ public abstract class TwoPlayerPanel extends GamePanel
      * @return  the dialog used to specify various game options and parameters.
      */
     @Override
-    protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller ) {
-        return new TwoPlayerOptionsDialog( parent, (TwoPlayerController) controller);
+    protected GameOptionsDialog createOptionsDialog(Component parent, GameController controller ) {
+        return new TwoPlayerOptionsDialog(parent, (TwoPlayerController) controller);
     }
 
     /**

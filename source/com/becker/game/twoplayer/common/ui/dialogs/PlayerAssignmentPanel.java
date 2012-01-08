@@ -35,12 +35,12 @@ public class PlayerAssignmentPanel extends JPanel
     private GradientButton editOptions2Button_;
 
     private TwoPlayerController controller;
-    private JFrame parent;
+    private Component parent;
 
     /**
      * constructor
      */
-    protected PlayerAssignmentPanel(TwoPlayerController controller, JFrame parent) {
+    protected PlayerAssignmentPanel(TwoPlayerController controller, Component parent) {
         this.controller = controller;
         this.parent = parent;
         initialize();

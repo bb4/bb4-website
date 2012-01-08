@@ -26,7 +26,7 @@ public class GraphOptionsDialog extends SimulatorOptionsDialog {
     /**
      * constructor
      */
-    public GraphOptionsDialog( JFrame parent, Simulator simulator ) {
+    public GraphOptionsDialog( Component parent, Simulator simulator ) {
         super( parent, simulator );
     }
 

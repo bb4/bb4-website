@@ -5,6 +5,7 @@ import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -12,7 +13,7 @@ import java.awt.event.ActionEvent;
  */
 public class OptionsDialog extends SimulatorOptionsDialog {
 
-    public OptionsDialog( JFrame parent, Simulator simulator ) {
+    public OptionsDialog(Component parent, Simulator simulator ) {
         super(parent, simulator);
     }
 

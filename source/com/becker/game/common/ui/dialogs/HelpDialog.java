@@ -41,7 +41,7 @@ public final class HelpDialog extends AbstractDialog
      * @param comments supplementary info
      * @param text game specific instructions to display.
      */
-    public HelpDialog( JFrame parent, String gameName, String comments, String text) {
+    public HelpDialog(Component parent, String gameName, String comments, String text) {
         super( parent );
 
         gameName_ = gameName;

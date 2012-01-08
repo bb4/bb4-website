@@ -15,6 +15,7 @@ import com.becker.game.twoplayer.go.ui.dialogs.GoNewGameDialog;
 import com.becker.game.twoplayer.go.ui.gametree.GoTreeCellRenderer;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -47,7 +48,7 @@ public final class GoPanel extends TwoPlayerPanel {
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )  {
+    protected NewGameDialog createNewGameDialog(Component parent, GameViewable viewer )  {
         return new GoNewGameDialog( parent, viewer );
     }
 

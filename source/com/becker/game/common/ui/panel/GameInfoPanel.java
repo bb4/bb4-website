@@ -17,8 +17,8 @@ import java.awt.*;
  *
  *  @author Barry Becker
  */
-public abstract class GameInfoPanel extends TexturedPanel implements GameChangedListener
-{
+public abstract class GameInfoPanel extends TexturedPanel
+                                    implements GameChangedListener {
 
     protected static final String COLON = ' ' + GameContext.getLabel("COLON")+ ' ';
 
@@ -36,8 +36,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     /**
      * Constructor
      */
-    protected GameInfoPanel( GameController controller )
-    {
+    protected GameInfoPanel( GameController controller ) {
         super(null);
         controller_ = controller;
 
@@ -65,8 +64,8 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
      *  create all the sub panels in the desired order.
      *  Subclasses may override to get a different ordering.
      */
-    protected void createSubPanels()
-    {
+    protected void createSubPanels() {
+
         // the custom panel shows game specific info like captures etc.
         JPanel customPanel = createCustomInfoPanel();
         if ( customPanel != null )
@@ -94,24 +93,22 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     /**
      * @return title to display at the top of the game info window.
      */
-    protected String getTitleText()
-    {
+    protected String getTitleText() {
         return GameContext.getLabel("GAME_INFORMATION");
     }
 
     /**
      * This panel shows information that is specific to the game type (like captures or territory estimates).
      */
-    protected JPanel createCustomInfoPanel()
-    {
+    protected JPanel createCustomInfoPanel()  {
         return null; // none by default
     }
 
     /**
      * this is general information that is applicable to every 2 player game.
      */
-    protected JPanel createGeneralInfoPanel()
-    {
+    protected JPanel createGeneralInfoPanel() {
+
         JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
 
         JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
@@ -150,8 +147,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
          * */
     }
 
-    protected String getMoveNumLabel()
-    {
+    protected String getMoveNumLabel() {
         return GameContext.getLabel("CURRENT_MOVE_NUM" + COLON);
     }
 
@@ -164,8 +160,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     /**
      * create a row in a panel that has one or 2 components.
      */
-    protected final JPanel createRowEntryPanel( JComponent firstComp, JComponent secondComp )
-    {
+    protected final JPanel createRowEntryPanel( JComponent firstComp, JComponent secondComp ) {
         JPanel rowPanel = createPanel();
 
         rowPanel.setLayout( new BoxLayout( rowPanel, BoxLayout.X_AXIS ) );
@@ -179,13 +174,11 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
         return rowPanel;
     }
 
-    protected final JPanel createRowEntryPanel( JComponent firstComp )
-    {
+    protected final JPanel createRowEntryPanel( JComponent firstComp ) {
         return createRowEntryPanel( firstComp, null );
     }
 
-    protected final JPanel createPanel()
-    {
+    protected final JPanel createPanel() {
         JPanel p = new JPanel();
         p.setOpaque(false);
         return p;
@@ -196,8 +189,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
      * @param title  the title of the panel.
      * @return  the constructed panel
      */
-    protected final JPanel createSectionPanel(String title)
-    {
+    protected final JPanel createSectionPanel(String title) {
         JPanel p = createPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
         p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), title,
@@ -205,13 +197,11 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
         return p;
     }
 
-    protected final JLabel createLabel()
-    {
+    protected final JLabel createLabel() {
        return createLabel(null);
     }
 
-    protected final JLabel createLabel(String s)
-    {
+    protected final JLabel createLabel(String s) {
         JLabel l = new JLabel(s);
         l.setFont(LABEL_FONT);
         l.setOpaque(false);
@@ -223,8 +213,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
      */
     protected abstract void setPlayerLabel();
 
-    protected static Border createMarginBorder()
-    {
+    protected static Border createMarginBorder() {
         return BorderFactory.createEmptyBorder(3,3,3,3);
     }
 
@@ -232,8 +221,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
-    public void gameChanged( GameChangedEvent gce )
-    {
+    public void gameChanged( GameChangedEvent gce ) {
         if ( controller_ == null )
             return;
         if ( controller_.getLastMove() != null ) {

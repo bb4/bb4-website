@@ -35,7 +35,7 @@ class SnakeOptionsDialog extends NewtonianSimOptionsDialog
     private NumberInput springDampingField_;
 
     /** constructor */
-    SnakeOptionsDialog( JFrame parent, SnakeSimulator simulator ) {
+    SnakeOptionsDialog(Component parent, SnakeSimulator simulator ) {
         super( parent, simulator );
     }
 

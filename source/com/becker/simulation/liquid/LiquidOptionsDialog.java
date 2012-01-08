@@ -27,7 +27,7 @@ class LiquidOptionsDialog extends SimulatorOptionsDialog {
 
 
     /** constructor  */
-    LiquidOptionsDialog( JFrame parent, LiquidSimulator simulator ) {
+    LiquidOptionsDialog(Component parent, LiquidSimulator simulator ) {
         super( parent, simulator );
     }
 

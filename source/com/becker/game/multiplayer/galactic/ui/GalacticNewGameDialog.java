@@ -8,10 +8,11 @@ import com.becker.game.multiplayer.common.ui.MultiPlayerNewGameDialog;
 import com.becker.game.multiplayer.common.ui.PlayerTable;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GalacticNewGameDialog extends MultiPlayerNewGameDialog {
 
-    public GalacticNewGameDialog( JFrame parent, GameViewable viewer ) {
+    public GalacticNewGameDialog( Component parent, GameViewable viewer ) {
         super( parent, viewer );
     }
 

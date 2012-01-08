@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 class FluidOptionsDialog extends SimulatorOptionsDialog
                          implements ActionListener {
 
-    FluidOptionsDialog( JFrame parent, FluidSimulator simulator ) {
+    FluidOptionsDialog( Component parent, FluidSimulator simulator ) {
         super( parent, simulator );
     }
 

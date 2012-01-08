@@ -6,13 +6,14 @@ import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.predprey.PredPreySimulator;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Barry Becker
  */
 public class PredPreyOptionsDialog extends SimulatorOptionsDialog {
 
-    public PredPreyOptionsDialog(JFrame parent, Simulator simulator) {
+    public PredPreyOptionsDialog(Component parent, Simulator simulator) {
         super(parent, simulator);
     }
 

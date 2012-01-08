@@ -7,6 +7,7 @@ import com.becker.game.multiplayer.common.ui.MultiGameOptionsDialog;
 import com.becker.game.multiplayer.trivial.TrivialOptions;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 
@@ -17,14 +18,12 @@ import java.awt.event.ItemListener;
  * @author Barry Becker
  */
 public class TrivialOptionsDialog extends MultiGameOptionsDialog
-                         implements ActionListener, ItemListener
-{
+                         implements ActionListener, ItemListener {
 
     /**
      * Constructor
      */
-    public TrivialOptionsDialog( JFrame parent, GameController controller )
-    {
+    public TrivialOptionsDialog(Component parent, GameController controller ) {
         super( parent, controller);
     }
 

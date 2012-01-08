@@ -5,10 +5,11 @@ import com.becker.game.common.GameViewable;
 import com.becker.game.twoplayer.pente.ui.PenteNewGameDialog;
 
 import javax.swing.*;
+import java.awt.*;
 
 class TicTacToeNewGameDialog extends PenteNewGameDialog {
 
-    public TicTacToeNewGameDialog( JFrame parent, GameViewable viewer ) {
+    public TicTacToeNewGameDialog(Component parent, GameViewable viewer ) {
         super( parent, viewer );
     }
 }

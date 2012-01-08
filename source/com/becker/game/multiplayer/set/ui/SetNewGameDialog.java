@@ -8,19 +8,18 @@ import com.becker.game.multiplayer.common.ui.MultiPlayerNewGameDialog;
 import com.becker.game.multiplayer.common.ui.PlayerTable;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Barry Becker Date: Feb 5, 2006
  */
-public class SetNewGameDialog extends MultiPlayerNewGameDialog
-{
+public class SetNewGameDialog extends MultiPlayerNewGameDialog {
 
     /**
      * constructor.
      */
-    public SetNewGameDialog( JFrame parent, GameViewable viewer )
-    {
-        super( parent, viewer );
+    public SetNewGameDialog(Component parent, GameViewable viewer ) {
+        super(parent, viewer );
     }
 
 

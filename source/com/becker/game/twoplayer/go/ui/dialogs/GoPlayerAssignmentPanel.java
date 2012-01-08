@@ -6,6 +6,7 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.ui.dialogs.PlayerAssignmentPanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Use this modal dialog to initialize the required game parameters that
@@ -21,7 +22,7 @@ public class GoPlayerAssignmentPanel extends PlayerAssignmentPanel {
     /**
      * constructor
      */
-    protected GoPlayerAssignmentPanel(TwoPlayerController controller, JFrame parent) {
+    protected GoPlayerAssignmentPanel(TwoPlayerController controller, Component parent) {
         super(controller, parent);
     }
 

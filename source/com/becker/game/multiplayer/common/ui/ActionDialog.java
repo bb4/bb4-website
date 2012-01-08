@@ -12,18 +12,16 @@ import java.awt.*;
  * Allow the user to specify a poker action
  * @author Barry Becker
  */
-public abstract class ActionDialog extends OptionsDialog
-{
-    protected MultiGamePlayer player_;
+public abstract class ActionDialog extends OptionsDialog {
 
+    protected MultiGamePlayer player_;
     protected MultiGameController controller_;
 
     /**
      * constructor - create the tree dialog.
      * @param gc pokerController
      */
-    protected ActionDialog(MultiGameController gc, Component parent)
-    {
+    protected ActionDialog(MultiGameController gc, Component parent) {
         controller_ = gc;
         player_ = controller_.getCurrentPlayer();
         Point p = parent.getLocationOnScreen();
@@ -33,13 +31,11 @@ public abstract class ActionDialog extends OptionsDialog
         showContent();
     }
 
-
     /**
      * ui initialization of the tree control.
      */
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent() {
         setResizable( true );
         JPanel mainPanel = new JPanel();
         mainPanel =  new JPanel();

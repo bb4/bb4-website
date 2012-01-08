@@ -35,7 +35,7 @@ public abstract class TallyDialog extends OptionsDialog
      * @param parent frame to display relative to
      * @param controller pass in game controller.
      */
-    protected TallyDialog( JFrame parent, MultiGameController controller )
+    protected TallyDialog(Component parent, MultiGameController controller )
     {
         super( parent );
         controller_ = controller;

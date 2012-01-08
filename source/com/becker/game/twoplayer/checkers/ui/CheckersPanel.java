@@ -11,6 +11,7 @@ import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *  This class defines the main UI for the Checkers game panel.
@@ -18,8 +19,7 @@ import javax.swing.*;
  *
  *  @author Barry Becker
  */
-public class CheckersPanel extends TwoPlayerPanel
-{
+public class CheckersPanel extends TwoPlayerPanel {
 
     /**
      * Construct the panel.
@@ -28,20 +28,17 @@ public class CheckersPanel extends TwoPlayerPanel
     {}
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("CHECKERS_TITLE");
     }
 
     @Override
-    protected GameBoardViewer createBoardViewer()
-    {
+    protected GameBoardViewer createBoardViewer() {
         return new CheckersBoardViewer();
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    protected NewGameDialog createNewGameDialog(Component parent, GameViewable viewer ) {
         return new CheckersNewGameDialog( parent, viewer );
     }
 

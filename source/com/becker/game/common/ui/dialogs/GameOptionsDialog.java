@@ -55,7 +55,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     /**
      *  constructor
      */
-    protected GameOptionsDialog( JFrame parent, GameController controller ) {
+    protected GameOptionsDialog( Component parent, GameController controller ) {
         super(parent);
         controller_ = controller;
  
@@ -119,7 +119,6 @@ public abstract class GameOptionsDialog extends OptionsDialog
         p.setName(GameContext.getLabel("GAME"));
         return p;
     }
-
 
     /**
      * @return general game options tab panel.

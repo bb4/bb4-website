@@ -11,6 +11,7 @@ import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *  This class defines the main UI for the Pente game applet.
@@ -39,7 +40,7 @@ public class PentePanel extends TwoPlayerPanel {
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer ) {
+    protected NewGameDialog createNewGameDialog(Component parent, GameViewable viewer ) {
         return new PenteNewGameDialog( parent, viewer );
     }
 

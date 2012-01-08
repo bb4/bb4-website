@@ -5,6 +5,7 @@ import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -18,7 +19,7 @@ public class RDOptionsDialog extends SimulatorOptionsDialog {
     private JCheckBox useParallelRenderingCheckbox_;
 
 
-    public RDOptionsDialog( JFrame parent, Simulator simulator ) {
+    public RDOptionsDialog(Component parent, Simulator simulator ) {
         super(parent, simulator);
     }
 

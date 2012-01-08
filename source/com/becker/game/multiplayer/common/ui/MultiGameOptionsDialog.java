@@ -7,7 +7,7 @@ import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.multiplayer.common.MultiGameOptions;
 import com.becker.ui.components.NumberInput;
 
-import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -15,14 +15,14 @@ import java.awt.event.KeyListener;
  * @author Barry Becker
  */
 public abstract class MultiGameOptionsDialog extends GameOptionsDialog
-                                    implements KeyListener  {
+                                             implements KeyListener  {
 
     protected NumberInput maxNumPlayers_;
     protected NumberInput numRobotPlayers_;
 
     private static final int ABS_MAX_NUM_PLAYERS = 30;
 
-    protected MultiGameOptionsDialog(JFrame parent, GameController controller ) {
+    protected MultiGameOptionsDialog(Component parent, GameController controller ) {
         super(parent, controller);
     }
 

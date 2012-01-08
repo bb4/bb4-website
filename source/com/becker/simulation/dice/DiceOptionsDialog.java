@@ -16,6 +16,7 @@ public class DiceOptionsDialog extends SimulatorOptionsDialog {
 
     /** number of dice to use.   */
     private NumberInput numDiceField_;
+
     /** number of sides on dice.  */
     private NumberInput numSidesField_;
 
@@ -23,8 +24,7 @@ public class DiceOptionsDialog extends SimulatorOptionsDialog {
     /**
      * constructor
      */ 
-    public DiceOptionsDialog( JFrame parent, Simulator simulator )
-    {
+    public DiceOptionsDialog( Component parent, Simulator simulator ) {
         super( parent, simulator );
     }
 

@@ -58,7 +58,7 @@ final class BattleDialog extends OptionsDialog
      * @param battle the simulation
      * @param viewer send in the viewer so we can give feedback about the battle while it is occurring
      */
-    BattleDialog( JFrame parent, BattleSimulation battle, GalaxyViewer viewer ) {
+    BattleDialog( Component parent, BattleSimulation battle, GalaxyViewer viewer ) {
         super( parent );
         this.setResizable(false);
         this.setModal(true);
