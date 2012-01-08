@@ -78,7 +78,9 @@ class ComparisonGrid extends TableBase {
         SearchOptionsConfig optionsConfig = (SearchOptionsConfig) opts;
         SearchOptions sOptions = optionsConfig.getSearchOptions();
 
-        Object d[] = new Object[colNames.length + 1];
+        if (colNames == null)   return;
+
+        Object[] d = new Object[colNames.length + 1];
 
         d[0] = optionsConfig.getName();
         for (int i=1; i<=colNames.length; i++) {

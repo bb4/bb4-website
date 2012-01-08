@@ -1,22 +1,15 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.configuration;
 
-import com.becker.game.common.GameContext;
 import com.becker.game.multiplayer.common.ui.PlayerTableModel;
-import com.becker.game.multiplayer.galactic.Galaxy;
-import com.becker.game.multiplayer.galactic.Order;
-import com.becker.game.multiplayer.galactic.Planet;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.ui.table.BasicCellRenderer;
 import com.becker.ui.table.TableBase;
 import com.becker.ui.table.TableColumnMeta;
 
 import javax.swing.table.TableModel;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -31,6 +24,7 @@ class ConfigurationsTable extends TableBase {
     private static final int BRUTE_OPTIONS_INDEX = 2;
     private static final int BEST_MOVE_OPTIONS_INDEX = 3;
     private static final int MONTE_CARLO_OPTIONS_INDEX = 4;
+    // I don't wnat this extra column, but without it the object is not passed through
     private static final int INSTANCE_INDEX = 5;
 
     private static final String NAME = "Name";
@@ -38,9 +32,11 @@ class ConfigurationsTable extends TableBase {
     private static final String BRUTE_OPTIONS = "Brute Force Options";
     private static final String BEST_MOVE_OPTIONS = "Best Move Options";
     private static final String MONTE_CARLO_OPTIONS = "Monte Carlo Options";
+    private static final String INST = "";
+
 
     private static final String[] columnNames_ =  {
-            NAME, ALGORITHM, BRUTE_OPTIONS, BEST_MOVE_OPTIONS, MONTE_CARLO_OPTIONS
+            NAME, ALGORITHM, BRUTE_OPTIONS, BEST_MOVE_OPTIONS, MONTE_CARLO_OPTIONS, INST
     };
 
     private static final String NAME_TIP = "Some descriptive name";
@@ -52,7 +48,7 @@ class ConfigurationsTable extends TableBase {
             "Options for when the search algorithm involves a stochastic process";
 
     private static final String[] columnTips_ =  {
-            NAME_TIP, ALGORITHM_TIP, BRUTE_OPTIONS_TIP, BEST_MOVE_OPTIONS_TIP, MONTE_CARLO_OPTIONS_TIP};
+            NAME_TIP, ALGORITHM_TIP, BRUTE_OPTIONS_TIP, BEST_MOVE_OPTIONS_TIP, MONTE_CARLO_OPTIONS_TIP, ""};
 
     private static final int NUM_COLS = columnNames_.length;
 
@@ -103,12 +99,19 @@ class ConfigurationsTable extends TableBase {
      */
     public List<SearchOptionsConfig> getSearchOptions() {
 
-        TableModel model = table_.getModel();
+        TableModel model = getPlayerModel();
         int nRows = model.getRowCount();
+        System.out.println("numRows = " + nRows);
         List<SearchOptionsConfig> searchOptions = new ArrayList<SearchOptionsConfig>(nRows);
 
         for (int i = 0; i < nRows; i++) {
-            SearchOptionsConfig options = ((SearchOptionsConfig)model.getValueAt(i, INSTANCE_INDEX));
+            String options = (String)model.getValueAt(i, INSTANCE_INDEX-1);
+            System.out.println("got mc options="+ options);
+
+        }
+        for (int i = 0; i < nRows; i++) {
+            SearchOptionsConfig options = ((SearchOptionsConfig) model.getValueAt(i, INSTANCE_INDEX));
+            System.out.println("got options="+ options);
             searchOptions.add( options );
         }
 
@@ -137,6 +140,7 @@ class ConfigurationsTable extends TableBase {
         d[BEST_MOVE_OPTIONS_INDEX ] = sOptions.getBestMovesSearchOptions().toString();
         d[MONTE_CARLO_OPTIONS_INDEX ] = sOptions.getMonteCarloSearchOptions().toString();
         d[INSTANCE_INDEX] = optionsConfig;
+        System.out.println("d[5]=" + d[5].toString());
 
         getPlayerModel().addRow(d);
     }
