@@ -84,10 +84,10 @@ public class PlayerOptionsDialog extends OptionsDialog {
 
         okButton_ = new GradientButton();
         initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("ACCEPT_PLAYER_OPTIONS") );
-        initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL_EDITS") );
+        initBottomButton(cancelButton, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL_EDITS") );
 
         buttonsPanel.add( okButton_ );
-        buttonsPanel.add( cancelButton_ );
+        buttonsPanel.add(cancelButton);
 
         return buttonsPanel;
     }

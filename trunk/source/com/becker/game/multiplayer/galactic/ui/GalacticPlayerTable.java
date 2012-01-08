@@ -27,8 +27,8 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class GalacticPlayerTable extends PlayerTable implements TableModelListener
-{
+public class GalacticPlayerTable extends PlayerTable
+                                 implements TableModelListener {
 
     private static final int ICON_INDEX = 3;
     private static final int HOME_PLANET_INDEX = 4;
@@ -40,7 +40,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
     private static final String NUM_SHIPS = GameContext.getLabel("NUM_SHIPS");
     private static final String PRODUCTION = GameContext.getLabel("PRODUCTION");
 
-    /** hight enought to accommodate the icon. */
+    /** height enough to accommodate the icon. */
     private static final int ROW_HEIGHT = 30;
 
 
@@ -54,13 +54,11 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
          PRODUCTION
     };
 
-
     /**
-     * constructor
-     * @param players to initializet the rows in the table with.
+     * Constructor
+     * @param players to initialize the rows in the table with.
      */
-    public GalacticPlayerTable(PlayerList players)
-    {
+    public GalacticPlayerTable(PlayerList players) {
         super(players, galacticColumnNames_);
         table_.getModel().addTableModelListener(this);
 
@@ -79,11 +77,11 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
     }
 
     /**
-     * @return  the players represented by rows in the table
+     * @return the players represented by rows in the table
      */
     @Override
-    public PlayerList getPlayers()
-    {
+    public PlayerList getPlayers() {
+
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
         PlayerList players = new PlayerList();
@@ -108,8 +106,8 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
      * @param player to add
      */
     @Override
-    protected void addRow(Object player)
-    {
+    protected void addRow(Object player) {
+
         GalacticPlayer p = (GalacticPlayer) player;
         Object d[] = new Object[getNumColumns()];
         d[NAME_INDEX] = p.getName();
@@ -119,7 +117,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
         d[NUM_SHIPS_INDEX] = p.getHomePlanet().getNumShips();
         d[PRODUCTION_INDEX] = p.getHomePlanet().getProductionCapacity();
         d[HUMAN_INDEX] = p.isHuman();
-        //data[i] = d;
+
         getPlayerModel().addRow(d);
     }
 

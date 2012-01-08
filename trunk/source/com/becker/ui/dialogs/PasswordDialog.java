@@ -83,11 +83,11 @@ public class PasswordDialog extends AbstractDialog
         okButton_ = new GradientButton();
         initBottomButton( okButton_,
                 "OK", "Check to see if the password is correct. " );
-        initBottomButton( cancelButton_,
+        initBottomButton(cancelButton,
                 "Cancel", "Go back to the main window without entering a password." );
 
         buttonsPanel.add( okButton_ );
-        buttonsPanel.add( cancelButton_ );
+        buttonsPanel.add(cancelButton);
 
         return buttonsPanel;
     }

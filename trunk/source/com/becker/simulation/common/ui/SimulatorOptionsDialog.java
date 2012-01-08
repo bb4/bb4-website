@@ -88,10 +88,10 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         initBottomButton( startButton_, "Done", "Use these selections when running the simulation." );
-        initBottomButton( cancelButton_, "Cancel", "Resume the current simulation without changing the options" );
+        initBottomButton(cancelButton, "Cancel", "Resume the current simulation without changing the options" );
 
         buttonsPanel.add( startButton_ );
-        buttonsPanel.add( cancelButton_ );
+        buttonsPanel.add(cancelButton);
 
         return buttonsPanel;
     }
@@ -193,7 +193,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog {
         if ( source == startButton_ ) {
             ok();
         }
-        else if ( source == cancelButton_ ) {
+        else if ( source == cancelButton) {
             cancel();
         }
     }

@@ -95,10 +95,10 @@ public abstract class TallyDialog extends OptionsDialog
 
         okButton_ = new GradientButton();
         initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("PLACE_ORDER_TIP") );
-        //initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL") );
+        //initBottomButton( cancelButton, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL") );
 
         buttonsPanel.add( okButton_ );
-        //buttonsPanel.add( cancelButton_ );
+        //buttonsPanel.add( cancelButton );
 
         return buttonsPanel;
     }

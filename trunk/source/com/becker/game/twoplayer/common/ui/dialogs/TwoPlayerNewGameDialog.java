@@ -109,7 +109,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
         if ( source == startButton_ ) {
             ok();
         }
-        else if ( source == cancelButton_ ) {
+        else if ( source == cancelButton) {
             cancel();
         }
         else if (source == optimizationCheckbox_) {

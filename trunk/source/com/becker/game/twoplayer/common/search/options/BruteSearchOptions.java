@@ -24,17 +24,16 @@ public class BruteSearchOptions {
     /** never search more than this many additional plys during quiescent search. */
     private static final int DEFAULT_MAX_QUIESCENT_DEPTH = 8;
 
-    private boolean alphaBeta_ = ALPHA_BETA;
-    private boolean quiescence_ = QUIESCENCE;
-
     /** default alpha beta values. Some strategies (like nega* reverse them) */
     private static final SearchWindow DEFAULT_SEARCH_WINDOW = new SearchWindow();
+
+    private boolean alphaBeta_ = ALPHA_BETA;
+    private boolean quiescence_ = QUIESCENCE;
 
     private int lookAhead_;
 
     private int maxQuiescentDepth_ = DEFAULT_MAX_QUIESCENT_DEPTH;
     private SearchWindow initialSearchWindow_ = DEFAULT_SEARCH_WINDOW;
-
 
 
     /**
@@ -117,5 +116,12 @@ public class BruteSearchOptions {
 
     public SearchWindow getInitialSearchWindow() {
         return initialSearchWindow_.copy();
+    }
+    
+    public String toString() {
+        return "lookAhead:" + lookAhead_
+                + "  alphaBeta:" + alphaBeta_
+                + "  quiescence:" + quiescence_
+                + "  maxQuiescentDepth:"+ maxQuiescentDepth_;
     }
 }

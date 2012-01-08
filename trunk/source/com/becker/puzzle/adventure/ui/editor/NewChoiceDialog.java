@@ -87,10 +87,10 @@ class NewChoiceDialog extends AbstractDialog
         JPanel buttonsPanel = new JPanel();
 
         initBottomButton( okButton_, "OK", "Use the selected scene as the new choice destination. " );
-        initBottomButton( cancelButton_, "Cancel", "Do not select any scene." );
+        initBottomButton(cancelButton, "Cancel", "Do not select any scene." );
 
         buttonsPanel.add( okButton_ );
-        buttonsPanel.add( cancelButton_ );
+        buttonsPanel.add(cancelButton);
 
         return buttonsPanel;
     }

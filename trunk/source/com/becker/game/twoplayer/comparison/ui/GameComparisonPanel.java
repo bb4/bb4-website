@@ -2,6 +2,8 @@
 package com.becker.game.twoplayer.comparison.ui;
 
 
+import com.becker.game.twoplayer.comparison.ui.configuration.ConfigurationPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

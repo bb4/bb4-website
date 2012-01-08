@@ -1,9 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.game.twoplayer.comparison.ui;
+package com.becker.game.twoplayer.comparison.ui.configuration;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
-import com.becker.game.twoplayer.common.ui.dialogs.PlayerOptionsDialog;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
@@ -17,7 +16,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-final class ConfigurationPanel extends JPanel
+public final class ConfigurationPanel extends JPanel
                               implements ActionListener {
 
     private GradientButton addConfigButton_;
@@ -28,7 +27,7 @@ final class ConfigurationPanel extends JPanel
     /**
      * constructor - create the tree dialog.
      */
-    ConfigurationPanel() {
+    public ConfigurationPanel() {
 
         configTable_ = new ConfigurationsTable();
         init();
@@ -65,7 +64,7 @@ final class ConfigurationPanel extends JPanel
     /**
      * @return  the options list in the table
      */
-    public List<SearchOptions> getConfigurations() {
+    public List<SearchOptionsConfig> getConfigurations() {
         return configTable_.getSearchOptions();
     }
 
@@ -92,10 +91,10 @@ final class ConfigurationPanel extends JPanel
         SearchOptionsDialog optionsDialog = new SearchOptionsDialog(this);
         boolean canceled = optionsDialog.showDialog();
 
-        if ( !canceled ) { // newGame a game with the newly defined options
-            //SearchOptions options = optionsDialog.getSearchOptions();
-            //if (options != null)
-            //    configTable_.addRow(options);
+        if ( !canceled ) {
+            SearchOptionsConfig options = optionsDialog.getSearchOptionsConfig();
+            if (options != null)
+                configTable_.addRow(options);
         }
     }
 

@@ -11,10 +11,9 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class HeaderRenderer extends DefaultTableCellRenderer
-{
-    public HeaderRenderer()
-    {
+public class HeaderRenderer extends DefaultTableCellRenderer {
+
+    public HeaderRenderer() {
         setHorizontalAlignment(SwingConstants.CENTER);
         setOpaque(true);
 
@@ -23,19 +22,18 @@ public class HeaderRenderer extends DefaultTableCellRenderer
         setBorder(UIManager.getBorder("TableHeader.cellBorder"));
     }
 
-    public void updateUI()
-    {
+    @Override
+    public void updateUI() {
         super.updateUI();
         setBorder(UIManager.getBorder("TableHeader.cellBorder"));
     }
 
+    @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
-                       boolean selected, boolean focused, int row, int column)
-    {
+                       boolean selected, boolean focused, int row, int column) {
         JTableHeader h = table != null ? table.getTableHeader() : null;
 
-        if (h != null)
-        {
+        if (h != null) {
             setEnabled(h.isEnabled());
             setComponentOrientation(h.getComponentOrientation());
 
@@ -43,8 +41,7 @@ public class HeaderRenderer extends DefaultTableCellRenderer
             setBackground(h.getBackground());
             setFont(h.getFont());
         }
-        else
-        {
+        else {
             /* Use sensible values instead of random leftover values from the last call */
             setEnabled(true);
             setComponentOrientation(ComponentOrientation.UNKNOWN);

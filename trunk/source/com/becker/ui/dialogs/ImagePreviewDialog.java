@@ -51,8 +51,8 @@ public class ImagePreviewDialog extends AbstractDialog
     protected  JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
-        initBottomButton( cancelButton_, "Cancel", "Cancel image prview" );
-        buttonsPanel.add( cancelButton_ );
+        initBottomButton(cancelButton, "Cancel", "Cancel image prview" );
+        buttonsPanel.add(cancelButton);
 
         return buttonsPanel;
     }
