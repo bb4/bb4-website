@@ -42,7 +42,6 @@ public class BestMovesSearchOptions {
         percentLessThanBestThreshold_ = percentLessThanBestThresh;
     }
 
-
     public int getDefaultPercentageBestMoves() {
         return DEFAULT_PERCENTAGE_BEST_MOVES;
     }
@@ -94,10 +93,11 @@ public class BestMovesSearchOptions {
     }
 
     public String toString() {
-        StringBuilder bldr = new StringBuilder("BestMovesSearchOptions:\n");
-        bldr.append("bestPercentage = ").append(bestPercentage_).append("\n");
-        bldr.append("minBestMoves = ").append(minBestMoves_).append("\n");
-        bldr.append("percentLessThanBestThreshold = ").append(percentLessThanBestThreshold_).append("\n");
+        StringBuilder bldr = new StringBuilder();
+        bldr.append("bestPercentage: ").append(bestPercentage_);
+        bldr.append("  minBestMoves:").append(minBestMoves_);
+        bldr.append("  percentLessThanBestThreshold:").append(percentLessThanBestThreshold_);
         return bldr.toString();
     }
+
 }

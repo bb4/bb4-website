@@ -135,10 +135,10 @@ public abstract class GameOptionsDialog extends OptionsDialog
 
         okButton_ =  new GradientButton();
         initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("USE_OPTIONS") );
-        initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("RESUME") );
+        initBottomButton(cancelButton, GameContext.getLabel("CANCEL"), GameContext.getLabel("RESUME") );
 
         buttonsPanel.add( okButton_ );
-        buttonsPanel.add( cancelButton_ );
+        buttonsPanel.add(cancelButton);
 
         return buttonsPanel;
     }

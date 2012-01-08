@@ -203,11 +203,11 @@ public class StoryEditorDialog extends AbstractDialog
 
         initBottomButton( okButton_, "OK",
                 "Save your edits and see the changes in the story. " );
-        initBottomButton( cancelButton_, "Cancel",
+        initBottomButton(cancelButton, "Cancel",
                 "Go back to the story without saving your edits." );
 
         rightButtonsPanel.add( okButton_ );
-        rightButtonsPanel.add( cancelButton_ );
+        rightButtonsPanel.add(cancelButton);
         return rightButtonsPanel;
     }
 

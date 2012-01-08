@@ -110,10 +110,10 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
 
         startButton_ = new GradientButton();
         initBottomButton( startButton_, GameContext.getLabel("START_GAME"), GameContext.getLabel("START_GAME_TIP") );
-        initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("NGD_CANCEL_TIP") );
+        initBottomButton(cancelButton, GameContext.getLabel("CANCEL"), GameContext.getLabel("NGD_CANCEL_TIP") );
 
         buttonsPanel.add( startButton_ );
-        buttonsPanel.add( cancelButton_ );
+        buttonsPanel.add(cancelButton);
 
         return buttonsPanel;
     }

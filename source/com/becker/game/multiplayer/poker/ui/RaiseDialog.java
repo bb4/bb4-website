@@ -108,10 +108,10 @@ final class RaiseDialog extends OptionsDialog
 
         okButton_ = new GradientButton();
         initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("RAISE_BUTTON_TIP") );
-        initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL") );
+        initBottomButton(cancelButton, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL") );
 
         buttonsPanel.add( okButton_ );
-        buttonsPanel.add( cancelButton_ );
+        buttonsPanel.add(cancelButton);
 
         return buttonsPanel;
     }

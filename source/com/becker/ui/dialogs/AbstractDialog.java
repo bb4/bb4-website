@@ -18,7 +18,7 @@ import java.awt.event.WindowEvent;
 public abstract class AbstractDialog extends JDialog implements ActionListener {
 
     /** there is always a cancel button so it is included here. */
-    protected GradientButton cancelButton_ = new GradientButton();
+    protected GradientButton cancelButton = new GradientButton();
 
     protected boolean canceled_ = false;
 
@@ -98,7 +98,7 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();  
-        if ( source == cancelButton_ ) {
+        if ( source == cancelButton) {
             cancel();
         }
     }

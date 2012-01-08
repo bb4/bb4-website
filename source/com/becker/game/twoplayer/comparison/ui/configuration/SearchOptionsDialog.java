@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.game.twoplayer.comparison.ui;
+package com.becker.game.twoplayer.comparison.ui.configuration;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
@@ -19,8 +19,8 @@ import java.awt.event.ActionEvent;
  */
 public class SearchOptionsDialog extends OptionsDialog {
 
-    private GradientButton okButton_;
-
+    private GradientButton okButton;
+    private TextInput nameField;
     private SearchOptionsPanel searchOptionsPanel;
 
 
@@ -35,8 +35,8 @@ public class SearchOptionsDialog extends OptionsDialog {
         return GameContext.getLabel("EDIT_PLAYER_OPTIONS");
     }
 
-    public SearchOptions getSearchOptions() {
-        return searchOptionsPanel.getOptions();
+    public SearchOptionsConfig getSearchOptionsConfig() {
+        return new SearchOptionsConfig(nameField.getValue(), searchOptionsPanel.getOptions());
     }
 
     @Override
@@ -45,7 +45,7 @@ public class SearchOptionsDialog extends OptionsDialog {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
-        TextInput nameField = new TextInput("Configuration Name:", "", 30);
+        nameField = new TextInput("Configuration Name:", "", 30);
         nameField.setBorder(BorderFactory.createEmptyBorder(5, 5, 10, 5));
 
         // all defaults initially.
@@ -63,12 +63,12 @@ public class SearchOptionsDialog extends OptionsDialog {
     protected JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
-        okButton_ = new GradientButton();
-        initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("ACCEPT_PLAYER_OPTIONS") );
-        initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL_EDITS") );
+        okButton = new GradientButton();
+        initBottomButton(okButton, GameContext.getLabel("OK"), GameContext.getLabel("ACCEPT_PLAYER_OPTIONS") );
+        initBottomButton(cancelButton, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL_EDITS") );
 
-        buttonsPanel.add( okButton_ );
-        buttonsPanel.add( cancelButton_ );
+        buttonsPanel.add(okButton);
+        buttonsPanel.add(cancelButton);
 
         return buttonsPanel;
     }
@@ -77,7 +77,7 @@ public class SearchOptionsDialog extends OptionsDialog {
     public void actionPerformed( ActionEvent e ) {
         super.actionPerformed(e);
         Object source = e.getSource();
-        if ( source == okButton_ ) {
+        if ( source == okButton) {
             searchOptionsPanel.ok();
             dispose();
         }

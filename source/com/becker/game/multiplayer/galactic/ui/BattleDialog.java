@@ -130,7 +130,7 @@ final class BattleDialog extends OptionsDialog
 
         initBottomButton( startButton_, "Fight!", "Begin the battle sequence");
         initBottomButton( closeButton_, GameContext.getLabel("CLOSE"), "Close dialog" );
-        //initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL") );
+        //initBottomButton( cancelButton, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL") );
 
         buttonsPanel_.add( startButton_, BorderLayout.CENTER);
         buttonsPanel_.add( closeButton_, BorderLayout.EAST );

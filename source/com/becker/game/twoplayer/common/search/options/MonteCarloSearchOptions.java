@@ -20,9 +20,7 @@ public class MonteCarloSearchOptions {
     private static final int DEFAULT_RANDOM_LOOKAHEAD = 20;
 
     private int maxSimulations_ = DEFAULT_MAX_SIMULATIONS;
-
     private double exploreExploitRatio_ = DEFAULT_EXPLORE_EXPLOIT_RATIO;
-
     private int randomLookAhead_ = DEFAULT_RANDOM_LOOKAHEAD;
 
     /**
@@ -41,7 +39,6 @@ public class MonteCarloSearchOptions {
         exploreExploitRatio_ = exploreExploitRatio;
         randomLookAhead_ = randomLookAhead;
     }
-
 
     /**
      * @return the max number of simulations to make while searching.
@@ -89,4 +86,11 @@ public class MonteCarloSearchOptions {
         randomLookAhead_ = randomLookAhead;
     }
 
+    public String toString() {
+        StringBuilder bldr = new StringBuilder();
+        bldr.append("maxSimulations:").append(maxSimulations_);
+        bldr.append("  exploreExploitRatio:").append(exploreExploitRatio_);
+        bldr.append("  randomLookAhead:").append(randomLookAhead_);
+        return bldr.toString();
+    }
 }

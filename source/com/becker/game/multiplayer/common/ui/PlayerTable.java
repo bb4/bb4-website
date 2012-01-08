@@ -23,8 +23,7 @@ import java.util.Vector;
  *
  * @author Barry Becker
  */
-public abstract class PlayerTable extends TableBase
-{
+public abstract class PlayerTable extends TableBase {
 
     // remember the deleted rows, so we can add them back when the user clicks add again
     private List<Vector> deletedRows_;
@@ -40,10 +39,9 @@ public abstract class PlayerTable extends TableBase
 
     /**
      * constructor
-     * @param players to initializet the rows in the table with.
+     * @param players to initialize the rows in the table with.
      */
-    protected PlayerTable(PlayerList players, String[] columnNames)
-    {
+    protected PlayerTable(PlayerList players, String[] columnNames) {
         super(players, columnNames);
 
         deletedRows_ = new ArrayList<Vector>();
@@ -70,8 +68,7 @@ public abstract class PlayerTable extends TableBase
     /**
      * add another row to the end of the table.
      */
-    public void addRow()
-    {
+    public void addRow() {
         if (deletedRows_.isEmpty()) {
             Player player = createPlayer();
             addRow(player);
@@ -85,8 +82,7 @@ public abstract class PlayerTable extends TableBase
     /**
      * remove the selected rows from the table
      */
-    public void removeSelectedRows()
-    {
+    public void removeSelectedRows()  {
         int nSelected = table_.getSelectedRowCount();
         int[] selectedRows = table_.getSelectedRows();
         if (selectedRows.length == table_.getRowCount()) {
@@ -106,7 +102,6 @@ public abstract class PlayerTable extends TableBase
     protected PlayerTableModel getPlayerModel() {
         return (PlayerTableModel) getModel();
     }
-
 
     @Override
     protected TableModel createTableModel(String[] columnNames) {
