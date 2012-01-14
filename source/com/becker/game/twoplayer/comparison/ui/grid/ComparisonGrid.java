@@ -13,7 +13,8 @@ import java.util.List;
 
 
 /**
- * Contains a list of search option configurations .
+ * Turns the list of search option configurations into a NxN grid
+ * to compare the performance of all the search configurations in the list.
  * 
  * @author Barry Becker
  */
@@ -36,6 +37,7 @@ class ComparisonGrid extends TableBase {
     private ComparisonGrid(List<SearchOptionsConfig> optionsList, String[] colNames)  {
         super(optionsList, colNames);
         this.colNames = colNames;
+        this.initializeTable(optionsList);
     }
     
     private static String[] createColumnNames(List<SearchOptionsConfig> optionsList) {
