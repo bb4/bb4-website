@@ -4,7 +4,6 @@ package com.becker.game.twoplayer.comparison.execution;
 import com.becker.game.twoplayer.comparison.model.PerformanceResults;
 import com.becker.game.twoplayer.comparison.model.ResultsModel;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
-import sun.misc.Perf;
 
 import java.util.List;
 

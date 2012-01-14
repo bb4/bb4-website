@@ -7,6 +7,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.PluginManager;
 import com.becker.game.common.ui.menu.FileMenu;
 import com.becker.game.twoplayer.comparison.ui.GameComparisonMenu;
+import com.becker.game.twoplayer.comparison.ui.GameComparisonMenuController;
 import com.becker.game.twoplayer.comparison.ui.GameComparisonPanel;
 import com.becker.ui.util.GUIUtil;
 
@@ -54,8 +55,10 @@ public class GameComparisonApp {
      * Add a top level menu to allow changing to a different game from the one currently displayed.
      */
     private void addMenuBar(String initialGame) {
-        GameComparisonMenu gameMenu = new GameComparisonMenu(frame_, initialGame);
-        JMenu fileMenu = new FileMenu(gameMenu);
+        GameComparisonMenuController menuController = new GameComparisonMenuController(frame_);
+        GameComparisonMenu gameMenu = new GameComparisonMenu(initialGame);
+
+        JMenu fileMenu = new FileMenu(menuController);
        
         JMenuBar menubar = new JMenuBar();
         menubar.add(fileMenu);

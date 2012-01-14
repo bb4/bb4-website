@@ -13,8 +13,8 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public final class GameChangedEvent extends AWTEvent
-{
+public final class GameChangedEvent extends AWTEvent {
+
     private static final int GAME_CHANGED_EVENT = AWTEvent.RESERVED_ID_MAX + 4003;
     private final Move move_;
     private final IGameController controller_;
@@ -25,26 +25,23 @@ public final class GameChangedEvent extends AWTEvent
      * @param mv the most recently played move
      * @param controller
      */
-    public GameChangedEvent(Move mv, IGameController controller, Object source )
-    {
+    public GameChangedEvent(Move mv, IGameController controller, Object source ) {
         super(source, GAME_CHANGED_EVENT );
         move_ = mv;
         controller_ = controller;
     }
 
     /**
-     * @return the game controller for the viewer that sent the evernt.
+     * @return the game controller for the viewer that sent the event.
      */
-    public IGameController getController()
-    {
+    public IGameController getController() {
         return controller_;
     }
 
     /**
      * @return the move that just caused the game changed event to fire.
      */
-    public Move getMove()
-    {
+    public Move getMove() {
         return move_;
     }
 

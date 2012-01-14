@@ -42,7 +42,7 @@ public final class ConfigurationPanel extends JPanel
         addConfigButton_.addActionListener(this);
         addremoveButtonsPanel.add(addConfigButton_, BorderLayout.CENTER);
 
-        removeConfigButton_ = new GradientButton(GameContext.getLabel("remove entry"));
+        removeConfigButton_ = new GradientButton("remove entry");
         removeConfigButton_.addActionListener(this);
         addremoveButtonsPanel.add(removeConfigButton_, BorderLayout.EAST);
 
