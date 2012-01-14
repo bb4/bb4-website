@@ -15,7 +15,7 @@ import javax.swing.*;
 /**
  * This application allows you to run any of the two player games
  * against each other using different search strategies.
- * The can work well for integration testing and performance testing of
+ * This can work well for integration testing and performance testing of
  * the different search strategies when applied to all the different two player games.
  *
  * @author Barry Becker
