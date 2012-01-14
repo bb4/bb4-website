@@ -40,7 +40,6 @@ public class GameComparisonMenu extends GameMenu  {
         // this will load the resources for the specified game.
         GameContext.loadGameResources(gameName);
 
-
         gamePanel_ = PluginManager.getInstance().getPlugin(gameName).getPanelInstance();
         //gamePanel_.init(frame_);
 

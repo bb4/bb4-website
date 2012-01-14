@@ -4,6 +4,7 @@ package com.becker.game.twoplayer.comparison.ui.configuration;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.ui.dialogs.searchoptions.SearchOptionsPanel;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.TextInput;
 import com.becker.ui.dialogs.OptionsDialog;

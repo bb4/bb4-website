@@ -2,7 +2,7 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.multiplayer.common.ui.PlayerTableModel;
+import com.becker.ui.table.BasicTableModel;
 import com.becker.game.multiplayer.galactic.Galaxy;
 import com.becker.game.multiplayer.galactic.Order;
 import com.becker.game.multiplayer.galactic.Planet;
@@ -79,7 +79,7 @@ class OrdersTable extends TableBase {
 
     @Override
     protected TableModel createTableModel(String[] columnNames) {
-        return  new PlayerTableModel(columnNames_, 0, false);
+        return  new BasicTableModel(columnNames_, 0, false);
     }
 
     public void removeRow(int rowIndex) {
@@ -146,8 +146,8 @@ class OrdersTable extends TableBase {
         return outgoingMap;
     }
 
-    private PlayerTableModel getPlayerModel() {
-        return (PlayerTableModel)getModel();
+    private BasicTableModel getPlayerModel() {
+        return (BasicTableModel)getModel();
     }
 
     /**

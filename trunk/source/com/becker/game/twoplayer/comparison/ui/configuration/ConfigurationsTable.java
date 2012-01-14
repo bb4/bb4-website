@@ -1,7 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.configuration;
 
-import com.becker.game.multiplayer.common.ui.PlayerTableModel;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
+import com.becker.ui.table.BasicTableModel;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.ui.table.BasicCellRenderer;
 import com.becker.ui.table.TableBase;
@@ -87,7 +88,7 @@ class ConfigurationsTable extends TableBase {
 
     @Override
     protected TableModel createTableModel(String[] columnNames) {
-        return  new PlayerTableModel(columnNames_, 0, false);
+        return  new BasicTableModel(columnNames_, 0, false);
     }
 
     public void removeRow(int rowIndex) {
@@ -118,8 +119,8 @@ class ConfigurationsTable extends TableBase {
         return searchOptions;
     }
 
-    private PlayerTableModel getPlayerModel() {
-        return (PlayerTableModel)getModel();
+    private BasicTableModel getPlayerModel() {
+        return (BasicTableModel)getModel();
     }
 
     /**

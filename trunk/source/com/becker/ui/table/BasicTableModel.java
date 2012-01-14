@@ -1,29 +1,29 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.multiplayer.common.ui;
+package com.becker.ui.table;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 
 /**
- * Basically the DefaultTableModel with a few customizations
- * @see PlayerTable
+ * Basically the DefaultTableModel with a few customizations.
  *
  * @author Barry Becker
  */
-public class PlayerTableModel extends DefaultTableModel {
+public class BasicTableModel extends DefaultTableModel {
 
-    private boolean editable_;
     private static final long serialVersionUID = 0;
 
-    public PlayerTableModel(Object[][] data, Object[]
-                            columnNames, boolean editable) {
+    private boolean editable_;
+
+    public BasicTableModel(Object[][] data, Object[]
+            columnNames, boolean editable) {
         super(data, columnNames);
         editable_ = editable;
     }
 
-    public PlayerTableModel(Object[] columnNames, int rowCount,
-                            boolean editable) {
+    public BasicTableModel(Object[] columnNames, int rowCount,
+                           boolean editable) {
         super(columnNames, rowCount);
         editable_ = editable;
     }

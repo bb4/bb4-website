@@ -1,7 +1,9 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.grid;
 
-import com.becker.game.twoplayer.comparison.ui.configuration.SearchOptionsConfig;
+import com.becker.game.twoplayer.comparison.execution.PerformanceRunner;
+import com.becker.game.twoplayer.comparison.model.ResultsModel;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
@@ -22,6 +24,7 @@ public final class ComparisonGridPanel extends JPanel
     private GradientButton runButton_;
     private ComparisonGrid grid_;
     private JScrollPane scrollPane;
+    List<SearchOptionsConfig> optionsList; 
 
 
     /**
@@ -36,6 +39,8 @@ public final class ComparisonGridPanel extends JPanel
     public void setOptionsList(List<SearchOptionsConfig> optionsList) {
 
         grid_ = ComparisonGrid.createInstance(optionsList);
+        this.optionsList = optionsList;
+        runButton_.setEnabled(optionsList.size() > 0);
         scrollPane.setViewportView(grid_.getTable());
     }
 
@@ -46,6 +51,7 @@ public final class ComparisonGridPanel extends JPanel
 
         runButton_ = new GradientButton("Run comparisons");
         runButton_.addActionListener(this);
+        runButton_.setEnabled(false);
         addremoveButtonsPanel.add(runButton_, BorderLayout.CENTER);
 
         JPanel titlePanel = new JPanel(new BorderLayout());
@@ -67,13 +73,13 @@ public final class ComparisonGridPanel extends JPanel
         Object source = e.getSource();
 
         if (source == runButton_) {
-            runSearchComparisons();
+            PerformanceRunner runner = new PerformanceRunner(optionsList);//, gameName);
+            ResultsModel resultsModel = runner.doComparisonRuns();
+            System.out.println("resultsModel =" + resultsModel);
         }
         
     }
     
-    private void runSearchComparisons() {
-        // todo
-    }
+  
 }
 
