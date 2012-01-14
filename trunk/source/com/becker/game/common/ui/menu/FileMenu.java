@@ -1,9 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.common.ui.menu;
 
-import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
-import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,22 +14,22 @@ import java.awt.event.ActionListener;
  */
 public class FileMenu extends JMenu implements ActionListener {
 
-    private GameMenu gameMenu_;
     private JMenuItem openItem_;
     private JMenuItem saveItem_;
     private JMenuItem saveImageItem_;
     private JMenuItem exitItem_;
+    private FileMenuListener listener;
 
 
     /**
      * Game file menu constructor
      */
-    public FileMenu(GameMenu gameMenu) {
+    public FileMenu(FileMenuListener listener) {
 
         super(GameContext.getLabel("FILE"));
-        gameMenu_ = gameMenu;
         setBorder(BorderFactory.createEtchedBorder());
 
+        this.listener = listener;
         openItem_ =  createMenuItem(GameContext.getLabel("OPEN"));
         saveItem_ =  createMenuItem(GameContext.getLabel("SAVE"));
         saveImageItem_ =  createMenuItem(GameContext.getLabel("SAVE_IMAGE"));
@@ -57,13 +55,13 @@ public class FileMenu extends JMenu implements ActionListener {
     public void actionPerformed( ActionEvent e )  {
         JMenuItem item = (JMenuItem) e.getSource();
         if (item == openItem_)  {
-            gameMenu_.open();
+            listener.openFile();
         }
         else if (item == saveItem_) {
-            gameMenu_.save();
+            listener.saveFile();
         }
         else if (item == saveImageItem_) {
-            GUIUtil.saveSnapshot(gameMenu_.getGameComponent(), FileUtil.getHomeDir());
+            listener.saveImage();
         }
         else if (item == exitItem_) {
             System.exit(0);

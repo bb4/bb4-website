@@ -151,7 +151,7 @@ public final class GameContext {
     }
 
     /**
-     * set the current locale and load the cutpoints for it.
+     * set the current locale .
      * @param locale
      */
     public static void setLocale(LocaleType locale) {

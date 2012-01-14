@@ -274,8 +274,7 @@ public abstract class GamePanel extends TexturedPanel
      * <P>
      * super.actionPerformed(e);
      */
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         if ( source == toolBar_.getNewGameButton() ) {
             //newGameDialog_.setLocationRelativeTo( this );

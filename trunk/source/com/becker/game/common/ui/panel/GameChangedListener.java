@@ -8,7 +8,7 @@ import java.util.EventListener;
  *
  * @author Barry Becker
  */
-public interface GameChangedListener extends EventListener
-{
+public interface GameChangedListener extends EventListener {
+
     void gameChanged( GameChangedEvent evt );
 }

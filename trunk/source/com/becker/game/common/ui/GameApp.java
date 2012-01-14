@@ -7,6 +7,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.PluginManager;
 import com.becker.game.common.ui.menu.FileMenu;
 import com.becker.game.common.ui.menu.GameMenu;
+import com.becker.game.common.ui.menu.GameMenuController;
 import com.becker.game.common.ui.panel.GamePanel;
 import com.becker.ui.util.GUIUtil;
 
@@ -48,8 +49,13 @@ public class GameApp {
      * Add a top level menu to allow changing to a different game from the one currently displayed.
      */
     private void addMenuBar(String initialGame) {
-        GameMenu gameMenu = new GameMenu(frame_, initialGame);
-        JMenu fileMenu = new FileMenu(gameMenu);
+
+        GameMenuController menuListener = new GameMenuController(frame_);
+
+        GameMenu gameMenu = new GameMenu(initialGame);
+        gameMenu.addListener(menuListener);
+
+        JMenu fileMenu = new FileMenu(menuListener);
        
         JMenuBar menubar = new JMenuBar();
         menubar.add(fileMenu);

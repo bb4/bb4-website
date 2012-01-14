@@ -1,19 +1,24 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.common.ui.menu;
 
-import com.becker.game.common.ui.panel.IGamePanel;
-
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The standard file menu for all game programs.
  * Allows such common operations as new, load, save, exit.
  * @author Barry Becker
  */
-public abstract class AbstractGameMenu extends JMenu implements ActionListener {
+public abstract class AbstractGameMenu extends JMenu
+                                       implements ActionListener {
 
-    protected IGamePanel gamePanel_;
+    protected JFrame frame_;
+    protected String currentGameName;
+
+    protected List<GameMenuListener> listeners =
+            new ArrayList<GameMenuListener>();
 
     /**
      * Game file menu constructor
@@ -24,7 +29,16 @@ public abstract class AbstractGameMenu extends JMenu implements ActionListener {
         setBorder(BorderFactory.createEtchedBorder());
     }
 
-    public abstract JComponent getGameComponent();
+    public void addListener(GameMenuListener listener) {
+        listeners.add(listener);
+        notifyOfChange(currentGameName);
+    }
+
+    protected void notifyOfChange(String gameName) {
+        for (GameMenuListener listener : listeners) {
+            listener.gameChanged(gameName);
+        }
+    }
 
     /**
      * Create a menu item.
@@ -37,6 +51,5 @@ public abstract class AbstractGameMenu extends JMenu implements ActionListener {
         item.addActionListener(this);
         return item;
     }
-
 
 }
