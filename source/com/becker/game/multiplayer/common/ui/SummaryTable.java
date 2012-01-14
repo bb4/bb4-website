@@ -3,10 +3,7 @@ package com.becker.game.multiplayer.common.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.player.PlayerList;
-import com.becker.ui.table.ColorCellEditor;
-import com.becker.ui.table.ColorCellRenderer;
-import com.becker.ui.table.TableBase;
-import com.becker.ui.table.TableColumnMeta;
+import com.becker.ui.table.*;
 
 import javax.swing.table.TableModel;
 
@@ -52,12 +49,12 @@ public abstract class SummaryTable extends TableBase  {
 
     @Override
     protected TableModel createTableModel(String[] columnNames)  {
-        return  new PlayerTableModel(columnNames, 0, false);
+        return  new BasicTableModel(columnNames, 0, false);
     }
 
 
-    protected PlayerTableModel getPlayerModel()
+    protected BasicTableModel getPlayerModel()
     {
-        return (PlayerTableModel)table_.getModel();
+        return (BasicTableModel)table_.getModel();
     }
 }

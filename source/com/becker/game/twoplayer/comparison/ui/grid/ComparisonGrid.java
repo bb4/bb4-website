@@ -1,9 +1,9 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.grid;
 
-import com.becker.game.multiplayer.common.ui.PlayerTableModel;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
+import com.becker.ui.table.BasicTableModel;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
-import com.becker.game.twoplayer.comparison.ui.configuration.SearchOptionsConfig;
 import com.becker.ui.table.BasicCellRenderer;
 import com.becker.ui.table.TableBase;
 import com.becker.ui.table.TableColumnMeta;
@@ -21,6 +21,7 @@ import java.util.List;
 class ComparisonGrid extends TableBase {
 
     String[] colNames;
+
 
     /**
      * constructor
@@ -63,11 +64,11 @@ class ComparisonGrid extends TableBase {
 
     @Override
     protected TableModel createTableModel(String[] columnNames) {
-        return new PlayerTableModel(columnNames, 0, false);
+        return new BasicTableModel(columnNames, 0, false);
     }
 
-    private PlayerTableModel getPlayerModel() {
-        return (PlayerTableModel)getModel();
+    private BasicTableModel getPlayerModel() {
+        return (BasicTableModel)getModel();
     }
 
     /**

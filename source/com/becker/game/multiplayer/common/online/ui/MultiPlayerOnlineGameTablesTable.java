@@ -5,11 +5,8 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.online.OnlineGameTable;
 import com.becker.game.common.player.Player;
 import com.becker.game.multiplayer.common.MultiGameOptions;
-import com.becker.game.multiplayer.common.ui.PlayerTableModel;
-import com.becker.ui.table.TableBase;
-import com.becker.ui.table.TableButton;
-import com.becker.ui.table.TableButtonListener;
-import com.becker.ui.table.TableColumnMeta;
+import com.becker.ui.table.BasicTableModel;
+import com.becker.ui.table.*;
 
 import javax.swing.table.TableModel;
 import java.awt.*;
@@ -89,7 +86,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
 
     @Override
     protected TableModel createTableModel(String[] columnNames) {
-        return new PlayerTableModel(columnNames, 0, true);
+        return new BasicTableModel(columnNames, 0, true);
     }
 
     public OnlineGameTable getGameTable(int i) {
@@ -104,9 +101,9 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     }
 
 
-    PlayerTableModel getPlayerModel()
+    BasicTableModel getPlayerModel()
     {
-        return (PlayerTableModel)getModel();
+        return (BasicTableModel)getModel();
     }
 
     /**
@@ -114,7 +111,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
      */
     public void removeAllRows() {
 
-        PlayerTableModel m = this.getPlayerModel();
+        BasicTableModel m = this.getPlayerModel();
         for (int i = m.getRowCount() -1; i >= 0; i--) {
             m.removeRow(i);
         }

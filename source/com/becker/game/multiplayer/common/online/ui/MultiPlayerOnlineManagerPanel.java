@@ -13,7 +13,7 @@ import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.multiplayer.common.MultiGameOptions;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
-import com.becker.game.multiplayer.common.ui.PlayerTableModel;
+import com.becker.ui.table.BasicTableModel;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.table.TableButtonListener;
 
@@ -282,7 +282,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     private void joinDifferentTable(int joinRow) {
 
         System.out.println("in join different table. row="+ joinRow);
-        PlayerTableModel m = onlineGameTablesTable_.getPlayerModel();
+        BasicTableModel m = onlineGameTablesTable_.getPlayerModel();
 
         for (int i=0; i < m.getRowCount(); i++) {
             // you can join tables other than the one you are at as long as they are not already playing.

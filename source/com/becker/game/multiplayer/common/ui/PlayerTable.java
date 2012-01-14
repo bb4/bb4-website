@@ -4,10 +4,7 @@ package com.becker.game.multiplayer.common.ui;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
-import com.becker.ui.table.ColorCellEditor;
-import com.becker.ui.table.ColorCellRenderer;
-import com.becker.ui.table.TableBase;
-import com.becker.ui.table.TableColumnMeta;
+import com.becker.ui.table.*;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
@@ -89,7 +86,7 @@ public abstract class PlayerTable extends TableBase {
             JOptionPane.showMessageDialog(null, "You are not allowed to delete all the players!");
             return;
         }
-        PlayerTableModel model = (PlayerTableModel)getModel();
+        BasicTableModel model = (BasicTableModel)getModel();
         for (int i=nSelected-1; i>=0; i--) {
             int selRow = selectedRows[i];
             GameContext.log(0, "adding this to delete list:"
@@ -99,13 +96,13 @@ public abstract class PlayerTable extends TableBase {
         }
     }
 
-    protected PlayerTableModel getPlayerModel() {
-        return (PlayerTableModel) getModel();
+    protected BasicTableModel getPlayerModel() {
+        return (BasicTableModel) getModel();
     }
 
     @Override
     protected TableModel createTableModel(String[] columnNames) {
-        return new PlayerTableModel(columnNames, 0, true);
+        return new BasicTableModel(columnNames, 0, true);
     }
 
 }

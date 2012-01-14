@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.game.twoplayer.comparison.ui.configuration;
+package com.becker.game.twoplayer.comparison.model;
 
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
@@ -13,6 +13,7 @@ public class SearchOptionsConfig {
     
     private String name;
     private SearchOptions searchOptions;
+    //private
     
     public SearchOptionsConfig(String name, SearchOptions options) {
         this.name = name;
