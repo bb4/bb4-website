@@ -16,13 +16,13 @@ public class GoPlayerOptions extends TwoPlayerPlayerOptions {
     /** initial look ahead factor. */
     private static final int DEFAULT_LOOK_AHEAD =4;
 
-    /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
+    /** for any given ply never consider less than this of the top moves. */
     private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 0;
 
-    /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. Not used for go */
+    /** for any given ply never consider more than BEST_PERCENTAGE of the top moves. Not used for go */
     private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 60;
 
-    /** for any given ply never consider less that this many moves. */
+    /** for any given ply never consider less than this many moves. */
     private static final int DEFAULT_MIN_BEST_MOVES = 6;
 
 
@@ -44,7 +44,7 @@ public class GoPlayerOptions extends TwoPlayerPlayerOptions {
                                  new BestMovesSearchOptions(DEFAULT_PERCENTAGE_BEST_MOVES,
                                                             DEFAULT_MIN_BEST_MOVES,
                                                             DEFAULT_PERCENT_LESS_THAN_BEST_THRESH),
-                                 new MonteCarloSearchOptions(200, 1.0, 10));
+                                 new MonteCarloSearchOptions(200, 0.9, 10));
         opts.setSearchStrategyMethod(SearchStrategyType.NEGASCOUT);
         opts.getBruteSearchOptions().setQuiescence(true);
         return opts;

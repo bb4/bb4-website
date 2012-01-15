@@ -1,6 +1,11 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.grid;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.common.plugin.PluginManager;
+import com.becker.game.common.ui.menu.GameMenuListener;
+import com.becker.game.common.ui.panel.IGamePanel;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 import com.becker.game.twoplayer.comparison.execution.PerformanceRunner;
 import com.becker.game.twoplayer.comparison.model.ResultsModel;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
@@ -17,12 +22,14 @@ import java.awt.event.ActionListener;
  * @author Barry Becker
  */
 public final class ComparisonGridPanel extends JPanel
-                                       implements ActionListener {
+                                       implements ActionListener, GameMenuListener {
 
     private GradientButton runButton_;
     private ComparisonGrid grid_;
     private JScrollPane scrollPane;
-    SearchOptionsConfigList optionsList;
+    private SearchOptionsConfigList optionsList;
+    private String gameName;
+
 
 
     /**
@@ -71,13 +78,35 @@ public final class ComparisonGridPanel extends JPanel
         Object source = e.getSource();
 
         if (source == runButton_) {
-            PerformanceRunner runner = new PerformanceRunner(optionsList);//, gameName);
+
+            IGamePanel gamePanel = createGamePanel(gameName);
+
+            PerformanceRunner runner =
+                    new PerformanceRunner((TwoPlayerPanel)gamePanel, optionsList);
             ResultsModel resultsModel = runner.doComparisonRuns();
             System.out.println("resultsModel =" + resultsModel);
-        }
-        
+        }        
     }
-    
-  
+
+    public void gameChanged(String gameName) {
+
+        this.gameName = gameName;
+    }
+
+
+    public IGamePanel createGamePanel(String gameName) {
+
+        // this will load the resources for the specified game.
+        GameContext.loadGameResources(gameName);
+
+        IGamePanel gamePanel = PluginManager.getInstance().getPlugin(gameName).getPanelInstance();
+        //gamePanel.init(this);
+
+        //frame_.getContentPane().add(getGameComponent());
+        //frame_.setTitle(gamePanel_.getTitle());
+        //frame_.setVisible(true);
+
+        return gamePanel;
+    }
 }
 

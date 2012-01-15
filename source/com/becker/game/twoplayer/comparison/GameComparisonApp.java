@@ -25,6 +25,7 @@ public class GameComparisonApp {
 
     private static final int WIDTH = 1200;
     private static final int HEIGHT = 900;
+    private static final String DEFAULT_GAME = "tictactoe";
     
     private JFrame frame_;
     private GameComparisonPanel gameComparisonPanel;
@@ -39,12 +40,11 @@ public class GameComparisonApp {
         GUIUtil.setCustomLookAndFeel();
 
         frame_ = new JFrame();
-       
-        addMenuBar(initialGame);
 
         frame_.setBounds(200, 200, WIDTH, HEIGHT);
         gameComparisonPanel = new GameComparisonPanel();
         frame_.getContentPane().add(gameComparisonPanel);
+        addMenuBar(initialGame);
 
         // display the frame
         frame_.setVisible(true);
@@ -58,6 +58,8 @@ public class GameComparisonApp {
         GameComparisonMenuController menuController = new GameComparisonMenuController(frame_);
         GameComparisonMenu gameMenu = new GameComparisonMenu(initialGame);
         gameMenu.addListener(menuController);
+        gameMenu.addListener(gameComparisonPanel.getGridPanel());
+
         JMenu fileMenu = new FileMenu(menuController);
        
         JMenuBar menubar = new JMenuBar();
@@ -80,7 +82,7 @@ public class GameComparisonApp {
 
         GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
 
-        String defaultGame = PluginManager.getInstance().getDefaultPlugin().getName();
+        String defaultGame = DEFAULT_GAME;
         String gameName = defaultGame;
         if (args.length == 1) {
             // if there is only one arg assume it is the name of the game

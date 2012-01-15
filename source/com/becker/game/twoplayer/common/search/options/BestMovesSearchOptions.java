@@ -34,7 +34,7 @@ public class BestMovesSearchOptions {
      * @param bestPercentage default number of best moves to consider at each ply.
      * @param minBestMoves we will never consider fewer than this many moves when searching.
      * @param percentLessThanBestThresh Select best moves whose values is no less than this percent less
-     *  than the highest value in the set
+     *  than the highest value in the set.
      */
     public BestMovesSearchOptions(int bestPercentage, int minBestMoves, int percentLessThanBestThresh) {
         bestPercentage_ = bestPercentage;

@@ -19,6 +19,9 @@ public class PerformanceResults {
     
     /** the time in milliseconds that it took the game to run. */
     private long timeMillis;
+
+    /** number of moves that were played. */
+    private int numMoves;
             
     /** How much the winning player won by */
     private double strengthOfWin;
@@ -26,11 +29,14 @@ public class PerformanceResults {
     private long numP1NodesSearched;
     private long numP2NodesSearched;
     
-    
-    public PerformanceResults(boolean p1Won, boolean wasTie, double strengthOfWin) {
+    /** Constructor */
+    public PerformanceResults(boolean p1Won, boolean wasTie, double strengthOfWin,
+                              int numMoves, long timeMillis) {
         this.player1Won = p1Won;
         this.wasTie = wasTie;
         this.strengthOfWin = strengthOfWin;
+        this.numMoves = numMoves;
+        this.timeMillis = timeMillis;
     }
     
     public boolean getPlayer1Won() {
@@ -47,6 +53,10 @@ public class PerformanceResults {
     
     public double getNumSeconds() {
         return (double) timeMillis / 1000.0;
+    }
+
+    public int getNumMoves() {
+        return numMoves;
     }
     
     public String getTimeFormatted() {
@@ -68,7 +78,7 @@ public class PerformanceResults {
             bldr.append(getStrengthOfWin());
         }
         bldr.append(" in ").append(getTimeFormatted());
+        bldr.append(" and " + getNumMoves() +" moves.");
         return bldr.toString();
     }
-        
 }

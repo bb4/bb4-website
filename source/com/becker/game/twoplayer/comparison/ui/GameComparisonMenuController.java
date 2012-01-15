@@ -28,6 +28,7 @@ public class GameComparisonMenuController extends GameMenuController {
      */
     @Override
     protected void showGame(String gameName) {
+
         // this will load the resources for the specified game.
         GameContext.loadGameResources(gameName);
 

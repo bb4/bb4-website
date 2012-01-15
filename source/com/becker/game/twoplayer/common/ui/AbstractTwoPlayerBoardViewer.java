@@ -128,17 +128,17 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     @Override
     public void startNewGame() {
         reset();
-        TwoPlayerController c = get2PlayerController();
-        if (get2PlayerController().getTwoPlayerOptions().isAutoOptimize())
+        TwoPlayerController controller = get2PlayerController();
+        if (get2PlayerController().getTwoPlayerOptions().isAutoOptimize())  {
             runOptimization();
-
-        if (c.getPlayers().allPlayersComputer() ) {
-            c.computerMovesFirst();
+        }
+        if (controller.getPlayers().allPlayersComputer() ) {
+            controller.computerMovesFirst();
             doComputerMove( false );
         }
-        else if ( c.doesComputerMoveFirst() ) {
+        else if ( controller.doesComputerMoveFirst() ) {
             // computer vs human opponent
-            c.computerMovesFirst();
+            controller.computerMovesFirst();
             refresh();
         }
         // for all other cases a human moves first
@@ -245,8 +245,8 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         assert c == evt.getController();
 
         // note: we don't show the winner dialog if we are having the computer play against itself.
-        if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true)
-                && !c.getTwoPlayerOptions().isAutoOptimize()) {
+        if (c.getSearchable().done((TwoPlayerMove)evt.getMove(), true)
+                && c.getTwoPlayerOptions().getShowGameOverDialog()) {
             showWinnerDialog();
             c.reset();
         }
