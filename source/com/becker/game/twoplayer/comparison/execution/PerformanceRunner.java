@@ -4,8 +4,7 @@ package com.becker.game.twoplayer.comparison.execution;
 import com.becker.game.twoplayer.comparison.model.PerformanceResults;
 import com.becker.game.twoplayer.comparison.model.ResultsModel;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
-
-import java.util.List;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 
 /**
  * Run through the grid of game combinations and gather the performance results
@@ -13,9 +12,9 @@ import java.util.List;
  */
 public class PerformanceRunner {
         
-    List<SearchOptionsConfig> optionsList;
+    SearchOptionsConfigList optionsList;
     
-    public PerformanceRunner(List<SearchOptionsConfig> optionsList)  {
+    public PerformanceRunner(SearchOptionsConfigList optionsList)  {
          this.optionsList = optionsList;
     }
 
@@ -44,6 +43,7 @@ public class PerformanceRunner {
         SearchOptionsConfig config1 = optionsList.get(i);
         SearchOptionsConfig config2 = optionsList.get(j);
 
+        // run with each as player1
 
         return new PerformanceResults(true, false, 10);
     }

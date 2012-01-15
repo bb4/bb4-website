@@ -1,15 +1,14 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.configuration;
 
-import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 /**
  * Allow the user to maintain their current orders and add new ones.
@@ -64,7 +63,7 @@ public final class ConfigurationPanel extends JPanel
     /**
      * @return  the options list in the table
      */
-    public List<SearchOptionsConfig> getConfigurations() {
+    public SearchOptionsConfigList getConfigurations() {
         return configTable_.getSearchOptions();
     }
 
