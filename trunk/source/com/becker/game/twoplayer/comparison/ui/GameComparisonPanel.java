@@ -62,6 +62,10 @@ public class GameComparisonPanel extends JPanel
         this.add(tabbedPane, BorderLayout.CENTER );
     }
 
+    public ComparisonGridPanel getGridPanel() {
+        return comparisonGridPanel;
+    }
+
     /**
      * handle button click actions.
      * If you add your own custom buttons, you should override this, but be sure the first line is

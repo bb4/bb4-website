@@ -40,6 +40,7 @@ public abstract class TwoPlayerPanel extends GamePanel
     /** for showing progress while the computer thinks. */
     private JProgressBar progressBar_;
 
+    /** dialog to show the game tree while processing and other debug info. */
     private GameTreeDialog treeDialog_;
 
     /**
@@ -47,7 +48,7 @@ public abstract class TwoPlayerPanel extends GamePanel
      */
     protected TwoPlayerPanel()  {}
 
-    private TwoPlayerController get2PlayerController() {
+    public TwoPlayerController get2PlayerController() {
         return (TwoPlayerController)boardViewer_.getController();
     }
 
@@ -63,7 +64,8 @@ public abstract class TwoPlayerPanel extends GamePanel
         treeDialog_ = createGameTreeDialog();
 
         TwoPlayerOptions options = get2PlayerController().getTwoPlayerOptions();
-        GameContext.log(2, "2player pane init  get2PlayerController().getShowGameTree() ="+ options.getShowGameTree() );
+        GameContext.log(2, "2player pane init  get2PlayerController().getShowGameTree() ="
+                + options.getShowGameTree() );
         if (options.getShowGameTree()) {
             showGameTreeDialog();
         }
@@ -74,7 +76,7 @@ public abstract class TwoPlayerPanel extends GamePanel
         progressBar_ = createProgressBar();
         boardViewer_.setProgressBar(progressBar_);
 
-        // put the progress bar in a panel so it does not cause a relayout
+        // put the progress bar in a panel so it does not cause a re-layout
         JPanel progressPanel = new TexturedPanel(BG_TEXTURE);
         progressPanel.setLayout(new BorderLayout());
         //progressPanel.setPreferredSize(new Dimension(1000, 20));
@@ -111,9 +113,12 @@ public abstract class TwoPlayerPanel extends GamePanel
      * @return the new game tree dialog
      */
     protected GameTreeDialog createGameTreeDialog() {
-        AbstractTwoPlayerBoardViewer v = (AbstractTwoPlayerBoardViewer)createBoardViewer();
-        v.setViewOnly( true ); // we don't want it to recieve click events
-        return new GameTreeDialog( null, v, new GameTreeCellRenderer((TwoPlayerPieceRenderer)v.getPieceRenderer()) );
+        AbstractTwoPlayerBoardViewer viewer = (AbstractTwoPlayerBoardViewer)createBoardViewer();
+        // we don't want it to receive click events
+        viewer.setViewOnly(true);
+        GameTreeCellRenderer renderer =
+                new GameTreeCellRenderer((TwoPlayerPieceRenderer)viewer.getPieceRenderer());
+        return new GameTreeDialog( null, viewer, renderer );
     }
 
     /**
@@ -137,28 +142,25 @@ public abstract class TwoPlayerPanel extends GamePanel
     @Override
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
-        AbstractTwoPlayerBoardViewer v = (AbstractTwoPlayerBoardViewer)boardViewer_;
 
         if ( source == toolBar_.getNewGameButton()) {
             get2PlayerController().pause();
             boolean canceled = newGameDialog_.showDialog();
             if ( !canceled ) { // newGame a game with the newly defined options
-                // the only case we don't show the progress bar is if both players are human.
-                progressBar_.setVisible(!get2PlayerController().getPlayers().allPlayersHuman());
-                v.startNewGame();
+                startGame();
             }
             else {
-                v.continueProcessing();
+                getBoardViewer().continueProcessing();
             }
         }
         else if ( source == toolBar_.getUndoButton() ) {
-            v.undoLastManMove();
+            getBoardViewer().undoLastManMove();
             // gray it if there are now no more moves to undo
             toolBar_.getUndoButton().setEnabled(boardViewer_.canUndoMove());
             toolBar_.getRedoButton().setEnabled(true);
         }
         else if ( source == toolBar_.getRedoButton() ) {
-            v.redoLastManMove();
+            getBoardViewer().redoLastManMove();
             // gray it if there are now no more moves to undo
             toolBar_.getRedoButton().setEnabled(boardViewer_.canRedoMove());
             toolBar_.getUndoButton().setEnabled(true);
@@ -178,6 +180,18 @@ public abstract class TwoPlayerPanel extends GamePanel
         }
         else if ( source == toolBar_.getHelpButton() )
             showHelpDialog();
+    }
+
+    private AbstractTwoPlayerBoardViewer getBoardViewer() {
+        return (AbstractTwoPlayerBoardViewer)boardViewer_;
+    }
+
+    /**
+     * We don't show the progress bar is if both players are human.
+     */
+    public void startGame()  {
+         progressBar_.setVisible(!get2PlayerController().getPlayers().allPlayersHuman());
+         getBoardViewer().startNewGame();
     }
 
 }

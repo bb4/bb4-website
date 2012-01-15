@@ -34,11 +34,29 @@ public class SearchOptions {
 
     /**
      * Constructor
+     */
+    public SearchOptions(SearchStrategyType algorithm) {
+        this(algorithm, new BruteSearchOptions(), new BestMovesSearchOptions(), new MonteCarloSearchOptions());
+    }
+
+    /**
+     * Constructor
      * @param bruteOptions brute force search options to use.
      */
     public SearchOptions(BruteSearchOptions bruteOptions,
                          BestMovesSearchOptions bestMovesOptions,
                          MonteCarloSearchOptions mcOptions) {
+        this(DEFAULT_STRATEGY_METHOD, bruteOptions, bestMovesOptions, mcOptions);
+    }
+
+    /**
+     * Constructor
+     */
+    public SearchOptions(SearchStrategyType algorithm,
+                         BruteSearchOptions bruteOptions,
+                         BestMovesSearchOptions bestMovesOptions,
+                         MonteCarloSearchOptions mcOptions) {
+        strategyMethod_ = algorithm;
         bruteOptions_ = bruteOptions;
         bestMovesOptions_ = bestMovesOptions;
         monteCarloOptions_ = mcOptions;

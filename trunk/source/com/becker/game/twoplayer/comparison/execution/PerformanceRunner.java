@@ -1,6 +1,15 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.execution;
 
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.plugin.GamePlugin;
+import com.becker.game.common.plugin.PluginManager;
+import com.becker.game.common.ui.panel.IGamePanel;
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 import com.becker.game.twoplayer.comparison.model.PerformanceResults;
 import com.becker.game.twoplayer.comparison.model.ResultsModel;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
@@ -11,11 +20,13 @@ import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
  * @author Barry Becker
  */
 public class PerformanceRunner {
-        
-    SearchOptionsConfigList optionsList;
+
+    private SearchOptionsConfigList optionsList;
+    private TwoPlayerPanel gamePanel_;
     
-    public PerformanceRunner(SearchOptionsConfigList optionsList)  {
+    public PerformanceRunner(TwoPlayerPanel gamePanel, SearchOptionsConfigList optionsList)  {
          this.optionsList = optionsList;
+        this.gamePanel_ = gamePanel;
     }
 
     /**
@@ -26,6 +37,11 @@ public class PerformanceRunner {
 
         int size = optionsList.size();
         ResultsModel model = new ResultsModel(size);
+
+        //GamePlugin plugin = PluginManager.getInstance().getPlugin(gameName);
+        GameRunnerDialog runnerDialog = new GameRunnerDialog(gamePanel_);
+        runnerDialog.showDialog();
+        gamePanel_.init(null);
 
         for (int i=0; i<size; i++) {
             for (int j=0; j<size; j++) {
@@ -43,9 +59,33 @@ public class PerformanceRunner {
         SearchOptionsConfig config1 = optionsList.get(i);
         SearchOptionsConfig config2 = optionsList.get(j);
 
-        // run with each as player1
+        TwoPlayerController controller = gamePanel_.get2PlayerController();
+        PlayerList players = controller.getPlayers();
+        ((TwoPlayerOptions)controller.getOptions()).setShowGameOverDialog(false);
+        
+        Player player1 = players.getPlayer1();
+        Player player2 = players.getPlayer2();
+        player1.setHuman(false);
+        player2.setHuman(false);
+        ((TwoPlayerPlayerOptions)(player1.getOptions())).setSearchOptions(config1.getSearchOptions());
+        ((TwoPlayerPlayerOptions)(player2.getOptions())).setSearchOptions(config2.getSearchOptions());
 
-        return new PerformanceResults(true, false, 10);
+        long startTime = System.currentTimeMillis();
+        // should run with each as player1
+        gamePanel_.startGame();
+
+        assert (controller.isDone());
+        System.out.println("game is done");
+        double strengthOfWin = controller.getStrengthOfWin();
+         
+        int numMoves = controller.getNumMoves();
+        long elapsedMillis = System.currentTimeMillis() - startTime;
+
+        boolean isTie = !players.anyPlayerWon();
+        boolean player1Won = players.getWinningPlayer() == player1;
+        controller.reset();
+
+        return new PerformanceResults(player1Won, isTie, strengthOfWin, numMoves, elapsedMillis);
     }
 
 }

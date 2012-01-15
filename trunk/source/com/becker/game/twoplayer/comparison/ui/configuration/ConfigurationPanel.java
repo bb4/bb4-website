@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.comparison.ui.configuration;
 
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
+import com.becker.game.twoplayer.comparison.model.data.DefaultSearchConfigurations;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
@@ -18,6 +19,9 @@ import java.awt.event.ActionListener;
 public final class ConfigurationPanel extends JPanel
                               implements ActionListener {
 
+    private static final SearchOptionsConfigList DEFAULT_CONFIGURATIONS =
+            new DefaultSearchConfigurations();
+
     private GradientButton addConfigButton_;
     private GradientButton removeConfigButton_;
     private ConfigurationsTable configTable_;
@@ -28,7 +32,7 @@ public final class ConfigurationPanel extends JPanel
      */
     public ConfigurationPanel() {
 
-        configTable_ = new ConfigurationsTable();
+        configTable_ = new ConfigurationsTable(DEFAULT_CONFIGURATIONS);
         init();
     }
 

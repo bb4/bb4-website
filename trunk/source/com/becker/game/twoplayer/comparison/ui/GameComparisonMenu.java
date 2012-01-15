@@ -20,6 +20,7 @@ public class GameComparisonMenu extends GameMenu  {
     }
 
     /** @return a list of only the two player games */
+    @Override
     protected List<GamePlugin> getPlugins() {
         return PluginManager.getInstance().getPlugins(PluginType.TWO_PLAYER_GAME);
     }

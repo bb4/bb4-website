@@ -17,4 +17,18 @@ public class SearchOptionsConfigList extends ArrayList<SearchOptionsConfig> {
     public SearchOptionsConfigList(int size)  {
         super(size);
     }
+
+    /**
+     * @throws IllegalStateException if we already have a configuration with that name.
+     */
+    public boolean add(SearchOptionsConfig config) {
+
+        for (SearchOptionsConfig element : this) {
+            if (element.getName().equals(config.getName())) {
+                throw new IllegalStateException(
+                        "Cannot have two conigurations with the same name");
+            }
+        }
+        return super.add(config);
+    }
 }

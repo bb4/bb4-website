@@ -17,6 +17,7 @@ public class TwoPlayerOptions extends GameOptions {
     /** if true, then try to show a dialog visualizing the game tree.  */
     private boolean showGameTree_ = false;
 
+    private boolean showGameOverDialog_ = true;
     private boolean autoOptimize_;
     private String autoOptimizeFile_ = null;
 
@@ -62,6 +63,14 @@ public class TwoPlayerOptions extends GameOptions {
         showGameTree_ = show;
     }
 
+    public final void setShowGameOverDialog(boolean value) {
+        showGameOverDialog_ = value;
+    }
+
+    public boolean getShowGameOverDialog() {
+        return showGameOverDialog_;
+    }
+
     /**
      * Optimize the evaluation weights by running many games where the computer
      * plays against itself.
@@ -69,6 +78,7 @@ public class TwoPlayerOptions extends GameOptions {
      */
     public final void setAutoOptimize(boolean autoOptimize) {
         autoOptimize_ = autoOptimize;
+        showGameOverDialog_ = false;
     }
 
     /**

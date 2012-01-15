@@ -64,7 +64,7 @@ class ConfigurationsTable extends TableBase {
      * constructor
      * @param optionsList to initialize the rows in the table with. May be null.
      */
-    public ConfigurationsTable(List<SearchOptions> optionsList)  {
+    public ConfigurationsTable(SearchOptionsConfigList optionsList)  {
         super(optionsList, columnNames_);
     }
 
