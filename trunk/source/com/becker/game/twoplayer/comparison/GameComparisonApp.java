@@ -57,7 +57,7 @@ public class GameComparisonApp {
     private void addMenuBar(String initialGame) {
         GameComparisonMenuController menuController = new GameComparisonMenuController(frame_);
         GameComparisonMenu gameMenu = new GameComparisonMenu(initialGame);
-
+        gameMenu.addListener(menuController);
         JMenu fileMenu = new FileMenu(menuController);
        
         JMenuBar menubar = new JMenuBar();

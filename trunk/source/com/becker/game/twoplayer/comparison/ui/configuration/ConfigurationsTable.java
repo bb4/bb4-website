@@ -1,15 +1,15 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.configuration;
 
-import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
-import com.becker.ui.table.BasicTableModel;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 import com.becker.ui.table.BasicCellRenderer;
+import com.becker.ui.table.BasicTableModel;
 import com.becker.ui.table.TableBase;
 import com.becker.ui.table.TableColumnMeta;
 
 import javax.swing.table.TableModel;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,7 +25,7 @@ class ConfigurationsTable extends TableBase {
     private static final int BRUTE_OPTIONS_INDEX = 2;
     private static final int BEST_MOVE_OPTIONS_INDEX = 3;
     private static final int MONTE_CARLO_OPTIONS_INDEX = 4;
-    // I don't wnat this extra column, but without it the object is not passed through
+    // I don't want this extra column, but without it the object is not passed through
     private static final int INSTANCE_INDEX = 5;
 
     private static final String NAME = "Name";
@@ -98,12 +98,12 @@ class ConfigurationsTable extends TableBase {
     /**
      * @return the search options represented by rows in the table
      */
-    public List<SearchOptionsConfig> getSearchOptions() {
+    public SearchOptionsConfigList getSearchOptions() {
 
         TableModel model = getPlayerModel();
         int nRows = model.getRowCount();
         System.out.println("numRows = " + nRows);
-        List<SearchOptionsConfig> searchOptions = new ArrayList<SearchOptionsConfig>(nRows);
+        SearchOptionsConfigList searchOptions = new SearchOptionsConfigList(nRows);
 
         for (int i = 0; i < nRows; i++) {
             String options = (String)model.getValueAt(i, INSTANCE_INDEX-1);

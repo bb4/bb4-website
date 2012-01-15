@@ -1,15 +1,15 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.grid;
 
-import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
-import com.becker.ui.table.BasicTableModel;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 import com.becker.ui.table.BasicCellRenderer;
+import com.becker.ui.table.BasicTableModel;
 import com.becker.ui.table.TableBase;
 import com.becker.ui.table.TableColumnMeta;
 
 import javax.swing.table.TableModel;
-import java.util.List;
 
 
 /**
@@ -27,7 +27,7 @@ class ComparisonGrid extends TableBase {
      * constructor
      * @param optionsList to initialize the rows in the table with. May be null.
      */
-    public static ComparisonGrid createInstance(List<SearchOptionsConfig> optionsList)  {
+    public static ComparisonGrid createInstance(SearchOptionsConfigList optionsList)  {
         return new ComparisonGrid(optionsList, createColumnNames(optionsList));
     }
 
@@ -35,13 +35,13 @@ class ComparisonGrid extends TableBase {
      * constructor
      * @param optionsList to initialize the rows in the table with. May be null.
      */
-    private ComparisonGrid(List<SearchOptionsConfig> optionsList, String[] colNames)  {
+    private ComparisonGrid(SearchOptionsConfigList optionsList, String[] colNames)  {
         super(optionsList, colNames);
         this.colNames = colNames;
         this.initializeTable(optionsList);
     }
     
-    private static String[] createColumnNames(List<SearchOptionsConfig> optionsList) {
+    private static String[] createColumnNames(SearchOptionsConfigList optionsList) {
         String[] names = new String[optionsList.size() + 1];
         names[0] = "---";
         int i=1;

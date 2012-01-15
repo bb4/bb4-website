@@ -3,15 +3,13 @@ package com.becker.game.twoplayer.comparison.ui.grid;
 
 import com.becker.game.twoplayer.comparison.execution.PerformanceRunner;
 import com.becker.game.twoplayer.comparison.model.ResultsModel;
-import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Allow the user to maintain their current orders and add new ones.
@@ -24,7 +22,7 @@ public final class ComparisonGridPanel extends JPanel
     private GradientButton runButton_;
     private ComparisonGrid grid_;
     private JScrollPane scrollPane;
-    List<SearchOptionsConfig> optionsList; 
+    SearchOptionsConfigList optionsList;
 
 
     /**
@@ -32,11 +30,11 @@ public final class ComparisonGridPanel extends JPanel
      */
     public ComparisonGridPanel() {
 
-        grid_ = ComparisonGrid.createInstance(new ArrayList<SearchOptionsConfig>());
+        grid_ = ComparisonGrid.createInstance(new SearchOptionsConfigList());
         init();
     }
     
-    public void setOptionsList(List<SearchOptionsConfig> optionsList) {
+    public void setOptionsList(SearchOptionsConfigList optionsList) {
 
         grid_ = ComparisonGrid.createInstance(optionsList);
         this.optionsList = optionsList;

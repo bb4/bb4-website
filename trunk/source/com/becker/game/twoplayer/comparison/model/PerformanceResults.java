@@ -2,7 +2,6 @@
 package com.becker.game.twoplayer.comparison.model;
 
 import com.becker.common.format.FormatUtil;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
  * Right now this just contains the name of the config and the
