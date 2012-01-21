@@ -6,10 +6,8 @@ import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.MonteCarloSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.twoplayer.common.ui.dialogs.searchoptions.MonteCarloOptionsPanel;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
-import groovyjarjarantlr.Lookahead;
 
 import java.util.ArrayList;
 

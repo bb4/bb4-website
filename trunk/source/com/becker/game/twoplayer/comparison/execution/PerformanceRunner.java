@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.execution;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.plugin.GamePlugin;
@@ -37,8 +38,6 @@ public class PerformanceRunner {
 
         int size = optionsList.size();
         ResultsModel model = new ResultsModel(size);
-
-        //GamePlugin plugin = PluginManager.getInstance().getPlugin(gameName);
         GameRunnerDialog runnerDialog = new GameRunnerDialog(gamePanel_);
         runnerDialog.showDialog();
         gamePanel_.init(null);
@@ -74,10 +73,10 @@ public class PerformanceRunner {
         // should run with each as player1
         gamePanel_.startGame();
 
-        assert (controller.isDone());
-        System.out.println("game is done");
+        //assert (controller.isDone());
+        System.out.println("game is done = " + controller.isDone());
         double strengthOfWin = controller.getStrengthOfWin();
-         
+        System.out.println("str of win = " + strengthOfWin);
         int numMoves = controller.getNumMoves();
         long elapsedMillis = System.currentTimeMillis() - startTime;
 
