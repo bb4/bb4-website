@@ -48,6 +48,7 @@ public abstract class TwoPlayerPanel extends GamePanel
      */
     protected TwoPlayerPanel()  {}
 
+
     public TwoPlayerController get2PlayerController() {
         return (TwoPlayerController)boardViewer_.getController();
     }

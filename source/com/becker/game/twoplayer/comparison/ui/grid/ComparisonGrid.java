@@ -2,8 +2,7 @@
 package com.becker.game.twoplayer.comparison.ui.grid;
 
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
-import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
-import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
+import com.becker.game.twoplayer.comparison.model.*;
 import com.becker.ui.table.BasicCellRenderer;
 import com.becker.ui.table.BasicTableModel;
 import com.becker.ui.table.TableBase;
@@ -20,25 +19,32 @@ import javax.swing.table.TableModel;
  */
 class ComparisonGrid extends TableBase {
 
-    String[] colNames;
+    private static final int HEADER_HEIGHT = 30;
+    private String[] colNames;
 
 
     /**
-     * constructor
+     * Constructor
      * @param optionsList to initialize the rows in the table with. May be null.
      */
     public static ComparisonGrid createInstance(SearchOptionsConfigList optionsList)  {
         return new ComparisonGrid(optionsList, createColumnNames(optionsList));
     }
+    
+    /** Set the height of the rows */
+    public void updateRowHeight(int height) {
+        getTable().setRowHeight((height-HEADER_HEIGHT)/getNumRows());
+    }
 
     /**
-     * constructor
+     * Constructor
      * @param optionsList to initialize the rows in the table with. May be null.
      */
     private ComparisonGrid(SearchOptionsConfigList optionsList, String[] colNames)  {
         super(optionsList, colNames);
         this.colNames = colNames;
         this.initializeTable(optionsList);
+        this.setRowHeight(60);
     }
     
     private static String[] createColumnNames(SearchOptionsConfigList optionsList) {
@@ -57,9 +63,10 @@ class ComparisonGrid extends TableBase {
         columnMeta[0].setPreferredWidth(210);
         columnMeta[0].setMaxWidth(310);
         columnMeta[0].setCellRenderer(new BasicCellRenderer());
-        //for (int i = 1; i < getNumColumns(); i++) {
-         //   columnMeta[i].setTooltip(columnTips_[i]);
-        //}
+        for (int i = 1; i < getNumColumns(); i++) {
+            //columnMeta[i].setTooltip(columnTips_[i]);
+            columnMeta[i].setCellRenderer(new ResultGridCellRenderer());
+        }
     }
 
     @Override
@@ -67,8 +74,9 @@ class ComparisonGrid extends TableBase {
         return new BasicTableModel(columnNames, 0, false);
     }
 
-    private BasicTableModel getPlayerModel() {
-        return (BasicTableModel)getModel();
+    @Override
+    public BasicTableModel getModel() {
+        return (BasicTableModel)table_.getModel();
     }
 
     /**
@@ -79,7 +87,6 @@ class ComparisonGrid extends TableBase {
     public void addRow(Object opts) {
 
         SearchOptionsConfig optionsConfig = (SearchOptionsConfig) opts;
-        SearchOptions sOptions = optionsConfig.getSearchOptions();
 
         if (colNames == null)   return;
 
@@ -87,9 +94,18 @@ class ComparisonGrid extends TableBase {
 
         d[0] = optionsConfig.getName();
         for (int i=1; i<=colNames.length; i++) {
-            d[i] = "...";
+            d[i] = new PerformanceResultsPair();
         }
-        getPlayerModel().addRow(d);
+        getModel().addRow(d);
     }
 
+    public void updateWithResults(ResultsModel model) {
+        int size = colNames.length;
+        System.out.println("size=" + size);
+        for (int i=0; i<size; i++) {
+            for (int j=0; j<size; j++) {
+                getModel().setValueAt(model.getResults(i,j), i, j);
+            }
+        }
+    }
 }

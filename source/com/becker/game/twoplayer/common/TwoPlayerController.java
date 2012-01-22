@@ -331,7 +331,7 @@ public abstract class TwoPlayerController extends GameController {
      * When the user indicates that they want to see the GameTreeDialog,
      * the game panel gives the GameTreeDialog to the Controller:
      * controller_.setGameTreeViewer( treeDialog_ );
-     * Then whenever a move by either party occurs, the GameTreeDialog recieves
+     * Then whenever a move by either party occurs, the GameTreeDialog receives
      * a game tree event. The GameTreeDialog renders the tree that was build up during search.
      * It already has a reference to the root of the tree.
      * If this method is never called, the controller knows
