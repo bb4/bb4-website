@@ -147,6 +147,19 @@ public class GradientButton extends JButton
             double width = getSize().getWidth();
             double height = getSize().getHeight();
 
+            GradientPaint rtow = createGradient(height);
+
+            float opacity = mousedOver_ ? 1.0f : 0.75f;
+            if (!isEnabled()) {
+                opacity = 0.6f;
+            }
+            g2D.setComposite(           // SRC_OVER
+                    AlphaComposite.getInstance( AlphaComposite.SRC_OVER, opacity ));
+            g2D.setPaint( rtow );
+            g2D.fill( new Rectangle2D.Double( 0, 0, width, height ) );
+        }
+
+        private GradientPaint createGradient(double height) {
             Point2D.Double origin = new Point2D.Double( 0.0, 0.0 );
             Point2D.Double end = new Point2D.Double( 0.0, height );
 
@@ -157,20 +170,12 @@ public class GradientButton extends JButton
 
             GradientPaint rtow;
             if ( isSelected() ) {
-                rtow = new GradientPaint( origin, endColor, end, startColor );
+                rtow = new GradientPaint(origin, endColor, end, startColor );
             }
             else {
                 rtow = new GradientPaint( origin, startColor, end, endColor );
             }
-
-            float opacity = mousedOver_ ? 1.0f : 0.75f;
-            if (!isEnabled()) {
-                opacity = 0.6f;
-            }
-            g2D.setComposite(           // SRC_OVER
-                    AlphaComposite.getInstance( AlphaComposite.SRC_OVER, opacity ));
-            g2D.setPaint( rtow );
-            g2D.fill( new Rectangle2D.Double( 0, 0, width, height ) );
+            return rtow;
         }
     }
 }

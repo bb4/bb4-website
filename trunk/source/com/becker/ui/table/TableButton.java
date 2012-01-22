@@ -35,7 +35,7 @@ public class TableButton extends GradientButton
      * Constructor
      *
      * @param text label for all the buttons in the column
-     * @param id   used to identifiy the button clicked in the tableButton handler.
+     * @param id   used to identify the button clicked in the tableButton handler.
      */
     public TableButton(String text, String id) {
         super(text);

@@ -22,13 +22,24 @@ public class PerformanceResults {
 
     /** number of moves that were played. */
     private int numMoves;
+
+    private double normalizedNumSeconds = 1.0;
+    private double normalizedNumMoves = 1.0;
             
     /** How much the winning player won by */
     private double strengthOfWin;
     
     private long numP1NodesSearched;
     private long numP2NodesSearched;
-    
+
+    private boolean normalized;
+
+
+    /** default constructor */
+    public PerformanceResults() {
+        this(false, false, 0, 0, 0);
+    }
+
     /** Constructor */
     public PerformanceResults(boolean p1Won, boolean wasTie, double strengthOfWin,
                               int numMoves, long timeMillis) {
@@ -39,6 +50,13 @@ public class PerformanceResults {
         this.timeMillis = timeMillis;
     }
     
+    public Outcome getOutcome() {
+        if (wasTie) {
+            return Outcome.TIE;
+        }
+        else return player1Won ? Outcome.PLAYER1_WON : Outcome.PLAYER2_WON;
+    }
+
     public boolean getPlayer1Won() {
         return this.player1Won;
     }
@@ -67,6 +85,21 @@ public class PerformanceResults {
         return ( minFmt + seconds + " secs");
     }
 
+    public double getNormalizedNumSeconds() {
+        //assert normalized;
+        return normalizedNumSeconds;
+    }
+
+    public double getNormalizedNumMoves() {
+        //assert normalized;
+        return normalizedNumMoves;
+    }
+
+    public void normalize(ResultMaxTotals maxTotals) {
+        normalizedNumSeconds = getNumSeconds() / maxTotals.maxTotalTimeSeconds;
+        normalizedNumMoves = (double)getNumMoves() / maxTotals.maxTotalMoves;
+        normalized = true;
+    }
 
     public String toString() {
         StringBuilder bldr = new StringBuilder();

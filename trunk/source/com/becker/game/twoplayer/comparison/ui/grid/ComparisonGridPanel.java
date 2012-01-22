@@ -30,8 +30,6 @@ public final class ComparisonGridPanel extends JPanel
     private SearchOptionsConfigList optionsList;
     private String gameName;
 
-
-
     /**
      * constructor - create the tree dialog.
      */
@@ -84,7 +82,8 @@ public final class ComparisonGridPanel extends JPanel
             PerformanceRunner runner =
                     new PerformanceRunner((TwoPlayerPanel)gamePanel, optionsList);
             ResultsModel resultsModel = runner.doComparisonRuns();
-            System.out.println("resultsModel =" + resultsModel);
+            grid_.updateWithResults(resultsModel);
+            System.out.println("resultsModel = " + resultsModel);
         }        
     }
 
@@ -99,14 +98,14 @@ public final class ComparisonGridPanel extends JPanel
         // this will load the resources for the specified game.
         GameContext.loadGameResources(gameName);
 
-        IGamePanel gamePanel = PluginManager.getInstance().getPlugin(gameName).getPanelInstance();
-        //gamePanel.init(this);
+        return PluginManager.getInstance().getPlugin(gameName).getPanelInstance();
+    }
 
-        //frame_.getContentPane().add(getGameComponent());
-        //frame_.setTitle(gamePanel_.getTitle());
-        //frame_.setVisible(true);
+    @Override
+    public void paint(Graphics g) {
 
-        return gamePanel;
+        grid_.updateRowHeight(scrollPane.getHeight());
+        super.paint(g);
     }
 }
 

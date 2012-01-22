@@ -6,7 +6,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
 /**
- * ColorCellRenderer renders a cell in a table that represents a color
+ * Renders a cell in a table that has a tooltip
  * @see ColorCellEditor
  *
  * @author Barry Becker

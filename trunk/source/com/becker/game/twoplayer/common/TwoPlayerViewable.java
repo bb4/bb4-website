@@ -21,7 +21,8 @@ public interface TwoPlayerViewable extends GameViewable {
     void computerMoved(Move m);
 
     /**
-     * Used when the computer is playing against itself, and you want the game to show up in the viewer.
+     * Used when the computer is playing against itself, and you want the game to show up in the viewer and
+     * be synchronous (block and not in separate thread).
      */
     void showComputerVsComputerGame();
 
