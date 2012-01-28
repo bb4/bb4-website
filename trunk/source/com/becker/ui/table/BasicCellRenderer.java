@@ -13,6 +13,14 @@ import java.awt.*;
  */
 public class BasicCellRenderer extends DefaultTableCellRenderer {
 
+    
+    public BasicCellRenderer() {}
+
+    /*
+    public BasicCellRenderer(Color backGroundColor) {
+        super();
+        this.setBackground(backGroundColor);
+    }*/
     /**
      * {@inheritDoc}
      */
@@ -21,4 +29,6 @@ public class BasicCellRenderer extends DefaultTableCellRenderer {
         super.setValue(value);
         this.setToolTipText((value == null) ? "" : value.toString());
     }
+    
+    
 }

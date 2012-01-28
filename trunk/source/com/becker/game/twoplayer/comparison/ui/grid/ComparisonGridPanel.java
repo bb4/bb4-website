@@ -15,6 +15,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Allow the user to maintain their current orders and add new ones.
@@ -77,10 +80,16 @@ public final class ComparisonGridPanel extends JPanel
 
         if (source == runButton_) {
 
-            IGamePanel gamePanel = createGamePanel(gameName);
+            final IGamePanel gamePanel = createGamePanel(gameName);
+
+            //SwingUtilities.invokeLater(new Runnable() {
+            //                public void run() {}
+            //});
 
             PerformanceRunner runner =
-                    new PerformanceRunner((TwoPlayerPanel)gamePanel, optionsList);
+                                new PerformanceRunner((TwoPlayerPanel)gamePanel, optionsList);
+            runner.doComparisonRuns();
+
             ResultsModel resultsModel = runner.doComparisonRuns();
             grid_.updateWithResults(resultsModel);
             System.out.println("resultsModel = " + resultsModel);
