@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.game.twoplayer.comparison.ui.grid;
+package com.becker.game.twoplayer.comparison.ui.grid.cellrenderers;
 
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.twoplayer.comparison.model.Outcome;
@@ -42,11 +42,8 @@ public class ResultGridCellRenderer extends JPanel
      * Constructor
      */
     public ResultGridCellRenderer() {
-        this.setLayout(new BorderLayout());
-        
-        this.setMinimumSize(new Dimension(100, 100));
-        //label = new JLabel("foo");
-        //this.add(label);
+        setLayout(new BorderLayout());
+        setMinimumSize(new Dimension(100, 100));
     }
 
     public Component getTableCellRendererComponent(JTable table,
@@ -60,8 +57,7 @@ public class ResultGridCellRenderer extends JPanel
     private void setLabel(TableModel tableModel, int row, int col) {
 
         perfResults = (PerformanceResultsPair) tableModel.getValueAt(row, col);
-    
-        this.setToolTipText(perfResults.toString());
+        setToolTipText(perfResults.toString());
     }
     
     
