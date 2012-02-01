@@ -111,7 +111,9 @@ public class PerformanceResults {
             bldr.append(getStrengthOfWin());
         }
         bldr.append(" in ").append(getTimeFormatted());
-        bldr.append(" and " + getNumMoves() +" moves.");
+        bldr.append(" and " + getNumMoves() +" moves. ");
+        bldr.append(" normalized time = "+normalizedNumSeconds);
+        bldr.append(" normalized numMoves = "+normalizedNumMoves);
         return bldr.toString();
     }
 }

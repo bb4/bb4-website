@@ -36,14 +36,17 @@ public class PerformanceRunner {
         runnerDialog.showDialog();
         gamePanel_.init(null);
 
+
         for (int i=0; i<size; i++) {
             for (int j=0; j<size; j++) {
-                                
+
+                System.out.println("-loop ------("+i+", "+j+") ----");
                 PerformanceResultsPair results = 
                         getResultsForComparison(i, j);
                 model.setResults(i, j, results);
             }
         }
+        model.normalize();
         return model;
     }
     
@@ -61,8 +64,10 @@ public class PerformanceRunner {
         SearchOptionsConfig config2 = optionsList.get(j);
         ((TwoPlayerPlayerOptions) (player1.getOptions())).setSearchOptions(config1.getSearchOptions());
         ((TwoPlayerPlayerOptions)(player2.getOptions())).setSearchOptions(config2.getSearchOptions());
-        
+
+        System.out.println("("+i+", "+j+") round 1");
         PerformanceResults p1FirstResults = getResultsForRound(player1, player2);
+        System.out.println("("+i+", "+j+") round 2");
         PerformanceResults p2FirstResults = getResultsForRound(player2, player1);
         return new PerformanceResultsPair(p1FirstResults, p2FirstResults);
     }
@@ -72,13 +77,17 @@ public class PerformanceRunner {
         long startTime = System.currentTimeMillis();
         // should run with each as player1
         TwoPlayerController controller = gamePanel_.get2PlayerController();
+
+        // this is freezing the UI and reporting that the first move is null.
         ((TwoPlayerViewable)controller.getViewer()).showComputerVsComputerGame();
+        //gamePanel_.startGame();
+
         PlayerList players = controller.getPlayers();
         players.set(0, player1);
         players.set(1, player2);
         
         assert (controller.isDone());
-        System.out.println("game is done = " + controller.isDone());
+        System.out.println("******** game is done = " + controller.isDone() +" ******");
         double strengthOfWin = controller.getStrengthOfWin();
         System.out.println("str of win = " + strengthOfWin);
         int numMoves = controller.getNumMoves();
