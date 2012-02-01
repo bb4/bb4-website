@@ -82,13 +82,8 @@ public final class ComparisonGridPanel extends JPanel
 
             final IGamePanel gamePanel = createGamePanel(gameName);
 
-            //SwingUtilities.invokeLater(new Runnable() {
-            //                public void run() {}
-            //});
-
             PerformanceRunner runner =
-                                new PerformanceRunner((TwoPlayerPanel)gamePanel, optionsList);
-            runner.doComparisonRuns();
+                new PerformanceRunner((TwoPlayerPanel)gamePanel, optionsList);
 
             ResultsModel resultsModel = runner.doComparisonRuns();
             grid_.updateWithResults(resultsModel);

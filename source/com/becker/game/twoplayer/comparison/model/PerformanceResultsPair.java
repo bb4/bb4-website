@@ -32,7 +32,7 @@ public class PerformanceResultsPair {
     }
 
     public double getTotalNumSeconds() {
-        return p1FirstResults.getNumSeconds() + p2FirstResults.getNumMoves();
+        return p1FirstResults.getNumSeconds() + p2FirstResults.getNumSeconds();
     }
     
     public int getTotalNumMoves() {
@@ -45,18 +45,22 @@ public class PerformanceResultsPair {
     }
     
     public double[] getNormalizedTimes() {
-        return new double[] {p1FirstResults.getNormalizedNumSeconds(), p2FirstResults.getNormalizedNumSeconds()};
+        return new double[] {
+            p1FirstResults.getNormalizedNumSeconds(), p2FirstResults.getNormalizedNumSeconds()
+        };
     }
 
     public double[] getNormalizedNumMoves() {
-        return new double[] {p1FirstResults.getNormalizedNumMoves(), p2FirstResults.getNormalizedNumMoves()};
+        return new double[] {
+            p1FirstResults.getNormalizedNumMoves(), p2FirstResults.getNormalizedNumMoves()
+        };
     }
 
     public String toString() {
         StringBuilder bldr = new StringBuilder("Results pair");
 
         bldr.append(" Player1 first: ").append(p1FirstResults.toString()).append("\n");
-        bldr.append(" Player2 first: ").append(p1FirstResults.toString()).append("\n");
+        bldr.append(" Player2 first: ").append(p2FirstResults.toString()).append("\n");
 
         return bldr.toString();
     }

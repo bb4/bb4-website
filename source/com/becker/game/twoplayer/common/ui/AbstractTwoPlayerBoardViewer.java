@@ -175,7 +175,8 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         // if player one has not already moved, make sure they do
         if (get2PlayerController().getMoveList().isEmpty())  {
             get2PlayerController().computerMovesFirst();
-            assert (!get2PlayerController().getMoveList().isEmpty()) : "Error: null before search";
+            boolean isEmpty = get2PlayerController().getMoveList().isEmpty();
+            assert (!isEmpty) : "Error: null before search";
         }
 
         while ( !done ) {

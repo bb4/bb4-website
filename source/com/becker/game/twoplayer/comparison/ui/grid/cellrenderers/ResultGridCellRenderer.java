@@ -29,12 +29,18 @@ import java.util.List;
  * @author Barry Becker
  */
 public class ResultGridCellRenderer extends JPanel
-                         implements TableCellRenderer {
+                                    implements TableCellRenderer {
   
     private static final Color BG_COLOR = new Color(220, 220, 221);
+    private static final Color BORDER_COLOR = new Color(20, 0, 0, 100);
 
-    private static final Color TIME_BAR_COLOR = new Color(250, 180, 40);
-    private static final Color NUM_MOVES_BAR_COLOR = new Color(190, 210, 1);
+    private static final Color TIME_BAR_COLOR = new Color(170, 140, 100);
+    private static final Color NUM_MOVES_BAR_COLOR = new Color(90, 110, 70);
+
+    // the following must sum to one.
+    private static final double WON_BAR_PROPORTION = 0.8;
+    private static final double TIME_BAR_PROPORTION = 0.1;
+    private static final double NUM_MOVES_BAR_PROPORTION = 0.1;
 
     PerformanceResultsPair perfResults;
 
@@ -68,9 +74,9 @@ public class ResultGridCellRenderer extends JPanel
         Graphics2D g2 = (Graphics2D) g;
         drawBackGround(g2);
 
-        int winBarHeight = getHeight()/2;
-        int timeBarHeight = getHeight()/4;
-        int movesBarHeight = getHeight()/4;
+        int winBarHeight = (int)(WON_BAR_PROPORTION * getHeight());
+        int timeBarHeight = (int)(TIME_BAR_PROPORTION * getHeight());
+        int movesBarHeight = (int)(NUM_MOVES_BAR_PROPORTION * getHeight());
         
         drawWinBar(winBarHeight, g2);
         drawTimeBar(timeBarHeight, winBarHeight, g2);
@@ -105,20 +111,25 @@ public class ResultGridCellRenderer extends JPanel
     
     private void drawDualBar(int barHeight, int yOffset, double[] normValues, Color barColor, Graphics2D g2) {
 
-        System.out.println("normValue1=" + normValues[0] +"normValue2=" + normValues[1] );
         int n1Width = (int)(normValues[0] * getWidth());
-        g2.setPaint(createGradient(n1Width, barColor));
+        g2.setPaint(createGradient(0, n1Width, barColor));
         g2.fillRect(0, yOffset, n1Width, barHeight);
+
         
         int n2Width = (int)(normValues[1] * getWidth());
-        g2.setPaint(createGradient(n2Width, barColor));
-        g2.fillRect(n1Width, yOffset, n2Width, barHeight);        
+        g2.setPaint(createGradient(n1Width, n2Width, barColor));
+        g2.fillRect(n1Width, yOffset, n2Width, barHeight);
+
+        // add boarder
+        g2.setColor(BORDER_COLOR);
+        g2.drawRect(0, yOffset, n1Width, barHeight);
+        g2.drawRect(n1Width, yOffset, n2Width, barHeight);
     }
     
-    private GradientPaint createGradient(double width, Color color) {
+    private GradientPaint createGradient(double offset, double width, Color color) {
         
-        Point2D.Double origin = new Point2D.Double( 0.0, 0.0 );
-        Point2D.Double end = new Point2D.Double( width, 0.0 );
+        Point2D.Double origin = new Point2D.Double( offset, 0.0 );
+        Point2D.Double end = new Point2D.Double( offset + width, 0.0 );
 
         Color startColor = color.brighter();
       
