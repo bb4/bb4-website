@@ -50,8 +50,7 @@ public class GraphPanel extends JPanel implements Runnable {
         } );
     }
 
-    public void setPaused( boolean newPauseState )
-    {
+    public void setPaused( boolean newPauseState ) {
         synchronized (pauseLock_) {
             if ( paused_ != newPauseState ) {
                 paused_ = newPauseState;

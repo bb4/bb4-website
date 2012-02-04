@@ -2,6 +2,7 @@
 package com.becker.optimization.parameter;
 
 
+import com.becker.common.math.MathUtil;
 import com.becker.common.math.Vector;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.types.Parameter;
@@ -88,10 +89,15 @@ class ImprovementIteration {
         return incFintess;
     }
 
-    /** update gradient */
+    /**
+     * Update gradient.
+     * Use EPS if the gradLength is 0.
+     */
     void updateGradient(double jumpSize, double gradLength) {
+        double gradLen = gradLength ==0 ?  MathUtil.EPS_MEDIUM : gradLength;
         for ( int i = 0; i < delta.size(); i++ ) {
-            gradient.set(i, jumpSize * fitnessDelta.get(i) / (delta.get(i) * gradLength));
+            double denominator = delta.get(i) * gradLen;
+            gradient.set(i, jumpSize * fitnessDelta.get(i) / denominator);
         }
     }
 }

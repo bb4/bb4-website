@@ -179,6 +179,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
             assert (!isEmpty) : "Error: null before search";
         }
 
+        // don't run this on the event dispatch thread.
         while ( !done ) {
             done = doComputerMove( false );
             // if done the final move was placed
@@ -205,7 +206,10 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         setCursor( waitCursor_ );
 
         try {
-            return moveProgress_.doComputerMove(isPlayer1);
+            boolean done =  moveProgress_.doComputerMove(isPlayer1);
+            // force
+            paint( this.getGraphics() );
+            return done;
         }
         catch  (AssertionError ae) {
             // if any errors occur during search, I want to save the state of the game to

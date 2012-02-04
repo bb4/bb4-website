@@ -148,7 +148,7 @@ public class NumericParameterArray extends ParameterArray {
         currentParams = step.findNextParams(currentParams);
 
         double newJumpSize = step.getJumpSize();
-        // the improvement may be negative, meaning it did not improve.
+        // the improvement may be zero or negative, meaning it did not improve.
         double improvement = step.getImprovement();
 
         double dotProduct = iter.getGradient().normalizedDot(iter.getOldGradient());
