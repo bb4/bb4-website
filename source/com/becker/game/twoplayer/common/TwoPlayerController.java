@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common;
 
+import com.becker.common.concurrency.Worker;
 import com.becker.game.common.*;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
@@ -16,6 +17,7 @@ import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 
+import javax.swing.*;
 import java.awt.*;
 
 import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
@@ -282,8 +284,8 @@ public abstract class TwoPlayerController extends GameController {
      */
      public boolean requestComputerMove(final boolean player1ToMove, boolean synchronous) throws AssertionError {
 
-        return worker_.requestComputerMove(player1ToMove, synchronous);
-    }
+         return worker_.requestComputerMove(player1ToMove, synchronous);
+     }
 
     /**
      * Let the computer play against itself for a long time as it optimizes its parameters.

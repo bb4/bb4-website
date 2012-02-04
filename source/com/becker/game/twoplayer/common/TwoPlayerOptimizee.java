@@ -75,7 +75,9 @@ class TwoPlayerOptimizee implements Optimizee {
         weights.setPlayer2Weights(params1);
         double run2 = runComputerVsComputer();
 
-        return (run1 - run2);
+        double delta = run1 - run2;
+        System.out.println("delta fitness = "+ run1 + " - " + run2 +" = " + delta );
+        return delta;
     }
 
     /**
