@@ -102,17 +102,13 @@ class ConfigurationsTable extends TableBase {
 
         TableModel model = getPlayerModel();
         int nRows = model.getRowCount();
-        System.out.println("numRows = " + nRows);
         SearchOptionsConfigList searchOptions = new SearchOptionsConfigList(nRows);
 
         for (int i = 0; i < nRows; i++) {
             String options = (String)model.getValueAt(i, INSTANCE_INDEX-1);
-            System.out.println("got mc options="+ options);
-
         }
         for (int i = 0; i < nRows; i++) {
             SearchOptionsConfig options = ((SearchOptionsConfig) model.getValueAt(i, INSTANCE_INDEX));
-            System.out.println("got options="+ options);
             searchOptions.add( options );
         }
 

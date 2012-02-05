@@ -1,12 +1,14 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.grid;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.PluginManager;
 import com.becker.game.common.ui.menu.GameMenuListener;
 import com.becker.game.common.ui.panel.IGamePanel;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 import com.becker.game.twoplayer.comparison.execution.PerformanceRunner;
+import com.becker.game.twoplayer.comparison.execution.PerformanceRunnerListener;
 import com.becker.game.twoplayer.comparison.model.ResultsModel;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 import com.becker.ui.components.GradientButton;
@@ -24,8 +26,9 @@ import java.util.logging.Logger;
  *
  * @author Barry Becker
  */
-public final class ComparisonGridPanel extends JPanel
-                                       implements ActionListener, GameMenuListener {
+public final class ComparisonGridPanel
+           extends JPanel
+        implements ActionListener, GameMenuListener, PerformanceRunnerListener {
 
     private GradientButton runButton_;
     private ComparisonGrid grid_;
@@ -83,11 +86,10 @@ public final class ComparisonGridPanel extends JPanel
             final IGamePanel gamePanel = createGamePanel(gameName);
 
             PerformanceRunner runner =
-                new PerformanceRunner((TwoPlayerPanel)gamePanel, optionsList);
+                new PerformanceRunner((TwoPlayerPanel)gamePanel, optionsList, this);
 
-            ResultsModel resultsModel = runner.doComparisonRuns();
-            grid_.updateWithResults(resultsModel);
-            System.out.println("resultsModel = " + resultsModel);
+            // when done performanceRunsDone will be called.
+            runner.doComparisonRuns();
         }        
     }
 
@@ -95,7 +97,6 @@ public final class ComparisonGridPanel extends JPanel
 
         this.gameName = gameName;
     }
-
 
     public IGamePanel createGamePanel(String gameName) {
 
@@ -110,6 +111,10 @@ public final class ComparisonGridPanel extends JPanel
 
         grid_.updateRowHeight(scrollPane.getHeight());
         super.paint(g);
+    }
+
+    public void performanceRunsDone(ResultsModel model) {
+        grid_.updateWithResults(model);
     }
 }
 

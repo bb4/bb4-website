@@ -218,7 +218,9 @@ public abstract class TwoPlayerController extends GameController {
         ParameterArray weights;
         player1sTurn_ = player1;
 
-        assert (!getMoveList().isEmpty()) : "Error: null before search";
+        // we cannot find a computer move if no move played yet.
+        if (getMoveList().isEmpty()) return null;
+
         TwoPlayerMove move = (TwoPlayerMove) getMoveList().getLastMove();
         TwoPlayerMove lastMove = move.copy();
 

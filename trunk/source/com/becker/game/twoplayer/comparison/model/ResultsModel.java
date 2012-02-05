@@ -25,6 +25,10 @@ public class ResultsModel {
         return resultsGrid[i][j];
     }
     
+    public int getSize() {
+        return size;
+    }
+
     /** Once all the results have been recorded, we should go through and normalize them. */
     public void normalize()  {
         double maxTotalTime = findMaxTotalTimeSeconds();

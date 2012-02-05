@@ -16,7 +16,7 @@ public class PentePatterns extends Patterns
     /** total number of patterns used. */
     private static final int NUM_PATTERNS = 210;
 
-    /** String patter/weight pairs. Easier to read than parallel arrays. */
+    /** String pattern/weight pairs. Easier to read than parallel arrays. */
     private static final Pair[] PAIRS = {
             new Pair("_XX", 1),
             new Pair("XXX", 2),
