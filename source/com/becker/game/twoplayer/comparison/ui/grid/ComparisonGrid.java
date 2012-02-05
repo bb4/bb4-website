@@ -113,7 +113,6 @@ class ComparisonGrid extends TableBase {
 
     public void updateWithResults(ResultsModel model) {
         int size = colNames.length-1;
-        System.out.println("size=" + size);
         for (int i=0; i<size; i++) {
             for (int j=0; j<size; j++) {
                 getModel().setValueAt(model.getResults(i,j), i, j + 1);

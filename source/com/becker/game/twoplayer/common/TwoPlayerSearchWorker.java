@@ -5,8 +5,6 @@ import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.concurrency.Worker;
 import com.becker.game.common.Move;
 
-import javax.swing.*;
-
 /**
  * Searches for the next computer move in a separate thread.
  *
@@ -71,11 +69,12 @@ class TwoPlayerSearchWorker {
 
               @Override
               public void finished() {
-                  processing_ = false;
+
                   // move_ could be null if there was no legal move
                   if (controller_.getTwoPlayerViewer() != null && move_ != null)  {
                       controller_.getTwoPlayerViewer().computerMoved(move_);
                   }
+                  processing_ = false;
               }
          };
 
@@ -85,8 +84,7 @@ class TwoPlayerSearchWorker {
              
              // this blocks until the value is available
              TwoPlayerMove m = (TwoPlayerMove)worker_.get();
-             boolean done = controller_.getSearchable().done(m, true);
-             return done;
+             return controller_.getSearchable().done(m, true);
          }
          return false;
      }
