@@ -37,6 +37,10 @@ class ComparisonGrid extends TableBase {
     public void updateRowHeight(int height) {
         getTable().setRowHeight((height-HEADER_HEIGHT)/getNumRows());
     }
+    
+    public void setGameName(String gameName) {
+         getTable().getColumnModel().getColumn(0).setHeaderValue(gameName);
+    }
 
     /**
      * Constructor

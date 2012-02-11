@@ -55,12 +55,37 @@ public class PerformanceResultsPair {
             p1FirstResults.getNormalizedNumMoves(), p2FirstResults.getNormalizedNumMoves()
         };
     }
+    
+    public String getWinnerText() {
+        String text1 = "Player1 " + (p1FirstResults.getOutcomeVerb(true)) + " when he played first.\n";
+        String text2 = "Player2 " + (p2FirstResults.getOutcomeVerb(false)) + " when he played first.";
+        return text1 + text2;
+    }
+    
+    private String getOutcomeVerb(PerformanceResults results, boolean player1Perpective)  {
+        String verb = "";
+        switch (results.getOutcome()) {
+            case PLAYER1_WON : verb = player1Perpective?"won":"lost"; break;
+            case PLAYER2_WON : verb = player1Perpective?"lost":"won"; break;
+            case TIE: verb = "tied"; break;
+        }
+        return verb;
+    }
+
+    public String toHtmlString() {
+            StringBuilder bldr = new StringBuilder("<html>");
+
+            bldr.append(" Player1 first: ").append(p1FirstResults.toHtmlString(true)).append("<br>");
+            bldr.append("Player2 first: ").append(p2FirstResults.toHtmlString(true));
+            bldr.append("</html>");
+            return bldr.toString();
+        }
 
     public String toString() {
         StringBuilder bldr = new StringBuilder("Results pair");
 
         bldr.append(" Player1 first: ").append(p1FirstResults.toString()).append("\n");
-        bldr.append(" Player2 first: ").append(p2FirstResults.toString()).append("\n");
+        bldr.append(" Player2 first: ").append(p2FirstResults.toString());
 
         return bldr.toString();
     }

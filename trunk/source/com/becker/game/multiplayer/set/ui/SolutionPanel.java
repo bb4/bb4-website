@@ -106,9 +106,7 @@ class SolutionPanel extends JPanel
             return;
         }
         boolean changed =
-                   currentlyHighlightedSet_ == null && set != null
-                || currentlyHighlightedSet_ != null && set == null
-                || !sameSet(set, currentlyHighlightedSet_);
+            currentlyHighlightedSet_ == null || set == null || !sameSet(set, currentlyHighlightedSet_);
 
         if (!changed) return;
 

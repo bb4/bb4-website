@@ -79,7 +79,6 @@ public class SearchOptionsPanel extends JPanel
         return searchOptions_;
     }
 
-
     /**
      * @return Radio buttons for selecting the strategy.
      */

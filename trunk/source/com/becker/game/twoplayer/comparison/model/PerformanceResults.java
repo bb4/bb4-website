@@ -31,7 +31,6 @@ public class PerformanceResults {
     
     private long numP1NodesSearched;
     private long numP2NodesSearched;
-
     private boolean normalized;
 
 
@@ -101,6 +100,36 @@ public class PerformanceResults {
         normalized = true;
     }
 
+    public String getOutcomeVerb(boolean player1Perpective)  {
+        String verb = "";
+        switch (getOutcome()) {
+            case PLAYER1_WON : verb = player1Perpective?"won":"lost"; break;
+            case PLAYER2_WON : verb = player1Perpective?"lost":"won"; break;
+            case TIE: verb = "tied"; break;
+        }
+        return verb;
+    }
+
+    public String toHtmlString(boolean substring) {
+        StringBuilder bldr = new StringBuilder();
+        if (!substring)
+            bldr.append("<html>");
+        if (getWasTie()) {
+            bldr.append("it was a tie");
+        }
+        else  {
+            bldr.append("player <b>" + (getPlayer1Won()?"1":"2") + "</b> won by ");
+            bldr.append(getStrengthOfWin());
+        }
+        bldr.append("<br> in ");
+        bldr.append("<b>" + getTimeFormatted() + "</b>");
+        bldr.append("<br> and " + getNumMoves() + " moves. ");
+        if (!substring)
+            bldr.append("</html>");
+        
+        return bldr.toString();
+    }
+
     public String toString() {
         StringBuilder bldr = new StringBuilder();
         if (getWasTie()) {
@@ -110,10 +139,10 @@ public class PerformanceResults {
             bldr.append("player " + (getPlayer1Won()?"1":"2") + " won by ");
             bldr.append(getStrengthOfWin());
         }
-        bldr.append(" in ").append(getTimeFormatted());
+        bldr.append("\n in ").append(getTimeFormatted());
         bldr.append(" and " + getNumMoves() +" moves. ");
-        bldr.append(" normalized time = "+normalizedNumSeconds);
-        bldr.append(" normalized numMoves = "+normalizedNumMoves);
+        bldr.append(" normalized time = ").append(normalizedNumSeconds);
+        bldr.append(" normalized numMoves = ").append(normalizedNumMoves);
         return bldr.toString();
     }
 }

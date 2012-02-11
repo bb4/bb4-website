@@ -31,9 +31,9 @@ public class DefaultSearchConfigurations extends SearchOptionsConfigList {
         add(new SearchOptionsConfig("Negascout", new SearchOptions(SearchStrategyType.NEGASCOUT)));
         //add(new SearchOptionsConfig("Negamax w/mem", new SearchOptions(SearchStrategyType.NEGAMAX_W_MEMORY)));
         //add(new SearchOptionsConfig("Negascout w/mem", new SearchOptions(SearchStrategyType.NEGASCOUT_W_MEMORY)));
-        //add(new SearchOptionsConfig("UCT", new SearchOptions(SearchStrategyType.UCT)));
+        add(new SearchOptionsConfig("UCT", new SearchOptions(SearchStrategyType.UCT)));
         //add(new SearchOptionsConfig("MTD Negamax", new SearchOptions(SearchStrategyType.MTD_NEGAMAX)));
-        //add(new SearchOptionsConfig("MTD Negascout", new SearchOptions(SearchStrategyType.MTD_NEGASCOUT)));
+        add(new SearchOptionsConfig("MTD Negascout", new SearchOptions(SearchStrategyType.MTD_NEGASCOUT)));
     }
     
     private BruteSearchOptions createBruteOptions() {

@@ -39,7 +39,7 @@ public class PlayerHeadCellRenderer extends DefaultTableCellRenderer {
         }
 
         setText((value == null) ? "" : value.toString());
-
+        setToolTipText(getText());
         setBorder(UIManager.getBorder("TableHeader.cellBorder"));
         setHorizontalAlignment(JLabel.CENTER);
         this.setFont(FONT);
