@@ -22,12 +22,23 @@ public class SearchOptionsDialog extends OptionsDialog {
 
     private GradientButton okButton;
     private TextInput nameField;
+    private SearchOptionsConfig existingOptions;
     private SearchOptionsPanel searchOptionsPanel;
 
 
     /** Constructor  */
     public SearchOptionsDialog(Component parent) {
         super( parent );
+        showContent();
+    }
+    
+    /** 
+     * Constructor. 
+     * Use this version if we want to initialize with existing options 
+     */
+    public SearchOptionsDialog(Component parent, SearchOptionsConfig options) {
+        super( parent );
+        existingOptions = options;
         showContent();
     }
 
@@ -46,11 +57,14 @@ public class SearchOptionsDialog extends OptionsDialog {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
-        nameField = new TextInput("Configuration Name:", "", 30);
-        nameField.setBorder(BorderFactory.createEmptyBorder(5, 5, 10, 5));
+        
 
         // all defaults initially.
-        SearchOptions searchOptions = new SearchOptions();
+        String title = (existingOptions != null) ? existingOptions.getName() : "";
+        SearchOptions searchOptions = (existingOptions != null) ? existingOptions.getSearchOptions(): new SearchOptions();
+        
+        nameField = new TextInput("Configuration Name:", title, 30);
+        nameField.setBorder(BorderFactory.createEmptyBorder(5, 5, 10, 5));
 
         searchOptionsPanel = new SearchOptionsPanel(searchOptions);
         

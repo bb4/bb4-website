@@ -46,8 +46,10 @@ public class ResultHeaderCellRenderer extends PlayerHeadCellRenderer {
             setText(((TextAndIcon)value).text);
         } else {
             setText((value == null) ? "" : value.toString());
+
             setIcon(null);
         }
+        setToolTipText(getText());
         setBorder(UIManager.getBorder("TableHeader.cellBorder"));
         setHorizontalAlignment(JLabel.CENTER);
         this.setFont(FONT);

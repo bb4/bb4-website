@@ -142,4 +142,26 @@ class ConfigurationsTable extends TableBase {
         getPlayerModel().addRow(d);
     }
 
+    /**
+     * add a row based on a player object
+     * @param optionsConfig to add
+     */
+    public void updateRow(int row, SearchOptionsConfig optionsConfig) {
+
+        SearchOptions sOptions = optionsConfig.getSearchOptions();
+
+        Object d[] = new Object[NUM_COLS + 1];
+
+        d[NAME_INDEX] = optionsConfig.getName();
+        d[ALGORITHM_INDEX] = sOptions.getSearchStrategyMethod();
+        d[BRUTE_OPTIONS_INDEX ] = sOptions.getBruteSearchOptions().toString();
+        d[BEST_MOVE_OPTIONS_INDEX ] = sOptions.getBestMovesSearchOptions().toString();
+        d[MONTE_CARLO_OPTIONS_INDEX ] = sOptions.getMonteCarloSearchOptions().toString();
+        d[INSTANCE_INDEX] = optionsConfig;
+        System.out.println("d[5]=" + d[5].toString());
+
+        getPlayerModel().removeRow(row);
+        getPlayerModel().insertRow(row, d);
+    }
+
 }

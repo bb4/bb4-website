@@ -13,7 +13,7 @@ import com.becker.game.twoplayer.common.search.SearchWindow;
 public class BruteSearchOptions {
 
     /** Number of moves to look ahead while searching for the best move. */
-    private static final int DEFAULT_LOOK_AHEAD = 3;
+    private static final int DEFAULT_LOOK_AHEAD = 4;
 
     /** if true then use alpha beta pruning */
     private static final boolean ALPHA_BETA = true;
