@@ -30,9 +30,9 @@ public class FileMenu extends JMenu implements ActionListener {
         setBorder(BorderFactory.createEtchedBorder());
 
         this.listener = listener;
-        openItem_ =  createMenuItem(GameContext.getLabel("OPEN"));
-        saveItem_ =  createMenuItem(GameContext.getLabel("SAVE"));
-        saveImageItem_ =  createMenuItem(GameContext.getLabel("SAVE_IMAGE"));
+        openItem_ = createMenuItem(GameContext.getLabel("OPEN"));
+        saveItem_ = createMenuItem(GameContext.getLabel("SAVE"));
+        saveImageItem_ = createMenuItem(GameContext.getLabel("SAVE_IMAGE"));
         exitItem_ = createMenuItem("Exit");
         add(openItem_);
         add(saveItem_);
