@@ -26,9 +26,9 @@ public class ResultGridCellRenderer extends JPanel
     private static final Color NUM_MOVES_BAR_COLOR = new Color(90, 110, 70);
 
     // the following must sum to one.
-    private static final double WON_BAR_PROPORTION = 0.7;
-    private static final double TIME_BAR_PROPORTION = 0.15;
-    private static final double NUM_MOVES_BAR_PROPORTION = 0.15;
+    private static final double WON_BAR_PROPORTION = 0.8;
+    private static final double TIME_BAR_PROPORTION = 0.1;
+    private static final double NUM_MOVES_BAR_PROPORTION = 0.1;
 
     PerformanceResultsPair perfResults;
 
@@ -76,7 +76,7 @@ public class ResultGridCellRenderer extends JPanel
         perfResults = (PerformanceResultsPair) tableModel.getValueAt(row, col);
         setToolTipText(perfResults.toHtmlString());
 
-        wonBar.setOutcomes(perfResults.getOutcomes());
+        wonBar.setOutcomes(perfResults.getOutcomes(), perfResults.getFinalImages());
         timeBar.setBarSegments(perfResults.getNormalizedTimes());
         numMovesBar.setBarSegments(perfResults.getNormalizedNumMoves());
 

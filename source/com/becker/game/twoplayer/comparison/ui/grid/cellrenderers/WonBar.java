@@ -4,6 +4,7 @@ package com.becker.game.twoplayer.comparison.ui.grid.cellrenderers;
 import com.becker.game.twoplayer.comparison.model.Outcome;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * The bar that shows which side won for each player who started fist.
@@ -13,13 +14,15 @@ import java.awt.*;
  */
 public class WonBar extends SegmentedBar {
 
-    private static final int X_INSET = 10;
-    private static final int Y_INSET = 12;
+    private static final int TEXT_INSET = 12;
+    private static final int IMAGE_INSET = 20;
 
     private Outcome[] outcomes;
+    private Image[] finalImages;
     
-    public void setOutcomes(Outcome[] outcomes) {
+    public void setOutcomes(Outcome[] outcomes, Image[] finalImages) {
         this.outcomes = outcomes;
+        this.finalImages = finalImages;
     }
     
     @Override
@@ -34,15 +37,21 @@ public class WonBar extends SegmentedBar {
         }
         int height = this.getHeight();
         int width = getWidth()/2;
-        
+
+        int imageSize = width - 2 * IMAGE_INSET;
         g2.setColor(side1Wincolor);
         g2.fillRect(0, 0, width, height);
+
 
         g2.setColor(side2Wincolor);
         g2.fillRect(width, 0, width, height);
 
-        drawLabels(g2);
-        
+        if (finalImages[0] != null)
+            g2.drawImage(finalImages[0], IMAGE_INSET, IMAGE_INSET, imageSize, imageSize, null);
+        if (finalImages[1] != null)
+            g2.drawImage(finalImages[1], IMAGE_INSET + width, IMAGE_INSET, imageSize, imageSize, null);
+
+        drawLabels(g2);        
     }
     
     private void drawLabels(Graphics2D g2) {
@@ -50,8 +59,8 @@ public class WonBar extends SegmentedBar {
         int width = getWidth()/2;
         String lab1 = (width > 70) ?  "pplayer1 first" : "p1 1st";
         String lab2 = (width > 70) ?  "player2 first" : "p2 1st";
-        g2.drawString(lab1, X_INSET, Y_INSET);
-        g2.drawString(lab2, width + X_INSET, Y_INSET);
+        g2.drawString(lab1, TEXT_INSET, TEXT_INSET);
+        g2.drawString(lab2, width + TEXT_INSET, TEXT_INSET);
     }
 }
                                             

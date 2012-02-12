@@ -277,11 +277,15 @@ public final class GUIUtil {
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION ) {
 
-            BufferedImage img = (BufferedImage) component.createImage(component.getWidth(), component.getHeight());
-            component.paint(img.createGraphics());
-
+            BufferedImage img = getSnapshot(component);
             ImageUtil.saveAsImage(file.getAbsolutePath(), img, ImageUtil.ImageType.PNG);
         }
+    }
+    
+    public static BufferedImage getSnapshot(JComponent component) {
+        BufferedImage img = (BufferedImage) component.createImage(component.getWidth(), component.getHeight());
+        component.paint(img.createGraphics());
+        return img;
     }
 
 

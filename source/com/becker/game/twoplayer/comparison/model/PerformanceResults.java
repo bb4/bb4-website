@@ -3,6 +3,8 @@ package com.becker.game.twoplayer.comparison.model;
 
 import com.becker.common.format.FormatUtil;
 
+import java.awt.image.BufferedImage;
+
 /**
  * Right now this just contains the name of the config and the
  * search options, but we may add the game weights too at some point.
@@ -30,21 +32,25 @@ public class PerformanceResults {
     private double strengthOfWin;
 
     private boolean normalized;
+    
+    /** a screen shot of the final game state */
+    private BufferedImage finalStateImg;
 
 
     /** default constructor */
     public PerformanceResults() {
-        this(false, false, 0, 0, 0);
+        this(false, false, 0, 0, 0, null);
     }
 
     /** Constructor */
     public PerformanceResults(boolean p1Won, boolean wasTie, double strengthOfWin,
-                              int numMoves, long timeMillis) {
+                              int numMoves, long timeMillis, BufferedImage finalImage) {
         this.player1Won = p1Won;
         this.wasTie = wasTie;
         this.strengthOfWin = strengthOfWin;
         this.numMoves = numMoves;
         this.timeMillis = timeMillis;
+        this.finalStateImg = finalImage;
     }
     
     public Outcome getOutcome() {
@@ -52,6 +58,10 @@ public class PerformanceResults {
             return Outcome.TIE;
         }
         else return player1Won ? Outcome.PLAYER1_WON : Outcome.PLAYER2_WON;
+    }
+    
+    public BufferedImage getFinalImage() {
+        return finalStateImg;
     }
 
     public boolean getPlayer1Won() {

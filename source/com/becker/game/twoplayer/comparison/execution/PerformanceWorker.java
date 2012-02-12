@@ -8,6 +8,10 @@ import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerViewable;
 import com.becker.game.twoplayer.comparison.model.*;
+import com.becker.ui.util.GUIUtil;
+
+import javax.swing.*;
+import java.awt.image.BufferedImage;
 
 /**
  * A worker that will run all the computer vs computer games in a separate thread.
@@ -86,6 +90,7 @@ public class PerformanceWorker implements Runnable {
         double strengthOfWin = controller.getStrengthOfWin();
         System.out.println("str of win = " + strengthOfWin);
         int numMoves = controller.getNumMoves();
+        BufferedImage finalImage = GUIUtil.getSnapshot((JComponent) controller.getViewer());
 
         long elapsedMillis = System.currentTimeMillis() - startTime;
 
@@ -93,6 +98,6 @@ public class PerformanceWorker implements Runnable {
         boolean player1Won = players.getWinningPlayer() == player1;
         controller.reset();
 
-        return new PerformanceResults(player1Won, isTie, strengthOfWin, numMoves, elapsedMillis);
+        return new PerformanceResults(player1Won, isTie, strengthOfWin, numMoves, elapsedMillis, finalImage);
     }
 }

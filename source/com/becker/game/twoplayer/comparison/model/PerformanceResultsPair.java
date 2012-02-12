@@ -1,6 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.model;
 
+import java.awt.*;
+
 /**
  * Right now this just contains the name of the config and the
  * search options, but we may add the game weights too at some point.
@@ -29,6 +31,10 @@ public class PerformanceResultsPair {
     
     public Outcome[] getOutcomes() {
         return new Outcome[] {p1FirstResults.getOutcome(), p2FirstResults.getOutcome()};
+    }
+    
+    public Image[] getFinalImages() {
+        return new Image[] {p1FirstResults.getFinalImage(), p2FirstResults.getFinalImage()};
     }
 
     public double getTotalNumSeconds() {
