@@ -18,7 +18,7 @@ public class GameRunnerDialog extends AbstractDialog {
     /** Constructor */
     public GameRunnerDialog(TwoPlayerPanel panel) {
         this.gamePanel = panel;
-        this.setMinimumSize(new Dimension(500, 500));
+        this.setMinimumSize(new Dimension(600, 500));
         showContent();
     }
 
