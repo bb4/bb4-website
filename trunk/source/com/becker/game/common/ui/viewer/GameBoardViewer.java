@@ -49,8 +49,6 @@ public abstract class GameBoardViewer extends JPanel
     /** list of listeners for handling those events. */
     private final List<GameChangedListener> gameListeners_ = new ArrayList<GameChangedListener>();
 
-    private JProgressBar progressBar_;
-
     protected final Cursor waitCursor_ = new Cursor( Cursor.WAIT_CURSOR );
     protected Cursor origCursor_ = null;
     protected JFrame parent_ = null;
@@ -98,7 +96,7 @@ public abstract class GameBoardViewer extends JPanel
      * @param progressBar an optional progress bar for showing progress as the computer thinks about its next move.
      */
     public void setProgressBar(JProgressBar progressBar) {
-        progressBar_ = progressBar;
+        // not used
     }
 
     /**
@@ -145,10 +143,6 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void refresh() {
         this.repaint();
-        // this will paint the component immediately - no good.
-        //if (this.getGraphics() != null) {
-        //    this.paint( this.getGraphics() );
-        //}
     }
 
     /**

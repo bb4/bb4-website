@@ -13,7 +13,6 @@ public class SearchOptionsConfig {
     
     private String name;
     private SearchOptions searchOptions;
-    //private
     
     public SearchOptionsConfig(String name, SearchOptions options) {
         this.name = name;

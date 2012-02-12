@@ -4,10 +4,12 @@ package com.becker.game.twoplayer.comparison.ui.configuration;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
+import com.becker.game.twoplayer.comparison.model.data.ConfigurationListEnum;
 import com.becker.game.twoplayer.comparison.model.data.DefaultSearchConfigurations;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -22,61 +24,91 @@ import java.awt.event.ActionListener;
 public final class ConfigurationPanel extends JPanel
                               implements ActionListener, ListSelectionListener {
 
-    private static final SearchOptionsConfigList DEFAULT_CONFIGURATIONS =
-            new DefaultSearchConfigurations();
+    private static final ConfigurationListEnum DEFAULT_CONFIGURATIONS = ConfigurationListEnum.DEFAULT_CONFIGS;
 
     private GradientButton addConfigButton_;
     private GradientButton editConfigButton_;
     private GradientButton removeConfigButton_;
+    
+    private JComboBox configDropList;
+
     private ConfigurationsTable configTable_;
-    //private int selectedRow;
+    private JScrollPane scrollPane_;
 
 
     /**
      * constructor - create the tree dialog.
      */
     public ConfigurationPanel() {
-
-        configTable_ = new ConfigurationsTable(DEFAULT_CONFIGURATIONS);
-        configTable_.addListSelectionListener(this);
         init();
     }
 
     private void init() {
 
         this.setLayout(new BorderLayout());
-        JPanel addremoveButtonsPanel = new JPanel();
+
+        JPanel addremoveButtonsPanel = createButtonsPanel();
+
+        JPanel titlePanel = new JPanel(new BorderLayout());
+                titlePanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        
+        JPanel dropListElement = createDropListElement();
+        
+        titlePanel.add(dropListElement, BorderLayout.WEST);
+        titlePanel.add(addremoveButtonsPanel, BorderLayout.EAST);
+
+        add(titlePanel, BorderLayout.NORTH);
+
+        scrollPane_ = new JScrollPane();
+
+        initializeConfigTable();
+
+        scrollPane_.setPreferredSize(new Dimension(360,120));
+        scrollPane_.setBorder(
+                BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5),
+                scrollPane_.getBorder()));
+        add(scrollPane_, BorderLayout.CENTER);
+    }
+    
+    private JPanel createDropListElement() {
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel instr = new JLabel(" Select a set of configurations to test:  ");
+        configDropList = createConfigDropDown();
+        panel.add(instr, BorderLayout.CENTER);
+        panel.add(configDropList, BorderLayout.EAST);
+        return panel;
+    }
+    
+    private JComboBox createConfigDropDown() {
+        
+        ComboBoxModel model = new DefaultComboBoxModel(ConfigurationListEnum.values());    
+        model.setSelectedItem(DEFAULT_CONFIGURATIONS);
+        JComboBox dropList = new JComboBox(model);
+        dropList.addActionListener(this);
+        return dropList;
+    }
+    
+    private JPanel createButtonsPanel() {
+        JPanel panel = new JPanel();
 
         addConfigButton_ = new GradientButton("New");
         addConfigButton_.setToolTipText("add a new entry in the table");
         addConfigButton_.addActionListener(this);
-        addremoveButtonsPanel.add(addConfigButton_, BorderLayout.WEST);
-        
+        panel.add(addConfigButton_, BorderLayout.WEST);
+
         editConfigButton_ = new GradientButton("Edit");
         editConfigButton_.setToolTipText("edit an existing entry in the table");
         editConfigButton_.addActionListener(this);
         editConfigButton_.setEnabled(false);
-        addremoveButtonsPanel.add(editConfigButton_, BorderLayout.CENTER);
+        panel.add(editConfigButton_, BorderLayout.CENTER);
 
         removeConfigButton_ = new GradientButton("Remove");
         removeConfigButton_.setToolTipText("remove an entry from the table");
         removeConfigButton_.addActionListener(this);
         removeConfigButton_.setEnabled(false);
-        addremoveButtonsPanel.add(removeConfigButton_, BorderLayout.EAST);
+        panel.add(removeConfigButton_, BorderLayout.EAST);
 
-        JPanel titlePanel = new JPanel(new BorderLayout());
-                titlePanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        titlePanel.add(addremoveButtonsPanel, BorderLayout.EAST);
-
-
-        add(titlePanel, BorderLayout.NORTH);
-
-        JScrollPane scrollPane = new JScrollPane(configTable_.getTable());
-        scrollPane.setPreferredSize(new Dimension(360,120));
-        scrollPane.setBorder(
-                BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5),
-                scrollPane.getBorder()));
-        add(scrollPane, BorderLayout.CENTER);
+        return panel;
     }
 
     /**
@@ -86,6 +118,9 @@ public final class ConfigurationPanel extends JPanel
         return configTable_.getSearchOptions();
     }
 
+    /**
+     * Handle add/edit/remove button click, or droplist selection.
+     */
     public void actionPerformed(ActionEvent e) {
 
         Object source = e.getSource();
@@ -102,6 +137,24 @@ public final class ConfigurationPanel extends JPanel
             configTable_.removeRow(configTable_.getSelectedRow());
             removeConfigButton_.setEnabled(false);
         }
+        else if (source == configDropList) {
+             initializeConfigTable();
+        }
+        else {
+            assert false :  "Unexpected source =" + source;
+        }
+    }
+
+    /**
+     * Create the table based on the current config droplist selection and set the new table in the scrollpane view
+     */
+    private void initializeConfigTable() {
+
+        SearchOptionsConfigList configList =
+                ((ConfigurationListEnum)configDropList.getSelectedItem()).getConfigList();
+        configTable_ = new ConfigurationsTable(configList);
+        configTable_.addListSelectionListener(this);
+        scrollPane_.setViewportView(configTable_.getTable());
     }
 
     /**
@@ -125,7 +178,6 @@ public final class ConfigurationPanel extends JPanel
     private void editConfiguration(int row)  {
 
         SearchOptionsConfig initOptions = getConfigurations().get(row);
-        System.out.println("now editing row="+ row);
         SearchOptionsDialog optionsDialog = new SearchOptionsDialog(this, initOptions);
         boolean canceled = optionsDialog.showDialog();
 
@@ -139,8 +191,6 @@ public final class ConfigurationPanel extends JPanel
 
     /** called when one of the rows in the grid is selected */
     public void valueChanged(ListSelectionEvent e) {
-        //selectedRow = e.getFirstIndex();
-        ///System.out.println("selected row=" + selectedRow);
         editConfigButton_.setEnabled(true);
         removeConfigButton_.setEnabled(true);
     }

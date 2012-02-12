@@ -28,9 +28,7 @@ public class PerformanceResults {
             
     /** How much the winning player won by */
     private double strengthOfWin;
-    
-    private long numP1NodesSearched;
-    private long numP2NodesSearched;
+
     private boolean normalized;
 
 
@@ -90,7 +88,7 @@ public class PerformanceResults {
     }
 
     public double getNormalizedNumMoves() {
-        //assert normalized;
+        assert normalized;
         return normalizedNumMoves;
     }
 
