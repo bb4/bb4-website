@@ -31,6 +31,9 @@ public abstract class ValueDifferencer {
         winLength = patterns_.getWinRunLength();
     }
 
+    /**
+     * @return the difference in worth after making a move compared with before.
+     */
     public abstract int findValueDifference(int row, int col, ParameterArray weights);
 
     /**

@@ -27,6 +27,10 @@ public class ValueDifferencerFactory {
         lineFactory_ = factory;
     }
 
+    /**
+     * @param dir
+     * @return differencer for the specified direction.
+     */
     public ValueDifferencer createValueDifferencer(Direction dir) {
         ValueDifferencer differencer = null;
         switch (dir) {

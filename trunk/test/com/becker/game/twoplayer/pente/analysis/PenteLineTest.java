@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.pente.analysis;
 
 import com.becker.game.common.GameWeights;
 import com.becker.game.twoplayer.pente.PentePatterns;
+import com.becker.game.twoplayer.pente.PenteTestWeights;
 import com.becker.game.twoplayer.pente.PenteWeights;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -24,7 +25,7 @@ public class PenteLineTest extends TestCase  {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        weights = new PenteWeights();
+        weights = new PenteTestWeights();
     }
 
     public void testEvalLinePlayer1Short() {

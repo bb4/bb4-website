@@ -18,9 +18,7 @@ public abstract class DiagonalDifferencer extends ValueDifferencer {
     protected int numRows;
     protected int numCols;
 
-    /**
-     * Constructor
-     */
+
     public DiagonalDifferencer(TwoPlayerBoard board, Patterns patterns,
                                LineFactory lineFactory) {
         super(board, patterns, lineFactory);

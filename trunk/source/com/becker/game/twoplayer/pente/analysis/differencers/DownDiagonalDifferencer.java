@@ -9,23 +9,18 @@ import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * Determines the difference in value between the most recent move
- * and how it was before in the up/down or left right direction.
+ * and how it was before in the downward diagonal direction.
  *
  * @author Barry Becker
 */
 public class DownDiagonalDifferencer extends DiagonalDifferencer {
 
-    /**
-     * Constructor
-     */
+
     public DownDiagonalDifferencer(TwoPlayerBoard board, Patterns patterns,
                                    LineFactory lineFactory) {
         super(board, patterns, lineFactory);
     }
 
-    /**
-     * @return the difference in worth after making a move compared with before.
-     */
     @Override
     public int findValueDifference(int row, int col, ParameterArray weights) {
 
