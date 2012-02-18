@@ -13,6 +13,6 @@ public class LineFactory {
     public LineFactory() {}
 
     public Line createLine(Patterns patterns, ParameterArray weights) {
-        return new Line(patterns, weights);
+        return new Line(new LineEvaluator(patterns, weights));
     }
 }

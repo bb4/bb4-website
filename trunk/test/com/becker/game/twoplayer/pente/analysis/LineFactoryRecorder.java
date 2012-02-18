@@ -21,7 +21,7 @@ public class LineFactoryRecorder extends LineFactory {
 
     @Override
     public Line createLine(Patterns patterns, ParameterArray weights) {
-        Line line = new Line(patterns, weights);
+        Line line = new Line(new LineEvaluator(patterns, weights));
         lines_.add(line);
         return line;
     }

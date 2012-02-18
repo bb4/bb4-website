@@ -16,8 +16,9 @@ public class TstUtil {
 
     private TstUtil() {}
 
-    public static LineRecorder createLine(String linePattern, Patterns patterns, ParameterArray weights) {
-        LineRecorder line = new LineRecorder(patterns, weights);
+    public static Line createLine(String linePattern, LineEvaluator evaluator) {
+
+        Line line = new Line(evaluator);
         for (int i=0; i<linePattern.length(); i++) {
              GamePiece piece = null;
              char c = linePattern.charAt(i);
