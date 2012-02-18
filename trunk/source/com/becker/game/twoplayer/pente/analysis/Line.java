@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.pente.analysis;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.pente.Patterns;
 import com.becker.game.twoplayer.pente.PentePatterns;
 import com.becker.optimization.parameter.ParameterArray;
@@ -12,9 +13,6 @@ import com.becker.optimization.parameter.ParameterArray;
  * @author Barry Becker
  */
 public class Line {
-
-    private static final char P1_SYMB = 'X';
-    private static final char P2_SYMB = 'O';
 
     /** contains the symbols in the line (run) */
     protected StringBuilder line;
@@ -39,12 +37,12 @@ public class Line {
      */
     public void append(BoardPosition pos) {
         assert (pos != null): "Cannot append at null board position.";
-        if ( pos.getPiece() == null )
+        if ( pos.getPiece() == null )  {
             line.append( PentePatterns.UNOCCUPIED );
-        else if ( pos.getPiece().isOwnedByPlayer1() )
-            line.append( P1_SYMB );
-        else
-            line.append( P2_SYMB );
+        }
+        else {
+            line.append( pos.getPiece().getSymbol() );
+        }
     }
 
     /**
@@ -58,10 +56,10 @@ public class Line {
      * @return the difference in worth after making a move compared with before.
      *
      */
-    public int computeValueDifference(int position)
-    {
+    public int computeValueDifference(int position) {
+
         char symb = line.charAt( position ); // the last move made
-        boolean player1Perspective = (symb == P1_SYMB);
+        boolean player1Perspective = (symb == GamePiece.P1_SYMB);
 
         int len = line.length();
         if ( len < patterns_.getMinInterestingLength() ) {
@@ -93,14 +91,14 @@ public class Line {
      * @param maxpos last pattern index position in line (usually one less than the line magnitude).
      * @return the worth of a (vertical, horizontal, left diagonal, or right diagonal) line.
      */
-    public int evalLine(boolean player1Perspective, int pos, int minpos, int maxpos)
-    {
+    public int evalLine(boolean player1Perspective, int pos, int minpos, int maxpos) {
+
         assert pos >= minpos && pos <= maxpos;
         int length = maxpos - minpos + 1;
         if ( length < patterns_.getMinInterestingLength() )
             return 0; // not an interesting pattern.
 
-        char opponentSymb = player1Perspective ? P2_SYMB : P1_SYMB;
+        char opponentSymb = player1Perspective ? GamePiece.P2_SYMB : GamePiece.P1_SYMB;
         
         if ( (line.charAt( pos ) == opponentSymb)
                 && !(pos == minpos) && !(pos == maxpos) ) {
@@ -121,7 +119,7 @@ public class Line {
         int index = getWeightIndex(opponentSymb, pos, minpos, maxpos);
         if (index >= 0) {
             int weight = (int)weights_.get(index).getValue();
-            return (opponentSymb == P2_SYMB) ? weight : -weight;
+            return (opponentSymb == GamePiece.P2_SYMB) ? weight : -weight;
         } else {
             return 0;
         }
@@ -189,8 +187,7 @@ public class Line {
     /**
      * debugging aid
      */
-    public void worthDebug( String dir, int pos, int diff )
-    {
+    public void worthDebug( String dir, int pos, int diff ) {
         GameContext.log( 0,  dir + " "  + line + "  Pos: " + pos + "  difference:" + diff );
     }
 

@@ -103,6 +103,7 @@ public final class ComparisonGridPanel
         // this will load the resources for the specified game.
         GameContext.loadGameResources(gameName);
         grid_.setGameName(gameName);
+        repaint();
 
         return PluginManager.getInstance().getPlugin(gameName).getPanelInstance();
     }

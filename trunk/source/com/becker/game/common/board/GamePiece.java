@@ -16,6 +16,9 @@ public class GamePiece implements Serializable {
 
     private static final long serialVersionUID = 1;
 
+    public static final char P1_SYMB = 'X';
+    public static final char P2_SYMB = 'O';
+
     /** Subclasses should add more types if needed. */
     public static final char REGULAR_PIECE = 'x';
 
@@ -120,17 +123,15 @@ public class GamePiece implements Serializable {
         return toString();
     }
 
+    public char getSymbol() {
+        return ownedByPlayer1_ ?  'X' : 'O';
+    }
     /**
      * @return a string representation of the board position
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ( ownedByPlayer1_ )
-            sb.append( "X" );
-        else
-            sb.append( "O" );
-        return sb.toString();
+        return Character.toString(getSymbol());
     }
 }
 

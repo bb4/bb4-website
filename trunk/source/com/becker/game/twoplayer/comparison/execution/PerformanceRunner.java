@@ -1,15 +1,9 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.execution;
 
-import com.becker.common.concurrency.ThreadUtil;
-import com.becker.game.common.player.Player;
-import com.becker.game.common.player.PlayerList;
-import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
-import com.becker.game.twoplayer.common.TwoPlayerViewable;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 import com.becker.game.twoplayer.comparison.model.*;
+import com.becker.game.twoplayer.comparison.ui.execution.GameRunnerDialog;
 
 import javax.swing.*;
 

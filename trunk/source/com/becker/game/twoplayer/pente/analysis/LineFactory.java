@@ -5,7 +5,7 @@ import com.becker.game.twoplayer.pente.Patterns;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
- * Creates lines. Easy to override and create mock for in tests.
+ * Creates lines. Easy to override and create mock in tests.
  * @author Barry Becker
  */
 public class LineFactory {
