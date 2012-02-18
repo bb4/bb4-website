@@ -8,6 +8,7 @@ import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.pente.PenteBoard;
 import com.becker.game.twoplayer.pente.PentePatterns;
+import com.becker.game.twoplayer.pente.PenteTestWeights;
 import com.becker.game.twoplayer.pente.PenteWeights;
 import com.becker.game.twoplayer.pente.analysis.differencers.ValueDifferencerFactory;
 import junit.framework.TestSuite;
@@ -37,7 +38,7 @@ public class MoveEvaluatorTest extends TestCase  {
         super.setUp();
 
         board = new PenteBoard();
-        weights = new PenteWeights();
+        weights = new PenteTestWeights();
         PentePatterns patterns = new PentePatterns();
         evaluator = new MoveEvaluator(board, patterns);
         lineFactory = new LineFactoryRecorder();

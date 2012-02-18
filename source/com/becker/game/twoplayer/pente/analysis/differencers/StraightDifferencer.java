@@ -17,12 +17,9 @@ import com.becker.optimization.parameter.ParameterArray;
 */
 public class StraightDifferencer extends ValueDifferencer {
 
-    private int numMax;
     private boolean isVertical;
 
-    /**
-     * Constructor
-     */
+
     public StraightDifferencer(TwoPlayerBoard board, Patterns patterns,
                                LineFactory lineFactory, Direction dir) {
         super(board, patterns, lineFactory);
@@ -30,13 +27,11 @@ public class StraightDifferencer extends ValueDifferencer {
         isVertical = (dir == Direction.VERTICAL);
     }
 
-    /**
-     * @return the difference in worth after making a move compared with before.
-     */
+
     @Override
     public int findValueDifference(int row, int col, ParameterArray weights) {
 
-        numMax = isVertical ? board_.getNumRows() : board_.getNumCols();
+        int numMax = isVertical ? board_.getNumRows() : board_.getNumCols();
         int currentPos = isVertical ? row :  col;
         int start = currentPos - winLength;
         if ( start < 1 ) {
@@ -50,9 +45,6 @@ public class StraightDifferencer extends ValueDifferencer {
         Line line = lineFactory_.createLine(patterns_, weights);
         for (int i = start; i <= stop; i++ ) {
             if (isVertical) {
-                BoardPosition pos = board_.getPosition(i, col);
-                assert pos != null : "invalid at i=" + i + " col=" + col + " start="+ start +" stop="+ stop +" numMax="+ numMax
-                        + " isVert="+ isVertical + " winLength="+ winLength + " board.numRows=" + board_.getNumRows();
                 line.append(board_.getPosition(i, col));
             } else {
                 line.append(board_.getPosition(row, i));
