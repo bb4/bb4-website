@@ -58,14 +58,15 @@ public class PenteLineTest extends TestCase  {
 
     private void checkLine(String linePattern, int position, boolean player1persp, int expectedWorth,
                            String[] expectedPatternsChecked) {
-        LineRecorder line = createLine(linePattern);
-        int worth = line.evalLine(player1persp, position, 0, linePattern.length()-1);
+        StubLineEvaluator evaluator = new StubLineEvaluator(new PentePatterns(), weights.getDefaultWeights());
+        StringBuilder line = new StringBuilder(linePattern);
+        int worth = evaluator.evaluate(line, player1persp, position, 0, linePattern.length() - 1);
         //System.out.println("p1Persp=" + player1persp + " " + line +" pos="+ position);
 
         assertEquals("unexpected score for pattern "+ linePattern + " pos=" + position + " player1Persp="+ player1persp,
                 expectedWorth, worth);
 
-        List<String> checkedPats = line.getPatternsChecked();
+        List<String> checkedPats = evaluator.getPatternsChecked();
         //System.out.println("pats="+ TstUtil.quoteStringList(checkedPats));
         assertEquals(expectedPatternsChecked.length, checkedPats.size());
         int i = 0;
@@ -79,10 +80,9 @@ public class PenteLineTest extends TestCase  {
      * @param linePattern  some sequence of X, O, _
      * @return the line
      */
-    private LineRecorder createLine(String linePattern) {
-        return TstUtil.createLine(linePattern, new PentePatterns(), weights.getDefaultWeights());
+    private Line createLine(String linePattern, LineEvaluator evaluator) {
+        return TstUtil.createLine(linePattern, evaluator);
     }
-
 
     public static Test suite() {
         return new TestSuite(PenteLineTest.class);
