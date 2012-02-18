@@ -56,7 +56,7 @@ public class PenteWeights extends GameWeights {
     private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {
         "1a weight", "1b weight", "1c weight", "2a weight",
         "2b weight", "3a weight", "3b weight", "4a  weight",
-        "4b weight", "5 weight", "6 weight", "7 weight"};
+        "5 weight", "6 weight", "7 weight", "8 weight"};
 
 
     private static final String[] WEIGHT_DESCRIPTIONS = {
@@ -68,7 +68,7 @@ public class PenteWeights extends GameWeights {
         "Likely win if play next (_XXX_, _X_XX_, _X_XX_X ...)",                   // 6
         "Guaranteed to win on next move (_XXXX, X_XXX, XX_XX, _X_XXX, _XX_XX, _XXX_X, ...)",  // 7
         "Guaranteed win even if not moving next (_XXXX_, _XXXX_X, ...)",              // 8
-        "Already won. Arrangements of 5 in a row weight ?//Open ended 4b in a row (with options)?",    // 9
+        "Already won. Arrangements of 5 in a row weight",                        // 9
         "Already won. Arrangements of 6 in a row weight",                    // 10
         "Already won. Arrangements of 7 in a row weight",                // 11
         "Already won. Arrangements of 8 in a row weight"            // 12

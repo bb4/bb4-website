@@ -1,6 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.model;
 
+import com.becker.common.format.FormatUtil;
+
 import java.awt.*;
 
 /**
@@ -52,13 +54,29 @@ public class PerformanceResultsPair {
     
     public double[] getNormalizedTimes() {
         return new double[] {
-            p1FirstResults.getNormalizedNumSeconds(), p2FirstResults.getNormalizedNumSeconds()
+            p1FirstResults.getNormalizedNumSeconds(), 
+            p2FirstResults.getNormalizedNumSeconds()
+        };
+    }
+    
+    public String[] getTimesFormatted() {
+        return new String[]  {
+            p1FirstResults.getTimeFormatted(), 
+            p2FirstResults.getTimeFormatted()
         };
     }
 
     public double[] getNormalizedNumMoves() {
         return new double[] {
-            p1FirstResults.getNormalizedNumMoves(), p2FirstResults.getNormalizedNumMoves()
+            p1FirstResults.getNormalizedNumMoves(), 
+            p2FirstResults.getNormalizedNumMoves()
+        };
+    }
+    
+    public String[] getNumMoves() {
+        return new String[] {
+            FormatUtil.formatNumber(p1FirstResults.getNumMoves()),
+            FormatUtil.formatNumber(p2FirstResults.getNumMoves())
         };
     }
     

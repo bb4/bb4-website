@@ -1,6 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.execution;
 
+import com.becker.common.math.MathUtil;
+import com.becker.game.common.GameContext;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
@@ -14,7 +16,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 
 /**
- * A worker that will run all the computer vs computer games in a separate thread.
+ * A worker that will run all the computer vs computer games serially in a separate thread.
  * @author Barry Becker
  */
 public class PerformanceWorker implements Runnable {
@@ -37,6 +39,7 @@ public class PerformanceWorker implements Runnable {
         System.out.println("initialized");
     }
 
+    /** Run the process in a separate thread */
     public void run() {
 
         int size = model.getSize();
@@ -52,6 +55,7 @@ public class PerformanceWorker implements Runnable {
         listener.performanceRunsDone(model);
     }
 
+    /** Get the results for a pair of games where each player gets to play first */
     private PerformanceResultsPair getResultsForComparison(int i, int j) {
 
         PlayerList players = controller.getPlayers();
@@ -66,20 +70,24 @@ public class PerformanceWorker implements Runnable {
         ((TwoPlayerPlayerOptions)(player1.getOptions())).setSearchOptions(config1.getSearchOptions());
         ((TwoPlayerPlayerOptions)(player2.getOptions())).setSearchOptions(config2.getSearchOptions());
 
-        System.out.println("("+i+", "+j+") round 1");
+        System.out.println("("+i+", "+j+") round 1  starts:" + config1.getSearchOptions().getSearchStrategyMethod());
         PerformanceResults p1FirstResults = getResultsForRound(player1, player2);
-        System.out.println("("+i+", "+j+") round 2");
+        System.out.println("("+i+", "+j+") round 2  starts:" + config2.getSearchOptions().getSearchStrategyMethod());
         PerformanceResults p2FirstResults = getResultsForRound(player2, player1);
 
         return new PerformanceResultsPair(p1FirstResults, p2FirstResults);
     }
 
+    /** Get the results for one of the games in the pair */
     private PerformanceResults getResultsForRound(Player player1, Player player2) {
 
         long startTime = System.currentTimeMillis();
         // this is freezing the UI and reporting that the first move is null.
         ((TwoPlayerViewable)controller.getViewer()).showComputerVsComputerGame();
         //gamePanel_.startGame();
+
+        // make sure the random number sequence is the same for each game to make comparison easier.
+        GameContext.setRandomSeed(1);
 
         PlayerList players = controller.getPlayers();
         players.set(0, player1);

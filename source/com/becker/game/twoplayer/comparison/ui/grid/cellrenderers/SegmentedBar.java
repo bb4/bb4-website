@@ -1,14 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.grid.cellrenderers;
 
-import com.becker.game.twoplayer.comparison.model.Outcome;
-import com.becker.game.twoplayer.comparison.model.PerformanceResultsPair;
-
 import javax.swing.*;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
 /**
@@ -21,6 +15,9 @@ public abstract class SegmentedBar extends JPanel {
   
     protected static final Color BG_COLOR = new Color(220, 220, 221);
     protected static final Color BORDER_COLOR = new Color(20, 0, 0, 100);
+    
+    private static final int TEXT_INSET_X = 5;
+    private static final int TEXT_INSET_Y = 14;
 
     /** constructor */
     public SegmentedBar() {
@@ -42,9 +39,12 @@ public abstract class SegmentedBar extends JPanel {
     }
    
     protected abstract void drawBar(Graphics2D g2);
-    
-    protected void drawDualBar(double[] normValues, Color barColor, Graphics2D g2) {
 
+    /** draws the segmented bar pair with label horizontally. */
+    protected void drawDualBar(double[] normValues, 
+                               String[] labels, 
+                               Color barColor, 
+                               Graphics2D g2) {
         int n1Width = 0;
         int n2Width = 0;
         if (normValues != null) {
@@ -59,10 +59,15 @@ public abstract class SegmentedBar extends JPanel {
         g2.setPaint(createGradient(n1Width, n2Width, barColor));
         g2.fillRect(n1Width, 0, n2Width, height);
 
-        // add boarder
+        // add border
         g2.setColor(BORDER_COLOR);
         g2.drawRect(0, 0, n1Width, height);
         g2.drawRect(n1Width, 0, n2Width, height);
+        
+        if (height > 18) {
+            g2.drawString(labels[0], TEXT_INSET_X, TEXT_INSET_Y);
+            g2.drawString(labels[1], n1Width + TEXT_INSET_X, height- TEXT_INSET_Y/2);
+        }
     }
     
     protected GradientPaint createGradient(double offset, double width, Color color) {

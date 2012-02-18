@@ -77,8 +77,8 @@ public class ResultGridCellRenderer extends JPanel
         setToolTipText(perfResults.toHtmlString());
 
         wonBar.setOutcomes(perfResults.getOutcomes(), perfResults.getFinalImages());
-        timeBar.setBarSegments(perfResults.getNormalizedTimes());
-        numMovesBar.setBarSegments(perfResults.getNormalizedNumMoves());
+        timeBar.setBarSegments(perfResults.getNormalizedTimes(), perfResults.getTimesFormatted());
+        numMovesBar.setBarSegments(perfResults.getNormalizedNumMoves(), perfResults.getNumMoves());
 
         // This does not work for some reason.
         //wonBar.setToolTipText(perfResults.getWinnerText());

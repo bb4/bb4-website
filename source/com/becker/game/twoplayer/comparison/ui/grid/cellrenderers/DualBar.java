@@ -12,6 +12,7 @@ public class DualBar extends SegmentedBar {
 
     private Color color;
     private double[] segments;
+    private String[] labels;
 
     /**
      * Constructor
@@ -20,14 +21,17 @@ public class DualBar extends SegmentedBar {
         color = barColor;
     }
 
-    public void setBarSegments(double[] barSegments) {
+    public void setBarSegments(double[] barSegments, String[] barLabels) {
         segments = barSegments;
+        labels = barLabels;
     }
 
     @Override
     protected void drawBar(Graphics2D g2) {
 
-        drawDualBar(segments, color, g2);
+        drawDualBar(segments, labels, color, g2);
     }
+
+
 }
                                             
