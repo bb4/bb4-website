@@ -19,8 +19,9 @@ public class TestAll extends TestCase {
 
         suite.addTestSuite(StraightVerticalDifferencerTest.class);
         suite.addTestSuite(StraightHorizontalDifferencerTest.class);
+        suite.addTestSuite(UpDiagonalDifferencerTest.class);
+        suite.addTestSuite(DownDiagonalDifferencerTest.class);
 
-        
         return suite;
     }
 }

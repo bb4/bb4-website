@@ -6,7 +6,7 @@ import com.becker.game.twoplayer.pente.Patterns;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
- * Represents a run of symbols to be evaluated on the board.
+ * Test that we can correctly evaluate a run of symbols on the board.
  * @author Barry Becker
  */
 public class LineEvaluator {
