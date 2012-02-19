@@ -1,11 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.pente.analysis;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.pente.Patterns;
-import com.becker.game.twoplayer.pente.PentePatterns;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -14,6 +11,9 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class LineEvaluator {
 
+    private static final int BACK = -1;
+    private static final int FORWARD = 1;
+    
     protected Patterns patterns_;
     private ParameterArray weights_;
 
@@ -45,8 +45,9 @@ public class LineEvaluator {
 
         assert pos >= minpos && pos <= maxpos;
         int length = maxpos - minpos + 1;
-        if ( length < patterns_.getMinInterestingLength() )
+        if ( length < patterns_.getMinInterestingLength() )  {
             return 0; // not an interesting pattern.
+        }
 
         char opponentSymb = player1Perspective ? GamePiece.P2_SYMB : GamePiece.P1_SYMB;
         
@@ -61,20 +62,6 @@ public class LineEvaluator {
         return getWeight(line, opponentSymb, pos, minpos, maxpos);
     }
 
-    /**
-     * @return the weight for the pattern if its a recognizable patter, else return 0.
-     */
-    private int getWeight(StringBuilder line, char opponentSymb, int pos, int minpos, int maxpos) {
-
-        int index = getWeightIndex(line, opponentSymb, pos, minpos, maxpos);
-
-        if (index >= 0) {
-            int weight = (int)weights_.get(index).getValue();
-            return (opponentSymb == GamePiece.P2_SYMB) ? weight : -weight;
-        } else {
-            return 0;
-        }
-    }
 
     /**
      * In general, we march from the position pos in the middle towards the ends of the
@@ -87,51 +74,56 @@ public class LineEvaluator {
      * @param maxpos last symbol in the sting to evaluate
      * @return the index to use for getting the weight based on the pattern formed by this line.
      */
-    protected int getWeightIndex(StringBuilder line, char opponentSymb, int pos, int minpos, int maxpos) {
+    private int getWeightIndex(StringBuilder line, char opponentSymb, int pos, int minpos, int maxpos) {
 
-        int start = getStartPosition(line, opponentSymb, pos, minpos);
-        int stop = getStopPosition(line, opponentSymb, pos, maxpos);
-        return patterns_.getWeightIndexForPattern(line, start, stop);
+        String pattern = getPattern(line, opponentSymb, pos, minpos, maxpos);
+        return patterns_.getWeightIndexForPattern(pattern);
+    }
+    
+    protected String getPattern(StringBuilder line, char opponentSymb, int pos, int minpos, int maxpos) {
+
+        int start = getEndPosition(line, opponentSymb, pos, minpos, BACK);
+        int stop = getEndPosition(line, opponentSymb, pos, maxpos, FORWARD);
+        return line.substring(start, stop + 1);
     }
 
     /**
-     * March forward until we hit 2 blanks, an opponent piece, or the end of the line.
-     * @return stop position
+     * @return the weight for the pattern if its a recognizable pattern, else return 0.
      */
-    protected int getStopPosition(StringBuilder line, char opponentSymb, int pos, int maxpos) {
-        int stop;
-        stop = pos;
-        if ( (line.charAt( pos ) == opponentSymb) && (pos == maxpos) )  {
-            stop--;
-        }
-        else {
-            while ( stop < maxpos && (line.charAt( stop + 1 ) != opponentSymb)
-                  && !next2Unoccupied(line, stop, 1) ) {
-                stop++;
-            }
-        }
-        return stop;
-    }
+    private int getWeight(StringBuilder line, char opponentSymb, int pos, int minpos, int maxpos) {
 
-    /**
-     * March backward until we hit 2 blanks, an opponent piece, or the end of the line.
-     * @return start position
-     */
-    protected int getStartPosition(StringBuilder line, char opponentSymb, int pos, int minpos) {
-        int start = pos;
-        if ( (line.charAt( pos ) == opponentSymb) && (pos == minpos) )  {
-            start++;
+        int index = getWeightIndex(line, opponentSymb, pos, minpos, maxpos);
+
+        if (index >= 0) {
+            int weight = (int)weights_.get(index).getValue();
+            return (opponentSymb == GamePiece.P2_SYMB) ? weight : -weight;
+        } else {
+            return 0;
         }
+    }
+    
+    /**
+     * March in the direction specified until we hit 2 blanks, an opponent piece, 
+     * or the end of the line.
+     * @return end position
+     */
+    protected int getEndPosition(StringBuilder line, char opponentSymb, int pos, int extremePos, int direction) {
+        int end;
+        end = pos;
+        if ( (line.charAt( pos ) == opponentSymb) && (pos == extremePos) )  {
+            end -= direction;
+        }                                                                             
         else {
-            while ( start > minpos && (line.charAt( start - 1 ) != opponentSymb)
-                  && !next2Unoccupied(line, start, -1) ) {
-                start--;
+            while ( (direction * end < direction * extremePos) && (line.charAt( end + direction ) != opponentSymb)
+                  && !next2Unoccupied(line, end, direction) ) {
+                end += direction;
             }
         }
-        return start;
+        return end;
     }
 
     private boolean next2Unoccupied(StringBuilder line, int position, int dir) {
-        return (line.charAt( position ) == Patterns.UNOCCUPIED && line.charAt( position + dir ) == Patterns.UNOCCUPIED);
+        return (line.charAt( position ) == Patterns.UNOCCUPIED
+             && line.charAt( position + dir ) == Patterns.UNOCCUPIED);
     } 
 }

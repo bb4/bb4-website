@@ -39,10 +39,10 @@ public class DownDiagonalDifferencer extends DiagonalDifferencer {
         int stopr = row + winLength;
         if ( stopc > numCols ) {
             stopr += (numCols - stopc);
-            //stopc = numCols;
+            //stopc = numCols;//
         }
         if ( stopr > numRows ) {
-            //stopc += (numRows - stopr);
+            //stopc += (numRows - stopr);  //
             stopr = numRows;
         }
 

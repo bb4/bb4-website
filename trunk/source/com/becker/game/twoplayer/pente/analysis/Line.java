@@ -16,11 +16,11 @@ public class Line {
 
     /** contains the symbols in the line (run) */
     protected StringBuilder line;
-    protected LineEvaluator evaluator;
+    private LineEvaluator evaluator;
 
     /**
      * Constructor
-     * @param evaluator
+     * @param evaluator  used to evaluate the score for the line.
      */
     public Line(LineEvaluator evaluator) {
         this.evaluator = evaluator;

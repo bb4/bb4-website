@@ -20,7 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * This is an abstract base class for a Game UI.
+ * This is an abstract base class for a two player game UI.
  * See derived classes for specific game implementations.
  *
  * It contains a dockable toolbar which shows at least 5 buttons:
@@ -54,7 +54,7 @@ public abstract class TwoPlayerPanel extends GamePanel
     }
 
     /**
-     *  UIComponent initialization.
+     * UIComponent initialization.
      */
     @Override
     protected void initGui(Component parent) {
@@ -175,12 +175,14 @@ public abstract class TwoPlayerPanel extends GamePanel
                 if ( get2PlayerController().getTwoPlayerOptions().getShowGameTree() ) {
                     showGameTreeDialog();
                 }
-                else
+                else {
                     treeDialog_.setVisible(false);
+                }
             }
         }
-        else if ( source == toolBar_.getHelpButton() )
+        else if ( source == toolBar_.getHelpButton() )  {
             showHelpDialog();
+        }
     }
 
     private AbstractTwoPlayerBoardViewer getBoardViewer() {

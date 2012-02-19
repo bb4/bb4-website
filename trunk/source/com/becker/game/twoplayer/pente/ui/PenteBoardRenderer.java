@@ -14,7 +14,7 @@ import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
  */
 public class PenteBoardRenderer extends TwoPlayerBoardRenderer {
 
-    private  static GameBoardRenderer renderer_;
+    private static GameBoardRenderer renderer_;
 
 
     /**

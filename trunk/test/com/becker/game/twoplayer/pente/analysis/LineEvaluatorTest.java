@@ -19,14 +19,15 @@ public class LineEvaluatorTest extends TestCase  {
 
     StringBuilder line;
     StubLineEvaluator lineEvaluator;
-    GameWeights weights;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        weights = new StubWeights();
-        lineEvaluator = createLineEvaluator();
+        GameWeights weights = new StubWeights();
+        lineEvaluator =
+                new StubLineEvaluator(new StubPatterns(), weights.getDefaultWeights());
     }
+
 
     public void testEvalLineSimplePlayer1() {
 
@@ -180,9 +181,6 @@ public class LineEvaluatorTest extends TestCase  {
         return new StringBuilder(line);
     }
     
-    private StubLineEvaluator createLineEvaluator() {
-        return new StubLineEvaluator(new StubPatterns(), weights.getDefaultWeights());
-    }
 
     public static Test suite() {
         return new TestSuite(LineEvaluatorTest.class);

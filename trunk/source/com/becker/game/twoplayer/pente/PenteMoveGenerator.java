@@ -33,7 +33,7 @@ final class PenteMoveGenerator {
     public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         MoveList moveList = new MoveList();
 
-        PenteBoard pb = (PenteBoard) searchable_.getBoard();
+        PenteBoard pb = searchable_.getBoard();
         pb.determineCandidateMoves();
 
         boolean player1 = (lastMove == null) || !(lastMove.isPlayer1());

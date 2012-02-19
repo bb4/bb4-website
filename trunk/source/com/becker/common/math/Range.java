@@ -17,7 +17,7 @@ public class Range {
     }
 
     /**
-     * init with min and max valeus of the range.
+     * init with min and max values of the range.
      * @param minimum min value for range
      * @param maximum max value for range
      */

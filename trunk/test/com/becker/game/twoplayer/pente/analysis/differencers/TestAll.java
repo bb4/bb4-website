@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.game.twoplayer.pente.analysis;
+package com.becker.game.twoplayer.pente.analysis.differencers;
 
 
 import junit.framework.Test;
@@ -15,14 +15,11 @@ public class TestAll extends TestCase {
 
     public static Test suite() {
 
-        TestSuite suite =  new TestSuite("All Pente Analysis Tests");
+        TestSuite suite =  new TestSuite("All Pente Differencer Tests");
 
-        suite.addTestSuite(LineTest.class);
-        suite.addTestSuite(LineEvaluatorTest.class);
-        suite.addTestSuite(MoveEvaluatorTest.class);
-        suite.addTestSuite(PenteLineTest.class);
+        suite.addTestSuite(StraightVerticalDifferencerTest.class);
+        suite.addTestSuite(StraightHorizontalDifferencerTest.class);
 
-        suite.addTest(com.becker.game.twoplayer.pente.analysis.differencers.TestAll.suite());
         
         return suite;
     }

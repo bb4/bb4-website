@@ -28,7 +28,7 @@ public class ValueDifferencerFactory {
     }
 
     /**
-     * @param dir
+     * @param dir the direction used to decide which differencer to create.
      * @return differencer for the specified direction.
      */
     public ValueDifferencer createValueDifferencer(Direction dir) {

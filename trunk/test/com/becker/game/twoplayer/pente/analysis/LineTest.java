@@ -18,7 +18,6 @@ import junit.framework.TestSuite;
 public class LineTest extends TestCase  {
 
     Line line;
-    //StubLineEvaluator lineEvaluator;
     GameWeights weights;
 
     @Override
