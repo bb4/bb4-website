@@ -78,6 +78,14 @@ public abstract class Patterns {
     public int getWeightIndexForPattern(StringBuilder pattern, int minpos, int maxpos) {
         return weightIndexTable_[convertPatternToInt(pattern, minpos, maxpos)];
     }
+
+    /**
+     * @param pattern  pattern to get the weight index for.
+     * @return weight index
+     */
+    public int getWeightIndexForPattern(String pattern) {
+        return weightIndexTable_[convertPatternToInt(pattern, 0, pattern.length()-1)];
+    }
     
     /**
      * each pattern can be represented as a unique integer.
@@ -86,7 +94,6 @@ public abstract class Patterns {
      * @return integer identifier for pattern.
      */
     protected int convertPatternToInt( String pattern ) {
-
         StringBuilder buf = new StringBuilder( pattern );
         return convertPatternToInt( buf, 0, pattern.length()-1 );
     }
@@ -97,15 +104,17 @@ public abstract class Patterns {
      * in the weightIndexTable
      * @return integer representation of pattern
      */
-    private int convertPatternToInt( StringBuilder pattern, int minpos, int maxpos ) {
+    private int convertPatternToInt( CharSequence pattern, int minpos, int maxpos ) {
 
         int power = 1;
         int sum = 0;
 
         for ( int i = maxpos; i >= minpos; i-- ) {
-            if ( pattern.charAt( i ) != UNOCCUPIED )
+            if ( pattern.charAt( i ) != UNOCCUPIED )   {
                 sum += power;
-            power += power;  // doubles every step through the loop.
+            }
+            // power doubles every step through the loop.
+            power += power;
         }
         return sum + power;
     }

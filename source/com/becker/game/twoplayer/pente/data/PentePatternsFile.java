@@ -121,6 +121,7 @@ public class PentePatternsFile extends PentePatterns {
         } catch (FileNotFoundException e) {
             GameContext.log(0, "can't open " + exportFile + " for write" );
             e.printStackTrace();
+            return;
         }
         OutputStreamWriter oStreamWriter = new OutputStreamWriter( patternFile );
         BufferedWriter outData = new BufferedWriter( oStreamWriter );

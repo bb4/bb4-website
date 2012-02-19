@@ -19,9 +19,7 @@ import com.becker.optimization.parameter.ParameterArray;
 public class MoveEvaluator  {
 
     private TwoPlayerBoard board_;
-    private Patterns patterns_;
-    private ValueDifferencerFactory differencerFactory_;
-    
+
     private ValueDifferencer vertDifferencer;
     private ValueDifferencer horzDifferencer;
     private ValueDifferencer upDiagDifferencer;
@@ -31,22 +29,20 @@ public class MoveEvaluator  {
      * Constructor
      */
     public MoveEvaluator(TwoPlayerBoard board, Patterns patterns) {
-        patterns_ = patterns;
         board_ = board;
         setValueDifferencerFactory(
-                new ValueDifferencerFactory(board_, patterns_, new LineFactory()));
+                new ValueDifferencerFactory(board_, patterns, new LineFactory()));
     }
 
     /**
      * Used for testing to inject something that will create mock differencers.
      */
-    public void setValueDifferencerFactory(ValueDifferencerFactory factory) {
-        differencerFactory_ = factory;
+    public void setValueDifferencerFactory(ValueDifferencerFactory differencerFactory) {
         
-        vertDifferencer = differencerFactory_.createValueDifferencer(Direction.VERTICAL);
-        horzDifferencer = differencerFactory_.createValueDifferencer(Direction.HORIZONTAL);
-        upDiagDifferencer = differencerFactory_.createValueDifferencer(Direction.UP_DIAGONAL);
-        downDiagDifferencer = differencerFactory_.createValueDifferencer(Direction.DOWN_DIAGONAL);
+        vertDifferencer = differencerFactory.createValueDifferencer(Direction.VERTICAL);
+        horzDifferencer = differencerFactory.createValueDifferencer(Direction.HORIZONTAL);
+        upDiagDifferencer = differencerFactory.createValueDifferencer(Direction.UP_DIAGONAL);
+        downDiagDifferencer = differencerFactory.createValueDifferencer(Direction.DOWN_DIAGONAL);
     }
     
     /**
@@ -59,7 +55,7 @@ public class MoveEvaluator  {
         int row = move.getToRow();
         int col = move.getToCol();
         assert board_.getPosition(row, col).getPiece() != null :
-                "There must be a piece where the last move was played ("+row+", "+col+")";
+                "There must be a piece where the last move was played (" + row+", " + col + ")";
         
         // look at every string that passes through this new move to see how the value is effected.
         int diff;

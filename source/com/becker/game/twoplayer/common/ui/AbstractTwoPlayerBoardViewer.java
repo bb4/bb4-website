@@ -19,12 +19,12 @@ import java.util.List;
 
 /**
  * This class contains a TwoPlayerController and displays the current state of the Game.
- * The TwoPlayerController contains a Board which describes this state.
+ * The TwoPlayerController contains a Board which describes the game state.
  * The game specific TwoPlayerController is created upon construction to be used internally.
  * This class delegates to a boardRenderer to render the board and its pieces.
  * There should be no references to swing classes outside this ui subpackage.
  *   This class sends a GameChangedEvent after each move in case there are other
- * components (like the GameTreeViewer) that need to update based on the new board state.
+ * components (like the GameTreeViewer) that need to updated based on the new board state.
  * Since the computer can take a long time to think about its move before playing it, that
  * computation is handled asynchronously in a separate thread. The way it works is that the
  * TwoPlayerBoardViewer requests the next move from the controller (controller.requestComputerMove(p1)).
@@ -159,8 +159,12 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         // need to clear the cache, otherwise we may render a stale board.
         cachedGameBoard_ = null;
         c.manMoves(move);
-        //refresh();
-        boolean done = c.getSearchable().done(move, false); // was true, but then we did final update twice.
+
+        // need to refresh here to show man moves in human only gaem
+        refresh();
+
+        // Second arg was true, but then we did final update twice.
+        boolean done = c.getSearchable().done(move, false);
         sendGameChangedEvent(move);
         return done;
     }

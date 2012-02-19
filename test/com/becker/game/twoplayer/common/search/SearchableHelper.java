@@ -11,7 +11,7 @@ import com.becker.game.twoplayer.common.search.options.SearchOptions;
 public abstract class SearchableHelper implements ISearchableHelper {
 
     /** moved all test cases here so they are not included in the jar and do not need to be searched */
-    protected static final String EXTERNAL_TEST_CASE_DIR =
+    public static final String EXTERNAL_TEST_CASE_DIR =
             FileUtil.getHomeDir() +"/test/com/becker/game/twoplayer/";
 
     private static final String SGF_EXTENSION = ".sgf";
