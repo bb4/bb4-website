@@ -1,7 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.pente.analysis.differencers;
 
-import com.becker.game.twoplayer.pente.*;
+import com.becker.game.twoplayer.pente.Patterns;
+import com.becker.game.twoplayer.pente.PenteBoard;
 import com.becker.game.twoplayer.pente.analysis.Direction;
 
 
@@ -10,65 +11,72 @@ import com.becker.game.twoplayer.pente.analysis.Direction;
  *
  * @author Barry Becker
  */
-public class StraightVerticalDifferencerTest extends ValueDifferencerTst  {
+public class UpDiagonalDifferencerTest extends ValueDifferencerTst  {
 
     @Override
     protected ValueDifferencer createDifferencer(PenteBoard board, Patterns patterns) {
-        return differencerFactory.createValueDifferencer(Direction.VERTICAL);
+        return differencerFactory.createValueDifferencer(Direction.UP_DIAGONAL);
     }
 
-
     public void testBlank() {
-        verifyLine(4, 1, "_________");
+        verifyLine(3, 1, "___");
+    }
+
+    public void testLeftSide() {
+        verifyLine(4, 1, "___X");
     }
 
 
     public void testBottomLeftCorner() {
-        verifyLine(10, 1, "______");
+        verifyLine(10, 1, "_XXOOX");
     }
 
     public void testBottomRightCorner() {
-        verifyLine(10, 8, "______");
+        verifyLine(10, 8, "_");
     }
 
     public void testTopLeftCorner() {
-        verifyLine(1, 1, "______");
+        verifyLine(1, 1, "_");
     }
 
     public void testTopRightCorner() {
-        verifyLine(1, 8, "______");
+        verifyLine(1, 8, "XX_O__");
     }
 
 
+    public void testTopSide() {
+        verifyLine(1, 4, "___X");
+    }
+
     public void testPlayer1() {
-        verifyLine(1, 4, "XOX_XX");
+        verifyLine(5, 5, "___XX_O_");
     }
 
     public void testPlayer2() {
-        verifyLine(2, 4, "XOX_XXO");
+        verifyLine(5, 2, "_O_X__");
     }
 
     public void testPlayer2Single() {
-        verifyLine(5, 2, "____O___X_");
+        verifyLine(2, 4, "___O_");
     }
 
     public void testPlayer1Single() {
-        verifyLine(9, 2, "_O___X_");
+        verifyLine(9, 2, "_XXOOX_");
     }
 
     public void testPlayer1Surrounded() {
-        verifyLine(3, 4, "XOX_XXO_");
+        verifyLine(5, 4, "__XX_O__");
     }
 
     public void testPlayer2Surrounded() {
-        verifyLine(2, 4, "XOX_XXO");
+        verifyLine(7, 4, "_XXOOX__");
     }
 
     public void testPlayer2Edge() {
-        verifyLine(10, 7, "X__O_O");
+        verifyLine(10, 7, "O_");
     }
 
     public void testPlayer2AmongFriends() {
-        verifyLine(8, 7, "O_X__O_O");
+        verifyLine(8, 7, "__O_");
     }
 }
