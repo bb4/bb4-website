@@ -60,6 +60,40 @@ public class ExpectedSearchableResults {
         TwoPlayerMove.createMove(new Location(3, 6), 292, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(3, 3), 292, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(3, 7), 36, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(2, 8), 36, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(1, 6), 36, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(1, 5), 36, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(1, 3), 36, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(1, 2), 36, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(2, 6), 28, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(2, 4), 28, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(2, 2), 26, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(8, 2), 6, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(7, 7), 6, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(7, 3), 6, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(7, 1), 6, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(5, 8), 6, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(5, 7), 6, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(5, 1), 6, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(8, 7), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(8, 5), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(8, 4), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(8, 3), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(8, 1), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(7, 8), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(6, 8), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(6, 1), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(4, 8), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(4, 1), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(3, 1), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(1, 8), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(1, 7), 4, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(8, 6), 2, PLAYER1_PIECE),
+            /*
+        TwoPlayerMove.createMove(new Location(3, 2), 326, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(3, 6), 292, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(3, 3), 292, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(3, 7), 36, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(1, 6), 36, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(1, 5), 36, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(1, 3), 36, PLAYER1_PIECE),
@@ -88,18 +122,28 @@ public class ExpectedSearchableResults {
         TwoPlayerMove.createMove(new Location(3, 1), 4, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(1, 8), 4, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(1, 7), 4, PLAYER1_PIECE),
-        TwoPlayerMove.createMove(new Location(8, 6), 2, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(8, 6), 2, PLAYER1_PIECE),  */
     };
 
     static final TwoPlayerMove[] EXPECTED_TOP_END_GAME_MOVES_P1 = {
+            /*
         TwoPlayerMove.createMove(new Location(3, 2), 168, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(3, 6), 144, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(3, 3), 144, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(3, 7), 32, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(1, 6), 32, PLAYER1_PIECE),
         TwoPlayerMove.createMove(new Location(1, 5), 32, PLAYER1_PIECE),
-        TwoPlayerMove.createMove(new Location(1, 3), 32, PLAYER1_PIECE)
+        TwoPlayerMove.createMove(new Location(1, 3), 32, PLAYER1_PIECE)   */
+
+        TwoPlayerMove.createMove(new Location(3, 2), 326, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(3, 6), 292, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(3, 3), 292, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(3, 7), 36, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(2, 8), 36, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(1, 6), 36, PLAYER1_PIECE),
+        TwoPlayerMove.createMove(new Location(1, 5), 36, PLAYER1_PIECE),
     };
+
 
     static final TwoPlayerMove[] EXPECTED_ALL_MIDDLE_GAME_MOVES_P2 = {
         TwoPlayerMove.createMove(new Location(11, 10), -3148, PLAYER2_PIECE),

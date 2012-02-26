@@ -8,8 +8,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.List;
-
 /**
  * Verify that we correctly evaluate patterns on the board.
  *
@@ -168,7 +166,7 @@ public class LineEvaluatorTest extends TestCase  {
 
         line = createLine("X_OX");
         worth = lineEvaluator.evaluate(line, true, 2, 0, 3);
-        // X_ gets 4.
+        // X_ gets 1.
         assertEquals(1.0, worth);
 
         line = createLine("X_OX");
@@ -180,8 +178,12 @@ public class LineEvaluatorTest extends TestCase  {
 
         line = createLine("X_O_X");
         worth = lineEvaluator.evaluate(line, true, 2, 0, 4);
-        // X_ and _X get 4.
+        // X_ and _X get 2.
         assertEquals(2.0, worth);
+
+        worth = lineEvaluator.evaluate(line, false, 2, 0, 4);
+        // X_ and _X get 4.
+        assertEquals(-3.0, worth);
     }
 
     public void testEvalMixedLineXXOXX() {
@@ -190,14 +192,29 @@ public class LineEvaluatorTest extends TestCase  {
         worth = lineEvaluator.evaluate(line, true, 2, 0, 4);
         assertEquals(20.0, worth);
 
-        line = createLine("XXOXX");
         worth = lineEvaluator.evaluate(line, true, 1, 0, 4);
         assertEquals(10.0, worth);
 
-        line = createLine("XXOXX");
         worth = lineEvaluator.evaluate(line, false, 2, 0, 4);
         assertEquals(0.0, worth);
     }
+
+    public void testEvalMixedLine_XO_X() {
+
+        line = createLine("_XO_X");
+        worth = lineEvaluator.evaluate(line, true, 2, 0, 4);
+        assertEquals(2.0, worth);
+
+        worth = lineEvaluator.evaluate(line, false, 2, 0, 4);
+        assertEquals(-1.0, worth);
+
+        worth = lineEvaluator.evaluate(line, true, 1, 0, 4);
+        assertEquals(1.0, worth);
+
+        worth = lineEvaluator.evaluate(line, false, 2, 0, 4);
+        assertEquals(-1.0, worth);
+    }
+
     
     /**
      * @return the line

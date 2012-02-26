@@ -18,6 +18,7 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Pente Analysis Tests");
 
         suite.addTestSuite(LineTest.class);
+        suite.addTestSuite(PatternExtractorTest.class);
         suite.addTestSuite(LineEvaluatorTest.class);
         suite.addTestSuite(MoveEvaluatorTest.class);
         suite.addTestSuite(PenteLineTest.class);
