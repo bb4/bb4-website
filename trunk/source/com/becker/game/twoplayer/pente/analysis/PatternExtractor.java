@@ -1,0 +1,59 @@
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+package com.becker.game.twoplayer.pente.analysis;
+
+import com.becker.game.common.board.GamePiece;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
+import com.becker.optimization.parameter.ParameterArray;
+
+/**
+ * Test that we can correctly evaluate a run of symbols on the board.
+ * @author Barry Becker
+ */
+public class PatternExtractor {
+
+    private static final int BACK = -1;
+    private static final int FORWARD = 1;
+
+    private CharSequence line;
+
+    /**
+     * Constructor
+     * @param line the line to extract patterns from.
+     */
+    public PatternExtractor(CharSequence line) {
+        this.line = line;
+    }
+    
+
+    protected CharSequence getPattern(char opponentSymb, int pos, int minpos, int maxpos) {
+
+        int start = getEndPosition(line, opponentSymb, pos, minpos, BACK);
+        int stop = getEndPosition(line, opponentSymb, pos, maxpos, FORWARD);
+        return line.subSequence(start, stop + 1);
+    }
+    
+    /**
+     * March in the direction specified until we hit 2 blanks, an opponent piece, 
+     * or the end of the line.
+     * @return end position
+     */
+    protected int getEndPosition(CharSequence line, char opponentSymb, int pos, int extremePos, int direction) {
+        int end;
+        end = pos;
+        if ( (line.charAt( pos ) == opponentSymb) && (pos == extremePos) )  {
+            end -= direction;
+        }                                                                             
+        else {
+            while ( (direction * end < direction * extremePos) && (line.charAt( end + direction ) != opponentSymb)
+                  && !next2Unoccupied(line, end, direction) ) {
+                end += direction;
+            }
+        }
+        return end;
+    }
+
+    private boolean next2Unoccupied(CharSequence line, int position, int dir) {
+        return (line.charAt( position ) == Patterns.UNOCCUPIED
+             && line.charAt( position + dir ) == Patterns.UNOCCUPIED);
+    } 
+}

@@ -2,7 +2,7 @@
 package com.becker.game.twoplayer.pente.data;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.pente.PentePatterns;
+import com.becker.game.twoplayer.pente.pattern.PentePatterns;
 
 import java.io.*;
 
@@ -136,7 +136,7 @@ public class PentePatternsFile extends PentePatterns {
             }
             outData.write( "\r\n" );
             for ( i = 0; i < numPatterns; i++ ) {
-                int index = weightIndexTable_[convertPatternToInt( patterns_[i] )];
+                int index = getWeightIndexForPattern(patterns_[i]);
                 outData.write( index + ", " );
             }
             outData.write( "\r\n" );

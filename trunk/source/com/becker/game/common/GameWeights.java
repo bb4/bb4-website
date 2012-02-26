@@ -34,6 +34,10 @@ public class GameWeights {
     private final String[] names_;
     private final String[] descriptions_;
 
+    /**
+     * Constructor
+     * @param defaultWeights default weights to use (will also be used for p1 and p2 weights).
+     */
     public GameWeights( ParameterArray defaultWeights ) {
         // this will not change once set.
         numWeights_ = defaultWeights.size();
@@ -49,6 +53,9 @@ public class GameWeights {
         init();
     }
 
+    /**
+     * Constructor
+     */
     public GameWeights( double[] defaultWeights, double[] minWeights, double[] maxWeights,
                         String[] names, String[] descriptions ) {
         numWeights_ = defaultWeights.length;

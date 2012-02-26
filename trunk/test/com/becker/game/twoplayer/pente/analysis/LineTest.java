@@ -4,8 +4,8 @@ package com.becker.game.twoplayer.pente.analysis;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.GameWeights;
-import com.becker.game.twoplayer.pente.StubPatterns;
-import com.becker.game.twoplayer.pente.StubWeights;
+import com.becker.game.twoplayer.pente.pattern.SimplePatterns;
+import com.becker.game.twoplayer.pente.pattern.SimpleWeights;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -17,18 +17,13 @@ import junit.framework.TestSuite;
  */
 public class LineTest extends TestCase  {
 
-    Line line;
-    GameWeights weights;
+    private Line line;
+    private GameWeights weights = new SimpleWeights();
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        weights = new StubWeights();
-    }
 
     public void testAppendEmpty() {
 
-        Line line = new Line(new LineEvaluator(new StubPatterns(), weights.getDefaultWeights()));
+        Line line = new Line(new LineEvaluator(new SimplePatterns(), weights.getDefaultWeights()));
         BoardPosition pos = new BoardPosition(2, 2, null);
         line.append(pos);
         assertEquals("_", line.toString());
@@ -36,7 +31,7 @@ public class LineTest extends TestCase  {
 
     public void testAppendPlayer() {
 
-        Line line = new Line(new LineEvaluator(new StubPatterns(), weights.getDefaultWeights()));
+        Line line = new Line(new LineEvaluator(new SimplePatterns(), weights.getDefaultWeights()));
         BoardPosition pos = new BoardPosition(2, 2, new GamePiece(true));
         line.append(pos);
         assertEquals("X", line.toString());
@@ -46,36 +41,70 @@ public class LineTest extends TestCase  {
         assertEquals("XO", line.toString());
     }
 
-    public void testComputeValueDifference1() {
+    public void testComputeValueDifferenceXX_Integraction() {
 
         Line line = createLine("XX");
       
         int diff = line.computeValueDifference(0);
-        assertEquals(16, diff);
+        assertEquals(9, diff);
 
         diff = line.computeValueDifference(1);
-        assertEquals(16, diff);
+        assertEquals(9, diff);
     }
 
-    public void testComputeValueDifferenceOO() {
+    public void testComputeValueDifferenceOO_Integraction() {
 
         Line line = createLine("OO");
 
         int diff = line.computeValueDifference(0);
-        assertEquals(-16, diff);
+        assertEquals(-9, diff);
 
         diff = line.computeValueDifference(1);
-        assertEquals(-16, diff);
+        assertEquals(-9, diff);
     }
 
-    public void testComputeValueDifference_X() {
+    public void testComputeValueDifference_X_Integraction() {
 
         Line line = createLine("_X");
         assertEquals("_X", line.toString());
 
         int diff = line.computeValueDifference(1);
-        assertEquals(4, diff);
+        assertEquals(1, diff);
     }
+
+    public void testComputeValueDifferenceXX_TooShort() {
+
+        Line line = createLineWithMock("XX");
+
+        int diff = line.computeValueDifference(0);
+        assertEquals(0, diff);
+
+        diff = line.computeValueDifference(1);
+        assertEquals(0, diff);
+    }
+
+    public void testComputeValueDifference_XXX() {
+
+        Line line = createLineWithMock("_XXX");
+
+        int diff = line.computeValueDifference(2);
+        assertEquals(2, diff);
+
+        diff = line.computeValueDifference(3);
+        assertEquals(2, diff);
+    }
+
+    public void testComputeValueDifference_XOX() {
+
+        Line line = createLineWithMock("_XOX");
+
+        int diff = line.computeValueDifference(2);
+        assertEquals(-2, diff);
+
+        diff = line.computeValueDifference(3);
+        assertEquals(2, diff);
+    }
+
 
 
     /**
@@ -86,8 +115,17 @@ public class LineTest extends TestCase  {
         return TstUtil.createLine(linePattern, createLineEvaluator());
     }
 
-    private StubLineEvaluator createLineEvaluator() {
-        return new StubLineEvaluator(new StubPatterns(), weights.getDefaultWeights());
+    /**
+     * @param linePattern  some sequence of X, O, _
+     * @return the line
+     */
+    private Line createLineWithMock(String linePattern) {
+        return TstUtil.createLine(linePattern, new MockLineEvaluator(3));
+    }
+
+
+    private LineEvaluator createLineEvaluator() {
+        return new LineEvaluator(new SimplePatterns(), weights.getDefaultWeights());
     }
 
     public static Test suite() {

@@ -9,6 +9,9 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerSearchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
+import com.becker.game.twoplayer.pente.pattern.PentePatterns;
+import com.becker.game.twoplayer.pente.pattern.PenteWeights;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**

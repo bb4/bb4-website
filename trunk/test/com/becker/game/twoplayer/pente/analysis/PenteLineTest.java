@@ -2,9 +2,8 @@
 package com.becker.game.twoplayer.pente.analysis;
 
 import com.becker.game.common.GameWeights;
-import com.becker.game.twoplayer.pente.PentePatterns;
+import com.becker.game.twoplayer.pente.pattern.PentePatterns;
 import com.becker.game.twoplayer.pente.PenteTestWeights;
-import com.becker.game.twoplayer.pente.PenteWeights;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -58,7 +57,8 @@ public class PenteLineTest extends TestCase  {
 
     private void checkLine(String linePattern, int position, boolean player1persp, int expectedWorth,
                            String[] expectedPatternsChecked) {
-        StubLineEvaluator evaluator = new StubLineEvaluator(new PentePatterns(), weights.getDefaultWeights());
+        StubLineEvaluator evaluator =
+                new StubLineEvaluator(new PentePatterns(), weights.getDefaultWeights());
         StringBuilder line = new StringBuilder(linePattern);
         int worth = evaluator.evaluate(line, player1persp, position, 0, linePattern.length() - 1);
         //System.out.println("p1Persp=" + player1persp + " " + line +" pos="+ position);
@@ -66,11 +66,11 @@ public class PenteLineTest extends TestCase  {
         assertEquals("unexpected score for pattern "+ linePattern + " pos=" + position + " player1Persp="+ player1persp,
                 expectedWorth, worth);
 
-        List<String> checkedPats = evaluator.getPatternsChecked();
+        List<CharSequence> checkedPats = evaluator.getPatternsChecked();
         //System.out.println("pats="+ TstUtil.quoteStringList(checkedPats));
         assertEquals(expectedPatternsChecked.length, checkedPats.size());
         int i = 0;
-        for (String p : checkedPats) {
+        for (CharSequence p : checkedPats) {
             assertEquals(expectedPatternsChecked[i++], p);
         }
     }

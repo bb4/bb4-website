@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.pente.analysis.differencers;
 
 import com.becker.game.twoplayer.pente.*;
 import com.becker.game.twoplayer.pente.analysis.Direction;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
 
 
 /**

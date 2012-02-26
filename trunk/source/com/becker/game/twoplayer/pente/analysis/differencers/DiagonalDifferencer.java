@@ -2,10 +2,8 @@
 package com.becker.game.twoplayer.pente.analysis.differencers;
 
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
-import com.becker.game.twoplayer.pente.Patterns;
-import com.becker.game.twoplayer.pente.analysis.Line;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
 import com.becker.game.twoplayer.pente.analysis.LineFactory;
-import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * Determines the difference in value between the most recent move
