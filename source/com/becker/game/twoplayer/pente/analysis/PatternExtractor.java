@@ -1,12 +1,12 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.pente.analysis;
 
-import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.pente.pattern.Patterns;
-import com.becker.optimization.parameter.ParameterArray;
 
 /**
- * Test that we can correctly evaluate a run of symbols on the board.
+ * Extract a pattern from a line of sympols.
+ * A pattern consists of a sequence of friendly and unoccupied positions.
+ *
  * @author Barry Becker
  */
 public class PatternExtractor {
@@ -27,6 +27,10 @@ public class PatternExtractor {
 
     protected CharSequence getPattern(char opponentSymb, int pos, int minpos, int maxpos) {
 
+        if (line.charAt(pos) == opponentSymb) {
+            // assert false :" line="+ line +" pos = " + pos;
+            return "";
+        }
         int start = getEndPosition(line, opponentSymb, pos, minpos, BACK);
         int stop = getEndPosition(line, opponentSymb, pos, maxpos, FORWARD);
         return line.subSequence(start, stop + 1);

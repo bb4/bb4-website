@@ -27,21 +27,29 @@ public class PenteLineTest extends TestCase  {
         weights = new PenteTestWeights();
     }
 
-    public void testEvalLinePlayer1Short() {
+    /** from the perspective of X */
+    public void testEvalLinePlayer1Short_p1Persp() {
         checkLine("_X_XO", 1, PLAYER1_PERSP, 8, new String[] {"_X_X"});
         checkLine("_X_XO", 2, PLAYER1_PERSP, 8, new String[] {"_X_X"});
         checkLine("_X_XO", 3, PLAYER1_PERSP, 8, new String[] {"_X_X"});
-        checkLine("_X_XO", 3, PLAYER2_PERSP, 0, new String[] {"_"});
+        checkLine("_X_XO", 4, PLAYER1_PERSP, 0, new String[] {""});
         checkLine("_XX", 1, PLAYER1_PERSP, 0, new String[] {"_XX"});
         checkLine("_XX_", 2, PLAYER1_PERSP, 32, new String[] {"_XX_"});
-        checkLine("_XX_", 2, PLAYER2_PERSP, 0, new String[] {""});
         checkLine("_XX_", 3, PLAYER1_PERSP, 32, new String[] {"_XX_"});
+
+    }
+
+    /** from the perspective of O */
+    public void testEvalLinePlayer1Short_p2Persp() {
+        checkLine("_X_XO", 3, PLAYER2_PERSP, 0, new String[] {"_"});
+        checkLine("_X_XO", 4, PLAYER2_PERSP, 0, new String[] {"O"});
+        checkLine("_XX_", 2, PLAYER2_PERSP, 0, new String[] {});
         checkLine("_XX_", 3, PLAYER2_PERSP, 0, new String[] {"_"});
     }
 
+
     public void testEvalLinePlayer1Long() {
         checkLine("_XX_XX__",  1, PLAYER1_PERSP, 348, new String[] {"_XX_XX_"});
-
         checkLine("_XX_XX__",  3, PLAYER1_PERSP, 348, new String[] {"_XX_XX_"});
         checkLine("_XX_XX__",  3, PLAYER2_PERSP, 0,   new String[] {"_"});
         checkLine("_XX_XX__",  4, PLAYER1_PERSP, 348, new String[] {"_XX_XX_"});
@@ -68,7 +76,8 @@ public class PenteLineTest extends TestCase  {
 
         List<CharSequence> checkedPats = evaluator.getPatternsChecked();
         //System.out.println("pats="+ TstUtil.quoteStringList(checkedPats));
-        assertEquals(expectedPatternsChecked.length, checkedPats.size());
+        assertEquals("Unexpected number of patterns checked",
+                expectedPatternsChecked.length, checkedPats.size());
         int i = 0;
         for (CharSequence p : checkedPats) {
             assertEquals(expectedPatternsChecked[i++], p);

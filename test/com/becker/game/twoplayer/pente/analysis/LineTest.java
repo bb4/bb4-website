@@ -17,7 +17,6 @@ import junit.framework.TestSuite;
  */
 public class LineTest extends TestCase  {
 
-    private Line line;
     private GameWeights weights = new SimpleWeights();
 
 

@@ -160,8 +160,10 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         cachedGameBoard_ = null;
         c.manMoves(move);
 
-        // need to refresh here to show man moves in human only gaem
-        refresh();
+        // need to refresh here to show man moves in human only game
+        if (c.getPlayers().allPlayersHuman())  {
+            refresh();
+        }
 
         // Second arg was true, but then we did final update twice.
         boolean done = c.getSearchable().done(move, false);
