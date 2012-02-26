@@ -18,7 +18,9 @@ public class TestAll {
 
         TestSuite suite =  new TestSuite("All Game Tests");
 
+        suite.addTest(com.becker.game.common.TestAll.suite());
         suite.addTest(com.becker.game.twoplayer.TestAll.suite());
+        suite.addTest(com.becker.game.multiplayer.TestAll.suite());
 
         return suite;
     }

@@ -1,31 +1,25 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.game.twoplayer.tictactoe;
+package com.becker.game.twoplayer.pente.pattern;
 
 import com.becker.game.twoplayer.pente.pattern.Patterns;
 
 /**
- *  Encapsulates the domain knowledge for TicTacToe.
- *  These are key patterns that can occur in the game and are weighted
- *  by importance to let the computer play better.
+ *  Simple patterns for use with unit tests.
  *
  *  @author Barry Becker
  */
-public final class TicTacToePatterns extends Patterns {
-
-    public static final int WIN_RUN_LENGTH = 3;
-
-    private static final int NUM_PATTERNS = 5;
-
-    private static final String[] patternString = {
-        "_X", "_X_", "_XX", "X_X", "XXX"
+public final class SimplePatterns extends Patterns
+{
+    private static String[] patternString = {
+        "_X", "X_X", "_X_", "XX", "_XX", "_XX_"
     };
 
-    /** index into weights array. @see TicTacTowWeights */
-    private static final int[] weightIndex = {
-          0,     1,    2,     3,     4
+    /** index into weights array. */
+    private static int[] weightIndex = {
+        0, 0, 1, 2, 2, 2
     };
 
-    public TicTacToePatterns() {
+    public SimplePatterns() {
         initializePatterns();
     }
 
@@ -34,18 +28,19 @@ public final class TicTacToePatterns extends Patterns {
       */
     @Override
     public int getWinRunLength() {
-        return WIN_RUN_LENGTH;
+        return 2;
     }
 
     @Override
     protected int getNumPatterns() {
-        return NUM_PATTERNS;
+        return 6;
     }
 
     @Override
     public int getMinInterestingLength() {
         return 2;
     }
+
 
     @Override
     protected String getPatternString(int i) {

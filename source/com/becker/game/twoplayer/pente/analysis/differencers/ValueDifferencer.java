@@ -1,10 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.pente.analysis.differencers;
 
-import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.pente.Patterns;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
 import com.becker.game.twoplayer.pente.analysis.LineFactory;
 import com.becker.optimization.parameter.ParameterArray;
 

@@ -3,7 +3,9 @@ package com.becker.game.twoplayer.pente.analysis.differencers;
 
 import com.becker.game.twoplayer.common.search.SearchableHelper;
 import com.becker.game.twoplayer.pente.*;
-import com.becker.game.twoplayer.pente.analysis.Direction;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
+import com.becker.game.twoplayer.pente.pattern.PentePatterns;
+import com.becker.game.twoplayer.pente.pattern.SimpleWeights;
 import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.TestCase;
 
@@ -20,7 +22,7 @@ public abstract class ValueDifferencerTst extends TestCase  {
     /** instance under test */
     protected ValueDifferencer differencer;
     protected ValueDifferencerFactory differencerFactory;
-    protected ParameterArray weights = new StubWeights().getDefaultWeights();
+    protected ParameterArray weights = new SimpleWeights().getDefaultWeights();
     protected StubLineFactory lineFactory;
             
 

@@ -1,7 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.pente.analysis.differencers;
 
-import com.becker.game.twoplayer.pente.Patterns;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
 import com.becker.game.twoplayer.pente.PenteBoard;
 import com.becker.game.twoplayer.pente.analysis.Direction;
 

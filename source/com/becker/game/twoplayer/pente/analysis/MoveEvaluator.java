@@ -4,7 +4,7 @@ package com.becker.game.twoplayer.pente.analysis;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.pente.Patterns;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
 import com.becker.game.twoplayer.pente.analysis.differencers.ValueDifferencer;
 import com.becker.game.twoplayer.pente.analysis.differencers.ValueDifferencerFactory;
 import com.becker.optimization.parameter.ParameterArray;

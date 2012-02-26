@@ -11,6 +11,8 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
+import com.becker.game.twoplayer.pente.pattern.PentePatterns;
+import com.becker.game.twoplayer.pente.pattern.PenteWeights;
 
 import java.awt.*;
 

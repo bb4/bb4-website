@@ -3,8 +3,6 @@ package com.becker.game.twoplayer.pente.analysis;
 
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
-import com.becker.game.twoplayer.pente.Patterns;
-import com.becker.optimization.parameter.ParameterArray;
 
 import java.util.List;
 
@@ -46,7 +44,7 @@ public class TstUtil {
         System.out.println("lines = " + bldr.toString());
     }
 
-    public static String quoteStringList(List<String> strings) {
+    public static String quoteStringList(List<CharSequence> strings) {
         StringBuilder bldr = new StringBuilder();
         int len = strings.size();
         for (int i=0; i<len; i++)  {

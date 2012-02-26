@@ -2,7 +2,7 @@
 package com.becker.game.twoplayer.pente.analysis.differencers;
 
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
-import com.becker.game.twoplayer.pente.Patterns;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
 import com.becker.game.twoplayer.pente.analysis.Direction;
 import com.becker.game.twoplayer.pente.analysis.LineFactory;
 
