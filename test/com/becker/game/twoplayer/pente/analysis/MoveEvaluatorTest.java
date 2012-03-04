@@ -29,8 +29,7 @@ public class MoveEvaluatorTest extends TestCase  {
     LineFactoryRecorder lineFactory;
 
     /**
-     * common initialization for all go test cases.
-     * Override setOptionOverrides if you want different search parameters.
+     * Common initialization for all test cases.
      */
     @Override
     protected void setUp() throws Exception {
@@ -46,7 +45,7 @@ public class MoveEvaluatorTest extends TestCase  {
     }
 
     /**
-     * This will fail if exceptions are on when running test.
+     * This will fail if assertions are on when running test.
      * Verify error if piece is not where last move was played.
      */
     //@Test(expected=IllegalArgumentException.class) junit 4 only
@@ -175,9 +174,9 @@ public class MoveEvaluatorTest extends TestCase  {
 
 
     private void initRow(TwoPlayerBoard board, int row, String pattern) {
-        assert row>0;
-        for (int i=0; i<pattern.length(); i++)  {
-            char c= pattern.charAt(i);
+        assert row > 0;
+        for (int i = 0; i < pattern.length(); i++)  {
+            char c = pattern.charAt(i);
 
             if (c == 'X' || c == 'O')  {
                 boolean player1 = c == 'X';

@@ -151,7 +151,7 @@ public abstract class GameBoardViewer extends JPanel
      *  we may want to do more.
      */
     protected void showLastMove() {
-        this.repaint();
+        this.refresh();
     }
 
     /**

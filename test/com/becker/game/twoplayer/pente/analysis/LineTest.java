@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Verify that we correctly evaluate patterns on the board.
+ * Verify that we correctly evaluate lines on the board.
  *
  * @author Barry Becker
  */
@@ -103,7 +103,6 @@ public class LineTest extends TestCase  {
         diff = line.computeValueDifference(3);
         assertEquals(2, diff);
     }
-
 
 
     /**

@@ -46,6 +46,8 @@ public abstract class Patterns {
         return patternTable_.getWeightIndexForPattern(pattern, 0, pattern.length()-1);
     }
 
+
+
     /**
      * @return how many in a row are needed to win. If M is five then the game is pente
      */
@@ -78,6 +80,5 @@ public abstract class Patterns {
     protected void setPatternWeightInTable( String pattern, int wtIndex )  {
         patternTable_.setPatternWeightInTable(pattern, wtIndex);
     }
-
 
 }

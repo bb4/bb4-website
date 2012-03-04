@@ -5,7 +5,6 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.pente.pattern.Patterns;
-import com.becker.game.twoplayer.pente.pattern.PentePatterns;
 
 /**
  * Represents a run of symbols to be evaluated on the board.
@@ -55,8 +54,9 @@ public class Line {
      */
     public int computeValueDifference(int position) {
 
-        char symb = line.charAt( position ); // the last move made
-        assert symb != Patterns.UNOCCUPIED;
+        char symb = line.charAt( position );
+        assert symb != Patterns.UNOCCUPIED:
+            "The piece just played at position "+ position + " in line "+ line +" must be a symbol.";
         boolean player1Perspective = (symb == GamePiece.P1_SYMB);
 
         int len = line.length();
