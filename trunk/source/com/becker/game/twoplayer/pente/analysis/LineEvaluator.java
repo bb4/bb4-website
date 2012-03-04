@@ -53,7 +53,7 @@ public class LineEvaluator {
             // first check for a special case where there was a blocking move in the
             // middle. In this case we break the string into an upper and lower
             // half and evaluate each separately.
-            //// System.out.println("eval sep " + line + " " + minpos + "-" + pos +  "   " + pos + "-" + maxpos);
+            System.out.println("eval sep " + line + " " + minpos + "-" + pos +  "   " + pos + "-" + maxpos);
             return (evaluate(line, player1Perspective, pos-1, minpos, pos-1)
                     + evaluate(line, player1Perspective, pos+1, pos + 1, maxpos));
         }

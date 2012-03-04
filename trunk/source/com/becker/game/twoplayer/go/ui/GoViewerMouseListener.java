@@ -122,7 +122,7 @@ public class GoViewerMouseListener extends ViewerMouseListener {
         if ( getRenderer().getDraggedShowPiece() != null ) {
             getRenderer().getDraggedShowPiece().setLocation( loc );
         }
-        viewer_.repaint();
+        viewer_.refresh();
     }
 
     @Override

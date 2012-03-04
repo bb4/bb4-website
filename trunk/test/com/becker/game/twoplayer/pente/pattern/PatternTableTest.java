@@ -65,6 +65,7 @@ public class PatternTableTest extends TestCase  {
 
         assertEquals(99, patternTable.getWeightIndexForPattern("OOX_XX", 0, 5));
         assertEquals(99, patternTable.getWeightIndexForPattern("XX_XOO", 0, 5));
+        assertEquals(99, patternTable.getWeightIndexForPattern("XXX_XX", 0, 5));
         assertEquals(-1, patternTable.getWeightIndexForPattern("XOOO_X", 0, 5));
         assertEquals(-1, patternTable.getWeightIndexForPattern("XO_X", 0, 3));
     }

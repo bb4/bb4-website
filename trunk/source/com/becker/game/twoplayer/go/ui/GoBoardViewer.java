@@ -79,8 +79,7 @@ public final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
     protected String getGameOverMessage() {
 
         // show the dead stones marked as such.
-        //this.paint( this.getGraphics() );
-        this.repaint();
+        refresh();
 
         return new GoGameOverMessage((GoController)controller_).getText();
     }

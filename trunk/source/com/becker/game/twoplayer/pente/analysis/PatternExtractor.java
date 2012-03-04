@@ -4,7 +4,7 @@ package com.becker.game.twoplayer.pente.analysis;
 import com.becker.game.twoplayer.pente.pattern.Patterns;
 
 /**
- * Extract a pattern from a line of sympols.
+ * Extract a pattern from a line of symbols.
  * A pattern consists of a sequence of friendly and unoccupied positions.
  *
  * @author Barry Becker
@@ -24,7 +24,9 @@ public class PatternExtractor {
         this.line = line;
     }
     
-
+    /**
+     * Given the opponent symbol, find the pattern in the specified potion of the line.
+     */
     protected CharSequence getPattern(char opponentSymb, int pos, int minpos, int maxpos) {
 
         if (line.charAt(pos) == opponentSymb) {

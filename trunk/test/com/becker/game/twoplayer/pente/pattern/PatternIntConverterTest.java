@@ -21,7 +21,6 @@ public class PatternIntConverterTest extends TestCase  {
 
     /** converts to 1 in binary because we always have a leading1 .*/
     public void testGetInForEmptyPattern() {
-
         assertEquals(1, converter.convertPatternToInt(""));
     }
 
@@ -103,6 +102,16 @@ public class PatternIntConverterTest extends TestCase  {
     /** Converts to 110101 in binary */
     public void testGetInForX_X_X() {
         verify(53, "X_X_X");
+    }
+
+    /** Converts to 110101 in binary */
+    public void testGetInForO_O_O() {
+        verify(53, "O_O_O");
+    }
+
+    /** Converts to 110101 in binary */
+    public void testGetInForO_X_O() {
+        verify(53, "O_X_O");
     }
     
     /** Converts to 110101 in binary given the range */
