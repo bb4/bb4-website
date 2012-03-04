@@ -36,8 +36,8 @@ public abstract class ValueDifferencer {
 
     /**
      * Used for debugging and testing to inject something that will create mock lines.
-     */
+     *
     public void setLineFactory(LineFactory factory) {
         lineFactory_ = factory;
-    }
+    } */
 }

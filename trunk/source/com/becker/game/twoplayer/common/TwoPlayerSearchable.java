@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.common;
 
 import com.becker.common.geometry.Location;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
@@ -101,7 +100,7 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
      * @return an integer value for the worth of the move.
      *  must be between -SearchStrategy.WINNING_VALUE and SearchStrategy.WINNING_VALUE.
      */
-    public abstract int worth( Move lastMove, ParameterArray weights);
+    public abstract int worth( TwoPlayerMove lastMove, ParameterArray weights);
 
     /**
      * given a move, determine whether the game is over.

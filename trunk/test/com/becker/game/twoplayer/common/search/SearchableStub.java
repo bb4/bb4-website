@@ -57,7 +57,7 @@ public class SearchableStub extends AbstractSearchable {
         return m.getInheritedValue() >= SearchStrategy.WINNING_VALUE;
     }
 
-    public int worth(Move lastMove, ParameterArray weights) {
+    public int worth(TwoPlayerMove lastMove, ParameterArray weights) {
         return lastMove.getValue();
     }
 

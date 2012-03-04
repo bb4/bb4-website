@@ -2,7 +2,6 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
@@ -61,7 +60,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
      *   A big negative value means a good move for p2.
      */
     @Override
-    public int worth( Move lastMove, ParameterArray weights ) {
+    public int worth( TwoPlayerMove lastMove, ParameterArray weights ) {
         getProfiler().startCalcWorth();
         BlockadeMove m = (BlockadeMove)lastMove;
         // if its a winning move then return the winning value

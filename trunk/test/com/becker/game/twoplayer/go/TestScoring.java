@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoSearchable;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.game.twoplayer.go.options.GoWeights;
@@ -99,7 +100,7 @@ public class TestScoring extends GoTestCase {
         // see if a given move is in jeopardy
         //controller_.inJeopardy();
 
-        int finalWorth = searchable.worth(searchable.getMoveList().getLastMove(),
+        int finalWorth = searchable.worth((TwoPlayerMove) searchable.getMoveList().getLastMove(),
                                      controller_.getComputerWeights().getDefaultWeights());
         assertEquals("Unexpected worth for final move.", expectedFinalWorth, finalWorth);
 

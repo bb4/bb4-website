@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.checkers;
 
-import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
@@ -90,7 +89,7 @@ public class CheckersSearchable extends TwoPlayerSearchable {
      * @return the value of the current board position
      */
     @Override
-    public int worth( Move lastMove, ParameterArray weights ) {
+    public int worth( TwoPlayerMove lastMove, ParameterArray weights ) {
         return new BoardEvaluator(board_, weights).calculateWorth();
     }
 

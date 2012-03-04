@@ -11,6 +11,7 @@ import com.becker.game.twoplayer.blockade.persistence.BlockadeGameExporter;
 import com.becker.game.twoplayer.blockade.persistence.BlockadeGameImporter;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
@@ -86,7 +87,7 @@ public class BlockadeController extends TwoPlayerController {
         if (!getPlayers().anyPlayerWon()) {
              return 0;
         }
-        return getSearchable().worth(getLastMove(), weights_.getDefaultWeights());
+        return getSearchable().worth((TwoPlayerMove) getLastMove(), weights_.getDefaultWeights());
     }
 
     /**

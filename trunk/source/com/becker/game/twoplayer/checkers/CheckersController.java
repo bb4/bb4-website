@@ -6,6 +6,7 @@ import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.player.PlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
@@ -72,7 +73,7 @@ public class CheckersController extends TwoPlayerController {
         if (!getPlayers().anyPlayerWon())  {
             return 0;
         }
-        return getSearchable().worth(getLastMove(), weights_.getDefaultWeights());
+        return getSearchable().worth((TwoPlayerMove) getLastMove(), weights_.getDefaultWeights());
     }
 
     @Override
