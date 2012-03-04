@@ -2,7 +2,6 @@
 package com.becker.game.twoplayer.chess;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.player.PlayerList;
@@ -51,7 +50,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
      *   A big negative value means a good move for p2.
      */
     @Override
-    public int worth( Move lastMove, ParameterArray weights )  {
+    public int worth( TwoPlayerMove lastMove, ParameterArray weights )  {
         int row, col;
         double score = 0;
 

@@ -2,6 +2,7 @@
 package com.becker.game.twoplayer.pente.analysis;
 
 import com.becker.game.common.Move;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.pente.pattern.Patterns;
@@ -47,16 +48,19 @@ public class MoveEvaluator  {
     
     /**
      * Statically evaluate the board position.
-     * @return the lastMoves value modified by the value add of the new move.
-     *  a large positive value means that the move is good from the specified players viewpoint
+     * @return the lastMove's value modified by the value add of the new move.
+     *  a large positive value means that the move is good from player1's viewpoint.
      */
-    public int worth( Move lastMove, ParameterArray weights ) {
-        TwoPlayerMove move = (TwoPlayerMove)lastMove;
-        int row = move.getToRow();
-        int col = move.getToCol();
-        assert board_.getPosition(row, col).getPiece() != null :
+    public int worth( TwoPlayerMove lastMove, ParameterArray weights ) {
+
+        int row = lastMove.getToRow();
+        int col = lastMove.getToCol();
+        GamePiece piece = board_.getPosition(row, col).getPiece();
+        assert piece != null :
                 "There must be a piece where the last move was played (" + row+", " + col + ")";
-        
+        assert (lastMove.isPlayer1() == piece.isOwnedByPlayer1()) :
+                "The last move played must be for the same player found on the board.";
+
         // look at every string that passes through this new move to see how the value is effected.
         int diff;
         diff = horzDifferencer.findValueDifference(row, col, weights);

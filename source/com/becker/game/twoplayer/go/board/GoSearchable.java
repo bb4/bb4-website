@@ -145,7 +145,7 @@ public class GoSearchable extends TwoPlayerSearchable {
      *   A big negative value means a good move for p2.
      */
     @Override
-    public int worth( Move lastMove, ParameterArray weights ) {
+    public int worth( TwoPlayerMove lastMove, ParameterArray weights ) {
 
         return boardEvaluator_.worth(lastMove, weights, getHashKey());
     }

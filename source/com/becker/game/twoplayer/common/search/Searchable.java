@@ -64,11 +64,12 @@ public interface Searchable {
       *  This function is a key function that must be created for each type of game added.
       *  If evaluating from player 1's perspective, then good moves for p1 are given a positive score.
       *
-      *  @param lastMove  the last move made
+      *
+      * @param lastMove  the last move made
       *  @param weights  the polynomial weights to use in the polynomial evaluation function
       *  @return the worth of the board from the specified players point of view
       */
-    int worth( Move lastMove, ParameterArray weights);
+    int worth( TwoPlayerMove lastMove, ParameterArray weights);
 
     /**
      * Generate a list of good evaluated next moves given the last move.
