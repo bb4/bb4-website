@@ -119,7 +119,7 @@ public class BlockadeController extends TwoPlayerController {
     }
 
     @Override
-    public Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
-        return new BlockadeSearchable(board, players, options );
+    public Searchable createSearchable(TwoPlayerBoard board, PlayerList players) {
+        return new BlockadeSearchable(board, players);
     }
 }

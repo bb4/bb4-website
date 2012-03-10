@@ -19,7 +19,7 @@ public class Line {
 
     /**
      * Constructor
-     * @param evaluator  used to evaluate the score for the line.
+     * @param evaluator used to evaluate the score for the line.
      */
     public Line(LineEvaluator evaluator) {
         this.evaluator = evaluator;
@@ -82,6 +82,11 @@ public class Line {
      */
     public void worthDebug( String dir, int pos, int diff ) {
         GameContext.log( 0,  dir + " "  + line + "  Pos: " + pos + "  difference:" + diff );
+    }
+
+    /** provide access to the evaluator for unit tests. */
+    LineEvaluator getLineEvaluator() {
+        return evaluator;
     }
 
     @Override

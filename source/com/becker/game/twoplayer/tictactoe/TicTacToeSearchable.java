@@ -17,8 +17,8 @@ public class TicTacToeSearchable extends PenteSearchable {
     /**
      *  Constructor
      */
-    public TicTacToeSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
-        super(board, players, options);
+    public TicTacToeSearchable(TwoPlayerBoard board, PlayerList players) {
+        super(board, players);
     }
 
     public TicTacToeSearchable(PenteSearchable searchable) {

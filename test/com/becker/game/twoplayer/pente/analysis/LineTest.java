@@ -22,7 +22,7 @@ public class LineTest extends TestCase  {
 
     public void testAppendEmpty() {
 
-        Line line = new Line(new LineEvaluator(new SimplePatterns(), weights.getDefaultWeights()));
+        Line line = new Line(createLineEvaluator());
         BoardPosition pos = new BoardPosition(2, 2, null);
         line.append(pos);
         assertEquals("_", line.toString());
@@ -30,7 +30,7 @@ public class LineTest extends TestCase  {
 
     public void testAppendPlayer() {
 
-        Line line = new Line(new LineEvaluator(new SimplePatterns(), weights.getDefaultWeights()));
+        Line line = new Line(createLineEvaluator());
         BoardPosition pos = new BoardPosition(2, 2, new GamePiece(true));
         line.append(pos);
         assertEquals("X", line.toString());
@@ -93,6 +93,7 @@ public class LineTest extends TestCase  {
         assertEquals(2, diff);
     }
 
+    /** The mock evaluator returns 1 whenever the position matches the player symbol (or -1 if opponent) */
     public void testComputeValueDifference_XOX() {
 
         Line line = createLineWithMock("_XOX");
@@ -102,6 +103,65 @@ public class LineTest extends TestCase  {
 
         diff = line.computeValueDifference(3);
         assertEquals(2, diff);
+    }
+
+    public void testComputeValueDifference_XOXrecorded() {
+
+        Line line = createLineWithRecorder("_XOX");
+
+        int diff = line.computeValueDifference(2);
+        assertEquals(1, diff);
+        TstUtil.checkRecordedPatterns(new String[] {"_", "_X_X", "O", "_X"}, line);
+
+        diff = line.computeValueDifference(3);
+        assertEquals(1, diff);
+        TstUtil.checkRecordedPatterns(new String[] {"_", "O_", "X", ""}, line);
+    }
+
+    /** shows a more typical pattern */
+    public void testComputeValueDifferenceXX_XO_X_X_recorded() {
+
+        Line line = createLineWithRecorder("XX_XO_X_X_");
+
+        // The first two patterns are when we set the position to unoccupied, then check both points of view
+        // The second two are when we set the players piece again and check both points of view.
+        int diff = line.computeValueDifference(0);
+        assertEquals(0, diff);
+        TstUtil.checkRecordedPatterns(new String[] {"_X_X", "_", "XX_X", ""}, line);
+
+        diff = line.computeValueDifference(1);
+        assertEquals(-1, diff);
+        TstUtil.checkRecordedPatterns(new String[] {"X_", "_", "XX_X", "_"}, line);
+
+        diff = line.computeValueDifference(3);
+        assertEquals(2, diff);
+        TstUtil.checkRecordedPatterns(new String[] {"_", "_O_", "XX_X", "_", "O_"}, line);
+
+        diff = line.computeValueDifference(4);
+        assertEquals(-1, diff);
+        TstUtil.checkRecordedPatterns(new String[] {"_", "XX_X_", "O_", "XX_X", "_X_X_"}, line);
+
+        diff = line.computeValueDifference(6);
+        assertEquals(-1, diff);
+        TstUtil.checkRecordedPatterns(new String[] {"_", "_", "_X_X_", "O_", "_"}, line);
+
+        diff = line.computeValueDifference(8);
+        assertEquals(0, diff);
+        TstUtil.checkRecordedPatterns(new String[] {"_", "_", "_X_X_", "_"}, line);
+    }
+    
+    /** Cannot check where no symbol was played */
+    public void testComputeValueDifferenceXX_XO_X_X_emptyPosition() {
+
+        Line line = createLineWithRecorder("XX_XO_X_X_");
+
+        try {
+            line.computeValueDifference(2); 
+            fail("did not expect to get here");
+        }
+        catch (AssertionError e) {
+            // success
+        }
     }
 
 
@@ -121,6 +181,15 @@ public class LineTest extends TestCase  {
         return TstUtil.createLine(linePattern, new MockLineEvaluator(3));
     }
 
+    /**
+     * @param linePattern  some sequence of X, O, _
+     * @return the line
+     */
+    private Line createLineWithRecorder(String linePattern) {
+        StubLineEvaluator evaluator =
+                new StubLineEvaluator(new SimplePatterns(), weights.getDefaultWeights());
+        return TstUtil.createLine(linePattern, evaluator);
+    }
 
     private LineEvaluator createLineEvaluator() {
         return new LineEvaluator(new SimplePatterns(), weights.getDefaultWeights());

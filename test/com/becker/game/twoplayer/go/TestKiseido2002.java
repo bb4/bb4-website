@@ -14,17 +14,19 @@ import java.util.List;
  */
 public class TestKiseido2002 extends GoTestCase {
 
-
+    /*
     // just do january for now. Its a lot as it is.
     public void testJanuary() {
         check("2002-01");
-    }
+    }  */
 
-    /*
+
+    // just do february for now. Its a lot as it is.
     public void testFebruary() {
         check("2002-02");
     }
 
+    /*
     public void testMarch() {
         check("2002-03");
     }

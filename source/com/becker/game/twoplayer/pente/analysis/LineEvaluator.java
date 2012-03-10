@@ -29,10 +29,13 @@ public class LineEvaluator {
     }
     
     /**
-     * Evaluate a line (vertical, horizontal, or diagonal).
+     * Evaluate a line (vertical, horizontal, or diagonal) from the
+     * specified player point of view.
      * 
      * @param line the line to evaluate
-     * @param player1Perspective if true, then the first player just moved.
+     * @param player1Perspective if true, then the first player just moved, else the second player.
+     *   Note: this value does not guarantee anything about the symbol at position pos.
+     *   It can be either players symbol or unoccupied.
      * @param pos the position that was just played (symbol).
      * @param minpos starting pattern index in line (usually 0).
      * @param maxpos last pattern index position in line (usually one less than the line magnitude).
@@ -49,13 +52,13 @@ public class LineEvaluator {
         char opponentSymb = player1Perspective ? GamePiece.P2_SYMB : GamePiece.P1_SYMB;
         
         if ( (line.charAt( pos ) == opponentSymb)
-                && !(pos == minpos) && !(pos == maxpos) ) {
-            // first check for a special case where there was a blocking move in the
+                && pos != minpos && pos != maxpos ) {
+            // First check for a special case where there was a blocking move in the
             // middle. In this case we break the string into an upper and lower
             // half and evaluate each separately.
-            System.out.println("eval sep " + line + " " + minpos + "-" + pos +  "   " + pos + "-" + maxpos);
+            //System.out.println("eval sep " + line + " " + minpos + "-" + pos +  "   " + pos + "-" + maxpos);
             return (evaluate(line, player1Perspective, pos-1, minpos, pos-1)
-                    + evaluate(line, player1Perspective, pos+1, pos + 1, maxpos));
+                    + evaluate(line, player1Perspective, pos+1, pos+1, maxpos));
         }
         return getWeight(line, opponentSymb, pos, minpos, maxpos);
     }
@@ -89,6 +92,7 @@ public class LineEvaluator {
     protected int getWeightIndex(CharSequence line, char opponentSymb, int pos, int minpos, int maxpos) {
 
         CharSequence pattern = getPattern(line, opponentSymb, pos, minpos, maxpos);
+        //System.out.println("pattern=" + pattern);
         return patterns_.getWeightIndexForPattern(pattern);
     }
     

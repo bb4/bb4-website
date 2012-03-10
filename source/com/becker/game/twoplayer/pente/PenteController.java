@@ -83,7 +83,7 @@ public class PenteController extends TwoPlayerController {
 
 
     @Override
-    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
-        return new PenteSearchable(board, players, options);
+    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players) {
+        return new PenteSearchable(board, players);
     }
 }

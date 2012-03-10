@@ -194,8 +194,8 @@ public final class GoController extends TwoPlayerController {
     }
 
     @Override
-    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
-        return new GoSearchable(board, players, options, scoreCache_);
+    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players) {
+        return new GoSearchable(board, players, scoreCache_);
     }
 
     private class BoardOptions {

@@ -23,8 +23,8 @@ import java.util.List;
  */
 public class ChessSearchable extends TwoPlayerSearchable {
 
-    public ChessSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
-        super(board, players, options);
+    public ChessSearchable(TwoPlayerBoard board, PlayerList players) {
+        super(board, players);
     }
 
     public ChessSearchable(ChessSearchable searchable) {

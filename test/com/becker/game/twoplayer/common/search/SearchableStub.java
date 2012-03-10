@@ -21,20 +21,26 @@ import com.becker.optimization.parameter.ParameterArray;
 public class SearchableStub extends AbstractSearchable {
 
     protected SearchStrategy strategy_;
+    private SearchOptions options_;
 
     public SearchableStub(SearchOptions options) {
-        super(new MoveList(), options);
+        super(new MoveList());
+        options_ = options;
     }
 
     public SearchableStub(SearchableStub stub) {
         this(stub.getSearchOptions());
         moveList_ = new MoveList(stub.getMoveList());
     }
+    
+    @Override
+    public SearchOptions getSearchOptions() {
+       return options_;
+    }
 
     public Searchable copy() {
         return new SearchableStub(this);
-    }
-    
+    }    
 
     /**
      * {@inheritDoc}

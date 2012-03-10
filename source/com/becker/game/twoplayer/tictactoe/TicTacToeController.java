@@ -54,8 +54,7 @@ public class TicTacToeController extends PenteController {
     }
 
     @Override
-    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
-        return new TicTacToeSearchable(board, players, options);
+    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players) {
+        return new TicTacToeSearchable(board, players);
     }
-
 }

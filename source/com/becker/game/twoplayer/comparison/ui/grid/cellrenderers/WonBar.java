@@ -57,7 +57,7 @@ public class WonBar extends SegmentedBar {
     private void drawLabels(Graphics2D g2) {
         g2.setColor(Color.BLACK);
         int width = getWidth()/2;
-        String lab1 = (width > 70) ?  "pplayer1 first" : "p1 1st";
+        String lab1 = (width > 70) ?  "player1 first" : "p1 1st";
         String lab2 = (width > 70) ?  "player2 first" : "p2 1st";
         g2.drawString(lab1, TEXT_INSET, TEXT_INSET);
         g2.drawString(lab2, width + TEXT_INSET, TEXT_INSET);

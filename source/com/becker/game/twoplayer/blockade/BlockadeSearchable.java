@@ -30,8 +30,8 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
     /**
      *  Constructor.
      */
-    public BlockadeSearchable(TwoPlayerBoard board,  PlayerList players, SearchOptions options) {
-        super(board, players, options);
+    public BlockadeSearchable(TwoPlayerBoard board, PlayerList players) {
+        super(board, players);
     }
 
     public BlockadeSearchable(BlockadeSearchable searchable) {

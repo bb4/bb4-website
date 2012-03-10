@@ -21,8 +21,8 @@ public class CheckersSearchable extends TwoPlayerSearchable {
     /**
      * Constructor
      */
-    public CheckersSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
-        super(board, players, options);
+    public CheckersSearchable(TwoPlayerBoard board, PlayerList players) {
+        super(board, players);
     }
 
     public CheckersSearchable(CheckersSearchable searchable) {

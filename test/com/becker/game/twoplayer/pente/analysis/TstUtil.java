@@ -3,8 +3,11 @@ package com.becker.game.twoplayer.pente.analysis;
 
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
+import org.codehaus.groovy.vmplugin.v5.JUnit4Utils;
 
 import java.util.List;
+
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Created by IntelliJ IDEA. User: becker Date: Dec 27, 2009 Time: 8:15:01 AM To change this template use File |
@@ -54,4 +57,25 @@ public class TstUtil {
         }
         return bldr.toString();
     }
+
+    public static void checkRecordedPatterns(String[] expectedPatterns, Line line) {
+
+        checkRecordedPatterns(expectedPatterns, (StubLineEvaluator) line.getLineEvaluator());
+    }
+
+    public static void checkRecordedPatterns(String[] expectedPatterns, StubLineEvaluator evaluator) {
+
+        List<CharSequence> checkedPatterns = evaluator.getPatternsChecked();
+        int i=0;
+        System.out.println("checkedPatterns = " + TstUtil.quoteStringList(checkedPatterns));
+        assertEquals("Unexpected number of patterns checked",
+                expectedPatterns.length, checkedPatterns.size());
+
+        for (CharSequence pat : checkedPatterns) {
+            assertEquals(expectedPatterns[i++], pat);
+        }
+        checkedPatterns.clear();
+    }
+
+
 }
