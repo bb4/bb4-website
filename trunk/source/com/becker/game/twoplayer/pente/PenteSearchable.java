@@ -25,8 +25,8 @@ public class PenteSearchable extends TwoPlayerSearchable {
     PenteMoveGenerator generator;
 
     /** Constructor */
-    public PenteSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
-        super(board, players, options);
+    public PenteSearchable(TwoPlayerBoard board, PlayerList players) {
+        super(board, players);
         init();
     }
 

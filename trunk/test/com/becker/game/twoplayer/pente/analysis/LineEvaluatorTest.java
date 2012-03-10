@@ -8,8 +8,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.util.List;
+
 /**
- * Verify that we correctly evaluate patterns on the board.
+ * Verify that we correctly evaluate patterns in lines on the board.
  *
  * @author Barry Becker
  */
@@ -22,9 +24,7 @@ public class LineEvaluatorTest extends TestCase  {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        GameWeights weights = new SimpleWeights();
-        lineEvaluator =
-            new LineEvaluator(new SimplePatterns(), weights.getDefaultWeights());
+        lineEvaluator = createLineEvaluator();
     }
 
     public void testEvalLinePlayer1_X() {
@@ -122,13 +122,16 @@ public class LineEvaluatorTest extends TestCase  {
         assertEquals(-10.0, worth);
     }
 
+    /** XX is a winning pattern in this test example */
     public void testEvalLineLongerThanPattern() {
 
         line = createLine("X_XX");
         
+        // the pattern is XX
         worth = lineEvaluator.evaluate(line, true, 2, 2, 3);
         assertEquals(10.0, worth);
 
+        // the pattern is X with is not a pattern in SimplePatterns
         worth = lineEvaluator.evaluate(line, false, 2, 2, 3);
         assertEquals(0.0, worth);
 
@@ -141,26 +144,60 @@ public class LineEvaluatorTest extends TestCase  {
         worth = lineEvaluator.evaluate(line, true, 1, 0, 3);
         assertEquals(0.0, worth);
 
+        // X_XX is not a recognizable pattern
         worth = lineEvaluator.evaluate(line, true, 2, 0, 3);
         assertEquals(0.0, worth);
 
-        // _XX is not a recognizable StubPattern
+        // X_XX is not a recognizable StubPattern
         worth = lineEvaluator.evaluate(line, true, 3, 0, 3);
         assertEquals(0.0, worth);
     }
 
-    public void testEvalMixedLineXOX() {
+    public void testEvalMixedLineXOXwithRecordedPatterns() {
+
+        StubLineEvaluator evaluator = createStubLineEvaluator();
 
         line = createLine("XOX");
-        worth = lineEvaluator.evaluate(line, true, 2, 0, 2);
-        //checkRecordedPatterns(new String[] {"X"});
+        worth = evaluator.evaluate(line, true, 2, 0, 2);
+        TstUtil.checkRecordedPatterns(new String[] {"X"}, evaluator);
         assertEquals(0.0, worth);
 
         line = createLine("XOX");
-        worth = lineEvaluator.evaluate(line, true, 1, 0, 2);
-        //checkRecordedPatterns(new String[] {"X", "X"});
+        worth = evaluator.evaluate(line, false, 1, 0, 2);
+        TstUtil.checkRecordedPatterns(new String[] {"O"}, evaluator);
+        assertEquals(0.0, worth);
+
+        line = createLine("XOX");
+        worth = evaluator.evaluate(line, true, 1, 0, 2);
+        TstUtil.checkRecordedPatterns(new String[] {}, evaluator);
         assertEquals(0.0, worth);
     }
+
+    public void testEvalMixedLine_XOX_withRecordedPatterns() {
+
+        StubLineEvaluator evaluator = createStubLineEvaluator();
+
+        line = createLine("_XOX_");
+        worth = evaluator.evaluate(line, true, 3, 0, 4);
+        TstUtil.checkRecordedPatterns(new String[] {"X_"}, evaluator);
+        assertEquals(1.0, worth);
+
+        line = createLine("_XOX_");
+        worth = evaluator.evaluate(line, true, 1, 0, 4);
+        TstUtil.checkRecordedPatterns(new String[] {"_X"}, evaluator);
+        assertEquals(1.0, worth);
+
+        line = createLine("_XOX_");
+        worth = evaluator.evaluate(line, false, 2, 0, 4);
+        TstUtil.checkRecordedPatterns(new String[] {"O"}, evaluator);
+        assertEquals(0.0, worth);
+
+        line = createLine("_XOX_");
+        worth = evaluator.evaluate(line, true, 2, 0, 4);
+        TstUtil.checkRecordedPatterns(new String[] {"_X", "X_"}, evaluator);
+        assertEquals(2.0, worth);
+    }
+
 
     public void testEvalMixedLineX_OX() {
 
@@ -186,22 +223,40 @@ public class LineEvaluatorTest extends TestCase  {
         assertEquals(-3.0, worth);
     }
 
-    public void testEvalMixedLineXXOXX() {
+    public void testEvalMixedLineXXOXXwithRecordedPatterns() {
+        StubLineEvaluator evaluator = createStubLineEvaluator();
 
         line = createLine("XXOXX");
-        worth = lineEvaluator.evaluate(line, true, 2, 0, 4);
+        worth = evaluator.evaluate(line, true, 2, 0, 4);
+        TstUtil.checkRecordedPatterns(new String[] {"XX", "XX"}, evaluator);
         assertEquals(20.0, worth);
 
-        worth = lineEvaluator.evaluate(line, true, 1, 0, 4);
+        worth = evaluator.evaluate(line, true, 1, 0, 4);
+        TstUtil.checkRecordedPatterns(new String[] {"XX"}, evaluator);
         assertEquals(10.0, worth);
 
-        worth = lineEvaluator.evaluate(line, false, 2, 0, 4);
+        worth = evaluator.evaluate(line, false, 1, 0, 4);
+        TstUtil.checkRecordedPatterns(new String[] {"O"}, evaluator);
+        assertEquals(0.0, worth);
+
+        worth = evaluator.evaluate(line, false, 2, 0, 4);
+        TstUtil.checkRecordedPatterns(new String[] {"O"}, evaluator);
         assertEquals(0.0, worth);
     }
 
     public void testEvalMixedLine_XO_X() {
 
         line = createLine("_XO_X");
+
+        worth = lineEvaluator.evaluate(line, true, 0, 0, 4);
+        assertEquals(1.0, worth);
+
+        worth = lineEvaluator.evaluate(line, false, 0, 0, 4);
+        assertEquals(0.0, worth);
+
+        worth = lineEvaluator.evaluate(line, true, 1, 0, 4);
+        assertEquals(1.0, worth);
+
         worth = lineEvaluator.evaluate(line, true, 2, 0, 4);
         assertEquals(2.0, worth);
 
@@ -213,6 +268,12 @@ public class LineEvaluatorTest extends TestCase  {
 
         worth = lineEvaluator.evaluate(line, false, 2, 0, 4);
         assertEquals(-1.0, worth);
+
+        worth = lineEvaluator.evaluate(line, true, 3, 0, 4);
+        assertEquals(1.0, worth);
+
+        worth = lineEvaluator.evaluate(line, false, 3, 0, 4);
+        assertEquals(-1.0, worth);
     }
 
     
@@ -222,6 +283,17 @@ public class LineEvaluatorTest extends TestCase  {
     private StringBuilder createLine(String line) {
         return new StringBuilder(line);
     }
+
+    private LineEvaluator createLineEvaluator()  {
+        GameWeights weights = new SimpleWeights();
+        return new LineEvaluator(new SimplePatterns(), weights.getDefaultWeights());
+    }
+
+    private StubLineEvaluator createStubLineEvaluator()  {
+        GameWeights weights = new SimpleWeights();
+        return new StubLineEvaluator(new SimplePatterns(), weights.getDefaultWeights());
+    }
+
 
     public static Test suite() {
         return new TestSuite(LineEvaluatorTest.class);

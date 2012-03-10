@@ -25,7 +25,7 @@ public class GameComparisonApp {
 
     private static final int WIDTH = 1200;
     private static final int HEIGHT = 900;
-    private static final String DEFAULT_GAME = "tictactoe";
+    private static final String DEFAULT_GAME = "pente";
     
     private JFrame frame_;
     private GameComparisonPanel gameComparisonPanel;

@@ -47,8 +47,8 @@ public class NegaMaxStrategyTest extends NegaMaxStrategyTst {
 
     @Override
     protected ExpectedMoveMatrix getExpectedFourLevelLookaheadMoves() {
-        return new ExpectedMoveMatrix(   new MoveInfo(TwoPlayerMove.createMove(new Location(1, 1), 8, PLAYER2_PIECE), 374),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 97),
+        return new ExpectedMoveMatrix(   new MoveInfo(TwoPlayerMove.createMove(new Location(1, 1), 8, PLAYER2_PIECE), 228),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 100),
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 18),
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 29),
             new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 4),

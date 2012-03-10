@@ -59,8 +59,8 @@ public class MoveEvaluationTest extends TestCase  {
         TwoPlayerMove move = TwoPlayerMove.createMove(2, 2,  0, PLAYER1_PIECE);
         board.makeMove(move);
 
-        verifyAllDirectionsResult(2, 1, false, -12, -8);
-        verifyAllDirectionsResult(2, 3, false, -12, -8);
+        verifyAllDirectionsResult(2, 1, false, -16, -12);
+        verifyAllDirectionsResult(2, 3, false, -16, -12);
     }
 
     public void test_OOEvaluation() {

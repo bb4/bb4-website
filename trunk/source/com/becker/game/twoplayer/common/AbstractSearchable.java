@@ -19,23 +19,22 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public abstract class AbstractSearchable implements Searchable {
 
-    protected SearchOptions options_;
     protected MoveList moveList_;
     protected SearchStrategy strategy_;
 
     /**
      * Constructor.
      */
-    public AbstractSearchable(MoveList moveList, SearchOptions options) {
+    public AbstractSearchable(MoveList moveList) {
 
         moveList_ = moveList;
-        options_ = options;
     }
 
     public TwoPlayerMove searchForNextMove(ParameterArray weights, TwoPlayerMove lastMove,
                                            IGameTreeViewable treeViewer) {
 
         getProfiler().startProfiling();
+
         strategy_ = getSearchOptions().getSearchStrategy(this, weights);
 
         SearchTreeNode root = null;
@@ -61,9 +60,8 @@ public abstract class AbstractSearchable implements Searchable {
         return moveList_;
     }
 
-    public SearchOptions getSearchOptions() {
-        return options_;
-    }
+    /** @return the search options to use */
+    public abstract SearchOptions getSearchOptions();
 
     protected AbstractGameProfiler getProfiler() {
         return GameProfiler.getInstance();

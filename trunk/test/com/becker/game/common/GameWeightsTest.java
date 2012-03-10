@@ -29,7 +29,7 @@ public class GameWeightsTest extends TestCase  {
         assertEquals("unexpected description ",
                 "The weighting coefficient for the 1th term of the evaluation polynomial", weights.getDescription(1));
         assertEquals("unexpected param 2 value ",
-                10, weights.getPlayer1Weights().get(2).getValue());
+                10.0, weights.getPlayer1Weights().get(2).getValue());
     }
 
     /**

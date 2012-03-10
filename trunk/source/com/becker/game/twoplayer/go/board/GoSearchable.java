@@ -38,8 +38,8 @@ public class GoSearchable extends TwoPlayerSearchable {
     /**
      * Constructor.
      */
-    public GoSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options, ScoreCache cache) {
-        super(board, players, options);
+    public GoSearchable(TwoPlayerBoard board, PlayerList players, ScoreCache cache) {
+        super(board, players);
         init(cache);
     }
 

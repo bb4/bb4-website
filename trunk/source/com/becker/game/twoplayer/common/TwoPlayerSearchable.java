@@ -32,9 +32,9 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
     /**
      * Constructor.
      */
-    public TwoPlayerSearchable(final TwoPlayerBoard board,  PlayerList players, SearchOptions options) {
+    public TwoPlayerSearchable(final TwoPlayerBoard board,  PlayerList players) {
 
-        super(board.getMoveList(), options);
+        super(board.getMoveList());
         board_ = board;
         players_ = players;
 
@@ -47,7 +47,7 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
      */
     public TwoPlayerSearchable(TwoPlayerSearchable searchable) {
 
-        this(searchable.getBoard().copy(), (PlayerList)searchable.players_.clone(), searchable.options_);
+        this(searchable.getBoard().copy(), (PlayerList)searchable.players_.clone());
     }
 
     public TwoPlayerBoard getBoard() {
@@ -102,6 +102,13 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
      */
     public abstract int worth( TwoPlayerMove lastMove, ParameterArray weights);
 
+
+    @Override
+    public SearchOptions getSearchOptions() {
+        return ((TwoPlayerPlayerOptions) getCurrentPlayer().getOptions()).getSearchOptions();
+    }
+
+
     /**
      * given a move, determine whether the game is over.
      * If recordWin is true, then the variables for player1/2HasWon can get set.
@@ -142,7 +149,7 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
 
     private Player getCurrentPlayer()  {
         TwoPlayerMove move =  (TwoPlayerMove) moveList_.getLastMove();
-        return move.isPlayer1() ? players_.getPlayer2() : players_.getPlayer1();
+        return (move==null || !move.isPlayer1()) ?  players_.getPlayer1() : players_.getPlayer2();
     }
 
     /**

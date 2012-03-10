@@ -363,10 +363,11 @@ public abstract class TwoPlayerController extends GameController {
             SearchOptions options =
                     ((TwoPlayerPlayerOptions) getCurrentPlayer().getOptions()).getSearchOptions();
 
-            searchable_ = createSearchable((TwoPlayerBoard)getBoard(), getPlayers(),  options);
+            searchable_ = createSearchable((TwoPlayerBoard)getBoard(), getPlayers());
         }
+
         return searchable_;
     }
 
-    protected abstract Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options);
+    protected abstract Searchable createSearchable(TwoPlayerBoard board, PlayerList players);
 }

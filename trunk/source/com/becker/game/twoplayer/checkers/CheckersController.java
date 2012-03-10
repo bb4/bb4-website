@@ -77,7 +77,7 @@ public class CheckersController extends TwoPlayerController {
     }
 
     @Override
-    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
-        return new CheckersSearchable(board, players, options);
+    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players) {
+        return new CheckersSearchable(board, players);
     }
 }
