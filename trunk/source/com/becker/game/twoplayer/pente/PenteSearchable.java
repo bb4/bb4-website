@@ -85,11 +85,11 @@ public class PenteSearchable extends TwoPlayerSearchable {
      * @return true if the last move created a big change in the score
      */
     @Override
-    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights ) {
-        if (lastMove == null)
+    public boolean inJeopardy( TwoPlayerMove move, ParameterArray weights ) {
+        if (move == null)
             return false;
-        double newValue = worth(lastMove, weights);
-        double diff = newValue - lastMove.getValue();
+        double newValue = worth(move, weights);
+        double diff = newValue - move.getValue();
         return (diff > getJeopardyWeight());
     }
 

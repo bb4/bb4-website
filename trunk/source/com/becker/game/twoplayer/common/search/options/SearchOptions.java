@@ -105,4 +105,13 @@ public class SearchOptions {
 
         return getSearchStrategyMethod().createStrategy(searchable, weights);
     }
+    
+    public String toString() {
+        StringBuilder bldr = new StringBuilder("SearchOptions ");
+        bldr.append("strategy=").append(strategyMethod_).append("\\n");
+        bldr.append(bruteOptions_.toString()).append("\\n");
+        bldr.append(bestMovesOptions_.toString()).append("\\n");
+        bldr.append(monteCarloOptions_.toString()).append("\\n");
+        return bldr.toString();
+    }
 }

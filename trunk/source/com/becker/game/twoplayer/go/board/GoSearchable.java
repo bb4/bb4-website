@@ -82,25 +82,25 @@ public class GoSearchable extends TwoPlayerSearchable {
      * Sometimes, like when we are looking ahead, we do not want to set these.
      * The game is over if we have a resignation move, or the last two moves were passing moves.
      *
-     * @param m the move to check
+     * @param move the move to check
      * @param recordWin if true then the controller state will record wins
      * @return true if the game is over
      */
     @Override
-    public final boolean done( TwoPlayerMove m, boolean recordWin ) {
+    public final boolean done( TwoPlayerMove move, boolean recordWin ) {
 
         boolean gameOver = false;
 
-        if (m == null ) {
+        if (move == null ) {
             gameOver = true;
         }
-        else if (m.isResignationMove())  {
+        else if (move.isResignationMove())  {
             if (recordWin) {
-                setWinner(!m.isPlayer1());
+                setWinner(!move.isPlayer1());
             }
             gameOver = true;
         }
-        else if (twoPasses(m)) {
+        else if (twoPasses(move)) {
             if (recordWin) {
                 setWinner(getFinalScore(true) > getFinalScore(false));
             }
@@ -108,7 +108,7 @@ public class GoSearchable extends TwoPlayerSearchable {
         }
         if (!gameOver) {
             // try normal handling
-            gameOver = super.done( m, recordWin );
+            gameOver = super.done(move, recordWin );
         }
 
         if (gameOver && recordWin) {
@@ -160,24 +160,24 @@ public class GoSearchable extends TwoPlayerSearchable {
     }
 
     /**
-     * @param m the move to play.
+     * @param move the move to play.
      */
     @Override
-    public void makeInternalMove( TwoPlayerMove m ) {
+    public void makeInternalMove( TwoPlayerMove move) {
 
-        super.makeInternalMove(m);
-        updateHashIfCaptures((GoMove) m);
+        super.makeInternalMove(move);
+        updateHashIfCaptures((GoMove) move);
     }
 
     /**
      * takes back the most recent move.
-     * @param m  move to undo
+     * @param move  move to undo
      */
     @Override
-    public void undoInternalMove( TwoPlayerMove m ) {
+    public void undoInternalMove( TwoPlayerMove move) {
 
-        super.undoInternalMove(m);
-        updateHashIfCaptures((GoMove) m);
+        super.undoInternalMove(move);
+        updateHashIfCaptures((GoMove) move);
     }
 
     /**
@@ -298,8 +298,8 @@ public class GoSearchable extends TwoPlayerSearchable {
      * @return true if the last move created a big change in the score
      */
     @Override
-    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights) {
-        return UrgentMoveGenerator.inJeopardy((GoMove)lastMove, getBoard());
+    public boolean inJeopardy( TwoPlayerMove move, ParameterArray weights) {
+        return UrgentMoveGenerator.inJeopardy((GoMove) move, getBoard());
     }
 
     /**

@@ -27,15 +27,15 @@ public interface Searchable {
     SearchOptions getSearchOptions();
 
     /**
-     * @param m the move to play.
+     * @param move the move to play.
      */
-    void makeInternalMove( TwoPlayerMove m );
+    void makeInternalMove( TwoPlayerMove move );
 
     /**
      * takes back the most recent move.
-     * @param m move to undo.
+     * @param move move to undo.
      */
-    void undoInternalMove( TwoPlayerMove m );
+    void undoInternalMove( TwoPlayerMove move );
 
     /**
      * @return the current strategy used for searching.
@@ -52,11 +52,11 @@ public interface Searchable {
      * Given a move, determine whether the game is over.
      * If recordWin is true then the variables for player1/2HasWon can get set.
      * sometimes, like when we are looking ahead in search we do not want to set these.
-     * @param m the move to check. If null then return true. This is typically the last move played
+     * @param move the move to check. If null then return true. This is typically the last move played
      * @param recordWin if true then the controller state will record wins
      * @return  true if the game is over.
      */
-    boolean done( TwoPlayerMove m, boolean recordWin );
+    boolean done( TwoPlayerMove move, boolean recordWin );
 
      /**
       *  Statically evaluate a boards state to compute the value of the last move
@@ -96,7 +96,7 @@ public interface Searchable {
      * returns true if the specified move caused one or more opponent pieces to become jeopardized
      * @return true if the move m is in jeopardy.
      */
-    boolean inJeopardy( TwoPlayerMove m, ParameterArray weights);
+    boolean inJeopardy( TwoPlayerMove move, ParameterArray weights);
 
     /** The current board state. */
     TwoPlayerBoard getBoard();
