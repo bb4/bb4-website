@@ -68,8 +68,9 @@ public abstract class GameInfoPanel extends TexturedPanel
 
         // the custom panel shows game specific info like captures etc.
         JPanel customPanel = createCustomInfoPanel();
-        if ( customPanel != null )
+        if ( customPanel != null )    {
             this.add( customPanel );
+        }
 
         this.add( createGeneralInfoPanel() );
     }

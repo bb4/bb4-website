@@ -36,7 +36,6 @@ public class PerformanceWorker implements Runnable {
         this.controller = controller;
         this.optionsList = optionsList;
         this.listener = listener;
-        System.out.println("initialized");
     }
 
     /** Run the process in a separate thread */

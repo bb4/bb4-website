@@ -36,23 +36,22 @@ public class SearchTreeNode extends DefaultMutableTreeNode
 
     /**
      * Default Constructor
-     * @param m a twoplayer board move.
+     * @param move a twoplayer board move.
      */
-    public SearchTreeNode(TwoPlayerMove m) {
-        setUserObject(m);
+    public SearchTreeNode(TwoPlayerMove move) {
+        setUserObject(move);
         this.attributes = new NodeAttributes();
     }
 
     /**
      * Default Constructor
-     * @param m a twoplayer board move.
+     * @param move a twoplayer board move.
      * @param attributes set of name value pairs describing the node.
      */
-    public SearchTreeNode(TwoPlayerMove m, NodeAttributes attributes) {
-        setUserObject(m);
+    public SearchTreeNode(TwoPlayerMove move, NodeAttributes attributes) {
+        setUserObject(move);
         this.attributes = attributes;
     }
-
 
     public TwoPlayerMove[] getChildMoves() {
         if (children == null)

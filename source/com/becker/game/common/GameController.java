@@ -86,7 +86,7 @@ public abstract class GameController
     }
 
     /**
-     * If called before the end of the game it just reutrns 0 - same as it does in the case of a tie.
+     * If called before the end of the game it just returns 0 - same as it does in the case of a tie.
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
     public int getStrengthOfWin() {

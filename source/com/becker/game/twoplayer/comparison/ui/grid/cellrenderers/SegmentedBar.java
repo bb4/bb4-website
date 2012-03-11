@@ -17,7 +17,7 @@ public abstract class SegmentedBar extends JPanel {
     protected static final Color BORDER_COLOR = new Color(20, 0, 0, 100);
     
     private static final int TEXT_INSET_X = 5;
-    private static final int TEXT_INSET_Y = 14;
+    private static final int TEXT_INSET_Y = 10;
 
     /** constructor */
     public SegmentedBar() {
@@ -66,7 +66,7 @@ public abstract class SegmentedBar extends JPanel {
         
         if (height > 18) {
             g2.drawString(labels[0], TEXT_INSET_X, TEXT_INSET_Y);
-            g2.drawString(labels[1], n1Width + TEXT_INSET_X, height - TEXT_INSET_Y/3);
+            g2.drawString(labels[1], n1Width + TEXT_INSET_X, height - TEXT_INSET_Y/2);
         }
     }
     

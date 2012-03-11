@@ -1,9 +1,11 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui;
 
+import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.PluginManager;
 import com.becker.game.common.ui.menu.GameMenuController;
+import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
 
@@ -35,8 +37,12 @@ public class GameComparisonMenuController extends GameMenuController {
         gamePanel_ = PluginManager.getInstance().getPlugin(gameName).getPanelInstance();
         //gamePanel_.init(frame_);
 
-        //frame_.getContentPane().add(getGameComponent());
         frame_.setTitle(gamePanel_.getTitle());
         //frame_.setVisible(true);
+    }
+
+    @Override
+    public void saveImage() {
+        GUIUtil.saveSnapshot((JComponent)frame_.getComponent(0), FileUtil.getHomeDir());
     }
 }
