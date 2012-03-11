@@ -1,15 +1,12 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.configuration;
 
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 import com.becker.game.twoplayer.comparison.model.data.ConfigurationListEnum;
-import com.becker.game.twoplayer.comparison.model.data.DefaultSearchConfigurations;
 import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
-import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;

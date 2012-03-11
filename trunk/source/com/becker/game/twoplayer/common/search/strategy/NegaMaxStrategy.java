@@ -12,6 +12,7 @@ import com.becker.optimization.parameter.ParameterArray;
  *  This strategy class defines the NegaMax search algorithm.
  *  Negamax is very much like minimax, but it avoids having separate
  *  sections of code for minimizing and maximizing search.
+ *  The game tree it produces should be identical to minimax, but it is slightly more efficient.
  *  @author Barry Becker
  */
 public class NegaMaxStrategy extends AbstractBruteSearchStrategy {

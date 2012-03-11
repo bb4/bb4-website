@@ -54,13 +54,6 @@ class ConfigurationsTable extends TableBase {
     private static final int NUM_COLS = columnNames_.length;
 
     /**
-     * default constructor
-     */
-    public ConfigurationsTable()  {
-        this(null);
-    }
-
-    /**
      * constructor
      * @param optionsList to initialize the rows in the table with. May be null.
      */
@@ -143,8 +136,8 @@ class ConfigurationsTable extends TableBase {
     }
 
     /**
-     * add a row based on a player object
-     * @param optionsConfig to add
+     * Edit a row based on a player object
+     * @param optionsConfig to update
      */
     public void updateRow(int row, SearchOptionsConfig optionsConfig) {
 

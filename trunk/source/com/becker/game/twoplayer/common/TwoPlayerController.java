@@ -12,6 +12,7 @@ import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.ParameterArray;
@@ -135,8 +136,14 @@ public abstract class TwoPlayerController extends GameController {
     protected PlayerList createPlayers() {
 
         PlayerList players = new PlayerList();
-        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER1"), null), true));
-        players.add(new Player(createPlayerOptions(GameContext.getLabel("PLAYER2"), null), false));
+        
+        PlayerOptions p1Opts =
+                createPlayerOptions(GameContext.getLabel("PLAYER1"), TwoPlayerPieceRenderer.DEFAULT_PLAYER1_COLOR);
+        PlayerOptions p2Opts =
+                createPlayerOptions(GameContext.getLabel("PLAYER2"), TwoPlayerPieceRenderer.DEFAULT_PLAYER2_COLOR);
+
+        players.add(new Player(p1Opts, true));
+        players.add(new Player(p2Opts, false));
         return players;
     }
 

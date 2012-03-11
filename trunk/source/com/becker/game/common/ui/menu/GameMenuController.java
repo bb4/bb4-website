@@ -41,7 +41,8 @@ public class GameMenuController
     }
 
     public void saveImage() {
-        GUIUtil.saveSnapshot(getGameComponent(), FileUtil.getHomeDir());
+        JComponent comp = getGameComponent();
+        GUIUtil.saveSnapshot(comp, FileUtil.getHomeDir());
     }
 
     public JComponent getGameComponent() {
