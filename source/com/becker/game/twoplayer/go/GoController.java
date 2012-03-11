@@ -20,6 +20,7 @@ import com.becker.game.twoplayer.go.options.GoPlayerOptions;
 import com.becker.game.twoplayer.go.options.GoWeights;
 import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.game.twoplayer.go.persistence.GoGameImporter;
+import com.becker.game.twoplayer.go.ui.rendering.GoStoneRenderer;
 
 import java.awt.*;
 import java.util.List;
@@ -80,14 +81,16 @@ public final class GoController extends TwoPlayerController {
     protected PlayerList createPlayers() {
 
          PlayerList players = new PlayerList();
-         players.add(new Player(createPlayerOptions(GameContext.getLabel("BLACK"), null), true));
-         players.add(new Player(createPlayerOptions(GameContext.getLabel("WHITE"), null), false));
+         players.add(new Player(createPlayerOptions(GameContext.getLabel("BLACK"),
+                 GoStoneRenderer.DEFAULT_PLAYER1_COLOR), true));
+         players.add(new Player(createPlayerOptions(GameContext.getLabel("WHITE"),
+                 GoStoneRenderer.DEFAULT_PLAYER1_COLOR), false));
          return players;
     }
     
     @Override
     protected PlayerOptions createPlayerOptions(String playerName, Color color) {
-        return new GoPlayerOptions(playerName); 
+        return new GoPlayerOptions(playerName, color);
     }
 
     /**

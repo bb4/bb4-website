@@ -119,13 +119,13 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
      * given a move, determine whether the game is over.
      * If recordWin is true, then the variables for player1/2HasWon can get set.
      * Sometimes, like when we are looking ahead we do not want to set these.
-     * @param lastMove the move to check. If null then return true.
+     * @param move the move to check. If null then return true.
      * @param recordWin if true then the controller state will record wins
      */
     @Override
-    public boolean done( TwoPlayerMove lastMove, boolean recordWin ) {
+    public boolean done( TwoPlayerMove move, boolean recordWin ) {
 
-        if (getNumMoves() > 0 && lastMove == null) {
+        if (getNumMoves() > 0 && move == null) {
             GameContext.log(0, "Game is over because there are no more moves.");
             return true;
         }

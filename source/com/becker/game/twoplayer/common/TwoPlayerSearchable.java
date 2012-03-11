@@ -55,40 +55,40 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
     }
 
     /**
-     * @param m the move to play.
+     * @param move the move to play.
      */
-    public void makeInternalMove( TwoPlayerMove m ) {
+    public void makeInternalMove( TwoPlayerMove move) {
 
         TwoPlayerMove lastMove = (TwoPlayerMove)(moveList_.getLastMove());
         if (moveList_.getNumMoves() > 0) {
             // @@ we hit this a lot in the tests when running through gradle (because assertions are on). Should fix.
-            GameContext.log(1, "Should not move twice in a row m=" + m + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_);
+            GameContext.log(1, "Should not move twice in a row m=" + move + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_);
             //assert(lastMove.isPlayer1() != m.isPlayer1()):
             //        "can't go twice in a row m=" + m + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_;
         }
 
-        getBoard().makeMove( m );
+        getBoard().makeMove(move);
 
-        if (m.isPassingMove())  {
+        if (move.isPassingMove())  {
             hash.applyPassingMove();
         } else {
-            Location loc = m.getToLocation();
+            Location loc = move.getToLocation();
             hash.applyMove(loc, getBoard().getStateIndex(getBoard().getPosition(loc)));
         }
     }
 
     /**
      * takes back the most recent move.
-     * @param m move to undo
+     * @param move move to undo
      */
-    public void undoInternalMove( TwoPlayerMove m ) {
+    public void undoInternalMove( TwoPlayerMove move) {
         TwoPlayerMove lastMove = (TwoPlayerMove)moveList_.getLastMove();
-        assert m.equals(lastMove) : "The move we are trying to undo ("+m+") in list="
+        assert move.equals(lastMove) : "The move we are trying to undo ("+ move +") in list="
                 + moveList_+" was not equal to the last move ("+lastMove+"). all move=" + getBoard().getMoveList();
 
-        Location loc = m.getToLocation();
+        Location loc = move.getToLocation();
 
-        if (!m.isPassingMove()) {
+        if (!move.isPassingMove()) {
             hash.applyMove(loc, getBoard().getStateIndex(getBoard().getPosition(loc)));
         }
 
@@ -105,6 +105,8 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
 
     @Override
     public SearchOptions getSearchOptions() {
+        //System.out.println("getCurrentPlayer()=" + getCurrentPlayer() +" opts = "
+        // + ((TwoPlayerPlayerOptions) getCurrentPlayer().getOptions()).getSearchOptions());
         return ((TwoPlayerPlayerOptions) getCurrentPlayer().getOptions()).getSearchOptions();
     }
 
@@ -113,10 +115,10 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
      * given a move, determine whether the game is over.
      * If recordWin is true, then the variables for player1/2HasWon can get set.
      *  sometimes, like when we are looking ahead we do not want to set these.
-     * @param lastMove the move to check. If null then return true. This is typically the last move played.
+     * @param move the move to check. If null then return true. This is typically the last move played.
      * @param recordWin if true then the controller state will record wins
      */
-    public boolean done( TwoPlayerMove lastMove, boolean recordWin ) {
+    public boolean done( TwoPlayerMove move, boolean recordWin ) {
         // the game can't be over if no moves have been made yet.
         if (moveList_.getNumMoves() == 0) {
             return false;
@@ -125,7 +127,7 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
             GameContext.log(0, "Game over because one of the players has won.");
             return true;
         }
-        if (moveList_.getNumMoves() > 0 && lastMove == null) {
+        if (moveList_.getNumMoves() > 0 && move == null) {
             Player currentPlayer = getCurrentPlayer();
             GameContext.log(0, "Game is over because there are no more moves for player " + currentPlayer);
             if (recordWin) {
@@ -134,10 +136,10 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
             return true;
         }
 
-        boolean won = (Math.abs( lastMove.getValue() ) >= WINNING_VALUE);
+        boolean won = (Math.abs( move.getValue() ) >= WINNING_VALUE);
 
         if ( won && recordWin ) {
-            if ( lastMove.getValue() >= WINNING_VALUE )
+            if ( move.getValue() >= WINNING_VALUE )
                 players_.getPlayer1().setWon(true);
             else
                 players_.getPlayer2().setWon(true);
@@ -155,7 +157,7 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
     /**
      * @return true if the specified move caused one or more opponent pieces to become jeopardized
      */
-    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights) {
+    public boolean inJeopardy( TwoPlayerMove move, ParameterArray weights) {
         return false;
     }
 

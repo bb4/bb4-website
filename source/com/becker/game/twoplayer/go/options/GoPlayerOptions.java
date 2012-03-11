@@ -8,6 +8,8 @@ import com.becker.game.twoplayer.common.search.options.MonteCarloSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 
+import java.awt.*;
+
 /**
  * @author Barry Becker
  */
@@ -27,9 +29,8 @@ public class GoPlayerOptions extends TwoPlayerPlayerOptions {
 
 
     /** Constructor */
-    public GoPlayerOptions(String name) {
-        super(name, null);
-
+    public GoPlayerOptions(String name, Color color) {
+        super(name, color);
     }
 
     /** Constructor */

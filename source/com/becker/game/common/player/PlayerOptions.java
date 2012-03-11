@@ -29,6 +29,7 @@ public class PlayerOptions implements Serializable {
      */
     public PlayerOptions(String name, Color color) {
         name_ = name;
+        assert color != null;
         color_ = color;
     }
 
