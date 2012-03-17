@@ -8,7 +8,7 @@ import com.becker.game.twoplayer.comparison.ui.execution.GameRunnerDialog;
 import javax.swing.*;
 
 /**
- * Run through the grid of game combinations and gather the performance results
+ * Run through the grid of game combinations and gather the performance results .
  * @author Barry Becker
  */
 public class PerformanceRunner {
@@ -26,16 +26,17 @@ public class PerformanceRunner {
 
     /**
      * Run the NxN comparison and return the results.
+     * @param resultsSaveLocation to save results to
      * @return model with all the results
      */
-    public void doComparisonRuns() {
+    public void doComparisonRuns(String resultsSaveLocation) {
 
         GameRunnerDialog runnerDialog = new GameRunnerDialog(gamePanel_);
         runnerDialog.showDialog();
         gamePanel_.init(null);
 
         PerformanceWorker worker =
-                new PerformanceWorker(gamePanel_.get2PlayerController(), optionsList, listener);
+                new PerformanceWorker(gamePanel_.get2PlayerController(), optionsList, listener, resultsSaveLocation);
         SwingUtilities.invokeLater(worker);
     }
 
