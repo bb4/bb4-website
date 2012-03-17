@@ -42,8 +42,8 @@ public class PenteWeights extends GameWeights {
 
     /** Don't allow the weights to exceed these maximum values. Upper limit. */
     private static final double[] MAX_WEIGHTS = {
-        10.0,   10.0,   10.0,    20.0,    40.0,  80.0,
-        200.0,         200.0,      2 * ASSUMED_WINNING_VALUE,
+        10.0,   10.0,   10.0,    20.0,    JEOPARDY_WEIGHT/2,  JEOPARDY_WEIGHT,
+        2*JEOPARDY_WEIGHT,         2*JEOPARDY_WEIGHT,      2 * ASSUMED_WINNING_VALUE,
         3 * ASSUMED_WINNING_VALUE,  4 * ASSUMED_WINNING_VALUE,  5 * ASSUMED_WINNING_VALUE
     };
 
@@ -75,7 +75,7 @@ public class PenteWeights extends GameWeights {
     };
 
     public PenteWeights() {
-        this( DEFAULT_WEIGHTS);
+        this(DEFAULT_WEIGHTS);
     }
 
     public PenteWeights(double[] weights) {

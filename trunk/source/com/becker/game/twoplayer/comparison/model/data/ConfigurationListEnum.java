@@ -11,6 +11,7 @@ public enum ConfigurationListEnum {
 
     DEFAULT_CONFIGS("Default configurations", new DefaultSearchConfigurations()),
     NEGAMAX_CONFIGS("Negamax configurations", new NegaMaxConfigurations()),
+    NEGASCOUT_CONFIGS("Negascout configurations", new NegaScoutConfigurations()),
     UCT_CONFIGS("UCT Variations", new UCTSearchConfigurations()),
     EMPTY_CONFIGS("Empty", new EmptyConfigurations());
 

@@ -10,7 +10,7 @@ import java.io.*;
 public final class FileUtil {
 
     /**
-     * Get the correct file separator whether orn windows (\) or linux (/).
+     * Get the correct file separator whether on windows (\) or linux (/).
      * Getting error in applets if trying to use System.getProperty("file.separator")
      */
     public static final String FILE_SEPARATOR = "/";
