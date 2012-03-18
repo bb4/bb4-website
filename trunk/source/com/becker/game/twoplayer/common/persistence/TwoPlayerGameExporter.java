@@ -24,10 +24,13 @@ import java.util.Iterator;
 public class TwoPlayerGameExporter extends GameExporter {
 
     protected PlayerList players;
-    
+
+    /** make a copy of the board and players in case they change */
     public TwoPlayerGameExporter(IGameController controller) {
-        super(controller.getBoard());
-        players = controller.getPlayers();
+        super(controller.getBoard().copy());
+        
+        players = new PlayerList();
+        players.addAll(controller.getPlayers());
     }
 
     /**

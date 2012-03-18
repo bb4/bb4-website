@@ -15,11 +15,13 @@ public class DirFileFilter extends FileFilter {
 
    protected static final String DIRECTORY_DESC = "dir";
 
+   @Override
    public boolean accept(File f)
    {
          return f.isDirectory();
    }
 
+   @Override
    public String getDescription() {
          return DIRECTORY_DESC;
    }

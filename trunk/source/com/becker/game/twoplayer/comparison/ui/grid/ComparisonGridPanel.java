@@ -4,7 +4,6 @@ package com.becker.game.twoplayer.comparison.ui.grid;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.PluginManager;
-import com.becker.game.common.ui.SgfFileFilter;
 import com.becker.game.common.ui.menu.GameMenuListener;
 import com.becker.game.common.ui.panel.IGamePanel;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
@@ -29,17 +28,19 @@ import java.io.File;
  * @author Barry Becker
  */
 public final class ComparisonGridPanel
-           extends JPanel
-        implements ActionListener, GameMenuListener, PerformanceRunnerListener {
+             extends JPanel
+             implements ActionListener, GameMenuListener, PerformanceRunnerListener {
 
-    private static final String DEFAULT_SAVE_LOCATION = FileUtil.PROJECT_HOME + "temp/comparisonResults/temp";
+    private static final String DEFAULT_SAVE_LOCATION = FileUtil.PROJECT_HOME + "temp/comparisonResults/";
     private GradientButton runButton_;
     private GradientButton resultsLocationButton_;
+    private GradientButton saveResultsButton_;
+    private JLabel resultFolderLabel_;
     private ComparisonGrid grid_;
     private JScrollPane scrollPane;
     private SearchOptionsConfigList optionsList;
     private String gameName;
-    private String resultsSaveLocation = DEFAULT_SAVE_LOCATION;
+    private ResultsModel finalResultsModel;
 
     /**
      * constructor - create the tree dialog.
@@ -77,12 +78,18 @@ public final class ComparisonGridPanel
         topControlsPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
         topControlsPanel.add(runButton_, BorderLayout.WEST);
         
-        JLabel saveToLabel = new JLabel("and save results to : " + DEFAULT_SAVE_LOCATION);
+        saveResultsButton_ = new GradientButton("Save results to");
+        resultFolderLabel_ = new JLabel(DEFAULT_SAVE_LOCATION);
+        
+        saveResultsButton_.addActionListener(this);
+        saveResultsButton_.setEnabled(false);
+        
         resultsLocationButton_ = new GradientButton("...");
         resultsLocationButton_.addActionListener(this);
 
         JPanel saveLocationPanel = new JPanel();
-        saveLocationPanel.add(saveToLabel);
+        saveLocationPanel.add(saveResultsButton_);
+        saveLocationPanel.add(resultFolderLabel_);
         saveLocationPanel.add(resultsLocationButton_);
         topControlsPanel.add(saveLocationPanel, BorderLayout.CENTER);
                 
@@ -108,18 +115,32 @@ public final class ComparisonGridPanel
             PerformanceRunner runner =
                 new PerformanceRunner((TwoPlayerPanel)gamePanel, optionsList, this);
 
-
             // when done performanceRunsDone will be called.
-            runner.doComparisonRuns(resultsSaveLocation);
+            runner.doComparisonRuns();
         }    
         else if (source == resultsLocationButton_) {
-            JFileChooser chooser = FileChooserUtil.getFileChooser(new DirFileFilter());
+            updateSaveToLocation();
+        }
+        else if (source == saveResultsButton_) {
+            assert finalResultsModel != null;
+            finalResultsModel.saveModel(resultFolderLabel_.getText());
 
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            chooser.setAcceptAllFileFilterUsed(false);
-            int state = chooser.showDialog(null, "Select this location");
-            File file = chooser.getSelectedFile();
-            resultsSaveLocation = file.getAbsolutePath();
+            String message = "Results written to " + resultFolderLabel_.getText();
+            JOptionPane.showMessageDialog(null, message);
+        }
+    }
+
+    private void updateSaveToLocation() {
+        JFileChooser chooser = FileChooserUtil.getFileChooser(new DirFileFilter());
+
+        File dir =  new File(resultFolderLabel_.getText());
+        chooser.setCurrentDirectory(dir);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.showDialog(null, "Select this location");
+        File file = chooser.getSelectedFile();
+        if (file != null)  {
+            resultFolderLabel_.setText(file.getAbsolutePath());
         }
     }
 
@@ -145,8 +166,14 @@ public final class ComparisonGridPanel
         super.paint(g);
     }
 
+    /**
+     * Update the grid with the results and allow the user to save the results to the filesystem.
+     * @param model
+     */
     public void performanceRunsDone(ResultsModel model) {
-        grid_.updateWithResults(model);
+        finalResultsModel = model;
+        grid_.updateWithResults(finalResultsModel);
+        saveResultsButton_.setEnabled(true);
     }
 }
 

@@ -1,11 +1,15 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.model;
 
+import com.becker.common.util.FileUtil;
+
+import java.io.IOException;
+
 /**
  * @author Barry Becker
  */
 public class ResultsModel {
-    
+
     private int size;
     
     /** matrix of performance results based on the grid of options to compare. */
@@ -72,6 +76,28 @@ public class ResultsModel {
             }
         }
         return maxNumMoves;
+    }
+
+    /**
+     * Save all the results in the mode to the specified path on the filesystem.
+     * Consider first removing everything at the specified path.
+     * @param path filesystem path to save results to.
+     */
+    public void saveModel(String path) {
+        try
+        {
+            for (int i=0; i<size; i++) {
+                for (int j=0; j<size; j++) {
+                    PerformanceResultsPair resultsPair = resultsGrid[i][j];
+                    String directoryName = (i > j)?
+                            resultsPair.getP2FirstResults().getDescription():
+                            resultsPair.getP1FirstResults().getDescription();
+                    resultsPair.saveTo(path + FileUtil.FILE_SEPARATOR + directoryName);
+                }
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("Could not save the model", e);
+        }
     }
 
     public String toString() {

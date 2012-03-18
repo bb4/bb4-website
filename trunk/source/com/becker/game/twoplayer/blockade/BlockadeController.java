@@ -13,6 +13,7 @@ import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
@@ -92,17 +93,12 @@ public class BlockadeController extends TwoPlayerController {
 
     /**
      * save the current state of the com.becker.game.twoplayer.blockade game to a file in SGF (4) format (standard game format).
-     *This should some day be xml (xgf)
-     * @param fileName name of the file to save the state to
-     * @param ae the exception that occurred causing us to want to save state
+     * This should some day be xml (xgf)
      */
     @Override
-    public void saveToFile( String fileName, AssertionError ae ) {
-
-        BlockadeGameExporter exporter = new BlockadeGameExporter(this);
-        exporter.saveToFile(fileName, ae);
+    public TwoPlayerGameExporter getExporter() {
+        return new BlockadeGameExporter(this);
     }
-
 
     @Override
     public void restoreFromFile( String fileName ) {

@@ -2,8 +2,13 @@
 package com.becker.game.twoplayer.comparison.model;
 
 import com.becker.common.format.FormatUtil;
+import com.becker.common.util.FileUtil;
+import com.becker.common.util.ImageUtil;
+import com.becker.game.common.persistence.GameExporter;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Right now this just contains the name of the config and the
@@ -12,7 +17,7 @@ import java.awt.image.BufferedImage;
  * @author Barry Becker
  */
 public class PerformanceResults {
-    
+
     /** true if player1 won */
     private boolean player1Won;
     
@@ -36,21 +41,29 @@ public class PerformanceResults {
     /** a screen shot of the final game state */
     private BufferedImage finalStateImg;
 
+    /** for exporting the whole game to an sgf file. */
+    private GameExporter exporter;
+    
+    private String description;
+
 
     /** default constructor */
     public PerformanceResults() {
-        this(false, false, 0, 0, 0, null);
+        this(false, false, 0, 0, 0, null, null, "p1Config_vs_p2Config");
     }
 
     /** Constructor */
     public PerformanceResults(boolean p1Won, boolean wasTie, double strengthOfWin,
-                              int numMoves, long timeMillis, BufferedImage finalImage) {
+                              int numMoves, long timeMillis, BufferedImage finalImage,
+                              GameExporter exporter, String description) {
         this.player1Won = p1Won;
         this.wasTie = wasTie;
         this.strengthOfWin = strengthOfWin;
         this.numMoves = numMoves;
         this.timeMillis = timeMillis;
         this.finalStateImg = finalImage;
+        this.exporter = exporter;
+        this.description = description;
     }
     
     public Outcome getOutcome() {
@@ -117,6 +130,26 @@ public class PerformanceResults {
         }
         return verb;
     }
+    
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Write everything to the specified file.
+     * @param path directory to write to
+     * @throws IOException
+     */
+    public void saveTo(String path) throws IOException {
+        FileUtil.verifyDirectoryExistance(path);
+        
+        String baseName = path + FileUtil.FILE_SEPARATOR + getDescription();
+        exporter.saveToFile(baseName, null);
+        ImageUtil.saveAsImage(baseName, getFinalImage(), ImageUtil.ImageType.PNG);
+        PrintWriter writer = FileUtil.createPrintWriter(baseName + ".txt");
+        writer.write(toString());
+        writer.close();
+    }
 
     public String toHtmlString(boolean substring) {
         StringBuilder bldr = new StringBuilder();
@@ -149,8 +182,10 @@ public class PerformanceResults {
         }
         bldr.append("\n in ").append(getTimeFormatted());
         bldr.append(" and " + getNumMoves() +" moves. ");
-        bldr.append(" normalized time = ").append(normalizedNumSeconds);
-        bldr.append(" normalized numMoves = ").append(normalizedNumMoves);
+        bldr.append("\ntime (sec) = ").append(FormatUtil.formatNumber((double)timeMillis/1000.0));
+        bldr.append("\nnumMoves = ").append(numMoves);
+        bldr.append("\nnormalized time = ").append(normalizedNumSeconds);
+        bldr.append("\nnormalized numMoves = ").append(normalizedNumMoves);
         return bldr.toString();
     }
 }

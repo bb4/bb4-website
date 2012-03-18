@@ -32,7 +32,7 @@ public abstract class GameExporter {
     public abstract void saveToFile( String fileName, AssertionError ae);
 
     /**
-     * Convert a moew to SGF format
+     * Convert a move to SGF format
      * @param move the move to format
      * @return the sgf (smart game format) representation for the move.
      */

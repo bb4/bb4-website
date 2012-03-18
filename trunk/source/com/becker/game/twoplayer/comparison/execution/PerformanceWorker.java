@@ -1,14 +1,16 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.execution;
 
-import com.becker.common.util.FileUtil;
+
 import com.becker.game.common.GameContext;
+import com.becker.game.common.persistence.GameExporter;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerViewable;
+import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.comparison.model.*;
 import com.becker.ui.util.GUIUtil;
 
@@ -22,23 +24,22 @@ import java.awt.image.BufferedImage;
 public class PerformanceWorker implements Runnable {
 
     private static final String FILE_SIDE_DELIM = "_vs_";
+
     private TwoPlayerController controller;
     private SearchOptionsConfigList optionsList;
     private PerformanceRunnerListener listener;
     private ResultsModel model;
-    private String resultsSaveLocation;
 
     /**
      * Constructor.
      * The listener will be called when all the performance results have been computed and normalized.
      */
     PerformanceWorker(TwoPlayerController controller, SearchOptionsConfigList optionsList,
-                      PerformanceRunnerListener listener, String resultsSaveLocation) {
+                      PerformanceRunnerListener listener) {
         this.model = new ResultsModel(optionsList.size());
         this.controller = controller;
         this.optionsList = optionsList;
         this.listener = listener;
-        this.resultsSaveLocation = resultsSaveLocation;
     }
 
     /** Run the process in a separate thread */
@@ -71,19 +72,21 @@ public class PerformanceWorker implements Runnable {
         SearchOptionsConfig config2 = optionsList.get(j);
         ((TwoPlayerPlayerOptions)(player1.getOptions())).setSearchOptions(config1.getSearchOptions());
         ((TwoPlayerPlayerOptions)(player2.getOptions())).setSearchOptions(config2.getSearchOptions());
-        String fname1 = config1.getName() + FILE_SIDE_DELIM + config2.getName();
-        String fname2 = config2.getName() + FILE_SIDE_DELIM + config1.getName();
+        String description1 = config1.getName() + FILE_SIDE_DELIM + config2.getName();
+        String description2 = config2.getName() + FILE_SIDE_DELIM + config1.getName();
 
         System.out.println("("+i+", "+j+") round 1  starts:" + config1.getSearchOptions().getSearchStrategyMethod());
-        PerformanceResults p1FirstResults = getResultsForRound(player1, player2, fname1);
+        PerformanceResults p1FirstResults = getResultsForRound(player1, player2, description1);
         System.out.println("("+i+", "+j+") round 2  starts:" + config2.getSearchOptions().getSearchStrategyMethod());
-        PerformanceResults p2FirstResults = getResultsForRound(player2, player1, fname2);
+        PerformanceResults p2FirstResults = getResultsForRound(player2, player1, description2);
 
         return new PerformanceResultsPair(p1FirstResults, p2FirstResults);
     }
 
-    /** Get the results for one of the games in the pair */
-    private PerformanceResults getResultsForRound(Player player1, Player player2, String fileName) {
+    /**
+     * Get the results for one of the games in the pair
+     */
+    private PerformanceResults getResultsForRound(Player player1, Player player2, String description) {
 
         long startTime = System.currentTimeMillis();
         // make sure the random number sequence is the same for each game to make comparison easier.
@@ -95,7 +98,6 @@ public class PerformanceWorker implements Runnable {
 
         // this is freezing the UI and reporting that the first move is null.
         ((TwoPlayerViewable)controller.getViewer()).showComputerVsComputerGame();
-        //gamePanel_.startGame();
 
         assert (controller.isDone());
         System.out.println("******** game is done = " + controller.isDone() +" ******");
@@ -104,7 +106,7 @@ public class PerformanceWorker implements Runnable {
         int numMoves = controller.getNumMoves();
         BufferedImage finalImage = GUIUtil.getSnapshot((JComponent) controller.getViewer());
 
-        controller.saveToFile(resultsSaveLocation + FileUtil.FILE_SEPARATOR + fileName, null);
+        GameExporter exporter = controller.getExporter();
 
         long elapsedMillis = System.currentTimeMillis() - startTime;
 
@@ -112,6 +114,7 @@ public class PerformanceWorker implements Runnable {
         boolean player1Won = players.getWinningPlayer() == player1;
         controller.reset();
 
-        return new PerformanceResults(player1Won, isTie, strengthOfWin, numMoves, elapsedMillis, finalImage);
+        return new PerformanceResults(player1Won, isTie, strengthOfWin, numMoves, elapsedMillis, finalImage,
+                                      exporter, description);
     }
 }
