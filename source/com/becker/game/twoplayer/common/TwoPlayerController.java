@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common;
 
-import com.becker.common.concurrency.Worker;
 import com.becker.game.common.*;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
@@ -104,13 +103,10 @@ public abstract class TwoPlayerController extends GameController {
     /**
      * save the current state of the game to a file in SGF (4) format (standard game format).
      *This should some day be xml (xgf)
-     * @param fileName name of the file to save the state to
-     * @param ae the exception that occurred causing us to want to save state
      */
     @Override
-    public void saveToFile( String fileName, AssertionError ae ) {
-        TwoPlayerGameExporter exporter = new TwoPlayerGameExporter(this);
-        exporter.saveToFile(fileName, ae);
+    public TwoPlayerGameExporter getExporter() {
+        return new TwoPlayerGameExporter(this);
     }
 
     @Override

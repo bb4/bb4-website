@@ -3,6 +3,7 @@ package com.becker.game.common;
 
 import com.becker.game.common.board.Board;
 import com.becker.game.common.online.IServerConnection;
+import com.becker.game.common.persistence.GameExporter;
 import com.becker.game.common.player.PlayerAction;
 import com.becker.game.common.player.PlayerList;
 
@@ -119,22 +120,21 @@ public abstract class GameController
      * retract the most recently played move
      * @return  the move which was undone (null returned if no prior move)
      */
-    public Move undoLastMove()
-    {
+    public Move undoLastMove() {
         return getBoard().undoMove();
     }
 
     /**
-     * save the current state of the game to a file
+     * Retrieve an exporter that ca same the current state of the game to a file
      * Use this version when an error occurred and you want to dump the state.
      * There is no default implementation (other than to say it is not implemented).
      * You must override if you want it to work.
-     * @param fileName the file to save the state to
-     * @param rte exception that occurred upon failure
+     * @return the game exporter
      */
-    public void saveToFile( String fileName, AssertionError rte ) {
+    public GameExporter getExporter() {
 
-        GameContext.log(0,  "Error: saveToFile(name, rte) not implemented yet for " + getClass().getName());
+        GameContext.log(0, "Error: saveToFile(name, rte) not implemented yet for " + getClass().getName());
+        return null;
     }
 
     /**

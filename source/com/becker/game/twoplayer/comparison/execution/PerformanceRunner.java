@@ -26,17 +26,16 @@ public class PerformanceRunner {
 
     /**
      * Run the NxN comparison and return the results.
-     * @param resultsSaveLocation to save results to
      * @return model with all the results
      */
-    public void doComparisonRuns(String resultsSaveLocation) {
+    public void doComparisonRuns() {
 
         GameRunnerDialog runnerDialog = new GameRunnerDialog(gamePanel_);
         runnerDialog.showDialog();
         gamePanel_.init(null);
 
         PerformanceWorker worker =
-                new PerformanceWorker(gamePanel_.get2PlayerController(), optionsList, listener, resultsSaveLocation);
+                new PerformanceWorker(gamePanel_.get2PlayerController(), optionsList, listener);
         SwingUtilities.invokeLater(worker);
     }
 

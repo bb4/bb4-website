@@ -4,6 +4,8 @@ package com.becker.game.twoplayer.comparison.model;
 import com.becker.common.format.FormatUtil;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Right now this just contains the name of the config and the
@@ -30,7 +32,14 @@ public class PerformanceResultsPair {
         this.p1FirstResults = p1FirstResults;
         this.p2FirstResults = p2FirstResults;
     }
-    
+
+    public PerformanceResults getP1FirstResults() {
+        return p1FirstResults;
+    }
+    public PerformanceResults getP2FirstResults() {
+            return p2FirstResults;
+        }
+
     public Outcome[] getOutcomes() {
         return new Outcome[] {p1FirstResults.getOutcome(), p2FirstResults.getOutcome()};
     }
@@ -78,6 +87,11 @@ public class PerformanceResultsPair {
             FormatUtil.formatNumber(p1FirstResults.getNumMoves()),
             FormatUtil.formatNumber(p2FirstResults.getNumMoves())
         };
+    }
+    
+    public void saveTo(String path) throws IOException {
+        p1FirstResults.saveTo(path);
+        p2FirstResults.saveTo(path);
     }
     
     public String getWinnerText() {

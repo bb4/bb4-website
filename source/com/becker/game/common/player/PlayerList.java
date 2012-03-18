@@ -18,32 +18,28 @@ public class PlayerList extends ArrayList<Player> {
     /**
      *  @return the player that goes first.
      */
-    public Player getFirstPlayer()
-    {
+    public Player getFirstPlayer() {
         return get(0);
     }
 
     /**
      *  @return the player that goes first.
      */
-    public Player getPlayer1()
-    {
+    public Player getPlayer1() {
         return get(0);
     }
 
     /**
      *  @return the player that goes second.
      */
-    public Player getPlayer2()
-    {
+    public Player getPlayer2() {
         return get(1);
     }
 
     /**
      * @return  number of active players.
      */
-    public int getNumPlayers()
-    {
+    public int getNumPlayers() {
         return size();
     }
 

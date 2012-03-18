@@ -7,6 +7,7 @@ import com.becker.game.common.GameViewable;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.board.Board;
+import com.becker.game.common.persistence.GameExporter;
 import com.becker.game.common.ui.SgfFileFilter;
 import com.becker.game.common.ui.panel.GameChangedEvent;
 import com.becker.game.common.ui.panel.GameChangedListener;
@@ -133,7 +134,8 @@ public abstract class GameBoardViewer extends JPanel
             // if it does not have the .sgf extension already then add it
             String fPath = file.getAbsolutePath();
             fPath = SgfFileFilter.addExtIfNeeded(fPath, SgfFileFilter.SGF_EXTENSION);
-            controller_.saveToFile( fPath, ae );
+            GameExporter exporter = controller_.getExporter();
+            exporter.saveToFile(fPath, ae);
         }
     }
 

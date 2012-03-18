@@ -40,9 +40,9 @@ public final class FileChooserUtil {
     public static JFileChooser getFileChooser(FileFilter filter) {
         if (chooser_ == null) {
             chooser_ = new JFileChooser();
-            chooser_.setCurrentDirectory( new File( FileUtil.getHomeDir() ) );
-            chooser_.setFileFilter(filter);
         }
+        chooser_.setCurrentDirectory( new File( FileUtil.getHomeDir() ) );
+        chooser_.setFileFilter(filter);
         return chooser_;
     }
 

@@ -35,6 +35,22 @@ public final class FileUtil {
     }
 
     /**
+     * Tries to create the specified directory if it does not exist.
+     * @param path path to the directory to verify
+     * @throws IOException if any problem creating the specified directory
+     */
+    public static void verifyDirectoryExistance(String path) throws IOException {
+        File directory = new File(path);
+
+        if (!directory.exists()) {
+            boolean success = directory.mkdir();
+            if (!success) {
+                throw new IOException("Could not create directory: " + directory.getAbsolutePath());
+            }
+        }
+    }
+
+    /**
      * create a PrintWriter with utf8 encoding
      * returns null if there was a problem creating it.
      * @param filename including the full path
