@@ -62,7 +62,8 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
         TwoPlayerMove lastMove = (TwoPlayerMove)(moveList_.getLastMove());
         if (moveList_.getNumMoves() > 0) {
             // @@ we hit this a lot in the tests when running through gradle (because assertions are on). Should fix.
-            GameContext.log(1, "Should not move twice in a row m=" + move + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_);
+            GameContext.log(1, "Should not move twice in a row m=" + move
+                    + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_);
             //assert(lastMove.isPlayer1() != m.isPlayer1()):
             //        "can't go twice in a row m=" + m + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_;
         }
@@ -149,6 +150,9 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
         return (maxMovesExceeded || won);
     }
 
+    /**
+     * @return the player who's turn it is to move next.
+     */
     private Player getCurrentPlayer()  {
         TwoPlayerMove move =  (TwoPlayerMove) moveList_.getLastMove();
         return (move==null || !move.isPlayer1()) ?  players_.getPlayer1() : players_.getPlayer2();

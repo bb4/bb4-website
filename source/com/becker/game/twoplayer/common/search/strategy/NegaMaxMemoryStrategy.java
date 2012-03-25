@@ -14,7 +14,7 @@ import com.becker.optimization.parameter.ParameterArray;
 /**
  *  This strategy class defines the NegaMax with memory search algorithm.
  *  This version stores the values of moves that have already been searched.
- *  Based on psuedo code from Artificial Intelligence for Games by Millington and Funge.
+ *  Based on pseudo code from Artificial Intelligence for Games by Millington and Funge.
  *
  *  @author Barry Becker
  */

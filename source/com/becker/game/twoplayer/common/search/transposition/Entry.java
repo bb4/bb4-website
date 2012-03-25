@@ -42,8 +42,8 @@ public class Entry {
     public String toString() {
         StringBuilder bldr = new StringBuilder();
         bldr.append("Entry depth=").append(depth);
-        bldr.append("bestMove=").append(bestMove);
-        bldr.append("range=[").append(lowerValue).append(", ").append(upperValue).append("]");
+        bldr.append(" bestMove=").append(bestMove);
+        bldr.append(" range=[").append(lowerValue).append(", ").append(upperValue).append("]");
         return bldr.toString();
     }
 }

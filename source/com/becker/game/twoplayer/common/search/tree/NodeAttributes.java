@@ -2,6 +2,10 @@
 package com.becker.game.twoplayer.common.search.tree;
 
 
+import com.becker.common.format.FormatUtil;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.SearchWindow;
+
 import java.util.HashMap;
 
 
@@ -22,5 +26,23 @@ public class NodeAttributes extends HashMap<String, String>  {
      * Default Constructor
      */
     public NodeAttributes() {}
+    
+    
+    public static NodeAttributes createPrunedNode(int selectedValue, SearchWindow window) {
+        NodeAttributes attributes = new NodeAttributes();
+        attributes.put("value", FormatUtil.formatNumber(selectedValue) );
+        attributes.put("window", window.toString());
+        attributes.pruned = true;
+        attributes.put("pruned", "(value outside window)");
+        return attributes;
+    }
+
+    public static NodeAttributes createInnerNode(TwoPlayerMove theMove, SearchWindow window ) {
+        NodeAttributes attributes =  new NodeAttributes();
+        attributes.put("value", FormatUtil.formatNumber(theMove.getValue()) );
+        attributes.put("inhVal", FormatUtil.formatNumber(theMove.getInheritedValue()) );
+        attributes.put("window", window.toString());
+        return attributes;
+    }
 
 }
