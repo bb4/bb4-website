@@ -38,7 +38,7 @@ public class TranspositionTable extends LRUCache<HashKey, Entry> {
     public boolean entryExists(Entry entry, TwoPlayerMove lastMove, int depth, SearchWindow window) {
         if (entry != null && entry.depth >= depth) {
             cacheHits++;
-            System.out.println("Cache hit. \nentry.depth=" + entry.depth + " depth=" + depth  + "\n" + entry);
+            //System.out.println("Cache hit. \nentry.depth=" + entry.depth + " depth=" + depth  + "\n" + entry);
 
             if (entry.upperValue <= window.alpha || entry.upperValue == entry.lowerValue)  {
                 entry.bestMove.setInheritedValue(entry.upperValue);

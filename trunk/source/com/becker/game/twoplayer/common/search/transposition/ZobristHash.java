@@ -31,6 +31,7 @@ public final class ZobristHash {
 
     private HashKey currentKey;
 
+    /** only include the history when debugging. It costs a lot of memory. */
     private boolean includeHistory;
 
     /**
@@ -131,7 +132,8 @@ public final class ZobristHash {
      */
     private void applyPositionToKey(Location location, int stateIndex) {
 
-        currentKey.applyMove(location, randomNumberTable_[location.getRow()-1][location.getCol()-1][stateIndex]);
+        Long specialNum = randomNumberTable_[location.getRow()-1][location.getCol()-1][stateIndex];
+        currentKey.applyMove(location, specialNum);
     }
 
 }

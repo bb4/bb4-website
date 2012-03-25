@@ -50,10 +50,10 @@ public final class BoardEvaluator {
     }
 
     /**
-     *  If we have a cached worth value for this board position, then use that instead of recomputing it.
-     *  Why doesn't playing with caching give same results as without? I think its because we can arrive at
-     *  identical board positions from different routes and they have different scores (may be related to ko)
-     *  @return statically evaluated value for the board.
+     * If we have a cached worth value for this board position, then use that instead of recomputing it.
+     * Why doesn't playing with caching give same results as without? I think its because we can arrive at
+     * identical board positions from different routes and they have different scores (may be related to ko)
+     * @return statically evaluated value for the board.
      */
     private int cachedWorth( Move lastMove, ParameterArray weights, HashKey key) {
 

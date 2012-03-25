@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.format.FormatUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -159,7 +158,6 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
                                                   SearchWindow window, SearchTreeNode parent);
 
 
-
     /**
      * Show the node in the game tree (if one is used. It is used if parent not null).
      *
@@ -170,12 +168,8 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
     protected void showPrunedNodesInTree( MoveList list, SearchTreeNode parent,
                                           int i, int selectedValue, SearchWindow window) {
         if (hasGameTree()) {
-            NodeAttributes attributes = new NodeAttributes();
-            attributes.put("value", FormatUtil.formatNumber(selectedValue) );
-            attributes.put("window", window.toString());
-            attributes.pruned = true;
-            attributes.put("pruned", "(value outside window)");
-            super.addPrunedNodesInTree(list, parent, i, attributes);
+            super.addPrunedNodesInTree(list, parent, i,
+                    NodeAttributes.createPrunedNode(selectedValue, window));
         }
     }
 
@@ -188,10 +182,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
                                             SearchWindow window ) {
         NodeAttributes attributes = null;
         if (hasGameTree()) {
-            attributes = new NodeAttributes();
-            attributes.put("value", FormatUtil.formatNumber(theMove.getValue()) );
-            attributes.put("inhVal", FormatUtil.formatNumber(theMove.getInheritedValue()) );
-            attributes.put("window", window.toString());
+            attributes = NodeAttributes.createInnerNode(theMove, window);
         }
         return addNodeToTree(parent, theMove, attributes);
     }
