@@ -33,6 +33,7 @@ public class SimulatorApplet extends ApplicationApplet {
      */
     public SimulatorApplet(String simulatorClassName) {
 
+        System.out.println("simulatorClassName=" + simulatorClassName);
         simulator_ = createSimulationFromClassName(simulatorClassName);
     }
 
@@ -112,7 +113,7 @@ public class SimulatorApplet extends ApplicationApplet {
         else if (args.length > 1)
             simulatorClassName = args[1];
 
-        System.out.println("im class="+ simulatorClassName);
+        System.out.println("get class="+ simulatorClassName);
         SimulatorApplet applet = new SimulatorApplet(simulatorClassName);
         GUIUtil.showApplet( applet, applet.getTitle() );
     }

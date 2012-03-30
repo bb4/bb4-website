@@ -13,6 +13,7 @@ import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * Responsible for evaluating groups and territory on a go board.
+ * we keep a cache of the score for each unique board position to avoid recalculating.
  *
  * @author Barry Becker
  */
@@ -27,7 +28,7 @@ public final class BoardEvaluator {
     private ScoreCache scoreCache_;
 
     /**
-     *  Constructor.
+     * Constructor.
      */
     public BoardEvaluator(GoBoard board, ScoreCache cache) {
 

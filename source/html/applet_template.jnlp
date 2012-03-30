@@ -5,7 +5,6 @@
         <information>
             <title>{title}</title>
             <vendor>TesujiSoft - Barry G. Becker</vendor>
-            <!--homepage href="http://tesujisoft.no-ip.com/game_programs.html"/ -->
             <homepage href="http://{codebase}/applet_index_{locale}.html"/>
             <description>{description}</description>
             <description kind="short">{title}</description>
@@ -37,8 +36,10 @@
        </resources>
 
        <application-desc main-class="{qualifiedAppClassName}">
-           <argument>-name</argument>
+           <argument>-panel_class</argument>
            <argument>{panelClass}</argument>
+           <argument>-name</argument>
+           <argument>{name}</argument>
            <argument>-locale</argument>
            <argument>{language}</argument>
        </application-desc>

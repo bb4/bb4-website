@@ -30,6 +30,7 @@ public class GameMenu extends AbstractGameMenu
             String gameNameLabel = (gamePlugin.getLabel());
             add(createMenuItem(gameNameLabel));
         }
+        System.out.println("the initial game is " + initialGame);
 
         currentGameName = initialGame;
     }
@@ -48,6 +49,7 @@ public class GameMenu extends AbstractGameMenu
 
         currentGameName =
                 PluginManager.getInstance().getPluginFromLabel(item.getText()).getName();
+        System.out.println("the current game is " + currentGameName);
 
         notifyOfChange(currentGameName);
     }

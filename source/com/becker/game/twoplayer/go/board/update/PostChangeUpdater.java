@@ -121,7 +121,6 @@ public abstract class PostChangeUpdater {
         board_.setGroups(newGroups);
     }
 
-
     /**
      * clear all the eyes from all the stones on the board
      */

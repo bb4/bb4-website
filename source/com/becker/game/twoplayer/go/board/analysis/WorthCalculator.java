@@ -122,8 +122,10 @@ public class WorthCalculator {
         }
         int blackCap = board.getNumCaptures( true );
         int whiteCap = board.getNumCaptures( false );
-        this.info = new WorthInfo(territoryDelta, captureScore, blackCap, whiteCap,
-                             positionalScore, positionScores, ((GoMove)lastMove).getCaptures(), worth, board.getMoveList().copy());
+        this.info =
+                new WorthInfo(territoryDelta, captureScore, blackCap, whiteCap,
+                             positionalScore, positionScores, ((GoMove)lastMove).getCaptures(),
+                             worth, board.getMoveList().copy());
         return worth;
     }
 
