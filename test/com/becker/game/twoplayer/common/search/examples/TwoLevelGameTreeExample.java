@@ -6,6 +6,7 @@ import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 
 /**
  * A simple game tree for testing search strategies.
+ * Should add more than 2 children at each branch
  * It looks something like this
  *                 ____ []_____
  *                /            \
@@ -40,6 +41,5 @@ public class TwoLevelGameTreeExample extends AbstractGameTreeExample  {
 
         move0.setChildren(createList(move00, move01));
         move1.setChildren(createList(move10, move11));
-
     }
 }

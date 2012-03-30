@@ -16,12 +16,12 @@ public class SearchResult {
      * The result of a search.
      * @param moveId
      * @param inheritedValue
-     * @param consideredMoves
+     * @param numConsideredMoves
      */
-    public SearchResult(String moveId, int inheritedValue, long consideredMoves) {
+    public SearchResult(String moveId, int inheritedValue, long numConsideredMoves) {
         this.moveId = moveId;
         this.inheritedValue = inheritedValue;
-        this.numMovesConsidered = consideredMoves;
+        this.numMovesConsidered = numConsideredMoves;
     }
 
     public String getMoveId() {

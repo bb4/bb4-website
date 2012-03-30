@@ -28,6 +28,7 @@ public class SearchableStub extends AbstractSearchable {
         options_ = options;
     }
 
+    /** Copy constructor */
     public SearchableStub(SearchableStub stub) {
         this(stub.getSearchOptions());
         moveList_ = new MoveList(stub.getMoveList());
@@ -38,6 +39,7 @@ public class SearchableStub extends AbstractSearchable {
        return options_;
     }
 
+    /** @return a copy of this instnace */
     public Searchable copy() {
         return new SearchableStub(this);
     }    
@@ -67,18 +69,17 @@ public class SearchableStub extends AbstractSearchable {
         return lastMove.getValue();
     }
 
+    /*
     public int worth(Move lastMove, ParameterArray weights, boolean player1sPerspective) {
         return lastMove.getValue();
-    }
+    } */
 
     public TwoPlayerBoard getBoard() {
         return null;
     }
 
-
     /**
      * {@inheritDoc}
-     * @@ we should remove the final argument because it always seems to be true
      */
     public MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
@@ -86,7 +87,6 @@ public class SearchableStub extends AbstractSearchable {
 
     /**
      * {@inheritDoc}
-     * @@ we should remove the final argument because it always seems to be true
      */
     public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         MoveList urgentMoves = new MoveList();

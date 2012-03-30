@@ -7,6 +7,12 @@ import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
  * A simple game tree where one of the moves should get alpha pruned when alpha beta pruning is on.
  * Player1 to move next.
  *
+ *        7
+ *       /  \
+ *      3    2
+ *     / \  /  \
+ *    5  9  4  3
+ *
  * @author Barry Becker
  */
 public class AlphaPruneExample extends AbstractGameTreeExample  {
