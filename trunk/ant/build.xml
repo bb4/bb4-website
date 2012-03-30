@@ -495,7 +495,7 @@
         <!--jvmarg value="-agentpath:D:\apps\java\netbeans-5.5\profiler1\lib\deployed\jdk15\windows\profilerinterface.dll=D:\apps\java\netbeans-5.5\profiler1\lib,5140"/-->
         <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->  <!--   for Netbeans debugging-->
         <jvmarg value="-Xms128M"/>
-        <jvmarg value="-Xmx1028M"/>
+        <jvmarg value="-Xmx2048M"/>
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
@@ -508,7 +508,7 @@
         <arg value="${arg2}"/>
         <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000 "/  for Netbeans debugging-->
         <jvmarg value="-Xms128M"/>
-        <jvmarg value="-Xmx512M"/>
+        <jvmarg value="-Xmx1024M"/>
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>

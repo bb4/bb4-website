@@ -1,4 +1,3 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.util;
 
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ public class LRUCache<K,V> {
 
     private LinkedHashMap<K,V> map;
     private int cacheSize;
+    private long nextThreshold = 1000;
 
     /**
      * Creates a new LRU cache.
@@ -63,7 +63,10 @@ public class LRUCache<K,V> {
      */
     public synchronized void put(K key, V value) {
         map.put(key,value);
-        //System.out.println(this + "num="+numEntries());
+        if (numEntries() > nextThreshold) {
+            System.out.println(this + " passed threshold ="+numEntries());
+            nextThreshold *= 10;
+        }
     }
 
     /**
