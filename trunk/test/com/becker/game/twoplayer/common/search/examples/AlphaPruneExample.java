@@ -11,7 +11,6 @@ import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
  */
 public class AlphaPruneExample extends AbstractGameTreeExample  {
 
-
     public AlphaPruneExample(boolean player1PlaysNext, EvaluationPerspective persp) {
         super(persp);
 

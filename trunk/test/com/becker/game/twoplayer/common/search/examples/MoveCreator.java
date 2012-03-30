@@ -22,7 +22,6 @@ public class MoveCreator {
         evalPerspective = evalPersp;
     }
 
-
     public TwoPlayerMoveStub createMove(int value, boolean player1Move, TwoPlayerMoveStub parent) {
 
         return new TwoPlayerMoveStub(value, player1Move, createToLocation(), parent);

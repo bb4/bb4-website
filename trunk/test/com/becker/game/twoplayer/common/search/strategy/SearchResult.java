@@ -2,7 +2,7 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 /**
- * Meta informatino about a move made during search.
+ * Meta information about a move made during search.
  *
  * @author Barry Becker
  */
@@ -23,7 +23,6 @@ public class SearchResult {
         this.inheritedValue = inheritedValue;
         this.numMovesConsidered = consideredMoves;
     }
-
 
     public String getMoveId() {
         return moveId;
