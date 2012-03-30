@@ -88,7 +88,7 @@ public class FourLevelGameTreeExample extends AbstractGameTreeExample  {
         move10.setChildren(createList(move100, move101));
         move11.setChildren(createList(move110, move111));
 
-        // ply 32 children
+        // ply 3 children
         move000.setChildren(createList(move0000, move0001));
         move001.setChildren(createList(move0010, move0011));
 

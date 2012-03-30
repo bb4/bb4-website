@@ -25,16 +25,19 @@ public class MoveCreator {
     public TwoPlayerMoveStub createMove(int value, boolean player1Move, TwoPlayerMoveStub parent) {
 
         return new TwoPlayerMoveStub(value, player1Move, createToLocation(), parent);
-        //return new TwoPlayerMoveStub(getPerspectiveValue(value, player1Move), player1Move, parent);
     }
 
+    /**
+     * The location is not really useed, just give it something unique so the hash works.
+     * @return
+     */
     private Location createToLocation() {
         moveCount++;
         return new Location(moveCount / FAKE_BOARD_SIZE, moveCount % FAKE_BOARD_SIZE);
     }
 
     /**
-     * We can tell our depth in the tree, but looking at the number of ancestors we have.
+     * We can tell our depth in the tree by looking at the number of ancestors we have.
      * @param parent
      * @return depth in game tree.
      */

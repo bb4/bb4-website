@@ -27,6 +27,13 @@ public class MtdNegaMaxSearchStrategyTest extends NegaMaxMemorySearchStrategyTes
                 getOneLevelLookAheadPlayer1Result());
     }
 
+
+    // seems wrong
+    @Override
+    protected SearchResult getPruneFourLevelWithABSearchPlayer1() {
+        return new SearchResult( "0", 3, 14);
+    }
+
     /*
     @Override
     protected SearchResult getOneLevelLookAheadPlayer1Result() {
