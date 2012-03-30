@@ -2,7 +2,7 @@
 package com.becker.game.twoplayer.common.search.examples;
 
 /**
- * Date: Oct 24, 2010
+ * Enum for how we want to evaluate moves.
  *
  * @author Barry Becker
  */

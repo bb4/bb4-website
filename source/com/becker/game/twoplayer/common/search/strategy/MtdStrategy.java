@@ -85,13 +85,11 @@ public final class MtdStrategy implements SearchStrategy
     }
 
 
-    public final long getNumMovesConsidered()
-    {
+    public final long getNumMovesConsidered() {
         return searchWithMemory_.getNumMovesConsidered();
     }
 
-    public final int getPercentDone()
-    {
+    public final int getPercentDone() {
         return  searchWithMemory_.getPercentDone();
     }
 
@@ -103,18 +101,15 @@ public final class MtdStrategy implements SearchStrategy
          searchWithMemory_.setGameTreeEventListener(listener);
     }
 
-    public void pause()
-    {
+    public void pause() {
        searchWithMemory_.pause();
     }
 
-    public final boolean isPaused()
-    {
+    public final boolean isPaused() {
         return searchWithMemory_.isPaused();
     }
 
-    public void continueProcessing()
-    {
+    public void continueProcessing() {
        searchWithMemory_.continueProcessing();
     }
 }
