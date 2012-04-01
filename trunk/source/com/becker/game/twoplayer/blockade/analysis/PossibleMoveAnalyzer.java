@@ -4,10 +4,10 @@ package com.becker.game.twoplayer.blockade.analysis;
 import com.becker.common.geometry.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.board.BoardPosition;
-import com.becker.game.twoplayer.blockade.BlockadeBoard;
-import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
-import com.becker.game.twoplayer.blockade.BlockadeMove;
-import com.becker.game.twoplayer.blockade.Direction;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
+import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.board.Direction;
+import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 
 import java.util.LinkedList;
 import java.util.List;
