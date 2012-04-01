@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.pente.analysis;
 
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
-import org.codehaus.groovy.vmplugin.v5.JUnit4Utils;
+//import org.codehaus.groovy.vmplugin.v5.JUnit4Utils;
 
 import java.util.List;
 
