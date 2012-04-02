@@ -21,8 +21,9 @@ public class GeneticSearchSolver extends RedPuzzleSolver
 
     public static final int SOLVED_THRESH = 1000;
 
-    /** these boosters are bonuses we give to the scoring algorithm if 3 or four nubs on a side fit. */
+    /** bonuses given to the scoring algorithm if 3 nubs fit on a side piece. */
     public static final double THREE_FIT_BOOST = 0.1;
+    /** bonuses given to the scoring algorithm if 4 nubs on the center piece fit. */
     public static final double FOUR_FIT_BOOST = 0.6;
 
     // the max number of fitting nubs that we can have. The puzzle is solved if this happens.
@@ -59,7 +60,7 @@ public class GeneticSearchSolver extends RedPuzzleSolver
             optimizer.doOptimization(strategy, initialGuess, SOLVED_THRESH);
 
         solution_ = ((PieceParameterArray)solution).getPieceList();
-        List<Piece> moves = null;
+        List<Piece> moves;
         if (evaluateFitness(solution) >= SOLVED_THRESH) {
             moves = solution_.getPieces();
         } else {
@@ -115,7 +116,7 @@ public class GeneticSearchSolver extends RedPuzzleSolver
      */
     private static double getNumFits(PieceList pieces) {
         double totalFits = 0;
-        for (int i=0; i< pieces.size(); i++) {
+        for (int i=0; i < pieces.size(); i++) {
             double nFits = pieces.getNumFits(i);
             totalFits += nFits;
             // give a boost if a give piece has 3 or 4 fits.
