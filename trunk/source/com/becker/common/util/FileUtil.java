@@ -20,7 +20,7 @@ public final class FileUtil {
      * Reads the PROJECT_HOME env variable to figure out where the data files are.
      * If not deployed, you can use System.getenv("PROJECT_HOME") + FILE_SEPARATOR;
      */
-    public static final String PROJECT_HOME = "E:/projects/java_projects/trunk" + FILE_SEPARATOR;
+    public static final String PROJECT_HOME = getProjectHomeDir();
     
     /**
      * cannot instantiate static class.
@@ -34,6 +34,15 @@ public final class FileUtil {
         return PROJECT_HOME;
     }
 
+    private static final String getProjectHomeDir() {
+        String home;
+         try {
+            home = System.getenv("PROJECT_HOME");
+         } catch (Exception e) {
+            home =  "C:/Users/Barry/projects/java_projects/trunk";
+         }
+        return home + FILE_SEPARATOR;
+    }
     /**
      * Tries to create the specified directory if it does not exist.
      * @param path path to the directory to verify
