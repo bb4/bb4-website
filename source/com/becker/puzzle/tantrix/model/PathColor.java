@@ -7,7 +7,8 @@ public enum PathColor {
     RED,
     GREEN,
     BLUE,
-    YELLOW
+    YELLOW,
+    WHITE
 
     //public abstract Color getRGBColor();
 }

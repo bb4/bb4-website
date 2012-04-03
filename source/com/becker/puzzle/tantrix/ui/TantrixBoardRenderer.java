@@ -48,6 +48,9 @@ public class TantrixBoardRenderer {
         int minEdge = (Math.min(width, height) - 2 * MARGIN);
         hexRadius = minEdge / board_.getEdgeLength() / ROOT3D2 / 2.0;
 
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                            RenderingHints.VALUE_ANTIALIAS_ON);
+
         drawGrid(g2, board_.getEdgeLength());
 
         // erase what's there and redraw.
