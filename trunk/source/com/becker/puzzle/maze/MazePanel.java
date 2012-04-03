@@ -158,7 +158,7 @@ public class MazePanel extends JComponent {
                 if ( c!=null && c.visited ) {
                     g2.setColor( VISITED_COLOR );
                     g2.fillRect( xpos + 1, ypos + 1, cellSize, cellSize );
-                    //g2.setColor(Color.black);
+                    //g2.setColor(PathColor.black);
                 }
             }
         }

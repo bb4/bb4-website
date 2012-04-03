@@ -19,8 +19,8 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class PokerGameRenderer extends MultiGameBoardRenderer
-{
+public class PokerGameRenderer extends MultiGameBoardRenderer {
+
     private  static GameBoardRenderer renderer_;
 
 
@@ -28,13 +28,11 @@ public class PokerGameRenderer extends MultiGameBoardRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    private PokerGameRenderer()
-    {
+    private PokerGameRenderer() {
         pieceRenderer_ = PokerPlayerRenderer.getRenderer();
     }
 
-    public static GameBoardRenderer getRenderer()
-    {
+    public static GameBoardRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new PokerGameRenderer();
         return renderer_;
@@ -50,9 +48,9 @@ public class PokerGameRenderer extends MultiGameBoardRenderer
 
 
     @Override
-    protected void drawBackground( Graphics g, Board board, int startPos, int rightEdgePos, int bottomEdgePos,
-                                   int panelWidth, int panelHeight )
-    {
+    protected void drawBackground( Graphics g, Board board, int startPos,
+                                   int rightEdgePos, int bottomEdgePos,
+                                   int panelWidth, int panelHeight ) {
         super.drawBackground(g, board, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight);
         drawTable(g, board, panelWidth, panelHeight);
     }
@@ -61,13 +59,13 @@ public class PokerGameRenderer extends MultiGameBoardRenderer
      * Draw the pieces and possibly other game markers for both players.
      */
     @Override
-    protected void drawMarkers(IGameController controller, Graphics2D g2  )
-    {
+    protected void drawMarkers(IGameController controller, Graphics2D g2  ) {
         // draw the pot in the middle
         Board board = controller.getBoard();
         Location loc = new Location(board.getNumRows() >> 1, (board.getNumCols() >> 1) - 3);
         int pot = ((PokerController)controller).getPotValue();
-        ((PokerPlayerRenderer)pieceRenderer_).renderChips(g2, loc, pot, this.getCellSize());
+        new ChipRenderer().render(g2, loc, pot, this.getCellSize());
+
 
         // draw a backroung circle for the player whose turn it is
         PokerPlayer player = (PokerPlayer)controller.getCurrentPlayer();

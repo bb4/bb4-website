@@ -1,25 +1,19 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.redpuzzle;
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+package com.becker.puzzle.tantrix;
 
 import com.becker.puzzle.common.Refreshable;
-import com.becker.puzzle.redpuzzle.model.Piece;
-import com.becker.puzzle.redpuzzle.model.PieceList;
+import com.becker.puzzle.tantrix.model.HexTile;
+import com.becker.puzzle.tantrix.model.HexTileList;
 
 import java.util.List;
 
 /**
- * Works really well in spite of being brute force.
- * @see GeneticSearchSolver
- * for a potentially better alternative.
  *
- * Solves the puzzle in  10 seconds on Core2Duo sequentially.
- *
- * @author Barry Becker Date: Aug 6, 2006
+ * @author Barry Becker
  */
-public class BruteForceSolver<P, M> extends RedPuzzleSolver {
+public class BruteForceSolver<P, M> extends TantricPuzzleSolver {
 
-
-    public BruteForceSolver(PieceList pieces, Refreshable<PieceList, Piece> puzzlePanel) {
+    public BruteForceSolver(HexTileList pieces, Refreshable<HexTileList, HexTile> puzzlePanel) {
         super(pieces);
         puzzlePanel_ = puzzlePanel;
         assert (puzzlePanel_ != null): "for now we require a puzzle panel.";
@@ -30,18 +24,18 @@ public class BruteForceSolver<P, M> extends RedPuzzleSolver {
      * @return true if a solution is found.
      */
     @Override
-    public List<Piece> solve()  {    
-        List<Piece> moves = null;
+    public List<HexTile> solve()  {
+        List<HexTile> moves = null;
         long startTime = System.currentTimeMillis();
         
         if  (solvePuzzle(puzzlePanel_, pieces_, 0).size() == 0) {
-            moves = solution_.getPieces();
+            //moves = solution_.getTiles();
         }
            
         long elapsedTime = System.currentTimeMillis() - startTime;
-        puzzlePanel_.finalRefresh(moves , solution_, numTries_, elapsedTime);
+        //puzzlePanel_.finalRefresh(moves , solution_, numTries_, elapsedTime);
         
-        return moves;
+        return null;//moves;
     }
 
     /**
@@ -52,7 +46,7 @@ public class BruteForceSolver<P, M> extends RedPuzzleSolver {
      * @param i index of last placed piece. If we have to backtrack, we put it back where we got it.
      * @return true if successfully solved, false if no solution.
      */
-    protected PieceList solvePuzzle( Refreshable<PieceList, Piece> puzzlePanel, PieceList pieces, int i ) {
+    protected HexTileList solvePuzzle( Refreshable<HexTileList, HexTile> puzzlePanel, HexTileList pieces, int i ) {
         boolean solved = false;
 
         // base case of the recursion. If reached, the puzzle has been solved.
@@ -61,11 +55,12 @@ public class BruteForceSolver<P, M> extends RedPuzzleSolver {
 
         int k = 0;
         while (!solved && k < pieces.size() ) {
-            Piece p = pieces.get(k);
+            HexTile p = pieces.get(k);
             int r = 0;
             // try the 4 rotations
             while (!solved && r < 4) {
-                 numTries_++;                 
+                 numTries_++;
+                /*
                  if ( solution_.fits(p) ) {                    
                     solution_ = solution_.add( p );                   
                     pieces = pieces.remove( p );
@@ -75,7 +70,7 @@ public class BruteForceSolver<P, M> extends RedPuzzleSolver {
                     // call solvePuzzle with a simpler case (one less piece to solve)
                     pieces = solvePuzzle( puzzlePanel, pieces, k);
                     solved = pieces.size() == 0;
-                }
+                }  */
                 if (!solved) {
                     p = p.rotate();
                 }
@@ -84,14 +79,15 @@ public class BruteForceSolver<P, M> extends RedPuzzleSolver {
             k++;
         }
 
+        /*
         if (!solved && solution_.size() > 0) {
             // backtrack.
-            Piece p = solution_.getLast();
+            HexTile p = solution_.getLast();                                            s
             solution_ = solution_.removeLast();
             // put it back where we took it from,
             // so our list of unplaced pieces does not get out of order.
             pieces = pieces.add(i, p);
-        }
+        }*/
 
         // if we get here and pieces is empty, we did not find a puzzlePanel.
         return pieces;

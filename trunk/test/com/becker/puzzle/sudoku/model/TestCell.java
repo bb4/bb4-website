@@ -66,7 +66,7 @@ public class TestCell extends TestCase {
 
     /** Set an inappropriate illegal value and verify exception thrown
     public void testSetValueInvalid() {
-        board = new Board(TestData.SIMPLE_4);
+        board = new TantrixBoard(TestData.SIMPLE_4);
         cell = board.getCell(1, 1);
 
         Assert.assertEquals("Unexpected before candidates", new Candidates(1), cell.getCandidates());

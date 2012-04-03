@@ -1,11 +1,15 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.redpuzzle;
+package com.becker.puzzle.redpuzzle.ui;
 
 import com.becker.puzzle.common.AlgorithmEnum;
 import com.becker.puzzle.common.PuzzleApplet;
 import com.becker.puzzle.common.PuzzleController;
 import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
+import com.becker.puzzle.redpuzzle.Algorithm;
+import com.becker.puzzle.redpuzzle.RedPuzzleController;
+import com.becker.puzzle.redpuzzle.model.Piece;
+import com.becker.puzzle.redpuzzle.model.PieceList;
 import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.sliders.SliderChangeListener;
 import com.becker.ui.util.GUIUtil;
@@ -43,7 +47,7 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
     
     @Override
     protected PuzzleController<PieceList, Piece> createController(Refreshable<PieceList, Piece> viewer_) {
-        return new RedPuzzleController(viewer_);   
+        return new RedPuzzleController(viewer_);
     }
     
     @Override

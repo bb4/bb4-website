@@ -20,7 +20,7 @@ public class ColorCellRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value,
                                                    boolean isSelected, boolean hasFocus,
                                                    int row, int col) {
-        // we know the value is a Color
+        // we know the value is a PathColor
         Color color = (Color)value;
         setBackground(color);
         setToolTipText(color.toString());

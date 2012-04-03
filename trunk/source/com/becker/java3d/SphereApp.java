@@ -92,7 +92,7 @@ public final class SphereApp extends Applet {
         group.addChild(sphere);
 
         //Box box = new Box(.5f, .1f, .5f, Primitive.GENERATE_TEXTURE_COORDS,
-	 	//	             getAppearance(new Color3f(Color.green)));
+	 	//	             getAppearance(new Color3f(PathColor.green)));
         //group.addChild(box);
 
         ColorCube cube = new ColorCube(0.1);

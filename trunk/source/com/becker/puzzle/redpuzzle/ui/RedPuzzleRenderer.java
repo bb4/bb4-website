@@ -1,8 +1,11 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.redpuzzle;
+package com.becker.puzzle.redpuzzle.ui;
 
 import com.becker.common.format.FormatUtil;
 import com.becker.puzzle.common.PuzzleRenderer;
+import com.becker.puzzle.redpuzzle.model.Nub;
+import com.becker.puzzle.redpuzzle.model.Piece;
+import com.becker.puzzle.redpuzzle.model.PieceList;
 import com.becker.ui.util.GUIUtil;
 
 import java.awt.*;

@@ -53,7 +53,7 @@ public final class ColorUtil
     {
         int intval = color.getRGB();
         intval -= 0xFF000000;
-        //System.out.println("NodePres getString from Color = "+Integer.toHexString(intval).toUpperCase());
+        //System.out.println("NodePres getString from PathColor = "+Integer.toHexString(intval).toUpperCase());
         return '#'+Integer.toHexString(intval).toUpperCase();
     }
 

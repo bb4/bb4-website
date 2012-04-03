@@ -404,49 +404,65 @@
 
   <target name="executeGiveChange" depends="compile" description="A simple educational program for computing change.">
     <echo message="now executing GiveChange"/>
-    <java classname="com.becker.apps.misc.givechange.GiveChange" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+    <java classname="com.becker.apps.misc.givechange.GiveChange" classpath="${classesDir}"
+          fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
 
   <target name="executeStringUtil" depends="compile">
     <echo message="now executing StringUtil test"/>
-    <java classname="com.becker.apps.misc.string.StringUtil" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+    <java classname="com.becker.apps.misc.string.StringUtil" classpath="${classesDir}"
+          fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
 
   <target name="executeSimpleEditor" depends="compile" description="A simple editor.">
     <echo message="now executing simple editor"/>
-    <java classname="com.becker.apps.misc.sedit.SimpleEditor" classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar" fork="true" jvm="${java_compiler}" maxmemory="128M">
+    <java classname="com.becker.apps.misc.sedit.SimpleEditor"
+          classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar"
+          fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
 
   <target name="executeNativeRender" depends="compile" description="A simple test of the native graphics renderer.">
       <echo message="now executing NativeRender"/>
-      <java classname="com.becker.apps.misc.nativeRender.NativeRenderTest" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+      <java classname="com.becker.apps.misc.nativeRender.NativeRenderTest" classpath="${classesDir}"
+            fork="true" jvm="${java_compiler}" maxmemory="128M">
           <jvmarg value="${assertionsFlag}"/>
       </java>
   </target>
 
-  <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle screenSaver">
+  <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle">
      <echo message="now executing red puzzle"/>
-     <java classname="com.becker.puzzle.redpuzzle.RedPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+     <java classname="com.becker.puzzle.redpuzzle.ui.RedPuzzle" classpath="${classesDir}"
+           fork="true" jvm="${java_compiler}" maxmemory="128M">
+         <jvmarg value="${assertionsFlag}"/>
+     </java>
+  </target>
+
+  <target name="executeTantrixPuzzle" depends="compile" description=" run the Tantrix Puzzle">
+     <echo message="now executing tantrix puzzle"/>
+     <java classname="com.becker.puzzle.tantrix.ui.TantrixPuzzle" classpath="${classesDir}"
+           fork="true" jvm="${java_compiler}" maxmemory="128M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
   </target>
 
   <target name="executeSudoku" depends="compile" description=" run the Sudoku solver">
      <echo message="now executing Sudoku"/>
-     <java classname="com.becker.puzzle.sudoku.ui.SudokuPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+     <java classname="com.becker.puzzle.sudoku.ui.SudokuPuzzle" classpath="${classesDir}"
+           fork="true" jvm="${java_compiler}" maxmemory="256M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
   </target>
 
-  <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle screenSaver">
+  <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle">
      <echo message="now executing Hi-Q"/>
-     <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="400M">
+     <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}"
+           fork="true" jvm="${java_compiler}" maxmemory="512M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
   </target>
@@ -487,7 +503,8 @@
 
   <!-- call this to run java programs  -->
   <target name="executeProgram" depends="compile">
-    <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
+    <java classname="${className}" classpath="${classesDir};${libPath}"
+          fork="true" jvm="${java_compiler}">
         <sysproperty key="DEBUG" value="true"/>
         <arg line="${args}"/>
         <!-- use this if running Yourkit profiler -->
@@ -503,7 +520,8 @@
 
   <!-- call this to run java programs with two arguments -->
   <target name="executeProgram2" depends="compile">
-    <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
+    <java classname="${className}" classpath="${classesDir};${libPath}"
+          fork="true" jvm="${java_compiler}">
         <sysproperty key="DEBUG" value="true"/>
         <arg value="${arg1}"/>
         <arg value="${arg2}"/>

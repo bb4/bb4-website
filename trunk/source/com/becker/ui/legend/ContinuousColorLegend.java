@@ -325,7 +325,7 @@ public class ContinuousColorLegend extends JPanel {
             else if (e.getClickCount() > 1) {
                 Color oldColor = cmap_.getColorForValue(getValueForPosition(xpos));
                 Color newControlColor =
-                            JColorChooser.showDialog(this, "New Control Point Color", oldColor);
+                            JColorChooser.showDialog(this, "New Control Point PathColor", oldColor);
                 if (newControlColor != null) {
                     if (index == -1) {
                         // add a new control point and marker here if no point is double clicked on.

@@ -119,6 +119,6 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
     public static void main( String[] args )
     {
         ColorMixer simulator = new ColorMixer();
-        GUIUtil.showApplet(simulator, "Color Mixer");
+        GUIUtil.showApplet(simulator, "PathColor Mixer");
     }
 }
