@@ -10,10 +10,10 @@ import com.becker.common.geometry.Location;
  */
 public class TantrixBoard {
 
-    static final int MAX_SIZE = 7;
+    static final int MAX_SIZE = 8;
+
     /** The number of Cells in the board is n^2 * n^2.   */
     protected int n_ = MAX_SIZE;
-
 
     private HexTile[][] tiles;
 
