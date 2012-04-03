@@ -170,6 +170,8 @@ public final class BettingDialog extends ActionDialog {
      */
     private static class PokerHandPanel extends JPanel {
         PokerHand hand_;
+        HandRenderer handRenderer = new HandRenderer();
+
 
         public PokerHandPanel(PokerHand hand) {
             hand_ = new PokerHand(hand.getCards());
@@ -179,8 +181,7 @@ public final class BettingDialog extends ActionDialog {
 
         @Override
         protected void paintComponent(Graphics g) {
-             PokerPlayerRenderer renderer = (PokerPlayerRenderer) PokerPlayerRenderer.getRenderer();
-             renderer.renderHand((Graphics2D)g, new Location(0, 2), hand_, 22);
+             handRenderer.render((Graphics2D) g, new Location(0, 2), hand_, 22);
         }
     }
 

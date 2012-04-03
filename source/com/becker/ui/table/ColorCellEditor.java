@@ -22,7 +22,7 @@ public class ColorCellEditor extends AbstractCellEditor {
     public Component getTableCellEditorComponent(JTable table, Object value,
                                                  boolean isSelected,
                                                  int row, int col) {
-        // we know the value is a Color
+        // we know the value is a PathColor
         Color color = (Color)value;
         Color selectedColor = JColorChooser.showDialog(table, title_, color );
         if (selectedColor == null)  {// then it was canceled.

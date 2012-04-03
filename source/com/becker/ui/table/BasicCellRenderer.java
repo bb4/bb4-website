@@ -16,11 +16,6 @@ public class BasicCellRenderer extends DefaultTableCellRenderer {
     
     public BasicCellRenderer() {}
 
-    /*
-    public BasicCellRenderer(Color backGroundColor) {
-        super();
-        this.setBackground(backGroundColor);
-    }*/
     /**
      * {@inheritDoc}
      */

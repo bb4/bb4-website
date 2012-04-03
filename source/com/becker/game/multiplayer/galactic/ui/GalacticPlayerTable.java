@@ -145,7 +145,7 @@ public class GalacticPlayerTable extends PlayerTable
             boolean isHuman = (Boolean) m.getValueAt(row, HUMAN_INDEX);
             char c = (Character) m.getValueAt(row, HOME_PLANET_INDEX);
             Planet p = Galaxy.getPlanet(c);
-            //Color color = (Color) m.getValueAt(row, COLOR_INDEX);
+            // Color color = (Color) m.getValueAt(row, COLOR_INDEX);
             // create a dummy player of the correct type and get the image icon.
             GalacticPlayer np =
                     GalacticPlayer.createGalacticPlayer("", p, Color.WHITE, isHuman);

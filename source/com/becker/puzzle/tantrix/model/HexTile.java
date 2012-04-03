@@ -12,12 +12,23 @@ public class HexTile {
 
     private byte tantrixNumber;
     private Rotation rotation;
-    private List<Color> edgeColors;
+    private List<PathColor> edgeColors;
+    private PathColor primaryColor;
+
+
+    /**
+     * Constructor without rotation.
+     */
+    public HexTile(byte tantrixNumber, PathColor primaryColor,
+                   List<PathColor> edgeColors) {
+        this(tantrixNumber, primaryColor, Rotation.ANGLE_0, edgeColors);
+    }
 
     /**
      * Constructor.
      */
-    public HexTile(byte tantrixNumber, Rotation rotation, List<Color> edgeColors) {
+    public HexTile(byte tantrixNumber, PathColor primaryColor,
+                   Rotation rotation, List<PathColor> edgeColors) {
         this.tantrixNumber = tantrixNumber;
         this.rotation = rotation;
         this.edgeColors = edgeColors;
@@ -33,9 +44,22 @@ public class HexTile {
         return rotation;
     }
 
+    public HexTile rotate() {
+        Rotation newRotation = Rotation.values()[rotation.ordinal() + 1];
+        return new HexTile(tantrixNumber, primaryColor, newRotation, edgeColors);
+    }
+
     /** @return the color of the tiles mani path */
-    public List<Color> getEdgeColors() {
+    public List<PathColor> getEdgeColors() {
         return edgeColors;
     }
 
+    public PathColor getEdgeColor(int index) {
+        return edgeColors.get(index);
+    }
+
+    /** The primary path color on the back of the tile */
+    public PathColor getPrimaryColor() {
+        return primaryColor;
+    }
 }

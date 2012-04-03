@@ -46,8 +46,7 @@ public abstract class GamePieceRenderer {
     /**
      * @return  the diameter of the piece on the board.
      */
-    protected int getPieceSize(int cellSize, GamePiece piece)
-    {
+    protected int getPieceSize(int cellSize, GamePiece piece) {
         int pieceSize = (int) (0.85f * cellSize);
         // make the piece a little smaller in debug mode
         if ( GameContext.getDebugMode() > 0 )

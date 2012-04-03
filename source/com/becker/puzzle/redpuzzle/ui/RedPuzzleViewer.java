@@ -1,8 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.redpuzzle;
+package com.becker.puzzle.redpuzzle.ui;
 
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.common.PuzzleViewer;
+import com.becker.puzzle.redpuzzle.model.Piece;
+import com.becker.puzzle.redpuzzle.model.PieceList;
 import com.becker.sound.MusicMaker;
 
 import java.awt.*;
@@ -15,8 +17,7 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece> 
-{
+final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece> {
    
     public static final int MAX_ANIM_SPEED = 100;
     public static final int INITIAL_ANIM_SPEED = 20; 

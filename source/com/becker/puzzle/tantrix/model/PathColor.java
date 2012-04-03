@@ -3,9 +3,11 @@ package com.becker.puzzle.tantrix.model;
 
 /**
  */
-public enum Color {
+public enum PathColor {
     RED,
     GREEN,
     BLUE,
     YELLOW
+
+    //public abstract Color getRGBColor();
 }

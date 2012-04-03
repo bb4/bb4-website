@@ -202,7 +202,7 @@ public final class EnvironmentRenderer {
     }
 
     /**
-     * Color the squares according to the pressure in that discrete region.
+     * PathColor the squares according to the pressure in that discrete region.
      */
     private void renderPressure(Graphics2D g) {
         Grid grid = env_.getGrid();

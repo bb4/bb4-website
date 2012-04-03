@@ -7,6 +7,8 @@ import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.common.solver.ConcurrentPuzzleSolver;
 import com.becker.puzzle.common.solver.PuzzleSolver;
 import com.becker.puzzle.common.solver.SequentialPuzzleSolver;
+import com.becker.puzzle.redpuzzle.model.Piece;
+import com.becker.puzzle.redpuzzle.model.PieceList;
 
 /**
  * Enum for type of solver to employ when solving the puzzle.

@@ -7,6 +7,9 @@ import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.puzzle.common.Refreshable;
+import com.becker.puzzle.redpuzzle.model.Piece;
+import com.becker.puzzle.redpuzzle.model.PieceList;
+import com.becker.puzzle.redpuzzle.model.PieceParameterArray;
 
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class GeneticSearchSolver extends RedPuzzleSolver
     @Override
     public List<Piece> solve()  {
         
-        ParameterArray initialGuess = new PieceParameterArray(pieces_);        
+        ParameterArray initialGuess = new PieceParameterArray(pieces_);
         solution_ = pieces_;
         long startTime = System.currentTimeMillis();
         

@@ -39,8 +39,7 @@ public class TrivialPlayerRenderer extends GamePieceRenderer
     private TrivialPlayerRenderer()
     {}
 
-    public static GamePieceRenderer getRenderer()
-    {
+    public static GamePieceRenderer getRenderer() {
         if (renderer_ == null) {
             renderer_ = new TrivialPlayerRenderer();
         }
@@ -48,8 +47,7 @@ public class TrivialPlayerRenderer extends GamePieceRenderer
     }
 
     @Override
-    protected int getPieceSize(int cellSize, GamePiece piece)
-    {
+    protected int getPieceSize(int cellSize, GamePiece piece) {
         int pieceSize = (int) (0.85f * cellSize * 2);
         return pieceSize;
     }

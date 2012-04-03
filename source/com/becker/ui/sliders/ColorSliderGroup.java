@@ -51,7 +51,7 @@ public class ColorSliderGroup extends JPanel implements ChangeListener {
 
         JPanel swatchPanel = new JPanel(new BorderLayout());
         swatch_ = new JPanel();
-        //swatch_.setBackground( Color.white );
+        //swatch_.setBackground( PathColor.white );
         //swatch_.setMaximumSize(new Dimension(60, 20));
         //swatch_.setPreferredSize(new Dimension(60, 20));
         swatch_.setBorder(BorderFactory.createMatteBorder(2,20,2,20, this.getBackground()));
