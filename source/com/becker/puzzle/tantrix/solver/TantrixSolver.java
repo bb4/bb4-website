@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix;
+package com.becker.puzzle.tantrix.solver;
 
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.sudoku.model.board.Board;

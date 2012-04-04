@@ -1,12 +1,10 @@
-// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix;
+/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+package com.becker.puzzle.redpuzzle.solver;
 
 import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.common.solver.PuzzleSolver;
 import com.becker.puzzle.redpuzzle.model.Piece;
 import com.becker.puzzle.redpuzzle.model.PieceList;
-import com.becker.puzzle.tantrix.model.HexTile;
-import com.becker.puzzle.tantrix.model.HexTileList;
 
 import java.util.List;
 
@@ -18,39 +16,39 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public abstract class TantricPuzzleSolver implements PuzzleSolver<HexTileList, HexTile> {
+public abstract class RedPuzzleSolver implements PuzzleSolver<PieceList, Piece> {
 
     /** the unsorted pieces that we draw from and place in the solvedPieces list. */
-    protected HexTileList pieces_;
+    protected PieceList pieces_;
 
     /** the pieces we have correctly fitted so far. */
-    protected HexTileList solution_;
-
+    protected PieceList solution_;
+    
     /** some measure of the number of iterations the solver needs to solve the puzzle. */
     protected int numTries_ = 0;
-
-    protected Refreshable<HexTileList, HexTile> puzzlePanel_;
+    
+    protected Refreshable<PieceList, Piece> puzzlePanel_;
 
     /**
      * Constructor
      * @param pieces the unsorted pieces.
      */
-    public TantricPuzzleSolver(HexTileList pieces) {
+    public RedPuzzleSolver(PieceList pieces) {
         pieces_ = pieces;
-        solution_ = new HexTileList();
+        solution_ = new PieceList();
     }
 
     /**
      * Derived classes must provide the implmentation fo rthis abstract method.
      * @return true if a solution is found.
      */
-    public abstract List<HexTile> solve();
+    public abstract List<Piece> solve();
 
     /**
      * the list of successfully placed pieces so far.
      * @return
      */
-    public HexTileList getSolvedPieces() {
+    public PieceList getSolvedPieces() {
         return solution_;
     }
 

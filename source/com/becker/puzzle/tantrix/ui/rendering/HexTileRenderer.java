@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.ui;
+package com.becker.puzzle.tantrix.ui.rendering;
 
 import com.becker.common.format.FormatUtil;
 import com.becker.common.geometry.Location;
@@ -7,8 +7,6 @@ import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.ui.util.GUIUtil;
 
 import java.awt.*;
-import static com.becker.puzzle.tantrix.ui.TantrixBoardRenderer.MARGIN;
-import static com.becker.puzzle.tantrix.ui.HexUtil.*;
 
 /**
  * Renders a single tantrix tile.
@@ -18,7 +16,6 @@ import static com.becker.puzzle.tantrix.ui.HexUtil.*;
 public class HexTileRenderer {
 
     private static final Font TILE_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 9 );
-
     private static final Stroke TILE_STROKE = new BasicStroke(1);
     private static final Color TILE_BORDER_COLOR = new Color(70, 70, 70);
     private static final Color TILE_BG_COLOR = new Color(200, 200, 200);
@@ -39,8 +36,8 @@ public class HexTileRenderer {
     public void render(Graphics2D g2, Location location, HexTile tile, double radius) {
 
         boolean isOddRow = location.getRow() % 2 == 1;
-        double x = MARGIN + ((location.getCol() - (isOddRow ? -0.75 : -0.25)) * 2 * radius * ROOT3D2);
-        double y = MARGIN + ((location.getRow() + 1.6) * 3.0 * radius / 2.0);
+        double x = TantrixBoardRenderer.MARGIN + ((location.getCol() - (isOddRow ? -0.75 : -0.25)) * 2 * radius * HexUtil.ROOT3D2);
+        double y = TantrixBoardRenderer.MARGIN + ((location.getRow() + 0.6) * 3.0 * radius / 2.0);
         Point point = new Point((int)x, (int)y);
         point.setLocation(x, y);
         drawHexagon(g2, point, radius);
@@ -61,7 +58,7 @@ public class HexTileRenderer {
         int[] ypoints = new int[numPoints];
 
         for (int i = 0; i <= 6; i++) {
-            double angStart = rad(30 + 60 * i);
+            double angStart = HexUtil.rad(30 + 60 * i);
             xpoints[i] = (int)(point.getX() + radius * Math.cos(angStart));
             ypoints[i] = (int)(point.getY() + radius * Math.sin(angStart));
         }

@@ -6,7 +6,7 @@ import com.becker.puzzle.common.PuzzleApplet;
 import com.becker.puzzle.common.PuzzleController;
 import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
-import com.becker.puzzle.redpuzzle.Algorithm;
+import com.becker.puzzle.redpuzzle.solver.Algorithm;
 import com.becker.puzzle.redpuzzle.RedPuzzleController;
 import com.becker.puzzle.redpuzzle.model.Piece;
 import com.becker.puzzle.redpuzzle.model.PieceList;

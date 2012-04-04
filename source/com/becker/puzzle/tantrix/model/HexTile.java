@@ -15,7 +15,6 @@ public class HexTile {
     private List<PathColor> edgeColors;
     private PathColor primaryColor;
 
-
     /**
      * Constructor without rotation.
      */
@@ -30,8 +29,10 @@ public class HexTile {
     public HexTile(byte tantrixNumber, PathColor primaryColor,
                    Rotation rotation, List<PathColor> edgeColors) {
         this.tantrixNumber = tantrixNumber;
+        this.primaryColor = primaryColor;
         this.rotation = rotation;
         this.edgeColors = edgeColors;
+
     }
 
     /** @return the number on the back of the tile */

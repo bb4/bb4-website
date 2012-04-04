@@ -58,7 +58,8 @@ public class SierpinskiRenderer {
         g2.setBackground(BACKGROUND_COLOR);
         g2.clearRect(0,0, width, height);
         // this smooths the lines when we draw.
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                            RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
     /**

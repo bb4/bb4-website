@@ -2,12 +2,12 @@
 package com.becker.puzzle.tantrix.ui;
 
 import com.becker.puzzle.common.PuzzleViewer;
-import com.becker.puzzle.tantrix.TantrixSolver;
+import com.becker.puzzle.tantrix.solver.TantrixSolver;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.HexTileList;
+import com.becker.puzzle.tantrix.ui.rendering.TantrixBoardRenderer;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
