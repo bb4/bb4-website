@@ -4,7 +4,6 @@ package com.becker.puzzle.common.solver;
 import java.util.LinkedList;
 import java.util.List;
 
-//import net.jcip.annotations.*;
 
 /**
  * PuzzleNode

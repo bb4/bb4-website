@@ -2,8 +2,7 @@
 package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
-
-import java.util.List;
+import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
 
 /**
  * Represents the positioning of a tantrix tile on the board.
@@ -39,8 +38,10 @@ public class TilePlacement {
         return tile;
     }
 
-    public boolean hasTile() {
-        return tile != null;
+    public PathColor getPathColor(byte i) {
+        int index = (i - rotation.ordinal()) % HEX_SIDES;
+        index = (index < 0) ? index + HEX_SIDES : index;
+        return tile.getEdgeColor(index);
     }
 
     public Location getLocation() {
@@ -65,5 +66,9 @@ public class TilePlacement {
     public TilePlacement rotate() {
         Rotation newRotation = Rotation.values()[rotation.ordinal() + 1];
         return new TilePlacement(tile, location, newRotation);
+    }
+
+    public boolean isOnOddRow() {
+        return location.getRow() % 2 == 1;
     }
 }

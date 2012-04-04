@@ -3,34 +3,46 @@ package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
 
+
 /**
- *  The TantrixBoard describes the physical layout of the puzzle.
+ *  Immutable representation of the current stat of the tantrix puzzle.
  *
  *  @author Barry Becker
  */
 public class TantrixBoard {
 
-    static final int MAX_SIZE = 9;
+    static final byte MAX_SIZE = 9;
+    static final byte HEX_SIDES = 6;
+    //private static final TilePlacement EMPTY = new TilePlacement(new Location(-1, -1));
 
     /** The number of Cells in the board is n^2 * n^2.   */
     protected int n_ = MAX_SIZE;
 
     private TilePlacement[][] tiles;
 
-    /**
-     * Constructor
-     */
-    public TantrixBoard(int size) {
-        assert(size > 1 && size < MAX_SIZE);
-        n_ = size;
-        reset();
-    }
+    /** color of the loop path */
+    private PathColor primaryColor;
+
+    /** the last tile placed */
+    private TilePlacement lastTile;
+
+    /** tiles that have not yet been placed on the board */
+    private HexTileList unplacedTiles;
+
+    /** number of tiles in the puzzle */
+    private byte numTiles;
 
     /**
-     * copy constructor
+     * Copy constructor
      */
     public TantrixBoard(TantrixBoard b) {
+
         this(b.getEdgeLength());
+        this.primaryColor = b.primaryColor;
+        this.lastTile = b.lastTile;
+        this.unplacedTiles = (HexTileList) b.unplacedTiles.clone();
+        this.numTiles = b.numTiles;
+
         for (int i=0; i < n_; i++) {
            for (int j=0; j < n_; j++) {
                setTilePlacement(b.getTilePlacement(i, j));
@@ -38,6 +50,14 @@ public class TantrixBoard {
         }
     }
 
+    /**
+     * Constructor that creates a new board instance when placing a move.
+     * TODO - if the new tile to be placed is in the edge row of the grid
+     * we need to increase the size of the grid by one in that direction
+     * also only render the inside rows.
+     * @param board
+     * @param placement
+     */
     public TantrixBoard(TantrixBoard board, TilePlacement placement) {
         this(board);
         this.setTilePlacement(placement);
@@ -47,30 +67,137 @@ public class TantrixBoard {
 
         n_ = (int)Math.ceil(Math.sqrt(tileList.size())) + 1;
         reset();
+        numTiles = (byte) tileList.size();
+        HexTile tile = tileList.remove(0);
+        unplacedTiles = (HexTileList) tileList.clone();
+
+        lastTile = new TilePlacement(tile, new Location(n_/2, n_/2), Rotation.ANGLE_0);
+
+        this.setTilePlacement(lastTile);
+        /* // this shows all the tiles
         for (byte i = 0; i < tileList.size(); i++) {
             byte row = (byte) (i / n_);
             byte col = (byte) (i % n_);
-           tiles[row][col] = new TilePlacement(tileList.get(i), new Location(row, col), Rotation.ANGLE_0);
-        }
+            tiles[row][col] =
+                    new TilePlacement(tileList.get(i), new Location(row, col), Rotation.ANGLE_0);
+        } */
     }
 
-    public boolean isSolved() {
-        return false;
+    /**
+     * Private Constructor
+     */
+    private TantrixBoard(int size) {
+        assert(size > 1 && size < MAX_SIZE);
+        n_ = size;
+        reset();
     }
+
+    /**
+     * The puzzle is solved if there is a loop of the primary color
+     * and all secondary colors match. Since a tile can only be placed in
+     * a valid position, we only need to check if there is a complete loop.
+     * @return true if solved.
+     */
+    public boolean isSolved() {
+        if (!unplacedTiles.isEmpty()) {
+            return false;
+        }
+
+        int numVisited = 0;
+        TilePlacement currentTile = lastTile;
+        TilePlacement previousTile;
+
+        while (currentTile != null && currentTile != lastTile) {
+
+            previousTile = currentTile;
+            currentTile = findNeighborTile(currentTile, previousTile);
+            numVisited++;
+        }
+
+        return (numVisited == numTiles && currentTile == lastTile);
+    }
+
+    /**
+     * Loop through the edges until we find the primary color.
+     * If it does not direct us back to where we came from then go that way.
+     * @param currentTile
+     * @return the next tile in the path if there is one. Otherwise null
+     */
+    private TilePlacement findNeighborTile(TilePlacement currentTile, TilePlacement previousTile) {
+
+        for (byte i=0; i<HEX_SIDES; i++) {
+            PathColor color = currentTile.getTile().getEdgeColor(i);
+            if (color == primaryColor) {
+                TilePlacement nbr = getNeighbor(currentTile, i);
+                if (nbr != previousTile) {
+                    return nbr;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param currentTile where we are now
+     * @param direction side to navigate to to find the neighbor. 0 is to the right.
+     * @return the indicated neighbor of the specified tile.
+     */
+    TilePlacement getNeighbor(TilePlacement currentTile, byte direction) {
+
+        if (currentTile == null) return null;
+        return getTilePlacement(getNeighborLocation(currentTile, direction));
+    }
+
+    /**
+     * @param currentTile where we are now
+     * @param direction side to navigate to to find the neighbor. 0 is to the right.
+     * @return the indicated neighbor of the specified tile.
+     */
+    Location getNeighborLocation(TilePlacement currentTile, byte direction) {
+
+        assert (currentTile != null);
+        int offset = currentTile.isOnOddRow()? -1 : 0;
+        Location loc = currentTile.getLocation();
+        Location nbrLoc = null;
+
+        switch (direction) {
+            case 0 : nbrLoc = new Location(loc.getRow(), loc.getCol() + 1); break;
+            case 1 : nbrLoc = new Location(loc.getRow() - 1, loc.getCol() + offset + 1); break;
+            case 2 : nbrLoc = new Location(loc.getRow() - 1, loc.getCol() + offset); break;
+            case 3 : nbrLoc = new Location(loc.getRow(), loc.getCol() - 1); break;
+            case 4 : nbrLoc = new Location(loc.getRow() + 1, loc.getCol() + offset); break;
+            case 5 : nbrLoc = new Location(loc.getRow() + 1, loc.getCol() + offset +1); break;
+            default : assert false;
+        }
+        return nbrLoc;
+    }
+
 
     public TantrixBoard placeTile(TilePlacement placement) {
         return new TantrixBoard(this, placement);
+    }
+
+    public HexTileList getUnplacedTiles() {
+        return unplacedTiles;
+    }
+
+    public TilePlacement getLastTile() {
+        return lastTile;
+    }
+
+    public PathColor getPrimaryColor() {
+        return primaryColor;
     }
 
     /**
      * return to original state before attempting solution.
      * Non original values become 0.
      */
-    public void reset() {
+    private void reset() {
         tiles = new TilePlacement[n_][n_];
         for (int i=0; i<n_; i++)  {
            for (int j=0; j<n_; j++) {
-               tiles[i][j] = new TilePlacement(new Location(i, j));
+               tiles[i][j] = null; //new TilePlacement(new Location(i, j));
            }
         }
     }
@@ -89,19 +216,14 @@ public class TantrixBoard {
         return tiles[row][col];
     }
 
-    public void setTilePlacement(TilePlacement tile) {
-        Location loc = tile.getLocation();
-        tiles[loc.getRow()][loc.getCol()] = tile;
-    }
-
-    public final HexTile getTile(Location location) {
-        return tiles[location.getRow()][location.getCol()].getTile();
-    }
-
-    public final TilePlacement getTilePlacement(Location location) {
+    public TilePlacement getTilePlacement(Location location) {
         return tiles[location.getRow()][location.getCol()];
     }
 
+    private void setTilePlacement(TilePlacement tile) {
+        Location loc = tile.getLocation();
+        tiles[loc.getRow()][loc.getCol()] = tile;
+    }
 
     public String toString() {
         StringBuilder bldr = new StringBuilder("\n");
