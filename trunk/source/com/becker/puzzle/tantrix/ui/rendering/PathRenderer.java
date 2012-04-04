@@ -3,6 +3,9 @@ package com.becker.puzzle.tantrix.ui.rendering;
 
 import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.PathColor;
+import com.becker.puzzle.tantrix.model.Rotation;
+import com.becker.puzzle.tantrix.model.TilePlacement;
+
 import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.*;
 
 import java.awt.*;
@@ -29,11 +32,14 @@ public class PathRenderer {
     /**
      * Draw one of the tile paths which takes one of three forms.
      */
-    public void drawPath(Graphics2D g2, int pathNumber, HexTile tile, Point position, double size) {
+    public void drawPath(Graphics2D g2, int pathNumber, TilePlacement tilePlacement,
+                         Point position, double size) {
 
+        HexTile tile = tilePlacement.getTile();
         int pathStartIndex = getPathStartIndex(tile, pathNumber);
 
         int i = pathStartIndex + 1;
+
         PathColor pathColor = tile.getEdgeColor(pathStartIndex);
         while (pathColor != tile.getEdgeColor(i++)) {
             assert(i<6): "Should never exceed 6";
@@ -47,7 +53,7 @@ public class PathRenderer {
         //        + " pind=" + pathStartIndex + ", " + pathEndIndex
         //        + " color=" + tile.getEdgeColor(pathStartIndex));
         // account for the rotation.
-        pathStartIndex += tile.getRotation().ordinal();
+        pathStartIndex += tilePlacement.getRotation().ordinal();
 
         switch (diff) {
             case 1: drawTightCurvedPath(g2, position, pathStartIndex, color, size); break;
@@ -73,7 +79,7 @@ public class PathRenderer {
 
     private void drawTightCurvedPath(Graphics2D g2, Point position, int firstIndex,
                                      Color color, double radius) {
-        int startAngle = firstIndex * 60 + 60;;
+        int startAngle = firstIndex * 60 + 60;
         int angle = 120;
         double rstartAng = rad(startAngle-30);
         Point center = new Point((int)(position.getX() + radius * Math.cos(rstartAng)),

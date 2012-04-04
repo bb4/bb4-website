@@ -2,12 +2,9 @@
 package com.becker.puzzle.tantrix.ui;
 
 import com.becker.puzzle.common.*;
-import com.becker.puzzle.tantrix.solver.Algorithm;
+import com.becker.puzzle.tantrix.Algorithm;
 import com.becker.puzzle.tantrix.TantrixController;
-import com.becker.puzzle.tantrix.model.TantrixBoard;
-import com.becker.puzzle.tantrix.model.HexTile;
-import com.becker.puzzle.tantrix.model.HexTileList;
-import com.becker.puzzle.tantrix.model.HexTiles;
+import com.becker.puzzle.tantrix.model.*;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
@@ -17,7 +14,7 @@ import javax.swing.*;
  *
  * @author Barry becker
  */
-public final class TantrixPuzzle extends PuzzleApplet<HexTileList, HexTile> {
+public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacement> {
 
     /**
      * Construct the application.
@@ -25,19 +22,19 @@ public final class TantrixPuzzle extends PuzzleApplet<HexTileList, HexTile> {
     public TantrixPuzzle() {}
 
     @Override
-    protected PuzzleViewer<HexTileList, HexTile> createViewer() {
+    protected PuzzleViewer<TantrixBoard, TilePlacement> createViewer() {
 
         TantrixBoard board = new TantrixBoard(new HexTiles());
         return new TantrixPanel(board);
     }
 
     @Override
-    protected PuzzleController<HexTileList, HexTile> createController(Refreshable<HexTileList, HexTile> viewer) {
+    protected PuzzleController<TantrixBoard, TilePlacement> createController(Refreshable<TantrixBoard, TilePlacement> viewer) {
         return new TantrixController(viewer);
     }
     
     @Override
-    protected AlgorithmEnum<HexTileList, HexTile>[] getAlgorithmValues() {
+    protected AlgorithmEnum<TantrixBoard, TilePlacement>[] getAlgorithmValues() {
         return Algorithm.values();
     }
     

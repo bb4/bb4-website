@@ -2,10 +2,9 @@
 package com.becker.puzzle.tantrix.ui;
 
 import com.becker.puzzle.common.PuzzleViewer;
-import com.becker.puzzle.tantrix.solver.TantrixSolver;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
-import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.HexTileList;
+import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.ui.rendering.TantrixBoardRenderer;
 
 import java.awt.*;
@@ -16,7 +15,7 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public final class TantrixPanel extends PuzzleViewer<HexTileList, HexTile> {
+public final class TantrixPanel extends PuzzleViewer<TantrixBoard, TilePlacement> {
 
     private TantrixBoardRenderer renderer_;
 
@@ -33,11 +32,7 @@ public final class TantrixPanel extends PuzzleViewer<HexTileList, HexTile> {
 
 
     private TantrixBoard getSolvedPuzzle()  {
-        /*
-        TantrixSolver solver = new TantrixSolver();
-        TantrixBoard boardCopy = new TantrixBoard(getBoard());
-        solver.solvePuzzle(boardCopy);
-        return boardCopy;    */
+
         return renderer_.getBoard();
     }
 
@@ -48,11 +43,6 @@ public final class TantrixPanel extends PuzzleViewer<HexTileList, HexTile> {
     public void reset(HexTileList initialTiles) {
         renderer_.setBoard(new TantrixBoard(initialTiles));
         repaint();
-    }
-
-    public void startSolving(TantrixSolver solver) {
-        //boolean solved = solver.solvePuzzle(getBoard(), this);
-        //showMessage(solved);
     }
 
 

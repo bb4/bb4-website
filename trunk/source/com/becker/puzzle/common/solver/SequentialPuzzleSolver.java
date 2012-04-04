@@ -16,6 +16,7 @@ import java.util.Set;
  * @author Barry Becker
  */
 public class SequentialPuzzleSolver<P, M> implements PuzzleSolver<P, M> {
+
     private final PuzzleController<P, M> puzzle;
     private final Set<P> seen = new HashSet<P>();
     private final Refreshable<P, M> ui;

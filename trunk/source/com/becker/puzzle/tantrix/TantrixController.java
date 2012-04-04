@@ -3,10 +3,7 @@ package com.becker.puzzle.tantrix;
 
 import com.becker.puzzle.common.AbstractPuzzleController;
 import com.becker.puzzle.common.Refreshable;
-import com.becker.puzzle.tantrix.model.HexTile;
-import com.becker.puzzle.tantrix.model.HexTileList;
-import com.becker.puzzle.tantrix.model.HexTiles;
-import com.becker.puzzle.tantrix.solver.Algorithm;
+import com.becker.puzzle.tantrix.model.*;
 
 import java.util.List;
 
@@ -22,29 +19,29 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class TantrixController extends AbstractPuzzleController<HexTileList, HexTile> {
+public class TantrixController extends AbstractPuzzleController<TantrixBoard, TilePlacement> {
 
     /**
-     * Creates a new instance of RedPuzzleController
+     * Creates a new instance of \ the Controller
      */
-    public TantrixController(Refreshable<HexTileList, HexTile> ui) {
+    public TantrixController(Refreshable<TantrixBoard, TilePlacement> ui) {
         super(ui);
-        algorithm_ = Algorithm.BRUTE_FORCE_ORIGINAL;
+        algorithm_ = Algorithm.SEQUENTIAL;
     }
  
-    public HexTileList initialPosition() {
-        return new HexTiles();
+    public TantrixBoard initialPosition() {
+        return new TantrixBoard(new HexTileList());
     }
 
-    public boolean isGoal(HexTileList position) {
+    public boolean isGoal(TantrixBoard position) {
         return false;
     }
 
-    public HexTileList legalMoves(HexTileList position) {
+    public List<TilePlacement> legalMoves(TantrixBoard position) {
         return null;
     }
 
-    public HexTileList move(HexTileList position, HexTile move) {
+    public TantrixBoard move(TantrixBoard position, TilePlacement move) {
         return null;
     }
 }

@@ -22,7 +22,7 @@ import com.becker.ui.util.GUIUtil;
  * to the same board positions.
  * There are actually only 23.4 million unique board positions
  * see http://www.durangobill.com/Peg33.html for analysis.
- *    A brute force solution will run for years on todays fastest
+ *    A brute force solution will run for years on today's fastest
  * computers.
  * See http://homepage.sunrise.ch/homepage/pglaus/Solitaire/solitaire.htm
  * for a solution that uses a genetic algorithm to find a solution quickly.

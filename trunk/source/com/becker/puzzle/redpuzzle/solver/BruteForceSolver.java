@@ -14,9 +14,10 @@ import java.util.List;
  *
  * Solves the puzzle in  10 seconds on Core2Duo sequentially.
  *
- * @author Barry Becker Date: Aug 6, 2006
+ * @author Barry Becker
  */
-public class BruteForceSolver<P, M> extends RedPuzzleSolver {
+public class BruteForceSolver
+       extends RedPuzzleSolver<PieceList, Piece> {
 
 
     public BruteForceSolver(PieceList pieces, Refreshable<PieceList, Piece> puzzlePanel) {

@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class GeneticSearchSolver extends RedPuzzleSolver
+public class GeneticSearchSolver extends RedPuzzleSolver<PieceList, Piece>
                                  implements Optimizee, OptimizationListener {
 
     public static final int SOLVED_THRESH = 1000;
