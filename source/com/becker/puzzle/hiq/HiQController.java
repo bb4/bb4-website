@@ -11,13 +11,11 @@ import java.util.Set;
  * HiQ Puzzle Controller.
  *See puzzle.common for puzzle framework classes.
  *
- * Created on July 28, 2007
  * @author Barry Becker
  */
 public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {    
 
     /**
-     * 
      * @param ui shows the current state on the screen.
      */
     public HiQController(Refreshable<PegBoard, PegMove> ui) {
@@ -43,9 +41,9 @@ public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {
     }
     
     /**
-     *Check all board symmetries to be sure it has or has not been seen.
-     *If it was never seen before add it.
-     *Must be synchronized because some solvers use concurrency.
+     * Check all board symmetries to be sure it has or has not been seen.
+     * If it was never seen before add it.
+     * Must be synchronized because some solvers use concurrency.
      */
     @Override
     public synchronized boolean alreadySeen(PegBoard position, Set<PegBoard> seen) {

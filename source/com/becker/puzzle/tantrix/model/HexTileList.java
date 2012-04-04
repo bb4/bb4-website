@@ -14,8 +14,6 @@ public class HexTileList extends ArrayList<HexTile> {
 
    public HexTileList()  {}
 
-
-
 }
 
   

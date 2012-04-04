@@ -86,7 +86,7 @@ public final class Piece
     }
 
     /**
-     *  This rotates the piece the specified number of 90 degree inrements.
+     *  This rotates the piece the specified number of 90 degree increments.
      */
     public Piece rotate(int num) {
         Direction[] values = Direction.values();

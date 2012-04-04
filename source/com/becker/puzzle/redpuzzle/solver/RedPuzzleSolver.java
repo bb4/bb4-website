@@ -16,7 +16,8 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public abstract class RedPuzzleSolver implements PuzzleSolver<PieceList, Piece> {
+public abstract class RedPuzzleSolver<P, K>
+                implements PuzzleSolver<PieceList, Piece> {
 
     /** the unsorted pieces that we draw from and place in the solvedPieces list. */
     protected PieceList pieces_;
@@ -39,7 +40,7 @@ public abstract class RedPuzzleSolver implements PuzzleSolver<PieceList, Piece> 
     }
 
     /**
-     * Derived classes must provide the implmentation fo rthis abstract method.
+     * Derived classes must provide the implementation for this abstract method.
      * @return true if a solution is found.
      */
     public abstract List<Piece> solve();

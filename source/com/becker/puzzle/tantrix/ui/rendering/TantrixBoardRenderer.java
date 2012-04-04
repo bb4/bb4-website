@@ -4,6 +4,8 @@ package com.becker.puzzle.tantrix.ui.rendering;
 import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
+import com.becker.puzzle.tantrix.model.TilePlacement;
+
 import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.*;
 
 import java.awt.*;
@@ -62,10 +64,8 @@ public class TantrixBoardRenderer {
         for ( int i = 0; i < len; i++ ) {
             for ( int j = 0; j < len; j++ ) {
 
-                HexTile tile = board_.getTile(i, j);
-                if (tile != null) {
-                    tileRenderer.render(g2, new Location(i, j), tile, hexRadius);
-                }
+                TilePlacement placement = board_.getTilePlacement(new Location(i, j));
+                tileRenderer.render(g2, placement, hexRadius);
             }
         }
     }

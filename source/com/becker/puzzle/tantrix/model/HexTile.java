@@ -11,26 +11,15 @@ import java.util.List;
 public class HexTile {
 
     private byte tantrixNumber;
-    private Rotation rotation;
     private List<PathColor> edgeColors;
     private PathColor primaryColor;
 
     /**
-     * Constructor without rotation.
-     */
-    public HexTile(byte tantrixNumber, PathColor primaryColor,
-                   List<PathColor> edgeColors) {
-        this(tantrixNumber, primaryColor, Rotation.ANGLE_0, edgeColors);
-    }
-
-    /**
      * Constructor.
      */
-    public HexTile(byte tantrixNumber, PathColor primaryColor,
-                   Rotation rotation, List<PathColor> edgeColors) {
+    public HexTile(byte tantrixNumber, PathColor primaryColor, List<PathColor> edgeColors) {
         this.tantrixNumber = tantrixNumber;
         this.primaryColor = primaryColor;
-        this.rotation = rotation;
         this.edgeColors = edgeColors;
 
     }
@@ -38,16 +27,6 @@ public class HexTile {
     /** @return the number on the back of the tile */
     public byte getTantrixNumber() {
         return tantrixNumber;
-    }
-
-    /** @rturn the amount that the tile is rotated. */
-    public Rotation getRotation() {
-        return rotation;
-    }
-
-    public HexTile rotate() {
-        Rotation newRotation = Rotation.values()[rotation.ordinal() + 1];
-        return new HexTile(tantrixNumber, primaryColor, newRotation, edgeColors);
     }
 
     /** @return the color of the tiles mani path */

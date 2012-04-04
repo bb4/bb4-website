@@ -46,7 +46,7 @@ public enum Algorithm implements AlgorithmEnum<PieceList, Piece> {
         PieceList pieces =  PieceList.getInitialPuzzlePieces();
         switch (this) {
             case BRUTE_FORCE_ORIGINAL :
-                return new BruteForceSolver<PieceList, Piece>(pieces, ui);
+                return new BruteForceSolver(pieces, ui);
             case BRUTE_FORCE_SEQUENTIAL :
                 return new SequentialPuzzleSolver<PieceList, Piece>(controller, ui);
             case BRUTE_FORCE_CONCURRENT :

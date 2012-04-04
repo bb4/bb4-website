@@ -4,6 +4,8 @@ package com.becker.puzzle.tantrix.ui.rendering;
 import com.becker.common.format.FormatUtil;
 import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.HexTile;
+import com.becker.puzzle.tantrix.model.Rotation;
+import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.ui.util.GUIUtil;
 
 import java.awt.*;
@@ -33,21 +35,26 @@ public class HexTileRenderer {
     /**
      * Draw the poker hand (the cards are all face up or all face down)
      */
-    public void render(Graphics2D g2, Location location, HexTile tile, double radius) {
+    public void render(Graphics2D g2, TilePlacement tilePlacement, double radius) {
 
+        if (!tilePlacement.hasTile()) return;
+        Location location = tilePlacement.getLocation();
         boolean isOddRow = location.getRow() % 2 == 1;
-        double x = TantrixBoardRenderer.MARGIN + ((location.getCol() - (isOddRow ? -0.75 : -0.25)) * 2 * radius * HexUtil.ROOT3D2);
-        double y = TantrixBoardRenderer.MARGIN + ((location.getRow() + 0.6) * 3.0 * radius / 2.0);
+        double x = TantrixBoardRenderer.MARGIN
+                + ((location.getCol() - (isOddRow ? -0.75 : -0.25)) * 2 * radius * HexUtil.ROOT3D2);
+        double y = TantrixBoardRenderer.MARGIN
+                + ((location.getRow() + 0.6) * 3.0 * radius / 2.0);
+
         Point point = new Point((int)x, (int)y);
         point.setLocation(x, y);
         drawHexagon(g2, point, radius);
-        pathRenderer.drawPath(g2, 0, tile, point, radius);
-        pathRenderer.drawPath(g2, 1, tile, point, radius);
-        pathRenderer.drawPath(g2, 2, tile, point, radius);
+        pathRenderer.drawPath(g2, 0, tilePlacement, point, radius);
+        pathRenderer.drawPath(g2, 1, tilePlacement, point, radius);
+        pathRenderer.drawPath(g2, 2, tilePlacement, point, radius);
 
         g2.setColor(Color.BLACK);
         g2.setFont(TILE_FONT);
-        g2.drawString(FormatUtil.formatNumber(tile.getTantrixNumber()),
+        g2.drawString(FormatUtil.formatNumber(tilePlacement.getTile().getTantrixNumber()),
                       (int)(x + radius/2), (int)(y + radius/2));
     }
 

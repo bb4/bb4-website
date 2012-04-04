@@ -326,7 +326,7 @@ public class PieceList {
     }
     
     /**
-     *@return as unmodifiable list so there can be no malicious modifcation of our immutable state.
+     *@return as unmodifiable list so there can be no malicious modification of our immutable state.
      */
     public List<Piece> getPieces() {
         return Collections.unmodifiableList(pieces_);
