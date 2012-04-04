@@ -9,11 +9,9 @@ import java.util.List;
 
 /**
  * The controller allows the solver to do its thing by providing the PuzzleController api.
- * Originally I had implemented solvers without trying to do concurrency, and those less generic
- * forms still exist, but do not require the PuzzleController api.
- * 
+ *
  * The generic solvers (sequential and concurrent) expect the first class param
- * to represent the state of a board, and the HexTile (second param)
+ * to represent the state of a board, and the TilePlacement (second param)
  * to represent a move. The way a move is applied is simply to add the piece to the
  * end of the current list.
  *
@@ -22,7 +20,7 @@ import java.util.List;
 public class TantrixController extends AbstractPuzzleController<TantrixBoard, TilePlacement> {
 
     /**
-     * Creates a new instance of \ the Controller
+     * Creates a new instance of the Controller
      */
     public TantrixController(Refreshable<TantrixBoard, TilePlacement> ui) {
         super(ui);
@@ -30,18 +28,22 @@ public class TantrixController extends AbstractPuzzleController<TantrixBoard, Ti
     }
  
     public TantrixBoard initialPosition() {
-        return new TantrixBoard(new HexTileList());
+        return new TantrixBoard(new HexTiles().createRandomList(3));
     }
 
+    /**
+     * @return true if there is a loop of the primary color and all the
+     * secondary color path connections match.
+     */
     public boolean isGoal(TantrixBoard position) {
-        return false;
+        return position.isSolved();
     }
 
     public List<TilePlacement> legalMoves(TantrixBoard position) {
-        return null;
+        return new MoveGenerator(position).generateMoves();
     }
 
     public TantrixBoard move(TantrixBoard position, TilePlacement move) {
-        return null;
+        return position.placeTile(move);
     }
 }

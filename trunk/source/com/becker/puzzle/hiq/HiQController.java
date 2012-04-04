@@ -33,7 +33,7 @@ public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {
     }
 
     public List<PegMove> legalMoves(PegBoard position) {   
-        return position.generateMoves();
+        return new MoveGenerator(position).generateMoves();
     }
 
     public PegBoard move(PegBoard position, PegMove move) {
