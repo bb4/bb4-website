@@ -33,9 +33,14 @@ public class TantrixBoard {
         this(b.getEdgeLength());
         for (int i=0; i < n_; i++) {
            for (int j=0; j < n_; j++) {
-               setTilePlacement(i, j, b.getTilePlacement(i, j));
+               setTilePlacement(b.getTilePlacement(i, j));
            }
         }
+    }
+
+    public TantrixBoard(TantrixBoard board, TilePlacement placement) {
+        this(board);
+        this.setTilePlacement(placement);
     }
 
     public TantrixBoard(HexTileList tileList) {
@@ -47,6 +52,14 @@ public class TantrixBoard {
             byte col = (byte) (i % n_);
            tiles[row][col] = new TilePlacement(tileList.get(i), new Location(row, col), Rotation.ANGLE_0);
         }
+    }
+
+    public boolean isSolved() {
+        return false;
+    }
+
+    public TantrixBoard placeTile(TilePlacement placement) {
+        return new TantrixBoard(this, placement);
     }
 
     /**
@@ -76,8 +89,9 @@ public class TantrixBoard {
         return tiles[row][col];
     }
 
-    public void setTilePlacement(int row, int col, TilePlacement tile) {
-        tiles[row][col] = tile;
+    public void setTilePlacement(TilePlacement tile) {
+        Location loc = tile.getLocation();
+        tiles[loc.getRow()][loc.getCol()] = tile;
     }
 
     public final HexTile getTile(Location location) {

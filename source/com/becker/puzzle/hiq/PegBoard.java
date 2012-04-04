@@ -59,10 +59,9 @@ public class PegBoard {
     }
     
     /** 
-     * Do not use this constructor since outsders cannot create mutable boards.
+     * Do not use this constructor since outsiders cannot create mutable boards.
      */
-    private PegBoard() {
-    }
+    private PegBoard() {}
     
     /**
      * Copy constructor.
@@ -85,10 +84,10 @@ public class PegBoard {
         byte toRow = move.getToRow();
         byte toCol = move.getToCol();
         
-        setPosition(fromRow, fromCol,  undo);
+        setPosition(fromRow, fromCol, undo);
         // Remove or replace the piece that was jumped as appropriate
-        setPosition((byte)((fromRow + toRow) >> 1), (byte)((fromCol + toCol) >> 1),   undo);
-        setPosition(toRow, toCol,   !undo);
+        setPosition((byte)((fromRow + toRow) >> 1), (byte)((fromCol + toCol) >> 1), undo);
+        setPosition(toRow, toCol, !undo);
     }
         
     public int getSize() {
@@ -105,7 +104,6 @@ public class PegBoard {
     private void setPosition(byte row, byte col, boolean val) {
         set(getIndexForPosition(row, col), val);
     }
- 
 
     /**
      *@return true if the coordinates refer to one of the 33 board positions that can hold a peg.
@@ -145,40 +143,11 @@ public class PegBoard {
     }
 
     /**
-     *Creates a new board with the move applied.
-     *Does not violate immutability.
+     * Creates a new board with the move applied.
+     * Does not violate immutability.
      */
     public PegBoard doMove(PegMove move, boolean undo) {              
         return new PegBoard(this, move, undo);
-    }
-
-    /**
-     *
-     * @param location Location empty or peg location based on undo
-     * @param undo boolean find undo (peg) or redo (empty location) moves.
-     * @return List
-     */
-    private List<PegMove> findMovesForLocation(Location location, boolean undo) {
-        List<PegMove> moves = new LinkedList<PegMove>();
-        byte r = location.getRow();
-        byte c = location.getCol();
-
-        // 4 cases to consider: NEWS
-        checkMoveForDirection(r, c, 0, -2, undo, moves);
-        checkMoveForDirection(r, c, 0, 2, undo, moves);
-        checkMoveForDirection(r, c, -2, 0, undo, moves);
-        checkMoveForDirection(r, c, 2, 0, undo, moves);
-        return moves;
-    }
-    
-    private void checkMoveForDirection(byte r, byte c, int rowOffset, int colOffset, boolean undo, List<PegMove> moves) {
-        byte fromRow = (byte)(r + rowOffset);
-        byte fromCol = (byte)(c + colOffset);
-        if (isValidPosition(fromRow, fromCol) 
-               && getPosition(fromRow, fromCol)!=undo 
-               && getPosition((byte)(r + rowOffset/2), (byte)(c + colOffset/2))!=undo) {
-            moves.add(new PegMove(fromRow, fromCol, r, c));
-        }
     }
     
     /**
@@ -196,23 +165,6 @@ public class PegBoard {
             }
         }
         return list;
-    }
-
-    /**
-     * @return List of all valid jumps for the current board state
-     */
-    public List<PegMove> generateMoves() {
-       List<PegMove> moves = new LinkedList<PegMove>();
-       List<Location> emptyLocations = getLocations(false);
-       if (emptyLocations.isEmpty()) {
-           moves.add(getFirstMove());
-       } else {
-           for (Location pos : emptyLocations) {
-               moves.addAll(findMovesForLocation(pos, false));
-           }
-       }
-       //Collections.shuffle(moves);
-       return moves;
     }
 
     /**

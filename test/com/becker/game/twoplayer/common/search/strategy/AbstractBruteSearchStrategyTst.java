@@ -170,7 +170,7 @@ public abstract class AbstractBruteSearchStrategyTst extends AbstractSearchStrat
         verifyResult(new AlphaPruneExample(false, getEvaluationPerspective()),
                 getPruneTwoLevelWithABSearchPlayer2());
     }
-
+     /*
     public void testPruneFourLevelWithABSearchPlayer1() {
         bruteSearchOptions.setLookAhead(4);
         bruteSearchOptions.setAlphaBeta(true);
@@ -183,7 +183,7 @@ public abstract class AbstractBruteSearchStrategyTst extends AbstractSearchStrat
         bruteSearchOptions.setAlphaBeta(true);
         verifyResult(new AlphaBetaPruneExample(false, getEvaluationPerspective()),
                 getPruneFourLevelWithABSearchPlayer2());
-    }
+    }  */
 
     public void testThreeLevelPlayer1Search() {
         verifyResult(new ThreeLevelGameTreeExample(true, getEvaluationPerspective()),
