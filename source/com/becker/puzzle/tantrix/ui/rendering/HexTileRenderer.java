@@ -37,7 +37,7 @@ public class HexTileRenderer {
      */
     public void render(Graphics2D g2, TilePlacement tilePlacement, double radius) {
 
-        if (!tilePlacement.hasTile()) return;
+        if (tilePlacement == null) return;
         Location location = tilePlacement.getLocation();
         boolean isOddRow = location.getRow() % 2 == 1;
         double x = TantrixBoardRenderer.MARGIN

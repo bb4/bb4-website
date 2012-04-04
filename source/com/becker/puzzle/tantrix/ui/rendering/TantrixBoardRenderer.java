@@ -64,7 +64,7 @@ public class TantrixBoardRenderer {
         for ( int i = 0; i < len; i++ ) {
             for ( int j = 0; j < len; j++ ) {
 
-                TilePlacement placement = board_.getTilePlacement(new Location(i, j));
+                TilePlacement placement = board_.getTilePlacement(i, j);
                 tileRenderer.render(g2, placement, hexRadius);
             }
         }
