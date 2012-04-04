@@ -40,6 +40,7 @@ public class TantrixBoard {
 
     public TantrixBoard(HexTileList tileList) {
 
+        n_ = (int)Math.ceil(Math.sqrt(tileList.size())) + 1;
         reset();
         for (int i = 0; i < tileList.size(); i++) {
            tiles[i / n_][i % n_] = tileList.get(i);
@@ -60,7 +61,7 @@ public class TantrixBoard {
     }
 
     /**
-     * @return  retrieve the edge size of the board.
+     * @return retrieve the edge size of the board.
      */
     public final int getEdgeLength() {
         return n_;

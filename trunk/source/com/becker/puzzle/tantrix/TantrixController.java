@@ -6,8 +6,8 @@ import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.HexTileList;
 import com.becker.puzzle.tantrix.model.HexTiles;
+import com.becker.puzzle.tantrix.solver.Algorithm;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,8 +15,9 @@ import java.util.List;
  * Originally I had implemented solvers without trying to do concurrency, and those less generic
  * forms still exist, but do not require the PuzzleController api.
  * 
- * The generic solvers (sequential and concurrent) expect the PieceList to represent the state of a board,
- * and the Piece to represent a move. The way a move is applied is simply to add the piece to the 
+ * The generic solvers (sequential and concurrent) expect the first class param
+ * to represent the state of a board, and the HexTile (second param)
+ * to represent a move. The way a move is applied is simply to add the piece to the
  * end of the current list.
  *
  * @author Barry Becker
@@ -32,16 +33,14 @@ public class TantrixController extends AbstractPuzzleController<HexTileList, Hex
     }
  
     public HexTileList initialPosition() {
-        // empty piece list
-        HexTileList masterList = new HexTiles();
-        return masterList;
+        return new HexTiles();
     }
 
     public boolean isGoal(HexTileList position) {
         return false;
     }
 
-    public List<HexTile> legalMoves(HexTileList position) {
+    public HexTileList legalMoves(HexTileList position) {
         return null;
     }
 

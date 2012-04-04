@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix;
+package com.becker.puzzle.tantrix.solver;
 
 import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.tantrix.model.HexTile;

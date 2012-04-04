@@ -1,9 +1,9 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.ui;
+package com.becker.puzzle.tantrix.ui.rendering;
 
 import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.PathColor;
-import static com.becker.puzzle.tantrix.ui.HexUtil.*;
+import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.*;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

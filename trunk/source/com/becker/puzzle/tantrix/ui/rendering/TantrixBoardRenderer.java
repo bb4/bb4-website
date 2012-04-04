@@ -1,9 +1,10 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.ui;
+package com.becker.puzzle.tantrix.ui.rendering;
 
 import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
+import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.*;
 
 import java.awt.*;
 
@@ -14,10 +15,9 @@ import java.awt.*;
 public class TantrixBoardRenderer {
 
     static final int MARGIN = 50;
-    private static final double ROOT3D2 = Math.sqrt(3.0)/2.0;
 
     private static final Color BACKGROUND_COLOR = new Color(245, 245, 255, 100);
-    private static final Color GRID_COLOR = new Color(10, 0, 100);
+    private static final Color GRID_COLOR = new Color(100, 150, 190);
 
     private TantrixBoard board_;
     private double hexRadius;
@@ -46,7 +46,7 @@ public class TantrixBoardRenderer {
 
         Graphics2D g2 = (Graphics2D) g;
         int minEdge = (Math.min(width, height) - 2 * MARGIN);
-        hexRadius = minEdge / board_.getEdgeLength() / ROOT3D2 / 2.0;
+        hexRadius = minEdge / (board_.getEdgeLength() * ROOT3);
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                             RenderingHints.VALUE_ANTIALIAS_ON);
@@ -69,7 +69,6 @@ public class TantrixBoardRenderer {
             }
         }
     }
-
 
     /**
      * Draw the gridlines over the background.

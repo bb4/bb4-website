@@ -57,7 +57,6 @@ public class HexTiles extends HexTileList {
         add(new HexTile(i++, GREEN, new PathColors( RED, BLUE, BLUE, GREEN, RED, GREEN)));
         add(new HexTile(i++, BLUE, new PathColors(GREEN, BLUE, RED, GREEN, RED, BLUE)));
         add(new HexTile(i++, BLUE, new PathColors(BLUE, GREEN, RED, BLUE, RED, GREEN)));
-
         add(new HexTile(i++, BLUE, new PathColors(BLUE, GREEN, GREEN, RED, BLUE, RED)));
         add(new HexTile(i++, BLUE, new PathColors(RED, GREEN, BLUE, RED, BLUE, GREEN)));
         add(new HexTile(i++, BLUE, new PathColors(GREEN, YELLOW, YELLOW, BLUE, BLUE, GREEN)));
@@ -68,7 +67,6 @@ public class HexTiles extends HexTileList {
         add(new HexTile(i++, WHITE, new PathColors(BLUE, GREEN, GREEN, BLUE, YELLOW, YELLOW)));
         add(new HexTile(i++, WHITE, new PathColors(GREEN, YELLOW, YELLOW, GREEN, BLUE, BLUE)));
         add(new HexTile(i++, WHITE, new PathColors(BLUE, GREEN, YELLOW, BLUE, YELLOW, GREEN)));
-
         add(new HexTile(i++, WHITE, new PathColors(GREEN, YELLOW, BLUE, GREEN, BLUE, YELLOW)));
         add(new HexTile(i++, WHITE, new PathColors( YELLOW, GREEN, GREEN, BLUE, YELLOW, BLUE)));
         add(new HexTile(i++, WHITE, new PathColors(GREEN, YELLOW, YELLOW, BLUE, GREEN, BLUE)));
@@ -80,7 +78,7 @@ public class HexTiles extends HexTileList {
 
      /**
      * @param numTiles  the number of tiles to draw from the master list starting with 1.
-     * @return randome collection of tantrix tiles.
+     * @return a random collection of tantrix tiles.
      */
     public HexTileList createRandomList(int numTiles) {
         HexTileList tiles = new HexTileList();
@@ -90,9 +88,6 @@ public class HexTiles extends HexTileList {
         Collections.shuffle(tiles);
         return tiles;
     }
-
-
-
 }
 
   

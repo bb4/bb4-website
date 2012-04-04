@@ -2,7 +2,7 @@
 package com.becker.puzzle.tantrix.ui;
 
 import com.becker.puzzle.common.*;
-import com.becker.puzzle.tantrix.Algorithm;
+import com.becker.puzzle.tantrix.solver.Algorithm;
 import com.becker.puzzle.tantrix.TantrixController;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.HexTile;
