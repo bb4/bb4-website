@@ -117,8 +117,8 @@ public class BaseConcurrentPuzzleSolver<P, M>  implements PuzzleSolver<P, M> {
                 solution.setValue(this);
             }
             else {
-                for (M m : puzzle.legalMoves(position)) {
-                    SolverTask task = newTask(puzzle.move(position, m), m, this);
+                for (M move : puzzle.legalMoves(position)) {
+                    SolverTask task = newTask(puzzle.move(position, move), move, this);
 
                     // either process the children sequentially or concurrently based on  depthBreadthFactor
                     if (RANDOM.nextFloat() > depthBreadthFactor)

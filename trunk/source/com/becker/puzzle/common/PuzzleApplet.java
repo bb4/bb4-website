@@ -32,7 +32,7 @@ public abstract class PuzzleApplet<P, M> extends ApplicationApplet {
         controller_ = createController(viewer_);
 
         TopControlPanel<P, M> topPanel =
-                new TopControlPanel<P, M>(controller_, getAlgorithmValues());
+            new TopControlPanel<P, M>(controller_, getAlgorithmValues());
 
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(viewer_, BorderLayout.CENTER);

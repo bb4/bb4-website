@@ -29,11 +29,6 @@ public class HexTile {
         return tantrixNumber;
     }
 
-    /** @return the color of the tiles mani path */
-    public List<PathColor> getEdgeColors() {
-        return edgeColors;
-    }
-
     public PathColor getEdgeColor(int index) {
         return edgeColors.get(index);
     }

@@ -58,7 +58,10 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
     @Override
     protected JPanel createCustomControls() {
     
-        animSpeedSlider_ = new LabeledSlider("Speed ", RedPuzzleViewer.INITIAL_ANIM_SPEED, 1, RedPuzzleViewer.MAX_ANIM_SPEED);
+        animSpeedSlider_ =
+            new LabeledSlider("Speed ",
+                    RedPuzzleViewer.INITIAL_ANIM_SPEED, 1,
+                    RedPuzzleViewer.MAX_ANIM_SPEED);
         animSpeedSlider_.setResolution(RedPuzzleViewer.MAX_ANIM_SPEED - 1);
         animSpeedSlider_.setShowAsInteger(true);
         animSpeedSlider_.addChangeListener(this);

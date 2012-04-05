@@ -92,11 +92,4 @@ public class TestCell extends TestCase {
 
         Assert.assertEquals("Unexpectedly not the same ", origBoard, board);
     }
-
-    /**
-     * @return all the junit test cases to run (in this class).
-     */
-    public static Test suite() {
-        return new TestSuite(TestCell.class);
-    }
 }

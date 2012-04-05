@@ -16,6 +16,7 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Puzzle Tests");
 
         suite.addTest(com.becker.puzzle.sudoku.TestAll.suite());
+        suite.addTest(com.becker.puzzle.tantrix.TestAll.suite());
 
 
         return suite;

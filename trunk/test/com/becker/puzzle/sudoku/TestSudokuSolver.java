@@ -106,11 +106,4 @@ public class TestSudokuSolver extends TestCase {
         System.out.println("Time to solve was "+ (System.currentTimeMillis() - start));
         Assert.assertTrue("Unexpectedly not solved.", solved);
     }
-
-    /**
-     * @return all the junit test cases to run (in this class).
-     */
-    public static Test suite() {
-        return new TestSuite(TestSudokuSolver.class);
-    }
 }

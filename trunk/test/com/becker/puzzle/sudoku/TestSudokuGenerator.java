@@ -110,11 +110,4 @@ public class TestSudokuGenerator extends TestCase {
         System.out.println(" Time to generate size="+baseSize +" was "+ (System.currentTimeMillis() - start));
         return b;
     }
-
-    /**
-     * @return all the junit test cases to run (in this class).
-     */
-    public static Test suite() {
-        return new TestSuite(TestSudokuGenerator.class);
-    }
 }

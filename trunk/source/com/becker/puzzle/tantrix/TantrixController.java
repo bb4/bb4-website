@@ -20,16 +20,23 @@ import java.util.List;
 public class TantrixController
        extends AbstractPuzzleController<TantrixBoard, TilePlacement> {
 
+    int numTiles;
+
     /**
      * Creates a new instance of the Controller
      */
     public TantrixController(Refreshable<TantrixBoard, TilePlacement> ui) {
         super(ui);
+        System.out.println("num tiles = " + numTiles);
         algorithm_ = Algorithm.SEQUENTIAL;
+    }
+
+    public void setNumTiles(int numTiles) {
+        this.numTiles = numTiles;
     }
  
     public TantrixBoard initialPosition() {
-        return new TantrixBoard(new HexTiles().createRandomList(3));
+        return new TantrixBoard(new HexTiles().createRandomList(numTiles));
     }
 
     /**
