@@ -23,8 +23,7 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
     /**
      * Creates a new instance of PuzzleViewer
      */
-    public PuzzleViewer() {
-    }
+    public PuzzleViewer() {}
     
     
     public void refresh(P board, long numTries) {  
@@ -51,7 +50,7 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
     }
 
     /**
-     * @param numTries number of attemptws to solve so far.
+     * @param numTries number of attempts to solve so far.
      * @return some text to show in the status bar.
      */
     protected String createStatusMessage(long numTries) {

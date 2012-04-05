@@ -13,9 +13,8 @@ public class TantrixBoard {
 
     static final byte MAX_SIZE = 9;
     static final byte HEX_SIDES = 6;
-    //private static final TilePlacement EMPTY = new TilePlacement(new Location(-1, -1));
 
-    /** The number of Cells in the board is n^2 * n^2.   */
+    /** The number of positions is n^2 * n^2.   */
     protected int n_ = MAX_SIZE;
 
     private TilePlacement[][] tiles;
@@ -60,6 +59,8 @@ public class TantrixBoard {
      */
     public TantrixBoard(TantrixBoard board, TilePlacement placement) {
         this(board);
+        boolean removed = this.unplacedTiles.remove(placement.getTile());
+        assert(removed);
         this.setTilePlacement(placement);
     }
 
@@ -120,15 +121,15 @@ public class TantrixBoard {
     /**
      * Loop through the edges until we find the primary color.
      * If it does not direct us back to where we came from then go that way.
-     * @param currentTile
+     * @param currentPlacement
      * @return the next tile in the path if there is one. Otherwise null
      */
-    private TilePlacement findNeighborTile(TilePlacement currentTile, TilePlacement previousTile) {
+    private TilePlacement findNeighborTile(TilePlacement currentPlacement, TilePlacement previousTile) {
 
         for (byte i=0; i<HEX_SIDES; i++) {
-            PathColor color = currentTile.getTile().getEdgeColor(i);
+            PathColor color = currentPlacement.getPathColor(i);
             if (color == primaryColor) {
-                TilePlacement nbr = getNeighbor(currentTile, i);
+                TilePlacement nbr = getNeighbor(currentPlacement, i);
                 if (nbr != previousTile) {
                     return nbr;
                 }
@@ -172,7 +173,11 @@ public class TantrixBoard {
         return nbrLoc;
     }
 
-
+    /**
+     * Take the specified tile and place it where indicated.
+     * @param placement
+     * @return the new immutable board instance.
+     */
     public TantrixBoard placeTile(TilePlacement placement) {
         return new TantrixBoard(this, placement);
     }
@@ -217,12 +222,17 @@ public class TantrixBoard {
     }
 
     public TilePlacement getTilePlacement(Location location) {
+        byte row = location.getRow();
+        byte col = location.getCol();
+        if (row<0 || row >= n_ || col <0 || col>=n_) return null;
         return tiles[location.getRow()][location.getCol()];
     }
 
     private void setTilePlacement(TilePlacement tile) {
-        Location loc = tile.getLocation();
-        tiles[loc.getRow()][loc.getCol()] = tile;
+        if (tile != null) {
+            Location loc = tile.getLocation();
+            tiles[loc.getRow()][loc.getCol()] = tile;
+        }
     }
 
     public String toString() {

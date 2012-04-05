@@ -59,16 +59,20 @@ public class TilePlacement {
      * @return new immutable TilePlacement instance.
      */
     public TilePlacement rotate(byte turns) {
-        Rotation newRotation = Rotation.values()[(rotation.ordinal() + turns) % rotation.values().length];
+        Rotation newRotation = Rotation.values()[(rotation.ordinal() + turns) % HEX_SIDES];
         return new TilePlacement(tile, location, newRotation);
     }
 
     public TilePlacement rotate() {
-        Rotation newRotation = Rotation.values()[rotation.ordinal() + 1];
+        Rotation newRotation = Rotation.values()[(rotation.ordinal() + 1) % HEX_SIDES];
         return new TilePlacement(tile, location, newRotation);
     }
 
     public boolean isOnOddRow() {
         return location.getRow() % 2 == 1;
+    }
+
+    public String toString() {
+        return "Place " + tile +" at " + location + " with rotation " + rotation + ".";
     }
 }

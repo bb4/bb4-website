@@ -24,8 +24,8 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
     @Override
     protected PuzzleViewer<TantrixBoard, TilePlacement> createViewer() {
 
-        TantrixBoard board = new TantrixBoard(new HexTiles());
-        return new TantrixPanel(board);
+        //TantrixBoard board = new TantrixBoard(new HexTiles());
+        return new TantrixViewer();
     }
 
     @Override
@@ -41,7 +41,6 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
     
     @Override
     protected JPanel createCustomControls() {
-
         return new JPanel();
     }
 

@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * Base class for Puzzle applets.
  *
- * @author Barry Becker  Date: Sep 2005
+ * @author Barry Becker
  */
 public abstract class PuzzleApplet<P, M> extends ApplicationApplet {
     protected PuzzleController<P, M> controller_;

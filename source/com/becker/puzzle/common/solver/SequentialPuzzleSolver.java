@@ -52,14 +52,16 @@ public class SequentialPuzzleSolver<P, M> implements PuzzleSolver<P, M> {
                 P position = puzzle.move(node.position, move);
                 
                 // don't necessarily refresh every time as that would put too much load on the processor
-                if (ui != null)                  
-                    ui.refresh(position, numTries);             
+                if (ui != null) {
+                    ui.refresh(position, numTries);
+                }
                 
                 PuzzleNode<P, M> child = new PuzzleNode<P, M>(position, move, node);
                 numTries++;
                 List<M> result = search(child);
-                if (result != null)
+                if (result != null) {
                     return result;
+                }
             }
         }
         return null;
