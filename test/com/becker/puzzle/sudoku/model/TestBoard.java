@@ -114,10 +114,4 @@ public class TestBoard extends TestCase {
         assertTrue("Unexpectedly not solved", board.solved());
     }
 
-    /**
-     * @return all the junit test cases to run (in this class).
-     */
-    public static Test suite() {
-        return new TestSuite(TestBoard.class);
-    }
 }

@@ -15,7 +15,7 @@ public class MoveGenerator {
 
     TantrixBoard board;
 
-    /** a set of all the places that the next tile might be placed */
+    /** a set of all the places that a next tile might be placed next. */
     Set<Location> legalPositions;
 
     /**
@@ -32,9 +32,7 @@ public class MoveGenerator {
      */
     public List<TilePlacement> generateMoves() {
         List<TilePlacement> moves = new ArrayList<TilePlacement>();
-
         HexTileList unplacedTiles = board.getUnplacedTiles();
-        //assert !unplacedTiles.isEmpty();
 
         for (HexTile tile : unplacedTiles) {
             moves.addAll(findPlacementsForTile(tile));
@@ -75,7 +73,7 @@ public class MoveGenerator {
 
     /**
      * The tile fits if all the paths match for edges that have neighbors
-     * @param placement
+     * @param placement the tile to check for a valid fit.
      * @return true of the tile fits
      */
     private boolean fits(TilePlacement placement) {
@@ -111,7 +109,7 @@ public class MoveGenerator {
     }
 
     /**
-     * @return
+     * @return the one or two neighbors that can be found by following the primary path.
      */
     private List<TilePlacement> findPrimaryPathNeighbors(TilePlacement previous) {
 
@@ -128,6 +126,9 @@ public class MoveGenerator {
         return pathNbrs;
     }
 
+    /**
+     * @return all the empty neighbor positions next to the specified placement
+     */
     private List<Location> findEmptyNeighborLocations(TilePlacement placement) {
         List<Location> emptyNbrLocations = new LinkedList<Location>();
         for (byte i=0; i<HEX_SIDES; i++) {

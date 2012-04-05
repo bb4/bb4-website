@@ -28,7 +28,7 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
     
     public void refresh(P board, long numTries) {  
         status_ = createStatusMessage(numTries);
-        refresh1(board, numTries);
+        simpleRefresh(board, numTries);
     }
 
     public void finalRefresh(List<M> path, P board, long numTries, long millis) {  
@@ -40,10 +40,10 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
                     + createStatusMessage(numTries);
             System.out.println(status_);
         }
-        refresh1(board, numTries);   
+        simpleRefresh(board, numTries);
     }    
     
-    protected void refresh1(P board, long numTries) {
+    protected void simpleRefresh(P board, long numTries) {
         board_ = board;
         numTries_ = numTries;
         repaint();

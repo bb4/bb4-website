@@ -8,6 +8,7 @@ import com.becker.puzzle.tantrix.ui.rendering.TantrixBoardRenderer;
 import com.becker.sound.MusicMaker;
 
 import java.awt.*;
+import java.util.List;
 
 /**
  * Draws the current best solution to the puzzle in a panel.
@@ -44,6 +45,15 @@ public final class TantrixViewer extends PuzzleViewer<TantrixBoard, TilePlacemen
             renderer_.render(g, getWidth(), getHeight());
             // without this we do not get key events.
             requestFocus();
+        }
+    }
+
+
+    @Override
+    public void refresh(TantrixBoard board, long numTries) {
+        if (numTries % 1 == 0) {
+            status_ = createStatusMessage(numTries);
+            simpleRefresh(board, numTries);
         }
     }
 

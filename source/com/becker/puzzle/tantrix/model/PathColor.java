@@ -8,5 +8,9 @@ public enum PathColor {
     GREEN,
     BLUE,
     YELLOW,
-    WHITE
+    WHITE;
+
+    public String toString() {
+        return this.name().substring(0, 1);
+    }
 }

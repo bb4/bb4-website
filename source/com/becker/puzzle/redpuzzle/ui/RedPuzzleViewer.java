@@ -33,7 +33,8 @@ final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece> {
      * Constructor.
      */
     RedPuzzleViewer() {
-        setPreferredSize( new Dimension( 5 * RedPuzzleRenderer.PIECE_SIZE + 200, 5 * RedPuzzleRenderer.PIECE_SIZE + 100 ) );
+        int baseDim = 5 * RedPuzzleRenderer.PIECE_SIZE;
+        setPreferredSize( new Dimension( baseDim + 200, baseDim + 100 ) );
         renderer_ = new RedPuzzleRenderer();
     }
     

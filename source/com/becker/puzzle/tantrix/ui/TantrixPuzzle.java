@@ -8,13 +8,17 @@ import com.becker.puzzle.tantrix.model.*;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Tantrix Puzzle Application to show the solving of the puzzle.
  *
  * @author Barry becker
  */
-public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacement> {
+public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacement>
+                                 implements ChangeListener {
+    JSpinner spinner;
 
     /**
      * Construct the application.
@@ -31,7 +35,8 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
     @Override
     protected PuzzleController<TantrixBoard, TilePlacement>
                 createController(Refreshable<TantrixBoard, TilePlacement> viewer) {
-        return new TantrixController(viewer);
+        TantrixController controller = new TantrixController(viewer);
+        return controller;
     }
     
     @Override
@@ -41,7 +46,22 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
     
     @Override
     protected JPanel createCustomControls() {
-        return new JPanel();
+        JLabel label = new JLabel("Number of Tiles");
+        SpinnerModel model = new SpinnerNumberModel(3, 3, 30, 1);
+        spinner = new JSpinner(model);
+        spinner.addChangeListener(this);
+
+        JPanel numTilesSelector = new JPanel();
+        numTilesSelector.add(label);
+        numTilesSelector.add(spinner);
+
+        return numTilesSelector;
+    }
+
+    public void stateChanged(ChangeEvent e) {
+
+        ((TantrixController)controller_).setNumTiles((Integer)spinner.getValue());
+
     }
 
     /**

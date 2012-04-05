@@ -68,11 +68,27 @@ public class TilePlacement {
         return new TilePlacement(tile, location, newRotation);
     }
 
-    public boolean isOnOddRow() {
-        return location.getRow() % 2 == 1;
+    public String toString() {
+        return  tile +" at " + location + " " + rotation;
     }
 
-    public String toString() {
-        return "Place " + tile +" at " + location + " with rotation " + rotation + ".";
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TilePlacement that = (TilePlacement) o;
+        if (location != null ? !location.equals(that.location) : that.location != null) return false;
+        if (rotation != that.rotation) return false;
+        if (tile != null ? !tile.equals(that.tile) : that.tile != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = location != null ? location.hashCode() : 0;
+        result = 31 * result + (rotation != null ? rotation.hashCode() : 0);
+        result = 31 * result + (tile != null ? tile.hashCode() : 0);
+        return result;
     }
 }

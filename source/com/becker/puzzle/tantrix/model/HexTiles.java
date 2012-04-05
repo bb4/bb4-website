@@ -1,8 +1,11 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.model;
 
+import com.becker.common.math.MathUtil;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import static com.becker.puzzle.tantrix.model.PathColor.*;
 
@@ -75,17 +78,37 @@ public class HexTiles extends HexTileList {
         add(new HexTile(i++, WHITE, new PathColors( YELLOW, BLUE, BLUE, GREEN, YELLOW, GREEN)));
     }
 
+    /**
+     * Get a specific tile by its tantrix number.
+     * @param tantrixNumber
+     */
+    public HexTile getTile(int tantrixNumber) {
+        return get(tantrixNumber-1);
+    }
 
-     /**
+    public HexTileList createRandomList(int numTiles) {
+       return createRandomList(numTiles, MathUtil.RANDOM);
+    }
+
+    /**
      * @param numTiles  the number of tiles to draw from the master list starting with 1.
      * @return a random collection of tantrix tiles.
      */
-    public HexTileList createRandomList(int numTiles) {
+    public HexTileList createRandomList(int numTiles, Random rnd) {
+        HexTileList tiles = createOrderedList(numTiles);
+        Collections.shuffle(tiles, rnd);
+        return tiles;
+    }
+
+    /**
+     * @param numTiles  the number of tiles to draw from the master list starting with 1.
+     * @return a random collection of tantrix tiles.
+     */
+    public HexTileList createOrderedList(int numTiles) {
         HexTileList tiles = new HexTileList();
         for (int i=0; i<numTiles; i++) {
             tiles.add(this.get(i));
         }
-        Collections.shuffle(tiles);
         return tiles;
     }
 }

@@ -12,7 +12,7 @@ import java.util.Set;
  * Sequential puzzle solver.
  * Performs a depth first search on the state space.
  *
- * @author Brian Goetz, Tim Peierls
+ * @author Brian Goetz, Tim Peierls  (Java Concurrency in Practice)
  * @author Barry Becker
  */
 public class SequentialPuzzleSolver<P, M> implements PuzzleSolver<P, M> {
@@ -35,8 +35,10 @@ public class SequentialPuzzleSolver<P, M> implements PuzzleSolver<P, M> {
 
     public List<M> solve() {
         P pos = puzzle.initialPosition();
-        startTime =  System.currentTimeMillis(); 
-        return search(new PuzzleNode<P, M>(pos, null, null));
+        startTime =  System.currentTimeMillis();
+        List<M> pathToSolution = search(new PuzzleNode<P, M>(pos, null, null));
+        System.out.println("Path to solution = " + pathToSolution);
+        return pathToSolution;
     }
 
     private List<M> search(PuzzleNode<P, M> node) {
