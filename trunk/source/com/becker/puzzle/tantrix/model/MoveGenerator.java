@@ -34,7 +34,7 @@ public class MoveGenerator {
         List<TilePlacement> moves = new ArrayList<TilePlacement>();
 
         HexTileList unplacedTiles = board.getUnplacedTiles();
-        assert !unplacedTiles.isEmpty();
+        //assert !unplacedTiles.isEmpty();
 
         for (HexTile tile : unplacedTiles) {
             moves.addAll(findPlacementsForTile(tile));
@@ -42,7 +42,9 @@ public class MoveGenerator {
         return moves;
     }
 
-    /** @return list of all the legal placements for the specified tile. */
+    /**
+     * @return list of all the legal placements for the specified tile.
+     */
     private List<TilePlacement> findPlacementsForTile(HexTile tile) {
         List<TilePlacement> placements = new ArrayList<TilePlacement>();
 
@@ -108,11 +110,14 @@ public class MoveGenerator {
         return positions;
     }
 
+    /**
+     * @return
+     */
     private List<TilePlacement> findPrimaryPathNeighbors(TilePlacement previous) {
 
-        List<TilePlacement> pathNbrs  = new LinkedList<TilePlacement>();
+        List<TilePlacement> pathNbrs = new LinkedList<TilePlacement>();
         for (byte i=0; i<HEX_SIDES; i++) {
-            PathColor color = previous.getTile().getEdgeColor(i);
+            PathColor color = previous.getPathColor(i);
             if (color == board.getPrimaryColor()) {
                 TilePlacement nbr = board.getNeighbor(previous, i);
                 if (nbr != null) {

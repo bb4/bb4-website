@@ -17,7 +17,8 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class TantrixController extends AbstractPuzzleController<TantrixBoard, TilePlacement> {
+public class TantrixController
+       extends AbstractPuzzleController<TantrixBoard, TilePlacement> {
 
     /**
      * Creates a new instance of the Controller

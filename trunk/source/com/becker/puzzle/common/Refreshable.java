@@ -30,5 +30,4 @@ public interface Refreshable <P, M> {
      *Make a sound of some sort
      */
     void makeSound();
-
 }

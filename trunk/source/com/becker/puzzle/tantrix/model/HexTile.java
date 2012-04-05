@@ -42,4 +42,8 @@ public class HexTile {
     public PathColor getPrimaryColor() {
         return primaryColor;
     }
+
+    public String toString() {
+        return "tileNum=" + tantrixNumber + " colors: " + edgeColors;
+    }
 }

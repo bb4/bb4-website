@@ -18,7 +18,7 @@ public class TantrixBoardRenderer {
 
     static final int MARGIN = 50;
 
-    private static final Color BACKGROUND_COLOR = new Color(245, 245, 255, 100);
+    private static final Color BACKGROUND_COLOR = new Color(245, 245, 255);
     private static final Color GRID_COLOR = new Color(100, 150, 190);
 
     private TantrixBoard board_;
@@ -45,7 +45,7 @@ public class TantrixBoardRenderer {
      * This renders the current state of the TantrixBoard to the screen.
      */
     public void render(Graphics g, int width, int height)  {
-
+                              //////
         Graphics2D g2 = (Graphics2D) g;
         int minEdge = (Math.min(width, height) - 2 * MARGIN);
         hexRadius = minEdge / (board_.getEdgeLength() * ROOT3);
@@ -73,9 +73,8 @@ public class TantrixBoardRenderer {
     /**
      * Draw the gridlines over the background.
      */
-    protected void drawGrid(Graphics2D g2,
-                            int edgeLen) {
-        g2.setColor( GRID_COLOR );
+    protected void drawGrid(Graphics2D g2, int edgeLen) {
+
         int xpos, ypos;
         int i;
         int start = 0;
@@ -83,7 +82,10 @@ public class TantrixBoardRenderer {
         double hexWidth = 2 * hexRadius * ROOT3D2;
         int rightEdgePos = (int)(MARGIN + hexWidth * edgeLen);
         int bottomEdgePos = (int)(MARGIN + hexWidth * edgeLen);
+        g2.setColor( BACKGROUND_COLOR );
+        g2.fillRect(0, 0, rightEdgePos, bottomEdgePos);
 
+        g2.setColor( GRID_COLOR );
         for ( i = start; i <= edgeLen; i++ )  //   -----
         {
             ypos = (int)(MARGIN + i * hexWidth);
