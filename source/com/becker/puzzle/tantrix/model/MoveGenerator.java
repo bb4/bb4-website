@@ -7,23 +7,24 @@ import java.util.*;
 import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
 
 /**
- * Tantrix puzzle move generator. Generates valid next moves.
+ * Tantrix puzzle move generator. Generates valid next moves given the current state.
  *
  * @author Barry Becker
  */
 public class MoveGenerator {
 
-    TantrixBoard board;
+    private TantrixBoard board;
 
     /** a set of all the places that a next tile might be placed next. */
-    Set<Location> legalPositions;
+    private Set<Location> borderSpaces;
+
 
     /**
      * Constructor
      */
     public MoveGenerator(TantrixBoard board) {
         this.board = board;
-        this.legalPositions = findLegalPositions();
+        this.borderSpaces = new BorderFinder(board).findBorderPositions();
     }
 
     /**
@@ -46,7 +47,7 @@ public class MoveGenerator {
     private List<TilePlacement> findPlacementsForTile(HexTile tile) {
         List<TilePlacement> placements = new ArrayList<TilePlacement>();
 
-        for (Location loc : legalPositions)  {
+        for (Location loc : borderSpaces)  {
             TilePlacement placement = getPlacementIfFits(tile, loc);
             if (placement != null) {
                placements.add(placement);
@@ -64,11 +65,11 @@ public class MoveGenerator {
     private TilePlacement getPlacementIfFits(HexTile tile, Location loc) {
         TilePlacement placement = new TilePlacement(tile, loc, Rotation.ANGLE_0);
         int i = 0;
-        while (!fits(placement) && i<6) {
+        while (!fits(placement) && i<HEX_SIDES) {
             placement = placement.rotate();
             i++;
         }
-        return (i<6)? placement : null;
+        return (i<HEX_SIDES)? placement : null;
     }
 
     /**
@@ -84,60 +85,5 @@ public class MoveGenerator {
             }
         }
         return true;
-    }
-
-    /**
-     * Travel the primary path in both directions, adding all adjacent
-     * empty placements.
-     * @return list of legal next placements
-     */
-    private Set<Location> findLegalPositions() {
-        Set<Location> positions = new LinkedHashSet<Location>();
-        TilePlacement lastPlaced = board.getLastTile();
-
-        Queue<TilePlacement> searchQueue = new LinkedList<TilePlacement>();
-        searchQueue.add(lastPlaced);
-
-        while (!searchQueue.isEmpty()) {
-            TilePlacement placement = searchQueue.remove();
-            positions.addAll(findEmptyNeighborLocations(placement));
-
-            searchQueue.addAll(findPrimaryPathNeighbors(placement));
-        }
-
-        return positions;
-    }
-
-    /**
-     * @return the one or two neighbors that can be found by following the primary path.
-     */
-    private List<TilePlacement> findPrimaryPathNeighbors(TilePlacement previous) {
-
-        List<TilePlacement> pathNbrs = new LinkedList<TilePlacement>();
-        for (byte i=0; i<HEX_SIDES; i++) {
-            PathColor color = previous.getPathColor(i);
-            if (color == board.getPrimaryColor()) {
-                TilePlacement nbr = board.getNeighbor(previous, i);
-                if (nbr != null) {
-                    pathNbrs.add(nbr);
-                }
-            }
-        }
-        return pathNbrs;
-    }
-
-    /**
-     * @return all the empty neighbor positions next to the specified placement
-     */
-    private List<Location> findEmptyNeighborLocations(TilePlacement placement) {
-        List<Location> emptyNbrLocations = new LinkedList<Location>();
-        for (byte i=0; i<HEX_SIDES; i++) {
-
-            Location nbrLoc = board.getNeighborLocation(placement, i);
-            if (board.getTilePlacement(nbrLoc) == null) {
-                emptyNbrLocations.add(nbrLoc);
-            }
-        }
-        return emptyNbrLocations;
     }
 }

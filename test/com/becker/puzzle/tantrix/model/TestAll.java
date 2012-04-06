@@ -18,6 +18,8 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Tantrix model Tests");
 
         suite.addTestSuite(TantrixBoardTest.class);
+        suite.addTestSuite(BorderFinderTest.class);
+        suite.addTestSuite(MoveGeneratorTest.class);
 
         return suite;
     }
