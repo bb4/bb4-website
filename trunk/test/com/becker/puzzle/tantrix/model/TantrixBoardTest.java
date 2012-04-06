@@ -4,6 +4,7 @@ package com.becker.puzzle.tantrix.model;
 import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
 import junit.framework.TestCase;
+import static com.becker.puzzle.tantrix.model.TantrixTstUtil.*;
 
 /**
  * @author Barry Becker
@@ -13,27 +14,20 @@ public class TantrixBoardTest extends TestCase {
     /** instance under test */
     TantrixBoard board;
 
-    HexTiles tiles;
-    HexTileList threeTiles;
-    //HexTileList fiveTiles;
-
 
     @Override
     public void setUp() {
         MathUtil.RANDOM.setSeed(1);
-        tiles = new HexTiles();
-        threeTiles = tiles.createOrderedList(3);
-        //fiveTiles = tiles.createOrderedList(5);
     }
 
     public void testBoardConstruction() {
         board = place3UnsolvedTiles();
         TilePlacement expLastPlaced =
-                new TilePlacement(tiles.getTile(3), new Location(2, 1), Rotation.ANGLE_180);
+                new TilePlacement(TILES.getTile(3), new Location(2, 1), Rotation.ANGLE_180);
         assertEquals("Unexpected last tile placed", expLastPlaced, board.getLastTile());
         assertEquals("Unexpected edge length", 4, board.getEdgeLength());
         assertEquals("Unexpected primary path color",
-                tiles.getTile(1).getPrimaryColor(), board.getPrimaryColor());
+                TILES.getTile(1).getPrimaryColor(), board.getPrimaryColor());
         assertEquals("All the tiles should have been placed",
                 0, board.getUnplacedTiles().size());
     }
@@ -101,25 +95,4 @@ public class TantrixBoardTest extends TestCase {
         assertTrue("Unexpectedly not solved", board.isSolved());
     }
 
-    /** constructor places first tile in the middle */
-    private TantrixBoard place3UnsolvedTiles() {
-        TantrixBoard board = new TantrixBoard(threeTiles);
-
-        TilePlacement tile2 = new TilePlacement(tiles.getTile(2), new Location(2, 0), Rotation.ANGLE_0);
-        TilePlacement tile3 = new TilePlacement(tiles.getTile(3), new Location(2, 1), Rotation.ANGLE_180);
-        board = new TantrixBoard(board, tile2);
-        board = new TantrixBoard(board, tile3);
-        return board;
-    }
-
-    /** constructor places first tile in the middle */
-    private TantrixBoard place3SolvedTiles() {
-        TantrixBoard board = new TantrixBoard(threeTiles);
-
-        TilePlacement tile2 = new TilePlacement(tiles.getTile(2), new Location(2, 1), Rotation.ANGLE_60);
-        TilePlacement tile3 = new TilePlacement(tiles.getTile(3), new Location(2, 0), Rotation.ANGLE_120);
-        board = new TantrixBoard(board, tile2);
-        board = new TantrixBoard(board, tile3);
-        return board;
-    }
 }

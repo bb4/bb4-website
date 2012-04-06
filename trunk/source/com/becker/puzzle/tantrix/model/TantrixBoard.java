@@ -42,7 +42,8 @@ public class TantrixBoard {
         n_ =  board.getEdgeLength();
         int offset = initializeFromOldBoard(board, placement.getLocation());
         Location loc = placement.getLocation();
-        assert new Box(0, 0, n_-1, n_-1).contains(loc) : "Location out of bounds: " + loc;
+        assert new Box(0, 0, n_-1, n_-1).contains(loc) :
+                "Location out of bounds: " + loc + " offset="+ offset + " \n" + this;
 
         boolean removed = this.unplacedTiles.remove(placement.getTile());
         if (offset != 0) {
@@ -100,8 +101,9 @@ public class TantrixBoard {
         return offset;
     }
 
-    public TantrixBoard(HexTileList tileList) {
+    public TantrixBoard(HexTileList initialTiles) {
 
+        HexTileList tileList = (HexTileList) initialTiles.clone();
         n_ = (int)Math.ceil(Math.sqrt(tileList.size())) + 1;
         createPlacementArray();
         numTiles = (byte) tileList.size();
@@ -158,7 +160,7 @@ public class TantrixBoard {
             PathColor color = currentPlacement.getPathColor(i);
             if (color == primaryColor) {
                 TilePlacement nbr = getNeighbor(currentPlacement, i);
-                if (nbr != null && nbr != previousTile) {
+                if (nbr != null && !nbr.equals(previousTile)) {
                     return nbr;
                 }
             }
@@ -195,17 +197,22 @@ public class TantrixBoard {
      */
     Location getNeighborLocation(Location currentLocation, int direction) {
 
-        Location loc = currentLocation;
-        int offset = (loc.getRow() % 2 == 0) ? -1 : 0;
+        int offset = (currentLocation.getRow() % 2 == 0) ? -1 : 0;
         Location nbrLoc = null;
 
         switch (direction) {
-            case 0 : nbrLoc = new Location(loc.getRow(), loc.getCol() + 1); break;
-            case 1 : nbrLoc = new Location(loc.getRow() - 1, loc.getCol() + offset + 1); break;
-            case 2 : nbrLoc = new Location(loc.getRow() - 1, loc.getCol() + offset); break;
-            case 3 : nbrLoc = new Location(loc.getRow(), loc.getCol() - 1); break;
-            case 4 : nbrLoc = new Location(loc.getRow() + 1, loc.getCol() + offset); break;
-            case 5 : nbrLoc = new Location(loc.getRow() + 1, loc.getCol() + offset + 1); break;
+            case 0 : nbrLoc = new Location(currentLocation.getRow(), currentLocation.getCol() + 1);
+                break;
+            case 1 : nbrLoc = new Location(currentLocation.getRow() - 1, currentLocation.getCol() + offset + 1);
+                break;
+            case 2 : nbrLoc = new Location(currentLocation.getRow() - 1, currentLocation.getCol() + offset);
+                break;
+            case 3 : nbrLoc = new Location(currentLocation.getRow(), currentLocation.getCol() - 1);
+                break;
+            case 4 : nbrLoc = new Location(currentLocation.getRow() + 1, currentLocation.getCol() + offset);
+                break;
+            case 5 : nbrLoc = new Location(currentLocation.getRow() + 1, currentLocation.getCol() + offset + 1);
+                break;
             default : assert false;
         }
         return nbrLoc;
