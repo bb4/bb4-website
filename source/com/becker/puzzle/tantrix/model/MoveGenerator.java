@@ -29,6 +29,7 @@ public class MoveGenerator {
 
     /**
      * For each unplaced tile, find all valid placements given current configuration.
+     * Valid placements must extend the primary path.
      * @return List of all valid tile placements for the current board state.
      */
     public List<TilePlacement> generateMoves() {
@@ -69,21 +70,33 @@ public class MoveGenerator {
             placement = placement.rotate();
             i++;
         }
-        return (i<HEX_SIDES)? placement : null;
+        return (i < HEX_SIDES) ? placement : null;
     }
 
     /**
-     * The tile fits if all the paths match for edges that have neighbors
+     * The tile fits if the primary path and all the other paths match for edges that have neighbors.
      * @param placement the tile to check for a valid fit.
      * @return true of the tile fits
      */
     private boolean fits(TilePlacement placement) {
+        boolean primaryPathMatched = false;
+
         for (byte i=0; i<HEX_SIDES; i++) {
             TilePlacement nbr = board.getNeighbor(placement, i);
-            if (nbr != null && placement.getPathColor(i) != nbr.getPathColor((byte)(i+3))) {
-                return false;
+
+            if (nbr != null) {
+                PathColor pathColor = placement.getPathColor(i);
+
+                if (pathColor == nbr.getPathColor((byte)(i+3))) {
+                    if (pathColor == board.getPrimaryColor()) {
+                        primaryPathMatched = true;
+                    }
+                }  else {
+                    return false;
+                }
             }
         }
-        return true;
+
+        return primaryPathMatched;
     }
 }

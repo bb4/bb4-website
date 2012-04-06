@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.model;
 
+import com.becker.common.geometry.Location;
 import junit.framework.TestCase;
 import java.util.List;
 
@@ -22,8 +23,12 @@ public class MoveGeneratorTest extends TestCase {
 
         List<TilePlacement> moves = generator.generateMoves();
 
-        System.out.println("moves = " + moves);
-        assertEquals("Unexpected number of next moves.", 8, moves.size());
+        assertEquals("Unexpected number of next moves.", 2, moves.size());
+        assertEquals("Unexpected first next more.",
+            new TilePlacement(TILES.getTile(3), new Location(2, 2), Rotation.ANGLE_180), moves.get(0));
+        assertEquals("Unexpected second next move.",
+            new TilePlacement(TILES.getTile(3), new Location(1, 0), Rotation.ANGLE_0), moves.get(1));
+
     }
 
     public void testMoveGenerationFromTwoOfThreeTilesB() {
@@ -33,12 +38,7 @@ public class MoveGeneratorTest extends TestCase {
         List<TilePlacement> moves = generator.generateMoves();
 
         System.out.println("moves = " + moves);
-
-        // tileNum=3 colors: [B, B, R, R, Y, Y] at (row=1, column=0) ANGLE_0,
-        // tileNum=3 colors: [B, B, R, R, Y, Y] at (row=2, column=0) ANGLE_60,
-        // tileNum=3 colors: [B, B, R, R, Y, Y] at (row=3, column=0) ANGLE_0,
-        // tileNum=3 colors: [B, B, R, R, Y, Y] at (row=3, column=1) ANGLE_0]
-        assertEquals("Unexpected number of next moves.", 7, moves.size());
+        assertEquals("Unexpected number of next moves.", 1, moves.size());
     }
 
     public void testMoveGenerationFromFirstTileOfThree() {
@@ -48,19 +48,7 @@ public class MoveGeneratorTest extends TestCase {
         List<TilePlacement> moves = generator.generateMoves();
 
         System.out.println("moves = " + moves);
-        // tileNum=2 colors: [B, Y, Y, B, R, R] at (row=1, column=2) ANGLE_240,
-        // tileNum=2 colors: [B, Y, Y, B, R, R] at (row=0, column=2) ANGLE_60,
-        // tileNum=2 colors: [B, Y, Y, B, R, R] at (row=0, column=1) ANGLE_0,
-        // tileNum=2 colors: [B, Y, Y, B, R, R] at (row=1, column=0) ANGLE_0,
-        // tileNum=2 colors: [B, Y, Y, B, R, R] at (row=2, column=1) ANGLE_0,
-        // tileNum=2 colors: [B, Y, Y, B, R, R] at (row=2, column=2) ANGLE_0,
-        // tileNum=3 colors: [B, B, R, R, Y, Y] at (row=1, column=2) ANGLE_0,
-        // tileNum=3 colors: [B, B, R, R, Y, Y] at (row=0, column=2) ANGLE_180,
-        // tileNum=3 colors: [B, B, R, R, Y, Y] at (row=0, column=1) ANGLE_120,
-        // tileNum=3 colors: [B, B, R, R, Y, Y] at (row=1, column=0) ANGLE_0,
-        // tileNum=3 colors: [B, B, R, R, Y, Y] at (row=2, column=1) ANGLE_120,
-        // tileNum=3 colors: [B, B, R, R, Y, Y] at (row=2, column=2) ANGLE_180]
-        assertEquals("Unexpected number of next moves.", 12, moves.size());
+        assertEquals("Unexpected number of next moves.", 4, moves.size());
     }
 
 }
