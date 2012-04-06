@@ -16,27 +16,28 @@ import static com.becker.puzzle.tantrix.model.PathColor.*;
  */
 public class HexTiles extends HexTileList {
 
+
     public HexTiles()  {
         super();
         byte i = 1;
         add(new HexTile(i++, YELLOW, new PathColors(RED, BLUE, RED, BLUE, YELLOW, YELLOW)));
         add(new HexTile(i++, YELLOW, new PathColors(BLUE, YELLOW, YELLOW, BLUE, RED, RED)));
         add(new HexTile(i++, YELLOW, new PathColors(BLUE, BLUE, RED, RED, YELLOW, YELLOW)));
-        add(new HexTile(i++, YELLOW, new PathColors(BLUE, YELLOW, RED, BLUE, RED, YELLOW)));
-        add(new HexTile(i++, YELLOW, new PathColors(RED, BLUE, BLUE, RED, YELLOW, YELLOW)));
-        add(new HexTile(i++, YELLOW, new PathColors(YELLOW, RED, BLUE, YELLOW, BLUE, RED)));
-        add(new HexTile(i++, YELLOW, new PathColors(RED, YELLOW, RED, YELLOW, BLUE, BLUE))); // 7
-        add(new HexTile(i++, YELLOW, new PathColors(YELLOW, RED, YELLOW, RED, BLUE, BLUE)));
+        add(new HexTile(i++, RED, new PathColors(BLUE, YELLOW, RED, BLUE, RED, YELLOW)));
+        add(new HexTile(i++, RED, new PathColors(RED, BLUE, BLUE, RED, YELLOW, YELLOW)));
+        add(new HexTile(i++, BLUE, new PathColors(YELLOW, RED, BLUE, YELLOW, BLUE, RED)));
+        add(new HexTile(i++, BLUE, new PathColors(RED, YELLOW, RED, YELLOW, BLUE, BLUE))); // 7
+        add(new HexTile(i++, BLUE, new PathColors(YELLOW, RED, YELLOW, RED, BLUE, BLUE)));
         add(new HexTile(i++, YELLOW, new PathColors(RED, YELLOW, BLUE, RED, BLUE, YELLOW)));
-        add(new HexTile(i++, YELLOW, new PathColors(RED, YELLOW, YELLOW, BLUE, RED, BLUE))); // 10
+        add(new HexTile(i++, RED, new PathColors(RED, YELLOW, YELLOW, BLUE, RED, BLUE))); // 10
         add(new HexTile(i++, RED, new PathColors(BLUE, RED, RED, YELLOW, BLUE, YELLOW)));
         add(new HexTile(i++, YELLOW, new PathColors(YELLOW, RED, RED, BLUE, YELLOW, BLUE)));
-        add(new HexTile(i++, BLUE, new PathColors(YELLOW, BLUE, BLUE, YELLOW, RED, RED)));
+        add(new HexTile(i++, BLUE, new PathColors(YELLOW, BLUE, BLUE, YELLOW, RED, RED))); // 13
         add(new HexTile(i++, BLUE, new PathColors(BLUE, YELLOW, YELLOW, RED, RED, BLUE)));
-        add(new HexTile(i++, BLUE, new PathColors(BLUE, YELLOW, YELLOW, RED, RED, BLUE)));
-        add(new HexTile(i++, RED, new PathColors(RED, GREEN,GREEN,RED, YELLOW, YELLOW)));
+        add(new HexTile(i++, RED, new PathColors(RED, GREEN,GREEN, RED, YELLOW, YELLOW))); // 15
         add(new HexTile(i++, RED, new PathColors(YELLOW, RED, RED, YELLOW, GREEN, GREEN)));
-        add(new HexTile(i++, YELLOW, new PathColors(GREEN, YELLOW, YELLOW, RED, GREEN,RED )));
+        add(new HexTile(i++, YELLOW, new PathColors(GREEN, YELLOW, YELLOW, RED, GREEN, RED))); // 17
+        add(new HexTile(i++, RED, new PathColors(RED, YELLOW, YELLOW, GREEN, RED, GREEN )));
         add(new HexTile(i++, RED, new PathColors( RED, YELLOW, YELLOW, GREEN, RED, GREEN)));
         add(new HexTile(i++, RED, new PathColors(GREEN, RED, RED, YELLOW, GREEN, YELLOW)));
         add(new HexTile(i++, YELLOW, new PathColors(YELLOW, RED, RED, GREEN, YELLOW, GREEN)));

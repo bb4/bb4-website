@@ -53,6 +53,7 @@ public final class TantrixViewer extends PuzzleViewer<TantrixBoard, TilePlacemen
     public void refresh(TantrixBoard board, long numTries) {
         if (numTries % 1 == 0) {
             status_ = createStatusMessage(numTries);
+            makeSound();
             simpleRefresh(board, numTries);
         }
     }
@@ -61,7 +62,7 @@ public final class TantrixViewer extends PuzzleViewer<TantrixBoard, TilePlacemen
      * make a little click noise when the piece fits into place.
      */
     public void makeSound() {
-        musicMaker_.playNote(70, 20, 840);
+        musicMaker_.playNote(40, 20, 1240);
     }
 
 }

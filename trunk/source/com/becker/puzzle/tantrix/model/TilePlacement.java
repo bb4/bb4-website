@@ -69,7 +69,7 @@ public class TilePlacement {
     }
 
     public String toString() {
-        return  tile +" at " + location + " " + rotation;
+        return  "["  + tile +" at " + location + " " + rotation + "]";
     }
 
     @Override

@@ -64,6 +64,20 @@ public class Location implements Serializable {
     }
 
     /**
+     * @return an immutable copy of the original incremented by the amount specified.
+     */
+    public Location incrementOnCopy(Location loc) {
+        return new Location(row_ + loc.getRow(), col_+ loc.getCol());
+    }
+
+    /**
+     * @return an immutable copy of the original incremented by the amount specified.
+     */
+    public Location decrementOnCopy(Location loc) {
+        return new Location(row_ - loc.getRow(), col_ - loc.getCol());
+    }
+
+    /**
      * Checks to see if the given location has the same coordinates as this
      * one.
      *

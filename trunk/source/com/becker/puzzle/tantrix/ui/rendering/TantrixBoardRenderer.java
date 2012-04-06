@@ -2,7 +2,6 @@
 package com.becker.puzzle.tantrix.ui.rendering;
 
 import com.becker.common.geometry.Location;
-import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 
@@ -19,7 +18,7 @@ public class TantrixBoardRenderer {
     static final int MARGIN = 50;
 
     private static final Color BACKGROUND_COLOR = new Color(245, 245, 255);
-    private static final Color GRID_COLOR = new Color(100, 150, 190);
+    private static final Color GRID_COLOR = new Color(60, 90, 120);
 
     private TantrixBoard board_;
     private double hexRadius;
@@ -45,7 +44,7 @@ public class TantrixBoardRenderer {
      * This renders the current state of the TantrixBoard to the screen.
      */
     public void render(Graphics g, int width, int height)  {
-                              //////
+
         Graphics2D g2 = (Graphics2D) g;
         int minEdge = (Math.min(width, height) - 2 * MARGIN);
         hexRadius = minEdge / (board_.getEdgeLength() * ROOT3);
@@ -53,28 +52,28 @@ public class TantrixBoardRenderer {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                             RenderingHints.VALUE_ANTIALIAS_ON);
 
-        drawGrid(g2, board_.getEdgeLength());
+        drawGrid(g2);
 
         // erase what's there and redraw.
         g.setColor( BACKGROUND_COLOR );
         g.fillRect(0, 0, width, height);
 
         int len =  board_.getEdgeLength();
+        Location topLeftCorner = board_.getBoundingBox().getTopLeftCorner();
 
-        for ( int i = 0; i < len; i++ ) {
-            for ( int j = 0; j < len; j++ ) {
+        for (Location loc : board_.getTantrix().keySet()) {
 
-                TilePlacement placement = board_.getTilePlacement(i, j);
-                tileRenderer.render(g2, placement, hexRadius);
-            }
+            TilePlacement placement = board_.getTilePlacement(loc);
+            tileRenderer.render(g2, placement, topLeftCorner, hexRadius);
         }
     }
 
     /**
      * Draw the gridlines over the background.
      */
-    protected void drawGrid(Graphics2D g2, int edgeLen) {
+    protected void drawGrid(Graphics2D g2) {
 
+        int edgeLen = board_.getEdgeLength();
         int xpos, ypos;
         int i;
         int start = 0;

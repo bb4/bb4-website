@@ -4,6 +4,10 @@ package com.becker.puzzle.tantrix.model;
 import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *  Immutable representation of the current stat of the tantrix puzzle.
  *
@@ -12,11 +16,11 @@ import com.becker.common.geometry.Location;
 public class TantrixBoard {
 
     static final byte HEX_SIDES = 6;
+    /** starting position. must be odd?*/
+    static final Location INITIAL_LOCATION = new Location(21, 21);
 
-    /** The number of positions is n^2 * n^2. */
-    private int n_ = 3;
-
-    private TilePlacement[][] tiles;
+    /** The 'tantrix'. Map of locations to currently placed tiles. */
+    private Map<Location, TilePlacement> tantrix;
 
     /** color of the loop path */
     private PathColor primaryColor;
@@ -39,18 +43,9 @@ public class TantrixBoard {
      * @param placement new piece to add to the board and its positioning.
      */
     public TantrixBoard(TantrixBoard board, TilePlacement placement) {
-        n_ =  board.getEdgeLength();
-        int offset = initializeFromOldBoard(board, placement.getLocation());
-        Location loc = placement.getLocation();
-        assert new Box(0, 0, n_-1, n_-1).contains(loc) :
-                "Location out of bounds: " + loc + " offset="+ offset + " \n" + this;
+        initializeFromOldBoard(board);
 
         boolean removed = this.unplacedTiles.remove(placement.getTile());
-        if (offset != 0) {
-            Location oldLoc = placement.getLocation();
-            Location newLoc = new Location(oldLoc.getRow() + offset, oldLoc.getCol() + offset);
-            placement = new TilePlacement(placement.getTile(), newLoc, placement.getRotation());
-        }
         lastTile = placement;
         assert(removed) : "Did not remove " + placement.getTile() + " from " + unplacedTiles;
 
@@ -62,66 +57,40 @@ public class TantrixBoard {
      * that everything has been shifted down and to the right one.
      * @return return the offset (1) if the board was extended. or 0.
      */
-    private int initializeFromOldBoard(TantrixBoard board, Location location) {
+    private void initializeFromOldBoard(TantrixBoard board) {
 
         this.primaryColor = board.primaryColor;
         this.lastTile = board.lastTile;
         this.unplacedTiles = (HexTileList) board.unplacedTiles.clone();
         this.numTiles = board.numTiles;
-        int oldN = n_;
-        byte offset = adjustRangeAndReturnOffset(location);
+
         createPlacementArray();
-        for (int i = 0; i < oldN; i++) {
-            for (int j = 0; j < oldN; j++) {
-                setTilePlacement(board.getTilePlacement(i, j), offset);
-            }
-        }
-        return offset;
-    }
-
-    /**
-     * Adjusts n_ if needed
-     * @return the amount to offset the row/col position of the tiles when copying them over.
-     */
-    private byte adjustRangeAndReturnOffset(Location location)  {
-
-        byte offset = 0;
-        int oldDim = n_;
-        if (location != null) {
-            if (location.getRow() == 0 || location.getCol() == 0) {
-                n_++;
-                offset = 1;
-            }
-            else if (location.getRow() == (n_-1) || location.getCol() == (n_-1)) {
-                n_++;
-            }
-        }
-        if (n_ > oldDim)
-            System.out.println("n increased to " + n_ + " because of "+ location + " offset=" + offset);
-        return offset;
+        tantrix.putAll(board.tantrix);
     }
 
     public TantrixBoard(HexTileList initialTiles) {
 
         HexTileList tileList = (HexTileList) initialTiles.clone();
-        n_ = (int)Math.ceil(Math.sqrt(tileList.size())) + 5;
+
         createPlacementArray();
         numTiles = (byte) tileList.size();
+
+        primaryColor = new HexTiles().getTile(numTiles).getPrimaryColor();
         HexTile tile = tileList.remove(0);
         unplacedTiles = (HexTileList) tileList.clone();
-        primaryColor = tile.getPrimaryColor();
-
-        Location initialLoc = new Location(n_/2, n_/2);
-        lastTile = new TilePlacement(tile, initialLoc, Rotation.ANGLE_0);
+        lastTile = new TilePlacement(tile, INITIAL_LOCATION, Rotation.ANGLE_0);
 
         this.setTilePlacement(lastTile);
-        /* // this shows all the tiles
+
+        /* this shows all the tiles
+        //tantrix.put(new Location(2, 2),
+        //        new TilePlacement(new HexTiles().getTile(4), new Location(2, 2), Rotation.ANGLE_120));
         for (byte i = 0; i < tileList.size(); i++) {
-            byte row = (byte) (i / n_);
-            byte col = (byte) (i % n_);
-            tiles[row][col] =
-                    new TilePlacement(tileList.get(i), new Location(row, col), Rotation.ANGLE_0);
-        } */
+            byte row = (byte) (i / 8);
+            byte col = (byte) (i % 8);
+            tantrix.put(new Location(row, col),
+                    new TilePlacement(tileList.get(i), new Location(row, col), Rotation.ANGLE_120));
+        }*/
     }
 
     /**
@@ -137,21 +106,24 @@ public class TantrixBoard {
 
         int numVisited = 0;
         TilePlacement currentTile = lastTile;
-        TilePlacement previousTile;
+        TilePlacement previousTile = null;
+        TilePlacement nextTile = null;
 
         do {
+            nextTile = findNeighborTile(currentTile, previousTile);
             previousTile = currentTile;
-            currentTile = findNeighborTile(currentTile, previousTile);
+            currentTile = nextTile;
             numVisited++;
         } while (currentTile != null && !currentTile.equals(lastTile));
 
-        return (numVisited == numTiles && currentTile.equals(lastTile));
+        return (numVisited == numTiles && lastTile.equals(currentTile));
     }
 
     /**
      * Loop through the edges until we find the primary color.
      * If it does not direct us back to where we came from then go that way.
-     * @param currentPlacement
+     * @param currentPlacement where we are now
+     * @param previousTile where we were
      * @return the next tile in the path if there is one. Otherwise null.
      */
     private TilePlacement findNeighborTile(TilePlacement currentPlacement, TilePlacement previousTile) {
@@ -197,7 +169,7 @@ public class TantrixBoard {
      */
     Location getNeighborLocation(Location currentLocation, int direction) {
 
-        int offset = (currentLocation.getRow() % 2 == 0) ? -1 : 0;
+        int offset = (currentLocation.getRow() % 2 == 1) ? -1 : 0;
         Location nbrLoc = null;
 
         switch (direction) {
@@ -239,66 +211,57 @@ public class TantrixBoard {
         return primaryColor;
     }
 
-    /**
-     * return to original state before attempting solution.
-     * Non original values become 0.
-     */
-    private void createPlacementArray() {
-        tiles = new TilePlacement[n_][n_];
+    public int getEdgeLength() {
+        return (int) Math.ceil(Math.sqrt(tantrix.size()) + 1);
     }
 
     /**
-     * @return retrieve the edge size of the board.
+     * @return the position of the top left bbox corner
      */
-    public final int getEdgeLength() {
-        return n_;
+    public Box getBoundingBox() {
+        Box bbox = new Box(lastTile.getLocation(), lastTile.getLocation());
+
+        for (Location loc : tantrix.keySet())  {
+            bbox.expandBy(loc);
+        }
+        return bbox;
+    }
+
+    public Map<Location, TilePlacement> getTantrix() {
+        return Collections.unmodifiableMap(tantrix);
     }
 
     /**
      * @return the placement at the specified location.
      */
     public TilePlacement getTilePlacement(int row, int col) {
-        return tiles[row][col];
+        return tantrix.get(new Location(row, col));
     }
 
     public TilePlacement getTilePlacement(Location location) {
-        byte row = location.getRow();
-        byte col = location.getCol();
-        if (row<0 || row >= n_ || col<0 || col>=n_) {
-            return null;
-        }
-        return tiles[row][col];
+        return tantrix.get(location);
     }
 
-    private void setTilePlacement(TilePlacement tile) {
-        setTilePlacement(tile, (byte) 0);
+    private void setTilePlacement(TilePlacement placement) {
+        tantrix.put(placement.getLocation(), placement);
     }
 
-    private void setTilePlacement(TilePlacement placement, byte offset) {
-        if (placement == null) return;
-        Location loc = placement.getLocation();
-        int row = loc.getRow() + offset;
-        int col = loc.getCol() + offset;
-        assert (row < n_ && col < n_) : "n_="+ n_ +" loc=" +row + "," +col;
-        assert tiles[row][col] == null;
-
-        tiles[row][col] =
-            new TilePlacement(placement.getTile(), new Location(row, col), placement.getRotation());
+    /**
+     * return to original state before attempting solution.
+     * Non original values become 0.
+     */
+    private void createPlacementArray() {
+        tantrix = new HashMap<Location, TilePlacement>();
     }
+
 
     public String toString() {
         StringBuilder bldr = new StringBuilder("\n");
-        for (int row=0; row < n_; row++) {
-            for (int col=0; col < n_; col++) {
-                TilePlacement placement = getTilePlacement(row, col);
-                if (placement == null) {
-                    bldr.append("[  ----- ]");
-                } else {
-                    bldr.append(placement);
-                }
-                bldr.append(" ");
-            }
-            bldr.append("\n");
+        for (Location loc: tantrix.keySet()) {
+            TilePlacement placement = tantrix.get(loc);
+
+             bldr.append(placement);
+             bldr.append(" ");
         }
 
         return bldr.toString();

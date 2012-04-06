@@ -61,7 +61,6 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
     public void stateChanged(ChangeEvent e) {
 
         ((TantrixController)controller_).setNumTiles((Integer)spinner.getValue());
-
     }
 
     /**

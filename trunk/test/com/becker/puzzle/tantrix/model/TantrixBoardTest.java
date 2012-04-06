@@ -23,9 +23,9 @@ public class TantrixBoardTest extends TestCase {
     public void testBoardConstruction() {
         board = place3UnsolvedTiles();
         TilePlacement expLastPlaced =
-                new TilePlacement(TILES.getTile(3), new Location(2, 1), Rotation.ANGLE_180);
+                new TilePlacement(TILES.getTile(3), new Location(22, 21), Rotation.ANGLE_180);
         assertEquals("Unexpected last tile placed", expLastPlaced, board.getLastTile());
-        assertEquals("Unexpected edge length", 4, board.getEdgeLength());
+        assertEquals("Unexpected edge length", 3, board.getEdgeLength());
         assertEquals("Unexpected primary path color",
                 TILES.getTile(1).getPrimaryColor(), board.getPrimaryColor());
         assertEquals("All the tiles should have been placed",
@@ -35,9 +35,10 @@ public class TantrixBoardTest extends TestCase {
     public void test3TilePlacement() {
         board = place3SolvedTiles();
 
-        verifyPlacement(new Location(2, 2));
-        verifyPlacement(new Location(3, 1));
-        verifyPlacement(new Location(3, 2));
+        System.out.println(board);
+        verifyPlacement(new Location(22, 21));
+        verifyPlacement(new Location(22, 20));
+        verifyPlacement(new Location(21, 21));
     }
 
     private void verifyPlacement(Location loc) {
@@ -47,15 +48,30 @@ public class TantrixBoardTest extends TestCase {
                 loc, placement.getLocation());
     }
 
-    public void testGetNeighborLocation() {
+    public void testGetNeighborLocationOnOddRow() {
         board = place3UnsolvedTiles();
+
+        Location loc = new Location(1, 1);
         assertEquals("Unexpected right neighbor",
-                new Location(1, 2), board.getNeighborLocation(new Location(1, 1), 0));
+                new Location(1, 2), board.getNeighborLocation(loc, 0));
         assertEquals("Unexpected bottom left neighbor",
-                new Location(2, 1), board.getNeighborLocation(new Location(1, 1), 4));
+                new Location(2, 0), board.getNeighborLocation(loc, 4));
         assertEquals("Unexpected bottom right neighbor",
-                new Location(2, 2), board.getNeighborLocation(new Location(1, 1), 5));
+                new Location(2, 1), board.getNeighborLocation(loc, 5));
     }
+
+    public void testGetNeighborLocationOnEvenRow() {
+        board = place3UnsolvedTiles();
+
+        Location loc = new Location(2, 2);
+        assertEquals("Unexpected right neighbor",
+                new Location(2, 3), board.getNeighborLocation(loc, 0));
+        assertEquals("Unexpected bottom left neighbor",
+                new Location(3, 2), board.getNeighborLocation(loc, 4));
+        assertEquals("Unexpected bottom right neighbor",
+                new Location(3, 3), board.getNeighborLocation(loc, 5));
+    }
+
 
     public void testGetNeighborFromUnrotatedTile() {
         board = place3SolvedTiles();
@@ -85,13 +101,26 @@ public class TantrixBoardTest extends TestCase {
                 left, board.getNeighbor(board.getTilePlacement(3, 2), (byte)3));
     }
 
-    public void testIsNotSolved() {
+    public void test3TilesIsNotSolved() {
         board = place3UnsolvedTiles();
+        System.out.println(board);
         assertFalse("Unexpectedly solved", board.isSolved());
     }
 
-    public void testIsSolved() {
+    public void test3TilesIsSolved() {
         board = place3SolvedTiles();
+        System.out.println(board);
+        assertTrue("Unexpectedly not solved", board.isSolved());
+    }
+
+
+    public void test4TilesIsNotSolved() {
+        board = place4UnsolvedTiles();
+        assertFalse("Unexpectedly solved", board.isSolved());
+    }
+
+    public void test4TilesIsSolved() {
+        board = place4SolvedTiles();
         assertTrue("Unexpectedly not solved", board.isSolved());
     }
 

@@ -2,6 +2,7 @@
 package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
+import static com.becker.puzzle.tantrix.model.TantrixBoard.INITIAL_LOCATION;
 
 
 /**
@@ -11,6 +12,7 @@ public class TantrixTstUtil {
 
     public static final HexTiles TILES = new HexTiles();
     public static final HexTileList threeTiles = TILES.createOrderedList(3);
+    public static final HexTileList fourTiles = TILES.createOrderedList(4);
 
     private TantrixTstUtil() {}
 
@@ -18,7 +20,7 @@ public class TantrixTstUtil {
     public static TantrixBoard place2of3TilesA() {
         TantrixBoard board = new TantrixBoard(threeTiles);
 
-        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), new Location(2, 1), Rotation.ANGLE_0);
+        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(2, 1), Rotation.ANGLE_0);
         board = new TantrixBoard(board, tile2);
         return board;
     }
@@ -27,7 +29,7 @@ public class TantrixTstUtil {
     public static TantrixBoard place2of3TilesB() {
         TantrixBoard board = new TantrixBoard(threeTiles);
 
-        TilePlacement tile2 = new TilePlacement(TILES.getTile(3), new Location(2, 1), Rotation.ANGLE_120);
+        TilePlacement tile2 = new TilePlacement(TILES.getTile(3), loc(2, 1), Rotation.ANGLE_180);
         board = new TantrixBoard(board, tile2);
         return board;
     }
@@ -36,8 +38,8 @@ public class TantrixTstUtil {
     public static TantrixBoard place3UnsolvedTiles() {
         TantrixBoard board = new TantrixBoard(threeTiles);
 
-        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), new Location(2, 0), Rotation.ANGLE_0);
-        TilePlacement tile3 = new TilePlacement(TILES.getTile(3), new Location(2, 1), Rotation.ANGLE_180);
+        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(2, 0), Rotation.ANGLE_0);
+        TilePlacement tile3 = new TilePlacement(TILES.getTile(3), loc(2, 1), Rotation.ANGLE_180);
         board = new TantrixBoard(board, tile2);
         board = new TantrixBoard(board, tile3);
         return board;
@@ -48,10 +50,42 @@ public class TantrixTstUtil {
         System.out.println("3 tiles =" + threeTiles);
         TantrixBoard board = new TantrixBoard(threeTiles);
 
-        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), new Location(2, 1), Rotation.ANGLE_60);
-        TilePlacement tile3 = new TilePlacement(TILES.getTile(3), new Location(2, 0), Rotation.ANGLE_120);
+        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(2, 1), Rotation.ANGLE_60);
+        TilePlacement tile3 = new TilePlacement(TILES.getTile(3), loc(2, 0), Rotation.ANGLE_120);
         board = new TantrixBoard(board, tile2);
         board = new TantrixBoard(board, tile3);
+        System.out.println(board);
         return board;
+    }
+
+    /** Places first tile in the middle */
+    public static TantrixBoard place4UnsolvedTiles() {
+        TantrixBoard board = new TantrixBoard(fourTiles);
+
+        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(1, 2), Rotation.ANGLE_240);
+        TilePlacement tile3 = new TilePlacement(TILES.getTile(3), loc(0, 0), Rotation.ANGLE_120);
+        TilePlacement tile4 = new TilePlacement(TILES.getTile(4), loc(1, 0), Rotation.ANGLE_180);
+        board = new TantrixBoard(board, tile2);
+        board = new TantrixBoard(board, tile3);
+        board = new TantrixBoard(board, tile4);
+        return board;
+    }
+
+    /** Places first tile in the middle */
+    public static TantrixBoard place4SolvedTiles() {
+        System.out.println("4 tiles =" + fourTiles);
+        TantrixBoard board = new TantrixBoard(fourTiles);
+
+        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(1, 2), Rotation.ANGLE_240);
+        TilePlacement tile3 = new TilePlacement(TILES.getTile(3), loc(0, 0), Rotation.ANGLE_180);
+        TilePlacement tile4 = new TilePlacement(TILES.getTile(4), loc(0, 1), Rotation.ANGLE_60);
+        board = new TantrixBoard(board, tile2);
+        board = new TantrixBoard(board, tile3);
+        board = new TantrixBoard(board, tile4);
+        return board;
+    }
+
+    private static Location loc(int row, int col) {
+        return new Location(row, col).incrementOnCopy(INITIAL_LOCATION).incrementOnCopy(-1, -1);
     }
 }

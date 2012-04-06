@@ -3,8 +3,6 @@ package com.becker.puzzle.tantrix.ui.rendering;
 
 import com.becker.common.format.FormatUtil;
 import com.becker.common.geometry.Location;
-import com.becker.puzzle.tantrix.model.HexTile;
-import com.becker.puzzle.tantrix.model.Rotation;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.ui.util.GUIUtil;
 
@@ -35,10 +33,12 @@ public class HexTileRenderer {
     /**
      * Draw the poker hand (the cards are all face up or all face down)
      */
-    public void render(Graphics2D g2, TilePlacement tilePlacement, double radius) {
+    public void render(Graphics2D g2, TilePlacement tilePlacement,
+                       Location topLeftCorner, double radius) {
 
         if (tilePlacement == null) return;
-        Location location = tilePlacement.getLocation();
+        Location location =
+            tilePlacement.getLocation().decrementOnCopy(topLeftCorner);
         boolean isOddRow = location.getRow() % 2 == 1;
         double x = TantrixBoardRenderer.MARGIN
                 + ((location.getCol() - (isOddRow ? -0.75 : -0.25)) * 2 * radius * HexUtil.ROOT3D2);
