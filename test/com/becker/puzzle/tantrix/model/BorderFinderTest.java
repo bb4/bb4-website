@@ -38,9 +38,9 @@ public class BorderFinderTest extends TestCase {
     public void testFindBorderForTwoOfThreeTilesB() {
         board = place2of3TilesB();
         borderFinder = new BorderFinder(board);
-
+        System.out.println(board);
         Set<Location> positions = borderFinder.findBorderPositions();
-
+        System.out.println(positions);
         assertEquals("Unexpected number of border locations.", 8, positions.size());
     }
 

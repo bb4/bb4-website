@@ -47,17 +47,18 @@ public class PathRenderer {
         int pathEndIndex = i-1;
         int diff = pathEndIndex - pathStartIndex;
         Color color = PathColorInterpreter.getColorForPathColor(pathColor);
-
-        //System.out.println("diff="+ diff + " rot=" + tile.getRotation().ordinal()
-        //        + " pind=" + pathStartIndex + ", " + pathEndIndex
-        //        + " color=" + tile.getEdgeColor(pathStartIndex));
+        /*
+        System.out.println("diff="+ diff + " rot=" + tilePlacement.getRotation().ordinal()
+                + " pind=" + pathStartIndex + ", " + pathEndIndex
+                + " color=" + tile.getEdgeColor(pathStartIndex));    */
         // account for the rotation.
         pathStartIndex += tilePlacement.getRotation().ordinal();
+        pathEndIndex += tilePlacement.getRotation().ordinal();
 
         switch (diff) {
             case 1: drawCornerPath(g2, position, pathStartIndex, color, size); break;
             case 5: drawCornerPath(g2, position, pathEndIndex, color, size); break;
-            case 2: drawCurvedPath(g2, position, pathStartIndex, color, size); break;
+            case 2: drawCurvedPath(g2, position, pathStartIndex,color, size); break;
             case 4: drawCurvedPath(g2, position, pathEndIndex, color, size); break;
             case 3: drawStraightPath(g2, position, pathStartIndex, color, size); break;
         }
@@ -80,15 +81,14 @@ public class PathRenderer {
                                 Color color, double radius) {
         int startAngle = firstIndex * 60 + 60;
         int angle = 120;
-        double rstartAng = rad(startAngle-30);
+        double rstartAng = rad(startAngle - 30);
         Point center = new Point((int)(position.getX() + radius * Math.cos(rstartAng)),
                                  (int)(position.getY() - radius * Math.sin(rstartAng)));
 
         drawPathArc(g2, center, color, radius, radius/3.0, startAngle + 90, angle);
     }
 
-    private void drawCurvedPath(Graphics2D g2, Point position, int firstIndex,
-                                Color color, double radius) {
+    private void drawCurvedPath(Graphics2D g2, Point position, int firstIndex, Color color, double radius) {
         int startAngle = firstIndex * 60 + 60;
         int angle = 60;
         double rstartAng = rad(startAngle);
@@ -120,8 +120,8 @@ public class PathRenderer {
     private void drawStraightPath(Graphics2D g2, Point2D position, int firstIndex,
                                   Color color, double radius) {
 
-        double theta1 = rad(firstIndex * 60);
-        double theta2 = rad(firstIndex * 60 + 180);
+        double theta1 = rad(-firstIndex * 60);
+        double theta2 = rad(-firstIndex * 60 + 180);
 
         double halfWidth = radius * ROOT3D2;
         int startX = (int)(position.getX() + halfWidth * Math.cos(theta1));
