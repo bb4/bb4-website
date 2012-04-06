@@ -104,7 +104,7 @@ public class TantrixBoard {
     public TantrixBoard(HexTileList initialTiles) {
 
         HexTileList tileList = (HexTileList) initialTiles.clone();
-        n_ = (int)Math.ceil(Math.sqrt(tileList.size())) + 1;
+        n_ = (int)Math.ceil(Math.sqrt(tileList.size())) + 5;
         createPlacementArray();
         numTiles = (byte) tileList.size();
         HexTile tile = tileList.remove(0);
