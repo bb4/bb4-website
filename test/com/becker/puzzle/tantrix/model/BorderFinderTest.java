@@ -14,39 +14,37 @@ public class BorderFinderTest extends TestCase {
 
     /** instance under test */
     BorderFinder borderFinder;
-    TantrixBoard board;
+    Tantrix tantrix;
 
 
     public void testFindBorderForFirstTileOfThree() {
-        board = new TantrixBoard(threeTiles);
-        borderFinder = new BorderFinder(board);
+        tantrix = new TantrixBoard(threeTiles).tantrix;
+        borderFinder = new BorderFinder(tantrix, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
-
         assertEquals("Unexpected number of border locations.", 6, positions.size());
     }
 
     public void testFindBorderForTwoOfThreeTilesA() {
-        board = place2of3TilesA();
-        borderFinder = new BorderFinder(board);
+        tantrix = place2of3TilesA().tantrix;
+        borderFinder = new BorderFinder(tantrix, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
-
         assertEquals("Unexpected number of border locations.", 8, positions.size());
     }
 
     public void testFindBorderForTwoOfThreeTilesB() {
-        board = place2of3TilesB();
-        borderFinder = new BorderFinder(board);
-        System.out.println(board);
+        tantrix = place2of3TilesB().tantrix;
+        borderFinder = new BorderFinder(tantrix, PathColor.YELLOW);
+        System.out.println(tantrix);
         Set<Location> positions = borderFinder.findBorderPositions();
         System.out.println(positions);
         assertEquals("Unexpected number of border locations.", 8, positions.size());
     }
 
     public void testFindBorderForThreeSolvedTiles() {
-        board = place3SolvedTiles();
-        borderFinder = new BorderFinder(board);
+        tantrix = place3SolvedTiles().tantrix;
+        borderFinder = new BorderFinder(tantrix, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
 
