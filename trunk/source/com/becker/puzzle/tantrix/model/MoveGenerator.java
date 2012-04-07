@@ -3,7 +3,11 @@ package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
 
 /**
@@ -50,12 +54,11 @@ public class MoveGenerator {
         List<TilePlacement> placements = new ArrayList<TilePlacement>();
 
         for (Location loc : borderSpaces)  {
-            TilePlacement placement = getPlacementIfFits(tile, loc);
-            if (placement != null) {
-               placements.add(placement);
-            }
+            List<TilePlacement> validFits = getFittingPlacements(tile, loc);
+            placements.addAll(validFits);
         }
 
+        //System.out.println("placemens for tile="+ tile +" is "+ String.valueOf(;));
         return placements;
     }
 
@@ -64,14 +67,17 @@ public class MoveGenerator {
      * @param loc the location to try and place it at.
      * @return the placement if one could be found, else null.
      */
-    private TilePlacement getPlacementIfFits(HexTile tile, Location loc) {
+    private List<TilePlacement> getFittingPlacements(HexTile tile, Location loc) {
         TilePlacement placement = new TilePlacement(tile, loc, Rotation.ANGLE_0);
-        int i = 0;
-        while (!fits(placement) && i<HEX_SIDES) {
+        List<TilePlacement> validPlacements = new LinkedList<TilePlacement>();
+
+        for (int i=0; i<HEX_SIDES; i++) {
+            if (fits(placement)) {
+                validPlacements.add(placement);
+            }
             placement = placement.rotate();
-            i++;
         }
-        return (i < HEX_SIDES) ? placement : null;
+        return validPlacements;
     }
 
     /**

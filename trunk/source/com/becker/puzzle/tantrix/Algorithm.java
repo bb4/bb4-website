@@ -7,7 +7,8 @@ import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.common.solver.ConcurrentPuzzleSolver;
 import com.becker.puzzle.common.solver.PuzzleSolver;
 import com.becker.puzzle.common.solver.SequentialPuzzleSolver;
-import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.TantrixBoard;
+import com.becker.puzzle.tantrix.model.TilePlacement;
 
 /**
  * Enum for type of solver to employ when solving the puzzle.

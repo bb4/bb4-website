@@ -3,8 +3,6 @@ package com.becker.puzzle.tantrix.model;
 
 import java.util.ArrayList;
 
-import static com.becker.puzzle.tantrix.model.PathColor.*;
-
 /**
  * The complete set of hexagonal tantrix tiles
  *

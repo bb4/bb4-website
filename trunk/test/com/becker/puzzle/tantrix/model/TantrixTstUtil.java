@@ -45,6 +45,18 @@ public class TantrixTstUtil {
         return board;
     }
 
+    /** Places first tile in the middle */
+    public static TantrixBoard place3UnsolvedTiles2() {
+
+        TantrixBoard board = new TantrixBoard(threeTiles);
+
+        TilePlacement tile2 = new TilePlacement(TILES.getTile(3), loc(2, 1), Rotation.ANGLE_0);
+        TilePlacement tile3 = new TilePlacement(TILES.getTile(2), loc(3, 2), Rotation.ANGLE_0);
+        board = new TantrixBoard(board, tile2);
+        board = new TantrixBoard(board, tile3);
+        return board;
+    }
+
     /** constructor places first tile in the middle */
     public static TantrixBoard place3SolvedTiles() {
         System.out.println("3 tiles =" + threeTiles);

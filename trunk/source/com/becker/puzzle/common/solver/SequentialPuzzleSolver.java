@@ -37,7 +37,10 @@ public class SequentialPuzzleSolver<P, M> implements PuzzleSolver<P, M> {
         P pos = puzzle.initialPosition();
         startTime =  System.currentTimeMillis();
         List<M> pathToSolution = search(new PuzzleNode<P, M>(pos, null, null));
-        System.out.println("Path to solution = " + pathToSolution);
+
+        System.out.println((pathToSolution == null)?
+                "No Solution" :
+                "Path to solution = " + pathToSolution);
         return pathToSolution;
     }
 

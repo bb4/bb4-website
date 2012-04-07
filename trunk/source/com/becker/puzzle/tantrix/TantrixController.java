@@ -1,9 +1,13 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix;
 
+import com.becker.common.math.MathUtil;
 import com.becker.puzzle.common.AbstractPuzzleController;
 import com.becker.puzzle.common.Refreshable;
-import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.HexTiles;
+import com.becker.puzzle.tantrix.model.MoveGenerator;
+import com.becker.puzzle.tantrix.model.TantrixBoard;
+import com.becker.puzzle.tantrix.model.TilePlacement;
 
 import java.util.List;
 
@@ -36,6 +40,7 @@ public class TantrixController
     }
  
     public TantrixBoard initialPosition() {
+        //MathUtil.RANDOM.setSeed(1);
         return new TantrixBoard(new HexTiles().createRandomList(numTiles));
     }
 
