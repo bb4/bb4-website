@@ -5,7 +5,7 @@ import com.becker.common.geometry.Location;
 import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
 
 /**
- * Represents the positioning of a tantrix tile on the board.
+ * Represents the positioning of a tantrix tile on the tantrix.
  * Immutable.
  * @author Barry Becker
  */

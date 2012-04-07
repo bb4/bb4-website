@@ -24,13 +24,14 @@ public class MoveGenerator {
      */
     public MoveGenerator(TantrixBoard board) {
         this.board = board;
-        this.borderSpaces = new BorderFinder(board).findBorderPositions();
+        this.borderSpaces =
+            new BorderFinder(board.tantrix, board.getPrimaryColor()).findBorderPositions();
     }
 
     /**
      * For each unplaced tile, find all valid placements given current configuration.
      * Valid placements must extend the primary path.
-     * @return List of all valid tile placements for the current board state.
+     * @return List of all valid tile placements for the current tantrix state.
      */
     public List<TilePlacement> generateMoves() {
         List<TilePlacement> moves = new ArrayList<TilePlacement>();

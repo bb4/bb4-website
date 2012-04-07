@@ -14,14 +14,16 @@ import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
  */
 public class BorderFinder {
 
-    TantrixBoard board;
+    Tantrix board;
+    PathColor primaryColor;
     Set<Location> visited;
 
     /**
      * Constructor
      */
-    public BorderFinder(TantrixBoard board) {
+    public BorderFinder(Tantrix board, PathColor primaryColor) {
         this.board = board;
+        this.primaryColor = primaryColor;
     }
 
     /**
@@ -57,7 +59,7 @@ public class BorderFinder {
         List<TilePlacement> pathNbrs = new LinkedList<TilePlacement>();
         for (byte i=0; i<HEX_SIDES; i++) {
             PathColor color = previous.getPathColor(i);
-            if (color == board.getPrimaryColor()) {
+            if (color == primaryColor) {
                 TilePlacement nbr = board.getNeighbor(previous, i);
                 if (nbr != null && !visited.contains(nbr.getLocation())) {
                     pathNbrs.add(nbr);
@@ -76,7 +78,7 @@ public class BorderFinder {
         for (byte i=0; i<HEX_SIDES; i++) {
 
             Location nbrLoc = board.getNeighborLocation(placement, i);
-            if (board.getTilePlacement(nbrLoc) == null) {
+            if (board.get(nbrLoc) == null) {
                 emptyNbrLocations.add(nbrLoc);
             }
         }
