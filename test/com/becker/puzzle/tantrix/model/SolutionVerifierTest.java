@@ -21,11 +21,15 @@ public class SolutionVerifierTest extends TestCase {
         assertFalse("Unexpectedly solved", verifier.isSolved());
     }
 
+    public void test3TilesIsNotSolved2() {
+        verifier = new SolutionVerifier(place3UnsolvedTiles2());
+        assertFalse("Unexpectedly solved", verifier.isSolved());
+    }
+
     public void test3TilesIsSolved() {
         verifier = new SolutionVerifier(place3SolvedTiles());
         assertTrue("Unexpectedly not solved", verifier.isSolved());
     }
-
 
     public void test4TilesIsNotSolved() {
         verifier = new SolutionVerifier(place4UnsolvedTiles());

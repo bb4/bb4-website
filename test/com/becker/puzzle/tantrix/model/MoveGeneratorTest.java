@@ -47,7 +47,7 @@ public class MoveGeneratorTest extends TestCase {
         List<TilePlacement> moves = generator.generateMoves();
 
         System.out.println("moves = " + moves);
-        assertEquals("Unexpected number of next moves.", 4, moves.size());
+        assertEquals("Unexpected number of next moves.", 8, moves.size());
     }
 
 }

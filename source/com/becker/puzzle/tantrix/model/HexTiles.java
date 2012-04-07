@@ -3,7 +3,6 @@ package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.math.MathUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 

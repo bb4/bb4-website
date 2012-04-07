@@ -2,6 +2,7 @@
 package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
+
 import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
 
 /**

@@ -4,7 +4,8 @@ package com.becker.puzzle.tantrix.ui;
 import com.becker.puzzle.common.*;
 import com.becker.puzzle.tantrix.Algorithm;
 import com.becker.puzzle.tantrix.TantrixController;
-import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.TantrixBoard;
+import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;

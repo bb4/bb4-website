@@ -5,12 +5,12 @@ import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.PathColor;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 
-import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.*;
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.*;
 
 /**
  * Renders a single tantrix tile.

@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.ui;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
@@ -8,7 +9,6 @@ import com.becker.puzzle.tantrix.ui.rendering.TantrixBoardRenderer;
 import com.becker.sound.MusicMaker;
 
 import java.awt.*;
-import java.util.List;
 
 /**
  * Draws the current best solution to the puzzle in a panel.
@@ -55,6 +55,7 @@ public final class TantrixViewer extends PuzzleViewer<TantrixBoard, TilePlacemen
             status_ = createStatusMessage(numTries);
             makeASound(board.getUnplacedTiles().size());
             simpleRefresh(board, numTries);
+            //ThreadUtil.sleep(100);
         }
     }
 

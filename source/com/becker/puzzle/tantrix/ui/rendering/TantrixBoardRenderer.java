@@ -5,9 +5,10 @@ import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 
-import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.*;
-
 import java.awt.*;
+
+import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.ROOT3;
+import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.ROOT3D2;
 
 /**
  * Renders the the sudoku puzzle onscreen.
