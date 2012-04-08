@@ -26,7 +26,7 @@ public class BorderFinderTest extends TestCase {
     }
 
     public void testFindBorderForTwoOfThreeTilesA() {
-        tantrix = place2of3TilesA().tantrix;
+        tantrix = place2of3Tiles_OneThenTwo().tantrix;
         borderFinder = new BorderFinder(tantrix, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
@@ -34,7 +34,7 @@ public class BorderFinderTest extends TestCase {
     }
 
     public void testFindBorderForTwoOfThreeTilesB() {
-        tantrix = place2of3TilesB().tantrix;
+        tantrix = place2of3Tiles_OneThenThree().tantrix;
         borderFinder = new BorderFinder(tantrix, PathColor.YELLOW);
         System.out.println(tantrix);
         Set<Location> positions = borderFinder.findBorderPositions();

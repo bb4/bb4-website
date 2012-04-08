@@ -34,28 +34,32 @@ public class HexTileRenderer {
      * Draw the poker hand (the cards are all face up or all face down)
      */
     public void render(Graphics2D g2, TilePlacement tilePlacement,
-                       Location topLeftCorner, double radius, int margin) {
+                       Location topLeftCorner, double radius) {
 
         if (tilePlacement == null) return;
+        boolean isOddRow = tilePlacement.getLocation().getRow() % 2 == 1;
         Location location =
             tilePlacement.getLocation().decrementOnCopy(topLeftCorner);
-        boolean isOddRow = location.getRow() % 2 == 1;
-        double x = margin
-                + ((location.getCol() - (isOddRow ? -0.75 : -0.25)) * 2 * radius * HexUtil.ROOT3D2);
-        double y = margin
+
+        double x = radius/2
+                + ((location.getCol() - (isOddRow ? -0.25:  -0.75)) * 2 * radius * HexUtil.ROOT3D2);
+        double y = radius/2
                 + ((location.getRow() + 0.6) * 3.0 * radius / 2.0);
 
         Point point = new Point((int)x, (int)y);
-        point.setLocation(x, y);
         drawHexagon(g2, point, radius);
         pathRenderer.drawPath(g2, 0, tilePlacement, point, radius);
         pathRenderer.drawPath(g2, 1, tilePlacement, point, radius);
         pathRenderer.drawPath(g2, 2, tilePlacement, point, radius);
 
+        drawTileNumber(g2, tilePlacement, radius, x, y);
+    }
+
+    private void drawTileNumber(Graphics2D g2, TilePlacement tilePlacement, double radius, double x, double y) {
         g2.setColor(Color.BLACK);
         g2.setFont(TILE_FONT);
         g2.drawString(FormatUtil.formatNumber(tilePlacement.getTile().getTantrixNumber()),
-                      (int)(x + radius/2), (int)(y + radius/2));
+                      (int)x, (int)(y + radius/2));
     }
 
     private void drawHexagon(Graphics2D g2, Point point, double radius) {

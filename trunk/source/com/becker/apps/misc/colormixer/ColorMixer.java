@@ -27,10 +27,9 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
     private MixedColorsScrollPane mixedColorsPanel_;
 
     // constructor
-    public ColorMixer()
-    {
-    }
+    public ColorMixer() {}
 
+    @Override
     protected JPanel createMainPanel()
     {
         mixedColorsPanel_ = new MixedColorsScrollPane(colorA_, colorB_);
@@ -69,7 +68,7 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
 
     private JSlider createOpacitySlider() {
         JSlider opacitySlider = new JSlider(JSlider.HORIZONTAL, 0, SLIDER_TICKS, SLIDER_TICKS);
-        Dictionary dict = new Hashtable();
+        Dictionary<Integer, JLabel> dict = new Hashtable<Integer, JLabel>();
         dict.put(0, new JLabel("0"));
         dict.put(SLIDER_TICKS, new JLabel("1.0"));
         opacitySlider.setLabelTable(dict);
@@ -92,8 +91,7 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
     /**
      * called when a button is pressed
      */
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
 
         if ( source == colorButtonA_ || source == colorButtonB_) {
