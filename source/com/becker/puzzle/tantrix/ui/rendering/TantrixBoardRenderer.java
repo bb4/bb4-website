@@ -75,7 +75,6 @@ public class TantrixBoardRenderer {
         int i;
         int start = 0;
         int margin = (int)(hexRadius/2.0);
-        int startPos = margin;
         double hexWidth = 2 * hexRadius * ROOT3D2;
         int rightEdgePos = (int)(margin + hexWidth * edgeLen);
         int bottomEdgePos = (int)(margin + hexWidth * edgeLen);
@@ -86,12 +85,12 @@ public class TantrixBoardRenderer {
         for ( i = start; i <= edgeLen; i++ )  //   -----
         {
             ypos = (int)(margin + i * hexWidth);
-            g2.drawLine( startPos, ypos, rightEdgePos, ypos );
+            g2.drawLine( margin, ypos, rightEdgePos, ypos );
         }
         for ( i = start; i <= edgeLen; i++ )  //   ||||
         {
             xpos = (int)(margin + i * hexWidth);
-            g2.drawLine( xpos, startPos, xpos, bottomEdgePos );
+            g2.drawLine( xpos, margin, xpos, bottomEdgePos );
         }
     }
 }
