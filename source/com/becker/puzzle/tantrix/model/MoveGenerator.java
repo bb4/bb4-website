@@ -58,7 +58,6 @@ public class MoveGenerator {
             placements.addAll(validFits);
         }
 
-        //System.out.println("placemens for tile="+ tile +" is "+ String.valueOf(;));
         return placements;
     }
 
@@ -85,7 +84,7 @@ public class MoveGenerator {
      * @param placement the tile to check for a valid fit.
      * @return true of the tile fits
      */
-    private boolean fits(TilePlacement placement) {
+    boolean fits(TilePlacement placement) {
         boolean primaryPathMatched = false;
 
         for (byte i=0; i<HEX_SIDES; i++) {

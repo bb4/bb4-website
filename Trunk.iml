@@ -10,7 +10,7 @@
       <excludeFolder url="file://$MODULE_DIR$/test/go/cases" />
       <excludeFolder url="file://$MODULE_DIR$/test/go/kgs" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="module-library">

@@ -17,19 +17,19 @@ public class TantrixTstUtil {
     private TantrixTstUtil() {}
 
     /** Places first tile in the middle and one of two remaining placed */
-    public static TantrixBoard place2of3TilesA() {
+    public static TantrixBoard place2of3Tiles_OneThenTwo() {
         TantrixBoard board = new TantrixBoard(threeTiles);
 
-        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(2, 1), Rotation.ANGLE_0);
+        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(2, 1), Rotation.ANGLE_60);
         board = new TantrixBoard(board, tile2);
         return board;
     }
 
     /** Places first tile in the middle and one of two remaining placed */
-    public static TantrixBoard place2of3TilesB() {
+    public static TantrixBoard place2of3Tiles_OneThenThree() {
         TantrixBoard board = new TantrixBoard(threeTiles);
 
-        TilePlacement tile2 = new TilePlacement(TILES.getTile(3), loc(2, 1), Rotation.ANGLE_180);
+        TilePlacement tile2 = new TilePlacement(TILES.getTile(3), loc(2, 1), Rotation.ANGLE_240);
         board = new TantrixBoard(board, tile2);
         return board;
     }
@@ -70,6 +70,15 @@ public class TantrixTstUtil {
         return board;
     }
 
+    /** Places second tile in the middle */
+    public static TantrixBoard place1of3Tiles_startingWithTile2() {
+        HexTileList list = new HexTileList();
+        list.add(TILES.getTile(2));
+        list.add(TILES.getTile(3));
+        list.add(TILES.getTile(1));
+        return new TantrixBoard(list);
+    }
+
     /** Places first tile in the middle */
     public static TantrixBoard place4UnsolvedTiles() {
         TantrixBoard board = new TantrixBoard(fourTiles);
@@ -97,7 +106,7 @@ public class TantrixTstUtil {
         return board;
     }
 
-    private static Location loc(int row, int col) {
+    static Location loc(int row, int col) {
         return new Location(row, col).incrementOnCopy(INITIAL_LOCATION).incrementOnCopy(-1, -1);
     }
 }

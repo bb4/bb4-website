@@ -16,10 +16,10 @@ import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.ROOT3D2;
  */
 public class TantrixBoardRenderer {
 
-    static final double MARGIN_FRAC = 0.6;
+    static final double MARGIN_FRAC = 0.05;
 
     private static final Color BACKGROUND_COLOR = new Color(245, 245, 255);
-    private static final Color GRID_COLOR = new Color(60, 90, 120);
+    private static final Color GRID_COLOR = new Color(110, 120, 180);
 
     private TantrixBoard board_;
     private double hexRadius;
@@ -44,19 +44,16 @@ public class TantrixBoardRenderer {
 
         Graphics2D g2 = (Graphics2D) g;
         int minEdge = Math.min(width, height);
-        hexRadius = minEdge / (board_.getEdgeLength() * ROOT3);
-        int margin = (int)(MARGIN_FRAC * hexRadius);
+        hexRadius = (1.0 - 3.0*MARGIN_FRAC) * minEdge / (board_.getEdgeLength() * ROOT3);
 
         initializeAndClear(g2, width, height);
-        drawGrid(g2, margin);
+        drawGrid(g2);
 
-        int len =  board_.getEdgeLength();
         Location topLeftCorner = board_.getBoundingBox().getTopLeftCorner();
 
         for (Location loc : board_.getTantrixLocations()) {
-
             TilePlacement placement = board_.getTilePlacement(loc);
-            tileRenderer.render(g2, placement, topLeftCorner, hexRadius, margin);
+            tileRenderer.render(g2, placement, topLeftCorner, hexRadius);
         }
     }
 
@@ -71,12 +68,13 @@ public class TantrixBoardRenderer {
     /**
      * Draw the gridlines over the background.
      */
-    protected void drawGrid(Graphics2D g2, int margin) {
+    protected void drawGrid(Graphics2D g2) {
 
         int edgeLen = board_.getEdgeLength();
         int xpos, ypos;
         int i;
         int start = 0;
+        int margin = (int)(hexRadius/2.0);
         int startPos = margin;
         double hexWidth = 2 * hexRadius * ROOT3D2;
         int rightEdgePos = (int)(margin + hexWidth * edgeLen);
