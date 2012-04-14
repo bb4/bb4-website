@@ -12,14 +12,13 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class PegBoardRenderer extends PuzzleRenderer<PegBoard> {
+public class PegBoardRenderer implements PuzzleRenderer<PegBoard> {
 
     public static final int INC = 10;
 
     private static final int LEFT_MARGIN = 50;
     private static final int TOP_MARGIN = 55;
 
-    private static final Color BACKGROUND_COLOR = new Color(235, 235, 240);
     private static final Color FILLED_HOLE_COLOR = new Color(120, 0, 190);
     private static final Color EMPTY_HOLE_COLOR = new Color(55, 55, 65, 150);
     private static final int FILLED_HOLE_RAD = 16;
@@ -29,29 +28,18 @@ public class PegBoardRenderer extends PuzzleRenderer<PegBoard> {
      * private constructor because this class is a singleton.
      * Use getPieceRenderer instead.
      */
-    public PegBoardRenderer()
-    {
-    }
+    public PegBoardRenderer() {}
 
     /**
      * This renders the current state of the Board to the screen.
      */
-    @Override
-    public void render( Graphics g, PegBoard board, String status, int width, int height )
-    {
-         int i, xpos, ypos;
+    public void render( Graphics g, PegBoard board, int width, int height ) {
 
-        // erase what's there and redraw.
-        g.clearRect( 0, 0, width, height );
-        g.setColor( BACKGROUND_COLOR );
-        g.fillRect( 0, 0, width, height );
-
+        int i, xpos, ypos;
         int size = PegBoard.SIZE;
         int rightEdgePos = LEFT_MARGIN + 3 * INC * size;
         int bottomEdgePos = TOP_MARGIN + 3 * INC * size;
-
         g.setColor( Color.black );
-        drawStatus(g,  status,  LEFT_MARGIN, TOP_MARGIN - 36 );
 
         // draw the hatches which delineate the cells
         g.setColor( Color.darkGray );

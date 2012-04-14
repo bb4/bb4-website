@@ -4,15 +4,19 @@ package com.becker.puzzle.common;
 import com.becker.common.format.FormatUtil;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicBorders;
+import java.awt.*;
 import java.util.List;
 
 /**
  * Shows the current state of the puzzle in the ui.
- * Created on August 26, 2007, 10:41 AM
  * @author Barry Becker
  */
 public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P, M> {
-    
+
+    public static final int MARGIN = 15;
+    private static final Color BACKGROUND_COLOR = new Color(235, 235, 240);
+
     protected P board_;  
     protected String status_ = "";
     protected long numTries_;
@@ -63,5 +67,35 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
         msg += " Memory used = "+ FormatUtil.formatNumber(totalMem_ - freeMem_) +"k";
         return msg;
     }
-        
+
+    /**
+     * This renders the current state of the puzzle to the screen.
+     */
+    @Override
+    protected void paintComponent( Graphics g ) {
+        super.paintComponent(g);
+        clearBackground(g);
+        drawStatus(g, status_, MARGIN, MARGIN);
+    }
+
+    private void clearBackground(Graphics g) {
+        int width = this.getWidth();
+        int height = this.getHeight();
+        // erase what's there and redraw.
+        g.clearRect( 0, 0, width, height );
+        g.setColor( BACKGROUND_COLOR );
+        g.fillRect( 0, 0, width, height );
+    }
+
+    protected void drawStatus(Graphics g, String status, int x, int y) {
+        String[] lines = status.split("\n");
+        int offset = 0;
+        g.setColor( Color.black );
+        for (String line : lines) {
+            offset += 14;
+            g.drawString( line, x, y + offset );
+            //System.out.println("drawing " + line);
+        }
+    }
+
 }

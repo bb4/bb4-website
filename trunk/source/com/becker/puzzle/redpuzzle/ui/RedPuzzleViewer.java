@@ -21,7 +21,7 @@ final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece> {
    
     public static final int MAX_ANIM_SPEED = 100;
     public static final int INITIAL_ANIM_SPEED = 20; 
-    // slows down the animation.
+    /** slows down the animation.  */
     private int animationSpeed_ = INITIAL_ANIM_SPEED;
     
     // play a sound effect when a piece goes into place.
@@ -72,7 +72,6 @@ final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece> {
     public void makeSound() {
         musicMaker_.playNote(60, 20, 940);
     }
-    
 
     /**
      *  This renders the current state of the PuzzlePanel to the screen.
@@ -80,8 +79,8 @@ final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece> {
      */
     @Override
     protected void paintComponent( Graphics g ) {
-        super.paintComponents( g );
-        renderer_.render( g, board_, status_, this.getWidth(), this.getHeight());
+        super.paintComponent( g );
+        renderer_.render( g, board_, this.getWidth(), this.getHeight());
     }
 
 }

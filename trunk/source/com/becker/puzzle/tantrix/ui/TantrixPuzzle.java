@@ -36,8 +36,7 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
     @Override
     protected PuzzleController<TantrixBoard, TilePlacement>
                 createController(Refreshable<TantrixBoard, TilePlacement> viewer) {
-        TantrixController controller = new TantrixController(viewer);
-        return controller;
+        return new TantrixController(viewer);
     }
     
     @Override

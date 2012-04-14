@@ -17,13 +17,13 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class RedPuzzleRenderer extends PuzzleRenderer<PieceList> {
+public class RedPuzzleRenderer implements PuzzleRenderer<PieceList> {
 
      /** size of piece in pixels. */
     static final int PIECE_SIZE = 90;
     private static final int THIRD_SIZE = PIECE_SIZE / 3;
 
-    private static final int MARGIN = 65;
+    private static final int MARGIN = 75;
     private static final int ORIENT_ARROW_LEN = PIECE_SIZE >> 2;
     private static final int ARROW_HEAD_RAD = 2;
 
@@ -31,7 +31,6 @@ public class RedPuzzleRenderer extends PuzzleRenderer<PieceList> {
     private static final Color PIECE_BACKGROUND_COLOR = new Color(255, 205, 215, 55);
     private static final Color GRID_COLOR = new Color(10, 0, 100);
     private static final Color TEXT_COLOR = new Color(0, 0, 0);
-    private static final Color BACKGROUND_COLOR = new Color(220, 220, 240);
 
     private static final Font NUB_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12);
     private static final Font TEXT_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.BOLD, 18);
@@ -46,28 +45,18 @@ public class RedPuzzleRenderer extends PuzzleRenderer<PieceList> {
      * private constructor because this class is a singleton.
      * Use getPieceRenderer instead.
      */
-    public RedPuzzleRenderer()
-    {
-    }
+    public RedPuzzleRenderer() {}
 
     /**
      * This renders the current state of the Board to the screen.
      */
-    @Override
-    public void render( Graphics g, PieceList board, String status, int width, int height )
-    {
-        // erase what's there and redraw.
-        g.setColor( BACKGROUND_COLOR );
-        g.fillRect( 0, 0, width, height );
-
-        g.setColor( TEXT_COLOR );
-        drawStatus(g,  status, MARGIN, MARGIN - 50 );
+    public void render( Graphics g, PieceList board,  int width, int height ) {
 
         drawPieceBoundaryGrid((Graphics2D)g, DIM);
 
         int i;
         // use this to determine of there is a nub mismatch a a given location
-        // allocates a littel more space tha we actually use, but simpler this way.
+        // allocates a little more space tha we actually use, but simpler this way.
         char[][] nubChecks = new char[7][7];
 
         if (board== null) return;
