@@ -22,14 +22,16 @@ import java.util.List;
 public class GeneticSearchSolver extends RedPuzzleSolver<PieceList, Piece>
                                  implements Optimizee, OptimizationListener {
 
-    public static final int SOLVED_THRESH = 1000;
-
     /** bonuses given to the scoring algorithm if 3 nubs fit on a side piece. */
     public static final double THREE_FIT_BOOST = 0.1;
     /** bonuses given to the scoring algorithm if 4 nubs on the center piece fit. */
     public static final double FOUR_FIT_BOOST = 0.6;
 
-    // the max number of fitting nubs that we can have. The puzzle is solved if this happens.
+    /**
+     * The puzzle is solved if we reach this score.
+     * There are 24 nubs that need to fit for all the pieces.
+     * There are 4 edge pieces that get THREE_FIT_BOOST if all 3 nubs fit.
+     */
     public static final double MAX_FITS = 24 + 4 * THREE_FIT_BOOST + FOUR_FIT_BOOST;
 
     /** either genetic or concurrent genetic strategy. */
@@ -60,11 +62,11 @@ public class GeneticSearchSolver extends RedPuzzleSolver<PieceList, Piece>
         optimizer.setListener(this);
 
         ParameterArray solution =
-            optimizer.doOptimization(strategy, initialGuess, SOLVED_THRESH);
+            optimizer.doOptimization(strategy, initialGuess, MAX_FITS);
 
         solution_ = ((PieceParameterArray)solution).getPieceList();
         List<Piece> moves;
-        if (evaluateFitness(solution) >= SOLVED_THRESH) {
+        if (evaluateFitness(solution) >= MAX_FITS) {
             moves = solution_.getPieces();
         } else {
             moves = null;
@@ -83,11 +85,10 @@ public class GeneticSearchSolver extends RedPuzzleSolver<PieceList, Piece>
      * terminate the solver if we find a solution with this fitness.
      */
     public double getOptimalFitness() {
-        return SOLVED_THRESH;
+        return MAX_FITS;
     }
 
     public boolean evaluateByComparison() {
-
         return false;
     }
 
@@ -102,10 +103,6 @@ public class GeneticSearchSolver extends RedPuzzleSolver<PieceList, Piece>
         PieceList pieces = ((PieceParameterArray) params).getPieceList();
         double fitness = getNumFits(pieces);
         params.setFitness(fitness);
-        // there are 24 fits when the puzzle is solved.
-        if (fitness >= MAX_FITS) {
-            return SOLVED_THRESH;
-        }
         return fitness;
     }
 

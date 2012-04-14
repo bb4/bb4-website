@@ -130,9 +130,9 @@ public final class Piece
                p.nubs_[2] == this.nubs_[2] &&
                p.nubs_[3] == this.nubs_[3] &&
                p.getNumber() == this.getNumber()
+               //p.orientation_ == this.orientation_ must omit
         );
     }
-
 
     @Override
     public int hashCode() {
@@ -140,8 +140,6 @@ public final class Piece
         return 42; // any arbitrary constant will do 
     }
 
-
-    
     /**
      * @return a nice readable string representation for debugging.
      */

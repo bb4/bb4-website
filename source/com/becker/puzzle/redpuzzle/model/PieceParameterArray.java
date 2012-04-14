@@ -10,7 +10,7 @@ import com.becker.optimization.parameter.PermutedParameterArray;
  * For example, when finding a random neighbor, we consider rotations of
  * non-fitting pieces rather than just offsetting the number by some random amount.
  *
- * @author Barry Becker Date: Aug 6, 2006
+ * @author Barry Becker
  */
 public class PieceParameterArray extends PermutedParameterArray {
 
@@ -25,6 +25,7 @@ public class PieceParameterArray extends PermutedParameterArray {
     @Override
     public PieceParameterArray copy() {
         PieceParameterArray copy = new PieceParameterArray(pieces_);
+
         copy.setFitness(this.getFitness());
         return copy;
     }
@@ -42,9 +43,11 @@ public class PieceParameterArray extends PermutedParameterArray {
 
         int numSwaps = 1;   //Math.max(1, (int) (rad * 2.0));
 
-        for (int i=0; i<numSwaps; i++) {
+        for (int i = 0; i < numSwaps; i++) {
             doPieceSwap(pieces);
         }
+        //assert !this.equals(new PieceParameterArray(pieces)) :
+        //    "The piecelists should not be equal new=" + pieces + " orig=" + pieces_;
 
         assert (pieces.size() == NUM_PIECES);
         // make a pass over all the pieces.
@@ -54,7 +57,7 @@ public class PieceParameterArray extends PermutedParameterArray {
             int numFits = pieces.getNumFits(k);
             int bestNumFits = numFits;
             int bestRot = 1;
-            for (int i=0; i<3; i++) {
+            for (int i = 0; i < 3; i++) {
 
                 pieces.rotate(k, 1);  // fix
                 numFits = pieces.getNumFits(k);
@@ -71,18 +74,19 @@ public class PieceParameterArray extends PermutedParameterArray {
     }
 
     /**
-     * exchange 2 pieces, even if it means the fitness gets worse.
+     * Exchange 2 pieces, even if it means the fitness gets worse.
      *
      * Skew away from selecting pieces that have fits.
      * The probability of selecting pieces that already have fits is sharply reduced.
-     * The denonimator is 1 + the number of fits that the piece has.
+     * The denominator is 1 + the number of fits that the piece has.
      */
     private static void doPieceSwap(PieceList pieces) {
 
         double[] swapProbabilities = findSwapProbabilities(pieces);
         double totalProb = 0;
-        for (int i=0; i<NUM_PIECES; i++) totalProb += swapProbabilities[i];
-
+        for (int i = 0; i < NUM_PIECES; i++) {
+            totalProb += swapProbabilities[i];
+        }
         int p1 = getPieceFromProb(totalProb * RANDOM.nextDouble(), swapProbabilities);
         int p2;
         do {
@@ -119,7 +123,6 @@ public class PieceParameterArray extends PermutedParameterArray {
         }
         return --i;
     }
-
 
     /**
      * @return get a completely random solution in the parameter space.
@@ -159,5 +162,24 @@ public class PieceParameterArray extends PermutedParameterArray {
     public String toCSVString() {
         return toString();
     }
+
+    /*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        PieceParameterArray that = (PieceParameterArray) o;
+        if (pieces_ != null ? !pieces_.equals(that.pieces_) : that.pieces_ != null) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (pieces_ != null ? pieces_.hashCode() : 0);
+        return result;
+    }   */
 
 }

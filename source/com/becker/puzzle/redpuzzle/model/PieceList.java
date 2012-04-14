@@ -34,7 +34,7 @@ public class PieceList {
 
     private List<Piece> pieces_;
 
-    /** this defines the puzzle pieces for the standard 9x9 puzzle (not sorted).*
+    /** this defines the puzzle pieces for the standard 9x9 puzzle (not sorted).*/
     private static final Piece[] INITIAL_PIECES_9 = {
         new Piece( Nub.OUTY_SPADE,  Nub.OUTY_DIAMOND,  Nub.INNY_HEART, Nub.INNY_DIAMOND, 1),  // 0
         new Piece( Nub.OUTY_CLUB,  Nub.OUTY_HEART,  Nub.INNY_DIAMOND, Nub.INNY_CLUB, 2),     // 1
@@ -45,7 +45,7 @@ public class PieceList {
         new Piece( Nub.OUTY_HEART,  Nub.OUTY_DIAMOND,  Nub.INNY_CLUB, Nub.INNY_CLUB, 7),
         new Piece( Nub.OUTY_DIAMOND,  Nub.OUTY_CLUB,  Nub.INNY_CLUB, Nub.INNY_DIAMOND, 8),
         new Piece( Nub.OUTY_SPADE,  Nub.OUTY_SPADE,  Nub.INNY_HEART, Nub.INNY_CLUB, 9),
-     };   */
+     };
 
     /***
      * Mapping from Lynette's puzzle
@@ -53,7 +53,7 @@ public class PieceList {
      *         2 = diamond
      *         3 = club
      *         4 = spade        A = inny   B = outy
-     */
+     *
     private static final Piece[] INITIAL_PIECES_9 = {
             new Piece( Nub.INNY_HEART,  Nub.OUTY_SPADE,  Nub.OUTY_DIAMOND, Nub.OUTY_CLUB, 1),  // 0
             new Piece( Nub.OUTY_SPADE,  Nub.INNY_CLUB,  Nub.INNY_HEART, Nub.INNY_DIAMOND, 2),    // 1
@@ -64,7 +64,7 @@ public class PieceList {
             new Piece( Nub.OUTY_HEART,  Nub.OUTY_SPADE,  Nub.OUTY_DIAMOND, Nub.OUTY_CLUB, 7),
             new Piece( Nub.OUTY_HEART,  Nub.INNY_DIAMOND,  Nub.INNY_SPADE, Nub.OUTY_CLUB, 8),
             new Piece( Nub.OUTY_SPADE,  Nub.INNY_DIAMOND,  Nub.INNY_CLUB, Nub.INNY_SPADE, 9),
-    };
+    };*/
 
     /** this defines the puzzle pieces for a simpler 4x4 puzzle. */
     private static final Piece[] INITIAL_PIECES_4 = {
@@ -348,8 +348,18 @@ public class PieceList {
         return buf.toString();
     }
 
-    public int getEDGE_LENGTH() {
-        return EDGE_LENGTH;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PieceList pieceList = (PieceList) o;
+        if (pieces_ != null ? !pieces_.equals(pieceList.pieces_) : pieceList.pieces_ != null) return false;
+        return true;
     }
 
+    @Override
+    public int hashCode() {
+        return pieces_ != null ? pieces_.hashCode() : 0;
+    }
 }
