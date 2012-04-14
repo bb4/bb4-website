@@ -1,7 +1,6 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.ui;
 
-import com.becker.common.concurrency.ThreadUtil;
 import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
@@ -26,10 +25,12 @@ public final class TantrixViewer extends PuzzleViewer<TantrixBoard, TilePlacemen
     /**
      * Constructor.
      */
-    public TantrixViewer() {}
+    public TantrixViewer() {
+        renderer_ = new TantrixBoardRenderer();
+    }
 
     public TantrixBoard getBoard() {
-        return renderer_.getBoard();
+        return board_;
     }
 
     /**
@@ -39,13 +40,8 @@ public final class TantrixViewer extends PuzzleViewer<TantrixBoard, TilePlacemen
     @Override
     protected void paintComponent( Graphics g ) {
 
-        super.paintComponents( g );
-        if (board_ != null)  {
-            renderer_ = new TantrixBoardRenderer(board_);
-            renderer_.render(g, getWidth(), getHeight());
-            // without this we do not get key events.
-            requestFocus();
-        }
+        super.paintComponent(g);
+        renderer_.render(g, board_, getWidth(), getHeight());
     }
 
 
@@ -53,21 +49,14 @@ public final class TantrixViewer extends PuzzleViewer<TantrixBoard, TilePlacemen
     public void refresh(TantrixBoard board, long numTries) {
         if (numTries % 1 == 0) {
             status_ = createStatusMessage(numTries);
-            makeASound(board.getUnplacedTiles().size());
             simpleRefresh(board, numTries);
             //ThreadUtil.sleep(100);
         }
     }
 
     public void makeSound() {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    /**
-     * make a little click noise when the piece fits into place.
-     */
-    private void makeASound(int num) {
-        musicMaker_.playNote(num * 20, 20, 640);
+        int note = Math.min(127, 20 + getBoard().getUnplacedTiles().size() * 12);
+        musicMaker_.playNote(note * 20, 20, 640);
     }
 }
 

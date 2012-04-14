@@ -12,11 +12,11 @@ import java.awt.*;
  */
 public class PathColorInterpreter {
 
-    private static final Color BLUE_COLOR = new Color(10, 40, 250);
-    private static final Color RED_COLOR = new Color(220, 20, 30);
-    private static final Color GREEN_COLOR = new Color(10, 250, 20);
-    private static final Color YELLOW_COLOR = new Color(240, 240, 10);
-    private static final Color WHITE_COLOR = new Color(251, 250, 255);
+    private static final Color BLUE_COLOR = new Color(60, 90, 250);
+    private static final Color RED_COLOR = new Color(210, 75, 70);
+    private static final Color GREEN_COLOR = new Color(40, 210, 50);
+    private static final Color YELLOW_COLOR = new Color(230, 230, 40);
+    private static final Color WHITE_COLOR = new Color(251, 250, 254);
 
     public static Color getColorForPathColor(PathColor pathColor) {
 

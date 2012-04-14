@@ -6,7 +6,13 @@ import com.becker.puzzle.common.PuzzleApplet;
 import com.becker.puzzle.common.PuzzleController;
 import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
+import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.util.GUIUtil;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * HiQ Puzzle.
@@ -41,8 +47,13 @@ import com.becker.ui.util.GUIUtil;
  * After optimization it  ran in about 3 minutes on a Core2Duo (189 seconds).
  * After parallelizing the algorithm using ConcurrentPuzzleSolver it is down to 93 seconds on the CoreDuo.
  */
-public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove> {
-    
+public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
+                             implements ActionListener, DoneListener {
+
+    private JButton backButton_;
+    private JButton forwardButton_;
+    private int currentStep_;
+
     /**
      * Construct the application
      */
@@ -51,7 +62,7 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove> {
     
     @Override
     protected PuzzleViewer<PegBoard, PegMove> createViewer() {
-        return new PegBoardViewer(PegBoard.INITIAL_BOARD_POSITION);
+        return new PegBoardViewer(PegBoard.INITIAL_BOARD_POSITION, this);
     }
 
     @Override
@@ -62,6 +73,60 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove> {
     @Override
     protected AlgorithmEnum<PegBoard, PegMove>[] getAlgorithmValues() {
         return Algorithm.values();
+    }
+
+
+    @Override
+    protected JPanel createCustomControls() {
+
+        backButton_ = new JButton("Back");
+        forwardButton_ = new JButton("Forward");
+        backButton_.addActionListener(this);
+        forwardButton_.addActionListener(this);
+        backButton_.setEnabled(false);
+        forwardButton_.setEnabled(false);
+
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.add(backButton_, BorderLayout.WEST);
+        buttonPanel.add(forwardButton_, BorderLayout.EAST);
+
+        return buttonPanel;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == backButton_) {
+            moveInPath(-1);
+            backButton_.setEnabled((currentStep_ > 0));
+            forwardButton_.setEnabled(true);
+        }
+        else if (e.getSource() == forwardButton_) {
+            moveInPath(1);
+            boolean enable = (currentStep_ < ((PegBoardViewer)viewer_).getPath().size()-1);
+            forwardButton_.setEnabled(enable);
+            backButton_.setEnabled(true);
+        }
+    }
+
+
+    /**
+     * switch from the current move in the sequence forwards or backwards stepSize.
+     * @param stepSize num steps to move.
+     */
+    public void moveInPath(int stepSize) {
+        if (stepSize == 0) return;
+        int inc = stepSize > 0 ? 1 : -1;
+        int toStep = currentStep_ + stepSize;
+        do {
+            ((PegBoardViewer)viewer_).makeMove(currentStep_, (inc < 0));
+            currentStep_ += inc;
+        } while (currentStep_ != toStep);
+        viewer_.repaint();
+    }
+
+    public void done() {
+        currentStep_ = ((PegBoardViewer)viewer_).getPath().size()-1;
+        backButton_.setEnabled(true);
+        forwardButton_.setEnabled(false);
     }
 
     /**

@@ -43,7 +43,8 @@ public class SolutionVerifier {
             numVisited++;
         } while (currentTile != null && !currentTile.equals(lastTilePlaced));
 
-        return (numVisited == board.getNumTiles() && lastTilePlaced.equals(currentTile));
+        boolean isLoop = (numVisited == board.getNumTiles() && lastTilePlaced.equals(currentTile));
+        return isLoop && noInnerSpaces();
     }
 
     /**
@@ -65,5 +66,9 @@ public class SolutionVerifier {
             }
         }
         return null;
+    }
+
+    private boolean noInnerSpaces() {
+        return true;
     }
 }

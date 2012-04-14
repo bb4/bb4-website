@@ -232,6 +232,12 @@
           <param name="jarFile" value="hiq.jar"/>
       </antcall>
 
+      <!-- copy the class files that are needed for tantrix deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="puzzle/tantrix"/>
+          <param name="jarFile" value="tantrix.jar"/>
+      </antcall>
+
        <!-- copy xml and media files for stories -->
       <antcall target="copyImageResources">
         <param name="path" value="puzzle/adventure/stories/**/images"/>
