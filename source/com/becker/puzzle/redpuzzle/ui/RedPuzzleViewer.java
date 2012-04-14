@@ -2,7 +2,7 @@
 package com.becker.puzzle.redpuzzle.ui;
 
 import com.becker.common.concurrency.ThreadUtil;
-import com.becker.puzzle.common.PuzzleViewer;
+import com.becker.puzzle.common.ui.PuzzleViewer;
 import com.becker.puzzle.redpuzzle.model.Piece;
 import com.becker.puzzle.redpuzzle.model.PieceList;
 import com.becker.sound.MusicMaker;

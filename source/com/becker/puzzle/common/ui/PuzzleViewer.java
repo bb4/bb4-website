@@ -1,7 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.common;
+package com.becker.puzzle.common.ui;
 
 import com.becker.common.format.FormatUtil;
+import com.becker.puzzle.common.Refreshable;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicBorders;

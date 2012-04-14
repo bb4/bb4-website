@@ -7,6 +7,8 @@ import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.common.solver.ConcurrentPuzzleSolver;
 import com.becker.puzzle.common.solver.PuzzleSolver;
 import com.becker.puzzle.common.solver.SequentialPuzzleSolver;
+import com.becker.puzzle.hiq.model.PegBoard;
+import com.becker.puzzle.hiq.model.PegMove;
 
 /**
  * Type of HiQ solver to use.

@@ -1,7 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.common;
+package com.becker.puzzle.common.ui;
 
 import com.becker.common.concurrency.Worker;
+import com.becker.puzzle.common.AlgorithmEnum;
+import com.becker.puzzle.common.PuzzleController;
+import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.common.solver.PuzzleSolver;
 
 import java.util.Set;

@@ -1,7 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.hiq;
+package com.becker.puzzle.hiq.ui;
 
 import com.becker.puzzle.common.PuzzleRenderer;
+import com.becker.puzzle.hiq.model.PegBoard;
 
 import java.awt.*;
 
