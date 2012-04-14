@@ -1,7 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.hiq;
+package com.becker.puzzle.hiq.ui;
 
-import com.becker.puzzle.common.PuzzleViewer;
+import com.becker.puzzle.common.ui.PuzzleViewer;
+import com.becker.puzzle.hiq.model.PegBoard;
+import com.becker.puzzle.hiq.model.PegMove;
 
 import java.awt.*;
 import java.util.List;

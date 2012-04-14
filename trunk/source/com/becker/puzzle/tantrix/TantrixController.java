@@ -1,13 +1,13 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix;
 
-import com.becker.common.math.MathUtil;
-import com.becker.puzzle.common.AbstractPuzzleController;
+import com.becker.puzzle.common.ui.AbstractPuzzleController;
 import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.tantrix.model.HexTiles;
 import com.becker.puzzle.tantrix.model.MoveGenerator;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.solver.Algorithm;
 
 import java.util.List;
 

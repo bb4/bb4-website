@@ -1,8 +1,11 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.hiq;
 
-import com.becker.puzzle.common.AbstractPuzzleController;
+import com.becker.puzzle.common.ui.AbstractPuzzleController;
 import com.becker.puzzle.common.Refreshable;
+import com.becker.puzzle.hiq.model.MoveGenerator;
+import com.becker.puzzle.hiq.model.PegBoard;
+import com.becker.puzzle.hiq.model.PegMove;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +16,7 @@ import java.util.Set;
  *
  * @author Barry Becker
  */
-public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {    
+public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {
 
     /**
      * @param ui shows the current state on the screen.

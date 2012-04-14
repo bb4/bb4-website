@@ -1,7 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.ui;
 
-import com.becker.puzzle.common.PuzzleViewer;
+import com.becker.puzzle.common.ui.PuzzleViewer;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.ui.rendering.TantrixBoardRenderer;

@@ -1,12 +1,15 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.hiq;
+package com.becker.puzzle.hiq.ui;
 
 import com.becker.puzzle.common.AlgorithmEnum;
-import com.becker.puzzle.common.PuzzleApplet;
+import com.becker.puzzle.common.ui.PuzzleApplet;
 import com.becker.puzzle.common.PuzzleController;
-import com.becker.puzzle.common.PuzzleViewer;
+import com.becker.puzzle.common.ui.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
-import com.becker.ui.sliders.LabeledSlider;
+import com.becker.puzzle.hiq.Algorithm;
+import com.becker.puzzle.hiq.HiQController;
+import com.becker.puzzle.hiq.model.PegBoard;
+import com.becker.puzzle.hiq.model.PegMove;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
@@ -67,7 +70,7 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
 
     @Override
     protected PuzzleController<PegBoard, PegMove> createController(Refreshable<PegBoard, PegMove> viewer_) {
-        return new HiQController(viewer_);        
+        return new HiQController(viewer_);
     }
     
     @Override

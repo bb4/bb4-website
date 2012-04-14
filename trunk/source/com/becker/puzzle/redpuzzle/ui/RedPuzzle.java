@@ -2,9 +2,9 @@
 package com.becker.puzzle.redpuzzle.ui;
 
 import com.becker.puzzle.common.AlgorithmEnum;
-import com.becker.puzzle.common.PuzzleApplet;
+import com.becker.puzzle.common.ui.PuzzleApplet;
 import com.becker.puzzle.common.PuzzleController;
-import com.becker.puzzle.common.PuzzleViewer;
+import com.becker.puzzle.common.ui.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.redpuzzle.solver.Algorithm;
 import com.becker.puzzle.redpuzzle.RedPuzzleController;
