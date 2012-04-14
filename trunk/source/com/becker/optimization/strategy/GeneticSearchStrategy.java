@@ -73,7 +73,6 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
         improvementEpsilon_ = eps;
     }
 
-
     /**
      * finds a local maxima using a genetic algorithm (evolutionary) search.
      * We stop iterating as soon as the average evaluation score of the population
@@ -93,8 +92,11 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
          // create an initial population based on params and POPULATION_SIZE-1 other random candidate solutions.
          List<ParameterArray> population = new LinkedList<ParameterArray>();
          population.add(params);
-         for (int i=1; i<populationSize_; i++) {
-             population.add(i, params.getRandomNeighbor(INITIAL_RADIUS));
+         for (int i = 1; i < populationSize_; i++) {
+             ParameterArray nbr = params.getRandomNeighbor(INITIAL_RADIUS);
+             if (!nbr.equals(params)) {
+                 population.add(i, nbr);
+             }
          }
 
          // EVALUATE POPULATION
@@ -126,9 +128,9 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             deltaFitness = (currentBest.getFitness() - lastBest.getFitness());
             assert (deltaFitness >=0) : "We must never get worse in a new generation.";
 
-            System.out.println(" ct="+ct+"  nbrRadius_="+nbrRadius_ +" population size=" + populationSize_
-                               +" deltaFitness="+deltaFitness+"  currentBest = "+ currentBest.getFitness()
-                               +"  lastBest="+ lastBest.getFitness());
+            System.out.println(" ct="+ct+"  nbrRadius_=" + nbrRadius_ + " population size=" + populationSize_
+                               +" deltaFitness=" + deltaFitness+"  currentBest = " + currentBest.getFitness()
+                               +"  lastBest=" + lastBest.getFitness());
             log(ct, currentBest.getFitness(), nbrRadius_, deltaFitness, params, "---");
             recentBest = currentBest.copy();
 
@@ -147,6 +149,9 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
         }
         else if (deltaFitness <= improvementEpsilon_) {
             System.out.println("stopped because we made no IMPROVEMENT");
+        }
+        else {
+            System.out.println("Stopped because we exceeded the MAX ITERATIONS: " + ct);
         }
         System.out.println("----------------------- done -------------------");
         log(ct, currentBest.getFitness(), 0, 0, currentBest, FormatUtil.formatNumber(ct));
@@ -170,7 +175,9 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
         int keepSize = Math.max(1,  (int)(populationSize_*(1.0 - CULL_FACTOR)));
 
         //printPopulation(population, 10);
-        for (int j = populationSize_-1; j >= keepSize; j--) {
+        int size = population.size();
+        System.out.println("pop size = " + size);
+        for (int j = size-1; j >= keepSize; j--) {
             population.remove( j );
         }
         return keepSize;

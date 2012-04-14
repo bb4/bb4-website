@@ -29,14 +29,6 @@ public class PermutedParameterArray extends ParameterArray {
         super(params);
     }
 
-    /**
-     * Use this constructor if you have mixed types of parameters.
-     * @param params
-     */
-    public PermutedParameterArray(List<Parameter> params) {
-        super(params);
-    }
-
     @Override
     protected PermutedParameterArray createInstance() {
         return new PermutedParameterArray();
