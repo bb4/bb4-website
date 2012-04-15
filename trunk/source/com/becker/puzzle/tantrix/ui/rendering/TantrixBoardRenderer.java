@@ -17,10 +17,10 @@ import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.ROOT3D2;
  */
 public class TantrixBoardRenderer implements PuzzleRenderer<TantrixBoard> {
 
-    static final double MARGIN_FRAC = 0.07;
+    static final double MARGIN_FRAC = 0.2;
     static final int TOP_MARGIN = 15;
 
-    private static final Color GRID_COLOR = new Color(110, 120, 180);
+    private static final Color GRID_COLOR = new Color(130, 140, 170);
 
     private double hexRadius;
     private HexTileRenderer tileRenderer;
@@ -40,7 +40,7 @@ public class TantrixBoardRenderer implements PuzzleRenderer<TantrixBoard> {
         if (board == null) return;
         Graphics2D g2 = (Graphics2D) g;
         int minEdge = Math.min(width, height);
-        hexRadius = (1.0 - 3.0 * MARGIN_FRAC) * minEdge / (board.getEdgeLength() * ROOT3);
+        hexRadius = (1.0 - MARGIN_FRAC) * minEdge / (board.getEdgeLength() * ROOT3 * .9);
 
         setHints(g2);
         drawGrid(g2, board);
@@ -68,7 +68,7 @@ public class TantrixBoardRenderer implements PuzzleRenderer<TantrixBoard> {
         int i;
         int start = 0;
         int margin = (int)(hexRadius/2.0);
-        double hexWidth = 2 * hexRadius * ROOT3D2;
+        double hexWidth = 1.5 * hexRadius;
         int rightEdgePos = (int)(margin + hexWidth * edgeLen);
         int bottomEdgePos = (int)(TOP_MARGIN + margin + hexWidth * edgeLen);
 
