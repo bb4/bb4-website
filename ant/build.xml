@@ -446,7 +446,7 @@
   <target name="executeTantrixPuzzle" depends="compile" description=" run the Tantrix Puzzle">
      <echo message="now executing tantrix puzzle"/>
      <java classname="com.becker.puzzle.tantrix.ui.TantrixPuzzle" classpath="${classesDir}"
-           fork="true" jvm="${java_compiler}" maxmemory="2048M">
+           fork="true" jvm="${java_compiler}" maxmemory="4096M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
   </target>

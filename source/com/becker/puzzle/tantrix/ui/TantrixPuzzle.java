@@ -22,6 +22,7 @@ import javax.swing.event.ChangeListener;
 public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacement>
                                  implements ChangeListener {
     JSpinner spinner;
+    private static final int DEFAULT_NUM_TILES = 7;
 
     /**
      * Construct the application.
@@ -38,7 +39,9 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
     @Override
     protected PuzzleController<TantrixBoard, TilePlacement>
                 createController(Refreshable<TantrixBoard, TilePlacement> viewer) {
-        return new TantrixController(viewer);
+        TantrixController controller = new TantrixController(viewer);
+        controller.setNumTiles(DEFAULT_NUM_TILES);
+        return controller;
     }
     
     @Override
@@ -49,7 +52,7 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
     @Override
     protected JPanel createCustomControls() {
         JLabel label = new JLabel("Number of Tiles");
-        SpinnerModel model = new SpinnerNumberModel(3, 3, 30, 1);
+        SpinnerModel model = new SpinnerNumberModel(DEFAULT_NUM_TILES, 3, 30, 1);
         spinner = new JSpinner(model);
         spinner.addChangeListener(this);
 
@@ -62,7 +65,11 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
 
     public void stateChanged(ChangeEvent e) {
 
-        ((TantrixController)controller_).setNumTiles((Integer)spinner.getValue());
+        getController().setNumTiles((Integer)spinner.getValue());
+    }
+
+    private TantrixController getController() {
+        return ((TantrixController)controller_);
     }
 
     /**
