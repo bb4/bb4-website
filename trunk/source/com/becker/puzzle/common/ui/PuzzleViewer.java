@@ -46,6 +46,7 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
         }
         System.out.println(status_);
         simpleRefresh(board, numTries);
+        System.gc();
     }    
     
     protected void simpleRefresh(P board, long numTries) {

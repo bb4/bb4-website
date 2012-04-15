@@ -113,14 +113,14 @@ public class Tantrix extends HashMap<Location, TilePlacement>{
     }
 
     public int getEdgeLength() {
-        return (int) Math.ceil(Math.sqrt(size()) + 1);
+        return getBoundingBox().getMaxDimension() + 1;
     }
 
     /**
-     * @return the position of the top left bbox corner
+     * @return the bounds of the current tantrix tiles.
      */
     public Box getBoundingBox() {
-        Box bbox = new Box(lastTile.getLocation(), lastTile.getLocation());
+        Box bbox = new Box(lastTile.getLocation());
 
         for (Location loc : keySet())  {
             bbox.expandBy(loc);

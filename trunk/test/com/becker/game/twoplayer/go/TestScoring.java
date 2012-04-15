@@ -2,14 +2,9 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoSearchable;
 import com.becker.game.twoplayer.go.board.move.GoMove;
-import com.becker.game.twoplayer.go.options.GoWeights;
-import com.becker.optimization.parameter.ParameterArray;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 /**
  * @author Barry Becker

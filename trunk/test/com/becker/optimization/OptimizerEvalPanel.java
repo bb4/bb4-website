@@ -2,8 +2,8 @@
 package com.becker.optimization;
 
 import com.becker.common.format.FormatUtil;
-import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.parameter.types.Parameter;
 
 import javax.swing.*;
 import javax.vecmath.Point2d;

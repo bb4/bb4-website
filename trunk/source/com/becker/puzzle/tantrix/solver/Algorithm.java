@@ -17,10 +17,12 @@ import com.becker.puzzle.tantrix.model.TilePlacement;
  */
 public enum Algorithm implements AlgorithmEnum<TantrixBoard, TilePlacement> {
 
-    SEQUENTIAL("Solve sequentially"),
+    SEQUENTIAL("Solve sequentially (May run out of mem if >10)"),
     CONCURRENT_BREADTH("Solve concurrently (mostly breadth first)"),
     CONCURRENT_DEPTH("Solve concurrently (mostly depth first)"),
-    CONCURRENT_OPTIMUM("Solve concurrently (optimized between depth and breadth search)");
+    CONCURRENT_OPTIMUM("Solve concurrently (optimized between depth and breadth search)"),
+    GENETIC_SEARCH("Genetic search"),
+    CONCURRENT_GENETIC_SEARCH("Concurrent Genetic search");
 
     private String label;
     
@@ -39,7 +41,8 @@ public enum Algorithm implements AlgorithmEnum<TantrixBoard, TilePlacement> {
     /**
      * Create an instance of the algorithm given the controller and a refreshable.
      */
-    public PuzzleSolver<TantrixBoard, TilePlacement> createSolver(PuzzleController<TantrixBoard, TilePlacement> controller, Refreshable<TantrixBoard, TilePlacement> ui) {
+    public PuzzleSolver<TantrixBoard, TilePlacement> createSolver(PuzzleController<TantrixBoard, TilePlacement> controller,
+                                                                  Refreshable<TantrixBoard, TilePlacement> ui) {
 
         switch (this) {
             case SEQUENTIAL :
@@ -50,6 +53,10 @@ public enum Algorithm implements AlgorithmEnum<TantrixBoard, TilePlacement> {
                 return new ConcurrentPuzzleSolver<TantrixBoard, TilePlacement>(controller, 0.12f, ui);
             case CONCURRENT_OPTIMUM :
                 return new ConcurrentPuzzleSolver<TantrixBoard, TilePlacement>(controller, 0.2f, ui);
+            case GENETIC_SEARCH :
+                return new GeneticSearchSolver(controller.initialPosition(), ui, false);
+            case CONCURRENT_GENETIC_SEARCH :
+                return new GeneticSearchSolver(controller.initialPosition(), ui, true);
         }
         return null;
     }

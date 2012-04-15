@@ -3,14 +3,13 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.common.GameWeights;
 import com.becker.game.common.GameWeightsStub;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.SearchableStub;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 import com.becker.game.twoplayer.common.search.examples.*;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.transposition.TranspositionTable;
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.TestCase;
 

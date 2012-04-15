@@ -43,6 +43,8 @@ public class SolutionVerifier {
             numVisited++;
         } while (currentTile != null && !currentTile.equals(lastTilePlaced));
 
+        // check that there are no holes.
+
         boolean isLoop = (numVisited == board.getNumTiles() && lastTilePlaced.equals(currentTile));
         return isLoop && noInnerSpaces();
     }

@@ -9,8 +9,6 @@ import com.becker.optimization.strategy.OptimizationStrategyType;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import javax.rmi.PortableRemoteObject;
-
 /**
  * @author Barry Becker
  */

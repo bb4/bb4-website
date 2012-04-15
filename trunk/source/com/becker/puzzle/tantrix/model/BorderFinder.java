@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.model;
 
+import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
 
 import java.util.*;
@@ -15,28 +16,34 @@ import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
  */
 public class BorderFinder {
 
-    Tantrix board;
-    PathColor primaryColor;
-    Set<Location> visited;
+    private Tantrix tantrix;
+    private PathColor primaryColor;
+    private Set<Location> visited;
+    private int maxHalfPathLength;
+    private Box boundingBox;
+    //private int pruneCt;
+    //private int ppruneCt;
 
     /**
      * Constructor
      */
-    public BorderFinder(Tantrix board, PathColor primaryColor) {
-        this.board = board;
+    public BorderFinder(Tantrix tantrix, int numTiles, PathColor primaryColor) {
+        this.tantrix = tantrix;
         this.primaryColor = primaryColor;
+        this.maxHalfPathLength = (numTiles + 1)/2;
+        boundingBox = tantrix.getBoundingBox();
     }
 
     /**
-     * Travel the primary path in both directions, adding all adjacent
-     * empty placements.
+     * Travel the primary path in both directions, adding all adjacent empty placements
+     * as long as they do not push either boundingBox dimension beyond maxHalfPathLength.
      * @return list of legal next placements
      */
     public Set<Location> findBorderPositions() {
         Set<Location> positions = new LinkedHashSet<Location>();
         visited = new HashSet<Location>();
 
-        TilePlacement lastPlaced = board.getLastTile();
+        TilePlacement lastPlaced = tantrix.getLastTile();
 
         Queue<TilePlacement> searchQueue = new LinkedList<TilePlacement>();
         searchQueue.add(lastPlaced);
@@ -45,11 +52,33 @@ public class BorderFinder {
         while (!searchQueue.isEmpty()) {
             TilePlacement placement = searchQueue.remove();
             positions.addAll(findEmptyNeighborLocations(placement));
-
             searchQueue.addAll(findPrimaryPathNeighbors(placement));
         }
 
         return positions;
+    }
+
+    /**
+     * @return all the empty neighbor positions next to the specified placement
+     */
+    private List<Location> findEmptyNeighborLocations(TilePlacement placement) {
+        List<Location> emptyNbrLocations = new LinkedList<Location>();
+        for (byte i=0; i<HEX_SIDES; i++) {
+
+            Location nbrLoc = tantrix.getNeighborLocation(placement, i);
+            if (tantrix.get(nbrLoc) == null) {
+                Box newBox = new Box(boundingBox, nbrLoc);
+                if (newBox.getMaxDimension() <= maxHalfPathLength) {
+                    emptyNbrLocations.add(nbrLoc);
+                    boundingBox = newBox;
+                }
+                /*else {
+                     if (++pruneCt > 1)
+                         System.out.println("en pruned: " + pruneCt + " box="+ boundingBox);
+                } */
+            }
+        }
+        return emptyNbrLocations;
     }
 
     /**
@@ -61,28 +90,21 @@ public class BorderFinder {
         for (byte i=0; i<HEX_SIDES; i++) {
             PathColor color = previous.getPathColor(i);
             if (color == primaryColor) {
-                TilePlacement nbr = board.getNeighbor(previous, i);
+                TilePlacement nbr = tantrix.getNeighbor(previous, i);
                 if (nbr != null && !visited.contains(nbr.getLocation())) {
-                    pathNbrs.add(nbr);
-                    visited.add(nbr.getLocation());
+                    Box newBox = new Box(boundingBox, nbr.getLocation());
+                    if (newBox.getMaxDimension() < maxHalfPathLength) {
+                        pathNbrs.add(nbr);
+                        visited.add(nbr.getLocation());
+                        boundingBox = newBox;
+                    }
+                    /*else {
+                        if (++ppruneCt > 1)
+                            System.out.println("primary path pruned: " + ppruneCt + " box="+ boundingBox);
+                    }   */
                 }
             }
         }
         return pathNbrs;
-    }
-
-    /**
-     * @return all the empty neighbor positions next to the specified placement
-     */
-    private List<Location> findEmptyNeighborLocations(TilePlacement placement) {
-        List<Location> emptyNbrLocations = new LinkedList<Location>();
-        for (byte i=0; i<HEX_SIDES; i++) {
-
-            Location nbrLoc = board.getNeighborLocation(placement, i);
-            if (board.get(nbrLoc) == null) {
-                emptyNbrLocations.add(nbrLoc);
-            }
-        }
-        return emptyNbrLocations;
     }
 }

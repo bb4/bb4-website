@@ -56,7 +56,7 @@ public abstract class AbstractParameter implements Parameter {
      *     r is relative to each parameter range (in other words scaled by it).
      */
     public void tweakValue(double r, Random rand) {
-        assert Math.abs(r) < 1.0;
+        assert Math.abs(r) <= 1.5;
         if (r == 0 ) {
             return;  // no change in the param.
         }

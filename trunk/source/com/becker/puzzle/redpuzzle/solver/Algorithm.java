@@ -42,7 +42,7 @@ public enum Algorithm implements AlgorithmEnum<PieceList, Piece> {
      * Create an instance of the algorithm given the controller and a refreshable.
      */
     public PuzzleSolver<PieceList, Piece> createSolver(PuzzleController<PieceList, Piece> controller,
-                                                                                      Refreshable<PieceList, Piece> ui) {
+                                                       Refreshable<PieceList, Piece> ui) {
         PieceList pieces =  PieceList.getInitialPuzzlePieces();
         switch (this) {
             case BRUTE_FORCE_ORIGINAL :

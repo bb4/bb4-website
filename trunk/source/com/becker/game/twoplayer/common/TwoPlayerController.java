@@ -17,7 +17,6 @@ import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 
-import javax.swing.*;
 import java.awt.*;
 
 import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;

@@ -1,14 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
-import com.becker.game.twoplayer.common.search.examples.FourLevelGameTreeExample;
-import com.becker.game.twoplayer.common.search.examples.OneLevelGameTreeExample;
-import com.becker.game.twoplayer.common.search.examples.TwoLevelGameTreeExample;
-import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
-import com.becker.game.twoplayer.common.search.options.MonteCarloSearchOptions;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
