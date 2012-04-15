@@ -16,7 +16,7 @@ import java.util.*;
  *
  *  @author Barry Becker
  */
-public class PermutedParameterArray extends ParameterArray {
+public class PermutedParameterArray extends AbstractParameterArray {
 
     /** Default constructor */
     protected PermutedParameterArray() {}
@@ -35,7 +35,7 @@ public class PermutedParameterArray extends ParameterArray {
     }
 
     protected ParameterArray reverse() {
-        ParameterArray paramCopy = this.copy();
+        AbstractParameterArray paramCopy = this.copy();
         int len = size();
 
         for (int i=0; i<len/2; i++) {
@@ -52,7 +52,6 @@ public class PermutedParameterArray extends ParameterArray {
      * N^2 operation, where N is the number of params.
      * @return the distance between this parameter array and another.
      */
-    @Override
     public double distance( ParameterArray pa )  {
         assert ( params_.length == pa.size() );
 
@@ -126,7 +125,6 @@ public class PermutedParameterArray extends ParameterArray {
      *   Change Math.min(1, 10 * radius * N/100) of the entries, where N is the number of params
      * @return the random nbr.
      */
-    @Override
     public PermutedParameterArray getRandomNeighbor(double radius) {
 
         if (size() <= 1) return this;
@@ -155,7 +153,6 @@ public class PermutedParameterArray extends ParameterArray {
      *   many unique samples.
      * @return some number of unique samples.
      */
-    @Override
     public List<ParameterArray> findGlobalSamples(int requestedNumSamples) {
 
         // Divide by 2 because it does not matter which param we start with.
@@ -190,7 +187,6 @@ public class PermutedParameterArray extends ParameterArray {
      * {@inheritDoc}
      * Try swapping parameters randomly until we find an improvement (if we can);
      */
-    @Override
     public Improvement findIncrementalImprovement(Optimizee optimizee, double jumpSize,
                                                   Improvement lastImprovement, Set<ParameterArray> cache) {
         int maxTries = 1000;
@@ -226,7 +222,6 @@ public class PermutedParameterArray extends ParameterArray {
     /**
      * @return get a completely random solution in the parameter space.
      */
-    @Override
     public ParameterArray getRandomSample() {
 
         List<Parameter> theParams = Arrays.asList(params_);

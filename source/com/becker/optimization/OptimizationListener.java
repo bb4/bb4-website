@@ -10,5 +10,5 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public interface OptimizationListener {
 
-    void optimizerChanged(ParameterArray params); 
+    void optimizerChanged(ParameterArray params);
 }

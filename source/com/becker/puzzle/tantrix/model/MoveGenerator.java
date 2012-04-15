@@ -29,7 +29,7 @@ public class MoveGenerator {
     public MoveGenerator(TantrixBoard board) {
         this.board = board;
         this.borderSpaces =
-            new BorderFinder(board.tantrix, board.getPrimaryColor()).findBorderPositions();
+            new BorderFinder(board.tantrix, board.getNumTiles(), board.getPrimaryColor()).findBorderPositions();
     }
 
     /**

@@ -5,6 +5,8 @@ import com.becker.common.format.FormatUtil;
 import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.ui.util.GUIUtil;
+import java.awt.*;
+import static com.becker.puzzle.tantrix.ui.rendering.TantrixBoardRenderer.TOP_MARGIN;
 
 import java.awt.*;
 
@@ -43,7 +45,7 @@ public class HexTileRenderer {
 
         double x = radius/2
                 + ((location.getCol() - (isOddRow ? -0.25:  -0.75)) * 2 * radius * HexUtil.ROOT3D2);
-        double y = radius/2
+        double y = radius/2  + TOP_MARGIN
                 + ((location.getRow() + 0.6) * 3.0 * radius / 2.0);
 
         Point point = new Point((int)x, (int)y);

@@ -15,13 +15,17 @@ public class Box {
      * Constructor
      * Two points that define the box.
      * @param pt0 one corner of the box
-
      * @param pt1 the opposite corner of the box.
      */
     public Box(Location pt0, Location pt1) {
 
         this(Math.min(pt0.getRow(), pt1.getRow()), Math.min(pt0.getCol(), pt1.getCol()),
              Math.max(pt0.getRow(), pt1.getRow()), Math.max(pt0.getCol(), pt1.getCol()));
+    }
+
+    /** Degenerate box consisting of a point in space */
+    public Box(Location pt0) {
+        this(pt0, pt0);
     }
 
     public Box(int rowMin, int colMin, int rowMax, int colMax) {
@@ -41,12 +45,25 @@ public class Box {
         bottomRightCorner_ = new Location(rowMax, colMax);
     }
 
+    /** Constructs a box with dimensions of oldBox, but expanded by the specified point
+     * @param oldBox box to base initial dimensions on.
+     * @param point point to expand new box by.
+     */
+    public Box(Box oldBox, Location point) {
+        this(oldBox.getTopLeftCorner(), oldBox.getBottomRightCorner());
+        expandBy(point);
+    }
+
     public int getWidth() {
         return Math.abs(bottomRightCorner_.getCol() - topLeftCorner_.getCol());
     }
 
     public int getHeight() {
         return Math.abs(bottomRightCorner_.getRow() - topLeftCorner_.getRow());
+    }
+
+    public int getMaxDimension() {
+        return Math.max(getWidth(), getHeight());
     }
 
     public Location getTopLeftCorner() {

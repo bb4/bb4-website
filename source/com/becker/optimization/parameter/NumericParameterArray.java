@@ -18,7 +18,7 @@ import java.util.Set;
  *
  *  @author Barry Becker
  */
-public class NumericParameterArray extends ParameterArray {
+public class NumericParameterArray extends AbstractParameterArray {
 
     /** default number of steps to go from the min to the max */
     private static final int STEPS = 10;
@@ -87,7 +87,6 @@ public class NumericParameterArray extends ParameterArray {
      *   many unique samples.
      * @return some number of unique samples.
      */
-    @Override
     public List<ParameterArray> findGlobalSamples(int requestedNumSamples) {
         int numDims = size();
         System.out.println("reqNumSamples=" + requestedNumSamples);
@@ -121,7 +120,6 @@ public class NumericParameterArray extends ParameterArray {
     /**
      * {@inheritDoc}
      */
-    @Override
     public Improvement findIncrementalImprovement(Optimizee optimizee, double jumpSize,
                                                   Improvement lastImprovement, Set<ParameterArray> cache) {
 
@@ -182,7 +180,6 @@ public class NumericParameterArray extends ParameterArray {
      * @return the distance between this parameter array and another.
      * sqrt(sum of squares)
      */
-    @Override
     public double distance( ParameterArray pa )  {
         assert ( params_.length == pa.size() );
         double sumOfSq = 0.0;
@@ -220,7 +217,6 @@ public class NumericParameterArray extends ParameterArray {
      *     (relative to each parameter range).
      * @return the random nbr.
      */
-     @Override
      public NumericParameterArray getRandomNeighbor(double radius) {
          NumericParameterArray nbr = this.copy();
          for ( int k = 0; k < params_.length; k++ ) {
@@ -234,7 +230,6 @@ public class NumericParameterArray extends ParameterArray {
     /**
      * @return get a completely random solution in the parameter space.
      */
-    @Override
     public NumericParameterArray getRandomSample() {
          NumericParameterArray nbr = this.copy();
          for ( int k = 0; k < params_.length; k++ ) {

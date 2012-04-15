@@ -1,11 +1,14 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.redpuzzle.solver;
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+package com.becker.puzzle.tantrix.solver;
 
 import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.common.solver.PuzzleSolver;
 import com.becker.puzzle.redpuzzle.model.Piece;
 import com.becker.puzzle.redpuzzle.model.PieceList;
+import com.becker.puzzle.tantrix.model.TantrixBoard;
+import com.becker.puzzle.tantrix.model.TilePlacement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,46 +19,43 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public abstract class RedPuzzleSolver<P, K>
-                implements PuzzleSolver<PieceList, Piece> {
+public abstract class TantrixSolver<P, K>
+                implements PuzzleSolver<TantrixBoard, TilePlacement> {
 
-    /** the unsorted pieces that we draw from and place in the solvedPieces list. */
-    protected PieceList pieces_;
+    protected TantrixBoard board;
+    protected List<TilePlacement> solution_;
 
-    /** the pieces we have correctly fitted so far. */
-    protected PieceList solution_;
-    
     /** some measure of the number of iterations the solver needs to solve the puzzle. */
-    protected int numTries_ = 0;
-    
-    protected Refreshable<PieceList, Piece> puzzlePanel_;
+    private long numTries_ = 0;
+
+    protected Refreshable<TantrixBoard, TilePlacement> puzzlePanel_;
 
     /**
      * Constructor
-     * @param pieces the unsorted pieces.
+     * @param board board with the unplaced pieces.
      */
-    public RedPuzzleSolver(PieceList pieces) {
-        pieces_ = pieces;
-        solution_ = new PieceList();
+    public TantrixSolver(TantrixBoard board) {
+        this.board = board;
+        this.solution_ = new ArrayList<TilePlacement>();
     }
 
     /**
      * Derived classes must provide the implementation for this abstract method.
      * @return true if a solution is found.
      */
-    public abstract List<Piece> solve();
+    public abstract List<TilePlacement> solve();
 
     /**
      * @return the list of successfully placed pieces so far.
      */
-    public PieceList getSolvedPieces() {
+    public List<TilePlacement> getSolvedPieces() {
         return solution_;
     }
 
     /**
      * @return  the number of different ways we have tried to fit pieces together so far.
      */
-    public int getNumIterations() {
+    public long getNumIterations() {
         return numTries_;
     }
 

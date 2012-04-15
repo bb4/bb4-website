@@ -1,8 +1,9 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.puzzle.redpuzzle.model;
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+package com.becker.puzzle.tantrix.solver;
 
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.PermutedParameterArray;
+import com.becker.puzzle.redpuzzle.model.PieceList;
 
 /**
  * The parameter array to use when searching (using optimization) to find a red puzzle solution.
@@ -12,19 +13,19 @@ import com.becker.optimization.parameter.PermutedParameterArray;
  *
  * @author Barry Becker
  */
-public class PieceParameterArray extends PermutedParameterArray {
+public class TantrixParameterArray extends PermutedParameterArray {
 
     private PieceList pieces_ ;
     private static final int NUM_PIECES = 9;
 
 
-    public PieceParameterArray(PieceList pieces) {
+    public TantrixParameterArray(PieceList pieces) {
         pieces_ = pieces;
     }
 
     @Override
-    public PieceParameterArray copy() {
-        PieceParameterArray copy = new PieceParameterArray(pieces_);
+    public TantrixParameterArray copy() {
+        TantrixParameterArray copy = new TantrixParameterArray(pieces_);
 
         copy.setFitness(this.getFitness());
         return copy;
@@ -70,7 +71,7 @@ public class PieceParameterArray extends PermutedParameterArray {
             pieces.rotate(k, bestRot); // fix
         }
 
-        return new PieceParameterArray(pieces);
+        return new TantrixParameterArray(pieces);
     }
 
     /**
@@ -131,7 +132,7 @@ public class PieceParameterArray extends PermutedParameterArray {
     public ParameterArray getRandomSample() {
        PieceList pl = new PieceList(pieces_);
        PieceList shuffledPieces = pl.shuffle();
-       return new PieceParameterArray(shuffledPieces);
+       return new TantrixParameterArray(shuffledPieces);
     }
 
     /**

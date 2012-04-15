@@ -24,7 +24,7 @@ public class TantrixBoardTest extends TestCase {
         TilePlacement expLastPlaced =
                 new TilePlacement(TILES.getTile(3), new Location(22, 21), Rotation.ANGLE_180);
         assertEquals("Unexpected last tile placed", expLastPlaced, board.getLastTile());
-        assertEquals("Unexpected edge length", 3, board.getEdgeLength());
+        assertEquals("Unexpected edge length", 2, board.getEdgeLength());
         assertEquals("Unexpected primary path color",
                 TILES.getTile(1).getPrimaryColor(), board.getPrimaryColor());
         assertEquals("All the tiles should have been placed",

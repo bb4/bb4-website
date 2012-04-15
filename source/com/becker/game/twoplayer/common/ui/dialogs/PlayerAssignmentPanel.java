@@ -2,11 +2,9 @@
 package com.becker.game.twoplayer.common.ui.dialogs;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GameWeights;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.OptionsDialog;
 

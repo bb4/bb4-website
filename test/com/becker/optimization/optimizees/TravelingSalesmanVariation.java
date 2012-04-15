@@ -1,9 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.optimizees;
 
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.types.IntegerParameter;
 import com.becker.optimization.parameter.types.Parameter;
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.PermutedParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 

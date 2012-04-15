@@ -17,7 +17,8 @@ import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.ROOT3D2;
  */
 public class TantrixBoardRenderer implements PuzzleRenderer<TantrixBoard> {
 
-    static final double MARGIN_FRAC = 0.05;
+    static final double MARGIN_FRAC = 0.07;
+    static final int TOP_MARGIN = 15;
 
     private static final Color GRID_COLOR = new Color(110, 120, 180);
 
@@ -69,18 +70,18 @@ public class TantrixBoardRenderer implements PuzzleRenderer<TantrixBoard> {
         int margin = (int)(hexRadius/2.0);
         double hexWidth = 2 * hexRadius * ROOT3D2;
         int rightEdgePos = (int)(margin + hexWidth * edgeLen);
-        int bottomEdgePos = (int)(margin + hexWidth * edgeLen);
+        int bottomEdgePos = (int)(TOP_MARGIN + margin + hexWidth * edgeLen);
 
         g2.setColor( GRID_COLOR );
         for ( i = start; i <= edgeLen; i++ )  //   -----
         {
-            ypos = (int)(margin + i * hexWidth);
+            ypos = (int)(TOP_MARGIN + margin + i * hexWidth);
             g2.drawLine( margin, ypos, rightEdgePos, ypos );
         }
         for ( i = start; i <= edgeLen; i++ )  //   ||||
         {
             xpos = (int)(margin + i * hexWidth);
-            g2.drawLine( xpos, margin, xpos, bottomEdgePos );
+            g2.drawLine( xpos, TOP_MARGIN + margin, xpos, bottomEdgePos );
         }
     }
 }

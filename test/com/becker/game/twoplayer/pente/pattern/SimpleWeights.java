@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.pente.pattern;
 
 import com.becker.game.common.GameWeights;
 import com.becker.optimization.parameter.NumericParameterArray;
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.types.DoubleParameter;
 import com.becker.optimization.parameter.types.Parameter;
 

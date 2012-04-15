@@ -19,7 +19,7 @@ public class BorderFinderTest extends TestCase {
 
     public void testFindBorderForFirstTileOfThree() {
         tantrix = new TantrixBoard(threeTiles).tantrix;
-        borderFinder = new BorderFinder(tantrix, PathColor.YELLOW);
+        borderFinder = new BorderFinder(tantrix, 10, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
         assertEquals("Unexpected number of border locations.", 6, positions.size());
@@ -27,7 +27,7 @@ public class BorderFinderTest extends TestCase {
 
     public void testFindBorderForTwoOfThreeTilesA() {
         tantrix = place2of3Tiles_OneThenTwo().tantrix;
-        borderFinder = new BorderFinder(tantrix, PathColor.YELLOW);
+        borderFinder = new BorderFinder(tantrix, 10, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
         assertEquals("Unexpected number of border locations.", 8, positions.size());
@@ -35,7 +35,7 @@ public class BorderFinderTest extends TestCase {
 
     public void testFindBorderForTwoOfThreeTilesB() {
         tantrix = place2of3Tiles_OneThenThree().tantrix;
-        borderFinder = new BorderFinder(tantrix, PathColor.YELLOW);
+        borderFinder = new BorderFinder(tantrix, 10, PathColor.YELLOW);
         System.out.println(tantrix);
         Set<Location> positions = borderFinder.findBorderPositions();
         System.out.println(positions);
@@ -44,12 +44,27 @@ public class BorderFinderTest extends TestCase {
 
     public void testFindBorderForThreeSolvedTiles() {
         tantrix = place3SolvedTiles().tantrix;
-        borderFinder = new BorderFinder(tantrix, PathColor.YELLOW);
+        borderFinder = new BorderFinder(tantrix, 10, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
-
         assertEquals("Unexpected number of border locations.", 9, positions.size());
     }
 
 
+    public void testFindBorderForTwoOfThreeTilesA_ConstrainedByBorder() {
+        tantrix = place2of3Tiles_OneThenTwo().tantrix;
+        borderFinder = new BorderFinder(tantrix, 1, PathColor.YELLOW);
+
+        Set<Location> positions = borderFinder.findBorderPositions();
+        assertEquals("Unexpected number of border locations.", 2, positions.size());
+    }
+
+    public void testFindBorderForTwoOfThreeTilesB_ConstrainedByBorder() {
+        tantrix = place2of3Tiles_OneThenThree().tantrix;
+        borderFinder = new BorderFinder(tantrix, 1, PathColor.YELLOW);
+        System.out.println(tantrix);
+        Set<Location> positions = borderFinder.findBorderPositions();
+        System.out.println(positions);
+        assertEquals("Unexpected number of border locations.", 2, positions.size());
+    }
 }
