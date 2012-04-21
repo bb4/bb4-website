@@ -47,7 +47,8 @@ public final class TantrixViewer extends PuzzleViewer<TantrixBoard, TilePlacemen
 
     @Override
     public void refresh(TantrixBoard board, long numTries) {
-        if (numTries % 1 == 0) {
+        int rate = board_ == null ? 1 : board_.getNumTiles()-2;
+        if (numTries % rate == 0) {
             status_ = createStatusMessage(numTries);
             simpleRefresh(board, numTries);
             //ThreadUtil.sleep(100);
