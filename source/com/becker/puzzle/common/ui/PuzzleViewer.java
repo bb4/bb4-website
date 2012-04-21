@@ -66,7 +66,7 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
             totalMem_ = Runtime.getRuntime().totalMemory()/1000;
             freeMem_ = Runtime.getRuntime().freeMemory()/1000;   
         } 
-        msg += " Memory used = "+ FormatUtil.formatNumber(totalMem_ - freeMem_) +"k";
+        msg += "    Memory used = "+ FormatUtil.formatNumber(totalMem_ - freeMem_) +"k";
         return msg;
     }
 
