@@ -21,8 +21,6 @@ public class BorderFinder {
     private Set<Location> visited;
     private int maxHalfPathLength;
     private Box boundingBox;
-    //private int pruneCt;
-    //private int ppruneCt;
 
     /**
      * Constructor
@@ -45,7 +43,7 @@ public class BorderFinder {
 
         TilePlacement lastPlaced = tantrix.getLastTile();
 
-        Queue<TilePlacement> searchQueue = new LinkedList<TilePlacement>();
+        Queue<TilePlacement> searchQueue = new TilePlacementList();
         searchQueue.add(lastPlaced);
         visited.add(lastPlaced.getLocation());
 
@@ -80,9 +78,9 @@ public class BorderFinder {
     /**
      * @return the one or two neighbors that can be found by following the primary path.
      */
-    private List<TilePlacement> findPrimaryPathNeighbors(TilePlacement previous) {
+    private TilePlacementList findPrimaryPathNeighbors(TilePlacement previous) {
 
-        List<TilePlacement> pathNbrs = new LinkedList<TilePlacement>();
+        TilePlacementList pathNbrs = new TilePlacementList();
         for (byte i=0; i<HEX_SIDES; i++) {
             PathColor color = previous.getPathColor(i);
             if (color == primaryColor) {
