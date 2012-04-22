@@ -8,6 +8,7 @@ import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.model.TilePlacementList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,7 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
      * @return list of moves to a solution.
      */
     @Override
-    public List<TilePlacement> solve()  {
-
+    public TilePlacementList solve()  {
         /*
         ParameterArray initialGuess = new PieceParameterArray(board);
         solution_ = pieces_;
@@ -64,9 +64,8 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
         long elapsedTime = System.currentTimeMillis() - startTime;       
         puzzlePanel_.finalRefresh(moves, solution_, numTries_, elapsedTime);
         
-        return moves;
-        */
-        return new ArrayList<TilePlacement>();
+        return moves;                       */
+        return new TilePlacementList();
     }
 
     public String getName() {
@@ -92,7 +91,7 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
      * @return fitness value. High is good.
      */
     public double evaluateFitness(ParameterArray params) {
-    /*
+    /*    Use a FitnessEvaluator
         PieceList pieces = ((PieceParameterArray) params).getPieceList();
         double fitness = getNumFits(pieces);
         params.setFitness(fitness);

@@ -7,6 +7,7 @@ import com.becker.puzzle.redpuzzle.model.Piece;
 import com.becker.puzzle.redpuzzle.model.PieceList;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.model.TilePlacementList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public abstract class TantrixSolver<P, K>
                 implements PuzzleSolver<TantrixBoard, TilePlacement> {
 
     protected TantrixBoard board;
-    protected List<TilePlacement> solution_;
+    protected TilePlacementList solution_;
 
     /** some measure of the number of iterations the solver needs to solve the puzzle. */
     private long numTries_ = 0;
@@ -36,19 +37,19 @@ public abstract class TantrixSolver<P, K>
      */
     public TantrixSolver(TantrixBoard board) {
         this.board = board;
-        this.solution_ = new ArrayList<TilePlacement>();
+        this.solution_ = new TilePlacementList();
     }
 
     /**
      * Derived classes must provide the implementation for this abstract method.
      * @return true if a solution is found.
      */
-    public abstract List<TilePlacement> solve();
+    public abstract TilePlacementList solve();
 
     /**
      * @return the list of successfully placed pieces so far.
      */
-    public List<TilePlacement> getSolvedPieces() {
+    public TilePlacementList getSolvedPieces() {
         return solution_;
     }
 

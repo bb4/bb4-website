@@ -52,7 +52,7 @@ public class TantrixController
         return position.isSolved();
     }
 
-    public List<TilePlacement> legalMoves(TantrixBoard position) {
+    public TilePlacementList legalMoves(TantrixBoard position) {
         return new MoveGenerator(position).generateMoves();
     }
 

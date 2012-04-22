@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- *  Immutable representation of the current stat of the tantrix puzzle.
+ *  Immutable representation of the current state of the tantrix puzzle.
  *
  *  @author Barry Becker
  */

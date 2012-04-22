@@ -2,6 +2,7 @@
 package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
+import com.becker.common.math.MathUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,8 +38,8 @@ public class MoveGenerator {
      * Valid placements must extend the primary path.
      * @return List of all valid tile placements for the current tantrix state.
      */
-    public List<TilePlacement> generateMoves() {
-        List<TilePlacement> moves = new ArrayList<TilePlacement>();
+    public TilePlacementList generateMoves() {
+        TilePlacementList moves = new TilePlacementList();
         HexTileList unplacedTiles = board.getUnplacedTiles();
 
         for (HexTile tile : unplacedTiles) {
@@ -48,13 +49,29 @@ public class MoveGenerator {
     }
 
     /**
+     * For each unplaced tile, find all valid placements given current configuration.
+     * Valid placements must extend the primary path.
+     * @return List of all valid tile placements for the current tantrix state.
+     */
+    public TilePlacementList generateRandomPathMove() {
+        TilePlacementList moves = new TilePlacementList();
+
+        HexTileList unplacedTiles = board.getUnplacedTiles();
+        HexTile tile = unplacedTiles.get(MathUtil.RANDOM.nextInt(unplacedTiles.size()));
+
+        TilePlacement placement = findWeakPlacementForTile(tile);
+
+        return moves;
+    }
+
+    /**
      * @return list of all the legal placements for the specified tile.
      */
-    private List<TilePlacement> findPlacementsForTile(HexTile tile) {
-        List<TilePlacement> placements = new ArrayList<TilePlacement>();
+    private TilePlacementList findPlacementsForTile(HexTile tile) {
+        TilePlacementList placements = new TilePlacementList();
 
         for (Location loc : borderSpaces)  {
-            List<TilePlacement> validFits = getFittingPlacements(tile, loc);
+            TilePlacementList validFits = getFittingPlacements(tile, loc);
             placements.addAll(validFits);
         }
 
@@ -62,13 +79,29 @@ public class MoveGenerator {
     }
 
     /**
+     * @return the first placement for the specified tile which matches the primary path
+     *     but not necessarily the secondary paths.
+     */
+    private TilePlacement findWeakPlacementForTile(HexTile tile) {
+
+        for (Location loc : borderSpaces)  {
+            TilePlacementList validFits = getFittingPlacements(tile, loc);
+            if (!validFits.isEmpty())  {
+                return validFits.get(0);
+            }
+        }
+        assert false;
+        return null;
+    }
+
+    /**
      * @param tile the tile to place.
      * @param loc the location to try and place it at.
      * @return the placement if one could be found, else null.
      */
-    private List<TilePlacement> getFittingPlacements(HexTile tile, Location loc) {
+    private TilePlacementList getFittingPlacements(HexTile tile, Location loc) {
         TilePlacement placement = new TilePlacement(tile, loc, Rotation.ANGLE_0);
-        List<TilePlacement> validPlacements = new LinkedList<TilePlacement>();
+        TilePlacementList validPlacements = new TilePlacementList();
 
         for (int i=0; i<HEX_SIDES; i++) {
             if (fits(placement)) {
