@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.solver;
 
+import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.PermutedParameterArray;
@@ -33,12 +34,32 @@ public class TantrixPath extends PermutedParameterArray {
         tiles_ = tiles;
     }
 
+    public TantrixPath(TantrixBoard board) {
+
+        TantrixBoard myBoard = new TantrixBoard(board.getTiles());
+        RandomPathGenerator gen = new RandomPathGenerator(myBoard);
+        TantrixPath path = gen.generateRandomPath();
+        this.tiles_ = path.tiles_;
+    }
+
     @Override
     public TantrixPath copy() {
         TantrixPath copy = new TantrixPath(tiles_);
 
         copy.setFitness(this.getFitness());
         return copy;
+    }
+
+    public TilePlacementList getTilePlacements() {
+        return tiles_;
+    }
+
+    public TantrixPath subPath(int startIndex, int endIndex) {
+        TilePlacementList pathTiles = new TilePlacementList();
+        for (int i=startIndex; i<=endIndex; i++) {
+            pathTiles.add(this.tiles_.get(i));
+        }
+        return new TantrixPath(pathTiles);
     }
 
     /**
@@ -58,42 +79,64 @@ public class TantrixPath extends PermutedParameterArray {
     @Override
     public PermutedParameterArray getRandomNeighbor(double radius) {
 
-        TilePlacementList tiles = new TilePlacementList(tiles_);
-
-        TilePlacement pivotTile = tiles_.get(MathUtil.RANDOM.nextInt(tiles_.size()));
-
-/*
-        for (int i = 0; i < numSwaps; i++) {
-            doPieceSwap(tiles);
-        }
-        //assert !this.equals(new PieceParameterArray(pieces)) :
-        //    "The piecelists should not be equal new=" + pieces + " orig=" + tiles_;
-
-        assert (tiles.size() == NUM_PIECES);
-        // make a pass over all the pieces.
-        // If rotating a piece leads to more fits, then do it.
-        for ( int k = 0; k < tiles.size(); k++) {
-
-            int numFits = tiles.getNumFits(k);
-            int bestNumFits = numFits;
-            int bestRot = 1;
-            for (int i = 0; i < 3; i++) {
-
-                tiles.rotate(k, 1);  // fix
-                numFits = tiles.getNumFits(k);
-                if (numFits > bestNumFits) {
-                    bestNumFits = numFits;
-                    bestRot = 2 + i;
-                }
-            }
-            // rotate the piece to position of best fit.
-            tiles.rotate(k, bestRot); // fix
-        }         */
-
-        return new TantrixPath(tiles);
+        List<TantrixPath> pathPermutations = findPermutedPaths();
+        return selectBestPath(pathPermutations);
     }
 
+    /**
+     * try the seven cases and take the one that works best
+     * @return 7 permuted path cases.
+     */
+    private List<TantrixPath> findPermutedPaths() {
 
+        int pivotIndex = 1 + MathUtil.RANDOM.nextInt(tiles_.size()-2);
+        TilePlacement pivotTile = tiles_.get(pivotIndex);
+
+        TantrixPath subPath1 = subPath(0, pivotIndex-1);
+        TantrixPath subPath2 = subPath(pivotIndex+1, tiles_.size()-1);
+
+        TantrixPath subPath1Reversed = subPath1.reverse(pivotTile);
+        TantrixPath subPath2Reversed = subPath2.reverse(pivotTile);
+
+        List<TantrixPath> pathPermutations = new ArrayList<TantrixPath>();
+        pathPermutations.add(createPermutedPath(subPath1, pivotTile, subPath2Reversed));
+        pathPermutations.add(createPermutedPath(subPath1Reversed, pivotTile, subPath2));
+        pathPermutations.add(createPermutedPath(subPath1Reversed, pivotTile, subPath2Reversed));
+
+        pathPermutations.add(createPermutedPath(subPath2, pivotTile, subPath1));
+        pathPermutations.add(createPermutedPath(subPath2, pivotTile, subPath1Reversed));
+        pathPermutations.add(createPermutedPath(subPath2Reversed, pivotTile, subPath1));
+        pathPermutations.add(createPermutedPath(subPath2Reversed, pivotTile, subPath1Reversed));
+
+        return pathPermutations;
+    }
+
+    /**
+     * @param paths list of paths to evaluate.
+     * @return the path with the best score. In other words the path which is closest to a valid solution.
+     */
+    private TantrixPath selectBestPath(List<TantrixPath> paths) {
+        PathEvaluator evaluator = new PathEvaluator();
+
+        double bestScore = -1;
+        TantrixPath bestPath = null;
+
+        for (TantrixPath path : paths) {
+            double score = evaluator.evaluateFitness(path);
+            if (score > bestScore) {
+                bestPath = path;
+            }
+        }
+        return bestPath;
+    }
+
+    private TantrixPath reverse(TilePlacement pivotTile) {
+        return this;
+    }
+
+    private TantrixPath createPermutedPath(TantrixPath subPath1, TilePlacement placement, TantrixPath subPath2) {
+       return subPath1;
+    }
 
     /**
      * @return get a completely random solution in the parameter space.
@@ -104,13 +147,6 @@ public class TantrixPath extends PermutedParameterArray {
         TantrixBoard board = new TantrixBoard(new HexTileList(tiles_));
         RandomPathGenerator gen = new RandomPathGenerator(board);
         return gen.generateRandomPath();
-    }
-
-    /**
-     * @return the tiles corresponding to the encoded parameter array.
-     */
-    public TilePlacementList getPieceList() {
-        return tiles_;
     }
 
     /**

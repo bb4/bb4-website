@@ -48,19 +48,6 @@ public class TantrixBoard {
         tantrix = tantrix.placeTile(placement);
     }
 
-    /**
-     * If the new location is in the 0 row or column, we will return 1, to indicate
-     * that everything has been shifted down and to the right one.
-     * @return return the offset (1) if the tantrix was extended. or 0.
-     */
-    private void initializeFromOldBoard(TantrixBoard board) {
-
-        this.primaryColor = board.primaryColor;
-        this.unplacedTiles = (HexTileList) board.unplacedTiles.clone();
-        this.numTiles = board.numTiles;
-        this.tantrix = new Tantrix(board.tantrix);
-    }
-
     public TantrixBoard(HexTileList initialTiles) {
 
         HexTileList tileList = (HexTileList) initialTiles.clone();
@@ -82,6 +69,30 @@ public class TantrixBoard {
             tantrix.put(new Location(row, col),
                     new TilePlacement(tileList.get(i), new Location(row, col), Rotation.ANGLE_120));
         }*/
+    }
+
+    /**
+     * Create a board with the specified tile placments (nothing unplaced).
+     * @param tiles  specific placements to initialize the board with.
+     */
+    public TantrixBoard(TilePlacementList tiles, PathColor primaryColor) {
+        this.numTiles = (byte)tiles.size();
+        this.primaryColor = primaryColor;
+        this.unplacedTiles = new HexTileList();
+        this.tantrix = new Tantrix(tiles);
+    }
+
+    /**
+     * If the new location is in the 0 row or column, we will return 1, to indicate
+     * that everything has been shifted down and to the right one.
+     * @return return the offset (1) if the tantrix was extended. or 0.
+     */
+    private void initializeFromOldBoard(TantrixBoard board) {
+
+        this.primaryColor = board.primaryColor;
+        this.unplacedTiles = (HexTileList) board.unplacedTiles.clone();
+        this.numTiles = board.numTiles;
+        this.tantrix = new Tantrix(board.tantrix);
     }
 
     /**
@@ -123,6 +134,18 @@ public class TantrixBoard {
 
     public int getNumTiles() {
         return numTiles;
+    }
+
+    /**
+     * @return a list of all the tiles in the puzzle
+     */
+    public HexTileList getTiles() {
+        HexTileList tiles = new HexTileList();
+        tiles.addAll(getUnplacedTiles());
+        for (Location loc: getTantrixLocations()) {
+            tiles.add(getTilePlacement(loc).getTile());
+        }
+        return tiles;
     }
 
     public int getEdgeLength() {

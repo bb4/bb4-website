@@ -3,10 +3,7 @@ package com.becker.puzzle.tantrix;
 
 import com.becker.puzzle.common.ui.AbstractPuzzleController;
 import com.becker.puzzle.common.Refreshable;
-import com.becker.puzzle.tantrix.model.HexTiles;
-import com.becker.puzzle.tantrix.model.MoveGenerator;
-import com.becker.puzzle.tantrix.model.TantrixBoard;
-import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.model.*;
 import com.becker.puzzle.tantrix.solver.Algorithm;
 
 import java.util.List;
