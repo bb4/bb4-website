@@ -72,10 +72,6 @@ public class BorderFinder {
                     emptyNbrLocations.add(nbrLoc);
                     boundingBox = newBox;
                 }
-                /*else {
-                     if (++pruneCt > 1)
-                         System.out.println("en pruned: " + pruneCt + " box="+ boundingBox);
-                } */
             }
         }
         return emptyNbrLocations;
@@ -98,10 +94,6 @@ public class BorderFinder {
                         visited.add(nbr.getLocation());
                         boundingBox = newBox;
                     }
-                    /*else {
-                        if (++ppruneCt > 1)
-                            System.out.println("primary path pruned: " + ppruneCt + " box="+ boundingBox);
-                    }   */
                 }
             }
         }

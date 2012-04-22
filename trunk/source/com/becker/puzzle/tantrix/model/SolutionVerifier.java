@@ -11,6 +11,7 @@ import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
 public class SolutionVerifier {
 
     TantrixBoard board;
+
     /**
      * Constructor.
      * @param board the tantrix state to test for solution.
@@ -43,10 +44,10 @@ public class SolutionVerifier {
             numVisited++;
         } while (currentTile != null && !currentTile.equals(lastTilePlaced));
 
-        // check that there are no holes.
-
         boolean isLoop = (numVisited == board.getNumTiles() && lastTilePlaced.equals(currentTile));
-        return isLoop && noInnerSpaces();
+        InnerSpaceDetector detector = new InnerSpaceDetector(board);
+
+        return isLoop && !detector.hasInnerSpaces();
     }
 
     /**
@@ -70,7 +71,4 @@ public class SolutionVerifier {
         return null;
     }
 
-    private boolean noInnerSpaces() {
-        return true;
-    }
 }
