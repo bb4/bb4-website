@@ -34,8 +34,22 @@ public class Tantrix extends HashMap<Location, TilePlacement>{
         setTilePlacement(placement);
     }
 
+    /**
+     * Copy constructor
+     * @param tantrix tantrix to copy.
+     */
     public Tantrix(Tantrix tantrix) {
         putAll(tantrix);
+    }
+
+    /**
+     * @param tiles tiles in the tantrix
+     */
+    public Tantrix(TilePlacementList tiles) {
+        lastTile = tiles.getLast();
+        for (TilePlacement p : tiles) {
+            this.put(p.getLocation(), p);
+        }
     }
 
     private Tantrix() {}

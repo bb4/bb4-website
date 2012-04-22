@@ -24,7 +24,7 @@ public abstract class TantrixSolver<P, K>
                 implements PuzzleSolver<TantrixBoard, TilePlacement> {
 
     protected TantrixBoard board;
-    protected TilePlacementList solution_;
+    protected TantrixBoard solution_;
 
     /** some measure of the number of iterations the solver needs to solve the puzzle. */
     private long numTries_ = 0;
@@ -37,7 +37,7 @@ public abstract class TantrixSolver<P, K>
      */
     public TantrixSolver(TantrixBoard board) {
         this.board = board;
-        this.solution_ = new TilePlacementList();
+        //this.solution_ = new TilePlacementList();
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class TantrixSolver<P, K>
     /**
      * @return the list of successfully placed pieces so far.
      */
-    public TilePlacementList getSolvedPieces() {
+    public TantrixBoard getSolution() {
         return solution_;
     }
 

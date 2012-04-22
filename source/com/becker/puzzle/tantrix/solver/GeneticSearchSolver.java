@@ -3,6 +3,7 @@ package com.becker.puzzle.tantrix.solver;
 
 import com.becker.optimization.OptimizationListener;
 import com.becker.optimization.Optimizee;
+import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.puzzle.common.Refreshable;
@@ -26,6 +27,7 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
 
     /** either genetic or concurrent genetic strategy. */
     private OptimizationStrategyType strategy;
+    private int numTries_;
 
 
     /** Constructor */
@@ -42,30 +44,30 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
      */
     @Override
     public TilePlacementList solve()  {
-        /*
-        ParameterArray initialGuess = new PieceParameterArray(board);
-        solution_ = pieces_;
+
+        ParameterArray initialGuess = new TantrixPath(board);
         long startTime = System.currentTimeMillis();
         
         Optimizer optimizer = new Optimizer(this);
-
         optimizer.setListener(this);
 
         ParameterArray solution =
             optimizer.doOptimization(strategy, initialGuess, SOLVED_THRESH);
 
-        solution_ = ((PieceParameterArray)solution).getPieceList();
-        List<Piece> moves;
+        solution_ =
+            new TantrixBoard(((TantrixPath)solution).getTilePlacements(), board.getPrimaryColor());
+
+
+        TilePlacementList moves;
         if (evaluateFitness(solution) >= SOLVED_THRESH) {
-            moves = solution_.getPieces();
+            moves = ((TantrixPath)solution).getTilePlacements();
         } else {
             moves = null;
         }    
         long elapsedTime = System.currentTimeMillis() - startTime;       
         puzzlePanel_.finalRefresh(moves, solution_, numTries_, elapsedTime);
         
-        return moves;                       */
-        return new TilePlacementList();
+        return moves;
     }
 
     public String getName() {
@@ -91,12 +93,11 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
      * @return fitness value. High is good.
      */
     public double evaluateFitness(ParameterArray params) {
-    /*    Use a FitnessEvaluator
-        PieceList pieces = ((PieceParameterArray) params).getPieceList();
-        double fitness = getNumFits(pieces);
+        PathEvaluator evaluator = new PathEvaluator();
+
+        double fitness = evaluator.evaluateFitness((TantrixPath) params);
         params.setFitness(fitness);
-        return fitness; */
-        return 0;
+        return fitness;
     }
 
     public double compareFitness(ParameterArray params1, ParameterArray params2) {
