@@ -4,6 +4,8 @@ package com.becker.puzzle.tantrix.model;
 import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -145,8 +147,25 @@ public class TantrixBoard {
         return tantrix.get(new Location(row, col));
     }
 
+    /**
+     * @param location
+     * @return null of there is no placement at that location.
+     */
     public TilePlacement getTilePlacement(Location location) {
         return tantrix.get(location);
+    }
+
+    public boolean isEmpty(Location loc) {
+        return getTilePlacement(loc) == null;
+    }
+
+    /**
+     * @param currentLocation
+     * @param i direction to look in. [0 - 6]
+     * @return the specified neighbor
+     */
+    public Location getNeighborLocation(Location currentLocation, int i) {
+        return tantrix.getNeighborLocation(currentLocation, i);
     }
 
     public String toString() {

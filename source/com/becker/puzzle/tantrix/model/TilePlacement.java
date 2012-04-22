@@ -20,6 +20,7 @@ public class TilePlacement {
      * Constructor.
      */
     public TilePlacement(HexTile tile, Location location, Rotation rotation) {
+        assert tile != null;
         this.tile = tile;
         this.location = location;
         this.rotation = rotation;
