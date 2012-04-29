@@ -11,23 +11,14 @@ import java.util.HashMap;
  *
  *  @author Barry Becker
  */
-public class NeighborLocator {
-
-    private Location loc;
-    /**
-     * Constructor
-     * @param location
-     */
-    public NeighborLocator(Location location) {
-        assert location != null;
-        this.loc = location;
-    }
+public class HexNeighborLocator {
 
     /**
+     * @param loc source location
      * @param direction side to navigate to to find the neighbor. 0 is to the right.
      * @return the indicated neighbor of the specified tile.
      */
-    public Location getNeighborLocation(int direction) {
+    public static Location getNeighbor(Location loc, int direction) {
 
         int row = loc.getRow();
         int col = loc.getCol();
@@ -45,4 +36,7 @@ public class NeighborLocator {
         }
         return nbrLoc;
     }
+
+    /** hidden constructor */
+    private HexNeighborLocator() {}
 }
