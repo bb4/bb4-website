@@ -3,6 +3,9 @@ package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**
@@ -69,6 +72,20 @@ public class TilePlacement {
         Rotation newRotation = Rotation.values()[(rotation.ordinal() + 1) % NUM_SIDES];
         return new TilePlacement(tile, location, newRotation);
     }
+
+
+    public Map<Integer, Location> getOutgoingPathLocations(PathColor primaryColor) {
+        Map<Integer, Location> outgoingPathLocations = new HashMap<Integer, Location>();
+        for (int i=0; i< HexTile.NUM_SIDES; i++)  {
+            if (primaryColor == getPathColor(i)) {
+                outgoingPathLocations.put(i, HexNeighborLocator.getNeighbor(getLocation(), i));
+            }
+        }
+
+        assert outgoingPathLocations.size() == 2: "There must always be two paths.";
+        return outgoingPathLocations;
+    }
+
 
     public String toString() {
         return  "["  + tile +" at " + location + " " + rotation + "]";

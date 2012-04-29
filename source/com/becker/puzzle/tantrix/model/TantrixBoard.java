@@ -4,8 +4,6 @@ package com.becker.puzzle.tantrix.model;
 import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,6 +27,7 @@ public class TantrixBoard {
 
     /** number of tiles in the puzzle */
     private byte numTiles;
+
 
     /**
      * Constructor that creates a new tantrix instance when placing a move.
@@ -179,8 +178,7 @@ public class TantrixBoard {
      * @return the specified neighbor
      */
     public Location getNeighborLocation(Location currentLocation, int i) {
-        assert currentLocation != null;
-        return new NeighborLocator(currentLocation).getNeighborLocation(i);
+        return HexNeighborLocator.getNeighbor(currentLocation, i);
     }
 
     public String toString() {

@@ -83,7 +83,7 @@ public class Tantrix extends HashMap<Location, TilePlacement>{
             return null;
         }
         Location loc =
-            new NeighborLocator(currentPlacement.getLocation()).getNeighborLocation(direction);
+            HexNeighborLocator.getNeighbor(currentPlacement.getLocation(), direction);
         return get(loc);
     }
 
