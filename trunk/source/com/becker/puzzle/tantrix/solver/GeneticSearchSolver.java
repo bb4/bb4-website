@@ -29,6 +29,8 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
     private OptimizationStrategyType strategy;
     private int numTries_;
 
+    private PathEvaluator evaluator = new PathEvaluator();
+
 
     /** Constructor */
     public GeneticSearchSolver(TantrixBoard board, Refreshable<TantrixBoard, TilePlacement> puzzlePanel,
@@ -47,7 +49,7 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
 
         ParameterArray initialGuess = new TantrixPath(board);
         long startTime = System.currentTimeMillis();
-        
+
         Optimizer optimizer = new Optimizer(this);
         optimizer.setListener(this);
 
@@ -63,10 +65,10 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
             moves = ((TantrixPath)solution).getTilePlacements();
         } else {
             moves = null;
-        }    
-        long elapsedTime = System.currentTimeMillis() - startTime;       
+        }
+        long elapsedTime = System.currentTimeMillis() - startTime;
         puzzlePanel_.finalRefresh(moves, solution_, numTries_, elapsedTime);
-        
+
         return moves;
     }
 
@@ -93,7 +95,6 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
      * @return fitness value. High is good.
      */
     public double evaluateFitness(ParameterArray params) {
-        PathEvaluator evaluator = new PathEvaluator();
 
         double fitness = evaluator.evaluateFitness((TantrixPath) params);
         params.setFitness(fitness);

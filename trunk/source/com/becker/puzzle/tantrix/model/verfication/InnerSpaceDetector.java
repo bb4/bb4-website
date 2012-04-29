@@ -1,8 +1,9 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.model;
+package com.becker.puzzle.tantrix.model.verfication;
 
 import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
+import com.becker.puzzle.tantrix.model.TantrixBoard;
 
 import java.util.*;
 

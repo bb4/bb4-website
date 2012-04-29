@@ -1,14 +1,18 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.model;
+package com.becker.puzzle.tantrix.model.verfication;
+
+import com.becker.puzzle.tantrix.model.PathColor;
+import com.becker.puzzle.tantrix.model.TantrixBoard;
+import com.becker.puzzle.tantrix.model.TilePlacement;
 
 import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**
- * Used to determine whether or not a given tantrix state is a valid solution.
+ * Used to determine whether or not a given tantrix is a loop.
  *
  *  @author Barry Becker
  */
-public class SolutionVerifier {
+public class LoopDetector {
 
     TantrixBoard board;
 
@@ -16,7 +20,7 @@ public class SolutionVerifier {
      * Constructor.
      * @param board the tantrix state to test for solution.
      */
-    public SolutionVerifier(TantrixBoard board) {
+    public LoopDetector(TantrixBoard board) {
         this.board = board;
     }
 
@@ -26,7 +30,7 @@ public class SolutionVerifier {
      * a valid position, we only need to check if there is a complete loop.
      * @return true if solved.
      */
-    public boolean isSolved() {
+    public boolean hasLoop() {
         if (!board.getUnplacedTiles().isEmpty()) {
             return false;
         }
@@ -44,10 +48,7 @@ public class SolutionVerifier {
             numVisited++;
         } while (currentTile != null && !currentTile.equals(lastTilePlaced));
 
-        boolean isLoop = (numVisited == board.getNumTiles() && lastTilePlaced.equals(currentTile));
-        InnerSpaceDetector detector = new InnerSpaceDetector(board);
-
-        return isLoop && !detector.hasInnerSpaces();
+        return (numVisited == board.getNumTiles() && lastTilePlaced.equals(currentTile));
     }
 
     /**
@@ -70,5 +71,4 @@ public class SolutionVerifier {
         }
         return null;
     }
-
 }

@@ -3,6 +3,7 @@ package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
+import com.becker.puzzle.tantrix.model.verfication.SolutionVerifier;
 
 import java.util.Set;
 
@@ -104,7 +105,7 @@ public class TantrixBoard {
      * @param direction side to navigate to to find the neighbor. 0 is to the right.
      * @return the indicated neighbor of the specified tile.
      */
-    TilePlacement getNeighbor(TilePlacement currentPlacement, byte direction) {
+    public TilePlacement getNeighbor(TilePlacement currentPlacement, byte direction) {
         return tantrix.getNeighbor(currentPlacement, direction);
     }
 
