@@ -2,14 +2,10 @@
 package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
-import com.becker.common.math.MathUtil;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
-import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
+import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**
  * Tantrix puzzle move generator. Generates valid next moves given the current state.
@@ -49,22 +45,6 @@ public class MoveGenerator {
     }
 
     /**
-     * For each unplaced tile, find all valid placements given current configuration.
-     * Valid placements must extend the primary path.
-     * @return List of all valid tile placements for the current tantrix state.
-     */
-    public TilePlacementList generateRandomPathMove() {
-        TilePlacementList moves = new TilePlacementList();
-
-        HexTileList unplacedTiles = board.getUnplacedTiles();
-        HexTile tile = unplacedTiles.get(MathUtil.RANDOM.nextInt(unplacedTiles.size()));
-
-        TilePlacement placement = findWeakPlacementForTile(tile);
-
-        return moves;
-    }
-
-    /**
      * @return list of all the legal placements for the specified tile.
      */
     private TilePlacementList findPlacementsForTile(HexTile tile) {
@@ -79,22 +59,6 @@ public class MoveGenerator {
     }
 
     /**
-     * @return the first placement for the specified tile which matches the primary path
-     *     but not necessarily the secondary paths.
-     */
-    private TilePlacement findWeakPlacementForTile(HexTile tile) {
-
-        for (Location loc : borderSpaces)  {
-            TilePlacementList validFits = getFittingPlacements(tile, loc);
-            if (!validFits.isEmpty())  {
-                return validFits.get(0);
-            }
-        }
-        assert false;
-        return null;
-    }
-
-    /**
      * @param tile the tile to place.
      * @param loc the location to try and place it at.
      * @return the placement if one could be found, else null.
@@ -103,7 +67,7 @@ public class MoveGenerator {
         TilePlacement placement = new TilePlacement(tile, loc, Rotation.ANGLE_0);
         TilePlacementList validPlacements = new TilePlacementList();
 
-        for (int i=0; i<HEX_SIDES; i++) {
+        for (int i=0; i< NUM_SIDES; i++) {
             if (fits(placement)) {
                 validPlacements.add(placement);
             }
@@ -120,7 +84,7 @@ public class MoveGenerator {
     boolean fits(TilePlacement placement) {
         boolean primaryPathMatched = false;
 
-        for (byte i=0; i<HEX_SIDES; i++) {
+        for (byte i=0; i< NUM_SIDES; i++) {
             TilePlacement nbr = board.getNeighbor(placement, i);
 
             if (nbr != null) {

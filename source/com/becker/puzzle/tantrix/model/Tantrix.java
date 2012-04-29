@@ -79,47 +79,12 @@ public class Tantrix extends HashMap<Location, TilePlacement>{
      */
     TilePlacement getNeighbor(TilePlacement currentPlacement, byte direction) {
 
-        if (currentPlacement == null) return null;
-        Location loc = getNeighborLocation(currentPlacement, direction);
-        return get(loc);
-    }
-
-    /**
-     * @param currentTile where we are now
-     * @param direction side to navigate to to find the neighbor. 0 is to the right.
-     * @return the indicated neighbor of the specified tile.
-     */
-    Location getNeighborLocation(TilePlacement currentTile, byte direction) {
-        assert (currentTile != null);
-        return getNeighborLocation(currentTile.getLocation(), direction);
-    }
-
-    /**
-     * @param currentLocation where we are now
-     * @param direction side to navigate to to find the neighbor. 0 is to the right.
-     * @return the indicated neighbor of the specified tile.
-     */
-    Location getNeighborLocation(Location currentLocation, int direction) {
-
-        int offset = (currentLocation.getRow() % 2 == 1) ? -1 : 0;
-        Location nbrLoc = null;
-
-        switch (direction) {
-            case 0 : nbrLoc = new Location(currentLocation.getRow(), currentLocation.getCol() + 1);
-                break;
-            case 1 : nbrLoc = new Location(currentLocation.getRow() - 1, currentLocation.getCol() + offset + 1);
-                break;
-            case 2 : nbrLoc = new Location(currentLocation.getRow() - 1, currentLocation.getCol() + offset);
-                break;
-            case 3 : nbrLoc = new Location(currentLocation.getRow(), currentLocation.getCol() - 1);
-                break;
-            case 4 : nbrLoc = new Location(currentLocation.getRow() + 1, currentLocation.getCol() + offset);
-                break;
-            case 5 : nbrLoc = new Location(currentLocation.getRow() + 1, currentLocation.getCol() + offset + 1);
-                break;
-            default : assert false;
+        if (currentPlacement == null) {
+            return null;
         }
-        return nbrLoc;
+        Location loc =
+            new NeighborLocator(currentPlacement.getLocation()).getNeighborLocation(direction);
+        return get(loc);
     }
 
     public TilePlacement getLastTile() {
@@ -140,6 +105,13 @@ public class Tantrix extends HashMap<Location, TilePlacement>{
             bbox.expandBy(loc);
         }
         return bbox;
+    }
+
+    /**
+     * @return the placement at the specified location.
+     */
+    public TilePlacement getTilePlacement(Location loc) {
+        return get(loc);
     }
 
     /**

@@ -9,6 +9,7 @@ import com.becker.puzzle.redpuzzle.model.PieceList;
 import com.becker.puzzle.tantrix.model.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,15 +24,18 @@ import java.util.List;
 public class TantrixPath extends PermutedParameterArray {
 
     private TilePlacementList tiles_;
+    private PathColor primaryPathColor_;
 
 
     /**
      * The list of tiles that are passed in must be a continuous primary path,
      *  but it is not required that it be a loop, or that any of the secondary colors match.
      * @param tiles ordered path tiles.
+     * @param primaryColor
      */
-    public TantrixPath(TilePlacementList tiles) {
+    public TantrixPath(TilePlacementList tiles, PathColor primaryColor) {
         tiles_ = tiles;
+        primaryPathColor_ = primaryColor;
     }
 
     public TantrixPath(TantrixBoard board) {
@@ -40,11 +44,12 @@ public class TantrixPath extends PermutedParameterArray {
         RandomPathGenerator gen = new RandomPathGenerator(myBoard);
         TantrixPath path = gen.generateRandomPath();
         this.tiles_ = path.tiles_;
+        this.primaryPathColor_ = board.getPrimaryColor();
     }
 
     @Override
     public TantrixPath copy() {
-        TantrixPath copy = new TantrixPath(tiles_);
+        TantrixPath copy = new TantrixPath(tiles_, primaryPathColor_);
 
         copy.setFitness(this.getFitness());
         return copy;
@@ -54,12 +59,25 @@ public class TantrixPath extends PermutedParameterArray {
         return tiles_;
     }
 
+    /**
+     * The start index is not necessarily smaller than the end index.
+     * @param startIndex  tile to add first
+     * @param endIndex  tile to add last
+     * @return sub path
+     */
     public TantrixPath subPath(int startIndex, int endIndex) {
         TilePlacementList pathTiles = new TilePlacementList();
-        for (int i=startIndex; i<=endIndex; i++) {
-            pathTiles.add(this.tiles_.get(i));
+        if (startIndex <= endIndex) {
+            for (int i = startIndex; i <= endIndex; i++) {
+                pathTiles.add(this.tiles_.get(i));
+            }
         }
-        return new TantrixPath(pathTiles);
+        else  {
+            for (int i = startIndex; i >= endIndex; i--) {
+                pathTiles.add(this.tiles_.get(i));
+            }
+        }
+        return new TantrixPath(pathTiles, primaryPathColor_);
     }
 
     /**
@@ -90,25 +108,8 @@ public class TantrixPath extends PermutedParameterArray {
     private List<TantrixPath> findPermutedPaths() {
 
         int pivotIndex = 1 + MathUtil.RANDOM.nextInt(tiles_.size()-2);
-        TilePlacement pivotTile = tiles_.get(pivotIndex);
-
-        TantrixPath subPath1 = subPath(0, pivotIndex-1);
-        TantrixPath subPath2 = subPath(pivotIndex+1, tiles_.size()-1);
-
-        TantrixPath subPath1Reversed = subPath1.reverse(pivotTile);
-        TantrixPath subPath2Reversed = subPath2.reverse(pivotTile);
-
-        List<TantrixPath> pathPermutations = new ArrayList<TantrixPath>();
-        pathPermutations.add(createPermutedPath(subPath1, pivotTile, subPath2Reversed));
-        pathPermutations.add(createPermutedPath(subPath1Reversed, pivotTile, subPath2));
-        pathPermutations.add(createPermutedPath(subPath1Reversed, pivotTile, subPath2Reversed));
-
-        pathPermutations.add(createPermutedPath(subPath2, pivotTile, subPath1));
-        pathPermutations.add(createPermutedPath(subPath2, pivotTile, subPath1Reversed));
-        pathPermutations.add(createPermutedPath(subPath2Reversed, pivotTile, subPath1));
-        pathPermutations.add(createPermutedPath(subPath2Reversed, pivotTile, subPath1Reversed));
-
-        return pathPermutations;
+        PathPermuter permuter = new PathPermuter(this);
+        return permuter.findPermutedPaths(pivotIndex);
     }
 
     /**
@@ -130,14 +131,6 @@ public class TantrixPath extends PermutedParameterArray {
         return bestPath;
     }
 
-    private TantrixPath reverse(TilePlacement pivotTile) {
-        return this;
-    }
-
-    private TantrixPath createPermutedPath(TantrixPath subPath1, TilePlacement placement, TantrixPath subPath2) {
-       return subPath1;
-    }
-
     /**
      * @return get a completely random solution in the parameter space.
      */
@@ -147,6 +140,10 @@ public class TantrixPath extends PermutedParameterArray {
         TantrixBoard board = new TantrixBoard(new HexTileList(tiles_));
         RandomPathGenerator gen = new RandomPathGenerator(board);
         return gen.generateRandomPath();
+    }
+
+    public PathColor getPrimaryPathColor() {
+        return primaryPathColor_;
     }
 
     /**

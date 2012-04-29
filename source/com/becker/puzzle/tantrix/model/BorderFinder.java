@@ -6,7 +6,7 @@ import com.becker.common.geometry.Location;
 
 import java.util.*;
 
-import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
+import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**
  * Finds the set of moves on the border of the current 'tantrix'.
@@ -61,9 +61,9 @@ public class BorderFinder {
      */
     private List<Location> findEmptyNeighborLocations(TilePlacement placement) {
         List<Location> emptyNbrLocations = new LinkedList<Location>();
-        for (byte i=0; i<HEX_SIDES; i++) {
+        for (byte i=0; i< NUM_SIDES; i++) {
 
-            Location nbrLoc = tantrix.getNeighborLocation(placement, i);
+            Location nbrLoc = new NeighborLocator(placement.getLocation()).getNeighborLocation(i);
             if (tantrix.get(nbrLoc) == null) {
                 Box newBox = new Box(boundingBox, nbrLoc);
                 if (newBox.getMaxDimension() <= maxHalfPathLength) {
@@ -81,7 +81,7 @@ public class BorderFinder {
     private TilePlacementList findPrimaryPathNeighbors(TilePlacement previous) {
 
         TilePlacementList pathNbrs = new TilePlacementList();
-        for (byte i=0; i<HEX_SIDES; i++) {
+        for (byte i=0; i< NUM_SIDES; i++) {
             PathColor color = previous.getPathColor(i);
             if (color == primaryColor) {
                 TilePlacement nbr = tantrix.getNeighbor(previous, i);

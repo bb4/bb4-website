@@ -6,7 +6,7 @@ import com.becker.common.geometry.Location;
 
 import java.util.*;
 
-import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
+import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**
  * Used to determine if a candidate solution has empty spaces within the tantrix.
@@ -36,11 +36,11 @@ class InnerSpaceDetector {
     public boolean hasInnerSpaces() {
 
         Set<Location> seedEmpties = findEmptyBorderPositions();
-        //System.out.println("seeds=" + seedEmpties);
+        System.out.println("seeds=" + seedEmpties);
         Set<Location> visited = findConnectedEmpties(seedEmpties);
-        //System.out.println("all empties="+ visited);
+        System.out.println("all empties="+ visited);
         boolean hasInner = !allEmptiesVisited(visited);
-        //System.out.println("found inner spaces == " + hasInner);
+        System.out.println("found inner spaces == " + hasInner);
         return hasInner;
     }
 
@@ -106,7 +106,7 @@ class InnerSpaceDetector {
         List<Location> emptyNbrLocations = new LinkedList<Location>();
         Box bbox = board.getBoundingBox();
 
-        for (byte i=0; i<HEX_SIDES; i++) {
+        for (byte i=0; i< NUM_SIDES; i++) {
 
             Location nbrLoc = board.getNeighborLocation(loc, i);
             if (board.isEmpty(nbrLoc) && bbox.contains(nbrLoc)) {
