@@ -3,7 +3,7 @@ package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
 
-import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
+import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**
  * Represents the positioning of a tantrix tile on the tantrix.
@@ -40,9 +40,9 @@ public class TilePlacement {
         return tile;
     }
 
-    public PathColor getPathColor(byte i) {
-        int index = (i - rotation.ordinal()) % HEX_SIDES;
-        index = (index < 0) ? index + HEX_SIDES : index;
+    public PathColor getPathColor(int i) {
+        int index = (i - rotation.ordinal()) % NUM_SIDES;
+        index = (index < 0) ? index + NUM_SIDES : index;
         return tile.getEdgeColor(index);
     }
 
@@ -60,13 +60,13 @@ public class TilePlacement {
      * @param turns positive (c-clockwise) or negative (clockwise) number of turns.
      * @return new immutable TilePlacement instance.
      */
-    public TilePlacement rotate(byte turns) {
-        Rotation newRotation = Rotation.values()[(rotation.ordinal() + turns) % HEX_SIDES];
+    public TilePlacement rotate(int turns) {
+        Rotation newRotation = Rotation.values()[(rotation.ordinal() + turns) % NUM_SIDES];
         return new TilePlacement(tile, location, newRotation);
     }
 
     public TilePlacement rotate() {
-        Rotation newRotation = Rotation.values()[(rotation.ordinal() + 1) % HEX_SIDES];
+        Rotation newRotation = Rotation.values()[(rotation.ordinal() + 1) % NUM_SIDES];
         return new TilePlacement(tile, location, newRotation);
     }
 

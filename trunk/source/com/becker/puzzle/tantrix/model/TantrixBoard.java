@@ -15,8 +15,6 @@ import java.util.Set;
  */
 public class TantrixBoard {
 
-    static final byte HEX_SIDES = 6;
-
     /** starting position. must be odd I believe. */
     static final Location INITIAL_LOCATION = new Location(21, 21);
 
@@ -72,7 +70,7 @@ public class TantrixBoard {
     }
 
     /**
-     * Create a board with the specified tile placments (nothing unplaced).
+     * Create a board with the specified tile placements (nothing unplaced).
      * @param tiles  specific placements to initialize the board with.
      */
     public TantrixBoard(TilePlacementList tiles, PathColor primaryColor) {
@@ -164,13 +162,6 @@ public class TantrixBoard {
     }
 
     /**
-     * @return the placement at the specified location.
-     */
-    public TilePlacement getTilePlacement(int row, int col) {
-        return tantrix.get(new Location(row, col));
-    }
-
-    /**
      * @param location
      * @return null of there is no placement at that location.
      */
@@ -188,7 +179,8 @@ public class TantrixBoard {
      * @return the specified neighbor
      */
     public Location getNeighborLocation(Location currentLocation, int i) {
-        return tantrix.getNeighborLocation(currentLocation, i);
+        assert currentLocation != null;
+        return new NeighborLocator(currentLocation).getNeighborLocation(i);
     }
 
     public String toString() {

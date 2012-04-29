@@ -10,6 +10,9 @@ import java.util.List;
  */
 public class HexTile {
 
+    /** number of sides on a hex tile. */
+    public static final byte NUM_SIDES = 6;
+    
     private byte tantrixNumber;
     private List<PathColor> edgeColors;
     private PathColor primaryColor;

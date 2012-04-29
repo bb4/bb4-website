@@ -1,7 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.model;
 
-import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
+import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**
  * Used to determine whether or not a given tantrix state is a valid solution.
@@ -59,7 +59,7 @@ public class SolutionVerifier {
      */
     private TilePlacement findNeighborTile(TilePlacement currentPlacement, TilePlacement previousTile) {
 
-        for (byte i = 0; i < HEX_SIDES; i++) {
+        for (byte i = 0; i < NUM_SIDES; i++) {
             PathColor color = currentPlacement.getPathColor(i);
             if (color == board.getPrimaryColor()) {
                 TilePlacement nbr = board.getNeighbor(currentPlacement, i);

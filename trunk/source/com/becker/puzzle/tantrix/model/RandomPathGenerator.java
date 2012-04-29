@@ -5,12 +5,7 @@ import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.tantrix.solver.TantrixPath;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
-import static com.becker.puzzle.tantrix.model.TantrixBoard.HEX_SIDES;
+import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**
  * Generates random continuous primary color paths that do not necessarily match on secondary colors.
@@ -43,7 +38,7 @@ public class RandomPathGenerator {
             TilePlacement placement = generateRandomPathMove(currentBoard);
             currentBoard = currentBoard.placeTile(placement);
         }
-        return new TantrixPath(moves);
+        return new TantrixPath(moves, primaryColor);
     }
 
     /**
@@ -76,13 +71,13 @@ public class RandomPathGenerator {
     /**
      * @param tile the tile to place.
      * @param loc the location to try and place it at.
-     * @return the placement if one could be found, else null.
+     * @return the fitting placement if one could be found, else null.
      */
     private TilePlacementList getFittingPlacements(HexTile tile, Location loc) {
         TilePlacement placement = new TilePlacement(tile, loc, Rotation.ANGLE_0);
         TilePlacementList validPlacements = new TilePlacementList();
 
-        for (int i = 0; i < HEX_SIDES; i++) {
+        for (int i = 0; i < NUM_SIDES; i++) {
             if (fits(placement)) {
                 validPlacements.add(placement);
             }
@@ -98,7 +93,7 @@ public class RandomPathGenerator {
      */
     boolean fits(TilePlacement placement) {
 
-        for (byte i = 0; i < HEX_SIDES; i++) {
+        for (byte i = 0; i < NUM_SIDES; i++) {
             TilePlacement nbr = initialBoard.getNeighbor(placement, i);
 
             if (nbr != null) {
