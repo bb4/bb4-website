@@ -63,7 +63,7 @@ public class BorderFinder {
         List<Location> emptyNbrLocations = new LinkedList<Location>();
         for (byte i=0; i< NUM_SIDES; i++) {
 
-            Location nbrLoc = HexNeighborLocator.getNeighbor(placement.getLocation(), i);
+            Location nbrLoc = HexUtil.getNeighborLocation(placement.getLocation(), i);
             if (tantrix.get(nbrLoc) == null) {
                 Box newBox = new Box(boundingBox, nbrLoc);
                 if (newBox.getMaxDimension() <= maxHalfPathLength) {

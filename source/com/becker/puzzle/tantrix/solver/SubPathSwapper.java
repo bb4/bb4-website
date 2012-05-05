@@ -33,7 +33,7 @@ public class SubPathSwapper extends SubPathMutator {
         Location firstTileLocation = firstTile.getLocation();
         int numRotations = findRotationsToSwapLocation(firstTileLocation);
 
-        Location newLocation = HexNeighborLocator.getNeighbor(pivotTile.getLocation(), numRotations);
+        Location newLocation = HexUtil.getNeighborLocation(pivotTile.getLocation(), numRotations);
         Location origLocation = pivotTile.getLocation();
 
         Rotation tileRotation = firstTile.getRotation().rotateBy(numRotations);
@@ -55,7 +55,7 @@ public class SubPathSwapper extends SubPathMutator {
             previousTilePlacement = currentTilePlacement;
         }
 
-        return new TantrixPath(tiles, primaryColor);
+        return new TantrixPath(tiles, primaryColor, subPath.getEvaluator());
     }
 
     /**

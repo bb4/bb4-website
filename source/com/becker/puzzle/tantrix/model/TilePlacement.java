@@ -73,12 +73,11 @@ public class TilePlacement {
         return new TilePlacement(tile, location, newRotation);
     }
 
-
     public Map<Integer, Location> getOutgoingPathLocations(PathColor primaryColor) {
         Map<Integer, Location> outgoingPathLocations = new HashMap<Integer, Location>();
         for (int i=0; i< HexTile.NUM_SIDES; i++)  {
             if (primaryColor == getPathColor(i)) {
-                outgoingPathLocations.put(i, HexNeighborLocator.getNeighbor(getLocation(), i));
+                outgoingPathLocations.put(i, HexUtil.getNeighborLocation(getLocation(), i));
             }
         }
 

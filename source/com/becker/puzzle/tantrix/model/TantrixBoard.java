@@ -3,6 +3,8 @@ package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
+import com.becker.puzzle.tantrix.model.fitting.TantrixTileFitter;
+import com.becker.puzzle.tantrix.model.fitting.TileFitter;
 import com.becker.puzzle.tantrix.model.verfication.SolutionVerifier;
 
 import java.util.Set;
@@ -18,7 +20,7 @@ public class TantrixBoard {
     static final Location INITIAL_LOCATION = new Location(21, 21);
 
     /** The 'tantrix'. Map of locations to currently placed tiles. */
-    Tantrix tantrix;
+    private Tantrix tantrix;
 
     /** color of the loop path */
     private PathColor primaryColor;
@@ -69,6 +71,10 @@ public class TantrixBoard {
         }*/
     }
 
+    public Tantrix getTantrix() {
+        return tantrix;
+    }
+
     /**
      * Create a board with the specified tile placements (nothing unplaced).
      * @param tiles  specific placements to initialize the board with.
@@ -107,6 +113,17 @@ public class TantrixBoard {
      */
     public TilePlacement getNeighbor(TilePlacement currentPlacement, byte direction) {
         return tantrix.getNeighbor(currentPlacement, direction);
+    }
+
+    /**
+     * The tile fits if the primary path and all the other paths match for edges that have neighbors.
+     * @param placement the tile to check for a valid fit.
+     * @return true of the tile fits
+     */
+    public boolean fits(TilePlacement placement) {
+
+        TantrixTileFitter fitter = new TantrixTileFitter(tantrix, getPrimaryColor());
+        return fitter.isFit(placement);
     }
 
     /**
@@ -179,7 +196,7 @@ public class TantrixBoard {
      * @return the specified neighbor
      */
     public Location getNeighborLocation(Location currentLocation, int i) {
-        return HexNeighborLocator.getNeighbor(currentLocation, i);
+        return HexUtil.getNeighborLocation(currentLocation, i);
     }
 
     public String toString() {

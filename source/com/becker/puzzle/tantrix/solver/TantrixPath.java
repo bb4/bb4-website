@@ -3,13 +3,11 @@ package com.becker.puzzle.tantrix.solver;
 
 import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
+import java.util.Map;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.PermutedParameterArray;
-import com.becker.puzzle.redpuzzle.model.PieceList;
 import com.becker.puzzle.tantrix.model.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,6 +23,8 @@ public class TantrixPath extends PermutedParameterArray {
 
     private TilePlacementList tiles_;
     private PathColor primaryPathColor_;
+    private PathEvaluator evaluator_;
+
 
 
     /**
@@ -33,9 +33,10 @@ public class TantrixPath extends PermutedParameterArray {
      * @param tiles ordered path tiles.
      * @param primaryColor
      */
-    public TantrixPath(TilePlacementList tiles, PathColor primaryColor) {
+    public TantrixPath(TilePlacementList tiles, PathColor primaryColor, PathEvaluator evaluator) {
         tiles_ = tiles;
         primaryPathColor_ = primaryColor;
+        evaluator_ = evaluator;
     }
 
     public TantrixPath(TantrixBoard board) {
@@ -49,7 +50,7 @@ public class TantrixPath extends PermutedParameterArray {
 
     @Override
     public TantrixPath copy() {
-        TantrixPath copy = new TantrixPath(tiles_, primaryPathColor_);
+        TantrixPath copy = new TantrixPath(tiles_, primaryPathColor_, evaluator_);
 
         copy.setFitness(this.getFitness());
         return copy;
@@ -57,6 +58,10 @@ public class TantrixPath extends PermutedParameterArray {
 
     public TilePlacementList getTilePlacements() {
         return tiles_;
+    }
+
+    public PathEvaluator getEvaluator() {
+        return evaluator_;
     }
 
     /**
@@ -77,11 +82,11 @@ public class TantrixPath extends PermutedParameterArray {
                 pathTiles.add(this.tiles_.get(i));
             }
         }
-        return new TantrixPath(pathTiles, primaryPathColor_);
+        return new TantrixPath(pathTiles, primaryPathColor_, evaluator_);
     }
 
     /**
-     * We want to find a potential solution close to the one that we have, 
+     * We want to find a potential solution close to the one that we have,
      * with minimal disturbance of the pieces that are already fit, but yet improved from what we had.
      * The main criteria for quality of the path is
      *  1) How close the ends of the path are to each other. Perfection achieved when we have a closed loop.
@@ -101,37 +106,7 @@ public class TantrixPath extends PermutedParameterArray {
         return selectBestPath(pathPermutations);
     }
 
-    /**
-     * try the seven cases and take the one that works best
-     * @return 7 permuted path cases.
-     */
-    private List<TantrixPath> findPermutedPaths() {
-
-        int pivotIndex = 1 + MathUtil.RANDOM.nextInt(tiles_.size()-2);
-        PathPermuter permuter = new PathPermuter(this);
-        return permuter.findPermutedPaths(pivotIndex);
-    }
-
-    /**
-     * @param paths list of paths to evaluate.
-     * @return the path with the best score. In other words the path which is closest to a valid solution.
-     */
-    private TantrixPath selectBestPath(List<TantrixPath> paths) {
-        PathEvaluator evaluator = new PathEvaluator();
-
-        double bestScore = -1;
-        TantrixPath bestPath = null;
-
-        for (TantrixPath path : paths) {
-            double score = evaluator.evaluateFitness(path);
-            if (score > bestScore) {
-                bestPath = path;
-            }
-        }
-        return bestPath;
-    }
-
-    /**
+      /**
      * @return get a completely random solution in the parameter space.
      */
     @Override
@@ -144,6 +119,63 @@ public class TantrixPath extends PermutedParameterArray {
 
     public PathColor getPrimaryPathColor() {
         return primaryPathColor_;
+    }
+
+    /**
+     * Its a loop if the beginning of the path connects with the end.
+     * Having the distance between beginning and end be 0 is a prerequisite and quicker to compute.
+     * @return true if the path is a complete loop (ignoring secondary paths)
+     */
+    public boolean isLoop() {
+
+        double distance = getEndPointDistance();
+
+        if (distance == 0) {
+            Map<Integer, Location> outgoing = tiles_.getFirst().getOutgoingPathLocations(primaryPathColor_);
+            if (outgoing.containsValue(tiles_.getLast().getLocation())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return  the distance between the path end points. A distance of 0 does not automatically mean there is a loop.
+     */
+    public double getEndPointDistance() {
+        Location end1 = tiles_.get(0).getLocation();
+        Location end2 = tiles_.get(0).getLocation();
+        return HexUtil.distanceBetween(end1, end2);
+    }
+
+    /**
+     * try the seven cases and take the one that works best
+     * @return 7 permuted path cases.
+     */
+    private List<TantrixPath> findPermutedPaths() {
+
+        int pivotIndex = 1 + MathUtil.RANDOM.nextInt(tiles_.size()-2);
+        PathPermuter permuter = new PathPermuter(this, evaluator_);
+        return permuter.findPermutedPaths(pivotIndex);
+    }
+
+    /**
+     * @param paths list of paths to evaluate.
+     * @return the path with the best score. In other words the path which is closest to a valid solution.
+     */
+    private TantrixPath selectBestPath(List<TantrixPath> paths) {
+
+        double bestScore = -1;
+        TantrixPath bestPath = null;
+
+        for (TantrixPath path : paths) {
+            double score = evaluator_.evaluateFitness(path);
+            if (score > bestScore) {
+                bestPath = path;
+            }
+        }
+        return bestPath;
     }
 
     /**
