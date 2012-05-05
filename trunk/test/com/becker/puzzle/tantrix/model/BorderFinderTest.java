@@ -18,7 +18,7 @@ public class BorderFinderTest extends TestCase {
 
 
     public void testFindBorderForFirstTileOfThree() {
-        tantrix = new TantrixBoard(threeTiles).tantrix;
+        tantrix = new TantrixBoard(threeTiles).getTantrix();
         borderFinder = new BorderFinder(tantrix, 10, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
@@ -26,7 +26,7 @@ public class BorderFinderTest extends TestCase {
     }
 
     public void testFindBorderForTwoOfThreeTilesA() {
-        tantrix = place2of3Tiles_OneThenTwo().tantrix;
+        tantrix = place2of3Tiles_OneThenTwo().getTantrix();
         borderFinder = new BorderFinder(tantrix, 10, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
@@ -34,7 +34,7 @@ public class BorderFinderTest extends TestCase {
     }
 
     public void testFindBorderForTwoOfThreeTilesB() {
-        tantrix = place2of3Tiles_OneThenThree().tantrix;
+        tantrix = place2of3Tiles_OneThenThree().getTantrix();
         borderFinder = new BorderFinder(tantrix, 10, PathColor.YELLOW);
         System.out.println(tantrix);
         Set<Location> positions = borderFinder.findBorderPositions();
@@ -43,7 +43,7 @@ public class BorderFinderTest extends TestCase {
     }
 
     public void testFindBorderForThreeSolvedTiles() {
-        tantrix = place3SolvedTiles().tantrix;
+        tantrix = place3SolvedTiles().getTantrix();
         borderFinder = new BorderFinder(tantrix, 10, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
@@ -52,7 +52,7 @@ public class BorderFinderTest extends TestCase {
 
 
     public void testFindBorderForTwoOfThreeTilesA_ConstrainedByBorder() {
-        tantrix = place2of3Tiles_OneThenTwo().tantrix;
+        tantrix = place2of3Tiles_OneThenTwo().getTantrix();
         borderFinder = new BorderFinder(tantrix, 1, PathColor.YELLOW);
 
         Set<Location> positions = borderFinder.findBorderPositions();
@@ -60,7 +60,7 @@ public class BorderFinderTest extends TestCase {
     }
 
     public void testFindBorderForTwoOfThreeTilesB_ConstrainedByBorder() {
-        tantrix = place2of3Tiles_OneThenThree().tantrix;
+        tantrix = place2of3Tiles_OneThenThree().getTantrix();
         borderFinder = new BorderFinder(tantrix, 1, PathColor.YELLOW);
         System.out.println(tantrix);
         Set<Location> positions = borderFinder.findBorderPositions();

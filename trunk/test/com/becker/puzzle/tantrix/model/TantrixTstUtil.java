@@ -106,7 +106,7 @@ public class TantrixTstUtil {
         return board;
     }
 
-    static Location loc(int row, int col) {
+    public static Location loc(int row, int col) {
         return new Location(row, col).incrementOnCopy(INITIAL_LOCATION).incrementOnCopy(-1, -1);
     }
 }

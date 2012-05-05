@@ -63,6 +63,6 @@ public class SubPathReverser extends SubPathMutator {
              previousTilePlacement = currentTilePlacement;
          }
 
-         return new TantrixPath(tiles, primaryColor);
+         return new TantrixPath(tiles, primaryColor, subPath.getEvaluator());
     }
 }

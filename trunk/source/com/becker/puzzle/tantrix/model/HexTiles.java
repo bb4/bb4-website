@@ -79,7 +79,7 @@ public class HexTiles extends HexTileList {
     }
 
     /**
-     * Get a specific tile by its tantrix number.
+     * Get a specific tile by its tantrix number (base index of 1, not 0).
      * @param tantrixNumber
      */
     public HexTile getTile(int tantrixNumber) {
@@ -101,7 +101,7 @@ public class HexTiles extends HexTileList {
     }
 
     /**
-     * @param numTiles  the number of tiles to draw from the master list starting with 1.
+     * @param numTiles the number of tiles to draw from the master list starting with tile 1.
      * @return a random collection of tantrix tiles.
      */
     public HexTileList createOrderedList(int numTiles) {
@@ -113,4 +113,4 @@ public class HexTiles extends HexTileList {
     }
 }
 
-  
+

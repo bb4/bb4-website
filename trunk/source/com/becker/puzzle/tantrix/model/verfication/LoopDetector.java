@@ -1,9 +1,15 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.model.verfication;
 
+import com.becker.common.geometry.Location;
+import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.PathColor;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
+import org.apache.commons.codec.binary.Hex;
+
+import java.util.List;
+import java.util.Set;
 
 import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
@@ -25,9 +31,8 @@ public class LoopDetector {
     }
 
     /**
-     * The puzzle is solved if there is a loop of the primary color
-     * and all secondary colors match. Since a tile can only be placed in
-     * a valid position, we only need to check if there is a complete loop.
+     * True if loop of the primary color.
+     * Does not check the consistency of secondary paths.
      * @return true if solved.
      */
     public boolean hasLoop() {

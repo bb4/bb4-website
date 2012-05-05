@@ -15,7 +15,7 @@ import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
  *
  *  @author Barry Becker
  */
-class InnerSpaceDetector {
+public class InnerSpaceDetector {
 
     TantrixBoard board;
 
@@ -37,11 +37,11 @@ class InnerSpaceDetector {
     public boolean hasInnerSpaces() {
 
         Set<Location> seedEmpties = findEmptyBorderPositions();
-        System.out.println("seeds=" + seedEmpties);
+        //System.out.println("seeds=" + seedEmpties);
         Set<Location> visited = findConnectedEmpties(seedEmpties);
-        System.out.println("all empties="+ visited);
+        //System.out.println("all empties="+ visited);
         boolean hasInner = !allEmptiesVisited(visited);
-        System.out.println("found inner spaces == " + hasInner);
+        //System.out.println("found inner spaces == " + hasInner);
         return hasInner;
     }
 

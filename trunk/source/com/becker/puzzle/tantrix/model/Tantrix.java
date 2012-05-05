@@ -17,6 +17,8 @@ public class Tantrix extends HashMap<Location, TilePlacement>{
     /** the last tile placed */
     private TilePlacement lastTile;
 
+    private Tantrix() {}
+
     /**
      * Constructor that creates a new tantrix instance when placing a move.
      * If the new tile to be placed is in the edge row of the grid, then
@@ -52,13 +54,10 @@ public class Tantrix extends HashMap<Location, TilePlacement>{
         }
     }
 
-    private Tantrix() {}
-
     /**
      * Initialize ourselves from the old version.
      */
     private void initializeFromOldTantrix(Tantrix tantrix) {
-        //this.primaryColor = tantrix.primaryColor;
         this.lastTile = tantrix.lastTile;
         this.putAll(tantrix);
     }
@@ -77,13 +76,13 @@ public class Tantrix extends HashMap<Location, TilePlacement>{
      * @param direction side to navigate to to find the neighbor. 0 is to the right.
      * @return the indicated neighbor of the specified tile.
      */
-    TilePlacement getNeighbor(TilePlacement currentPlacement, byte direction) {
+    public TilePlacement getNeighbor(TilePlacement currentPlacement, byte direction) {
 
         if (currentPlacement == null) {
             return null;
         }
         Location loc =
-            HexNeighborLocator.getNeighbor(currentPlacement.getLocation(), direction);
+            HexUtil.getNeighborLocation(currentPlacement.getLocation(), direction);
         return get(loc);
     }
 
@@ -105,13 +104,6 @@ public class Tantrix extends HashMap<Location, TilePlacement>{
             bbox.expandBy(loc);
         }
         return bbox;
-    }
-
-    /**
-     * @return the placement at the specified location.
-     */
-    public TilePlacement getTilePlacement(Location loc) {
-        return get(loc);
     }
 
     /**

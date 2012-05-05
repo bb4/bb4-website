@@ -29,7 +29,7 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
     private OptimizationStrategyType strategy;
     private int numTries_;
 
-    private PathEvaluator evaluator = new PathEvaluator();
+    private PathEvaluator evaluator;
 
 
     /** Constructor */
@@ -39,6 +39,7 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
         puzzlePanel_ = puzzlePanel;
         strategy = useConcurrency ? OptimizationStrategyType.CONCURRENT_GENETIC_SEARCH :
                                     OptimizationStrategyType.GENETIC_SEARCH;
+        evaluator = new PathEvaluator(board);
     }
 
     /**
@@ -58,7 +59,6 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
 
         solution_ =
             new TantrixBoard(((TantrixPath)solution).getTilePlacements(), board.getPrimaryColor());
-
 
         TilePlacementList moves;
         if (evaluateFitness(solution) >= SOLVED_THRESH) {

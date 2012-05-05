@@ -22,6 +22,8 @@ public class TestAll extends TestCase {
         suite.addTestSuite(BorderFinderTest.class);
         suite.addTestSuite(MoveGeneratorTest.class);
 
+        suite.addTest(com.becker.puzzle.tantrix.model.fitting.TestAll.suite());
+
         return suite;
     }
 }

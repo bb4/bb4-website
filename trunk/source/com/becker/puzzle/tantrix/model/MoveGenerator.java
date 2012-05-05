@@ -2,10 +2,10 @@
 package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
+import com.becker.puzzle.tantrix.model.fitting.TantrixTileFitter;
+import com.becker.puzzle.tantrix.model.fitting.TileFitter;
 
 import java.util.Set;
-
-import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**
  * Tantrix puzzle move generator. Generates valid next moves given the current state.
@@ -26,7 +26,7 @@ public class MoveGenerator {
     public MoveGenerator(TantrixBoard board) {
         this.board = board;
         this.borderSpaces =
-            new BorderFinder(board.tantrix, board.getNumTiles(), board.getPrimaryColor()).findBorderPositions();
+            new BorderFinder(board.getTantrix(), board.getNumTiles(), board.getPrimaryColor()).findBorderPositions();
     }
 
     /**
@@ -49,57 +49,14 @@ public class MoveGenerator {
      */
     private TilePlacementList findPlacementsForTile(HexTile tile) {
         TilePlacementList placements = new TilePlacementList();
+        TantrixTileFitter fitter =
+                new TantrixTileFitter(board.getTantrix(), board.getPrimaryColor());
 
         for (Location loc : borderSpaces)  {
-            TilePlacementList validFits = getFittingPlacements(tile, loc);
+            TilePlacementList validFits = fitter.getFittingPlacements(tile, loc);
             placements.addAll(validFits);
         }
 
         return placements;
-    }
-
-    /**
-     * @param tile the tile to place.
-     * @param loc the location to try and place it at.
-     * @return the placement if one could be found, else null.
-     */
-    private TilePlacementList getFittingPlacements(HexTile tile, Location loc) {
-        TilePlacement placement = new TilePlacement(tile, loc, Rotation.ANGLE_0);
-        TilePlacementList validPlacements = new TilePlacementList();
-
-        for (int i=0; i< NUM_SIDES; i++) {
-            if (fits(placement)) {
-                validPlacements.add(placement);
-            }
-            placement = placement.rotate();
-        }
-        return validPlacements;
-    }
-
-    /**
-     * The tile fits if the primary path and all the other paths match for edges that have neighbors.
-     * @param placement the tile to check for a valid fit.
-     * @return true of the tile fits
-     */
-    boolean fits(TilePlacement placement) {
-        boolean primaryPathMatched = false;
-
-        for (byte i=0; i< NUM_SIDES; i++) {
-            TilePlacement nbr = board.getNeighbor(placement, i);
-
-            if (nbr != null) {
-                PathColor pathColor = placement.getPathColor(i);
-
-                if (pathColor == nbr.getPathColor((byte)(i+3))) {
-                    if (pathColor == board.getPrimaryColor()) {
-                        primaryPathMatched = true;
-                    }
-                }  else {
-                    return false;
-                }
-            }
-        }
-
-        return primaryPathMatched;
     }
 }
