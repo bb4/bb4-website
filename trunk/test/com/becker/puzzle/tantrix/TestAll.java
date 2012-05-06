@@ -20,6 +20,7 @@ public class TestAll extends TestCase {
         //suite.addTestSuite(TestSudokuGenerator.class);
 
         suite.addTest(com.becker.puzzle.tantrix.model.TestAll.suite());
+        suite.addTest(com.becker.puzzle.tantrix.solver.TestAll.suite());
 
         return suite;
     }

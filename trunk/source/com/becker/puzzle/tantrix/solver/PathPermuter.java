@@ -18,7 +18,6 @@ public class PathPermuter extends PermutedParameterArray {
 
     private TantrixPath path_;
     private TilePlacement pivotTile;
-    private PathEvaluator evaluator;
 
 
     /**
@@ -26,9 +25,9 @@ public class PathPermuter extends PermutedParameterArray {
      *  but it is not required that it be a loop, or that any of the secondary colors match.
      * @param path ordered path tiles.
      */
-    public PathPermuter(TantrixPath path, PathEvaluator evaluator) {
+    public PathPermuter(TantrixPath path) {
         path_ = path;
-        this.evaluator = evaluator;
+
     }
 
     /**
@@ -88,7 +87,7 @@ public class PathPermuter extends PermutedParameterArray {
         TilePlacementList tiles = new TilePlacementList(subPath1.getTilePlacements());
         tiles.add(pivotTile);
         tiles.addAll(subPath2.getTilePlacements());
-        return isValid(tiles) ? new TantrixPath(tiles, path_.getPrimaryPathColor(), evaluator) : null;
+        return isValid(tiles) ? new TantrixPath(tiles, path_.getPrimaryPathColor()) : null;
     }
 
     /**

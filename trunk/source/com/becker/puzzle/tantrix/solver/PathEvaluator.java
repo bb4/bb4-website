@@ -2,10 +2,10 @@
 package com.becker.puzzle.tantrix.solver;
 
 
+import com.becker.puzzle.tantrix.model.Tantrix;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.verfication.ConsistencyChecker;
 import com.becker.puzzle.tantrix.model.verfication.InnerSpaceDetector;
-import com.becker.puzzle.tantrix.model.verfication.LoopDetector;
 
 /**
  * Evaluates the fitness of a tantrix path.
@@ -15,18 +15,21 @@ import com.becker.puzzle.tantrix.model.verfication.LoopDetector;
  */
 public class PathEvaluator {
 
+    /** How close are the endpoints of the primary path from forming a loop. */
     private static final double LOOP_PROXIMITY_WEIGHT = 0.5;
+
+    /** Weight to give if we actually have a primary path loop. */
     private static final double LOOP_WEIGHT = 0.7;
+
+    /** Weight to give matching paths (includes secondary paths) */
     private static final double PATH_MATCH_WEIGHT = 0.4;
+
+    /** We have a loop and all paths match */
     private static final double CONSISTENT_LOOP_BONUS = 0.3;
+
+    /** consistent loop and no inner spaces. */
     private static final double PERFECT_LOOP_BONUS = 2.0;
 
-
-    private TantrixBoard board;
-
-    public PathEvaluator(TantrixBoard board) {
-        this.board = board;
-    }
 
     /**
      * The main criteria for quality of the path is
@@ -39,6 +42,7 @@ public class PathEvaluator {
 
         int numTiles = path.size();
         double distance = path.getEndPointDistance();
+        //System.out.println("dist="+ distance + " isLoop=" + path.isLoop());
         boolean isLoop = distance == 0 && path.isLoop();
 
         ConsistencyChecker checker = new ConsistencyChecker(path.getTilePlacements(), path.getPrimaryPathColor());
@@ -48,8 +52,10 @@ public class PathEvaluator {
         boolean perfectLoop = false;
 
         if (consistentLoop) {
-            InnerSpaceDetector innerDetector = new InnerSpaceDetector(board);
+            Tantrix tantrix = new Tantrix(path.getTilePlacements());
+            InnerSpaceDetector innerDetector = new InnerSpaceDetector(tantrix);
             perfectLoop = !innerDetector.hasInnerSpaces();
+            System.out.println("perfect loop");
         }
 
         double fitness =
@@ -59,11 +65,9 @@ public class PathEvaluator {
                 + (consistentLoop ? CONSISTENT_LOOP_BONUS : 0)
                 + (perfectLoop ? PERFECT_LOOP_BONUS : 0);
         System.out.println("fitness=" + fitness);
-
+        assert !Double.isNaN(fitness) :
+                "Invalid fitness  isLoop=" + isLoop + " consistentLoop=" + consistentLoop
+                + " numTiles=" + numTiles + " distance=" + distance;
         return fitness;
     }
-
-
-
-
 }

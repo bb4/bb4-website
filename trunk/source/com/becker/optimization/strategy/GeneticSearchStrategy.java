@@ -125,13 +125,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             // EVALUATE POPULATION
             currentBest = evaluatePopulation(population, recentBest);
 
-            deltaFitness = (currentBest.getFitness() - lastBest.getFitness());
-            assert (deltaFitness >=0) : "We must never get worse in a new generation.";
-
-            System.out.println(" ct="+ct+"  nbrRadius_=" + nbrRadius_ + " population size=" + populationSize_
-                               +" deltaFitness=" + deltaFitness+"  currentBest = " + currentBest.getFitness()
-                               +"  lastBest=" + lastBest.getFitness());
-            log(ct, currentBest.getFitness(), nbrRadius_, deltaFitness, params, "---");
+            deltaFitness = computeFitnessDelta(params, lastBest, currentBest, ct);
             recentBest = currentBest.copy();
 
             if (listener_ != null) {
@@ -156,6 +150,25 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
         System.out.println("----------------------- done -------------------");
         log(ct, currentBest.getFitness(), 0, 0, currentBest, FormatUtil.formatNumber(ct));
         return currentBest;
+    }
+
+    /**
+     * Computes the fitness delta, but also log and and asserts/
+     * @return  the different in fitness between current best and last best.
+     */
+    private double computeFitnessDelta(ParameterArray params, ParameterArray lastBest,
+                                       ParameterArray currentBest, int ct) {
+        double deltaFitness;
+        deltaFitness = (currentBest.getFitness() - lastBest.getFitness());
+        assert (deltaFitness >=0) :
+                "We must never get worse in a new generation. Old fitness="
+                        + lastBest.getFitness() + " New Fitenss = " + currentBest.getFitness() + ".";
+
+        System.out.println(" ct="+ct+"  nbrRadius_=" + nbrRadius_ + " population size=" + populationSize_
+                           +" deltaFitness=" + deltaFitness+"  currentBest = " + currentBest.getFitness()
+                           +"  lastBest=" + lastBest.getFitness());
+        log(ct, currentBest.getFitness(), nbrRadius_, deltaFitness, params, "---");
+        return deltaFitness;
     }
 
     /**

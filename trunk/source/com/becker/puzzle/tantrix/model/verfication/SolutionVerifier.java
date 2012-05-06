@@ -29,7 +29,7 @@ public class SolutionVerifier {
     public boolean isSolved() {
 
         LoopDetector loopDetector = new LoopDetector(board);
-        InnerSpaceDetector detector = new InnerSpaceDetector(board);
+        InnerSpaceDetector detector = new InnerSpaceDetector(board.getTantrix());
 
         return loopDetector.hasLoop() && !detector.hasInnerSpaces();
     }

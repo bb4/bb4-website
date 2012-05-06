@@ -63,7 +63,7 @@ class TwoPlayerOptimizee implements Optimizee {
      *
      * @param params1 set of weight for one of the sides
      * @param params2 set of weights for the other side
-     * @return the amount that params1 are better than params2. May be negative if params1 are better.
+     * @return the amount that params1 are better than params2. May be negative if params2 are better.
      */
     public double compareFitness( ParameterArray params1, ParameterArray params2 ) {
         GameWeights weights = controller_.getComputerWeights();

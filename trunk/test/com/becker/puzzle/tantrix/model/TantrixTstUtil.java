@@ -18,8 +18,8 @@ public class TantrixTstUtil {
 
     /** Places first tile in the middle and one of two remaining placed */
     public static TantrixBoard place2of3Tiles_OneThenTwo() {
-        TantrixBoard board = new TantrixBoard(threeTiles);
 
+        TantrixBoard board = new TantrixBoard(threeTiles);
         TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(2, 1), Rotation.ANGLE_60);
         board = new TantrixBoard(board, tile2);
         return board;
@@ -27,8 +27,8 @@ public class TantrixTstUtil {
 
     /** Places first tile in the middle and one of two remaining placed */
     public static TantrixBoard place2of3Tiles_OneThenThree() {
-        TantrixBoard board = new TantrixBoard(threeTiles);
 
+        TantrixBoard board = new TantrixBoard(threeTiles);
         TilePlacement tile2 = new TilePlacement(TILES.getTile(3), loc(2, 1), Rotation.ANGLE_240);
         board = new TantrixBoard(board, tile2);
         return board;
@@ -36,8 +36,8 @@ public class TantrixTstUtil {
 
     /** Places first tile in the middle */
     public static TantrixBoard place3UnsolvedTiles() {
-        TantrixBoard board = new TantrixBoard(threeTiles);
 
+        TantrixBoard board = new TantrixBoard(threeTiles);
         TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(2, 0), Rotation.ANGLE_0);
         TilePlacement tile3 = new TilePlacement(TILES.getTile(3), loc(2, 1), Rotation.ANGLE_180);
         board = new TantrixBoard(board, tile2);
@@ -45,7 +45,7 @@ public class TantrixTstUtil {
         return board;
     }
 
-    /** Places first tile in the middle */
+    /** Places first tile in the middle. Not a valid primary path. */
     public static TantrixBoard place3UnsolvedTiles2() {
 
         TantrixBoard board = new TantrixBoard(threeTiles);

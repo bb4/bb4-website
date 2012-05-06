@@ -55,7 +55,7 @@ public class SubPathSwapper extends SubPathMutator {
             previousTilePlacement = currentTilePlacement;
         }
 
-        return new TantrixPath(tiles, primaryColor, subPath.getEvaluator());
+        return new TantrixPath(tiles, primaryColor);
     }
 
     /**
