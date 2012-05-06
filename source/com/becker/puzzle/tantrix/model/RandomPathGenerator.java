@@ -4,7 +4,6 @@ package com.becker.puzzle.tantrix.model;
 import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.tantrix.model.fitting.PrimaryPathFitter;
-import com.becker.puzzle.tantrix.solver.PathEvaluator;
 import com.becker.puzzle.tantrix.solver.TantrixPath;
 
 import java.util.Collections;
@@ -40,10 +39,9 @@ public class RandomPathGenerator {
 
         while (!currentBoard.getUnplacedTiles().isEmpty())   {
             TilePlacement placement = generateRandomPathMove(currentBoard);
-            // if placement == null we need toString() backtrack.
             currentBoard = currentBoard.placeTile(placement);
         }
-        return new TantrixPath(moves, primaryColor, new PathEvaluator(currentBoard));
+        return new TantrixPath(moves, primaryColor);
     }
 
     /**

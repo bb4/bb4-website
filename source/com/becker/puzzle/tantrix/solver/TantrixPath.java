@@ -3,12 +3,12 @@ package com.becker.puzzle.tantrix.solver;
 
 import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
-import java.util.Map;
+
+import java.util.*;
+
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.PermutedParameterArray;
 import com.becker.puzzle.tantrix.model.*;
-
-import java.util.List;
 
 /**
  * A list of tiles representing a primary color path that is used when searching to find a tantrix solution.
@@ -26,18 +26,29 @@ public class TantrixPath extends PermutedParameterArray {
     private PathEvaluator evaluator_;
 
 
-
     /**
      * The list of tiles that are passed in must be a continuous primary path,
-     *  but it is not required that it be a loop, or that any of the secondary colors match.
+     * but it is not required that it be a loop, or that any of the secondary colors match.
      * @param tiles ordered path tiles.
      * @param primaryColor
      */
-    public TantrixPath(TilePlacementList tiles, PathColor primaryColor, PathEvaluator evaluator) {
-        tiles_ = tiles;
+    public TantrixPath(TilePlacementList tiles, PathColor primaryColor) {
+
+        assert primaryColor != null;
         primaryPathColor_ = primaryColor;
-        evaluator_ = evaluator;
+        tiles_ = reorder(tiles);
     }
+
+    /**
+     * The list of tiles that are passed in must be a continuous primary path,
+     * but it is not required that it be a loop, or that any of the secondary colors match.
+     * @param tantrix ordered path tiles.
+     * @param primaryColor
+     */
+    public TantrixPath(Tantrix tantrix, PathColor primaryColor) {
+        this(new TilePlacementList(tantrix), primaryColor);
+    }
+
 
     public TantrixPath(TantrixBoard board) {
 
@@ -50,8 +61,7 @@ public class TantrixPath extends PermutedParameterArray {
 
     @Override
     public TantrixPath copy() {
-        TantrixPath copy = new TantrixPath(tiles_, primaryPathColor_, evaluator_);
-
+        TantrixPath copy = new TantrixPath(tiles_, primaryPathColor_);
         copy.setFitness(this.getFitness());
         return copy;
     }
@@ -61,6 +71,9 @@ public class TantrixPath extends PermutedParameterArray {
     }
 
     public PathEvaluator getEvaluator() {
+        if (evaluator_ == null) {
+            evaluator_ = new PathEvaluator();
+        }
         return evaluator_;
     }
 
@@ -82,7 +95,7 @@ public class TantrixPath extends PermutedParameterArray {
                 pathTiles.add(this.tiles_.get(i));
             }
         }
-        return new TantrixPath(pathTiles, primaryPathColor_, evaluator_);
+        return new TantrixPath(pathTiles, primaryPathColor_);
     }
 
     /**
@@ -128,6 +141,7 @@ public class TantrixPath extends PermutedParameterArray {
      */
     public boolean isLoop() {
 
+        if (size() <= 2) return false;
         double distance = getEndPointDistance();
 
         if (distance == 0) {
@@ -144,9 +158,67 @@ public class TantrixPath extends PermutedParameterArray {
      * @return  the distance between the path end points. A distance of 0 does not automatically mean there is a loop.
      */
     public double getEndPointDistance() {
-        Location end1 = tiles_.get(0).getLocation();
-        Location end2 = tiles_.get(0).getLocation();
+        if (tiles_.isEmpty()) return 200.0;//Double.MAX_VALUE;
+        if (tiles_.size() == 1) return 1.0;
+        TilePlacement first = tiles_.getFirst();
+        TilePlacement last = tiles_.getLast();
+        Location end1 = first.getLocation();
+        Location end2 = last.getLocation();
+
+        // if they touch return distance of 0
+        if (first.getOutgoingPathLocations(primaryPathColor_).containsValue(end2)
+                && last.getOutgoingPathLocations(primaryPathColor_).containsValue(end1)) {
+            return 0;
+        }
+
         return HexUtil.distanceBetween(end1, end2);
+    }
+
+    /**
+     * Attempt to reorder the tiles into a path if possible.
+     * Throw an error if not.
+     * @param list
+     * @return the tiles in path order.
+     */
+    private TilePlacementList reorder(TilePlacementList list) {
+        if (list.size() < 2) {
+            return list;
+        }
+        Iterator<TilePlacement> placementIter = list.iterator();
+        TilePlacement startingPoint = placementIter.next();
+        Iterator<Location> outIter =
+                startingPoint.getOutgoingPathLocations(primaryPathColor_).values().iterator();
+        Set<Location> head = new HashSet<Location>();
+        Set<Location> tail = new HashSet<Location>();
+        head.add(outIter.next());
+        tail.add(outIter.next());
+
+        TilePlacementList newList = new TilePlacementList();
+        newList.add(startingPoint);
+        placementIter.remove();
+
+        do {
+            while (placementIter.hasNext()) {
+                TilePlacement nextPlacement = placementIter.next();
+                if (head.contains(nextPlacement.getLocation())) {
+                    newList.addLast(nextPlacement);
+                    head.clear();
+                    head.addAll(nextPlacement.getOutgoingPathLocations(primaryPathColor_).values());
+                    placementIter.remove();
+                }
+                else if (tail.contains(nextPlacement.getLocation())) {
+                    newList.addFirst(nextPlacement);
+                    tail.clear();
+                    tail.addAll(nextPlacement.getOutgoingPathLocations(primaryPathColor_).values());
+                    placementIter.remove();
+                }
+            }
+            System.out.println("num left = " + list.size() + "  ordered list=" + newList);
+            placementIter = list.iterator();
+        }
+        while (placementIter.hasNext());
+
+        return newList;
     }
 
     /**
@@ -156,7 +228,7 @@ public class TantrixPath extends PermutedParameterArray {
     private List<TantrixPath> findPermutedPaths() {
 
         int pivotIndex = 1 + MathUtil.RANDOM.nextInt(tiles_.size()-2);
-        PathPermuter permuter = new PathPermuter(this, evaluator_);
+        PathPermuter permuter = new PathPermuter(this);
         return permuter.findPermutedPaths(pivotIndex);
     }
 

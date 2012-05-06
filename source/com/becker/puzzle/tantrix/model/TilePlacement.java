@@ -75,13 +75,14 @@ public class TilePlacement {
 
     public Map<Integer, Location> getOutgoingPathLocations(PathColor primaryColor) {
         Map<Integer, Location> outgoingPathLocations = new HashMap<Integer, Location>();
-        for (int i=0; i< HexTile.NUM_SIDES; i++)  {
+        for (int i=0; i < HexTile.NUM_SIDES; i++)  {
             if (primaryColor == getPathColor(i)) {
                 outgoingPathLocations.put(i, HexUtil.getNeighborLocation(getLocation(), i));
             }
         }
 
-        assert outgoingPathLocations.size() == 2: "There must always be two paths.";
+        assert outgoingPathLocations.size() == 2: "There must always be two paths. Instead had "
+                + outgoingPathLocations + " for "+this+" pcolor="+ primaryColor;
         return outgoingPathLocations;
     }
 

@@ -3,7 +3,8 @@ package com.becker.puzzle.tantrix.model.verfication;
 
 import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
-import com.becker.puzzle.tantrix.model.TantrixBoard;
+import com.becker.puzzle.tantrix.model.HexUtil;
+import com.becker.puzzle.tantrix.model.Tantrix;
 
 import java.util.*;
 
@@ -17,14 +18,14 @@ import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
  */
 public class InnerSpaceDetector {
 
-    TantrixBoard board;
+    Tantrix tantrix;
 
     /**
      * Constructor.
-     * @param board the tantrix state to test for solution.
+     * @param tantrix the tantrix state to test for solution.
      */
-    public InnerSpaceDetector(TantrixBoard board) {
-        this.board = board;
+    public InnerSpaceDetector(Tantrix tantrix) {
+        this.tantrix = tantrix;
     }
 
     /**
@@ -50,32 +51,35 @@ public class InnerSpaceDetector {
      */
     private Set<Location> findEmptyBorderPositions() {
 
-        Box bbox = board.getBoundingBox();
+        Box bbox = tantrix.getBoundingBox();
         Set<Location> empties = new HashSet<Location>();
 
         for (int i = bbox.getMinCol(); i <= bbox.getMaxCol(); i++) {
             Location loc = new Location(bbox.getMinRow(), i);
-            if (board.isEmpty(loc))  {
+            if (tantrix.get(loc) == null)  {
                 empties.add(loc);
             }
             loc = new Location(bbox.getMaxRow(), i);
-            if (board.isEmpty(loc))  {
+            if (tantrix.get(loc) == null)  {
                 empties.add(loc);
             }
         }
 
         for (int i = bbox.getMinRow() + 1; i < bbox.getMaxRow(); i++) {
             Location loc = new Location(i, bbox.getMinCol());
-            if (board.isEmpty(loc))  {
+            if (tantrix.get(loc) == null)  {
                 empties.add(loc);
             }
             loc = new Location(i, bbox.getMaxCol());
-            if (board.isEmpty(loc))  {
+            if (tantrix.get(loc) == null)  {
                 empties.add(loc);
             }
         }
 
-        assert empties.size() > 0 : "We should have found at least one empty position on the border";
+        int totalLocs = (bbox.getHeight() + 1) * (bbox.getWidth() + 1);
+        assert (totalLocs == tantrix.size() || empties.size() > 0):
+                "We should have found at least one empty position on the border. Num Tiles ="
+                + tantrix.size() + " bbox area = " + bbox.getArea();
         return empties;
     }
 
@@ -105,12 +109,12 @@ public class InnerSpaceDetector {
      */
     private List<Location> findEmptyNeighborLocations(Location loc) {
         List<Location> emptyNbrLocations = new LinkedList<Location>();
-        Box bbox = board.getBoundingBox();
+        Box bbox = tantrix.getBoundingBox();
 
         for (byte i=0; i< NUM_SIDES; i++) {
 
-            Location nbrLoc = board.getNeighborLocation(loc, i);
-            if (board.isEmpty(nbrLoc) && bbox.contains(nbrLoc)) {
+            Location nbrLoc = HexUtil.getNeighborLocation(loc, i);
+            if (tantrix.get(nbrLoc) == null && bbox.contains(nbrLoc)) {
                 emptyNbrLocations.add(nbrLoc);
             }
         }
@@ -122,11 +126,11 @@ public class InnerSpaceDetector {
      * @return true if any empties in the tantrix bbox are not visited
      */
     private boolean allEmptiesVisited(Set<Location> visited) {
-        Box bbox = board.getBoundingBox();
+        Box bbox = tantrix.getBoundingBox();
         for (int i = bbox.getMinRow(); i < bbox.getMaxRow(); i++) {
             for (int j = bbox.getMinCol(); j <= bbox.getMaxCol(); j++)  {
                 Location loc = new Location(i, j);
-                if (board.isEmpty(loc) && !visited.contains(loc))  {
+                if (tantrix.get(loc) == null && !visited.contains(loc))  {
                     return false;
                 }
             }

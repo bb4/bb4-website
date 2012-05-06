@@ -39,7 +39,7 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
         puzzlePanel_ = puzzlePanel;
         strategy = useConcurrency ? OptimizationStrategyType.CONCURRENT_GENETIC_SEARCH :
                                     OptimizationStrategyType.GENETIC_SEARCH;
-        evaluator = new PathEvaluator(board);
+        evaluator = new PathEvaluator();
     }
 
     /**

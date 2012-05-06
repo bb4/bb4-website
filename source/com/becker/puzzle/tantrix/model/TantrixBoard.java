@@ -194,10 +194,10 @@ public class TantrixBoard {
      * @param currentLocation
      * @param i direction to look in. [0 - 6]
      * @return the specified neighbor
-     */
+     *
     public Location getNeighborLocation(Location currentLocation, int i) {
         return HexUtil.getNeighborLocation(currentLocation, i);
-    }
+    } */
 
     public String toString() {
         StringBuilder bldr = new StringBuilder("\n");

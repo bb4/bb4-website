@@ -12,7 +12,7 @@ import static com.becker.puzzle.tantrix.model.TantrixTstUtil.*;
 public class SolutionVerifierTest extends TestCase {
 
     /** instance under test */
-    SolutionVerifier verifier;
+    private SolutionVerifier verifier;
 
 
     public void test3TilesIsNotSolved() {
