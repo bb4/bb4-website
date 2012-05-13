@@ -1,15 +1,9 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.model.fitting;
 
-import com.becker.common.geometry.Location;
-import com.becker.puzzle.tantrix.model.HexUtil;
 import com.becker.puzzle.tantrix.model.PathColor;
 import com.becker.puzzle.tantrix.model.Tantrix;
 import com.becker.puzzle.tantrix.model.TilePlacement;
-
-import java.util.Collection;
-
-import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**
  *  The process of finding neighbors is a bit more efficient if we have the tantrix.

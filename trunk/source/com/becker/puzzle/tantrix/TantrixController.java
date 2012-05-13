@@ -1,12 +1,10 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix;
 
-import com.becker.puzzle.common.ui.AbstractPuzzleController;
 import com.becker.puzzle.common.Refreshable;
+import com.becker.puzzle.common.ui.AbstractPuzzleController;
 import com.becker.puzzle.tantrix.model.*;
 import com.becker.puzzle.tantrix.solver.Algorithm;
-
-import java.util.List;
 
 /**
  * The controller allows the solver to do its thing by providing the PuzzleController api.
@@ -35,7 +33,7 @@ public class TantrixController
     public void setNumTiles(int numTiles) {
         this.numTiles = numTiles;
     }
- 
+
     public TantrixBoard initialPosition() {
         //MathUtil.RANDOM.setSeed(1);
         return new TantrixBoard(new HexTiles().createRandomList(numTiles));

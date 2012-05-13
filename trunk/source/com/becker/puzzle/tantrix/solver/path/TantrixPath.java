@@ -1,14 +1,14 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.solver;
+package com.becker.puzzle.tantrix.solver.path;
 
 import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
-
-import java.util.*;
-
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.PermutedParameterArray;
 import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.solver.path.permuting.PathPermuter;
+
+import java.util.*;
 
 /**
  * A list of tiles representing a primary color path that is used when searching to find a tantrix solution.
@@ -50,9 +50,13 @@ public class TantrixPath extends PermutedParameterArray {
     }
 
 
+    /**
+     * Creates a random path given a board state.
+     * @param board
+     */
     public TantrixPath(TantrixBoard board) {
 
-        TantrixBoard myBoard = new TantrixBoard(board.getTiles());
+        TantrixBoard myBoard = new TantrixBoard(board.getAllTiles());
         RandomPathGenerator gen = new RandomPathGenerator(myBoard);
         TantrixPath path = gen.generateRandomPath();
         this.tiles_ = path.tiles_;
@@ -68,13 +72,6 @@ public class TantrixPath extends PermutedParameterArray {
 
     public TilePlacementList getTilePlacements() {
         return tiles_;
-    }
-
-    public PathEvaluator getEvaluator() {
-        if (evaluator_ == null) {
-            evaluator_ = new PathEvaluator();
-        }
-        return evaluator_;
     }
 
     /**
@@ -176,7 +173,7 @@ public class TantrixPath extends PermutedParameterArray {
 
     /**
      * Attempt to reorder the tiles into a path if possible.
-     * Throw an error if not.
+     * Throw an error if not. Should not change the order if the tiles are already arranged on a path.
      * @param list
      * @return the tiles in path order.
      */
@@ -190,8 +187,16 @@ public class TantrixPath extends PermutedParameterArray {
                 startingPoint.getOutgoingPathLocations(primaryPathColor_).values().iterator();
         Set<Location> head = new HashSet<Location>();
         Set<Location> tail = new HashSet<Location>();
-        head.add(outIter.next());
-        tail.add(outIter.next());
+
+        // if the list is already ordered along the primary path, try to preserve that.
+        Location next = outIter.next();
+        if (next.equals(list.get(1).getLocation())) {
+            head.add(next);
+            tail.add(outIter.next());
+        } else {
+            head.add(outIter.next());
+            tail.add(next);
+        }
 
         TilePlacementList newList = new TilePlacementList();
         newList.add(startingPoint);
@@ -201,13 +206,13 @@ public class TantrixPath extends PermutedParameterArray {
             while (placementIter.hasNext()) {
                 TilePlacement nextPlacement = placementIter.next();
                 if (head.contains(nextPlacement.getLocation())) {
-                    newList.addLast(nextPlacement);
+                    newList.addFirst(nextPlacement);
                     head.clear();
                     head.addAll(nextPlacement.getOutgoingPathLocations(primaryPathColor_).values());
                     placementIter.remove();
                 }
                 else if (tail.contains(nextPlacement.getLocation())) {
-                    newList.addFirst(nextPlacement);
+                    newList.addLast(nextPlacement);
                     tail.clear();
                     tail.addAll(nextPlacement.getOutgoingPathLocations(primaryPathColor_).values());
                     placementIter.remove();

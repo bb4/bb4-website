@@ -14,14 +14,14 @@ public final class FileUtil {
      * Getting error in applets if trying to use System.getProperty("file.separator")
      */
     public static final String FILE_SEPARATOR = "/";
-    
+
     /**
      * Points to the main project directory.
      * Reads the PROJECT_HOME env variable to figure out where the data files are.
      * If not deployed, you can use System.getenv("PROJECT_HOME") + FILE_SEPARATOR;
      */
     public static final String PROJECT_HOME = getProjectHomeDir();
-    
+
     /**
      * cannot instantiate static class.
      */
@@ -34,7 +34,11 @@ public final class FileUtil {
         return PROJECT_HOME;
     }
 
-    private static final String getProjectHomeDir() {
+    /**
+     * Get the location of the PROJECT_HOME environment variable if it is set.
+     * @return location of project files.
+     */
+    private static String getProjectHomeDir() {
         String home;
          try {
             home = System.getenv("PROJECT_HOME");
@@ -77,33 +81,5 @@ public final class FileUtil {
             e.printStackTrace();
         }
         return outfile;
-    }
-
-
-    
-    /**
-     * Copy source file to destination file.
-     *
-     * @param srcfile The source file
-     * @param destfile The destination file
-     * @throws SecurityException
-     */
-    public static void copyFile( String srcfile, String destfile ) throws IOException {
-        byte[] bytearr = new byte[512];
-        int len = 0;
-        BufferedInputStream input = new BufferedInputStream( new FileInputStream( srcfile ) );
-        BufferedOutputStream output = new BufferedOutputStream( new FileOutputStream( destfile ) );
-        try {
-            while ( (len = input.read( bytearr )) != -1 ) {                
-                output.write( bytearr, 0, len );
-            }
-        } catch (FileNotFoundException exc) {
-            exc.printStackTrace();
-        } catch (SecurityException exc) {
-            exc.printStackTrace();
-        } finally {
-            input.close();
-            output.close();
-        }
     }
 }

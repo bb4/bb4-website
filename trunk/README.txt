@@ -13,7 +13,7 @@ Initial setup
  - Set JAVA_HOME to the JDK install location (e.g. D:\apps\Program Files\Java\jdk1.6.0_32).
 
 Building
- - Very entries in ant/common.properties and ant/build.xml. No changes should be needed.
+ - Verify entries in ant/common.properties and ant/build.xml. No changes should be needed.
     - If you want to deploy to a local webserver, you can set
        codebase=localhost, and
        distributionDir=<apache install location>/Apache2.2/htdocs

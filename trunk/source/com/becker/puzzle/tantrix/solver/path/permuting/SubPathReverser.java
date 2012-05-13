@@ -1,12 +1,14 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.solver;
+package com.becker.puzzle.tantrix.solver.path.permuting;
 
 import com.becker.common.geometry.Location;
-import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.PathColor;
+import com.becker.puzzle.tantrix.model.Rotation;
+import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.model.TilePlacementList;
+import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 
-import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Reverse a subpath.
@@ -31,14 +33,17 @@ public class SubPathReverser extends SubPathMutator {
 
          TilePlacementList tiles = new TilePlacementList();
          TilePlacementList subPathTiles = subPath.getTilePlacements();
+         System.out.println("The subPath tiles are:"+subPathTiles);          // need test for subPath mutators.
          TilePlacement lastTile = subPathTiles.getLast();
          Map<Integer, Location> outgoing = lastTile.getOutgoingPathLocations(primaryColor);
          int directionToPrev = (subPathTiles.size() > 1) ?
                  findOutgoingDirection(lastTile, subPathTiles.get(subPathTiles.size()-2).getLocation()) :
                  findOutgoingDirection(lastTile, pivotTile.getLocation());
-         outgoing.remove(directionToPrev); // now only one outgoing path - the one that is free.
+         // after removing, only one outgoing path - the one that is free.
+         outgoing.remove(directionToPrev);
 
          Location newLocation = subPathTiles.getFirst().getLocation();
+         System.out.println("these should be adjacent: "+newLocation + " " + pivotTile.getLocation());
          int startDir = findOutgoingDirection(pivotTile, newLocation);
          int numRotations = 3 + outgoing.keySet().iterator().next() - startDir;
 

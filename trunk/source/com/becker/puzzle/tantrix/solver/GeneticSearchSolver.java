@@ -10,9 +10,8 @@ import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.model.TilePlacementList;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.becker.puzzle.tantrix.solver.path.PathEvaluator;
+import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 
 /**
  * Solve the Tantrix puzzle using a genetic search algorithm.
@@ -49,6 +48,7 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
     public TilePlacementList solve()  {
 
         ParameterArray initialGuess = new TantrixPath(board);
+        assert(initialGuess.size() > 0) : "The random path should have some tiles!";
         long startTime = System.currentTimeMillis();
 
         Optimizer optimizer = new Optimizer(this);
@@ -114,7 +114,7 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
     public void optimizerChanged(ParameterArray params) {
         // update our current best guess at the solution.
         //solution_ = ((PieceParameterArray) params).getPieceList();
-        //numTries_ ++;
+        numTries_ ++;
         //puzzlePanel_.refresh(solution_, getNumIterations());
     }
 }

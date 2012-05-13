@@ -4,7 +4,7 @@ package com.becker.puzzle.tantrix.model;
 import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.tantrix.model.fitting.PrimaryPathFitter;
-import com.becker.puzzle.tantrix.solver.TantrixPath;
+import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -33,20 +33,19 @@ public class RandomPathGenerator {
      * @return a random path.
      */
     public TantrixPath generateRandomPath() {
-        TilePlacementList moves = new TilePlacementList();
 
         TantrixBoard currentBoard = initialBoard;
 
-        while (!currentBoard.getUnplacedTiles().isEmpty())   {
+        while (!currentBoard.getUnplacedTiles().isEmpty()) {
             TilePlacement placement = generateRandomPathMove(currentBoard);
             currentBoard = currentBoard.placeTile(placement);
         }
-        return new TantrixPath(moves, primaryColor);
+        return new TantrixPath(currentBoard.getTantrix(), primaryColor);
     }
 
     /**
      * For each unplaced tile, find all valid placements given current configuration.
-     * Valid placements must extend the primary path.
+     * Valid placements must extend the primary path but not necessarily match secondary paths.
      * @return List of all valid tile placements for the current tantrix state.
      */
     public TilePlacement generateRandomPathMove(TantrixBoard board) {

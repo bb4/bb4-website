@@ -3,14 +3,9 @@ package com.becker.puzzle.tantrix.solver;
 
 import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.common.solver.PuzzleSolver;
-import com.becker.puzzle.redpuzzle.model.Piece;
-import com.becker.puzzle.redpuzzle.model.PieceList;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.model.TilePlacementList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**

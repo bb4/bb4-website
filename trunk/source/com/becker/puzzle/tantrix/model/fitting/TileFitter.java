@@ -4,7 +4,6 @@ package com.becker.puzzle.tantrix.model.fitting;
 import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.HexUtil;
 import com.becker.puzzle.tantrix.model.PathColor;
-import com.becker.puzzle.tantrix.model.Tantrix;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 
 import java.util.Collection;

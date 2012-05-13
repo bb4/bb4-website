@@ -1,7 +1,6 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.model.fitting;
 
-import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.*;
 import junit.framework.TestCase;
 

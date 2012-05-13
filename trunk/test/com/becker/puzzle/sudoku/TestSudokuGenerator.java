@@ -3,9 +3,7 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.model.board.Board;
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import java.util.ArrayList;
 import java.util.List;

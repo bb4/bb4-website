@@ -4,7 +4,8 @@ package com.becker.puzzle.tantrix.model;
 import com.becker.common.geometry.Location;
 import junit.framework.TestCase;
 
-import static com.becker.puzzle.tantrix.model.TantrixTstUtil.*;
+import static com.becker.puzzle.tantrix.model.TantrixTstUtil.place3SolvedTiles;
+import static com.becker.puzzle.tantrix.model.TantrixTstUtil.place3UnsolvedTiles;
 
 /**
  * @author Barry Becker

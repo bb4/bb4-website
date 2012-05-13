@@ -38,12 +38,8 @@ public class InnerSpaceDetector {
     public boolean hasInnerSpaces() {
 
         Set<Location> seedEmpties = findEmptyBorderPositions();
-        //System.out.println("seeds=" + seedEmpties);
         Set<Location> visited = findConnectedEmpties(seedEmpties);
-        //System.out.println("all empties="+ visited);
-        boolean hasInner = !allEmptiesVisited(visited);
-        //System.out.println("found inner spaces == " + hasInner);
-        return hasInner;
+        return !allEmptiesVisited(visited);
     }
 
     /**
