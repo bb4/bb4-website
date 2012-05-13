@@ -7,9 +7,7 @@ import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.model.update.ReflectiveBoardUpdater;
 import com.becker.puzzle.sudoku.model.update.updaters.LoneRangerUpdater;
 import com.becker.puzzle.sudoku.model.update.updaters.StandardCRBUpdater;
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * @author Barry Becker

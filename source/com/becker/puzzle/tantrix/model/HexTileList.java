@@ -2,7 +2,6 @@
 package com.becker.puzzle.tantrix.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The complete set of hexagonal tantrix tiles
@@ -21,4 +20,4 @@ public class HexTileList extends ArrayList<HexTile> {
 
 }
 
-  
+

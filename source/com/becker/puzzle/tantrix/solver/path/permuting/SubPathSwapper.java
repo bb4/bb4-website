@@ -1,10 +1,12 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.solver;
+package com.becker.puzzle.tantrix.solver.path.permuting;
 
 import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Swap a subpath from on outgoing primary path to the other on the pivot tile.

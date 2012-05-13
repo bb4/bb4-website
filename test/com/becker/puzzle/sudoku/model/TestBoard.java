@@ -7,9 +7,7 @@ import com.becker.puzzle.sudoku.model.board.Board;
 import com.becker.puzzle.sudoku.model.board.Candidates;
 import com.becker.puzzle.sudoku.model.board.ValuesList;
 import junit.framework.Assert;
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import java.util.Arrays;
 import java.util.Collections;

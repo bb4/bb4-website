@@ -1,10 +1,12 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.solver;
+package com.becker.puzzle.tantrix.solver.path.permuting;
 
 import com.becker.common.geometry.Location;
-import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.PathColor;
+import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 
-import java.util.*;
+import java.util.Map;
 
 /**
  * Given a TantrixPath and a pivot tile index, find the permuted paths.

@@ -3,7 +3,6 @@ package com.becker.puzzle.tantrix.model;
 
 import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.fitting.TantrixTileFitter;
-import com.becker.puzzle.tantrix.model.fitting.TileFitter;
 
 import java.util.Set;
 

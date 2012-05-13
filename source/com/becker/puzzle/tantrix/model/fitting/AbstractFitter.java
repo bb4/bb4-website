@@ -4,8 +4,6 @@ package com.becker.puzzle.tantrix.model.fitting;
 import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.*;
 
-import java.util.Collection;
-
 import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
 /**

@@ -9,7 +9,6 @@ import com.becker.puzzle.tantrix.model.TilePlacement;
 import java.awt.*;
 
 import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.ROOT3;
-import static com.becker.puzzle.tantrix.ui.rendering.HexUtil.ROOT3D2;
 
 /**
  * Renders the the tantrix puzzle onscreen.

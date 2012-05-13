@@ -4,6 +4,7 @@ package com.becker.puzzle.tantrix.model;
 import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
 import junit.framework.TestCase;
+
 import static com.becker.puzzle.tantrix.model.TantrixTstUtil.*;
 
 /**

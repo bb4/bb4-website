@@ -1,13 +1,15 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.ui;
 
-import com.becker.puzzle.common.*;
+import com.becker.puzzle.common.AlgorithmEnum;
+import com.becker.puzzle.common.PuzzleController;
+import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.common.ui.PuzzleApplet;
 import com.becker.puzzle.common.ui.PuzzleViewer;
-import com.becker.puzzle.tantrix.solver.Algorithm;
 import com.becker.puzzle.tantrix.TantrixController;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.solver.Algorithm;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
@@ -43,12 +45,12 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
         controller.setNumTiles(DEFAULT_NUM_TILES);
         return controller;
     }
-    
+
     @Override
     protected AlgorithmEnum<TantrixBoard, TilePlacement>[] getAlgorithmValues() {
         return Algorithm.values();
     }
-    
+
     @Override
     protected JPanel createCustomControls() {
         JLabel label = new JLabel("Number of Tiles");

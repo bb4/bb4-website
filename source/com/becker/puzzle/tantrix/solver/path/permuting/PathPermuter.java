@@ -1,11 +1,17 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.solver;
+package com.becker.puzzle.tantrix.solver.path.permuting;
 
 import com.becker.common.geometry.Location;
 import com.becker.optimization.parameter.PermutedParameterArray;
-import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.PathColor;
+import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.model.TilePlacementList;
+import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Given a TantrixPath and a pivot tile index, find the permuted paths.
@@ -27,7 +33,6 @@ public class PathPermuter extends PermutedParameterArray {
      */
     public PathPermuter(TantrixPath path) {
         path_ = path;
-
     }
 
     /**
@@ -40,6 +45,9 @@ public class PathPermuter extends PermutedParameterArray {
 
         TantrixPath subPath1 = path_.subPath(pivotIndex - 1, 0);
         TantrixPath subPath2 = path_.subPath(pivotIndex + 1, path_.size() - 1);
+        System.out.println("The whole path is " + path_.getTilePlacements());
+        System.out.println("subpath1="+ subPath1.getTilePlacements());
+        System.out.println("subpath2="+ subPath2.getTilePlacements());
 
         return createPermutedPathList(subPath1, subPath2);
     }

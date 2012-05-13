@@ -2,7 +2,8 @@
 package com.becker.puzzle.tantrix.solver;
 
 import com.becker.puzzle.tantrix.model.TantrixBoard;
-import com.becker.puzzle.tantrix.model.verfication.SolutionVerifier;
+import com.becker.puzzle.tantrix.solver.path.PathEvaluator;
+import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 import junit.framework.TestCase;
 
 import static com.becker.puzzle.tantrix.model.TantrixTstUtil.*;
@@ -21,19 +22,19 @@ public class PathEvaluatorTest extends TestCase {
 
 
     public void testEvaluateLoopPathWith3Tiles() {
-        verifyFitness(place3SolvedTiles(), 3.9);
+        verifyFitness(place3SolvedTiles(), 3.8839);
     }
 
     public void testEvaluateNonLoopPathWith2Tiles_1_2() {
-        verifyFitness(place2of3Tiles_OneThenTwo(), 0.9);
+        verifyFitness(place2of3Tiles_OneThenTwo(), 0.8762);
     }
 
     public void testEvaluateNonLoopPathWith2Tiles_1_3() {
-        verifyFitness(place2of3Tiles_OneThenThree(), 0.9);
+        verifyFitness(place2of3Tiles_OneThenThree(), 0.8762);
     }
 
     public void testEvaluateNonLoopPathWith3Tiles() {
-        verifyFitness(place3UnsolvedTiles(), 0.7333);
+        verifyFitness(place3UnsolvedTiles(), 0.72258);
     }
 
     public void testEvaluateNonLoopPathWith1Tile() {

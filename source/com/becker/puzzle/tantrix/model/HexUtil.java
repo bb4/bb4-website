@@ -1,11 +1,9 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.model;
 
-import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
 
 import javax.vecmath.Point2d;
-import java.util.HashMap;
 
 /**
  *  Used to find neighboring locations in hex space.

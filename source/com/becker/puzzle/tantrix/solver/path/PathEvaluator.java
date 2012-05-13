@@ -1,9 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.solver;
+package com.becker.puzzle.tantrix.solver.path;
 
 
 import com.becker.puzzle.tantrix.model.Tantrix;
-import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.verfication.ConsistencyChecker;
 import com.becker.puzzle.tantrix.model.verfication.InnerSpaceDetector;
 
@@ -59,7 +58,7 @@ public class PathEvaluator {
         }
 
         double fitness =
-                LOOP_PROXIMITY_WEIGHT * (numTiles - distance) / numTiles
+                LOOP_PROXIMITY_WEIGHT * (numTiles - distance) / (0.1 + numTiles)
                 + (isLoop ? LOOP_WEIGHT : 0)
                 + (double)numFits / numTiles * PATH_MATCH_WEIGHT
                 + (consistentLoop ? CONSISTENT_LOOP_BONUS : 0)

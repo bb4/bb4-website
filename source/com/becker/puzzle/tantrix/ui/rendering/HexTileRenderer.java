@@ -5,10 +5,10 @@ import com.becker.common.format.FormatUtil;
 import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.ui.util.GUIUtil;
-import java.awt.*;
-import static com.becker.puzzle.tantrix.ui.rendering.TantrixBoardRenderer.TOP_MARGIN;
 
 import java.awt.*;
+
+import static com.becker.puzzle.tantrix.ui.rendering.TantrixBoardRenderer.TOP_MARGIN;
 
 /**
  * Renders a single tantrix tile.

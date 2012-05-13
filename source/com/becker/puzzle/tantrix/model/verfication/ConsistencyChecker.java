@@ -1,7 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.model.verfication;
 
-import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.PathColor;
+import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.model.fitting.TileFitter;
 
 import java.util.Collection;
@@ -31,7 +32,7 @@ public class ConsistencyChecker {
     /**
      * True if all the colored paths match. There is not necessarily a loop.
      * @return true if all paths fit.
-     */
+     *
     public boolean allTilesFit() {
 
         for (TilePlacement p : tiles) {
@@ -40,7 +41,7 @@ public class ConsistencyChecker {
             }
         }
         return true;
-    }
+    } */
 
     /**
      * @return the number of tiles that fit perfectly.

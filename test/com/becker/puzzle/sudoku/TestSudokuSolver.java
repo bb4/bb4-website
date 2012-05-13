@@ -4,7 +4,8 @@ package com.becker.puzzle.sudoku;
 import com.becker.common.math.MathUtil;
 import com.becker.puzzle.sudoku.data.TestData;
 import com.becker.puzzle.sudoku.model.board.Board;
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.TestCase;
 
 /**
  * @author Barry Becker
