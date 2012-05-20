@@ -1,12 +1,10 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.puzzle.tantrix.solver;
+package com.becker.puzzle.tantrix.solver.path;
 
 import com.becker.puzzle.tantrix.model.TantrixBoard;
-import com.becker.puzzle.tantrix.solver.path.PathEvaluator;
-import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 import junit.framework.TestCase;
 
-import static com.becker.puzzle.tantrix.model.TantrixTstUtil.*;
+import static com.becker.puzzle.tantrix.TantrixTstUtil.*;
 
 /**
  * @author Barry Becker
@@ -18,7 +16,6 @@ public class PathEvaluatorTest extends TestCase {
 
     /** instance under test */
     private PathEvaluator evaluator = new PathEvaluator();
-
 
 
     public void testEvaluateLoopPathWith3Tiles() {
@@ -33,8 +30,9 @@ public class PathEvaluatorTest extends TestCase {
         verifyFitness(place2of3Tiles_OneThenThree(), 0.8762);
     }
 
+    // high score because all paths (even secondary) match
     public void testEvaluateNonLoopPathWith3Tiles() {
-        verifyFitness(place3UnsolvedTiles(), 0.72258);
+        verifyFitness(place3UnsolvedTiles(), 0.7226);
     }
 
     public void testEvaluateNonLoopPathWith1Tile() {

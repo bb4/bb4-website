@@ -13,33 +13,34 @@ import static com.becker.puzzle.tantrix.TantrixTstUtil.loc;
 /**
  * @author Barry Becker
  */
-public class SubPathReverserTest extends SubPathMutatorBase {
-
+public class SubPathSwapperTest extends SubPathMutatorBase {
 
     @Override
-    protected SubPathMutator createMutator(TilePlacement placement, PathColor primaryColor) {
-        return new SubPathReverser(placement, primaryColor);
+    public SubPathMutator createMutator(TilePlacement placement, PathColor primaryColor) {
+        return new SubPathSwapper(placement, primaryColor);
     }
-
 
     @Override
     protected void verifyMutated1TilePath(TantrixPath resultPath) {
         assertEquals("Unexpected result for " + mutator,
                 1, resultPath.size());
-        TilePlacement first = new TilePlacement(TILES.getTile(2), loc(2, 1), Rotation.ANGLE_60);
+
+        TilePlacement first = new TilePlacement(TILES.getTile(2), loc(2, 0), Rotation.ANGLE_300);
         TilePlacementList expList = new TilePlacementList(first);
-        assertEquals("Unexpected reversal.", expList, resultPath.getTilePlacements());
+        assertEquals("Unexpected swap", expList, resultPath.getTilePlacements());
     }
 
     @Override
     protected void verifyMutated2TilePath(TantrixPath resultPath) {
-        assertEquals("unexpected size.", 2, resultPath.size());
+        assertEquals("unexpected size ", 2, resultPath.size());
 
-        TilePlacement first = new TilePlacement(TILES.getTile(3), loc(2, 1), Rotation.ANGLE_180);
-        TilePlacement second = new TilePlacement(TILES.getTile(2), loc(1, 2), Rotation.ANGLE_180);
+        //TilePlacement first = new TilePlacement(TILES.getTile(2), loc(2, 0), Rotation.ANGLE_300);
+        //TilePlacement second = new TilePlacement(TILES.getTile(3), loc(2, 1), Rotation.ANGLE_300);
+        TilePlacement first = new TilePlacement(TILES.getTile(3), loc(2, 0), Rotation.ANGLE_120);
+        TilePlacement second = new TilePlacement(TILES.getTile(2), loc(2, 1), Rotation.ANGLE_120);
 
         TilePlacementList expList = new TilePlacementList(first, second);
 
-        assertEquals("Unexpected reversal.", expList, resultPath.getTilePlacements());
+        assertEquals("Unexpected swap", expList, resultPath.getTilePlacements());
     }
 }

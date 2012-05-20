@@ -16,7 +16,7 @@ import java.util.Set;
 public class TantrixBoard {
 
     /** starting position. must be odd I believe. */
-    static final Location INITIAL_LOCATION = new Location(21, 21);
+    public static final Location INITIAL_LOCATION = new Location(21, 21);
 
     /** The 'tantrix'. Map of locations to currently placed tiles. */
     private Tantrix tantrix;

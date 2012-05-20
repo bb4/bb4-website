@@ -4,6 +4,7 @@ package com.becker.puzzle.tantrix.model.fitting;
 import com.becker.puzzle.tantrix.model.PathColor;
 import com.becker.puzzle.tantrix.model.Tantrix;
 import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.model.TilePlacementList;
 
 import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 
@@ -26,6 +27,15 @@ public class PrimaryPathFitter extends AbstractFitter {
     }
 
     /**
+     * Constructor
+     */
+    public PrimaryPathFitter(TilePlacementList tiles, PathColor primaryColor) {
+        super(primaryColor);
+        this.tantrix = new Tantrix(tiles);
+    }
+
+
+    /**
      * The tile fits if the primary path fits.
      * Check all the neighbors (that exist) and verify that if that direction is a primary path output, then it matches.
      * @param placement the tile to check for a valid fit.
@@ -39,7 +49,8 @@ public class PrimaryPathFitter extends AbstractFitter {
 
             if (nbr != null) {
                 PathColor pathColor = placement.getPathColor(i);
-                //System.out.println("nbr"+i+" of "+placement+" ="+ nbr + ". Out color in dir " + i + "="+ pathColor +". Does it match " + nbr.getPathColor((byte)(i+3)) + "?");
+                //System.out.println("nbr"+i+" of "+placement+" ="+ nbr + ". Out color in dir " + i + "="
+                // + pathColor +". Does it match " + nbr.getPathColor((byte)(i+3)) + "?");
 
                 if (pathColor == primaryColor && pathColor == nbr.getPathColor((byte)(i+3))) {
                     return true;
@@ -48,5 +59,41 @@ public class PrimaryPathFitter extends AbstractFitter {
         }
 
         return false;
+    }
+
+    /**
+     * @param placement the tile to check for a valid fit.
+     * @return the number of primary path matches to neighboring tiles.
+     */
+    public int numPrimaryFits(TilePlacement placement) {
+
+        int numFits = 0;
+        for (byte i = 0; i < NUM_SIDES; i++) {
+            TilePlacement nbr = tantrix.getNeighbor(placement, i);
+
+            if (nbr != null) {
+                PathColor pathColor = placement.getPathColor(i);
+
+                if (pathColor == primaryColor && pathColor == nbr.getPathColor(i+3)) {
+                    numFits++;
+                }
+            }
+        }
+        assert numFits <= 2 : "There cannot be more than 2 primary path fits.";
+        return numFits;
+    }
+
+    /**
+     * @return total number of primary path fits for the whole tantrix.
+     */
+    public int numPrimaryFits() {
+        if (tantrix.size() < 2) return 0;
+
+        int numFits = 0;
+        for (TilePlacement p : tantrix.values()) {
+            numFits += numPrimaryFits(p);
+        }
+
+        return numFits;
     }
 }

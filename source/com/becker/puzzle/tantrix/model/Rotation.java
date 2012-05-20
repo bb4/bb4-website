@@ -14,6 +14,10 @@ public enum Rotation {
     ANGLE_300;
 
     public Rotation rotateBy(int numRotations) {
-        return Rotation.values()[this.ordinal() + numRotations % HexTile.NUM_SIDES];
+        int rot = numRotations;
+        while (rot < 0)  {
+            rot += HexTile.NUM_SIDES;
+        }
+        return Rotation.values()[this.ordinal() + rot % HexTile.NUM_SIDES];
     }
 }

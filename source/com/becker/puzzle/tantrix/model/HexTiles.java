@@ -83,7 +83,7 @@ public class HexTiles extends HexTileList {
      * @param tantrixNumber
      */
     public HexTile getTile(int tantrixNumber) {
-        return get(tantrixNumber-1);
+        return super.get(tantrixNumber - 1);
     }
 
     public HexTileList createRandomList(int numTiles) {

@@ -49,7 +49,7 @@ public abstract class SubPathMutator {
     }
 
     /**
-     * Of the two outgoing path locations coming out from previousPlacement pick the one that is not the origLocation.
+     * Of the two outgoing path locations coming out from previousPlacement pick the one that is not the excludeLocation.
      * @param sourcePlacement the tile to consider outgoing paths from.
      * @param excludeLocation we want to chose the other location that is not this when leaving the source.
      * @return the other outgoing location for the sourcePlacement.

@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.model;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 /**
@@ -19,13 +20,15 @@ public class TilePlacementList extends LinkedList<TilePlacement> {
     }
 
     /** copy constructor */
-    public TilePlacementList(TilePlacementList list) {
+    public TilePlacementList(Collection<TilePlacement> list) {
         this.addAll(list);
     }
-    /*
-    public void addToStart(TilePlacement p) {
-        this.addFirst(p);
-    }  */
+
+    public TilePlacementList(TilePlacement... placements) {
+        for (TilePlacement placement : placements){
+            this.addLast(placement);
+        }
+    }
 
 }
 
