@@ -6,6 +6,7 @@ import com.becker.common.math.MathUtil;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.PermutedParameterArray;
 import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.fitting.PrimaryPathFitter;
 import com.becker.puzzle.tantrix.solver.path.permuting.PathPermuter;
 
 import java.util.*;
@@ -23,20 +24,36 @@ public class TantrixPath extends PermutedParameterArray {
 
     private TilePlacementList tiles_;
     private PathColor primaryPathColor_;
-    private PathEvaluator evaluator_;
+    private PathEvaluator evaluator_ = new PathEvaluator();
 
 
     /**
      * The list of tiles that are passed in must be a continuous primary path,
      * but it is not required that it be a loop, or that any of the secondary colors match.
      * @param tiles ordered path tiles.
-     * @param primaryColor
+     * @param primaryColor primary path color
+     * @throws IllegalStateException if tiles do not form a primary path.
      */
     public TantrixPath(TilePlacementList tiles, PathColor primaryColor) {
 
         assert primaryColor != null;
         primaryPathColor_ = primaryColor;
-        tiles_ = reorder(tiles);
+        tiles_ = tiles;
+        if (!hasPrimaryPath())
+            throw new IllegalStateException("Must form a path");
+    }
+
+    /**
+     * There is a primary path if there are  2*num tiles - 2 fits
+     * There is a looping path if 2* num tiles fits.
+     * @return true if there exists a primary path or loop.
+     */
+    private boolean hasPrimaryPath() {
+        PrimaryPathFitter fitter = new PrimaryPathFitter(tiles_, primaryPathColor_);
+        if (tiles_.size() < 2) return true;
+
+        int numFits = fitter.numPrimaryFits();
+        return numFits >= 2 * tiles_.size() - 2;
     }
 
     /**
@@ -46,9 +63,8 @@ public class TantrixPath extends PermutedParameterArray {
      * @param primaryColor
      */
     public TantrixPath(Tantrix tantrix, PathColor primaryColor) {
-        this(new TilePlacementList(tantrix), primaryColor);
+        this(new Pathifier(primaryColor).reorder(tantrix), primaryColor);
     }
-
 
     /**
      * Creates a random path given a board state.
@@ -132,7 +148,7 @@ public class TantrixPath extends PermutedParameterArray {
     }
 
     /**
-     * Its a loop if the beginning of the path connects with the end.
+     * It's a loop if the beginning of the path connects with the end.
      * Having the distance between beginning and end be 0 is a prerequisite and quicker to compute.
      * @return true if the path is a complete loop (ignoring secondary paths)
      */
@@ -155,7 +171,7 @@ public class TantrixPath extends PermutedParameterArray {
      * @return  the distance between the path end points. A distance of 0 does not automatically mean there is a loop.
      */
     public double getEndPointDistance() {
-        if (tiles_.isEmpty()) return 200.0;//Double.MAX_VALUE;
+        if (tiles_.isEmpty()) return 1000.0;//Double.MAX_VALUE;
         if (tiles_.size() == 1) return 1.0;
         TilePlacement first = tiles_.getFirst();
         TilePlacement last = tiles_.getLast();
@@ -169,61 +185,6 @@ public class TantrixPath extends PermutedParameterArray {
         }
 
         return HexUtil.distanceBetween(end1, end2);
-    }
-
-    /**
-     * Attempt to reorder the tiles into a path if possible.
-     * Throw an error if not. Should not change the order if the tiles are already arranged on a path.
-     * @param list
-     * @return the tiles in path order.
-     */
-    private TilePlacementList reorder(TilePlacementList list) {
-        if (list.size() < 2) {
-            return list;
-        }
-        Iterator<TilePlacement> placementIter = list.iterator();
-        TilePlacement startingPoint = placementIter.next();
-        Iterator<Location> outIter =
-                startingPoint.getOutgoingPathLocations(primaryPathColor_).values().iterator();
-        Set<Location> head = new HashSet<Location>();
-        Set<Location> tail = new HashSet<Location>();
-
-        // if the list is already ordered along the primary path, try to preserve that.
-        Location next = outIter.next();
-        if (next.equals(list.get(1).getLocation())) {
-            head.add(next);
-            tail.add(outIter.next());
-        } else {
-            head.add(outIter.next());
-            tail.add(next);
-        }
-
-        TilePlacementList newList = new TilePlacementList();
-        newList.add(startingPoint);
-        placementIter.remove();
-
-        do {
-            while (placementIter.hasNext()) {
-                TilePlacement nextPlacement = placementIter.next();
-                if (head.contains(nextPlacement.getLocation())) {
-                    newList.addFirst(nextPlacement);
-                    head.clear();
-                    head.addAll(nextPlacement.getOutgoingPathLocations(primaryPathColor_).values());
-                    placementIter.remove();
-                }
-                else if (tail.contains(nextPlacement.getLocation())) {
-                    newList.addLast(nextPlacement);
-                    tail.clear();
-                    tail.addAll(nextPlacement.getOutgoingPathLocations(primaryPathColor_).values());
-                    placementIter.remove();
-                }
-            }
-            System.out.println("num left = " + list.size() + "  ordered list=" + newList);
-            placementIter = list.iterator();
-        }
-        while (placementIter.hasNext());
-
-        return newList;
     }
 
     /**

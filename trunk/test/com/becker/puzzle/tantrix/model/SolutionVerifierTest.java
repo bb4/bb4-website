@@ -4,7 +4,7 @@ package com.becker.puzzle.tantrix.model;
 import com.becker.puzzle.tantrix.model.verfication.SolutionVerifier;
 import junit.framework.TestCase;
 
-import static com.becker.puzzle.tantrix.model.TantrixTstUtil.*;
+import static com.becker.puzzle.tantrix.TantrixTstUtil.*;
 
 /**
  * @author Barry Becker
@@ -17,6 +17,11 @@ public class SolutionVerifierTest extends TestCase {
 
     public void test3TilesIsNotSolved() {
         verifier = new SolutionVerifier(place3UnsolvedTiles());
+        assertFalse("Unexpectedly solved", verifier.isSolved());
+    }
+
+    public void test3NonPathTilesIsNotSolved() {
+        verifier = new SolutionVerifier(place3NonPathTiles());
         assertFalse("Unexpectedly solved", verifier.isSolved());
     }
 

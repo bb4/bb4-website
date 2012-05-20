@@ -33,19 +33,15 @@ public class SubPathReverser extends SubPathMutator {
 
          TilePlacementList tiles = new TilePlacementList();
          TilePlacementList subPathTiles = subPath.getTilePlacements();
-         System.out.println("The subPath tiles are:"+subPathTiles);          // need test for subPath mutators.
          TilePlacement lastTile = subPathTiles.getLast();
-         Map<Integer, Location> outgoing = lastTile.getOutgoingPathLocations(primaryColor);
-         int directionToPrev = (subPathTiles.size() > 1) ?
-                 findOutgoingDirection(lastTile, subPathTiles.get(subPathTiles.size()-2).getLocation()) :
-                 findOutgoingDirection(lastTile, pivotTile.getLocation());
-         // after removing, only one outgoing path - the one that is free.
-         outgoing.remove(directionToPrev);
+         int outgoingDirection = findDirectionAwayFromLast(subPathTiles, lastTile);
+         System.out.println("outgoing dir = " + outgoingDirection);
 
          Location newLocation = subPathTiles.getFirst().getLocation();
          System.out.println("these should be adjacent: "+newLocation + " " + pivotTile.getLocation());
          int startDir = findOutgoingDirection(pivotTile, newLocation);
-         int numRotations = 3 + outgoing.keySet().iterator().next() - startDir;
+         System.out.println("start dir = " + startDir);
+         int numRotations = startDir - 3 - outgoingDirection;
 
          Location origLocation = pivotTile.getLocation();
          Rotation tileRotation = lastTile.getRotation().rotateBy(numRotations);
@@ -69,5 +65,23 @@ public class SubPathReverser extends SubPathMutator {
          }
 
          return new TantrixPath(tiles, primaryColor);
+    }
+
+    /**
+     *
+     * @param subPathTiles
+     * @param lastTile
+     * @return the direction leading away from the tile right before it in the path.
+     */
+    private int findDirectionAwayFromLast(TilePlacementList subPathTiles, TilePlacement lastTile) {
+        Map<Integer, Location> outgoing = lastTile.getOutgoingPathLocations(primaryColor);
+
+        int directionToPrev = (subPathTiles.size() > 1) ?
+                findOutgoingDirection(lastTile, subPathTiles.get(subPathTiles.size()-2).getLocation()) :
+                findOutgoingDirection(lastTile, pivotTile.getLocation());
+        // after removing, only one outgoing path - the one that is free.
+        outgoing.remove(directionToPrev);
+
+        return outgoing.keySet().iterator().next();
     }
 }

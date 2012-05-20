@@ -14,7 +14,9 @@ public class TestAll extends TestCase {
 
         TestSuite suite =  new TestSuite("All Tantrix path Tests");
 
-        //suite.addTestSuite(PathEvaluatorTest.class);
+        suite.addTestSuite(TantrixPathTest.class);
+        suite.addTestSuite(PathEvaluatorTest.class);
+        suite.addTestSuite(PathifierTest.class);
         suite.addTest(com.becker.puzzle.tantrix.solver.path.permuting.TestAll.suite());
 
         return suite;

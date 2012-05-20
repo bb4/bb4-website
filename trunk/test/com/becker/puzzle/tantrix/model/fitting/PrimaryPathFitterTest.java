@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 import java.util.List;
 
-import static com.becker.puzzle.tantrix.model.TantrixTstUtil.*;
+import static com.becker.puzzle.tantrix.TantrixTstUtil.*;
 
 /**
  * @author Barry Becker
@@ -110,14 +110,19 @@ public class PrimaryPathFitterTest extends TestCase {
         assertTrue("Unexpectedly fit.", fitter.isFit(tile2));
     }
 
-    public void testile2PlacementDoesNotFits() {
-        tantrix = place1of3Tiles_startingWithTile2().getTantrix();
+    /* The tiles form a path but not a loop */
+    public void testNumFitsFor3UnsolvedTiles() {
 
-        TilePlacement tile2 = new TilePlacement(TILES.getTile(3), loc(0, 0), Rotation.ANGLE_300);
-        fitter = new PrimaryPathFitter(tantrix, PathColor.YELLOW);
-        System.out.println(tantrix);
-
-        assertFalse("Unexpectedly did not fit.", fitter.isFit(tile2));
+        tantrix = place3UnsolvedTiles().getTantrix();
+        PrimaryPathFitter fitter = new PrimaryPathFitter(tantrix, PathColor.YELLOW);
+        assertEquals("Unexpected number of fits.", 4, fitter.numPrimaryFits());
     }
 
+    /* The tiles do not even form a path */
+    public void testNumFitsFor3NonPathTiles() {
+
+        tantrix = place3NonPathTiles().getTantrix();
+        PrimaryPathFitter fitter = new PrimaryPathFitter(tantrix, PathColor.YELLOW);
+        assertEquals("Unexpected number of fits.", 2, fitter.numPrimaryFits());
+    }
 }

@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 import java.util.Set;
 
-import static com.becker.puzzle.tantrix.model.TantrixTstUtil.*;
+import static com.becker.puzzle.tantrix.TantrixTstUtil.*;
 
 /**
  * @author Barry Becker
