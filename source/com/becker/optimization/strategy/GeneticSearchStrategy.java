@@ -19,11 +19,6 @@ import java.util.List;
  */
 public class GeneticSearchStrategy extends OptimizationStrategy {
 
-    /** The population size will be this number raised to the number of dimensions power (up to POP_MAX). */
-    private static final int POPULATION_SIZE_PER_DIM = 4;
-    /** but never exceed this amount  */
-    private static final int POPULATION_MAX = 4000;
-
     // the amount to decimate the parent population by on each iteration
     private static final double CULL_FACTOR = 0.9;
     private static final double NBR_RADIUS = 0.03;
@@ -86,15 +81,16 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
      public ParameterArray doOptimization( ParameterArray params, double fitnessRange) {
 
          ParameterArray lastBest;
-
-         populationSize_ = Math.min(POPULATION_MAX, (int)Math.pow(POPULATION_SIZE_PER_DIM, params.size()));
+         populationSize_ = params.getSamplePopulationSize();
 
          // create an initial population based on params and POPULATION_SIZE-1 other random candidate solutions.
          List<ParameterArray> population = new LinkedList<ParameterArray>();
          population.add(params);
+
          for (int i = 1; i < populationSize_; i++) {
              ParameterArray nbr = params.getRandomNeighbor(INITIAL_RADIUS);
              if (!nbr.equals(params)) {
+                 notifyOfChange(nbr);       ////
                  population.add(i, nbr);
              }
          }
@@ -111,7 +107,6 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
      */
     private ParameterArray findNewBest(ParameterArray params, ParameterArray lastBest,
                                        List<ParameterArray> population) {
-        //
         ParameterArray currentBest;
         int ct = 0;
         double deltaFitness;
@@ -128,10 +123,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             deltaFitness = computeFitnessDelta(params, lastBest, currentBest, ct);
             recentBest = currentBest.copy();
 
-            if (listener_ != null) {
-                // notify of our best candidate in this generation
-                listener_.optimizerChanged(currentBest);
-            }
+            notifyOfChange(currentBest);
             ct++;
 
         } while ( (deltaFitness > improvementEpsilon_ || optimizee_.getOptimalFitness() > 0 )
@@ -255,11 +247,11 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
         return bestFitness.copy();
     }
 
-    private static void printPopulation(List population) {
+    private void printPopulation(List population) {
         printPopulation(population, population.size());
     }
 
-    private static void printPopulation(List population, int limit)  {
+    private void printPopulation(List population, int limit)  {
         for (int i=0; i<population.size() && i<limit; i++)
             System.out.println( i + ": " + population.get(i));
         System.out.println( "" );

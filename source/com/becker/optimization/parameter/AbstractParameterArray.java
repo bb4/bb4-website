@@ -15,6 +15,9 @@ import java.util.Random;
  */
 public abstract class AbstractParameterArray implements ParameterArray {
 
+    /** but never exceed this amount  */
+    private static final int POPULATION_MAX = 4000;
+
     protected Parameter[] params_;
 
     protected static final Random RANDOM = new Random(123);
@@ -43,6 +46,14 @@ public abstract class AbstractParameterArray implements ParameterArray {
         for (int i=0; i<len; i++) {
             params_[i] = params.get(i);
         }
+    }
+
+    public int getSamplePopulationSize()  {
+        int pop = 1;
+        for (Parameter param : params_) {
+            pop *= param.isIntegerOnly() ? 2 : 4;
+        }
+        return Math.min(POPULATION_MAX, pop);
     }
 
     /**

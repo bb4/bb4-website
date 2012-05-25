@@ -45,9 +45,9 @@ public class PathPermuter extends PermutedParameterArray {
 
         TantrixPath subPath1 = path_.subPath(pivotIndex - 1, 0);
         TantrixPath subPath2 = path_.subPath(pivotIndex + 1, path_.size() - 1);
-        System.out.println("The whole path is " + path_.getTilePlacements());
-        System.out.println("subpath1="+ subPath1.getTilePlacements());
-        System.out.println("subpath2="+ subPath2.getTilePlacements());
+        //System.out.println("The whole path is " + path_.getTilePlacements());
+        //System.out.println("subpath1="+ subPath1.getTilePlacements());
+        //System.out.println("subpath2="+ subPath2.getTilePlacements());
 
         return createPermutedPathList(subPath1, subPath2);
     }

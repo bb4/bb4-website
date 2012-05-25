@@ -37,22 +37,22 @@ public class SubPathSwapper extends SubPathMutator {
         int directionToPivot = findOutgoingDirection(firstTile, pivotTile.getLocation());
 
         Location newLocation = HexUtil.getNeighborLocation(pivotTile.getLocation(), numRotations);
-        System.out.println("newLocation="+ newLocation);
         Location origLocation = pivotTile.getLocation();
 
-        System.out.println("numRotations=" + numRotations + " directionToPivot=" + directionToPivot);
-        Rotation tileRotation = firstTile.getRotation().rotateBy(numRotations + 3 - directionToPivot);
+        numRotations = numRotations + 3 - directionToPivot;
+        Rotation tileRotation = firstTile.getRotation().rotateBy(numRotations);
 
         TilePlacement previousTilePlacement = new TilePlacement(firstTile.getTile(), newLocation, tileRotation);
         tiles.add(previousTilePlacement);
 
+        // this part almost the same as reverser
         for (int i=1; i<subPathTiles.size(); i++) {
             TilePlacement currentTile = subPathTiles.get(i);
 
             newLocation = findOtherOutgoingLocation(previousTilePlacement, origLocation);
 
-            tileRotation = currentTile.getRotation().rotateBy(numRotations);
-            TilePlacement currentTilePlacement = new TilePlacement(currentTile.getTile(), newLocation, tileRotation);
+            Rotation tileRotation1 = currentTile.getRotation().rotateBy(numRotations);
+            TilePlacement currentTilePlacement = new TilePlacement(currentTile.getTile(), newLocation, tileRotation1);
             assert fits(currentTilePlacement, previousTilePlacement) :
                 " current=" + currentTilePlacement + " did not fit with " + previousTilePlacement;
 

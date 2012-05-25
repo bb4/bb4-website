@@ -2,10 +2,10 @@
 package com.becker.puzzle.hiq.ui;
 
 import com.becker.puzzle.common.AlgorithmEnum;
-import com.becker.puzzle.common.ui.PuzzleApplet;
 import com.becker.puzzle.common.PuzzleController;
-import com.becker.puzzle.common.ui.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
+import com.becker.puzzle.common.ui.PuzzleApplet;
+import com.becker.puzzle.common.ui.PuzzleViewer;
 import com.becker.puzzle.hiq.Algorithm;
 import com.becker.puzzle.hiq.HiQController;
 import com.becker.puzzle.hiq.model.PegBoard;
@@ -62,7 +62,7 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
      */
     public HiQPuzzle() {}
 
-    
+
     @Override
     protected PuzzleViewer<PegBoard, PegMove> createViewer() {
         return new PegBoardViewer(PegBoard.INITIAL_BOARD_POSITION, this);
@@ -72,7 +72,7 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
     protected PuzzleController<PegBoard, PegMove> createController(Refreshable<PegBoard, PegMove> viewer_) {
         return new HiQController(viewer_);
     }
-    
+
     @Override
     protected AlgorithmEnum<PegBoard, PegMove>[] getAlgorithmValues() {
         return Algorithm.values();

@@ -1,8 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.parameter.ui;
 
-import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.ParameterChangeListener;
+import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.types.StringParameter;
 
 import javax.swing.*;
@@ -17,17 +17,17 @@ import java.awt.event.ActionListener;
 public class StringParameterWidget extends ParameterWidget implements ActionListener {
 
     private JComboBox dropdown;
-    
+
     public StringParameterWidget(Parameter param, ParameterChangeListener listener) {
         super(param, listener);
     }
-    
+
    /**
      * Create a ui widget appropriate for the parameter type.
      */
     @Override
     protected void addChildren() {
-             
+
         // create a dropdown
         StringParameter sparam = (StringParameter) parameter;
         dropdown = new JComboBox(sparam.getStringValues().toArray());
@@ -38,24 +38,24 @@ public class StringParameterWidget extends ParameterWidget implements ActionList
         dropdown.addActionListener(this);
         add(dropdown, BorderLayout.CENTER);
     }
-    
+
      /**
       * Called when a ComboBox selection has changed.
       * @param e the item event
       */
-    public void actionPerformed(ActionEvent e) {    
+    public void actionPerformed(ActionEvent e) {
         parameter.setValue(dropdown.getSelectedIndex());
         doNotification();
     }
-    
+
     @Override
     public void refreshInternal() {
-        dropdown.setSelectedItem((String)parameter.getNaturalValue());
+        dropdown.setSelectedItem(parameter.getNaturalValue());
     }
-    
+
     @Override
-    protected int getMaxHeight() { 
-        return 20; 
+    protected int getMaxHeight() {
+        return 20;
     }
-    
+
 }

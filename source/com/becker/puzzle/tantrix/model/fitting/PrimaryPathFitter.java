@@ -34,7 +34,6 @@ public class PrimaryPathFitter extends AbstractFitter {
         this.tantrix = new Tantrix(tiles);
     }
 
-
     /**
      * The tile fits if the primary path fits.
      * Check all the neighbors (that exist) and verify that if that direction is a primary path output, then it matches.
@@ -49,8 +48,6 @@ public class PrimaryPathFitter extends AbstractFitter {
 
             if (nbr != null) {
                 PathColor pathColor = placement.getPathColor(i);
-                //System.out.println("nbr"+i+" of "+placement+" ="+ nbr + ". Out color in dir " + i + "="
-                // + pathColor +". Does it match " + nbr.getPathColor((byte)(i+3)) + "?");
 
                 if (pathColor == primaryColor && pathColor == nbr.getPathColor((byte)(i+3))) {
                     return true;

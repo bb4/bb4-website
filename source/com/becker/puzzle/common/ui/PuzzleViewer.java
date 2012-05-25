@@ -5,7 +5,6 @@ import com.becker.common.format.FormatUtil;
 import com.becker.puzzle.common.Refreshable;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicBorders;
 import java.awt.*;
 import java.util.List;
 
@@ -18,25 +17,25 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
     public static final int MARGIN = 15;
     private static final Color BACKGROUND_COLOR = new Color(235, 235, 240);
 
-    protected P board_;  
+    protected P board_;
     protected String status_ = "";
     protected long numTries_;
-    
+
     long totalMem_ = Runtime.getRuntime().totalMemory();
     long freeMem_ = Runtime.getRuntime().freeMemory();
-    
+
     /**
      * Creates a new instance of PuzzleViewer
      */
     public PuzzleViewer() {}
-    
-    
-    public void refresh(P board, long numTries) {  
+
+
+    public void refresh(P board, long numTries) {
         status_ = createStatusMessage(numTries);
         simpleRefresh(board, numTries);
     }
 
-    public void finalRefresh(List<M> path, P board, long numTries, long millis) {  
+    public void finalRefresh(List<M> path, P board, long numTries, long millis) {
 
         float time = (float)millis / 1000.0f;
         status_ = "Did not find solution.";
@@ -47,8 +46,8 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
         System.out.println(status_);
         simpleRefresh(board, numTries);
         System.gc();
-    }    
-    
+    }
+
     protected void simpleRefresh(P board, long numTries) {
         board_ = board;
         numTries_ = numTries;
@@ -64,8 +63,8 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
         // I think this might be an expensive operation so don't do it every time
         if (Math.random() <.05) {
             totalMem_ = Runtime.getRuntime().totalMemory()/1000;
-            freeMem_ = Runtime.getRuntime().freeMemory()/1000;   
-        } 
+            freeMem_ = Runtime.getRuntime().freeMemory()/1000;
+        }
         msg += "    Memory used = "+ FormatUtil.formatNumber(totalMem_ - freeMem_) +"k";
         return msg;
     }

@@ -1,11 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.redpuzzle.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * The pieces that are in the red puzzle.
@@ -94,9 +90,9 @@ public class PieceList {
      * @param pieces
      */
     public PieceList(PieceList pieces) {
-        this(pieces.pieces_);   
+        this(pieces.pieces_);
     }
-    
+
     /**
      * copy constructor
      * @param pieces
@@ -128,16 +124,14 @@ public class PieceList {
             default: assert false: "We only support 4 or 9 piece red puzzles at this time.";
         }
         pieces.addPieces(initialPieces);
-        
+
         // shuffle the pieces so we get difference solutions -
         // or at least different approaches to the solution if there is only one.
         return pieces.shuffle();
     }
-    
+
     private void addPieces(Piece[] pieces) {
-        for (Piece p : pieces)  {
-           pieces_.add(p);       
-        }
+        Collections.addAll(pieces_, pieces);
     }
 
     /**
@@ -157,38 +151,38 @@ public class PieceList {
 
         return pieces_.get(pieces_.size() - 1);
     }
-   
+
     /**
      *? Does this need to be made immutable?
      * Swap 2 pieces.
      */
-    public void doSwap(int p1Pos, int p2Pos) {      
+    public void doSwap(int p1Pos, int p2Pos) {
        assert p1Pos <= NUM_PIECES && p2Pos < NUM_PIECES :
                 "The position indices must be less than " + NUM_PIECES + ".  You had " + p1Pos + ",  " + p2Pos;
         Piece piece2 = get(p2Pos);
         Piece piece1 = pieces_.remove(p1Pos);
-        pieces_.add(p1Pos, piece2);        
+        pieces_.add(p1Pos, piece2);
         pieces_.remove(piece2);
         pieces_.add(p2Pos, piece1);
     }
-    
+
     /**
      * @param p piece to add to the end of the list.
      */
     public PieceList add(Piece p) {
-        return add(pieces_.size(), p);       
+        return add(pieces_.size(), p);
     }
-    
+
     /**
       * @param p piece to add to the end of the list.
       */
      public PieceList add(int i, Piece p) {
          PieceList newPieceList = new PieceList(this);
-         newPieceList.pieces_.add(i, p);            
+         newPieceList.pieces_.add(i, p);
          assert newPieceList.pieces_.size() <= NUM_PIECES :
                 "there can only be at most " + NUM_PIECES + " pieces.";
          return newPieceList;
-    } 
+    }
 
     /**
      * @param p the piece to remove.
@@ -200,8 +194,8 @@ public class PieceList {
         assert removed: " could not remove "+p+" from "+newPieceList.pieces_;
         return newPieceList;
     }
-    
-    /** 
+
+    /**
      * @return piece list after removing the last element.
      */
     public PieceList removeLast() {
@@ -225,7 +219,7 @@ public class PieceList {
         Piece rp = p.rotate(numRotations);
         pieces_.set(k, rp);
     }
-    
+
     /**
      *@return a new shuffled PieceList object based on the old.
      */
@@ -239,7 +233,7 @@ public class PieceList {
         Collections.shuffle(plist, RANDOM);
         return new PieceList(plist);
     }
-        
+
     /**
      * Try the piece.
      * @param piece the piece to try to fit into our current solution.
@@ -273,14 +267,6 @@ public class PieceList {
      */
     public int size() {
         return pieces_.size();
-    }
-
-    public int getNumFits() {
-        int totalFits = 0;
-        for (int i=0; i<pieces_.size(); i++) {
-            totalFits += this.getNumFits(i);
-        }
-        return totalFits;
     }
 
     /**
@@ -324,21 +310,21 @@ public class PieceList {
 
         return numFits;
     }
-    
+
     /**
      *@return as unmodifiable list so there can be no malicious modification of our immutable state.
      */
     public List<Piece> getPieces() {
         return Collections.unmodifiableList(pieces_);
     }
-    
+
     /**
      *@return true if we contain p
      */
     public boolean contains(Piece p) {
         return pieces_.contains(p);
     }
-            
+
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder("PieceList: ("+size()+" pieces)\n");

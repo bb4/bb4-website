@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  * @author Barry Becker
  */
-public class PathColors extends ArrayList<PathColor> {
+class PathColors extends ArrayList<PathColor> {
 
       PathColors(PathColor c1, PathColor c2, PathColor c3, PathColor c4, PathColor c5, PathColor c6)  {
           super(6);
