@@ -41,18 +41,20 @@ public final class TantrixViewer extends PuzzleViewer<TantrixBoard, TilePlacemen
     protected void paintComponent( Graphics g ) {
 
         super.paintComponent(g);
+        System.out.println("now drawing ******** board_=" + board_);
         renderer_.render(g, board_, getWidth(), getHeight());
     }
 
 
     @Override
     public void refresh(TantrixBoard board, long numTries) {
-        int rate = board_ == null ? 1 : board_.getNumTiles()-2;
-        if (numTries % rate == 0) {
-            status_ = createStatusMessage(numTries);
-            simpleRefresh(board, numTries);
-            //ThreadUtil.sleep(100);
-        }
+        //int rate = board_ == null ? 1 : board_.getNumTiles()-2;
+        //System.out.println("rate=" + rate + " numTries="+ numTries+" numTries % rate=" + numTries % rate);
+        //if (numTries % rate == 0) {
+        status_ = createStatusMessage(numTries);
+        simpleRefresh(board, numTries);
+        //ThreadUtil.sleep(100);
+        //}
     }
 
     public void makeSound() {

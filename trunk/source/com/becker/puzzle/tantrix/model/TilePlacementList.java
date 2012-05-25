@@ -20,6 +20,11 @@ public class TilePlacementList extends LinkedList<TilePlacement> {
     }
 
     /** copy constructor */
+    public TilePlacementList(TilePlacementList list) {
+        this.addAll(list);
+    }
+
+    /** copy constructor */
     public TilePlacementList(Collection<TilePlacement> list) {
         this.addAll(list);
     }

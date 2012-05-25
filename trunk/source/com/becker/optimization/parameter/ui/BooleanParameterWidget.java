@@ -1,9 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.parameter.ui;
 
+import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.types.BooleanParameter;
 import com.becker.optimization.parameter.types.Parameter;
-import com.becker.optimization.parameter.ParameterChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,43 +17,43 @@ import java.awt.event.ItemListener;
 public class BooleanParameterWidget extends ParameterWidget implements ItemListener {
 
     private JCheckBox cb;
-    
+
     public BooleanParameterWidget(Parameter param, ParameterChangeListener listener) {
         super(param, listener);
     }
-    
+
    /**
      * Create a ui widget appropriate for the parameter type.
      */
     @Override
     protected void addChildren() {
-             
-            cb = new JCheckBox();            
+
+            cb = new JCheckBox();
             cb.setText(parameter.getName());
-       
+
             BooleanParameter bparam = (BooleanParameter) parameter;
-            cb.setSelected((Boolean)bparam.getNaturalValue());            
-            cb.addItemListener(this);       
+            cb.setSelected((Boolean)bparam.getNaturalValue());
+            cb.addItemListener(this);
             add(cb, BorderLayout.CENTER);
     }
-    
+
      /**
       * Called when a checkbox selection has changed for a BooleanParameter
       * @param e the item event
       */
-    public void itemStateChanged(ItemEvent e) { 
+    public void itemStateChanged(ItemEvent e) {
         parameter.setValue(cb.isSelected()?1:0);
         doNotification();
     }
-    
+
     @Override
     public void refreshInternal() {
         cb.setSelected((Boolean)parameter.getNaturalValue());
     }
-    
+
     @Override
-    protected int getMaxHeight() { 
-        return 20; 
+    protected int getMaxHeight() {
+        return 20;
     }
-    
+
 }

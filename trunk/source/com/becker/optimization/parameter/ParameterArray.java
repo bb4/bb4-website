@@ -1,14 +1,11 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.optimization.parameter;
 
-import com.becker.common.format.FormatUtil;
 import com.becker.optimization.Improvement;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.types.Parameter;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 /**
@@ -42,6 +39,11 @@ public interface ParameterArray extends Comparable<ParameterArray> {
      * @return the ith parameter in the array.
      */
     Parameter get(int i);
+
+    /**
+     * @return a reasonable size for a sampling of values from the parameter space.
+     */
+    int getSamplePopulationSize();
 
     /**
      * Globally sample the parameter space with a uniform distribution.

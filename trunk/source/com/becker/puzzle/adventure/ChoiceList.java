@@ -5,17 +5,14 @@ import com.becker.common.util.OrderedMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * A choice that you can make in a scene.
  *
  * @author Barry Becker
  */
+@SuppressWarnings("ClassWithTooManyMethods")
 public class ChoiceList implements List<Choice> {
 
     private List<Choice> choices_;
@@ -44,7 +41,7 @@ public class ChoiceList implements List<Choice> {
      * @param isFirst true if this is the first scene.
      */
     public ChoiceList(Node sceneNode, boolean isFirst) {
-        
+
         // if there are choices they will be the second element (right after description).
         NodeList children = sceneNode.getChildNodes();
         if (children.getLength() > 1) {

@@ -2,14 +2,14 @@
 package com.becker.puzzle.redpuzzle.ui;
 
 import com.becker.puzzle.common.AlgorithmEnum;
-import com.becker.puzzle.common.ui.PuzzleApplet;
 import com.becker.puzzle.common.PuzzleController;
-import com.becker.puzzle.common.ui.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
-import com.becker.puzzle.redpuzzle.solver.Algorithm;
+import com.becker.puzzle.common.ui.PuzzleApplet;
+import com.becker.puzzle.common.ui.PuzzleViewer;
 import com.becker.puzzle.redpuzzle.RedPuzzleController;
 import com.becker.puzzle.redpuzzle.model.Piece;
 import com.becker.puzzle.redpuzzle.model.PieceList;
+import com.becker.puzzle.redpuzzle.solver.Algorithm;
 import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.sliders.SliderChangeListener;
 import com.becker.ui.util.GUIUtil;
@@ -31,7 +31,7 @@ import javax.swing.*;
  */
 public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
                             implements SliderChangeListener {
-    
+
     /** allows you to change the animation speed. */
     private LabeledSlider animSpeedSlider_;
 
@@ -44,20 +44,20 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
     protected PuzzleViewer<PieceList, Piece> createViewer() {
         return new RedPuzzleViewer();
     }
-    
+
     @Override
     protected PuzzleController<PieceList, Piece> createController(Refreshable<PieceList, Piece> viewer_) {
         return new RedPuzzleController(viewer_);
     }
-    
+
     @Override
     protected AlgorithmEnum<PieceList, Piece>[] getAlgorithmValues() {
         return Algorithm.values();
     }
-    
+
     @Override
     protected JPanel createCustomControls() {
-    
+
         animSpeedSlider_ =
             new LabeledSlider("Speed ",
                     RedPuzzleViewer.INITIAL_ANIM_SPEED, 1,
@@ -65,7 +65,7 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
         animSpeedSlider_.setResolution(RedPuzzleViewer.MAX_ANIM_SPEED - 1);
         animSpeedSlider_.setShowAsInteger(true);
         animSpeedSlider_.addChangeListener(this);
-        
+
         return animSpeedSlider_;
     }
 

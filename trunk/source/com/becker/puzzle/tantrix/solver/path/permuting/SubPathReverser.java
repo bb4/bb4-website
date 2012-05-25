@@ -35,12 +35,9 @@ public class SubPathReverser extends SubPathMutator {
          TilePlacementList subPathTiles = subPath.getTilePlacements();
          TilePlacement lastTile = subPathTiles.getLast();
          int outgoingDirection = findDirectionAwayFromLast(subPathTiles, lastTile);
-         System.out.println("outgoing dir = " + outgoingDirection);
 
          Location newLocation = subPathTiles.getFirst().getLocation();
-         System.out.println("these should be adjacent: "+newLocation + " " + pivotTile.getLocation());
          int startDir = findOutgoingDirection(pivotTile, newLocation);
-         System.out.println("start dir = " + startDir);
          int numRotations = startDir - 3 - outgoingDirection;
 
          Location origLocation = pivotTile.getLocation();

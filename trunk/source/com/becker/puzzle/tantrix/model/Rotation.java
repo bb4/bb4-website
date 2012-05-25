@@ -18,6 +18,6 @@ public enum Rotation {
         while (rot < 0)  {
             rot += HexTile.NUM_SIDES;
         }
-        return Rotation.values()[this.ordinal() + rot % HexTile.NUM_SIDES];
+        return Rotation.values()[(this.ordinal() + rot) % HexTile.NUM_SIDES];
     }
 }

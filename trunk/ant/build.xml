@@ -66,7 +66,7 @@
   </target>
 
 
-  <target name="deploy" depends="compile" 
+  <target name="deploy" depends="compile"
       description="deploys the built jars, html, and jnlp files to the ${distributionDir} dir so they can be bulk copied to a website">
       <ant antfile="distribute.xml" inheritall="true" target="distribute"/>
   </target>
@@ -442,10 +442,16 @@
 
   <target name="executeTantrixPuzzle" depends="compile" description=" run the Tantrix Puzzle">
      <echo message="now executing tantrix puzzle"/>
-     <java classname="com.becker.puzzle.tantrix.ui.TantrixPuzzle" classpath="${classesDir}"
+     <!--java classname="com.becker.puzzle.tantrix.ui.TantrixPuzzle" classpath="${classesDir}"
            fork="true" jvm="${java_compiler}" maxmemory="4096M">
          <jvmarg value="${assertionsFlag}"/>
-     </java>
+     </java-->
+
+      <antcall target="executeProgram">
+          <param name="className" value="com.becker.puzzle.tantrix.ui.TantrixPuzzle"/>
+          <param name="libPath" value="${libDir}/vecmath.jar;"/>
+          <param name="args" value="-name galactic -locale ENGLISH"/>
+      </antcall>
   </target>
 
   <target name="executeSudoku" depends="compile" description=" run the Sudoku solver">
@@ -487,7 +493,7 @@
       <param name="libPath" value="${libDir}/kgsGtp.jar;${libDir}/gogui7.1.jar"/>
     </antcall>
   </target>
-  
+
   <target name="GoGui" depends="compile">
     <echo message="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.server.GtpTesujisoftGoServer"/>
     <antcall target="executeProgram2">

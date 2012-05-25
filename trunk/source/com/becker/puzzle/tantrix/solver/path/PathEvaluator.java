@@ -54,7 +54,7 @@ public class PathEvaluator {
             Tantrix tantrix = new Tantrix(path.getTilePlacements());
             InnerSpaceDetector innerDetector = new InnerSpaceDetector(tantrix);
             perfectLoop = !innerDetector.hasInnerSpaces();
-            System.out.println("perfect loop");
+            //System.out.println("perfect loop");
         }
 
         double fitness =

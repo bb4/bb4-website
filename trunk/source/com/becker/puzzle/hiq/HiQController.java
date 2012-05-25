@@ -1,8 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.hiq;
 
-import com.becker.puzzle.common.ui.AbstractPuzzleController;
 import com.becker.puzzle.common.Refreshable;
+import com.becker.puzzle.common.ui.AbstractPuzzleController;
 import com.becker.puzzle.hiq.model.MoveGenerator;
 import com.becker.puzzle.hiq.model.PegBoard;
 import com.becker.puzzle.hiq.model.PegMove;
@@ -35,14 +35,14 @@ public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {
         return position.isSolved();
     }
 
-    public List<PegMove> legalMoves(PegBoard position) {   
+    public List<PegMove> legalMoves(PegBoard position) {
         return new MoveGenerator(position).generateMoves();
     }
 
     public PegBoard move(PegBoard position, PegMove move) {
         return position.doMove(move, false);
     }
-    
+
     /**
      * Check all board symmetries to be sure it has or has not been seen.
      * If it was never seen before add it.
@@ -50,7 +50,7 @@ public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {
      */
     @Override
     public synchronized boolean alreadySeen(PegBoard position, Set<PegBoard> seen) {
-       
+
         boolean visited = false;
         for (int i = 0; i < PegBoard.SYMMETRIES; i++) {
               if (seen.contains(position.symmetry(i))) {
@@ -63,5 +63,5 @@ public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {
         }
         return visited;
     }
-  
+
 }

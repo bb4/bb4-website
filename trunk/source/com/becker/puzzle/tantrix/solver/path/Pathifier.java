@@ -7,7 +7,9 @@ import com.becker.puzzle.tantrix.model.Tantrix;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.model.TilePlacementList;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Attempts to reorder the tiles so that they show a path of the primary color.
@@ -67,22 +69,20 @@ public class Pathifier {
 
     private void addForwardTiles(LinkedList<TilePlacement> newList, Location outLocation,
                                  TilePlacementList remaining, Tantrix tantrix) {
-        System.out.println("adding forward for " + outLocation);
         addTiles(newList, outLocation, remaining, tantrix, true);
     }
 
     private void addBackwardTiles(LinkedList<TilePlacement> newList, Location outLocation,
                                   TilePlacementList remaining, Tantrix tantrix) {
-        System.out.println("adding backward for " + outLocation);
         addTiles(newList, outLocation, remaining, tantrix, false);
     }
 
+    /** add forward or backward tiles to the beginning or end of path respectively */
     private void addTiles(LinkedList<TilePlacement> newList, Location outLocation,
                           TilePlacementList remaining, Tantrix tantrix, boolean forward) {
         TilePlacement nextPlacement = tantrix.get(outLocation);
 
         if (nextPlacement != null && !newList.contains(nextPlacement) && !remaining.isEmpty()) {
-            System.out.println("adding " + nextPlacement);
             if (forward)
                 newList.addLast(nextPlacement);
             else {
@@ -91,7 +91,6 @@ public class Pathifier {
             remaining.remove(nextPlacement);
             Collection<Location> outgoing = nextPlacement.getOutgoingPathLocations(primaryPathColor_).values();
             for (Location loc : outgoing) {
-                System.out.println("adding out loc=" + loc + " forward=" + forward + " remaining=" + remaining);
                 addTiles(newList, loc, remaining, tantrix, forward);
             }
         }

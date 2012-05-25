@@ -9,7 +9,8 @@ import com.becker.puzzle.tantrix.model.*;
 import com.becker.puzzle.tantrix.model.fitting.PrimaryPathFitter;
 import com.becker.puzzle.tantrix.solver.path.permuting.PathPermuter;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A list of tiles representing a primary color path that is used when searching to find a tantrix solution.
@@ -26,7 +27,6 @@ public class TantrixPath extends PermutedParameterArray {
     private PathColor primaryPathColor_;
     private PathEvaluator evaluator_ = new PathEvaluator();
 
-
     /**
      * The list of tiles that are passed in must be a continuous primary path,
      * but it is not required that it be a loop, or that any of the secondary colors match.
@@ -35,12 +35,18 @@ public class TantrixPath extends PermutedParameterArray {
      * @throws IllegalStateException if tiles do not form a primary path.
      */
     public TantrixPath(TilePlacementList tiles, PathColor primaryColor) {
-
         assert primaryColor != null;
         primaryPathColor_ = primaryColor;
         tiles_ = tiles;
-        if (!hasPrimaryPath())
-            throw new IllegalStateException("Must form a path");
+
+        if (!hasPrimaryPath()) {
+            throw new IllegalStateException("The following tiles must form a primary path :\n" + tiles);
+        }
+    }
+
+    @Override
+    public int getSamplePopulationSize()  {
+        return 3 * size();
     }
 
     /**
@@ -214,6 +220,28 @@ public class TantrixPath extends PermutedParameterArray {
             }
         }
         return bestPath;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        TantrixPath that = (TantrixPath) o;
+
+        if (primaryPathColor_ != that.primaryPathColor_) return false;
+        if (tiles_ != null ? !tiles_.equals(that.tiles_) : that.tiles_ != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (tiles_ != null ? tiles_.hashCode() : 0);
+        result = 31 * result + (primaryPathColor_ != null ? primaryPathColor_.hashCode() : 0);
+        return result;
     }
 
     /**

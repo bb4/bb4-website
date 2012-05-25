@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.solver;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.optimization.OptimizationListener;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.Optimizer;
@@ -22,7 +23,7 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
                                  implements Optimizee, OptimizationListener {
 
     /** When reached, the puzzle is solved. */
-    public static final double SOLVED_THRESH = 1000;
+    public static final double SOLVED_THRESH = 3.0;
 
     /** either genetic or concurrent genetic strategy. */
     private OptimizationStrategyType strategy;
@@ -113,8 +114,10 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
      */
     public void optimizerChanged(ParameterArray params) {
         // update our current best guess at the solution.
-        //solution_ = ((PieceParameterArray) params).getPieceList();
-        numTries_ ++;
-        //puzzlePanel_.refresh(solution_, getNumIterations());
+        TantrixPath path = (TantrixPath)params;
+        solution_ = new TantrixBoard(path.getTilePlacements(), path.getPrimaryPathColor());
+        System.out.println("refreshing******************");
+        puzzlePanel_.refresh(solution_, numTries_++);
+        ThreadUtil.sleep(100);
     }
 }
