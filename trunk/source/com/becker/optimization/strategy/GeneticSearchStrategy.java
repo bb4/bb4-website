@@ -91,7 +91,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
              ParameterArray nbr = params.getRandomNeighbor(INITIAL_RADIUS);
              if (!nbr.equals(params) && !population.contains(nbr)) {
                  notifyOfChange(nbr);
-                 population.add(i, nbr);
+                 population.add(nbr);
              }
          }
          assert(population.size() > 0);
