@@ -58,16 +58,6 @@ public class TantrixBoard {
         unplacedTiles = (HexTileList) tileList.clone();
 
         tantrix = new Tantrix(tantrix, new TilePlacement(tile, INITIAL_LOCATION, Rotation.ANGLE_0));
-
-        /* this shows all the tiles
-        //tantrix.put(new Location(2, 2),
-        //        new TilePlacement(new HexTiles().getTile(4), new Location(2, 2), Rotation.ANGLE_120));
-        for (byte i = 0; i < tileList.size(); i++) {
-            byte row = (byte) (i / 8);
-            byte col = (byte) (i % 8);
-            tantrix.put(new Location(row, col),
-                    new TilePlacement(tileList.get(i), new Location(row, col), Rotation.ANGLE_120));
-        }*/
     }
 
     public Tantrix getTantrix() {
@@ -86,16 +76,12 @@ public class TantrixBoard {
     }
 
     /**
-     * If the new location is in the 0 row or column, we will return 1, to indicate
-     * that everything has been shifted down and to the right one.
-     * @return return the offset (1) if the tantrix was extended. or 0.
+     * Take the specified tile and place it where indicated.
+     * @param placement the placement containing the new tile to place.
+     * @return the new immutable tantrix instance.
      */
-    private void initializeFromOldBoard(TantrixBoard board) {
-
-        this.primaryColor = board.primaryColor;
-        this.unplacedTiles = (HexTileList) board.unplacedTiles.clone();
-        this.numTiles = board.numTiles;
-        this.tantrix = new Tantrix(board.tantrix);
+    public TantrixBoard placeTile(TilePlacement placement) {
+        return new TantrixBoard(this, placement);
     }
 
     /**
@@ -123,15 +109,6 @@ public class TantrixBoard {
 
         TantrixTileFitter fitter = new TantrixTileFitter(tantrix, getPrimaryColor());
         return fitter.isFit(placement);
-    }
-
-    /**
-     * Take the specified tile and place it where indicated.
-     * @param placement the placement containing the new tile to place.
-     * @return the new immutable tantrix instance.
-     */
-    public TantrixBoard placeTile(TilePlacement placement) {
-        return new TantrixBoard(this, placement);
     }
 
     public HexTileList getUnplacedTiles() {
@@ -198,5 +175,18 @@ public class TantrixBoard {
         }
 
         return bldr.toString();
+    }
+
+    /**
+     * If the new location is in the 0 row or column, we will return 1, to indicate
+     * that everything has been shifted down and to the right one.
+     * @return return the offset (1) if the tantrix was extended. or 0.
+     */
+    private void initializeFromOldBoard(TantrixBoard board) {
+
+        this.primaryColor = board.primaryColor;
+        this.unplacedTiles = (HexTileList) board.unplacedTiles.clone();
+        this.numTiles = board.numTiles;
+        this.tantrix = new Tantrix(board.tantrix);
     }
 }

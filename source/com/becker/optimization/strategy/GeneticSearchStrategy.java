@@ -89,11 +89,12 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
 
          for (int i = 1; i < populationSize_; i++) {
              ParameterArray nbr = params.getRandomNeighbor(INITIAL_RADIUS);
-             if (!nbr.equals(params)) {
-                 notifyOfChange(nbr);       ////
+             if (!nbr.equals(params) && !population.contains(nbr)) {
+                 notifyOfChange(nbr);
                  population.add(i, nbr);
              }
          }
+         assert(population.size() > 0);
 
          // EVALUATE POPULATION
          lastBest = evaluatePopulation(population, params);
@@ -121,6 +122,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             currentBest = evaluatePopulation(population, recentBest);
 
             deltaFitness = computeFitnessDelta(params, lastBest, currentBest, ct);
+            System.out.println("delta fitness =" + deltaFitness);
             recentBest = currentBest.copy();
 
             notifyOfChange(currentBest);

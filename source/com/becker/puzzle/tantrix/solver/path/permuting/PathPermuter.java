@@ -43,8 +43,16 @@ public class PathPermuter extends PermutedParameterArray {
 
         pivotTile = path_.getTilePlacements().get(pivotIndex);
 
-        TantrixPath subPath1 = path_.subPath(pivotIndex - 1, 0);
-        TantrixPath subPath2 = path_.subPath(pivotIndex + 1, path_.size() - 1);
+        TantrixPath subPath1 = null;
+        TantrixPath subPath2 = null;
+        try {
+            subPath1 = path_.subPath(pivotIndex - 1, 0);
+            subPath2 = path_.subPath(pivotIndex + 1, path_.size() - 1);
+        }
+        catch (IllegalStateException e) {
+            System.out.println("pivot index = " + pivotIndex);
+            System.out.println("is this a valid path? " + path_);
+        }
         //System.out.println("The whole path is " + path_.getTilePlacements());
         //System.out.println("subpath1="+ subPath1.getTilePlacements());
         //System.out.println("subpath2="+ subPath2.getTilePlacements());

@@ -1,6 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.solver.path;
 
+import com.becker.common.geometry.Location;
+import com.becker.common.math.MathUtil;
 import com.becker.puzzle.tantrix.model.*;
 import junit.framework.TestCase;
 
@@ -63,5 +65,22 @@ public class TantrixPathTest extends TestCase {
         TantrixBoard board = place3UnsolvedTiles();
         TantrixPath path = new TantrixPath(board.getTantrix(), board.getPrimaryColor());
         assertFalse("Unexpectedly a loop", path.isLoop());
+    }
+
+    public void testFindRandomNeighbor() {
+        MathUtil.RANDOM.setSeed(0);
+        TantrixBoard board = place3UnsolvedTiles();
+        TantrixPath path = new TantrixPath(board.getTantrix(), board.getPrimaryColor());
+        TantrixPath nbr = (TantrixPath) path.getRandomNeighbor(0.5);
+
+        TilePlacementList tiles =
+                new TilePlacementList(
+                        new TilePlacement(TILES.getTile(2), new Location(22, 20), Rotation.ANGLE_300),
+                        new TilePlacement(TILES.getTile(1), new Location(21, 21), Rotation.ANGLE_0),
+                        new TilePlacement(TILES.getTile(3), new Location(22, 21), Rotation.ANGLE_240));
+        TantrixPath expectedPath = new TantrixPath(tiles, PathColor.YELLOW);
+
+        TantrixPath expNbr = new TantrixPath(tiles, board.getPrimaryColor());
+        assertEquals("Unexpected random neighbor.", expectedPath, nbr);
     }
 }
