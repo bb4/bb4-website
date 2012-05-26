@@ -30,20 +30,6 @@ public class ConsistencyChecker {
     }
 
     /**
-     * True if all the colored paths match. There is not necessarily a loop.
-     * @return true if all paths fit.
-     *
-    public boolean allTilesFit() {
-
-        for (TilePlacement p : tiles) {
-            if (!fitter.isFit(p)) {
-                return false;
-            }
-        }
-        return true;
-    } */
-
-    /**
      * @return the number of tiles that fit perfectly.
      */
     public int numFittingTiles() {

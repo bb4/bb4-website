@@ -37,7 +37,13 @@ public class SubPathReverser extends SubPathMutator {
          int outgoingDirection = findDirectionAwayFromLast(subPathTiles, lastTile);
 
          Location newLocation = subPathTiles.getFirst().getLocation();
-         int startDir = findOutgoingDirection(pivotTile, newLocation);
+         int startDir = 0;
+         try {
+             startDir = findOutgoingDirection(pivotTile, newLocation);
+         }
+         catch (AssertionError e) {
+             System.out.println("We are currently trying to mutate pivot="+ pivotTile + "\n on subPath="+ subPath);
+         }
          int numRotations = startDir - 3 - outgoingDirection;
 
          Location origLocation = pivotTile.getLocation();

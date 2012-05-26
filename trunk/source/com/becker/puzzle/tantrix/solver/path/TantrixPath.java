@@ -40,7 +40,8 @@ public class TantrixPath extends PermutedParameterArray {
         tiles_ = tiles;
 
         if (!hasPrimaryPath()) {
-            throw new IllegalStateException("The following tiles must form a primary path :\n" + tiles);
+            throw new IllegalStateException(
+                    "The following " + tiles.size() +" tiles must form a primary path :\n" + tiles);
         }
     }
 
@@ -135,6 +136,7 @@ public class TantrixPath extends PermutedParameterArray {
     public PermutedParameterArray getRandomNeighbor(double radius) {
 
         List<TantrixPath> pathPermutations = findPermutedPaths();
+        System.out.println("finding best from among " + pathPermutations);
         return selectBestPath(pathPermutations);
     }
 
@@ -199,8 +201,9 @@ public class TantrixPath extends PermutedParameterArray {
      */
     private List<TantrixPath> findPermutedPaths() {
 
-        int pivotIndex = 1 + MathUtil.RANDOM.nextInt(tiles_.size()-2);
         PathPermuter permuter = new PathPermuter(this);
+
+        int pivotIndex = 1 + MathUtil.RANDOM.nextInt(tiles_.size()-2);
         return permuter.findPermutedPaths(pivotIndex);
     }
 
@@ -217,6 +220,7 @@ public class TantrixPath extends PermutedParameterArray {
             double score = evaluator_.evaluateFitness(path);
             if (score > bestScore) {
                 bestPath = path;
+                bestScore = score;
             }
         }
         return bestPath;
