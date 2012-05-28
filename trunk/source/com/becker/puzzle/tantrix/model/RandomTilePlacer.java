@@ -46,9 +46,24 @@ public class RandomTilePlacer {
     }
 
     /**
-     * @return the first placement for the specified tile which matches the primary path
-     *     but not necessarily the secondary paths. The opposite end of the primary path can only
-     *     retouch the tantrix if it is the last tile to be placed in the random path.
+     * A random placement for the specified tile which matches the primary path,
+     * but not necessarily the secondary paths. The opposite end of the primary path can only
+     * retouch the tantrix if it is the last tile to be placed in the random path.
+     *
+     * There are usually two ways to place a tile, but there are some rare cases where there can be four.
+     * For example, given:
+     * [tileNum=6 colors: [Y, R, B, Y, B, R] at (row=20, column=21) ANGLE_240]
+     * [tileNum=2 colors: [B, Y, Y, B, R, R] at (row=20, column=20) ANGLE_60]
+     * [tileNum=7 colors: [R, Y, R, Y, B, B] at (row=21, column=21) ANGLE_0]
+     *
+     * There are these 4 valid placements:
+     *  [tileNum=4 colors: [B, Y, R, B, R, Y] at (row=21, column=22) ANGLE_0],
+     *  [tileNum=4 colors: [B, Y, R, B, R, Y] at (row=21, column=22) ANGLE_60],
+     *  [tileNum=4 colors: [B, Y, R, B, R, Y] at (row=21, column=22) ANGLE_240],
+     *  [tileNum=4 colors: [B, Y, R, B, R, Y] at (row=21, column=22) ANGLE_300]]
+     *  but all of them cause retouching to the main path.
+     *
+     * @return a valid primary pth placement.
      */
     private TilePlacement findPrimaryPathPlacementForTile(TantrixBoard board, HexTile tile, boolean isLast) {
 
@@ -67,10 +82,11 @@ public class RandomTilePlacer {
         TilePlacementList validFits =
                 fitter.getFittingPlacements(tile, nextLocation);
 
-        assert validFits.size() == 2 :
-                "Tantrix=" + board.getTantrix() + "\nlastPlaced="+lastPlaced.getLocation()
-                + "\nThere must be two ways for the primary path to fit, but we had only " + validFits.size()
-                + " ways to  place " + tile + " at " + lastPlaced.getLocation() + "\nThey were validFits=" + validFits;
+        assert validFits.size() >= 2 :
+                "Tantrix=" + board.getTantrix() + "\nlastPlaced=" + lastPlaced.getLocation()
+                + "\nThere must be two ways for the primary path to fit, but we had " + validFits.size()
+                + " ways to  place " + tile + " at " + lastPlaced.getLocation()
+                        + "\nThese were all validFits=" + validFits;
 
         if (!isLast) {
             cullPlacementsThatRetouch(board, lastPlaced, validFits);

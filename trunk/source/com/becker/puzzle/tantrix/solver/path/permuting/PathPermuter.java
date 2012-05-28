@@ -43,19 +43,8 @@ public class PathPermuter extends PermutedParameterArray {
 
         pivotTile = path_.getTilePlacements().get(pivotIndex);
 
-        TantrixPath subPath1 = null;
-        TantrixPath subPath2 = null;
-        try {
-            subPath1 = path_.subPath(pivotIndex - 1, 0);
-            subPath2 = path_.subPath(pivotIndex + 1, path_.size() - 1);
-        }
-        catch (IllegalStateException e) {
-            System.out.println("pivot index = " + pivotIndex);
-            System.out.println("is this a valid path? " + path_);
-        }
-        //System.out.println("The whole path is " + path_.getTilePlacements());
-        //System.out.println("subpath1="+ subPath1.getTilePlacements());
-        //System.out.println("subpath2="+ subPath2.getTilePlacements());
+        TantrixPath subPath1 = path_.subPath(pivotIndex - 1, 0);
+        TantrixPath subPath2 =  path_.subPath(pivotIndex + 1, path_.size() - 1);
 
         return createPermutedPathList(subPath1, subPath2);
     }
@@ -74,8 +63,8 @@ public class PathPermuter extends PermutedParameterArray {
         TantrixPath subPath2Reversed = reverser.mutate(subPath2);
         TantrixPath subPath1Swapped = swapper.mutate(subPath1);
         TantrixPath subPath2Swapped = swapper.mutate(subPath2);
-        TantrixPath subPath1RevSwapped = reverser.mutate(subPath1Swapped);
-        TantrixPath subPath2RevSwapped = reverser.mutate(subPath2Swapped);
+        TantrixPath subPath1RevSwapped = swapper.mutate(subPath1Reversed);
+        TantrixPath subPath2RevSwapped = swapper.mutate(subPath2Reversed);
 
         List<TantrixPath> pathPermutations = new ArrayList<TantrixPath>();
 
@@ -91,19 +80,53 @@ public class PathPermuter extends PermutedParameterArray {
     }
 
     private void addIfNotNull(TantrixPath path, List<TantrixPath> pathPermutations) {
-        if (path != null) pathPermutations.add(path);
+        if (path != null) {
+            pathPermutations.add(path);
+        }
     }
 
     /**
+     * Combine supPath1 and subPath2 to make a new path. SubPath1 needs to be reversed when adding.
      * @param subPath1
      * @param subPath2
      * @return null if the resulting permuted path is not valid (i.e. has overlaps)
      */
     private TantrixPath createPermutedPath(TantrixPath subPath1, TantrixPath subPath2) {
-        TilePlacementList tiles = new TilePlacementList(subPath1.getTilePlacements());
+
+        // add tiles from the first path in reverse order
+        TilePlacementList tiles = new TilePlacementList();
+        for (TilePlacement p : subPath1.getTilePlacements()) {
+            tiles.addFirst(p);
+        }
+
         tiles.add(pivotTile);
         tiles.addAll(subPath2.getTilePlacements());
-        return isValid(tiles) ? new TantrixPath(tiles, path_.getPrimaryPathColor()) : null;
+        TantrixPath path = null;
+        if (isValid(tiles)) {
+            assert (TantrixPath.hasOrderedPrimaryPath(tiles, path_.getPrimaryPathColor())) :
+                    "out of order path tiles \nsubpath1" + subPath1 + "\npivot="+ pivotTile + "\nsubpath2=" + subPath2 + "\norigPath="+ path_;
+
+           /*
+            subpath1[
+            [tileNum=4 colors: [B, Y, R, B, R, Y] at (row=21, column=22) ANGLE_0],
+            [tileNum=1 colors: [R, B, R, B, Y, Y] at (row=22, column=21) ANGLE_300],
+            [tileNum=2 colors: [B, Y, Y, B, R, R] at (row=23, column=22) ANGLE_180]]
+
+            pivot=[tileNum=3 colors: [B, B, R, R, Y, Y] at (row=20, column=21) ANGLE_120]
+
+            subpath2=[[tileNum=5 colors: [R, B, B, R, Y, Y] at (row=21, column=21) ANGLE_60]]
+
+            origPath=[
+            [tileNum=5 colors: [R, B, B, R, Y, Y] at (row=21, column=22) ANGLE_120],
+            [tileNum=3 colors: [B, B, R, R, Y, Y] at (row=20, column=21) ANGLE_120],
+            [tileNum=2 colors: [B, Y, Y, B, R, R] at (row=21, column=21) ANGLE_180],
+            [tileNum=1 colors: [R, B, R, B, Y, Y] at (row=20, column=20) ANGLE_300],
+            [tileNum=4 colors: [B, Y, R, B, R, Y] at (row=19, column=21) ANGLE_0]]
+          */
+
+            path = new TantrixPath(tiles, path_.getPrimaryPathColor());
+        }
+        return path;
     }
 
     /**

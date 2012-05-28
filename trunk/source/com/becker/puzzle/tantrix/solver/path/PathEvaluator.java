@@ -41,7 +41,6 @@ public class PathEvaluator {
 
         int numTiles = path.size();
         double distance = path.getEndPointDistance();
-        //System.out.println("dist="+ distance + " isLoop=" + path.isLoop());
         boolean isLoop = distance == 0 && path.isLoop();
 
         ConsistencyChecker checker = new ConsistencyChecker(path.getTilePlacements(), path.getPrimaryPathColor());

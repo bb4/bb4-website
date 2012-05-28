@@ -38,12 +38,7 @@ public class SubPathReverser extends SubPathMutator {
 
          Location newLocation = subPathTiles.getFirst().getLocation();
          int startDir = 0;
-         try {
-             startDir = findOutgoingDirection(pivotTile, newLocation);
-         }
-         catch (AssertionError e) {
-             System.out.println("We are currently trying to mutate pivot="+ pivotTile + "\n on subPath="+ subPath);
-         }
+         startDir = findOutgoingDirection(pivotTile, newLocation);
          int numRotations = startDir - 3 - outgoingDirection;
 
          Location origLocation = pivotTile.getLocation();
@@ -60,7 +55,8 @@ public class SubPathReverser extends SubPathMutator {
              tileRotation = currentTile.getRotation().rotateBy(numRotations);
              TilePlacement currentTilePlacement = new TilePlacement(currentTile.getTile(), newLocation, tileRotation);
              assert fits(currentTilePlacement, previousTilePlacement) :
-                " current=" + currentTilePlacement +" did not fit with " + previousTilePlacement;
+                " current=" + currentTilePlacement +" (" + i  +") did not fit with " + previousTilePlacement
+                        + " when reversing " + subPath + " at pivot = "+ pivotTile;
 
              tiles.add(currentTilePlacement);
              origLocation = previousTilePlacement.getLocation();
@@ -71,9 +67,8 @@ public class SubPathReverser extends SubPathMutator {
     }
 
     /**
-     *
-     * @param subPathTiles
-     * @param lastTile
+     * @param subPathTiles other path tiles
+     * @param lastTile the last tile in the path
      * @return the direction leading away from the tile right before it in the path.
      */
     private int findDirectionAwayFromLast(TilePlacementList subPathTiles, TilePlacement lastTile) {
@@ -82,7 +77,7 @@ public class SubPathReverser extends SubPathMutator {
         int directionToPrev = (subPathTiles.size() > 1) ?
                 findOutgoingDirection(lastTile, subPathTiles.get(subPathTiles.size()-2).getLocation()) :
                 findOutgoingDirection(lastTile, pivotTile.getLocation());
-        // after removing, only one outgoing path - the one that is free.
+        // after removing, there will be only one outgoing path - the one that is free.
         outgoing.remove(directionToPrev);
 
         return outgoing.keySet().iterator().next();

@@ -21,18 +21,46 @@ public class TantrixPathTest extends TestCase {
 
         HexTile pivotTile = TILES.getTile(1);
 
-        TilePlacement firstTilePlacement =
+        TilePlacement first =
                 new TilePlacement(TILES.getTile(2), loc(2, 1), Rotation.ANGLE_0);
-        TilePlacement secondTilePlacement =
+        TilePlacement second =
                 new TilePlacement(TILES.getTile(3), loc(1, 2), Rotation.ANGLE_0);
 
-        TilePlacementList tileList = new TilePlacementList();
-        tileList.add(firstTilePlacement);
-        tileList.add(secondTilePlacement);
+        TilePlacementList tileList = new TilePlacementList(first, second);
         path = new TantrixPath(tileList, pivotTile.getPrimaryColor());
 
         assertEquals("Unexpected path tiles", tileList, path.getTilePlacements());
     }
+
+
+    /**
+     * We should get an error if the tiles are not in path order, even if they
+     * do form path.
+     */
+    public void test5TilePathConstructionWhenPathTilesUnorder() {
+
+        TilePlacement first =
+                new TilePlacement(TILES.getTile(4), new Location(21, 22), Rotation.ANGLE_0);
+        TilePlacement second =
+                new TilePlacement(TILES.getTile(1), new Location(22, 21), Rotation.ANGLE_300);
+        TilePlacement third =
+                new TilePlacement(TILES.getTile(2), new Location(23, 22), Rotation.ANGLE_180);
+        TilePlacement fourth =
+                new TilePlacement(TILES.getTile(3), new Location(20, 21), Rotation.ANGLE_120);
+        TilePlacement fifth =
+                new TilePlacement(TILES.getTile(5), new Location(21, 21), Rotation.ANGLE_240);
+
+        TilePlacementList tileList = new TilePlacementList(first, second, third, fourth, fifth);
+
+        try {
+            new TantrixPath(tileList, PathColor.RED);
+            fail("should have failed because unordered.");
+        } catch (IllegalStateException e) {
+            // success
+        }
+        // assertEquals("Unexpected path tiles", tileList, path.getTilePlacements());
+    }
+
 
     /** we expect an exception because the tiles passed to the constructor do not form a primary path */
     public void testNonLoopPathConstruction() {
