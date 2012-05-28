@@ -12,6 +12,7 @@ import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.model.TilePlacementList;
 import com.becker.puzzle.tantrix.solver.path.PathEvaluator;
 import com.becker.puzzle.tantrix.solver.path.TantrixPath;
+import static com.becker.puzzle.tantrix.solver.path.PathEvaluator.SOLVED_THRESH;
 
 /**
  * Solve the Tantrix puzzle using a genetic search algorithm.
@@ -21,8 +22,7 @@ import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlacement>
                                  implements Optimizee, OptimizationListener {
 
-    /** When reached, the puzzle is solved. */
-    public static final double SOLVED_THRESH = 3.0;
+
 
     /** either genetic or concurrent genetic strategy. */
     private OptimizationStrategyType strategy;

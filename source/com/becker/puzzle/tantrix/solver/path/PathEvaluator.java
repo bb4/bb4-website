@@ -14,14 +14,17 @@ import com.becker.puzzle.tantrix.model.verfication.InnerSpaceDetector;
  */
 public class PathEvaluator {
 
+    /** When reached, the puzzle is solved. */
+    public static final double SOLVED_THRESH = 3.0;
+
     /** How close are the endpoints of the primary path from forming a loop. */
-    private static final double LOOP_PROXIMITY_WEIGHT = 0.5;
+    private static final double LOOP_PROXIMITY_WEIGHT = 0.6;
 
     /** Weight to give if we actually have a primary path loop. */
     private static final double LOOP_WEIGHT = 0.7;
 
     /** Weight to give matching paths (includes secondary paths) */
-    private static final double PATH_MATCH_WEIGHT = 0.4;
+    private static final double PATH_MATCH_WEIGHT = 0.3;
 
     /** We have a loop and all paths match */
     private static final double CONSISTENT_LOOP_BONUS = 0.3;
