@@ -240,6 +240,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             } else {
                 fitness = optimizee_.evaluateFitness(p);
             }
+            notifyOfChange(p);
 
             p.setFitness(fitness);
             if (fitness > bestFitness.getFitness()) {
