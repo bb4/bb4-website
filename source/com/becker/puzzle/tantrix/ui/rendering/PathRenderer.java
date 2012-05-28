@@ -47,10 +47,7 @@ public class PathRenderer {
         int pathEndIndex = i-1;
         int diff = pathEndIndex - pathStartIndex;
         Color color = PathColorInterpreter.getColorForPathColor(pathColor);
-        /*
-        System.out.println("diff="+ diff + " rot=" + tilePlacement.getRotation().ordinal()
-                + " pind=" + pathStartIndex + ", " + pathEndIndex
-                + " color=" + tile.getEdgeColor(pathStartIndex));    */
+
         // account for the rotation.
         pathStartIndex += tilePlacement.getRotation().ordinal();
         pathEndIndex += tilePlacement.getRotation().ordinal();

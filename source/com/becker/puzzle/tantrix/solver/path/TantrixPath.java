@@ -6,7 +6,6 @@ import com.becker.common.math.MathUtil;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.PermutedParameterArray;
 import com.becker.puzzle.tantrix.model.*;
-import com.becker.puzzle.tantrix.model.fitting.PrimaryPathFitter;
 import com.becker.puzzle.tantrix.solver.path.permuting.PathPermuter;
 
 import java.util.List;
@@ -39,28 +38,10 @@ public class TantrixPath extends PermutedParameterArray {
         primaryPathColor_ = primaryColor;
         tiles_ = tiles;
 
-        if (!hasPrimaryPath()) {
+        if (!hasOrderedPrimaryPath(tiles, primaryColor)) {
             throw new IllegalStateException(
                     "The following " + tiles.size() +" tiles must form a primary path :\n" + tiles);
         }
-    }
-
-    @Override
-    public int getSamplePopulationSize()  {
-        return 3 * size();
-    }
-
-    /**
-     * There is a primary path if there are  2*num tiles - 2 fits
-     * There is a looping path if 2* num tiles fits.
-     * @return true if there exists a primary path or loop.
-     */
-    private boolean hasPrimaryPath() {
-        PrimaryPathFitter fitter = new PrimaryPathFitter(tiles_, primaryPathColor_);
-        if (tiles_.size() < 2) return true;
-
-        int numFits = fitter.numPrimaryFits();
-        return numFits >= 2 * tiles_.size() - 2;
     }
 
     /**
@@ -71,6 +52,32 @@ public class TantrixPath extends PermutedParameterArray {
      */
     public TantrixPath(Tantrix tantrix, PathColor primaryColor) {
         this(new Pathifier(primaryColor).reorder(tantrix), primaryColor);
+    }
+
+
+    @Override
+    public int getSamplePopulationSize()  {
+        return 3 * size();
+    }
+
+    /**
+     * There is a ordered primary path if all the successive tiles are connected by the primary path.
+     * @return true if there exists a primary path or loop.
+     */
+    public static boolean hasOrderedPrimaryPath(TilePlacementList tiles, PathColor primaryColor) {
+        if (tiles.size() < 2) return true;
+
+        TilePlacement lastTile = tiles.get(0);
+
+        for (int i=1; i<tiles.size(); i++)  {
+            TilePlacement currentTile = tiles.get(i);
+            Map<Integer, Location> outgoing = currentTile.getOutgoingPathLocations(primaryColor);
+            if (!outgoing.containsValue(lastTile.getLocation())) {
+                return false;
+            }
+            lastTile = currentTile;
+        }
+        return true;
     }
 
     /**
@@ -136,7 +143,7 @@ public class TantrixPath extends PermutedParameterArray {
     public PermutedParameterArray getRandomNeighbor(double radius) {
 
         List<TantrixPath> pathPermutations = findPermutedPaths();
-        System.out.println("finding best from among " + pathPermutations);
+        assert (!pathPermutations.isEmpty()) : "Could not find any permutations of " + this;
         return selectBestPath(pathPermutations);
     }
 

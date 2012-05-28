@@ -1,7 +1,6 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.solver;
 
-import com.becker.common.concurrency.ThreadUtil;
 import com.becker.optimization.OptimizationListener;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.Optimizer;
@@ -118,6 +117,5 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
         solution_ = new TantrixBoard(path.getTilePlacements(), path.getPrimaryPathColor());
         System.out.println("refreshing******************");
         puzzlePanel_.refresh(solution_, numTries_++);
-        ThreadUtil.sleep(100);
     }
 }

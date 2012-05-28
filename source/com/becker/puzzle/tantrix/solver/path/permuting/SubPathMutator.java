@@ -39,8 +39,7 @@ public abstract class SubPathMutator {
 
     protected boolean fits(TilePlacement currentPlacement, TilePlacement previousPlacement) {
         Map<Integer, Location> outgoingPathLocations = currentPlacement.getOutgoingPathLocations(primaryColor);
-        for (int direction : outgoingPathLocations.keySet()) {
-            Location loc = outgoingPathLocations.get(direction);
+        for (Location loc : outgoingPathLocations.values()) {
             if (loc.equals(previousPlacement.getLocation())) {
                 return true;
             }

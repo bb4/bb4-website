@@ -54,10 +54,11 @@ public class SubPathSwapper extends SubPathMutator {
             Rotation tileRotation1 = currentTile.getRotation().rotateBy(numRotations);
             TilePlacement currentTilePlacement = new TilePlacement(currentTile.getTile(), newLocation, tileRotation1);
             assert fits(currentTilePlacement, previousTilePlacement) :
-                " current=" + currentTilePlacement + " did not fit with " + previousTilePlacement;
+                    " current=" + currentTilePlacement +" (" + i  +") did not fit with " + previousTilePlacement
+                            + " when reversing " + subPath + " at pivot = "+ pivotTile;
 
             tiles.add(currentTilePlacement);
-            origLocation = previousTilePlacement.getLocation();
+            origLocation = previousTilePlacement.getLocation(); //currentTilePlacement.getLocation();
             previousTilePlacement = currentTilePlacement;
         }
 
