@@ -17,8 +17,8 @@ import static com.becker.puzzle.tantrix.TantrixTstUtil.loc;
 public class SubPathSwapperTest extends SubPathMutatorBase {
 
     @Override
-    public SubPathMutator createMutator(TilePlacement placement, PathColor primaryColor) {
-        return new SubPathSwapper(placement, primaryColor);
+    public SubPathMutator createMutator(PathColor primaryColor) {
+        return new SubPathSwapper(primaryColor);
     }
 
     @Override

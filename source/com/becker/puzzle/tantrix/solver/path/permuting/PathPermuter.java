@@ -23,7 +23,9 @@ import java.util.Set;
 public class PathPermuter extends PermutedParameterArray {
 
     private TantrixPath path_;
-    private TilePlacement pivotTile;
+
+    /** The pivot path remains unchanged while the ends change. */
+    private TantrixPath pivotPath;
 
 
     /**
@@ -36,15 +38,40 @@ public class PathPermuter extends PermutedParameterArray {
     }
 
     /**
+     * try the seven cases and take any that are valid for the n^2 positions of the pivot path.
+     * @return no more than 7 permuted path cases.
+     */
+    public List<TantrixPath> findAllPermutedPaths() {
+
+        List<TantrixPath> pathPermutations = new ArrayList<TantrixPath>();
+
+        int lowerIndexStart = 1;
+        int upperIndexStop = path_.size() - 2;
+
+        for (int i=lowerIndexStart; i<upperIndexStop; i++) {
+            for (int j=upperIndexStop; j>=i; j--) {
+                TantrixPath subPath1 = path_.subPath(i - 1, 0);
+                pivotPath = path_.subPath(i, j);
+                TantrixPath subPath2 =  path_.subPath(j + 1, path_.size() - 1);
+                pathPermutations.addAll( createPermutedPathList(subPath1, subPath2));
+            }
+        }
+
+        return pathPermutations;
+    }
+
+    /**
      * try the seven cases and take any that are valid.
      * @return no more than 7 permuted path cases.
      */
-    public List<TantrixPath> findPermutedPaths(int pivotIndex) {
+    public List<TantrixPath> findPermutedPaths(int pivotIndex1, int pivotIndex2) {
 
-        pivotTile = path_.getTilePlacements().get(pivotIndex);
+        int lowerIndex = Math.min(pivotIndex1, pivotIndex2);
+        int upperIndex = Math.max(pivotIndex1, pivotIndex2);
 
-        TantrixPath subPath1 = path_.subPath(pivotIndex - 1, 0);
-        TantrixPath subPath2 =  path_.subPath(pivotIndex + 1, path_.size() - 1);
+        TantrixPath subPath1 = path_.subPath(lowerIndex - 1, 0);
+        pivotPath = path_.subPath(lowerIndex, upperIndex);
+        TantrixPath subPath2 =  path_.subPath(upperIndex + 1, path_.size() - 1);
 
         return createPermutedPathList(subPath1, subPath2);
     }
@@ -56,15 +83,17 @@ public class PathPermuter extends PermutedParameterArray {
      */
     private List<TantrixPath> createPermutedPathList(TantrixPath subPath1, TantrixPath subPath2) {
         PathColor primaryColor = path_.getPrimaryPathColor();
-        SubPathMutator swapper = new SubPathSwapper(pivotTile, primaryColor);
-        SubPathMutator reverser = new SubPathReverser(pivotTile, primaryColor);
+        SubPathMutator swapper = new SubPathSwapper(primaryColor);
+        SubPathMutator reverser = new SubPathReverser(primaryColor);
+        TilePlacement firstPivot = pivotPath.getFirst();
+        TilePlacement lastPivot = pivotPath.getLast();
 
-        TantrixPath subPath1Reversed = reverser.mutate(subPath1);
-        TantrixPath subPath2Reversed = reverser.mutate(subPath2);
-        TantrixPath subPath1Swapped = swapper.mutate(subPath1);
-        TantrixPath subPath2Swapped = swapper.mutate(subPath2);
-        TantrixPath subPath1RevSwapped = swapper.mutate(subPath1Reversed);
-        TantrixPath subPath2RevSwapped = swapper.mutate(subPath2Reversed);
+        TantrixPath subPath1Reversed = reverser.mutate(firstPivot, subPath1);
+        TantrixPath subPath2Reversed = reverser.mutate(lastPivot, subPath2);
+        TantrixPath subPath1Swapped = swapper.mutate(firstPivot, subPath1);
+        TantrixPath subPath2Swapped = swapper.mutate(lastPivot, subPath2);
+        TantrixPath subPath1RevSwapped = swapper.mutate(firstPivot, subPath1Reversed);
+        TantrixPath subPath2RevSwapped = swapper.mutate(lastPivot, subPath2Reversed);
 
         List<TantrixPath> pathPermutations = new ArrayList<TantrixPath>();
 
@@ -99,30 +128,13 @@ public class PathPermuter extends PermutedParameterArray {
             tiles.addFirst(p);
         }
 
-        tiles.add(pivotTile);
+        tiles.addAll(pivotPath.getTilePlacements());
         tiles.addAll(subPath2.getTilePlacements());
         TantrixPath path = null;
         if (isValid(tiles)) {
             assert (TantrixPath.hasOrderedPrimaryPath(tiles, path_.getPrimaryPathColor())) :
-                    "out of order path tiles \nsubpath1" + subPath1 + "\npivot="+ pivotTile + "\nsubpath2=" + subPath2 + "\norigPath="+ path_;
-
-           /*
-            subpath1[
-            [tileNum=4 colors: [B, Y, R, B, R, Y] at (row=21, column=22) ANGLE_0],
-            [tileNum=1 colors: [R, B, R, B, Y, Y] at (row=22, column=21) ANGLE_300],
-            [tileNum=2 colors: [B, Y, Y, B, R, R] at (row=23, column=22) ANGLE_180]]
-
-            pivot=[tileNum=3 colors: [B, B, R, R, Y, Y] at (row=20, column=21) ANGLE_120]
-
-            subpath2=[[tileNum=5 colors: [R, B, B, R, Y, Y] at (row=21, column=21) ANGLE_60]]
-
-            origPath=[
-            [tileNum=5 colors: [R, B, B, R, Y, Y] at (row=21, column=22) ANGLE_120],
-            [tileNum=3 colors: [B, B, R, R, Y, Y] at (row=20, column=21) ANGLE_120],
-            [tileNum=2 colors: [B, Y, Y, B, R, R] at (row=21, column=21) ANGLE_180],
-            [tileNum=1 colors: [R, B, R, B, Y, Y] at (row=20, column=20) ANGLE_300],
-            [tileNum=4 colors: [B, Y, R, B, R, Y] at (row=19, column=21) ANGLE_0]]
-          */
+                    "out of order path tiles \nsubpath1" + subPath1 + "\npivot="+ pivotPath
+                            + "\nsubpath2=" + subPath2 + "\norigPath="+ path_;
 
             path = new TantrixPath(tiles, path_.getPrimaryPathColor());
         }

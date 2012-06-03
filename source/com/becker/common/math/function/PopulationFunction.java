@@ -13,11 +13,13 @@ import java.util.List;
 public class PopulationFunction implements Function {
 
     /** When we get more than this many x values, scroll to the right instead of compressing the domain. */
-    private static final int MAX_X_VALUES = 500;
+    private static final int DEFAULT_MAX_X_VALUES = 500;
 
     /** These parallel arrays define the piecewise function map. */
     protected List<Double> xValues;
     protected List<Double> yValues;
+
+    private int maxXValues = DEFAULT_MAX_X_VALUES;
 
     /**
      * Constructor.
@@ -32,7 +34,7 @@ public class PopulationFunction implements Function {
 
     public void addValue(double x, double y) {
 
-        if (xValues.size() > MAX_X_VALUES) {
+        if (xValues.size() > maxXValues) {
             xValues.remove(0);
             yValues.remove(0);
         }
@@ -44,6 +46,10 @@ public class PopulationFunction implements Function {
         for (int i=0; i < len; i++) {
             xValues.set(i, (double)i/(len-1));
         }
+    }
+
+    public void setMaxXValues(int max) {
+        maxXValues = max;
     }
 
     /** X axis domain */

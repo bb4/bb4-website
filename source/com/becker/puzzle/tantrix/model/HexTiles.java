@@ -15,7 +15,6 @@ import static com.becker.puzzle.tantrix.model.PathColor.*;
  */
 public class HexTiles extends HexTileList {
 
-
     public HexTiles()  {
         super();
         byte i = 1;

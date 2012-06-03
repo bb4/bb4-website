@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.puzzle.tantrix.solver.path;
 
+import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
 import com.becker.optimization.parameter.ParameterArray;
@@ -8,6 +9,8 @@ import com.becker.optimization.parameter.PermutedParameterArray;
 import com.becker.puzzle.tantrix.model.*;
 import com.becker.puzzle.tantrix.solver.path.permuting.PathPermuter;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -54,10 +57,30 @@ public class TantrixPath extends PermutedParameterArray {
         this(new Pathifier(primaryColor).reorder(tantrix), primaryColor);
     }
 
+    /**
+     * Creates a random path given a board state.
+     * @param board
+     */
+    public TantrixPath(TantrixBoard board) {
+
+        TantrixBoard myBoard = new TantrixBoard(board.getAllTiles());
+        RandomPathGenerator gen = new RandomPathGenerator(myBoard);
+        TantrixPath path = gen.generateRandomPath();
+        this.tiles_ = path.tiles_;
+        this.primaryPathColor_ = board.getPrimaryColor();
+    }
+
+    public TilePlacement getFirst() {
+        return tiles_.getFirst();
+    }
+
+    public TilePlacement getLast() {
+        return tiles_.getLast();
+    }
 
     @Override
     public int getSamplePopulationSize()  {
-        return 3 * size();
+        return size() * size();
     }
 
     /**
@@ -78,19 +101,6 @@ public class TantrixPath extends PermutedParameterArray {
             lastTile = currentTile;
         }
         return true;
-    }
-
-    /**
-     * Creates a random path given a board state.
-     * @param board
-     */
-    public TantrixPath(TantrixBoard board) {
-
-        TantrixBoard myBoard = new TantrixBoard(board.getAllTiles());
-        RandomPathGenerator gen = new RandomPathGenerator(myBoard);
-        TantrixPath path = gen.generateRandomPath();
-        this.tiles_ = path.tiles_;
-        this.primaryPathColor_ = board.getPrimaryColor();
     }
 
     @Override
@@ -142,9 +152,14 @@ public class TantrixPath extends PermutedParameterArray {
     @Override
     public PermutedParameterArray getRandomNeighbor(double radius) {
 
-        List<TantrixPath> pathPermutations = findPermutedPaths();
-        assert (!pathPermutations.isEmpty()) : "Could not find any permutations of " + this;
-        return selectBestPath(pathPermutations);
+        int count = 0;
+        List<TantrixPath> pathPermutations;
+        do {
+            pathPermutations = findPermutedPaths(radius);
+        } while (pathPermutations.isEmpty() && count++ < 5);
+
+        assert (!pathPermutations.isEmpty()) : "Could not find any permutations of " + this + "\n count=" + count;
+        return selectPath(pathPermutations);
     }
 
       /**
@@ -208,14 +223,45 @@ public class TantrixPath extends PermutedParameterArray {
 
     /**
      * try the seven cases and take the one that works best
+     * @param radius the larger the radius the wider the variance of the random paths returned.
      * @return 7 permuted path cases.
      */
-    private List<TantrixPath> findPermutedPaths() {
+    private List<TantrixPath> findPermutedPaths(double radius) {
 
+        List<TantrixPath> permutedPaths = new ArrayList<TantrixPath>();
         PathPermuter permuter = new PathPermuter(this);
+        int numTiles = tiles_.size();
 
-        int pivotIndex = 1 + MathUtil.RANDOM.nextInt(tiles_.size()-2);
-        return permuter.findPermutedPaths(pivotIndex);
+        if (radius >= 0.4) {
+            for (int i = 1; i < numTiles - 1; i++) {
+                permutedPaths.addAll(permuter.findPermutedPaths(i, i));
+            }
+        }
+        else if (radius > 0.00) {
+            // n^2 * 7 permuted paths will be added.
+            for (int pivot1 = 1; pivot1 < numTiles-1; pivot1++) {
+                for (int pivot2 = pivot1; pivot2 < numTiles-1; pivot2++) {
+                    permutedPaths.addAll(permuter.findPermutedPaths(pivot1, pivot2));
+                }
+            }
+        }
+        /*
+        else if (radius > 0.04) {
+            int pivotIndex1 = 1 + MathUtil.RANDOM.nextInt(tiles_.size()-2);
+            int pivotIndex2 = 1 + MathUtil.RANDOM.nextInt(tiles_.size()-2);
+            return permuter.findPermutedPaths(pivotIndex1, pivotIndex2);
+        }
+        else if (radius > 0) {//0.01) {
+            int halfTiles = tiles_.size()/2;
+            int proportion = (int)Math.ceil(5.0 * radius * (halfTiles));
+            int pivotIndex1 = 1 + MathUtil.RANDOM.nextInt(proportion);
+            int pivotIndex2 = tiles_.size() - 2 - MathUtil.RANDOM.nextInt(proportion);
+            //System.out.println("radius="+radius+" numTiles=" + tiles_.size() + " pivotIndex1=" + pivotIndex1 + " pivotIndex2=" + pivotIndex2);
+            return permuter.findPermutedPaths(pivotIndex1, pivotIndex2);
+        } */
+
+        // if radius very small, swap non-fitting tiles of the same shape?
+        return permutedPaths;
     }
 
     /**
@@ -235,6 +281,36 @@ public class TantrixPath extends PermutedParameterArray {
             }
         }
         return bestPath;
+    }
+
+    /**
+     * Skew toward selecting the best, but don't always select the best because then we
+     * might always return the same random neighbor.
+     * @param paths list of paths to evaluate.
+     * @return the path with the best score. In other words the path which is closest to a valid solution.
+     */
+    private TantrixPath selectPath(List<TantrixPath> paths) {
+
+        double totalScore = 0;
+        List<Double> scores = new ArrayList<Double>(paths.size() + 1);
+
+        for (TantrixPath path : paths) {
+            double score = evaluator_.evaluateFitness(path);
+            score *= score;
+            totalScore += score;
+            scores.add(score);
+        }
+        scores.add(10000.0);
+
+        double r = MathUtil.RANDOM.nextDouble() * totalScore;
+
+        double total = 0;
+        int ct = 0;
+        do {
+           total += scores.get(ct++);
+        } while (r > total);
+
+        return paths.get(ct-1);
     }
 
     @Override

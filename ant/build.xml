@@ -274,6 +274,14 @@
     </antcall>
   </target>
 
+  <target name="executeVerhulst" description="Run the Verhulst dynamics simulator">
+      <antcall target="executeProgram">
+          <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+          <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+          <param name="args" value="com.becker.simulation.verhulst.VerhulstSimulator"/>
+      </antcall>
+  </target>
+
   <target name="executeHabitat" description="Run the Habitat simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>

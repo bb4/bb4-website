@@ -115,7 +115,6 @@ public class GeneticSearchSolver extends TantrixSolver<TantrixBoard, TilePlaceme
         // update our current best guess at the solution.
         TantrixPath path = (TantrixPath)params;
         solution_ = new TantrixBoard(path.getTilePlacements(), path.getPrimaryPathColor());
-        System.out.println("refreshing******************");
         puzzlePanel_.refresh(solution_, numTries_++);
     }
 }

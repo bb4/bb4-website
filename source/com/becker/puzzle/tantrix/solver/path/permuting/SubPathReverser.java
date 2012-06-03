@@ -17,8 +17,8 @@ import java.util.Map;
  */
 public class SubPathReverser extends SubPathMutator {
 
-    public SubPathReverser(TilePlacement pivotTile, PathColor primaryColor) {
-        super(pivotTile, primaryColor);
+    public SubPathReverser(PathColor primaryColor) {
+        super(primaryColor);
     }
 
     /**
@@ -29,12 +29,12 @@ public class SubPathReverser extends SubPathMutator {
      *   the same point on the pivot tile.
      */
      @Override
-     public TantrixPath mutate(TantrixPath subPath) {
+     public TantrixPath mutate(TilePlacement pivotTile, TantrixPath subPath) {
 
          TilePlacementList tiles = new TilePlacementList();
          TilePlacementList subPathTiles = subPath.getTilePlacements();
          TilePlacement lastTile = subPathTiles.getLast();
-         int outgoingDirection = findDirectionAwayFromLast(subPathTiles, lastTile);
+         int outgoingDirection = findDirectionAwayFromLast(subPathTiles, lastTile, pivotTile);
 
          Location newLocation = subPathTiles.getFirst().getLocation();
          int startDir = 0;
@@ -71,7 +71,8 @@ public class SubPathReverser extends SubPathMutator {
      * @param lastTile the last tile in the path
      * @return the direction leading away from the tile right before it in the path.
      */
-    private int findDirectionAwayFromLast(TilePlacementList subPathTiles, TilePlacement lastTile) {
+    private int findDirectionAwayFromLast(TilePlacementList subPathTiles,
+                                          TilePlacement lastTile, TilePlacement pivotTile) {
         Map<Integer, Location> outgoing = lastTile.getOutgoingPathLocations(primaryColor);
 
         int directionToPrev = (subPathTiles.size() > 1) ?

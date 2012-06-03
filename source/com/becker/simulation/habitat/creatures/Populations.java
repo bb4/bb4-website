@@ -19,14 +19,14 @@ import java.util.Map;
  *
  * @author Barry Becker
  */
-public class Populations extends ArrayList<Population> {
+public abstract class Populations extends ArrayList<Population> {
 
-    long dayCount = 0;
+    private long dayCount = 0;
 
     /** associate population with function*/
-    Map<Population, PopulationFunction> functionMap;
+    private Map<Population, PopulationFunction> functionMap;
 
-    HabitatGrid grid;
+    private HabitatGrid grid;
 
     /**
      * Constructor
@@ -41,14 +41,12 @@ public class Populations extends ArrayList<Population> {
         grid = new HabitatGrid(20, 15);
 
         this.clear();
-        this.add(Population.createPopulation(CreatureType.GRASS, 40));
-        this.add(Population.createPopulation(CreatureType.COW, 10));
-        this.add(Population.createPopulation(CreatureType.RAT, 15));
-        this.add(Population.createPopulation(CreatureType.CAT, 9));
-        this.add(Population.createPopulation(CreatureType.LION, 4));
+        addPopulations();
 
         updateGridCellCounts();
     }
+
+    protected abstract void addPopulations();
 
     public void nextDay() {
         for (Population pop : this) {
