@@ -15,8 +15,8 @@ import java.util.Set;
  */
 public class SubPathSwapper extends SubPathMutator {
 
-    public SubPathSwapper(TilePlacement pivotTile, PathColor primaryColor) {
-        super(pivotTile, primaryColor);
+    public SubPathSwapper(PathColor primaryColor) {
+        super(primaryColor);
     }
 
     /**
@@ -28,12 +28,12 @@ public class SubPathSwapper extends SubPathMutator {
      *   the a different point the pivot tile. There is only one other valid point that it can connect to.
      */
     @Override
-    public TantrixPath mutate(TantrixPath subPath) {
+    public TantrixPath mutate(TilePlacement pivotTile, TantrixPath subPath) {
         TilePlacementList tiles = new TilePlacementList();
         TilePlacementList subPathTiles = subPath.getTilePlacements();
         TilePlacement firstTile = subPathTiles.get(0);
         Location firstTileLocation = firstTile.getLocation();
-        int numRotations = findRotationsToSwapLocation(firstTileLocation);
+        int numRotations = findRotationsToSwapLocation(firstTileLocation, pivotTile);
         int directionToPivot = findOutgoingDirection(firstTile, pivotTile.getLocation());
 
         Location newLocation = HexUtil.getNeighborLocation(pivotTile.getLocation(), numRotations);
@@ -67,10 +67,9 @@ public class SubPathSwapper extends SubPathMutator {
 
     /**
      * There are two outgoing paths from the pivot tile. The firstTileLocation is at one of them. We want the other one.
-     * @param firstTileLocation
      * @return the number of rotations to get to the swap location.
      */
-    private int findRotationsToSwapLocation(Location firstTileLocation) {
+    private int findRotationsToSwapLocation(Location firstTileLocation, TilePlacement pivotTile) {
         Map<Integer, Location> outgoingPathLocations = pivotTile.getOutgoingPathLocations(primaryColor);
         Set<Integer> keys = outgoingPathLocations.keySet();
         for (int key : keys) {

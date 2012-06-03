@@ -18,8 +18,8 @@ public class SubPathReverserTest extends SubPathMutatorBase {
 
 
     @Override
-    protected SubPathMutator createMutator(TilePlacement placement, PathColor primaryColor) {
-        return new SubPathReverser(placement, primaryColor);
+    protected SubPathMutator createMutator(PathColor primaryColor) {
+        return new SubPathReverser(primaryColor);
     }
 
 

@@ -19,7 +19,7 @@ public abstract class SubPathMutatorBase extends TestCase {
     protected SubPathMutator mutator;
 
     /** creates the mutator to test */
-    protected abstract SubPathMutator createMutator(TilePlacement pivot, PathColor primaryColor);
+    protected abstract SubPathMutator createMutator(PathColor primaryColor);
 
     public void testMutating1TilePath() {
 
@@ -33,9 +33,9 @@ public abstract class SubPathMutatorBase extends TestCase {
         TilePlacementList tileList = new TilePlacementList();
         tileList.add(firstTilePlacement);
         TantrixPath path = new TantrixPath(tileList, PathColor.YELLOW);
-        mutator = createMutator(pivotTilePlacement, PathColor.YELLOW);
+        mutator = createMutator(PathColor.YELLOW);
 
-        TantrixPath resultPath = mutator.mutate(path);
+        TantrixPath resultPath = mutator.mutate(pivotTilePlacement, path);
 
         verifyMutated1TilePath(resultPath);
     }
@@ -55,9 +55,9 @@ public abstract class SubPathMutatorBase extends TestCase {
         tileList.add(firstTilePlacement);
         tileList.add(secondTilePlacement);
         TantrixPath path = new TantrixPath(tileList, PathColor.YELLOW);
-        mutator = createMutator(pivotTilePlacement, PathColor.YELLOW);
+        mutator = createMutator(PathColor.YELLOW);
 
-        TantrixPath resultPath = mutator.mutate(path);
+        TantrixPath resultPath = mutator.mutate(pivotTilePlacement, path);
         verifyMutated2TilePath(resultPath);
     }
 
@@ -80,9 +80,9 @@ public abstract class SubPathMutatorBase extends TestCase {
         tileList.add(secondTilePlacement);
         tileList.add(thirdTilePlacement);
         TantrixPath path = new TantrixPath(tileList, PathColor.RED);
-        mutator = createMutator(pivotTilePlacement, PathColor.RED);
+        mutator = createMutator(PathColor.RED);
 
-        TantrixPath resultPath = mutator.mutate(path);
+        TantrixPath resultPath = mutator.mutate(pivotTilePlacement, path);
         verifyMutated3TilePath(resultPath);
     }
 
@@ -105,9 +105,9 @@ public abstract class SubPathMutatorBase extends TestCase {
         tileList.add(secondTilePlacement);
         tileList.add(thirdTilePlacement);
         TantrixPath path = new TantrixPath(tileList, PathColor.RED);
-        mutator = createMutator(pivotTilePlacement, PathColor.RED);
+        mutator = createMutator(PathColor.RED);
 
-        TantrixPath resultPath = mutator.mutate(path);
+        TantrixPath resultPath = mutator.mutate(pivotTilePlacement, path);
         verifyMutated3aTilePath(resultPath);
     }
 

@@ -1,16 +1,11 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.becker.simulation.predprey;
+package com.becker.simulation.verhulst;
 
 import com.becker.common.math.function.Function;
 import com.becker.common.math.function.PopulationFunction;
 import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.graphing.GraphOptionsDialog;
-import com.becker.simulation.predprey.creatures.Foxes;
-import com.becker.simulation.predprey.creatures.Lions;
-import com.becker.simulation.predprey.creatures.Population;
-import com.becker.simulation.predprey.creatures.Rabbits;
-import com.becker.simulation.predprey.options.DynamicOptions;
 import com.becker.ui.animation.AnimationFrame;
 import com.becker.ui.renderers.MultipleFunctionRenderer;
 
@@ -25,32 +20,24 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class PredPreySimulator extends Simulator {
+public class VerhulstSimulator extends Simulator {
 
     MultipleFunctionRenderer graph_;
     long iteration;
 
     Rabbits rabbits;
-    Foxes foxes;
-
     PopulationFunction rabbitFunction;
-    PopulationFunction foxFunction;
-
     DynamicOptions options_;
 
     /** Constructor */
-    public PredPreySimulator() {
-        super("Predator Prey Simulation");
-
-        foxes = new Foxes();
+    public VerhulstSimulator() {
+        super("Verhulst Simulation");
         rabbits = new Rabbits();
-
         initGraph();
     }
 
     public List<Population> getCreatures() {
         List<Population> creatures = new ArrayList<Population>();
-        creatures.add(foxes);
         creatures.add(rabbits);
         return creatures;
     }
@@ -70,19 +57,13 @@ public class PredPreySimulator extends Simulator {
     @Override
     public double timeStep() {
         iteration++;
+        double newPop =
+            rabbits.getPopulation() * ( (1.0 + rabbits.birthRate) - rabbits.birthRate * rabbits.getPopulation());
 
-        foxes.setPopulation( foxes.getPopulation() * foxes.birthRate
-                           - foxes.getPopulation() * foxes.deathRate / rabbits.getPopulation());
-        //                   - lions.getPopulation() * foxes.deathRate * foxes.getPopulation());
-        rabbits.setPopulation( rabbits.getPopulation() * rabbits.birthRate
-                             - foxes.getPopulation() * rabbits.deathRate * rabbits.getPopulation());
-        //                    - lions.getPopulation() * rabbits.deathRate * rabbits.getPopulation());
+        //System.out.println("pop="+ newPop + " rate="+ rabbits.birthRate);
+        rabbits.setPopulation(newPop);
 
         rabbitFunction.addValue(iteration, rabbits.getPopulation());
-        foxFunction.addValue(iteration, foxes.getPopulation());
-
-        options_.update();
-
         return timeStep_;
     }
 
@@ -90,24 +71,17 @@ public class PredPreySimulator extends Simulator {
         iteration = 0;
 
         rabbits.reset();
-        foxes.reset();
-
         rabbitFunction = new PopulationFunction(Rabbits.INITIAL_NUM_RABBITS);
-        foxFunction = new PopulationFunction(Foxes.INITIAL_NUM_FOXES);
+        rabbitFunction.setMaxXValues(200);
 
         List<Function> functions = new LinkedList<Function>();
         functions.add(rabbitFunction);
-        functions.add(foxFunction);
-        //functions.add(lionFunction);
 
         List<Color> lineColors = new LinkedList<Color>();
         lineColors.add(Rabbits.COLOR);
-        lineColors.add(Foxes.COLOR);
-        //lineColors.add(Lions.COLOR);
 
         graph_ = new MultipleFunctionRenderer(functions, lineColors);
     }
-
 
     @Override
     public JPanel createDynamicControls() {
@@ -115,10 +89,9 @@ public class PredPreySimulator extends Simulator {
         return options_;
     }
 
-
     @Override
     protected SimulatorOptionsDialog createOptionsDialog() {
-         return new GraphOptionsDialog( frame_, this );
+        return new GraphOptionsDialog( frame_, this );
     }
 
     @Override
@@ -128,7 +101,7 @@ public class PredPreySimulator extends Simulator {
     }
 
     public static void main( String[] args ) {
-        final PredPreySimulator sim = new PredPreySimulator();
+        final VerhulstSimulator sim = new VerhulstSimulator();
 
         sim.setPaused(true);
         new AnimationFrame( sim );

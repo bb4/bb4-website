@@ -14,7 +14,7 @@ public class TestLifeAnalyzer extends GoTestCase {
 
     private static final String PREFIX = "board/analysis/group/life/";
 
-    // test for unconditional habitat
+    // test for unconditional hab
     public void testUnconditionalLife1() {
         verifyUnconditionalLife("unconditionalLife1", true, 12, true);
     }

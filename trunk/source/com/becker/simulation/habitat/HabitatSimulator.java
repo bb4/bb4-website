@@ -7,6 +7,8 @@ import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.graphing.GraphOptionsDialog;
 import com.becker.simulation.habitat.creatures.Populations;
+import com.becker.simulation.habitat.creatures.SerengetiPopulations;
+import com.becker.simulation.habitat.creatures.SinglePopulation;
 import com.becker.simulation.habitat.options.DynamicOptions;
 import com.becker.ui.animation.AnimationFrame;
 import com.becker.ui.renderers.MultipleFunctionRenderer;
@@ -21,7 +23,7 @@ import java.awt.*;
  */
 public class HabitatSimulator extends Simulator {
 
-    /** Number of times greater area to allocate to the habitat compared to the graph. */
+    /** Number of times greater area to allocate to the hab compared to the graph. */
     private static final int HABITAT_TO_GRAPH_RATIO = 3;
 
     private HabitatRenderer habitatRenderer_;
@@ -35,7 +37,7 @@ public class HabitatSimulator extends Simulator {
 
         super("Habitat Simulation");
         setBackground(Color.WHITE);
-        populations = new Populations();
+        populations = new SinglePopulation();
         initialize();
     }
 
@@ -76,7 +78,7 @@ public class HabitatSimulator extends Simulator {
     }
 
     /**
-     * Draw the population graph under the habitat.
+     * Draw the population graph under the hab.
      * @param g
      */
     @Override

@@ -10,7 +10,7 @@ import com.becker.optimization.parameter.ParameterArray;
  *   z = 1 - (1 - p1)^2 - (2 - p2)^2
  *
  * Normally we have no idea what the real function is that we are trying to optimize.
- * Nor is a real habitat function likely to be as well behaved as this one is.
+ * Nor is a real hab function likely to be as well behaved as this one is.
  * This function is very smooth (actually infinitely differentiable) - which is a
  * feature that makes hill-climbing algorithms work very well on.
  * But for this simple case I intentionally use a simple polynomial function with only

@@ -63,7 +63,6 @@ public class MultipleFunctionRenderer extends AbstractFunctionRenderer {
     }
 
 
-
     @Override
     protected Range getRange() {
 

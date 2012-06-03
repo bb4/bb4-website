@@ -1,13 +1,12 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.strategy;
 
+import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.format.FormatUtil;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Genetic Algorithm (evolutionary) optimization strategy.
@@ -21,14 +20,15 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
 
     // the amount to decimate the parent population by on each iteration
     private static final double CULL_FACTOR = 0.9;
-    private static final double NBR_RADIUS = 0.03;
+    private static final double NBR_RADIUS = 0.04;
     private static final double NBR_RADIUS_SHRINK_FACTOR = 0.9;
+    private static final double NBR_RADIUS_EXPAND_FACTOR = 1.02;
     private static final double NBR_RADIUS_SOFTENER = 5.0;
     private static final double INITIAL_RADIUS = 1.5;
 
 
     /** this prevents us from running forever.  */
-    private static final int MAX_ITERATIONS = 100;
+    private static final int MAX_ITERATIONS = 200;
 
     /** stop when the avg population score does not improve by better than this  */
     private static final double DEFAULT_IMPROVEMENT_EPS = 0.000000000001;
@@ -89,8 +89,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
 
          for (int i = 1; i < populationSize_; i++) {
              ParameterArray nbr = params.getRandomNeighbor(INITIAL_RADIUS);
-             if (!nbr.equals(params) && !population.contains(nbr)) {
-                 notifyOfChange(nbr);
+             if (!population.contains(nbr)) {
                  population.add(nbr);
              }
          }
@@ -121,8 +120,9 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             // EVALUATE POPULATION
             currentBest = evaluatePopulation(population, recentBest);
 
-            deltaFitness = computeFitnessDelta(params, lastBest, currentBest, ct);
+            deltaFitness = computeFitnessDelta(params, recentBest, currentBest, ct);
             System.out.println("delta fitness =" + deltaFitness);
+            nbrRadius_ *= deltaFitness > 0 ? NBR_RADIUS_SHRINK_FACTOR : NBR_RADIUS_EXPAND_FACTOR;
             recentBest = currentBest.copy();
 
             notifyOfChange(currentBest);
@@ -147,7 +147,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
     }
 
     /**
-     * Computes the fitness delta, but also log and and asserts/
+     * Computes the fitness delta, but also logs and asserts that it is not 0.
      * @return  the different in fitness between current best and last best.
      */
     private double computeFitnessDelta(ParameterArray params, ParameterArray lastBest,
@@ -181,9 +181,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
         // @@ add option to do cross-over variations too.
         int keepSize = Math.max(1,  (int)(populationSize_*(1.0 - CULL_FACTOR)));
 
-        //printPopulation(population, 10);
         int size = population.size();
-        System.out.println("pop size = " + size);
         for (int j = size-1; j >= keepSize; j--) {
             population.remove( j );
         }
@@ -213,10 +211,16 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             // add a permutation of one of the keepers
             // we multiply the radius by m because we want the worse ones to have
             // higher variability.
-            population.add(p.getRandomNeighbor((m + NBR_RADIUS_SOFTENER)/NBR_RADIUS_SOFTENER * nbrRadius_));
-            k++;
+            double r = (m + NBR_RADIUS_SOFTENER)/NBR_RADIUS_SOFTENER * nbrRadius_;
+            //System.out.println("r="+r);
+            ParameterArray nbr = p.getRandomNeighbor(r);
+            if (!population.contains(nbr)) {
+                population.add(nbr);
+                notifyOfChange(p);
+                k++;
+            }
         }
-        nbrRadius_ *= NBR_RADIUS_SHRINK_FACTOR;
+        //printPopulation(population, 20);
     }
 
 
@@ -226,25 +230,27 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
      * Note: this method assigns a fitness value to each member of the population.
      *
      * @param population the population to evaluate
-     * @param params the best solution from the previous iteration
+     * @param previousBest the best solution from the previous iteration
      * @return the new best solution.
      */
-    protected ParameterArray evaluatePopulation(List<ParameterArray> population, ParameterArray params) {
-        ParameterArray bestFitness = params;
+    protected ParameterArray evaluatePopulation(List<ParameterArray> population, ParameterArray previousBest) {
+        ParameterArray bestFitness = previousBest;
 
         for (ParameterArray p : population) {
 
             double fitness;
             if (optimizee_.evaluateByComparison()) {
-                fitness = optimizee_.compareFitness(p, params);
+                fitness = optimizee_.compareFitness(p, previousBest);
             } else {
                 fitness = optimizee_.evaluateFitness(p);
             }
-            notifyOfChange(p);
 
             p.setFitness(fitness);
             if (fitness > bestFitness.getFitness()) {
                 bestFitness = p;
+                // show it if better than what we had before
+                notifyOfChange(p);
+                ThreadUtil.sleep(500);
             }
         }
         return bestFitness.copy();

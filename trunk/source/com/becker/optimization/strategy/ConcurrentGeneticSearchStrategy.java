@@ -36,12 +36,12 @@ public class ConcurrentGeneticSearchStrategy extends GeneticSearchStrategy {
      * Create a thread for each evaluation and don't continue until they are all done (countDown latch or gate);
      *
      * @param population the population to evaluate
-     * @param params the best solution from the previous iteration
+     * @param previousBest the best solution from the previous iteration
      * @return the new best solution.
      */
     @Override
-    protected ParameterArray evaluatePopulation(List<ParameterArray> population, ParameterArray params) {
-        ParameterArray bestFitness = params;
+    protected ParameterArray evaluatePopulation(List<ParameterArray> population, ParameterArray previousBest) {
+        ParameterArray bestFitness = previousBest;
 
         Parallelizer<EvaluationWorker> parallelizer =
                 new Parallelizer<EvaluationWorker>();
@@ -49,7 +49,7 @@ public class ConcurrentGeneticSearchStrategy extends GeneticSearchStrategy {
         List<Runnable> workers = new ArrayList<Runnable>(population.size());
 
         for (ParameterArray candidate : population) {
-            workers.add(new EvaluationWorker(candidate, params));
+            workers.add(new EvaluationWorker(candidate, previousBest));
         }
 
         // blocks until all Callables are done running.

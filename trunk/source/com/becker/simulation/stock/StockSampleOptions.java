@@ -3,7 +3,7 @@ package com.becker.simulation.stock;
 
 /**
  * Options for a sample of stocks.
- * Use HabitatOptionsDialog to set them.
+ * Use VerhulstOptionsDialog to set them.
  *
  * @author Barry Becker
  */
@@ -33,5 +33,5 @@ public class StockSampleOptions {
     public double getTheoreticalMaximum() {
         return startingValue * Math.pow(1.0 + percentIncrease, numTimePeriods);
     }
-    
+
 }

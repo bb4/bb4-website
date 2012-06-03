@@ -8,7 +8,7 @@ import com.becker.simulation.habitat.creatures.Populations;
 import java.awt.*;
 
 /**
- * This class draws a the global habitat and all the creatures in it.
+ * This class draws a the global hab and all the creatures in it.
  *
  * @author Barry Becker
  */

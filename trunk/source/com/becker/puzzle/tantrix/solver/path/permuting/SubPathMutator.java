@@ -17,15 +17,12 @@ import java.util.Map;
  */
 public abstract class SubPathMutator {
 
-    protected TilePlacement pivotTile;
     protected PathColor primaryColor;
 
     /**
      * Constructor
-     * @param pivotTile tile to mutate around.
      */
-    public SubPathMutator(TilePlacement pivotTile, PathColor primaryColor) {
-        this.pivotTile = pivotTile;
+    public SubPathMutator(PathColor primaryColor) {
         this.primaryColor = primaryColor;
     }
 
@@ -34,7 +31,7 @@ public abstract class SubPathMutator {
      * @param subPath the subpath to reverse relative to the pivot tile.
      * @return the mutated subpath.
      */
-    public abstract TantrixPath mutate(TantrixPath subPath);
+    public abstract TantrixPath mutate(TilePlacement pivotTile, TantrixPath subPath);
 
 
     protected boolean fits(TilePlacement currentPlacement, TilePlacement previousPlacement) {

@@ -2,9 +2,21 @@
 package com.becker.puzzle.tantrix.solver.path;
 
 
+import com.becker.common.geometry.Box;
+import com.becker.common.geometry.Location;
+import com.becker.game.twoplayer.common.search.transposition.HashKey;
+import com.becker.puzzle.tantrix.model.HexTile;
+import com.becker.puzzle.tantrix.model.HexUtil;
 import com.becker.puzzle.tantrix.model.Tantrix;
+import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.model.verfication.ConsistencyChecker;
 import com.becker.puzzle.tantrix.model.verfication.InnerSpaceDetector;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 
 /**
  * Evaluates the fitness of a tantrix path.
@@ -15,22 +27,25 @@ import com.becker.puzzle.tantrix.model.verfication.InnerSpaceDetector;
 public class PathEvaluator {
 
     /** When reached, the puzzle is solved. */
-    public static final double SOLVED_THRESH = 3.0;
+    public static final double SOLVED_THRESH = 3.5;
 
     /** How close are the endpoints of the primary path from forming a loop. */
-    private static final double LOOP_PROXIMITY_WEIGHT = 0.6;
+    private static final double LOOP_PROXIMITY_WEIGHT = 0.3;
 
     /** Weight to give if we actually have a primary path loop. */
-    private static final double LOOP_WEIGHT = 0.7;
+    private static final double LOOP_WEIGHT = 0.3;
 
     /** Weight to give matching paths (includes secondary paths) */
-    private static final double PATH_MATCH_WEIGHT = 0.3;
+    private static final double PATH_MATCH_WEIGHT = 1.0;
 
     /** We have a loop and all paths match */
-    private static final double CONSISTENT_LOOP_BONUS = 0.3;
+    private static final double CONSISTENT_LOOP_BONUS = 0.6;
 
     /** consistent loop and no inner spaces. */
     private static final double PERFECT_LOOP_BONUS = 2.0;
+
+    /** A measure of compactness. Avoids inner spaces. */
+    private static final double COMPACTNESS = 0.2;
 
 
     /**
@@ -51,6 +66,7 @@ public class PathEvaluator {
         boolean allFit = numFits == numTiles;
         boolean consistentLoop = isLoop && allFit;
         boolean perfectLoop = false;
+        double compactness = determineCompactness(path);
 
         if (consistentLoop) {
             Tantrix tantrix = new Tantrix(path.getTilePlacements());
@@ -63,12 +79,37 @@ public class PathEvaluator {
                 LOOP_PROXIMITY_WEIGHT * (numTiles - distance) / (0.1 + numTiles)
                 + (isLoop ? LOOP_WEIGHT : 0)
                 + (double)numFits / numTiles * PATH_MATCH_WEIGHT
+                + compactness * COMPACTNESS
                 + (consistentLoop ? CONSISTENT_LOOP_BONUS : 0)
                 + (perfectLoop ? PERFECT_LOOP_BONUS : 0);
-        System.out.println("fitness=" + fitness);
+        //System.out.println("fitness=" + fitness);
         assert !Double.isNaN(fitness) :
                 "Invalid fitness  isLoop=" + isLoop + " consistentLoop=" + consistentLoop
                 + " numTiles=" + numTiles + " distance=" + distance;
         return fitness;
+    }
+
+    /**
+     * First dd all the tiles to a hash keyed on location.
+     * Then for every one of the six sides of each tile, add one if the
+     * neighbor is in the hash. Return (num nbrs in hash - 2(numTiles-1))/numTiles
+     * @param path
+     * @return measure of path compactness between 0 and ~1
+     */
+    private double determineCompactness(TantrixPath path) {
+        Set<Location> locationHash = new HashSet<Location>();
+        int numTiles = path.size();
+        for (TilePlacement p : path.getTilePlacements()) {
+            locationHash.add(p.getLocation());
+        }
+        int ct = 0;
+        for (TilePlacement p : path.getTilePlacements()) {
+            for (int i = 0; i < HexTile.NUM_SIDES; i++)   {
+                if (locationHash.contains(HexUtil.getNeighborLocation(p.getLocation(), i))) {
+                    ct++;
+                }
+            }
+        }
+        return (double)(ct - (numTiles-1))/numTiles * 0.5;
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public enum CreatureType {
                                         // size,   mSpeed,  normpeed, gest, starve,  nutr
     GRASS("grass", new Color(40, 255, 20),    2.0,    0.0,      0.0,    11,    42,     1),
-    COW(  "cow",   new Color(70, 60, 100),   15.0,    0.002,    0.0001,  25,    94,    10),
+    WILDEBEEST(  "cow",   new Color(70, 60, 100),   15.0,    0.002,    0.0001,  25,    94,    10),
     RAT(  "rat",   new Color(140, 105, 20),   2.0,    0.005,    0.002,   8,    30,     1),
     CAT(  "cat",   new Color(0, 195, 220),    5.0,    0.01,     0.004,  15,    58,     4),
     LION("lion",   new Color(240, 200, 20),   9.0,    0.02,    0.008,   21,    83,     6);
@@ -42,8 +42,8 @@ public enum CreatureType {
 
     static {
         // eaten by relationship
-        predatorMap_.put(GRASS, Arrays.asList(COW, RAT));
-        predatorMap_.put(COW, Arrays.asList(LION));
+        predatorMap_.put(GRASS, Arrays.asList(WILDEBEEST, RAT));
+        predatorMap_.put(WILDEBEEST, Arrays.asList(LION));
         predatorMap_.put(RAT, Arrays.asList(CAT, LION));
         predatorMap_.put(CAT, Arrays.asList(LION));
         predatorMap_.put(LION, Collections.EMPTY_LIST);

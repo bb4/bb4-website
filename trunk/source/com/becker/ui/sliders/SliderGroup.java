@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 
 /**
@@ -21,7 +22,7 @@ public class SliderGroup extends JPanel implements ChangeListener {
     private SliderProperties[] sliderProps_;
     private JLabel[] labels_;
     private JSlider[] sliders_;
-    
+
     private static final int DEFAULT_MIN = 0;
     private static final int DEFAULT_MAX = 100;
     private static final int DEFAULT_INITIAL = 50;
@@ -74,8 +75,8 @@ public class SliderGroup extends JPanel implements ChangeListener {
         }
         buildUI();
     }
-    
-    /** 
+
+    /**
      * return all the sliders to their initial value.
      */
     public void reset() {
@@ -83,8 +84,8 @@ public class SliderGroup extends JPanel implements ChangeListener {
              int initial = (int) (sliderProps_[i].getInitialValue() * sliderProps_[i].getScale());
             sliders_[i].setValue(initial);
         }
-    } 
-    
+    }
+
     public int getSliderValueAsInt(int sliderIndex) {
         return (int) getSliderValue(sliderIndex);
     }
@@ -92,24 +93,24 @@ public class SliderGroup extends JPanel implements ChangeListener {
     public double getSliderValue(int sliderIndex) {
         return sliderProps_[sliderIndex].getScale() * (double)sliders_[sliderIndex].getValue();
     }
-  
+
     public void setSliderValue(int sliderIndex, double value) {
         double v = (value * sliderProps_[sliderIndex].getScale());
         sliders_[sliderIndex].setValue((int) v);
-        labels_[sliderIndex].setText(sliderProps_[sliderIndex].getName() + v);
+        labels_[sliderIndex].setText(sliderProps_[sliderIndex].getName() + " " + FormatUtil.formatNumber(value));
     }
-    
+
     public void setSliderValue(int sliderIndex, int value) {
         assert(sliderProps_[sliderIndex].getScale() == 1.0) : "you should call setSliderValue(int, double) if you have a slider with real values";
         sliders_[sliderIndex].setValue(value);
-        labels_[sliderIndex].setText(getSliderTitle(sliderIndex, value)); //sliderProps_[sliderIndex].getName() + value);
+        labels_[sliderIndex].setText(getSliderTitle(sliderIndex, value));
     }
 
     public void setSliderMinimum(int sliderIndex, int min) {
          assert(sliderProps_[sliderIndex].getScale() == 1.0) : "you should call setSliderMinimum(int, double) if you have a slider with real values";
         sliders_[sliderIndex].setMinimum(min);
     }
-    
+
     public void setSliderMinimum(int sliderIndex, double min) {
         double mn = (min * sliderProps_[sliderIndex].getScale());
         sliders_[sliderIndex].setMinimum((int) mn);
@@ -161,10 +162,10 @@ public class SliderGroup extends JPanel implements ChangeListener {
             }
         }
         assert slider!=null: "no slider by the name of " + name;
-            
+
         slider.setEnabled(enable);
     }
-    
+
     /**
      * one of the sliders has moved.
      * @param e  change event.
