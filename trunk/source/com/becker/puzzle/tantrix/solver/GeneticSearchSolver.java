@@ -12,6 +12,7 @@ import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.model.TilePlacementList;
 import com.becker.puzzle.tantrix.solver.path.PathEvaluator;
 import com.becker.puzzle.tantrix.solver.path.TantrixPath;
+
 import static com.becker.puzzle.tantrix.solver.path.PathEvaluator.SOLVED_THRESH;
 
 /**

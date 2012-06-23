@@ -29,6 +29,7 @@ public class RandomTilePlacer {
      * For each unplaced tile, find all valid placements given current configuration.
      * Valid placements must extend the primary path but not necessarily match secondary paths.
      * @return List of all valid tile placements for the current tantrix state.
+     *  returns null of no placement is possible.
      */
     public TilePlacement generatePlacement(TantrixBoard board) {
 
@@ -37,11 +38,16 @@ public class RandomTilePlacer {
 
         TilePlacement nextMove = null;
         int i=0;
-        while (nextMove == null)   {
+        while (nextMove == null && i<unplacedTiles.size())   {
             HexTile tile = unplacedTiles.get(i++);
             boolean isLast = unplacedTiles.isEmpty();
             nextMove = findPrimaryPathPlacementForTile(board, tile, isLast);
         }
+        /*
+        if (nextMove == null) {
+            throw new IllegalStateException("We could not find a placement on \n" + board
+                    + "\nusing these unplaced tiles:"  + unplacedTiles + " primColor="+ board.getPrimaryColor());
+        }*/
         return nextMove;
     }
 
@@ -82,16 +88,6 @@ public class RandomTilePlacer {
         TilePlacementList validFits =
                 fitter.getFittingPlacements(tile, nextLocation);
 
-        assert validFits.size() >= 2 :
-                "Tantrix=" + board.getTantrix() + "\nlastPlaced=" + lastPlaced.getLocation()
-                + "\nThere must be two ways for the primary path to fit, but we had " + validFits.size()
-                + " ways to  place " + tile + " at " + lastPlaced.getLocation()
-                        + "\nThese were all validFits=" + validFits;
-
-        if (!isLast) {
-            cullPlacementsThatRetouch(board, lastPlaced, validFits);
-        }
-
         if (validFits.isEmpty())  {
             return null;
         }
@@ -102,7 +98,7 @@ public class RandomTilePlacer {
     /**
      * Avoid having the random extension to the path loop back and retouch the tantrix.
      * We remove those placements from consideration (unless it is the last one).
-     */
+     *
     private void cullPlacementsThatRetouch(TantrixBoard board, TilePlacement lastPlaced, TilePlacementList validFits) {
         Iterator<TilePlacement> iter = validFits.iterator();
         while (iter.hasNext()) {
@@ -120,5 +116,5 @@ public class RandomTilePlacer {
                 iter.remove();
             }
         }
-    }
+    } */
 }

@@ -23,7 +23,7 @@ public abstract class AbstractFitter {
 
     /**
      * The number of placements can be 0, 1, 2, or 3 (rare).
-     * If PrimaryPathFitter, can never have just one, because there are two outputs for every path on a tile.
+     * PrimaryPathFitter can never have just one, because there are two outputs for every path on a tile.
      *
      * @param tile the tile to place.
      * @param loc the location to try and place it at.

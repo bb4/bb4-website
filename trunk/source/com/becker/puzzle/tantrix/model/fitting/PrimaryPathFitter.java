@@ -35,27 +35,33 @@ public class PrimaryPathFitter extends AbstractFitter {
     }
 
     /**
-     * The tile fits if the primary path fits.
+     * The tile fits if the primary path fits against all neighbors.
+     * All adjacent primary paths must match an edge on the tile being fit.
      * Check all the neighbors (that exist) and verify that if that direction is a primary path output, then it matches.
+     * If none of the neighbor edges has a primary path, then rotations where non-primary path edges touch those neighbors
+     * are allowed as fits.
      * @param placement the tile to check for a valid fit.
      * @return true of the tile fits
      */
     @Override
     public boolean isFit(TilePlacement placement) {
 
+        boolean fits = true;
         for (byte i = 0; i < NUM_SIDES; i++) {
             TilePlacement nbr = tantrix.getNeighbor(placement, i);
 
             if (nbr != null) {
                 PathColor pathColor = placement.getPathColor(i);
+                PathColor nbrColor = nbr.getPathColor(i+3);
 
-                if (pathColor == primaryColor && (pathColor == nbr.getPathColor(i+3))) {
-                    return true;
+                //System.out.println("DIR="+i +" pathColor="+ pathColor + " nbrColor=" +nbrColor + "   ppcol="+ primaryColor);
+                if ((pathColor == primaryColor || nbrColor == primaryColor) && pathColor != nbrColor) {
+                    fits = false;
                 }
             }
         }
 
-        return false;
+        return fits;
     }
 
     /**
@@ -93,4 +99,11 @@ public class PrimaryPathFitter extends AbstractFitter {
 
         return numFits;
     }
+
+    /** used only for debugging */
+    public Tantrix getTantrix() {
+        return tantrix;
+    }
+
+
 }

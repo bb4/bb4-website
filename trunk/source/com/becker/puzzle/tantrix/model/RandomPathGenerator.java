@@ -31,6 +31,9 @@ public class RandomPathGenerator {
 
         while (!currentBoard.getUnplacedTiles().isEmpty()) {
             TilePlacement placement = tilePlacer.generatePlacement(currentBoard);
+            //if (placement == null) {
+            //    currentBoard.undoLastPlaced();
+            //}
             currentBoard = currentBoard.placeTile(placement);
         }
         return new TantrixPath(currentBoard.getTantrix(), initialBoard.getPrimaryColor());

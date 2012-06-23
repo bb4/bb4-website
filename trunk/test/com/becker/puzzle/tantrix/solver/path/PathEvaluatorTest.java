@@ -19,20 +19,20 @@ public class PathEvaluatorTest extends TestCase {
 
 
     public void testEvaluateLoopPathWith3Tiles() {
-        verifyFitness(place3SolvedTiles(), 4.3903);
+        verifyFitness(place3SolvedTiles(), 4.257);
     }
 
     public void testEvaluateNonLoopPathWith2Tiles_1_2() {
-        verifyFitness(place2of3Tiles_OneThenTwo(), 1.0857);
+        verifyFitness(place2of3Tiles_OneThenTwo(), 1.2857);
     }
 
     public void testEvaluateNonLoopPathWith2Tiles_1_3() {
-        verifyFitness(place2of3Tiles_OneThenThree(), 1.0857);
+        verifyFitness(place2of3Tiles_OneThenThree(), 1.2857);
     }
 
     // high score because all paths (even secondary) match
     public void testEvaluateNonLoopPathWith3Tiles() {
-        verifyFitness(place3UnsolvedTiles(), 0.9935);
+        verifyFitness(place3UnsolvedTiles(), 1.26025);
     }
 
     public void testEvaluateNonLoopPathWith1Tile() {

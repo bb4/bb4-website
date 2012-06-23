@@ -20,7 +20,7 @@ import java.util.Set;
  *
  * @author Barry Becker
  */
-public class PathPermuter extends PermutedParameterArray {
+public class PathPivotPermuter extends PermutedParameterArray {
 
     private TantrixPath path_;
 
@@ -33,7 +33,7 @@ public class PathPermuter extends PermutedParameterArray {
      *  but it is not required that it be a loop, or that any of the secondary colors match.
      * @param path ordered path tiles.
      */
-    public PathPermuter(TantrixPath path) {
+    public PathPivotPermuter(TantrixPath path) {
         path_ = path;
     }
 

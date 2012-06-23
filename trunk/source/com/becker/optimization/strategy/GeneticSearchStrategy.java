@@ -24,11 +24,11 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
     private static final double NBR_RADIUS_SHRINK_FACTOR = 0.9;
     private static final double NBR_RADIUS_EXPAND_FACTOR = 1.02;
     private static final double NBR_RADIUS_SOFTENER = 5.0;
-    private static final double INITIAL_RADIUS = 1.5;
+    private static final double INITIAL_RADIUS = 1.0;
 
 
     /** this prevents us from running forever.  */
-    private static final int MAX_ITERATIONS = 200;
+    private static final int MAX_ITERATIONS = 100;
 
     /** stop when the avg population score does not improve by better than this  */
     private static final double DEFAULT_IMPROVEMENT_EPS = 0.000000000001;
@@ -212,10 +212,11 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             // we multiply the radius by m because we want the worse ones to have
             // higher variability.
             double r = (m + NBR_RADIUS_SOFTENER)/NBR_RADIUS_SOFTENER * nbrRadius_;
-            //System.out.println("r="+r);
+            System.out.println("r="+r);
             ParameterArray nbr = p.getRandomNeighbor(r);
             if (!population.contains(nbr)) {
                 population.add(nbr);
+                System.out.println("adding p=" + p);
                 notifyOfChange(p);
                 k++;
             }
@@ -244,7 +245,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             } else {
                 fitness = optimizee_.evaluateFitness(p);
             }
-
+            System.out.println("f="+fitness);
             p.setFitness(fitness);
             if (fitness > bestFitness.getFitness()) {
                 bestFitness = p;

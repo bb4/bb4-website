@@ -22,7 +22,6 @@ public class PathifierTest extends TestCase {
         pathifier = new Pathifier(TILES.getTile(1).getPrimaryColor());
     }
 
-
     public void test2TilePathConstruction() {
 
         TilePlacement firstTilePlacement =
