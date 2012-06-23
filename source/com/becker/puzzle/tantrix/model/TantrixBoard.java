@@ -50,9 +50,7 @@ public class TantrixBoard {
     public TantrixBoard(HexTileList initialTiles) {
 
         HexTileList tileList = (HexTileList) initialTiles.clone();
-
         numTiles = (byte) tileList.size();
-
         primaryColor = new HexTiles().getTile(numTiles).getPrimaryColor();
         HexTile tile = tileList.remove(0);
         unplacedTiles = (HexTileList) tileList.clone();

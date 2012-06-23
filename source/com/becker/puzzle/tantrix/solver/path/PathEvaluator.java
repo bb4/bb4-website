@@ -2,9 +2,7 @@
 package com.becker.puzzle.tantrix.solver.path;
 
 
-import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
-import com.becker.game.twoplayer.common.search.transposition.HashKey;
 import com.becker.puzzle.tantrix.model.HexTile;
 import com.becker.puzzle.tantrix.model.HexUtil;
 import com.becker.puzzle.tantrix.model.Tantrix;
@@ -12,9 +10,7 @@ import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.model.verfication.ConsistencyChecker;
 import com.becker.puzzle.tantrix.model.verfication.InnerSpaceDetector;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -27,7 +23,7 @@ import java.util.Set;
 public class PathEvaluator {
 
     /** When reached, the puzzle is solved. */
-    public static final double SOLVED_THRESH = 3.5;
+    public static final double SOLVED_THRESH = 3.1;
 
     /** How close are the endpoints of the primary path from forming a loop. */
     private static final double LOOP_PROXIMITY_WEIGHT = 0.3;
@@ -110,6 +106,6 @@ public class PathEvaluator {
                 }
             }
         }
-        return (double)(ct - (numTiles-1))/numTiles * 0.5;
+        return (ct - 2.0 * (numTiles-1))/numTiles * 0.5;
     }
 }

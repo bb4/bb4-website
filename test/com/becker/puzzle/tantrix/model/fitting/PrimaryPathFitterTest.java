@@ -24,12 +24,12 @@ public class PrimaryPathFitterTest extends TestCase {
      *        1
      *    (3)   2
      */
-    public void testFitOnTwoWhereThreePossible() {
+    public void testFitOnTwoWhereOnePossible() {
 
         tantrix = place2of3Tiles_OneThenTwo().getTantrix();
         fitter = new PrimaryPathFitter(tantrix, PathColor.YELLOW);
         List<TilePlacement> placements = fitter.getFittingPlacements(tiles.getTile(3), loc(2, 0));
-        assertEquals("Unexpected fitting Placements. placements=\n"+placements, 3, placements.size());
+        assertEquals("Unexpected fitting Placements. placements=\n"+placements, 1, placements.size());
     }
 
     /**
@@ -37,12 +37,12 @@ public class PrimaryPathFitterTest extends TestCase {
      *        1
      *    (4)   2
      */
-    public void testFitOnTwoWhereFourPossible() {
+    public void testFitOnTwoWhereNonePossible() {
 
         tantrix = place2of3Tiles_OneThenTwo().getTantrix();
         fitter = new PrimaryPathFitter(tantrix, PathColor.YELLOW);
         List<TilePlacement> placements = fitter.getFittingPlacements(tiles.getTile(4), loc(2, 0));
-        assertEquals("Unexpected fitting Placements. placements=\n"+placements, 4, placements.size());
+        assertEquals("Unexpected fitting Placements. placements=\n"+placements, 0, placements.size());
     }
 
     /**
@@ -55,6 +55,8 @@ public class PrimaryPathFitterTest extends TestCase {
         tantrix = place2of3Tiles_OneThenTwo().getTantrix();
         fitter = new PrimaryPathFitter(tantrix, PathColor.YELLOW);
         List<TilePlacement> placements = fitter.getFittingPlacements(tiles.getTile(3), loc(1, 2));
+        System.out.println("tantrix="+ tantrix.values());
+        System.out.println("  placements=" +  placements);
         assertEquals("Unexpected fitting Placements.", 0, placements.size());
     }
 
@@ -80,7 +82,7 @@ public class PrimaryPathFitterTest extends TestCase {
     public void testPlacementDoesNotFit0() {
         tantrix = place2of3Tiles_OneThenThree().getTantrix();
         System.out.println("tantrix="+tantrix);
-        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(2, 0), Rotation.ANGLE_0);
+        TilePlacement tile2 = new TilePlacement(TILES.getTile(2), loc(2, 1), Rotation.ANGLE_0);
         fitter = new PrimaryPathFitter(tantrix, PathColor.YELLOW);
         assertTrue("Unexpectedly did not fit.", fitter.isFit(tile2));
     }

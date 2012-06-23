@@ -32,33 +32,32 @@ public class HexTiles extends HexTileList {
         add(new HexTile(i++, YELLOW, new PathColors(YELLOW, RED, RED, BLUE, YELLOW, BLUE)));
         add(new HexTile(i++, BLUE, new PathColors(YELLOW, BLUE, BLUE, YELLOW, RED, RED))); // 13
         add(new HexTile(i++, BLUE, new PathColors(BLUE, YELLOW, YELLOW, RED, RED, BLUE)));
-        add(new HexTile(i++, RED, new PathColors(RED, GREEN,GREEN, RED, YELLOW, YELLOW))); // 15
+        add(new HexTile(i++, RED, new PathColors(RED, GREEN, GREEN, RED, YELLOW, YELLOW))); // 15
         add(new HexTile(i++, RED, new PathColors(YELLOW, RED, RED, YELLOW, GREEN, GREEN)));
         add(new HexTile(i++, YELLOW, new PathColors(GREEN, YELLOW, YELLOW, RED, GREEN, RED))); // 17
         add(new HexTile(i++, RED, new PathColors(RED, YELLOW, YELLOW, GREEN, RED, GREEN )));
-        add(new HexTile(i++, RED, new PathColors( RED, YELLOW, YELLOW, GREEN, RED, GREEN)));
-        add(new HexTile(i++, RED, new PathColors(GREEN, RED, RED, YELLOW, GREEN, YELLOW)));
+        add(new HexTile(i++, RED, new PathColors(GREEN, RED, RED, YELLOW, GREEN, YELLOW)));   // 19
         add(new HexTile(i++, YELLOW, new PathColors(YELLOW, RED, RED, GREEN, YELLOW, GREEN)));
         add(new HexTile(i++, YELLOW, new PathColors(GREEN, YELLOW, YELLOW, RED, RED, GREEN)));
         add(new HexTile(i++, YELLOW, new PathColors(GREEN, YELLOW, YELLOW, GREEN, RED, RED)));
-        add(new HexTile(i++, YELLOW, new PathColors(RED, YELLOW, YELLOW, GREEN, GREEN, RED)));
+        add(new HexTile(i++, YELLOW, new PathColors(RED, YELLOW, YELLOW, GREEN, GREEN, RED))); // 23
         add(new HexTile(i++, RED, new PathColors(BLUE, RED, RED, BLUE,GREEN, GREEN)));
         add(new HexTile(i++, RED, new PathColors(BLUE, RED, RED, GREEN, GREEN, BLUE)));
         add(new HexTile(i++, RED, new PathColors(GREEN, BLUE,BLUE, GREEN, RED, RED)));
         add(new HexTile(i++, RED, new PathColors(BLUE, RED, RED, GREEN, BLUE, GREEN)));
         add(new HexTile(i++, RED, new PathColors(BLUE, GREEN, GREEN,RED, RED, BLUE)));
-        add(new HexTile(i++, RED, new PathColors(GREEN, RED, RED, BLUE,GREEN, BLUE)));
+        add(new HexTile(i++, RED, new PathColors(GREEN, RED, RED, BLUE, GREEN, BLUE)));  // 29
         add(new HexTile(i++, RED, new PathColors(RED, GREEN, GREEN, RED, BLUE, BLUE)));
         add(new HexTile(i++, YELLOW, new PathColors(RED, GREEN, GREEN,YELLOW, RED, YELLOW)));
         add(new HexTile(i++, GREEN, new PathColors(GREEN, YELLOW, RED, GREEN, RED,YELLOW)));
         add(new HexTile(i++, GREEN, new PathColors(YELLOW, GREEN, GREEN, RED, YELLOW, RED)));
         add(new HexTile(i++, GREEN, new PathColors( RED, YELLOW, GREEN, RED, GREEN, YELLOW)));
-        add(new HexTile(i++, GREEN, new PathColors(YELLOW, RED, GREEN, YELLOW, GREEN, RED)));
+        add(new HexTile(i++, GREEN, new PathColors(YELLOW, RED, GREEN, YELLOW, GREEN, RED)));  // 35
         add(new HexTile(i++, GREEN, new PathColors( RED, GREEN, GREEN, BLUE, RED, BLUE)));
         add(new HexTile(i++, GREEN, new PathColors(GREEN, BLUE, BLUE, RED, GREEN, RED)));
         add(new HexTile(i++, GREEN, new PathColors( RED, BLUE, BLUE, GREEN, RED, GREEN)));
         add(new HexTile(i++, BLUE, new PathColors(GREEN, BLUE, RED, GREEN, RED, BLUE)));
-        add(new HexTile(i++, BLUE, new PathColors(BLUE, GREEN, RED, BLUE, RED, GREEN)));
+        add(new HexTile(i++, BLUE, new PathColors(BLUE, GREEN, RED, BLUE, RED, GREEN)));   // 40
         add(new HexTile(i++, BLUE, new PathColors(BLUE, GREEN, GREEN, RED, BLUE, RED)));
         add(new HexTile(i++, BLUE, new PathColors(RED, GREEN, BLUE, RED, BLUE, GREEN)));
         add(new HexTile(i++, BLUE, new PathColors(GREEN, YELLOW, YELLOW, BLUE, BLUE, GREEN)));
@@ -68,7 +67,7 @@ public class HexTiles extends HexTileList {
         add(new HexTile(i++, GREEN, new PathColors( YELLOW, GREEN, GREEN, YELLOW, BLUE, BLUE)));
         add(new HexTile(i++, WHITE, new PathColors(BLUE, GREEN, GREEN, BLUE, YELLOW, YELLOW)));
         add(new HexTile(i++, WHITE, new PathColors(GREEN, YELLOW, YELLOW, GREEN, BLUE, BLUE)));
-        add(new HexTile(i++, WHITE, new PathColors(BLUE, GREEN, YELLOW, BLUE, YELLOW, GREEN)));
+        add(new HexTile(i++, WHITE, new PathColors(BLUE, GREEN, YELLOW, BLUE, YELLOW, GREEN)));  // 50
         add(new HexTile(i++, WHITE, new PathColors(GREEN, YELLOW, BLUE, GREEN, BLUE, YELLOW)));
         add(new HexTile(i++, WHITE, new PathColors( YELLOW, GREEN, GREEN, BLUE, YELLOW, BLUE)));
         add(new HexTile(i++, WHITE, new PathColors(GREEN, YELLOW, YELLOW, BLUE, GREEN, BLUE)));

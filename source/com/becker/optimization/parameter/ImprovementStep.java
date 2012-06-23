@@ -26,6 +26,9 @@ public class ImprovementStep {
     /** continue optimization iteration until the improvement in fitness is less than this.  */
     protected static final double JUMP_SIZE_EPS = 0.000000001;
 
+    /** Increase the size of the radious by this multiplier */
+    private static final double RADIUS_EXPANDER = 1.5;
+
     public static final double JUMP_SIZE_INC_FACTOR = 1.3;
     public static final double JUMP_SIZE_DEC_FACTOR = 0.7;
 
@@ -95,7 +98,7 @@ public class ImprovementStep {
         while (cache.contains(currentParams)) {
             sameParams = true;
             currentParams = currentParams.getRandomNeighbor(gaussRadius);
-            gaussRadius *= 1.5;
+            gaussRadius *= RADIUS_EXPANDER;
         }
         cache.add(currentParams);
 

@@ -55,7 +55,8 @@ public class SubPathSwapper extends SubPathMutator {
             TilePlacement currentTilePlacement = new TilePlacement(currentTile.getTile(), newLocation, tileRotation1);
             assert fits(currentTilePlacement, previousTilePlacement) :
                     " current=" + currentTilePlacement +" (" + i  +") did not fit with " + previousTilePlacement
-                            + " when reversing " + subPath + " at pivot = "+ pivotTile;
+                            + " when swapping " + subPath + " at pivot = "+ pivotTile + " with primColor = " + primaryColor
+                            + " The outgoing locations from curent are "  + currentTilePlacement.getOutgoingPathLocations(primaryColor);
 
             tiles.add(currentTilePlacement);
             origLocation = previousTilePlacement.getLocation(); //currentTilePlacement.getLocation();

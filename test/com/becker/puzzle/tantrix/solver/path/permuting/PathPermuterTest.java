@@ -2,7 +2,6 @@
 package com.becker.puzzle.tantrix.solver.path.permuting;
 
 import com.becker.common.geometry.Location;
-import com.becker.common.math.MathUtil;
 import com.becker.puzzle.tantrix.TantrixTstUtil;
 import com.becker.puzzle.tantrix.model.*;
 import com.becker.puzzle.tantrix.solver.path.TantrixPath;
@@ -18,13 +17,13 @@ import static com.becker.puzzle.tantrix.TantrixTstUtil.*;
 public class PathPermuterTest extends TestCase {
 
     /** instance under test */
-    private PathPermuter permuter;
+    private PathPivotPermuter permuter;
 
 
     public void testPermute3TilePath() {
 
         TantrixBoard board = TantrixTstUtil.place3UnsolvedTiles();
-        permuter = new PathPermuter(new TantrixPath(board.getTantrix(), board.getPrimaryColor()));
+        permuter = new PathPivotPermuter(new TantrixPath(board.getTantrix(), board.getPrimaryColor()));
 
         List<TantrixPath> permutedPathList = permuter.findPermutedPaths(1, 1);
         assertEquals("Unexpected number of permuted paths.", 7, permutedPathList.size());

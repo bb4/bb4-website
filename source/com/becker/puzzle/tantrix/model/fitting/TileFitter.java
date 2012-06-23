@@ -36,7 +36,7 @@ public class TileFitter extends AbstractFitter {
     public boolean isFit(TilePlacement placement) {
         boolean primaryPathMatched = false;
 
-        for (byte i=0; i< NUM_SIDES; i++) {
+        for (byte i=0; i < NUM_SIDES; i++) {
             TilePlacement nbr = getNeighbor(placement, i);
 
             if (nbr != null) {

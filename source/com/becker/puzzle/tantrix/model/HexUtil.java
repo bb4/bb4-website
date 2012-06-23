@@ -27,7 +27,7 @@ public class HexUtil {
         int row = loc.getRow();
         int col = loc.getCol();
 
-        int colOffset = (row % 2 == 1) ? -1 : 0;
+        int colOffset = (Math.abs(row) % 2 == 1) ? -1 : 0;
         Location nbrLoc = null;
 
         switch (direction) {
