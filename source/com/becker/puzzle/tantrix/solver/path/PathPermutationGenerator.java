@@ -48,12 +48,11 @@ public class PathPermutationGenerator  {
      */
     public PermutedParameterArray getRandomNeighbor(double radius) {
 
-        System.out.println("finding rand nbr for rad="+ radius);
         List<TantrixPath> pathPermutations = findPermutedPaths(radius);
 
         assert (!pathPermutations.isEmpty()) :
                 "Could not find any permutations of " + this;
-        //System.out.println("selecting from among " + pathPermutations.size() +" paths");
+        System.out.println("selecting from among " + pathPermutations.size() +" paths");
         return selectPath(pathPermutations);
     }
 
