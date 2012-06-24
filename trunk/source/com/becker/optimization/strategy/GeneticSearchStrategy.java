@@ -196,30 +196,31 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
     private void replaceCulledWithKeeperVariants(List<ParameterArray> population, int keepSize) {
 
         int k = keepSize;
+        System.out.println(" pop.size="+ population.size() + " of popSize_=" + populationSize_ + " keepsize="+ keepSize);
         while ( k < populationSize_ ) {
 
             // loop over the keepers until all replacements found
-            int m = k % keepSize;
+            int keeperIndex = k % keepSize;
 
             // do the best one twice to avoid terminating too quickly
             // in the event that we got a very good fitness score on an early iteration.
-            if (m == keepSize-1) {
-                m = 0;
+            if (keeperIndex == keepSize-1) {
+                keeperIndex = 0;
             }
-            ParameterArray p = population.get(m);
+            ParameterArray p = population.get(keeperIndex);
 
             // add a permutation of one of the keepers
             // we multiply the radius by m because we want the worse ones to have
             // higher variability.
-            double r = (m + NBR_RADIUS_SOFTENER)/NBR_RADIUS_SOFTENER * nbrRadius_;
-            System.out.println("r="+r);
+            double r = (keeperIndex + NBR_RADIUS_SOFTENER)/NBR_RADIUS_SOFTENER * nbrRadius_;
+            System.out.println("r="+r + " keeperIndex=" + keeperIndex + " nbrRadius_=" + nbrRadius_);
             ParameterArray nbr = p.getRandomNeighbor(r);
             if (!population.contains(nbr)) {
                 population.add(nbr);
                 System.out.println("adding p=" + p);
                 notifyOfChange(p);
-                k++;
             }
+            k++;
         }
         //printPopulation(population, 20);
     }
