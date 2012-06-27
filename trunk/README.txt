@@ -29,5 +29,5 @@ Additional source
   I split out jigo (used by go) and jhlabs (used by image breeder) into separate gradle projects which build separate
   jars because they are based on other peoples open source code. In the rare case that you need to modify the source in
   these jars, do the following.
-  - svn co https://free1.projectlocker.com/Tesujisoft/jhlabs/svn
-  - svn co https://free1.projectlocker.com/Tesujisoft/jigo/svn
+  - svn co https://free1.projectlocker.com/Tesujisoft/jhlabs/svn  (in java_projects/jhlabs)
+  - svn co https://free1.projectlocker.com/Tesujisoft/jigo/svn    (in java_projects/jigo)

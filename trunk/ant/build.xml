@@ -45,11 +45,10 @@
 
 
   <target name="compile" depends="init" description="Compiles the source code">
-    <javac debug="yes" deprecation="yes" destdir="${classesDir}"  includeantruntime="false"
-        nowarn="no" optimize="yes" srcdir="${sourceDir}" verbose="false"
-        executable="${java_home}/bin/javac" compiler="modern" source="1.6">
-       <!-- compilerarg value="-Xlint" /   this is nice but adding support for generics is a bit of a rathole.-->
-       <classpath refid="compile.classpath"/>
+    <javac debug="yes" destdir="${classesDir}" includeantruntime="false" verbose="on"
+        srcdir="${sourceDir}" executable="${java_home}/bin/javac" compiler="modern" source="1.6">
+        <classpath refid="compile.classpath"/>
+        <compilerarg value="-Xlint:cast,deprecation,divzero,empty,fallthrough,finally,overrides,path,unchecked"/>
     </javac>
     <!-- use ant deploy to copy the resources to the classes dir -->
   </target>
