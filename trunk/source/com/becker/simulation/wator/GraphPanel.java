@@ -31,8 +31,8 @@ public class GraphPanel extends Panel {
 
     private void initializeBasedOnSize() {
         int i;
-        x = size().width - 2;
-        y = size().height - 2;
+        x = getWidth() - 2;
+        y = getHeight() - 2;
         stab = new int[x];
         ftab = new int[x];
         ctab = new Color[x];
@@ -67,12 +67,12 @@ public class GraphPanel extends Panel {
         cont = true;
         synchronized (g = getGraphics()) {
 
-            if (x != (size().width - 2) || y != (size().height - 2))
+            if (x != (getWidth() - 2) || y != (getHeight() - 2))
             {
                 initializeBasedOnSize();
             }
-            x = size().width - 2;
-            y = size().height - 2;
+            x = getWidth() - 2;
+            y = getHeight() - 2;
 
             if ((i = pos + 1) >= x) i = 0;
             ctab[i] = Color.black;
@@ -92,7 +92,7 @@ public class GraphPanel extends Panel {
 
         synchronized (g) {
             g.setColor(Color.black);
-            g.drawRect(0, 0, size().width - 1, size().height - 1);
+            g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
             for (i = 0; i < x; i++) drawgen(g, i);
         }
     }

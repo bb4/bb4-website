@@ -75,8 +75,8 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer {
     public int getWallIndexForPosition(int xp, int yp, Location loc, BlockadeBoard b) {
         int numRows = b.getNumRows();
         int numCols = b.getNumCols();
-        float x = (float)xp/cellSize_ - (int)(xp / cellSize_);
-        float y = (float)yp/cellSize_ - (int)(yp / cellSize_);
+        float x = (float)xp/cellSize_ - (xp / cellSize_);
+        float y = (float)yp/cellSize_ - (yp / cellSize_);
 
         if (loc.getCol() >= numCols)
            x = Math.min(0.499f, x);

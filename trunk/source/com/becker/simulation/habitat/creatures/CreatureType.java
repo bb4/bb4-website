@@ -46,7 +46,7 @@ public enum CreatureType {
         predatorMap_.put(WILDEBEEST, Arrays.asList(LION));
         predatorMap_.put(RAT, Arrays.asList(CAT, LION));
         predatorMap_.put(CAT, Arrays.asList(LION));
-        predatorMap_.put(LION, Collections.EMPTY_LIST);
+        predatorMap_.put(LION, Collections.<CreatureType>emptyList());
 
         for (CreatureType creature : values()) {
             List<CreatureType> preys = new ArrayList<CreatureType>();

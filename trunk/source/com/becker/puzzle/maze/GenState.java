@@ -9,19 +9,16 @@ import java.awt.*;
  *
  *  @author Barry Becker
  */
-public class GenState
-{
+public class GenState {
     private Point position_;
     private Point direction_;
     private int depth_;
 
-    public GenState( Point pos, Point dir, int d )
-    {
+    public GenState( Point pos, Point dir, int d ) {
         position_ = pos;
         direction_ = dir;
         depth_ = d;
     }
-
 
     public Point getPosition() {
         return position_;
@@ -34,7 +31,6 @@ public class GenState
     public int getDepth() {
         return depth_;
     }
-
 }
 
 

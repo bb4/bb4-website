@@ -16,7 +16,7 @@ import java.util.List;
 public class GalacticTurn extends Move {
 
     /** a list of battle simulations */
-    private List battles_;
+    private List<BattleSimulation> battles_;
 
 
     /**
@@ -49,8 +49,8 @@ public class GalacticTurn extends Move {
      * @param battle
      */
     public void addSimulation(BattleSimulation battle)  {
-        if (battles_==null) {
-            battles_ = new ArrayList();
+        if (battles_ == null) {
+            battles_ = new ArrayList<BattleSimulation>();
         }
         battles_.add(battle);
     }

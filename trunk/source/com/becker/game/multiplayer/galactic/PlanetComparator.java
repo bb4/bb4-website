@@ -6,9 +6,9 @@ import java.util.Comparator;
 /**
  * Sort planets by how far they are from a comparisonPlanet.
  *
- * @author Barry Becker Date: Aug 26, 2006
+ * @author Barry Becker
  */
-public class PlanetComparator implements Comparator {
+public class PlanetComparator implements Comparator<Planet> {
 
     private Planet comparisonPlanet_;
 
@@ -16,14 +16,13 @@ public class PlanetComparator implements Comparator {
         comparisonPlanet_ = p;
         assert(comparisonPlanet_ != null):
                 "you must specify a comparison planet.";
-
     }
 
-    
-    public int compare(Object p1, Object p2) {
 
-        double p1Dist = ((Planet)p1).getDistanceFrom(comparisonPlanet_);
-        double p2Dist = ((Planet)p2).getDistanceFrom(comparisonPlanet_);
+    public int compare(Planet p1, Planet p2) {
+
+        double p1Dist = p1.getDistanceFrom(comparisonPlanet_);
+        double p2Dist = p2.getDistanceFrom(comparisonPlanet_);
 
         if (p1Dist < p2Dist )
             return -1;

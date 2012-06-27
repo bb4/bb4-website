@@ -15,23 +15,20 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public class MazeGenerator
-{
+public class MazeGenerator {
 
     private MazeModel maze_;
     private MazePanel panel_;
 
     // put the stop point at the maximum search depth.
-    private static int maxDepth_ = 0;
+    private int maxDepth_ = 0;
 
 
-    public MazeGenerator(MazePanel panel)
-    {
+    public MazeGenerator(MazePanel panel) {
         this(panel.getMaze(), panel);
     }
 
-    private MazeGenerator(MazeModel maze, MazePanel panel)
-    {
+    private MazeGenerator(MazeModel maze, MazePanel panel) {
         maze_ = maze;
         panel_ = panel;
     }
@@ -39,8 +36,7 @@ public class MazeGenerator
     /**
      * generate the maze
      */
-    public void generate()
-    {
+    public void generate() {
         generate(Direction.FORWARD.getProbability(),
                  Direction.LEFT.getProbability(),
                  Direction.RIGHT.getProbability() );
@@ -49,8 +45,7 @@ public class MazeGenerator
     /**
      * generate the maze.
      */
-    public void generate(double forwardProb, double leftProb, double rightProb )
-    {
+    public void generate(double forwardProb, double leftProb, double rightProb ) {
         // the second argument is a dummy direction
         maxDepth_ = 0;
         Direction.FORWARD.setProbability(forwardProb);
@@ -66,8 +61,7 @@ public class MazeGenerator
      * I used to use a recursive algorithm but it was slower and would give stack overflow
      * exceptions even for moderately sized mazes.
      */
-    public void search()
-    {
+    public void search() {
         List<GenState> stack = new LinkedList<GenState>();
 
         Point currentPosition = maze_.getStartPosition();
@@ -82,7 +76,7 @@ public class MazeGenerator
             boolean moved = false;
 
             do {
-                GenState state = (GenState) stack.remove(0);  // pop
+                GenState state = stack.remove(0);  // pop
 
                 currentPosition = state.getPosition();
                 dir = state.getDirection();

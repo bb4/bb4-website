@@ -112,15 +112,24 @@ public class AikidoAppGenerator {
         NodeList children = node.getChildNodes();
 
         if (nodeInfo.id!=null) {
-            buf.append("  img['"+nodeInfo.id+"']='"+nodeInfo.img+"';\n");
-            buf.append("  label['"+nodeInfo.id+"']='"+nodeInfo.label+"';\n\n");
+            buf.append("  img['")
+               .append(nodeInfo.id)
+               .append("']='")
+               .append(nodeInfo.img).append("';\n");
+            buf.append("  label['")
+               .append(nodeInfo.id)
+               .append("']='")
+               .append(nodeInfo.label).append("';\n\n");
 
             int len = children.getLength();
             if (len > 0)
-                buf.append("  next['"+nodeInfo.id+"']= new Array();\n");
+                buf.append("  next['").append(nodeInfo.id).append("']= new Array();\n");
             for (int i=0; i<len; i++) {
                 Node child = children.item(i);
-                buf.append("  next['"+nodeInfo.id+"']["+i+"]='"+ DomUtil.getAttribute(child, "id") +"';\n");
+                buf.append("  next['")
+                   .append(nodeInfo.id)
+                   .append("'][").append(i).append("]='")
+                   .append(DomUtil.getAttribute(child, "id")).append("';\n");
             }
             if (len > 0)
                 buf.append('\n');
@@ -142,7 +151,7 @@ public class AikidoAppGenerator {
         String getTableMethod = "  function getTable() {\n"
           + "    return document.getElementById(\"techniqueTable\");\n  }\n\n";
 
-        String showValsMethod =  
+        String showValsMethod =
              " // for debugging"
           + "  function showVals(selectedVal, valuesList)\n"
           + "  {\n"
@@ -321,8 +330,7 @@ public class AikidoAppGenerator {
     }
 
 
-
-    private static String genRowForNode(Node node, Document document, List parentList) {
+    private static String genRowForNode(Node node, List<NodeInfo> parentList) {
 
         StringBuilder buf = new StringBuilder();
         NodeInfo nodeInfo = new NodeInfo(node.getAttributes());
@@ -340,12 +348,12 @@ public class AikidoAppGenerator {
 
             buf.append("  <tr nowrap> \n");
             for (int i=1; i<parentList.size(); i++) {
-                NodeInfo info = (NodeInfo)parentList.get(i);
+                NodeInfo info = parentList.get(i);
                 buf.append("    <td nowrap>\n");
                 if (DEBUG_MODE)  {
-                    buf.append("      <div title=\""+info.id+"\" style=\"height:14px; width:120px; overflow:hidden;\"\n");
+                    buf.append("      <div title=\"").append(info.id).append("\" style=\"height:14px; width:120px; overflow:hidden;\"\n");
                 } else {
-                    buf.append("      <div title="+info.label+"style=\"height:14px; width:90px; overflow:hidden;\"\n");
+                    buf.append("      <div title=").append(info.label).append("style=\"height:14px; width:90px; overflow:hidden;\"\n");
                 }
                 buf.append("        <font size='-3'><span>");
                 if (DEBUG_MODE)  {
@@ -360,13 +368,13 @@ public class AikidoAppGenerator {
             buf.append("  </tr>   \n");
             buf.append("  <tr>   \n");
             for (int i=1; i<parentList.size(); i++) {
-                NodeInfo info = (NodeInfo)parentList.get(i);
+                NodeInfo info = parentList.get(i);
                 buf.append("    <td>\n");
                 //buf.append("      <img src=\""+ info.img +"\" style=\"width:50px; height:44px;\">\n");
                 if (DEBUG_MODE)  {
-                    buf.append("      <img src=\""+ info.img +"\" height=\"80\" title=\""+info.label+"\">\n");
+                    buf.append("      <img src=\"").append(info.img).append("\" height=\"80\" title=\"").append(info.label).append("\">\n");
                 } else {
-                    buf.append("      <img src=\""+ info.img +"\" height=\"60\" title=\""+info.label+"\">\n");
+                    buf.append("      <img src=\"").append(info.img).append("\" height=\"60\" title=\"").append(info.label).append("\">\n");
                 }
                 buf.append("    </td>\n");
             }
@@ -375,7 +383,7 @@ public class AikidoAppGenerator {
 
         for (int i=0; i<children.getLength(); i++) {
             Node child = children.item(i);
-            buf.append( genRowForNode(child, document, parentList));
+            buf.append( genRowForNode(child, parentList));
         }
 
         parentList.remove(parentList.size()-1);
@@ -387,7 +395,7 @@ public class AikidoAppGenerator {
 
     private static String getTechniqueTable(Document document) {
         StringBuilder buf = new StringBuilder();
-        List parentList = new LinkedList();
+        List<NodeInfo> parentList = new LinkedList<NodeInfo>();
 
         // recursive call
         //buf.append("<table id='techniqueTable' width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"1\">\n");
@@ -395,7 +403,7 @@ public class AikidoAppGenerator {
 
         Node root = document.getDocumentElement();
         imgPath_ = DomUtil.getAttribute(root, "imgpath");
-        buf.append( genRowForNode(root, document, parentList));
+        buf.append( genRowForNode(root, parentList));
 
         buf.append("</table>\n\n");
 
