@@ -28,7 +28,7 @@ public final class SoundUtil {
         URL clipURL = GUIUtil.getURL(soundPath);
         playSoundInternal(clipURL);
     }
-    
+
     /**
      * This converts the file to something that jav can paly.
      * wav, aiff, and au files should work, but currently only au seem to.
@@ -66,7 +66,7 @@ public final class SoundUtil {
 
 
     /**
-     * This converts the file to something that jav can paly. 
+     * This converts the file to something that jav can paly.
      * @param clipURL
      */
     private static void playSoundInternal(URL clipURL) {

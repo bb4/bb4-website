@@ -59,7 +59,7 @@ public class PathTilePermuter {
                 new TilePlacement(tile, location, Rotation.ANGLE_0);
         int ct = 0;
         while (!fitter.isFit(newPlacement) && ct < HexTile.NUM_SIDES) {
-            //System.out.println("new palcement = " + newPlacement);
+            //System.out.println("new placement = " + newPlacement);
             newPlacement = newPlacement.rotate();
             ct++;
         }

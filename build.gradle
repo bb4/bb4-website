@@ -31,7 +31,7 @@ dependencies {
                   'lib/jigo-1.0.jar',
                   'lib/sun.jar',
                   'lib/vecmath.jar',
-                  'lib/serces_2_3_0.jar',
+                  'lib/xerces_2_3_0.jar',
                   'lib/xml-apis.jar',
                   'lib/jnlp.jar'
                   )

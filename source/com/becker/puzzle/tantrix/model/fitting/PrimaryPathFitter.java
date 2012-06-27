@@ -54,7 +54,6 @@ public class PrimaryPathFitter extends AbstractFitter {
                 PathColor pathColor = placement.getPathColor(i);
                 PathColor nbrColor = nbr.getPathColor(i+3);
 
-                //System.out.println("DIR="+i +" pathColor="+ pathColor + " nbrColor=" +nbrColor + "   ppcol="+ primaryColor);
                 if ((pathColor == primaryColor || nbrColor == primaryColor) && pathColor != nbrColor) {
                     fits = false;
                 }
