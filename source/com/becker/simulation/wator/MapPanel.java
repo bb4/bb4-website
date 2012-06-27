@@ -47,10 +47,10 @@ public class MapPanel extends Panel {
         y = new int[ni];
         dx = new int[nj];
         dy = new int[ni];
-        k = size().width - 2;
+        k = getWidth() - 2;
         for (i = 0; i < nj; i++)
             dx[i] = ((k * i + k) / nj + 1) - (x[i] = (k * i) / nj + 1);
-        k = size().height - 2;
+        k = getHeight() - 2;
         for (i = 0; i < ni; i++)
             dy[i] = ((k * i + k) / ni + 1) - (y[i] = (k * i) / ni + 1);
         map = new Fish[ni][nj];
@@ -149,12 +149,12 @@ public class MapPanel extends Panel {
         Image i;
         Graphics g;
 
-        i = createImage(size().width, size().height);
+        i = createImage(getWidth(), getHeight());
         g = i.getGraphics();
         g.setColor(cl_bl);
-        g.fillRect(0, 0, size().width, size().height);
+        g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(Color.black);
-        g.drawRect(0, 0, size().width - 1, size().height - 1);
+        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
         for (f = Fish.first(); f != null; f = f.next()) {
             g.setColor(f.starve < 0? cl_gn: cl_rd);
             g.fillRect(x[f.j], y[f.i], dx[f.j], dy[f.i]);

@@ -2,6 +2,7 @@ package com.becker.java2d.print;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.io.BufferedReader;
@@ -11,23 +12,21 @@ import java.io.IOException;
 import java.util.Vector;
 
 public class FilePageRenderer extends JComponent
-                              implements Printable
-{
+                              implements Printable {
     private int mCurrentPage;
     // mLines contains all the lines of the file.
-    private Vector mLines;
+    private Vector<String> mLines;
     // mPages is a Vector of Vectors. Each of its elements
     //   represents a single page. Each of its elements is
     //   a Vector containing Strings that are the lines for
     //   a particular page.
-    private Vector mPages;
+    private Vector<Vector<String>> mPages;
     private Font mFont;
     private int mFontSize;
     private Dimension mPreferredSize;
 
     public FilePageRenderer( File file, PageFormat pageFormat )
-            throws IOException
-    {
+            throws IOException {
         mFontSize = 12;
         mFont = new Font( "Serif", Font.PLAIN, mFontSize );
         // Open the file.
@@ -35,7 +34,7 @@ public class FilePageRenderer extends JComponent
                 new FileReader( file ) );
         // Read all the lines.
         String line;
-        mLines = new Vector();
+        mLines = new Vector<String>();
         while ( (line = in.readLine()) != null )
             mLines.addElement( line );
         // Clean up.
@@ -44,20 +43,19 @@ public class FilePageRenderer extends JComponent
         paginate( pageFormat );
     }
 
-    public void paginate( PageFormat pageFormat )
-    {
+    public void paginate( PageFormat pageFormat ) {
         mCurrentPage = 0;
-        mPages = new Vector();
+        mPages = new Vector<Vector<String>>();
         float y = mFontSize;
-        Vector page = new Vector();
+        Vector<String> page = new Vector<String>();
         for ( int i = 0; i < mLines.size(); i++ ) {
-            String line = (String) mLines.elementAt( i );
+            String line = mLines.elementAt( i );
             page.addElement( line );
             y += mFontSize;
             if ( y + mFontSize * 2 > pageFormat.getImageableHeight() ) {
                 y = 0;
                 mPages.addElement( page );
-                page = new Vector();
+                page = new Vector<String>();
             }
         }
         // Add the last page.
@@ -68,11 +66,11 @@ public class FilePageRenderer extends JComponent
         repaint();
     }
 
-    public void paintComponent( Graphics g )
-    {
+    @Override
+    public void paintComponent( Graphics g ) {
         Graphics2D g2 = (Graphics2D) g;
         // Make the background white.
-        java.awt.geom.Rectangle2D r = new java.awt.geom.Rectangle2D.Float( 0, 0,
+        Rectangle2D r = new Rectangle2D.Float( 0, 0,
                 mPreferredSize.width, mPreferredSize.height );
         g2.setPaint( Color.white );
         g2.fill( r );
@@ -90,8 +88,7 @@ public class FilePageRenderer extends JComponent
         }
     }
 
-    public int print( Graphics g, PageFormat pageFormat, int pageIndex )
-    {
+    public int print( Graphics g, PageFormat pageFormat, int pageIndex ) {
         if ( pageIndex >= mPages.size() ) return NO_SUCH_PAGE;
         int savedPage = mCurrentPage;
         mCurrentPage = pageIndex;
@@ -102,30 +99,26 @@ public class FilePageRenderer extends JComponent
         return PAGE_EXISTS;
     }
 
-    public Dimension getPreferredSize()
-    {
+    @Override
+    public Dimension getPreferredSize() {
         return mPreferredSize;
     }
 
-    public int getCurrentPage()
-    {
+    public int getCurrentPage()  {
         return mCurrentPage;
     }
 
-    public int getNumPages()
-    {
+    public int getNumPages() {
         return mPages.size();
     }
 
-    public void nextPage()
-    {
+    public void nextPage() {
         if ( mCurrentPage < mPages.size() - 1 )
             mCurrentPage++;
         repaint();
     }
 
-    public void previousPage()
-    {
+    public void previousPage() {
         if ( mCurrentPage > 0 )
             mCurrentPage--;
         repaint();

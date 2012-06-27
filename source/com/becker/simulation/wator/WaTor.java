@@ -4,7 +4,6 @@ package com.becker.simulation.wator;
 import java.applet.Applet;
 import java.awt.*;
 
-
 /**
  * WATOR predator-prey simulation based on A.K. Dewdney "Sharks and fish
  * wage an ecological war on the toroidal planet Wa-Tor" (Scientific
@@ -95,6 +94,44 @@ public class WaTor extends Applet implements Runnable {
         }
         thread = null;
     }
+
+    /*     modernized, but does not work.
+    @Override
+    public void processEvent(AWTEvent e) {
+        Object source = e.getSource();
+        if (source instanceof Button) {
+            if (source == bn_go) goflag = true;
+            if (source == bn_stop) goflag = false;
+            if (source == bn_remix) remixflag = true;
+            if (goflag || remixflag) start();
+            return;
+        }
+        else if (source instanceof Scrollbar)
+            switch (e.getID()) {
+                case Event.SCROLL_ABSOLUTE:
+                case Event.SCROLL_LINE_UP:
+                case Event.SCROLL_LINE_DOWN:
+                case Event.SCROLL_PAGE_UP:
+                case Event.SCROLL_PAGE_DOWN:
+                    synchronized (mutex) {
+                        if (source == sb_size)
+                            remixflag = setSize(sb_size.getValue());
+                        else if (source == sb_nshark)
+                            remixflag = setNumShark(sb_nshark.getValue());
+                        else if (source == sb_nfish)
+                            remixflag = setNumFish(sb_nfish.getValue());
+                        else if (source == sb_sbreed)
+                            brkflag = setSharkBreed(sb_sbreed.getValue());
+                        else if (source == sb_fbreed)
+                            brkflag = setFishBreed(sb_fbreed.getValue());
+                        else if (source == sb_starve)
+                            brkflag = setStarve(sb_starve.getValue());
+                    }
+            if (remixflag) start();
+            return;
+        }
+        super.processEvent(e);
+    }  */
 
     @Override
     public boolean handleEvent(Event e) {
@@ -199,8 +236,8 @@ public class WaTor extends Applet implements Runnable {
     private boolean setSize(int n) {
         int x, y;
 
-        x = pn_mp.size().width - 2;
-        y = pn_mp.size().height - 2;
+        x = pn_mp.getWidth() - 2;
+        y = pn_mp.getHeight() - 2;
         if (n < 1) n = 1;
         if (x < y) { nj = n; ni = n * y / x; }
         else { ni = n; nj = n * x / y; }

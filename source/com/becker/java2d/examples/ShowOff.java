@@ -29,17 +29,17 @@ public class ShowOff
     public ShowOff( String filename, String message, int split )
             throws IOException
     {
-        
+
         Image img = Utilities.blockingLoad( filename );
         mImage = Utilities.makeBufferedImage( img );
- 
+
         // Create a font.
         mFont = new Font( "Serif", Font.PLAIN, 116 );
         // Save the message and split.
         mMessage = message;
         mSplit = split;
         // Set our size to match the image's size.
-        setSize( (int) mImage.getWidth(), (int) mImage.getHeight() );
+        setSize( mImage.getWidth(), mImage.getHeight() );
     }
 
     @Override

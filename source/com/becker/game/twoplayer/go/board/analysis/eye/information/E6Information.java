@@ -16,8 +16,10 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
 public class E6Information extends AbstractEyeSubtypeInformation {
 
     /** Different sorts of eye with 6 spaces. */
-    public enum Eye6Type {E112222, E111223, E111133, E112233, E112233a, E112233b, E122223, E112224, E111124, E222233}
-    
+    public enum Eye6Type {
+        E112222, E111223, E111133, E112233, E112233a, E112233b, E122223, E112224, E111124, E222233
+    }
+
     private Eye6Type type;
 
     /**
@@ -78,12 +80,12 @@ public class E6Information extends AbstractEyeSubtypeInformation {
                 return handleVitalPointCases(nbrMap, eye, 5);
             case E112224 :
                 GoBoardPositionList endFilledSpaces = findSpecialFilledSpaces(nbrMap, getEndPoints(), eye);
-                switch (endFilledSpaces.size())
-                {
+                switch (endFilledSpaces.size()) {
                     case 0 :  return handleVitalPointCases(nbrMap, eye, 2);
                     case 1 :  return handleVitalPointCases(nbrMap, eye, 1); // replace with handleLifeProp? see page 122
                     default : assert false : "unexpected number of end spaces filled";
                 }
+                break;
             case E111124 :
                 return handleVitalPointCases(nbrMap, eye, 2);
             case E222233 :

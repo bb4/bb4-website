@@ -51,12 +51,13 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
+import java.util.List;
 
 /**
  * Illustrates general MIDI melody instruments and MIDI controllers.
  *
  * @version @(#)MidiSynth.java	1.15 99/12/03
- * @author Brian Lichtenwalter  
+ * @author Brian Lichtenwalter
  */
 public class MidiSynth extends JPanel {
 
@@ -77,8 +78,8 @@ public class MidiSynth extends JPanel {
     JCheckBox mouseOverCB = new JCheckBox("mouseOver", true);
     JSlider veloS, presS, bendS, revbS;
     JCheckBox soloCB, monoCB, muteCB, sustCB;
-    Vector keys = new Vector();
-    Vector whiteKeys = new Vector();
+    List<Key> keys = new Vector<Key>();
+    List<Key> whiteKeys = new Vector<Key>();
     JTable table;
     Piano piano;
     boolean record;
@@ -115,7 +116,7 @@ public class MidiSynth extends JPanel {
                     System.out.println("getSynthesizer() failed!");
                     return;
                 }
-            } 
+            }
             synthesizer.open();
             sequencer = MidiSystem.getSequencer();
             sequence = new Sequence(Sequence.PPQ, 10);
@@ -157,15 +158,12 @@ public class MidiSynth extends JPanel {
         }
     }
 
-
-
-
     /**
      * given 120 bpm:
      *   (120 bpm) / (60 seconds per minute) = 2 beats per second
      *   2 / 1000 beats per millisecond
      *   (2 * resolution) ticks per second
-     *   (2 * resolution)/1000 ticks per millisecond, or 
+     *   (2 * resolution)/1000 ticks per millisecond, or
      *      (resolution / 500) ticks per millisecond
      *   ticks = milliseconds * resolution / 500
      */
@@ -174,7 +172,7 @@ public class MidiSynth extends JPanel {
         try {
             long millis = System.currentTimeMillis() - startTime;
             long tick = millis * sequence.getResolution() / 500;
-            message.setMessage(type+cc.num, num, cc.velocity); 
+            message.setMessage(type+cc.num, num, cc.velocity);
             MidiEvent event = new MidiEvent(message, tick);
             track.add(event);
         } catch (Exception ex) { ex.printStackTrace(); }
@@ -210,17 +208,16 @@ public class MidiSynth extends JPanel {
         public void setNoteState(int state) {
             noteState = state;
         }
-    } // End class Key
-
+    }
 
 
     /**
-     * Piano renders black & white keys and plays the notes for a MIDI 
-     * channel.  
+     * Piano renders black & white keys and plays the notes for a MIDI
+     * channel.
      */
     class Piano extends JPanel implements MouseListener {
 
-        Vector blackKeys = new Vector();
+        List<Key> blackKeys = new Vector<Key>();
         Key prevKey;
         final int kw = 16, kh = 80;
 
@@ -228,9 +225,9 @@ public class MidiSynth extends JPanel {
         public Piano() {
             setLayout(new BorderLayout());
             setPreferredSize(new Dimension(42*kw, kh+1));
-            int transpose = 24;  
-            int whiteIDs[] = { 0, 2, 4, 5, 7, 9, 11 }; 
-          
+            int transpose = 24;
+            int whiteIDs[] = { 0, 2, 4, 5, 7, 9, 11 };
+
             for (int i = 0, x = 0; i < 6; i++) {
                 for (int j = 0; j < 7; j++, x += kw) {
                     int keyNum = i * 12 + whiteIDs[j] + transpose;
@@ -249,21 +246,7 @@ public class MidiSynth extends JPanel {
             keys.addAll(blackKeys);
             keys.addAll(whiteKeys);
 
-            addMouseMotionListener(new MouseMotionAdapter() {
-                public void mouseMoved(MouseEvent e) {
-                    if (mouseOverCB.isSelected()) {
-                        Key key = getKey(e.getPoint());
-                        if (prevKey != null && prevKey != key) {
-                            prevKey.off();
-                        } 
-                        if (key != null && prevKey != key) {
-                            key.on();
-                        }
-                        prevKey = key;
-                        repaint();
-                    }
-                }
-            });
+            addMouseMotionListener(new MyMouseMotionAdapter());
             addMouseListener(this);
         }
 
@@ -292,14 +275,15 @@ public class MidiSynth extends JPanel {
 
 
         public Key getKey(Point point) {
-            for (int i = 0; i < keys.size(); i++) {
-                if (((Rectangle) keys.get(i)).contains(point)) {
-                    return (Key) keys.get(i);
+            for (Key key : keys) {
+                if (key.contains(point)) {
+                    return key;
                 }
             }
             return null;
         }
 
+        @Override
         public void paint(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
             Dimension d = getSize();
@@ -310,8 +294,7 @@ public class MidiSynth extends JPanel {
             g2.setColor(Color.white);
             g2.fillRect(0, 0, 42*kw, kh);
 
-            for (int i = 0; i < whiteKeys.size(); i++) {
-                Key key = (Key) whiteKeys.get(i);
+            for (Key key : whiteKeys) {
                 if (key.isNoteOn()) {
                     g2.setColor(record ? pink : jfcBlue);
                     g2.fill(key);
@@ -319,8 +302,7 @@ public class MidiSynth extends JPanel {
                 g2.setColor(Color.black);
                 g2.draw(key);
             }
-            for (int i = 0; i < blackKeys.size(); i++) {
-                Key key = (Key) blackKeys.get(i);
+            for (Key key : blackKeys) {
                 if (key.isNoteOn()) {
                     g2.setColor(record ? pink : jfcBlue);
                     g2.fill(key);
@@ -329,6 +311,23 @@ public class MidiSynth extends JPanel {
                 } else {
                     g2.setColor(Color.black);
                     g2.fill(key);
+                }
+            }
+        }
+
+        private class MyMouseMotionAdapter extends MouseMotionAdapter {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                if (mouseOverCB.isSelected()) {
+                    Key key = getKey(e.getPoint());
+                    if (prevKey != null && prevKey != key) {
+                        prevKey.off();
+                    }
+                    if (key != null && prevKey != key) {
+                        key.on();
+                    }
+                    prevKey = key;
+                    repaint();
                 }
             }
         }
@@ -344,7 +343,7 @@ public class MidiSynth extends JPanel {
         boolean solo, mono, mute, sustain;
         int velocity, pressure, bend, reverb;
         int row, col, num;
- 
+
         public ChannelData(MidiChannel channel, int num) {
             this.channel = channel;
             this.num = num;
@@ -378,8 +377,8 @@ public class MidiSynth extends JPanel {
     class InstrumentsTable extends JPanel {
 
         private String names[] = {
-           "Piano", "Chromatic Perc.", "Organ", "Guitar", 
-           "Bass", "Strings", "Ensemble", "Brass", 
+           "Piano", "Chromatic Perc.", "Organ", "Guitar",
+           "Bass", "Strings", "Ensemble", "Brass",
            "Reed", "Pipe", "Synth Lead", "Synth Pad",
            "Synth Effects", "Ethnic", "Percussive", "Sound Effects" };
         private int nRows = 8;
@@ -407,7 +406,7 @@ public class MidiSynth extends JPanel {
                 public boolean isCellEditable(int r, int c) {return false;}
                 public void setValueAt(Object obj, int r, int c) {}
             };
-    
+
             table = new JTable(dataModel);
             table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -443,7 +442,7 @@ public class MidiSynth extends JPanel {
                 column.setPreferredWidth(110);
             }
             table.setAutoResizeMode(table.AUTO_RESIZE_OFF);
-        
+
             JScrollPane sp = new JScrollPane(table);
             sp.setVerticalScrollBarPolicy(sp.VERTICAL_SCROLLBAR_NEVER);
             sp.setHorizontalScrollBarPolicy(sp.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -503,7 +502,7 @@ public class MidiSynth extends JPanel {
             combo.setMaximumSize(new Dimension(120,25));
             for (int i = 1; i <= 16; i++) {
                 combo.addItem("Channel " + String.valueOf(i));
-            } 
+            }
             combo.addItemListener(this);
             p.add(combo);
             p.add(Box.createHorizontalStrut(20));
@@ -599,11 +598,11 @@ public class MidiSynth extends JPanel {
         public void actionPerformed(ActionEvent e) {
             JButton button = (JButton) e.getSource();
             if (button.getText().startsWith("All")) {
-                for (int i = 0; i < channels.length; i++) {
-                    channels[i].channel.allNotesOff();
+                for (ChannelData channel : channels) {
+                    channel.channel.allNotesOff();
                 }
-                for (int i = 0; i < keys.size(); i++) {
-                    ((Key) keys.get(i)).setNoteState(OFF);
+                for (Key key : keys) {
+                    key.setNoteState(OFF);
                 }
             } else if (button.getText().startsWith("Record")) {
                 if (recordFrame != null) {
@@ -615,19 +614,15 @@ public class MidiSynth extends JPanel {
         }
     }
 
-
-
     /**
      * A frame that allows for midi capture & saving the captured data.
      */
     class RecordFrame extends JFrame implements ActionListener, MetaEventListener {
 
         public JButton recordB, playB, saveB;
-        Vector tracks = new Vector();
-        DefaultListModel listModel = new DefaultListModel();
+        List<TrackData> tracks = new Vector<TrackData>();
         TableModel dataModel;
         JTable table;
-
 
         public RecordFrame() {
             super("Midi Capture");
@@ -640,8 +635,6 @@ public class MidiSynth extends JPanel {
                 sequence = new Sequence(Sequence.PPQ, 10);
             } catch (Exception ex) { ex.printStackTrace(); }
 
-            //JPanel p1 = new JPanel(new BorderLayout());
-
             JPanel p2 = new JPanel();
             p2.setBorder(new EmptyBorder(5,5,5,5));
             p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
@@ -653,16 +646,16 @@ public class MidiSynth extends JPanel {
             getContentPane().add("North", p2);
 
             final String[] names = { "Channel #", "Instrument" };
-    
+
             dataModel = new AbstractTableModel() {
                 public int getColumnCount() { return names.length; }
                 public int getRowCount() { return tracks.size();}
                 public Object getValueAt(int row, int col) {
                     if (col == 0) {
-                        return ((TrackData) tracks.get(row)).chanNum;
+                        return (tracks.get(row)).chanNum;
                     } else if (col == 1) {
-                        return ((TrackData) tracks.get(row)).name;
-                    } 
+                        return (tracks.get(row)).name;
+                    }
                     return null;
                 }
                 public String getColumnName(int col) {return names[col]; }
@@ -674,18 +667,18 @@ public class MidiSynth extends JPanel {
                 }
                 public void setValueAt(Object val, int row, int col) {
                     if (col == 0) {
-                        ((TrackData) tracks.get(row)).chanNum = (Integer) val;
+                        (tracks.get(row)).chanNum = (Integer) val;
                     } else if (col == 1) {
-                        ((TrackData) tracks.get(row)).name = (String) val;
-                    } 
+                        (tracks.get(row)).name = (String) val;
+                    }
                 }
             };
-    
+
             table = new JTable(dataModel);
             TableColumn col = table.getColumn("Channel #");
             col.setMaxWidth(65);
             table.sizeColumnsToFit(0);
-        
+
             JScrollPane scrollPane = new JScrollPane(table);
             EmptyBorder eb = new EmptyBorder(0,5,5,5);
             scrollPane.setBorder(new CompoundBorder(eb,new EtchedBorder()));
@@ -719,7 +712,7 @@ public class MidiSynth extends JPanel {
                     track = sequence.createTrack();
                     startTime = System.currentTimeMillis();
 
-                    // add a program change right at the beginning of 
+                    // add a program change right at the beginning of
                     // the track for the current instrument
                     createShortEvent(PROGRAM,cc.col*8+cc.row);
 
@@ -738,7 +731,7 @@ public class MidiSynth extends JPanel {
                     recordB.setText("Record");
                     playB.setEnabled(true);
                     saveB.setEnabled(true);
-                } 
+                }
             } else if (button.equals(playB)) {
                 if (playB.getText().startsWith("Play")) {
                     try {
@@ -752,7 +745,7 @@ public class MidiSynth extends JPanel {
                     sequencer.stop();
                     playB.setText("Play");
                     recordB.setEnabled(true);
-                } 
+                }
             } else if (button.equals(saveB)) {
                 try {
                     System.out.println("about to ready user.dir property.");
@@ -797,10 +790,10 @@ public class MidiSynth extends JPanel {
                 } else {
                     if (MidiSystem.write(sequence, fileTypes[0], file) == -1) {
                         throw new IOException("Problems writing to file");
-                    } 
+                    }
                 }
             } catch (Exception ex) {
-                ex.printStackTrace(); 
+                ex.printStackTrace();
             }
         }
 
@@ -830,4 +823,4 @@ public class MidiSynth extends JPanel {
         f.setSize(w, h);
         f.setVisible(true);
     }
-} 
+}

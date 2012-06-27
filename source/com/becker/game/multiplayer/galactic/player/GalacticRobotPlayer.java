@@ -48,7 +48,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
 
         int numShipsToSend = origin.getNumShips() - numShipsToLeaveBehind;
 
-        List planets = Galaxy.getPlanets();
+        List<Planet> planets = Galaxy.getPlanets();
         // we must set a comparator to sort all the planets relative to.
         Collections.sort(planets, new PlanetComparator(origin));
 
@@ -78,7 +78,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
                 orders.add(order);
             }
         }
-        
+
         GameContext.log(1, "num orders=" + orders.size());
         return orders;
     }

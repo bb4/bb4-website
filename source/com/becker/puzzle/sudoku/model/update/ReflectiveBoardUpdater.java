@@ -28,7 +28,6 @@ public class ReflectiveBoardUpdater implements IBoardUpdater {
         this.updaterClasses = updaterClasses;
     }
 
-
     public ReflectiveBoardUpdater(Class... classes) {
         updaterClasses = Arrays.asList(classes);
     }
@@ -48,7 +47,7 @@ public class ReflectiveBoardUpdater implements IBoardUpdater {
 
     /**
      * Creates the updater instances using reflection. Cool.
-     * @param board
+     * @param board the board
      * @return list of updaters to apply
      */
     private List<IUpdater> createUpdaters(Board board)   {
@@ -56,7 +55,7 @@ public class ReflectiveBoardUpdater implements IBoardUpdater {
         List<IUpdater> updaters = new LinkedList<IUpdater>();
 
         for (Class clazz : updaterClasses) {
-            Constructor ctor = null;
+            Constructor ctor;
             try {
                 ctor = clazz.getDeclaredConstructor(Board.class);
                 try {
