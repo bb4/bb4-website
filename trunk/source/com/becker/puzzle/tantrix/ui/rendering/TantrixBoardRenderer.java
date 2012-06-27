@@ -67,7 +67,7 @@ public class TantrixBoardRenderer implements PuzzleRenderer<TantrixBoard> {
         int i;
         int start = 0;
         int margin = (int)(hexRadius/2.0);
-        double hexWidth = 1.5 * hexRadius;
+        double hexWidth = ROOT3 * hexRadius;
         int rightEdgePos = (int)(margin + hexWidth * edgeLen);
         int bottomEdgePos = (int)(TOP_MARGIN + margin + hexWidth * edgeLen);
 

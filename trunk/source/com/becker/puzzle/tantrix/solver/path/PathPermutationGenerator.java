@@ -10,11 +10,10 @@ import com.becker.puzzle.tantrix.solver.path.permuting.SameTypeTileMixer;
 import java.util.*;
 
 /**
- * A list of tiles representing a primary color path that is used when searching to find a tantrix solution.
- * It has some unique properties.
- * For example, when finding a random neighbor, we select a tile at random and then consider all the
+ * When finding a random neighbor, we select a tile at random and then consider all the
  * 7 other permutations of attaching the current path segments on either side. If any of those give a path
  * with a higher score that is what we use for the permuted path.
+ * Includes a cache to avoid trying the same random path multiple times.
  *
  * @author Barry Becker
  */
@@ -22,7 +21,7 @@ public class PathPermutationGenerator  {
 
     private TantrixPath path;
     private PathEvaluator evaluator_ = new PathEvaluator();
-    //private static Set<TantrixPath> cache = new HashSet<TantrixPath>();
+    private static Set<TantrixPath> cache = new HashSet<TantrixPath>();
 
     /**
      * Constructor
@@ -52,7 +51,7 @@ public class PathPermutationGenerator  {
 
         assert (!pathPermutations.isEmpty()) :
                 "Could not find any permutations of " + this;
-        System.out.println("selecting from among " + pathPermutations.size() +" paths");
+        //System.out.println("selecting from among " + pathPermutations.size() +" paths");
         return selectPath(pathPermutations);
     }
 
@@ -91,26 +90,22 @@ public class PathPermutationGenerator  {
             do {
                 SameTypeTileMixer mixer = new SameTypeTileMixer(typeIter.next(), path);
                 addAllPermutedPaths(mixer.findPermutedPaths(), permutedPaths);
-            } while (permutedPaths.isEmpty() && typeIter.hasNext());
+            } while (typeIter.hasNext());
         }
 
-        // as a last resort use this.
+        // as a last resort use this without checking for it in the cache.
         if (permutedPaths.isEmpty()) {
-            int pivotIndex1 = 1 + MathUtil.RANDOM.nextInt(tiles.size()-2);
-            int pivotIndex2 = 1 + MathUtil.RANDOM.nextInt(tiles.size()-2);
-            return permuter.findPermutedPaths(pivotIndex1, pivotIndex2);
-        }
-         /*
-        else if (radius > 0) {//0.01) {
-            int halfTiles = tiles_.size()/2;
-            int proportion = (int)Math.ceil(5.0 * radius * (halfTiles));
-            int pivotIndex1 = 1 + MathUtil.RANDOM.nextInt(proportion);
-            int pivotIndex2 = tiles_.size() - 2 - MathUtil.RANDOM.nextInt(proportion);
-            //System.out.println("radius="+radius+" numTiles=" + tiles_.size() + " pivotIndex1=" + pivotIndex1 + " pivotIndex2=" + pivotIndex2);
-            return permuter.findPermutedPaths(pivotIndex1, pivotIndex2);
-        } */
 
-        // if radius very small, swap non-fitting tiles of the same shape?
+            List<TantrixPath> paths;
+            do {
+                int pivotIndex1 = 1 + MathUtil.RANDOM.nextInt(tiles.size()-2);
+                int pivotIndex2 = 1 + MathUtil.RANDOM.nextInt(tiles.size()-2);
+                paths = permuter.findPermutedPaths(pivotIndex1, pivotIndex2);
+                System.out.println("paths unexpectedly empty! when p1="+pivotIndex1 + " p2="+ pivotIndex2);
+            } while (paths.isEmpty());
+            return paths;
+        }
+
         return permutedPaths;
     }
 
@@ -134,11 +129,11 @@ public class PathPermutationGenerator  {
      */
     private void addPermutedPath(TantrixPath pathToAdd, List<TantrixPath> permutedPaths) {
 
-        //if (!cache.contains(pathToAdd)) {
+        if (!cache.contains(pathToAdd)) {
             permutedPaths.add(pathToAdd);
-            //cache.add(pathToAdd);
+            cache.add(pathToAdd);
             //System.out.println("csize=" + cache.size());
-        //}
+        }
     }
 
     /**

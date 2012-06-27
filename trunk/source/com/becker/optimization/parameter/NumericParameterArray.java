@@ -220,8 +220,8 @@ public class NumericParameterArray extends AbstractParameterArray {
      public NumericParameterArray getRandomNeighbor(double radius) {
          NumericParameterArray nbr = this.copy();
          for ( int k = 0; k < params_.length; k++ ) {
-             Parameter par = nbr.get(k);
-             par.tweakValue(radius, RANDOM);
+             Parameter param = nbr.get(k);
+             param.tweakValue(radius, RANDOM);
          }
 
          return nbr;
