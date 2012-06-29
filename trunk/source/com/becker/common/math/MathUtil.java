@@ -11,14 +11,14 @@ import java.util.Random;
  * Some supplemental mathematics routines.
  * Static util class.
  *
- * @author Barry Becker Date: Jan 7, 2006
+ * @author Barry Becker
  */
 public final class MathUtil {
 
     public static final double EPS = 0.000000000000000001;
-    
+
     public static final double EPS_MEDIUM = 0.0000000001;
-    
+
     public static final double EPS_BIG = 0.0001;
 
     public static final Random RANDOM = new Random(1);
@@ -103,7 +103,7 @@ public final class MathUtil {
             numerator =  MathUtil.bigPermutation(m, diff);
             denominator = MathUtil.bigFactorial(n);
         }
-        
+
         return numerator.divide(denominator);
     }
 
@@ -144,7 +144,7 @@ public final class MathUtil {
         }
         return f;
     }
-    
+
     /**
      * permutation function computes a!/b!.
      * 0! = 1 (http://www.zero-factorial.com/whatis.html)
@@ -153,7 +153,7 @@ public final class MathUtil {
      * @return a!/b!
      */
     public static long permutation(int a, int b) {
-        assert a > 0; 
+        assert a > 0;
         assert a > b;
         long f = a;
         int anew = a-1;
@@ -163,7 +163,7 @@ public final class MathUtil {
         }
         return f;
     }
-    
+
     /**
      * permutation function computes a!/b!.
       * 0! = 1 (http://www.zero-factorial.com/whatis.html)
@@ -172,7 +172,7 @@ public final class MathUtil {
       * @return a!/b!
      */
     public static BigInteger bigPermutation(int a, int b) {
-        assert a > 0; 
+        assert a > 0;
         assert a > b;
         BigInteger f = new BigInteger(Integer.toString(a));
         int anew = a-1;

@@ -1,20 +1,23 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.format;
 
+
+import java.util.Currency;
+import java.util.Locale;
+
 /**
  * @author Barry Becker
  */
 public class CurrencyFormatter implements INumberFormatter {
 
-    public CurrencyFormatter() {
-    }
+    private static final String CURRENCY_SYMBOL = Currency.getInstance(Locale.US).getSymbol();
+
 
     public String format(double number) {
         String formattedNumber = FormatUtil.formatNumber(number);
-        return  "$" + formattedNumber;
+        return  CURRENCY_SYMBOL + formattedNumber;
     }
 
-    
     /** for testing */
     public static void main(String[] args) {
         CurrencyFormatter fmtr = new CurrencyFormatter();

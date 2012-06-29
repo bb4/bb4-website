@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
  * Miscellaneous commonly used static utility methods.
  */
 public final class FormatUtil {
-    
+
     private static final DecimalFormat expFormat_ = new DecimalFormat("0.###E0");
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");
     private static final DecimalFormat intFormat_ = new DecimalFormat("#,###");
@@ -16,6 +16,7 @@ public final class FormatUtil {
 
 
     /**
+     * Show a reasonable number of significant digits.
      * @param num the number to format.
      * @return a nicely formatted string representation of the number.
      */
@@ -25,10 +26,11 @@ public final class FormatUtil {
         if (absnum == 0)  {
             return "0";
         }
-        else if (absnum > 10000000.0 || absnum < 0.000000001) {
+        if (absnum > 10000000.0 || absnum < 0.000000001) {
             return expFormat_.format(num);
         }
-        else if (absnum > 1000.0) {
+
+        if (absnum > 1000.0) {
             format_.setMinimumFractionDigits(0);
             format_.setMaximumFractionDigits(0);
         }
