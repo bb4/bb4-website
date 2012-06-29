@@ -3,7 +3,7 @@ package com.becker.ui.legend;
 
 import com.becker.common.ColorMap;
 import com.becker.common.format.FormatUtil;
-import com.becker.common.math.NiceNumbers;
+import com.becker.common.math.CutPointGenerator;
 import com.becker.common.math.Range;
 
 import javax.swing.*;
@@ -36,6 +36,8 @@ public class ContinuousColorLegend extends JPanel {
     private static final Color EDIT_BAR_BG = new Color(255, 255, 255, 180);
     private static final BasicStroke MARKER_STROKE = new BasicStroke(0.5f);
 
+    private CutPointGenerator cutPointGenerator;
+
     /**
      * By default the min and max come from the colormap min and max
      * in some cases, such as synchronizing with another map, you may want to adjust them.
@@ -44,10 +46,6 @@ public class ContinuousColorLegend extends JPanel {
 
     private LegendEditBar legendEditBar_;
     private boolean isEditable_ = false;
-
-    public ContinuousColorLegend(ColorMap colormap) {
-        this(null, colormap, false);
-    }
 
     public ContinuousColorLegend(String title, ColorMap colormap) {
         this(title, colormap, false);
@@ -58,9 +56,10 @@ public class ContinuousColorLegend extends JPanel {
         colormap_ = colormap;
         range_ = new Range(colormap_.getMinValue(), colormap_.getMaxValue());
         isEditable_ = editable;
+        cutPointGenerator = new CutPointGenerator();
         initUI();
     }
-    
+
     public Range getRange() {
         return range_;
     }
@@ -400,9 +399,8 @@ public class ContinuousColorLegend extends JPanel {
             FontRenderContext frc = g2.getFontRenderContext();
 
             int desiredTicks = this.getWidth() / LABEL_SPACING;
-            
-            double[] values =
-                      NiceNumbers.getCutPoints(getRange(), 2 + desiredTicks, true);
+
+            double[] values = cutPointGenerator.getCutPoints(getRange(), 2 + desiredTicks);
 
             g2.setColor(this.getBackground());  // was white
             int width = this.getWidth();
@@ -410,7 +408,7 @@ public class ContinuousColorLegend extends JPanel {
             int numVals = values.length;
 
             double rat = (double) (width - 20) / getRangeExtent();
-            
+
             g2.setColor(Color.black);
             g2.setFont(LABEL_FONT);
             g2.drawString(FormatUtil.formatNumber(getMin()), 2, 10);
