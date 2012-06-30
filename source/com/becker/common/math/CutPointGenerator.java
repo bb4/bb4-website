@@ -135,9 +135,9 @@ public class CutPointGenerator {
     /**
      * Find the number of fractional digits to show in the nice numbers.
      * @param range range to check.
-     * @param maxTicks no more than this many cutpoints.
+     * @param maxTicks no more than this many cut points.
      * @return Recommended number of fractional digits to display.
-     *     The cutpoints eg. 0, 1, 2, etc.
+     *     The cut points eg. 0, 1, 2, etc.
      */
     int getNumberOfFractionDigits(Range range, int maxTicks) {
         checkArgs(range);
@@ -157,12 +157,16 @@ public class CutPointGenerator {
      * @param range range to check for NaN values.
      */
     private void checkArgs(Range range) {
+        if (Double.isNaN(range.getExtent())) {
+            throw new IllegalArgumentException("Min cannot be greater than max for " + range);
+        }
         if (Double.isNaN(range.getMin()) || Double.isInfinite(range.getMin())) {
             throw new IllegalArgumentException("min is not a number");
         }
         if (Double.isNaN(range.getMax()) || Double.isInfinite(range.getMax())) {
             throw new IllegalArgumentException("max is not a number");
         }
+
     }
 
     private double checkSmallNumber(double value) {
