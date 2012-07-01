@@ -32,10 +32,17 @@ public class CutPointGenerator {
     private boolean useTightLabeling;
 
 
+    /**
+     * Constructor
+     */
     public CutPointGenerator() {
        this(true, new DecimalFormat("###,###.##"));
     }
 
+    /**
+     * Constructor
+     * @param useTightLabeling If true, show the precise min/max values at the extreme cut points (tight)
+     */
     public CutPointGenerator(boolean useTightLabeling) {
         this(useTightLabeling, new DecimalFormat("###,###.##"));
     }
