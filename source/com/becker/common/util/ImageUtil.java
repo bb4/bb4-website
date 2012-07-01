@@ -24,7 +24,6 @@ import java.io.IOException;
  *
  * @author Barry Becker
  */
-@SuppressWarnings({"StaticMethodOnlyUsedInOneClass"})
 public final class ImageUtil {
 
     /** print quality for JPGs. 1.0 is no compression.    */
@@ -187,7 +186,7 @@ public final class ImageUtil {
         rgbaL[1] = (float) (colorLL[1] + x * (colorLR[1] - colorLL[1]));
         rgbaL[2] = (float) (colorLL[2] + x * (colorLR[2] - colorLL[2]));
         rgbaL[3] = (float) (colorLL[3] + x * (colorLR[3] - colorLL[3]));
-         
+
         rgbaU[0] = (float) (colorUL[0] + x * (colorUR[0] - colorUL[0]));
         rgbaU[1] = (float) (colorUL[1] + x * (colorUR[1] - colorUL[1]));
         rgbaU[2] = (float) (colorUL[2] + x * (colorUR[2] - colorUL[2]));

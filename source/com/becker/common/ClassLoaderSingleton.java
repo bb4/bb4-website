@@ -2,7 +2,7 @@
 package com.becker.common;
 
 /**
- * Enables you to get a class loader from a static context.
+ * Allows getting a class loader from a static context.
  *
  * @author Barry Becker
  */
@@ -21,9 +21,9 @@ public class ClassLoaderSingleton {
         }
         return loader_;
     }
-    
+
     /**
-     * @param className  the class to load.
+     * @param className the class to load.
      * @return  the loaded class.
      */
     public static Class loadClass(String className){

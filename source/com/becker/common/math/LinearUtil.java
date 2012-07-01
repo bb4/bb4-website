@@ -20,7 +20,7 @@ public final class LinearUtil {
     /**
      * matrix conjugate-Gradient solver for Ax=b
      * @param matrix the matrix of linear coefficients
-     * @param b the right ahnd side
+     * @param b the right hand side
      * @param initialGuess the initial guess for the solution x, x0
      * @param eps the tolerable error (eg .0000001)
      */
@@ -42,7 +42,7 @@ public final class LinearUtil {
         matrixInverse.invert();
         double error, norm;
         int iteration = 0;
-        //return initialGuess;
+
         do {
             matrixMultp.mul( matrix, p );
             double lambda = (r.dot( p ) / p.dot( matrixMultp ));

@@ -35,7 +35,7 @@ public final class DomUtil {
 
     private DomUtil() {}
 
-    /** This is where I keep all my published xsds (xml schemas)  and dtds (doc type definitions) */
+    /** This URL is where I keep all my published xsds (xml schemas) and dtds (doc type definitions) */
     private static final String SCHEMA_LOCATION = "http://barrybecker4.com/schema/";
 
     /**
@@ -175,7 +175,7 @@ public final class DomUtil {
         String attribs = "";
         if (attribMap!= null) {
             attribMap.getLength();
-         
+
             for (int i=0; i<attribMap.getLength(); i++) {
                 Node n = attribMap.item(i);
                 attribs += n.getNodeName()+"=\""+n.getNodeValue() +"\"  ";
@@ -248,7 +248,7 @@ public final class DomUtil {
             pce.printStackTrace();
 
         } catch (IOException ioe) {
-           // I/O error 
+           // I/O error
            ioe.printStackTrace();
         }
         return document;
@@ -264,7 +264,7 @@ public final class DomUtil {
             return parseXML(is, true, null);
         } catch  (IOException e) {
             System.err.println("Failed to open " +  url.getPath());
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
         return null;
     }
@@ -302,7 +302,7 @@ public final class DomUtil {
             Logger.getLogger(DomUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * @param oStream stream to write xml to.
      * @param document the xml document to be written to the specified output stream
@@ -320,9 +320,9 @@ public final class DomUtil {
             }
         } catch (TransformerConfigurationException ex) {
             Logger.getLogger(DomUtil.class.getName()).log(Level.SEVERE, null, ex);
-        }      
+        }
         DOMSource source = new DOMSource(document);
-        
+
          // takes some OutputStream or Writer
         StreamResult result =  new StreamResult(oStream);  // replace out with FileOutputStream
 
