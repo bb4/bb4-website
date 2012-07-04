@@ -19,7 +19,7 @@ public abstract class AbstractParameter implements Parameter {
     private double range_ = 0.0;
     private String name_ = null;
     private boolean integerOnly_ = false;
-    
+
     protected RedistributionFunction redistributionFunction_;
 
     /**
@@ -51,7 +51,7 @@ public abstract class AbstractParameter implements Parameter {
 
     /**
      * Teak the value of this parameter a little. If r is big, you may be tweaking it a lot.
-     * 
+     *
      * @param r  the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
      *     r is relative to each parameter range (in other words scaled by it).
      */
@@ -60,18 +60,18 @@ public abstract class AbstractParameter implements Parameter {
         if (r == 0 ) {
             return;  // no change in the param.
         }
-        
-        double change = 0.5 * rand.nextGaussian() * r * getRange();
+
+        double change = (rand.nextGaussian() - 0.5) * r * getRange();
         value_ += change;
         if (value_ > getMaxValue()) {
               value_ = getMaxValue();
         }
         else if (value_ < getMinValue()) {
              value_ = getMinValue();
-        }  
+        }
         setValue(value_);
    }
-    
+
     public void randomizeValue(Random rand) {
         setValue(getMinValue() + rand.nextDouble() * getRange());
     }
@@ -86,13 +86,13 @@ public abstract class AbstractParameter implements Parameter {
         sa.append( FormatUtil.formatNumber(getMinValue()) );
         sa.append( ", " );
         sa.append( FormatUtil.formatNumber(getMaxValue()) );
-        sa.append( ']' );  
+        sa.append( ']' );
         if (this.redistributionFunction_ != null) {
             sa.append(" redistributionFunction=").append(this.redistributionFunction_);
         }
         return sa.toString();
     }
-    
+
     public Class getType() {
         if (isIntegerOnly()) {
             return int.class; // Integer.TYPE;  //int.class;
@@ -101,29 +101,29 @@ public abstract class AbstractParameter implements Parameter {
             return float.class; // Float.TYPE; //  float.class;
         }
     }
-    
+
     public void setValue(double value) {
         validateRange(value);
         this.value_ = value;
         // if there is a redistribution function, we need to apply its inverse.
         if (redistributionFunction_ != null) {
             double v = (value - minValue_) / getRange();
-            this.value_= 
+            this.value_=
                     minValue_ + getRange() *redistributionFunction_.getInverseFunctionValue(v);
         }
     }
 
     public double getValue() {
-        double value = value_;     
+        double value = value_;
         if (redistributionFunction_ != null) {
             double v = (value_ - minValue_) / getRange();
             v = redistributionFunction_.getValue(v);
-            value = v * getRange() + minValue_;        
-        } 
+            value = v * getRange() + minValue_;
+        }
         validateRange(value);
         return value;
-    }  
-   
+    }
+
 
     public double getMinValue() {
         return minValue_;
@@ -140,13 +140,13 @@ public abstract class AbstractParameter implements Parameter {
     public String getName() {
         return name_;
     }
-    
+
     public void setRedistributionFunction(RedistributionFunction function) {
         redistributionFunction_ = function;
     }
-    
+
     private void validateRange(double value) {
-        assert (value >= minValue_ && value <= maxValue_) : 
+        assert (value >= minValue_ && value <= maxValue_) :
             "Value " + value + " outside range [" + minValue_ +", " + maxValue_ + "] for parameter " + getName();
     }
 
@@ -180,5 +180,5 @@ public abstract class AbstractParameter implements Parameter {
         result = 31 * result + (integerOnly_ ? 1 : 0);
         return result;
     }
-   
+
 }

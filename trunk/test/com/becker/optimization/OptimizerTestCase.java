@@ -63,6 +63,7 @@ public abstract class OptimizerTestCase extends TestCase {
                                      Optimizer optimizer, double fitnessRange,
                                      double errorThresh, String title) {
 
+        System.out.println(title + "\nabout to apply "+ optType + " to " + problem.getName() + " with initial guess =" + initialGuess);
         ParameterArray solution = optimizer.doOptimization(optType, initialGuess, fitnessRange);
 
         double error = problem.getError(solution);

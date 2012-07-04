@@ -9,6 +9,7 @@ import java.util.Random;
 
 /**
  * Simulated annealing optimization strategy.
+ * See http://en.wikipedia.org/wiki/Annealing for an explanation of the name.
  *
  * @author Barry Becker
  */
@@ -26,7 +27,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
     private double tempMax_ = DEFAULT_TEMP_MAX;
 
     /** deterministic randomness */
-    private static final Random RAND = new Random(0);
+    private static final Random RAND = new Random(1);
 
     /**
      * Constructor.
@@ -39,7 +40,6 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
     }
 
     /**
-     *
      * @param tempMax the initial temperature at the start of the simulated annealing process (before cooling).
      */
     public void setMaxTemperature(double tempMax) {

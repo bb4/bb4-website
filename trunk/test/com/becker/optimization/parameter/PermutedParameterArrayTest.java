@@ -40,7 +40,7 @@ public class PermutedParameterArrayTest extends TestCase {
         PermutedParameterArray params1 = createPermParameterArray(new int[] {2, 1, 0, 3, 4});
         PermutedParameterArray params2 = createPermParameterArray(new int[] {0, 1, 2, 3, 4});
 
-        assertEquals("Unexpected distance", 14.0, params1.distance(params2));
+        assertEquals("Unexpected distance", 6.0, params1.distance(params2));
     }
 
     /**
@@ -55,11 +55,11 @@ public class PermutedParameterArrayTest extends TestCase {
 
 
     /**
-     * As different as they can be. No runs
+     * As different as they can be. No runs even when reversed.
      */
-    public void testPermutedDistanceMaximumDifference() {
+    public void testPermutedDistanceMaximumDifferent() {
         PermutedParameterArray params1 = createPermParameterArray(new int[] {4, 2, 0, 3, 1});
-        PermutedParameterArray params2 = createPermParameterArray(new int[] {4, 1, 3, 0, 2});
+        PermutedParameterArray params2 = createPermParameterArray(new int[] {0, 1, 2, 3, 4});
 
         assertEquals("Unexpected distance", 32.0, params1.distance(params2));
     }

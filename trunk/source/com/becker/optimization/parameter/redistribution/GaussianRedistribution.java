@@ -48,7 +48,7 @@ public class GaussianRedistribution extends AbstractRedistributionFunction {
         double highMissing = 1.0 - cdfFunction[NUM_MAP_VALUES-1];
 
         System.out.println("lowMissing=" + lowMissing + " highMissing="+highMissing);
-        //System.out.println(" x="+x  + " inc="+inc);
+
         // reallocate the part that is missing.
         int numMapValsm1 = NUM_MAP_VALUES-1;
         for (int i=1; i<NUM_MAP_VALUES; i++) {

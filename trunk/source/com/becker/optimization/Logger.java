@@ -21,19 +21,16 @@ public class Logger {
     /**
      * Constructor
      */
-    public Logger(String sLogFile)
-    {
+    public Logger(String sLogFile) {
         assert sLogFile!=null;
         sLogFile_ = sLogFile;
     }
-
 
     /**
      * create and init the log file.
      * @param params used to determine param names.
      */
-    public void initialize(ParameterArray params)
-    {
+    public void initialize(ParameterArray params) {
         try {
             // create the log file (destroying it if it already existed)
             FileWriter logFile = new FileWriter( sLogFile_, false );
@@ -62,9 +59,8 @@ public class Logger {
      * @param params the params to write.
      */
     public final void write(int iteration, double fitness, double jumpSize, double distance,
-                            ParameterArray params, String comment)
-    {
-        String sep = Optimizer.SEPARATOR;
+                            ParameterArray params, String comment)  {
+        String sep = SEPARATOR;
         String rowText = iteration + sep
                        + FormatUtil.formatNumber(fitness) + sep
                        + FormatUtil.formatNumber(jumpSize) + sep

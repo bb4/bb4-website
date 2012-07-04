@@ -31,13 +31,10 @@ import com.becker.optimization.strategy.OptimizationStrategyType;
  */
 public class Optimizer {
 
+    /** The thing to be optimized */
     Optimizee optimizee_;
 
-    // debug level of 0 means no debug info, 3 is all debug info.
-    protected static final int DEBUG_LEVEL = 0;
-
     protected Logger logger_;
-    public static final String SEPARATOR = ",\t";
 
     protected OptimizationListener listener_;
 
@@ -81,7 +78,7 @@ public class Optimizer {
             logger_.initialize( params );
             optStrategy.setLogger(logger_);
         }
-  
+
         optStrategy.setListener(listener_);
         return optStrategy.doOptimization(params, fitnessRange);
     }

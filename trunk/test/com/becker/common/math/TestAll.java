@@ -17,6 +17,7 @@ public class TestAll {
         TestSuite suite =  new TestSuite("All Math Tests");
 
         suite.addTestSuite(MathUtilTest.class);
+        suite.addTestSuite(MultiArrayTest.class);
         suite.addTestSuite(NiceNumberRounderTest.class);
         suite.addTestSuite(NiceNumbersTest.class);
 

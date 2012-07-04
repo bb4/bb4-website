@@ -33,7 +33,6 @@ public class StringParameterWidget extends ParameterWidget implements ActionList
         dropdown = new JComboBox(sparam.getStringValues().toArray());
         dropdown.setName(parameter.getName());
         dropdown.setMaximumSize(new Dimension(200, 20));
-        //System.out.println("values= " + sparam.getStringValues().toArray());
         dropdown.setToolTipText(parameter.getName());
         dropdown.addActionListener(this);
         add(dropdown, BorderLayout.CENTER);

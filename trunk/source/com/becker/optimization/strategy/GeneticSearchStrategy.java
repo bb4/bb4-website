@@ -19,8 +19,8 @@ import java.util.*;
 public class GeneticSearchStrategy extends OptimizationStrategy {
 
     // the amount to decimate the parent population by on each iteration
-    private static final double CULL_FACTOR = 0.9;
-    private static final double NBR_RADIUS = 0.04;
+    private static final double CULL_FACTOR = 0.8;
+    private static final double NBR_RADIUS = 0.08;
     private static final double NBR_RADIUS_SHRINK_FACTOR = 0.9;
     private static final double NBR_RADIUS_EXPAND_FACTOR = 1.02;
     private static final double NBR_RADIUS_SOFTENER = 5.0;
@@ -213,11 +213,9 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
             // we multiply the radius by m because we want the worse ones to have
             // higher variability.
             double r = (keeperIndex + NBR_RADIUS_SOFTENER)/NBR_RADIUS_SOFTENER * nbrRadius_;
-            //System.out.println("r="+r + " keeperIndex=" + keeperIndex + " nbrRadius_=" + nbrRadius_);
             ParameterArray nbr = p.getRandomNeighbor(r);
             if (!population.contains(nbr)) {
                 population.add(nbr);
-                //System.out.println("adding p=" + p);
                 notifyOfChange(p);
             }
             k++;

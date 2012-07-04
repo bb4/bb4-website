@@ -11,16 +11,12 @@ import java.awt.geom.Point2D;
 
 /**
  * This is a simple search space to test the optimization package.
- * The function we will try to maximize is
- *
- *   z = 1 - (1 - p1)^2 - (2 - p2)^2
- *
- * Show the solution visually
+ * The function we will try to maximize is one of the AnalyticFunction variants.
+ * Shows the solution visually
  *
  * @author Barry Becker
  */
 public class GraphAnalyticFunctionSolution extends AnalyticFunctionTestProblem {
-
 
     /** Constructor */
     public GraphAnalyticFunctionSolution(AnalyticVariation v) {
@@ -46,7 +42,7 @@ public class GraphAnalyticFunctionSolution extends AnalyticFunctionTestProblem {
      * Shows the path to the solution graphically.
      */
     public static void main(String[] args) {
-        AnalyticVariation v = AnalyticVariation.SINUSOIDAL;
+        AnalyticVariation v = AnalyticVariation.PARABOLA;
         OptimizeeTestProblem testProblem = new GraphAnalyticFunctionSolution(v);
         Optimizer optimizer =
                 new Optimizer(testProblem, FileUtil.PROJECT_HOME + "performance/test_optimizer/poly_optimization.txt");
@@ -56,10 +52,12 @@ public class GraphAnalyticFunctionSolution extends AnalyticFunctionTestProblem {
 
         ParameterArray initialGuess = testProblem.getInitialGuess();
 
-        doTest(OptimizationStrategyType.SIMULATED_ANNEALING, initialGuess, optimizer, v, testProblem.getFitnessRange());
-        // for (OptimizationStrategyType type : OptimizationStrategyType.values()) {
-        //     doTest(type, initialGuess, optimizer, v, testProblem.getFitnessRange());
-        // }
+        //doTest(OptimizationStrategyType.GENETIC_SEARCH, initialGuess, optimizer, v, testProblem.getFitnessRange());
+        for (OptimizationStrategyType type : OptimizationStrategyType.values()) {
+             doTest(type, initialGuess, optimizer, v, testProblem.getFitnessRange());
+             oef.repaint();
+        }
+
     }
 
 }

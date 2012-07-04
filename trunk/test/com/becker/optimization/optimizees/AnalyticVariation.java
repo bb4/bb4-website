@@ -1,8 +1,12 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.optimizees;
 
+import com.becker.optimization.parameter.NumericParameterArrayTest;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
+import static com.becker.optimization.optimizees.AnalyticFunctionConsts.P1;
+
+
 import static com.becker.optimization.optimizees.AnalyticFunctionConsts.*;
 
 /**
@@ -15,18 +19,18 @@ public enum AnalyticVariation {
 
     PARABOLA {
         /**
-         * Smooth inverted parabola.
+         * Smooth inverted parabola with max at 1000.0.
          */
         @Override
         public double evaluateFitness(ParameterArray a) {
-            return  1000 + ((1.0 - Math.pow(AnalyticFunctionConsts.P1 - a.get(0).getValue(), 2)
-                                 - Math.pow(AnalyticFunctionConsts.P2 - a.get(1).getValue(), 2)));
+            return  1000 + ((1.0 - Math.pow(P1 - a.get(0).getValue(), 2)
+                                 - Math.pow(P2 - a.get(1).getValue(), 2)));
         }
 
         @Override
         public double getErrorTolerancePercent(OptimizationStrategyType opt) {
             return getErrorTolerancePercent(opt, new double[] {
-                    GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, BASE_TOLERANCE,  0,  GLOB_SAMP_TOL,   GLOB_SAMP_TOL, BASE_TOLERANCE
+                    GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, GLOB_SAMP_TOL,  0,  GLOB_SAMP_TOL,   GLOB_SAMP_TOL, BASE_TOLERANCE
             });
         }
     },
@@ -38,13 +42,14 @@ public enum AnalyticVariation {
          */
         @Override
         public double evaluateFitness(ParameterArray a) {
-            return PARABOLA.evaluateFitness(a) + 0.5 * Math.cos(a.get(0).getValue() * a.get(1).getValue() - 2.0);
+            return PARABOLA.evaluateFitness(a)
+                    + 0.5 * Math.cos((a.get(0).getValue() - P1) * (a.get(1).getValue() - P2)) - 0.5;
         }
 
         @Override
         public double getErrorTolerancePercent(OptimizationStrategyType opt) {
             return getErrorTolerancePercent(opt, new double[] {
-                    GLOB_SAMP_TOL, RELAXED_TOL, 0.01, BASE_TOLERANCE,  RELAXED_TOL, 0.042, 0.042, BASE_TOLERANCE
+                    GLOB_SAMP_TOL, RELAXED_TOL, 0.01, GLOB_SAMP_TOL,  RELAXED_TOL, 0.042, 0.042, BASE_TOLERANCE
             });
         }
     },
@@ -57,18 +62,18 @@ public enum AnalyticVariation {
          */
         @Override
         public double evaluateFitness(ParameterArray a) {
-            return PARABOLA.evaluateFitness(a) + 0.5 * Math.abs(Math.cos(a.get(0).getValue() * a.get(1).getValue() - 2.0));
+            return PARABOLA.evaluateFitness(a)
+                    + 0.5 * Math.abs(Math.cos((a.get(0).getValue() - P1) * (a.get(1).getValue() - P2))) - 0.5;
         }
 
         @Override
         public double getErrorTolerancePercent(OptimizationStrategyType opt) {
             return getErrorTolerancePercent(opt, new double[] {
-                    GLOB_SAMP_TOL, 0.0128, 0.01, BASE_TOLERANCE,  RELAXED_TOL, 0.03,  0.03,  BASE_TOLERANCE
+                    GLOB_SAMP_TOL, 0.0128, 0.01, GLOB_SAMP_TOL,  RELAXED_TOL, 0.03,  0.03,  BASE_TOLERANCE
             });
         }
     },
     STEPPED  {
-
         /**
          *  This version introduces a bit of step function noise.
          */
@@ -81,7 +86,7 @@ public enum AnalyticVariation {
         @Override
         public double getErrorTolerancePercent(OptimizationStrategyType opt) {
             return getErrorTolerancePercent(opt, new double[] {
-                    GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, BASE_TOLERANCE, RELAXED_TOL,  0.042,  0.042, BASE_TOLERANCE
+                    GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, GLOB_SAMP_TOL, RELAXED_TOL,  0.042,  0.042, BASE_TOLERANCE
             });
         }
     };
@@ -116,4 +121,15 @@ public enum AnalyticVariation {
         }
         return percent;
     }
+
+    public static void main(String[] args) {
+        double p1 = 0.97795;
+        double p2 = 1.975;
+        System.out.println("f("+p1+", "+ p2 +")="
+                + PARABOLA.evaluateFitness(NumericParameterArrayTest.createParamArray(p1, p2)));
+
+        //Which evaluates to: 1001.4977043582815
+    }
+
+
 }
