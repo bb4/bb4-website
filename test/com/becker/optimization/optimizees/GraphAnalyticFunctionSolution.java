@@ -3,7 +3,7 @@ package com.becker.optimization.optimizees;
 
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
-import com.becker.optimization.OptimizerEvalFrame;
+import com.becker.optimization.ui.OptimizerEvalFrame;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 
