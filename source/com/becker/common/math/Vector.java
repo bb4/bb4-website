@@ -63,7 +63,7 @@ public class Vector {
         double divisor = magThis * magB;
         divisor = (divisor == 0) ? 1.0 : divisor;
         double dot = this.dot(b);
-        double normalizedDotProduct = dot / divisor;
+        double normalizedDotProduct = dot / (1.0 + MathUtil.EPS) * divisor;
 
         assert normalizedDotProduct >= -1 && normalizedDotProduct <= 1 :
                 "Dot product, " + normalizedDotProduct +", was outside expected range. Dot=" + dot + " div="+ divisor;

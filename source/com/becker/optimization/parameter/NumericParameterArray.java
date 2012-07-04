@@ -92,13 +92,10 @@ public class NumericParameterArray extends AbstractParameterArray {
         System.out.println("reqNumSamples=" + requestedNumSamples);
         int i;
         int[] dims = new int[numDims];
-        int numSamples = 1;
+
         int samplingRate = (int)Math.pow((double)requestedNumSamples, 1.0/numDims);
-        for ( i = 0; i < numDims; i++ ) {
-            dims[i] = samplingRate;
-            numSamples *= dims[i];
-        }
-        System.out.println("dims="+Arrays.toString(dims));
+        int numSamples = determineNumSamples(dims, samplingRate);
+        System.out.println("dims="+Arrays.toString(dims) + " samplingRate="  + samplingRate);
         MultiArray samples = new MultiArray( dims );
         List<ParameterArray> globalSamples = new ArrayList<ParameterArray>(numSamples);
 
@@ -108,13 +105,25 @@ public class NumericParameterArray extends AbstractParameterArray {
 
             for ( int j = 0; j < nextSample.size(); j++ ) {
                 Parameter p = nextSample.get( j );
-                double increment = (p.getMaxValue() - p.getMinValue()) / (samplingRate + 1.0);
-                p.setValue(increment / 2.0 + index[j] * increment);
+                double increment = (p.getMaxValue() - p.getMinValue()) / samplingRate;
+                p.setValue(p.getMinValue() + increment / 2.0 + index[j] * increment);
             }
 
             globalSamples.add(nextSample);
         }
         return globalSamples;
+    }
+
+
+    private int determineNumSamples(int[] dims, int samplingRate) {
+        int i;
+        int numSamples = 1;
+
+        for ( i = 0; i < dims.length; i++ ) {
+            dims[i] = samplingRate;
+            numSamples *= dims[i];
+        }
+        return numSamples;
     }
 
     /**

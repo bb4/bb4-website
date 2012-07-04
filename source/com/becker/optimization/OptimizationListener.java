@@ -5,7 +5,7 @@ import com.becker.optimization.parameter.ParameterArray;
 
 
 /**
- * Called when the optimizer has improved
+ * Called whenever the optimizer has improved its optimization of the optimizee.
  * @author Barry Becker
  */
 public interface OptimizationListener {

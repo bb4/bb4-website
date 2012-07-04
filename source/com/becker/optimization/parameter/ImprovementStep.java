@@ -88,7 +88,7 @@ public class ImprovementStep {
         NumericParameterArray oldParams = currentParams.copy();
 
         iter_.updateGradient(jumpSize, gradLength);
-        //System.out.println("gradient = " + iter_.gradient + " jumpSize="+ jumpSize);
+        //log("gradient = " + iter_.gradient + " jumpSize="+ jumpSize);
         currentParams = currentParams.copy();
         currentParams.add( iter_.getGradient() );
         double gaussRadius = 0.01;
@@ -121,7 +121,7 @@ public class ImprovementStep {
             currentParams = oldParams;
             if (!sameParams) {
                 // we have not improved, try again with a reduced jump size.
-                //System.out.println( "Warning: the new params are worse so reduce the step size and try again");
+                //log( "Warning: the new params are worse so reduce the step size and try again");
                 //log(numIterations, currentParams.getFitness(), jumpSize, Double.NaN, currentParams, "not improved");
                 jumpSize *= JUMP_SIZE_DEC_FACTOR;
             }

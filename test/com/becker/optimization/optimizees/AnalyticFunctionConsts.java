@@ -27,8 +27,8 @@ public class AnalyticFunctionConsts {
 
     // define the initialGuess in some bounded region of the 2-dimensional search space.
     private static final double[] vals    = {  6.81,  7.93};   // initialGuess
-    private static final double[] minVals = {-20.0, -20.0};
-    private static final double[] maxVals = { 20.0,  20.0};
+    private static final double[] minVals = {-10.0, -10.0};
+    private static final double[] maxVals = { 10.0,  10.0};
     private static final String[] names   = {"p1",   "p2"};
     public static final ParameterArray INITIAL_GUESS = new NumericParameterArray(vals, minVals, maxVals, names);
 
@@ -36,7 +36,7 @@ public class AnalyticFunctionConsts {
     public static final double BASE_TOLERANCE = 0.0002;
     public static final double RELAXED_TOL = 0.001;
     /** Really relax this one because we do not expect it to ever get that close */
-    public static final double GLOB_SAMP_TOL = 0.04;
+    public static final double GLOB_SAMP_TOL = 0.03;
 
     private AnalyticFunctionConsts() {}
 }

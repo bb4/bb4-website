@@ -40,4 +40,5 @@ public abstract class OptimizeeTestProblem implements Optimizee {
      * @return  approximate range of fitness values (usually 0 to this number).
      */
     public abstract double getFitnessRange();
+
 }

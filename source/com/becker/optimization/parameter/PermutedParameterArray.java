@@ -45,6 +45,7 @@ public class PermutedParameterArray extends AbstractParameterArray {
         }
         return paramCopy;
     }
+
     /**
      * The distance computation will be quite different for this than a regular parameter array.
      * We want the distance to represent a measure of the amount of similarity between two permutations.
@@ -56,58 +57,81 @@ public class PermutedParameterArray extends AbstractParameterArray {
         assert ( params_.length == pa.size() );
 
         ParameterArray paReverse = ((PermutedParameterArray) pa).reverse();
-        return Math.min(distanceAux(pa), distanceAux(paReverse));
+        return Math.min(difference(pa), difference(paReverse));
     }
 
-    public double distanceAux( ParameterArray pa )  {
+    /**
+     * The amount of difference can be used as a measure of distance
+     * @param pa
+     * @return the amount of difference between pa and ourselves.
+     */
+    public double difference(ParameterArray pa)  {
 
         List<Integer> runLengths = new LinkedList<Integer>();
         int len = params_.length;
         int i = 0;
-        int k;
 
-        while (i<len) {
-
-            Parameter param = get(i);
-
-            // find the corresponding entry in the other parameter array. it must be there
-            int j=0;
-            while (j<len && !param.equals(pa.get(j)) ) {
-                j++;
-            }
-            assert (j<len) : "Param "+  param +  " did not match any values in "+ pa;
-
-            int ii = i;
-            k = 1;
-            boolean matchFound = false;
-            boolean matched;
-            do {
-                ii = ++ii % len;
-                j = ++j % len;
-                k++;
-                matched = this.get(ii).equals(pa.get(j));
-                matchFound |= matched;
-            } while (matched && k<=len);
-
-            int runLength = k-1;
-
-            if (matchFound) {
-                runLengths.add(runLength);
-            }
+        while (i < len) {
+            int runLength = determineRunLength(pa, len, i, runLengths);
             i += runLength;
         }
+        System.out.println("runLengths="+ runLengths);
+        double diff = calcDistance(runLengths);
+        System.out.println("diff="+ diff);
 
-        return calcDistance(runLengths);
+        return diff;
     }
 
     /**
-     * Find the distance between two permutations that have runs of the specified lengths.
+     * Adds the computed runlength to the runLengths list.
+     * @return the computed runlength
+     */
+    private int determineRunLength(ParameterArray pa, int len, int i, List<Integer> runLengths) {
+        int k;
+        int ii = i;
+        k = 1;
+        int j = findCorresspondingEntryIndex(pa, len, get(i));
+
+        boolean matchFound = false;
+        boolean matched;
+        do {
+            ii = ++ii % len;
+            j = ++j % len;
+            k++;
+            matched = this.get(ii).equals(pa.get(j));
+            matchFound |= matched;
+        } while (matched && k<=len);
+
+        int runLength = k-1;
+
+        if (matchFound) {
+            runLengths.add(runLength);
+        }
+        return runLength;
+    }
+
+    /**
+     * @return  the entry in pa that corresponds to param.
+     * @throws AssertionError if not there. It must be there.
+     */
+    private int findCorresspondingEntryIndex(ParameterArray pa, int len, Parameter param) {
+        int j=0;
+        while (j<len && !param.equals(pa.get(j)) ) {
+            j++;
+        }
+        assert (j<len) : "Param "+  param +  " did not match any values in "+ pa;
+        return j;
+    }
+
+    /**
+     * Find the distance between two permutations that each have runs of the specified lengths.
      * @param runLengths list of run lengths.
      * @return the approximate distance between two permutations.
      */
     private double calcDistance(List<Integer> runLengths) {
 
-        // careful this could overflow. If it does we may need to switch to BigInteger.
+        // careful this could overflow if the run is really long.
+        // If it does we may need to switch to BigInteger.
         double max = Math.pow(2, size());
 
         if (runLengths.isEmpty()) return max;
@@ -165,9 +189,6 @@ public class PermutedParameterArray extends AbstractParameterArray {
         int numSamples = requestedNumSamples;
 
         if (requestedNumSamples > closeFactor *numPermutations) {
-
-            System.out.println("Warning: samples requested approaching num permutations. Reducing to "
-                    + closeFactor * numPermutations);
             numSamples = (int)(closeFactor * numPermutations);
         }
 
