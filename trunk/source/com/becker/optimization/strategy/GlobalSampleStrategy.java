@@ -75,7 +75,7 @@ public class GlobalSampleStrategy extends OptimizationStrategy {
             //System.out.println( "key = " + hashKey + '\n' + testParams + "\n  fitness=" + fitness );
             if ( fitness > bestFitness ) {
                 bestFitness = fitness;
-                System.out.println("new best = "+fitness);
+                notifyOfChange(sample);
                 bestParams = sample.copy();
             }
             if (isOptimalFitnessReached(bestParams))
