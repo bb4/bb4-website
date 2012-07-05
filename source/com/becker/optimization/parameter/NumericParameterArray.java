@@ -159,6 +159,7 @@ public class NumericParameterArray extends AbstractParameterArray {
         double improvement = step.getImprovement();
 
         double dotProduct = iter.getGradient().normalizedDot(iter.getOldGradient());
+        System.out.println("dot between " + iter.getGradient() + " and " + iter.getOldGradient()+ " is "+ dotProduct);
         newJumpSize = findNewJumpSize(newJumpSize, dotProduct);
 
         iter.getGradient().copyFrom(iter.getOldGradient());
@@ -167,18 +168,19 @@ public class NumericParameterArray extends AbstractParameterArray {
     }
 
     /**
-     * @param jumpSize
+     * If we are headed in pretty much the same direction as last time, then we increase the jumpSize.
+     * If we are headed off in a completely new direction, reduce the jumpSize until we start to stabilize.
+     * @param jumpSize the current amount that is stepped in the assumed solution direction.
      * @param dotProduct determines the angle between the new gradient and the old.
      * @return the new jump size - which is usually the same as the old one.
      */
     private double findNewJumpSize(double jumpSize, double dotProduct) {
-        // if we are headed in pretty much the same direction as last time, then we increase the jumpSize.
-        // if we are headed off in a completely new direction, reduce the jumpSize until we start to stabilize.
+
         double newJumpSize = jumpSize;
         if ( dotProduct > MAX_DOT_PRODUCT ) {
             newJumpSize *= ImprovementStep.JUMP_SIZE_INC_FACTOR;
         }
-        else if ( dotProduct < MIN_DOT_PRODUCT ){
+        else if ( dotProduct < MIN_DOT_PRODUCT ) {
             newJumpSize *= ImprovementStep.JUMP_SIZE_DEC_FACTOR;
         }
         System.out.println( "dotProduct = " + dotProduct + " new jumpsize = " + jumpSize );

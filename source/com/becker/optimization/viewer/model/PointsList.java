@@ -37,7 +37,6 @@ public class PointsList implements NavigationListener {
     private List<Point2d> rawPoints_;
 
     private Point2d rawSolutionPosition_;
-    private Point solutionPosition_ = null;
     private int edgeSize;
     private Range rangeX, rangeY;
 
@@ -80,8 +79,6 @@ public class PointsList implements NavigationListener {
 
         Parameter xParam = params.get(0);
         Parameter yParam = params.get(1);
-
-        System.out.println("ADDING point " + rangeX);
 
         if (rangeX == null) {
             rangeX = new Range(xParam.getMinValue(), xParam.getMaxValue());

@@ -13,7 +13,7 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class GlobalHillClimbingStrategy extends OptimizationStrategy {
 
-    private static final int NUM_SAMPLES = 10000;
+    private static final int NUM_SAMPLES = 1000;
 
     /**
      * Constructor.
@@ -36,6 +36,7 @@ public class GlobalHillClimbingStrategy extends OptimizationStrategy {
     public ParameterArray doOptimization( ParameterArray params, double fitnessRange ) {
 
         GlobalSampleStrategy gsStrategy = new GlobalSampleStrategy(optimizee_);
+        gsStrategy.setListener(listener_);
         // 3 sample points along each dimension
         gsStrategy.setSamplingRate(NUM_SAMPLES);
 
@@ -44,6 +45,7 @@ public class GlobalHillClimbingStrategy extends OptimizationStrategy {
         ParameterArray sampledParams = gsStrategy.doOptimization(params, fitnessRange);
 
         OptimizationStrategy strategy = new HillClimbingStrategy(optimizee_);
+        strategy.setListener(listener_);
         return strategy.doOptimization(sampledParams, fitnessRange);
     }
 }

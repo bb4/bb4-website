@@ -3,7 +3,6 @@ package com.becker.optimization.optimizees;
 
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.viewer.OptimizerEvalFrame;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 
@@ -18,6 +17,10 @@ import javax.vecmath.Point2d;
  */
 public class GraphAnalyticFunctionSolution extends AnalyticFunctionTestProblem {
 
+    /** Place to put performance results from the tests */
+    private static final String PERFORMANCE_DIR =
+            FileUtil.PROJECT_HOME + "performance/test_optimizer/poly_optimization.txt";
+
     /** Constructor */
     public GraphAnalyticFunctionSolution(AnalyticVariation v) {
         super(v);
@@ -31,13 +34,11 @@ public class GraphAnalyticFunctionSolution extends AnalyticFunctionTestProblem {
         AnalyticVariation v = AnalyticVariation.PARABOLA;
         OptimizeeTestProblem testProblem = new GraphAnalyticFunctionSolution(v);
 
-        Optimizer optimizer =
-                new Optimizer(testProblem, FileUtil.PROJECT_HOME + "performance/test_optimizer/poly_optimization.txt");
+        Optimizer optimizer = new Optimizer(testProblem, PERFORMANCE_DIR);
 
         Point2d solutionPosition = new Point2d(AnalyticFunctionConsts.P1, AnalyticFunctionConsts.P2);
         OptimizationStrategyType strategy = OptimizationStrategyType.GLOBAL_SAMPLING;
 
         new OptimizerEvalFrame(optimizer, solutionPosition, strategy, testProblem);
     }
-
 }

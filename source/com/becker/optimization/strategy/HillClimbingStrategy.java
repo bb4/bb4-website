@@ -35,7 +35,7 @@ public class HillClimbingStrategy extends OptimizationStrategy {
 
     /**
      * Finds a local maxima.
-     * Its a bit like newton's method, but in n dimensions.
+     * It is a bit like newton's method, but in n dimensions.
      * If we make a jump and find that we are worse off than before, we will backtrack and reduce the stepsize so
      * that we can be guaranteed to improve my some amount on every iteration until the incremental improvement
      * is less than the threshold fitness_eps.
@@ -66,11 +66,12 @@ public class HillClimbingStrategy extends OptimizationStrategy {
         cache.add(currentParams);
 
         Improvement improvement = null;
+        boolean improved = true;
 
         // iterate until there is no significant improvement between iterations,
         // of the jumpSize is too small (below some threshold).
         do {
-            System.out.println( "iter=" + numIterations + " FITNESS = " + currentParams.getFitness() + "  ------------");
+            //System.out.println( "iter=" + numIterations + " FITNESS = " + currentParams.getFitness() + "  ------------");
 
             improvement = currentParams.findIncrementalImprovement(optimizee_, jumpSize, improvement, cache);
 
@@ -78,13 +79,14 @@ public class HillClimbingStrategy extends OptimizationStrategy {
             currentParams = improvement.getParams();
             jumpSize = improvement.getNewJumpSize();
             notifyOfChange(currentParams);
+            improved = improvement.getImprovement() > fitnessEps;
 
-        } while ( (improvement.getImprovement() > fitnessEps)
+        } while (improved
                 && (jumpSize > JUMP_SIZE_EPS)
                 && !isOptimalFitnessReached(currentParams));
 
         System.out.println("The optimized parameters after " + numIterations + " iterations are " + currentParams);
-        System.out.println("Last improvement = " + improvement + " jumpSize=" + jumpSize);
+        System.out.println("Last improvement = " + improvement + " jumpSize=" + jumpSize + " improved="+ improved);
         return currentParams;
     }
 
