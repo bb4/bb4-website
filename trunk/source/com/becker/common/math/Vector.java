@@ -15,6 +15,7 @@ public class Vector {
      * @param length  number of elements
      */
     public Vector(int length) {
+        assert length > 0 : "length must be at least 1";
         data = new double[length];
     }
 
@@ -63,7 +64,7 @@ public class Vector {
         double divisor = magThis * magB;
         divisor = (divisor == 0) ? 1.0 : divisor;
         double dot = this.dot(b);
-        double normalizedDotProduct = dot / (1.0 + MathUtil.EPS) * divisor;
+        double normalizedDotProduct = dot / divisor;
 
         assert normalizedDotProduct >= -1 && normalizedDotProduct <= 1 :
                 "Dot product, " + normalizedDotProduct +", was outside expected range. Dot=" + dot + " div="+ divisor;
