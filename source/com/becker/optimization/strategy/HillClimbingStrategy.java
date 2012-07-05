@@ -16,7 +16,7 @@ import java.util.Set;
 public class HillClimbingStrategy extends OptimizationStrategy {
 
     /** make steps of this size toward the local maxima, until we need something else. */
-    private static final double INITIAL_JUMP_SIZE = 0.7;
+    private static final double INITIAL_JUMP_SIZE = 0.9;
 
     /** continue optimization iteration until the improvement in fitness is less than this.  */
     private static final double FITNESS_EPS_PERCENT = 0.0000001;
@@ -57,6 +57,7 @@ public class HillClimbingStrategy extends OptimizationStrategy {
         }
         int numIterations = 0;
         log(0, currentParams.getFitness(), 0.0, 0.0, currentParams, "initial test");
+        notifyOfChange(currentParams);
 
         double fitnessEps = fitnessRange * FITNESS_EPS_PERCENT / 100.0;
 

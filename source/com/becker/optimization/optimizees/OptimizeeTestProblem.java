@@ -11,7 +11,6 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public abstract class OptimizeeTestProblem implements Optimizee {
 
-
     /**
      * @return  the exact solution for this problem.
      */

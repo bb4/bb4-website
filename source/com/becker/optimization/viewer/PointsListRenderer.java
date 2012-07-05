@@ -1,14 +1,11 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.becker.optimization.ui;
+package com.becker.optimization.viewer;
 
 import com.becker.common.format.FormatUtil;
-import com.becker.optimization.OptimizationListener;
-import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.viewer.model.PointsList;
 
-import javax.swing.*;
 import javax.vecmath.Point2d;
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 /**
  * Panel for showing the optimization visually.
@@ -17,17 +14,11 @@ import java.awt.geom.Point2D;
  */
 public class PointsListRenderer {
 
-    private static final int POINT_RADIUS = 7;
     private static final int EDGE_SIZE = 1000;
-    public  static final Dimension SIZE = new Dimension(EDGE_SIZE, EDGE_SIZE);
-    public static final Color VECTOR_COLOR = new Color(10, 40, 255);
+    public static final Dimension SIZE = new Dimension(EDGE_SIZE, EDGE_SIZE);
 
-
-    /**
-     * Constructor
-     */
-    public PointsListRenderer() {}
-
+    private static final int POINT_RADIUS = 7;
+    private static final Color VECTOR_COLOR = new Color(10, 40, 255);
 
     public void render(PointsList points, Graphics2D  g2) {
 

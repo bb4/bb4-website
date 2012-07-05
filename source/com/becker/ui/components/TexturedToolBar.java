@@ -17,13 +17,21 @@ public class TexturedToolBar extends JToolBar {
 
     protected static final Dimension MAX_BUTTON_SIZE = new Dimension( 100, 24 );
 
-    // the thing that processes the toolbar button presses.
+    /** the thing that processes the toolbar button presses. */
     protected ActionListener listener_;
 
 
     public TexturedToolBar( ImageIcon texture, ActionListener listener ) {
         listener_ = listener;
         setTexture(texture);
+    }
+
+    public TexturedToolBar( ImageIcon texture) {
+        setTexture(texture);
+    }
+
+    public void setListener(ActionListener listener ) {
+        listener_ = listener;
     }
 
     public void setTexture( ImageIcon texture ) {
