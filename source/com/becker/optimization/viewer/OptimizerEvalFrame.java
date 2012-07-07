@@ -1,12 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.viewer;
 
-import com.becker.optimization.Optimizee;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.optimizees.OptimizeeTestProblem;
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
-
 
 import javax.swing.*;
 import javax.vecmath.Point2d;

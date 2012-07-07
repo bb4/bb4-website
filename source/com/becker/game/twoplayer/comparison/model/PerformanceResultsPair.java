@@ -4,20 +4,19 @@ package com.becker.game.twoplayer.comparison.model;
 import com.becker.common.format.FormatUtil;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 /**
  * Right now this just contains the name of the config and the
  * search options, but we may add the game weights too at some point.
- * 
+ *
  * @author Barry Becker
  */
 public class PerformanceResultsPair {
-    
+
     /** true if player1 won */
     private PerformanceResults p1FirstResults;
-    
+
     private PerformanceResults p2FirstResults;
 
     /** default constructor */
@@ -26,7 +25,7 @@ public class PerformanceResultsPair {
         this.p2FirstResults = new PerformanceResults();
         this.normalize(new ResultMaxTotals(1.0, 1));
     }
-    
+
     /** constructor */
     public PerformanceResultsPair(PerformanceResults p1FirstResults, PerformanceResults p2FirstResults) {
         this.p1FirstResults = p1FirstResults;
@@ -43,7 +42,7 @@ public class PerformanceResultsPair {
     public Outcome[] getOutcomes() {
         return new Outcome[] {p1FirstResults.getOutcome(), p2FirstResults.getOutcome()};
     }
-    
+
     public Image[] getFinalImages() {
         return new Image[] {p1FirstResults.getFinalImage(), p2FirstResults.getFinalImage()};
     }
@@ -51,7 +50,7 @@ public class PerformanceResultsPair {
     public double getTotalNumSeconds() {
         return p1FirstResults.getNumSeconds() + p2FirstResults.getNumSeconds();
     }
-    
+
     public int getTotalNumMoves() {
         return p1FirstResults.getNumMoves() + p2FirstResults.getNumMoves();
     }
@@ -60,46 +59,46 @@ public class PerformanceResultsPair {
         p1FirstResults.normalize(maxTotals);
         p2FirstResults.normalize(maxTotals);
     }
-    
+
     public double[] getNormalizedTimes() {
         return new double[] {
-            p1FirstResults.getNormalizedNumSeconds(), 
+            p1FirstResults.getNormalizedNumSeconds(),
             p2FirstResults.getNormalizedNumSeconds()
         };
     }
-    
+
     public String[] getTimesFormatted() {
         return new String[]  {
-            p1FirstResults.getTimeFormatted(), 
+            p1FirstResults.getTimeFormatted(),
             p2FirstResults.getTimeFormatted()
         };
     }
 
     public double[] getNormalizedNumMoves() {
         return new double[] {
-            p1FirstResults.getNormalizedNumMoves(), 
+            p1FirstResults.getNormalizedNumMoves(),
             p2FirstResults.getNormalizedNumMoves()
         };
     }
-    
+
     public String[] getNumMoves() {
         return new String[] {
             FormatUtil.formatNumber(p1FirstResults.getNumMoves()),
             FormatUtil.formatNumber(p2FirstResults.getNumMoves())
         };
     }
-    
+
     public void saveTo(String path) throws IOException {
         p1FirstResults.saveTo(path);
         p2FirstResults.saveTo(path);
     }
-    
+
     public String getWinnerText() {
         String text1 = "Player1 " + (p1FirstResults.getOutcomeVerb(true)) + " when he played first.\n";
         String text2 = "Player2 " + (p2FirstResults.getOutcomeVerb(false)) + " when he played first.";
         return text1 + text2;
     }
-    
+
     private String getOutcomeVerb(PerformanceResults results, boolean player1Perpective)  {
         String verb = "";
         switch (results.getOutcome()) {

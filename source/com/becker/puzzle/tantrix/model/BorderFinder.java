@@ -4,7 +4,12 @@ package com.becker.puzzle.tantrix.model;
 import com.becker.common.geometry.Box;
 import com.becker.common.geometry.Location;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
 import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 

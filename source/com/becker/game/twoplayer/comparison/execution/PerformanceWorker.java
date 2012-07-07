@@ -10,8 +10,11 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerViewable;
-import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
-import com.becker.game.twoplayer.comparison.model.*;
+import com.becker.game.twoplayer.comparison.model.PerformanceResults;
+import com.becker.game.twoplayer.comparison.model.PerformanceResultsPair;
+import com.becker.game.twoplayer.comparison.model.ResultsModel;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;

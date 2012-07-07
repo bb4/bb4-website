@@ -6,7 +6,6 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.IGameController;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
-import com.becker.game.common.player.PlayerList;
 import com.becker.ui.themes.BarryTheme;
 import com.becker.ui.util.GUIUtil;
 

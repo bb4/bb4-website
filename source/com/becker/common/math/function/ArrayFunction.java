@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.math.function;
 
-import com.becker.common.math.MathUtil;
 import com.becker.common.math.Range;
 import com.becker.common.math.interplolation.InterpolationMethod;
 import com.becker.common.math.interplolation.Interpolator;
@@ -9,21 +8,21 @@ import com.becker.common.math.interplolation.Interpolator;
 /**
  * The function is represented with an array of lookups that
  * can be interpolated using some method.
- * 
+ *
  * @author Barry Becker
  */
 public class ArrayFunction implements InvertibleFunction {
 
     /** the linear function lookup table. */
     private double[] functionMap;
-    
+
     /** The inverse lookup for the main function. */
     private double[] inverseFunctionMap;
 
     private Interpolator interpolator_;
     private Interpolator inverseInterpolator_;
 
-     
+
     /**
      * Constructor.
      * @param func
@@ -32,20 +31,20 @@ public class ArrayFunction implements InvertibleFunction {
     public ArrayFunction(double[] func, InterpolationMethod interpMethod) {
         this(func, new FunctionInverter(func).createInverseFunction(new Range(0, 1.0)), interpMethod);
     }
-    
+
     /**
      * Constructor.
-     * Use this version of the constructor if you already know the inverse function and do not 
+     * Use this version of the constructor if you already know the inverse function and do not
      * want to compute it (because computing it will not be as accurate).
      * @param func function definition.
      */
     public ArrayFunction(double[] func, double[] inverseFunc) {
-        this(func, inverseFunc, InterpolationMethod.LINEAR);        
+        this(func, inverseFunc, InterpolationMethod.LINEAR);
     }
-    
+
     /**
      * Constructor.
-     * Use this version of the constructor if you already know the inverse function and do not 
+     * Use this version of the constructor if you already know the inverse function and do not
      * want to compute it (because computing it will not be as accurate).
      * @param func
      */
@@ -55,8 +54,8 @@ public class ArrayFunction implements InvertibleFunction {
         interpolator_ = interpMethod.createInterpolator(func);
         inverseInterpolator_ = interpMethod.createInterpolator(inverseFunc);
     }
-    
-    
+
+
     /**
      * Constructor.
      * @param funcMap
@@ -64,9 +63,9 @@ public class ArrayFunction implements InvertibleFunction {
     public ArrayFunction(double[] funcMap) {
         this(funcMap, InterpolationMethod.LINEAR);
     }
-    
+
     /**
-     * 
+     *
      * @param value
      * @return
      */
@@ -78,9 +77,9 @@ public class ArrayFunction implements InvertibleFunction {
     public Range getDomain() {
         return new Range(0, 1.0);
     }
-    
+
     /**
-     * 
+     *
      * @param value
      * @return  inverse function value
      */

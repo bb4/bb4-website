@@ -3,8 +3,6 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeTypeAnalyzer;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E7Information.Eye7Type.E1122222;
 
@@ -27,7 +25,7 @@ public class TestE7Information extends TestEyeTypeAnalyzer {
         checkWhiteEye(b, new E7Information(E1122222.toString()), EyeStatus.ALIVE);
     }
 
-    
+
     // TODO
 
 }

@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.go.board.elements.string;
 
-import com.becker.game.twoplayer.go.board.elements.group.TestGoGroup;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

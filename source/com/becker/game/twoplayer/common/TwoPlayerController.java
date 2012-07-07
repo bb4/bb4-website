@@ -1,7 +1,11 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameOptions;
+import com.becker.game.common.GameWeights;
+import com.becker.game.common.Move;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.player.PlayerOptions;
@@ -131,7 +135,7 @@ public abstract class TwoPlayerController extends GameController {
     protected PlayerList createPlayers() {
 
         PlayerList players = new PlayerList();
-        
+
         PlayerOptions p1Opts =
                 createPlayerOptions(GameContext.getLabel("PLAYER1"), TwoPlayerPieceRenderer.DEFAULT_PLAYER1_COLOR);
         PlayerOptions p2Opts =

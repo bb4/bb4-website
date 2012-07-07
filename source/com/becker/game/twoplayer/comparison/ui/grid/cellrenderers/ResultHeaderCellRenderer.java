@@ -2,16 +2,10 @@
 package com.becker.game.twoplayer.comparison.ui.grid.cellrenderers;
 
 import com.becker.game.twoplayer.comparison.model.Outcome;
-import com.becker.game.twoplayer.comparison.model.PerformanceResultsPair;
-import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 /**
  * Show the column headers with player two's color.
@@ -66,4 +60,3 @@ public class ResultHeaderCellRenderer extends PlayerHeadCellRenderer {
     }
 
 }
-                                            

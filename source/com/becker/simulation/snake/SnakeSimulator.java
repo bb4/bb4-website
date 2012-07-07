@@ -5,9 +5,9 @@ import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.format.FormatUtil;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
+import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.types.DoubleParameter;
-import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.rendering.BackgroundGridRenderer;
@@ -35,7 +35,7 @@ public class SnakeSimulator extends NewtonianSimulator {
             new DoubleParameter( LocomotionParameters.WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" ),
             new DoubleParameter( LocomotionParameters.WAVE_PERIOD, 0.5, 9.0, "wave period" ),
     };
-    
+
     private static final ParameterArray INITIAL_PARAMS = new NumericParameterArray( PARAMS);
 
     private Snake snake_ = new Snake(new LongSnakeData());
@@ -76,7 +76,7 @@ public class SnakeSimulator extends NewtonianSimulator {
     protected void reset() {
         snake_.reset();
     }
-    
+
     @Override
     protected double getInitialTimeStep() {
         return INITIAL_TIME_STEP;

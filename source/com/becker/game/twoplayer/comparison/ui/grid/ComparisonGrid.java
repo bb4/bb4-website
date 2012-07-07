@@ -1,7 +1,10 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.grid;
 
-import com.becker.game.twoplayer.comparison.model.*;
+import com.becker.game.twoplayer.comparison.model.PerformanceResultsPair;
+import com.becker.game.twoplayer.comparison.model.ResultsModel;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 import com.becker.game.twoplayer.comparison.ui.grid.cellrenderers.FirstColumnCellRenderer;
 import com.becker.game.twoplayer.comparison.ui.grid.cellrenderers.ResultGridCellRenderer;
 import com.becker.game.twoplayer.comparison.ui.grid.cellrenderers.ResultHeaderCellRenderer;
@@ -16,7 +19,7 @@ import javax.swing.table.TableModel;
 /**
  * Turns the list of search option configurations into a NxN grid
  * to compare the performance of all the search configurations in the list.
- * 
+ *
  * @author Barry Becker
  */
 class ComparisonGrid extends TableBase {
@@ -32,12 +35,12 @@ class ComparisonGrid extends TableBase {
     public static ComparisonGrid createInstance(SearchOptionsConfigList optionsList)  {
         return new ComparisonGrid(optionsList, createColumnNames(optionsList));
     }
-    
+
     /** Set the height of the rows */
     public void updateRowHeight(int height) {
         getTable().setRowHeight((height-HEADER_HEIGHT)/getNumRows());
     }
-    
+
     public void setGameName(String gameName) {
          getTable().getColumnModel().getColumn(0).setHeaderValue(gameName);
     }
@@ -58,7 +61,7 @@ class ComparisonGrid extends TableBase {
             col.setHeaderRenderer(new ResultHeaderCellRenderer());
         }
     }
-    
+
     private static String[] createColumnNames(SearchOptionsConfigList optionsList) {
         String[] names = new String[optionsList.size() + 1];
         names[0] = "---";

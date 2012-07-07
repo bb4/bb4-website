@@ -1,14 +1,8 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.go.board;
 
-import com.becker.common.geometry.Location;
 import com.becker.common.math.MathUtil;
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
-
-import java.util.List;
 
 /**
  * Check positional score accumulation.
@@ -30,9 +24,9 @@ public class TestPositionalScore extends GoTestCase {
         assertEquals(0.0, score.getBadShapeScore(), TOLERANCE);
         assertEquals(0.0, score.getPosScore(), TOLERANCE);
         assertEquals(0.0, score.getHealthScore(), TOLERANCE);
-        assertEquals(0.0, score.getPositionScore(), TOLERANCE);  
+        assertEquals(0.0, score.getPositionScore(), TOLERANCE);
     }
-    
+
     public void testOccupiedPositionalScoreConstruction() {
         score = PositionalScore.createOccupiedScore(0.1, 0.2, 0.3);
 
@@ -51,13 +45,13 @@ public class TestPositionalScore extends GoTestCase {
         assertEquals(0.2, score.getEyeSpaceScore(), TOLERANCE);
         assertEquals(0.3, score.getPositionScore(), TOLERANCE);
     }
-    
+
     public void testPositionalScoreAccumulation() {
         score = PositionalScore.createOccupiedScore(0.1, 0.2, 0.3);
         PositionalScore score2 = PositionalScore.createEyePointScore(0.4, 0.5);
 
         score.incrementBy(score2);
-        
+
         assertEquals(0.4, score.getDeadStoneScore(), TOLERANCE);
         assertEquals(0.5, score.getEyeSpaceScore(), TOLERANCE);
         assertEquals(0.1, score.getBadShapeScore(), TOLERANCE);
@@ -66,5 +60,5 @@ public class TestPositionalScore extends GoTestCase {
         assertEquals(1.5, score.getPositionScore(), TOLERANCE);
     }
 
-    
+
 }

@@ -5,9 +5,9 @@ import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.pente.analysis.Direction;
 import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
-import junit.framework.TestSuite;
 import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Verify that we correctly evaluate patterns on the board.
@@ -21,7 +21,7 @@ public class MoveEvaluationTest extends TestCase  {
     TicTacToeWeights weights;
 
     TicTacToeBoard board;
-    
+
     private static final GamePiece PLAYER1_PIECE = new GamePiece(true);
     private static final GamePiece PLAYER2_PIECE = new GamePiece(false);
 
@@ -85,7 +85,7 @@ public class MoveEvaluationTest extends TestCase  {
 
         TwoPlayerMove move1 = TwoPlayerMove.createMove(2, 2,  0, PLAYER2_PIECE);
         board.makeMove(move1);
-        
+
         TwoPlayerMove move2 = TwoPlayerMove.createMove(2, 1,  0, PLAYER2_PIECE);
         board.makeMove(move2);
         verifyResult(Direction.HORIZONTAL, 2, 3, false, -8160);
@@ -106,12 +106,12 @@ public class MoveEvaluationTest extends TestCase  {
          verifyResult(Direction.DOWN_DIAGONAL, 3, 3, false, -8156);
          board.undoMove();
     }
-    
+
     public void testXXXEvaluation() {
 
         TwoPlayerMove move1 = TwoPlayerMove.createMove(2, 2,  0, PLAYER1_PIECE);
         board.makeMove(move1);
-        
+
         TwoPlayerMove move2 = TwoPlayerMove.createMove(2, 1,  0, PLAYER1_PIECE);
         board.makeMove(move2);
         verifyResult(Direction.HORIZONTAL, 2, 3, true, 8160);

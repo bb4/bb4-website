@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.optimization.viewer;
 
+import com.becker.optimization.viewer.NavigationListener.Direction;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.TexturedToolBar;
 import com.becker.ui.util.GUIUtil;
@@ -9,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.becker.optimization.viewer.NavigationListener.Direction;
 
 /**
  * Toolbar that appears a the top of the game application window.

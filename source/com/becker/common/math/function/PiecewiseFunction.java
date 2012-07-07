@@ -3,12 +3,10 @@ package com.becker.common.math.function;
 
 import com.becker.common.math.Range;
 
-import java.util.Arrays;
-
 
 /**
  * Piecewise linear function representation.
- * 
+ *
  * @author Barry Becker
  */
 public class PiecewiseFunction implements InvertibleFunction {
@@ -24,35 +22,35 @@ public class PiecewiseFunction implements InvertibleFunction {
      */
     public PiecewiseFunction(double[] xVals, double[] yVals ) {
         xValues = xVals;
-        yValues = yVals;     
+        yValues = yVals;
         assert xValues.length == yValues.length;
     }
-    
+
     /**
-     * 
+     *
      * @param value
      * @return
      */
     public double getValue(double value) {
-        
-        return getValue(value, xValues, yValues); 
+
+        return getValue(value, xValues, yValues);
     }
-    
+
     /**
-     * 
+     *
      * @param value
      * @return inverse function value.
      */
     public double getInverseValue(double value) {
-        
-        return getValue(value, yValues, xValues); 
+
+        return getValue(value, yValues, xValues);
     }
 
     public Range getDomain() {
         return new Range(xValues[0], xValues[xValues.length-1]);
     }
-    
-    
+
+
     private double getValue(double value, double[] xVals, double [] yVals) {
 
         // first find the x value
@@ -60,7 +58,7 @@ public class PiecewiseFunction implements InvertibleFunction {
         while (value > xVals[i]) {
             i++;
         }
-        
+
         // return the linearly interpolated y value
         if (i == 0) {
             return yVals[0];
@@ -76,12 +74,12 @@ public class PiecewiseFunction implements InvertibleFunction {
             return yValm1 + ratio * (yVals[i] -  yValm1);
         }
     }
-    
+
     public String toString() {
         StringBuilder bldr = new StringBuilder("PiecewiseFunction: ");
         for (int i=0; i< xValues.length; i++) {
             bldr.append("x=").append(xValues[i]).append(" y=").append(yValues[i]);
-        }     
+        }
         return bldr.toString();
     }
 }

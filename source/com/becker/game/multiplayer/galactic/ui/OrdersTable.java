@@ -2,10 +2,10 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.common.GameContext;
-import com.becker.ui.table.BasicTableModel;
 import com.becker.game.multiplayer.galactic.Galaxy;
 import com.becker.game.multiplayer.galactic.Order;
 import com.becker.game.multiplayer.galactic.Planet;
+import com.becker.ui.table.BasicTableModel;
 import com.becker.ui.table.TableBase;
 import com.becker.ui.table.TableColumnMeta;
 
@@ -64,7 +64,7 @@ class OrdersTable extends TableBase {
      */
     public OrdersTable(List<Order> orders)  {
         super(orders, columnNames_);
-    
+
          lastOrders_ = orders;
     }
 

@@ -2,9 +2,7 @@
 package com.becker.game.twoplayer.pente;
 
 import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.SearchableHelper;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
  * @author Barry Becker

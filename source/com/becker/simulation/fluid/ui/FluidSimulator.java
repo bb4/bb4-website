@@ -4,8 +4,8 @@ package com.becker.simulation.fluid.ui;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.NumericParameterArray;
-import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.Profiler;
 import com.becker.simulation.common.ui.Simulator;
@@ -66,7 +66,7 @@ public class FluidSimulator extends Simulator {
         int scale = (int) envRenderer_.getOptions().getScale();
         setPreferredSize(new Dimension( environment_.getWidth() * scale, environment_.getHeight() * scale));
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
-        
+
         handler_ = new InteractionHandler(environment_.getGrid(), scale);
         this.addMouseListener(handler_);
         this.addMouseMotionListener(handler_);
@@ -75,8 +75,8 @@ public class FluidSimulator extends Simulator {
     @Override
     protected SimulatorOptionsDialog createOptionsDialog() {
          return new FluidOptionsDialog( frame_, this );
-    }    
-    
+    }
+
     @Override
     public JPanel createDynamicControls() {
         fluidOptions_ = new FluidDynamicOptions(this);
@@ -86,11 +86,11 @@ public class FluidSimulator extends Simulator {
     public EnvironmentRenderer getRenderer() {
             return envRenderer_;
     }
-    
+
     public FluidEnvironment getEnvironment() {
         return environment_;
     }
-    
+
     public InteractionHandler getInteractionHandler() {
         return handler_;
     }
@@ -103,13 +103,13 @@ public class FluidSimulator extends Simulator {
             Profiler.getInstance().resetAll();
         }
     }
-    
+
     @Override
     protected void reset() {
         // remove the listeners in order to prevent a memory leak.
-        this.removeMouseListener(handler_);      
+        this.removeMouseListener(handler_);
         this.removeMouseMotionListener(handler_);
-        environment_.reset();        
+        environment_.reset();
         commonInit();
     }
 

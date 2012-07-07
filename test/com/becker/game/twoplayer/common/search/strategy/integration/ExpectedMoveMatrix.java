@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.common.search.strategy.integration;
 
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Progress;
-import com.becker.game.twoplayer.common.search.strategy.integration.MoveInfo;
 
 /**
  * The expected moves for a given game for each combination of game progress and player.

@@ -50,8 +50,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Vector;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Illustrates general MIDI melody instruments and MIDI controllers.

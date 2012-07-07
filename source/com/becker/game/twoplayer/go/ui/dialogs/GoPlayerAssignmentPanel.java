@@ -5,7 +5,6 @@ import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.ui.dialogs.PlayerAssignmentPanel;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**

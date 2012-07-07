@@ -5,7 +5,6 @@ import com.becker.common.format.FormatUtil;
 import com.becker.common.math.MathUtil;
 
 import java.math.BigDecimal;
-import java.text.Format;
 
 /**
  * I want to determine what are the odds of at least one student scoring higher
@@ -18,7 +17,7 @@ import java.text.Format;
  * @author Barry Becker
  */
 public class CombinationApp {
-    
+
     private static final int NUM_RIGHT = 30;
     private static final int NUM_QUESTIONS = 40;
     /** num answers for one of the multiple choice questions. */
@@ -54,7 +53,7 @@ public class CombinationApp {
         }
         return prob.doubleValue();
     }
-    
+
     public static void main(String[] args) {
 
         for (int i=0; i<=NUM_QUESTIONS; i++) {
@@ -64,7 +63,7 @@ public class CombinationApp {
 
         double p = getProbabilityOfNorMoreRight(NUM_RIGHT, NUM_QUESTIONS);
         double prob = 1.0 - Math.pow(1.0 - p, 20);
-        System.out.println("Probability of having at least one student out of " 
+        System.out.println("Probability of having at least one student out of "
                 + 20 + " get >=" + NUM_RIGHT + " is " + prob);
 
         p = getProbabilityOfNorMoreRight(NUM_RIGHT, NUM_QUESTIONS);

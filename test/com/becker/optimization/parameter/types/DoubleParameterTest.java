@@ -1,9 +1,6 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.optimization.parameter.types;
 
-import com.becker.optimization.parameter.PermutedParameterArray;
-import junit.framework.TestCase;
-
 /**
  * @author Barry Becker
  */

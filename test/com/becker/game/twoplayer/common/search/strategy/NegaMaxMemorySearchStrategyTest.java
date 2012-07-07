@@ -2,12 +2,13 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.examples.*;
+import com.becker.game.twoplayer.common.search.examples.GameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.TwoLevelQuiescentExample;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * Test negamax memory strategy independent of any particular game implementation.
- * 
+ *
  * @author Barry Becker
  */
 public class NegaMaxMemorySearchStrategyTest extends NegaMaxSearchStrategyTest {
@@ -36,7 +37,7 @@ public class NegaMaxMemorySearchStrategyTest extends NegaMaxSearchStrategyTest {
     protected SearchResult getTwoLevelQuiescenseABPlayer2Result() {
         return new SearchResult("0", 2, 9);  // seems wrong
     }
-    
+
     @Override
     protected SearchResult getThreeLevelPlayer1WithABResult() {
         return new SearchResult( "0", -4, 8);

@@ -2,11 +2,8 @@
 package com.becker.game.twoplayer.common.search.transposition;
 
 import com.becker.common.geometry.Location;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.position.GoStone;
 import com.becker.game.twoplayer.go.board.move.GoMove;
-import junit.framework.TestCase;
 
 
 /**

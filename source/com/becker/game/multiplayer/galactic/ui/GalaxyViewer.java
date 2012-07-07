@@ -12,7 +12,12 @@ import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
-import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.galactic.BattleSimulation;
+import com.becker.game.multiplayer.galactic.GalacticController;
+import com.becker.game.multiplayer.galactic.GalacticTurn;
+import com.becker.game.multiplayer.galactic.Galaxy;
+import com.becker.game.multiplayer.galactic.Order;
+import com.becker.game.multiplayer.galactic.Planet;
 import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 import com.becker.game.multiplayer.galactic.player.GalacticRobotPlayer;
 

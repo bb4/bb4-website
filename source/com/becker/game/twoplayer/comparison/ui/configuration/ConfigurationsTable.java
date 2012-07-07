@@ -10,12 +10,11 @@ import com.becker.ui.table.TableBase;
 import com.becker.ui.table.TableColumnMeta;
 
 import javax.swing.table.TableModel;
-import java.util.List;
 
 
 /**
  * Contains a list of search option configurations .
- * 
+ *
  * @author Barry Becker
  */
 class ConfigurationsTable extends TableBase {

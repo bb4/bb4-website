@@ -14,7 +14,11 @@ import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.string.GoStringSet;
 import com.becker.game.twoplayer.go.board.elements.string.IGoString;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Determine if group is pass-alive using
@@ -30,7 +34,7 @@ public class LifeAnalyzer {
 
     /** Keep track of living strings neighboring eyes. */
     private Map<IGoEye, List<IGoString>> eyeStringNbrMap;
-    
+
     /** Keep track of vital eyes neighboring living string. */
     private Map<IGoString, GoEyeList> stringEyeNbrMap;
 

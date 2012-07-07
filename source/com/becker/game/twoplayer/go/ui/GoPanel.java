@@ -14,7 +14,6 @@ import com.becker.game.twoplayer.common.ui.gametree.GameTreeDialog;
 import com.becker.game.twoplayer.go.ui.dialogs.GoNewGameDialog;
 import com.becker.game.twoplayer.go.ui.gametree.GoTreeCellRenderer;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 

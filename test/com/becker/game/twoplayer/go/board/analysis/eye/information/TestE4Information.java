@@ -3,8 +3,6 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeTypeAnalyzer;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E4Information.Eye4Type.*;
 
@@ -69,7 +67,7 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
         GoBoard b = initializeBoard("four_space_bent_three_filled", 4);
 
         checkBlackEye(b, new E4Information(E1122.toString()), EyeStatus.NAKADE);
-        checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED); 
+        checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
     }
 
     public void testFourAliveInAtariVitalsSplit() {

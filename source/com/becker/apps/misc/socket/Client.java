@@ -114,6 +114,6 @@ public class Client extends JFrame implements ActionListener {
         frame.addWindowListener(l);
         frame.pack();
         frame.setVisible(true);
-        frame.createListenSocket();   
+        frame.createListenSocket();
     }
 }

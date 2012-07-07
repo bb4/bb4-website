@@ -8,11 +8,11 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
+import com.becker.game.twoplayer.common.search.Progress;
+import com.becker.game.twoplayer.common.search.SearchableHelper;
 import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;
 import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
-import com.becker.game.twoplayer.common.search.Progress;
-import com.becker.game.twoplayer.common.search.SearchableHelper;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
@@ -151,7 +151,7 @@ public abstract class AbstractStrategyTst extends TestCase {
         }
         // an extra check to make sure the calculation does not take too long.
         double elapsed = (float)(System.currentTimeMillis() - time) / 1000.0;
-        assertTrue("Took too long: " + elapsed, elapsed < 1.5);
+        assertTrue("Took too long: " + elapsed, elapsed < 2.0);
         System.out.println("TOTAL TIME = " + FormatUtil.formatNumber(elapsed));
     }
 

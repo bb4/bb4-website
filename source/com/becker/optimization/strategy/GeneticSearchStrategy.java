@@ -6,7 +6,9 @@ import com.becker.common.format.FormatUtil;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Genetic Algorithm (evolutionary) optimization strategy.

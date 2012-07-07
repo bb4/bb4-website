@@ -7,7 +7,6 @@ import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.common.ui.PuzzleApplet;
 import com.becker.puzzle.common.ui.PuzzleViewer;
 import com.becker.puzzle.tantrix.TantrixController;
-import com.becker.puzzle.tantrix.model.HexTiles;
 import com.becker.puzzle.tantrix.model.TantrixBoard;
 import com.becker.puzzle.tantrix.model.TilePlacement;
 import com.becker.puzzle.tantrix.solver.Algorithm;

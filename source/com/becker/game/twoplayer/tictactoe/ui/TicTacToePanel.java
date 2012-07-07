@@ -10,7 +10,6 @@ import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
 import com.becker.game.twoplayer.pente.ui.PentePanel;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -43,7 +42,7 @@ public class TicTacToePanel extends PentePanel {
 
     @Override
     protected GameInfoPanel createInfoPanel(GameController controller) {
-        return new TwoPlayerInfoPanel( controller );  
+        return new TwoPlayerInfoPanel( controller );
     }
 
     /**

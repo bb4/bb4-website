@@ -3,9 +3,6 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.twoplayer.go.board.move.GoMove;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 /**
  * Test a collection of problems from

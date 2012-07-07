@@ -8,7 +8,11 @@ import org.igoweb.kgs.client.gtp.GtpClient;
 import org.igoweb.kgs.client.gtp.Options;
 
 import javax.swing.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +33,7 @@ public class GtpKgsTesujisoftGoClient {
 
         try {
             String logFile = FileUtil.getHomeDir() + "/temp/" + "log.txt";
-            
+
             File file = new File(logFile);
             PrintStream log = new PrintStream(new FileOutputStream(file));
             log.println("log=" + logFile);
@@ -56,10 +60,10 @@ public class GtpKgsTesujisoftGoClient {
 
             Options kgsOptions = new Options(props, logFile);
             log.println("step 1");
-            GtpClient gtpClient = new GtpClient(System.in, System.out, kgsOptions);            
+            GtpClient gtpClient = new GtpClient(System.in, System.out, kgsOptions);
 
             log.println("step 2");
-            gtpClient.go();            
+            gtpClient.go();
             log.println("step 3");
 
             log.close();

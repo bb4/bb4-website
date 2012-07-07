@@ -9,10 +9,11 @@ import com.becker.puzzle.tantrix.model.*;
 import com.becker.puzzle.tantrix.solver.path.PathType;
 import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 import junit.framework.TestCase;
-import static com.becker.puzzle.tantrix.TantrixTstUtil.TILES;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.becker.puzzle.tantrix.TantrixTstUtil.TILES;
 import static com.becker.puzzle.tantrix.solver.path.permuting.PathTstUtil.*;
 
 

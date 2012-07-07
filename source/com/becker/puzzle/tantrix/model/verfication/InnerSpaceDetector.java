@@ -6,7 +6,11 @@ import com.becker.common.geometry.Location;
 import com.becker.puzzle.tantrix.model.HexUtil;
 import com.becker.puzzle.tantrix.model.Tantrix;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
 import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 

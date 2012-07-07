@@ -4,8 +4,6 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.move.GoMove;
 import com.becker.ui.file.GenericFileFilter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import java.util.List;
 
@@ -97,7 +95,7 @@ public class TestKiseido2002 extends GoTestCase {
 
         assertTrue(true);
     }
-      
+
     /**
      * @param directory
      * @param pattern

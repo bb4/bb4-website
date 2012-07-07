@@ -1,21 +1,21 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.parameter;
 
-import com.becker.optimization.parameter.types.BooleanParameter;
-import com.becker.optimization.parameter.types.DoubleParameter;
-import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.parameter.redistribution.BooleanRedistribution;
 import com.becker.optimization.parameter.redistribution.DiscreteRedistribution;
 import com.becker.optimization.parameter.redistribution.GaussianRedistribution;
 import com.becker.optimization.parameter.redistribution.RedistributionFunction;
 import com.becker.optimization.parameter.redistribution.UniformRedistribution;
+import com.becker.optimization.parameter.types.BooleanParameter;
+import com.becker.optimization.parameter.types.DoubleParameter;
 import com.becker.optimization.parameter.types.IntegerParameter;
+import com.becker.optimization.parameter.types.Parameter;
 
 /**
  * Different types of parameter distributions to test.
  * Since we apply a redistribution to the original skewed distribution,
  * we expect the result to be a uniform distribution.
- * 
+ *
  * @author Barry Becker
  */
 public enum ParameterDistributionType {
@@ -105,10 +105,10 @@ public enum ParameterDistributionType {
     BOOLEAN_SKEWED("Boolean Skewed",
             new BooleanParameter(false, "Param"),
             new BooleanRedistribution(0.8));
-    
+
     private String name;
     private Parameter param;
-            
+
     /**
      * Constructor
      */
@@ -119,18 +119,18 @@ public enum ParameterDistributionType {
             this.param.setRedistributionFunction(redistFunction);
         }
     }
-    
+
     public Parameter getParameter() {
         return param;
     }
-    
+
     private static int getNumDiscretes() {
         return 10;
     }
     private static String getDefaultName() {
         return "Param";
     }
-    
+
     private static RedistributionFunction getUniform1() {
         final double[] values = {0.2};
         final double[] valueProbs = {0.01};
@@ -156,7 +156,7 @@ public enum ParameterDistributionType {
         final double[] valueProbs = {0.01, 0.02, 0.01, 0.01};
         return new UniformRedistribution(values, valueProbs);
     }
-    
+
     private static RedistributionFunction getDiscUniform1() {
         final int[] values = {3};
         final double[] valueProbs = {0.8};
@@ -182,8 +182,8 @@ public enum ParameterDistributionType {
         final double[] valueProbs = {0.25, 0.25, 0.25, 0.25};
         return new DiscreteRedistribution(4, values, valueProbs);
     }
-    
-    
+
+
     public String toString() {
         return name;
     }

@@ -2,7 +2,6 @@
 package com.becker.game.common;
 
 
-import com.becker.game.twoplayer.common.BestMoveFinderTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

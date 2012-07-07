@@ -6,7 +6,6 @@ import com.becker.game.common.player.PlayerOptions;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.pente.PenteController;
 
 import java.awt.*;
@@ -21,7 +20,7 @@ import java.awt.*;
  * @author Barry Becker
 */
 public class TicTacToeController extends PenteController {
-    
+
     /**
      *  Constructor
      */

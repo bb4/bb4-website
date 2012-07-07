@@ -2,9 +2,9 @@
 package com.becker.game.twoplayer.common.search;
 
 import com.becker.common.geometry.Location;
-import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 
@@ -42,7 +42,7 @@ public class TwoPlayerMoveStub extends TwoPlayerMove {
         children_.addAll(children);
     }
 
-    public MoveList getChildren() {      
+    public MoveList getChildren() {
         return children_;
     }
 

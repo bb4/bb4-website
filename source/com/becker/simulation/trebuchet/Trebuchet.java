@@ -10,7 +10,10 @@ import java.awt.*;
 
 import static com.becker.simulation.common.PhysicsConstants.GRAVITY;
 import static com.becker.simulation.trebuchet.TrebuchetConstants.*;
-import static java.lang.Math.*;
+import static java.lang.Math.PI;
+import static java.lang.Math.asin;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 /**
  *  Data structure and methods for representing a single dynamic trebuchet (advanced form of a catapult)

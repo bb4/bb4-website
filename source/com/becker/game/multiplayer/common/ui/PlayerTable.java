@@ -4,7 +4,11 @@ package com.becker.game.multiplayer.common.ui;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.player.Player;
 import com.becker.game.common.player.PlayerList;
-import com.becker.ui.table.*;
+import com.becker.ui.table.BasicTableModel;
+import com.becker.ui.table.ColorCellEditor;
+import com.becker.ui.table.ColorCellRenderer;
+import com.becker.ui.table.TableBase;
+import com.becker.ui.table.TableColumnMeta;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;

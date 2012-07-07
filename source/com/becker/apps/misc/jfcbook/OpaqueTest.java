@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.apps.misc.jfcbook;
 
-import com.becker.common.util.FileUtil;
 import com.becker.ui.components.ResizableAppletPanel;
 import com.becker.ui.components.TexturedPanel;
 import com.becker.ui.util.GUIUtil;

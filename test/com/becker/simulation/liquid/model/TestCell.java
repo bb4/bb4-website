@@ -1,19 +1,20 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.liquid.model;
 
-import javax.vecmath.Vector2d;
-
 import com.becker.simulation.liquid.compute.MassConserver;
 import com.becker.simulation.liquid.compute.SurfaceVelocityUpdater;
 import com.becker.simulation.liquid.compute.VelocityUpdater;
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.TestCase;
+
+import javax.vecmath.Vector2d;
 
 /**
  * @author Barry Becker
  */
 public class TestCell extends TestCase {
 
-    private static final double VISCOSITY = 0.001; 
+    private static final double VISCOSITY = 0.001;
     private static final  double DT = 0.1;
 
     public void testCellStatus1() {
@@ -128,7 +129,7 @@ public class TestCell extends TestCase {
         cb.setPressures(pressure);
         verifySurfaceVelocities(cb, pressure, 1.0, 0.0, 0.0, 0.0, 0.0);
     }
-    
+
      /**
       * This test dissipateOverflow as well as updateSurfaceVelocities.
       */
@@ -137,15 +138,15 @@ public class TestCell extends TestCase {
         double pressure = 1.0;
         CellBlock cb = new CellBlock();
         cb.setPressures(pressure);
-        
+
         cb.setVelocities(1.0,  0.0);
-        verifySurfaceVelocities(cb, pressure,  1.0, 1.0, 1.0, 0.0, 0.0);          
+        verifySurfaceVelocities(cb, pressure,  1.0, 1.0, 1.0, 0.0, 0.0);
     }
-    
-    private void verifySurfaceVelocities(CellBlock cb, 
-                double pressure, double expectedPressure, 
+
+    private void verifySurfaceVelocities(CellBlock cb,
+                double pressure, double expectedPressure,
                 double expRightXVel, double expLeftXVel, double expTopYVel, double expBottomYVel) {
-        
+
         Cell cell = cb.get(0, 0);
 
         SurfaceVelocityUpdater updater = new SurfaceVelocityUpdater(pressure);

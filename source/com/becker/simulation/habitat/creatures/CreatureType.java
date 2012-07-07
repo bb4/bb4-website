@@ -2,8 +2,12 @@
 package com.becker.simulation.habitat.creatures;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Everything we need to know about a creature.

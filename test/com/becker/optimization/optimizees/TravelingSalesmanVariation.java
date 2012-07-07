@@ -2,9 +2,9 @@
 package com.becker.optimization.optimizees;
 
 import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.parameter.PermutedParameterArray;
 import com.becker.optimization.parameter.types.IntegerParameter;
 import com.becker.optimization.parameter.types.Parameter;
-import com.becker.optimization.parameter.PermutedParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 
 import static com.becker.optimization.optimizees.AnalyticFunctionConsts.*;

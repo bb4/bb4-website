@@ -7,9 +7,9 @@ import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
 import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
-import com.becker.optimization.parameter.ParameterArray;
-import junit.framework.*;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
+import com.becker.optimization.parameter.ParameterArray;
+import junit.framework.Assert;
 
 
 /**

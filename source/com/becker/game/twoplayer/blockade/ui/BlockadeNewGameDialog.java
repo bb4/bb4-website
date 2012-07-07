@@ -4,7 +4,6 @@ package com.becker.game.twoplayer.blockade.ui;
 import com.becker.game.common.GameViewable;
 import com.becker.game.twoplayer.common.ui.dialogs.TwoPlayerNewGameDialog;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 

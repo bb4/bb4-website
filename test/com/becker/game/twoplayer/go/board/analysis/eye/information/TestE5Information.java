@@ -3,8 +3,6 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeTypeAnalyzer;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E5Information.Eye5Type.*;
 
@@ -26,7 +24,7 @@ public class TestE5Information extends TestEyeTypeAnalyzer {
         checkBlackEye(b, new E5Information(E11222.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E5Information(E11222.toString()), EyeStatus.ALIVE);
     }
-    
+
     public void testFiveBentSpaceEye() {
         GoBoard b = initializeBoard("five_bent_eye", 2);
 

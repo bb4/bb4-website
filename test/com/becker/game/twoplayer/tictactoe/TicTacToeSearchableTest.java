@@ -1,14 +1,15 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.tictactoe;
 
-import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.MoveList;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
 import com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
 import junit.framework.Assert;
-import junit.framework.TestSuite;
 import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import static com.becker.game.twoplayer.tictactoe.ExpectedSearchableResults.*;
 
 

@@ -1,10 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.common.math;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
-
-import java.util.Arrays;
 
 /**
  * @author Barry Becker
@@ -13,10 +10,10 @@ public class NiceNumberRounderTest extends TestCase {
 
 
     private static double BASE_VALUE = 101.34;
-    
+
     private static double[] EXPECTED_ROUNDED_VALUES = {
-        100.0, 100.0, 200.0, 200.0, 200.0, 200.0, 200.0, 
-        500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 
+        100.0, 100.0, 200.0, 200.0, 200.0, 200.0, 200.0,
+        500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0,
         1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0
     };
     private static double[] EXPECTED_CEILED_VALUES = {
@@ -45,7 +42,7 @@ public class NiceNumberRounderTest extends TestCase {
     public void testRoundNumberLargeLower() {
         assertEquals("Unexpected ", 200000000000.0, NiceNumberRounder.round(172034506708.90123, true));
     }
-    
+
     public void testRoundNumber() {
         int index = 0;
         for (double inc = 0; inc < 1000; inc += 30.0) {

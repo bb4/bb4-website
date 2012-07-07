@@ -8,15 +8,20 @@ import utils.ErrorMessage;
 import utils.Options;
 import utils.StringUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 /**
  * This class wraps the GoController and provides an interface to a GTP based controller (front end ui).
  * GoGui is typically the controller I have used, but it could be any GTP based UI.
- * 
+ *
  * This wraps my Tesujisoft go engine so that a client program can use it.
  * If you want to have the Tesujisoft go engine play on KGS use GtpKgsTesujisoftGoClient.
- * 
+ *
  * Inherits the ability to connect a Go program supporting GTP to a socket from GtpServer.
  *
  *  @author Barry Becker

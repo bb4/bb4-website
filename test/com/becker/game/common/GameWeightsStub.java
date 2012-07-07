@@ -2,8 +2,8 @@
 package com.becker.game.common;
 
 
-import com.becker.optimization.parameter.types.DoubleParameter;
 import com.becker.optimization.parameter.NumericParameterArray;
+import com.becker.optimization.parameter.types.DoubleParameter;
 import com.becker.optimization.parameter.types.Parameter;
 
 /**

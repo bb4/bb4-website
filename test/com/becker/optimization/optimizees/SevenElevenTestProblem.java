@@ -3,9 +3,9 @@ package com.becker.optimization.optimizees;
 
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
+import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.types.IntegerParameter;
-import com.becker.optimization.parameter.NumericParameterArray;
 import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 

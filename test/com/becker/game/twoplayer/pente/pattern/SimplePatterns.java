@@ -1,8 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.pente.pattern;
 
-import com.becker.game.twoplayer.pente.pattern.Patterns;
-
 /**
  *  Simple patterns for use with unit tests.
  *
