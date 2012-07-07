@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.redpuzzle.model;
 
+import com.becker.common.math.MathUtil;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.PermutedParameterArray;
 
@@ -31,7 +32,7 @@ public class PieceParameterArray extends PermutedParameterArray {
     }
 
     /**
-     * We want to find a potential solution close to the one that we have, 
+     * We want to find a potential solution close to the one that we have,
      * with minimal disturbance of the pieces that are already fit.
      *
      * @param radius proportional to the number of pieces that you want to vary.
@@ -87,12 +88,12 @@ public class PieceParameterArray extends PermutedParameterArray {
         for (int i = 0; i < NUM_PIECES; i++) {
             totalProb += swapProbabilities[i];
         }
-        int p1 = getPieceFromProb(totalProb * RANDOM.nextDouble(), swapProbabilities);
+        int p1 = getPieceFromProb(totalProb * MathUtil.RANDOM.nextDouble(), swapProbabilities);
         int p2;
         do {
-            p2 = getPieceFromProb(totalProb * RANDOM.nextDouble(), swapProbabilities);
+            p2 = getPieceFromProb(totalProb * MathUtil.RANDOM.nextDouble(), swapProbabilities);
         } while (p2 == p1);
-     
+
         pieces.doSwap(p1, p2);
     }
 

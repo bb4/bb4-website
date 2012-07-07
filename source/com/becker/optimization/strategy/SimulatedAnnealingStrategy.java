@@ -105,7 +105,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
 
         } while (temperature > tempMin && !isOptimalFitnessReached(currentParams));
 
-        System.out.println("T=" + temperature + "  currentFitness = " + bestParams.getFitness());
+        //System.out.println("T=" + temperature + "  currentFitness = " + bestParams.getFitness());
         log(ct, bestParams.getFitness(), 0, 0, bestParams, FormatUtil.formatNumber(temperature));
 
         return bestParams;
@@ -144,7 +144,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy {
             // we always select the solution if it has a better fitness,
             // but we sometimes select a worse solution if the second term evaluates to true.
             if (deltaFitness < 0 && useWorseSolution) {
-                System.out.println( "*** selected worse solution with prob="
+                System.out.println( "Selected worse solution with prob="
                         + probability + " delta=" + deltaFitness +" / temp=" + temperature);
             }
             params = newParams;

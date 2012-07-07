@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.parameter;
 
+import com.becker.common.math.MathUtil;
 import com.becker.common.math.MultiArray;
 import com.becker.common.math.Vector;
 import com.becker.optimization.Improvement;
@@ -232,7 +233,7 @@ public class NumericParameterArray extends AbstractParameterArray {
          NumericParameterArray nbr = this.copy();
          for ( int k = 0; k < params_.length; k++ ) {
              Parameter param = nbr.get(k);
-             param.tweakValue(radius, RANDOM);
+             param.tweakValue(radius, MathUtil.RANDOM);
          }
 
          return nbr;
@@ -245,7 +246,7 @@ public class NumericParameterArray extends AbstractParameterArray {
          NumericParameterArray nbr = this.copy();
          for ( int k = 0; k < params_.length; k++ ) {
              Parameter newPar = nbr.get(k);
-             newPar.setValue(newPar.getMinValue() + RANDOM.nextDouble() * newPar.getRange());
+             newPar.setValue(newPar.getMinValue() + MathUtil.RANDOM.nextDouble() * newPar.getRange());
              assert (newPar.getValue() < newPar.getMaxValue() && newPar.getValue() > newPar.getMinValue()):
                      "newPar "+newPar.getValue()+" not between "+newPar.getMinValue()+" and  "+newPar.getMaxValue();
          }

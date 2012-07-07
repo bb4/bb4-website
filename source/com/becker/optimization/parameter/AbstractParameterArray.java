@@ -20,8 +20,6 @@ public abstract class AbstractParameterArray implements ParameterArray {
 
     protected Parameter[] params_;
 
-    protected static final Random RANDOM = new Random(123);
-
     /** assign a fitness (evaluation value) to this set of parameters */
     private double fitness_ = 0;
 
@@ -51,7 +49,7 @@ public abstract class AbstractParameterArray implements ParameterArray {
     public int getSamplePopulationSize()  {
         int pop = 1;
         for (Parameter param : params_) {
-            pop *= param.isIntegerOnly() ? 2 : 4;
+            pop *= param.isIntegerOnly() ? 2 : 6;
         }
         return Math.min(POPULATION_MAX, pop);
     }

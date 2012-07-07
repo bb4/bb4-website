@@ -42,8 +42,8 @@ public class MultiArrayTest extends TestCase {
         assertEquals("Unexpected num dims", 1, array.getNumDims());
         assertEquals("Unexpected num values", 1, array.getNumValues());
         assertIndicesEqual("Unexpected index from raw.", new int[] {0}, array.getIndexFromRaw(0));
-        assertEquals("Unexpected index key", "0", array.getIndexKey(0));
-        assertEquals("Unexpected index key (array)", "0", array.getIndexKey(new int[] {0}));
+        assertEquals("Unexpected index key", "[0]", array.getIndexKey(0));
+        //assertEquals("Unexpected index key (array)", "0", array.getIndexKey(new int[] {0}));
         assertEquals("Unexpected raw value", 0.0, array.getRaw(0));
     }
 
@@ -59,8 +59,10 @@ public class MultiArrayTest extends TestCase {
         assertIndicesEqual("Unexpected index from raw.", new int[] {0, 0}, array.getIndexFromRaw(0));
         assertIndicesEqual("Unexpected index from raw.", new int[] {1, 0}, array.getIndexFromRaw(2));
         assertIndicesEqual("Unexpected index from raw.", new int[] {1, 1}, array.getIndexFromRaw(3));
-        assertEquals("Unexpected index key", "0,0", array.getIndexKey(0));
-        assertEquals("Unexpected index key (array)", "0,1", array.getIndexKey(new int[] {0, 1}));
+        assertEquals("Unexpected index key", "[0, 0]", array.getIndexKey(0));
+        assertEquals("Unexpected index key", "[0, 1]", array.getIndexKey(1));
+        assertEquals("Unexpected index key", "[1, 1]", array.getIndexKey(3));
+        //assertEquals("Unexpected index key (array)", "0,1", array.getIndexKey(new int[] {0, 1}));
         assertEquals("Unexpected raw value", 3.4, array.getRaw(2));
     }
 
@@ -77,10 +79,14 @@ public class MultiArrayTest extends TestCase {
         assertIndicesEqual("Unexpected index from raw.", new int[] {0, 0, 0}, array.getIndexFromRaw(0));
         assertIndicesEqual("Unexpected index from raw.", new int[] {0, 0, 2}, array.getIndexFromRaw(2));
         assertIndicesEqual("Unexpected index from raw.", new int[] {0, 1, 0}, array.getIndexFromRaw(4));
-        assertIndicesEqual("Unexpected index from raw.", new int[] {1, 1, 1}, array.getIndexFromRaw(19));
-        assertEquals("Unexpected index key", "0,0,0", array.getIndexKey(0));
-        assertEquals("Unexpected index key", "1,1,1", array.getIndexKey(19));
-        assertEquals("Unexpected index key (array)", "0,1,3", array.getIndexKey(new int[] {0, 1, 3}));
+        assertIndicesEqual("Unexpected index from raw.", new int[] {1, 1, 3}, array.getIndexFromRaw(19));
+        assertEquals("Unexpected index key", "[0, 0, 0]", array.getIndexKey(0));
+        assertEquals("Unexpected index key", "[1, 1, 3]", array.getIndexKey(19));
+        assertEquals("Unexpected index key", "[1, 2, 0]", array.getIndexKey(20));
+        assertEquals("Unexpected index key", "[1, 2, 1]", array.getIndexKey(21));
+        assertEquals("Unexpected index key", "[1, 2, 2]", array.getIndexKey(22));
+        assertEquals("Unexpected index key", "[1, 2, 3]", array.getIndexKey(23));
+        //assertEquals("Unexpected index key (array)", "0,1,3", array.getIndexKey(new int[] {0, 1, 3}));
         assertEquals("Unexpected raw value", 3.4, array.getRaw(13));
     }
 

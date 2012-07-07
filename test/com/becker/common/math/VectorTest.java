@@ -98,4 +98,40 @@ public class VectorTest extends TestCase {
         assertEquals("Unexpected normalizedDot product.",
                 0.9692307692307692, vector.normalizedDot(vector2));
     }
+
+
+    //Normalized Dot product, 1.0000000000000002, was outside expected range.
+    // Dot=0.5670000000000002 div=0.5670000000000001
+    // for v1=-0.4409008100751817 -0.4500071951369762 v2=-0.6298583001074021 -0.6428674216242523
+    // magThis=0.63 magB=0.9000000000000001
+    // for v1=-0.4409008100751817 -0.4500071951369762 v2=-0.6298583001074021 -0.6428674216242523  magThis=0.63 magB=0.9000000000000001
+
+    // my test = magThis=0.8909080052121578 magB=1.2727257217316543 dot=1.133881533930152  divisor=1.133881533930152
+
+
+
+    /** This case failed from hill climbing one time */
+    public void testNormalizedDotProductWhenAlmostSameNegative() {
+
+        vector = new Vector(new double[] {-0.4409008100751817, -0.4500071951369762});
+        Vector vector2 = new Vector(new double[] {-0.6298583001074021, -0.6428674216242523});
+        assertEquals("Unexpected normalizedDot product.",
+                1.0, vector.normalizedDot(vector2));
+        assertEquals("Unexpected normalizedDot product.",
+                1.0, vector2.normalizedDot(vector));
+    }
+
+    // java.lang.AssertionError: Normalized Dot product, 1.0000000000000002, was outside expected range.
+    //Dot=4.208925801143705 div=4.208925801143704
+    //        for v1=-1.6370338447524475 -1.6708452150399316 v2=-1.2592568036557408 -1.285265550030705
+    //magThis=2.339145900000001 magB=1.799343000000001
+
+    /** This case failed from hill climbing one time */
+    public void testNormalizedDotProductWhenAlmostSame2() {
+
+        vector = new Vector(new double[] {-1.6370338447524475, -1.6708452150399316});
+        Vector vector2 = new Vector(new double[] {-1.2592568036557408, -1.285265550030705});
+        assertEquals("Unexpected normalizedDot product.",
+                1.0, vector.normalizedDot(vector2));
+    }
 }

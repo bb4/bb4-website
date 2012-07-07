@@ -1,6 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.math;
 
+import org.apache.ivy.util.StringUtils;
+
+import java.util.Arrays;
+
 /**
  * Provide support for high dimensional arrays of doubles.
  * Eventually this class should support multi-dimensional arrays of any type, but
@@ -120,7 +124,7 @@ public class MultiArray {
         for ( int i = numDims_ - 1; i >= 0; i-- ) {
             index[i] = rawIndex / prod % dims_[i];
             if ( i > 0 )  {
-                prod *= dims_[i - 1];
+                prod *= dims_[i];
             }
         }
         return index;
@@ -133,24 +137,8 @@ public class MultiArray {
      */
     public String getIndexKey( int rawIndex ) {
         int[] index = getIndexFromRaw( rawIndex );
-        return getIndexKey( index );
+        return Arrays.toString(index);
     }
-
-    /**
-     * @param index as an array of integer indices.
-     * @return a string representation of the tuple.
-     * eg "3,5,9,3"
-     */
-    public String getIndexKey( int[] index ) {
-        StringBuilder key = new StringBuilder( "" );
-        for ( int i = 0; i < numDims_; i++ ) {
-            key.append( Integer.toString( index[i] ) );
-            if ( i < numDims_ - 1 )
-                key.append( ',' );
-        }
-        return key.toString();
-    }
-
 }
 
 
