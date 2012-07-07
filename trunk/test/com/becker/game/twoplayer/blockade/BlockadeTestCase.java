@@ -15,7 +15,7 @@ import junit.framework.*;
  *Base class for all Blockade test cases.
  * @author Barry Becker
  */
-public class BlockadeTestCase extends TestCase {
+public abstract class BlockadeTestCase extends TestCase {
 
     /** moved all test cases here so they are not included in the jar and do not need to be searched */
     private static final String EXTERNAL_TEST_CASE_DIR =

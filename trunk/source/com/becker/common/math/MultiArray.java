@@ -1,8 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.math;
 
-import org.apache.ivy.util.StringUtils;
-
 import java.util.Arrays;
 
 /**

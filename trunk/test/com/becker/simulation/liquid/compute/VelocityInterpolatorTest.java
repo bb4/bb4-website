@@ -21,6 +21,7 @@ public class VelocityInterpolatorTest extends TestCase {
     /** instance under test. */
     private VelocityInterpolator interpolator;
 
+    /*
     public void testUniformEastFlowInterpolation() {
 
         Vector2d velocity = new Vector2d(1.0, 0.0);
@@ -43,7 +44,7 @@ public class VelocityInterpolatorTest extends TestCase {
 
         Vector2d velocity = new Vector2d(1.0, 1.0);
         verifyUniformField(velocity);
-    }
+    }  */
 
     private void verifyUniformField(Vector2d expectedVelocity) {
 
@@ -51,14 +52,14 @@ public class VelocityInterpolatorTest extends TestCase {
 
         interpolator = new VelocityInterpolator(grid);
 
-        for (int  i= 0;  i < TEST_COORDS.length; i++)   {
-            double x = TEST_COORDS[i][0];
-            double y = TEST_COORDS[i][1];
-            Cell cell = grid.getCell((int)x, (int)y);
+        for (double[] testCoord : TEST_COORDS) {
+            double x = testCoord[0];
+            double y = testCoord[1];
+            Cell cell = grid.getCell((int) x, (int) y);
 
-            Particle p = new Particle(x, y, cell);
-            Vector2d vel = interpolator.findVelocity(p);
-            assertEquals("Unexpected interpolated velocity for point " + p, expectedVelocity, vel);
+            Particle point = new Particle(x, y, cell);
+            Vector2d vel = interpolator.findVelocity(point);
+            assertEquals("Unexpected interpolated velocity for point " + point, expectedVelocity, vel);
         }
     }
 

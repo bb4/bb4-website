@@ -116,9 +116,9 @@ public class VectorTest extends TestCase {
         vector = new Vector(new double[] {-0.4409008100751817, -0.4500071951369762});
         Vector vector2 = new Vector(new double[] {-0.6298583001074021, -0.6428674216242523});
         assertEquals("Unexpected normalizedDot product.",
-                1.0, vector.normalizedDot(vector2));
+                1.0, vector.normalizedDot(vector2), MathUtil.EPS_MEDIUM);
         assertEquals("Unexpected normalizedDot product.",
-                1.0, vector2.normalizedDot(vector));
+                1.0, vector2.normalizedDot(vector), MathUtil.EPS_MEDIUM);
     }
 
     // java.lang.AssertionError: Normalized Dot product, 1.0000000000000002, was outside expected range.
@@ -132,6 +132,6 @@ public class VectorTest extends TestCase {
         vector = new Vector(new double[] {-1.6370338447524475, -1.6708452150399316});
         Vector vector2 = new Vector(new double[] {-1.2592568036557408, -1.285265550030705});
         assertEquals("Unexpected normalizedDot product.",
-                1.0, vector.normalizedDot(vector2));
+                1.0, vector.normalizedDot(vector2), MathUtil.EPS_MEDIUM);
     }
 }
