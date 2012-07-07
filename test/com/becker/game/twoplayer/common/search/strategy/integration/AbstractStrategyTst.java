@@ -151,7 +151,7 @@ public abstract class AbstractStrategyTst extends TestCase {
         }
         // an extra check to make sure the calculation does not take too long.
         double elapsed = (float)(System.currentTimeMillis() - time) / 1000.0;
-        assertTrue("Took too long: " + elapsed, elapsed < 1.0);
+        assertTrue("Took too long: " + elapsed, elapsed < 1.5);
         System.out.println("TOTAL TIME = " + FormatUtil.formatNumber(elapsed));
     }
 

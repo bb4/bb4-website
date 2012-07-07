@@ -23,7 +23,7 @@ import java.util.Set;
  *
  * @author Barry Becker
  */
-public class GoTestCase extends TestCase {
+public abstract class GoTestCase extends TestCase {
 
     /** moved all test cases here so they are not included in the jar and do not need to be searched   */
     public static final String EXTERNAL_TEST_CASE_DIR =
@@ -81,7 +81,7 @@ public class GoTestCase extends TestCase {
     protected int getBoardSize() {
         return 13;
     }
-    
+
     protected GoBoard getBoard() {
        return (GoBoard) controller_.getBoard();
     }

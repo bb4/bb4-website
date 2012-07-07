@@ -139,7 +139,6 @@ public abstract class AbstractBruteSearchStrategyTst extends AbstractSearchStrat
                 getLadderMax4QuiescensePlayer2Result());
     }
 
-
     public void testPruneTwoLevelWithoutABSearchPlayer1() {
         bruteSearchOptions.setLookAhead(2);
         bruteSearchOptions.setAlphaBeta(false);
@@ -298,7 +297,7 @@ public abstract class AbstractBruteSearchStrategyTst extends AbstractSearchStrat
     protected SearchResult getThreeLevelPlayer2WithABResult() {
         return new SearchResult( "0", -5, 13);
     }
-    
+
     protected SearchResult getFourLevelPlayer1Result() {
         return new SearchResult("0", 27, 30);
     }

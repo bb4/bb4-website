@@ -16,16 +16,16 @@ import com.becker.game.twoplayer.go.board.elements.string.GoString;
 public class TestStringLibertyAnalyzer extends GoTestCase {
 
     private GoBoardConfigurator boardConfig;
-   
+
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         boardConfig = new GoBoardConfigurator(9, 0);
     }
-    
+
     public void testSingleStoneLiberties() {
-        
+
         GoBoardPositionList list = new GoBoardPositionList();
         list.add(createBlackStone(4, 4));
 
@@ -68,11 +68,11 @@ public class TestStringLibertyAnalyzer extends GoTestCase {
         list.add(createBlackStone(5, 5));
 
         GoBoardPositionList otherList = new GoBoardPositionList();
-            list.add(createWhiteStone(3, 4));
-            list.add(createWhiteStone(3, 5));
-            list.add(createWhiteStone(5, 6));
+        otherList.add(createWhiteStone(3, 4));
+        otherList.add(createWhiteStone(3, 5));
+        otherList.add(createWhiteStone(5, 6));
 
-        verifyNumberOfLibertiesWithOther(3, list, otherList);
+        verifyNumberOfLibertiesWithOther(4, list, otherList);
     }
 
     /**
@@ -129,11 +129,11 @@ public class TestStringLibertyAnalyzer extends GoTestCase {
                 expectedNumber, analyzer.getLiberties().size());
     }
 
-    /** 
-     * create a black stone to add to the string. 
-     */  
+    /**
+     * create a black stone to add to the string.
+     */
     private GoBoardPosition createBlackStone(int row, int col) {
-        return new GoBoardPosition(row, col, null, new GoStone(true, 0.5f)); 
+        return new GoBoardPosition(row, col, null, new GoStone(true, 0.5f));
     }
 
     /**

@@ -53,7 +53,7 @@ public class SurfaceVelocityUpdaterTest extends TestCase {
         verifyBorderVelocities(cell, neighbors, 0.285714285714, 0.28571428, 0.2054924, 0.205492455313);
     }
 
-
+    /*
     public void testUpdateSurfaceWithOneNorthEmptyNbrInNorthEastFlow() {
 
         Grid grid = new NonUniformGrid(DIM, DIM, new Vector2d(0.5, 0.5), CellStatus.FULL);
@@ -99,7 +99,7 @@ public class SurfaceVelocityUpdaterTest extends TestCase {
 
         assertEquals("Unexpected pressure", ATMOSPHERIC_PRESSURE, cell.getPressure());
         verifyBorderVelocities(cell, neighbors, 0.2857142857, 0.2857142857, 0.2054924553, 0.2054924553);
-    }
+    }  */
 
     private void verifyBorderVelocities(Cell cell, CellNeighbors neighbors,
                                    double U, double V, double leftU, double bottomV) {

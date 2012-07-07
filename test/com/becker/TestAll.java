@@ -15,9 +15,7 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Tests");
 
         suite.addTest(com.becker.game.TestAll.suite());
-        suite.addTest(com.becker.optimization.TestAll.suite());
         suite.addTest(com.becker.puzzle.TestAll.suite());
-        suite.addTest(com.becker.simulation.TestAll.suite());
         suite.addTest(com.becker.sound.TestAll.suite());
 
         return suite;
