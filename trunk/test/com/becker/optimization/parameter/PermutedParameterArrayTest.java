@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization.parameter;
 
+import com.becker.common.math.MathUtil;
 import com.becker.optimization.parameter.types.IntegerParameter;
 import com.becker.optimization.parameter.types.Parameter;
 import junit.framework.TestCase;
@@ -10,13 +11,16 @@ import junit.framework.TestCase;
  */
 public class PermutedParameterArrayTest extends TestCase {
 
-
+    @Override
+    public void setUp() {
+        MathUtil.RANDOM.setSeed(0);
+    }
 
     public void testPermutedNeighbor() {
 
         PermutedParameterArray params = createPermParameterArray(new int[] {0, 1, 2, 3, 4});
         PermutedParameterArray nbrParams = params.getRandomNeighbor(1.0);
-        PermutedParameterArray expNbr =  createPermParameterArray(new int[] {2, 1, 0, 3, 4});
+        PermutedParameterArray expNbr =  createPermParameterArray(new int[] {3, 1, 2, 0, 4});
 
         assertTrue("Unexpected neighbor. expected " + expNbr +" but got "+ nbrParams,
                 expNbr.equals(nbrParams));

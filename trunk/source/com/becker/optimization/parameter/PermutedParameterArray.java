@@ -75,9 +75,9 @@ public class PermutedParameterArray extends AbstractParameterArray {
             int runLength = determineRunLength(pa, len, i, runLengths);
             i += runLength;
         }
-        System.out.println("runLengths="+ runLengths);
+        //System.out.println("runLengths="+ runLengths);
         double diff = calcDistance(runLengths);
-        System.out.println("diff="+ diff);
+        //System.out.println("diff="+ diff);
 
         return diff;
     }
@@ -157,10 +157,10 @@ public class PermutedParameterArray extends AbstractParameterArray {
 
         PermutedParameterArray nbr = (PermutedParameterArray)this.copy();
         for ( int k = 0; k < numToSwap; k++ ) {
-            int index1 = RANDOM.nextInt(size());
-            int index2 = RANDOM.nextInt(size());
+            int index1 = MathUtil.RANDOM.nextInt(size());
+            int index2 = MathUtil.RANDOM.nextInt(size());
             while (index2 == index1) {
-                index2 = RANDOM.nextInt(size());
+                index2 = MathUtil.RANDOM.nextInt(size());
             }
             Parameter temp =  nbr.params_[index1];
             nbr.params_[index1] = nbr.params_[index2];
@@ -246,7 +246,7 @@ public class PermutedParameterArray extends AbstractParameterArray {
     public ParameterArray getRandomSample() {
 
         List<Parameter> theParams = Arrays.asList(params_);
-        Collections.shuffle(theParams, RANDOM);
+        Collections.shuffle(theParams, MathUtil.RANDOM);
 
         Parameter[] newParams = new Parameter[params_.length];
         for ( int k = 0; k < params_.length; k++ ) {

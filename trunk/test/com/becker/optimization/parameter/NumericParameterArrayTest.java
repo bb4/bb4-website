@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.optimization.parameter;
 
+import com.becker.common.math.MathUtil;
 import junit.framework.TestCase;
 
 import java.rmi.UnexpectedException;
@@ -19,13 +20,23 @@ public class NumericParameterArrayTest extends TestCase {
     /** instance under test */
     private NumericParameterArray params;
 
+    @Override
+    public void setUp() {
+        MathUtil.RANDOM.setSeed(0);
+    }
 
-    public void testCreateTypical() {
+    public void testGetNumSteps() {
 
         params = createParamArray(.2, .3);
 
         assertEquals("Unexpected numSteps", 10, params.getNumSteps());
-        assertEquals("Unexpected numSteps", 16, params.getSamplePopulationSize());
+    }
+
+    public void testGetSamplePopulationSize() {
+
+        params = createParamArray(.2, .3);
+
+        assertEquals("Unexpected numSteps", 36, params.getSamplePopulationSize());
     }
 
     public void testFind0GlobalSamples() {

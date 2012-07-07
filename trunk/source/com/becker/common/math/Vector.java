@@ -55,19 +55,22 @@ public class Vector {
 
     /**
      * Find the normalized dot product with range [-1, 1].
-     * @param b
+     * @param b  vector to dot product with
      * @return the normalized dot product.
      */
     public double normalizedDot(Vector b) {
         double magB = b.magnitude();
         double magThis = this.magnitude();
+        System.out.println("for v1=" + this + "v2="+ b + " magThis="+ magThis + " magB=" + magB);
         double divisor = magThis * magB;
         divisor = (divisor == 0) ? 1.0 : divisor;
         double dot = this.dot(b);
         double normalizedDotProduct = dot / divisor;
 
-        assert normalizedDotProduct >= -1 && normalizedDotProduct <= 1 :
-                "Dot product, " + normalizedDotProduct +", was outside expected range. Dot=" + dot + " div="+ divisor;
+        assert normalizedDotProduct >= (-1.0 - MathUtil.EPS_MEDIUM) && normalizedDotProduct <= (1 + MathUtil.EPS_MEDIUM) :
+                "Normalized Dot product, " + normalizedDotProduct
+              + ", was outside expected range.\nDot=" + dot + " div="+ divisor +"\nfor v1=" + this + "v2="+b
+              + "\nmagThis="+ magThis + " magB=" + magB;
 
         return normalizedDotProduct;
     }

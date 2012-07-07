@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization;
 
+import com.becker.common.math.MathUtil;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.optimizees.OptimizeeTestProblem;
 import com.becker.optimization.parameter.ParameterArray;
@@ -16,6 +17,10 @@ public abstract class OptimizerTestCase extends TestCase {
     /** Where the log files will go */
     protected static final String LOG_FILE_HOME = FileUtil.PROJECT_HOME + "performance/test_optimizer/";
 
+    @Override
+    public void setUp() {
+        MathUtil.RANDOM.setSeed(0);
+    }
 
     public void testGlobalSampling() {
 

@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.optimization;
 
+import com.becker.common.math.MathUtil;
 import com.becker.optimization.optimizees.AnalyticFunctionTestProblem;
 import com.becker.optimization.optimizees.AnalyticVariation;
 import com.becker.optimization.optimizees.OptimizeeTestProblem;
@@ -14,11 +15,14 @@ import junit.framework.TestSuite;
  */
 public class TestAnalyticFunctionProblem extends OptimizerTestCase {
 
+
+
     @Override
     protected void doTest(OptimizationStrategyType optimizationType) {
 
         for (AnalyticVariation variation : AnalyticVariation.values()) {
 
+            MathUtil.RANDOM.setSeed(0);
             OptimizeeTestProblem problem = new AnalyticFunctionTestProblem(variation);
             String logFile =  LOG_FILE_HOME + "analytic_" + variation + "_optimization.txt";
 

@@ -15,7 +15,8 @@ import java.util.Random;
  */
 public final class MathUtil {
 
-    public static final double EPS = 0.000000000000000001;
+    /** Java double precision cannot accurately represent more than 16 decimal places */
+    public static final double EPS = 0.0000000000000001;
 
     public static final double EPS_MEDIUM = 0.0000000001;
 

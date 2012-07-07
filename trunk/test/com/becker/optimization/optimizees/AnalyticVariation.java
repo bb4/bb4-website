@@ -30,7 +30,7 @@ public enum AnalyticVariation {
         @Override
         public double getErrorTolerancePercent(OptimizationStrategyType opt) {
             return getErrorTolerancePercent(opt, new double[] {
-                    GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, GLOB_SAMP_TOL,  0,  GLOB_SAMP_TOL,   GLOB_SAMP_TOL, BASE_TOLERANCE
+                    GLOB_SAMP_TOL, RELAXED_TOL, BASE_TOLERANCE, GLOB_SAMP_TOL,  0,  3 * GLOB_SAMP_TOL,  3 * GLOB_SAMP_TOL, BASE_TOLERANCE
             });
         }
     },
@@ -49,7 +49,7 @@ public enum AnalyticVariation {
         @Override
         public double getErrorTolerancePercent(OptimizationStrategyType opt) {
             return getErrorTolerancePercent(opt, new double[] {
-                    GLOB_SAMP_TOL, RELAXED_TOL, 0.01, GLOB_SAMP_TOL,  RELAXED_TOL, 0.042, 0.042, BASE_TOLERANCE
+                    GLOB_SAMP_TOL, RELAXED_TOL, 0.01, GLOB_SAMP_TOL,  RELAXED_TOL, 0.072, 0.072, BASE_TOLERANCE
             });
         }
     },
@@ -69,7 +69,7 @@ public enum AnalyticVariation {
         @Override
         public double getErrorTolerancePercent(OptimizationStrategyType opt) {
             return getErrorTolerancePercent(opt, new double[] {
-                    GLOB_SAMP_TOL, 0.0128, 0.01, GLOB_SAMP_TOL,  RELAXED_TOL, 0.03,  0.03,  BASE_TOLERANCE
+                    GLOB_SAMP_TOL, 0.0128, 0.01, 2*GLOB_SAMP_TOL,  RELAXED_TOL, 2*GLOB_SAMP_TOL,  3*GLOB_SAMP_TOL,  BASE_TOLERANCE
             });
         }
     },
@@ -86,7 +86,7 @@ public enum AnalyticVariation {
         @Override
         public double getErrorTolerancePercent(OptimizationStrategyType opt) {
             return getErrorTolerancePercent(opt, new double[] {
-                    GLOB_SAMP_TOL, BASE_TOLERANCE, BASE_TOLERANCE, GLOB_SAMP_TOL, RELAXED_TOL,  0.042,  0.042, BASE_TOLERANCE
+                    GLOB_SAMP_TOL, RELAXED_TOL, BASE_TOLERANCE, GLOB_SAMP_TOL, RELAXED_TOL,  0.06,  0.06, BASE_TOLERANCE
             });
         }
     };
