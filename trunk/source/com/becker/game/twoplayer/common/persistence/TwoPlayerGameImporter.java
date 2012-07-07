@@ -15,7 +15,11 @@ import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.persistence.GameImporter;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.persistence.tokens.*;
+import com.becker.game.twoplayer.common.persistence.tokens.Player1MoveToken;
+import com.becker.game.twoplayer.common.persistence.tokens.Player1NameToken;
+import com.becker.game.twoplayer.common.persistence.tokens.Player2NameToken;
+import com.becker.game.twoplayer.common.persistence.tokens.Size2Token;
+import com.becker.game.twoplayer.common.persistence.tokens.TwoPlayerMoveToken;
 
 import javax.swing.*;
 import java.io.FileInputStream;
@@ -129,7 +133,7 @@ public class TwoPlayerGameImporter extends GameImporter {
     {
         TwoPlayerMoveToken mvToken = (TwoPlayerMoveToken) token;
         boolean player1 = token instanceof Player1MoveToken;
-        
+
         return TwoPlayerMove.createMove(mvToken.getToY(), mvToken.getToX(), 0,  new GamePiece(player1));
     }
 }

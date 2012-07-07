@@ -13,6 +13,7 @@ import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;
 import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.optimization.parameter.ParameterArray;
+
 import java.util.List;
 
 
@@ -167,12 +168,12 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     /** Load a game that does not have any more valid moves and verify that done == true  */
     public abstract void testDoneEndGame();
 
-    /**  
+    /**
      * Verify that we generate a reasonable list of moves to try next.
      * check that we can generate a list of initial moves and do not fail when the last move is null.
      */
    public void testGenerateMovesBeforeFirstMove() {
- 
+
        List moves = searchable.generateMoves(null, weights());
        assertTrue("We expect the move list to be non-null at the very start of the game.", moves!= null);
 
@@ -309,7 +310,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     }
 
     protected ParameterArray weights() {
-       return getController().getComputerWeights().getPlayer1Weights(); 
+       return getController().getComputerWeights().getPlayer1Weights();
     }
 
     protected void printMoves(String name, MoveList moves) {

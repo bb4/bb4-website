@@ -3,9 +3,8 @@ package com.becker.game.twoplayer.tictactoe;
 
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
-import com.becker.game.twoplayer.pente.pattern.Patterns;
 import com.becker.game.twoplayer.pente.PenteSearchable;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
 
 /**
  * Defines everything the computer needs to know to play TicTacToe.
@@ -29,7 +28,7 @@ public class TicTacToeSearchable extends PenteSearchable {
     protected Patterns createPatterns() {
         return new TicTacToePatterns();
     }
-        
+
     @Override
     public TicTacToeSearchable copy() {
         return new TicTacToeSearchable(this);

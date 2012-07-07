@@ -32,7 +32,7 @@ public final class Base64Codec {
      * @return compressed string representation.
      */
     public static synchronized String compress( final String data ) {
-        
+
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream( 512 );
         Deflater deflater = new Deflater();
         DeflaterOutputStream oStream = new DeflaterOutputStream( byteOut, deflater );

@@ -6,7 +6,6 @@ import com.becker.optimization.parameter.types.Parameter;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  *  represents a 1 dimensional array of parameters

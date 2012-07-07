@@ -2,7 +2,7 @@
 package com.becker.simulation.liquid.compute;
 
 import com.becker.simulation.liquid.model.*;
-import junit.framework.*;
+import junit.framework.TestCase;
 
 import javax.vecmath.Vector2d;
 

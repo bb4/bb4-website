@@ -3,8 +3,6 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeTypeAnalyzer;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E6Information.Eye6Type.E112222;
 
@@ -126,7 +124,7 @@ public class TestE6Information extends TestEyeTypeAnalyzer {
 
 
     //////   E111223   (just a sampling of the cases)
-    
+
 
     //   TODO
     //////   E112233

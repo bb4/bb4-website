@@ -6,7 +6,10 @@ import com.becker.game.common.online.OnlineGameTable;
 import com.becker.game.common.player.Player;
 import com.becker.game.multiplayer.common.MultiGameOptions;
 import com.becker.ui.table.BasicTableModel;
-import com.becker.ui.table.*;
+import com.becker.ui.table.TableBase;
+import com.becker.ui.table.TableButton;
+import com.becker.ui.table.TableButtonListener;
+import com.becker.ui.table.TableColumnMeta;
 
 import javax.swing.table.TableModel;
 import java.awt.*;
@@ -162,7 +165,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     protected static synchronized String getUniqueName() {
           return "Table "+ counter_++;
     }
-    
+
      protected static Color getRandomColor() {
 
         int r = GameContext.random().nextInt(256);

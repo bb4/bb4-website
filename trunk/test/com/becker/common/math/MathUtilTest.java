@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.math;
 
-import junit.framework.*;
+import junit.framework.TestCase;
 
 import javax.vecmath.Point2d;
 //import static junit.framework.assertEquals;
@@ -13,30 +13,30 @@ public class MathUtilTest extends TestCase {
 
     public void testPositiveGCD() {
         long result;
-        
-        result = MathUtil.gcd(2l, 4l);               
+
+        result = MathUtil.gcd(2l, 4l);
         assertEquals(result, 2l);
-        
-        result = MathUtil.gcd(4l, 2l);               
+
+        result = MathUtil.gcd(4l, 2l);
         assertEquals(result, 2l);
-        
-        result = MathUtil.gcd(420l, -40l);               
+
+        result = MathUtil.gcd(420l, -40l);
         assertEquals(result, 20l);
-        
-        result = MathUtil.gcd(40l, 420l);               
+
+        result = MathUtil.gcd(40l, 420l);
         assertEquals(result, 20l);
     }
-    
+
     public void testNegativeGCD() {
         long result;
-        
-        result = MathUtil.gcd(2L, 0L);               
+
+        result = MathUtil.gcd(2L, 0L);
         assertEquals(result, 2L);
-        
-        result = MathUtil.gcd(0L, 2L);               
+
+        result = MathUtil.gcd(0L, 2L);
         assertEquals(result, 2L);
-        
-        result = MathUtil.gcd(423L, -40L);               
+
+        result = MathUtil.gcd(423L, -40L);
         assertEquals(result, 1L);
     }
 
@@ -80,7 +80,7 @@ public class MathUtilTest extends TestCase {
                 "4923573423718507525892570413923319470803578288313732111773416409792512000000000000",
                 MathUtil.bigPermutation(70, 20).toString());
     }
-    
+
     public void testCombination4_3() {
         assertEquals("Unexpected value for C(4, 3)", "4", MathUtil.combination(4, 3).toString());
     }

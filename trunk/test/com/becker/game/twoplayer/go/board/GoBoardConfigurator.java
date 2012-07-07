@@ -2,26 +2,22 @@
 package com.becker.game.twoplayer.go.board;
 
 import com.becker.common.geometry.Location;
-import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.position.GoStone;
-import com.becker.game.twoplayer.go.board.move.GoMove;
-import junit.framework.Assert;
 
 /**
  * Helps configure go boards for unit testing.
  * @author Barry Becker
  */
 public class GoBoardConfigurator {
-    
+
     private GoBoard board;
-    
-    
+
+
     public GoBoardConfigurator(int size) {
         board = new GoBoard(size, 0);
     }
-    
+
     public GoBoardConfigurator(int size, int numHandicap) {
         board = new GoBoard(size, numHandicap);
     }
@@ -30,8 +26,8 @@ public class GoBoardConfigurator {
     public GoBoardConfigurator(String filename) {
         board = new GoBoard();
     }*/
-    
-    
+
+
     public GoBoard getBoard() {
         return board;
     }

@@ -10,8 +10,6 @@ import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.eye.GoEyeSet;
 import com.becker.game.twoplayer.go.board.elements.eye.IGoEye;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 /**
  * Test that we can get the correct type and status for all the different eyes that can arise.

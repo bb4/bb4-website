@@ -2,10 +2,7 @@
 package com.becker.common;
 
 
-import com.becker.common.CommandLineOptions;
 import junit.framework.TestCase;
-
-import java.util.Map;
 
 /**
  * @author Barry Becker

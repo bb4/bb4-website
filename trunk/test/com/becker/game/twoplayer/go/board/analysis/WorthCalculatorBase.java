@@ -4,7 +4,6 @@ package com.becker.game.twoplayer.go.board.analysis;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.territory.TerritoryAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.options.GoWeights;
 import junit.framework.Assert;

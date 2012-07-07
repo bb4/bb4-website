@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.liquid.compute;
 
-import com.becker.common.math.MathUtil;
 import com.becker.simulation.liquid.model.*;
 import junit.framework.TestCase;
 

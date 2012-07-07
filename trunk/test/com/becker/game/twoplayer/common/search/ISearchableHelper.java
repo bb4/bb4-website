@@ -2,7 +2,6 @@
 package com.becker.game.twoplayer.common.search;
 
 import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**

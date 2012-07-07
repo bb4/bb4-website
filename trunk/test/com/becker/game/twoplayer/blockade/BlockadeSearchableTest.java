@@ -2,18 +2,20 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.geometry.Location;
-import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.MoveList;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
+import com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
 import com.becker.optimization.parameter.ParameterArray;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 import java.util.List;
-import junit.framework.*;
 
 
 /**
@@ -137,7 +139,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
         if (expectedMoves.length != moves.size()) {
             printMoves( fileName, moves);
         }
-        
+
         Assert.assertEquals("Unexpected number of generated moves.",
                 expectedMoves.length, moves.size());
 

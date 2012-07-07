@@ -1,11 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common.search.examples;
 
-import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
-
-import java.util.Arrays;
 
 /**
  * An abstract game tree for testing search strategies.

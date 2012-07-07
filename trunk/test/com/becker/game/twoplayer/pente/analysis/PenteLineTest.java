@@ -2,8 +2,8 @@
 package com.becker.game.twoplayer.pente.analysis;
 
 import com.becker.game.common.GameWeights;
-import com.becker.game.twoplayer.pente.pattern.PentePatterns;
 import com.becker.game.twoplayer.pente.PenteTestWeights;
+import com.becker.game.twoplayer.pente.pattern.PentePatterns;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

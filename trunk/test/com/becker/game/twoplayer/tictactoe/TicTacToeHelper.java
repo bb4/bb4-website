@@ -2,9 +2,8 @@
 package com.becker.game.twoplayer.tictactoe;
 
 import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.SearchableHelper;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
  * @author Barry Becker
@@ -37,7 +36,7 @@ public class TicTacToeHelper extends SearchableHelper {
     @Override
     protected String getDefaultFileName() {
         return getMiddleGameMoveFileName(true);
-    }   
+    }
 
     @Override
     protected String getStartGameMoveFileName(boolean player1) {

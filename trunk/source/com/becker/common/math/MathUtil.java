@@ -3,7 +3,6 @@ package com.becker.common.math;
 
 import javax.vecmath.Point2d;
 import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.Random;
 
 

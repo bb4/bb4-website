@@ -13,15 +13,20 @@ import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.multiplayer.common.MultiGameOptions;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
-import com.becker.ui.table.BasicTableModel;
 import com.becker.ui.components.GradientButton;
+import com.becker.ui.table.BasicTableModel;
 import com.becker.ui.table.TableButtonListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Iterator;
 
 /**
@@ -32,7 +37,7 @@ import java.util.Iterator;
  * @author Barry Becker
  */
 public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPanel
-                                                  implements ActionListener, MouseListener, 
+                                                  implements ActionListener, MouseListener,
                                                                       KeyListener, TableButtonListener {
 
     private static final String DEFAULT_NAME = "<name>";
@@ -143,7 +148,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
         //System.out.println("got an update of the multiplayer table list from the server:\n" + cmd);
         switch (cmd.getName())  {
             case UPDATE_TABLES :
-                updateTables( (OnlineGameTableList) cmd.getArgument());                               
+                updateTables( (OnlineGameTableList) cmd.getArgument());
                 break;
            case START_GAME :
                 startGame();
@@ -155,7 +160,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     }
 
     /**
-     * 
+     *
      * @param tableList list of tables to update.
      */
     void updateTables(OnlineGameTableList tableList) {
@@ -183,8 +188,8 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
             //controller_.getServerConnection().sendCommand(startCmd);
         }
     }
-    
-    
+
+
     /**
      * An online table has filled with players and is ready to start.
      * Initiallize the players for the controller with surrogates for all but the single current player on this client.
@@ -192,7 +197,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     void startGame()
     {
         System.out.println("Start the game for player:" + currentName_ +" on the client. Table=" +  onlineGameTablesTable_.getSelectedTable());
-        
+
         // since we are on the client we need to create surrogates for the players which are not the current player
         Iterator<Player> it = onlineGameTablesTable_.getSelectedTable().getPlayers().iterator();
         PlayerList players = new PlayerList();
@@ -207,7 +212,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
             }
         }
         System.out.println("starting game with players="+players);
-        controller_.setPlayers(players);       
+        controller_.setPlayers(players);
     }
 
     /**
@@ -219,8 +224,8 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
         Object source = e.getSource();
 
         if (nameChecksOut()) {
-            if (source == createTableButton_) {        
-                createNewGameTable();            
+            if (source == createTableButton_) {
+                createNewGameTable();
             }
         }
     }

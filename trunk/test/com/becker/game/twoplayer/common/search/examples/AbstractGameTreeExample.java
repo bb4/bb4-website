@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common.search.examples;
 
-import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
@@ -35,7 +34,7 @@ public abstract class AbstractGameTreeExample implements GameTreeExample {
     public TwoPlayerMove getInitialMove() {
         return initialMove;
     }
-   
+
     /**
      * Print the tree in depth first search for debugging purposes
      */

@@ -1,7 +1,6 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.simulation.verhulst;
 
-import com.becker.simulation.henonphase.algorithm.TravelerParams;
 import com.becker.ui.sliders.SliderGroup;
 import com.becker.ui.sliders.SliderProperties;
 

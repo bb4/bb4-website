@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.common.search;
 
-import junit.framework.*;
+import junit.framework.TestCase;
 
 /**
  * Verify that all the methods in the Searchable interface work as expected.

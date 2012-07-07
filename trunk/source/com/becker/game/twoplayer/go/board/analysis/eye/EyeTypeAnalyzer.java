@@ -3,7 +3,12 @@ package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.E1Information;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.E2Information;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.E3Information;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.FalseEyeInformation;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.TerritorialEyeInformation;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
@@ -16,7 +21,7 @@ import java.util.Set;
 
 /**
  * Determine the type of an eye on the board.
- * 
+ *
  * @author Barry Becker
  */
 public class EyeTypeAnalyzer {
@@ -26,14 +31,14 @@ public class EyeTypeAnalyzer {
     private NeighborAnalyzer nbrAnalyzer_;
     private GroupAnalyzer groupAnalyzer_;
 
-    
+
     public EyeTypeAnalyzer(IGoEye eye, GoBoard board, GroupAnalyzer analyzer) {
         eye_ = eye;
         board_ = board;
         groupAnalyzer_ = analyzer;
         nbrAnalyzer_ = new NeighborAnalyzer(board);
     }
-      
+
     /**
      * @return the eye type determined based on the properties and
      *     nbrs of the positions in the spaces_ list.
@@ -55,7 +60,7 @@ public class EyeTypeAnalyzer {
         }
         if ( size == 3 ) {
             return new E3Information();
-        }  
+        }
         if ( size > 3 && size < 8 ) {
             BigEyeAnalyzer bigEyeAnalyzer = new BigEyeAnalyzer(eye_);
             return bigEyeAnalyzer.determineEyeInformation();

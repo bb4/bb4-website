@@ -5,7 +5,10 @@ import com.becker.common.math.MathUtil;
 import com.becker.puzzle.tantrix.solver.path.PathType;
 import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Mix tiles of the same type without changing the primary originalPath.

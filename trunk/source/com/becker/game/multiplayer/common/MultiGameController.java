@@ -19,10 +19,10 @@ import java.util.List;
 
 /**
  * Abstract base class for multi player game controllers.
- * 
+ *
  * Online play should work like this:
  *  Case One: no robot players, all players are humans on client computers.
- *    - One of the human players creates a table with certain parameters that define 
+ *    - One of the human players creates a table with certain parameters that define
  *      the game to be played.
  *   - Each client and the server create an instance of the game controller.
  *     On each client there is a human player representing the player on that client,
@@ -31,9 +31,9 @@ import java.util.List;
  *   - When it is a given players turn, they specify their action.
  *     That action is sent in a message to the server. The server then broadcasts
  *     the response (in this case the players action) to all OnlineChangeListeners.
- *     Since all the surrogates for that player (one on the server and one on each client 
+ *     Since all the surrogates for that player (one on the server and one on each client
  *     except the one representing that acutal player) are OnlineChangeListeners,
- *     they will get the event and know to set the action so that it can be retrieved by 
+ *     they will get the event and know to set the action so that it can be retrieved by
  *     that controller.
  *   - When a surrogate is asked for its action, it blocks until it actually recieved the action
  *     in that response message from the server.
@@ -43,19 +43,19 @@ import java.util.List;
 public abstract class MultiGameController extends GameController {
 
     protected int currentPlayerIndex_;
- 
+
     // there is a different starting player each round
     protected int startingPlayerIndex_ = 0;
-    
+
     // the ith play in a given round
     protected int playIndex_ = 0;
 
     private Dimension size;
-        
+
     protected  MultiGameController()  {
         size = new Dimension(0, 0);
     }
-    
+
     /**
      *  Construct the game controller given an initial board size
      */
@@ -68,7 +68,7 @@ public abstract class MultiGameController extends GameController {
     protected Board createBoard() {
         return createTable(size.width, size.height);
     }
-    
+
     protected abstract Board createTable(int nrows, int ncols);
 
 
@@ -86,7 +86,7 @@ public abstract class MultiGameController extends GameController {
         startingPlayerIndex_ = 0;
         playIndex_ = 0;
         currentPlayerIndex_ = 0;
-        initPlayers();        
+        initPlayers();
     }
 
     @Override
@@ -96,14 +96,14 @@ public abstract class MultiGameController extends GameController {
         }
         return gameOptions_;
     }
-    
+
     protected abstract GameOptions createOptions();
 
     /**
      * by default we start with one human and one robot player.
      */
     protected abstract void initPlayers();
- 
+
 
     /**
      *
@@ -143,8 +143,8 @@ public abstract class MultiGameController extends GameController {
      * @param action
      *
     public void handlePlayerAction(PlayerAction action) {
-        // find the player and set his action            
-        for (Player p : players_) {            
+        // find the player and set his action
+        for (Player p : players_) {
             if (p.getName().equals(action.getPlayerName())) {
                 ((MultiGamePlayer)p).setAction(action);
             }
@@ -163,18 +163,18 @@ public abstract class MultiGameController extends GameController {
         if (isDone()) {
             pviewer.sendGameChangedEvent(null);
             return 0;
-        }        
-        int nextIndex = advanceToNextPlayerIndex();        
+        }
+        int nextIndex = advanceToNextPlayerIndex();
 
         if (!isDone()) {
             if (getCurrentPlayer().isSurrogate()) {
                 GameContext.log(0, "about to do surrogate move for " + getCurrentPlayer()
                         + " in controller="+this + " in thread="+Thread.currentThread().getName());
                 pviewer.doSurrogateMove((SurrogateMultiPlayer)getCurrentPlayer());
-            }         
+            }
             else if (!getCurrentPlayer().isHuman()) {
                 pviewer.doComputerMove(getCurrentPlayer());
-            }                          
+            }
         }
         // fire game changed event
         pviewer.sendGameChangedEvent(null);
@@ -191,7 +191,7 @@ public abstract class MultiGameController extends GameController {
      * @return the index of the next player
      */
     protected abstract int advanceToNextPlayerIndex();
-   
+
 
     /**
      *  @return the player that goes first.

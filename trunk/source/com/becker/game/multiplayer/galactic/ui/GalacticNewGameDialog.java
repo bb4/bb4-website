@@ -7,7 +7,6 @@ import com.becker.game.multiplayer.common.online.ui.MultiPlayerOnlineGameTablesT
 import com.becker.game.multiplayer.common.ui.MultiPlayerNewGameDialog;
 import com.becker.game.multiplayer.common.ui.PlayerTable;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class GalacticNewGameDialog extends MultiPlayerNewGameDialog {

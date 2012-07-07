@@ -2,10 +2,9 @@
 package com.becker.common.util;
 
 
-import com.becker.common.util.LRUCache;
-import java.util.Map;
-
 import junit.framework.TestCase;
+
+import java.util.Map;
 
 /**
  * Test LRUCache behavior.

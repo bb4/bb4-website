@@ -2,9 +2,9 @@
 package com.becker.game.twoplayer.pente.analysis.differencers;
 
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
-import com.becker.game.twoplayer.pente.pattern.Patterns;
 import com.becker.game.twoplayer.pente.analysis.Line;
 import com.becker.game.twoplayer.pente.analysis.LineFactory;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -25,7 +25,7 @@ public class UpDiagonalDifferencer extends DiagonalDifferencer {
     public int findValueDifference(int row, int col, ParameterArray weights) {
 
         init();
-        int startc = col - winLength; 
+        int startc = col - winLength;
         int startr = row + winLength;
         if ( startc < 1 ) {
             startr += startc - 1;

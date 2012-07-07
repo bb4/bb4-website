@@ -7,7 +7,6 @@ import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.graphing.GraphOptionsDialog;
 import com.becker.simulation.habitat.creatures.Populations;
-import com.becker.simulation.habitat.creatures.SerengetiPopulations;
 import com.becker.simulation.habitat.creatures.SinglePopulation;
 import com.becker.simulation.habitat.options.DynamicOptions;
 import com.becker.ui.animation.AnimationFrame;

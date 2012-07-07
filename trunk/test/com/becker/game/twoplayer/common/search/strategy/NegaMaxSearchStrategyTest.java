@@ -2,12 +2,12 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.examples.*;
+import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * Test negamax strategy independent of any particular game implementation.
- * 
+ *
  * @author Barry Becker
  */
 public class NegaMaxSearchStrategyTest extends AbstractBruteSearchStrategyTst {

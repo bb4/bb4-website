@@ -9,14 +9,17 @@ import com.becker.optimization.parameter.ParameterArray;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.becker.game.twoplayer.common.search.SearchAttribute.*;
+import static com.becker.game.twoplayer.common.search.SearchAttribute.ASPIRATION;
+import static com.becker.game.twoplayer.common.search.SearchAttribute.BRUTE_FORCE;
+import static com.becker.game.twoplayer.common.search.SearchAttribute.MEMORY;
+import static com.becker.game.twoplayer.common.search.SearchAttribute.MONTE_CARLO;
 /**
  * Currently supported search strategies.
  *
  * @author Barry Becker
  */
 public enum SearchStrategyType {
-    
+
     MINIMAX("MINIMAX_SEARCH",
             new SearchAttribute[] {BRUTE_FORCE}) {
         @Override
@@ -51,7 +54,7 @@ public enum SearchStrategyType {
         public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
             return new NegaScoutMemoryStrategy(s, weights);
         }
-    },   
+    },
     MTD_NEGASCOUT("MTD_NEGASCOUT_SEARCH",
             new SearchAttribute[] {BRUTE_FORCE, MEMORY, ASPIRATION}){
         @Override

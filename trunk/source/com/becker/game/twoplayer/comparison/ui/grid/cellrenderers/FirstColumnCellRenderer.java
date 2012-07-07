@@ -2,10 +2,8 @@
 package com.becker.game.twoplayer.comparison.ui.grid.cellrenderers;
 
 import com.becker.game.twoplayer.comparison.model.Outcome;
-import com.becker.ui.util.GUIUtil;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 
@@ -45,4 +43,3 @@ public class FirstColumnCellRenderer extends PlayerHeadCellRenderer {
         return this;
     }
 }
-                                            

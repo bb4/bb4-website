@@ -3,10 +3,7 @@ package com.becker.common.function;
 
 import com.becker.common.math.MathUtil;
 import com.becker.common.math.Range;
-import com.becker.common.math.function.ErrorFunction;
 import com.becker.common.math.function.FunctionInverter;
-import com.becker.common.math.function.InvertibleFunction;
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import java.util.Arrays;
@@ -21,7 +18,7 @@ public class FunctionInverterTest extends TestCase {
 
 
     public void testInvertTrivialFunction() {
-        
+
         double[] func = new double[] {0, 1.0};
         inverter = new FunctionInverter(func);
         double[] inverse = inverter.createInverseFunction(new Range(0, 1.0));

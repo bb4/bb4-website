@@ -4,8 +4,6 @@ package com.becker.optimization.optimizees;
 import com.becker.optimization.parameter.NumericParameterArrayTest;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
-import static com.becker.optimization.optimizees.AnalyticFunctionConsts.P1;
-
 
 import static com.becker.optimization.optimizees.AnalyticFunctionConsts.*;
 

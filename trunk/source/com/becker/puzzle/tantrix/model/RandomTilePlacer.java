@@ -6,7 +6,6 @@ import com.becker.common.math.MathUtil;
 import com.becker.puzzle.tantrix.model.fitting.PrimaryPathFitter;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 
 /**

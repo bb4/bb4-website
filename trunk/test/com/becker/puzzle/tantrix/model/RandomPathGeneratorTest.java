@@ -6,7 +6,8 @@ import com.becker.common.math.MathUtil;
 import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 import junit.framework.TestCase;
 
-import static com.becker.puzzle.tantrix.TantrixTstUtil.*;
+import static com.becker.puzzle.tantrix.TantrixTstUtil.TILES;
+import static com.becker.puzzle.tantrix.TantrixTstUtil.place3UnsolvedTiles;
 
 /**
  * @author Barry Becker

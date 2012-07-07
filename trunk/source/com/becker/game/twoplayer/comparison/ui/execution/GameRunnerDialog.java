@@ -1,7 +1,6 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.twoplayer.comparison.ui.execution;
 
-import com.becker.game.common.ui.panel.IGamePanel;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 import com.becker.ui.dialogs.AbstractDialog;
 

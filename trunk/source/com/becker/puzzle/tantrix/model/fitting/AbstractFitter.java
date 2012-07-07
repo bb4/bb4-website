@@ -2,7 +2,11 @@
 package com.becker.puzzle.tantrix.model.fitting;
 
 import com.becker.common.geometry.Location;
-import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.HexTile;
+import com.becker.puzzle.tantrix.model.PathColor;
+import com.becker.puzzle.tantrix.model.Rotation;
+import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.model.TilePlacementList;
 
 import static com.becker.puzzle.tantrix.model.HexTile.NUM_SIDES;
 

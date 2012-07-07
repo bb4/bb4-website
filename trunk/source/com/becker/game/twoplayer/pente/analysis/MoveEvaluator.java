@@ -4,9 +4,9 @@ package com.becker.game.twoplayer.pente.analysis;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.pente.pattern.Patterns;
 import com.becker.game.twoplayer.pente.analysis.differencers.ValueDifferencer;
 import com.becker.game.twoplayer.pente.analysis.differencers.ValueDifferencerFactory;
+import com.becker.game.twoplayer.pente.pattern.Patterns;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -38,13 +38,13 @@ public class MoveEvaluator  {
      * Used for testing to inject something that will create mock differencers.
      */
     public void setValueDifferencerFactory(ValueDifferencerFactory differencerFactory) {
-        
+
         vertDifferencer = differencerFactory.createValueDifferencer(Direction.VERTICAL);
         horzDifferencer = differencerFactory.createValueDifferencer(Direction.HORIZONTAL);
         upDiagDifferencer = differencerFactory.createValueDifferencer(Direction.UP_DIAGONAL);
         downDiagDifferencer = differencerFactory.createValueDifferencer(Direction.DOWN_DIAGONAL);
     }
-    
+
     /**
      * Statically evaluate the board position.
      * @return the lastMove's value modified by the value add of the new move.

@@ -1,7 +1,12 @@
 package com.becker.sound;
 
 
-import javax.sound.midi.*;
+import javax.sound.midi.Instrument;
+import javax.sound.midi.MidiChannel;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Soundbank;
+import javax.sound.midi.Synthesizer;
 
 /**
  *  This class provides a convenient way to access the Java Sound API.

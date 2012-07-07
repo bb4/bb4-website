@@ -3,8 +3,8 @@ package com.becker.optimization.optimizees;
 
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.Optimizer;
-import com.becker.optimization.viewer.OptimizerEvalFrame;
 import com.becker.optimization.strategy.OptimizationStrategyType;
+import com.becker.optimization.viewer.OptimizerEvalFrame;
 
 import javax.vecmath.Point2d;
 

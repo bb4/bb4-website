@@ -2,7 +2,7 @@
 package com.becker.game.twoplayer.comparison.execution;
 
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
-import com.becker.game.twoplayer.comparison.model.*;
+import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 import com.becker.game.twoplayer.comparison.ui.execution.GameRunnerDialog;
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ public class PerformanceRunner {
     private SearchOptionsConfigList optionsList;
     private TwoPlayerPanel gamePanel_;
     private PerformanceRunnerListener listener;
-    
+
     public PerformanceRunner(TwoPlayerPanel gamePanel, SearchOptionsConfigList optionsList,
                              PerformanceRunnerListener listener)  {
         this.optionsList = optionsList;

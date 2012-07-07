@@ -7,7 +7,6 @@ import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.graphing.GraphOptionsDialog;
 import com.becker.simulation.predprey.creatures.Foxes;
-import com.becker.simulation.predprey.creatures.Lions;
 import com.becker.simulation.predprey.creatures.Population;
 import com.becker.simulation.predprey.creatures.Rabbits;
 import com.becker.simulation.predprey.options.DynamicOptions;

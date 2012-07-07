@@ -7,7 +7,6 @@ import com.becker.game.multiplayer.common.ui.MultiPlayerNewGameDialog;
 import com.becker.game.multiplayer.common.ui.PlayerTable;
 import com.becker.game.multiplayer.trivial.online.ui.OnlineTrivialManagerPanel;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**

@@ -2,7 +2,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group.eye.potential;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import junit.framework.Assert;
@@ -148,7 +147,7 @@ public class TestEyePotentialAnalyzer extends GoTestCase {
         verifyBlackEyePotential(5, 0.75f);
         verifyWhiteEyePotential(5, 0.666f);
     }
-    
+
     public void testEyePotential_SymmetricLargeC() {
         restoreGame("symmetric_large_c");
         verifyBlackEyePotential(9, 1.074f);

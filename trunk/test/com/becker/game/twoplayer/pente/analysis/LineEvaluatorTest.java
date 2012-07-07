@@ -8,8 +8,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.List;
-
 /**
  * Verify that we correctly evaluate patterns in lines on the board.
  *
@@ -126,7 +124,7 @@ public class LineEvaluatorTest extends TestCase  {
     public void testEvalLineLongerThanPattern() {
 
         line = createLine("X_XX");
-        
+
         // the pattern is XX
         worth = lineEvaluator.evaluate(line, true, 2, 2, 3);
         assertEquals(10.0, worth);
@@ -276,7 +274,7 @@ public class LineEvaluatorTest extends TestCase  {
         assertEquals(-1.0, worth);
     }
 
-    
+
     /**
      * @return the line
      */

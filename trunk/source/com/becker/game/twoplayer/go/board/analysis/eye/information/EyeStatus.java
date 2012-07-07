@@ -3,7 +3,10 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.elements.eye.GoEye;
 
-import static com.becker.game.twoplayer.go.board.analysis.eye.information.EyeShapeScores.*;
+import static com.becker.game.twoplayer.go.board.analysis.eye.information.EyeShapeScores.BIG_EYE;
+import static com.becker.game.twoplayer.go.board.analysis.eye.information.EyeShapeScores.FALSE_EYE;
+import static com.becker.game.twoplayer.go.board.analysis.eye.information.EyeShapeScores.GUARANTEED_TWO_EYES;
+import static com.becker.game.twoplayer.go.board.analysis.eye.information.EyeShapeScores.SINGLE_EYE;
 
 /**
  * Enum for the different possible center Eye Status'.
@@ -58,7 +61,7 @@ public enum EyeStatus
      * This can arise when there is a ko on the edge or corner.
      */
     UNSETTLED_KO("Unsettled ko", "Unsettled ko status can only happen on the edge or in the corner.", FALSE_EYE),
-    
+
     /**
      * Other possibilities: Unknown, dead, false
      */

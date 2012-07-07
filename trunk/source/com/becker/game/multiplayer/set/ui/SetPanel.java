@@ -12,7 +12,6 @@ import com.becker.game.common.ui.panel.GameToolBar;
 import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.game.multiplayer.set.SetController;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -10,7 +10,6 @@ import com.becker.game.common.ui.panel.GameInfoPanel;
 import com.becker.game.common.ui.panel.GamePanel;
 import com.becker.game.common.ui.viewer.GameBoardViewer;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**

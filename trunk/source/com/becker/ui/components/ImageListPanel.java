@@ -17,9 +17,9 @@ import java.util.TimerTask;
 
 /**
  *  Displays an array of images.
- * The images are displayed in a way that uses the available space 
+ * The images are displayed in a way that uses the available space
  * effectively without using a scrollbar.
- * The images may get smaller than their actual size, but they 
+ * The images may get smaller than their actual size, but they
  * will maintain their aspect ratio, and they will not get bigger.
  *
  * @author Barry Becker
@@ -40,22 +40,22 @@ public final class ImageListPanel extends JPanel
 
     private static final Color BACKGROUND_COLOR = Color.WHITE;
     private static final Color HIGHLIGHT_COLOR = Color.ORANGE;
-    private static final Color SELECTION_COLOR = Color.BLUE;    
+    private static final Color SELECTION_COLOR = Color.BLUE;
     private static final Stroke BORDER_STROKE = new BasicStroke( 2.0f );
-    
+
     private static final int IMAGE_MARGIN = 2;
     private static final int TOTAL_MARGIN = 2 * IMAGE_MARGIN;
-    
+
     private List<ImageSelectionListener> imgSelectionListeners_;
 
     /**
      * Use this Constructor if you just want the empty panel initially.
      * Maybe add constructor for unequal sized images where we specify the desired max size.
-     */ 
+     */
     public ImageListPanel() {
         imgSelectionListeners_ = new LinkedList<ImageSelectionListener>();
-        
-        this.setMinimumSize(new Dimension(100, 100));        
+
+        this.setMinimumSize(new Dimension(100, 100));
         this.addComponentListener( new ComponentAdapter()  {
             @Override
             public void componentResized( ComponentEvent ce ) {
@@ -65,16 +65,16 @@ public final class ImageListPanel extends JPanel
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
     }
-    
+
     /**
      * Constructor.
      * @param images array of identically sized images to show in an array.
-     */ 
+     */
     public ImageListPanel(List<BufferedImage> images) {
-        this();                
+        this();
         setImageList(images);
     }
-    
+
     public void setImageList(List<BufferedImage> images) {
         assert images!=null;
         images_ = images;
@@ -84,7 +84,7 @@ public final class ImageListPanel extends JPanel
         highlightedImage_ = null;
         this.repaint();
     }
-    
+
     public List<BufferedImage> getImageList() {
         return images_;
     }
@@ -106,7 +106,7 @@ public final class ImageListPanel extends JPanel
         imageList.add(image);
         setImageList(imageList);
     }
-    
+
     /**
      * This is how the client can register itself to receive these events.
      * @param isl the listener to add
@@ -124,24 +124,24 @@ public final class ImageListPanel extends JPanel
     {
         imgSelectionListeners_.remove(isl);
     }
-    
-    
+
+
     public List<Integer> getSelectedImageIndices() {
-        
+
         if (images_ == null)
             return null;
         List<Integer> selectedIndices = new LinkedList<Integer>();
-        
+
         for (int i = 0; i < images_.size();  i++ ) {
-           
+
             BufferedImage img =  images_.get(i);
             if (selectedImages_.contains(img)) {
                 selectedIndices.add(i);
-            }         
+            }
         }
         return selectedIndices;
     }
-    
+
     public void setSelectedImageIndices(List<Integer> selectedIndices) {
         assert selectedIndices != null;
         // replace what we have with the new selections
@@ -151,7 +151,7 @@ public final class ImageListPanel extends JPanel
                 BufferedImage img =  images_.get(i);
                 selectedImages_.add(img);
                 updateImageSelectionListeners(img);
-            }         
+            }
         }
     }
 
@@ -176,66 +176,66 @@ public final class ImageListPanel extends JPanel
     protected void paintComponent( Graphics g )
     {
         super.paintComponents( g );
-        if (images_ == null || images_.size() == 0) 
+        if (images_ == null || images_.size() == 0)
             return;
-        
-        // erase what's there and redraw.        
+
+        // erase what's there and redraw.
         g.clearRect( 0, 0, getWidth(), getHeight() );
         g.setColor( BACKGROUND_COLOR );
         g.fillRect( 0, 0, getWidth(), getHeight() );
 
         double panelRatio = (double)getWidth() / (double)getHeight();
-        
+
         // find the number of rows that will give the closest match on the aspect ratios
         int numImages = images_.size();
         int numRows = 1;
         numColumns_ = numImages;
         double ratio = imageRatio_ * numImages;
-        double lastRatio = 100000000;        
-        while (ratio > panelRatio) {            
+        double lastRatio = 100000000;
+        while (ratio > panelRatio) {
             lastRatio = ratio;
             numRows++;
-            numColumns_ = (int)Math.ceil((double)numImages / (double)numRows);        
+            numColumns_ = (int)Math.ceil((double)numImages / (double)numRows);
             ratio = imageRatio_ * (double)numColumns_/(double)numRows;
             //System.out.println("ratio="+ ratio +" panelRatio=" + panelRatio + " numRows="+ numRows);
-        } 
+        }
         if (panelRatio - ratio < lastRatio - panelRatio) {
             // then we may have space on right side, but vertical space completely used
             imageDisplayHeight_ = Math.min(getHeight() / numRows, (int)((baseImageWidth_)/imageRatio_) )- TOTAL_MARGIN;
-            imageDisplayWidth_ = (int) (imageDisplayHeight_ * imageRatio_);               
+            imageDisplayWidth_ = (int) (imageDisplayHeight_ * imageRatio_);
         } else {
             // horizontal space completely used
             numRows--;
-            numColumns_ = (int)Math.ceil((double)numImages / (double)numRows);    
-            imageDisplayWidth_ = Math.min( getWidth() / numColumns_, baseImageWidth_) - TOTAL_MARGIN;     
-            imageDisplayHeight_ = (int) (imageDisplayWidth_ / imageRatio_);     
+            numColumns_ = (int)Math.ceil((double)numImages / (double)numRows);
+            imageDisplayWidth_ = Math.min( getWidth() / numColumns_, baseImageWidth_) - TOTAL_MARGIN;
+            imageDisplayHeight_ = (int) (imageDisplayWidth_ / imageRatio_);
         }
-        
-        Graphics2D g2 = (Graphics2D)g;  
+
+        Graphics2D g2 = (Graphics2D)g;
         int enlargedImageIndex = -1;
-        
+
         g2.setStroke( BORDER_STROKE );
-        
+
         for (int i = 0; i < images_.size();  i++ ) {
-         
-            int colPos = getColumnPosition(i) + IMAGE_MARGIN; 
-            int rowPos = getRowPosition(i)  + IMAGE_MARGIN; 
+
+            int colPos = getColumnPosition(i) + IMAGE_MARGIN;
+            int rowPos = getRowPosition(i)  + IMAGE_MARGIN;
             BufferedImage img =  images_.get(i);
             if (img.equals(highlightedImage_) && enlargeHighlightedImage_) {
                 enlargedImageIndex = i;
             }
-            g2.drawImage(img, colPos , rowPos, 
+            g2.drawImage(img, colPos , rowPos,
                                     imageDisplayWidth_, imageDisplayHeight_, null);
-                        
+
             // put a border around images that are selected or highlighted
-            if (highlightedImage_ == img || selectedImages_.contains(img)) {                
-                g2.setColor((highlightedImage_ == img) ? HIGHLIGHT_COLOR :SELECTION_COLOR);                    
+            if (highlightedImage_ == img || selectedImages_.contains(img)) {
+                g2.setColor((highlightedImage_ == img) ? HIGHLIGHT_COLOR :SELECTION_COLOR);
                 g2.drawRect(colPos- IMAGE_MARGIN, rowPos - IMAGE_MARGIN,
                                      imageDisplayWidth_ + TOTAL_MARGIN, imageDisplayHeight_ + TOTAL_MARGIN);
-            }        
+            }
         }
-        
-        if (enlargedImageIndex >= 0) {      
+
+        if (enlargedImageIndex >= 0) {
             int w = highlightedImage_.getWidth();
             int h = highlightedImage_.getHeight();
 
@@ -250,17 +250,17 @@ public final class ImageListPanel extends JPanel
             g2.drawImage(highlightedImage_, 0 , 0, w, h, null);
         }
     }
-    
+
     private int getRowPosition(int i) {
         int row = i / numColumns_;
         return row * ( imageDisplayHeight_ + TOTAL_MARGIN);
     }
-    
+
     private int getColumnPosition(int i) {
         int col = i % numColumns_;
         return col * ( imageDisplayWidth_ + TOTAL_MARGIN);
     }
-    
+
 
 
     /**
@@ -269,7 +269,7 @@ public final class ImageListPanel extends JPanel
     private BufferedImage findImageOver(int x, int y) {
 
         if (images_ == null) return null;
-        int selectedIndex = -1;        
+        int selectedIndex = -1;
         for (int i = 0; i < images_.size(); i++ ) {
             int row = i / numColumns_;
             int col = i % numColumns_;
@@ -294,12 +294,12 @@ public final class ImageListPanel extends JPanel
 
         if (changed) {
             if (image != null) {
-                highlightedImage_ = image;         
+                highlightedImage_ = image;
             } else {
                 highlightedImage_ = null;
             }
             this.repaint();
-            
+
             // start a time that is canceled if the mouse moves
             final Timer enlargementTimer = new Timer();
             enlargeHighlightedImage_ = false;
@@ -312,14 +312,14 @@ public final class ImageListPanel extends JPanel
                             repaint();
                        }
                    }, TIME_TO_ENLARGE);
-        }        
+        }
     }
 
- 
+
     public void mouseDragged(MouseEvent e) {}
     public void mouseClicked(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {}
-    
+
     /**
      * An image was seelcted on release of the mouse click.
      */
@@ -336,19 +336,19 @@ public final class ImageListPanel extends JPanel
                 }
                 selectedImages_.add(img);
             }
-            this.repaint();            
+            this.repaint();
         }
-        
+
          updateImageSelectionListeners(img);
     }
-    
+
     private void updateImageSelectionListeners(BufferedImage selectedImage) {
         // make sure listeners get notification that an image was selected.
         for (ImageSelectionListener isl : imgSelectionListeners_) {
                 isl.imageSelected(selectedImage);
          }
     }
- 
+
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
 }

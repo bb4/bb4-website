@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.tictactoe;
 
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**

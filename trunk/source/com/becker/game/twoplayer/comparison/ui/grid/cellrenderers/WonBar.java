@@ -4,7 +4,6 @@ package com.becker.game.twoplayer.comparison.ui.grid.cellrenderers;
 import com.becker.game.twoplayer.comparison.model.Outcome;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * The bar that shows which side won for each player who started fist.
@@ -19,12 +18,12 @@ public class WonBar extends SegmentedBar {
 
     private Outcome[] outcomes;
     private Image[] finalImages;
-    
+
     public void setOutcomes(Outcome[] outcomes, Image[] finalImages) {
         this.outcomes = outcomes;
         this.finalImages = finalImages;
     }
-    
+
     @Override
     protected void drawBar(Graphics2D g2) {
 
@@ -51,9 +50,9 @@ public class WonBar extends SegmentedBar {
         if (finalImages[1] != null)
             g2.drawImage(finalImages[1], IMAGE_INSET + width, IMAGE_INSET, imageSize, imageSize, null);
 
-        drawLabels(g2);        
+        drawLabels(g2);
     }
-    
+
     private void drawLabels(Graphics2D g2) {
         g2.setColor(Color.BLACK);
         int width = getWidth()/2;
@@ -63,4 +62,3 @@ public class WonBar extends SegmentedBar {
         g2.drawString(lab2, width + TEXT_INSET, TEXT_INSET);
     }
 }
-                                            

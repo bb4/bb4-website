@@ -5,7 +5,12 @@ import ca.dj.jigo.sgf.SGFException;
 import ca.dj.jigo.sgf.SGFLoader;
 import ca.dj.jigo.sgf.tokens.*;
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.common.persistence.tokens.*;
+import com.becker.game.twoplayer.common.persistence.tokens.Player1MoveToken;
+import com.becker.game.twoplayer.common.persistence.tokens.Player1NameToken;
+import com.becker.game.twoplayer.common.persistence.tokens.Player2MoveToken;
+import com.becker.game.twoplayer.common.persistence.tokens.Player2NameToken;
+import com.becker.game.twoplayer.common.persistence.tokens.Size2Token;
+import com.becker.game.twoplayer.common.persistence.tokens.TwoPlayerMoveToken;
 
 import java.io.IOException;
 import java.io.StreamTokenizer;
@@ -16,14 +21,14 @@ import java.io.StreamTokenizer;
  * @author Barry Becker
  */
 public class TwoPlayerSGFLoader extends SGFLoader {
-    
+
     /**
      * Creates a new instance of SGFTwoPlayerLoader
      */
     public TwoPlayerSGFLoader() {
     }
-    
-       
+
+
     /**
      * Reads an SGF token, provided a StreamTokenizer to help with parsing the
      * text into SGFTokens.

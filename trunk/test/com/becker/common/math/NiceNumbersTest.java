@@ -1,9 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.math;
 
-import junit.framework.*;
+import junit.framework.TestCase;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * @author Barry Becker

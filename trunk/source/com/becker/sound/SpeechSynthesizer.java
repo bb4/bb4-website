@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 
 /**
  * See http://www.javaworld.com/javaworld/jw-08-2001/jw-0817-javatalk.html?page=1
- * 
+ *
  * The speech engine works by concatenating short sound samples that represent the smallest
  * units of human -- in this case English -- speech.
  * Those sound samples, called allophones, are labeled with a one-, two-, or three-letter identifier.
@@ -93,7 +93,7 @@ import java.util.StringTokenizer;
  */
 public class SpeechSynthesizer {
     private SourceDataLine line = null;
-    
+
     /** delay in millis between words. */
     private static final int DELAY_BETWEEN_WORDS = 100;
 
@@ -105,11 +105,11 @@ public class SpeechSynthesizer {
         if ( args.length > 0 ) player.sayPhoneWord( args[0] );
         System.exit( 0 );
     }
-    
+
      /*
      * This method speaks the given phonetic words.
      */
-    public void sayText( String text )  {        
+    public void sayText( String text )  {
         sayPhoneWords( text.split(" "));
     }
 
@@ -174,8 +174,8 @@ public class SpeechSynthesizer {
         }
         return false;
     }
-    
-    /** 
+
+    /**
      * Speak a single phonetic token
      * @return the token that was said.
      */
@@ -211,13 +211,13 @@ public class SpeechSynthesizer {
         if ( line != null )  {
             // this used to be just drain, but I added flush to make it work post java 1.5
             line.drain();
-            //System.out.println("draining fp=" + line.getFramePosition() + " info=" + line.getLineInfo());       
+            //System.out.println("draining fp=" + line.getFramePosition() + " info=" + line.getLineInfo());
             pause(50);
             line.flush();
         }
         pause(DELAY_BETWEEN_WORDS);
     }
-    
+
     private void pause(int delay) {
 
         ThreadUtil.sleep(delay);

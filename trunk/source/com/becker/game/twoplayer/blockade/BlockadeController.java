@@ -15,7 +15,6 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 import java.awt.*;
 import java.util.List;

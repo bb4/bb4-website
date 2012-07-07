@@ -1,17 +1,17 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.pente.analysis;
 
-import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.GameWeights;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.pente.PenteBoard;
-import com.becker.game.twoplayer.pente.pattern.PentePatterns;
 import com.becker.game.twoplayer.pente.PenteTestWeights;
 import com.becker.game.twoplayer.pente.analysis.differencers.ValueDifferencerFactory;
-import junit.framework.TestSuite;
+import com.becker.game.twoplayer.pente.pattern.PentePatterns;
 import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class MoveEvaluatorTest extends TestCase  {
         PentePatterns patterns = new PentePatterns();
         evaluator = new MoveEvaluator(board, patterns);
         lineFactory = new LineFactoryRecorder();
-        ValueDifferencerFactory differencerFactory = 
+        ValueDifferencerFactory differencerFactory =
                 new ValueDifferencerFactory(board, patterns, lineFactory);
         evaluator.setValueDifferencerFactory(differencerFactory);
     }
@@ -83,8 +83,8 @@ public class MoveEvaluatorTest extends TestCase  {
      *   _______
      *   _______
      *   _______
-     *   
-     *   Lines are : 
+     *
+     *   Lines are :
      *     horizontal: _XX____
      *     vertical :  X_____
      *     upDiag   :   _X
@@ -208,7 +208,7 @@ public class MoveEvaluatorTest extends TestCase  {
         int worth = evaluator.worth(lastMove, weights.getDefaultWeights());
         List<Line> lines = lineFactory.getCreatedLines();
         TstUtil.printLines(lines);
-        
+
         assertEquals("Unexpected worth for move " + lastMove,
                 expectedWorth, worth);
         assertEquals(expectedLines.length, lines.size());

@@ -2,7 +2,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group.eye;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.E1Information;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeStatus;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
@@ -148,7 +147,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         verifyEyes(false, expectedEyes);
     }
 
-    
+
     private GoEyeSet createEyeSet(IGoEye... eyes) {
         GoEyeSet eyeList = new GoEyeSet();
         eyeList.addAll(Arrays.asList(eyes));
@@ -161,13 +160,13 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
     private void verifyEyes(boolean forBlackGroup, GoEyeSet expectedEyes) {
 
         IGoGroup group = getBiggestGroup(forBlackGroup);
-   
+
         EyeSpaceAnalyzer analyzer = new EyeSpaceAnalyzer(group, new GroupAnalyzerMap());
         analyzer.setBoard(getBoard());
         GoEyeSet eyes = analyzer.determineEyes();
 
         boolean matched = compareEyeSets(expectedEyes, eyes);
-        if (!matched) {                      
+        if (!matched) {
             System.err.println("we expected: \n" + expectedEyes);
             System.err.println("but got: \n" + eyes);
         }
@@ -178,9 +177,9 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
      * @return true if both sets of eyes are the same
      */
     private boolean compareEyeSets(GoEyeSet expEyes, GoEyeSet actEyes) {
-        
+
         Assert.assertEquals("Unexpected number of eyes in group.", expEyes.size(), actEyes.size());
-        
+
         // assuming the number of eyes match, check for 1-1 correspondence
         boolean allFound = true;
         for (IGoEye actEye : actEyes) {
@@ -190,7 +189,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
                 if (expEye.isMatch(actEye)) {
                     found = true;
                     break;
-                }   
+                }
             }
             if (!found) {
                 allFound = false;

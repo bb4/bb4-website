@@ -1,8 +1,6 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.game.common.player;
 
-import com.becker.game.common.online.IServerConnection;
-
 import java.awt.*;
 import java.io.Serializable;
 
@@ -57,7 +55,7 @@ public class PlayerOptions implements Serializable {
         sb.append(additionalInfo()).append(" ]");
         return sb.toString();
     }
-    
+
     protected String additionalInfo() {
         return "";
     }

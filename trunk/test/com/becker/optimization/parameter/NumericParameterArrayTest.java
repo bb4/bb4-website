@@ -4,8 +4,6 @@ package com.becker.optimization.parameter;
 import com.becker.common.math.MathUtil;
 import junit.framework.TestCase;
 
-import java.rmi.UnexpectedException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

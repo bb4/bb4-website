@@ -5,7 +5,6 @@ package com.becker.common.util;
 import junit.framework.TestCase;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Test LRUCache behavior.

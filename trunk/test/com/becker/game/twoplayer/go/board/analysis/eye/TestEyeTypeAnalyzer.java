@@ -14,14 +14,12 @@ import com.becker.game.twoplayer.go.board.elements.group.GoGroup;
 import com.becker.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.becker.game.twoplayer.go.board.elements.position.GoBoardPositionSet;
 import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import java.util.Set;
 
 /**
  * Test that we can get the correct type and status for all the different eyes that can arise.
- * 
+ *
  * @author Barry Becker
  */
 public abstract class TestEyeTypeAnalyzer extends GoTestCase {

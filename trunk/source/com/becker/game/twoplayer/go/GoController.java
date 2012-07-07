@@ -11,7 +11,6 @@ import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.cache.ScoreCache;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoSearchable;
@@ -88,7 +87,7 @@ public final class GoController extends TwoPlayerController {
                  GoStoneRenderer.DEFAULT_PLAYER1_COLOR), false));
          return players;
     }
-    
+
     @Override
     protected PlayerOptions createPlayerOptions(String playerName, Color color) {
         return new GoPlayerOptions(playerName, color);

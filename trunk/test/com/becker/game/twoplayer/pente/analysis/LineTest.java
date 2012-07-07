@@ -1,9 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.game.twoplayer.pente.analysis;
 
+import com.becker.game.common.GameWeights;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
-import com.becker.game.common.GameWeights;
 import com.becker.game.twoplayer.pente.pattern.SimplePatterns;
 import com.becker.game.twoplayer.pente.pattern.SimpleWeights;
 import junit.framework.Test;
@@ -43,7 +43,7 @@ public class LineTest extends TestCase  {
     public void testComputeValueDifferenceXX_Integraction() {
 
         Line line = createLine("XX");
-      
+
         int diff = line.computeValueDifference(0);
         assertEquals(9, diff);
 
@@ -149,14 +149,14 @@ public class LineTest extends TestCase  {
         assertEquals(0, diff);
         TstUtil.checkRecordedPatterns(new String[] {"_", "_", "_X_X_", "_"}, line);
     }
-    
+
     /** Cannot check where no symbol was played */
     public void testComputeValueDifferenceXX_XO_X_X_emptyPosition() {
 
         Line line = createLineWithRecorder("XX_XO_X_X_");
 
         try {
-            line.computeValueDifference(2); 
+            line.computeValueDifference(2);
             fail("did not expect to get here");
         }
         catch (AssertionError e) {

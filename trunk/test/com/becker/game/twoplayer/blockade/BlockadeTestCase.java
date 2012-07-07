@@ -2,14 +2,16 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.util.FileUtil;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
 import com.becker.game.common.player.Player;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.becker.game.twoplayer.common.TwoPlayerPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.*;
 import com.becker.ui.file.GenericFileFilter;
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.TestCase;
 
 /**
  *Base class for all Blockade test cases.

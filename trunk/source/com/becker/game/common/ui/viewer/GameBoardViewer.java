@@ -121,7 +121,7 @@ public abstract class GameBoardViewer extends JPanel
     public void saveGame() {
        saveGame(null);
     }
-    
+
     /**
      * save the current game to the specified file (in SGF = Smart Game Format)
      * Derived classes should implement the details of the save

@@ -2,7 +2,11 @@
 package com.becker.puzzle.tantrix.solver.path.permuting;
 
 import com.becker.common.geometry.Location;
-import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.HexTile;
+import com.becker.puzzle.tantrix.model.PathColor;
+import com.becker.puzzle.tantrix.model.Rotation;
+import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.model.TilePlacementList;
 import com.becker.puzzle.tantrix.model.fitting.PrimaryPathFitter;
 import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 

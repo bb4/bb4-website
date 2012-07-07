@@ -6,9 +6,8 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.types.Parameter;
 import com.becker.optimization.viewer.NavigationListener;
 
-
-import java.awt.*;
 import javax.vecmath.Point2d;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

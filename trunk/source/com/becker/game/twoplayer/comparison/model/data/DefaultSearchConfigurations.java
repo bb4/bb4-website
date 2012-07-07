@@ -9,11 +9,9 @@ import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfig;
 import com.becker.game.twoplayer.comparison.model.SearchOptionsConfigList;
 
-import java.util.ArrayList;
-
 /**
  * A default list of search config options so we do not have to enter them every time.
- * 
+ *
  * @author Barry Becker
  */
 public class DefaultSearchConfigurations extends SearchOptionsConfigList {
@@ -35,7 +33,7 @@ public class DefaultSearchConfigurations extends SearchOptionsConfigList {
         //add(new SearchOptionsConfig("MTD Negamax", new SearchOptions(SearchStrategyType.MTD_NEGAMAX)));
         add(new SearchOptionsConfig("MTD Negascout", new SearchOptions(SearchStrategyType.MTD_NEGASCOUT)));
     }
-    
+
     private BruteSearchOptions createBruteOptions() {
         return new BruteSearchOptions(DEFAULT_LOOK_AHEAD, DEFAULT_QUIESCENT_LOOK_AHEAD);
     }
@@ -47,5 +45,5 @@ public class DefaultSearchConfigurations extends SearchOptionsConfigList {
     private MonteCarloSearchOptions createMonteCarloOptions() {
         return new MonteCarloSearchOptions(200, 0.9, 10);
     }
-    
+
 }

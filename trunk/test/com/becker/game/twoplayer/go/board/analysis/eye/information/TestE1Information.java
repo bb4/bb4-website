@@ -3,8 +3,6 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeTypeAnalyzer;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 /**
  * Test that we can get the correct type and status for single point eyes.

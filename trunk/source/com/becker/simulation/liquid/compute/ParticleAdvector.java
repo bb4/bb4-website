@@ -2,7 +2,12 @@
 package com.becker.simulation.liquid.compute;
 
 import com.becker.simulation.liquid.Logger;
-import com.becker.simulation.liquid.model.*;
+import com.becker.simulation.liquid.model.Cell;
+import com.becker.simulation.liquid.model.CellDimensions;
+import com.becker.simulation.liquid.model.CellStatus;
+import com.becker.simulation.liquid.model.Grid;
+import com.becker.simulation.liquid.model.Particle;
+import com.becker.simulation.liquid.model.Particles;
 
 import javax.vecmath.Vector2d;
 

@@ -61,7 +61,7 @@ public class Galaxy extends Board
 
     /** Copy constructor */
     protected Galaxy(Galaxy g) {
-       super(g); 
+       super(g);
     }
 
     public Galaxy copy() {

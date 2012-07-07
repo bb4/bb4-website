@@ -2,13 +2,16 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.common.search.examples.*;
+import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
+import com.becker.game.twoplayer.common.search.examples.FourLevelGameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.OneLevelGameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.TwoLevelGameTreeExample;
 import com.becker.game.twoplayer.common.search.options.MonteCarloSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
  * Test minimax strategy independent of any particular game implementation.
- * 
+ *
  * @author Barry Becker
  */
 public abstract class MonteCarloSearchStrategyTst extends AbstractSearchStrategyTst {
@@ -31,7 +34,7 @@ public abstract class MonteCarloSearchStrategyTst extends AbstractSearchStrategy
        SearchOptions opts =  super.createSearchOptions();
        // consider all moves (effectively)
        opts.getBestMovesSearchOptions().setMinBestMoves(100);
-       
+
        MonteCarloSearchOptions options = opts.getMonteCarloSearchOptions();
        options.setExploreExploitRatio(1.0);
        options.setMaxSimulations(10);

@@ -12,6 +12,7 @@ import com.becker.ui.util.GUIUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+
 import static com.becker.game.multiplayer.poker.ui.PokerPlayerRenderer.POKER_FONT;
 
 /**

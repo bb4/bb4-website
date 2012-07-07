@@ -61,7 +61,7 @@ public class RDViewer {
     }
 
     public void setUseOffscreenRendering(boolean use) {
-        useOfflineRendering = use; 
+        useOfflineRendering = use;
     }
 
     public boolean getUseOffScreenRendering() {

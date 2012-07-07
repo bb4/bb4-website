@@ -2,7 +2,9 @@
 package com.becker.puzzle.tantrix.solver.path.permuting;
 
 import com.becker.common.math.MathUtil;
-import com.becker.puzzle.tantrix.model.*;
+import com.becker.puzzle.tantrix.model.PathColor;
+import com.becker.puzzle.tantrix.model.TilePlacement;
+import com.becker.puzzle.tantrix.model.TilePlacementList;
 import com.becker.puzzle.tantrix.solver.path.PathType;
 import com.becker.puzzle.tantrix.solver.path.TantrixPath;
 import junit.framework.TestCase;
@@ -10,7 +12,8 @@ import junit.framework.TestCase;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.becker.puzzle.tantrix.solver.path.permuting.PathTstUtil.*;
+import static com.becker.puzzle.tantrix.solver.path.permuting.PathTstUtil.LOOP_PATH;
+import static com.becker.puzzle.tantrix.solver.path.permuting.PathTstUtil.NON_LOOP_PATH4;
 
 /**
  * @author Barry Becker

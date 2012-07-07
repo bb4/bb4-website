@@ -2,19 +2,18 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.geometry.Location;
+import com.becker.game.common.GameContext;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.GamePiece;
-import com.becker.game.twoplayer.blockade.board.BlockadeBoard;
-import com.becker.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import com.becker.game.twoplayer.blockade.board.Path;
-import com.becker.game.twoplayer.blockade.board.PathLengths;
-import com.becker.game.twoplayer.blockade.board.PlayerPathLengths;
+import com.becker.game.twoplayer.blockade.board.*;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.becker.game.twoplayer.blockade.board.move.BlockadeWall;
-import junit.framework.*;
-import com.becker.game.common.*;
+import junit.framework.Assert;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Barry Becker
@@ -235,7 +234,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
     private static final Path[] EXPECTED_P2_PATHS = {
        new Path(moves2[0]), new Path(moves2[1]), new Path(moves2[2]), new Path(moves2[3])
     };
-   
+
 
     /**
      * Test that we can accurately determine all the opponent shortest paths.
@@ -279,7 +278,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
     }
 
     /**
-     * @return "" if no difference or the list of differences. 
+     * @return "" if no difference or the list of differences.
      * (there will be *** after those that do not match)
      */
     private String pathListDiff(Path[] expectedPaths, List<Path> actualPaths) {
