@@ -19,7 +19,6 @@ import java.io.File;
  */
 class StoryMenu extends JMenu implements ActionListener  {
 
-    //private JFrame frame_;
     private GraphicalAdventure storyApp_;
 
     private JMenuItem openItem_;
@@ -33,8 +32,7 @@ class StoryMenu extends JMenu implements ActionListener  {
      * Game application constructor
      * @param storyApp the initially selected game.
      */
-    public StoryMenu(GraphicalAdventure storyApp)
-    {
+    public StoryMenu(GraphicalAdventure storyApp)  {
         super("Story");
 
         this.setBorder(BorderFactory.createEtchedBorder());
@@ -56,8 +54,7 @@ class StoryMenu extends JMenu implements ActionListener  {
      * called when the user has selected a different story file option.
      * @param e
      */
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
          JMenuItem item = (JMenuItem) e.getSource();
          if (item == openItem_)  {
             openStory();
@@ -129,8 +126,7 @@ class StoryMenu extends JMenu implements ActionListener  {
      * @param name name of the menu item. The label.
      * @return the menu item to add.
      */
-    JMenuItem createMenuItem(String name)
-    {
+    JMenuItem createMenuItem(String name) {
         JMenuItem item = new JMenuItem(name);
         item.addActionListener(this);
         return item;

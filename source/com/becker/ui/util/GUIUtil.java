@@ -35,7 +35,8 @@ public final class GUIUtil {
     /** default location of files on the local system unless otherwise specified. */
     public static final String RESOURCE_ROOT = FileUtil.PROJECT_HOME + "source/";
 
-    public static final String DEFAULT_FONT_FAMILY = "Verdana"; //"Ænigma Scrawl 4 BRK"; //"Nyala";//"Raavi";
+    /** Some other interesting fonts: "Ænigma Scrawl 4 BRK"; "Nyala"; "Raavi"; */
+    public static final String DEFAULT_FONT_FAMILY = "Verdana";
 
     /** webstart services  */
     private static BasicService basicService_ = null;
@@ -106,7 +107,7 @@ public final class GUIUtil {
      */
     public static ImageIcon getIcon(String sPath, boolean failIfNotFound) {
         ImageIcon icon = null;
-        if (isStandAlone_)   {
+        if (isStandAlone())   {
             //System.out.println("spath="+ sPath);
             URL url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
             if (url != null) {
@@ -153,9 +154,9 @@ public final class GUIUtil {
     public static URL getURL(String sPath, boolean failIfNotFound) {
 
         URL url = null;
-        //System.out.println("searching for url path=" + sPath);
+        System.out.println(" searching for url path=" + sPath + " standAlone="+ isStandAlone());
         try {
-            if (isStandAlone_)   {
+            if (isStandAlone())   {
                 url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
             }
             else {
@@ -164,7 +165,7 @@ public final class GUIUtil {
             }
 
             assert (url != null || !failIfNotFound):
-                "failed to create url for  "+sPath + " standAlone=" + isStandAlone_ + " resourceRoot_=" + RESOURCE_ROOT;
+                "failed to create url for  "+sPath + " standAlone=" + isStandAlone() + " resourceRoot=" + RESOURCE_ROOT;
         } catch (MalformedURLException e) {
             System.out.println( sPath + " is not a valid resource or URL" );
             e.printStackTrace();
@@ -281,7 +282,7 @@ public final class GUIUtil {
             ImageUtil.saveAsImage(file.getAbsolutePath(), img, ImageUtil.ImageType.PNG);
         }
     }
-    
+
     public static BufferedImage getSnapshot(JComponent component) {
         BufferedImage img = (BufferedImage) component.createImage(component.getWidth(), component.getHeight());
         component.paint(img.createGraphics());

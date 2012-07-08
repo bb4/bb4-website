@@ -352,9 +352,9 @@
   <target name="executeAdventure(Graphical)" depends="compile" description="An Exciting graphical based adventure game">
     <echo message="now executing GraphicalAdventure"/>
     <antcall target="executeProgram">
+      <param name="args" value="ludlow/ludlowScript.xml"/>
       <param name="className" value="com.becker.puzzle.adventure.ui.GraphicalAdventure"/>
       <param name="libPath" value="${libDir}/jai_codec.jar" />
-      <param name="args" value="ludlow/ludlowScript.xml"/>
     </antcall>
   </target>
 

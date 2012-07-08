@@ -103,7 +103,6 @@ public class TableButton extends GradientButton
 
     private void setLabel(TableModel tableModel, int row) {
 
-        System.out.println("row="+ row + " columnIndex_=" + columnIndex_);
         Object cellValue = tableModel.getValueAt(row, columnIndex_);
 
         boolean isNullValued = cellValue == null;

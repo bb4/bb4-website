@@ -1,4 +1,4 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2000-2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.adventure.ui.editor;
 
 import com.becker.ui.components.GradientButton;
@@ -19,8 +19,7 @@ import java.util.List;
 class NewChoiceDialog extends AbstractDialog
                       implements ActionListener {
 
-
-    /** click this when done selecting a name for the destinatino scene. */
+    /** click this when done selecting a name for the destination scene. */
     private  GradientButton okButton_ = new GradientButton();
 
     private JComboBox sceneSelector_;
@@ -80,7 +79,7 @@ class NewChoiceDialog extends AbstractDialog
 
 
     /**
-     *  create the buttons that go at the botton ( eg OK, Cancel, ...)
+     *  create the buttons that go at the button ( eg OK, Cancel, ...)
      * @return buttons panel.
      */
     JPanel createButtonsPanel() {
@@ -97,8 +96,7 @@ class NewChoiceDialog extends AbstractDialog
 
 
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         super.actionPerformed(e);
         Object source = e.getSource();
 
@@ -107,8 +105,7 @@ class NewChoiceDialog extends AbstractDialog
         }
     }
 
-    void ok()
-    {
+    void ok() {
         String customSceneName = sceneTextInput_.getValue();
         if (!customSceneName.equals("")) {
             selectedDestinationScene_ = customSceneName;

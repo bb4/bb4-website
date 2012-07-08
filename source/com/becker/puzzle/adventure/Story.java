@@ -134,7 +134,7 @@ public class Story {
     public void resetToFirstScene() {
         currentScene_ = sceneMap_.getFirst();
     }
-    
+
     /**
      * Write the story document back to xml.
      * @param destFileName file to write to.
@@ -159,7 +159,7 @@ public class Story {
      * @return the story document based on the current state of the story.
      */
     private Document createStoryDocument() {
-        
+
         Document document = DomUtil.createNewDocument();
 
         Element rootElement = document.createElement(ROOT_ELEMENT);
@@ -180,7 +180,7 @@ public class Story {
     /**
      * If args[0] does not have the name of the document to use, use a default.
      * @param args command line args (0 or 1 if name of xml doc is specified.)
-     * @return the loaded Document that contains the asventure.
+     * @return the loaded Document that contains the adventure.
      */
     public static Document importStoryDocument(String[] args) {
         Document document;
@@ -224,13 +224,13 @@ public class Story {
 
     void initFromScenes(Scene[] scenes)  {
         sceneMap_ = createSceneMap(scenes.length);
-        
+
         for (final Scene scene : scenes) {
             assert scene.getChoices() != null;
             sceneMap_.put(scene.getName(), scene);
         }
         verifyScenes();
-        
+
         currentScene_ = scenes[0];
         visitedScenes_ = new LinkedList<Scene>();
     }
@@ -256,14 +256,14 @@ public class Story {
         String nextSceneName = currentScene_.getNextSceneName(choice);
         advanceToScene(nextSceneName);
     }
-    
+
     /**
      * Jump to some arbitrary scene.
      * Not typically used. Should use advanceScene for normal navigation.
      * @param nextSceneName name of the scene to navigate to.
      */
     public void advanceToScene(String nextSceneName) {
-     
+
         if (nextSceneName != null) {
             if (currentScene_ != null)
                 visitedScenes_.add(currentScene_);
@@ -319,14 +319,14 @@ public class Story {
     public List<String> getAllSceneNames() {
         return sceneMap_.keyList();
     }
-    
+
     /**
      * make sure the set of scenes in internally consistent.
      */
     private void verifyScenes() {
         for (Scene scene : sceneMap_.values()) {
             scene.verifyMedia();
-            
+
             for (Choice choice : scene.getChoices())  {
                 String dest = choice.getDestination();
                 if (dest != null  && sceneMap_.get(choice.getDestination()) == null) {
@@ -345,7 +345,7 @@ public class Story {
         sceneMap_.put(newSceneName, changedScene);
         // also need to update the references to named scenes in the choices.
         for (String sceneName : sceneMap_.keyList()) {
-            sceneMap_.get(sceneName).getChoices().sceneNameChanged(oldSceneName, newSceneName); 
+            sceneMap_.get(sceneName).getChoices().sceneNameChanged(oldSceneName, newSceneName);
         }
     }
 }

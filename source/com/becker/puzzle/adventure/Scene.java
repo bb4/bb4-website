@@ -13,19 +13,19 @@ import java.net.URL;
 
 
 /**
- * Every scene has a name_, some text_ which describes the scene. and a list of
+ * Every scene has a name, some text which describes the scene. and a list of
  * choices which the actor chooses from to decide what to do next.
- * There is a "Return to last scene" choice automatically appened to all list of choices.
+ * There is a "Return to last scene" choice automatically appended to all list of choices.
  * A scene may also have an associated sound and image.
  *
  * @author Barry Becker
  */
 public class Scene {
 
-    private String name_;
-    private String text_;
-    private ChoiceList choices_;
-    private boolean isFirst_;
+    private String name;
+    private String text;
+    private ChoiceList choices;
+    private boolean isFirst;
     private URL soundURL_;
     private BufferedImage image_;
 
@@ -36,7 +36,7 @@ public class Scene {
     public Scene(Node sceneNode, String resourcePath, boolean isFirst) {
         String description = sceneNode.getFirstChild().getTextContent();
 
-        isFirst_= isFirst;
+        this.isFirst = isFirst;
         commonInit(DomUtil.getAttribute(sceneNode, "name"),
                   description, new ChoiceList(sceneNode, isFirst()), resourcePath);
     }
@@ -46,12 +46,12 @@ public class Scene {
      * @param scene the scene to initialize from.
      */
     public Scene(Scene scene) {
-        this.name_ = scene.getName();
-        this.text_ = scene.getText();
+        this.name = scene.getName();
+        this.text = scene.getText();
         this.image_ = scene.getImage();
         this.soundURL_ = scene.soundURL_;
-        this.choices_ = new ChoiceList(scene);
-        this.isFirst_ = scene.isFirst();
+        this.choices = new ChoiceList(scene);
+        this.isFirst = scene.isFirst();
     }
 
     /**
@@ -85,9 +85,9 @@ public class Scene {
     }
 
     private void commonInit(String name, String text, ChoiceList choices, String resourcePath) {
-        name_ = name;
-        text_ = text;
-        choices_ = choices;
+        this.name = name;
+        this.text = text;
+        this.choices = choices;
         loadResources(name, resourcePath);
     }
 
@@ -108,18 +108,18 @@ public class Scene {
      * @return  choices that will lead to the next scene.
      */
     public ChoiceList getChoices() {
-        return choices_;
+        return choices;
     }
 
     public void deleteChoice(int choice) {
-        choices_.remove(choice);
+        choices.remove(choice);
     }
 
     /**
      * @return the name of the scene
      */
     public String getName() {
-        return name_;
+        return name;
     }
 
     /**
@@ -127,18 +127,18 @@ public class Scene {
      * @param name new scene name
      */
     public void setName(String name) {
-        name_ = name;
+        this.name = name;
     }
 
     /**
      * @return some text that describes the scene.
      */
     public String getText() {
-        return text_;
+        return text;
     }
 
     public void setText(String text) {
-        text_ = text;
+        this.text = text;
     }
 
     /**
@@ -147,7 +147,7 @@ public class Scene {
      */
     public boolean isParentOf(Scene scene) {
         String sName = scene.getName();
-        return choices_.isDestination(sName);
+        return choices.isDestination(sName);
     }
 
     /**
@@ -171,7 +171,7 @@ public class Scene {
     }
 
     boolean isFirst() {
-        return isFirst_;
+        return isFirst;
     }
 
     /**
@@ -181,16 +181,16 @@ public class Scene {
      */
     public String getNextSceneName(int choice) {
 
-        assert choice >= 0 || choice < choices_.size();
+        assert choice >= 0 || choice < choices.size();
 
-        return choices_.get(choice).getDestination();
+        return choices.get(choice).getDestination();
     }
 
     /**
      * @return true if there are more than one coice for the user to select from.
      */
     public boolean hasChoices() {
-        return choices_ != null;
+        return choices != null;
     }
 
     /**
@@ -214,10 +214,10 @@ public class Scene {
         StringBuilder buf = new StringBuilder();
         buf.append('\n').append(this.getText()).append('\n');
 
-        if (choices_ != null) {
-            int len = choices_.size();
+        if (choices != null) {
+            int len = choices.size();
             for (int i=0; i < len; i++)  {
-                buf.append(1 + i).append(") ").append(choices_.get(i).getDescription()).append('\n');
+                buf.append(1 + i).append(") ").append(choices.get(i).getDescription()).append('\n');
             }
         }
         return buf.toString();
@@ -228,7 +228,7 @@ public class Scene {
      */
     @Override
     public String toString() {
-        
+
         return this.getName();
     }
 }

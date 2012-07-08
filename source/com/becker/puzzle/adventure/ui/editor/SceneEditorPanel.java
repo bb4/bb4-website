@@ -18,7 +18,6 @@ import java.awt.event.ActionListener;
  */
 class SceneEditorPanel extends JPanel implements ActionListener {
 
-
     /** The scene to edit */
     private Scene scene_;
 
@@ -84,13 +83,12 @@ class SceneEditorPanel extends JPanel implements ActionListener {
         return buttonPanel;
     }
 
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e )  {
         Object source = e.getSource();
 
         if ( source == showImageButton_ ) {
             ImagePreviewDialog imgPreviewDlg = new ImagePreviewDialog(scene_.getImage());
-            imgPreviewDlg.showDialog();  
+            imgPreviewDlg.showDialog();
         }
         else if ( source == playSoundButton_ ) {
             scene_.playSound();
