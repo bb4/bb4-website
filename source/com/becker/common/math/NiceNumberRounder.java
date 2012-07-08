@@ -1,6 +1,4 @@
-// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.becker.common.math;
-
 
 /**
  * Rounds numbers in a "nice" way so that they are easy to read.

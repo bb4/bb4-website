@@ -3,7 +3,7 @@ package com.becker.common.math;
 
 /**
  * Manage a double precision range.
- * 
+ *
  * @author Barry Becker
  */
 public class Range {
@@ -66,8 +66,8 @@ public class Range {
         }
     }
 
-    /** 
-     * The extend of the range. 
+    /**
+     * The extend of the range.
      * @return the max minus the min.
      */
     public double getExtent() {
@@ -86,7 +86,7 @@ public class Range {
 
     /**
      * @param value
-     * @return  normalized value assumeing 0 for min. 1 for max.
+     * @return  normalized value assuming 0 for min. 1 for max.
      */
     public double mapToUnitScale(double value) {
         double range = getExtent();
