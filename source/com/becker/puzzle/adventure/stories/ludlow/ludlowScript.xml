@@ -57,8 +57,7 @@ You find nothing in them except for leaves, dust, and 200 paperclips. ",
         </choices>
     </scene>
     <scene name="A.inside_entrance">
-        <description>
- The double door is unlocked and opens easily.
+        <description> The double door is unlocked and opens easily.
  The beam of your flashligh reveals an empty hallway with a mirror at the opposite end.
  There are openings that lead to rooms on the left and right.
  The hall has inch-thick red carpeting and walnut-paneled walls.
@@ -66,17 +65,20 @@ You find nothing in them except for leaves, dust, and 200 paperclips. ",
  and covers the forty feet of wall section on that south face of the hall.
         </description>
         <choices>
-            <choice description="Go through left opening" resultScene="B.rat_room"/>
-            <choice description="Go through right opening" resultScene="K.trophyRoom"/>
-            <choice description="Tamper with mirror at the end of the hall." resultScene="A.mirror"/>
+            <choice description="Go through left (east) opening" resultScene="B.rat_room"/>
+            <choice description="Go through right (west) opening" resultScene="K.trophyRoom"/>
+            <choice description="Tamper with mirror at the end of the hall (to the south). " resultScene="A.mirror"/>
             <choice description="Exit the mansion" resultScene="quit"/>
         </choices>
     </scene>
     <scene name="B.rat_room">
-        <description>The beams of the flashlights show a room paneled in redstained barn boards with a floor of the same substance. There is a couch in the northeast corner of the room and an opening out of theroom on the east wall.
+        <description>The beams of the flashlights show a room paneled in redstained barn boards with a floor of the same substance. 
+There is a couch in the northeast corner of the room and an opening out of theroom on the east wall.
 
-There are leaves on the floor, and an old worn out couch in the north east corner. There is a musty smell to the room, and leaves are littered on the floor.
-The couch is an old, dusty, overstuffed relic with several cushions and rips on all parts of it. The room measures sixty feet east and west and forty feet north and south, if paced out.
+There are leaves on the floor, and an old worn out couch in the north east corner. 
+There is a musty smell to the room, and leaves are littered on the floor.
+The couch is an old, dusty, overstuffed relic with several cushions and rips on all parts of it. 
+The room measures sixty feet east and west and forty feet north and south, if paced out.
 There is a door on the east side of the room.
         </description>
         <choices>
@@ -93,24 +95,26 @@ The floor has dried leaves littering it. If paced out, the hall is eighty feet l
 The hall leads to another room at the end.
         </description>
         <choices>
-            <choice description="Proceed into the room at the end of the hall." resultScene="D.crate_room"/>
-            <choice description="Back to previous room" resultScene="B.rat_room"/>
+            <choice description="Proceed into the room at the end of the hall (east)." resultScene="D.crate_room"/>
+            <choice description="Back to previous room (west)" resultScene="B.rat_room"/>
         </choices>
     </scene>
     <scene name="D.crate_room">
         <description>
 The beam of the flashlight shows a room with gray painted walls and a cement floor.
 It is filled with wooden crates and there are leaves all over the room in large piles.
-There are 200 empty wooden crates of differing sizes, and the biggest concentration of leaves is in the southwest corner of the room.
-The room measures sixty feet east and west and forty feet north and south and has a side alcove to the south starting on the east wall that is forty feet long east and west and twenty feet long north and south.
-It is here that the concentration of leaves is located. Behind a big crate along the east wall, thirty feet from the north corner, one finds a door with a normal handle.
+There are 200 empty wooden crates of differing sizes, and the biggest concentration of leaves is in the 
+southwest corner of the room.
+The room measures sixty feet east and west and forty feet north and south and has a side alcove to the 
+south starting on the east wall that is forty feet long east and west and twenty feet long north and south.
+It is here that the concentration of leaves is located. Behind a big crate along the east wall, thirty 
+feet from the north corner, one finds a door with a normal handle.
         </description>
         <choices>
-            <choice description="Go through door behind big crate." resultScene="E.gray_storage_room"/>
+            <choice description="Go through door behind big crate (east)." resultScene="E.gray_storage_room"/>
             <choice description="Look inside all the crates." resultScene="open_crates"/>
             <choice description="Sift through the pile of leaves on the floor." resultScene="D.crate_room_leaves"/>
-            <choice description="Proceed into the room at the end of the hall." resultScene="stub"/>
-            <choice description="Back to hallway" resultScene="C.pink_hallway"/>
+            <choice description="Back to hallway (west)" resultScene="C.pink_hallway"/>
         </choices>
     </scene>
     <scene name="D.crate_room_leaves">
@@ -157,16 +161,20 @@ He will never follow a retreating group out of the room, but will act dangerousl
 It is filled with boxes and barrels.
 There are thirteen barrels of grain alcohol each with the number "50" painted on it.
 There are thirteen boxes filled with pairs of white gloves.
-A metal chest contains a silver set made to serve eighteen people, four pairs of silver candlesticks, three huge silver carving knives (like short swords), and eighteen solid silver goblets (total worth of the silver items is 20,000 silver pieces).
-There are thirteen chests filled with books about plants; thirteen boxes filled with assorted sizes of clay pots; and ten large crates with mattresses in them. When paced out, the room is forty feet wide east and west and sixty feet wide north and south.
+A metal chest contains a silver set made to serve eighteen people, four pairs of silver candlesticks, 
+three huge silver carving knives (like short swords), and eighteen solid silver goblets 
+(total worth of the silver items is 20,000 silver pieces).
+There are thirteen chests filled with books about plants; 
+thirteen boxes filled with assorted sizes of clay pots; 
+and ten large crates with mattresses in them. 
+When paced out, the room is forty feet wide east and west and sixty feet wide north and south.
 A door on the east wall is originally hidden by the mattress crates.
 
         </description>
         <choices>
             <choice description="Go through the door on the east side of the room." resultScene="F.oak_room"/>
-            <choice description="Proceed into the room at the end of the hall." resultScene="stub"/>
             <choice description=" Inspect boxes and barrels further." resultScene="E.crazy_man_attacks"/>
-            <choice description="Go back to the room with the crates." resultScene="D.crate_room"/>
+            <choice description="Go back to the room with the crates (west)." resultScene="D.crate_room"/>
         </choices>
     </scene>
     <scene name="G.passageway">
@@ -190,8 +198,10 @@ Flails-2-7 pts.</description>
         </choices>
     </scene>
     <scene name="F.stairway">
-        <description> --- describe the scene here ---</description>
-        <choices/>
+        <description> A creaky old stairway leads up to level 2.</description>
+        <choices>
+            <choice description=" - Put your choice description here -" resultScene="VII.chunksRoom"/>
+        </choices>
     </scene>
     <scene name="F.rocks">
         <description>All of the valuable minerals in the
@@ -302,15 +312,20 @@ room is forty feet by forty feet, plus a hall section that has the tub at its
 end. This hall section starts on the south wall and is ten feet wide
 (east and west) and twenty feet long.</description>
         <choices>
-            <choice description=" - Put your choice description here -" resultScene="J.medicine_cabinet"/>
+            <choice description="Examine the sink. Turn on water" resultScene="J.turnOnWater"/>
+            <choice description="Open the medicine cabinet." resultScene="J.medicine_cabinet"/>
         </choices>
     </scene>
     <scene name="J.medicine_cabinet">
         <description> The mirror over the sink has a recessed cabinet.
-In it are two small plastic bottles of pills: One has ten green pills that
- will speed any being up to twice normal for three melee rounds; the second
-bottle has twenty pink pills that will restore ten lost hit points per pill.</description>
-        <choices/>
+In it are two small plastic bottles of pills: 
+   One has ten green pills.
+   One has twenty pink pills.
+</description>
+        <choices>
+            <choice description=" - Put your choice description here -" resultScene="J.takeGreenPill"/>
+            <choice description="Swallow one of the green pills." resultScene="J.takePinkPill"/>
+        </choices>
     </scene>
     <scene name="B.rat_attack">
         <description>Rats com out from under the couch and attack you.
@@ -348,14 +363,15 @@ stands. There are many of these all over the room. There are exits on
 the east and west walls.
   This is a trophy room of some type with stuffed felines of all
 different descriptions along the brown painted walls. On the north
-wall is a cabinet with three long rifles that are very heavy and two
+wall is a cabinet with three long rifles that are very heavy, and two
 shorter rifles that have two barrels apiece. There is a drawer under these rifles,
 containing two boxes of what must be shells. Besides the triggers,
 there are two levers on each gun; one is large and on the stock and one
 is small and near the trigger.
    If paced out, the room is forty feet east and west and sixty feet north and south.</description>
         <choices>
-            <choice description="Proceed through the exit to the east." resultScene="L.upStaircase"/>
+            <choice description="Take one of the guns." resultScene="K.trophyRoom"/>
+            <choice description="Proceed through the exit to the west." resultScene="L.upStaircase"/>
         </choices>
     </scene>
     <scene name="X.spiralStaircase">
@@ -369,6 +385,37 @@ character walks onto the furs, the characters are attacked by four
 giant centipedes (HP: 2,2,1,2; #AT: 1; 0: Nil; AC: 9; SA: Save versus
 poison). These creatures are hidden under furs until movement
 rouses them.</description>
+        <choices/>
+    </scene>
+    <scene name="VII.chunksRoom">
+        <description> The beams of the flashlights show a room with a number of
+metal chunks littering the floor. There are three doors, each one on a
+different wall.
+When you enter the room, metal chunks fall from the ceiling, and characters can see that the ceiling is
+massed with millions of these chunks stuck to it.
+ After a character or party enters
+the room, every melee round 3-18 of these chunks will fall. They
+weigh fifteen ounces each and do 1-6 points of damage when hitting
+a player. There is only a 15% chance that any given one will hit, since
+, they fall throughout the general area of the player. The doors are all
+fake and while the handles will turn, they can't open. They appear to
+be made from oak, but are metal like everything else.</description>
+        <choices/>
+    </scene>
+    <scene name="J.turnOnWater">
+        <description>The water works fine in this area,
+except when it is about to overflow any sink or tub or stool for any
+reason. It will cut itself off first.</description>
+        <choices/>
+    </scene>
+    <scene name="J.takeGreenPill">
+        <description>Everything around you seems to move in slow motion.
+(time  sped up to twice normal for three melee rounds)
+</description>
+        <choices/>
+    </scene>
+    <scene name="J.takePinkPill">
+        <description>Healing.  Up to ten lost hit points per pill are restored.</description>
         <choices/>
     </scene>
 </script>
