@@ -189,7 +189,7 @@ condition and do the following damage: Maces-2-7 pts; Halberds-
 Swords-1-10 pts.; Oaggers-1-4 pts.; Boar Spears-2-7 pts.; and
 Flails-2-7 pts.</description>
         <choices>
-            <choice description=" - Put your choice description here -" resultScene="H.fur_room"/>
+            <choice description=" Travel west along the hallway and open the door at the end." resultScene="H.fur_room"/>
             <choice description=" Go back to the oak storage room." resultScene="F.oak_room"/>
         </choices>
     </scene>

@@ -49,7 +49,7 @@ public class TableButton extends GradientButton
      * Constructor
      *
      * @param columnIndex the column that has the label to show in the button.
-     * @param id          used to identifiy the button clicked in the tableButton handler.
+     * @param id          used to identify the button clicked in the tableButton handler.
      */
     public TableButton(int columnIndex, String id) {
         id_ = id;
