@@ -9,7 +9,7 @@ import java.awt.*;
 
 /**
  * This panel is responsible for drawing the Text describing the current scene.
- * @author Barry Becker 
+ * @author Barry Becker
  */
 public class StoryPanel extends JSplitPane {
 
@@ -61,11 +61,9 @@ public class StoryPanel extends JSplitPane {
      * Render the Environment on the screen.
      */
     @Override
-    public void paintComponent( Graphics g )
-    {
+    public void paintComponent( Graphics g ) {
         super.paintComponent( g );
         textArea_.setText(story_.getCurrentScene().getText());
         imagePanel_.setSingleImage(story_.getCurrentScene().getImage());
     }
-
 }

@@ -10,30 +10,26 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class ParentTableModel extends DefaultTableModel
-{
+public class ParentTableModel extends DefaultTableModel {
+
     private static final long serialVersionUID = 0;
 
-    public ParentTableModel(Object[][] data, Object[] columnNames)
-    {
+    public ParentTableModel(Object[][] data, Object[] columnNames) {
         super(data, columnNames);
     }
 
-    public ParentTableModel(Object[] columnNames, int rowCount)
-    {
+    public ParentTableModel(Object[] columnNames, int rowCount) {
         super(columnNames, rowCount);
     }
 
     @Override
-    public Class getColumnClass(int col)
-    {
+    public Class getColumnClass(int col) {
         List v = (List)dataVector.elementAt(0);
         return v.get(col).getClass();
     }
 
     @Override
-    public boolean isCellEditable(int row, int column)
-    {
+    public boolean isCellEditable(int row, int column)  {
 
         return (column == ParentTable.NAVIGATE_INDEX);
     }

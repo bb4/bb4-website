@@ -73,11 +73,11 @@ public class StoryEditorDialog extends AbstractDialog
         JLabel title = new JLabel("Navigate through the scene heirarchy and change values for scenes.");
         title.setBorder(BorderFactory.createEmptyBorder(5, 4, 20, 4));
         title.setFont(INSTRUCTION_FONT);
-    
+
         mainPanel.add(title, BorderLayout.NORTH);
         mainPanel.add(editingPane, BorderLayout.CENTER);
         mainPanel.add(createButtonsPanel(), BorderLayout.SOUTH);
-      
+
         return mainPanel;
     }
 
@@ -223,7 +223,7 @@ public class StoryEditorDialog extends AbstractDialog
         int row = selectedChildRow_;
         ChildTableModel childModel = childTable_.getChildTableModel();
 
-        if ( source == okButton_ ) {      
+        if ( source == okButton_ ) {
             ok();
         }
         else if (source == addButton_) {
@@ -243,7 +243,7 @@ public class StoryEditorDialog extends AbstractDialog
             selectedChildRow_ = childTable_.moveRow(row, row - 1);
             updateMoveButtons();
         }
-        else if (source == moveDownButton_) { 
+        else if (source == moveDownButton_) {
             selectedChildRow_ = childTable_.moveRow(row, row + 1);
             updateMoveButtons();
         }
@@ -331,8 +331,7 @@ public class StoryEditorDialog extends AbstractDialog
         childTable_.getChildTableModel().updateSceneChoices(story_.getCurrentScene());
     }
 
-    void ok()
-    {
+    void ok()  {
         commitSceneChanges();
         this.setVisible( false );
     }

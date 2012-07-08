@@ -34,19 +34,16 @@ public final class GraphicalAdventure extends ApplicationApplet
     private boolean storyEdited_ = false;
 
 
-    public GraphicalAdventure()
-    {
-        GUIUtil.setStandAlone(true);
+    public GraphicalAdventure() {
+        GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
     }
 
     /**
      * Constructor.
      * @param story initial story to show.
      */
-    public GraphicalAdventure(Story story)
-    {
-        GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
-                
+    public GraphicalAdventure(Story story) {
+        this();
         story_ = story;
         JFrame frame = GUIUtil.showApplet( this, story.getTitle());
 
@@ -64,8 +61,7 @@ public final class GraphicalAdventure extends ApplicationApplet
      * Build the user interface with parameter input controls at the top.
      */
     @Override
-    protected JPanel createMainPanel()
-    {
+    protected JPanel createMainPanel() {
         mainPanel_ = new JPanel();
         mainPanel_.setLayout( new BorderLayout() );
 
@@ -79,23 +75,23 @@ public final class GraphicalAdventure extends ApplicationApplet
      * @param story new story to present.
      */
     public void setStory(Story story) {
-        if (story != null)  {
-            mainPanel_.removeAll();
-            System.out.println("set new story");
-            story_ = story;
+        if (story == null) return;
 
-            StoryPanel storyPanel = new StoryPanel(story_);
+        mainPanel_.removeAll();
+        System.out.println("set new story");
+        story_ = story;
 
-            // setup for initial scene
-            choicePanel_ = new ChoicePanel(story_.getCurrentScene().getChoices());
-            story_.getCurrentScene().playSound();
+        StoryPanel storyPanel = new StoryPanel(story_);
 
-            choicePanel_.addSceneChangeListener(this);
+        // setup for initial scene
+        choicePanel_ = new ChoicePanel(story_.getCurrentScene().getChoices());
+        story_.getCurrentScene().playSound();
 
-            mainPanel_.add( storyPanel, BorderLayout.CENTER );
-            mainPanel_.add( choicePanel_, BorderLayout.SOUTH );
-            refresh();
-        }
+        choicePanel_.addSceneChangeListener(this);
+
+        mainPanel_.add( storyPanel, BorderLayout.CENTER );
+        mainPanel_.add( choicePanel_, BorderLayout.SOUTH );
+        refresh();
     }
 
 
@@ -103,8 +99,7 @@ public final class GraphicalAdventure extends ApplicationApplet
         return story_;
     }
 
-    void refresh()
-    {
+    void refresh() {
         mainPanel_.invalidate();
         mainPanel_.validate();
         mainPanel_.repaint();
@@ -164,15 +159,14 @@ public final class GraphicalAdventure extends ApplicationApplet
     /**
      * called when a button is pressed.
      */
-    public void sceneChanged( int selectedChoiceIndex )
-    {
+    public void sceneChanged( int selectedChoiceIndex ) {
         story_.advanceScene(selectedChoiceIndex);
         refresh();
         choicePanel_.setChoices(story_.getCurrentScene().getChoices());
         story_.getCurrentScene().playSound();
     }
 
-    
+
     @Override
     public Dimension getSize() {
         return new Dimension(1000, 700);
@@ -198,7 +192,7 @@ public final class GraphicalAdventure extends ApplicationApplet
     public static void main( String[] args ) throws IOException {
 
         Document document = Story.importStoryDocument(args);
-       
+
         Story story = new Story(document);
 
         new GraphicalAdventure(story);

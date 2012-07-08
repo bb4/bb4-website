@@ -50,8 +50,7 @@ class ParentTable extends TableBase  {
      * @param scene scene to add
      */
     @Override
-    protected void addRow(Object scene)
-    {
+    protected void addRow(Object scene) {
         Scene parentScene = (Scene) scene;
         Object d[] = new Object[getNumColumns()];
         d[NAVIGATE_INDEX] = parentScene.getName();
@@ -84,8 +83,7 @@ class ParentTable extends TableBase  {
     }
 
 
-    DefaultTableModel getParentTableModel()
-    {
+    DefaultTableModel getParentTableModel() {
         return (DefaultTableModel)table_.getModel();
     }
 }

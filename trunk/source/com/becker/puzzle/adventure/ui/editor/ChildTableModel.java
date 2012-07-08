@@ -1,4 +1,4 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2000-2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.adventure.ui.editor;
 
 import com.becker.common.util.OrderedMap;
@@ -13,16 +13,13 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class ChildTableModel extends DefaultTableModel
-{
+public class ChildTableModel extends DefaultTableModel {
 
-    public ChildTableModel(Object[][] data, Object[] columnNames)
-    {
+    public ChildTableModel(Object[][] data, Object[] columnNames) {
         super(data, columnNames);
     }
 
-    public ChildTableModel(Object[] columnNames, int rowCount)
-    {
+    public ChildTableModel(Object[] columnNames, int rowCount) {
         super(columnNames, rowCount);
     }
 
@@ -61,15 +58,13 @@ public class ChildTableModel extends DefaultTableModel
     }
 
     @Override
-    public Class getColumnClass(int col)
-    {
+    public Class getColumnClass(int col)  {
         List v = (List) dataVector.elementAt(0);
         return v.get(col).getClass();
     }
 
     @Override
-    public boolean isCellEditable(int row, int column)
-    {
+    public boolean isCellEditable(int row, int column) {
         return true;
     }
 }

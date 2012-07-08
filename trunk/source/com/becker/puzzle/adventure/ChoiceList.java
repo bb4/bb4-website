@@ -41,7 +41,7 @@ public class ChoiceList implements List<Choice> {
     /**
      * Constructor.
      * Create an initialized choice list.
-     * @param sceneNode to initalize from.
+     * @param sceneNode to initialize from.
      * @param isFirst true if this is the first scene.
      */
     public ChoiceList(Node sceneNode, boolean isFirst) {

@@ -94,8 +94,7 @@ class ChildTable extends TableBase  {
         return new ChildTableModel(columnNames, 0);
     }
 
-    ChildTableModel getChildTableModel()
-    {
+    ChildTableModel getChildTableModel() {
         return (ChildTableModel)table_.getModel();
     }
 }
