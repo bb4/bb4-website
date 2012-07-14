@@ -31,7 +31,7 @@ public class CutPointGenerator {
     }
 
     /**
-     *  Constructor
+     * Constructor
      * @param useTightLabeling whether or not to use tight labeling.
      * @param formatter method for formatting the label values.
      */
@@ -132,8 +132,7 @@ public class CutPointGenerator {
      * Determine the number of fractional digits to show in the nice numbered cut points.
      * @param range the range to check.
      * @param maxNumTicks no more than this many cut points.
-     * @return Recommended number of fractional digits to display.
-     *     The cut points eg. 0, 1, 2, etc.
+     * @return Recommended number of fractional digits to display. The cut points: eg. 0, 1, 2, etc.
      */
     int getNumberOfFractionDigits(Range range, int maxNumTicks) {
         validateArguments(range);

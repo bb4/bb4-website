@@ -21,7 +21,6 @@ final class NiceNumberRounder {
 
         int exp = (int) Math.floor(MathUtil.log10(numberToRound));
 
-        // f will be between 1 and 10.
         double normalizedNumber = numberToRound / MathUtil.exp10(exp);
         double niceNum = roundDown ? roundNumberDown(normalizedNumber) : roundNumberUp(normalizedNumber);
 
