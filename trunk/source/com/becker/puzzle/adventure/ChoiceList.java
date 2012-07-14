@@ -1,13 +1,13 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.adventure;
 
-import com.becker.common.util.OrderedMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -87,11 +87,11 @@ public class ChoiceList implements List<Choice> {
      * update the order and descriptions
      * @param choiceMap new order and descriptions to update with.
      */
-    public void update(OrderedMap<String, String> choiceMap)  {
+    public void update(LinkedHashMap<String, String> choiceMap)  {
         assert choiceMap.size() == choices_.size() :
                 "choiceMap.size()=" + choiceMap.size() + " not equal choices_.size()=" + choices_.size();
         List<Choice> newChoices = new ArrayList<Choice>(choiceMap.size());
-        for (String dest : choiceMap.keyList()) {
+        for (String dest : choiceMap.keySet()) {
             newChoices.add(new Choice(choiceMap.get(dest), dest));
         }
         choices_ = newChoices;
