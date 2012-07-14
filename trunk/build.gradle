@@ -75,15 +75,15 @@ sourceSets {
     }
     /*
     gameSrc {
-          set.java.srcDirs = ["source/com/becker/game"]
-          set.resources.srcDirs = ["source/com/becker/game"]
+          set.java.srcDirs = ["source/com/barrybecker4/game"]
+          set.resources.srcDirs = ["source/com/barrybecker4/game"]
     }
 
     main {
-         set.java.srcDirs = ["source/com/becker/common", "source/com/becker/java2d",
-                    "source/com/becker/optimization", "source/com/becker/sound", "source/com/becker/ui"]
-         set.resources.srcDirs = ["source/com/becker/common", "source/com/becker/java2d",
-                    "source/com/becker/optimization", "source/com/becker/sound", "source/com/becker/ui"]
+         set.java.srcDirs = ["source/com/barrybecker4/common", "source/com/barrybecker4/java2d",
+                    "source/com/barrybecker4/optimization", "source/com/barrybecker4/sound", "source/com/barrybecker4/ui"]
+         set.resources.srcDirs = ["source/com/barrybecker4/common", "source/com/barrybecker4/java2d",
+                    "source/com/barrybecker4/optimization", "source/com/barrybecker4/sound", "source/com/barrybecker4/ui"]
     }
     test {
          set.java.srcDirs = ["test"]

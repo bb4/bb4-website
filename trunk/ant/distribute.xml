@@ -36,12 +36,12 @@
       <!-- copy the core class files that are needed for all my applets. Produces common.jar -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
-          <include name="com/becker/common/**/*.class"/>
-          <include name="com/becker/ui/**/*.class"/>
-          <include name="com/becker/xml/*.class"/>
-          <include name="com/becker/common/ImageUtil.class"/>
-          <include name="com/becker/java2d/gradient/**/*.class"/>
-          <exclude name="com/becker/**/test"/>
+          <include name="com/barrybecker4/common/**/*.class"/>
+          <include name="com/barrybecker4/ui/**/*.class"/>
+          <include name="com/barrybecker4/xml/*.class"/>
+          <include name="com/barrybecker4/common/ImageUtil.class"/>
+          <include name="com/barrybecker4/java2d/gradient/**/*.class"/>
+          <exclude name="com/barrybecker4/**/test"/>
         </fileset>
       </copy>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/common.jar"/>
@@ -50,9 +50,9 @@
       <!-- copy my class files that are needed for programs that want to do image processing. Produces imageproc.jar-->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
-          <include name="com/becker/java2d/imageproc/**/*.class"/>
-          <include name="com/becker/java2d/ui/**/*.class"/>
-          <include name="com/becker/java2d/*.class"/>
+          <include name="com/barrybecker4/java2d/imageproc/**/*.class"/>
+          <include name="com/barrybecker4/java2d/ui/**/*.class"/>
+          <include name="com/barrybecker4/java2d/*.class"/>
         </fileset>
       </copy>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/imageproc.jar"/>
@@ -61,7 +61,7 @@
       <!-- copy the class files that are needed for programs that want to have sound. Produces sound.jar-->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
-          <include name="com/becker/sound/*.class"/>
+          <include name="com/barrybecker4/sound/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
@@ -81,8 +81,8 @@
       <!-- copy the class files that are needed for simulation programs . Produces simulation.jar-->
       <copy todir="${stagingDir}">
           <fileset dir="${classesDir}">
-            <include name="com/becker/simulation/common/**/*.class"/>
-            <include name="com/becker/simulation/graphing/**/*.class"/>
+            <include name="com/barrybecker4/simulation/common/**/*.class"/>
+            <include name="com/barrybecker4/simulation/graphing/**/*.class"/>
           </fileset>
       </copy>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/simulation.jar"/>
@@ -92,11 +92,11 @@
       <!-- copy just the core class files that are needed for all the games. Produces gameCommon.jar -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
-          <include name="com/becker/game/common/**/*.class"/>
-          <include name="com/becker/game/card/**/*.class"/>
-          <include name="com/becker/game/*.xml"/>
-          <include name="com/becker/java2d/*Gradient*.class"/>
-          <exclude name="com/becker/game/**/test"/>
+          <include name="com/barrybecker4/game/common/**/*.class"/>
+          <include name="com/barrybecker4/game/card/**/*.class"/>
+          <include name="com/barrybecker4/game/*.xml"/>
+          <include name="com/barrybecker4/java2d/*Gradient*.class"/>
+          <exclude name="com/barrybecker4/game/**/test"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
@@ -150,9 +150,9 @@
       <!-- copy the class files that are needed for chess deployment -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
-          <include name="com/becker/game/twoplayer/checkers/**/*.class"/>
-          <include name="com/becker/game/twoplayer/chess/**/*.class"/>
-          <exclude name="com/becker/game/twoplayer/**/test"/>
+          <include name="com/barrybecker4/game/twoplayer/checkers/**/*.class"/>
+          <include name="com/barrybecker4/game/twoplayer/chess/**/*.class"/>
+          <exclude name="com/barrybecker4/game/twoplayer/**/test"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
@@ -166,8 +166,8 @@
       <!-- copy the class files that are needed for go deployment -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
-          <include name="com/becker/game/twoplayer/go/**/*.class"/>
-          <exclude name="com/becker/game/twoplayer/go/**/test"/>
+          <include name="com/barrybecker4/game/twoplayer/go/**/*.class"/>
+          <exclude name="com/barrybecker4/game/twoplayer/go/**/test"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy  -->
       </copy>
@@ -378,8 +378,8 @@
           description="Deploys the class files that are needed for Application/Applet deployment.">
       <copy todir="${stagingDir}">
           <fileset dir="${classesDir}">
-              <include name="com/becker/${componentDir}/**/*.class"/>
-              <exclude name="com/becker/${componentDir}/**/test/**/*.class"/>
+              <include name="com/barrybecker4/${componentDir}/**/*.class"/>
+              <exclude name="com/barrybecker4/${componentDir}/**/test/**/*.class"/>
           </fileset>
           <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
@@ -571,13 +571,13 @@
     <!--echo message="copying ${path}"/-->
     <copy todir="${classesDir}">
       <fileset dir="${sourceDir}">
-        <include name="com/becker/${path}/${pattern}"/>
+        <include name="com/barrybecker4/${path}/${pattern}"/>
       </fileset>
       <mapper from="${pattern}" to="${pattern}" type="glob"/>   <!-- preserve hierarchy -->
     </copy>
     <copy todir="${stagingDir}">
       <fileset dir="${sourceDir}">
-        <include name="com/becker/${path}/${pattern}"/>
+        <include name="com/barrybecker4/${path}/${pattern}"/>
       </fileset>
       <mapper from="${pattern}" to="${pattern}" type="glob"/>   <!-- preserve hierarchy -->
     </copy>
