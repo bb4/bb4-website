@@ -150,9 +150,9 @@ public final class DomUtil {
     public static String getAttribute(Node node, String attribName, String defaultValue) {
         NamedNodeMap attribMap = node.getAttributes();
         String attributeVal = null;
-        if (attribMap == null)
+        if (attribMap == null)  {
             return null;
-        // assert (attribMap!=null) : "no attributes for " +node.getNodeName()+" "+node.getNodeValue();
+        }
 
         for (int i=0; i<attribMap.getLength(); i++) {
             Node attr = attribMap.item(i);
@@ -170,8 +170,7 @@ public final class DomUtil {
      * @param attribMap
      * @return
      */
-    public static String getAttributeList(NamedNodeMap attribMap)
-    {
+    public static String getAttributeList(NamedNodeMap attribMap) {
         String attribs = "";
         if (attribMap!= null) {
             attribMap.getLength();
@@ -202,8 +201,6 @@ public final class DomUtil {
             printTree(l.item(i), level+1);
          }
      }
-
-
 
     /**
      * parse an xml file and return a cleaned up Document object.
@@ -255,8 +252,7 @@ public final class DomUtil {
     }
 
 
-    public static Document parseXML(URL url)
-    {
+    public static Document parseXML(URL url) {
         try {
             System.out.println("url path=" + url.getPath());
             URLConnection urlc = url.openConnection();
@@ -269,14 +265,12 @@ public final class DomUtil {
         return null;
     }
 
-    public static Document parseXMLFile(File file)
-    {
+    public static Document parseXMLFile(File file) {
         System.out.println("about to parse "+ file.getPath());
         return parseXMLFile(file, true);
     }
 
-    public static Document parseXMLFile(File file, boolean replaceUseWithDeepCopy)
-    {
+    public static Document parseXMLFile(File file, boolean replaceUseWithDeepCopy) {
         try {
             FileInputStream str = new FileInputStream(file);
             return parseXML(str, replaceUseWithDeepCopy, null);
@@ -326,6 +320,7 @@ public final class DomUtil {
          // takes some OutputStream or Writer
         StreamResult result =  new StreamResult(oStream);  // replace out with FileOutputStream
 
+        assert transformer!=null;
         try {
             // replace out with FileOutputStream  // System.out
             transformer.transform(source, result);
