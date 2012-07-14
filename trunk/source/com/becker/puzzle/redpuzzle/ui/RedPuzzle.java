@@ -27,7 +27,7 @@ import javax.swing.*;
  * BruteForce < 8.0s and Genetic= 3.0s
  * After refactoring and applying the generic solver pattern (see puzzle.common) things were faster
  * BruteForce Sequential <1.0s  BruteForce concurrent <.1s
- * @author Barry becker
+ * @author Barry Becker
  */
 public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
                             implements SliderChangeListener {

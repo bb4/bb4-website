@@ -19,7 +19,7 @@ import javax.swing.event.ChangeListener;
 /**
  * Tantrix Puzzle Application to show the solving of the puzzle.
  *
- * @author Barry becker
+ * @author Barry Becker
  */
 public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacement>
                                  implements ChangeListener {
