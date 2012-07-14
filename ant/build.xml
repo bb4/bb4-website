@@ -12,7 +12,7 @@
   <property name="stagingDir" value="../temp/classes"/>
 
   <!-- the base game applicaiton class -->
-  <property name="gameAppClass" value="com.becker.game.common.ui.GameApp"/>
+  <property name="gameAppClass" value="com.barrybecker4.game.common.ui.GameApp"/>
 
   <!-- the jvm to use when executing -->
   <property name="java6" value="${java_home}/bin/java"/>
@@ -128,7 +128,7 @@
 
    <target name="executeTrivialServer" depends="compile" description="Run online trivial server">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
+      <param name="className" value="com.barrybecker4.game.common.online.ui.OnlineGameServerFrame"/>
       <param name="libPath" value="${libDir}/jai_codec.jar;"/>
       <param name="args" value="-name trivial"/>
     </antcall>
@@ -163,7 +163,7 @@
 
    <target name="executePokerServer" depends="compile" description="Run online poker server">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
+      <param name="className" value="com.barrybecker4.game.common.online.ui.OnlineGameServerFrame"/>
       <param name="libPath" value="${libDir}/jai_codec.jar;"/>
       <param name="args" value="-name poker -locale ENGLISH"/>
     </antcall>
@@ -190,7 +190,7 @@
 
   <target name="executeSetGame" description="Run the Set Game app">
     <antcall target="executeProgram">
-      <param name="className" value="${gameAppClass}"/>  <!-- com.becker.game.multiplayer.set.SetApplet -->
+      <param name="className" value="${gameAppClass}"/>  <!-- com.barrybecker4ecker4.game.multiplayer.set.SetApplet -->
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
       <param name="args" value="-name set -locale ENGLISH"/>
     </antcall>
@@ -206,7 +206,7 @@
 
   <target name="executeImageBreeder" description="Run the Image Breeder">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.apps.imagebreeder.ImageBreederApplet" />
+      <param name="className" value="com.barrybecker4.apps.imagebreeder.ImageBreederApplet" />
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jhlabs-1.0.2.jar;" />
       <param name="args" value=""/>
     </antcall>
@@ -214,64 +214,64 @@
 
   <target name="executeDice" description="Run the Dice simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.dice.DiceSimulator"/>
+      <param name="args" value="com.barrybecker4.simulation.dice.DiceSimulator"/>
     </antcall>
   </target>
 
   <target name="executeStock" description="Run the Stock simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.stock.StockSimulator"/>
+      <param name="args" value="com.barrybecker4.simulation.stock.StockSimulator"/>
     </antcall>
   </target>
 
   <target name="executePredPrey" description="Run the Predator/Prey simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.predprey.PredPreySimulator"/>
+      <param name="args" value="com.barrybecker4.simulation.predprey.PredPreySimulator"/>
     </antcall>
   </target>
 
   <target name="executeVerhulst" description="Run the Verhulst dynamics simulator">
       <antcall target="executeProgram">
-          <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+          <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
           <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-          <param name="args" value="com.becker.simulation.verhulst.VerhulstSimulator"/>
+          <param name="args" value="com.barrybecker4.simulation.verhulst.VerhulstSimulator"/>
       </antcall>
   </target>
 
   <target name="executeHabitat" description="Run the Habitat simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.habitat.HabitatSimulator"/>
+      <param name="args" value="com.barrybecker4.simulation.habitat.HabitatSimulator"/>
     </antcall>
   </target>
 
   <target name="executeGraph" description="Run the Graph simulator">
       <antcall target="executeProgram">
-        <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+        <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
         <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-        <param name="args" value="com.becker.simulation.graphing.GraphSimulator"/>
+        <param name="args" value="com.barrybecker4.simulation.graphing.GraphSimulator"/>
       </antcall>
     </target>
 
 
   <target name="executeParameterDistribution" description="Run the Parameter Distribution simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.parameter.ParameterSimulator"/>
+      <param name="args" value="com.barrybecker4.simulation.parameter.ParameterSimulator"/>
     </antcall>
   </target>
 
   <target name="executeMaze" description="Run the maze generation program">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.puzzle.maze.MazeSimulator"/>
+      <param name="className" value="com.barrybecker4.puzzle.maze.MazeSimulator"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
       <param name="args" value=""/>
     </antcall>
@@ -280,71 +280,71 @@
 
   <target name="executeSpirograph" description="Run the SpiroGraph program">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.apps.spirograph.SpiroGraph"/>
+      <param name="className" value="com.barrybecker4.apps.spirograph.SpiroGraph"/>
       <param name="libPath" value="${libDir}/jai_codec.jar"/>
     </antcall>
   </target>
 
   <target name="executeSnake" description="Run the Snake simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.snake.SnakeSimulator"/>
+      <param name="args" value="com.barrybecker4.simulation.snake.SnakeSimulator"/>
     </antcall>
   </target>
 
   <target name="executeReactionDiffusion" description="Run the Reaction Diffusion simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.reactiondiffusion.RDSimulator"/>
+      <param name="args" value="com.barrybecker4.simulation.reactiondiffusion.RDSimulator"/>
     </antcall>
   </target>
 
   <target name="executeFractalExplorer" description="Run the Fractal Explorer">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.fractalexplorer.FractalExplorer"/>
+      <param name="args" value="com.barrybecker4.simulation.fractalexplorer.FractalExplorer"/>
     </antcall>
   </target>
 
   <target name="executeHenonPhaseExplorer" description="Run the Henon Phase Explorer">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.henonphase.HenonPhaseExplorer"/>
+      <param name="args" value="com.barrybecker4.simulation.henonphase.HenonPhaseExplorer"/>
     </antcall>
   </target>
 
   <target name="executeLiquid" description="Run the Liquid simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
-      <param name="args" value="com.becker.simulation.liquid.LiquidSimulator"/>
+      <param name="args" value="com.barrybecker4.simulation.liquid.LiquidSimulator"/>
     </antcall>
   </target>
 
   <target name="executeFluid" description="Run the Fluid simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.fluid.ui.FluidSimulator"/>
+      <param name="args" value="com.barrybecker4.simulation.fluid.ui.FluidSimulator"/>
     </antcall>
   </target>
 
    <target name="executeTrebuchet" depends="compile" description="Run the Trebuchet simulator">
      <antcall target="executeProgram">
-       <param name="className" value="com.becker.simulation.common.ui.SimulatorApplet"/>
+       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
        <param name="libPath" value="${libDir}/vecmath.jar"/>
-       <param name="args" value="com.becker.simulation.trebuchet.TrebuchetSimulator"/>
+       <param name="args" value="com.barrybecker4.simulation.trebuchet.TrebuchetSimulator"/>
      </antcall>
   </target>
 
   <target name="executeAdventure(Text)" depends="compile" description="An Exciting text based adventure game">
     <echo message="now executing TextAdventure"/>
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.puzzle.adventure.TextAdventure"/>
+      <param name="className" value="com.barrybecker4.puzzle.adventure.TextAdventure"/>
       <param name="args" value="ludlow/ludlowScript.xml"/>
     </antcall>
   </target>
@@ -353,14 +353,14 @@
     <echo message="now executing GraphicalAdventure"/>
     <antcall target="executeProgram">
       <param name="args" value="ludlow/ludlowScript.xml"/>
-      <param name="className" value="com.becker.puzzle.adventure.ui.GraphicalAdventure"/>
+      <param name="className" value="com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure"/>
       <param name="libPath" value="${libDir}/jai_codec.jar" />
     </antcall>
   </target>
 
   <target name="executeGiveChange" depends="compile" description="A simple educational program for computing change.">
     <echo message="now executing GiveChange"/>
-    <java classname="com.becker.apps.misc.givechange.GiveChange" classpath="${classesDir}"
+    <java classname="com.barrybecker4.apps.misc.givechange.GiveChange" classpath="${classesDir}"
           fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
@@ -368,7 +368,7 @@
 
   <target name="executeStringUtil" depends="compile">
     <echo message="now executing StringUtil test"/>
-    <java classname="com.becker.apps.misc.string.StringUtil" classpath="${classesDir}"
+    <java classname="com.barrybecker4.apps.misc.string.StringUtil" classpath="${classesDir}"
           fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
@@ -376,7 +376,7 @@
 
   <target name="executeSimpleEditor" depends="compile" description="A simple editor.">
     <echo message="now executing simple editor"/>
-    <java classname="com.becker.apps.misc.sedit.SimpleEditor"
+    <java classname="com.barrybecker4.apps.misc.sedit.SimpleEditor"
           classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar"
           fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
@@ -385,7 +385,7 @@
 
   <target name="executeNativeRender" depends="compile" description="A simple test of the native graphics renderer.">
       <echo message="now executing NativeRender"/>
-      <java classname="com.becker.apps.misc.nativeRender.NativeRenderTest" classpath="${classesDir}"
+      <java classname="com.barrybecker4.apps.misc.nativeRender.NativeRenderTest" classpath="${classesDir}"
             fork="true" jvm="${java_compiler}" maxmemory="128M">
           <jvmarg value="${assertionsFlag}"/>
       </java>
@@ -393,7 +393,7 @@
 
   <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle">
      <echo message="now executing red puzzle"/>
-     <java classname="com.becker.puzzle.redpuzzle.ui.RedPuzzle" classpath="${classesDir}"
+     <java classname="com.barrybecker4.puzzle.redpuzzle.ui.RedPuzzle" classpath="${classesDir}"
            fork="true" jvm="${java_compiler}" maxmemory="128M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
@@ -401,13 +401,13 @@
 
   <target name="executeTantrixPuzzle" depends="compile" description=" run the Tantrix Puzzle">
      <echo message="now executing tantrix puzzle"/>
-     <!--java classname="com.becker.puzzle.tantrix.ui.TantrixPuzzle" classpath="${classesDir}"
+     <!--java classname="com.barrybecker4ecker4.puzzle.tantrix.ui.TantrixPuzzle" classpath="${classesDir}"
            fork="true" jvm="${java_compiler}" maxmemory="4096M">
          <jvmarg value="${assertionsFlag}"/>
      </java-->
 
       <antcall target="executeProgram">
-          <param name="className" value="com.becker.puzzle.tantrix.ui.TantrixPuzzle"/>
+          <param name="className" value="com.barrybecker4.puzzle.tantrix.ui.TantrixPuzzle"/>
           <param name="libPath" value="${libDir}/vecmath.jar;"/>
           <param name="args" value="-name galactic -locale ENGLISH"/>
       </antcall>
@@ -415,7 +415,7 @@
 
   <target name="executeSudoku" depends="compile" description=" run the Sudoku solver">
      <echo message="now executing Sudoku"/>
-     <java classname="com.becker.puzzle.sudoku.ui.SudokuPuzzle" classpath="${classesDir}"
+     <java classname="com.barrybecker4.puzzle.sudoku.ui.SudokuPuzzle" classpath="${classesDir}"
            fork="true" jvm="${java_compiler}" maxmemory="256M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
@@ -423,7 +423,7 @@
 
   <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle">
      <echo message="now executing Hi-Q"/>
-     <java classname="com.becker.puzzle.hiq.ui.HiQPuzzle" classpath="${classesDir}"
+     <java classname="com.barrybecker4.puzzle.hiq.ui.HiQPuzzle" classpath="${classesDir}"
            fork="true" jvm="${java_compiler}" maxmemory="512M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
@@ -432,34 +432,34 @@
 
   <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.ui.xmlviewer.DomEcho"/>
+      <param name="className" value="com.barrybecker4.ui.xmlviewer.DomEcho"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
-      <!--param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/ -->
+      <!--param name="args" value="${project_home}/source/com/barrybecker4/xml/katate_dori.xml"/ -->
       <param name="args" value="${project_home}/source/com/becker/apps/misc/yugioh/yugiohCards.xml"/>
     </antcall>
   </target>
 
   <target name="XMLAppGenerator" depends="compile" description=" run the XML App Generator">
      <antcall target="executeProgram">
-       <param name="className" value="com.becker.xml.AikidoAppGenerator"/>
+       <param name="className" value="com.barrybecker4.xml.AikidoAppGenerator"/>
        <param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/>
      </antcall>
   </target>
 
   <target name="kgsTesujisoftGoClient" depends="compile" description="run the Tesujisoft Go engine on KGS.">
      <antcall target="executeProgram">
-      <param name="className" value="com.becker.game.twoplayer.go.GtpKgsTesujisoftGoClient"/>
+      <param name="className" value="com.barrybecker4.game.twoplayer.go.GtpKgsTesujisoftGoClient"/>
       <param name="libPath" value="${libDir}/kgsGtp.jar;${libDir}/gogui7.1.jar"/>
     </antcall>
   </target>
 
   <target name="GoGui" depends="compile">
-    <echo message="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.server.GtpTesujisoftGoServer"/>
+    <echo message="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.barrybecker4.game.twoplayer.go.server.GtpTesujisoftGoServer"/>
     <antcall target="executeProgram2">
       <param name="className" value="gogui.Main"/>
       <param name="libPath" value="${libDir}/gogui7.1.jar"/>
       <param name="arg1" value="-program"/>
-      <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.server.GtpTesujisoftGoServer"/>
+      <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.barrybecker4.game.twoplayer.go.server.GtpTesujisoftGoServer"/>
     </antcall>
   </target>
 
