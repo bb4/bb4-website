@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class LRUCache<K,V> {
 
-    /**   
+    /**
      * The <i>load factor</i> is a measure of how full the hash table is allowed to
      * get before its capacity is automatically increased.  75% in this case.
      */
@@ -39,7 +39,6 @@ public class LRUCache<K,V> {
 
           @Override
           protected boolean removeEldestEntry (Map.Entry<K,V> eldest) {
-              //System.out.println("LRU size=" + size() + " cacheSize=" + LRUCache.this.cacheSize);
               return size() > LRUCache.this.cacheSize;
           }
        };

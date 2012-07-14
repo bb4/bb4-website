@@ -20,14 +20,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * A utility class for generating image files and manipulating images
+ * A utility class for generating image files and manipulating images.
  *
  * @author Barry Becker
  */
 public final class ImageUtil {
-
-    /** print quality for JPGs. 1.0 is no compression.    */
-    private static final float JPG_QUALITY = 0.9f;
 
     public enum ImageType { PNG, JPG }
 
@@ -83,35 +80,25 @@ public final class ImageUtil {
 
         if ( type == ImageType.JPG ) {
 
-            //JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder( out );
-            //JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam( bi );
-
             ImageWriter encoder = ImageIO.getImageWritersByFormatName("JPEG").next();
             JPEGImageWriteParam param = new JPEGImageWriteParam(null);
-
-            // this makes the images near perfect - very little compression
-            //param.setQuality( JPG_QUALITY, false );
-            //encoder.setJPEGEncodeParam( param );
 
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
             encoder.setOutput(out);
 
             try {
-                //encoder.encode( bi );  // this writes it to a file as a .jpg
                 encoder.write(null, new IIOImage((RenderedImage)img, null, null), param);
             } catch (IOException fne) {
                 System.err.println( "IOException error:" + fne.getMessage());
             }
         }
         else { // PNG is the default
-            // Create the ParameterBlock.
-            // we can play with this for better compression/quality
             PNGEncodeParam param = PNGEncodeParam.getDefaultEncodeParam( bi );
 
-            //Create the PNG image encoder.
             ImageEncoder encoder = ImageCodec.createImageEncoder( "PNG", out, param );
             try {
-                encoder.encode( bi );  // this writes it to a file as a .png
+                // Writes it to a file as a .png
+                encoder.encode( bi );
             } catch (IOException fne) {
                 System.out.println( "IOException error:" +  fne.getMessage());
             } catch (NullPointerException npe) {
@@ -156,7 +143,6 @@ public final class ImageUtil {
     }
 
     /**
-     *
      * @param pixels one dimension array of pixels where a pixel at x and y can be located with
      *   3 *(x * height + y )
      *   Note that there are 4 ints for every pixel (rgb)
