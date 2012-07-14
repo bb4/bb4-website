@@ -1,10 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.adventure.ui.editor;
 
-import com.becker.common.util.OrderedMap;
 import com.becker.puzzle.adventure.Scene;
 
 import javax.swing.table.DefaultTableModel;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 
@@ -29,7 +29,7 @@ public class ChildTableModel extends DefaultTableModel {
      * @param currentScene scene to update to.
      */
     public void updateSceneChoices(Scene currentScene) {
-        OrderedMap<String, String> choiceMap = new OrderedMap<String, String>();
+        LinkedHashMap<String, String> choiceMap = new LinkedHashMap<String, String>();
 
         for (int i = 0; i < getRowCount(); i++) {
             String dest = (String) getValueAt(i, ChildTable.NAVIGATE_INDEX);

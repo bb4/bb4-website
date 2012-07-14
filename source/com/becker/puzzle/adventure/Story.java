@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.puzzle.adventure;
 
-import com.becker.common.util.OrderedMap;
 import com.becker.common.xml.DomUtil;
 import com.becker.ui.util.GUIUtil;
 import org.w3c.dom.Document;
@@ -12,6 +11,7 @@ import org.w3c.dom.NodeList;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * Run your own adventure story.
  * Just modify the script in SceneData and run.
  * This program is meant as a very simple example of how you can
- * approach creating a simple adventure game on a somputer.
+ * approach creating a simple adventure game on a computer.
  *
  * There are many improvements that  I will leave as an exercise for reader (Brian I hope).
  * Next to each is a number which is the number of hours I expect it would take me to implement.
@@ -63,7 +63,7 @@ public class Story {
     private String date;
 
     /** Maps scene name to the scene. Preserves order of scenes. */
-    private OrderedMap<String, Scene> sceneMap_;
+    private LinkedHashMap<String, Scene> sceneMap_;
 
     /** The scene where the user is now. */
     private Scene currentScene_;
@@ -132,7 +132,7 @@ public class Story {
 
     /** Return to the initial sceen from wherever they be now. */
     public void resetToFirstScene() {
-        currentScene_ = sceneMap_.getFirst();
+        currentScene_ = sceneMap_.values().iterator().next();
     }
 
     /**
@@ -151,7 +151,7 @@ public class Story {
     }
 
 
-    private OrderedMap<String, Scene> getSceneMap() {
+    private LinkedHashMap<String, Scene> getSceneMap() {
         return sceneMap_;
     }
 
@@ -169,7 +169,7 @@ public class Story {
         rootElement.setAttribute("title", title);
         document.appendChild(rootElement);
 
-        for (String sceneName : sceneMap_.keyList()) {
+        for (String sceneName : sceneMap_.keySet()) {
             Scene scene = sceneMap_.get(sceneName);
             scene.appendToDocument(document);
         }
@@ -210,12 +210,13 @@ public class Story {
         initFromScenes(scenes);
     }
 
-    private OrderedMap<String, Scene> createSceneMap(int size) {
-       return new OrderedMap<String, Scene>(size);
+    /** must be ordered */
+    private LinkedHashMap<String, Scene> createSceneMap(int size) {
+       return new LinkedHashMap<String, Scene>(size);
     }
 
-    private void copySceneMap(OrderedMap<String, Scene> fromMap) {
-        for (String sceneName : fromMap.keyList()) {
+    private void copySceneMap(LinkedHashMap<String, Scene> fromMap) {
+        for (String sceneName : fromMap.keySet()) {
             Scene scene = fromMap.get(sceneName);
             // add deep copies of the scene.
             sceneMap_.put(sceneName, new Scene(scene));
@@ -278,7 +279,7 @@ public class Story {
     public List<Scene> getParentScenes()  {
         List<Scene> parentScenes = new ArrayList<Scene>();
         // loop through all the scenes, and if any of them have us as a child, add to the list
-        for (String sceneName : sceneMap_.keyList()) {
+        for (String sceneName : sceneMap_.keySet()) {
             Scene s = sceneMap_.get(sceneName);
             if (s.isParentOf(currentScene_)) {
                 parentScenes.add(s);
@@ -308,7 +309,7 @@ public class Story {
     public List<String> getCandidateDestinationSceneNames() {
         List<String> candidateSceneNames = new ArrayList<String>();
 
-         for (String sceneName : sceneMap_.keyList()) {
+         for (String sceneName : sceneMap_.keySet()) {
             if (!getCurrentScene().getChoices().isDestination(sceneName)) {
                 candidateSceneNames.add(sceneName);
             }
@@ -317,7 +318,7 @@ public class Story {
     }
 
     public List<String> getAllSceneNames() {
-        return sceneMap_.keyList();
+        return new ArrayList<String>(sceneMap_.keySet());
     }
 
     /**
@@ -344,7 +345,7 @@ public class Story {
         //System.out.println("oldScene name=" + oldSceneName +"  newSceneName="+ newSceneName+"  changedScene=" + changedScene.getName());
         sceneMap_.put(newSceneName, changedScene);
         // also need to update the references to named scenes in the choices.
-        for (String sceneName : sceneMap_.keyList()) {
+        for (String sceneName : sceneMap_.keySet()) {
             sceneMap_.get(sceneName).getChoices().sceneNameChanged(oldSceneName, newSceneName);
         }
     }
