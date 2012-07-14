@@ -4,13 +4,13 @@ package com.becker.common.i18n;
 import java.util.Locale;
 
 /**
- * Enum for the suppoerted locales.
+ * Enum for the supported locales.
  *
  * @author Barry Becker
  */
-public enum LocaleType
-{
-    // currently supported locales
+public enum LocaleType {
+
+    // Currently supported locales
     ENGLISH ( new Locale("en", "US")),
     GERMAN ( new Locale("de", "DE")),
     JAPANESE ( new Locale("ja", "JP")),
@@ -22,16 +22,14 @@ public enum LocaleType
     /**
      * constructor for eye type enum
      *
-
      * @param locale the locale corresponding to the enum value.
      */
-    private LocaleType( Locale locale) {
+    LocaleType( Locale locale) {
         locale_ = locale;
     }
 
 
-    public Locale getLocale()
-    {
+    public Locale getLocale() {
         return locale_;
     }
 

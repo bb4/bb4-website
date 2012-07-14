@@ -1,8 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.predprey;
 
+import com.becker.common.math.function.CountFunction;
 import com.becker.common.math.function.Function;
-import com.becker.common.math.function.PopulationFunction;
 import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.graphing.GraphOptionsDialog;
@@ -32,8 +32,8 @@ public class PredPreySimulator extends Simulator {
     Rabbits rabbits;
     Foxes foxes;
 
-    PopulationFunction rabbitFunction;
-    PopulationFunction foxFunction;
+    CountFunction rabbitFunction;
+    CountFunction foxFunction;
 
     DynamicOptions options_;
 
@@ -91,8 +91,8 @@ public class PredPreySimulator extends Simulator {
         rabbits.reset();
         foxes.reset();
 
-        rabbitFunction = new PopulationFunction(Rabbits.INITIAL_NUM_RABBITS);
-        foxFunction = new PopulationFunction(Foxes.INITIAL_NUM_FOXES);
+        rabbitFunction = new CountFunction(Rabbits.INITIAL_NUM_RABBITS);
+        foxFunction = new CountFunction(Foxes.INITIAL_NUM_FOXES);
 
         List<Function> functions = new LinkedList<Function>();
         functions.add(rabbitFunction);

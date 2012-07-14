@@ -62,7 +62,6 @@ public final class MathUtil {
         return gcd(a, b % a);
     }
 
-
     /**
      * @param a
      * @param b

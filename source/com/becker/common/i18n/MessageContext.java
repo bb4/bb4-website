@@ -153,8 +153,7 @@ public final class MessageContext {
      * @@ currently we only check the common common bundle, but we should do all.
      * @@ This could be moved to a JUnit test.
      */
-    private void verifyConsistentMessageBundles()
-    {
+    private void verifyConsistentMessageBundles() {
         log(1, "verifying consistency of message bundles... ");
         // an array of hashSets of the keys for each bundle
         List<Set<String>> messageKeySets = new ArrayList<Set<String>>();

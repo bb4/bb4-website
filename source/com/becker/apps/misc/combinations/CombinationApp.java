@@ -25,6 +25,8 @@ public class CombinationApp {
     /** The chance of getting any given problem wrong. */
     private static final double CHANGE_WRONG = (CHOICES_PER_QUESTION-1.0)/(double)CHOICES_PER_QUESTION;
 
+    private CombinationApp() {}
+
     /**
      * The general formula for probability of getting numRight or more right out of numQuestions is:
      *
@@ -48,7 +50,7 @@ public class CombinationApp {
 
             BigDecimal result = comb.multiply(new BigDecimal(Math.pow(CHANGE_WRONG, diff - i)));
             result  = result.divide(new BigDecimal(Math.pow(CHOICES_PER_QUESTION, numQuestions - diff + i)));
-            //System.out.println("interm result="+ result);
+            //System.out.println("intermediate result="+ result);
             prob = prob.add(result);
         }
         return prob.doubleValue();

@@ -1,8 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.habitat.creatures;
 
+import com.becker.common.math.function.CountFunction;
 import com.becker.common.math.function.Function;
-import com.becker.common.math.function.PopulationFunction;
 import com.becker.simulation.habitat.model.Cell;
 import com.becker.simulation.habitat.model.HabitatGrid;
 import com.becker.ui.renderers.MultipleFunctionRenderer;
@@ -24,7 +24,7 @@ public abstract class Populations extends ArrayList<Population> {
     private long dayCount = 0;
 
     /** associate population with function*/
-    private Map<Population, PopulationFunction> functionMap;
+    private Map<Population, CountFunction> functionMap;
 
     private HabitatGrid grid;
 
@@ -37,7 +37,7 @@ public abstract class Populations extends ArrayList<Population> {
     }
 
     public void initialize() {
-        functionMap = new HashMap<Population, PopulationFunction>();
+        functionMap = new HashMap<Population, CountFunction>();
         grid = new HabitatGrid(20, 15);
 
         this.clear();
@@ -66,7 +66,7 @@ public abstract class Populations extends ArrayList<Population> {
         List<Color> lineColors = new LinkedList<Color>();
 
         for (Population pop : this) {
-            PopulationFunction func = new PopulationFunction(pop.getSize());
+            CountFunction func = new CountFunction(pop.getSize());
             functions.add(func);
             lineColors.add(pop.getType().getColor());
 

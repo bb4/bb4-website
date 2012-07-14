@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Represents a location location of something in byte coordinates.
  * The range of bytes are only 0 to 255 and cannot be negative.
  *
- * Immutable. Use MutableLocation if you really need to modify it.
+ * Immutable. Use MutableLocation if you really need to modify it (rare).
  *
  * @author Barry Becker
  */
@@ -86,12 +86,12 @@ public class Location implements Serializable {
      */
     @Override
     public boolean equals( Object location ) {
-        
+
         if (!(location instanceof Location)) return false;
         Location loc = (Location) location;
         return (loc.getRow() == row_) && (loc.getCol() == col_);
     }
-    
+
     /**
      * If override euals, should also override hashCode
      */
