@@ -4,18 +4,22 @@ package com.becker.apps.misc.progressdemo;
 import com.becker.common.concurrency.ThreadUtil;
 import com.becker.common.concurrency.Worker;
 
-/** Uses a Worker to perform a time-consuming (and utterly fake) task. */
-
+/**
+ *  Uses a Worker to perform a time-consuming, fake task.
+ */
 public class LongTask {
     private int lengthOfTask;
     private int current = 0;
     private String statMessage;
 
+    /**
+     * Compute magnitude of task...
+     * In a real program, this would figure out
+     * the number of bytes to read or whatever.
+     * @param size
+     */
     LongTask(Integer size) {
-        //Compute magnitude of task...
-        //In a real program, this would figure out
-        //the number of bytes to read or whatever.
-        lengthOfTask = size.intValue();
+        lengthOfTask = size;
     }
 
     /**
@@ -24,6 +28,7 @@ public class LongTask {
     void go() {
         current = 0;
         final Worker worker = new Worker() {
+            @Override
             public Object construct() {
                 return new ActualTask();
             }
@@ -54,10 +59,7 @@ public class LongTask {
      * Called from ProgressBarDemo to find out if the task has completed.
      */
     boolean done() {
-        if (current >= lengthOfTask)
-            return true;
-        else
-            return false;
+        return current >= lengthOfTask;
     }
 
     String getMessage() {
@@ -72,8 +74,9 @@ public class LongTask {
             //Fake a long task,
             //making a random amount of progress every second.
             while (current < lengthOfTask) {
-                ThreadUtil.sleep(1000); //sleep for a second
-                current += Math.random() * 100; //make some progress
+                ThreadUtil.sleep(1000);
+                //make some progress
+                current += Math.random() * 100;
                 if (current > lengthOfTask) {
                     current = lengthOfTask;
                 }

@@ -1,13 +1,13 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.common.geometry;
 
-
 /**
  * A box defined by 2 locations.
+ * The coordinates habe only the resolution of bytes.
  * @author Barry Becker
  */
 public class Box {
-    
+
     private Location topLeftCorner_;
     private Location bottomRightCorner_;
 
@@ -28,6 +28,9 @@ public class Box {
         this(pt0, pt0);
     }
 
+    /**
+     *  Constructor which takes the coordinates of any two diagonal corners.
+     */
     public Box(int rowMin, int colMin, int rowMax, int colMax) {
 
         if (rowMin > rowMax) {
@@ -45,7 +48,8 @@ public class Box {
         bottomRightCorner_ = new Location(rowMax, colMax);
     }
 
-    /** Constructs a box with dimensions of oldBox, but expanded by the specified point
+    /**
+     * Constructs a box with dimensions of oldBox, but expanded by the specified point
      * @param oldBox box to base initial dimensions on.
      * @param point point to expand new box by.
      */
@@ -54,10 +58,12 @@ public class Box {
         expandBy(point);
     }
 
+    /** @return the width of the box */
     public int getWidth() {
         return Math.abs(bottomRightCorner_.getCol() - topLeftCorner_.getCol());
     }
 
+    /** @return the height of the box */
     public int getHeight() {
         return Math.abs(bottomRightCorner_.getRow() - topLeftCorner_.getRow());
     }
@@ -163,7 +169,7 @@ public class Box {
                 new Location(Math.min(bottomRightCorner_.getRow() + amount, maxRow),
                              Math.min(bottomRightCorner_.getCol() + amount, maxCol));
     }
-    
+
     /**
      * @param threshold if withing this distance to the edge, extend the box all the way to that edge.
      * @param maxRow don't go further than this though.

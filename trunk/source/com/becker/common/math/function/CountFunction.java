@@ -8,9 +8,10 @@ import java.util.List;
 
 /**
  * Tracks a positive integer over time.
+ * For example, it might be used to track a population count.
  * @author Barry Becker
  */
-public class PopulationFunction implements Function {
+public class CountFunction implements Function {
 
     /** When we get more than this many x values, scroll to the right instead of compressing the domain. */
     private static final int DEFAULT_MAX_X_VALUES = 500;
@@ -25,7 +26,7 @@ public class PopulationFunction implements Function {
      * Constructor.
      * @param initialYValue y value for x=0
      */
-    public PopulationFunction(double initialYValue) {
+    public CountFunction(double initialYValue) {
         xValues = new ArrayList<Double>();
         yValues = new ArrayList<Double>();
         xValues.add(0.0);
@@ -96,7 +97,7 @@ public class PopulationFunction implements Function {
     }
 
     public String toString() {
-        StringBuilder bldr = new StringBuilder("PopulationFunction: ");
+        StringBuilder bldr = new StringBuilder("CountFunction: ");
         for (int i=0; i< xValues.size(); i++) {
             bldr.append("\nx=").append(xValues.get(i)).append(" y=").append(yValues.get(i));
         }

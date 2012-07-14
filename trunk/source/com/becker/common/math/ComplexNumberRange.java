@@ -13,9 +13,8 @@ public class ComplexNumberRange {
     private ComplexNumber point2_;
     private ComplexNumber extent_;
 
-
     /**
-     * init with min and max valeus of the range.
+     * init with min and max values of the range.
      * @param point1 one value for range
      * @param point2 other value for range
      */
@@ -40,7 +39,7 @@ public class ComplexNumberRange {
     }
 
     /**
-     * If params are outside 0, 1, then the interpolated point will be oustide the range.
+     * If params are outside 0, 1, then the interpolated point will be outside the range.
      * @param realRatio between 0 and 1 in real direction
      * @param imaginaryRatio between 0 and 1 in imaginary direction
      * @return interpolated position.

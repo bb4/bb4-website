@@ -1,8 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.becker.simulation.verhulst;
 
+import com.becker.common.math.function.CountFunction;
 import com.becker.common.math.function.Function;
-import com.becker.common.math.function.PopulationFunction;
 import com.becker.simulation.common.ui.Simulator;
 import com.becker.simulation.common.ui.SimulatorOptionsDialog;
 import com.becker.simulation.graphing.GraphOptionsDialog;
@@ -26,7 +26,7 @@ public class VerhulstSimulator extends Simulator {
     long iteration;
 
     Rabbits rabbits;
-    PopulationFunction rabbitFunction;
+    CountFunction rabbitFunction;
     DynamicOptions options_;
 
     /** Constructor */
@@ -71,7 +71,7 @@ public class VerhulstSimulator extends Simulator {
         iteration = 0;
 
         rabbits.reset();
-        rabbitFunction = new PopulationFunction(Rabbits.INITIAL_NUM_RABBITS);
+        rabbitFunction = new CountFunction(Rabbits.INITIAL_NUM_RABBITS);
         rabbitFunction.setMaxXValues(200);
 
         List<Function> functions = new LinkedList<Function>();
