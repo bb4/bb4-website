@@ -13,7 +13,7 @@ import java.awt.event.ItemListener;
 /**
  * Buttons at the top for generating and solving the puzzle using different strategies.
  *
- * @author Barry becker
+ * @author Barry Becker
  */
 public final class TopControlPanel extends JPanel
                                    implements ActionListener, ItemListener {

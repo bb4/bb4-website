@@ -12,14 +12,9 @@ import java.awt.*;
  * Sudoku Puzzle UI.
  * This program can generate and solve Sudoku puzzles.
  *
- * @author Barry becker
+ * @author Barry Becker
  */
 public final class SudokuPuzzle extends JApplet {
-
-    private SudokuController controller_;
-    private TopControlPanel topControls_;
-    private SudokuPanel puzzlePanel_;
-
 
     /**
      * Construct the application and set the look and feel.
@@ -34,14 +29,14 @@ public final class SudokuPuzzle extends JApplet {
      */
     @Override
     public void init() {
-        puzzlePanel_ = new SudokuPanel(Data.HARDEST_9);
-        controller_ = new SudokuController(puzzlePanel_);
-        topControls_ = new TopControlPanel(controller_);
+        SudokuPanel puzzlePanel = new SudokuPanel(Data.HARDEST_9);
+        SudokuController controller = new SudokuController(puzzlePanel);
+        TopControlPanel topControls = new TopControlPanel(controller);
 
         JPanel panel = new JPanel(new BorderLayout());
 
-        panel.add(topControls_, BorderLayout.NORTH);
-        panel.add(puzzlePanel_, BorderLayout.CENTER);
+        panel.add(topControls, BorderLayout.NORTH);
+        panel.add(puzzlePanel, BorderLayout.CENTER);
         getContentPane().add(panel);
     }
 

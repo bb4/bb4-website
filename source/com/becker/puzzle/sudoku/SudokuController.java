@@ -10,7 +10,7 @@ import java.awt.*;
 /**
  * Controller part of the MVC pattern.
  *
- * @author Barry becker
+ * @author Barry Becker
  */
 public final class SudokuController {
 
