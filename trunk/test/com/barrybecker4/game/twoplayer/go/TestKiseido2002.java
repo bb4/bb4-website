@@ -21,7 +21,7 @@ public class TestKiseido2002 extends GoTestCase {
 
     // just do february for now. Its a lot as it is.
     public void testFebruary() {
-        check("2002-02");
+        check("2002-02", 10);
     }
 
     /*
@@ -68,15 +68,25 @@ public class TestKiseido2002 extends GoTestCase {
 
     /**
      * Verify that we can load all the files with the specified pattern
-     * @param problemPattern
+     * @param problemPattern verify loading of all files that match this pattern.
      */
     private void check(String problemPattern) {
+       check(problemPattern, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Verify that we can load all the files with the specified pattern
+     * @param problemPattern verify loading of all files that match this pattern.
+     * @param limit don't load more files that this (since there may be a lot).
+     */
+    private void check(String problemPattern, int limit) {
 
         GameContext.log(0, "Now checking "+ problemPattern);
         String[] files = getFilesMatching("games2002/", problemPattern);
-
+        int ct = 0;
         for (String file : files) {
 
+            if (ct++ >= limit) break;
             String filename = file.substring(0, file.length() - 4);
             GameContext.log(0, " about to restore :" + filename);
             try {
@@ -88,7 +98,7 @@ public class TestKiseido2002 extends GoTestCase {
         }
 
         // must check the worth of the board once to update the scoreContributions fo empty spaces.
-        List moves = controller_.getMoveList();
+        controller_.getMoveList();
         //double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true);
         controller_.getSearchable().done(GoMove.createResignationMove(true), true);
         //controller_.updateLifeAndDeath();   // this updates the groups and territory as well.

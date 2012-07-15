@@ -12,8 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Toolbar that appears a the top of the game application window.
- * Offers standard actions for all games, but can be given game specific buttons too.
+ * Toolbar that appears a the top of the application window.
  * @author Barry Becker
  */
 public class NavigationBar extends TexturedToolBar  {

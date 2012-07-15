@@ -3,6 +3,7 @@ package com.barrybecker4.optimization.viewer;
 
 
 /**
+ * Implemented by something that listens for navigation events.
  * @author Barry Becker
  */
 public interface NavigationListener {
@@ -12,5 +13,4 @@ public interface NavigationListener {
     void pan(Direction direction);
     void zoomIn();
     void zoomOut();
-
 }
