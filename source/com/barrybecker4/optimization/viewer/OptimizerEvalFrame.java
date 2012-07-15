@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 
 
 /**
- * Show iteration steps to 2 d solution.
+ * Show iteration steps to the 2d solution.
  *
  * @author Barry Becker
  */

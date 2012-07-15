@@ -37,14 +37,21 @@
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/barrybecker4/common/**/*.class"/>
-          <include name="com/barrybecker4/ui/**/*.class"/>
-          <exclude name="com/barrybecker4/**/test"/>
         </fileset>
       </copy>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-common.jar"/>
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy my class files that are needed for programs that want to do image processing. Produces imageproc.jar-->
+      <!-- copy the shared ui class files that are needed for most applets. Produces bb4-ui.jar -->
+      <copy todir="${stagingDir}">
+          <fileset dir="${classesDir}">
+              <include name="com/barrybecker4/ui/**/*.class"/>
+          </fileset>
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-ui.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy my class files that are needed for programs that want to do image processing. Produces bb4-imageproc.jar-->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/barrybecker4/java2d/imageproc/**/*.class"/>
@@ -52,7 +59,7 @@
           <include name="com/barrybecker4/java2d/*.class"/>
         </fileset>
       </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/imageproc.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-imageproc.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for programs that want to have sound. Produces bb4-sound.jar-->
@@ -69,24 +76,24 @@
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-sound.jar"/>
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy the class files that are needed for programs that want to do optimization. Produces optimization.jar-->
+      <!-- copy the class files that are needed for programs that want to do optimization. Produces bb4-bb4-optimization.jar-->
       <antcall target="deployJar">
           <param name="componentDir" value="optimization"/>
-          <param name="jarFile" value="optimization.jar"/>
+          <param name="jarFile" value="bb4-bb4-optimization.jar"/>
       </antcall>
 
-      <!-- copy the class files that are needed for simulation programs . Produces simulation.jar-->
+      <!-- copy the class files that are needed for simulation programs . Produces bb4-simulation.jar-->
       <copy todir="${stagingDir}">
           <fileset dir="${classesDir}">
             <include name="com/barrybecker4/simulation/common/**/*.class"/>
             <include name="com/barrybecker4/simulation/graphing/**/*.class"/>
           </fileset>
       </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/simulation.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-simulation.jar"/>
       <delete dir="${stagingDir}/com"/>
 
 
-      <!-- copy just the core class files that are needed for all the games. Produces gameCommon.jar -->
+      <!-- copy just the core class files that are needed for all the games. Produces bb4-gameCommon.jar -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/barrybecker4/game/common/**/*.class"/>
@@ -105,7 +112,7 @@
         <param name="pattern" value="*.xml"/>
       </antcall>
 
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/gameCommon.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-gameCommon.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy just the core class files that are needed for all the twoplayer games. Produces game2Common.jar -->
@@ -114,10 +121,10 @@
           <param name="jarFile" value="game2Common.jar"/>
       </antcall>
 
-       <!-- copy just the core class files that are needed for all the multiplayer games. Produces gameMultiCommon.jar -->
+       <!-- copy just the core class files that are needed for all the multiplayer games. Produces bb4-multiPlayerCommon.jar -->
        <antcall target="deployJar">
           <param name="componentDir" value="game/multiplayer/common"/>
-          <param name="jarFile" value="gameMultiCommon.jar"/>
+          <param name="jarFile" value="bb4-multiPlayerCommon.jar"/>
       </antcall>
 
       <!-- copy the class files that are needed for pente deployment -->
@@ -202,7 +209,7 @@
       <!-- copy the class files that are needed for puzzle deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="puzzle/common"/>
-          <param name="jarFile" value="puzzle.jar"/>
+          <param name="jarFile" value="bb4-puzzle.jar"/>
       </antcall>
 
       <!-- copy the class files that are needed for maze deployment -->
@@ -214,7 +221,7 @@
       <!-- copy the class files that are needed for redpuzzle deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="puzzle/redpuzzle"/>
-          <param name="jarFile" value="redpuzzle.jar"/>
+          <param name="jarFile" value="redbb4-puzzle.jar"/>
       </antcall>
 
       <!-- copy the class files that are needed for sudoku deployment -->

@@ -25,12 +25,24 @@ public class Improvement {
     /** The direction we moved toward this improvement */
     private Vector gradient;
 
-
+    /**
+     * Constructor
+     * @param improvedParams  the (hopefully) improved parameters.
+     * @param improvement the amount of improvement since last iteration.
+     * @param newJumpSize size of the iteration increment.
+     * @param gradient direction that we are currently moving in.
+     */
     public Improvement(ParameterArray improvedParams, double improvement, double newJumpSize, Vector gradient) {
         this(improvedParams, improvement, newJumpSize);
         this.gradient = gradient;
     }
 
+    /**
+     * Constructor
+     * @param improvedParams  the newly improved parameters.
+     * @param improvement the amount of improvement since last iteration.
+     * @param newJumpSize size of the iteration increment.
+     */
     public Improvement(ParameterArray improvedParams, double improvement, double newJumpSize) {
         parameters = improvedParams;
         this.improvement = improvement;

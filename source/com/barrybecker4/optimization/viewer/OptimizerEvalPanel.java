@@ -37,7 +37,6 @@ public class OptimizerEvalPanel extends JPanel implements OptimizationListener, 
         renderer = new PointsListRenderer();
     }
 
-
     public void doTest(OptimizationStrategyType optType, Optimizer optimizer,
                        ParameterArray initialGuess, double fitnessRange) {
 

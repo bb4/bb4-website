@@ -15,10 +15,10 @@
             <j2se version="1.6+" initial-heap-size="64m" max-heap-size="900m" href="http://java.sun.com/products/autodl/j2se"/>
             <jar href="bb4-common.jar" main="false"/>
             <jar href="game2Common.jar" main="false"/>
-            <jar href="gameMultiCommon.jar" main="false"/>
-            <jar href="puzzle.jar" main="false"/>
+            <jar href="bb4-multiPlayerCommon.jar" main="false"/>
+            <jar href="bb4-puzzle.jar" main="false"/>
             <jar href="bb4-sound.jar" main="false"/>
-            <jar href="optimization.jar" main="false"/>
+            <jar href="bb4-optimization.jar" main="false"/>
             <jar href="pente.jar" main="false"/>
             <jar href="checkers.jar" main="false"/>
             <jar href="chess.jar" main="false"/>
@@ -30,7 +30,7 @@
             <jar href="set.jar" main="false"/>
             <jar href="vecmath.jar" main="false"/>
             <jar href="jai_codec.jar" main="false"/>
-            <jar href="imageproc.jar" main="false"/>
+            <jar href="bb4-imageproc.jar" main="false"/>
             {jarElement1}
             {jarElement2}
        </resources>
