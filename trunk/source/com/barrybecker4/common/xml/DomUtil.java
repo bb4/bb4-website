@@ -19,6 +19,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -203,10 +205,11 @@ public final class DomUtil {
      }
 
     /**
-     * parse an xml file and return a cleaned up Document object.
+     * Parse an xml file and return a cleaned up Document object.
      * Set replaceUseWithDeepCopy to false if you are in a debug mode and don't want to see a lot of redundant subtrees.
      * @param stream some input stream.
-     * @param replaceUseWithDeepCopy if true then replace each instance of a use node with a deep copy of what it refers to
+     * @param replaceUseWithDeepCopy if true then replace each instance of a use node with a deep copy of
+     *                               what it refers to
      * @param xsdUri location of the schema to use for validation.
      * @return the parsed file as a Document
      */
@@ -235,19 +238,20 @@ public final class DomUtil {
             //printTree(document, 0);
 
         } catch (SAXException sxe) {
-           // Error generated during parsing)
-           Exception  x = sxe;
-           if (sxe.getException() != null)
-               x = sxe.getException();
-           x.printStackTrace();
+            // Error generated during parsing)
+            Exception  x = sxe;
+            if (sxe.getException() != null)
+                x = sxe.getException();
+            x.printStackTrace();
         } catch (ParserConfigurationException pce) {
-            // Parser with specified options can't be built
-            pce.printStackTrace();
+             // Parser with specified options can't be built
+             pce.printStackTrace();
 
         } catch (IOException ioe) {
-           // I/O error
-           ioe.printStackTrace();
+            // I/O error
+            ioe.printStackTrace();
         }
+
         return document;
     }
 

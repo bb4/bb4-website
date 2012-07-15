@@ -8,35 +8,39 @@ import java.awt.*;
 public final class AnimationFrame extends ApplicationFrame
                                   implements AnimationChangeListener {
 
-    private Label mStatusLabel;
+    /** Shows the current animation status. Like the framerate for example */
+    private Label statusLabel;
 
     /**
      * Constructor
-     * @param ac the animation component to show and animate.
+     * @param component the animation component to show and animate.
      */
-    public AnimationFrame( AnimationComponent ac ) {
-        this( ac, null );
+    public AnimationFrame( AnimationComponent component ) {
+        this( component, null );
     }
 
-    public AnimationFrame( AnimationComponent ac, String title ) {
+    public AnimationFrame( AnimationComponent component, String title ) {
+
         super( title );
 
+        statusLabel = new Label();
         Container contentPane = this.getContentPane();
         contentPane.setLayout( new BorderLayout() );
-        contentPane.add( ac, BorderLayout.CENTER );
-        contentPane.add( mStatusLabel = new Label(), BorderLayout.SOUTH );
+        contentPane.add( component, BorderLayout.CENTER );
+        contentPane.add( statusLabel, BorderLayout.SOUTH );
+        component.setChangeListener(this);
 
-        // Listen for the status changes.
-        ac.setChangeListener( this );
+        startAnimation(component);
+    }
 
-        // Kick off the animation.
-        Thread t = new Thread( ac );
-        t.start();
+    private void startAnimation(AnimationComponent component) {
+        Thread thread = new Thread( component );
+        thread.start();
     }
 
 
     public void statusChanged( String message )  {
-        mStatusLabel.setText( message );
+        statusLabel.setText(message);
     }
 
 }

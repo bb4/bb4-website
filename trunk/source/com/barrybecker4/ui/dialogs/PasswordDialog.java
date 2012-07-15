@@ -74,7 +74,7 @@ public class PasswordDialog extends AbstractDialog
 
 
     /**
-     *  create the buttons that go at the botton ( eg OK, Cancel, ...)
+     *  create the buttons that go at the bottom ( eg OK, Cancel, ...)
      * @return panel with ok cancel buttons.
      */
     protected  JPanel createButtonsPanel() {
@@ -112,7 +112,6 @@ public class PasswordDialog extends AbstractDialog
                     "Invalid Passord!", "Error", JOptionPane.ERROR_MESSAGE );
         }
     }
-
 
     /**
      * Implements KeyListener interface.

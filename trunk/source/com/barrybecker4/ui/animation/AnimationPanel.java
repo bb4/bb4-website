@@ -7,34 +7,39 @@ import com.barrybecker4.ui.util.GUIUtil;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel for showing an animation
+ * @author Barry Becker
+ */
 public final class AnimationPanel extends JPanel
                                   implements AnimationChangeListener {
 
-    private Label mStatusLabel;
+    private Label statusLabel;
 
     /**
      * Constructor
-     * @param ac animation component to animate.
+     * @param component animation component to animate.
      */
-    public AnimationPanel( AnimationComponent ac ) {
+    public AnimationPanel( AnimationComponent component ) {
 
         setLayout( new BorderLayout() );
         setFont( new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12 ) );
 
-        this.add( ac, BorderLayout.CENTER );
-        this.add( mStatusLabel = new Label(), BorderLayout.SOUTH );
+        this.add( component, BorderLayout.CENTER );
+        this.add( statusLabel = new Label(), BorderLayout.SOUTH );
+        component.setChangeListener(this);
 
-        // Listen for the status changes.
-        ac.setChangeListener( this );
+        startAnimation(component);
+    }
 
-        // Kick off the animation.
-        Thread t = new Thread( ac );
-        t.start();
+    private void startAnimation(AnimationComponent ac) {
+        Thread thread = new Thread( ac );
+        thread.start();
     }
 
     public void statusChanged( String message ) {
         if (message != null)
-            mStatusLabel.setText( message );
+            statusLabel.setText( message );
     }
 
 }

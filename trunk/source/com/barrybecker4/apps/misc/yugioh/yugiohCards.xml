@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<yugioh
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<yugioh xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://barrybecker4.com/schema/yugioh.xsd" >
 
     <monsterCard>

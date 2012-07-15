@@ -11,7 +11,7 @@ import java.io.File;
  * This is a FileFilter for files having some specific extension.
  * For use with JFileChoosers
  *
- * @author Barry Becker Date: Oct 29, 2006
+ * @author Barry Becker
  */
 public class ExtensionFileFilter extends FileFilter {
 
@@ -25,28 +25,28 @@ public class ExtensionFileFilter extends FileFilter {
     }
 
     /**
-     * @param f
-     * @return true if f matches the desired extesion.
+     * @param file the file to check for acceptance.
+     * @return true if f matches the desired extension.
      */
-    public boolean accept(File f)
-    {
-       boolean accept = f.isDirectory();
+    @Override
+    public boolean accept(File file) {
+       boolean accept = file.isDirectory();
        if  (!accept) {
-            String suffix = GUIUtil.getFileSuffix(f);
+            String suffix = GUIUtil.getFileSuffix(file);
             if (suffix != null)
                accept = (suffix.equals(extension_));
        }
        return accept;
     }
 
+    @Override
     public String getDescription() {
          return "*." + extension_;
     }
 
-
     /**
      * @param fPath  to verify
-     * @return fPath with the proper extesion added if it was not there before.
+     * @return fPath with the proper extension added if it was not there before.
      */
     public static String addExtIfNeeded(String fPath, String ext) {
         String newPath = fPath;

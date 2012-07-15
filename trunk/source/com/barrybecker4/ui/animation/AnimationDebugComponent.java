@@ -5,12 +5,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * For debugging animations.
+ * @author Barry Becker
+ */
 public abstract class AnimationDebugComponent extends AnimationComponent
                                               implements ActionListener  {
 
     private boolean runNextStep_ = false;
     protected Button stepButton_ = new Button( "advance to next frame" );
 
+    /** Constructor */
     public AnimationDebugComponent() {
         stepButton_.addActionListener( this );
     }
@@ -18,7 +23,7 @@ public abstract class AnimationDebugComponent extends AnimationComponent
     @Override
     public void run() {
 
-        while ( animating_ ) {
+        while ( isAnimating() ) {
             if ( runNextStep_ ) {
                 render();
                 timeStep();

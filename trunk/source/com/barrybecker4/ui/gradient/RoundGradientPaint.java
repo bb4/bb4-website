@@ -1,4 +1,4 @@
-package com.barrybecker4.java2d.gradient;
+package com.barrybecker4.ui.gradient;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

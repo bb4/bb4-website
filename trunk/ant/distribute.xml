@@ -38,7 +38,6 @@
         <fileset dir="${classesDir}">
           <include name="com/barrybecker4/common/**/*.class"/>
           <include name="com/barrybecker4/ui/**/*.class"/>
-          <include name="com/barrybecker4/java2d/gradient/**/*.class"/>
           <exclude name="com/barrybecker4/**/test"/>
         </fileset>
       </copy>
@@ -93,7 +92,7 @@
           <include name="com/barrybecker4/game/common/**/*.class"/>
           <include name="com/barrybecker4/game/card/**/*.class"/>
           <include name="com/barrybecker4/game/*.xml"/>
-          <include name="com/barrybecker4/java2d/*Gradient*.class"/>
+          <!--include name="com/barrybecker4/java2d/*Gradient*.class"/-->
           <exclude name="com/barrybecker4/game/**/test"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->

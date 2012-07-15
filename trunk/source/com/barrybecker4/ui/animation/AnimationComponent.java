@@ -12,47 +12,35 @@ import java.awt.event.ItemListener;
 
 /**
  * A ui component for showing animations.
- * The calculation and animation rendering are done in a separate thread
- * So the rest of the ui does not lock up.
+ * The calculation and animation rendering are done in a separate thread so the
+ * rest of the ui does not lock up.
  */
 public abstract class AnimationComponent extends Container
                                       implements Runnable {
 
-    protected boolean animating_ = true;
-    protected int numStepsPerFrame_ = 1;
-    /** previous times in milliseconds. */
-    protected long[] previousTimes_;
-    protected int previousIndex_;
-    protected boolean previousFilled_;
-    /** frames per second. */
-    protected double frameRate_;
+    /** An image showing the current animation frame */
     protected volatile Image image_;
 
-    // incremented for every frame
-    protected int frameCount_ = 0;
+    /** parameters controlling the animation */
+    private AnimationParameters params;
 
-    // if true it will save all the animation steps to files
-    private boolean recordAnimation_ = false;
 
-    private boolean bPaused_ = true;
-
+    /** Constructor */
     public AnimationComponent() {
-        previousTimes_ = new long[64];
-        previousTimes_[0] = System.currentTimeMillis();
-        previousIndex_ = 1;
-        previousFilled_ = false;
+        params = new AnimationParameters();
     }
 
     /**
      * if recordAnimation is true then each frame is written to a numbered file for
      * compilation into a movie later
+     * @param doIt if true, then the animation will be recorded.
      */
     public void setRecordAnimation( boolean doIt ) {
-        recordAnimation_ = doIt;
+        params.recordAnimation = doIt;
     }
 
     public boolean getRecordAnimation() {
-        return recordAnimation_;
+        return params.recordAnimation;
     }
 
     /**
@@ -61,16 +49,16 @@ public abstract class AnimationComponent extends Container
      *  this can speed things a lot.
      */
     public void setNumStepsPerFrame( int num ) {
-        numStepsPerFrame_ = num;
+        params.numStepsPerFrame = num;
     }
 
     public int getNumStepsPerFrame() {
-        return numStepsPerFrame_;
+        return params.numStepsPerFrame;
     }
 
     public abstract double timeStep();
 
-    // the base filename when recording
+    /** @return  the base filename when recording  */
     protected abstract String getFileNameBase();
 
     /**
@@ -80,12 +68,12 @@ public abstract class AnimationComponent extends Container
     public void run() {
 
         render();
-        while ( animating_ ) {
+        while ( params.animating ) {
 
-            frameCount_++;
+            params.incrementFrameCount();
 
-            if ( recordAnimation_ &&  image_ != null ) {
-                    String fname = getFileNameBase() + Integer.toString( 1000000 + frameCount_ );
+            if ( params.recordAnimation &&  image_ != null ) {
+                    String fname = getFileNameBase() + Integer.toString( 1000000 + params.getFrameCount());
                     ImageUtil.saveAsImage( fname, this.image_, ImageUtil.ImageType.PNG );
             }
 
@@ -96,35 +84,39 @@ public abstract class AnimationComponent extends Container
             } else {
                 render();
 
-                for ( int i = 0; i < numStepsPerFrame_; i++ )  {
+                for ( int i = 0; i < params.getNumStepsPerFrame(); i++ )  {
                     timeStep();
                 }
                 calculateFrameRate();
+                firePropertyChange( "statusChanged", getStatusMessage() );
             }
         }
     }
 
+    protected void calculateFrameRate() {
+        params.calculateFrameRate();
+    }
+
     protected boolean isAnimating() {
-        return animating_;
+        return params.animating;
     }
 
     protected void setAnimating(boolean animating) {
-        if (animating != animating_) {
+        if (animating != params.animating) {
             if (animating) {
-                animating_ = true;
+                params.animating = true;
                 new Thread( this ).start();
             } else {
-                animating_ = false;
+                params.animating = false;
             }
         }
     }
 
     /**
-     *
-     * @return  a start button that says Pause or Resume once started.
+     * @return a start button that says Pause or Resume once started.
      */
-    protected JToggleButton createStartButton()
-    {
+    protected JToggleButton createStartButton()  {
+
         final JToggleButton toggleButton = new JToggleButton( "Start", true);
         toggleButton.addItemListener( new ItemListener()
         {
@@ -165,7 +157,7 @@ public abstract class AnimationComponent extends Container
     }
 
     /**
-     *  Offscreen image.
+     * Check for offscreen image. Creates it if needed.
      */
     protected boolean checkImage( Dimension d ) {
 
@@ -178,61 +170,32 @@ public abstract class AnimationComponent extends Container
     }
 
     /**
-     * Determine the number of frames per second as a moving average.
-     */
-    protected void calculateFrameRate() {
-
-        long now = System.currentTimeMillis();
-        int numberOfFrames = previousTimes_.length;
-        double newRate;
-        // Use the more stable method if a history is available.
-        if ( previousFilled_ ) {
-            newRate = (double) numberOfFrames /
-                    (double) (now - previousTimes_[previousIndex_]) *
-                    1000.0;
-        }
-        else {
-            newRate = 1000.0 /
-                    (double) (now - previousTimes_[numberOfFrames - 1]);
-        }
-        frameRate_ = newRate;
-
-        firePropertyChange( "statusChanged", getStatusMessage() );
-
-        // Update the history.
-        previousTimes_[previousIndex_] = now;
-        previousIndex_++;
-        if ( previousIndex_ >= numberOfFrames ) {
-            previousIndex_ = 0;
-            previousFilled_ = true;
-        }
-    }
-
-    /**
-     *message to show in the status bar at the bottom
+     * Message to show in the status bar at the bottom
      */
     protected String getStatusMessage() {
         return FormatUtil.formatNumber(getFrameRate()) + " fps";
     }
 
     public double getFrameRate() {
-        return frameRate_;
+        return params.getFrameRate();
     }
 
     /**
      * If paused is true the animation is stopped
+     * @param paused true if you want the animation to stop temporarily.
      */
-
-    public void setPaused( boolean bPaused ) {
-        bPaused_ = bPaused;
+    public void setPaused( boolean paused ) {
+        params.paused = paused;
     }
 
+    /**
+     * @return true if currently paused.
+     */
     public boolean isPaused() {
-        return bPaused_;
+        return params.paused;
     }
 
-
-    // Property change support.
+    /** Property change support. */
     private transient AnimationChangeListener animationChangeListener_;
 
     public void setChangeListener( AnimationChangeListener af ) {

@@ -434,14 +434,14 @@
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.ui.xmlviewer.DomEcho"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
-      <param name="args" value="${project_home}/source/com/becker/apps/misc/yugioh/yugiohCards.xml"/>
+      <param name="args" value="${project_home}/source/com/barrybecker4/apps/misc/yugioh/yugiohCards.xml"/>
     </antcall>
   </target>
 
   <target name="XMLAppGenerator" depends="compile" description=" run the XML App Generator">
      <antcall target="executeProgram">
-       <param name="className" value="com.barrybecker4.xml.AikidoAppGenerator"/>
-       <param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/>
+       <param name="className" value="com.barrybecker4.apps.aikido.AikidoAppGenerator"/>
+       <param name="args" value="${project_home}/source/com/barrybecker4/apps/aikido/katate_dori.xml"/>
      </antcall>
   </target>
 

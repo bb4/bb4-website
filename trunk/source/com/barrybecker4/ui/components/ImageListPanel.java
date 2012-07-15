@@ -16,7 +16,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *  Displays an array of images.
+ * Displays an array of images.
  * The images are displayed in a way that uses the available space
  * effectively without using a scrollbar.
  * The images may get smaller than their actual size, but they
@@ -29,6 +29,7 @@ public final class ImageListPanel extends JPanel
     private List<BufferedImage> images_;
     private BufferedImage highlightedImage_ = null;
     private List<BufferedImage> selectedImages_;
+
     private double imageRatio_;
     private int baseImageWidth_;
     private int numColumns_;
@@ -173,8 +174,8 @@ public final class ImageListPanel extends JPanel
      * This renders the array of images to the screen.
      */
     @Override
-    protected void paintComponent( Graphics g )
-    {
+    protected void paintComponent( Graphics g ) {
+
         super.paintComponents( g );
         if (images_ == null || images_.size() == 0)
             return;
@@ -262,7 +263,6 @@ public final class ImageListPanel extends JPanel
     }
 
 
-
     /**
      * @return  the image that the mouse is currently over (at x, y coordinates)
      */
@@ -321,7 +321,7 @@ public final class ImageListPanel extends JPanel
     public void mousePressed(MouseEvent e) {}
 
     /**
-     * An image was seelcted on release of the mouse click.
+     * An image was selected on release of the mouse click.
      */
     public void mouseReleased(MouseEvent e) {
         BufferedImage img = findImageOver(e.getX(), e.getY());

@@ -59,7 +59,7 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
     }
 
     /**
-     * initiallize the dialogs ui
+     * initialize the dialogs ui.
      */
     protected abstract JComponent createDialogContent();
 

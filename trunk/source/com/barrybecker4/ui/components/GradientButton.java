@@ -140,8 +140,7 @@ public class GradientButton extends JButton
         /**
          * Does the work of actually drawing the gradient background.
          */
-        private void addGradientBackground( Graphics g )
-        {
+        private void addGradientBackground( Graphics g ) {
             Graphics2D g2D = (Graphics2D) g;
 
             double width = getSize().getWidth();

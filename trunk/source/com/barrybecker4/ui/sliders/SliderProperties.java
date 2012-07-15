@@ -3,7 +3,7 @@ package com.barrybecker4.ui.sliders;
 
 /**
  * Immutable slider properties.
- * Everythign a slider needs to initialize.
+ * Everything a slider needs to initialize.
  *
  * @author Barry Becker
  */

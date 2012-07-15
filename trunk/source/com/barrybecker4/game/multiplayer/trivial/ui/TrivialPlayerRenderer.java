@@ -9,7 +9,7 @@ import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.common.ui.viewer.GamePieceRenderer;
 import com.barrybecker4.game.multiplayer.common.MultiPlayerMarker;
 import com.barrybecker4.game.multiplayer.trivial.player.TrivialPlayer;
-import com.barrybecker4.java2d.gradient.RoundGradientPaint;
+import com.barrybecker4.ui.gradient.RoundGradientPaint;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;

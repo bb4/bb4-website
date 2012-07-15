@@ -4,7 +4,7 @@ package com.barrybecker4.ui.sliders;
 
 
 /**
- * @author Barry Becker Date: Jul 16, 2006
+ * @author Barry Becker
  */
 public interface SliderGroupChangeListener {
 

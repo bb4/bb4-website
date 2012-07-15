@@ -17,17 +17,18 @@ import java.io.OutputStream;
  * @see OutputWindow
  * @author Barry Becker
  */
-public class Log implements ILog
-{
+public class Log implements ILog {
 
-    // must be static because accessed in satic method (logMessage)
-    // the default is to log to the console
+    /**
+     * Must be static because accessed in static method (logMessage)
+     * the default is to log to the console
+     */
     private int logDestination_ = LOG_TO_CONSOLE;
 
-    // an output window for logging
+    /** an output window for logging  */
     private OutputWindow logWindow_ = null;
     private OutputStream fileOutStream_ = null;
-    // used if logging to String
+    /** used if logging to String */
     private StringBuilder logBuffer_ = null;
 
     /**
@@ -40,8 +41,7 @@ public class Log implements ILog
      * Log Constructor
      * @param logWindow window to send output to
      */
-    public Log( OutputWindow logWindow )
-    {
+    public Log( OutputWindow logWindow ) {
         logWindow_ = logWindow;
         setDestination( logDestination_ );
     }
@@ -49,8 +49,7 @@ public class Log implements ILog
     /**
      * @return  the current loggin destination
      */
-    public int getDestination()
-    {
+    public int getDestination() {
         return logDestination_;
     }
 
@@ -58,8 +57,7 @@ public class Log implements ILog
      *  Set the log destination
      *  @@ allow multiples using | to combine the hex constants
      */
-    public void setDestination( int logDestination )
-    {
+    public void setDestination( int logDestination ) {
         logDestination_ = logDestination;
         if ( logWindow_ != null ) {
             if ( logDestination_ == LOG_TO_WINDOW )
@@ -72,14 +70,12 @@ public class Log implements ILog
     /**
      * @param w The static log window to send the output to.
      */
-    public void setLogWindow( OutputWindow w )
-    {
+    public void setLogWindow( OutputWindow w ) {
         logWindow_ = w;
     }
 
 
-    public void setLogFile( String fileName ) throws FileNotFoundException
-    {
+    public void setLogFile( String fileName ) throws FileNotFoundException {
         fileOutStream_ = new BufferedOutputStream(new FileOutputStream(fileName));
     }
 
@@ -94,8 +90,8 @@ public class Log implements ILog
      * @param logLevel message will only be logged if this number is less than the application logLevel (debug_)
      * @param message the message to log
      */
-    public void print( int logLevel, int appLogLevel, String message )
-    {
+    public void print( int logLevel, int appLogLevel, String message ) {
+
         if ( logLevel <= appLogLevel ) {
             if ((logDestination_ & LOG_TO_CONSOLE) >0) {
                 System.err.println( message );
@@ -118,8 +114,7 @@ public class Log implements ILog
                  else System.err.println("no logFile to print to. First specify with setLogFile. message="+message);
             }
             if ((logDestination_ & LOG_TO_STRING) > 0) {
-                if (logBuffer_ != null)
-                {
+                if (logBuffer_ != null)  {
                     logBuffer_.append(message);
                 }
                 else System.err.println("no StringBuilder buffer was set to print to. First specify with setStringBuilder.  message="+message);
@@ -127,18 +122,15 @@ public class Log implements ILog
         }
     }
 
-    public void println( int logLevel, int appLogLevel, String message )
-    {
+    public void println( int logLevel, int appLogLevel, String message ) {
         print( logLevel, appLogLevel, message + '\n' );
     }
 
-    public void print( String message )
-    {
+    public void print( String message ) {
         print( 0, 0, message );
     }
 
-    public void println( String message )
-    {
+    public void println( String message ) {
         print( 0, 0, message + '\n' );
     }
 

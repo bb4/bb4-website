@@ -5,7 +5,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
-import com.barrybecker4.java2d.gradient.RoundGradientPaint;
+import com.barrybecker4.ui.gradient.RoundGradientPaint;
 import com.barrybecker4.ui.util.GUIUtil;
 
 import java.awt.*;

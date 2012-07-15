@@ -5,8 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- *  Create a specialized panel that will allow applets to be resizable within a browser
- *  Usually it is not possible to have applets resizable.
+ * Create a specialized panel that will allow applets to be resizable within a browser.
+ * Usually it is not possible to have applets resizable.
  *
  * The basic idea is this:
  *   - We represent a really huge mainPanel.
@@ -24,8 +24,9 @@ public class ResizableAppletPanel extends JPanel {
     private JPanel mainPanel_;
     private static final long serialVersionUID = 0L;
 
-    // these buffer panels allows the applet to be resized.
+    /** Horizontal buffer panel allowing the applet to be resized horizontally. */
     private JPanel resizeHorizontalPanel_ = new JPanel();
+    /** Vertical buffer panel allowing the applet to be resized vertically. */
     private JPanel resizeVerticalPanel_ = new JPanel();
 
     /** Constructor */

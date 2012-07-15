@@ -2,7 +2,7 @@
 package com.barrybecker4.ui.animation;
 
 /**
- *
+ * Something that listens for changes of status with regard to the animation.
  * @author  Barry Becker
  */
 public interface AnimationChangeListener {

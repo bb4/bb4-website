@@ -12,7 +12,7 @@ import java.awt.*;
 /**
  * A group of horizontal sliders arranged vertically.
  *
- * @author Barry Becker Date: Jul 16, 2006
+ * @author Barry Becker
  */
 public class SliderGroup extends JPanel implements ChangeListener {
 

@@ -5,8 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * ColorCellRenderer renders a cell in a table that reperesents a color
- * @see com.barrybecker4.ui.table.ColorCellRenderer
+ * ColorCellRenderer renders a cell in a table that represents a color
+ * @see ColorCellRenderer
  *
  * @author Barry Becker
  */
@@ -25,12 +25,14 @@ public class ColorCellEditor extends AbstractCellEditor {
         // we know the value is a PathColor
         Color color = (Color)value;
         Color selectedColor = JColorChooser.showDialog(table, title_, color );
-        if (selectedColor == null)  {// then it was canceled.
-           selectedColor = color;
+        if (selectedColor == null)  {
+            // then it was canceled.
+            selectedColor = color;
         }
 
         this.setCellEditorValue(selectedColor);
-        table.getModel().setValueAt(selectedColor, row, col);    // shouldn't need this
+        // shouldn't need this
+        table.getModel().setValueAt(selectedColor, row, col);
 
         return cellRenderer_.getTableCellRendererComponent(table, selectedColor, true, isSelected, row, col);
     }

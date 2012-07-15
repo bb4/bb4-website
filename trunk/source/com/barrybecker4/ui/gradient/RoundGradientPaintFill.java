@@ -1,4 +1,4 @@
-package com.barrybecker4.java2d.gradient;
+package com.barrybecker4.ui.gradient;
 
 import com.barrybecker4.ui.application.ApplicationFrame;
 

@@ -32,20 +32,18 @@ public class ColorInputPanel extends JPanel
         colorButton.setToolTipText( toolTip );
 
         colorButton.addActionListener(
-                new ActionListener()
-                {
-                    public void actionPerformed( ActionEvent evt )
-                    {
-                        Object source = evt.getSource();
-                        if ( source == colorButton ) {
-                            Color selectedColor = JColorChooser.showDialog( colorButton, label, colorButton.getBackground() );
-                            colorButton.setBackground( selectedColor );
-                            if (actionListener_ !=null) {
-                                actionListener_.actionPerformed(evt);
-                            }
+            new ActionListener() {
+                public void actionPerformed( ActionEvent evt ) {
+                    Object source = evt.getSource();
+                    if ( source == colorButton ) {
+                        Color selectedColor = JColorChooser.showDialog( colorButton, label, colorButton.getBackground() );
+                        colorButton.setBackground( selectedColor );
+                        if (actionListener_ !=null) {
+                            actionListener_.actionPerformed(evt);
                         }
                     }
-                } );
+                }
+            } );
         this.add(colorButton);
     }
 

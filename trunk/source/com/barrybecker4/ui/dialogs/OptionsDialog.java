@@ -17,8 +17,8 @@ public abstract class OptionsDialog extends AbstractDialog
     public static final String COLON = " : ";
 
     /**
-     *  constructor  (use this constructor if possible)
-     *  @param parent the parent component so we know how to place ourselves
+     * Constructor  (use this constructor if possible)
+     * @param parent the parent component so we know how to place ourselves
      */
     public OptionsDialog( Component parent ) {
         super( parent );

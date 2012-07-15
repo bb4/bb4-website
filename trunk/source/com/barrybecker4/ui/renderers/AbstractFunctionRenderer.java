@@ -35,7 +35,6 @@ public abstract class AbstractFunctionRenderer {
     public void setSize(int width, int height) {
         width_ = width;
         height_ = height;
-        int maxNumLabels_ = width_ / maxLabelWidth_;
     }
 
     public void setPosition(int xOffset, int yOffset) {

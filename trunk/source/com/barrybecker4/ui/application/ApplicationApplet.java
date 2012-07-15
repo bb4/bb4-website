@@ -34,7 +34,7 @@ public abstract class ApplicationApplet extends JApplet{
     }
 
     /**
-     * create and initialize the puzzle
+     * create and initialize the application
      * (init required for applet)
      */
     protected abstract JPanel createMainPanel();

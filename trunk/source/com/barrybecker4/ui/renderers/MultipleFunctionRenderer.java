@@ -20,11 +20,11 @@ public class MultipleFunctionRenderer extends AbstractFunctionRenderer {
 
     /**
      * Constructor that assumes no scaling.
-     * @param funcs the functions to plot.
+     * @param functions the functions to plot.
      * @param lineColors line colors corresponding to functions
      */
-    public MultipleFunctionRenderer(List<Function> funcs, List<Color> lineColors) {
-        functions_ = funcs;
+    public MultipleFunctionRenderer(List<Function> functions, List<Color> lineColors) {
+        functions_ = functions;
         lineColors_ = lineColors;
         assert functions_.size() == lineColors_.size() :
                 "There must be as many line colors as functions";
