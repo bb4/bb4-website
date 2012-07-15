@@ -7,6 +7,7 @@ import com.barrybecker4.simulation.common.ui.Simulator;
 import com.barrybecker4.simulation.common.ui.SimulatorOptionsDialog;
 import com.barrybecker4.simulation.graphing.GraphOptionsDialog;
 import com.barrybecker4.simulation.habitat.creatures.Populations;
+import com.barrybecker4.simulation.habitat.creatures.SerengetiPopulations;
 import com.barrybecker4.simulation.habitat.creatures.SinglePopulation;
 import com.barrybecker4.simulation.habitat.options.DynamicOptions;
 import com.barrybecker4.ui.animation.AnimationFrame;
@@ -36,7 +37,7 @@ public class HabitatSimulator extends Simulator {
 
         super("Habitat Simulation");
         setBackground(Color.WHITE);
-        populations = new SinglePopulation();
+        populations = new SerengetiPopulations();
         initialize();
     }
 

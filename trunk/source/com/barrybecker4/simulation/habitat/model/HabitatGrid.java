@@ -38,16 +38,20 @@ public class HabitatGrid {
     }
 
     public List<Cell> getNeighborCells(Cell cell) {
-         List<Cell> nbrCells = new ArrayList<Cell>(8);
+        List<Cell> nbrCells = new ArrayList<Cell>(8);
 
-        nbrCells.add(cells[getSafeX(cell.xIndex -1)][getSafeY(cell.yIndex -1)]);
-        nbrCells.add(cells[getSafeX(cell.xIndex -1)][cell.yIndex]);
-        nbrCells.add(cells[getSafeX(cell.xIndex -1)][getSafeY(cell.yIndex +1)]);
-        nbrCells.add(cells[cell.xIndex][getSafeY(cell.yIndex -1)]);
-        nbrCells.add(cells[cell.xIndex][getSafeY(cell.yIndex +1)]);
-        nbrCells.add(cells[getSafeX(cell.xIndex +1)][getSafeY(cell.yIndex -1)]);
-        nbrCells.add(cells[getSafeX(cell.xIndex +1)][cell.yIndex]);
-        nbrCells.add(cells[getSafeX(cell.xIndex +1)][getSafeY(cell.yIndex +1)]);
+        int xm1 = getSafeX(cell.xIndex - 1);
+        int xp1 = getSafeX(cell.xIndex + 1);
+        int ym1 = getSafeY(cell.yIndex - 1);
+        int yp1 = getSafeY(cell.yIndex + 1);
+        nbrCells.add(cells[xm1][ym1]);
+        nbrCells.add(cells[xm1][cell.yIndex]);
+        nbrCells.add(cells[xm1][yp1]);
+        nbrCells.add(cells[cell.xIndex][ym1]);
+        nbrCells.add(cells[cell.xIndex][yp1]);
+        nbrCells.add(cells[xp1][ym1]);
+        nbrCells.add(cells[xp1][cell.yIndex]);
+        nbrCells.add(cells[xp1][yp1]);
 
         return nbrCells;
     }
