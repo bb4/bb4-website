@@ -8,8 +8,8 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
-public class Utilities
-{
+public class Utilities {
+
     private Utilities() {}
 
     private static final Component sComponent = new Component()
@@ -25,8 +25,7 @@ public class Utilities
      * @param image image to load
      * @return true when the image has been loaded.
      */
-    public static boolean waitForImage( Image image )
-    {
+    public static boolean waitForImage( Image image ) {
         int id;
         synchronized (sComponent) {
             id = sID++;
@@ -37,26 +36,22 @@ public class Utilities
         } catch (InterruptedException ie) {
             return false;
         }
-        if ( sTracker.isErrorID( id ) ) return false;
-        return true;
+        return !sTracker.isErrorID(id);
     }
 
-    public static Image blockingLoad( String path )
-    {
+    public static Image blockingLoad( String path ) {
         Image image = Toolkit.getDefaultToolkit().getImage( path );
         if ( !waitForImage(image) ) return null;
         return image;
     }
 
-    public static Image blockingLoad( URL url )
-    {
+    public static Image blockingLoad( URL url ) {
         Image image = Toolkit.getDefaultToolkit().getImage( url );
         if ( !waitForImage(image) ) return null;
         return image;
     }
 
-    public static BufferedImage makeBufferedImage( Image image )
-    {
+    public static BufferedImage makeBufferedImage( Image image ) {
         System.out.println( "image="+image );
         if (image==null)  {
             System.out.println( "Warning image is null" );
@@ -66,8 +61,7 @@ public class Utilities
         return makeBufferedImage( image, BufferedImage.TYPE_INT_ARGB );
     }
 
-    public static BufferedImage makeBufferedImage( Image image, int imageType )
-    {
+    public static BufferedImage makeBufferedImage( Image image, int imageType ) {
         if ( !waitForImage(image) ) return null;
 
         BufferedImage bufferedImage = new BufferedImage(
@@ -84,13 +78,10 @@ public class Utilities
     }
 
 
-    public static Frame getNonClearingFrame( String name, Component c )
-    {
-        final Frame f = new Frame( name )
-        {
+    public static Frame getNonClearingFrame( String name, Component c ) {
+        final Frame f = new Frame( name ) {
             @Override
-            public void update( Graphics g )
-            {
+            public void update( Graphics g ) {
                 paint( g );
             }
         };
@@ -98,11 +89,9 @@ public class Utilities
         centerFrame( f );
         f.setLayout( new BorderLayout() );
         f.add( c, BorderLayout.CENTER );
-        f.addWindowListener( new WindowAdapter()
-        {
+        f.addWindowListener( new WindowAdapter() {
             @Override
-            public void windowClosing( WindowEvent e )
-            {
+            public void windowClosing( WindowEvent e ) {
                 f.dispose();
             }
         } );
@@ -110,8 +99,7 @@ public class Utilities
     }
 
     public static void sizeContainerToComponent( Container container,
-                                                 Component component )
-    {
+                                                 Component component ) {
         if ( !container.isDisplayable() ) container.addNotify();
         Insets insets = container.getInsets();
         Dimension size = component.getPreferredSize();
@@ -120,8 +108,7 @@ public class Utilities
         container.setSize( width, height );
     }
 
-    public static void centerFrame( Frame f )
-    {
+    public static void centerFrame( Frame f ) {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension d = f.getSize();
         int x = (screen.width - d.width) >> 1;

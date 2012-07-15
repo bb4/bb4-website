@@ -12,7 +12,7 @@ import java.net.URL;
 
 
 /**
- * FormatUtil methods for playing sound files.
+ * Static methods for playing sound files.
  * @author Barry Becker
  */
 public final class SoundUtil {
@@ -48,7 +48,7 @@ public final class SoundUtil {
     }
 
      /**
-     * This converts the file to something that jav can paly.
+     * This converts the file to something that jav can play.
      * wav, aiff, and au files should work, but currently only au seem to.
      * @param clipURL
      */
@@ -63,7 +63,6 @@ public final class SoundUtil {
         Thread t = new Thread(playSoundTask);
         t.start();
     }
-
 
     /**
      * This converts the file to something that jav can paly.

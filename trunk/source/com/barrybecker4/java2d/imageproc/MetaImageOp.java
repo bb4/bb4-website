@@ -4,6 +4,9 @@ import com.barrybecker4.optimization.parameter.types.BooleanParameter;
 import com.barrybecker4.optimization.parameter.types.Parameter;
 
 import java.awt.image.BufferedImageOp;
+import java.lang.IllegalAccessException;
+import java.lang.IllegalArgumentException;
+import java.lang.NoSuchMethodException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -37,7 +40,7 @@ public class MetaImageOp {
 
     /**
      * Use this constructor if no parameters.
-     * @param opClass
+     * @param op image operator
      */
     public MetaImageOp(BufferedImageOp op) {
         // an empty list of parameters because there are none.
@@ -59,8 +62,7 @@ public class MetaImageOp {
     /**
      * @return a concrete filter operator instance.
      */
-    public  BufferedImageOp getInstance()
-    {
+    public  BufferedImageOp getInstance() {
         return getRandomInstance(0);
     }
 
@@ -68,8 +70,7 @@ public class MetaImageOp {
      * @param randomVariance number of standard deviations to use when randomizing params.
      * @return a concrete instance with tweaked parameters.
      */
-    public  BufferedImageOp getRandomInstance(float randomVariance)
-    {
+    public  BufferedImageOp getRandomInstance(float randomVariance) {
         if (!isDynamic) {
             return op;
         }
@@ -105,10 +106,10 @@ public class MetaImageOp {
      * Call the methods on the filter to set its custom parameters.
      * @param filter
      * @param randomVariance
-     * @throws java.lang.NoSuchMethodException
-     * @throws java.lang.IllegalAccessException
-     * @throws java.lang.IllegalArgumentException
-     * @throws java.lang.reflect.InvocationTargetException
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws InvocationTargetException
      */
     private synchronized List<Parameter> tweakParameters(BufferedImageOp filter, float randomVariance)
             throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
@@ -141,7 +142,7 @@ public class MetaImageOp {
                 args[0] = (int) param.getValue();
             }
             else if (paramType.equals(boolean.class)) {
-                args[0] = ((BooleanParameter)param).getNaturalValue();
+                args[0] = param.getNaturalValue();
             }
             else if (paramType.equals(String.class)) {
                 args[0] = param.getNaturalValue();
@@ -150,7 +151,6 @@ public class MetaImageOp {
                 throw new IllegalArgumentException("Unexpected param type = "+paramType);
             }
 
-            //System.out.println("arg="+args[0] + " type="+args[0].getClass().getName() +" v="+p.getValue());
             method.invoke(filter, args); // p.getInformation().cast(p.getValue()));
         }
         return newParams;

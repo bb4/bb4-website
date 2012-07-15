@@ -31,11 +31,10 @@ import java.util.Map;
  *  - Brian big hair took 106 seconds to run caustics
  */
 public class ImageBreederApplet extends ApplicationApplet
-                                implements ItemListener,
-                                            ActionListener,
-        ImageSelectionListener,
-                                            SliderChangeListener
-{
+                             implements ItemListener,
+                                        ActionListener,
+                                        ImageSelectionListener,
+                                        SliderChangeListener {
     private static int NUM_CHILD_IMAGES = 20;
     private static float DEFAULT_VARIANCE = 0.2f;
     private float variance = DEFAULT_VARIANCE;
@@ -67,8 +66,7 @@ public class ImageBreederApplet extends ApplicationApplet
     /**
      * constructor
      */
-    public ImageBreederApplet()
-    {
+    public ImageBreederApplet() {
         GUIUtil.setStandAlone(true);
         operations = new ProcessingOperators();
         createImageFrame(IMAGE_DIR + DEFAULT_IMAGE);
@@ -78,8 +76,7 @@ public class ImageBreederApplet extends ApplicationApplet
      * constructor
      * @param imageFile
      */
-    public ImageBreederApplet( String imageFile )
-    {
+    public ImageBreederApplet( String imageFile ) {
         operations = new ProcessingOperators();
         createImageFrame( imageFile );
     }
@@ -88,8 +85,7 @@ public class ImageBreederApplet extends ApplicationApplet
      * The generated images are shown in a separate window.
      * @param imageFile
      */
-    private void createImageFrame( String imageFile )
-    {
+    private void createImageFrame( String imageFile ) {
         currentImage = GUIUtil.getBufferedImage(imageFile);
 
         // also create image list panel
@@ -106,8 +102,8 @@ public class ImageBreederApplet extends ApplicationApplet
         mImageListFrame.setVisible( true );
     }
 
-    protected JPanel createMainPanel()
-    {
+    @Override
+    protected JPanel createMainPanel() {
         filterList = operations.getSortedKeys();
         // When an item is selected, do the corresponding transformation.
         filterList.addItemListener(this);
@@ -304,7 +300,7 @@ public class ImageBreederApplet extends ApplicationApplet
     }
 
     /**
-     * Make the parameters setting smatch the last selected image.
+     * Make the parameters setting match the last selected image.
      * @param img
      */
     public void imageSelected(BufferedImage img) {
@@ -315,8 +311,7 @@ public class ImageBreederApplet extends ApplicationApplet
     }
 
 
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         String imageFile = IMAGE_DIR + DEFAULT_IMAGE;
         if ( args.length > 0 && !args[0].equals("imagebreeder") )  {
             imageFile = args[0];

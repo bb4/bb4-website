@@ -20,49 +20,41 @@ import java.util.Map;
 /**
  * A set of  available image processing operations.
  */
-public class ProcessingOperators
-{
+public class ProcessingOperators {
 
     private Map<String, MetaImageOp> mOps;
 
-    public ProcessingOperators()
-    {
+    public ProcessingOperators() {
         createOps();
     }
 
-    public Map getOperationsMap()
-    {
+    public Map getOperationsMap() {
         return mOps;
     }
 
-    public MetaImageOp getOperation(String key)
-    {
+    public MetaImageOp getOperation(String key) {
         return mOps.get(key);
     }
 
-    public java.awt.List getSortedKeys()
-    {
+    public java.awt.List getSortedKeys() {
         // Make a sorted list of the operators.
-        java.util.List<String> names = new java.util.ArrayList<String>();
+        List<String> names = new ArrayList<String>();
         names.addAll(mOps.keySet());
 
         Collections.sort( names );
         final java.awt.List list = new java.awt.List();
-        for ( int i = 0; i < names.size(); i++ )
-            list.add( names.get( i ) );
+        for (String name : names) list.add(name);
         return list;
     }
 
-    private void createOps()
-    {
+    private void createOps() {
         mOps = new HashMap<String, MetaImageOp>();
         createConvolutions();
         createColorOps();
         createJHLabsOps();
     }
 
-    private void createConvolutions()
-    {
+    private void createConvolutions() {
         float ninth = 1.0f / 9.0f;
         float[] blurKernel = {
             ninth, ninth, ninth,
