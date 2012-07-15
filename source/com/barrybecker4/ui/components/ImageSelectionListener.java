@@ -9,7 +9,7 @@ import java.util.EventListener;
  *
  * @author Barry Becker
  */
-public interface ImageSelectionListener extends EventListener
-{
+public interface ImageSelectionListener extends EventListener {
+
     void imageSelected(BufferedImage img);
 }

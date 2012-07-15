@@ -8,7 +8,7 @@ import java.awt.*;
 
 /**
  * A color swatch and r,g,b sliders to control its color.
- * @author Barry Becker Date: Jul 16, 2006
+ * @author Barry Becker
  */
 public class ColorSliderGroup extends JPanel implements ChangeListener {
 
@@ -49,13 +49,8 @@ public class ColorSliderGroup extends JPanel implements ChangeListener {
         blueSlider_ = new JSlider( JSlider.HORIZONTAL, 0, 255, 0 );
         blueSlider_.addChangeListener( this );
 
-        JPanel swatchPanel = new JPanel(new BorderLayout());
         swatch_ = new JPanel();
-        //swatch_.setBackground( PathColor.white );
-        //swatch_.setMaximumSize(new Dimension(60, 20));
-        //swatch_.setPreferredSize(new Dimension(60, 20));
         swatch_.setBorder(BorderFactory.createMatteBorder(2,20,2,20, this.getBackground()));
-
 
         add( swatch_ );
         add( redPanel );
@@ -77,7 +72,6 @@ public class ColorSliderGroup extends JPanel implements ChangeListener {
 
     public void setColorChangeListener(ColorChangeListener listener) {
         colorListener_ = listener;
-        //colorListener_.colorChanged();
         updateSwatch();
     }
 

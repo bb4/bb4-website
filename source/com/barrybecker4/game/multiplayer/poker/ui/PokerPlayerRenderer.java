@@ -9,7 +9,7 @@ import com.barrybecker4.game.multiplayer.poker.PokerPlayerMarker;
 import com.barrybecker4.game.multiplayer.poker.PokerTable;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
-import com.barrybecker4.java2d.gradient.RoundGradientPaint;
+import com.barrybecker4.ui.gradient.RoundGradientPaint;
 import com.barrybecker4.ui.util.GUIUtil;
 
 import java.awt.*;

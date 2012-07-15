@@ -13,8 +13,8 @@ import java.awt.event.KeyListener;
  *
  * @author Barry Becker
  */
-public class NumberInput extends JPanel
-{
+public class NumberInput extends JPanel {
+
     private JTextField numberField_;
     private double initialValue_;
     private double min_;
@@ -26,8 +26,7 @@ public class NumberInput extends JPanel
      * This uses a default of 0 until the real default can be set with setInitialValue.
      * @param labelText label for the number input element
      */
-    public NumberInput( String labelText)
-    {
+    public NumberInput( String labelText) {
        this( labelText, 0, null, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
     }
 
@@ -35,13 +34,11 @@ public class NumberInput extends JPanel
      * @param labelText label for the number input element
      * @param initialValue the value to use if nothing else if entered. shows in the ui.
      */
-    public NumberInput( String labelText, int initialValue )
-    {
+    public NumberInput( String labelText, int initialValue ) {
        this( labelText, initialValue, null, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
     }
 
-    public NumberInput( String labelText, double initialValue )
-    {
+    public NumberInput( String labelText, double initialValue ) {
        this( labelText, initialValue, null, -Double.MAX_VALUE, Double.MAX_VALUE, false);
     }
 
@@ -51,8 +48,7 @@ public class NumberInput extends JPanel
      * @param toolTip the tooltip for the whole panel
      */
     public NumberInput( String labelText, double initialValue, String toolTip,
-                        double minAllowed, double maxAllowed, boolean integerOnly )
-    {
+                        double minAllowed, double maxAllowed, boolean integerOnly ) {
 
         initialValue_ = initialValue;
         setMin(minAllowed);

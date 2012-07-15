@@ -7,7 +7,6 @@ import java.io.FilenameFilter;
 /**
  * Shows files with filter that is passed to the constructor.
  *
- * Created on May 28, 2007, 6:02 AM
  * @author Barry Becker
  */
 public class GenericFileFilter implements FilenameFilter {
@@ -29,9 +28,8 @@ public class GenericFileFilter implements FilenameFilter {
         return (name.contains(pattern_));
     }
 
-
     /**
-     * @param pattern
+     * @param pattern find files that match this pattern.
      * @return all the files matching the supplied pattern in the specified directory
      */
     public static String[] getFilesMatching(String directory, String pattern) {

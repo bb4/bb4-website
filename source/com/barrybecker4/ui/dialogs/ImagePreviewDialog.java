@@ -13,11 +13,11 @@ import java.awt.image.BufferedImage;
  * @author Barry Becker
  */
 public class ImagePreviewDialog extends AbstractDialog
-                                                  implements ActionListener {
+                                implements ActionListener {
 
     private BufferedImage image_;
 
-
+    /** Constructor */
     public ImagePreviewDialog(BufferedImage img) {
 
         image_ = img;
@@ -28,6 +28,7 @@ public class ImagePreviewDialog extends AbstractDialog
     }
 
 
+    @Override
     protected JComponent createDialogContent() {
         JPanel mainPanel = new JPanel(new BorderLayout());
 
@@ -46,7 +47,7 @@ public class ImagePreviewDialog extends AbstractDialog
     }
 
     /**
-     *  create the buttons that go at the botton ( eg OK, Cancel, ...)
+     *  create the buttons that go at the bottom ( eg OK, Cancel, ...)
      */
     protected  JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );

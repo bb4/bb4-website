@@ -108,6 +108,6 @@ public class HabitatSimulator extends Simulator {
         final HabitatSimulator sim = new HabitatSimulator();
 
         sim.setPaused(true);
-        JFrame f = new AnimationFrame( sim );
+        new AnimationFrame( sim );
     }
 }

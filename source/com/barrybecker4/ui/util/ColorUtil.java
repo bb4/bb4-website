@@ -16,13 +16,13 @@ public final class ColorUtil
     /**
      * gets a color from a hexadecimal string like "AABBCC"
      * or "AABBCCDD". The DD in this case gives the opacity value
-     * if only rgb are given, then FF is asumed for the opacity
+     * if only rgb are given, then FF is assumed for the opacity
      * @param sColor color to convert
      * @param defaultColor  color to use if sColor has a problem
      * @return the color object
      */
     public static Color getColorFromHTMLColor(String sColor, Color defaultColor) {
-        if (sColor==null || sColor.length()<6 || sColor.length()>8)
+        if (sColor == null || sColor.length() < 6 || sColor.length() > 8)
             return defaultColor;
 
         long intColor;
@@ -49,8 +49,7 @@ public final class ColorUtil
      * The DD in this case gives the opacity value
      * @return html color
      */
-    public static String getHTMLColorFromColor(Color color)
-    {
+    public static String getHTMLColorFromColor(Color color) {
         int intval = color.getRGB();
         intval -= 0xFF000000;
         //System.out.println("NodePres getString from PathColor = "+Integer.toHexString(intval).toUpperCase());
@@ -58,13 +57,11 @@ public final class ColorUtil
     }
 
 
-    public static Color invertColor(Color cColor)
-    {
+    public static Color invertColor(Color cColor) {
         return invertColor(cColor, 255);
     }
 
-    public static Color invertColor(Color cColor, int trans)
-    {
+    public static Color invertColor(Color cColor, int trans) {
         return new Color( 255-cColor.getRed(), 255-cColor.getGreen(), 255-cColor.getBlue(), trans);
     }
 
@@ -73,8 +70,7 @@ public final class ColorUtil
      * @param color
      * @return the hue (in HSB space) for a given color.
      */
-    public static float getColorHue(Color color)
-    {
+    public static float getColorHue(Color color) {
         float[] hsv = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
         return hsv[0];
     }

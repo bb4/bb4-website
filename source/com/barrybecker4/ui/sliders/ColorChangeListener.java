@@ -4,7 +4,7 @@ package com.barrybecker4.ui.sliders;
 import java.awt.*;
 
 /**
- * @author Barry Becker Date: Jul 16, 2006
+ * @author Barry Becker
  */
 public interface ColorChangeListener {
 

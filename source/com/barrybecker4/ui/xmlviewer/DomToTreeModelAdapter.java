@@ -10,105 +10,106 @@ import javax.swing.tree.TreePath;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This adapter converts the current Document (a DOM) into
+ * a JTree model.
+ */
+public class DomToTreeModelAdapter implements TreeModel {
+
+    private Document document_;
+
+    private List<TreeModelListener> listenerList_ = new LinkedList<TreeModelListener>();
+
+
+    public DomToTreeModelAdapter(Document document) {
+      document_ = document;
+    }
+
+    // Basic TreeModel operations
+    public Object  getRoot() {
+      return new AdapterNode(document_);
+    }
+
     /**
-     * This adapter converts the current Document (a DOM) into
-     * a JTree model.
+     * Determines whether the icon shows up to the left.
+     * @param aNode
+     * @return  true for any node with no children
      */
-    public class DomToTreeModelAdapter implements TreeModel
-    {
+    public boolean isLeaf(Object aNode) {
+      AdapterNode node = (AdapterNode) aNode;
+      return node.childCount() <= 0;
+    }
 
-      private Document document_;
+    public int getChildCount(Object parent) {
+    AdapterNode node = (AdapterNode) parent;
+    return node.childCount();
+    }
 
-      private List<TreeModelListener> listenerList_ = new LinkedList<TreeModelListener>();
+    public Object getChild(Object parent, int index) {
+    AdapterNode node = (AdapterNode) parent;
+    return node.child(index);
+    }
 
+    public int getIndexOfChild(Object parent, Object child) {
+    AdapterNode node = (AdapterNode) parent;
+    return node.index((AdapterNode) child);
+    }
 
-      public DomToTreeModelAdapter(Document document) {
-          document_ = document;
-      }
+    /**
+     * We won't be making changes in the GUI
+     * If we did, we would ensure the new value was really new,
+     * adjust the model, and then fire a TreeNodesChanged event.
+     * @param path
+     * @param newValue
+     */
+    public void valueForPathChanged(TreePath path, Object newValue) {}
 
-      // Basic TreeModel operations
-      public Object  getRoot() {
-        //System.err.println("Returning root: " +document);
-        return new AdapterNode(document_);
-      }
-
-      public boolean isLeaf(Object aNode) {
-        // Determines whether the icon shows up to the left.
-        // Return true for any node with no children
-        AdapterNode node = (AdapterNode) aNode;
-        if (node.childCount() > 0) return false;
-        return true;
-      }
-
-      public int getChildCount(Object parent) {
-        AdapterNode node = (AdapterNode) parent;
-        return node.childCount();
-      }
-
-      public Object getChild(Object parent, int index) {
-        AdapterNode node = (AdapterNode) parent;
-        return node.child(index);
-      }
-
-      public int getIndexOfChild(Object parent, Object child) {
-        AdapterNode node = (AdapterNode) parent;
-        return node.index((AdapterNode) child);
-      }
-
-      public void valueForPathChanged(TreePath path, Object newValue) {
-        // Null. We won't be making changes in the GUI
-        // If we did, we would ensure the new value was really new,
-        // adjust the model, and then fire a TreeNodesChanged event.
-      }
-
-      /*
-       * Use these methods to add and remove event listeners.
-       * (Needed to satisfy TreeModel interface, but not used.)
-       */
-
-      public void addTreeModelListener(TreeModelListener listener) {
-        if ( listener != null
-        && ! listenerList_.contains( listener ) ) {
+    /*
+     * Use these methods to add and remove event listeners.
+     * (Needed to satisfy TreeModel interface, but not used.)
+     */
+    public void addTreeModelListener(TreeModelListener listener) {
+        if ( listener != null  && ! listenerList_.contains( listener ) ) {
            listenerList_.add( listener );
         }
-      }
+    }
 
-      public void removeTreeModelListener(TreeModelListener listener) {
+    public void removeTreeModelListener(TreeModelListener listener) {
         if ( listener != null ) {
            listenerList_.remove( listener );
         }
-      }
+    }
 
-      /*
-       * Invoke these methods to inform listeners of changes.
-       * (Not needed for this example.)
-       * Methods taken from TreeModelSupport class described at
-       *   http://java.sun.com/products/jfc/tsc/articles/jtree/index.html
-       * That architecture (produced by Tom Santos and Steve Wilson)
-       * is more elegant. I just hacked 'em in here so they are
-       * immediately at hand.
-       */
-      public void fireTreeNodesChanged( TreeModelEvent e ) {
+    /**
+     * Invoke these methods to inform listeners of changes.
+     * (Not needed for this example.)
+     * Methods taken from TreeModelSupport class described at
+     *   http://java.sun.com/products/jfc/tsc/articles/jtree/index.html
+     * That architecture (produced by Tom Santos and Steve Wilson)
+     * is more elegant. I just hacked 'em in here so they are
+     * immediately at hand.
+     */
+    public void fireTreeNodesChanged( TreeModelEvent e ) {
         for ( TreeModelListener listener : listenerList_ ) {
           listener.treeNodesChanged( e );
         }
-      }
+    }
 
-      public void fireTreeNodesInserted( TreeModelEvent e ) {
+    public void fireTreeNodesInserted( TreeModelEvent e ) {
         for ( TreeModelListener listener : listenerList_ ) {
           listener.treeNodesInserted( e );
         }
-      }
+    }
 
-      public void fireTreeNodesRemoved( TreeModelEvent e ) {
+    public void fireTreeNodesRemoved( TreeModelEvent e ) {
         for ( TreeModelListener listener : listenerList_ ) {
           listener.treeNodesRemoved( e );
         }
-      }
+    }
 
-      public void fireTreeStructureChanged( TreeModelEvent e ) {
+    public void fireTreeStructureChanged( TreeModelEvent e ) {
         for ( TreeModelListener listener : listenerList_ ) {
           listener.treeStructureChanged( e );
         }
-      }
     }
+}

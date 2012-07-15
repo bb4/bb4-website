@@ -8,7 +8,7 @@ import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
 /**
- * Miscelaneous commonly used file chooser related utility methods.
+ * Miscellaneous commonly used file chooser related utility methods.
  * @author Barry Becker
  */
 public final class FileChooserUtil {

@@ -7,7 +7,7 @@ import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.common.ui.viewer.GamePieceRenderer;
 import com.barrybecker4.game.multiplayer.galactic.Galaxy;
 import com.barrybecker4.game.multiplayer.galactic.Planet;
-import com.barrybecker4.java2d.gradient.RoundGradientPaint;
+import com.barrybecker4.ui.gradient.RoundGradientPaint;
 import com.barrybecker4.ui.util.GUIUtil;
 
 import java.awt.*;

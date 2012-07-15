@@ -13,51 +13,53 @@ import java.awt.event.MouseEvent;
  *
  * @author Barry Becker
  */
-public final class SplashScreen extends JWindow
-{
+public final class SplashScreen extends JWindow {
 
-    /** Constructor
+    /**
+     * Constructor
      * @param image image to show in a borderless window
-     * @param f owning frame (may be null)
+     * @param frame owning frame (may be null)
      * @param waitTime time to wait in milliseconds before closing the splash screen
      */
-    public SplashScreen( Icon image, Frame f, int waitTime )
-    {
-        super( f );
-        JLabel label = new JLabel( image );
-        label.setBorder( BorderFactory.createRaisedBevelBorder() );
-        getContentPane().add( label, BorderLayout.CENTER );
-        pack();
-        Dimension screenSize =
-                Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension labelSize = label.getPreferredSize();
-        setLocation( (screenSize.width >> 1) - (labelSize.width >> 1),
-                (screenSize.height >> 1) - (labelSize.height >> 1) );
-        addMouseListener( new MouseAdapter()
-        {
+    public SplashScreen( Icon image, Frame frame, int waitTime ) {
+        super( frame );
+
+        addLabel(image);
+
+        Thread splashThread = createSplashThread(waitTime);
+
+        setVisible( true );
+        splashThread.start();
+    }
+
+    /**
+     * Shows the splash screen until the user clicks on it.
+     * @param waitTime time to wait before auto dismissing if the user has not clicked.
+     * @return the thread taht will show the splash
+     */
+    private Thread createSplashThread(int waitTime) {
+        addMouseListener( new MouseAdapter() {
             @Override
-            public void mousePressed( MouseEvent e )
-            {
+            public void mousePressed( MouseEvent e ) {
                 setVisible( false );
                 dispose();
             }
         } );
+
         final int pause = waitTime;
-        final Runnable closerRunner = new Runnable()
-        {
+        final Runnable closerRunner = new Runnable()  {
             public void run()
             {
                 setVisible( false );
                 dispose();
             }
         };
-        Runnable waitRunner = new Runnable()
-        {
-            public void run()
-            {
+
+        Runnable waitRunner = new Runnable() {
+            public void run() {
                 try {
                     Thread.sleep( pause );
-                    SwingUtilities.invokeAndWait( closerRunner );
+                    SwingUtilities.invokeAndWait(closerRunner);
                 } catch (Exception e) {
                     e.printStackTrace();
                     // can catch InvocationTargetException
@@ -65,9 +67,21 @@ public final class SplashScreen extends JWindow
                 }
             }
         };
-        setVisible( true );
-        Thread splashThread = new Thread( waitRunner, "SplashThread" );
-        splashThread.start();
+
+        return new Thread( waitRunner, "SplashThread" );
+    }
+
+    private void addLabel(Icon image) {
+        JLabel label = new JLabel( image );
+        label.setBorder( BorderFactory.createRaisedBevelBorder() );
+        getContentPane().add( label, BorderLayout.CENTER );
+        pack();
+
+        Dimension screenSize =
+                Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension labelSize = label.getPreferredSize();
+        setLocation( (screenSize.width >> 1) - (labelSize.width >> 1),
+                (screenSize.height >> 1) - (labelSize.height >> 1) );
     }
 }
 

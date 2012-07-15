@@ -8,13 +8,13 @@ import javax.swing.table.TableColumn;
 
 /**
  * Meta data information about a column in a Table.
- * @author Barry Becker Date: Jan 13, 2007
+ * @author Barry Becker
  */
 public class TableColumnMeta {
 
-    // name of the column
+    /** name of the column */
     private String name_;
-    // mouse over tip (optional)
+    /** mouse over tip (optional)   */
     private String tooltip_;
     private Integer minWidth_;
     private Integer preferredWidth_;

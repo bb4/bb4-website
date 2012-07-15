@@ -7,6 +7,7 @@ import org.w3c.dom.NamedNodeMap;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
@@ -21,58 +22,46 @@ import java.io.File;
 /**
  * Graphically view some XML document in a swing UI.
  */
-public class DomEcho  extends JPanel
-{
+public class DomEcho  extends JPanel {
+
     private static final int WINDOW_HEIGHT = 460;
     private static final int LEFT_WIDTH = 300;
     private static final int RIGHT_WIDTH = 340;
     private static final int WINDOW_WIDTH = LEFT_WIDTH + RIGHT_WIDTH;
 
-    public DomEcho(Document document)
-    {
-       // Make a nice border
-       EmptyBorder eb = new EmptyBorder(5,5,5,5);
-       BevelBorder bb = new BevelBorder(BevelBorder.LOWERED);
-       CompoundBorder cb = new CompoundBorder(eb,bb);
-       this.setBorder(new CompoundBorder(cb,eb));
+    public DomEcho(Document document) {
 
-       // Set up the tree
-       JTree tree = new JTree(new DomToTreeModelAdapter(document));
+        this.setBorder(createBorder());
 
-       // Iterate over the tree and make nodes visible
-       // (Otherwise, the tree shows up fully collapsed)
-       //TreePath nodePath = ???;
-       //  tree.expandPath(nodePath);
+        JTree tree = new JTree(new DomToTreeModelAdapter(document));
 
-       // Build left-side view
-       JScrollPane treeView = new JScrollPane(tree);
-       treeView.setPreferredSize(
+        // Left-side view
+        JScrollPane treeView = new JScrollPane(tree);
+        treeView.setPreferredSize(
            new Dimension( LEFT_WIDTH, WINDOW_HEIGHT ));
 
-       // Build right-side view
-       // (must be final to be referenced in inner class)
-       final
-       JEditorPane htmlPane = new JEditorPane();//"text/html","");
-       htmlPane.setEditable(false);
-       JScrollPane htmlView = new JScrollPane(htmlPane);
-       htmlView.setPreferredSize(
+        // Right-side view
+        final JEditorPane htmlPane = new JEditorPane();
+        htmlPane.setEditable(false);
+        JScrollPane htmlView = new JScrollPane(htmlPane);
+        htmlView.setPreferredSize(
            new Dimension( RIGHT_WIDTH, WINDOW_HEIGHT ));
 
-       // Wire the two views together. Use a selection listener
-       // created with an anonymous inner-class adapter.
-       tree.addTreeSelectionListener(
-         new TreeSelectionListener() {
-           public void valueChanged(TreeSelectionEvent e) {
-             TreePath p = e.getNewLeadSelectionPath();
-             if (p != null) {
-                 AdapterNode adpNode =
-                    (AdapterNode) p.getLastPathComponent();
-                 NamedNodeMap attribMap = adpNode.getDomNode().getAttributes();
-                 String attribs = DomUtil.getAttributeList(attribMap);
+        // Wire the two views together. Use a selection listener
+        // created with an anonymous inner-class adapter.
+        tree.addTreeSelectionListener(
+           new TreeSelectionListener() {
+               public void valueChanged(TreeSelectionEvent e) {
+                 TreePath p = e.getNewLeadSelectionPath();
+                 if (p != null) {
+                     AdapterNode adpNode =
+                        (AdapterNode) p.getLastPathComponent();
+                     NamedNodeMap attribMap = adpNode.getDomNode().getAttributes();
+                     String attribs = DomUtil.getAttributeList(attribMap);
 
-                 htmlPane.setText(attribs);
-             }
-           }
+                     htmlPane.setText(attribs);
+                 }
+               }
          }
        );
 
@@ -89,7 +78,16 @@ public class DomEcho  extends JPanel
        // Add GUI components
        this.setLayout(new BorderLayout());
        this.add("Center", splitPane );
-    } // constructor
+    }
+
+    /** Make a nice border */
+    private Border createBorder() {
+
+        EmptyBorder eb = new EmptyBorder(5,5,5,5);
+        BevelBorder bb = new BevelBorder(BevelBorder.LOWERED);
+        CompoundBorder cb = new CompoundBorder(eb,bb);
+        return new CompoundBorder(cb,eb);
+    }
 
 
     public static void makeFrame(Document document) {
@@ -114,12 +112,11 @@ public class DomEcho  extends JPanel
                           (screenSize.height >> 1) - (h >> 1));
         frame.setSize(w, h);
         frame.setVisible(true);
-    } // makeFrame
+    }
 
+    /** for testing */
+    public static void main(String argv[]) {
 
-    // -------------------------------------------------------------------------
-    public static void main(String argv[])
-    {
         Document document;
         if (argv.length < 1) {
             document = DomUtil.buildDom();
@@ -129,6 +126,6 @@ public class DomEcho  extends JPanel
             document = DomUtil.parseXMLFile(file);
         }
         makeFrame(document);
-    } // main
+    }
 
 }

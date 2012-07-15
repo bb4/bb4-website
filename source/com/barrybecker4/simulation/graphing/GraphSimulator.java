@@ -70,6 +70,6 @@ public class GraphSimulator extends Simulator {
         final GraphSimulator sim = new GraphSimulator();
 
         sim.setPaused(true);
-        JFrame f = new AnimationFrame( sim );
+         new AnimationFrame( sim );
     }
 }

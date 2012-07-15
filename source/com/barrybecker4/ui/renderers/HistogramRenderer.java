@@ -46,8 +46,7 @@ public class HistogramRenderer {
      * Constructor that assumes no scaling ont he x axis.
      * @param data  the array to hold counts for each x axis position.
      */
-    public HistogramRenderer(int[] data)
-    {
+    public HistogramRenderer(int[] data) {
         this(data, new LinearFunction(1.0));
     }
 
@@ -57,8 +56,7 @@ public class HistogramRenderer {
      * @param func  a way to scale the values on the x axis.
      *   This function takes an x value in the domain space and maps it to a bin location.
      */
-    public HistogramRenderer(int[] data, InvertibleFunction func)
-    {
+    public HistogramRenderer(int[] data, InvertibleFunction func)  {
         data_ = data;
         numBars_ = data_.length;
         xFunction_ = func;
@@ -88,7 +86,7 @@ public class HistogramRenderer {
     }
 
     /**
-     * The larger this is, the fewere equally spaced x labels.
+     * The larger this is, the fewer equally spaced x labels.
      * @param maxLabelWidth   max width of x labels.
      */
     public void setMaxLabelWidth(int maxLabelWidth) {

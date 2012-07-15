@@ -9,14 +9,16 @@ import org.w3c.dom.NodeList;
  *  display in the tree. It also returns children, index values,
  *  and child counts.
  */
-public class AdapterNode
-{
+public class AdapterNode {
+
     private Node domNode_;
 
     private boolean compress_ = false;
 
-    // An array of names for DOM node-types
-    // (Array indexes = nodeType() values.)
+    /**
+     * An array of names for DOM node-types
+     * Array indexes = nodeType() values.
+     */
     private static final String[] typeName = {
         "none",
         "Element",
@@ -49,104 +51,108 @@ public class AdapterNode
     private static final int USE_TYPE = 13;
 
 
-  // Construct an Adapter node from a DOM node
-  public AdapterNode(Node node) {
-    domNode_ = node;
-  }
-
-  // Return a string that identifies this node in the tree
-  // *** Refer to table at top of org.w3c.dom.Node ***
-  public String toString() {
-    String s = typeName[domNode_.getNodeType()];
-    String nodeName = domNode_.getNodeName();
-    if (! "#".startsWith(nodeName)) {
-       s += ": " + nodeName;
+    // Construct an Adapter node from a DOM node
+    public AdapterNode(Node node) {
+        domNode_ = node;
     }
-    if (compress_) {
-       String t = content().trim();
-       int x = t.indexOf("\n");
-       if (x >= 0) t = t.substring(0, x);
-       s += ' ' + t;
-       return s;
-    }
-    if (domNode_.getNodeValue() != null) {
-       if (s.startsWith("ProcInstr"))
-          s += ", ";
-       else
-          s += ": ";
-       // Trim the value to get rid of NL's at the front
-       String t = domNode_.getNodeValue().trim();
-       int x = t.indexOf("\n");
-       if (x >= 0) t = t.substring(0, x);
-       s += t;
-    }
-    return s;
-  }
 
-  public String content() {
-    String s = "";
-    NodeList nodeList = domNode_.getChildNodes();
-    for (int i=0; i<nodeList.getLength(); i++) {
-      Node node = nodeList.item(i);
-      int type = node.getNodeType();
-      AdapterNode adpNode = new AdapterNode(node); //inefficient, but works
-      if (type == ELEMENT_TYPE) {
-        // Skip subelements that are displayed in the tree.
-        if ( treeElement(node.getNodeName()) ) continue;
-
-        // EXTRA-CREDIT HOMEWORK:
-        //   Special case the SLIDE element to use the TITLE text
-        //   and ignore TITLE element when constructing the tree.
-
-        // EXTRA-CREDIT
-        //   Convert ITEM elements to html lists using
-        //   <ul>, <li>, </ul> tags
-
-        s += '<' + node.getNodeName() + '>';
-        s += adpNode.content();
-        s += "</" + node.getNodeName() + '>';
-      } else if (type == TEXT_TYPE) {
-        s += node.getNodeValue();
-      } else if (type == ENTITYREF_TYPE) {
-        // The content is in the TEXT node under it
-        s += adpNode.content();
-      } else if (type == CDATA_TYPE) {
-        // The "value" has the text, same as a text node.
-        //   while EntityRef has it in a text node underneath.
-        //   (because EntityRef can contain multiple subelements)
-        // Convert angle brackets and ampersands for display
-        StringBuilder sb = new StringBuilder( node.getNodeValue() );
-        int j=0;
-        while (j<sb.length()) {
-          if (sb.charAt(j) == '<') {
-            sb.setCharAt(j, '&');
-            sb.insert(j+1, "lt;");
-            j += 3;
-          } else if (sb.charAt(j) == '&') {
-            sb.setCharAt(j, '&');
-            sb.insert(j+1, "amp;");
-            j += 4;
-          }
-          j++;
+    /**
+     *  Return a string that identifies this node in the tree
+     * Refer to table at top of org.w3c.dom.Node ***
+     */
+     public String toString() {
+        String s = typeName[domNode_.getNodeType()];
+        String nodeName = domNode_.getNodeName();
+        if (! "#".startsWith(nodeName)) {
+           s += ": " + nodeName;
         }
-        s += "<pre>" + sb + "\n</pre>";
-      }
-       // Ignoring these:
-       //   ATTR_TYPE      -- not in the DOM tree
-       //   ENTITY_TYPE    -- does not appear in the DOM
-       //   PROCINSTR_TYPE -- not "data"
-       //   COMMENT_TYPE   -- not "data"
-       //   DOCUMENT_TYPE  -- Root node only. No data to display.
-       //   DOCTYPE_TYPE   -- Appears under the root only
-       //   DOCFRAG_TYPE   -- equiv. to "document" for fragments
-       //   NOTATION_TYPE  -- nothing but binary data in here
+        if (compress_) {
+           String t = content().trim();
+           int x = t.indexOf("\n");
+           if (x >= 0) t = t.substring(0, x);
+           s += ' ' + t;
+           return s;
+        }
+        if (domNode_.getNodeValue() != null) {
+           if (s.startsWith("ProcInstr"))
+              s += ", ";
+           else
+              s += ": ";
+           // Trim the value to get rid of NL's at the front
+           String t = domNode_.getNodeValue().trim();
+           int x = t.indexOf("\n");
+           if (x >= 0) t = t.substring(0, x);
+           s += t;
+        }
+        return s;
     }
-    return s;
-  }
 
-  /*
-   * Return children, index, and count values
-   */
+    public String content() {
+        StringBuilder buf = new StringBuilder();
+        NodeList nodeList = domNode_.getChildNodes();
+        for (int i=0; i<nodeList.getLength(); i++) {
+            serialize(buf, nodeList, i);
+        }
+        return buf.toString();
+   }
+
+    private void serialize(StringBuilder s, NodeList nodeList, int i) {
+        Node node = nodeList.item(i);
+        int type = node.getNodeType();
+
+        AdapterNode adpNode = new AdapterNode(node);
+
+        if (type == ELEMENT_TYPE) {
+            // Skip sub-elements that are displayed in the tree.
+            if ( treeElement(node.getNodeName()) )
+                return;
+
+            // TODO:   Convert ITEM elements to html lists using
+            //   <ul>, <li>, </ul> tags
+
+            s.append('<').append(node.getNodeName()).append('>');
+            s.append(adpNode.content());
+            s.append("</").append(node.getNodeName()).append('>');
+            } else if (type == TEXT_TYPE) {
+                s.append(node.getNodeValue());
+            } else if (type == ENTITYREF_TYPE) {
+                // The content is in the TEXT node under it
+                s.append(adpNode.content());
+            } else if (type == CDATA_TYPE) {
+                // The "value" has the text, same as a text node.
+                //   while EntityRef has it in a text node underneath.
+                //   (because EntityRef can contain multiple sub-elements)
+                // Convert angle brackets and ampersands for display
+                StringBuilder sb = new StringBuilder( node.getNodeValue() );
+                int j=0;
+                while (j<sb.length()) {
+                if (sb.charAt(j) == '<') {
+                    sb.setCharAt(j, '&');
+                    sb.insert(j+1, "lt;");
+                    j += 3;
+                } else if (sb.charAt(j) == '&') {
+                    sb.setCharAt(j, '&');
+                    sb.insert(j+1, "amp;");
+                    j += 4;
+                }
+                j++;
+            }
+            s.append("<pre>").append(sb).append("\n</pre>");
+        }
+        // Ignoring these:
+        //   ATTR_TYPE      -- not in the DOM tree
+        //   ENTITY_TYPE    -- does not appear in the DOM
+        //   PROCINSTR_TYPE -- not "data"
+        //   COMMENT_TYPE   -- not "data"
+        //   DOCUMENT_TYPE  -- Root node only. No data to display.
+        //   DOCTYPE_TYPE   -- Appears under the root only
+        //   DOCFRAG_TYPE   -- equiv. to "document" for fragments
+        //   NOTATION_TYPE  -- nothing but binary data in here
+    }
+
+    /*
+    * Return children, index, and count values
+    */
   public int index(AdapterNode child) {
     //System.err.println("Looking for index of " + child);
     int count = childCount();
@@ -177,23 +183,22 @@ public class AdapterNode
   }
 
   public int childCount() {
-    if (!compress_) {
-      // Indent this
-      return domNode_.getChildNodes().getLength();
-    }
-    int count = 0;
-    for (int i=0; i<domNode_.getChildNodes().getLength(); i++) {
-       Node node = domNode_.getChildNodes().item(i);
-       if (node.getNodeType() == ELEMENT_TYPE
-       && treeElement( node.getNodeName() ))
-       {
-         // Note:
-         //   Have to check for proper type.
-         //   The DOCTYPE element also has the right name
-         ++count;
-       }
-    }
-    return count;
+      if (!compress_) {
+            // Indent this
+            return domNode_.getChildNodes().getLength();
+      }
+      int count = 0;
+      for (int i=0; i<domNode_.getChildNodes().getLength(); i++) {
+          Node node = domNode_.getChildNodes().item(i);
+          if (node.getNodeType() == ELEMENT_TYPE
+          && treeElement( node.getNodeName() ))  {
+               // Note:
+               //   Have to check for proper type.
+               //   The DOCTYPE element also has the right name
+               ++count;
+          }
+      }
+      return count;
   }
 
      // The list of elements to display in the tree
