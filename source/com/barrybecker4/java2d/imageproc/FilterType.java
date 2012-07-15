@@ -1,6 +1,7 @@
 package com.barrybecker4.java2d.imageproc;
 
 /**
+ * Differnt types of image filters.
  *
  * @author Barry Becker
  */

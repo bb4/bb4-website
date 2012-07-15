@@ -33,18 +33,16 @@
       <mkdir dir="${stagingDir}"/>
 
       <!-- there are only one set of jar files for all locales -->
-      <!-- copy the core class files that are needed for all my applets. Produces common.jar -->
+      <!-- copy the core class files that are needed for all my applets. Produces bb4-common.jar -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/barrybecker4/common/**/*.class"/>
           <include name="com/barrybecker4/ui/**/*.class"/>
-          <include name="com/barrybecker4/xml/*.class"/>
-          <include name="com/barrybecker4/common/ImageUtil.class"/>
           <include name="com/barrybecker4/java2d/gradient/**/*.class"/>
           <exclude name="com/barrybecker4/**/test"/>
         </fileset>
       </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/common.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-common.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy my class files that are needed for programs that want to do image processing. Produces imageproc.jar-->
@@ -58,7 +56,7 @@
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/imageproc.jar"/>
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy the class files that are needed for programs that want to have sound. Produces sound.jar-->
+      <!-- copy the class files that are needed for programs that want to have sound. Produces bb4-sound.jar-->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/barrybecker4/sound/*.class"/>
@@ -69,7 +67,7 @@
         <param name="path" value="sound/allophones"/>
         <param name="pattern" value="*.wav"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/sound.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-sound.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for programs that want to do optimization. Produces optimization.jar-->

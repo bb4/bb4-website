@@ -12,8 +12,8 @@ public class AllFonts {
 
     private static void showAllFonts() {
         Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-        for ( int i = 0; i < fonts.length; i++ ) {
-            System.out.println( fonts[i].getFontName() + " : " + fonts[i].getFamily() + " : " + fonts[i].getName() );
+        for (Font font : fonts) {
+            System.out.println(font.getFontName() + " : " + font.getFamily() + " : " + font.getName());
         }
     }
 
@@ -40,6 +40,7 @@ public class AllFonts {
     }
 
     private static class FontsPanel extends JPanel {
+         @Override
          public void paint( Graphics g ) {
               super.paint(g);
               Graphics2D g2 = (Graphics2D) g;

@@ -6,7 +6,7 @@ import java.awt.image.ColorModel;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
-public class RoundGradientContext implements PaintContext {
+class RoundGradientContext implements PaintContext {
     protected Point2D mPoint_;
     protected Point2D mRadius_;
     protected Color mC1_, mC2_;

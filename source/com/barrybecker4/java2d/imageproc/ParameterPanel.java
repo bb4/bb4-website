@@ -10,12 +10,12 @@ import java.util.List;
 
 
 /**
- * Auto create a panel of sliders and dropdowns (etc) for manipulating a set of parmeters.
+ * Auto create a panel of sliders and drop-downs (etc) for manipulating a set of parameters.
  * @author Barry Becker
  */
 public class ParameterPanel extends JScrollPane
-                            implements ParameterChangeListener
-{
+                            implements ParameterChangeListener {
+
     /** called when a parameter changes */
     private List<ParameterChangeListener> changeListeners;
 
@@ -23,8 +23,8 @@ public class ParameterPanel extends JScrollPane
 
     private JPanel viewPanel;
 
-    public ParameterPanel( List<Parameter> params )
-    {
+    public ParameterPanel( List<Parameter> params ) {
+
         changeListeners = new ArrayList<ParameterChangeListener>();
         parameters = params;
 
@@ -40,8 +40,8 @@ public class ParameterPanel extends JScrollPane
     /**
      * @param params set of parameters that match the number and type of the original
      */
-    public void updateParameters( List<Parameter> params)
-    {
+    public void updateParameters( List<Parameter> params) {
+
         if (params == null)
             return;
         if (parameters != null) {
@@ -66,8 +66,7 @@ public class ParameterPanel extends JScrollPane
     /**
      * Add a unique UI element for manipulating each individual parameter.
      */
-    protected void initializeUI()
-    {
+    protected void initializeUI() {
         for (Parameter param : parameters) {
             viewPanel.add(param.createWidget(this));
         }
@@ -78,7 +77,7 @@ public class ParameterPanel extends JScrollPane
     }
 
     /**
-     * we only want to call parmeterChange listeners if a parameter actually changed.
+     * we only want to call parameterChange listeners if a parameter actually changed.
      * @param param the swing component that was activated.
      */
     public void parameterChanged(Parameter param) {

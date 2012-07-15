@@ -19,8 +19,8 @@ import java.awt.image.BufferedImageOp;
  * Based on the Sampler program that comes with Java2D by Knudsen.
  */
 public class FilterSamplerApp extends ApplicationFrame
-                                   implements ItemListener, ActionListener, ParameterChangeListener
-{
+                     implements ItemListener, ActionListener, ParameterChangeListener {
+
     private Frame mImageFrame;
     private SplitImageComponent mSplitImageComponent;
     private ProcessingOperators operations;
@@ -28,10 +28,9 @@ public class FilterSamplerApp extends ApplicationFrame
     private Checkbox accumulateCheckbox;
     private Label statusLabel = new Label( "" );
     private ParameterPanel paramPanel;
-    private java.awt.List filterList;
+    private List filterList;
 
-    public FilterSamplerApp( String imageFile )
-    {
+    public FilterSamplerApp( String imageFile ) {
         super( "Filter Sampler" );
         operations = new ProcessingOperators();
         createImageFrame( imageFile );
@@ -42,8 +41,7 @@ public class FilterSamplerApp extends ApplicationFrame
      * The image to be manipulated goes in a separate frame.
      * @param imageFile
      */
-    private void createImageFrame( String imageFile )
-    {
+    private void createImageFrame( String imageFile ) {
         // Create the image frame.
         mSplitImageComponent = new SplitImageComponent( imageFile );
         mSplitImageComponent.setPreferredSize(new Dimension(600, 700));
@@ -57,8 +55,7 @@ public class FilterSamplerApp extends ApplicationFrame
     }
 
     @Override
-    protected void createUI()
-    {
+    protected void createUI() {
         super.createUI();
         setFont( new Font( "Serif", Font.PLAIN, 12 ) );
         setLayout( new BorderLayout() );
@@ -68,8 +65,7 @@ public class FilterSamplerApp extends ApplicationFrame
         statusLabel = new Label( "" );
     }
 
-    protected void initializeUI()
-    {
+    protected void initializeUI() {
         Point pt = mImageFrame.getLocation();
         setLocation( pt.x - getSize().width, pt.y );
 
@@ -108,7 +104,7 @@ public class FilterSamplerApp extends ApplicationFrame
         BufferedImageOp op = metaOp.getInstance();
 
         String previous = mImageFrame.getTitle() + " + ";
-        if ( accumulateCheckbox.getState() == false )
+        if (!accumulateCheckbox.getState())
             previous = "";
         mImageFrame.setTitle( previous + key );
         statusLabel.setText( "Performing " + key + "..." );
@@ -141,8 +137,7 @@ public class FilterSamplerApp extends ApplicationFrame
      * Called whenever one of the UI parameter widgets was changed by the user.
      * @param param
      */
-    public void parameterChanged(Parameter param)
-    {
+    public void parameterChanged(Parameter param) {
         // we could use param.getName() to get the filter, but its just the currently selected one.
         String key = filterList.getSelectedItem();
         MetaImageOp metaOp = operations.getOperation( key );
@@ -152,7 +147,7 @@ public class FilterSamplerApp extends ApplicationFrame
 
     private void applyImageOperator(BufferedImageOp op) {
         BufferedImage source = mSplitImageComponent.getSecondImage();
-        if ( source == null || accumulateCheckbox.getState() == false ) {
+        if ( source == null || !accumulateCheckbox.getState()) {
             source = mSplitImageComponent.getImage();
         }
         BufferedImage destination = op.filter( source, null );
@@ -182,8 +177,7 @@ public class FilterSamplerApp extends ApplicationFrame
         mImageFrame.repaint();
     }
 
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         String imageFile = Utilities.DEFAULT_IMAGE_DIR + "EtholWithRoses.small.jpg";
         if ( args.length > 0 )
             imageFile = args[0];
