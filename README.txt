@@ -17,7 +17,7 @@ Initial setup
 Building
  - Verify entries in ant/common.properties and ant/build.xml. No changes should be needed.
     - If you want to deploy to a local webserver, you can set
-       codebase=localhost, and
+       codebase=localhost/dist, and
        distributionDir=<apache install location>/Apache2.2/htdocs
  - Update Project Structure | Project SDK so that the JDK 1.6 points to the install location of your JDK.
  - You should now be able to run the applets/deploy task from the And Build window within Intellij.
