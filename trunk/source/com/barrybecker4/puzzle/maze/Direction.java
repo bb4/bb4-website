@@ -12,7 +12,7 @@ import java.util.Random;
  * Vary the probability that each direction occurs for interesting effects.
  * the sum of these probabilities must sum to 1.
  *
- * @author Barry Becker Date: Nov 27, 2005
+ * @author Barry Becker
  */
 public enum Direction {
 

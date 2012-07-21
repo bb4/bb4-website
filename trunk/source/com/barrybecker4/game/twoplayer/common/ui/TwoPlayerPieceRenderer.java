@@ -22,8 +22,8 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer {
     private static GamePieceRenderer renderer_ = null;
 
     // We should move the color options to the PlayerOptions class so they can be customized.
-    public static final Color DEFAULT_PLAYER1_COLOR = new Color( 230, 100, 255);
-    public static final Color DEFAULT_PLAYER2_COLOR = new Color( 100, 220, 255);
+    public static final Color DEFAULT_PLAYER1_COLOR = new Color( 180, 60, 100);
+    public static final Color DEFAULT_PLAYER2_COLOR = new Color( 10, 120, 255);
 
     private static final Color PLAYER1_TEXT_COLOR = new Color( 255, 250, 255 );
     private static final Color PLAYER2_TEXT_COLOR = new Color( 0, 50, 30 );

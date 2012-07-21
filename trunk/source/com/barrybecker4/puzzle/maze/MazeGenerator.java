@@ -57,7 +57,7 @@ public class MazeGenerator {
     }
 
     /**
-     * do a depth first search (without recursion) of the grid space to determine the graph.
+     * Do a depth first search (without recursion) of the grid space to determine the graph.
      * I used to use a recursive algorithm but it was slower and would give stack overflow
      * exceptions even for moderately sized mazes.
      */
@@ -100,27 +100,34 @@ public class MazeGenerator {
                     currentPosition = nextPosition;
                 }
                 else {
-                    // add a wall
-                    if ( dir.x == 1 ) // east
-                        currentCell.eastWall = true;
-                    else if ( dir.y == 1 ) // south
-                        currentCell.southWall = true;
-                    else if ( dir.x == -1 )  // west
-                        nextCell.eastWall = true;
-                    else if ( dir.y == -1 )  // north
-                        nextCell.southWall = true;
+                    addWall(currentCell, dir, nextCell);
                 }
             } while ( !moved && !stack.isEmpty() );
 
-            // this can be really slow if you do a refresh every time
-            if (Math.random() < 4.0/(Math.pow(panel_.getAnimationSpeed(), 2) + 1)) {
-                panel_.paintAll();
-            }
-
+            refresh();
             // now at a new location
             if ( moved )
                 MazeModel.pushMoves( currentPosition, dir, ++depth, stack );
         }
+    }
+
+    /** this can be really slow if you do a refresh every time */
+    private void refresh() {
+        if (Math.random() < 4.0/(Math.pow(panel_.getAnimationSpeed(), 2) + 1)) {
+            panel_.paintAll();
+        }
+    }
+
+    private void addWall(MazeCell currentCell, Point dir, MazeCell nextCell) {
+        // add a wall
+        if ( dir.x == 1 ) // east
+            currentCell.eastWall = true;
+        else if ( dir.y == 1 ) // south
+            currentCell.southWall = true;
+        else if ( dir.x == -1 )  // west
+            nextCell.eastWall = true;
+        else if ( dir.y == -1 )  // north
+            nextCell.southWall = true;
     }
 
 }

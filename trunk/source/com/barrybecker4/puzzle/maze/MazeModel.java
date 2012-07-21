@@ -15,8 +15,9 @@ public class MazeModel {
     private int width_;
     private int height_;
 
-    // the grid of cells that make up the maze paths
-    // in x,y (col, row) order
+    /**
+     * The grid of cells that make up the maze paths in x,y (col, row) order.
+     */
     private MazeCell[][] grid_;
 
     // the start and stop positions
@@ -77,8 +78,6 @@ public class MazeModel {
         return height_;
     }
 
-
-
     /**
      * From currentPosition try moving in each direction in a random order.
      */
@@ -104,7 +103,6 @@ public class MazeModel {
         // return everything to unvisited
         for (int j = 0; j < height_; j++ ) {
             for (int i = 0; i < width_; i++ ) {
-                //g.drawLine(OFFSET, ypos+OFFSET, rightEdgePos+OFFSET, ypos+OFFSET);
                 MazeCell c = grid_[i][j];
                 c.clear();
             }

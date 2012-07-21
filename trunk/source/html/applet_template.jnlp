@@ -18,12 +18,13 @@
             <jar href="bb4-multiPlayerCommon.jar" main="false"/>
             <jar href="bb4-puzzle.jar" main="false"/>
             <jar href="bb4-sound.jar" main="false"/>
+            <jar href="bb4-ui.jar" main="false"/>
             <jar href="bb4-optimization.jar" main="false"/>
             <jar href="pente.jar" main="false"/>
             <jar href="checkers.jar" main="false"/>
             <jar href="chess.jar" main="false"/>
             <jar href="go.jar" main="false"/>
-            <jar href="jigo_sgf.jar" main="false"/>
+            <jar href="jigo-sgf-1.0.jar" main="false"/>
             <jar href="blockade.jar" main="false"/>
             <jar href="galactic.jar" main="false"/>
             <jar href="poker.jar" main="false"/>

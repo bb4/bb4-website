@@ -349,6 +349,7 @@
       <copy file="${libDir}/sun.jar" tofile="${distributionGameDir}/sun.jar"/>
       <copy file="../lib/jai_codec.jar" tofile="${distributionGameDir}/jai_codec.jar"/>
       <copy file="../lib/jhlabs-1.0.2.jar" tofile="${distributionGameDir}/jhlabs-1.0.2.jar"/>
+      <copy file="../lib/jigo-1.0.jar" tofile="${distributionGameDir}/jigo-sgf-1.0.jar"/>
   </target>     <!-- end distributeJars -->
 
 
