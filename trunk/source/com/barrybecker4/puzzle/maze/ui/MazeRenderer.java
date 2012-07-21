@@ -1,10 +1,10 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.puzzle.maze;
+package com.barrybecker4.puzzle.maze.ui;
 
-import com.barrybecker4.common.concurrency.ThreadUtil;
+import com.barrybecker4.puzzle.maze.model.MazeCell;
+import com.barrybecker4.puzzle.maze.model.MazeModel;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**

@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.puzzle.maze;
+package com.barrybecker4.puzzle.maze.model;
 
 import java.awt.*;
 import java.util.ArrayList;

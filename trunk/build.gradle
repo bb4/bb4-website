@@ -28,7 +28,7 @@ dependencies {
                   'lib/j3dcore.jar',
                   'lib/j3dutils.jar',
                   'lib/jhlabs-1.0.2.jar',
-                  'lib/jigo-1.0.jar',
+                  'lib/jigo-sgf-1.0.jar',
                   'lib/sun.jar',
                   'lib/vecmath.jar',
                   'lib/xerces_2_3_0.jar',
