@@ -76,10 +76,10 @@
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-sound.jar"/>
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy the class files that are needed for programs that want to do optimization. Produces bb4-bb4-optimization.jar-->
+      <!-- copy the class files that are needed for programs that want to do optimization. Produces bb4-optimization.jar-->
       <antcall target="deployJar">
           <param name="componentDir" value="optimization"/>
-          <param name="jarFile" value="bb4-bb4-optimization.jar"/>
+          <param name="jarFile" value="bb4-optimization.jar"/>
       </antcall>
 
       <!-- copy the class files that are needed for simulation programs . Produces bb4-simulation.jar-->
@@ -115,10 +115,10 @@
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-gameCommon.jar"/>
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy just the core class files that are needed for all the twoplayer games. Produces game2Common.jar -->
+      <!-- copy just the core class files that are needed for all the twoplayer games. Produces bb4-game2Common.jar -->
       <antcall target="deployJar">
           <param name="componentDir" value="game/twoplayer/common"/>
-          <param name="jarFile" value="game2Common.jar"/>
+          <param name="jarFile" value="bb4-game2Common.jar"/>
       </antcall>
 
        <!-- copy just the core class files that are needed for all the multiplayer games. Produces bb4-multiPlayerCommon.jar -->
