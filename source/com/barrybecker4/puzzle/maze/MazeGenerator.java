@@ -1,6 +1,12 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.maze;
 
+import com.barrybecker4.puzzle.maze.model.Direction;
+import com.barrybecker4.puzzle.maze.model.GenState;
+import com.barrybecker4.puzzle.maze.model.MazeCell;
+import com.barrybecker4.puzzle.maze.model.MazeModel;
+import com.barrybecker4.puzzle.maze.ui.MazePanel;
+
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +26,7 @@ public class MazeGenerator {
     private MazeModel maze_;
     private MazePanel panel_;
 
-    // put the stop point at the maximum search depth.
+    /** put the stop point at the maximum search depth. */
     private int maxDepth_ = 0;
 
 
@@ -46,7 +52,7 @@ public class MazeGenerator {
      * generate the maze.
      */
     public void generate(double forwardProb, double leftProb, double rightProb ) {
-        // the second argument is a dummy direction
+
         maxDepth_ = 0;
         Direction.FORWARD.setProbability(forwardProb);
         Direction.LEFT.setProbability(leftProb);
@@ -58,7 +64,7 @@ public class MazeGenerator {
 
     /**
      * Do a depth first search (without recursion) of the grid space to determine the graph.
-     * I used to use a recursive algorithm but it was slower and would give stack overflow
+     * Used to use a recursive algorithm but it was slower and would give stack overflow
      * exceptions even for moderately sized mazes.
      */
     public void search() {

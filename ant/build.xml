@@ -35,7 +35,7 @@
     <pathelement location="${libDir}/commons-codec-1.3.jar"/>
     <pathelement location="${libDir}/rt.jar"/>
     <pathelement location="${libDir}/jhlabs-1.0.2.jar"/>
-    <pathelement location="${libDir}/jigo-1.0.jar"/>
+    <pathelement location="${libDir}/jigo-sgf-1.0.jar"/>
     <pathelement location="${libDir}/j3dcore.jar"/>
     <pathelement location="${libDir}/j3dutils.jar"/>
   </path>
@@ -271,7 +271,7 @@
 
   <target name="executeMaze" description="Run the maze generation program">
     <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.puzzle.maze.MazeSimulator"/>
+      <param name="className" value="com.barrybecker4.puzzle.maze.ui.MazeSimulator"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
       <param name="args" value=""/>
     </antcall>
