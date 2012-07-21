@@ -107,7 +107,7 @@ public class MazeSimulator extends ApplicationApplet
         double sum = forwardP + leftP + rightP;
         mazePanel_.setAnimationSpeed(controlPanel_.getAnimationSpeed());
         mazePanel_.setThickness(thickness);
-        mazePanel_.generate(thickness, forwardP / sum, leftP / sum, rightP / sum );
+        mazePanel_.generate(forwardP / sum, leftP / sum, rightP / sum );
     }
 
     public void solve() {

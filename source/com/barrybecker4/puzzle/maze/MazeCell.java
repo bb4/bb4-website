@@ -8,11 +8,7 @@ import java.awt.*;
  *
  *  @author Barry Becker
  */
-public class MazeCell
-{
-
-    /** 4 if 2d 6 if 3d 12 if 4d */
-    public static final int NUM_CELL_FACES = 4;
+public class MazeCell {
 
     public boolean visited = false;
 
@@ -31,8 +27,7 @@ public class MazeCell
     public int depth = 0;
 
 
-    public Point getNextPosition(Point currentPosition, Point dir)
-    {
+    public Point getNextPosition(Point currentPosition, Point dir) {
         visited = true;
 
         Point nextPosition = (Point) currentPosition.clone();

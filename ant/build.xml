@@ -80,7 +80,7 @@
   <target name="executePente" description="Run the pente program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-1.0.jar;/"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-sgf-1.0.jar;/"/>
       <param name="args" value="-name pente -locale ENGLISH"/>
     </antcall>
   </target>
@@ -88,7 +88,7 @@
   <target name="executeTicTacToe" description="Run the tic-tac-toe program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-1.0.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-sgf-1.0.jar;"/>
       <param name="args" value="-name tictactoe -locale ENGLISH"/>
     </antcall>
   </target>
@@ -96,7 +96,7 @@
   <target name="executeBlockade" description="Run the blockade program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-1.0.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-sgf-1.0.jar;"/>
       <param name="args" value="-name blockade -locale ENGLISH"/>
     </antcall>
   </target>
@@ -104,7 +104,7 @@
   <target name="executeCheckers" description="Run the checkers program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-1.0.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-sgf-1.0.jar;"/>
       <param name="args" value="-name checkers -locale ENGLISH"/>
     </antcall>
   </target>
@@ -112,7 +112,7 @@
   <target name="executeChess" description="Run the chess program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-1.0.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-sgf-1.0.jar;"/>
       <param name="args" value="-name chess -locale ENGLISH"/>
     </antcall>
   </target>
@@ -199,7 +199,7 @@
   <target name="executeGo" description="Run the go program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/gtpserver.jar;${libDir}/jigo-1.0.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/gtpserver.jar;${libDir}/jigo-sgf-1.0.jar;"/>
       <param name="args" value="-name go -locale ENGLISH"/>
     </antcall>
   </target>
