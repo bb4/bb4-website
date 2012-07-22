@@ -2,6 +2,7 @@
 package com.barrybecker4.puzzle.maze.ui;
 
 import com.barrybecker4.common.concurrency.ThreadUtil;
+import com.barrybecker4.common.geometry.IntLocation;
 import com.barrybecker4.puzzle.maze.MazeGenerator;
 import com.barrybecker4.puzzle.maze.MazeSolver;
 import com.barrybecker4.puzzle.maze.model.MazeModel;
@@ -63,7 +64,7 @@ public class MazePanel extends JComponent {
      * solve the maze.
      */
     public void solve() {
-        MazeSolver solver= new MazeSolver(this);
+        MazeSolver solver = new MazeSolver(this);
         solver.solve();
     }
 
@@ -79,10 +80,10 @@ public class MazePanel extends JComponent {
      * paint just the region around a single cell for performance.
      * @param pt
      */
-    public void paintCell(Point pt) {
+    public void paintCell(IntLocation pt) {
         int csized2 = (cellSize/2)+2;
-        int xpos = (int)(pt.getX() * cellSize);
-        int ypos = (int)(pt.getY() * cellSize);
+        int xpos = (pt.getX() * cellSize);
+        int ypos = (pt.getY() * cellSize);
         if (animationSpeed_ <= 10)  {
             // this paints just the cell immediately (sorta slow)
             this.paintImmediately( xpos-csized2, ypos-csized2, (2*cellSize), (2*cellSize));

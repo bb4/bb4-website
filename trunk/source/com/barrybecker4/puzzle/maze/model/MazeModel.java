@@ -2,8 +2,7 @@
 package com.barrybecker4.puzzle.maze.model;
 
 
-import java.awt.*;
-import java.util.List;
+import com.barrybecker4.common.geometry.IntLocation;
 
 /**
  * The model part of the model view controller pattern for the maze.
@@ -21,8 +20,8 @@ public class MazeModel {
     private MazeCell[][] grid_;
 
     // the start and stop positions
-    private Point startPosition_;
-    private Point stopPosition_;
+    private IntLocation startPosition_;
+    private IntLocation stopPosition_;
 
     /**
      * Constructs a maze with specified width and height.
@@ -43,18 +42,18 @@ public class MazeModel {
         setConstraints();
 
         // randomize this?
-        startPosition_ = new Point( 2, 2 );
+        startPosition_ = new IntLocation( 2, 2 );
     }
 
-    public Point getStartPosition() {
+    public IntLocation getStartPosition() {
         return startPosition_;
     }
 
-    public void setStopPosition(Point stopPos) {
+    public void setStopPosition(IntLocation stopPos) {
         stopPosition_ = stopPos;
     }
 
-    public Point getStopPosition() {
+    public IntLocation getStopPosition() {
         return stopPosition_;
     }
 
@@ -63,12 +62,8 @@ public class MazeModel {
         return grid_[Math.min(x, width_-1)][Math.min(y, height_-1)];
     }
 
-    public MazeCell getCell(Point p) {
-        return grid_[p.x][p.y];
-    }
-
-    public int getNumCells() {
-        return width_ * height_;
+    public MazeCell getCell(IntLocation p) {
+        return grid_[p.getX()][p.getY()];
     }
 
     public int getWidth() {
@@ -79,27 +74,11 @@ public class MazeModel {
     }
 
     /**
-     * From currentPosition try moving in each direction in a random order.
-     */
-    public static void pushMoves( Point currentPosition, Point currentDir, int depth, List<GenState> stack )
-    {
-        // assigning different probabilities to the order in which we check these directions
-        // can give interesting effects.
-        List<Direction> directions = Direction.getShuffledDirections();
-
-        // check all the directions except the one we came from
-        for ( int i = 0; i < 3; i++ ) {
-            Direction direction = directions.get(i);
-            Point dir = direction.apply(currentDir);
-            stack.add(0, new GenState( currentPosition, dir, depth ) );
-        }
-    }
-
-    /**
      * mark all the cells unvisited.
      */
-    public void unvisitAll()
-    {
+    public void unvisitAll() {
+
+        System.out.println("h="+ height_ + " w=" + width_);
         // return everything to unvisited
         for (int j = 0; j < height_; j++ ) {
             for (int i = 0; i < width_; i++ ) {
@@ -113,8 +92,7 @@ public class MazeModel {
      *  set OBSTACLEs, walls
      *  mark all the cells around the periphery as visited so there will be walls generated there
      */
-    private void setConstraints()
-    {
+    private void setConstraints()  {
         int i, j;
         MazeCell c;
 

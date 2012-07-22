@@ -1,15 +1,14 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.maze;
 
+import com.barrybecker4.common.geometry.IntLocation;
+import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.puzzle.maze.model.Direction;
 import com.barrybecker4.puzzle.maze.model.GenState;
 import com.barrybecker4.puzzle.maze.model.MazeCell;
 import com.barrybecker4.puzzle.maze.model.MazeModel;
+import com.barrybecker4.puzzle.maze.model.StateStack;
 import com.barrybecker4.puzzle.maze.ui.MazePanel;
-
-import java.awt.*;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *  Program to automatically generate a Maze.
@@ -25,18 +24,16 @@ public class MazeGenerator {
 
     private MazeModel maze_;
     private MazePanel panel_;
+    private StateStack stack;
 
     /** put the stop point at the maximum search depth. */
     private int maxDepth_ = 0;
 
 
     public MazeGenerator(MazePanel panel) {
-        this(panel.getMaze(), panel);
-    }
-
-    private MazeGenerator(MazeModel maze, MazePanel panel) {
-        maze_ = maze;
+        maze_ = panel.getMaze();
         panel_ = panel;
+        stack = new StateStack();
     }
 
     /**
@@ -44,14 +41,14 @@ public class MazeGenerator {
      */
     public void generate() {
         generate(Direction.FORWARD.getProbability(),
-                 Direction.LEFT.getProbability(),
-                 Direction.RIGHT.getProbability() );
+                Direction.LEFT.getProbability(),
+                Direction.RIGHT.getProbability());
     }
 
     /**
      * generate the maze.
      */
-    public void generate(double forwardProb, double leftProb, double rightProb ) {
+    public void generate(double forwardProb, double leftProb, double rightProb) {
 
         maxDepth_ = 0;
         Direction.FORWARD.setProbability(forwardProb);
@@ -68,72 +65,83 @@ public class MazeGenerator {
      * exceptions even for moderately sized mazes.
      */
     public void search() {
-        List<GenState> stack = new LinkedList<GenState>();
+        stack.clear();
 
-        Point currentPosition = maze_.getStartPosition();
+        IntLocation currentPosition = maze_.getStartPosition();
         MazeCell currentCell = maze_.getCell(currentPosition);
+        currentCell.visited = true;
 
         // push the initial moves
-        MazeModel.pushMoves( currentPosition, new Point( 1, 0 ), 1, stack );
-        Point dir;
-        int depth;
+        stack.pushMoves(currentPosition, new IntLocation(0, 1), 0);
 
         while ( !stack.isEmpty() ) {
-            boolean moved = false;
-
-            do {
-                GenState state = stack.remove(0);  // pop
-
-                currentPosition = state.getPosition();
-                dir = state.getDirection();
-                depth = state.getDepth();
-
-                if ( depth > maxDepth_ ) {
-                    maxDepth_ = depth;
-                    maze_.setStopPosition(currentPosition);
-                }
-                if ( depth > currentCell.depth )
-                    currentCell.depth = depth;
-
-                currentCell = maze_.getCell(currentPosition);
-                Point nextPosition = currentCell.getNextPosition(currentPosition, dir);
-
-                MazeCell nextCell = maze_.getCell(nextPosition);
-
-                if ( !nextCell.visited ) {
-                    moved = true;
-                    nextCell.visited = true;
-                    currentPosition = nextPosition;
-                }
-                else {
-                    addWall(currentCell, dir, nextCell);
-                }
-            } while ( !moved && !stack.isEmpty() );
-
-            refresh();
-            // now at a new location
-            if ( moved )
-                MazeModel.pushMoves( currentPosition, dir, ++depth, stack );
+            currentCell = findNextCell(currentCell);
         }
     }
 
+    private MazeCell findNextCell(MazeCell lastCell) {
+        IntLocation currentPosition;
+        MazeCell nextCell;
+        int depth;
+        IntLocation dir;
+        boolean moved = false;
+
+        do {
+            GenState state = stack.remove(0);  // pop
+
+            currentPosition = state.getPosition();
+            dir = state.getDirection();
+            depth = state.getDepth();
+
+            if ( depth > maxDepth_ ) {
+                maxDepth_ = depth;
+                maze_.setStopPosition(currentPosition);
+            }
+            if ( depth > lastCell.getDepth() )  {
+                lastCell.setDepth(depth);
+            }
+
+            MazeCell currentCell = maze_.getCell(currentPosition);
+            IntLocation nextPosition = currentCell.getNextPosition(currentPosition, dir);
+            nextCell = maze_.getCell(nextPosition);
+
+            if (nextCell.visited) {
+                addWall(currentCell, dir, nextCell);
+            }
+            else {
+                moved = true;
+                nextCell.visited = true;
+                currentPosition = nextPosition;
+            }
+        } while ( !moved && !stack.isEmpty() );
+
+        refresh();
+        // now at a new location
+        if ( moved )  {
+            stack.pushMoves(currentPosition, dir, ++depth);
+        }
+        return nextCell;
+    }
+
+    private void addWall(MazeCell currentCell, IntLocation dir, MazeCell nextCell) {
+        // add a wall
+        if ( dir.getX() == 1 ) // east
+            currentCell.eastWall = true;
+        else if ( dir.getY() == 1 ) // south
+            currentCell.southWall = true;
+        else if ( dir.getX() == -1 )  // west
+            nextCell.eastWall = true;
+        else if ( dir.getY() == -1 )  // north
+            nextCell.southWall = true;
+    }
+
+
     /** this can be really slow if you do a refresh every time */
     private void refresh() {
-        if (Math.random() < 4.0/(Math.pow(panel_.getAnimationSpeed(), 2) + 1)) {
+        if (MathUtil.RANDOM.nextDouble() < 4.0/(Math.pow(panel_.getAnimationSpeed(), 2) + 1)) {
             panel_.paintAll();
         }
     }
 
-    private void addWall(MazeCell currentCell, Point dir, MazeCell nextCell) {
-        // add a wall
-        if ( dir.x == 1 ) // east
-            currentCell.eastWall = true;
-        else if ( dir.y == 1 ) // south
-            currentCell.southWall = true;
-        else if ( dir.x == -1 )  // west
-            nextCell.eastWall = true;
-        else if ( dir.y == -1 )  // north
-            nextCell.southWall = true;
-    }
 
 }

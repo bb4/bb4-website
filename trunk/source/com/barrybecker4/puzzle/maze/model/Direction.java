@@ -1,7 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.maze.model;
 
-import java.awt.*;
+import com.barrybecker4.common.geometry.IntLocation;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,15 +19,15 @@ public enum Direction {
 
     FORWARD(0.5) {
         @Override
-        public Point apply(Point p) { return p; }
+        public IntLocation apply(IntLocation p) { return p; }
     },
     LEFT(0.28) {
         @Override
-        public Point apply(Point p) { return leftOf(p); }
+        public IntLocation apply(IntLocation p) { return leftOf(p); }
     },
     RIGHT(0.22) {
         @Override
-        public Point apply(Point p) { return rightOf(p); }
+        public IntLocation apply(IntLocation p) { return rightOf(p); }
     };
 
     private double probability_;
@@ -45,7 +46,7 @@ public enum Direction {
         probability_ = probability;
     }
 
-    public abstract Point apply(Point dir);
+    public abstract IntLocation apply(IntLocation dir);
 
     /**
      * return a shuffled list of directions
@@ -96,29 +97,29 @@ public enum Direction {
 
 
     /**
-     *  find the direction which is counterclockwise 90 to the left of the specified dir.
+     *  find the direction which is counterclockwise 90 (to the left) of the specified dir.
      */
-    private static Point leftOf( Point dir ) {
-        Point newDir;
-        if ( dir.x == 0 ) {
-            newDir = new Point((dir.y > 0)? -1 : 1, 0 );
+    private static IntLocation leftOf( IntLocation dir ) {
+        IntLocation newDir;
+        if ( dir.getX() == 0 ) {
+            newDir = new IntLocation(0, (dir.getY() > 0)? -1 : 1 );
         }
         else {  // assumed dir.y == 0
-            newDir = new Point( 0, ( dir.x > 0)? 1 : -1);
+            newDir = new IntLocation(( dir.getX() > 0)? 1 : -1, 0);
         }
         return newDir;
     }
 
     /**
-     * find the direction which is clockwise 90 to the right of the specified dir.
+     * find the direction which is clockwise 90 (to the right) of the specified dir.
      */
-    private static Point rightOf( Point dir ) {
-        Point newDir ;
-        if ( dir.x == 0 ) {
-            newDir = new Point( (dir.y > 0)? 1 : -1, 0 );
+    private static IntLocation rightOf( IntLocation dir ) {
+        IntLocation newDir ;
+        if ( dir.getX() == 0 ) {
+            newDir = new IntLocation(0, (dir.getY() > 0)? 1 : -1);
         }
         else {  // assumed dir.y == 0
-            newDir = new Point( 0, (dir.x > 0)? -1 : 1);
+            newDir = new IntLocation((dir.getX() > 0)? -1 : 1, 0);
         }
         return newDir;
     }

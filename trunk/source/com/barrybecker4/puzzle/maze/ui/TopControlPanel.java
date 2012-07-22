@@ -5,7 +5,6 @@ import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.components.NumberInput;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**

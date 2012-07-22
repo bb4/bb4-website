@@ -1,28 +1,27 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.common.geometry;
 
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 
 /**
- * Represents a location location of something in byte coordinates.
- * The range of bytes are only -127 to 127.
+ * Represents a location location of something in integer coordinates.
  *
  * Immutable. Use MutableLocation if you really need to modify it (rare).
  *
  * @author Barry Becker
  */
-public class Location implements Serializable {
+public class IntLocation implements Serializable {
 
     private static final long serialVersionUID = 1;
-    protected byte row_ = 0;
-    protected byte col_ = 0;
+    protected int row_ = 0;
+    protected int col_ = 0;
 
     /**
      * Constructs a new point at (0, 0).
      * Default empty constructor
      */
-    public Location() {
+    public IntLocation() {
     }
 
     /**
@@ -31,16 +30,16 @@ public class Location implements Serializable {
      * @param row  the row  coordinate (0 - 255).
      * @param col  the column coordinate (0 - 255).
      */
-    public Location( int row, int col ) {
-        row_ = (byte) row;
-        col_ = (byte) col;
+    public IntLocation(int row, int col) {
+        row_ = row;
+        col_ = col;
     }
 
-    public byte getRow() {
+    public int getRow() {
         return row_;
     }
 
-    public byte getCol() {
+    public int getCol() {
         return col_;
     }
 
@@ -52,29 +51,29 @@ public class Location implements Serializable {
         return row_;
     }
 
-    public Location copy() {
-        return new Location(row_, col_);
+    public IntLocation copy() {
+        return new IntLocation(row_, col_);
     }
 
     /**
      * @return an immutable copy of the original incremented by the amount specified.
      */
-    public Location incrementOnCopy(int rowChange, int colChange) {
-        return new Location(row_ + rowChange, col_+colChange);
+    public IntLocation incrementOnCopy(int rowChange, int colChange) {
+        return new IntLocation(row_ + rowChange, col_+colChange);
     }
 
     /**
      * @return an immutable copy of the original incremented by the amount specified.
      */
-    public Location incrementOnCopy(Location loc) {
-        return new Location(row_ + loc.getRow(), col_+ loc.getCol());
+    public IntLocation incrementOnCopy(IntLocation loc) {
+        return new IntLocation(row_ + loc.getRow(), col_+ loc.getCol());
     }
 
     /**
      * @return an immutable copy of the original incremented by the amount specified.
      */
-    public Location decrementOnCopy(Location loc) {
-        return new Location(row_ - loc.getRow(), col_ - loc.getCol());
+    public IntLocation decrementOnCopy(IntLocation loc) {
+        return new IntLocation(row_ - loc.getRow(), col_ - loc.getCol());
     }
 
     /**
@@ -87,8 +86,8 @@ public class Location implements Serializable {
     @Override
     public boolean equals( Object location ) {
 
-        if (!(location instanceof Location)) return false;
-        Location loc = (Location) location;
+        if (!(location instanceof IntLocation)) return false;
+        IntLocation loc = (IntLocation) location;
         return (loc.getRow() == row_) && (loc.getCol() == col_);
     }
 
@@ -103,7 +102,7 @@ public class Location implements Serializable {
      * @param loc another location to measure distance from.
      * @return the euclidean distance from this location to another.
      */
-    public double getDistanceFrom(Location loc) {
+    public double getDistanceFrom(IntLocation loc) {
         float xDif = Math.abs(col_ - loc.getCol());
         float yDif = Math.abs(row_ - loc.getRow());
         return Math.sqrt( xDif*xDif + yDif*yDif);

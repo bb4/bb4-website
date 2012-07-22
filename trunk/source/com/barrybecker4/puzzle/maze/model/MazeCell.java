@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.maze.model;
 
-import java.awt.*;
+import com.barrybecker4.common.geometry.IntLocation;
 
 /**
  *  A region of space bounded by walls in the maze.
@@ -10,29 +10,42 @@ import java.awt.*;
  */
 public class MazeCell {
 
-    public boolean visited = false;
+    public boolean visited;
 
     // walls in the positive x, y directions.
     // when these are true, we render walls
-    public boolean eastWall = false;
-    public boolean southWall = false;
+    public boolean eastWall;
+    public boolean southWall;
 
-    // the 4 possible paths (e,w,n,s)
+    // the 4 possible paths (e, w, n, s)
     // we show 0 or 2 of them at any given time in a cell when solving the maze
-    public boolean eastPath = false;
-    public boolean westPath = false;
-    public boolean northPath = false;
-    public boolean southPath = false;
+    public boolean eastPath;
+    public boolean westPath ;
+    public boolean northPath;
+    public boolean southPath;
 
-    public int depth = 0;
+    private int depth;
 
+    /** Constructor */
+    public MazeCell() {
+        visited = false;
+        eastWall = false;
+        southWall = false;
+        depth = 0;
+        clearPath();
+    }
 
-    public Point getNextPosition(Point currentPosition, Point dir) {
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int d) {
+        depth = d;
+    }
+
+    public IntLocation getNextPosition(IntLocation currentPosition, IntLocation dir) {
         visited = true;
-
-        Point nextPosition = (Point) currentPosition.clone();
-        nextPosition.translate( dir.x, dir.y );
-        return nextPosition;
+        return currentPosition.incrementOnCopy(dir);
     }
 
     /**

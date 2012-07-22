@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.maze.ui;
 
+import com.barrybecker4.common.geometry.IntLocation;
 import com.barrybecker4.puzzle.maze.model.MazeCell;
 import com.barrybecker4.puzzle.maze.model.MazeModel;
 import com.barrybecker4.ui.util.GUIUtil;
@@ -155,9 +156,9 @@ public class MazeRenderer {
         drawChar("F", maze.getStopPosition(), cellSize, g2);
     }
 
-    private static void drawChar(String c, Point pos,  int cellSize, Graphics2D g2) {
+    private static void drawChar(String c, IntLocation pos,  int cellSize, Graphics2D g2) {
         if (pos != null)  {
-            g2.drawString( c, (int) ((pos.x + 0.32) * cellSize), (int) ((pos.y + 0.76) * cellSize) );
+            g2.drawString( c, (int) ((pos.getX() + 0.32) * cellSize), (int) ((pos.getY() + 0.76) * cellSize) );
         }
     }
 }
