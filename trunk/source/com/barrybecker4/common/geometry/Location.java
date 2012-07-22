@@ -44,11 +44,11 @@ public class Location implements Serializable {
         return col_;
     }
 
-    public int getX() {
+    public byte getX() {
         return col_;
     }
 
-    public int getY() {
+    public byte getY() {
         return row_;
     }
 

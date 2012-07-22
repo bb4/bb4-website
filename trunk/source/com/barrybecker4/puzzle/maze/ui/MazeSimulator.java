@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.maze.ui;
 
+import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.ui.application.ApplicationApplet;
 import com.barrybecker4.ui.util.GUIUtil;
 
@@ -18,14 +19,14 @@ import java.awt.event.ComponentEvent;
 public class MazeSimulator extends ApplicationApplet
                            implements ActionListener {
 
-    MazePanel mazePanel_;
-
-    protected Dimension oldSize_;
-
+    private MazePanel mazePanel_;
+    private Dimension oldSize_;
     private TopControlPanel controlPanel_;
 
     /** constructor */
-    public MazeSimulator() {}
+    public MazeSimulator() {
+        MathUtil.RANDOM.setSeed(1);
+    }
 
     /**
      * Build the user interface with parameter input controls at the top.
@@ -113,12 +114,6 @@ public class MazeSimulator extends ApplicationApplet
     public void solve() {
         mazePanel_.setAnimationSpeed(controlPanel_.getAnimationSpeed());
         mazePanel_.solve();
-    }
-
-
-    @Override
-    public void start() {
-        regenerate();
     }
 
     //------ Main method --------------------------------------------------------

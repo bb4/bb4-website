@@ -3,6 +3,7 @@ package com.barrybecker4.puzzle.maze.ui;
 
 import com.barrybecker4.common.concurrency.ThreadUtil;
 import com.barrybecker4.common.geometry.IntLocation;
+import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.puzzle.maze.MazeGenerator;
 import com.barrybecker4.puzzle.maze.MazeSolver;
 import com.barrybecker4.puzzle.maze.model.MazeModel;
@@ -92,7 +93,7 @@ public class MazePanel extends JComponent {
             }
         }
         else  {
-            if (Math.random() < (8.0/(double)(animationSpeed_ * animationSpeed_)))  {
+            if (MathUtil.RANDOM.nextDouble() < (8.0/(double)(animationSpeed_ * animationSpeed_)))  {
                 paintAll();
             }
             else {
