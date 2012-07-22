@@ -19,7 +19,7 @@ public class ProgressMonitorDemo extends JFrame {
     private JTextArea taskOutput;
 
     public ProgressMonitorDemo() {
-        super("ProgressMonitorDemo");
+        super("SimpleFrame");
         task = new LongTask(550);
 
         //Create the demo's UI.
