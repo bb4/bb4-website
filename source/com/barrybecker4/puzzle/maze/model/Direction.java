@@ -3,10 +3,6 @@ package com.barrybecker4.puzzle.maze.model;
 
 import com.barrybecker4.common.geometry.IntLocation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 /**
  * Possible directions that we can go.
@@ -32,7 +28,6 @@ public enum Direction {
 
     private double probability_;
 
-    private static Random RANDOM = new Random(1);
 
     Direction(double probability) {
         probability_ = probability;
@@ -48,58 +43,11 @@ public enum Direction {
 
     public abstract IntLocation apply(IntLocation dir);
 
-    /**
-     * return a shuffled list of directions
-     * they are ordered given the potentially skewed probabilities at the top.
-     */
-    public static List<Direction> getShuffledDirections() {
-        double rnd = RANDOM.nextDouble();
-        List<Direction> directions = new ArrayList<Direction>();
-        List<Direction> originalDirections = new ArrayList<Direction>();
-        originalDirections.addAll(Arrays.asList(values()));
-
-        double fwdProb = FORWARD.getProbability();
-        double leftProb = LEFT.getProbability();
-        double rightProb = RIGHT.getProbability();
-        double sum = fwdProb + leftProb + rightProb;
-        fwdProb /= sum;
-        leftProb /= sum;
-        rightProb /= sum;
-
-        if (rnd < fwdProb) {
-            directions.add( originalDirections.remove( 0 ) );
-            directions.add( getSecondDir( originalDirections,  leftProb));
-        }
-        else if ( rnd >= fwdProb && rnd < ( fwdProb + leftProb) ) {
-            directions.add( originalDirections.remove( 1 ) );
-            directions.add( getSecondDir( originalDirections,  fwdProb));
-        }
-        else {
-            directions.add( originalDirections.remove( 2 ) );
-            directions.add( getSecondDir( originalDirections,  fwdProb));
-        }
-        // the third direction is whatever remains
-        directions.add( originalDirections.remove( 0 ) );
-        return directions;
-    }
-
-    /**
-     * Determine the second direction in the list given a probability
-     * @return  the second direction.
-     */
-    private static Direction getSecondDir( List twoDirections, double p1) {
-        double rnd = RANDOM.nextDouble();
-        if ( rnd < p1 )
-            return (Direction) twoDirections.remove( 0 );
-        else
-            return (Direction) twoDirections.remove( 1 );
-    }
-
 
     /**
      *  find the direction which is counterclockwise 90 (to the left) of the specified dir.
      */
-    private static IntLocation leftOf( IntLocation dir ) {
+    protected IntLocation leftOf( IntLocation dir ) {
         IntLocation newDir;
         if ( dir.getX() == 0 ) {
             newDir = new IntLocation(0, (dir.getY() > 0)? -1 : 1 );
@@ -113,7 +61,7 @@ public enum Direction {
     /**
      * find the direction which is clockwise 90 (to the right) of the specified dir.
      */
-    private static IntLocation rightOf( IntLocation dir ) {
+    protected IntLocation rightOf( IntLocation dir ) {
         IntLocation newDir ;
         if ( dir.getX() == 0 ) {
             newDir = new IntLocation(0, (dir.getY() > 0)? 1 : -1);

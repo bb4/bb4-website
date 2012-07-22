@@ -41,7 +41,6 @@ public class MazeModel {
         // a border around the whole maze
         setConstraints();
 
-        // randomize this?
         startPosition_ = new IntLocation( 2, 2 );
     }
 
@@ -57,13 +56,16 @@ public class MazeModel {
         return stopPosition_;
     }
 
-    public MazeCell getCell(int x, int y) {
-
-        return grid_[Math.min(x, width_-1)][Math.min(y, height_-1)];
+    public MazeCell getCell(IntLocation p) {
+        return getCell(p.getX(), p.getY());
     }
 
-    public MazeCell getCell(IntLocation p) {
-        return grid_[p.getX()][p.getY()];
+    public MazeCell getCell(int x, int y) {
+
+        assert(x<width_);
+        assert(y<height_);
+        //return grid_[Math.min(x, width_-1)][Math.min(y, height_-1)];
+        return grid_[x][y];
     }
 
     public int getWidth() {
@@ -77,9 +79,6 @@ public class MazeModel {
      * mark all the cells unvisited.
      */
     public void unvisitAll() {
-
-        System.out.println("h="+ height_ + " w=" + width_);
-        // return everything to unvisited
         for (int j = 0; j < height_; j++ ) {
             for (int i = 0; i < width_; i++ ) {
                 MazeCell c = grid_[i][j];

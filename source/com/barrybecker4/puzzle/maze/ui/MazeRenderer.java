@@ -77,11 +77,10 @@ public class MazeRenderer {
     }
 
     private void drawVisitedCells(Graphics2D g2, MazeModel maze) {
-        int j;
-        int i;
+
         g2.setColor( VISITED_COLOR );
-        for ( j = 0; j < maze.getHeight(); j++ ) {
-            for ( i = 0; i < maze.getWidth(); i++ ) {
+        for (int j = 0; j < maze.getHeight(); j++ ) {
+            for (int i = 0; i < maze.getWidth(); i++ ) {
                 MazeCell c = maze.getCell(i, j);
                 if ( c == null )
                     System.out.println( "Error1 pos i=" + i + " j=" + j + " is out of bounds." );
@@ -98,14 +97,13 @@ public class MazeRenderer {
     }
 
     private void drawWalls(Graphics2D g2, MazeModel maze) {
-        int j;
-        int i;
+
         g2.setStroke( wallStroke );
         g2.setColor( WALL_COLOR );
-        for ( j = 0; j < maze.getHeight(); j++ ) {
-            for ( i = 0; i < maze.getWidth(); i++ ) {
+        for (int j = 0; j < maze.getHeight(); j++ ) {
+            for (int i = 0; i < maze.getWidth(); i++ ) {
                 MazeCell c = maze.getCell(i, j);
-                assert ( c != null ) :  "Error2 pos i=" + i + " j=" + j  + " is out of bounds.";
+                assert ( c != null ) : "Error2 pos i=" + i + " j=" + j  + " is out of bounds.";
 
                 int xpos = i * cellSize;
                 int ypos = j * cellSize;
@@ -121,13 +119,12 @@ public class MazeRenderer {
     }
 
     private void drawPath(Graphics2D g2, MazeModel maze) {
-        int j;
-        int i;
+
         g2.setStroke( pathStroke );
         g2.setColor( PATH_COLOR );
 
-        for ( j = 0; j < maze.getHeight(); j++ ) {
-            for ( i = 0; i < maze.getWidth(); i++ ) {
+        for (int j = 0; j < maze.getHeight(); j++ ) {
+            for (int i = 0; i < maze.getWidth(); i++ ) {
                 MazeCell c = maze.getCell(i,  j);
                 int xpos = i * cellSize;
                 int ypos = j * cellSize;

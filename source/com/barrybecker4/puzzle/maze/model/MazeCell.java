@@ -63,6 +63,10 @@ public class MazeCell {
         northPath = false;
         southPath = false;
     }
+
+    public String toString() {
+       return "Cell visited=" + visited + " eastWall="  + eastWall + " southWall=" + southWall;
+    }
 }
 
 
