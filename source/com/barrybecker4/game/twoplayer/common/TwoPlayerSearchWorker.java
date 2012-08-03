@@ -38,7 +38,10 @@ class TwoPlayerSearchWorker {
                 worker_.interrupt();
                 processing_ = false;
                 // make the move even though we did not finish computing it
-                controller_.getTwoPlayerViewer().computerMoved((Move)worker_.get());
+                Move move = (Move)worker_.get();
+                if (move != null) {
+                    controller_.getTwoPlayerViewer().computerMoved(move);
+                }
             }
             ThreadUtil.sleep(100);
         }
@@ -71,7 +74,7 @@ class TwoPlayerSearchWorker {
               public void finished() {
 
                   // move_ could be null if there was no legal move
-                  if (controller_.getTwoPlayerViewer() != null && move_ != null)  {
+                  if (controller_.getTwoPlayerViewer() != null)  {
                       controller_.getTwoPlayerViewer().computerMoved(move_);
                   }
                   processing_ = false;

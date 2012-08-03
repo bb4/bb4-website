@@ -97,6 +97,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
             numTopLevelMoves_ = list.size();
 
         if (emptyMoveList(list, lastMove)) {
+            updatePercentDone(depth, list);
             // if there are no possible next moves, return null (we hit the end of the game).
             return null;
         }
@@ -193,7 +194,8 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
      */
     protected void updatePercentDone(int depth, List remainingNextMoves) {
         if (depth == lookAhead_)   {
-            percentDone_ = 100 * (numTopLevelMoves_ - remainingNextMoves.size()) / numTopLevelMoves_;
+            percentDone_ = (numTopLevelMoves_  == 0) ? 100 :
+                    100 * (numTopLevelMoves_ - remainingNextMoves.size()) / numTopLevelMoves_;
         }
     }
 

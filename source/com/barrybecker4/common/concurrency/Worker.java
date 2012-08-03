@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.concurrency;
 
-
 /**
  * Worker is an abstract class that you subclass to
  * perform (usually gui related) work in a dedicated thread.  For
@@ -19,33 +18,45 @@ package com.barrybecker4.common.concurrency;
  */
 public abstract class Worker {
 
-    /** value to return. See getValue(), setValue()   */
-    private Object returnValue_ = null;
+    /** value to return after asynchronous computation. See getValue(), setValue()   */
+    private Object returnValue = null;
 
-    private final ThreadVar threadVar_;
+    /** worker thread under separate synchronization control. */
+    private final ThreadVar threadVar;
+
 
     /**
-     * Class to maintain reference to current worker thread
-     * under separate synchronization control.
+     * Constructor.
+     * Start a thread that will call the <code>construct</code> method and then exit.
      */
-    private static class ThreadVar {
-        private Thread thread_;
-        ThreadVar(Thread t) {
-            thread_ = t;
-        }
-        private synchronized Thread get() {
-            return thread_;
-        }
-        private synchronized void clear() {
-            thread_ = null;
-        }
+    public Worker() {
+
+        Runnable doConstruct = new Runnable() {
+            public void run() {
+                try {
+                    returnValue = construct();
+                }
+                finally {
+                    threadVar.clear();
+                }
+
+                // old: SwingUtilities.invokeLater(doFinished);
+                // Now call directly, but if the body of finished is in the ui,
+                // it should call SwingUtilities.invokeLater()
+                finished();
+            }
+        };
+
+        Thread thread = new Thread(doConstruct);
+        thread.setName("Worker Thread");
+        threadVar = new ThreadVar(thread);
     }
 
     /**
      * @return the value produced by the worker thread, or null if it hasn't been constructed yet.
      */
     protected synchronized Object getValue() {
-        return returnValue_;
+        return returnValue;
     }
 
     /**
@@ -53,6 +64,13 @@ public abstract class Worker {
      * @return the result.
      */
     public abstract Object construct();
+
+    /**
+     * Start the worker thread.
+     */
+    public void start() {
+        threadVar.start();
+    }
 
     /**
      * Called on the event dispatching thread (not on the worker thread)
@@ -67,11 +85,7 @@ public abstract class Worker {
      * to force the worker to stop what it's doing.
      */
     public void interrupt() {
-        Thread t = threadVar_.get();
-        if (t != null) {
-            t.interrupt();
-        }
-        threadVar_.clear();
+        threadVar.interrupt();
     }
 
     /**
@@ -83,54 +97,17 @@ public abstract class Worker {
      */
     public Object get() {
         while (true) {
-            Thread t = threadVar_.get();
-            if (t == null) {
+            Thread thread = threadVar.get();
+            if (thread == null) {
                 return getValue();
             }
             try {
-                t.join();
+                thread.join();
             }
             catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // propagate
                 return null;
             }
-        }
-    }
-
-
-    /**
-     * Start a thread that will call the <code>construct</code> method
-     * and then exit.
-     */
-    public Worker() {
-
-        Runnable doConstruct = new Runnable() {
-            public void run() {
-                try {
-                    returnValue_ = construct();
-                }
-                finally {
-                    threadVar_.clear();
-                }
-
-                // old: SwingUtilities.invokeLater(doFinished);
-                // Now call directly, but if the body of finished is in the ui,
-                // it should call SwingUtilities.invokeLater()
-                finished();
-            }
-        };
-
-        Thread t = new Thread(doConstruct);
-        threadVar_ = new ThreadVar(t);
-    }
-
-    /**
-     * Start the worker thread.
-     */
-    public void start() {
-        Thread t = threadVar_.get();
-        if (t != null) {
-            t.start();
         }
     }
 }
