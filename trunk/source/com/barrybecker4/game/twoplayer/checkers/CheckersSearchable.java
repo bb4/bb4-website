@@ -56,31 +56,40 @@ public class CheckersSearchable extends TwoPlayerSearchable {
      */
     @Override
     public boolean done( TwoPlayerMove move, boolean recordWin ) {
+
         if (move == null)  {
-            System.out.println("done because move is null");
+            // for checkers this means that the other player won.
+            if (recordWin)  {
+                TwoPlayerMove lastMove = (TwoPlayerMove) getMoveList().getLastMove();
+                recordPlayerWin(lastMove.isPlayer1());
+            }
             return true;
         }
 
         boolean won = (Math.abs( move.getValue() ) >= WINNING_VALUE);
 
         if ( won && recordWin ) {
-            if ( move.isPlayer1() )
-                players_.getPlayer1().setWon(true);
-            else
-                players_.getPlayer2().setWon(true);
+            recordPlayerWin(move.isPlayer1());
         }
 
         if ( getNumMoves() >= getBoard().getMaxNumMoves() ) {
-            System.out.println("getNumMoves()="+getNumMoves() + " getBoard().getMaxNumMoves()=" + getBoard().getMaxNumMoves());
             won = true;
             if ( recordWin ) {
-                if ( Math.abs( move.getValue() ) >= 0 )
-                    players_.getPlayer1().setWon(true);
-                else
-                    players_.getPlayer2().setWon(true);
+                recordPlayerWin(Math.abs(move.getValue()) >= 0);
             }
         }
         return (won);
+    }
+
+    /**
+     * @param p1Won true if player 1 should be marked the winner
+     */
+    private void recordPlayerWin(boolean p1Won) {
+        if (p1Won) {
+            players_.getPlayer1().setWon(true);
+        } else {
+            players_.getPlayer2().setWon(true);
+        }
     }
 
     /**

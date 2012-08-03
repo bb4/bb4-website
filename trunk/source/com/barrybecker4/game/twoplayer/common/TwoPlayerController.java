@@ -12,7 +12,6 @@ import com.barrybecker4.game.common.player.PlayerOptions;
 import com.barrybecker4.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.barrybecker4.game.twoplayer.common.persistence.TwoPlayerGameImporter;
 import com.barrybecker4.game.twoplayer.common.search.Searchable;
-import com.barrybecker4.game.twoplayer.common.search.options.SearchOptions;
 import com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.barrybecker4.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
@@ -356,7 +355,6 @@ public abstract class TwoPlayerController extends GameController {
      */
     public boolean isDone() {
         TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
-        //assert lastMove!=null;
         return getSearchable().done(lastMove, false);
     }
 
@@ -366,9 +364,6 @@ public abstract class TwoPlayerController extends GameController {
 
     public Searchable getSearchable() {
         if (searchable_ == null) {
-            SearchOptions options =
-                    ((TwoPlayerPlayerOptions) getCurrentPlayer().getOptions()).getSearchOptions();
-
             searchable_ = createSearchable((TwoPlayerBoard)getBoard(), getPlayers());
         }
 

@@ -50,7 +50,7 @@ import java.util.List;
 public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
                                                    implements GameChangedListener, TwoPlayerViewable {
 
-    /** Responsible for showing move progress visually. */
+    /** Responsible for showing move progress visually (with a progress bar). */
     private ComputerMoveProgress moveProgress_;
 
     /**
@@ -213,8 +213,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
 
         try {
             boolean done =  moveProgress_.doComputerMove(isPlayer1);
-            // force
-            paint( this.getGraphics() );
+            repaint(); //paint( this.getGraphics() );
             return done;
         }
         catch  (AssertionError ae) {
@@ -225,7 +224,6 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
 
         return false;
     }
-
 
     /**
      * Currently this does not actually step forward just one search step, but instead
@@ -293,13 +291,15 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
              if ( controller.isPlayer1sTurn() ) {
                  assert !controller.isProcessing();
                  done = manMoves( move );
-                 if ( !controller.getPlayers().getPlayer2().isHuman() && !done )
-                     doComputerMove( false );
+                 if ( !controller.getPlayers().getPlayer2().isHuman() && !done )  {
+                     done = doComputerMove( false );
+                 }
              }
              else { // player 2s turn
                  done = manMoves( move );
-                 if ( !controller.getPlayers().getPlayer1().isHuman() && !done )
-                     doComputerMove( true );
+                 if ( !controller.getPlayers().getPlayer1().isHuman() && !done )  {
+                     done = doComputerMove( true );
+                 }
              }
          }
          return !done;
@@ -411,9 +411,8 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     private class PostMoveCleanup implements Runnable {
         private final Move lastMove;
 
-        public PostMoveCleanup(Move lastMOve) {
-            assert lastMOve != null;
-            this.lastMove = lastMOve;
+        public PostMoveCleanup(Move lastMove) {
+            this.lastMove = lastMove;
         }
 
         public void run() {
