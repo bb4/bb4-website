@@ -37,7 +37,7 @@ class PatternToIntConverter {
                 sum += power;
             }
             // power doubles every step through the loop.
-            power += power;
+            power <<= 1;
         }
         return sum + power;
     }
@@ -65,7 +65,7 @@ class PatternToIntConverter {
                 sum += power;
             }
             // power doubles every step through the loop.
-            power += power;
+            power <<= 1;
         }
         return sum + power;
     }

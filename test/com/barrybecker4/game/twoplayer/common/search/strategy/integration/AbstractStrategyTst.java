@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.common.search.strategy.integration;
 
-import com.barrybecker4.common.format.FormatUtil;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
@@ -35,6 +34,9 @@ public abstract class AbstractStrategyTst extends TestCase {
 
     protected static final GamePiece PLAYER1_PIECE = new GamePiece(true);
     protected static final GamePiece PLAYER2_PIECE = new GamePiece(false);
+
+    /** All tests should be able to run in less time than this. */
+    private static final double MAX_NUM_SECONDS = 4.0;
 
 
     @Override
@@ -151,8 +153,9 @@ public abstract class AbstractStrategyTst extends TestCase {
         }
         // an extra check to make sure the calculation does not take too long.
         double elapsed = (float)(System.currentTimeMillis() - time) / 1000.0;
-        assertTrue("Took too long: " + elapsed, elapsed < 5.0);
-        System.out.println("TOTAL TIME = " + FormatUtil.formatNumber(elapsed));
+        assertTrue("Took too long. Expected to be less than " + MAX_NUM_SECONDS + " seconds but was: " + elapsed
+                + " seconds.", elapsed < MAX_NUM_SECONDS);
+        //System.out.println("TOTAL TIME = " + FormatUtil.formatNumber(elapsed));
     }
 
     public void verifyMove(Progress prog, boolean player1, ExpectedMoveMatrix expectedMoves, String desc) {

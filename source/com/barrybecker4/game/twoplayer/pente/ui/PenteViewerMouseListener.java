@@ -28,8 +28,8 @@ public class PenteViewerMouseListener extends ViewerMouseListener {
 
 
     @Override
-    public void mousePressed( MouseEvent e )
-    {
+    public void mousePressed( MouseEvent e ) {
+
         PenteBoardViewer viewer = (PenteBoardViewer) viewer_;
         PenteController controller = (PenteController) viewer.getController();
 
