@@ -152,8 +152,9 @@ public class TwoPlayerMove extends Move {
     public int compareTo( Move m ) {
 
         int result = super.compareTo(m);
-        if (result != 0)
+        if (result != 0)  {
             return result;
+        }
 
         // break tie by row position
         TwoPlayerMove move = (TwoPlayerMove) m;
@@ -268,7 +269,7 @@ public class TwoPlayerMove extends Move {
         String pieceCreator = "null";
         if (getPiece() != null) {
             pieceCreator = getPiece().isOwnedByPlayer1()? "PLAYER1_PIECE" : "PLAYER2_PIECE";
-            //pieceCreator = "new GamePiece(" + getPiece().isOwnedByPlayer1() + ")";
+
         }
         return "TwoPlayerMove.createMove(new Location("
                 +  getToLocation().getRow()  + ", " + getToLocation().getCol()  + "), " + getValue() + ", "

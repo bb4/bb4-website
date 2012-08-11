@@ -36,7 +36,7 @@ final class PenteMoveGenerator {
         PenteBoard pb = searchable_.getBoard();
         pb.determineCandidateMoves();
 
-        boolean player1 = (lastMove == null) || !(lastMove.isPlayer1());
+        boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
 
         int ncols = pb.getNumCols();
         int nrows = pb.getNumRows();
@@ -69,15 +69,20 @@ final class PenteMoveGenerator {
         if (lastMove == null)  {
             return new MoveList();
         }
-         MoveList allMoves = findMovesForBothPlayers(lastMove, weights);
+         MoveList allMoves = // generateMoves(lastMove, weights);
+           findMovesForBothPlayers(lastMove, weights);
 
         // now keep only those that result in a win or loss.
         MoveList urgentMoves = new MoveList();
+        boolean currentPlayer = !lastMove.isPlayer1();
+
         for (Move m : allMoves) {
             TwoPlayerMove move = (TwoPlayerMove) m;
             // if its not a winning move or we already have it, then skip
             if ( Math.abs(move.getValue()) >= WINNING_VALUE  && !contains(move, urgentMoves) ) {
                 move.setUrgent(true);
+                move.setPlayer1(currentPlayer);
+                move.setPiece(new GamePiece(currentPlayer));
                 urgentMoves.add(move);
             }
         }
@@ -85,22 +90,22 @@ final class PenteMoveGenerator {
     }
 
     /**
-     * Consider both our moves and and opponent moves.
+     * Consider both our moves and opponent moves.
      * @return Set of all next moves.
      */
     private MoveList findMovesForBothPlayers(TwoPlayerMove lastMove, ParameterArray weights) {
         MoveList allMoves = new MoveList();
-        MoveList moves = generateMoves( lastMove, weights);
+
+        MoveList moves = generateMoves(lastMove, weights);
         allMoves.addAll(moves);
 
+        // unlike go, I don't know if we need this
         TwoPlayerMove oppLastMove = lastMove.copy();
         oppLastMove.setPlayer1(!lastMove.isPlayer1());
         MoveList opponentMoves =
-                generateMoves( oppLastMove, weights);
+                generateMoves(oppLastMove, weights);
         for (Move m : opponentMoves){
             TwoPlayerMove move = (TwoPlayerMove) m;
-            move.setPlayer1(!lastMove.isPlayer1());
-            move.setPiece(new GamePiece(!lastMove.isPlayer1()));
             allMoves.add(move);
         }
 
@@ -108,10 +113,9 @@ final class PenteMoveGenerator {
     }
 
     /**
-     * @return true of the movelist contains the specified move.
+     * @return true of the {@link MoveList} contains the specified move.
      */
-    private boolean contains(TwoPlayerMove move, MoveList moves)
-    {
+    private boolean contains(TwoPlayerMove move, MoveList moves) {
         for (Move m : moves) {
             Location moveLocation = ((TwoPlayerMove)m).getToLocation();
             if (moveLocation.equals(move.getToLocation())) {
