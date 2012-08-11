@@ -64,8 +64,8 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
             // @@ we hit this a lot in the tests when running through gradle (because assertions are on). Should fix.
             GameContext.log(1, "Should not move twice in a row m=" + move
                     + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_);
-            //assert(lastMove.isPlayer1() != m.isPlayer1()):
-            //        "can't go twice in a row m=" + m + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_;
+            assert(lastMove.isPlayer1() != move.isPlayer1()):
+                    "can't go twice in a row m=" + move + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_;
         }
 
         getBoard().makeMove(move);
@@ -113,13 +113,14 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
 
 
     /**
-     * given a move, determine whether the game is over.
+     * Given a move, determine whether the game is over.
      * If recordWin is true, then the variables for player1/2HasWon can get set.
      *  sometimes, like when we are looking ahead we do not want to set these.
      * @param move the move to check. If null then return true. This is typically the last move played.
      * @param recordWin if true then the controller state will record wins
      */
     public boolean done( TwoPlayerMove move, boolean recordWin ) {
+
         // the game can't be over if no moves have been made yet.
         if (moveList_.getNumMoves() == 0) {
             return false;
@@ -137,7 +138,8 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
             return true;
         }
 
-        boolean won = (Math.abs( move.getInheritedValue()) >= WINNING_VALUE);
+        int absValue = Math.abs(move.getValue());
+        boolean won = (absValue >= WINNING_VALUE);
 
         if ( won && recordWin ) {
             if ( move.getValue() >= WINNING_VALUE )

@@ -73,7 +73,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     /**
      * Restore a game file
-     * @param problemFileBase the saved game to restor and test.
+     * @param problemFileBase the saved game to restore and test.
      */
     protected void restore(String problemFileBase) {
         getController().restoreFromFile(helper.getTestFile(problemFileBase));

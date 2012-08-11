@@ -168,8 +168,4 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);
     }
-
-    public static Test suite() {
-        return new TestSuite(TicTacToeSearchableTest.class);
-    }
 }

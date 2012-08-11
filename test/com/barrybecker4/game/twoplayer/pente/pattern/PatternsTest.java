@@ -67,13 +67,13 @@ public class PatternsTest extends TestCase  {
         String pattern = "X_XX_XXX";
 
         assertEquals(-1, patterns.getWeightIndexForPattern(pattern, 0, 1));
-        assertEquals(1, patterns.getWeightIndexForPattern(pattern, 1, 3));
-        assertEquals(1, patterns.getWeightIndexForPattern(pattern, 2, 4));
-        assertEquals(3, patterns.getWeightIndexForPattern(pattern, 0, 3));
-        assertEquals(5, patterns.getWeightIndexForPattern(pattern, 0, 4));
-        assertEquals(5, patterns.getWeightIndexForPattern(pattern, 0, 5));
-        assertEquals(7, patterns.getWeightIndexForPattern(pattern, 0, 6));
-        assertEquals(7, patterns.getWeightIndexForPattern(pattern, 0, 7));
+        assertEquals(0, patterns.getWeightIndexForPattern(pattern, 1, 3));
+        assertEquals(0, patterns.getWeightIndexForPattern(pattern, 2, 4));
+        assertEquals(2, patterns.getWeightIndexForPattern(pattern, 0, 3));
+        assertEquals(4, patterns.getWeightIndexForPattern(pattern, 0, 4));
+        assertEquals(4, patterns.getWeightIndexForPattern(pattern, 0, 5));
+        assertEquals(6, patterns.getWeightIndexForPattern(pattern, 0, 6));
+        assertEquals(6, patterns.getWeightIndexForPattern(pattern, 0, 7));
     }
 
     public void testGetWeightIndexForPentePatternXX_XX() {
@@ -83,19 +83,15 @@ public class PatternsTest extends TestCase  {
 
         assertEquals(-1, patterns.getWeightIndexForPattern(pattern, 0, 0));
         assertEquals(-1, patterns.getWeightIndexForPattern(pattern, 0, 1));
-        assertEquals(1, patterns.getWeightIndexForPattern(pattern, 0, 2));
-        assertEquals(3, patterns.getWeightIndexForPattern(pattern, 0, 3));
-        assertEquals(7, patterns.getWeightIndexForPattern(pattern, 0, 4));
-        assertEquals(7, patterns.getWeightIndexForPattern(pattern));
+        assertEquals(0, patterns.getWeightIndexForPattern(pattern, 0, 2));
+        assertEquals(2, patterns.getWeightIndexForPattern(pattern, 0, 3));
+        assertEquals(6, patterns.getWeightIndexForPattern(pattern, 0, 4));
+        assertEquals(6, patterns.getWeightIndexForPattern(pattern));
     }
 
 
     private void verify(int expIndex, String pattern) {
         int wtIndex = patterns.getWeightIndexForPattern(pattern, 0, pattern.length()-1);
         assertEquals(expIndex, wtIndex);
-    }
-
-    public static Test suite() {
-        return new TestSuite(PatternsTest.class);
     }
 }

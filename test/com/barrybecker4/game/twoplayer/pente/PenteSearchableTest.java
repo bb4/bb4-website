@@ -45,13 +45,15 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
                 searchable.done((TwoPlayerMove)getController().getLastMove(), false));
     }
 
+    /** Expected done becauise there are 5 ina row and score should exceed the win threshold. */
     @Override
     public void testDoneForMidGameWin() {
         restore("wonGameP1");
-        Assert.assertTrue("Expected done state for this game. ",
+        Assert.assertTrue("Expected done state for this game. P1 should have won.",
                 searchable.done((TwoPlayerMove)getController().getLastMove(), false));
+
         restore("wonGameP2");
-        Assert.assertTrue("Expected done state for this game. ",
+        Assert.assertTrue("Expected done state for this game. P2 should have won.",
                 searchable.done((TwoPlayerMove)getController().getLastMove(), false));
     }
 
@@ -152,9 +154,5 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
                 getController().getSearchable().generateMoves(lastMove, weights());
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);
-    }
-
-    public static Test suite() {
-        return new TestSuite(PenteSearchableTest.class);
     }
 }

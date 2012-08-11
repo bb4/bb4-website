@@ -5,8 +5,7 @@ import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.game.twoplayer.common.search.options.SearchOptions;
 
 /**
- * Created by IntelliJ IDEA. User: barrybecker4 Date: Dec 31, 2009 Time: 7:32:13 AM To change this template use File |
- * Settings | File Templates.
+ * @author Barry Becker
  */
 public interface ISearchableHelper {
 
@@ -25,11 +24,6 @@ public interface ISearchableHelper {
      * @return test file containing state of saved game to restore.
      */
     String getTestFile(String problemFileBase);
-
-    /**
-     * @return test file containing state of saved default game to restore.
-     */
-    String getDefaultTestFile();
 
     /**
      * @param progress how far into the game are we.

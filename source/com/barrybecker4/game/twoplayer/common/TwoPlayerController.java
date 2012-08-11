@@ -117,7 +117,8 @@ public abstract class TwoPlayerController extends GameController {
         importer.restoreFromFile(fileName);
         TwoPlayerMove m = (TwoPlayerMove)(getLastMove());
         if (m != null) {
-            m.setValue( getSearchable().worth( m, weights_.getDefaultWeights()));
+            int value = getSearchable().worth( m, weights_.getDefaultWeights());
+            m.setValue(value);
         }
     }
 

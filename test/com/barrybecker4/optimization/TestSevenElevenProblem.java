@@ -32,13 +32,4 @@ public class TestSevenElevenProblem extends OptimizerTestCase {
        verifyTest(optType, problem, initialGuess, optimizer, problem.getFitnessRange(),
                   ERROR_TOLERANCE_PERCENT[optType.ordinal()], "Seven Eleven");
     }
-
-
-    /**
-     * @return all the junit test cases to run (in this class).
-     */
-    public static Test suite() {
-        return new TestSuite(TestSevenElevenProblem.class);
-    }
-
 }

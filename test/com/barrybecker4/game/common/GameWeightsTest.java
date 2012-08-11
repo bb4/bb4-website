@@ -32,14 +32,4 @@ public class GameWeightsTest extends TestCase  {
                 10.0, weights.getPlayer1Weights().get(2).getValue());
     }
 
-    /**
-     * @return the line
-     */
-    private StringBuilder createLine(String line) {
-        return new StringBuilder(line);
-    }
-
-    public static Test suite() {
-        return new TestSuite(GameWeightsTest.class);
-    }
 }

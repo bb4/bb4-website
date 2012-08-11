@@ -125,8 +125,4 @@ public class PatternIntConverterTest extends TestCase  {
         assertEquals("Unexpected integer for pattern.",
                 expectedInt, converter.convertPatternToInt(pattern));
     }
-
-    public static Test suite() {
-        return new TestSuite(PatternIntConverterTest.class);
-    }
 }
