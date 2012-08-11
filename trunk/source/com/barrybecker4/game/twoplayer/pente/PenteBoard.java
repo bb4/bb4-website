@@ -13,7 +13,7 @@ import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 public class PenteBoard extends TwoPlayerBoard {
 
     /** this is an auxiliary structure to help determine candidate moves. should extract to sep class. */
-    protected boolean[][] candidateMoves_;
+    protected CandidateMoves candidateMoves;
 
     /** constructor
      *  @param numRows num rows
@@ -32,7 +32,7 @@ public class PenteBoard extends TwoPlayerBoard {
 
     public PenteBoard(PenteBoard pb) {
         super(pb);
-        candidateMoves_ = pb.candidateMoves_.clone();
+        candidateMoves = pb.candidateMoves.copy();
     }
 
     @Override
@@ -46,22 +46,7 @@ public class PenteBoard extends TwoPlayerBoard {
     @Override
     public void setSize( int numRows, int numCols ) {
         super.setSize(numRows, numCols);
-        candidateMoves_ = createCandidateMoves();
-    }
-
-    private boolean[][] createCandidateMoves() {
-        return new boolean[getNumRows() + 2][getNumCols() + 2];
-    }
-
-    /**
-     * The candidateMoves has a border on all sides
-     */
-    protected void initCandidateMoves() {
-        for ( int i = 0; i <= getNumRows() + 1; i++ )  {
-            for ( int j = 0; j <= getNumCols() + 1; j++ ) {
-                candidateMoves_[i][j] = false;
-            }
-        }
+        candidateMoves = new CandidateMoves(numRows, numCols);
     }
 
     public int getMaxNumMoves() {
@@ -82,9 +67,8 @@ public class PenteBoard extends TwoPlayerBoard {
      * later we look for empty spots that are true for candidate moves.
      */
     public void determineCandidateMoves()  {
-        boolean[][] b = candidateMoves_;
         // first clear out what we had before
-        initCandidateMoves();
+        candidateMoves.clear();
 
         // set the footprints
         int i,j;
@@ -92,21 +76,21 @@ public class PenteBoard extends TwoPlayerBoard {
         for ( i = 1; i <= getNumRows(); i++ ) {
             for ( j = 1; j <= getNumCols(); j++ ) {
                 if ( getPosition(i, j).isOccupied() ) {
-                    b[i - 1][j - 1] = true;
-                    b[i - 1][j] = true;
-                    b[i - 1][j + 1] = true;
-                    b[i][j - 1] = true;
-                    b[i][j + 1] = true;
-                    b[i + 1][j - 1] = true;
-                    b[i + 1][j] = true;
-                    b[i + 1][j + 1] = true;
+                    candidateMoves.setCandidate(i - 1, j - 1);
+                    candidateMoves.setCandidate(i - 1, j);
+                    candidateMoves.setCandidate(i - 1, j + 1);
+                    candidateMoves.setCandidate(i, j - 1);
+                    candidateMoves.setCandidate(i, j + 1);
+                    candidateMoves.setCandidate(i + 1, j - 1);
+                    candidateMoves.setCandidate(i + 1, j);
+                    candidateMoves.setCandidate(i + 1, j + 1);
                     hasCandidates = true;
                 }
             }
         }
         // edge case when no moves on the board - just use the center
         if (!hasCandidates) {
-            b[getNumRows()/2+1][getNumCols()/2+1] = true;
+            candidateMoves.setCandidate(getNumRows() / 2 + 1, getNumCols() / 2 + 1);
         }
     }
 
@@ -118,7 +102,7 @@ public class PenteBoard extends TwoPlayerBoard {
      * @return true if this position is a possible next move
      */
     public boolean isCandidateMove( int row, int col )  {
-        return (candidateMoves_[row][col] && getPosition(row, col).isUnoccupied());
+        return (candidateMoves.isCandidate(row, col) && getPosition(row, col).isUnoccupied());
     }
 
     /**

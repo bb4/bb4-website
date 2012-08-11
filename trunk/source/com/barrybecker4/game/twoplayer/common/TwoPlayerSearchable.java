@@ -137,7 +137,7 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
             return true;
         }
 
-        boolean won = (Math.abs( move.getValue() ) >= WINNING_VALUE);
+        boolean won = (Math.abs( move.getInheritedValue()) >= WINNING_VALUE);
 
         if ( won && recordWin ) {
             if ( move.getValue() >= WINNING_VALUE )

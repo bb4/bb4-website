@@ -29,16 +29,16 @@ public class TicTacToeBoard extends PenteBoard {
      */
     @Override
     public void determineCandidateMoves() {
-        boolean[][] b = candidateMoves_;
+
         // first clear out what we had before
-        initCandidateMoves();
+        candidateMoves.clear();
 
         int i,j;
 
         for ( i = 1; i <= getNumRows(); i++ )  {
             for ( j = 1; j <= getNumCols(); j++ )  {
                 if ( !getPosition(i, j).isOccupied())
-                    b[i][j] = true;
+                    candidateMoves.setCandidate(i, j);
             }
         }
     }

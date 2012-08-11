@@ -14,14 +14,12 @@ import com.barrybecker4.game.twoplayer.pente.PenteController;
  *
  *  @author Barry Becker
  */
-public class PenteBoardViewer extends AbstractTwoPlayerBoardViewer
-{
+public class PenteBoardViewer extends AbstractTwoPlayerBoardViewer {
 
     public PenteBoardViewer() {}
 
     @Override
-    protected GameController createController()
-    {
+    protected GameController createController() {
         return new PenteController();
     }
 
