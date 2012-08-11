@@ -29,13 +29,13 @@ public class PenteLineTest extends TestCase  {
 
     /** from the perspective of X */
     public void testEvalLinePlayer1Short_p1Persp() {
-        checkLine("_X_XO", 1, PLAYER1_PERSP, 8, new String[] {"_X_X"});
-        checkLine("_X_XO", 2, PLAYER1_PERSP, 8, new String[] {"_X_X"});
-        checkLine("_X_XO", 3, PLAYER1_PERSP, 8, new String[] {"_X_X"});
+        checkLine("_X_XO", 1, PLAYER1_PERSP, 2, new String[] {"_X_X"});
+        checkLine("_X_XO", 2, PLAYER1_PERSP, 2, new String[] {"_X_X"});
+        checkLine("_X_XO", 3, PLAYER1_PERSP, 2, new String[] {"_X_X"});
         checkLine("_X_XO", 4, PLAYER1_PERSP, 0, new String[] {""});
         checkLine("_XX", 1, PLAYER1_PERSP, 0, new String[] {"_XX"});
-        checkLine("_XX_", 2, PLAYER1_PERSP, 32, new String[] {"_XX_"});
-        checkLine("_XX_", 3, PLAYER1_PERSP, 32, new String[] {"_XX_"});
+        checkLine("_XX_", 2, PLAYER1_PERSP, 8, new String[] {"_XX_"});
+        checkLine("_XX_", 3, PLAYER1_PERSP, 8, new String[] {"_XX_"});
 
     }
 
@@ -49,18 +49,18 @@ public class PenteLineTest extends TestCase  {
 
 
     public void testEvalLinePlayer1Long() {
-        checkLine("_XX_XX__",  1, PLAYER1_PERSP, 348, new String[] {"_XX_XX_"});
-        checkLine("_XX_XX__",  3, PLAYER1_PERSP, 348, new String[] {"_XX_XX_"});
+        checkLine("_XX_XX__",  1, PLAYER1_PERSP, 320, new String[] {"_XX_XX_"});
+        checkLine("_XX_XX__",  3, PLAYER1_PERSP, 320, new String[] {"_XX_XX_"});
         checkLine("_XX_XX__",  3, PLAYER2_PERSP, 0,   new String[] {"_"});
-        checkLine("_XX_XX__",  4, PLAYER1_PERSP, 348, new String[] {"_XX_XX_"});
-        checkLine("_XX_XX__",  6, PLAYER1_PERSP, 348, new String[] {"_XX_XX_"});
-        checkLine("_XX_XX__",  1, PLAYER1_PERSP, 348, new String[] {"_XX_XX_"});
-        checkLine("_XX_XOX_X__", 1, PLAYER1_PERSP, 32, new String[] {"_XX_X"});
+        checkLine("_XX_XX__",  4, PLAYER1_PERSP, 320, new String[] {"_XX_XX_"});
+        checkLine("_XX_XX__",  6, PLAYER1_PERSP, 320, new String[] {"_XX_XX_"});
+        checkLine("_XX_XX__",  1, PLAYER1_PERSP, 320, new String[] {"_XX_XX_"});
+        checkLine("_XX_XOX_X__", 1, PLAYER1_PERSP, 8, new String[] {"_XX_X"});
         checkLine("_XX_XOX_X__", 1, PLAYER2_PERSP, 0,  new String[] {""});
-        checkLine("_XX_XOX_X__", 5, PLAYER1_PERSP, 40, new String[] {"_XX_X", "X_X_"});
+        checkLine("_XX_XOX_X__", 5, PLAYER1_PERSP, 10, new String[] {"_XX_X", "X_X_"});
         checkLine("_XX_XOX_X__", 5, PLAYER2_PERSP, 0,  new String[] {"O"});
         checkLine("_OO_OXO_O__", 5, PLAYER1_PERSP, 0,  new String[] {"X"});
-        checkLine("_OO_OXO_O__", 5, PLAYER2_PERSP, -40, new String[] {"_OO_O", "O_O_"});
+        checkLine("_OO_OXO_O__", 5, PLAYER2_PERSP, -10, new String[] {"_OO_O", "O_O_"});
     }
 
     private void checkLine(String linePattern, int position, boolean player1persp, int expectedWorth,
@@ -91,9 +91,5 @@ public class PenteLineTest extends TestCase  {
      */
     private Line createLine(String linePattern, LineEvaluator evaluator) {
         return TstUtil.createLine(linePattern, evaluator);
-    }
-
-    public static Test suite() {
-        return new TestSuite(PenteLineTest.class);
     }
 }

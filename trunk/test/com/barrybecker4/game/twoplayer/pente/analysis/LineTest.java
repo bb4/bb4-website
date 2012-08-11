@@ -194,8 +194,4 @@ public class LineTest extends TestCase  {
     private LineEvaluator createLineEvaluator() {
         return new LineEvaluator(new SimplePatterns(), weights.getDefaultWeights());
     }
-
-    public static Test suite() {
-        return new TestSuite(LineTest.class);
-    }
 }

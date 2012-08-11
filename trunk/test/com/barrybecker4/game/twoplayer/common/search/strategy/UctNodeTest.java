@@ -213,9 +213,4 @@ public class UctNodeTest extends TestCase  {
             }
         }
     }
-
-
-    public static Test suite() {
-        return new TestSuite(UctNodeTest.class);
-    }
 }

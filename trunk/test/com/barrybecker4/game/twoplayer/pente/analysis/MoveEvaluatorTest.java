@@ -94,14 +94,14 @@ public class MoveEvaluatorTest extends TestCase  {
 
         initRow(board, 1, "_XX__");
         lastMove = TwoPlayerMove.createMove(1, 2, 0, new GamePiece(true));
-        checkResultLines(lastMove, 32, new String[] {"_XX____", "X_____", "_X", "X_____"});
+        checkResultLines(lastMove, 8, new String[] {"_XX____", "X_____", "_X", "X_____"});
     }
 
     public void test_OO__Evaluation() {
 
         initRow(board, 1, "_OO__");
         lastMove = TwoPlayerMove.createMove(1, 2, 0, new GamePiece(false));
-        checkResultLines(lastMove, -32, new String[] {"_OO____", "O_____", "_O", "O_____"});
+        checkResultLines(lastMove, -8, new String[] {"_OO____", "O_____", "_O", "O_____"});
     }
 
     /** the side of the last move played must match the piece on the board or we get an assertion. */
@@ -129,20 +129,20 @@ public class MoveEvaluatorTest extends TestCase  {
 
         initRow(board, 2, "_XX__");  // on second row
         lastMove = TwoPlayerMove.createMove(2, 2, 0, new GamePiece(true));
-        checkResultLines(lastMove, 32, new String[] {"_XX____", "_X_____", "_X_", "_X_____"});
+        checkResultLines(lastMove, 8, new String[] {"_XX____", "_X_____", "_X_", "_X_____"});
     }
 
     public void test_XX_X_X_Row1Evaluation() {
 
         initRow(board, 1, "_XX_X__X_");
         lastMove = TwoPlayerMove.createMove(1, 2, 0, new GamePiece(true));
-        checkResultLines(lastMove, 288, new String[] {"_XX_X__", "X_____", "_X", "X_____"});
+        checkResultLines(lastMove, 24, new String[] {"_XX_X__", "X_____", "_X", "X_____"});
 
         lastMove = TwoPlayerMove.createMove(1, 3, 0, new GamePiece(true));
-        checkResultLines(lastMove, 320, new String[] {"_XX_X__X", "X_____", "__X", "X_____"});
+        checkResultLines(lastMove, 32, new String[] {"_XX_X__X", "X_____", "__X", "X_____"});
 
         lastMove = TwoPlayerMove.createMove(1, 5, 0, new GamePiece(true));
-        checkResultLines(lastMove, 320, new String[] {"_XX_X__X__", "X_____", "____X", "X_____"});
+        checkResultLines(lastMove, 32, new String[] {"_XX_X__X__", "X_____", "____X", "X_____"});
 
         lastMove = TwoPlayerMove.createMove(1, 8, 0, new GamePiece(true));
         checkResultLines(lastMove, 0, new String[] {"X_X__X_____", "X_____", "_____X", "X_____"});
@@ -152,13 +152,13 @@ public class MoveEvaluatorTest extends TestCase  {
 
         initRow(board, 5, "_XX_X__X_");
         lastMove = TwoPlayerMove.createMove(5, 2, 0, new GamePiece(true));
-        checkResultLines(lastMove, 288, new String[] {"_XX_X__", "____X_____", "_X____", "_X_____"});
+        checkResultLines(lastMove, 24, new String[] {"_XX_X__", "____X_____", "_X____", "_X_____"});
 
         lastMove = TwoPlayerMove.createMove(5, 3, 0, new GamePiece(true));
-        checkResultLines(lastMove, 320, new String[] {"_XX_X__X", "____X_____", "__X____", "__X_____"});
+        checkResultLines(lastMove, 32, new String[] {"_XX_X__X", "____X_____", "__X____", "__X_____"});
 
         lastMove = TwoPlayerMove.createMove(5, 5, 0, new GamePiece(true));
-        checkResultLines(lastMove, 320, new String[] {"_XX_X__X__", "____X_____", "____X____", "____X_____"});
+        checkResultLines(lastMove, 32, new String[] {"_XX_X__X__", "____X_____", "____X____", "____X_____"});
 
         lastMove = TwoPlayerMove.createMove(5, 8, 0, new GamePiece(true));
         checkResultLines(lastMove, 0, new String[] {"X_X__X_____", "____X_____", "_____X____", "____X_____"});
@@ -190,13 +190,13 @@ public class MoveEvaluatorTest extends TestCase  {
         initRow(board, 3, "_XX_X__X_");
         initRow(board, 4, "_XX_X__X_");
         TwoPlayerMove lastMove = TwoPlayerMove.createMove(2, 2, 0, new GamePiece(false));
-        checkResultLines(lastMove, -56, new String[] {"_OX_X__", "_OXX___", "_O_", "_OX____"});
+        checkResultLines(lastMove, -14, new String[] {"_OX_X__", "_OXX___", "_O_", "_OX____"});
 
         lastMove = TwoPlayerMove.createMove(3, 3, 0, new GamePiece(true));
-        checkResultLines(lastMove, 640, new String[] {"_XX_X__X", "_XXX____", "_XX__", "_OX_____"});
+        checkResultLines(lastMove, 64, new String[] {"_XX_X__X", "_XXX____", "_XX__", "_OX_____"});
 
         lastMove = TwoPlayerMove.createMove(3, 8, 0, new GamePiece(true));
-        checkResultLines(lastMove, 288, new String[] {"X_X__X_____", "_XXX____", "_____X__", "__X_____"});
+        checkResultLines(lastMove, 24, new String[] {"X_X__X_____", "_XXX____", "_____X__", "__X_____"});
     }
 
 
@@ -230,9 +230,5 @@ public class MoveEvaluatorTest extends TestCase  {
                 board.makeMove(move);
             }
         }
-    }
-
-    public static Test suite() {
-        return new TestSuite(MoveEvaluatorTest.class);
     }
 }

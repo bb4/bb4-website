@@ -162,8 +162,4 @@ public class MoveEvaluationTest extends TestCase  {
         assertEquals("[" + dir + "] Unexpected worth for move " + lastMove, expectedWorth, worth);
         board.undoMove();
     }
-
-    public static Test suite() {
-        return new TestSuite(MoveEvaluationTest.class);
-    }
 }

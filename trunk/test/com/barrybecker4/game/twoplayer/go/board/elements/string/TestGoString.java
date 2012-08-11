@@ -35,8 +35,4 @@ public class TestGoString extends GoTestCase {
 
         assertEquals("Unexpected number fo liberties", 4, string.getNumLiberties(board));
     }
-
-    public static Test suite() {
-        return new TestSuite(TestGoString.class);
-    }
 }

@@ -35,10 +35,4 @@ public class TestAnalyticFunctionProblem extends OptimizerTestCase {
         }
     }
 
-    /**
-     * @return all the junit test cases to run (in this class).
-     */
-    public static Test suite() {
-        return new TestSuite(TestAnalyticFunctionProblem.class);
-    }
 }

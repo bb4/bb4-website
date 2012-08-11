@@ -36,14 +36,14 @@ public class PenteWeights extends GameWeights {
      */
     private static final double[] DEFAULT_WEIGHTS = {
         0.0,    0.0,    0.0,    0.5,    2.0,    8.0,
-        JEOPARDY_WEIGHT,     JEOPARDY_WEIGHT + 7.0, ASSUMED_WINNING_VALUE,
+        JEOPARDY_WEIGHT,     JEOPARDY_WEIGHT + 7.0, 1.2 * ASSUMED_WINNING_VALUE,
         2.1 * ASSUMED_WINNING_VALUE,  2.1 * ASSUMED_WINNING_VALUE,  3 * ASSUMED_WINNING_VALUE
     };
 
     /** Don't allow the weights to exceed these maximum values. Upper limit. */
     private static final double[] MAX_WEIGHTS = {
         10.0,   10.0,   10.0,    20.0,    JEOPARDY_WEIGHT/2,  JEOPARDY_WEIGHT,
-        2*JEOPARDY_WEIGHT,         2*JEOPARDY_WEIGHT,      2 * ASSUMED_WINNING_VALUE,
+        2*JEOPARDY_WEIGHT,         2*JEOPARDY_WEIGHT,     2*ASSUMED_WINNING_VALUE,
         3 * ASSUMED_WINNING_VALUE,  4 * ASSUMED_WINNING_VALUE,  5 * ASSUMED_WINNING_VALUE
     };
 
@@ -60,18 +60,18 @@ public class PenteWeights extends GameWeights {
 
 
     protected static final String[] WEIGHT_DESCRIPTIONS = {
-        "Open ended two in a row (_XX)",            // 1
-        "Closed three in a row (XXX)",                    // 2
-        "Three in a row with chance to make 4 (_XXX or X_XX)",   // 3
-        "Can be blocked after next move (_X_X, X_X_X)",               // 4
-        "Chance to have win after next move (_XX_, _X_X_, _X_XX, _XX_X)",  // 5
-        "Likely win if play next (_XXX_, _X_XX_, _X_XX_X ...)",                   // 6
-        "Guaranteed to win on next move (_XXXX, X_XXX, XX_XX, _X_XXX, _XX_XX, _XXX_X, ...)",  // 7
-        "Guaranteed win even if not moving next (_XXXX_, _XXXX_X, ...)",              // 8
-        "Already won. Arrangements of 5 in a row weight",                        // 9
-        "Already won. Arrangements of 6 in a row weight",                    // 10
-        "Already won. Arrangements of 7 in a row weight",                // 11
-        "Already won. Arrangements of 8 in a row weight"            // 12
+        "Open ended two in a row (_XX)",            // 0
+        "Closed three in a row (XXX)",                    // 1
+        "Three in a row with chance to make 4 (_XXX or X_XX)",   // 2
+        "Can be blocked after next move (_X_X, X_X_X)",               // 3
+        "Chance to have win after next move (_XX_, _X_X_, _X_XX, _XX_X)",  // 4
+        "Likely win if play next (_XXX_, _X_XX_, _X_XX_X ...)",                   // 5
+        "Guaranteed to win on next move (_XXXX, X_XXX, XX_XX, _X_XXX, _XX_XX, _XXX_X, ...)",  // 6
+        "Guaranteed win even if not moving next (_XXXX_, _XXXX_X, ...)",              // 7
+        "Already won. Arrangements of 5 in a row weight",                        // 8
+        "Already won. Arrangements of 6 in a row weight",                    // 9
+        "Already won. Arrangements of 7 in a row weight",                // 10
+        "Already won. Arrangements of 8 in a row weight"            // 11
     };
 
     public PenteWeights() {

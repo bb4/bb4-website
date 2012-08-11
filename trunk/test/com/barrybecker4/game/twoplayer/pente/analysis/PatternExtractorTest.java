@@ -149,9 +149,4 @@ public class PatternExtractorTest extends TestCase  {
         assertEquals("_", extractor.getPattern('O', 13, 0, 14));
         assertEquals("_", extractor.getPattern('O', 14, 0, 14));
     }
-
-
-    public static Test suite() {
-        return new TestSuite(PatternExtractorTest.class);
-    }
 }

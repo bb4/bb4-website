@@ -265,7 +265,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         if (c.getSearchable().done((TwoPlayerMove)evt.getMove(), true)
                 && c.getTwoPlayerOptions().getShowGameOverDialog()) {
             showWinnerDialog();
-            c.reset();
+            //c.reset();
         }
         else {
             if (get2PlayerController().getPlayers().allPlayersComputer()) {

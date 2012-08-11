@@ -24,10 +24,6 @@ public abstract class SearchableHelper implements ISearchableHelper {
         return getTestCaseDir() + problemFileBase + SGF_EXTENSION;
     }
 
-    public String getDefaultTestFile() {
-        return getTestFile(getDefaultFileName());
-    }
-
     public String getTestFile(Progress progress, boolean player1) {
         String fName = null;
         switch (progress) {
@@ -40,9 +36,6 @@ public abstract class SearchableHelper implements ISearchableHelper {
         }
         return getTestFile(fName);
     }
-
-
-    protected abstract String getDefaultFileName();
 
     protected abstract String getStartGameMoveFileName(boolean player1);
     protected abstract String getMiddleGameMoveFileName(boolean player1);

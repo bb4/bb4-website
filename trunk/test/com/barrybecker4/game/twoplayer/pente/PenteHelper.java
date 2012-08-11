@@ -19,11 +19,6 @@ public class PenteHelper extends SearchableHelper {
     }
 
     @Override
-    protected String getDefaultFileName() {
-        return "XXXX";
-    }
-
-    @Override
     protected String getStartGameMoveFileName(boolean player1) {
         return player1 ? "x" : "y";
     }

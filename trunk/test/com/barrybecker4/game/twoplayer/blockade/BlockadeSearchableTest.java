@@ -167,8 +167,4 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
          Assert.assertTrue("We expect move list to be empty since generateUrgentMoves is not implemented for Blockade.",
                  moves.isEmpty());
     }
-
-    public static Test suite() {
-        return new TestSuite(BlockadeSearchableTest.class);
-    }
 }

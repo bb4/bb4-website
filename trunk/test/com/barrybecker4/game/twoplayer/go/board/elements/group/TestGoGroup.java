@@ -31,8 +31,4 @@ public class TestGoGroup extends GoTestCase {
         assertEquals("Unexpected number of liberties", 4, group.getNumLiberties(board));
         assertTrue(group.isOwnedByPlayer1());
     }
-
-    public static Test suite() {
-        return new TestSuite(TestGoGroup.class);
-    }
 }

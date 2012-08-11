@@ -291,9 +291,4 @@ public class LineEvaluatorTest extends TestCase  {
         GameWeights weights = new SimpleWeights();
         return new StubLineEvaluator(new SimplePatterns(), weights.getDefaultWeights());
     }
-
-
-    public static Test suite() {
-        return new TestSuite(LineEvaluatorTest.class);
-    }
 }
