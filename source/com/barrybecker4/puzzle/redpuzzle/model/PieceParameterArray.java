@@ -4,6 +4,9 @@ package com.barrybecker4.puzzle.redpuzzle.model;
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 import com.barrybecker4.optimization.parameter.PermutedParameterArray;
+import com.barrybecker4.optimization.parameter.types.Parameter;
+
+import java.util.Arrays;
 
 /**
  * The parameter array to use when searching (using optimization) to find a red puzzle solution.
@@ -17,6 +20,7 @@ public class PieceParameterArray extends PermutedParameterArray {
 
     private PieceList pieces_ ;
     private static final int NUM_PIECES = 9;
+    private static final int SAMPLE_POPULATION_SIZE = 400;
 
 
     public PieceParameterArray(PieceList pieces) {
@@ -29,6 +33,11 @@ public class PieceParameterArray extends PermutedParameterArray {
 
         copy.setFitness(this.getFitness());
         return copy;
+    }
+
+    @Override
+    public int getSamplePopulationSize()  {
+        return SAMPLE_POPULATION_SIZE;
     }
 
     /**
@@ -141,6 +150,21 @@ public class PieceParameterArray extends PermutedParameterArray {
      */
     public PieceList getPieceList() {
         return pieces_;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PieceParameterArray that = (PieceParameterArray) o;
+        return pieces_.getPieces().equals(that.pieces_.getPieces());
+    }
+
+    @Override
+    public int hashCode() {
+        return pieces_ != null ? pieces_.getPieces().hashCode() : 0;
     }
 
     /**

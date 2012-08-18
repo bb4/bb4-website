@@ -38,8 +38,11 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
     /** radius to look for neighbors in  */
     private double nbrRadius_ = NBR_RADIUS;
 
-    /** this is the number of members to be maintained in the population at any time. */
-    private int populationSize_;
+    /**
+     * this is the desired number of members to be maintained in the population at any time.
+     * Might not always get this many if there are duplicates or the search space is small.
+     */
+    private int desiredPopulationSize_;
 
     /** If crossover breeding of genetic material is used. */
     private boolean useCrossOver_ = false;
@@ -83,13 +86,13 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
      public ParameterArray doOptimization( ParameterArray params, double fitnessRange) {
 
          ParameterArray lastBest;
-         populationSize_ = params.getSamplePopulationSize();
+         desiredPopulationSize_ = params.getSamplePopulationSize();
 
          // create an initial population based on params and POPULATION_SIZE-1 other random candidate solutions.
          List<ParameterArray> population = new LinkedList<ParameterArray>();
          population.add(params);
 
-         for (int i = 1; i < populationSize_; i++) {
+         for (int i = 1; i < desiredPopulationSize_; i++) {
              ParameterArray nbr = params.getRandomNeighbor(INITIAL_RADIUS);
              if (!population.contains(nbr)) {
                  population.add(nbr);
@@ -160,7 +163,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
                 "We must never get worse in a new generation. Old fitness="
                         + lastBest.getFitness() + " New Fitenss = " + currentBest.getFitness() + ".";
 
-        System.out.println(" ct="+ct+"  nbrRadius_=" + nbrRadius_ + " population size=" + populationSize_
+        System.out.println(" ct="+ct+"  nbrRadius_=" + nbrRadius_ + " population size=" + desiredPopulationSize_
                            +" deltaFitness=" + deltaFitness+"  currentBest = " + currentBest.getFitness()
                            +"  lastBest=" + lastBest.getFitness());
         log(ct, currentBest.getFitness(), nbrRadius_, deltaFitness, params, "---");
@@ -178,10 +181,10 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
         Collections.sort(population);
         Collections.reverse(population);
 
-        // throw out the bottom CULL_FACTOR*populationSize_ members - keeping the cream of the crop.
+        // throw out the bottom CULL_FACTOR*desiredPopulationSize_ members - keeping the cream of the crop.
         // then replace those culled with unary variations of those (now parents) that remain.
         // @@ add option to do cross-over variations too.
-        int keepSize = Math.max(1,  (int)(populationSize_*(1.0 - CULL_FACTOR)));
+        int keepSize = Math.max(1,  (int)(population.size() *(1.0 - CULL_FACTOR)));
 
         int size = population.size();
         for (int j = size-1; j >= keepSize; j--) {
@@ -198,8 +201,8 @@ public class GeneticSearchStrategy extends OptimizationStrategy {
     private void replaceCulledWithKeeperVariants(List<ParameterArray> population, int keepSize) {
 
         int k = keepSize;
-        //System.out.println(" pop.size="+ population.size() + " of popSize_=" + populationSize_ + " keepsize="+ keepSize);
-        while ( k < populationSize_ ) {
+        //System.out.println(" pop.size="+ population.size() + " of desPopSize_=" + desiredPopulationSize_ + " keepsize="+ keepSize);
+        while ( k < desiredPopulationSize_) {
 
             // loop over the keepers until all replacements found
             int keeperIndex = k % keepSize;

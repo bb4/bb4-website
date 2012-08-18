@@ -69,8 +69,8 @@ final class PenteMoveGenerator {
         if (lastMove == null)  {
             return new MoveList();
         }
-         MoveList allMoves = // generateMoves(lastMove, weights);
-           findMovesForBothPlayers(lastMove, weights);
+         MoveList allMoves =
+             findMovesForBothPlayers(lastMove, weights);
 
         // now keep only those that result in a win or loss.
         MoveList urgentMoves = new MoveList();

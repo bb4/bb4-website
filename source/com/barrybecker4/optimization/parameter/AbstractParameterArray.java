@@ -47,6 +47,7 @@ public abstract class AbstractParameterArray implements ParameterArray {
 
     public int getSamplePopulationSize()  {
         int pop = 1;
+        assert params_ != null;
         for (Parameter param : params_) {
             pop *= param.isIntegerOnly() ? 2 : 6;
         }
