@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Run your own adventure story.
@@ -33,10 +34,12 @@ public final class GraphicalAdventure extends ApplicationApplet
     private JPanel mainPanel_;
     private boolean storyEdited_ = false;
 
-
-    public GraphicalAdventure() {
-        GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
+    static {
+        GUIUtil.setStandAlone(true);
     }
+
+
+    public GraphicalAdventure() {}
 
     /**
      * Constructor.
@@ -78,7 +81,6 @@ public final class GraphicalAdventure extends ApplicationApplet
         if (story == null) return;
 
         mainPanel_.removeAll();
-        System.out.println("set new story");
         story_ = story;
 
         StoryPanel storyPanel = new StoryPanel(story_);
@@ -180,7 +182,7 @@ public final class GraphicalAdventure extends ApplicationApplet
         super.init();
         if (story_ == null)  {
             String scriptName = getParameter("name");
-            Document document = Story.importStoryDocument(new String[]{scriptName});
+            Document document = Story.importStoryDocument(new String[]{}); //new String[]{scriptName});
             Story story = new Story(document);
             setStory(story);
         }
@@ -191,7 +193,8 @@ public final class GraphicalAdventure extends ApplicationApplet
      */
     public static void main( String[] args ) throws IOException {
 
-        Document document = Story.importStoryDocument(args);
+        System.out.println("in main");
+        Document document = Story.importStoryDocument(new String[]{}); //args);
 
         Story story = new Story(document);
 

@@ -12,8 +12,8 @@ import java.util.Map;
  * My own custom UI theme.
  * @author  barrybecker4
  */
-public class BarryTheme extends DefaultMetalTheme
-{
+public class BarryTheme extends DefaultMetalTheme {
+
     public static final Color UI_BLACK = new Color( 0, 0, 0 );
     public static final Color UI_WHITE = new Color( 250, 250, 255 );
 
@@ -23,17 +23,17 @@ public class BarryTheme extends DefaultMetalTheme
     /** menu bgs, selected item in dropdown menu, small square in selected buttons, progress bar fill */
     public static final Color UI_COLOR_PRIMARY2 = new Color( 234, 234, 255 );
     /** tooltip backgrounds, large colored areas, active titlebar, text selection */
-    public static final Color UI_COLOR_PRIMARY3 = new Color( 255, 255, 153 );
+    public static final Color UI_COLOR_PRIMARY3 = new Color( 255, 255, 160 );
 
     /** very dark. for tab, button and checkbox borders */
     public static final Color UI_COLOR_SECONDARY1 = new Color( 7, 2, 71 ); //51
-    /**  deselected tab backgrounds, dimmed button borders */
-    public static final Color UI_COLOR_SECONDARY2 = new Color( 153, 153, 204 );
+    /** deselected tab backgrounds, dimmed button borders */
+    public static final Color UI_COLOR_SECONDARY2 = new Color( 180, 180, 210 );
     /** ( 204, 204, 255 );  // almost all backgrounds, active tabs. */
-    public static final Color UI_COLOR_SECONDARY3 = new Color(214, 214, 245);
+    public static final Color UI_COLOR_SECONDARY3 = new Color(244, 244, 250);
 
     /** button backgrounds */
-    public static final Color UI_BUTTON_BACKGROUND = new Color( 204, 204, 255 );
+    public static final Color UI_BUTTON_BACKGROUND = new Color( 204, 204, 245 );
 
 
     /** get custom colors for these look and feel properties */
@@ -80,8 +80,7 @@ public class BarryTheme extends DefaultMetalTheme
 
     // the name of the theme
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "Barry's theme";
     }
 
@@ -145,65 +144,54 @@ public class BarryTheme extends DefaultMetalTheme
     }
 
     @Override
-    protected ColorUIResource getBlack()
-    {
+    protected ColorUIResource getBlack() {
         return black_;
     }
 
     @Override
-    protected ColorUIResource getWhite()
-    {
+    protected ColorUIResource getWhite() {
         return white_;
     }
 
-    protected ColorUIResource getPrimary0()
-    {
+    protected ColorUIResource getPrimary0() {
         return new ColorUIResource( black_ );
     }
 
     @Override
-    protected ColorUIResource getPrimary1()
-    {
+    protected ColorUIResource getPrimary1() {
         return colorResourcePrimary1_;
     }
 
     @Override
-    protected ColorUIResource getPrimary2()
-    {
+    protected ColorUIResource getPrimary2() {
         return colorResourcePrimary2_;
     }
 
     @Override
-    protected ColorUIResource getPrimary3()
-    {
+    protected ColorUIResource getPrimary3() {
         return colorResourcePrimary3_;
     }
 
-    protected ColorUIResource getSecondary0()
-    {
+    protected ColorUIResource getSecondary0() {
         return black_;
     }
 
     @Override
-    protected ColorUIResource getSecondary1()
-    {
+    protected ColorUIResource getSecondary1() {
         return colorResourceSecondary1_;
     }
 
     @Override
-    protected ColorUIResource getSecondary2()
-    {
+    protected ColorUIResource getSecondary2() {
         return colorResourceSecondary2_;
     }
 
     @Override
-    protected ColorUIResource getSecondary3()
-    {
+    protected ColorUIResource getSecondary3() {
         return colorResourceSecondary3_;
     }
 
-    protected ColorUIResource getSecondary4()
-    {
+    protected ColorUIResource getSecondary4() {
         return white_;
     }
 }

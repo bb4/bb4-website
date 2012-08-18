@@ -1,6 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.spirograph;
 
+import com.barrybecker4.apps.spirograph.model.Parameters;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 
@@ -9,8 +11,7 @@ import java.awt.geom.Point2D;
  * The circles and spoke represent the plastic stylus tool of the old spirograph.
  * @author Barry Becker
  */
-public class DecorationRenderer
-{
+public class DecorationRenderer {
     private static final Color AXES_COLOR = new Color(120, 120, 200);
     private static final Color CIRCLE_COLOR = new Color(220, 0, 0);
     private static final Color CIRCLE2_FILL_COLOR = new Color(200, 0, 0, 40);
@@ -27,8 +28,7 @@ public class DecorationRenderer
     /**
      * Constructor
      */
-    public DecorationRenderer(Parameters params)
-    {
+    public DecorationRenderer(Parameters params) {
         this.params = params;
     }
 
@@ -44,8 +44,7 @@ public class DecorationRenderer
     /**
      * Draw axes
      */
-    private void drawAxes(Graphics2D g)
-    {
+    private void drawAxes(Graphics2D g) {
         g.setColor( AXES_COLOR );
         g.setStroke( AXES_STROKE );
         g.drawLine( width >> 1, 0, width >> 1, height);
@@ -70,8 +69,7 @@ public class DecorationRenderer
         drawLineAndDot(g);
     }
 
-    private void drawCircle2(Graphics2D g)
-    {
+    private void drawCircle2(Graphics2D g)  {
         Point2D center = params.getCenter(width, height);
         int sign = params.getSign();
         float r2 = params.getR2();
@@ -82,8 +80,7 @@ public class DecorationRenderer
                     (int)(2 * sign * r2),  (int)(2 * sign * r2) );
     }
 
-    private void drawLineAndDot(Graphics2D g)
-    {
+    private void drawLineAndDot(Graphics2D g) {
         g.setColor( CIRCLE_COLOR );
         Point2D center = params.getCenter(width, height);
         int side = params.getSign();
@@ -102,8 +99,7 @@ public class DecorationRenderer
         drawDot(g, dotPos);
     }
 
-    private void drawDot(Graphics2D g, Point dotPos)
-    {
+    private void drawDot(Graphics2D g, Point dotPos) {
         g.fillOval( dotPos.x - HALF_DOT_RAD, dotPos.y - HALF_DOT_RAD,
                     DOT_RAD, DOT_RAD );
     }

@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.apps.spirograph;
+package com.barrybecker4.apps.spirograph.model;
 
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.ui.sliders.ColorChangeListener;
@@ -47,8 +47,7 @@ public class GraphState implements ColorChangeListener {
        listeners_.add(listener);
     }
 
-    public void colorChanged(Color color)
-    {
+    public void colorChanged(Color color) {
         setColor(color);
     }
 

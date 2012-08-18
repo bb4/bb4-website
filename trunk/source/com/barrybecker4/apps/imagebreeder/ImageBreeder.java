@@ -6,6 +6,7 @@ import com.barrybecker4.java2d.imageproc.MetaImageOp;
 import com.barrybecker4.optimization.parameter.types.Parameter;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,8 +36,7 @@ public class ImageBreeder {
      * @param op metaOp to breed based on.
      * @param variance amount of variation to have in bred images.
      */
-    public ImageBreeder(BufferedImage image,  MetaImageOp op, float variance)
-    {
+    public ImageBreeder(BufferedImage image,  MetaImageOp op, float variance) {
         metaOp = op;
         imageToBreed = image;
         this.variance = variance;
@@ -91,7 +91,9 @@ public class ImageBreeder {
         }
 
         public BufferedImage call() {
-            BufferedImage img = metaOp.getRandomInstance(variance).filter( imageToBreed, null  );
+
+            BufferedImageOp randOp = metaOp.getRandomInstance(variance);
+            BufferedImage img = randOp.filter(imageToBreed, null );
             // remember the parameters that were used to create this instance;
             imgToParamsMap.put(img, metaOp.getLastUsedParameters());
             return img;

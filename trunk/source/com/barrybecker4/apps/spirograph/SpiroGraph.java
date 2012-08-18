@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.spirograph;
 
+import com.barrybecker4.apps.spirograph.model.GraphState;
 import com.barrybecker4.ui.application.ApplicationApplet;
 import com.barrybecker4.ui.util.GUIUtil;
 
@@ -22,12 +23,12 @@ public class SpiroGraph extends ApplicationApplet {
         GraphState state = ControlSliderGroup.createGraphState();
 
         GraphPanel graphPanel = new GraphPanel(state);
-        ControlPanel cp = new ControlPanel(graphPanel, state);
+        ControlPanel controlPanel = new ControlPanel(graphPanel, state);
 
         JPanel mainPanel = new JPanel( new BorderLayout() );
 
         mainPanel.add( BorderLayout.CENTER, graphPanel);
-        mainPanel.add( BorderLayout.EAST, cp );
+        mainPanel.add( BorderLayout.EAST, controlPanel );
 
         return mainPanel;
     }

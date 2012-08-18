@@ -1,6 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.spirograph;
 
+import com.barrybecker4.apps.spirograph.model.GraphState;
+import com.barrybecker4.apps.spirograph.model.GraphStateChangeListener;
+import com.barrybecker4.apps.spirograph.model.ParametricEquations;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.sliders.ColorSliderGroup;
 
@@ -16,8 +19,8 @@ import java.awt.event.ActionListener;
  * @author Barry Becker
  */
 public class ControlPanel extends JPanel
-                          implements ActionListener, GraphStateChangeListener
-{
+                          implements ActionListener, GraphStateChangeListener {
+
     private static final String HIDE_DECORATION_LABEL = "Hide Decoration";
     private static final String SHOW_DECORATIONLABEL = "Show Decoration";
     private static final String RESET_LABEL = "Reset";
@@ -37,6 +40,8 @@ public class ControlPanel extends JPanel
      * Constructor
      */
     public ControlPanel(GraphPanel graphPanel, GraphState state) {
+
+        setBorder(BorderFactory.createEmptyBorder(4, 4, 12, 3));
         graphPanel_ = graphPanel;
         state_ = state;
         state_.addStateListener(this);
@@ -56,16 +61,12 @@ public class ControlPanel extends JPanel
         fill.setPreferredSize(new Dimension(100, 1000));
         add(fill);
 
-        JPanel q1 = new JPanel();
-        q1.setLayout( new GridLayout( 2, 1, 0, 0 ) );
-        q1.add( xFunction_ = new JLabel( "", JLabel.CENTER ) );
-        q1.add( yFunction_ = new JLabel( "", JLabel.CENTER ) );
+        add(createFunctionPanel());
+
         parameterChanged();
-        add(q1);
     }
 
-    private JPanel createButtonGroup()
-    {
+    private JPanel createButtonGroup()  {
         JPanel bp = new JPanel(new BorderLayout());
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS) );
@@ -85,6 +86,15 @@ public class ControlPanel extends JPanel
         return bp;
     }
 
+    private JPanel createFunctionPanel() {
+        JPanel functionPanel = new JPanel();
+        functionPanel.setLayout(new GridLayout(2, 1, 0, 0));
+        functionPanel.add(xFunction_ = new JLabel("", JLabel.CENTER));
+        functionPanel.add(yFunction_ = new JLabel("", JLabel.CENTER));
+        return functionPanel;
+    }
+
+
     private GradientButton createButton( String label) {
         GradientButton button = new GradientButton( label );
         button.addActionListener( this );
@@ -101,8 +111,8 @@ public class ControlPanel extends JPanel
      * a button was pressed.
      * @param e event
      */
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
+
         Object source = e.getSource();
         assert source instanceof GradientButton;
         String obj = ((AbstractButton) source).getText();
