@@ -135,7 +135,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
      * @return best quiescent move
      */
     TwoPlayerMove quiescentSearch(TwoPlayerMove lastMove,
-                                            int depth, SearchWindow window, SearchTreeNode parent) {
+                                  int depth, SearchWindow window, SearchTreeNode parent) {
 
         MoveList urgentMoves = searchable_.generateUrgentMoves(lastMove, weights_);
         if (emptyMoveList(urgentMoves, lastMove)) return null;

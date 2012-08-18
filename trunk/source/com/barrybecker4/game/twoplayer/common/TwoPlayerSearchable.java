@@ -55,21 +55,13 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
     }
 
     /**
+     * Make the specified more.
+     * It is actually ok if the same player moves twice in the case where we are looking for urgent moves.
      * @param move the move to play.
      */
     public void makeInternalMove(TwoPlayerMove move) {
 
         TwoPlayerMove lastMove = (TwoPlayerMove)(moveList_.getLastMove());
-        if (moveList_.getNumMoves() > 0) {
-            // @@ we hit this a lot in the tests when running through gradle (because assertions are on). Should fix.
-            if (lastMove.isPlayer1() == move.isPlayer1())
-            {
-                GameContext.log(0, "Should not move twice in a row m=" + move
-                        + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_);
-                //assert(lastMove.isPlayer1() != move.isPlayer1()):
-                //    "can't go twice in a row m=" + move + "\n getLastMove()=" + lastMove + "\n movelist = " + moveList_;
-            }
-        }
 
         getBoard().makeMove(move);
 
