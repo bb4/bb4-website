@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.apps.spirograph;
+package com.barrybecker4.apps.spirograph.model;
 
 /**
  * Represents 2 parametric equations for defining a  epicycloid curve.

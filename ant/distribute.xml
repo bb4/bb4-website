@@ -24,8 +24,6 @@
          <param name="distributionDir" value="${distributionGameDir}"/>
       </foreach>
 
-      echo message="Done distributing."
-
   </target>
 
   <target name="distributeJars"

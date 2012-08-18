@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.spirograph;
 
+import com.barrybecker4.apps.spirograph.model.GraphState;
 import com.barrybecker4.common.concurrency.ThreadUtil;
 
 import javax.swing.*;
@@ -32,8 +33,7 @@ public class GraphPanel extends JPanel implements Runnable {
     /**
      * Constructor
      */
-    public GraphPanel(GraphState state)
-    {
+    public GraphPanel(GraphState state) {
         state_ = state;
         setBackground( BACKGROUND_COLOR );
         state_.initialize(getWidth(), getHeight());
@@ -109,8 +109,7 @@ public class GraphPanel extends JPanel implements Runnable {
     /**
      * starts the rendering thread.
      */
-    public void run()
-    {
+    public void run() {
         graphRenderer_.startDrawingGraph();
         thread_ = new Thread( this );
     }
@@ -119,8 +118,7 @@ public class GraphPanel extends JPanel implements Runnable {
      * Does nothing it not paused.
      * If paused, it will discontinue processing on this thread until pauseLock is released.
      */
-    public void waitIfPaused()
-    {
+    public void waitIfPaused()  {
         try {
             synchronized (pauseLock_) {
                 while ( paused_ )
@@ -131,15 +129,13 @@ public class GraphPanel extends JPanel implements Runnable {
         }
     }
 
-    public void clear()
-    {
+    public void clear() {
         graphRenderer_.clear();
         repaint();
     }
 
     @Override
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         Graphics2D g2 = (Graphics2D)g;
         graphRenderer_.renderCurrentGraph(g2);
         if ( state_.showDecoration()) {

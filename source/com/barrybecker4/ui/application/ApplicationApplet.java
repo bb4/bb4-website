@@ -28,8 +28,7 @@ public abstract class ApplicationApplet extends JApplet{
      */
     @Override
     public void init() {
-        resizablePanel_ =
-                new ResizableAppletPanel(createMainPanel());
+        resizablePanel_ = new ResizableAppletPanel(createMainPanel());
         getContentPane().add(resizablePanel_);
     }
 

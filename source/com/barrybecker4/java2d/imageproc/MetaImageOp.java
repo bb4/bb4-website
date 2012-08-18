@@ -70,7 +70,8 @@ public class MetaImageOp {
      * @param randomVariance number of standard deviations to use when randomizing params.
      * @return a concrete instance with tweaked parameters.
      */
-    public  BufferedImageOp getRandomInstance(float randomVariance) {
+    public BufferedImageOp getRandomInstance(float randomVariance) {
+        System.out.println("geting random. isDynamic=" + isDynamic + " randomVariance=" + randomVariance);
         if (!isDynamic) {
             return op;
         }
@@ -114,21 +115,23 @@ public class MetaImageOp {
     private synchronized List<Parameter> tweakParameters(BufferedImageOp filter, float randomVariance)
             throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {
-        //System.out.println("op="+filter.getClass().getSimpleName());
+        System.out.println("op="+filter.getClass().getSimpleName() + " randomVariance=" + randomVariance);
         List<Parameter> newParams = new ArrayList<Parameter>(parameters.size());
 
         for (Parameter p : parameters) {
             // the name must match the property (e.g. foo will be set using setFoo)
             String methodName =
                     "set" +  p.getName().substring(0, 1).toUpperCase() + p.getName().substring(1);
+            System.out.println("methodName = " + methodName);
             Method method = filter.getClass().getDeclaredMethod(methodName, p.getType()); // p.getNaturalValue().getClass());
 
             Object[] args = new Object[1];
             Parameter param = p.copy();
 
             if (randomVariance > 0) {
-                    param.tweakValue(randomVariance, RANDOM);
+                param.tweakValue(randomVariance, RANDOM);
             }
+            System.out.println("tweaked value = " + param);
             newParams.add(param);
 
             // @@ This should work with autoboxing, but does not for some reason, so we resort to ugly case statement.

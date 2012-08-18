@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.spirograph;
 
+import com.barrybecker4.apps.spirograph.model.GraphState;
 import com.barrybecker4.common.concurrency.ThreadUtil;
 import com.barrybecker4.ui.renderers.OfflineGraphics;
 
@@ -12,9 +13,9 @@ import java.awt.geom.Point2D;
  * May be interrupted.
  * @author Barry Becker
  */
-public class GraphRenderer
-{
-    /** offline rendering is fast */
+public class GraphRenderer {
+
+    /** offline rendering is faster */
     private OfflineGraphics offlineGraphics_;
     private GraphState state_;
 
@@ -25,8 +26,7 @@ public class GraphRenderer
     /**
      * Constructor
      */
-    public GraphRenderer(GraphState state, GraphPanel graphPanel)
-    {
+    public GraphRenderer(GraphState state, GraphPanel graphPanel) {
         state_ = state;
         graphPanel_ = graphPanel;
     }
@@ -59,8 +59,7 @@ public class GraphRenderer
      * Renders the current offline image into the g2 object.
      * @param g2 graphics to render image into.
      */
-    public void renderCurrentGraph( Graphics2D g2 )
-    {
+    public void renderCurrentGraph( Graphics2D g2 ) {
         int xpos = (graphPanel_.getSize().width - graphPanel_.getWidth()) >> 1;
         int ypos = (graphPanel_.getSize().height - graphPanel_.getHeight()) >> 1;
         g2.drawImage( getOfflineGraphics().getOfflineImage(), xpos, ypos, graphPanel_ );
@@ -69,8 +68,7 @@ public class GraphRenderer
     /**
      * Sets the center point.
      */
-    public void setPoint(float pos, float phi)
-    {
+    public void setPoint(float pos, float phi) {
         Point2D center = state_.params.getCenter(graphPanel_.getWidth(), graphPanel_.getHeight());
         state_.params.setX((float)(center.getX() + pos * Math.cos( phi )));
         state_.params.setY((float)(center.getY() - pos * Math.sin( phi )));
@@ -83,8 +81,7 @@ public class GraphRenderer
         aborted_ = true;
     }
 
-    public void clear()
-    {
+    public void clear() {
         getOfflineGraphics().clear();
     }
 

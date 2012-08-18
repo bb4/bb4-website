@@ -170,6 +170,7 @@ public final class GUIUtil {
             System.out.println( sPath + " is not a valid resource or URL" );
             e.printStackTrace();
         }
+
         return url;
      }
 
@@ -235,7 +236,6 @@ public final class GUIUtil {
         }
 
         applet.init();
-
         baseFrame.repaint();
         baseFrame.setVisible( true );
 

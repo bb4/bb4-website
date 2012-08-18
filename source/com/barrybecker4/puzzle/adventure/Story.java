@@ -43,11 +43,10 @@ import java.util.List;
  * items the player has.
  * 10) fix sound deploy in ant
  * 11) add means to edit the network of scene from within the application. Show all scene leading to and from
- * the current scene. Allow editing of scene properties and associatating media.
+ * the current scene. Allow editing of scene properties and associating media.
  *
  * @author Barry Becker
  */
-@SuppressWarnings({"AssignmentToNull"})
 public class Story {
 
     /** title of the story */
@@ -185,6 +184,7 @@ public class Story {
     public static Document importStoryDocument(String[] args) {
         Document document;
 
+        assert args != null;
         // default story
         URL url = GUIUtil.getURL(STORIES_ROOT + "ludlow/ludlowScript.xml");
         System.out.println("num args="+ args.length);
@@ -196,7 +196,8 @@ public class Story {
             System.out.println("importStoryDocument Args=" + Arrays.toString(args));
             url = GUIUtil.getURL(STORIES_ROOT + args[1]);
         }
-        System.out.println("about to parse url="+url +"\n story file location");
+        //throw new IllegalStateException("bad url=" + url + "args="+ args);
+        System.out.println("about to parse url=" + url + "\n story file location");
         document = DomUtil.parseXML(url);
         //DomUtil.printTree(document, 0);
         return document;
