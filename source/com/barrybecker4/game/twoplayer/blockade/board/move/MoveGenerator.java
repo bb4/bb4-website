@@ -7,6 +7,7 @@ import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.Path;
+import com.barrybecker4.game.twoplayer.blockade.board.PathList;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 
@@ -45,7 +46,7 @@ public class MoveGenerator {
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
 
         // There is one path from every piece to every opponent home (i.e. n*NUM_HOMES)
-        List<Path> opponentPaths = board_.findAllOpponentShortestPaths(player1);
+        PathList opponentPaths = board_.findAllOpponentShortestPaths(player1);
 
         List<BoardPosition> pawnLocations = new LinkedList<BoardPosition>();
         for ( int row = 1; row <= board_.getNumRows(); row++ ) {
@@ -72,11 +73,11 @@ public class MoveGenerator {
      * @param weights to use.
      * @return the number of moves added.
      */
-    private int addMoves( BoardPosition p, MoveList moveList, List<Path> opponentPaths, ParameterArray weights) {
+    private int addMoves( BoardPosition p, MoveList moveList, PathList opponentPaths, ParameterArray weights) {
         int numMovesAdded = 0;
 
         // first find the NUM_HOMES shortest paths for p.
-        List<Path> paths = board_.findShortestPaths((BlockadeBoardPosition)p);
+        PathList paths = board_.findShortestPaths((BlockadeBoardPosition)p);
 
         WallPlacementFinder wallFinder = new WallPlacementFinder(board_, opponentPaths, weights);
 
@@ -108,7 +109,7 @@ public class MoveGenerator {
         // unfortunately, I think we need to recalculate them.
         BlockadeBoardPosition newPos =
                 (BlockadeBoardPosition) board_.getPosition(firstStep.getToRow(), firstStep.getToCol());
-        List<Path> ourPaths = board_.findShortestPaths(newPos);
+        PathList ourPaths = board_.findShortestPaths(newPos);
 
         List<BlockadeMove> wallMoves = wallFinder.findWallPlacementsForMove(firstStep, ourPaths);
         GameContext.log(2, "num wall placements for Move = " + wallMoves.size());

@@ -8,8 +8,10 @@ import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.analysis.BoardAnalyzer;
+import com.barrybecker4.game.twoplayer.blockade.board.analysis.PossibleMoveAnalyzer;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
+import com.barrybecker4.game.twoplayer.blockade.board.move.WallPlacementValidator;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerBoard;
 
 import java.util.List;
@@ -34,6 +36,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
     private BoardPosition[] p2Homes_ = null;
 
     private BoardAnalyzer boardAnalyzer_;
+    private WallPlacementValidator wallValidator_;
 
 
     /**
@@ -44,6 +47,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
     public BlockadeBoard(int numRows, int numCols) {
         setSize(numRows, numCols);
         boardAnalyzer_ = new BoardAnalyzer(this);
+        wallValidator_ = new WallPlacementValidator(this);
     }
 
     /** copy constructor */
@@ -137,7 +141,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @return a list of legal piece movements
      */
     public List<BlockadeMove> getPossibleMoveList(BoardPosition position, boolean op1) {
-        return boardAnalyzer_.getPossibleMoveList(position, op1);
+        return new PossibleMoveAnalyzer(this, position, op1).getPossibleMoveList();
     }
 
 
@@ -145,7 +149,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @param player1 the last player to make a move.
      * @return all the opponent's shortest paths to your home bases.
      */
-    public List<Path> findAllOpponentShortestPaths(boolean player1) {
+    public PathList findAllOpponentShortestPaths(boolean player1) {
 
         return boardAnalyzer_.findAllOpponentShortestPaths(player1);
     }
@@ -161,7 +165,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @param position position to check shortest paths for.
      * @return the NUM_HOMES shortest paths from toPosition.
      */
-    public List<Path> findShortestPaths( BlockadeBoardPosition position )  {
+    public PathList findShortestPaths( BlockadeBoardPosition position )  {
         return boardAnalyzer_.findShortestPaths(position);
     }
 
@@ -174,7 +178,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @return an error string if the wall is not a legal placement on the board.
      */
     public String checkLegalWallPlacement(BlockadeWall wall, Location location) {
-        return boardAnalyzer_.checkLegalWallPlacement(wall, location);
+        return wallValidator_.checkLegalWallPlacement(wall, location, boardAnalyzer_);
     }
 
     /**

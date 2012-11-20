@@ -4,6 +4,7 @@ package com.barrybecker4.game.twoplayer.blockade.ui;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.Path;
+import com.barrybecker4.game.twoplayer.blockade.board.PathList;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 
 import java.awt.*;
@@ -49,7 +50,7 @@ final class PathRenderer {
         g2.setStroke(pathStroke);
         if (pos == null || pos.isUnoccupied()) return;
 
-        List<Path> paths = b.findShortestPaths(pos);
+        PathList paths = b.findShortestPaths(pos);
         boolean p1 = pos.getPiece().isOwnedByPlayer1();
         Color pathColor = p1? BlockadePieceRenderer.getRenderer().getPlayer1Color() :
                                             BlockadePieceRenderer.getRenderer().getPlayer2Color();

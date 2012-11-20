@@ -34,7 +34,7 @@ public class PathLengths {
      * Update the values of the shortest, secondShortest and furthest.
      * @param paths
      */
-    public void updatePathLengths(List<Path> paths) {
+    public void updatePathLengths(PathList paths) {
         // if we don't have NUM_HOMES paths then this set of path lengths is invalid.
         // probably the move and corresponding wall placement was not valid, or we landed on a home.
         if (paths.size() == 0 || (paths.size() < BlockadeBoard.NUM_HOMES && (paths.get(0).getLength() > 0))) {
