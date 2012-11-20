@@ -37,6 +37,8 @@ import java.awt.event.ActionListener;
 public abstract class TwoPlayerPanel extends GamePanel
                                   implements ActionListener, GameChangedListener {
 
+    private static final Color PROGRESS_BAR_COLOR = new Color(20, 80, 230, 130);
+
     /** for showing progress while the computer thinks. */
     private JProgressBar progressBar_;
 
@@ -92,8 +94,8 @@ public abstract class TwoPlayerPanel extends GamePanel
         progressBar.setVisible(!get2PlayerController().getPlayers().allPlayersHuman());
         progressBar.setMinimum(0);
         progressBar.setMaximum(100);
-        progressBar.setBackground(BarryTheme.UI_COLOR_SECONDARY1);
-        progressBar.setForeground(BarryTheme.UI_COLOR_PRIMARY2);
+        progressBar.setBackground(BarryTheme.UI_COLOR_SECONDARY2);
+        progressBar.setForeground(PROGRESS_BAR_COLOR);
         progressBar.setStringPainted(true);
         progressBar.setBorderPainted(false);
         progressBar.setString(" ");
