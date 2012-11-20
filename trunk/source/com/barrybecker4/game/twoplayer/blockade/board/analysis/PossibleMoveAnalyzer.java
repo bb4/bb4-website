@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-class PossibleMoveAnalyzer {
+public class PossibleMoveAnalyzer {
 
     private BlockadeBoard board;
 

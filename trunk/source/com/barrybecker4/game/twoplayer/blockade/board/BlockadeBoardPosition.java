@@ -30,7 +30,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
     private boolean isPlayer2Home_ = false;
 
     /** Cache the most recent shortest paths to opponent homes so we do not have to keep recomputing them. */
-    private List<Path> cachedPaths_ = null;
+    private PathList cachedPaths_ = null;
 
 
     /**
@@ -74,9 +74,9 @@ public final class BlockadeBoardPosition extends BoardPosition {
      * @param wall the most recently placed wall
      * @return list of shortest paths.
      */
-    public List<Path> findShortestPaths(BlockadeBoard board, BlockadeWall wall) {
+    public PathList findShortestPaths(BlockadeBoard board, BlockadeWall wall) {
 
-        List<Path> paths = cachedPaths_;
+        PathList paths = cachedPaths_;
         // Why didn't caching work like I hoped?
         // Seems that walls have a more subtle influence on the path than I thought.
         paths = board.findShortestPaths(this);

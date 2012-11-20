@@ -6,6 +6,7 @@ import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.Direction;
 import com.barrybecker4.game.twoplayer.blockade.board.Path;
+import com.barrybecker4.game.twoplayer.blockade.board.PathList;
 import com.barrybecker4.game.twoplayer.blockade.board.PlayerPathLengths;
 import com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.barrybecker4.optimization.parameter.ParameterArray;
@@ -21,13 +22,13 @@ import java.util.List;
 public class WallPlacementFinder {
 
     private BlockadeBoard board_;
-    private List<Path> opponentPaths_;
+    private PathList opponentPaths_;
     private ParameterArray weights_;
 
     /**
      * Constructor
      */
-    public WallPlacementFinder(BlockadeBoard board, List<Path> opponentPaths, ParameterArray weights) {
+    public WallPlacementFinder(BlockadeBoard board, PathList opponentPaths, ParameterArray weights) {
 
         board_ = board;
         weights_ = weights;
@@ -42,7 +43,7 @@ public class WallPlacementFinder {
      * @param paths our shortest paths.
      * @return all move variations on firstStep based on different wall placements.
      */
-    public List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep, List<Path> paths) {
+    public List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep, PathList paths) {
         List<BlockadeMove> moves = new LinkedList<BlockadeMove>();
 
         // is it true that the set of walls we could add for any constant set
@@ -66,8 +67,9 @@ public class WallPlacementFinder {
                 List<BlockadeWall> walls = getWallsForMove(move, paths);
                 GameContext.log(2, "num walls for move "+move+"  = "+walls.size() );
 
-                if  (walls.isEmpty()) {
-                    GameContext.log(1, "***No walls for move "+move+" at step j=" + j + " along opponentPath="+opponentPath
+                if (walls.isEmpty()) {
+                    GameContext.log(2, "***No walls for move " + move + " at step j=" + j
+                            + " along opponentPath="+opponentPath
                             +" that do not interfere with our path");
                 }
 
@@ -128,7 +130,7 @@ public class WallPlacementFinder {
      * @param paths our friendly paths.
      * @return the walls for a specific move along an opponent path.
      */
-    List<BlockadeWall> getWallsForMove(BlockadeMove move, List<Path> paths) {
+    List<BlockadeWall> getWallsForMove(BlockadeMove move, PathList paths) {
         List<BlockadeWall> wallsList = new LinkedList<BlockadeWall>();
 
         // 12 cases
@@ -187,7 +189,7 @@ public class WallPlacementFinder {
      * @param direction to move one space (one of EAST, WEST, NORTH, SOUTH).
      * @return the accumulated list of walls.
      */
-    private List<BlockadeWall> checkAddWallsForDirection(BlockadeBoardPosition pos, List<Path> paths,
+    private List<BlockadeWall> checkAddWallsForDirection(BlockadeBoardPosition pos, PathList paths,
                                                          Direction direction, List<BlockadeWall> wallsList) {
         BlockadeBoard b = board_;
         List<BlockadeWall> wallsToCheck = new LinkedList<BlockadeWall>();
@@ -236,7 +238,7 @@ public class WallPlacementFinder {
      * @param paths
      * @return wallsList list of walls that are blocking paths.
      */
-    private List<BlockadeWall> getBlockedWalls(List<BlockadeWall> wallsToCheck, List<Path> paths,
+    private List<BlockadeWall> getBlockedWalls(List<BlockadeWall> wallsToCheck, PathList paths,
                                                List<BlockadeWall> wallsList)  {
         for (BlockadeWall wall : wallsToCheck) {
             if (wall != null && !arePathsBlockedByWall(paths, wall, board_))
@@ -336,7 +338,7 @@ public class WallPlacementFinder {
      * @param wall that we check to see if blocking any paths
      * @return true if the wall is blocking any of the paths.
      */
-    private static  boolean arePathsBlockedByWall(List<Path> paths, BlockadeWall wall, BlockadeBoard b) {
+    private static  boolean arePathsBlockedByWall(PathList paths, BlockadeWall wall, BlockadeBoard b) {
         assert (wall!=null);
         for (final Path path : paths) {
             if (path.isBlockedByWall(wall, b))
