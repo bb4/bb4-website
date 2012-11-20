@@ -183,12 +183,11 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
 
 
     /**
-     *
+     * Place the piece after dropping it two spaces from where it was.
      * @param loc location where the piece was placed.
      * @return true if a piece is successfully moved.
      */
-    private boolean placePiece(Location loc)
-    {
+    private boolean placePiece(Location loc) {
         if ( getRenderer().getDraggedPiece() == null )   {
             return false; // nothing being dragged
         }
@@ -197,32 +196,14 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
         BlockadeBoard board = (BlockadeBoard) controller.getBoard();
         // get the original position.
         BlockadeBoardPosition position =
-                (BlockadeBoardPosition)board.getPosition( getRenderer().getDraggedPiece().getLocation());
+                (BlockadeBoardPosition)board.getPosition(getRenderer().getDraggedPiece().getLocation());
 
-        // valid or not, we won't show the dragged piece after releasing the mouse.
+        // valid or not, don't show the dragged piece after releasing the mouse.
         getRenderer().setDraggedPiece(null);
 
-        BoardPosition destpos = board.getPosition( loc );
-        if (customCheckFails(destpos)) {
-            JOptionPane.showMessageDialog( viewer_, GameContext.getLabel("ILLEGAL_MOVE"));
+        BlockadeMove m = checkAndGetValidMove(position, loc);
+        if (m == null) {
             return false;
-        }
-
-        List<BlockadeMove> possibleMoveList = controller.getPossibleMoveList(position);
-
-        // verify that the move is valid before allowing it to be made.
-        Iterator it = possibleMoveList.iterator();
-        boolean found = false;
-
-        BlockadeMove m = null;
-        while ( it.hasNext() && !found ) {
-            m = (BlockadeMove) it.next();
-            if ( (m.getToRow() == destpos.getRow()) && (m.getToCol() == destpos.getCol()) )
-                found = true;
-        }
-
-        if ( !found ) {
-            return false; // it was not valid
         }
 
         // make sure that the piece shows while we decide where to place the wall.
@@ -248,17 +229,46 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
         return true;
     }
 
+    /**
+     * @param origPosition place dragged from
+     * @param placedLocation location dragged to.
+     * @return the valid move else and error is shown and null is returned.
+     */
+    private BlockadeMove checkAndGetValidMove(BlockadeBoardPosition origPosition, Location placedLocation) {
+        BlockadeController controller = (BlockadeController)viewer_.getController();
+        BlockadeBoard board = (BlockadeBoard) controller.getBoard();
+        List<BlockadeMove> possibleMoveList = controller.getPossibleMoveList(origPosition);
+
+        BlockadeBoardPosition destpos = (BlockadeBoardPosition) board.getPosition( placedLocation );
+        if (customCheckFails(destpos)) {
+            JOptionPane.showMessageDialog( viewer_, GameContext.getLabel("ILLEGAL_MOVE"));
+            return null;
+        }
+        // verify that the move is valid before allowing it to be made.
+        Iterator it = possibleMoveList.iterator();
+        boolean found = false;
+
+        BlockadeMove m = null;
+        while ( it.hasNext() && !found ) {
+            m = (BlockadeMove) it.next();
+            if ( (m.getToRow() == destpos.getRow()) && (m.getToCol() == destpos.getCol()) )
+                found = true;
+        }
+
+        if ( !found ) {
+            return null; // it was not valid
+        }
+        return m;
+    }
 
 
     /**
      * If there is a piece at the destination already, or destination is out of bounds,
      * then return without doing anything.
-     * @param destp position to move to.
+     * @param destpos position to move to.
      * @return true if this is not a valid move.
      */
-    private boolean customCheckFails(BoardPosition destp)
-    {
-        BlockadeBoardPosition destpos = (BlockadeBoardPosition)destp;
+    private boolean customCheckFails(BlockadeBoardPosition destpos) {
         return  ( (destpos == null) || (destpos.isOccupied() && !destpos.isHomeBase()) );
     }
 
@@ -271,8 +281,7 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
      * @param loc location where the wall was placed.
      * @return true if a wall is successfully placed.
      */
-    private boolean placeWall(Location loc, BlockadeMove m)
-    {
+    private boolean placeWall(Location loc, BlockadeMove m) {
         BlockadeBoardRenderer bbRenderer = (BlockadeBoardRenderer) getRenderer();
         BlockadeWall draggedWall = bbRenderer.getDraggedWall();
         if (draggedWall == null)

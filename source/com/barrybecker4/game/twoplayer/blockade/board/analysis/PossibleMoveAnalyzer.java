@@ -208,7 +208,7 @@ class PossibleMoveAnalyzer {
           // check the 2 alternative paths to this diagonal position to see if either are clear.
           if ((horizontalPathOpen || verticalPathOpen)
                && (diagonalPos.isUnoccupied() || diagonalPos.isHomeBase(opponentPlayer1)
-               && !diagonalPos.isVisited())) {  //Diag
+               && !diagonalPos.isVisited())) {  //Diagonal
                 possibleMoveList.add(
                    BlockadeMove.createMove(fromLocation, diagonalPos.getLocation(), 0, pos.getPiece(), null));
           }

@@ -10,7 +10,7 @@ import com.barrybecker4.game.twoplayer.common.search.options.SearchOptions;
 import java.awt.*;
 
 /**
- *
+ * Options when playing blockade.
  * @author Barry Becker
  */
 public class BlockadePlayerOptions extends TwoPlayerPlayerOptions {

@@ -117,13 +117,12 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer {
         drawHomeBases(g, bb, false);
     }
 
-
     /**
      * Draw the home bases for the specified player.
      */
     private void drawHomeBases(Graphics g, BlockadeBoard board, boolean player1) {
         // draw the home bases
-        BoardPosition[] homes = player1? board.getPlayer1Homes() : board.getPlayer2Homes();
+        BoardPosition[] homes = board.getPlayerHomes(player1);
 
         int cellSize = this.getCellSize();
         int offset = Math.round((float)cellSize / 4.0f);
@@ -136,7 +135,6 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer {
                        2 * offset, 2 * offset);
         }
     }
-
 
     @Override
     protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
@@ -176,7 +174,7 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer {
                 else
                     pos.setSouthWall(draggedWall_);
 
-                BlockadePieceRenderer.renderWallAtPosition1(g2, pos, cellSize, getMargin());
+                BlockadePieceRenderer.renderWallAtPosition(g2, pos, cellSize, getMargin());
 
                 // restore the actual wall
                 if (vertical)

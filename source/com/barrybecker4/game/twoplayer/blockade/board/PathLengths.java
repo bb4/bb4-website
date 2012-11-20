@@ -4,7 +4,7 @@ package com.barrybecker4.game.twoplayer.blockade.board;
 import java.util.List;
 
 /**
- * Utility class for holding the different paths lengths.
+ * Holds the the different paths lengths for a given player.
  *
  * @author Barry Becker
  */
@@ -29,12 +29,12 @@ public class PathLengths {
         secondShortestLength = secondShortest;
         furthestLength = furthest;
     }
+
     /**
      * Update the values of the shortest, secondShortest and furthest.
      * @param paths
      */
-    public void updatePathLengths(List<Path> paths)
-    {
+    public void updatePathLengths(List<Path> paths) {
         // if we don't have NUM_HOMES paths then this set of path lengths is invalid.
         // probably the move and corresponding wall placement was not valid, or we landed on a home.
         if (paths.size() == 0 || (paths.size() < BlockadeBoard.NUM_HOMES && (paths.get(0).getLength() > 0))) {

@@ -12,7 +12,6 @@ import com.barrybecker4.optimization.parameter.ParameterArray;
  */
 public class PlayerPathLengths {
 
-
    /** path lengths from pawns to opponent homes for each of the 2 players.  */
    private PathLengths[] pathLengths = new PathLengths[2];
 

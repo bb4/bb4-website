@@ -41,7 +41,6 @@ public class ColorMap {
     }
 
     /**
-     *
      * @param value numeric value to get a color for from the continuous map.
      * @return color that corresponds to specified value.
      */
@@ -50,7 +49,7 @@ public class ColorMap {
         if ( value <= values_.get(0)) {
             return colors_.get(0);
         }
-        else if (value >= values_.get(len-1)) {
+        if (value >= values_.get(len-1)) {
             return colors_.get(len-1);
         }
         int i = 1;

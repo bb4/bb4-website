@@ -33,13 +33,12 @@ public class BoardAnalyzer {
     }
 
     /**
-      * @see PossibleMoveAnalyzer
-      */
-     public List<BlockadeMove> getPossibleMoveList(BoardPosition position, boolean op1) {
-         PossibleMoveAnalyzer moveAnalyzer = new PossibleMoveAnalyzer(board, position, op1);
-         return moveAnalyzer.getPossibleMoveList();
-     }
-
+     * @see PossibleMoveAnalyzer
+     */
+    public List<BlockadeMove> getPossibleMoveList(BoardPosition position, boolean op1) {
+        PossibleMoveAnalyzer moveAnalyzer = new PossibleMoveAnalyzer(board, position, op1);
+        return moveAnalyzer.getPossibleMoveList();
+    }
 
     /**
      * @param player1 the last player to make a move.
@@ -68,7 +67,6 @@ public class BoardAnalyzer {
         //assert (opponentPaths.size() == numShortestPaths) : "Too few opponent paths:"+ opponentPaths;
         return opponentPaths;
     }
-
 
     /**
      * Find moves going to unvisited positions.
@@ -116,8 +114,7 @@ public class BoardAnalyzer {
         if (position.isHomeBase(opponentIsPlayer1)) {
            homeSet.add(root);
         }
-        else
-        {
+        else {
             q.addAll( findPathChildren(position, root, opponentIsPlayer1) );
 
             // do a breadth first search until you have spanned/visited all opponent homes.
@@ -146,7 +143,6 @@ public class BoardAnalyzer {
         unvisitAll();
         return paths;
     }
-
 
     /**
      * return everything to an unvisited state.
@@ -191,41 +187,28 @@ public class BoardAnalyzer {
     public String checkLegalWallPlacement(BlockadeWall wall, Location location) {
         String sError = null;
         assert (wall != null);
-        boolean vertical = wall.isVertical();
 
-        Map<BlockadeBoardPosition, BlockadeWall> oldWalls = new HashMap<BlockadeBoardPosition, BlockadeWall>();
+        Map<BlockadeBoardPosition, BlockadeWall> oldWalls = getOldWalls(wall);
 
-        // iterate over the 2 positions covered by the wall.
-        for (BlockadeBoardPosition pos: wall.getPositions())  {
-            BlockadeWall origWall = vertical? pos.getEastWall() : pos.getSouthWall() ;
-
-            if (sError==null  && ((vertical && pos.isEastBlocked()) || (!vertical && pos.isSouthBlocked()))) {
-                sError = GameContext.getLabel("CANT_OVERLAP_WALLS");
-            }
-
-            // save the old wall, and temporarily set the candidate wall
-            oldWalls.put(pos, origWall);
-            if (vertical)
-                pos.setEastWall(wall);
-            else
-                pos.setSouthWall(wall);
+        if (hasWallOverlap(wall)) {
+            sError = GameContext.getLabel("CANT_OVERLAP_WALLS");
         }
 
         BlockadeBoardPosition p = (BlockadeBoardPosition) board.getPosition(location);
-        if (sError==null && hasWallIntersection(wall)) {
+        if (sError == null && hasWallIntersection(wall)) {
              sError = GameContext.getLabel("CANT_INTERSECT_WALLS");
         }
-        else if (sError==null && p == null) {
+        else if (sError == null && p == null) {
             sError = GameContext.getLabel("INVALID_WALL_PLACEMENT");
         }
-        else if (sError==null && missingPath()) {
+        else if (sError == null && missingPath()) {
             sError = GameContext.getLabel("MUST_HAVE_ONE_PATH");
         }
 
        // now restore the original walls
        for (BlockadeBoardPosition pos: wall.getPositions())  {
             BlockadeWall origWall = oldWalls.get(pos);
-            if (vertical)
+            if (wall.isVertical())
                 pos.setEastWall(origWall);
             else
                 pos.setSouthWall(origWall);
@@ -256,6 +239,42 @@ public class BoardAnalyzer {
             }
         }
         return playerPaths;
+    }
+
+    private Map<BlockadeBoardPosition, BlockadeWall> getOldWalls(BlockadeWall wall) {
+
+        Map<BlockadeBoardPosition, BlockadeWall> oldWalls = new HashMap<BlockadeBoardPosition, BlockadeWall>();
+        boolean vertical = wall.isVertical();
+
+        for (BlockadeBoardPosition pos: wall.getPositions())  {
+
+            BlockadeWall origWall = vertical ? pos.getEastWall() : pos.getSouthWall() ;
+
+            // save the old wall, and temporarily set the candidate wall
+            oldWalls.put(pos, origWall);
+
+        }
+        return oldWalls;
+    }
+
+    private boolean hasWallOverlap(BlockadeWall wall) {
+        // iterate over the 2 positions covered by the wall.
+        boolean vertical = wall.isVertical();
+        for (BlockadeBoardPosition pos: wall.getPositions())  {
+            BlockadeWall origWall = vertical? pos.getEastWall() : pos.getSouthWall() ;
+
+            if ((vertical && pos.isEastBlocked()) || (!vertical && pos.isSouthBlocked())) {
+                return true;
+            }
+
+            if (vertical) {
+                pos.setEastWall(wall);
+            }
+            else  {
+                pos.setSouthWall(wall);
+            }
+        }
+        return false;
     }
 
     /**

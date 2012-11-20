@@ -69,7 +69,7 @@ public class ComplexNumber {
 
 
     /**
-     * @return result of multipling this Complex times another one.
+     * @return result of multiplying this Complex times another one.
      */
     public ComplexNumber multiply(ComplexNumber other) {
         return multiply(this, other);

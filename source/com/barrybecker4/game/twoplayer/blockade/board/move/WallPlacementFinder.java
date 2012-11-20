@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Generates candidate next moves for a game of cBlockade given a current board state.
+ * Generates candidate next moves for a game of Blockade given a current board state.
  *
  * @author Barry Becker
  */
@@ -128,7 +128,6 @@ public class WallPlacementFinder {
      * @param paths our friendly paths.
      * @return the walls for a specific move along an opponent path.
      */
-    @SuppressWarnings("fallthrough")
     List<BlockadeWall> getWallsForMove(BlockadeMove move, List<Path> paths) {
         List<BlockadeWall> wallsList = new LinkedList<BlockadeWall>();
 
@@ -315,7 +314,7 @@ public class WallPlacementFinder {
      *Add valid wall placements to the south.
      */
     private void addWallsForSouth(BlockadeBoardPosition southPos,
-                                                      BlockadeBoardPosition pos , List<BlockadeWall> wallsToCheck) {
+                                  BlockadeBoardPosition pos , List<BlockadeWall> wallsToCheck) {
         if (southPos != null && !pos.isSouthBlocked()) {
             BlockadeBoardPosition westPos = pos.getNeighbor(Direction.WEST, board_);
             BlockadeBoardPosition eastPos = pos.getNeighbor(Direction.EAST, board_);
@@ -337,8 +336,7 @@ public class WallPlacementFinder {
      * @param wall that we check to see if blocking any paths
      * @return true if the wall is blocking any of the paths.
      */
-    private static  boolean arePathsBlockedByWall(List<Path> paths, BlockadeWall wall, BlockadeBoard b)
-    {
+    private static  boolean arePathsBlockedByWall(List<Path> paths, BlockadeWall wall, BlockadeBoard b) {
         assert (wall!=null);
         for (final Path path : paths) {
             if (path.isBlockedByWall(wall, b))
@@ -408,8 +406,7 @@ public class WallPlacementFinder {
      * @return list of accumulated walls to check.
      */
     private List<BlockadeWall> handleDirectionCase(BlockadeBoardPosition pos, int rowOffset, int colOffset,
-                                                          List<BlockadeWall> wallsToCheck)
-    {
+                                                          List<BlockadeWall> wallsToCheck) {
         BlockadeBoardPosition offsetPos =
                     (BlockadeBoardPosition)board_.getPosition(pos.getRow() + rowOffset, pos.getCol() + colOffset);
         boolean isVertical = (rowOffset != 0);

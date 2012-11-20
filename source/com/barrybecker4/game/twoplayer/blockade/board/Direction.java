@@ -11,8 +11,7 @@ import java.util.Map;
  *
  * @author Barry Becker
  */
-public enum Direction
-{
+public enum Direction {
 
     /** these directional constants are determined by the hash = 10*(2+rowDif) + 2+colDif */
     NORTH_NORTH(2),        // -2 0
@@ -23,8 +22,8 @@ public enum Direction
     WEST(21),               // 0 -1
     EAST(23),               // 0 1
     EAST_EAST(24),          // 0 2
-    SOUTH_WEST(31),        // 1 -1
-    SOUTH (32),            // 1 0
+    SOUTH_WEST(31),         // 1 -1
+    SOUTH (32),             // 1 0
     SOUTH_EAST(33),         // 1 1
     SOUTH_SOUTH(42);        // 2 0
 
@@ -34,7 +33,7 @@ public enum Direction
     private static Map<Integer, Direction> map_;
 
     /**
-     * constructor for com.barrybecker4.game.twoplayer.blockade direction
+     * constructor for blockade direction
      *
      * @param hashKey string name of the eye type (eg "False Eye")
      */
@@ -44,7 +43,7 @@ public enum Direction
     }
 
     /**
-     * Oddly, this line cannot apear directly in the constructor or you get an error like
+     * Oddly, this line cannot appear directly in the constructor or you get an error like
      * illegal reference to static field in initializer.
      */
     private static void initHash(int hashKey, Direction d) {
@@ -65,8 +64,7 @@ public enum Direction
      * @param colDif column delta
      * @return the direction enum value
      */
-    public static Direction getDirection(int rowDif, int colDif)
-    {
+    public static Direction getDirection(int rowDif, int colDif) {
         // hash function
         int hashKey = 10 * (2 + rowDif) + 2 + colDif;
         return map_.get(hashKey);

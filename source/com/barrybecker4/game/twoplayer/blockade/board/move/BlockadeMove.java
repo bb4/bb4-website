@@ -123,15 +123,14 @@ public class BlockadeMove extends TwoPlayerMove {
 
     /**
      * Check to see if a given wall blocks the move.
-     * We assume the move is valid (eg does not move off the board or anything like that).
+     * Assume the move is valid (eg does not move off the board or anything like that).
      * @@ do  we need to place the wall and then remove it at the end?
      * @param wall to see if blocking our move.
      * @param board
      * @return  true if the wall blocks this move.
      */
-    @SuppressWarnings("fallthrough")
     public boolean isMoveBlockedByWall(BlockadeWall wall, BlockadeBoard board) {
-        // We assume that this wall does not interfere with other walls as that would be invalid.
+        // Assume that this wall does not interfere with other walls as that would be invalid.
         boolean blocked = false;
         board.addWall(wall);
 

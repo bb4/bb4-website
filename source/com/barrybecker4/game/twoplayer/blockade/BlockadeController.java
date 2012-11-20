@@ -20,7 +20,7 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * Defines for the computer how it should play com.barrybecker4.game.twoplayer.blockade.
+ * Defines for the computer how it should play blockade.
  *
  * Todo items
  *   - Restrict to N vertical and N horizontal walls, or allow not to place a wall.
@@ -91,7 +91,7 @@ public class BlockadeController extends TwoPlayerController {
     }
 
     /**
-     * save the current state of the com.barrybecker4.game.twoplayer.blockade game to a file in SGF (4) format (standard game format).
+     * Save the current state of the blockade game to a file in SGF (4) format (standard game format).
      * This should some day be xml (xgf)
      */
     @Override

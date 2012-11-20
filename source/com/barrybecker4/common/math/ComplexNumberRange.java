@@ -63,9 +63,8 @@ public class ComplexNumberRange {
         ComplexNumberRange that = (ComplexNumberRange) o;
 
         if (point1_ != null ? !point1_.equals(that.point1_) : that.point1_ != null) return false;
-        if (point2_ != null ? !point2_.equals(that.point2_) : that.point2_ != null) return false;
+        return !(point2_ != null ? !point2_.equals(that.point2_) : that.point2_ != null);
 
-        return true;
     }
 
     @Override
