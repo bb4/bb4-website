@@ -18,8 +18,8 @@ import java.util.Set;
  *
  * @author Barry Becker
  */
-public class BlockadeWall
-{
+public class BlockadeWall {
+
     /** whether the wall is VERTICAL or HORIZONTAL */
     private boolean isVertical_;
 
@@ -78,7 +78,6 @@ public class BlockadeWall
     }
 
     /**
-     *
      * @return true if this is a vertically oriented wall.
      */
     public boolean isVertical() {

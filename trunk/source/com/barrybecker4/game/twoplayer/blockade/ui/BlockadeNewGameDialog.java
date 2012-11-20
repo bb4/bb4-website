@@ -16,8 +16,7 @@ class BlockadeNewGameDialog extends TwoPlayerNewGameDialog
                             implements ActionListener {
 
     // constructor
-    public BlockadeNewGameDialog(Component parent, GameViewable viewer )
-    {
+    public BlockadeNewGameDialog(Component parent, GameViewable viewer ) {
         super(parent, viewer);
     }
 

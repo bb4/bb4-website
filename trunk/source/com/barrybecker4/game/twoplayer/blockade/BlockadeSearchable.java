@@ -15,12 +15,12 @@ import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerSearchable;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 
+import java.util.Arrays;
+
 import static com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 /**
  * For searching the blockade tree.
- * Could extract moveGenerator and moveEvaluator.
- *
  *
  * @author Barry Becker
  */
@@ -50,7 +50,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
      * The primary way of computing the score for Blockade is to
      * weight the difference of the 2 shortest minimum paths plus the
      * weighted difference of the 2 furthest minimum paths.
-     * An alternative method might be to weight the sum of the our shortest paths
+     * An alternative method might be to weight the sum of the shortest paths
      * and difference it with the weighted sum of the opponent shortest paths.
      * The minimum path for a piece is the distance to its closest enemy home position.
      *
@@ -65,8 +65,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
         // if its a winning move then return the winning value
         boolean player1Moved = m.isPlayer1();
 
-        if (checkForWin(player1Moved,
-                                 player1Moved? getBoard().getPlayer2Homes() : getBoard().getPlayer1Homes())) {
+        if (checkForWin(player1Moved)) {
             GameContext.log(1, "FOUND WIN!!!");
             return player1Moved ? WINNING_VALUE : -WINNING_VALUE;
         }
@@ -80,11 +79,12 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
 
     /**
       * If a players pawn lands on an opponent home, the game is over.
-      * @param player1 the player to check to see fi won.
-      * @param homes the array of home bases.
+      * @param player1 the player to check to see if won.
       * @return true if player has reached an opponent home. (for player1 or player2 depending on boolean player1 value)
       */
-    private static boolean checkForWin(boolean player1, BoardPosition[] homes) {
+    private boolean checkForWin(boolean player1) {
+
+        BoardPosition[] homes = getBoard().getPlayerHomes(!player1);
         for (BoardPosition home : homes) {
             GamePiece p = home.getPiece();
             if (p != null && p.isOwnedByPlayer1() == player1)
@@ -130,12 +130,15 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
         }
         BlockadeBoard board = (BlockadeBoard)board_;
 
-        boolean p1Won = checkForWin(true, board.getPlayer2Homes());
-        boolean p2Won = checkForWin(false, board.getPlayer1Homes());
-        if (p1Won)
+        boolean p1Won = checkForWin(true);
+        boolean p2Won = checkForWin(false);
+        //System.out.println("p1Won=" + p1Won + " p2Homes = " + Arrays.toString(board.getPlayerHomes(false)));
+        //System.out.println("p2Won=" + p2Won + " p1Homes = " + Arrays.toString(board.getPlayerHomes(true)));
+        if (p1Won) {
             players_.getPlayer1().setWon(true);
-        else if (p2Won)
+        } else if (p2Won)  {
             players_.getPlayer2().setWon(true);
+        }
         return (p1Won || p2Won);
     }
 

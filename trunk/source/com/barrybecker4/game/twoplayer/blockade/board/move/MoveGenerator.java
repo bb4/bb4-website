@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Generates candidate next moves for a game of cBlockade given a current board state.
+ * Generates candidate next moves for a game of Blockade given a current board state.
  *
  * @author Barry Becker
  */
@@ -23,6 +23,7 @@ public class MoveGenerator {
     private BlockadeBoard board_;
     private ParameterArray weights_;
 
+    /** Constructor */
     public MoveGenerator(ParameterArray weights, BlockadeBoard board) {
 
         board_ = board;
@@ -43,8 +44,7 @@ public class MoveGenerator {
         MoveList moveList = new MoveList();
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
 
-        //  There must be NUM_HOMES squared of them (unless the player won).
-        // There is one path from every piece to every opponent home (i.e. n*n)
+        // There is one path from every piece to every opponent home (i.e. n*NUM_HOMES)
         List<Path> opponentPaths = board_.findAllOpponentShortestPaths(player1);
 
         List<BoardPosition> pawnLocations = new LinkedList<BoardPosition>();

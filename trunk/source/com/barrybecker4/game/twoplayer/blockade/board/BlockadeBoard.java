@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Defines the structure of the com.barrybecker4.game.twoplayer.blockade board and the pieces on it.
+ * Defines the structure of the blockade board and the pieces on it.
  * Each BlockadeBoardPosition can contain a piece and south and east walls.
  *
  * @author Barry Becker
@@ -95,62 +95,50 @@ public class BlockadeBoard extends TwoPlayerBoard {
 
     /**
      * If the Blockade game has more than this many moves, then we assume it is a draw.
-     * We make this number big, because in com.barrybecker4.game.twoplayer.blockade it is impossible to have a draw.
+     * We make this number big, because in blockade it is impossible to have a draw.
      * I haven't proved it, but I think it is impossible for the number of moves to exceed
      * the rows*cols.
      * @return assumed maximum number of moves.
      */
-    public int getMaxNumMoves()
-    {
+    public int getMaxNumMoves() {
         return Integer.MAX_VALUE;
     }
 
     /**
      * @return player1's home bases.
      */
-    public BoardPosition[] getPlayer1Homes()
-    {
-        return p1Homes_;
+    public BoardPosition[] getPlayerHomes(boolean player1) {
+        return player1? p1Homes_ : p2Homes_;
     }
 
     /**
+     * Blockade pieces can move 1 or 2 spaces in any direction.
+     * However, only in rare cases would you ever want to move only 1 space.
+     * For example, move 1 space to land on a home base, or in preparation to jump an opponent piece.
+     * They may jump over opponent pieces that are in the way (but they do not capture it).
+     * The wall is ignored for the purposes of this method.
+     *     Moves are only allowed if the candidate position is unoccupied (unless a home base) and if
+     * it has not been visited already. The visited part is only significant when we are doing a traversal
+     * such as when we are finding the shortest paths to home bases.
+     * <pre>
+     *       #     There are at most 12 moves from this position
+     *     #*#    (some of course may be blocked by walls)
+     *   #*O*#    The most common being marked with #'s.
+     *     #*#
+     *       #
+     * </pre>
      *
-     * @return player2's home bases.
+     * We only add the one space moves if
+     *   1. jumping 2 spaces in that direction would land on an opponent pawn,
+     *   2. or moving one space moves lands on an opponent home base.
+     *
+     * @param position we are moving from
+     * @param op1 true if opposing player is player1; false if player2.
+     * @return a list of legal piece movements
      */
-    public BoardPosition[] getPlayer2Homes()
-    {
-        return p2Homes_;
+    public List<BlockadeMove> getPossibleMoveList(BoardPosition position, boolean op1) {
+        return boardAnalyzer_.getPossibleMoveList(position, op1);
     }
-
-    /**
-      * Blockade pieces can move 1 or 2 spaces in any direction.
-      * However, only in rare cases would you ever want to move only 1 space.
-      * For example, move 1 space to land on a home base, or in preparation to jump an opponent piece.
-      * They may jump over opponent pieces that are in the way (but they do not capture it).
-      * The wall is ignored for the purposes of this method.
-      *     Moves are only allowed if the candidate position is unoccupied (unless a home base) and if
-      * it has not been visited already. The visited part is only significant when we are doing a traversal
-      * such as when we are finding the shortest paths to home bases.
-      * <pre>
-      *       #     There are at most 12 moves from this position
-      *     #*#    (some of course may be blocked by walls)
-      *   #*O*#    The most common being marked with #'s.
-      *     #*#
-      *       #
-      * </pre>
-      *
-      * We only add the one space moves if
-      *   1. jumping 2 spaces in that direction would land on an opponent pawn,
-      *   2. or moving one space moves lands on an opponent home base.
-      *
-      * @param position we are moving from
-      * @param op1 true if opposing player is player1; false if player2.
-      * @return a list of legal piece movements
-      */
-     public List<BlockadeMove> getPossibleMoveList(BoardPosition position, boolean op1)
-     {
-         return boardAnalyzer_.getPossibleMoveList(position, op1);
-     }
 
 
     /**
@@ -255,7 +243,6 @@ public class BlockadeBoard extends TwoPlayerBoard {
         return true;
     }
 
-
     /**
      * for Blockade, undoing a move means moving the piece back and
      * restoring any captures.
@@ -274,7 +261,6 @@ public class BlockadeBoard extends TwoPlayerBoard {
         }
         getProfiler().stopUndoMove();
     }
-
 
     /**
      * Num different states.
@@ -296,16 +282,15 @@ public class BlockadeBoard extends TwoPlayerBoard {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder buf = new StringBuilder(50);
         // print just the walls
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
                BlockadeBoardPosition pos = ((BlockadeBoardPosition)getPosition(i, j));
-               if (pos.getEastWall()!=null)
+               if (pos.getEastWall() != null)
                    buf.append("East wall at: ").append(i).append(' ').append(j).append('\n');
-               if (pos.getSouthWall()!=null)
+               if (pos.getSouthWall() != null)
                    buf.append("South wall at: ").append(i).append(' ').append(j).append('\n');
 
             }

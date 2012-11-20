@@ -3,7 +3,7 @@ package com.barrybecker4.common.geometry;
 
 /**
  * A box defined by 2 locations.
- * The coordinates habe only the resolution of bytes.
+ * The coordinates have only the resolution of bytes.
  * @author Barry Becker
  */
 public class Box {
@@ -207,12 +207,9 @@ public class Box {
 
         Box box = (Box) o;
 
-        if (bottomRightCorner_ != null ? !bottomRightCorner_.equals(box.bottomRightCorner_) : box.bottomRightCorner_ != null)
-            return false;
-        if (topLeftCorner_ != null ? !topLeftCorner_.equals(box.topLeftCorner_) : box.topLeftCorner_ != null)
-            return false;
+        return !(bottomRightCorner_ != null ? !bottomRightCorner_.equals(box.bottomRightCorner_) : box.bottomRightCorner_ != null)
+            && !(topLeftCorner_ != null ? !topLeftCorner_.equals(box.topLeftCorner_) : box.topLeftCorner_ != null);
 
-        return true;
     }
 
     @Override

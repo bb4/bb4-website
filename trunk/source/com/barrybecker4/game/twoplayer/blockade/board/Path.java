@@ -55,8 +55,7 @@ public class Path {
     /**
      * @return true if the wall is blocking the paths.
      */
-    public boolean isBlockedByWall(BlockadeWall wall, BlockadeBoard b)
-    {
+    public boolean isBlockedByWall(BlockadeWall wall, BlockadeBoard b) {
        for (BlockadeMove move: elements_) {
             if (move.isMoveBlockedByWall(wall, b) )
                 return true;
@@ -76,7 +75,7 @@ public class Path {
     }
 
     /**
-     *@return the magnitude of the path.
+     * @return the magnitude of the path.
      */
     public int getLength() {
         return elements_.size();

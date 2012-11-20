@@ -11,15 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Render the paths on the com.barrybecker4.game.twoplayer.blockade board.
- * Mostly for debuggin puposes.
+ * Render the paths on the cblockade board.
+ * Mostly for debugging purposes.
  * Usually the human players do not want to see these paths during a normal game.
  *
- * Created on May 28, 2007, 5:36 AM
  * @author Barry Becker
  */
 final class PathRenderer {
-
 
     private static final float PATH_WIDTH_RATIO = .16f;
     private static final float POINT_WIDTH_RATIO = .22f;

@@ -34,7 +34,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
 
 
     /**
-     * create a new com.barrybecker4.game.twoplayer.blockade position.
+     * create a new blockade position.
      * @param row location.
      * @param col location.
      * @param piece the piece at this position if there is one (use null if no stone).
@@ -58,7 +58,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
     }
 
     /**
-     * create a new com.barrybecker4.game.twoplayer.blockade position.
+     * create a new blockade position.
      * Simple version of the above constructor for when we just want a generic position based on the row and column.
      * @param row location.
      * @param col location.
@@ -101,10 +101,9 @@ public final class BlockadeBoardPosition extends BoardPosition {
      * make it show an empty board position.
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         super.clear();
-        cachedPaths_ =null;
+        cachedPaths_ = null;
     }
 
     /**
@@ -139,51 +138,44 @@ public final class BlockadeBoardPosition extends BoardPosition {
     /**
      * @param wall the wall to set south of this position.
      */
-    public void setSouthWall( BlockadeWall wall )
-    {
+    public void setSouthWall( BlockadeWall wall ) {
         southWall_ = wall;
     }
 
     /**
      * @return the south wall, if any.
      */
-    public BlockadeWall getSouthWall()
-    {
+    public BlockadeWall getSouthWall() {
         return southWall_;
     }
 
     /**
      * @param wall the wall to set east of this position.
      */
-    public void setEastWall( BlockadeWall wall )
-    {
+    public void setEastWall( BlockadeWall wall ) {
         eastWall_ = wall;
     }
 
     /**
      * @return  the east wall, if any.
      */
-    public BlockadeWall getEastWall()
-    {
+    public BlockadeWall getEastWall() {
         return eastWall_;
     }
 
 
-    public void setVisited( boolean visited )
-    {
+    public void setVisited( boolean visited ) {
         visited_ = visited;
     }
 
-    public boolean isVisited()
-    {
+    public boolean isVisited() {
         return visited_;
     }
 
     /**
      * @return  true if the path from this cell is blocked to the south.
      */
-    public boolean isSouthBlocked()
-    {
+    public boolean isSouthBlocked() {
         return (southWall_ != null);
     }
 
@@ -191,41 +183,35 @@ public final class BlockadeBoardPosition extends BoardPosition {
      *
      * @return  true if the path from this cell is blocked to the east.
      */
-    public boolean isEastBlocked()
-    {
+    public boolean isEastBlocked() {
         return (eastWall_ != null);
     }
 
     /**
      * @return  true if the path from this cell is open to the south.
      */
-    public boolean isSouthOpen()
-    {
+    public boolean isSouthOpen() {
         return (southWall_ == null);
     }
 
     /**
-     *
      * @return  true if the path from this cell is open to the east.
      */
-    public boolean isEastOpen()
-    {
+    public boolean isEastOpen() {
         return (eastWall_ == null);
     }
 
     /**
      * @return true if this position is a home base.
      */
-    public boolean isHomeBase()
-    {
+    public boolean isHomeBase() {
         return (isPlayer1Home_ || isPlayer2Home_);
     }
 
     /**
      * @return true if this position is a home base for the specified player.
      */
-    public boolean isHomeBase(boolean player1)
-    {
+    public boolean isHomeBase(boolean player1) {
         return (player1? isPlayer1Home_: isPlayer2Home_);
     }
 
