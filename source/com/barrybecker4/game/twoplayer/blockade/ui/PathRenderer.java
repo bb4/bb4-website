@@ -3,8 +3,8 @@ package com.barrybecker4.game.twoplayer.blockade.ui;
 
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import com.barrybecker4.game.twoplayer.blockade.board.Path;
-import com.barrybecker4.game.twoplayer.blockade.board.PathList;
+import com.barrybecker4.game.twoplayer.blockade.board.path.Path;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 
 import java.awt.*;

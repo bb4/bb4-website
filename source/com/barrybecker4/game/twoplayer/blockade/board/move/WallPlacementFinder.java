@@ -3,11 +3,9 @@ package com.barrybecker4.game.twoplayer.blockade.board.move;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
-import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import com.barrybecker4.game.twoplayer.blockade.board.Direction;
-import com.barrybecker4.game.twoplayer.blockade.board.Path;
-import com.barrybecker4.game.twoplayer.blockade.board.PathList;
-import com.barrybecker4.game.twoplayer.blockade.board.PlayerPathLengths;
+import com.barrybecker4.game.twoplayer.blockade.board.path.Path;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PlayerPathLengths;
 import com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 

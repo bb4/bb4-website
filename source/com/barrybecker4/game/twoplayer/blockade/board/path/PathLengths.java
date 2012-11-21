@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.twoplayer.blockade.board;
+package com.barrybecker4.game.twoplayer.blockade.board.path;
 
 /**
  * Holds the the different paths lengths for a given player.

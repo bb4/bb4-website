@@ -7,7 +7,7 @@ import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
-import com.barrybecker4.game.twoplayer.blockade.board.PlayerPathLengths;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PlayerPathLengths;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.barrybecker4.game.twoplayer.blockade.board.move.MoveGenerator;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerBoard;

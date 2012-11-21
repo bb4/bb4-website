@@ -5,9 +5,9 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import com.barrybecker4.game.twoplayer.blockade.board.Path;
-import com.barrybecker4.game.twoplayer.blockade.board.PathList;
-import com.barrybecker4.game.twoplayer.blockade.board.PlayerPathLengths;
+import com.barrybecker4.game.twoplayer.blockade.board.path.Path;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PlayerPathLengths;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
 
@@ -24,7 +24,6 @@ import static com.barrybecker4.game.twoplayer.blockade.board.Homes.NUM_HOMES;
 public class BoardAnalyzer {
 
     private BlockadeBoard board;
-
     private ShortestPathFinder pathFinder;
 
     /**
@@ -51,8 +50,8 @@ public class BoardAnalyzer {
                     hsPawns.add(pos);
                     assert (hsPawns.size() <= NUM_HOMES) : "Error: too many opponent pieces: " + hsPawns ;
                     PathList paths = findShortestPaths(pos);
-                    GameContext.log(2,
-                        "about to add "+ paths.size() +" more paths to "+opponentPaths.size()+" maxAllowed="+ numShortestPaths);
+                    GameContext.log(2, "about to add "+ paths.size() +" more paths to "
+                         +opponentPaths.size()+" maxAllowed="+ numShortestPaths);
                     for (Path p: paths) {
                         opponentPaths.add(p);
                     }

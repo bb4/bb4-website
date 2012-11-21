@@ -13,8 +13,7 @@ import java.util.Set;
  *  Its either a vertical or horizontal wall.
  *  Not that there is no player ownership for walls (that is why we do not extend GamePiece).
  *  Both players have to abide by them equally regardless of who placed them.
- *
- *  Immutable
+ *  Immutable.
  *
  * @author Barry Becker
  */

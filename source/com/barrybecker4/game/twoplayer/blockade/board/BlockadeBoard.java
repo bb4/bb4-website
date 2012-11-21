@@ -11,6 +11,8 @@ import com.barrybecker4.game.twoplayer.blockade.board.analysis.PossibleMoveAnaly
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
 import com.barrybecker4.game.twoplayer.blockade.board.move.WallPlacementValidator;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PlayerPathLengths;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerBoard;
 
 import java.util.List;
