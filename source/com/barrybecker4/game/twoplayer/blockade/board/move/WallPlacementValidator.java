@@ -5,13 +5,15 @@ import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import com.barrybecker4.game.twoplayer.blockade.board.Path;
+import com.barrybecker4.game.twoplayer.blockade.board.Homes;
 import com.barrybecker4.game.twoplayer.blockade.board.PathList;
 import com.barrybecker4.game.twoplayer.blockade.board.analysis.BoardAnalyzer;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Analyzes the blockade board.
+ * Checks for legal wall placements.
  *
  * @author Barry Becker
  */
@@ -131,6 +133,6 @@ public class WallPlacementValidator {
     }
 
     private int getExpectedNumPaths() {
-        return BlockadeBoard.NUM_HOMES * BlockadeBoard.NUM_HOMES;
+        return Homes.NUM_HOMES * Homes.NUM_HOMES;
     }
 }

@@ -68,16 +68,16 @@ public class MoveGenerator {
     /**
      * Find all the moves a piece can make from position p, and insert them into moveList.
      *
-     * @param p the piece to check from its new location.
+     * @param position the piece to check from its new location.
      * @param moveList add the potential moves to this existing list.
      * @param weights to use.
      * @return the number of moves added.
      */
-    private int addMoves( BoardPosition p, MoveList moveList, PathList opponentPaths, ParameterArray weights) {
+    private int addMoves( BoardPosition position, MoveList moveList, PathList opponentPaths, ParameterArray weights) {
         int numMovesAdded = 0;
 
         // first find the NUM_HOMES shortest paths for p.
-        PathList paths = board_.findShortestPaths((BlockadeBoardPosition)p);
+        PathList paths = board_.findShortestPaths((BlockadeBoardPosition)position);
 
         WallPlacementFinder wallFinder = new WallPlacementFinder(board_, opponentPaths, weights);
 

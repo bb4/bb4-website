@@ -10,7 +10,11 @@ import com.barrybecker4.game.twoplayer.blockade.board.PathList;
 import com.barrybecker4.game.twoplayer.blockade.board.PlayerPathLengths;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
-import java.util.*;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static com.barrybecker4.game.twoplayer.blockade.board.Homes.NUM_HOMES;
 
 /**
  * Analyzes the blockade board.
@@ -37,7 +41,7 @@ public class BoardAnalyzer {
      */
     public PathList findAllOpponentShortestPaths(boolean player1) {
 
-        int numShortestPaths = BlockadeBoard.NUM_HOMES * BlockadeBoard.NUM_HOMES;
+        int numShortestPaths = NUM_HOMES * NUM_HOMES;
         PathList opponentPaths = new PathList();
         Set<BlockadeBoardPosition> hsPawns = new LinkedHashSet<BlockadeBoardPosition>();
         for ( int row = 1; row <= board.getNumRows(); row++ ) {
@@ -45,7 +49,7 @@ public class BoardAnalyzer {
                 BlockadeBoardPosition pos = (BlockadeBoardPosition) board.getPosition( row, col );
                 if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() != player1 ) {
                     hsPawns.add(pos);
-                    assert (hsPawns.size() <= BlockadeBoard.NUM_HOMES) : "Error: too many opponent pieces: " + hsPawns ;
+                    assert (hsPawns.size() <= NUM_HOMES) : "Error: too many opponent pieces: " + hsPawns ;
                     PathList paths = findShortestPaths(pos);
                     GameContext.log(2,
                         "about to add "+ paths.size() +" more paths to "+opponentPaths.size()+" maxAllowed="+ numShortestPaths);

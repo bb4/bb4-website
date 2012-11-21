@@ -6,13 +6,12 @@ import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
 
-import java.util.List;
-
 
 /**
  * The BlockadeBoardPosition describes the physical markers at a location on the board.
  * It can be empty or occupied. If occupied, then one of the BlockadePieces is there and it has an owner.
  * BlockadeBoardPositions may have BlockadeWalls present when unoccupied.
+ * @@ split out PathCache class
  *
  * @see BlockadeBoard
  * @author Barry Becker
@@ -35,13 +34,12 @@ public final class BlockadeBoardPosition extends BoardPosition {
 
     /**
      * create a new blockade position.
-     * @param row location.
-     * @param col location.
+     * @param loc location.
      * @param piece the piece at this position if there is one (use null if no stone).
      */
-    public BlockadeBoardPosition( int row, int col, GamePiece piece, BlockadeWall southWall, BlockadeWall eastWall,
+    public BlockadeBoardPosition( Location loc, GamePiece piece, BlockadeWall southWall, BlockadeWall eastWall,
                                   boolean isP1Home, boolean isP2Home) {
-        super( new Location(row, col), piece );
+        super( loc, piece );
         visited_ = false;
         southWall_ = southWall;
         eastWall_ = eastWall;
@@ -53,7 +51,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
      * Copy constructor
      */
     public BlockadeBoardPosition(BlockadeBoardPosition pos) {
-        this(pos.getRow(), pos.getCol(), pos.getPiece(), pos.southWall_, pos.eastWall_,
+        this(pos.getLocation(), pos.getPiece(), pos.southWall_, pos.eastWall_,
              pos.isPlayer1Home_, pos.isPlayer2Home_);
     }
 
@@ -63,9 +61,8 @@ public final class BlockadeBoardPosition extends BoardPosition {
      * @param row location.
      * @param col location.
      */
-    public BlockadeBoardPosition( int row, int col)
-    {
-        this( row, col, null, null, null, false, false);
+    public BlockadeBoardPosition( int row, int col) {
+        this( new Location(row, col), null, null, null, false, false);
     }
 
     /**
