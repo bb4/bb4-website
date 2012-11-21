@@ -21,7 +21,6 @@ public class MovePlacementValidator {
         this.board = board;
     }
 
-
     /**
      * Check to see if a given wall blocks the move.
      * Assume the move is valid (eg does not move off the board or anything like that).
