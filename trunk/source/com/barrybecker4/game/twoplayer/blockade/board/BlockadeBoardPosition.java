@@ -5,6 +5,8 @@ import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
+import com.barrybecker4.game.twoplayer.blockade.board.path.Path;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
 
 
 /**

@@ -4,9 +4,7 @@ package com.barrybecker4.game.twoplayer.blockade.board.move;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.Direction;
-import com.barrybecker4.game.twoplayer.blockade.board.PathList;
-
-import java.util.List;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
 
 /**
  * Find reasonable wall placements for a given pawn placement.
