@@ -4,6 +4,7 @@ package com.barrybecker4.game.twoplayer.blockade.board.move;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.Direction;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
 
 /**
  * Checks to see if moves are blocked by walls.

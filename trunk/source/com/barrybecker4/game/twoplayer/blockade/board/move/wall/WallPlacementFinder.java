@@ -1,8 +1,9 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.game.twoplayer.blockade.board.move;
+package com.barrybecker4.game.twoplayer.blockade.board.move.wall;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
+import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.barrybecker4.game.twoplayer.blockade.board.path.Path;
 import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
 import com.barrybecker4.game.twoplayer.blockade.board.path.PlayerPathLengths;

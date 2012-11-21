@@ -9,8 +9,8 @@ import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.analysis.BoardAnalyzer;
 import com.barrybecker4.game.twoplayer.blockade.board.analysis.PossibleMoveAnalyzer;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
-import com.barrybecker4.game.twoplayer.blockade.board.move.WallPlacementValidator;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.WallPlacementValidator;
 import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
 import com.barrybecker4.game.twoplayer.blockade.board.path.PlayerPathLengths;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerBoard;
@@ -29,8 +29,8 @@ public class BlockadeBoard extends TwoPlayerBoard {
     /** Home base positions for both players. */
     private Homes homes;
 
-    private BoardAnalyzer boardAnalyzer_;
-    private WallPlacementValidator wallValidator_;
+    private BoardAnalyzer boardAnalyzer;
+    private WallPlacementValidator wallValidator;
 
 
     /**
@@ -41,14 +41,15 @@ public class BlockadeBoard extends TwoPlayerBoard {
     public BlockadeBoard(int numRows, int numCols) {
         homes = new Homes();
         setSize(numRows, numCols);
-        boardAnalyzer_ = new BoardAnalyzer(this);
-        wallValidator_ = new WallPlacementValidator(this);
+        boardAnalyzer = new BoardAnalyzer(this);
+        wallValidator = new WallPlacementValidator(this);
     }
 
     /** copy constructor */
     protected BlockadeBoard(BlockadeBoard b) {
         super(b);
-        boardAnalyzer_ = new BoardAnalyzer(this);
+        boardAnalyzer = new BoardAnalyzer(this);
+        homes = new Homes(b.homes);
     }
 
     @Override
@@ -133,7 +134,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      */
     public PathList findAllOpponentShortestPaths(boolean player1) {
 
-        return boardAnalyzer_.findAllOpponentShortestPaths(player1);
+        return boardAnalyzer.findAllOpponentShortestPaths(player1);
     }
 
     /**
@@ -148,7 +149,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @return the NUM_HOMES shortest paths from toPosition.
      */
     public PathList findShortestPaths( BlockadeBoardPosition position )  {
-        return boardAnalyzer_.findShortestPaths(position);
+        return boardAnalyzer.findShortestPaths(position);
     }
 
     /*
@@ -160,7 +161,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @return an error string if the wall is not a legal placement on the board.
      */
     public String checkLegalWallPlacement(BlockadeWall wall, Location location) {
-        return wallValidator_.checkLegalWallPlacement(wall, location, boardAnalyzer_);
+        return wallValidator.checkLegalWallPlacement(wall, location, boardAnalyzer);
     }
 
     /**
@@ -170,7 +171,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      */
     public PlayerPathLengths findPlayerPathLengths(BlockadeMove lastMove) {
 
-        return boardAnalyzer_.findPlayerPathLengths(lastMove);
+        return boardAnalyzer.findPlayerPathLengths(lastMove);
     }
 
 

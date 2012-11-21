@@ -9,7 +9,7 @@ import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
 import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 
