@@ -14,7 +14,7 @@ import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.BlockadeController;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
 import com.barrybecker4.game.twoplayer.blockade.persistence.tokens.BlockadeMoveToken;
 import com.barrybecker4.game.twoplayer.blockade.persistence.tokens.Player1BlockadeMoveToken;
 import com.barrybecker4.game.twoplayer.common.persistence.TwoPlayerGameImporter;

@@ -5,11 +5,11 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
 import com.barrybecker4.game.twoplayer.blockade.board.path.Path;
 import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
 import com.barrybecker4.game.twoplayer.blockade.board.path.PlayerPathLengths;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

@@ -3,8 +3,8 @@ package com.barrybecker4.game.twoplayer.blockade.board.path;
 
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
 import com.barrybecker4.game.twoplayer.blockade.board.move.MovePlacementValidator;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.Iterator;

@@ -6,6 +6,7 @@ import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.Direction;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 
 import java.util.Iterator;
@@ -102,7 +103,7 @@ public class BlockadeMove extends TwoPlayerMove {
          return fromLocation_.getCol();
     }
 
-    Location getFromLocation() {
+    public Location getFromLocation() {
         return fromLocation_;
     }
 
