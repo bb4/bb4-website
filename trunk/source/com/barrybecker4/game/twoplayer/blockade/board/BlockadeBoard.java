@@ -6,7 +6,6 @@ import com.barrybecker4.game.common.AbstractGameProfiler;
 import com.barrybecker4.game.common.GameProfiler;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.board.BoardPosition;
-import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.analysis.BoardAnalyzer;
 import com.barrybecker4.game.twoplayer.blockade.board.analysis.PossibleMoveAnalyzer;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
@@ -25,15 +24,8 @@ import java.util.Set;
  */
 public class BlockadeBoard extends TwoPlayerBoard {
 
-    /** The number of home bases for each player.  Traditional rules call for 2. */
-    public static final int NUM_HOMES = 2;
-
-    /** The percentage away from the players closest edge to place the bases. */
-    private static final float HOME_BASE_POSITION_PERCENT = 0.3f;
-
     /** Home base positions for both players. */
-    private BoardPosition[] p1Homes_ = null;
-    private BoardPosition[] p2Homes_ = null;
+    private Homes homes;
 
     private BoardAnalyzer boardAnalyzer_;
     private WallPlacementValidator wallValidator_;
@@ -45,6 +37,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @param numCols number of rows in the board grid.
      */
     public BlockadeBoard(int numRows, int numCols) {
+        homes = new Homes();
         setSize(numRows, numCols);
         boardAnalyzer_ = new BoardAnalyzer(this);
         wallValidator_ = new WallPlacementValidator(this);
@@ -53,8 +46,6 @@ public class BlockadeBoard extends TwoPlayerBoard {
     /** copy constructor */
     protected BlockadeBoard(BlockadeBoard b) {
         super(b);
-        p1Homes_ = b.p1Homes_.clone();
-        p2Homes_ = b.p2Homes_.clone();
         boardAnalyzer_ = new BoardAnalyzer(this);
     }
 
@@ -70,24 +61,14 @@ public class BlockadeBoard extends TwoPlayerBoard {
     public void reset() {
         super.reset();
 
-        p1Homes_ = new BlockadeBoardPosition[NUM_HOMES];
-        p2Homes_ = new BlockadeBoardPosition[NUM_HOMES];
+        if (homes == null) {
+            homes = new Homes();
+        }
+        homes.init(getNumRows(), getNumCols());
 
-        // determine the home base positions,
-        // and place the players 2 pieces on their respective home bases initially.
-        int homeRow1 = getNumRows() - (int) (HOME_BASE_POSITION_PERCENT * getNumRows()) + 1;
-        int homeRow2 = (int) (HOME_BASE_POSITION_PERCENT * getNumRows());
-        float increment = (float)(getNumCols())/(NUM_HOMES+1);
-        int baseOffset = Math.round(increment);
-        for (int i=0; i<NUM_HOMES; i++) {
-            int c = baseOffset + Math.round(i*increment);
-            setPosition(new BlockadeBoardPosition( homeRow1, c, null, null, null, true, false));
-            setPosition(new BlockadeBoardPosition( homeRow2, c, null, null, null, false, true));
-
-            p1Homes_[i] = positions_.getPosition(homeRow1, c);
-            p1Homes_[i].setPiece(new GamePiece(true));
-            p2Homes_[i] = positions_.getPosition(homeRow2, c);
-            p2Homes_[i].setPiece(new GamePiece(false));
+        for (int i=0; i<Homes.NUM_HOMES; i++) {
+            setPosition(homes.getPlayerHomes(true)[i]);
+            setPosition(homes.getPlayerHomes(false)[i]);
         }
     }
 
@@ -95,7 +76,6 @@ public class BlockadeBoard extends TwoPlayerBoard {
     protected BoardPosition getPositionPrototype() {
         return new BlockadeBoardPosition(1, 1);
     }
-
 
     /**
      * If the Blockade game has more than this many moves, then we assume it is a draw.
@@ -112,7 +92,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @return player1's home bases.
      */
     public BoardPosition[] getPlayerHomes(boolean player1) {
-        return player1? p1Homes_ : p2Homes_;
+        return homes.getPlayerHomes(player1);
     }
 
     /**
@@ -232,8 +212,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @return true if the move was made successfully
      */
     @Override
-    protected boolean makeInternalMove( Move move )
-    {
+    protected boolean makeInternalMove( Move move ) {
         getProfiler().startMakeMove();
         BlockadeMove m = (BlockadeMove) move;
         getPosition(m.getToRow(), m.getToCol()).setPiece(m.getPiece());
@@ -260,7 +239,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
         getPosition(m.getToRow(), m.getToCol()).clear();
 
         // remove the wall that was placed by this move.
-        if (m.getWall()!=null) {
+        if (m.getWall() != null) {
             removeWall(m.getWall());
         }
         getProfiler().stopUndoMove();
@@ -273,7 +252,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      */
     @Override
     public int getNumPositionStates() {
-         return 12;
+        return 12;
     }
 
     /**

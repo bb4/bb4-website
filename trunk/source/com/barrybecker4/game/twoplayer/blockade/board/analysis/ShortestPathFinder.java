@@ -5,6 +5,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.barrybecker4.game.twoplayer.blockade.board.Homes;
 import com.barrybecker4.game.twoplayer.blockade.board.Path;
 import com.barrybecker4.game.twoplayer.blockade.board.PathList;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
@@ -53,7 +54,7 @@ class ShortestPathFinder {
         // mark position visited so we don't circle back to it.
         position.setVisited(true);
 
-        List<DefaultMutableTreeNode> q = new LinkedList<DefaultMutableTreeNode>();
+        List<DefaultMutableTreeNode> queue = new LinkedList<DefaultMutableTreeNode>();
         // the user object at the root is null, because there is no move there.
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(null);
         // if we are sitting on a home, then need to add it to the homeBase set.
@@ -61,12 +62,12 @@ class ShortestPathFinder {
            homeSet.add(root);
         }
         else {
-            q.addAll( findPathChildren(position, root, opponentIsPlayer1) );
+            queue.addAll(findPathChildren(position, root, opponentIsPlayer1));
 
             // do a breadth first search until you have spanned/visited all opponent homes.
-            while (homeSet.size() < BlockadeBoard.NUM_HOMES && !q.isEmpty()) {
+            while (homeSet.size() < Homes.NUM_HOMES && !queue.isEmpty()) {
                 // pop the next move from the head of the queue.
-                DefaultMutableTreeNode node = q.remove(0);
+                DefaultMutableTreeNode node = queue.remove(0);
                 BlockadeMove nodeMove = (BlockadeMove)node.getUserObject();
                 BlockadeBoardPosition toPosition =
                         (BlockadeBoardPosition) board.getPosition(nodeMove.getToRow(), nodeMove.getToCol());
@@ -79,7 +80,7 @@ class ShortestPathFinder {
                         homeSet.add(node);
                     }
                     List<DefaultMutableTreeNode> children =  findPathChildren(toPosition, node, opponentIsPlayer1);
-                    q.addAll(children);
+                    queue.addAll(children);
                 }
             }
         }

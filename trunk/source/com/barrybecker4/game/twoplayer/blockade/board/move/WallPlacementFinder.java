@@ -49,11 +49,11 @@ public class WallPlacementFinder {
         // is it true that the set of walls we could add for any constant set
         // of opponent paths is always the same regardless of firstStep?
         // I think its only true as long as firstStep is not touching any of those opponent paths
-        GameContext.log(2, firstStep + "\nopaths="+opponentPaths_ + "\n [[");
+        GameContext.log(2, firstStep + "\nopponent paths="+opponentPaths_ + "\n [[");
 
         for (Path opponentPath: opponentPaths_) {
             assert (opponentPath != null):
-                "Opponent path was null. There are "+opponentPaths_.size()+" oppenent paths.";
+                "    Opponent path was null. There are "+opponentPaths_.size()+" oppenent paths.";
             for (int j = 0; j < opponentPath.getLength(); j++) {
                 // if there is no wall currently interfering with this wall placement,
                 // and it does not impact a friendly path,
@@ -65,16 +65,16 @@ public class WallPlacementFinder {
                 // get all the possible legal and reasonable wall placements for this move
                 // along the opponent path that do not interfere with our own paths.
                 List<BlockadeWall> walls = getWallsForMove(move, paths);
-                GameContext.log(2, "num walls for move "+move+"  = "+walls.size() );
+                GameContext.log(2, "    num walls for move " + move + "  = "+walls.size() );
 
                 if (walls.isEmpty()) {
-                    GameContext.log(2, "***No walls for move " + move + " at step j=" + j
+                    GameContext.log(2, "    ***No walls for move " + move + " at step j=" + j
                             + " along opponentPath="+opponentPath
                             +" that do not interfere with our path");
                 }
 
                 // typically 0-4 walls
-                assert walls.size() <=4:"num walls = " + walls.size();
+                assert (walls.size() <=4) : "num walls = " + walls.size();
                 for (BlockadeWall wall: walls) {
                     addMoveWithWallPlacement(firstStep, wall, weights_, moves);
                }
@@ -88,7 +88,7 @@ public class WallPlacementFinder {
 
         // if no move was added add the more with no wall placement
         if (moves.isEmpty()) {
-           addMoveWithWallPlacement(firstStep, null, weights_, moves);
+            addMoveWithWallPlacement(firstStep, null, weights_, moves);
         }
 
         return moves;
@@ -232,7 +232,6 @@ public class WallPlacementFinder {
         return getBlockedWalls(wallsToCheck, paths, wallsList);
     }
 
-
     /**
      * @param wallsToCheck
      * @param paths
@@ -241,13 +240,12 @@ public class WallPlacementFinder {
     private List<BlockadeWall> getBlockedWalls(List<BlockadeWall> wallsToCheck, PathList paths,
                                                List<BlockadeWall> wallsList)  {
         for (BlockadeWall wall : wallsToCheck) {
-            if (wall != null && !arePathsBlockedByWall(paths, wall, board_))
+            if (wall != null && !arePathsBlockedByWall(paths, wall))
                 wallsList.add(wall);
         }
 
         return wallsList;
     }
-
 
     /**
      *Add valid wall placements to the east.
@@ -332,21 +330,19 @@ public class WallPlacementFinder {
          }
     }
 
-
     /**
      * @param paths are any of these paths blocked by the specified wall?
      * @param wall that we check to see if blocking any paths
      * @return true if the wall is blocking any of the paths.
      */
-    private static  boolean arePathsBlockedByWall(PathList paths, BlockadeWall wall, BlockadeBoard b) {
-        assert (wall!=null);
+    private boolean arePathsBlockedByWall(PathList paths, BlockadeWall wall) {
+        assert (wall != null);
         for (final Path path : paths) {
-            if (path.isBlockedByWall(wall, b))
+            if (path.isBlockedByWall(wall, board_))
                 return true;
         }
         return false;
     }
-
 
     /**
      * The 9 wall cases for a diagonal move

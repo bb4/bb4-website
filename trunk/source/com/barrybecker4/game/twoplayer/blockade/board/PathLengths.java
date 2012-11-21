@@ -1,8 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.blockade.board;
 
-import java.util.List;
-
 /**
  * Holds the the different paths lengths for a given player.
  *
@@ -37,12 +35,12 @@ public class PathLengths {
     public void updatePathLengths(PathList paths) {
         // if we don't have NUM_HOMES paths then this set of path lengths is invalid.
         // probably the move and corresponding wall placement was not valid, or we landed on a home.
-        if (paths.size() == 0 || (paths.size() < BlockadeBoard.NUM_HOMES && (paths.get(0).getLength() > 0))) {
+        if (paths.isValid()) {
             isValid = false;
             return;
         }
-        for (final Path p : paths) {
-            int len = p.getLength();
+        for (final Path path : paths) {
+            int len = path.getLength();
             if (len < shortestLength) {
                 secondShortestLength = shortestLength;
                 shortestLength = len;

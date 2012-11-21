@@ -9,7 +9,6 @@ import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 
 import java.awt.*;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Render the paths on the cblockade board.

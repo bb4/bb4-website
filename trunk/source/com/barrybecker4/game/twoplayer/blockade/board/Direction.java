@@ -53,11 +53,6 @@ public enum Direction {
         map_.put(hashKey, d);
     }
 
-
-    public int getHash() {
-        return hashKey_;
-    }
-
     /**
      * Get the direction given the row and column change.
      * @param rowDif row delta
@@ -71,7 +66,7 @@ public enum Direction {
     }
 
     /**
-     * @Return the row and column offset for this direction.
+     * @return the row and column offset for this direction.
      * An inverse map from the hashKey to the rowDif and colDif
      */
     public Location getOffset() {

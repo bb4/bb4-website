@@ -83,8 +83,8 @@ public class BlockadeMove extends TwoPlayerMove {
          BlockadeMove comparisonMove = (BlockadeMove) mv;
          return (getFromLocation().equals(comparisonMove.getFromLocation())) &&
                     (getToLocation().equals(comparisonMove.getToLocation())) &&
-                    ((wall_==null && comparisonMove.getWall() == null)
-                     ||wall_.equals(comparisonMove.getWall())) &&
+                    ((wall_== null && comparisonMove.getWall() == null)
+                     || wall_.equals(comparisonMove.getWall())) &&
                     (isPlayer1() == comparisonMove.isPlayer1());
     }
 
@@ -120,96 +120,6 @@ public class BlockadeMove extends TwoPlayerMove {
         return direction_;
     }
 
-
-    /**
-     * Check to see if a given wall blocks the move.
-     * Assume the move is valid (eg does not move off the board or anything like that).
-     * @@ do  we need to place the wall and then remove it at the end?
-     * @param wall to see if blocking our move.
-     * @param board
-     * @return  true if the wall blocks this move.
-     */
-    public boolean isMoveBlockedByWall(BlockadeWall wall, BlockadeBoard board) {
-        // Assume that this wall does not interfere with other walls as that would be invalid.
-        boolean blocked = false;
-        board.addWall(wall);
-
-        int fromRow = getFromRow();
-        int fromCol = getFromCol();
-        BlockadeBoardPosition start = (BlockadeBoardPosition)board.getPosition(fromRow, fromCol);
-        BlockadeBoardPosition west = start.getNeighbor(Direction.WEST, board);
-        BlockadeBoardPosition north = start.getNeighbor(Direction.NORTH, board);
-        BlockadeBoardPosition south, east;
-
-        switch (getDirection()) {
-            case NORTH_NORTH :
-                BlockadeBoardPosition northNorth = start.getNeighbor(Direction.NORTH_NORTH, board);
-                if (northNorth.isSouthBlocked())
-                    blocked = true;
-            case NORTH :
-                if (north.isSouthBlocked() )
-                    blocked = true;
-                break;
-            case WEST_WEST :
-                BlockadeBoardPosition westWest = start.getNeighbor(Direction.WEST_WEST, board);
-                if (westWest.isEastBlocked() )
-                    blocked = true;
-            case WEST :
-                if (west.isEastBlocked())
-                    blocked = true;
-                break;
-            case EAST_EAST :
-                east = start.getNeighbor(Direction.EAST, board);
-                if (east.isEastBlocked())
-                    blocked = true;
-            case EAST :
-                if (start.isEastBlocked())
-                    blocked = true;
-                break;
-            case SOUTH_SOUTH :
-                south = start.getNeighbor(Direction.SOUTH, board);
-                if (south.isSouthBlocked())
-                    blocked = true;
-            case SOUTH :
-                if (start.isSouthBlocked()) {
-                    blocked = true;
-                }
-                break;
-            case NORTH_WEST :
-                BlockadeBoardPosition northWest = start.getNeighbor(Direction.NORTH_WEST, board);
-                if (!((west.isEastOpen() && northWest.isSouthOpen()) ||
-                     (north.isSouthOpen() && northWest.isEastOpen()) ) )  {
-                    blocked = true;
-                }
-                break;
-            case NORTH_EAST :
-                BlockadeBoardPosition northEast = start.getNeighbor(Direction.NORTH_EAST, board);
-                if (!((start.isEastOpen() && northEast.isSouthOpen()) ||
-                     (north.isSouthOpen() && north.isEastOpen()) ) )  {
-                    blocked = true;
-                }
-                break;
-            case SOUTH_WEST :
-                BlockadeBoardPosition southWest = start.getNeighbor(Direction.SOUTH_WEST, board);
-                if (!((west.isEastOpen() && west.isSouthOpen()) ||
-                     (start.isSouthOpen() && southWest.isEastOpen()) ) )  {
-                    blocked = true;
-                }
-                break;
-            case SOUTH_EAST :
-                south = start.getNeighbor(Direction.SOUTH, board);
-                east = start.getNeighbor(Direction.EAST, board);
-                if (!((start.isEastOpen() && east.isSouthOpen()) ||
-                     (start.isSouthOpen() && south.isEastOpen()) ) )  {
-                    blocked = true;
-                }
-                break;
-        }
-        board.removeWall(wall);
-
-        return blocked;
-    }
-
     /**
      * @return a string, which if executed will create a move identical to this instance.
      */
@@ -235,7 +145,6 @@ public class BlockadeMove extends TwoPlayerMove {
                 + pieceCreator +", " + wallCreator +
                 "),";
     }
-
 
     @Override
     public String toString() {
