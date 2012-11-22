@@ -15,7 +15,7 @@ import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
 class WallAccumulator {
 
     private BlockadeBoard board;
-    BlockadeWallList wallsList;
+    private BlockadeWallList wallsList;
 
     /**
      * Constructor

@@ -6,14 +6,12 @@ import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 import com.barrybecker4.game.twoplayer.common.search.ISearchableHelper;
 import com.barrybecker4.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import java.util.List;
 
@@ -65,9 +63,8 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
 
     @Override
     protected int getExpectedNumGeneratedMovesBeforeFirstMove() {
-       return 40;  //53 //101; // 144
+       return 28; //40;  //53 //101; // 144
    }
-
 
     /**  Load a game in the middle and verify that we can get reasonable next moves. */
     @Override

@@ -46,7 +46,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
     }
 
     /** copy constructor */
-    protected BlockadeBoard(BlockadeBoard b) {
+    private BlockadeBoard(BlockadeBoard b) {
         super(b);
         boardAnalyzer = new BoardAnalyzer(this);
         homes = new Homes(b.homes);

@@ -93,7 +93,7 @@ public class BlockadeGameImporter extends TwoPlayerGameImporter {
 
 
     /**
-     * Create a com.barrybecker4.game.twoplayer.blockade more from the MoveToken
+     * Create a cblockade more from the MoveToken
      */
     @Override
     protected Move createMoveFromToken( SGFToken token) {

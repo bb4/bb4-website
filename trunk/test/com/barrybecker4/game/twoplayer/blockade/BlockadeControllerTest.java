@@ -6,7 +6,7 @@ import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
 import com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 import junit.framework.Assert;
@@ -27,12 +27,11 @@ public class BlockadeControllerTest extends BlockadeTestCase {
      */
     public void testWorthOfWinningMove() {
         restore("whitebox/endGame");
-        BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
 
         BlockadeMove winningMove =
-                new BlockadeMove(new Location(5, 8), new Location(4, 8), 0, new GamePiece(true),
-                                 new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))
-                );
+            new BlockadeMove(new Location(5, 8), new Location(4, 8), 0, new GamePiece(true),
+                             new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))
+            );
 
         controller_.makeMove(winningMove);
 

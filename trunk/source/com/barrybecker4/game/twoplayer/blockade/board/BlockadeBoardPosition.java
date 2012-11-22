@@ -52,7 +52,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
     /**
      * Copy constructor
      */
-    public BlockadeBoardPosition(BlockadeBoardPosition pos) {
+    private BlockadeBoardPosition(BlockadeBoardPosition pos) {
         this(pos.getLocation(), pos.getPiece(), pos.southWall_, pos.eastWall_,
              pos.isPlayer1Home_, pos.isPlayer2Home_);
     }
@@ -70,10 +70,9 @@ public final class BlockadeBoardPosition extends BoardPosition {
     /**
      * Reuse previously computed shortest paths if they are still valid.
      * Caching can cause a subtle problems were it is invalid, so I turned it off.
-     * @param wall the most recently placed wall
      * @return list of shortest paths.
      */
-    public PathList findShortestPaths(BlockadeBoard board, BlockadeWall wall) {
+    public PathList findShortestPaths(BlockadeBoard board) {
 
         PathList paths = cachedPaths_;
         // Why didn't caching work like I hoped?
@@ -89,7 +88,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
             for (int i = 0; i < paths.size(); i++) {
                 Path p = paths.get(i);
                 Path cp = cachedPaths_.get(i);
-                assert (p.equals(cp)) : p +" was not equal to "+cp +" wall placed was "+ wall;
+                assert (p.equals(cp)) : p +" was not equal to "+cp;
             }
         }    */
 

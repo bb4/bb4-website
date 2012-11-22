@@ -36,7 +36,7 @@ public class BoardAnalyzer {
 
     /**
      * @param player1 the last player to make a move.
-     * @return all the opponent's shortest paths to your home bases.
+     * @return all the opponent's shortest paths to specified players home bases.
      */
     public PathList findAllOpponentShortestPaths(boolean player1) {
 
@@ -58,7 +58,7 @@ public class BoardAnalyzer {
                 }
             }
         }
-        //assert (opponentPaths.size() == numShortestPaths) : "Too few opponent paths:"+ opponentPaths;
+        //assert (opponentPaths.size() == numShortestPaths) : "Too few opponent paths:" + opponentPaths;
         return opponentPaths;
     }
 
@@ -91,10 +91,8 @@ public class BoardAnalyzer {
                 if ( pos.isOccupied() ) {
                     GamePiece piece = pos.getPiece();
 
-                    BlockadeWall wall = lastMove.getWall();
-
                     // should reuse cached path if still valid.
-                    PathList paths = pos.findShortestPaths(board, wall);
+                    PathList paths = pos.findShortestPaths(board);
 
                     playerPaths.getPathLengthsForPlayer(piece.isOwnedByPlayer1()).updatePathLengths(paths);
                 }

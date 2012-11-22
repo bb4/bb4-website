@@ -11,6 +11,15 @@ import java.util.LinkedList;
  */
 public class PathList extends LinkedList<Path> {
 
+    public PathList() {}
+
+    /** constructor */
+    public PathList(Path[] paths) {
+       for (Path path : paths) {
+           add(path);
+       }
+    }
+
     @Override
     public boolean add(Path path) {
         return super.add(path);

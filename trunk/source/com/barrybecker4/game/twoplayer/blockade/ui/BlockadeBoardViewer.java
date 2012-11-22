@@ -19,7 +19,7 @@ import java.awt.event.MouseEvent;
  *
  *  @author Barry Becker
  */
-public class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer {
+class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer {
     /**
      * Construct the viewer.
      */

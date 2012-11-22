@@ -29,8 +29,8 @@ public class BlockadeMove extends TwoPlayerMove {
     private final Direction direction_;
 
     /**
-     *  Constructor. This should never be called directly
-     *  use the factory method createMove instead.
+     * Constructor. This should not usually be called directly
+     * use the factory method createMove instead.
      */
     public BlockadeMove(Location origin, Location destination,
                         int val, GamePiece piece, BlockadeWall w) {
@@ -53,7 +53,7 @@ public class BlockadeMove extends TwoPlayerMove {
     /**
      * copy constructor
      */
-    public BlockadeMove(BlockadeMove move) {
+    private BlockadeMove(BlockadeMove move) {
         super(move);
         this.fromLocation_ = move.fromLocation_;
         this.wall_ = move.wall_;

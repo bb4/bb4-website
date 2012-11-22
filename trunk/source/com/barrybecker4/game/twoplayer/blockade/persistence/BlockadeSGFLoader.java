@@ -8,11 +8,11 @@ import com.barrybecker4.game.twoplayer.common.persistence.tokens.TwoPlayerMoveTo
 
 
 /**
- * Loads a com.barrybecker4.game.twoplayer.blockade game from a text file.
+ * Loads a blockade game from a text file.
  *
  * @author Barry Becker
  */
-public class BlockadeSGFLoader extends TwoPlayerSGFLoader {
+class BlockadeSGFLoader extends TwoPlayerSGFLoader {
 
     /**
      * Creates a new instance of SGF Loader

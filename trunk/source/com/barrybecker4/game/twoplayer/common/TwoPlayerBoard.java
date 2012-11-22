@@ -40,7 +40,7 @@ public abstract class TwoPlayerBoard extends Board {
         TwoPlayerMove m = (TwoPlayerMove)move;
         if ( !m.isPassOrResignation() ) {
             BoardPosition pos = getPosition(m.getToLocation());
-            assert(m.getPiece() != null) : "moves piece was null :" + m;
+            assert(m.getPiece() != null) : "move's piece was null :" + m;
             pos.setPiece(m.getPiece());
             GamePiece piece = pos.getPiece();
             assert (piece != null):

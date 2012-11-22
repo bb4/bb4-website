@@ -32,19 +32,6 @@
   <component name="SvnBranchConfigurationManager">
     <option name="myConfigurationMap">
       <map>
-        <entry key="$PROJECT_DIR$">
-          <value>
-            <SvnBranchConfiguration>
-              <option name="branchUrls">
-                <list>
-                  <option value="https://free1.projectlocker.com/Tesujisoft/applets/svn/branches" />
-                  <option value="https://free1.projectlocker.com/Tesujisoft/applets/svn/tags" />
-                </list>
-              </option>
-              <option name="trunkUrl" value="https://free1.projectlocker.com/Tesujisoft/applets/svn/trunk" />
-            </SvnBranchConfiguration>
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/../jhlabs">
           <value>
             <SvnBranchConfiguration>
@@ -56,6 +43,19 @@
           <value>
             <SvnBranchConfiguration>
               <option name="trunkUrl" value="" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://free1.projectlocker.com/Tesujisoft/applets/svn/branches" />
+                  <option value="https://free1.projectlocker.com/Tesujisoft/applets/svn/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://free1.projectlocker.com/Tesujisoft/applets/svn/trunk" />
             </SvnBranchConfiguration>
           </value>
         </entry>

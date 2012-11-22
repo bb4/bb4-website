@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * .
  * @author Barry Becker
  */
-public class BlockadeWallList extends LinkedList<BlockadeWall> {
+class BlockadeWallList extends LinkedList<BlockadeWall> {
 
     @Override
     public boolean add(BlockadeWall wall) {

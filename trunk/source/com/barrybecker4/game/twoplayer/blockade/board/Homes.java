@@ -28,7 +28,7 @@ public class Homes  {
     public Homes() {}
 
     /** copy constructor */
-    protected Homes(Homes b) {
+    Homes(Homes b) {
         p1Homes_ = b.p1Homes_.clone();
         p2Homes_ = b.p2Homes_.clone();
     }
