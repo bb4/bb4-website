@@ -31,7 +31,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
         super(board, players);
     }
 
-    public BlockadeSearchable(BlockadeSearchable searchable) {
+    private BlockadeSearchable(BlockadeSearchable searchable) {
         super(searchable);
     }
 
@@ -93,7 +93,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
 
     /**
      * Generate all possible legal and reasonable next moves.
-     * In com.barrybecker4.game.twoplayer.blockade, there are a huge amount of possible next moves because of all the possible
+     * In blockade, there are a huge amount of possible next moves because of all the possible
      * wall placements. So restrict wall placements to those that hinder the enemy while not hindering you.
      * lastMove may be null if there was no last move.
      */

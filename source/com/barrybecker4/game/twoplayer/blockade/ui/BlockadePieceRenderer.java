@@ -62,15 +62,15 @@ class BlockadePieceRenderer extends TwoPlayerPieceRenderer {
         int ypos = margin + cellSize*(bpos.getRow());
 
         int wallWidthD2 = (int)(WALL_WIDTH_FRAC * cellSize);
-        int wallThickness =  (int)(2.1 * wallWidthD2);
+        int wallThickness = (int)(2.1 * wallWidthD2);
 
         boolean drewWall = false;
-        if (bpos.getEastWall()!=null) {
+        if (bpos.getEastWall() != null) {
             g2.setColor(EAST_WALL_COLOR);
             g2.fill3DRect(xpos-wallWidthD2, ypos-cellSize, wallThickness, cellSize, true);
             drewWall = true;
         }
-        if (bpos.getSouthWall()!=null) {
+        if (bpos.getSouthWall() != null) {
             g2.setColor(SOUTH_WALL_COLOR);
             g2.fill3DRect(xpos-cellSize, ypos-wallWidthD2, cellSize, wallThickness, true);
             drewWall = true;

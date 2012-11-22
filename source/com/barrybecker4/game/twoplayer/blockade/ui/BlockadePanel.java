@@ -21,11 +21,6 @@ import java.awt.*;
  */
 public class BlockadePanel extends TwoPlayerPanel {
 
-    /**
-     * Construct the panel.
-     */
-    public BlockadePanel() {}
-
     @Override
     public String getTitle() {
         return GameContext.getLabel("BLOCKADE_TITLE");

@@ -166,7 +166,7 @@ public abstract class GameBoardRenderer {
     /**
      * @return  the size of a board position cell (must be square).
      */
-    protected final int getCellSize() {
+    public final int getCellSize() {
         return cellSize_;
     }
 
@@ -178,7 +178,6 @@ public abstract class GameBoardRenderer {
         g.setColor( backgroundColor_ );
         g.fillRect( 0, 0, panelWidth, panelHeight);
     }
-
 
     /**
      * Compute the cell size based on the the dimenions of the viewer
@@ -233,7 +232,6 @@ public abstract class GameBoardRenderer {
     protected void drawLastMoveMarker(Graphics2D g2, IGameController controller)
     {}
 
-
     /**
      * Draw the pieces and possibly other game markers for both players.
      */
@@ -247,7 +245,6 @@ public abstract class GameBoardRenderer {
             }
         }
     }
-
 
     /**
      * This renders the current state of the Board to the screen.

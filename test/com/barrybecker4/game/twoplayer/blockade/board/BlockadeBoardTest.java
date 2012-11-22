@@ -1,13 +1,18 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.twoplayer.blockade;
+package com.barrybecker4.game.twoplayer.blockade.board;
 
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
+import com.barrybecker4.game.twoplayer.blockade.BlockadeTestCase;
 import com.barrybecker4.game.twoplayer.blockade.board.*;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeWall;
+import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
+import com.barrybecker4.game.twoplayer.blockade.board.path.Path;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PathLengths;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PlayerPathLengths;
 import junit.framework.Assert;
 
 import java.util.HashMap;
@@ -243,8 +248,8 @@ public class BlockadeBoardTest extends BlockadeTestCase {
          restore("whitebox/shortestPaths1");
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
 
-         List<Path> p1Paths = board.findAllOpponentShortestPaths(true);
-         List<Path> p2Paths = board.findAllOpponentShortestPaths(false);
+         PathList p1Paths = board.findAllOpponentShortestPaths(true);
+         PathList p2Paths = board.findAllOpponentShortestPaths(false);
 
          // use to get expected results.
          //printPathCreator(p1Paths);
@@ -261,7 +266,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
          Assert.assertTrue("p2Path difference=\n" + p2PathDiff,  p2PathDiff.length() == 0);
     }
 
-    private void printPathCreator(List<Path> paths) {
+    private void printPathCreator(PathList paths) {
         System.out.println("{");
         for (Path p : paths) {
             System.out.println("{");
@@ -281,7 +286,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
      * @return "" if no difference or the list of differences.
      * (there will be *** after those that do not match)
      */
-    private String pathListDiff(Path[] expectedPaths, List<Path> actualPaths) {
+    private String pathListDiff(Path[] expectedPaths, PathList actualPaths) {
         boolean pathListsDifferent = false;
         StringBuilder diffs= new StringBuilder("Paths compared: \n");
 
@@ -305,7 +310,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
          BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLastMove();
 
-         PlayerPathLengths pLengths = board.findPlayerPathLengths( lastMove);
+         PlayerPathLengths pLengths = board.findPlayerPathLengths(lastMove);
          GameContext.log(1, pLengths.toString());
 
          PathLengths expectedP1Lengths = new PathLengths(4, 6, 12);
@@ -358,8 +363,8 @@ public class BlockadeBoardTest extends BlockadeTestCase {
          BlockadeBoardPosition pos1 = (BlockadeBoardPosition) board.getPosition(2, 2);
          BlockadeBoardPosition pos2 = (BlockadeBoardPosition) board.getPosition(5, 2);
 
-         List<Path> pLengths1 = board.findShortestPaths(pos1);
-         List<Path> pLengths2 = board.findShortestPaths(pos2);
+         PathList pLengths1 = board.findShortestPaths(pos1);
+         PathList pLengths2 = board.findShortestPaths(pos2);
          //GameContext.log(2, "paths for "+pos1+ " are = "+ pLengths1);
          //GameContext.log(2, "pLengths2 = "+ pLengths2);
 

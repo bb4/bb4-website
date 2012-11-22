@@ -3,15 +3,15 @@ package com.barrybecker4.game.twoplayer.blockade.ui;
 
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
+import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.barrybecker4.game.twoplayer.blockade.board.path.Path;
 import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 
 import java.awt.*;
 import java.util.Iterator;
 
 /**
- * Render the paths on the cblockade board.
+ * Render the paths on the blockade board.
  * Mostly for debugging purposes.
  * Usually the human players do not want to see these paths during a normal game.
  *
@@ -21,7 +21,7 @@ final class PathRenderer {
 
     private static final float PATH_WIDTH_RATIO = .16f;
     private static final float POINT_WIDTH_RATIO = .22f;
-    private static final int ALPHA_CONST = 25;
+    private static final int ALPHA_CONST = 28;
 
     /** offset the players path a little so they are not right on top of each other. */
     private static final float PLAYER1_PATH_OFFSET = 0.5f;
@@ -31,8 +31,7 @@ final class PathRenderer {
      * Private constructor.
      * Static util class. Do not instantiate.
      */
-    private PathRenderer() {
-    }
+    private PathRenderer() {}
 
 
     /**

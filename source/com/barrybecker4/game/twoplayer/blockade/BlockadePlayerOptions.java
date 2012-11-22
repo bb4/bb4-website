@@ -13,7 +13,7 @@ import java.awt.*;
  * Options when playing blockade.
  * @author Barry Becker
  */
-public class BlockadePlayerOptions extends TwoPlayerPlayerOptions {
+class BlockadePlayerOptions extends TwoPlayerPlayerOptions {
 
     /** initial look ahead factor. */
     private static final int DEFAULT_LOOK_AHEAD = 3;

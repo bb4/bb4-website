@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.StreamTokenizer;
 
 /**
- * A generic com.barrybecker4.game.twoplayer.blockade move.
+ * A generic blockade move.
  * The superclass forPlayer1MoveToken and Player2MoveToken.
  */
 public abstract class BlockadeMoveToken extends TwoPlayerMoveToken
@@ -41,7 +41,7 @@ public abstract class BlockadeMoveToken extends TwoPlayerMoveToken
    }
 
   /**
-   * Parses a com.barrybecker4.game.twoplayer.blockade wall, sets the walls 2 points accordingly.
+   * Parses a blockade wall, sets the walls 2 points accordingly.
    * <P>
    * The first opening '[' must have already been read; thus leaving two
    * letters and a closing ']'.  This method reads everything up to and

@@ -56,7 +56,7 @@ public class PossibleMoveAnalyzer {
     /**
      * Blockade pieces can move 1 or 2 spaces in any direction.
      * However, only in rare cases would you ever want to move only 1 space.
-     * For example, move 1 space to land on a home base, or in preparation to jump an oppponent piece.
+     * For example, move 1 space to land on a home base, or in preparation to jump an opponent piece.
      * They may jump over opponent pieces that are in the way (but they do not capture it).
      * The wall is ignored for the purposes of this method.
      *     Moves are only allowed if the candidate position is unoccupied (unless a home base) and if

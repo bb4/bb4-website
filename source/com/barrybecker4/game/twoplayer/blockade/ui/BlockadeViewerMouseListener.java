@@ -25,15 +25,17 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public class BlockadeViewerMouseListener extends ViewerMouseListener {
+class BlockadeViewerMouseListener extends ViewerMouseListener {
 
-    private BlockadeMove currentMove_ = null;
+    private BlockadeMove currentMove = null;
 
     /** becomes true if the player has placed his pawn on an opponent base. */
-    private boolean hasWon_ = false;
+    private boolean hasWon = false;
 
     /** this becomes true when the player needs to place a wall instead of a piece during his turn.  */
-    private boolean wallPlacingMode_;
+    private boolean wallPlacingMode;
+
+    private WallPlacer wallPlacer;
 
 
     /**
@@ -41,7 +43,8 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
      */
     public BlockadeViewerMouseListener(GameBoardViewer viewer) {
         super(viewer);
-        wallPlacingMode_ = false;
+        wallPlacingMode = false;
+        wallPlacer = new WallPlacer(viewer.getBoard());
     }
 
 
@@ -49,7 +52,7 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
     public void mousePressed( MouseEvent e )
     {
         BlockadeBoardViewer viewer = (BlockadeBoardViewer) viewer_;
-        if (viewer.get2PlayerController().isProcessing() || wallPlacingMode_)
+        if (viewer.get2PlayerController().isProcessing() || wallPlacingMode)
             return;
 
         Board board = viewer.getBoard();
@@ -69,32 +72,32 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
 
     /**
      * When the mouse is released either the piece or a wall is being placed
-     * depending on the value of wallPlacingMode_.
+     * depending on the value of wallPlacingMode.
      * @param e
      */
     @Override
     public void mouseReleased( MouseEvent e )
     {
-        // compute the coords of the position that we dropped the piece on.
+        // compute the coordinates of the position that we dropped the piece on.
         BlockadeBoardViewer viewer = (BlockadeBoardViewer) viewer_;
         Location loc = getRenderer().createLocation(e);
 
-        if (!wallPlacingMode_)  {
+        if (!wallPlacingMode)  {
             boolean placed = placePiece( loc );
             if (!placed) {
                 getRenderer().setDraggedPiece(null);
             }
-            if (hasWon_) {
-                viewer.continuePlay( currentMove_ );
+            if (hasWon) {
+                viewer.continuePlay(currentMove);
             }
             return;
         }
 
-        boolean wallPlaced = placeWall(loc, currentMove_);
+        boolean wallPlaced = placeWall(loc, currentMove);
         if (!wallPlaced)
             return;
 
-        viewer.continuePlay( currentMove_ );
+        viewer.continuePlay(currentMove);
     }
 
 
@@ -114,7 +117,7 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
     }
 
     /**
-     * if we are in wallPlacingMode, then we show the wall being dragged around.
+     * If we are in wallPlacingMode, then we show the wall being dragged around.
      * When the player clicks the wall is irrevocably placed.
      * @param e
      */
@@ -122,7 +125,7 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
     public void mouseMoved( MouseEvent e )
     {
         BlockadeBoardViewer viewer = (BlockadeBoardViewer) viewer_;
-        if (wallPlacingMode_)  {
+        if (wallPlacingMode)  {
 
             // show the hovering wall
             BlockadeBoard board = (BlockadeBoard)viewer.getBoard();
@@ -131,51 +134,12 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
             if (board.getPosition(loc)==null) {
                 return;  // out of bounds
             }
-            int index =
-                ((BlockadeBoardRenderer)getRenderer()).getWallIndexForPosition(e.getX(), e.getY(), loc, board);
 
-            BoardPosition pos1 = null,  pos2 = null;
-
-            switch (index) {
-                case 0 :
-                    pos1 = board.getPosition(loc);
-                    pos2 = board.getPosition(loc.getRow()+1, loc.getCol());
-                    break;
-                case 1 :
-                    assert (board.getPosition(loc) != null);
-                    assert (board.getPosition(loc.getRow()-1, loc.getCol())!=null);
-                    pos1 = board.getPosition(loc);
-                    pos2 = board.getPosition(loc.getRow()-1, loc.getCol());
-                    break;
-                case 2 :
-                    pos1 = board.getPosition(loc.getRow()-1, loc.getCol());
-                    pos2 = board.getPosition(loc.getRow()-1, loc.getCol()+1);
-                    break;
-                case 3 :
-                    pos1 = board.getPosition(loc.getRow()-1, loc.getCol());
-                    pos2 = board.getPosition(loc.getRow()-1, loc.getCol()-1);
-                    break;
-                case 4 :
-                    pos1 = board.getPosition(loc.getRow(), loc.getCol()-1);
-                    pos2 = board.getPosition(loc.getRow()-1, loc.getCol()-1);
-                    break;
-                case 5 :
-                    pos1 = board.getPosition(loc.getRow(), loc.getCol()-1);
-                    pos2 = board.getPosition(loc.getRow()+1, loc.getCol()-1);
-                    break;
-                case 6 :
-                    pos1 = board.getPosition(loc);
-                    pos2 = board.getPosition(loc.getRow(), loc.getCol()-1);
-                    break;
-                case 7 :
-                    pos1 = board.getPosition(loc);
-                    pos2 = board.getPosition(loc.getRow(), loc.getCol()+1);
-                    break;
-                default : assert false:("bad index="+index);
-            }
+            BlockadeBoardPosition[] positions =
+                    wallPlacer.getCellLocations(e.getX(),  e.getY(), loc, getRenderer().getCellSize());
 
             ((BlockadeBoardRenderer)getRenderer()).setDraggedWall(
-                    new BlockadeWall((BlockadeBoardPosition)pos1, (BlockadeBoardPosition)pos2));
+                    new BlockadeWall(positions[0], positions[1]));
 
             viewer.repaint();
         }
@@ -207,24 +171,24 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
         }
 
         // make sure that the piece shows while we decide where to place the wall.
-        currentMove_ = m;
+        currentMove = m;
         GameContext.log(1, "legal human move :"+m.toString());
-        position.getPiece().setTransparency((short)0);
+        position.getPiece().setTransparency((short) 0);
         boolean isPlayer1 = position.getPiece().isOwnedByPlayer1();
         BlockadeBoardPosition newPosition =
-                (BlockadeBoardPosition) board.getPosition(currentMove_.getToRow(), currentMove_.getToCol());
+                (BlockadeBoardPosition) board.getPosition(currentMove.getToRow(), currentMove.getToCol());
         newPosition.setPiece(position.getPiece());
         position.setPiece(null);
         viewer_.refresh();
 
         if (newPosition.isHomeBase( !isPlayer1 )) {
-            hasWon_ = true;
+            hasWon = true;
             assert(isPlayer1 == (controller.getCurrentPlayer() == controller.getPlayers().getFirstPlayer()));
             controller.getCurrentPlayer().setWon(true);
         }
         else {
             // piece moved! now a wall needs to be placed.
-            wallPlacingMode_ = true;
+            wallPlacingMode = true;
         }
         return true;
     }
@@ -301,7 +265,7 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
         }
         else {
             // wall placed successfully.
-            wallPlacingMode_ = false;
+            wallPlacingMode = false;
             m.setWall(draggedWall);
             bbRenderer.setDraggedWall(null);
             return true;

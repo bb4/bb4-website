@@ -45,7 +45,7 @@ public class Path {
         moves.add(move);
     }
 
-    public Iterator iterator() {
+    public Iterator<BlockadeMove> iterator() {
         return moves.iterator();
     }
 
