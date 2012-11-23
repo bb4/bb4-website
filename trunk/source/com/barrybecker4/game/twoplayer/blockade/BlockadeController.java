@@ -25,8 +25,6 @@ import java.util.List;
  * Todo items
  *   - Restrict to N vertical and N horizontal walls, or allow not to place a wall.
  *     (perhaps only allow wall placements up to (xdim*ydim)/4 walls for each player)
- *   - computer moves only one space instead of two. Computer not winning at end when one space more required.
- *   - The winner should win as soon as he lands on an opponent base and not have to wait to place the wall.
  *
  * @author Barry Becker
  */

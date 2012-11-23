@@ -25,15 +25,28 @@ public class MovePlacementValidator {
     /**
      * Check to see if a given wall blocks the move.
      * Assume the move is valid (eg does not move off the board or anything like that).
-     * Do  we need to place the wall and then remove it at the end?
+     * Do we need to place the wall and then remove it at the end?
      * @param move the move to verify not blocked by a wall.
      * @param wall to see if blocking our move.
      * @return  true if the wall blocks this move.
      */
     public boolean isMoveBlockedByWall(BlockadeMove move, BlockadeWall wall) {
-        // Assume that this wall does not interfere with other walls as that would be invalid.
-        boolean blocked = false;
+
         board.addWall(wall);
+
+        boolean blocked = isMoveBlocked(move);
+        board.removeWall(wall);
+
+        return blocked;
+    }
+
+    /**
+     * @param move
+     * @return true if any wall blocks this move
+     */
+    public boolean isMoveBlocked(BlockadeMove move) {
+       // Assume that this wall does not interfere with other walls as that would be invalid.
+        boolean blocked = false;
 
         int fromRow = move.getFromRow();
         int fromCol = move.getFromCol();
@@ -45,36 +58,27 @@ public class MovePlacementValidator {
         switch (move.getDirection()) {
             case NORTH_NORTH :
                 BlockadeBoardPosition northNorth = start.getNeighbor(Direction.NORTH_NORTH, board);
-                if (northNorth.isSouthBlocked())
-                    blocked = true;
+                if (northNorth.isSouthBlocked()) blocked = true;
             case NORTH :
-                if (north.isSouthBlocked() )
-                    blocked = true;
+                if (north.isSouthBlocked() ) blocked = true;
                 break;
             case WEST_WEST :
                 BlockadeBoardPosition westWest = start.getNeighbor(Direction.WEST_WEST, board);
-                if (westWest.isEastBlocked() )
-                    blocked = true;
+                if (westWest.isEastBlocked() ) blocked = true;
             case WEST :
-                if (west.isEastBlocked())
-                    blocked = true;
+                if (west.isEastBlocked()) blocked = true;
                 break;
             case EAST_EAST :
                 east = start.getNeighbor(Direction.EAST, board);
-                if (east.isEastBlocked())
-                    blocked = true;
+                if (east.isEastBlocked()) blocked = true;
             case EAST :
-                if (start.isEastBlocked())
-                    blocked = true;
+                if (start.isEastBlocked()) blocked = true;
                 break;
             case SOUTH_SOUTH :
                 south = start.getNeighbor(Direction.SOUTH, board);
-                if (south.isSouthBlocked())
-                    blocked = true;
+                if (south.isSouthBlocked()) blocked = true;
             case SOUTH :
-                if (start.isSouthBlocked()) {
-                    blocked = true;
-                }
+                if (start.isSouthBlocked()) blocked = true;
                 break;
             case NORTH_WEST :
                 BlockadeBoardPosition northWest = start.getNeighbor(Direction.NORTH_WEST, board);
@@ -106,8 +110,6 @@ public class MovePlacementValidator {
                 }
                 break;
         }
-        board.removeWall(wall);
-
         return blocked;
     }
 }

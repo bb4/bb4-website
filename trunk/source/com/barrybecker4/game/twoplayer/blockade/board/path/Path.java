@@ -54,15 +54,30 @@ public class Path {
     }
 
     /**
-     * @return true if the wall is blocking the paths.
+     * @param wall check this wall to see if it is bloking this path.
+     * @return true if the specified wall is blocking the paths.
      */
     public boolean isBlockedByWall(BlockadeWall wall, BlockadeBoard board) {
        MovePlacementValidator validator = new MovePlacementValidator(board);
        for (BlockadeMove move: moves) {
-            if (validator.isMoveBlockedByWall(move, wall))
+            if (validator.isMoveBlockedByWall(move, wall)) {
                 return true;
-        }
-        return false;
+            }
+       }
+       return false;
+    }
+
+    /**
+     * @return true if a wall is blocking this path.
+     */
+    public boolean isBlocked(BlockadeBoard board) {
+       MovePlacementValidator validator = new MovePlacementValidator(board);
+       for (BlockadeMove move: moves) {
+            if (validator.isMoveBlocked(move)) {
+                return true;
+            }
+       }
+       return false;
     }
 
     void addPathElements(DefaultMutableTreeNode node) {

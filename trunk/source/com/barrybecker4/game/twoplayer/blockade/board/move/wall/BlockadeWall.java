@@ -55,16 +55,10 @@ public class BlockadeWall {
     @Override
     public boolean equals( Object wall )  {
 
-         BlockadeWall comparisonWall = (BlockadeWall) wall;
-         if (this.isVertical_ != comparisonWall.isVertical_ ||
-                 !this.getFirstPosition().getLocation().equals(comparisonWall.getFirstPosition().getLocation())) {
-             return false;
-         }
-         // for (BlockadeBoardPosition pos: positions_) {
-         //     if (!comparisonWall.getPositions().contains(pos))
-         //         return false;
-         // }
-         return true;
+        if (wall == null) return false;
+        BlockadeWall comparisonWall = (BlockadeWall) wall;
+        return !(this.isVertical_ != comparisonWall.isVertical_ ||
+                !this.getFirstPosition().getLocation().equals(comparisonWall.getFirstPosition().getLocation()));
     }
 
     @Override
