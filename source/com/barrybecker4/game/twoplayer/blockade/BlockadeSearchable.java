@@ -15,6 +15,8 @@ import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerSearchable;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 
+import java.util.Arrays;
+
 import static com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 /**
@@ -130,12 +132,13 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
 
         boolean p1Won = checkForWin(true);
         boolean p2Won = checkForWin(false);
-        //System.out.println("p1Won=" + p1Won + " p2Homes = " + Arrays.toString(board.getPlayerHomes(false)));
-        //System.out.println("p2Won=" + p2Won + " p1Homes = " + Arrays.toString(board.getPlayerHomes(true)));
-        if (p1Won) {
-            players_.getPlayer1().setWon(true);
-        } else if (p2Won)  {
-            players_.getPlayer2().setWon(true);
+
+        if (recordWin) {
+            if (p1Won) {
+                players_.getPlayer1().setWon(true);
+            } else if (p2Won)  {
+                players_.getPlayer2().setWon(true);
+            }
         }
         return (p1Won || p2Won);
     }
