@@ -25,6 +25,7 @@ public class ViewerMouseListener implements MouseListener, MouseMotionListener {
         return viewer_.getBoardRenderer();
     }
 
+    public void reset() {}
     /**
      * make the human move and show it on the screen,
      * then depending on the options, the computer may move.

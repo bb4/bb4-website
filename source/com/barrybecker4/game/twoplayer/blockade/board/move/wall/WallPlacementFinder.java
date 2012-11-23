@@ -75,7 +75,7 @@ public class WallPlacementFinder {
             addWallPlacementsForOpponentPathMove(firstStep, opponentPath.get(j), paths, moves);
         }
         if (moves.isEmpty()) {
-            GameContext.log(1, "No opponent moves found for "+firstStep +" along opponentPath="+opponentPath);
+            GameContext.log(2, "No opponent moves found for "+firstStep +" along opponentPath="+opponentPath);
         }
     }
 

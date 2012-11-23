@@ -21,7 +21,7 @@ final class PathRenderer {
 
     private static final float PATH_WIDTH_RATIO = .16f;
     private static final float POINT_WIDTH_RATIO = .22f;
-    private static final int ALPHA_CONST = 28;
+    private static final int ALPHA_CONST = 16;
 
     /** offset the players path a little so they are not right on top of each other. */
     private static final float PLAYER1_PATH_OFFSET = 0.5f;
@@ -56,7 +56,7 @@ final class PathRenderer {
 
         for (final Path path : paths) {
             assert(path.getLength() >= 0);
-            int alpha = Math.min(255, 5 + (20 * ALPHA_CONST) / Math.min(ALPHA_CONST, (path.getLength() + 1)));
+            int alpha = Math.min(255, 5 + (19 * ALPHA_CONST) / Math.min(ALPHA_CONST, (path.getLength() + 1)));
             Color c = new Color(pathColor.getRed(), pathColor.getGreen(), pathColor.getBlue(), alpha);
             g2.setColor(c);
             drawPath(g2, path, cellSize);

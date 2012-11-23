@@ -37,6 +37,7 @@ import java.util.List;
  */
 public abstract class GameBoardViewer extends JPanel
                                       implements GameViewable, GameChangedListener {
+
     /** every GameBoardViewer must contain a controller. */
     protected GameController controller_ = null;
 
@@ -139,7 +140,6 @@ public abstract class GameBoardViewer extends JPanel
         }
     }
 
-
     /**
      * Cause the board UI to draw itself based on the current state of the game.
      */
@@ -177,6 +177,7 @@ public abstract class GameBoardViewer extends JPanel
 
         setSize( getBoardRenderer().getSize(nrows, ncols));
         setPreferredSize( getBoardRenderer().getPreferredSize(nrows, ncols));
+        mouseListener_.reset();
     }
 
     /**

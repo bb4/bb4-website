@@ -101,6 +101,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
     @Override
     public void clear() {
         super.clear();
+        //visited_ = false;
         cachedPaths_ = null;
     }
 
