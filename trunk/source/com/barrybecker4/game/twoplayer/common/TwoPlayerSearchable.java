@@ -61,8 +61,6 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
      */
     public void makeInternalMove(TwoPlayerMove move) {
 
-        TwoPlayerMove lastMove = (TwoPlayerMove)(moveList_.getLastMove());
-
         getBoard().makeMove(move);
 
         if (move.isPassingMove())  {

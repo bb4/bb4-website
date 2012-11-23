@@ -210,7 +210,14 @@ public final class BlockadeBoardPosition extends BoardPosition {
      * @return true if this position is a home base for the specified player.
      */
     public boolean isHomeBase(boolean player1) {
-        return (player1? isPlayer1Home_: isPlayer2Home_);
+        return player1? isPlayer1Home_: isPlayer2Home_;
+    }
+
+    /**
+     * @return true if this position is a home base for the specified player.
+     */
+    public boolean isOccupiedHomeBase(boolean player1) {
+        return isOccupied() && player1? isPlayer1Home_: isPlayer2Home_;
     }
 
     public BlockadeBoardPosition getNeighbor(Direction d, BlockadeBoard board) {

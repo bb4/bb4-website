@@ -6,6 +6,7 @@ import com.barrybecker4.game.common.AbstractGameProfiler;
 import com.barrybecker4.game.common.GameProfiler;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.board.BoardPosition;
+import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.analysis.BoardAnalyzer;
 import com.barrybecker4.game.twoplayer.blockade.board.analysis.PossibleMoveAnalyzer;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
@@ -218,7 +219,12 @@ public class BlockadeBoard extends TwoPlayerBoard {
     protected boolean makeInternalMove( Move move ) {
         getProfiler().startMakeMove();
         BlockadeMove m = (BlockadeMove) move;
-        getPosition(m.getToRow(), m.getToCol()).setPiece(m.getPiece());
+        BlockadeBoardPosition toPos = (BlockadeBoardPosition) getPosition(m.getToLocation());
+        // in the rare event that we capture an opponent on his base, remember it so it can be undone.
+        if (toPos.isOccupiedHomeBase(!m.isPlayer1())) {
+            m.capturedOpponentPawn = toPos.getPiece();
+        }
+        toPos.setPiece(m.getPiece());
 
         // we also need to place a wall.
         if (m.getWall() != null) {
@@ -231,7 +237,8 @@ public class BlockadeBoard extends TwoPlayerBoard {
 
     /**
      * for Blockade, undoing a move means moving the piece back and
-     * restoring any captures.
+     * restoring any captures. It is very rare that there was a capture.
+     * It can only happen on the final winning move.
      */
     @Override
     protected void undoInternalMove( Move move ) {
@@ -239,7 +246,12 @@ public class BlockadeBoard extends TwoPlayerBoard {
         BlockadeMove m = (BlockadeMove) move;
         BoardPosition startPos = getPosition(m.getFromRow(), m.getFromCol());
         startPos.setPiece( m.getPiece() );
-        getPosition(m.getToRow(), m.getToCol()).clear();
+        BlockadeBoardPosition toPos = (BlockadeBoardPosition) getPosition(m.getToLocation());
+        toPos.clear();
+        if (m.capturedOpponentPawn != null) {
+            toPos.setPiece(m.capturedOpponentPawn);
+            m.capturedOpponentPawn = null;
+        }
 
         // remove the wall that was placed by this move.
         if (m.getWall() != null) {

@@ -29,6 +29,12 @@ public class BlockadeMove extends TwoPlayerMove {
     private final Direction direction_;
 
     /**
+     * At the very end of the game it is legal to capture an opponent piece that is still
+     * sitting on the home base. This needs to be remembered, so it can be properly undone during search.
+     */
+    public GamePiece capturedOpponentPawn;
+
+    /**
      * Constructor. This should not usually be called directly
      * use the factory method createMove instead.
      */
