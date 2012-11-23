@@ -91,7 +91,7 @@ public class BlockadeMove extends TwoPlayerMove {
          return (getFromLocation().equals(comparisonMove.getFromLocation())) &&
                     (getToLocation().equals(comparisonMove.getToLocation())) &&
                     ((wall_== null && comparisonMove.getWall() == null)
-                     || wall_.equals(comparisonMove.getWall())) &&
+                     || (wall_ != null && wall_.equals(comparisonMove.getWall()))) &&
                     (isPlayer1() == comparisonMove.isPlayer1());
     }
 

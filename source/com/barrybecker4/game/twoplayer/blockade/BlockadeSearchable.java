@@ -143,7 +143,6 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
         return (p1Won || p2Won);
     }
 
-
     /**
      * @@ quiescent search not yet implemented for Blockade
      * Probably we could return moves that result in a drastic change in value.

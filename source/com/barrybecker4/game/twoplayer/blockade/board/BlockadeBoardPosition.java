@@ -6,6 +6,7 @@ import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
 import com.barrybecker4.game.twoplayer.blockade.board.path.Path;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PathCache;
 import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
 
 
@@ -31,7 +32,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
     private boolean isPlayer2Home_ = false;
 
     /** Cache the most recent shortest paths to opponent homes so we do not have to keep recomputing them. */
-    private PathList cachedPaths_ = null;
+    private PathCache pathCache;
 
 
     /**
@@ -47,6 +48,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
         eastWall_ = eastWall;
         isPlayer1Home_ = isP1Home;
         isPlayer2Home_ = isP2Home;
+        pathCache = new PathCache();
     }
 
     /**
@@ -74,25 +76,12 @@ public final class BlockadeBoardPosition extends BoardPosition {
      */
     public PathList findShortestPaths(BlockadeBoard board) {
 
-        PathList paths = cachedPaths_;
         // Why didn't caching work like I hoped?
         // Seems that walls have a more subtle influence on the path than I thought.
-        paths = board.findShortestPaths(this);
+        //paths = board.findShortestPaths(this);
+        pathCache.update(this, board);
 
-        /* possibly remove
-        if (isPathCacheBroken(wall, board)) {
-            paths = board.findShortestPaths(this);
-            cachedPaths_ = paths;
-        }  else {
-            paths = board.findShortestPaths(this);
-            for (int i = 0; i < paths.size(); i++) {
-                Path p = paths.get(i);
-                Path cp = cachedPaths_.get(i);
-                assert (p.equals(cp)) : p +" was not equal to "+cp;
-            }
-        }    */
-
-        return paths;
+        return pathCache.getShortestPaths();
     }
 
     /**
@@ -101,29 +90,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
     @Override
     public void clear() {
         super.clear();
-        //visited_ = false;
-        cachedPaths_ = null;
-    }
-
-    /**
-     * The cache is broken if there the wall blocks one of our cached paths.
-     */
-    public boolean isPathCacheBroken(BlockadeWall wall, BlockadeBoard board) {
-        // If there was no wall placed last move, the paths must still be valid.
-        if (wall == null) {
-            return false;
-        }
-        // if nothing cached, we need to create the cache.
-        if (cachedPaths_ == null) {
-            return true;
-        }
-        // broken if any of the paths to opponent home is blocked by the recent wall.
-        for (Path path : cachedPaths_) {
-            if (path.isBlockedByWall(wall, board)) {
-                return true;
-            }
-        }
-        return false;
+        pathCache = new PathCache();
     }
 
     /**
@@ -237,6 +204,3 @@ public final class BlockadeBoardPosition extends BoardPosition {
         return ownerState * (1 + ((southWall_==null? 0:2) + (eastWall_==null? 0:1))) - 1;
     }
 }
-
-
-

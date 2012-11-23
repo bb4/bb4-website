@@ -92,7 +92,7 @@ public class BoardAnalyzer {
                     GamePiece piece = pos.getPiece();
 
                     // should reuse cached path if still valid.
-                    PathList paths = pos.findShortestPaths(board);
+                    PathList paths = pos.findShortestPaths(board);//, lastMove.getWall());
 
                     playerPaths.getPathLengthsForPlayer(piece.isOwnedByPlayer1()).updatePathLengths(paths);
                 }
