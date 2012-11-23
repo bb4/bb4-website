@@ -50,11 +50,11 @@ public class PlayerPathLengths {
         // If it landed on an opponents home base, then return a winning value.
         // It has landed if any of the shortest paths are 0.
         if (pathLengths[p1].shortestLength == 0 ) {
-            GameContext.log(1, "**WON**");
+            GameContext.log(3, "**WON**");
             value = winningValue;
         }
         else if ( pathLengths[p2].shortestLength == 0 ) {
-            GameContext.log(1, "**WON**");
+            GameContext.log(3, "**WON**");
             value = -winningValue;
         }
         else {

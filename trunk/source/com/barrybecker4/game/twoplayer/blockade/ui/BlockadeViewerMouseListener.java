@@ -27,10 +27,10 @@ import java.util.List;
  */
 class BlockadeViewerMouseListener extends ViewerMouseListener {
 
-    private BlockadeMove currentMove = null;
+    private BlockadeMove currentMove;
 
     /** becomes true if the player has placed his pawn on an opponent base. */
-    private boolean hasWon = false;
+    private boolean hasWon;
 
     /** this becomes true when the player needs to place a wall instead of a piece during his turn.  */
     private boolean wallPlacingMode;
@@ -43,10 +43,16 @@ class BlockadeViewerMouseListener extends ViewerMouseListener {
      */
     public BlockadeViewerMouseListener(GameBoardViewer viewer) {
         super(viewer);
-        wallPlacingMode = false;
+        reset();
         wallPlacer = new WallPlacer(viewer.getBoard());
     }
 
+    @Override
+    public void reset() {
+        currentMove = null;
+        hasWon = false;
+        wallPlacingMode = false;
+    }
 
     @Override
     public void mousePressed( MouseEvent e )
@@ -94,8 +100,9 @@ class BlockadeViewerMouseListener extends ViewerMouseListener {
         }
 
         boolean wallPlaced = placeWall(loc, currentMove);
-        if (!wallPlaced)
+        if (!wallPlaced) {
             return;
+        }
 
         viewer.continuePlay(currentMove);
     }
