@@ -37,20 +37,9 @@ public class PossibleMoveAnalyzer {
 
     /**
      * Constructor.
-     * @param position we are moving from
-     * @param op1 true if opposing player is player1; false if player2.
      */
-    public PossibleMoveAnalyzer(BlockadeBoard board, BoardPosition position, boolean op1) {
+    public PossibleMoveAnalyzer(BlockadeBoard board) {
         this.board = board;
-        this.opponentPlayer1 = op1;
-        this.pos = (BlockadeBoardPosition)position;
-        fromLocation = pos.getLocation();
-        possibleMoveList = new LinkedList<BlockadeMove>();
-
-        westPos = pos.getNeighbor(Direction.WEST, board);
-        eastPos = pos.getNeighbor(Direction.EAST, board);
-        northPos = pos.getNeighbor(Direction.NORTH, board);
-        southPos = pos.getNeighbor(Direction.SOUTH, board);
     }
 
     /**
@@ -58,7 +47,7 @@ public class PossibleMoveAnalyzer {
      * However, only in rare cases would you ever want to move only 1 space.
      * For example, move 1 space to land on a home base, or in preparation to jump an opponent piece.
      * They may jump over opponent pieces that are in the way (but they do not capture it).
-     * The wall is ignored for the purposes of this method.
+     * The wall placement is ignored for the purposes of this method.
      *     Moves are only allowed if the candidate position is unoccupied (unless a home base) and if
      * it has not been visited already. The visited part is only significant when we are doing a traversal
      * such as when we are finding the shortest paths to home bases.
@@ -74,10 +63,13 @@ public class PossibleMoveAnalyzer {
      *   1. jumping 2 spaces in that direction would land on an opponent pawn,
      *   2. or moving one space moves lands on an opponent home base.
      *
+     * @param position we are moving from
+     * @param op1 true if opposing player is player1; false if player2.
      * @return a list of legal piece movements
      */
-    public List<BlockadeMove> getPossibleMoveList()  {
-        possibleMoveList.clear();
+    public List<BlockadeMove> getPossibleMoveList(BoardPosition position, boolean op1)  {
+
+        initialize(position, op1);
 
         boolean eastOpen = !pos.isEastBlocked() && eastPos != null;                 // E
         addIf1HopNeeded(eastOpen, eastPos, 0, 1);
@@ -93,6 +85,19 @@ public class PossibleMoveAnalyzer {
         return possibleMoveList;
     }
 
+    /** initialize global properties of the class */
+    private void initialize(BoardPosition position, boolean op1) {
+        possibleMoveList = new LinkedList<BlockadeMove>();
+
+        opponentPlayer1 = op1;
+        pos = (BlockadeBoardPosition)position;
+        fromLocation = pos.getLocation();
+
+        westPos = pos.getNeighbor(Direction.WEST, board);
+        eastPos = pos.getNeighbor(Direction.EAST, board);
+        northPos = pos.getNeighbor(Direction.NORTH, board);
+        southPos = pos.getNeighbor(Direction.SOUTH, board);
+    }
 
     private boolean checkSouthOptions(boolean eastOpen, boolean southOpen) {
         if (southPos != null ) {
@@ -107,11 +112,11 @@ public class PossibleMoveAnalyzer {
         boolean westOpen = false;
         if (westPos != null)  {
             BlockadeBoardPosition southWestPos = pos.getNeighbor(Direction.SOUTH_WEST, board);
-            westOpen = (!westPos.isEastBlocked());                                                  // W
+            westOpen = (!westPos.isEastBlocked());                                                // W
             addIf1HopNeeded(westOpen, westPos, 0, -1);
 
             addIfDiagonalLegal(southWestPos, westOpen && !westPos.isSouthBlocked(),
-                               southOpen && !southWestPos.isEastBlocked());                        // SW
+                               southOpen && !southWestPos.isEastBlocked());                      // SW
         }
         return westOpen;
     }
@@ -128,7 +133,7 @@ public class PossibleMoveAnalyzer {
         boolean northOpen = false;
         if (northPos != null) {
             BlockadeBoardPosition northEastPos = pos.getNeighbor(Direction.NORTH_EAST, board);
-            northOpen = (!northPos.isSouthBlocked()) ;                                              // N
+            northOpen = (!northPos.isSouthBlocked()) ;                                             // N
             addIf1HopNeeded(northOpen, northPos, -1, 0);
             addIfDiagonalLegal(northEastPos, eastOpen && !northEastPos.isSouthBlocked(),
                                 northOpen && !northPos.isEastBlocked());                          // NE
@@ -137,7 +142,7 @@ public class PossibleMoveAnalyzer {
         BlockadeBoardPosition northNorthPos = pos.getNeighbor(Direction.NORTH_NORTH, board);
         if (northNorthPos != null) {
             Location toLocation = fromLocation.incrementOnCopy(-2, 0);
-            addIf2HopLegal(northOpen, northNorthPos.isSouthBlocked(), toLocation);                   // NN
+            addIf2HopLegal(northOpen, northNorthPos.isSouthBlocked(), toLocation);                 // NN
         }
 
         BlockadeBoardPosition northWestPos = pos.getNeighbor(Direction.NORTH_WEST, board);
@@ -153,7 +158,6 @@ public class PossibleMoveAnalyzer {
             addIf2HopLegal(eastOpen, eastPos.isEastBlocked(), toLocation);                       // EE
         }
     }
-
 
     /**
      * Check for needed 1 space moves (4 cases).

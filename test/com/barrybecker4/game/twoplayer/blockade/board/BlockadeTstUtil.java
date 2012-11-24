@@ -55,4 +55,17 @@ public class BlockadeTstUtil {
     public static BlockadeMove createMove(int r1, int c1, int r2, int c2, int val, GamePiece piece, BlockadeWall wall) {
         return new BlockadeMove(new Location(r1, c1), new Location(r2, c2), val, piece, wall);
     }
+
+    public static Path createPath(Location... locations) {
+        BlockadeMove[] moves = new BlockadeMove[locations.length-1];
+        Location lastMove = null;
+        int ct = 0;
+        for (Location loc : locations) {
+             if (lastMove != null) {
+                 moves[ct++] = new BlockadeMove(lastMove, loc, 0, null, null);
+             }
+            lastMove = loc;
+        }
+        return new Path(moves);
+    }
 }

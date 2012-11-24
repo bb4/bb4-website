@@ -128,7 +128,6 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
             GameContext.log(0, "Game is over because there are no more moves.");
             return true;
         }
-        BlockadeBoard board = (BlockadeBoard)board_;
 
         boolean p1Won = checkForWin(true);
         boolean p2Won = checkForWin(false);

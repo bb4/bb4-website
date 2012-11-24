@@ -125,7 +125,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @return a list of legal piece movements
      */
     public List<BlockadeMove> getPossibleMoveList(BoardPosition position, boolean op1) {
-        return new PossibleMoveAnalyzer(this, position, op1).getPossibleMoveList();
+        return new PossibleMoveAnalyzer(this).getPossibleMoveList(position, op1);
     }
 
 
@@ -281,16 +281,17 @@ public class BlockadeBoard extends TwoPlayerBoard {
 
     @Override
     public String toString() {
-        StringBuilder buf = new StringBuilder(50);
-        // print just the walls
+        StringBuilder buf = new StringBuilder(100);
+        // print just the walls and pawns
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
-               BlockadeBoardPosition pos = ((BlockadeBoardPosition)getPosition(i, j));
-               if (pos.getEastWall() != null)
-                   buf.append("East wall at: ").append(i).append(' ').append(j).append('\n');
-               if (pos.getSouthWall() != null)
-                   buf.append("South wall at: ").append(i).append(' ').append(j).append('\n');
-
+                BlockadeBoardPosition pos = ((BlockadeBoardPosition)getPosition(i, j));
+                if (pos.isOccupied())
+                    buf.append(pos).append("\n");
+                if (pos.getEastWall() != null)
+                    buf.append("East wall at: ").append(i).append(' ').append(j).append('\n');
+                if (pos.getSouthWall() != null)
+                    buf.append("South wall at: ").append(i).append(' ').append(j).append('\n');
             }
         }
         return buf.toString();
