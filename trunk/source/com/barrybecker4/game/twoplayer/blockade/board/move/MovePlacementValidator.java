@@ -27,7 +27,8 @@ public class MovePlacementValidator {
      * Assume the move is valid (eg does not move off the board or anything like that).
      * Do we need to place the wall and then remove it at the end?
      * @param move the move to verify not blocked by a wall.
-     * @param wall to see if blocking our move.
+     * @param wall to see if blocking our move. Assume that this wall does not interfere with other walls
+     *             as that would be invalid.
      * @return  true if the wall blocks this move.
      */
     public boolean isMoveBlockedByWall(BlockadeMove move, BlockadeWall wall) {
@@ -41,11 +42,11 @@ public class MovePlacementValidator {
     }
 
     /**
-     * @param move
+     * @param move  the move to check if blocked
      * @return true if any wall blocks this move
      */
     public boolean isMoveBlocked(BlockadeMove move) {
-       // Assume that this wall does not interfere with other walls as that would be invalid.
+
         boolean blocked = false;
 
         int fromRow = move.getFromRow();

@@ -28,13 +28,16 @@ public class PathCache {
 
         PathList paths = board.findShortestPaths(pos);
         cachedPaths = paths;
+
         /*
         if (isPathCacheBroken(board)) {
-
+            PathList paths = board.findShortestPaths(pos);
             cachedPaths = paths;
-        }  else {
-            assert (paths.equals(cachedPaths)) : paths  + " was not equal to "+ cachedPaths;
-        }*/
+        }
+        else {
+            assert (paths.equals(cachedPaths))
+                :(paths  + "\n was not equal to \n" + cachedPaths + "\n on board=" + board);
+        }   */
     }
 
     public PathList getShortestPaths() {

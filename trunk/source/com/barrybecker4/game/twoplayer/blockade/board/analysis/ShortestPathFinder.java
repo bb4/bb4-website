@@ -26,12 +26,14 @@ import java.util.Set;
 class ShortestPathFinder {
 
     private BlockadeBoard board;
+    private PossibleMoveAnalyzer moveAnalyzer;
 
     /**
      * Constructor.
      */
     public ShortestPathFinder(BlockadeBoard board) {
         this.board = board;
+        moveAnalyzer = new PossibleMoveAnalyzer(board);
     }
 
     /**
@@ -79,7 +81,7 @@ class ShortestPathFinder {
                     if (toPosition.isHomeBase(opponentIsPlayer1)) {
                         homeSet.add(node);
                     }
-                    List<DefaultMutableTreeNode> children =  findPathChildren(toPosition, node, opponentIsPlayer1);
+                    List<DefaultMutableTreeNode> children = findPathChildren(toPosition, node, opponentIsPlayer1);
                     queue.addAll(children);
                 }
             }
@@ -98,9 +100,9 @@ class ShortestPathFinder {
      * @param oppPlayer1 the opposing player (opposite of pies at pos).
      * @return a list of TreeNodes containing all the moves that lead to unvisited positions.
      */
-    private List<DefaultMutableTreeNode> findPathChildren(BoardPosition pos,
-                                                      MutableTreeNode parent, boolean oppPlayer1) {
-        List<BlockadeMove> moves = new PossibleMoveAnalyzer(board, pos, oppPlayer1).getPossibleMoveList();
+    private List<DefaultMutableTreeNode> findPathChildren(
+            BoardPosition pos, MutableTreeNode parent, boolean oppPlayer1) {
+        List<BlockadeMove> moves = moveAnalyzer.getPossibleMoveList(pos, oppPlayer1);
         List<DefaultMutableTreeNode> children = new ArrayList<DefaultMutableTreeNode>();
         for (BlockadeMove move : moves) {
             DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(move);
