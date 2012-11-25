@@ -1,14 +1,10 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.twoplayer.blockade.board.move.wall;
 
-import com.barrybecker4.common.geometry.Location;
-import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.BlockadeTestCase;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
-import com.barrybecker4.game.twoplayer.blockade.board.move.MoveGenerator;
+import static com.barrybecker4.game.twoplayer.blockade.board.BlockadeTstUtil.createMove;
 
 import java.util.List;
 
