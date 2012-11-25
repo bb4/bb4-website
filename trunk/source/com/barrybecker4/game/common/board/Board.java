@@ -105,14 +105,14 @@ public abstract class Board implements IBoard {
     /**
      * {@inheritDoc}
      */
-    public final BoardPosition getPosition( int row, int col ) {
+    public BoardPosition getPosition( int row, int col ) {
         return positions_.getPosition(row, col);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final BoardPosition getPosition( Location loc ) {
+    public BoardPosition getPosition( Location loc ) {
         return getPosition(loc.getRow(), loc.getCol());
     }
 

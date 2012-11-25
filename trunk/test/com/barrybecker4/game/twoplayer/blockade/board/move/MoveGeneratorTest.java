@@ -12,19 +12,11 @@ import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
 import java.util.List;
 
 /**
- * Test methods on the com.barrybecker4.game.twoplayer.blockade controller
- * Created on June 2, 2007, 7:08 AM
- * @author Barry Beckerecker
+ * Test methods on MoveGenerator
+ *
+ * @author Barry Becker
  */
 public class MoveGeneratorTest extends BlockadeTestCase {
-
-    /**
-     * common initialization for all test cases.
-     */
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
 
     public void  testGetWallsForMove() {
         restore("whitebox/moveList1");
@@ -56,11 +48,9 @@ public class MoveGeneratorTest extends BlockadeTestCase {
         GamePiece piece1 = new GamePiece(true); // player 1
         GamePiece piece2 = new GamePiece(false);  // player 2
         BlockadeWall wall1 =
-                new BlockadeWall((BlockadeBoardPosition) board.getPosition(8, 10),
-                                 (BlockadeBoardPosition) board.getPosition(9, 10));
+                new BlockadeWall(board.getPosition(8, 10), board.getPosition(9, 10));
         BlockadeWall wall2 =
-                new BlockadeWall((BlockadeBoardPosition) board.getPosition(12, 6),
-                                 (BlockadeBoardPosition) board.getPosition(12, 7));
+                new BlockadeWall(board.getPosition(12, 6), board.getPosition(12, 7));
 
         BlockadeMove move1 = BlockadeMove.createMove(new Location(8, 11), new Location(6, 11),  1 /*0.1*/, piece2, wall2);
         BlockadeMove move2 = BlockadeMove.createMove(new Location(12,6), new Location(10, 6), 1 /*0.1*/, piece1, wall1);

@@ -192,7 +192,7 @@ public final class BlockadeBoardPosition extends BoardPosition {
         int row = getRow();
         int col = getCol();
         Location offset = d.getOffset();
-        return (BlockadeBoardPosition) board.getPosition(row + offset.getRow(), col + offset.getCol());
+        return board.getPosition(row + offset.getRow(), col + offset.getCol());
     }
 
     /**

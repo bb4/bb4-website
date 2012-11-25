@@ -3,7 +3,6 @@ package com.barrybecker4.game.twoplayer.blockade.board.analysis;
 
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.Direction;
@@ -21,7 +20,7 @@ public class PossibleMoveAnalyzer {
 
     private BlockadeBoard board;
 
-    private BlockadeBoardPosition pos;
+    private BlockadeBoardPosition position;
     private Location fromLocation;
 
     /** true if opposing player is player1; false if player2. */
@@ -67,14 +66,14 @@ public class PossibleMoveAnalyzer {
      * @param op1 true if opposing player is player1; false if player2.
      * @return a list of legal piece movements
      */
-    public List<BlockadeMove> getPossibleMoveList(BoardPosition position, boolean op1)  {
+    public List<BlockadeMove> getPossibleMoveList(BlockadeBoardPosition position, boolean op1)  {
 
         initialize(position, op1);
 
-        boolean eastOpen = !pos.isEastBlocked() && eastPos != null;                 // E
+        boolean eastOpen = !this.position.isEastBlocked() && eastPos != null;                 // E
         addIf1HopNeeded(eastOpen, eastPos, 0, 1);
 
-        boolean southOpen = !pos.isSouthBlocked() && southPos != null;              // S
+        boolean southOpen = !this.position.isSouthBlocked() && southPos != null;              // S
         addIf1HopNeeded(southOpen, southPos, 1, 0);
 
         boolean westOpen = checkSouthOptions(eastOpen, southOpen);
@@ -86,17 +85,17 @@ public class PossibleMoveAnalyzer {
     }
 
     /** initialize global properties of the class */
-    private void initialize(BoardPosition position, boolean op1) {
+    private void initialize(BlockadeBoardPosition position, boolean op1) {
+        this.position = position;
         possibleMoveList = new LinkedList<BlockadeMove>();
 
         opponentPlayer1 = op1;
-        pos = (BlockadeBoardPosition)position;
-        fromLocation = pos.getLocation();
+        fromLocation = position.getLocation();
 
-        westPos = pos.getNeighbor(Direction.WEST, board);
-        eastPos = pos.getNeighbor(Direction.EAST, board);
-        northPos = pos.getNeighbor(Direction.NORTH, board);
-        southPos = pos.getNeighbor(Direction.SOUTH, board);
+        westPos = position.getNeighbor(Direction.WEST, board);
+        eastPos = position.getNeighbor(Direction.EAST, board);
+        northPos = position.getNeighbor(Direction.NORTH, board);
+        southPos = position.getNeighbor(Direction.SOUTH, board);
     }
 
     private boolean checkSouthOptions(boolean eastOpen, boolean southOpen) {
@@ -104,14 +103,14 @@ public class PossibleMoveAnalyzer {
              Location toLocation = fromLocation.incrementOnCopy(2, 0);
              addIf2HopLegal(southOpen, southPos.isSouthBlocked(), toLocation);                  // SS
 
-             BlockadeBoardPosition southEastPos = pos.getNeighbor(Direction.SOUTH_EAST, board);
+             BlockadeBoardPosition southEastPos = position.getNeighbor(Direction.SOUTH_EAST, board);
              addIfDiagonalLegal(southEastPos, eastOpen && !eastPos.isSouthBlocked(),
                                 southOpen && !southPos.isEastBlocked());                        // SE
         }
 
         boolean westOpen = false;
         if (westPos != null)  {
-            BlockadeBoardPosition southWestPos = pos.getNeighbor(Direction.SOUTH_WEST, board);
+            BlockadeBoardPosition southWestPos = position.getNeighbor(Direction.SOUTH_WEST, board);
             westOpen = (!westPos.isEastBlocked());                                                // W
             addIf1HopNeeded(westOpen, westPos, 0, -1);
 
@@ -122,7 +121,7 @@ public class PossibleMoveAnalyzer {
     }
 
     private void checkWest(boolean westOpen) {
-        BlockadeBoardPosition westWestPos = pos.getNeighbor(Direction.WEST_WEST, board);
+        BlockadeBoardPosition westWestPos = position.getNeighbor(Direction.WEST_WEST, board);
         if (westWestPos != null) {
            Location toLocation = fromLocation.incrementOnCopy(0, -2);
            addIf2HopLegal(westOpen, westWestPos.isEastBlocked(), toLocation);                    // WW
@@ -132,20 +131,20 @@ public class PossibleMoveAnalyzer {
     private void checkNorthOptions(boolean eastOpen, boolean westOpen) {
         boolean northOpen = false;
         if (northPos != null) {
-            BlockadeBoardPosition northEastPos = pos.getNeighbor(Direction.NORTH_EAST, board);
+            BlockadeBoardPosition northEastPos = position.getNeighbor(Direction.NORTH_EAST, board);
             northOpen = (!northPos.isSouthBlocked()) ;                                             // N
             addIf1HopNeeded(northOpen, northPos, -1, 0);
             addIfDiagonalLegal(northEastPos, eastOpen && !northEastPos.isSouthBlocked(),
                                 northOpen && !northPos.isEastBlocked());                          // NE
         }
 
-        BlockadeBoardPosition northNorthPos = pos.getNeighbor(Direction.NORTH_NORTH, board);
+        BlockadeBoardPosition northNorthPos = position.getNeighbor(Direction.NORTH_NORTH, board);
         if (northNorthPos != null) {
             Location toLocation = fromLocation.incrementOnCopy(-2, 0);
             addIf2HopLegal(northOpen, northNorthPos.isSouthBlocked(), toLocation);                 // NN
         }
 
-        BlockadeBoardPosition northWestPos = pos.getNeighbor(Direction.NORTH_WEST, board);
+        BlockadeBoardPosition northWestPos = position.getNeighbor(Direction.NORTH_WEST, board);
         if (northWestPos != null) {
             addIfDiagonalLegal(northWestPos, westOpen && !northWestPos.isSouthBlocked(),
                               northOpen && !northWestPos.isEastBlocked());                      // NW
@@ -171,7 +170,7 @@ public class PossibleMoveAnalyzer {
          int fromRow = fromLocation.getRow();
          int fromCol = fromLocation.getCol();
          BlockadeBoardPosition dirDirPosition =
-                 (BlockadeBoardPosition) board.getPosition(fromRow + 2 * rowOffset, fromCol + 2 * colOffset);
+                 board.getPosition(fromRow + 2 * rowOffset, fromCol + 2 * colOffset);
          // if either the players own pawn or that of the opponent is blocking the path, then true
          boolean pawnBlockingPath =
                  (dirDirPosition!=null && dirDirPosition.getPiece()!=null );
@@ -179,8 +178,8 @@ public class PossibleMoveAnalyzer {
                   (pawnBlockingPath || dirPosition.isHomeBase(opponentPlayer1))) {
               possibleMoveList.add(
                       BlockadeMove.createMove(new Location(fromRow, fromCol),
-                                              new Location(fromRow + rowOffset, fromCol + colOffset),
-                                              0, pos.getPiece(), null));
+                              new Location(fromRow + rowOffset, fromCol + colOffset),
+                              0, position.getPiece(), null));
                GameContext.log(2, "ADDED 1 HOP" + dirPosition);
           }
      }
@@ -196,7 +195,7 @@ public class PossibleMoveAnalyzer {
               && (dirDirPosition.isUnoccupied() || dirDirPosition.isHomeBase(opponentPlayer1))
               && !dirDirPosition.isVisited()) { //DD
                possibleMoveList.add(
-                       BlockadeMove.createMove(fromLocation, toLocation, 0, pos.getPiece(), null));
+                       BlockadeMove.createMove(fromLocation, toLocation, 0, position.getPiece(), null));
          }
      }
 
@@ -214,23 +213,23 @@ public class PossibleMoveAnalyzer {
                && (diagonalPos.isUnoccupied() || diagonalPos.isHomeBase(opponentPlayer1)
                && !diagonalPos.isVisited())) {  //Diagonal
                 possibleMoveList.add(
-                   BlockadeMove.createMove(fromLocation, diagonalPos.getLocation(), 0, pos.getPiece(), null));
+                   BlockadeMove.createMove(fromLocation, diagonalPos.getLocation(), 0, position.getPiece(), null));
           }
           else if (diagonalPos.isOccupied()) {
               // if the diagonal position that we want to move to is occupied, we try to add the 1 space moves
 
               BlockadeBoardPosition horzPos =
-                      (BlockadeBoardPosition) board.getPosition(fromLocation.getRow(), diagonalPos.getCol());
+                      board.getPosition(fromLocation.getRow(), diagonalPos.getCol());
               BlockadeBoardPosition vertPos =
-                      (BlockadeBoardPosition) board.getPosition(diagonalPos.getRow(), fromLocation.getCol());
+                      board.getPosition(diagonalPos.getRow(), fromLocation.getCol());
 
               if (horizontalPathOpen && horzPos.isUnoccupied() && !horzPos.isVisited()) {
                    possibleMoveList.add(
-                          BlockadeMove.createMove(fromLocation, horzPos.getLocation(), 0, pos.getPiece(), null));
+                          BlockadeMove.createMove(fromLocation, horzPos.getLocation(), 0, position.getPiece(), null));
               }
               if (verticalPathOpen && vertPos.isUnoccupied() && !vertPos.isVisited()) {
                    possibleMoveList.add(
-                          BlockadeMove.createMove(fromLocation, vertPos.getLocation(), 0, pos.getPiece(), null));
+                          BlockadeMove.createMove(fromLocation, vertPos.getLocation(), 0, position.getPiece(), null));
               }
           }
      }

@@ -46,7 +46,7 @@ public class WallPlacementValidator {
             sError = GameContext.getLabel("CANT_OVERLAP_WALLS");
         }
 
-        BlockadeBoardPosition pos = (BlockadeBoardPosition) board.getPosition(location);
+        BlockadeBoardPosition pos = board.getPosition(location);
         if (sError == null && hasWallIntersection(wall)) {
              sError = GameContext.getLabel("CANT_INTERSECT_WALLS");
         }
@@ -113,7 +113,7 @@ public class WallPlacementValidator {
          // you cannot intersect one wall with another
          BlockadeBoardPosition pos = wall.getFirstPosition();
 
-         BlockadeBoardPosition secondPos = (BlockadeBoardPosition)
+         BlockadeBoardPosition secondPos =
                     (vertical? board.getPosition(pos.getRow(), pos.getCol()+1) :
                                board.getPosition(pos.getRow()+1, pos.getCol()));
         return (vertical && pos.isSouthBlocked() && secondPos.isSouthBlocked())

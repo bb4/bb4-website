@@ -44,7 +44,7 @@ class BlockadeViewerMouseListener extends ViewerMouseListener {
     public BlockadeViewerMouseListener(GameBoardViewer viewer) {
         super(viewer);
         reset();
-        wallPlacer = new WallPlacer(viewer.getBoard());
+        wallPlacer = new WallPlacer((BlockadeBoard) viewer.getBoard());
     }
 
     @Override
@@ -167,7 +167,7 @@ class BlockadeViewerMouseListener extends ViewerMouseListener {
         BlockadeBoard board = (BlockadeBoard) controller.getBoard();
         // get the original position.
         BlockadeBoardPosition position =
-                (BlockadeBoardPosition)board.getPosition(getRenderer().getDraggedPiece().getLocation());
+                board.getPosition(getRenderer().getDraggedPiece().getLocation());
 
         // valid or not, don't show the dragged piece after releasing the mouse.
         getRenderer().setDraggedPiece(null);
@@ -183,7 +183,7 @@ class BlockadeViewerMouseListener extends ViewerMouseListener {
         position.getPiece().setTransparency((short) 0);
         boolean isPlayer1 = position.getPiece().isOwnedByPlayer1();
         BlockadeBoardPosition newPosition =
-                (BlockadeBoardPosition) board.getPosition(currentMove.getToRow(), currentMove.getToCol());
+                board.getPosition(currentMove.getToRow(), currentMove.getToCol());
         newPosition.setPiece(position.getPiece());
         position.setPiece(null);
         viewer_.refresh();
@@ -210,7 +210,7 @@ class BlockadeViewerMouseListener extends ViewerMouseListener {
         BlockadeBoard board = (BlockadeBoard) controller.getBoard();
         List<BlockadeMove> possibleMoveList = controller.getPossibleMoveList(origPosition);
 
-        BlockadeBoardPosition destpos = (BlockadeBoardPosition) board.getPosition( placedLocation );
+        BlockadeBoardPosition destpos = board.getPosition( placedLocation );
         if (customCheckFails(destpos)) {
             JOptionPane.showMessageDialog( viewer_, GameContext.getLabel("ILLEGAL_MOVE"));
             return null;

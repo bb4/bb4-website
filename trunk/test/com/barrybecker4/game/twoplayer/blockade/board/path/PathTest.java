@@ -50,7 +50,7 @@ public class PathTest extends BlockadeTestCase {
         assertBlocked(path);
     }
 
-    public void testBlockedTwoStepPathVertWAllUpper() {
+    public void testBlockedTwoStepPathVertWallUpper() {
 
         path = createPath(new Location(2, 2), new Location(4, 2), new Location(5, 3));
         board.addWall(new BlockadeWall(new BlockadeBoardPosition(4, 2), new BlockadeBoardPosition(4, 3)));
@@ -58,11 +58,25 @@ public class PathTest extends BlockadeTestCase {
     }
 
     /** The wall does not block the path in this case */
-    public void testNotBlockedTwoStepPathVertWAllLower() {
+    public void testNotBlockedTwoStepPathVertWallLower() {
 
         path = createPath(new Location(2, 2), new Location(4, 2), new Location(5, 3));
-        board.addWall(new BlockadeWall(new BlockadeBoardPosition(5, 2), new BlockadeBoardPosition(6, 3)));
+        board.addWall(new BlockadeWall(new BlockadeBoardPosition(5, 2), new BlockadeBoardPosition(6, 2)));
         assertNotBlocked(path);
+    }
+
+    public void testNotBlockedTwoStepPathHorzWallLower() {
+
+        path = createPath(new Location(2, 2), new Location(4, 2), new Location(5, 3));
+        board.addWall(new BlockadeWall(new BlockadeBoardPosition(5, 2), new BlockadeBoardPosition(5, 3)));
+        assertNotBlocked(path);
+    }
+
+    public void testBlockedTwoStepPathHorzWallLower() {
+
+        path = createPath(new Location(2, 2), new Location(4, 2), new Location(5, 3));
+        board.addWall(new BlockadeWall(new BlockadeBoardPosition(4, 2), new BlockadeBoardPosition(4, 3)));
+        assertBlocked(path);
     }
 
     private void assertBlocked(Path path) {

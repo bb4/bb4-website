@@ -51,7 +51,7 @@ public class MovePlacementValidator {
 
         int fromRow = move.getFromRow();
         int fromCol = move.getFromCol();
-        BlockadeBoardPosition start = (BlockadeBoardPosition)board.getPosition(fromRow, fromCol);
+        BlockadeBoardPosition start = board.getPosition(fromRow, fromCol);
         BlockadeBoardPosition west = start.getNeighbor(Direction.WEST, board);
         BlockadeBoardPosition north = start.getNeighbor(Direction.NORTH, board);
         BlockadeBoardPosition south, east;

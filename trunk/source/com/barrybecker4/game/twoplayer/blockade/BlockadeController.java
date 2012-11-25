@@ -6,6 +6,7 @@ import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.player.PlayerOptions;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
+import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.barrybecker4.game.twoplayer.blockade.persistence.BlockadeGameExporter;
 import com.barrybecker4.game.twoplayer.blockade.persistence.BlockadeGameImporter;
@@ -108,7 +109,8 @@ public class BlockadeController extends TwoPlayerController {
      * @return a possible list of moves based on position passed in.
      */
     public List<BlockadeMove> getPossibleMoveList(BoardPosition position) {
-        return ((BlockadeBoard)getBoard()).getPossibleMoveList(position, !position.getPiece().isOwnedByPlayer1());
+        return ((BlockadeBoard)getBoard()).getPossibleMoveList(
+                (BlockadeBoardPosition)position, !position.getPiece().isOwnedByPlayer1());
     }
 
     @Override

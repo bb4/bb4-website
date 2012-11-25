@@ -119,7 +119,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
          int numCols = board.getNumCols();
          for ( int row = 1; row <= numRows; row++ ) {
              for ( int col = 1; col <= numCols; col++ ) {
-                  BoardPosition position = board.getPosition(row, col);
+                  BlockadeBoardPosition position = board.getPosition(row, col);
                   List list1 = board.getPossibleMoveList(position, false);
                   //List list2 = board.getPossibleMoveList( position, true);
 
@@ -330,8 +330,8 @@ public class BlockadeBoardTest extends BlockadeTestCase {
 
          GamePiece piece1 = new GamePiece(true); // player 1
          GamePiece piece2 = new GamePiece(false);  // player 2
-         BlockadeWall wall1 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(8, 10), (BlockadeBoardPosition) board.getPosition(9, 10));
-         BlockadeWall wall2 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(12, 6), (BlockadeBoardPosition) board.getPosition(12, 7));
+         BlockadeWall wall1 = new BlockadeWall(board.getPosition(8, 10), board.getPosition(9, 10));
+         BlockadeWall wall2 = new BlockadeWall(board.getPosition(12, 6), board.getPosition(12, 7));
 
          BlockadeMove move1 = BlockadeMove.createMove(new Location(8, 11), new Location(6, 11), 1 /*0.1*/, piece2, wall2);
          BlockadeMove move2 = BlockadeMove.createMove(new Location(12, 6), new Location(10, 6), 1 /*0.1*/, piece1, wall1);
@@ -360,8 +360,8 @@ public class BlockadeBoardTest extends BlockadeTestCase {
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
          //BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLast();
 
-         BlockadeBoardPosition pos1 = (BlockadeBoardPosition) board.getPosition(2, 2);
-         BlockadeBoardPosition pos2 = (BlockadeBoardPosition) board.getPosition(5, 2);
+         BlockadeBoardPosition pos1 = board.getPosition(2, 2);
+         BlockadeBoardPosition pos2 = board.getPosition(5, 2);
 
          PathList pLengths1 = board.findShortestPaths(pos1);
          PathList pLengths2 = board.findShortestPaths(pos2);

@@ -28,16 +28,15 @@ public class PathCache {
 
         PathList paths = board.findShortestPaths(pos);
         cachedPaths = paths;
-
-        /*
+         /*
         if (isPathCacheBroken(board)) {
-            PathList paths = board.findShortestPaths(pos);
+            //PathList paths = board.findShortestPaths(pos);
             cachedPaths = paths;
         }
         else {
             assert (paths.equals(cachedPaths))
-                :(paths  + "\n was not equal to \n" + cachedPaths + "\n on board=" + board);
-        }   */
+                : (paths  + "\n was not equal to \n" + cachedPaths + "\n on board=" + board);
+        }  */
     }
 
     public PathList getShortestPaths() {
@@ -53,7 +52,7 @@ public class PathCache {
         if (cachedPaths == null) {
             return true;
         }
-        // broken if any of the paths to opponent home is blocked by the recent wall.
+        // broken if any of the paths to opponent home is blocked by a recent wall.
         for (Path path : cachedPaths) {
             if (path.isBlocked(board)) {
                 return true;
