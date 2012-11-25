@@ -61,11 +61,11 @@ public class MovePlacementValidator {
                 BlockadeBoardPosition northNorth = start.getNeighbor(Direction.NORTH_NORTH, board);
                 if (northNorth.isSouthBlocked()) blocked = true;
             case NORTH :
-                if (north.isSouthBlocked() ) blocked = true;
+                if (north.isSouthBlocked()) blocked = true;
                 break;
             case WEST_WEST :
                 BlockadeBoardPosition westWest = start.getNeighbor(Direction.WEST_WEST, board);
-                if (westWest.isEastBlocked() ) blocked = true;
+                if (westWest.isEastBlocked()) blocked = true;
             case WEST :
                 if (west.isEastBlocked()) blocked = true;
                 break;
