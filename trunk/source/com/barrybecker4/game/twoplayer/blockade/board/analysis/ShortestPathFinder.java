@@ -94,7 +94,7 @@ class ShortestPathFinder {
     }
 
     /**
-     * Find moves going to unvisited positions.
+     * Find moves going to unvisited positions that can be reached without going through walls.
      * @param pos the place we are moving from.
      * @param parent the parent node for the child moves
      * @param oppPlayer1 the opposing player (opposite of pies at pos).
@@ -133,11 +133,11 @@ class ShortestPathFinder {
         PathList paths = new PathList();
 
         for (MutableTreeNode home : homeSet) {
-            DefaultMutableTreeNode n = (DefaultMutableTreeNode)home;
-            Path path = new Path(n);
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode)home;
+            Path path = new Path(node);
             // if the path is not > 0 then then pawn is on the homeBase and the game has been won.
             if (path.getLength() == 0) {
-                GameContext.log(2, "found 0 magnitude path =" + path +" for home "  + n);
+                GameContext.log(2, "found 0 magnitude path =" + path +" for home "  + node);
             }
             paths.add(path);
         }

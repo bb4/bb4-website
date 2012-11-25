@@ -63,12 +63,12 @@ public class PossibleMoveAnalyzer {
      *   2. or moving one space moves lands on an opponent home base.
      *
      * @param position we are moving from
-     * @param op1 true if opposing player is player1; false if player2.
+     * @param oppIsPlayer1 true if opposing player is player1; false if player2.
      * @return a list of legal piece movements
      */
-    public List<BlockadeMove> getPossibleMoveList(BlockadeBoardPosition position, boolean op1)  {
+    public List<BlockadeMove> getPossibleMoveList(BlockadeBoardPosition position, boolean oppIsPlayer1)  {
 
-        initialize(position, op1);
+        initialize(position, oppIsPlayer1);
 
         boolean eastOpen = !this.position.isEastBlocked() && eastPos != null;                 // E
         addIf1HopNeeded(eastOpen, eastPos, 0, 1);
@@ -85,11 +85,11 @@ public class PossibleMoveAnalyzer {
     }
 
     /** initialize global properties of the class */
-    private void initialize(BlockadeBoardPosition position, boolean op1) {
+    private void initialize(BlockadeBoardPosition position, boolean oppIsPlayer1) {
         this.position = position;
         possibleMoveList = new LinkedList<BlockadeMove>();
 
-        opponentPlayer1 = op1;
+        opponentPlayer1 = oppIsPlayer1;
         fromLocation = position.getLocation();
 
         westPos = position.getNeighbor(Direction.WEST, board);

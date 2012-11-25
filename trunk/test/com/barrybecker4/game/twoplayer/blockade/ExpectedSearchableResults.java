@@ -131,6 +131,7 @@ public class ExpectedSearchableResults {
         createMove(10, 4, 9, 5, 528, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(7, 10))),
     };
 
+
      static final BlockadeMove[] EXPECTED_TOP_MIDDLE_GAME_MOVES_P1 =  {
         createMove(7, 9, 7, 11, -32, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(2, 8), new BlockadeBoardPosition(2, 7))),
         createMove(7, 9, 7, 11, -32, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 8), new BlockadeBoardPosition(1, 7))),

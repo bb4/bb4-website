@@ -97,6 +97,15 @@ public class Path {
         return moves.size();
     }
 
+    public int getPathLength() {
+
+        int total = 0;
+        for (BlockadeMove move : moves) {
+            total += move.getToLocation().getDistanceFrom(move.getFromLocation());
+        }
+        return total;
+    }
+
     /**
      *return true if the 2 paths are equal.
      */

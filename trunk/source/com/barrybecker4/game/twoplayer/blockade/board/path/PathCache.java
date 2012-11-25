@@ -1,14 +1,8 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.twoplayer.blockade.board.path;
 
-import com.barrybecker4.common.geometry.Location;
-import com.barrybecker4.game.common.board.BoardPosition;
-import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import com.barrybecker4.game.twoplayer.blockade.board.Direction;
-import com.barrybecker4.game.twoplayer.blockade.board.move.wall.BlockadeWall;
-import com.barrybecker4.simulation.liquid.config.Wall;
 
 
 /**
@@ -28,13 +22,13 @@ public class PathCache {
 
         PathList paths = board.findShortestPaths(pos);
         cachedPaths = paths;
-         /*
+        /*
         if (isPathCacheBroken(board)) {
             //PathList paths = board.findShortestPaths(pos);
             cachedPaths = paths;
         }
         else {
-            assert (paths.equals(cachedPaths))
+            assert (paths.getTotalPathLength() == cachedPaths.getTotalPathLength())
                 : (paths  + "\n was not equal to \n" + cachedPaths + "\n on board=" + board);
         }  */
     }
