@@ -10,15 +10,13 @@ import com.barrybecker4.game.twoplayer.blockade.board.Direction;
  *
  * @author Barry Becker
  */
-class StraightWallChecker {
-
-    private BlockadeBoard board;
+class StraightWallChecker extends WallChecker {
 
     /**
      * Constructor
      */
     StraightWallChecker(BlockadeBoard board) {
-        this.board = board;
+        super(board);
     }
 
     /**
@@ -100,7 +98,7 @@ class StraightWallChecker {
                 wallsToCheck.add( new BlockadeWall(pos, eastPos) );
             }
             BlockadeBoardPosition southWestPos = pos.getNeighbor(Direction.SOUTH_WEST, board);
-            if (westPos!=null && !westPos.isSouthBlocked()
+            if (westPos != null && !westPos.isSouthBlocked()
                 && !(westPos.isEastBlocked() && westPos.getEastWall() == southWestPos.getEastWall())) {
                 wallsToCheck.add( new BlockadeWall(pos, westPos) );
             }

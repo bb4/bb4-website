@@ -32,7 +32,7 @@ class WallAccumulator {
     /**
      * Add the walls that don't block your own paths, but do block the opponent shortest paths.
      * @param pos to start from.
-     * @param paths our friendly paths (do not add wall  if it intersects one of these paths).
+     * @param paths our friendly paths (do not add wall if it intersects one of these paths).
      * @param direction to move one space (one of EAST, WEST, NORTH, SOUTH).
      * @return the accumulated list of walls.
      */
@@ -78,18 +78,40 @@ class WallAccumulator {
                  break;
         }
 
+        assert validProposedWalls(wallsToCheck) :
+            "Trying to place \n" + wallsToCheck + "\nwhere they already exist in direction " + direction + "\non board\n"+ board;
+
+
         return getBlockedWalls(wallsToCheck, paths);
     }
 
     /**
-     * @param wallsToCheck
-     * @param paths
+     * Verify that the walls to check do not overlap on any existing walls
+     */
+    boolean validProposedWalls(BlockadeWallList wallsToCheck) {
+        for (BlockadeWall wall : wallsToCheck) {
+            for (BlockadeBoardPosition pos : wall.getPositions()) {
+                if (wall.isVertical()) {
+                    if (pos.isEastBlocked()) return false;
+                } else {
+                    if (pos.isSouthBlocked()) return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * @param wallsToCheck list of walls
+     * @param paths paths to check for walls that are blocking them.
      * @return wallsList list of walls that are blocking paths.
      */
     private BlockadeWallList getBlockedWalls(BlockadeWallList wallsToCheck, PathList paths)  {
         for (BlockadeWall wall : wallsToCheck) {
-            if (wall != null && !arePathsBlockedByWall(paths, wall))
+            if (wall != null && !arePathsBlockedByWall(paths, wall)) {
                 wallsList.add(wall);
+            }
         }
 
         return wallsList;
@@ -103,8 +125,9 @@ class WallAccumulator {
     private boolean arePathsBlockedByWall(PathList paths, BlockadeWall wall) {
         assert (wall != null);
         for (final Path path : paths) {
-            if (path.isBlockedByWall(wall, board))
+            if (path.isBlockedByWall(wall, board)) {
                 return true;
+            }
         }
         return false;
     }

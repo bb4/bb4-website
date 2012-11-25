@@ -72,7 +72,7 @@ class ShortestPathFinder {
                 DefaultMutableTreeNode node = queue.remove(0);
                 BlockadeMove nodeMove = (BlockadeMove)node.getUserObject();
                 BlockadeBoardPosition toPosition =
-                        (BlockadeBoardPosition) board.getPosition(nodeMove.getToRow(), nodeMove.getToCol());
+                        board.getPosition(nodeMove.getToRow(), nodeMove.getToCol());
                 if (!toPosition.isVisited()) {
                     toPosition.setVisited(true);
                     MutableTreeNode parentNode = (MutableTreeNode)node.getParent();
@@ -101,7 +101,7 @@ class ShortestPathFinder {
      * @return a list of TreeNodes containing all the moves that lead to unvisited positions.
      */
     private List<DefaultMutableTreeNode> findPathChildren(
-            BoardPosition pos, MutableTreeNode parent, boolean oppPlayer1) {
+            BlockadeBoardPosition pos, MutableTreeNode parent, boolean oppPlayer1) {
         List<BlockadeMove> moves = moveAnalyzer.getPossibleMoveList(pos, oppPlayer1);
         List<DefaultMutableTreeNode> children = new ArrayList<DefaultMutableTreeNode>();
         for (BlockadeMove move : moves) {
@@ -118,7 +118,7 @@ class ShortestPathFinder {
     private void unvisitAll() {
         for ( int i = 1; i <= board.getNumRows(); i++ ) {
             for ( int j = 1; j <= board.getNumCols(); j++ ) {
-                ((BlockadeBoardPosition)board.getPosition(i, j)).setVisited(false);
+                board.getPosition(i, j).setVisited(false);
             }
         }
     }

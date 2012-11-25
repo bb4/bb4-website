@@ -39,7 +39,7 @@ class WallsForMoveFinder {
         int fromRow = move.getFromRow();
         int fromCol = move.getFromCol();
         BlockadeBoard b = board_;
-        BlockadeBoardPosition origPos = (BlockadeBoardPosition)board_.getPosition(fromRow, fromCol);
+        BlockadeBoardPosition origPos = board_.getPosition(fromRow, fromCol);
         BlockadeBoardPosition westPos = origPos.getNeighbor(Direction.WEST, b);
         BlockadeBoardPosition eastPos = origPos.getNeighbor(Direction.EAST, b);
         BlockadeBoardPosition northPos = origPos.getNeighbor(Direction.NORTH, b);

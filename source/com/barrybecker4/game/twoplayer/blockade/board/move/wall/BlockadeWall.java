@@ -41,11 +41,12 @@ public class BlockadeWall {
     }
 
     private void init(BlockadeBoardPosition p1, BlockadeBoardPosition p2) {
-         HashSet<BlockadeBoardPosition> hsPositions = new LinkedHashSet<BlockadeBoardPosition>( 2 );
-         hsPositions.add( p1 );
-         hsPositions.add( p2 );
-         isVertical_ = p1.getCol() == p2.getCol();
-         positions_ = hsPositions;
+        HashSet<BlockadeBoardPosition> hsPositions = new LinkedHashSet<BlockadeBoardPosition>( 2 );
+        hsPositions.add( p1 );
+        hsPositions.add( p2 );
+        isVertical_ = p1.getCol() == p2.getCol();
+        assert p1.getCol() == p2.getCol() || p1.getRow() == p2.getRow() : "impossible wall!";
+        positions_ = hsPositions;
     }
 
     /**

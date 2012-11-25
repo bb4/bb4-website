@@ -45,7 +45,7 @@ public class BoardAnalyzer {
         Set<BlockadeBoardPosition> hsPawns = new LinkedHashSet<BlockadeBoardPosition>();
         for ( int row = 1; row <= board.getNumRows(); row++ ) {
             for ( int col = 1; col <= board.getNumCols(); col++ ) {
-                BlockadeBoardPosition pos = (BlockadeBoardPosition) board.getPosition( row, col );
+                BlockadeBoardPosition pos = board.getPosition( row, col );
                 if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() != player1 ) {
                     hsPawns.add(pos);
                     assert (hsPawns.size() <= NUM_HOMES) : "Error: too many opponent pieces: " + hsPawns ;
@@ -87,7 +87,7 @@ public class BoardAnalyzer {
 
         for ( int row = 1; row <= board.getNumRows(); row++ ) {
             for ( int col = 1; col <= board.getNumCols(); col++ ) {
-                BlockadeBoardPosition pos = (BlockadeBoardPosition) board.getPosition( row, col );
+                BlockadeBoardPosition pos = board.getPosition( row, col );
                 if ( pos.isOccupied() ) {
                     GamePiece piece = pos.getPiece();
 

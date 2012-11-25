@@ -4,6 +4,7 @@ package com.barrybecker4.game.twoplayer.blockade.ui;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.BoardPosition;
+import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 
 /**
@@ -13,12 +14,12 @@ import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
  */
 class WallPlacer {
 
-    private Board board;
+    private BlockadeBoard board;
 
     /**
      * Constructor.
      */
-    public WallPlacer(Board board) {
+    public WallPlacer(BlockadeBoard board) {
         this.board = board;
     }
 
@@ -32,7 +33,7 @@ class WallPlacer {
 
         int index = getWallIndexForPosition(x, y, loc, cellSize);
 
-        BoardPosition pos1 = null,  pos2 = null;
+        BlockadeBoardPosition pos1 = null,  pos2 = null;
 
         switch (index) {
             case 0 :
@@ -72,7 +73,7 @@ class WallPlacer {
             default : assert false:("bad index="+index);
         }
 
-        return new BlockadeBoardPosition[] {(BlockadeBoardPosition)pos1, (BlockadeBoardPosition)pos2};
+        return new BlockadeBoardPosition[] {pos1, pos2};
     }
 
 

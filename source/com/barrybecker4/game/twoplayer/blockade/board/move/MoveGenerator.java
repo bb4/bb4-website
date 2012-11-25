@@ -109,7 +109,7 @@ public class MoveGenerator {
         // after making the first move, the shortest paths may have changed somewhat.
         // unfortunately, I think we need to recalculate them.
         BlockadeBoardPosition newPos =
-                (BlockadeBoardPosition) board_.getPosition(firstStep.getToRow(), firstStep.getToCol());
+                board_.getPosition(firstStep.getToRow(), firstStep.getToCol());
         PathList ourPaths = board_.findShortestPaths(newPos);
 
         List<BlockadeMove> wallMoves = wallFinder.findWallPlacementsForMove(firstStep, ourPaths);

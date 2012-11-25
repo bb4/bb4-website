@@ -54,7 +54,7 @@ public class Path {
     }
 
     /**
-     * @param wall check this wall to see if it is bloking this path.
+     * @param wall check this wall to see if it is blocking this path.
      * @return true if the specified wall is blocking the paths.
      */
     public boolean isBlockedByWall(BlockadeWall wall, BlockadeBoard board) {

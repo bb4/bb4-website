@@ -94,7 +94,7 @@ class BlockadeBoardRenderer extends TwoPlayerBoardRenderer {
 
         for ( int i = 1; i <= nrows; i++ )  {
             for ( int j = 1; j <= ncols; j++ ) {
-                BlockadeBoardPosition pos = (BlockadeBoardPosition)board.getPosition( i, j );
+                BlockadeBoardPosition pos = board.getPosition( i, j );
                 BlockadePieceRenderer.renderWallAtPosition( g2,  pos, cellSize, getMargin() );
             }
         }
@@ -102,7 +102,7 @@ class BlockadeBoardRenderer extends TwoPlayerBoardRenderer {
         int numPieces = 0;
         for ( int i = 1; i <= nrows; i++ )  {
             for ( int j = 1; j <= ncols; j++ ) {
-                BlockadeBoardPosition pos = (BlockadeBoardPosition)board.getPosition( i, j );
+                BlockadeBoardPosition pos = board.getPosition( i, j );
                 if (pos.isOccupied())       {
                     pieceRenderer_.render(g2, pos,  cellSize_, getMargin(), board);
                     if (GameContext.getDebugMode() > 0)

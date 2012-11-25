@@ -59,6 +59,22 @@ public class BlockadeBoard extends TwoPlayerBoard {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BlockadeBoardPosition getPosition(int row, int col) {
+        return (BlockadeBoardPosition) super.getPosition(row, col);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final BlockadeBoardPosition getPosition( Location loc ) {
+        return (BlockadeBoardPosition) super.getPosition(loc.getRow(), loc.getCol());
+    }
+
+    /**
      * reset the board to its initial state.
      */
     @Override
@@ -124,7 +140,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @param op1 true if opposing player is player1; false if player2.
      * @return a list of legal piece movements
      */
-    public List<BlockadeMove> getPossibleMoveList(BoardPosition position, boolean op1) {
+    public List<BlockadeMove> getPossibleMoveList(BlockadeBoardPosition position, boolean op1) {
         return new PossibleMoveAnalyzer(this).getPossibleMoveList(position, op1);
     }
 
@@ -185,22 +201,22 @@ public class BlockadeBoard extends TwoPlayerBoard {
     }
 
     /**
-     * shows or hides this wall on the game board.
+     * Shows or hides this wall on the game board.
      * @param show whether to show or hide the wall.
      */
     private void showWall(BlockadeWall wall, boolean show) {
-        Set positions = wall.getPositions();
-        if (!positions.isEmpty())
-           assert (positions.size()==2): "positions="+positions;
-        for (Object position : positions) {
-            // since p may be from a different board, we need to make sure that we set the
-            // wall for this board.
-            BlockadeBoardPosition p = (BlockadeBoardPosition) position;
-            BlockadeBoardPosition pp = (BlockadeBoardPosition) getPosition(p.getRow(), p.getCol());
+        Set<BlockadeBoardPosition> positions = wall.getPositions();
+        assert positions.isEmpty() || (positions.size() == 2) : "positions="+positions;
+
+        for (BlockadeBoardPosition position : positions) {
+            // since p may be from a different board, we need to make sure that we set the wall for this board.
+            BlockadeBoardPosition otherPos = getPosition(position.getLocation());
             if (wall.isVertical()) {
-                pp.setEastWall(show ? wall : null);
+                assert (!show || !otherPos.isEastBlocked()) : "East blocked already!";
+                otherPos.setEastWall(show ? wall : null);
             } else {
-                pp.setSouthWall(show ? wall : null);
+                assert (!show || !otherPos.isSouthBlocked()) : "South blocked already!";
+                otherPos.setSouthWall(show ? wall : null);
             }
         }
     }
@@ -219,7 +235,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
     protected boolean makeInternalMove( Move move ) {
         getProfiler().startMakeMove();
         BlockadeMove m = (BlockadeMove) move;
-        BlockadeBoardPosition toPos = (BlockadeBoardPosition) getPosition(m.getToLocation());
+        BlockadeBoardPosition toPos = getPosition(m.getToLocation());
         // in the rare event that we capture an opponent on his base, remember it so it can be undone.
         if (toPos.isOccupiedHomeBase(!m.isPlayer1())) {
             m.capturedOpponentPawn = toPos.getPiece();
@@ -246,7 +262,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
         BlockadeMove m = (BlockadeMove) move;
         BoardPosition startPos = getPosition(m.getFromRow(), m.getFromCol());
         startPos.setPiece( m.getPiece() );
-        BlockadeBoardPosition toPos = (BlockadeBoardPosition) getPosition(m.getToLocation());
+        BlockadeBoardPosition toPos = getPosition(m.getToLocation());
         toPos.clear();
         if (m.capturedOpponentPawn != null) {
             toPos.setPiece(m.capturedOpponentPawn);
@@ -285,7 +301,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
         // print just the walls and pawns
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
-                BlockadeBoardPosition pos = ((BlockadeBoardPosition)getPosition(i, j));
+                BlockadeBoardPosition pos = getPosition(i, j);
                 if (pos.isOccupied())
                     buf.append(pos).append("\n");
                 if (pos.getEastWall() != null)
