@@ -35,4 +35,12 @@ public class PathList extends LinkedList<Path> {
         //return (size() != 0 && (size() == Homes.NUM_HOMES || (get(0).getLength() == 0)));
     }
 
+    public int getTotalPathLength() {
+        int total = 0;
+        for (Path path : this) {
+            total += path.getPathLength();
+        }
+        return total;
+    }
+
 }

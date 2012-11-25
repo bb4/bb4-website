@@ -22,13 +22,13 @@ import java.util.List;
  */
 public class MoveGenerator {
 
-    private BlockadeBoard board_;
+    private BlockadeBoard board;
     private ParameterArray weights_;
 
     /** Constructor */
     public MoveGenerator(ParameterArray weights, BlockadeBoard board) {
 
-        board_ = board;
+        this.board = board;
         weights_ = weights;
     }
 
@@ -47,12 +47,12 @@ public class MoveGenerator {
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
 
         // There is one path from every piece to every opponent home (i.e. n*NUM_HOMES)
-        PathList opponentPaths = board_.findAllOpponentShortestPaths(player1);
+        PathList opponentPaths = board.findAllOpponentShortestPaths(player1);
 
         List<BoardPosition> pawnLocations = new LinkedList<BoardPosition>();
-        for ( int row = 1; row <= board_.getNumRows(); row++ ) {
-            for ( int col = 1; col <= board_.getNumCols(); col++ ) {
-                BoardPosition p = board_.getPosition( row, col );
+        for ( int row = 1; row <= board.getNumRows(); row++ ) {
+            for ( int col = 1; col <= board.getNumCols(); col++ ) {
+                BoardPosition p = board.getPosition( row, col );
                 if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {
                     pawnLocations.add(p);
                     addMoves( p, moveList, opponentPaths, weights_ );
@@ -61,7 +61,7 @@ public class MoveGenerator {
         }
         if (moveList.isEmpty())
             GameContext.log(1, "There aren't any moves to consider for lastMove="+lastMove
-                    +" Complete movelist ="+board_.getMoveList() + " \nThe pieces are at:" + pawnLocations);
+                    +" Complete movelist ="+ board.getMoveList() + " \nThe pieces are at:" + pawnLocations);
 
         return moveList;
     }
@@ -78,9 +78,9 @@ public class MoveGenerator {
         int numMovesAdded = 0;
 
         // first find the NUM_HOMES shortest paths for p.
-        PathList paths = board_.findShortestPaths((BlockadeBoardPosition)position);
+        PathList paths = board.findShortestPaths((BlockadeBoardPosition)position);
 
-        WallPlacementFinder wallFinder = new WallPlacementFinder(board_, opponentPaths, weights);
+        WallPlacementFinder wallFinder = new WallPlacementFinder(board, opponentPaths, weights);
 
         // for each of these paths, add possible wall positions.
         // Take the first move from each shortest path and add the wall positions to it.
@@ -104,17 +104,17 @@ public class MoveGenerator {
 
         BlockadeMove firstStep = path.get(0);
         // make the move
-        board_.makeMove(firstStep);
+        board.makeMove(firstStep);
 
         // after making the first move, the shortest paths may have changed somewhat.
         // unfortunately, I think we need to recalculate them.
         BlockadeBoardPosition newPos =
-                board_.getPosition(firstStep.getToRow(), firstStep.getToCol());
-        PathList ourPaths = board_.findShortestPaths(newPos);
+                board.getPosition(firstStep.getToRow(), firstStep.getToCol());
+        PathList ourPaths = board.findShortestPaths(newPos);
 
         List<BlockadeMove> wallMoves = wallFinder.findWallPlacementsForMove(firstStep, ourPaths);
         GameContext.log(2, "num wall placements for Move = " + wallMoves.size());
-        board_.undoMove();
+        board.undoMove();
 
         // iterate through the wallMoves and add only the ones that are not there already
         for (BlockadeMove wallMove : wallMoves) {
