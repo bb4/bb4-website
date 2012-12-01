@@ -22,7 +22,6 @@ import java.io.IOException;
 
 public class SimpleEditor extends JFrame implements ActionListener {
 
-
     private JTextArea editArea;
 
     // menu options
@@ -38,17 +37,15 @@ public class SimpleEditor extends JFrame implements ActionListener {
     public SimpleEditor() {
         super("Simple Editor");
 
-
         GUIUtil.setCustomLookAndFeel();
 
-       addWindowListener(new WindowAdapter() {
+        addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
         //setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
 
         // Create the menu.
         getRootPane().setJMenuBar(createMenuBar());
@@ -159,7 +156,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
     private void loadFile(String fileName) {
         try {
             BufferedReader reader =
-                     new BufferedReader( new FileReader( fileName ) );
+                 new BufferedReader( new FileReader( fileName ) );
 
             StringBuilder bldr = new StringBuilder();
 
@@ -195,6 +192,6 @@ public class SimpleEditor extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new SimpleEditor();
+        new SimpleEditor();
     }
 }

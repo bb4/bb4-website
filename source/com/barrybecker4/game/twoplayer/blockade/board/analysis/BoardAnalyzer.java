@@ -80,9 +80,8 @@ public class BoardAnalyzer {
 
     /**
      * find all the paths from each player's pawn to each opponent base.
-     * @param lastMove last move made
      */
-    public PlayerPathLengths findPlayerPathLengths(BlockadeMove lastMove) {
+    public PlayerPathLengths findPlayerPathLengths() {
         PlayerPathLengths playerPaths = new PlayerPathLengths();
 
         for ( int row = 1; row <= board.getNumRows(); row++ ) {
@@ -92,7 +91,7 @@ public class BoardAnalyzer {
                     GamePiece piece = pos.getPiece();
 
                     // should reuse cached path if still valid.
-                    PathList paths = pos.findShortestPaths(board);//, lastMove.getWall());
+                    PathList paths = board.findShortestPaths(pos);
 
                     playerPaths.getPathLengthsForPlayer(piece.isOwnedByPlayer1()).updatePathLengths(paths);
                 }

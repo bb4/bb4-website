@@ -109,11 +109,11 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
         int appxHt1 = (int)(textHt/2.8);
 
         for (int i = start; i <= nrows1; i++ ) {  //   |
-            int ypos = getMargin() + appxHt1 + i * cellSize_ + gridOffset;
+            int ypos = getMargin() + appxHt1 + i * cellSize + gridOffset;
             g2.drawString(int2char(i), 1, ypos);
         }
         for (int i = start; i <= ncols1; i++ ) {  //   --
-            int xpos = getMargin() - 1 + i * cellSize_ + gridOffset;
+            int xpos = getMargin() - 1 + i * cellSize + gridOffset;
             g2.drawString(int2char(i), xpos, (3 +  getMargin() - appxHt1));
         }
     }
@@ -127,8 +127,8 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
                                    int panelWidth, int panelHeight)
     {
         super.drawBackground( g, b,  startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight);
-        //int t = (int)(cellSize_/3.4f);
-        int t = (int)(cellSize_/2.0f);
+        //int t = (int)(cellSize/3.4f);
+        int t = (int)(cellSize /2.0f);
         g.drawImage(woodGrainImage_.getImage(), (startPos-t), (startPos-t),
                                                 (rightEdgePos-startPos+2 * t), (bottomEdgePos-startPos+2 * t), null);
     }
@@ -145,17 +145,17 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
         List starpoints = board.getHandicapPositions();
         Iterator it = starpoints.iterator();
         g2.setColor(Color.black);
-        double rad = (float)cellSize_/21.0 + 0.46;
+        double rad = (float) cellSize /21.0 + 0.46;
         while (it.hasNext()) {
             GoBoardPosition p = (GoBoardPosition)it.next();
-            g2.fillOval(getMargin() + (int)(cellSize_*(p.getCol()-0.505)-rad),
-                        getMargin() +(int)(cellSize_*(p.getRow()-0.505)-rad),
+            g2.fillOval(getMargin() + (int)(cellSize *(p.getCol()-0.505)-rad),
+                        getMargin() +(int)(cellSize *(p.getRow()-0.505)-rad),
                         (int)(2.0*rad+1.7), (int)(2.0*rad+1.7));
         }
 
         // draw the group borders
         if ( GameContext.getDebugMode() > 0 ) {
-            GoGroupRenderer groupRenderer = new GoGroupRenderer(board, COLORMAP, (float) cellSize_, getMargin(), g2);
+            GoGroupRenderer groupRenderer = new GoGroupRenderer(board, COLORMAP, (float) cellSize, getMargin(), g2);
             GoSearchable searchable = ((GoSearchable)((TwoPlayerController) controller).getSearchable());
             for (IGoGroup group : board.getGroups()) {
 
@@ -179,7 +179,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
         Board board = controller.getBoard();
         if (nextMoves != null) {
             for (TwoPlayerMove move : nextMoves) {
-                ((TwoPlayerPieceRenderer) pieceRenderer_).renderNextMove(g2, move, cellSize_, getMargin(), board);
+                ((TwoPlayerPieceRenderer) pieceRenderer_).renderNextMove(g2, move, cellSize, getMargin(), board);
             }
         }
     }

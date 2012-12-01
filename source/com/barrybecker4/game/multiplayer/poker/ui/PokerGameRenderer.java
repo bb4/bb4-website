@@ -71,7 +71,7 @@ public class PokerGameRenderer extends MultiGameBoardRenderer {
         PokerPlayer player = (PokerPlayer)controller.getCurrentPlayer();
         PokerPlayerMarker m = player.getPiece();
         g2.setColor(PokerPlayerRenderer.HIGHLIGHT_COLOR);
-        g2.fillOval(cellSize_*(m.getLocation().getCol()-2), cellSize_*(m.getLocation().getRow()-2), 10*cellSize_, 10*cellSize_);
+        g2.fillOval(cellSize *(m.getLocation().getCol()-2), cellSize *(m.getLocation().getRow()-2), 10* cellSize, 10* cellSize);
 
         // now draw the players and their stuff (face, anme, chips, cards, etc)
         super.drawMarkers(controller, g2);

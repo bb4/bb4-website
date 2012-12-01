@@ -54,9 +54,9 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
         for (int i=0; i<nrows; i++) {
             for (int j=0; j<ncols; j++)  {
                 g.setColor(((i+j)%2 == 0)? BLACK_SQUARE_COLOR : RED_SQUARE_COLOR);
-                int ioff = getMargin() + cellSize_ * i;
-                int joff = getMargin() + cellSize_ * j;
-                g.fillRect( ioff, joff, cellSize_, cellSize_ );
+                int ioff = getMargin() + cellSize * i;
+                int joff = getMargin() + cellSize * j;
+                g.fillRect( ioff, joff, cellSize, cellSize);
             }
         }
     }

@@ -8,17 +8,17 @@ import java.util.regex.Pattern;
 /**
  * Some useful static string manipulation methods.
  *
- * // Duy,
+ * Duy,
  *    Notice that I named my class according to its function
- * and put it in a resonable package. Generic methods are public
- * so other application code cade reuse them. Alsways consider this
+ * and put it in a reasonable package. Generic methods are public
+ * so other application code can reuse them. Always consider this
  * in your design. The main method can be used to do the testing
  * for the class to make sure that everything is functioning as expected.
  * Note the use of meaningful variable names and methods.
  * Each method should be small and do only one thing.
 */
-public class StringUtil
-{
+public class StringUtil {
+
     private static final String OLD_TEXT = "hate";
     private static  final String NEW_TEXT = "love";
 
@@ -26,10 +26,9 @@ public class StringUtil
      * @param originalText to do replacement in
      * @param oldString string to be replaced
      * @param newString replacement text for oldString.
-     * @return originalTest with first occurence of oldString replaced with newString.
+     * @return originalTest with first occurrence of oldString replaced with newString.
      */
-    public static final String replaceFirstOccurrence(String originalText, String oldString, String newString)
-    {
+    public static String replaceFirstOccurrence(String originalText, String oldString, String newString) {
         // I just extracted the implementation of String.replaceFirst and put it here.
         // that may be considered cheating...
         Pattern pattern = Pattern.compile(oldString, Pattern.CASE_INSENSITIVE);
@@ -50,8 +49,7 @@ public class StringUtil
     /**
      * Run through a rigorous set of test to verify all specified requirements and edge cases.
      */
-    private static final void runReplacementRegressionTests()
-    {
+    private static void runReplacementRegressionTests() {
             String[] inputCases = {
                 "f",
                 "",
@@ -98,8 +96,7 @@ public class StringUtil
      * Let the user enter add hoc input from the keyboard interactively
      * until they get tired of it.
      */
-    private static final void runUserInputTest()
-    {
+    private static void runUserInputTest()  {
         boolean keepGoing = true;
         while (keepGoing) {
             Scanner keyboard = new Scanner(System.in);
@@ -111,8 +108,7 @@ public class StringUtil
             System.out.println("I have rephrased that line to read:");
             System.out.println(replacedlineOfText);
 
-            if (replacedlineOfText.equals(lineOfText))
-            {
+            if (replacedlineOfText.equals(lineOfText)) {
                 System.out.println("There should be at least one occurrence of " + OLD_TEXT + " in your input text." );
             }
 
@@ -126,10 +122,10 @@ public class StringUtil
      * Purpose:	Write a program that reads a line of text and then change the
 				first word of hate to love.
 	*/
-	public static void main (String[] args)
-    {
+	public static void main (String[] args) {
         runReplacementRegressionTests();
-
         runUserInputTest();
     }
+
+    private StringUtil() {}
 }

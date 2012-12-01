@@ -31,6 +31,7 @@ public class Server extends JFrame {
 
         setTitle("Server Program");
         WindowListener l = new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
@@ -83,6 +84,7 @@ public class Server extends JFrame {
      * Objects created in run method are finalized when
      * program terminates and thread exits
      */
+    @Override
     protected void finalize() {
         try {
             super.finalize();

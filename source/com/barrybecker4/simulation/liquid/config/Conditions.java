@@ -225,7 +225,7 @@ public class Conditions {
     }
 
     /**
-     * @return the cellSize_
+     * @return the cellSize
      */
     public double getCellSize() {
         return cellSize_;

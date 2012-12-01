@@ -22,7 +22,7 @@ import java.awt.event.MouseEvent;
 public abstract class GameBoardRenderer {
 
     /** the size of a game board cell where the pieces go */
-    protected int cellSize_;
+    protected int cellSize;
 
     /** to move pieces you drag them (if the move is valid) */
     private BoardPosition draggedPiece_ = null;
@@ -167,7 +167,7 @@ public abstract class GameBoardRenderer {
      * @return  the size of a board position cell (must be square).
      */
     public final int getCellSize() {
-        return cellSize_;
+        return cellSize;
     }
 
     /**
@@ -215,12 +215,12 @@ public abstract class GameBoardRenderer {
 
         for ( i = start; i <= nrows1; i++ )  //   -----
         {
-            ypos = getMargin() + i * cellSize_ + gridOffset;
+            ypos = getMargin() + i * cellSize + gridOffset;
             g2.drawLine( startPos, ypos, rightEdgePos, ypos );
         }
         for ( i = start; i <= ncols1; i++ )  //   ||||
         {
-            xpos = getMargin() + i * cellSize_ + gridOffset;
+            xpos = getMargin() + i * cellSize + gridOffset;
             g2.drawLine( xpos, startPos, xpos, bottomEdgePos );
         }
     }
@@ -241,7 +241,7 @@ public abstract class GameBoardRenderer {
         int ncols = board.getNumCols();
         for ( int i = 1; i <= nrows; i++ ) {
             for ( int j = 1; j <= ncols; j++ ) {
-                pieceRenderer_.render(g2, board.getPosition( i, j ),  cellSize_, getMargin(), board);
+                pieceRenderer_.render(g2, board.getPosition( i, j ), cellSize, getMargin(), board);
             }
         }
     }
@@ -251,7 +251,7 @@ public abstract class GameBoardRenderer {
      */
     public void render( Graphics g, IGameController controller, int panelWidth, int panelHeight ) {
         Board board = controller.getBoard();
-        cellSize_ = calcCellSize( board, panelWidth, panelHeight );
+        cellSize = calcCellSize( board, panelWidth, panelHeight );
 
         if ( draggedShowPiece_!=null) {
             draggedShowPiece_.getPiece().setTransparency( DRAG_TRANSPARENCY );
@@ -267,14 +267,14 @@ public abstract class GameBoardRenderer {
         int ncols1 = ncols;
         // if the grid is offset, it means the pieces will be shown at the vertices.
         if ( offsetGrid() ) {
-            gridOffset = cellSize_ >> 1;
+            gridOffset = cellSize >> 1;
             nrows1 = nrows - 1;
             ncols1 = ncols - 1;
         }
 
         int startPos = getMargin() + gridOffset;
-        int rightEdgePos = getMargin() + cellSize_ * ncols1 + gridOffset;
-        int bottomEdgePos = getMargin() + cellSize_ * nrows1 + gridOffset;
+        int rightEdgePos = getMargin() + cellSize * ncols1 + gridOffset;
+        int bottomEdgePos = getMargin() + cellSize * nrows1 + gridOffset;
 
         drawBackground( g2, board, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight );
 
@@ -286,7 +286,7 @@ public abstract class GameBoardRenderer {
 
         // if there is a piece being dragged, draw it
         if ( draggedShowPiece_ != null ) {
-            pieceRenderer_.render(g2, draggedShowPiece_, cellSize_, getMargin(), board);
+            pieceRenderer_.render(g2, draggedShowPiece_, cellSize, getMargin(), board);
         }
 
         drawLastMoveMarker(g2, controller);

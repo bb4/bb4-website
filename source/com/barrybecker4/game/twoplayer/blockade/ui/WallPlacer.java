@@ -86,7 +86,7 @@ class WallPlacer {
      * 5 /  | \  0
      * /  6 | 7 \
      * </pre>
-     *@@ We could make this an enum with values NEE, NNE, NNW, NWW, SWW, etc
+     * Perhaps Make this an enum with values NEE, NNE, NNW, NWW, SWW, etc
      * @param xp x position
      * @param yp y position
      * @return wall index corresponding to specified position.

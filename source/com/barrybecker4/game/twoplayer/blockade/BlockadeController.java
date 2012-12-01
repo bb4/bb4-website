@@ -32,8 +32,8 @@ import java.util.List;
 public class BlockadeController extends TwoPlayerController {
 
     /** the default Blockade board is 14 by 11 */
-    private static final int NUM_ROWS = 7;//14;
-    private static final int NUM_COLS = 5;//11;
+    private static final int NUM_ROWS = 14;
+    private static final int NUM_COLS = 11;
 
     /**
      *  Construct the Blockade game controller.

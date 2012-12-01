@@ -7,6 +7,7 @@ import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 
 /**
  * Maintain a list of best/shortest paths from a specific position.
+ * @@ Perhaps the paths could be cached based on the pawn and wall positions.
  *
  * @author Barry Becker
  */
@@ -18,32 +19,35 @@ public class PathCache {
     /**
      * Update the cached list of shortest paths if necessary
      */
-    public void update(BlockadeBoardPosition pos, BlockadeBoard board) {
+    public synchronized void update(BlockadeBoardPosition pos, BlockadeBoard board) {
 
         PathList paths = board.findShortestPaths(pos);
         cachedPaths = paths;
 
-        /*
+        /**
+         * I don't think path caching will work because a cached path may be lengthened during search
+         * when walls are placed, but then never shortened again after walls are removed.
+         *
         if (isPathCacheBroken(board)) {
             //PathList paths = board.findShortestPaths(pos);
-            System.out.println("cacheMiss");
+            System.out.println("Updating broken path cache to \n" + paths + "\n on board="+ board);
             cachedPaths = paths;
         }
         else {
             System.out.println("cacheHit pl=" + paths.getTotalPathLength() +" cpl=" + cachedPaths.getTotalPathLength());
             assert (paths.getTotalPathLength() == cachedPaths.getTotalPathLength())
                 : (paths  + "\n was not equal to \n" + cachedPaths + "\n on board=" + board);
-        }  */
+        } */
     }
 
-    public PathList getShortestPaths() {
+    public synchronized PathList getShortestPaths() {
         return cachedPaths;
     }
 
     /**
      * The cache is broken if any recently placed wall blocks one of our cached paths.
      */
-    private boolean isPathCacheBroken(BlockadeBoard board) {
+    private synchronized boolean isPathCacheBroken(BlockadeBoard board) {
 
         // if nothing cached, we need to create the cache.
         if (cachedPaths == null) {

@@ -12,8 +12,6 @@ import static com.barrybecker4.game.twoplayer.blockade.board.BlockadeTstUtil.cre
 import java.util.List;
 
 /**
- * Test methods on MoveGenerator
- *
  * @author Barry Becker
  */
 public class MovePlacementValidatorTest extends BlockadeTestCase {

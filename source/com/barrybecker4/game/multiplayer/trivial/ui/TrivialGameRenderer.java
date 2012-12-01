@@ -67,7 +67,7 @@ public class TrivialGameRenderer extends MultiGameBoardRenderer
         assert g2 != null;
         assert m.getLocation() != null;
         g2.setColor(TrivialPlayerRenderer.HIGHLIGHT_COLOR);
-        g2.fillOval(cellSize_*(m.getLocation().getCol()-2), cellSize_*(m.getLocation().getRow()-2), 10*cellSize_, 10*cellSize_);
+        g2.fillOval(cellSize *(m.getLocation().getCol()-2), cellSize *(m.getLocation().getRow()-2), 10* cellSize, 10* cellSize);
 
         // now draw the players and their stuff (face, name, chips, cards, etc)
         super.drawMarkers(controller, g2);
