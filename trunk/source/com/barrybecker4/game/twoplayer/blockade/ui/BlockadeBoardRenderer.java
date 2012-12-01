@@ -88,34 +88,38 @@ class BlockadeBoardRenderer extends TwoPlayerBoardRenderer {
     @Override
     protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
         BlockadeBoard board = (BlockadeBoard)controller.getBoard();
-        int nrows = board.getNumRows();
-        int ncols = board.getNumCols();
-        int cellSize = this.getCellSize();
 
-        for ( int i = 1; i <= nrows; i++ )  {
-            for ( int j = 1; j <= ncols; j++ ) {
+        drawWalls(g2, board);
+        drawShortestPaths(g2, board);
+    }
+
+    private void drawWalls(Graphics2D g2, BlockadeBoard board) {
+
+        for ( int i = 1; i <= board.getNumRows(); i++ )  {
+            for ( int j = 1; j <= board.getNumCols(); j++ ) {
                 BlockadeBoardPosition pos = board.getPosition( i, j );
-                BlockadePieceRenderer.renderWallAtPosition( g2,  pos, cellSize, getMargin() );
+                BlockadePieceRenderer.renderWallAtPosition(g2, pos, cellSize, getMargin());
             }
         }
+        if ( draggedWall_ != null ) {
+            drawDraggedWall(g2, cellSize);
+        }
+    }
 
+    private void drawShortestPaths(Graphics2D g2, BlockadeBoard board) {
         int numPieces = 0;
-        for ( int i = 1; i <= nrows; i++ )  {
-            for ( int j = 1; j <= ncols; j++ ) {
+        for ( int i = 1; i <= board.getNumRows(); i++ )  {
+            for ( int j = 1; j <= board.getNumCols(); j++ ) {
                 BlockadeBoardPosition pos = board.getPosition( i, j );
                 if (pos.isOccupied())       {
-                    pieceRenderer_.render(g2, pos,  cellSize_, getMargin(), board);
+                    pieceRenderer_.render(g2, pos, cellSize, getMargin(), board);
                     if (GameContext.getDebugMode() > 0)
-                       PathRenderer.drawShortestPaths(g2, pos, board, cellSize_);
+                       PathRenderer.drawShortestPaths(g2, pos, board, cellSize);
                     numPieces++;
                 }
             }
         }
         assert(numPieces >= 3) : "unexpected number of pieces: " + numPieces;
-
-        if ( draggedWall_ != null ) {
-            drawDraggedWall(g2, cellSize);
-        }
     }
 
     /**

@@ -62,18 +62,19 @@ public class PossibleMoveAnalyzer {
      *   1. jumping 2 spaces in that direction would land on an opponent pawn,
      *   2. or moving one space moves lands on an opponent home base.
      *
+     * Synchronized to avoid ConcurrentModificationException when rendering the paths.
      * @param position we are moving from
      * @param oppIsPlayer1 true if opposing player is player1; false if player2.
      * @return a list of legal piece movements
      */
-    public List<BlockadeMove> getPossibleMoveList(BlockadeBoardPosition position, boolean oppIsPlayer1)  {
+    public synchronized List<BlockadeMove> getPossibleMoveList(BlockadeBoardPosition position, boolean oppIsPlayer1)  {
 
         initialize(position, oppIsPlayer1);
 
-        boolean eastOpen = !this.position.isEastBlocked() && eastPos != null;                 // E
+        boolean eastOpen = !position.isEastBlocked() && eastPos != null;                 // E
         addIf1HopNeeded(eastOpen, eastPos, 0, 1);
 
-        boolean southOpen = !this.position.isSouthBlocked() && southPos != null;              // S
+        boolean southOpen = !position.isSouthBlocked() && southPos != null;              // S
         addIf1HopNeeded(southOpen, southPos, 1, 0);
 
         boolean westOpen = checkSouthOptions(eastOpen, southOpen);
