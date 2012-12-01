@@ -70,7 +70,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
             return player1Moved ? WINNING_VALUE : -WINNING_VALUE;
         }
 
-        PlayerPathLengths pathLengths = getBoard().findPlayerPathLengths(m);
+        PlayerPathLengths pathLengths = getBoard().findPlayerPathLengths();
         int worth = pathLengths.determineWorth(WINNING_VALUE, weights);
         getProfiler().stopCalcWorth();
         return worth;
@@ -143,7 +143,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
     }
 
     /**
-     * @@ quiescent search not yet implemented for Blockade
+     * Quiescent search not yet implemented for Blockade
      * Probably we could return moves that result in a drastic change in value.
      *
      * @return list of urgent moves

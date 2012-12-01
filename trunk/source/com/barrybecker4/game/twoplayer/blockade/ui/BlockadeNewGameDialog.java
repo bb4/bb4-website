@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 class BlockadeNewGameDialog extends TwoPlayerNewGameDialog
                             implements ActionListener {
 
-    // constructor
+    /** constructor  */
     public BlockadeNewGameDialog(Component parent, GameViewable viewer ) {
         super(parent, viewer);
     }

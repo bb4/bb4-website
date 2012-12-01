@@ -12,6 +12,8 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URL;
 import java.text.MessageFormat;
 
 /**
@@ -22,15 +24,16 @@ import java.text.MessageFormat;
 public final class HelpDialog extends AbstractDialog
                               implements ActionListener {
 
-    private final GradientButton okButton_ = new GradientButton();
-    private static final long serialVersionUID = 0L;
-
-    // these get replaced
-    private static String gameName_ = GameContext.getLabel("GAME_TUTORIAL");
-    private static String comments_ = GameContext.getLabel("AUTHOR");
     private static final String VERSION = GameContext.getLabel("VERSION");
     private static final String COPYRIGHT = GameContext.getLabel("COPYRIGHT");
     private static final Font FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12 );
+
+    private final GradientButton okButton_ = new GradientButton();
+    private static final long serialVersionUID = 0L;
+
+    // these will get replaced
+    private String gameName_ = GameContext.getLabel("GAME_TUTORIAL");
+    private String comments_ = GameContext.getLabel("AUTHOR");
 
     private String overviewText_ = null;
 
@@ -110,8 +113,10 @@ public final class HelpDialog extends AbstractDialog
 
         overviewTextArea.setWrapStyleWord(true);
         overviewTextArea.setLineWrap(true);
+
         overviewTextArea.setAutoscrolls(true);
         overviewTextArea.setEditable(false);
+
         return overviewTextArea;
     }
 

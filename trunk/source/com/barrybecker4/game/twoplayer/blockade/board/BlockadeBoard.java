@@ -183,12 +183,11 @@ public class BlockadeBoard extends TwoPlayerBoard {
 
     /**
      * find all the paths from each player's pawn to each opponent base.
-     * @param lastMove last move made
      * @return the lengths of all the paths from each player's pawn to each opponent base.
      */
-    public PlayerPathLengths findPlayerPathLengths(BlockadeMove lastMove) {
+    public PlayerPathLengths findPlayerPathLengths() {
 
-        return boardAnalyzer.findPlayerPathLengths(lastMove);
+        return boardAnalyzer.findPlayerPathLengths();
     }
 
 

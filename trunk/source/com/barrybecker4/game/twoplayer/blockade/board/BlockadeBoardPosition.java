@@ -9,12 +9,12 @@ import com.barrybecker4.game.twoplayer.blockade.board.path.Path;
 import com.barrybecker4.game.twoplayer.blockade.board.path.PathCache;
 import com.barrybecker4.game.twoplayer.blockade.board.path.PathList;
 
-
 /**
  * The BlockadeBoardPosition describes the physical markers at a location on the board.
  * It can be empty or occupied. If occupied, then one of the BlockadePieces is there and it has an owner.
  * BlockadeBoardPositions may have BlockadeWalls present when unoccupied.
- * @@ split out PathCache class
+ * Splitting out PathCache class did not seem to work. Path caching won't work because a cached path may
+ * be lengthened during search when walls are placed, but then never shortened again after walls are removed.
  *
  * @see BlockadeBoard
  * @author Barry Becker
@@ -31,9 +31,6 @@ public final class BlockadeBoardPosition extends BoardPosition {
     private boolean isPlayer1Home_ = false;
     private boolean isPlayer2Home_ = false;
 
-    /** Cache the most recent shortest paths to opponent homes so we do not have to keep recomputing them. */
-    private PathCache pathCache;
-
 
     /**
      * create a new blockade position.
@@ -48,7 +45,6 @@ public final class BlockadeBoardPosition extends BoardPosition {
         eastWall_ = eastWall;
         isPlayer1Home_ = isP1Home;
         isPlayer2Home_ = isP2Home;
-        pathCache = new PathCache();
     }
 
     /**
@@ -70,27 +66,11 @@ public final class BlockadeBoardPosition extends BoardPosition {
     }
 
     /**
-     * Reuse previously computed shortest paths if they are still valid.
-     * Caching can cause a subtle problems were it is invalid, so I turned it off.
-     * @return list of shortest paths.
-     */
-    public PathList findShortestPaths(BlockadeBoard board) {
-
-        // Why didn't caching work like I hoped?
-        // Seems that walls have a more subtle influence on the path than I thought.
-        //paths = board.findShortestPaths(this);
-        pathCache.update(this, board);
-
-        return pathCache.getShortestPaths();
-    }
-
-    /**
      * make it show an empty board position.
      */
     @Override
     public void clear() {
         super.clear();
-        pathCache = new PathCache();
     }
 
     /**

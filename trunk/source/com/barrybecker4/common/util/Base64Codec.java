@@ -52,7 +52,7 @@ public final class Base64Codec {
     }
 
     /**
-     * take a String and decompress it.
+     * Take a String and decompress it.
      * @param data the compressed string to decompress.
      * @return the decompressed string.
      */

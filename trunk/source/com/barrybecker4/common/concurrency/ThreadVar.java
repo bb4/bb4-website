@@ -1,7 +1,6 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.common.concurrency;
 
-
 /**
  * Class to maintain reference to current worker thread
  * under separate synchronization control.

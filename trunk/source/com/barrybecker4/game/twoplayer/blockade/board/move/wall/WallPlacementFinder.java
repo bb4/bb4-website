@@ -20,9 +20,9 @@ import java.util.List;
  */
 public class WallPlacementFinder {
 
-    private BlockadeBoard board_;
-    private PathList opponentPaths_;
-    private ParameterArray weights_;
+    private BlockadeBoard board;
+    private PathList opponentPaths;
+    private ParameterArray weights;
     private WallsForMoveFinder wallsFinder;
 
     /**
@@ -30,9 +30,9 @@ public class WallPlacementFinder {
      */
     public WallPlacementFinder(BlockadeBoard board, PathList opponentPaths, ParameterArray weights) {
 
-        board_ = board;
-        weights_ = weights;
-        opponentPaths_ = opponentPaths;
+        this.board = board;
+        this.weights = weights;
+        this.opponentPaths = opponentPaths;
         wallsFinder = new WallsForMoveFinder(board);
     }
 
@@ -42,7 +42,7 @@ public class WallPlacementFinder {
      * @@ optimize
      * Is it true that the set of walls we could add for any constant set
      * of opponent paths is always the same regardless of firstStep?
-     * I think its only true as long as firstStep is not touching any of those opponent paths
+     * I think its only true as long as firstStep is not touching any of those opponent paths.
      * @param firstStep the move to find wall placements for.
      * @param paths our shortest paths.
      * @return all move variations on firstStep based on different wall placements.
@@ -50,11 +50,11 @@ public class WallPlacementFinder {
     public List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep, PathList paths) {
         List<BlockadeMove> moves = new LinkedList<BlockadeMove>();
 
-        GameContext.log(2, firstStep + "\nopponent paths="+opponentPaths_ + "\n [[");
+        GameContext.log(2, firstStep + "\nopponent paths="+ opponentPaths + "\n [[");
 
-        for (Path opponentPath: opponentPaths_) {
+        for (Path opponentPath: opponentPaths) {
             assert (opponentPath != null):
-                "    Opponent path was null. There are "+opponentPaths_.size()+" oppenent paths.";
+                "    Opponent path was null. There are "+ opponentPaths.size()+" oppenent paths.";
 
             findWallPlacementsGivenOpponentPath(firstStep, paths, opponentPath, moves);
         }
@@ -62,7 +62,7 @@ public class WallPlacementFinder {
 
         // if no move was added add the move with no wall placement
         if (moves.isEmpty()) {
-            addMoveWithWallPlacement(firstStep, null, weights_, moves);
+            addMoveWithWallPlacement(firstStep, null, weights, moves);
         }
 
         return moves;
@@ -80,6 +80,9 @@ public class WallPlacementFinder {
     }
 
     /**
+     * Add all the possible legal and reasonable wall placements for this move
+     * along the opponent path that do not interfere with our own paths.
+     *
      * If there is no wall currently interfering with this wall placement,
      * and it does not impact a friendly path,
      * then consider this (and/or its twin) a candidate placement.
@@ -89,8 +92,6 @@ public class WallPlacementFinder {
     private void addWallPlacementsForOpponentPathMove(
             BlockadeMove firstStep, BlockadeMove move, PathList paths, List<BlockadeMove> moves) {
 
-        // get all the possible legal and reasonable wall placements for this move
-        // along the opponent path that do not interfere with our own paths.
         BlockadeWallList walls = wallsFinder.getWallsForMove(move, paths);
         GameContext.log(2, "    num walls for move " + move + "  = " + walls.size());
 
@@ -102,16 +103,16 @@ public class WallPlacementFinder {
         // typically 0-4 walls
         assert (walls.size() <=4) : "num walls = " + walls.size();
         for (BlockadeWall wall: walls) {
-            addMoveWithWallPlacement(firstStep, wall, weights_, moves);
+            addMoveWithWallPlacement(firstStep, wall, weights, moves);
         }
     }
 
     /**
      * Add a new move to movelist.
-     * The move is based on our move and the specified wall (the wall may be null is none placed).
+     * The move is based on our move and the specified wall (the wall may be null if none placed).
      */
     private void addMoveWithWallPlacement(BlockadeMove ourmove, BlockadeWall wall,
-                                                                         ParameterArray weights, List<BlockadeMove> moves) {
+                                          ParameterArray weights, List<BlockadeMove> moves) {
         int value = 0;
         // @@ we should provide the value here since we have all the path info.
         // we do not want to compute the path info again by calling findPlayerPathLengths.
@@ -121,9 +122,9 @@ public class WallPlacementFinder {
                                        ourmove.getToLocation(),
                                        value, ourmove.getPiece(), wall);
         // for the time being just call worth directly. Its less efficient, but simpler.
-        board_.makeMove(m);
-        PlayerPathLengths pathLengths = board_.findPlayerPathLengths(m);
-        board_.undoMove();
+        board.makeMove(m);
+        PlayerPathLengths pathLengths = board.findPlayerPathLengths();
+        board.undoMove();
 
         if (pathLengths.isValid()) {
             m.setValue(pathLengths.determineWorth(SearchStrategy.WINNING_VALUE, weights));
