@@ -22,12 +22,15 @@ public class PathCache {
 
         PathList paths = board.findShortestPaths(pos);
         cachedPaths = paths;
+
         /*
         if (isPathCacheBroken(board)) {
             //PathList paths = board.findShortestPaths(pos);
+            System.out.println("cacheMiss");
             cachedPaths = paths;
         }
         else {
+            System.out.println("cacheHit pl=" + paths.getTotalPathLength() +" cpl=" + cachedPaths.getTotalPathLength());
             assert (paths.getTotalPathLength() == cachedPaths.getTotalPathLength())
                 : (paths  + "\n was not equal to \n" + cachedPaths + "\n on board=" + board);
         }  */
@@ -38,7 +41,7 @@ public class PathCache {
     }
 
     /**
-     * The cache is broken if the last wall placed blocks one of our cached paths.
+     * The cache is broken if any recently placed wall blocks one of our cached paths.
      */
     private boolean isPathCacheBroken(BlockadeBoard board) {
 

@@ -51,7 +51,7 @@ final class PathRenderer {
         PathList paths = b.findShortestPaths(pos);
         boolean p1 = pos.getPiece().isOwnedByPlayer1();
         Color pathColor = p1? BlockadePieceRenderer.getRenderer().getPlayer1Color() :
-                                            BlockadePieceRenderer.getRenderer().getPlayer2Color();
+                              BlockadePieceRenderer.getRenderer().getPlayer2Color();
         pathColor = pathColor.darker();
 
         for (final Path path : paths) {

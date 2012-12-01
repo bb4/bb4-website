@@ -104,6 +104,7 @@ class ShortestPathFinder {
             BlockadeBoardPosition pos, MutableTreeNode parent, boolean oppPlayer1) {
         List<BlockadeMove> moves = moveAnalyzer.getPossibleMoveList(pos, oppPlayer1);
         List<DefaultMutableTreeNode> children = new ArrayList<DefaultMutableTreeNode>();
+
         for (BlockadeMove move : moves) {
             DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(move);
             childNode.setParent(parent);
