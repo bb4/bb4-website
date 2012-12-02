@@ -10,6 +10,8 @@ package com.barrybecker4.game.twoplayer.common.search.options;
  */
 public class MonteCarloSearchOptions {
 
+    public enum MaximizationStyle {WIN_RATE, NUM_VISITS}
+
     /** Number of moves to look ahead while searching for the best move. */
     private static final int DEFAULT_MAX_SIMULATIONS = 2000;
 
@@ -22,6 +24,7 @@ public class MonteCarloSearchOptions {
     private int maxSimulations_ = DEFAULT_MAX_SIMULATIONS;
     private double exploreExploitRatio_ = DEFAULT_EXPLORE_EXPLOIT_RATIO;
     private int randomLookAhead_ = DEFAULT_RANDOM_LOOKAHEAD;
+    private MaximizationStyle maxStyle_ = MaximizationStyle.WIN_RATE;
 
     /**
      * Default Constructor
@@ -33,11 +36,24 @@ public class MonteCarloSearchOptions {
      * @param maxSimulations default number simulations to run.
      * @param exploreExploitRatio
      * @param randomLookAhead amount to look ahead during random games.
+     * @param maxStyle method by which to select the best node.
      */
-    public MonteCarloSearchOptions(int maxSimulations, double exploreExploitRatio, int randomLookAhead) {
+    public MonteCarloSearchOptions(int maxSimulations, double exploreExploitRatio, int randomLookAhead,
+                                   MaximizationStyle maxStyle) {
         maxSimulations_ = maxSimulations;
         exploreExploitRatio_ = exploreExploitRatio;
         randomLookAhead_ = randomLookAhead;
+        maxStyle_ = maxStyle;
+    }
+
+    /**
+     * Constructor
+     * @param maxSimulations default number simulations to run.
+     * @param exploreExploitRatio
+     * @param randomLookAhead amount to look ahead during random games.
+     */
+    public MonteCarloSearchOptions(int maxSimulations, double exploreExploitRatio, int randomLookAhead) {
+        this(maxSimulations, exploreExploitRatio, randomLookAhead, MaximizationStyle.WIN_RATE);
     }
 
     /**
@@ -53,7 +69,6 @@ public class MonteCarloSearchOptions {
     public void setMaxSimulations( int maxSim) {
         maxSimulations_ = maxSim;
     }
-
 
     /**
      * The larger this is (bigger than 1) the closer to uniform search we get (i.e exploration).
@@ -84,6 +99,14 @@ public class MonteCarloSearchOptions {
      */
     public void setRandomLookAhead(int randomLookAhead) {
         randomLookAhead_ = randomLookAhead;
+    }
+
+    public MaximizationStyle getMaxStyle() {
+        return maxStyle_;
+    }
+
+    public void setMaxStyle(MaximizationStyle style)  {
+         maxStyle_ = style;
     }
 
     public String toString() {

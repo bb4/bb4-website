@@ -26,7 +26,7 @@ import java.util.Vector;
  */
 public abstract class PlayerTable extends TableBase {
 
-    // remember the deleted rows, so we can add them back when the user clicks add again
+    /** remember the deleted rows, so we can add them back when the user clicks add again  */
     private List<Vector> deletedRows_;
 
     protected static final int NAME_INDEX = 0;

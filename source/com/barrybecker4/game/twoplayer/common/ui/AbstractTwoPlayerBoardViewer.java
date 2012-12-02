@@ -268,7 +268,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
             //c.reset();
         }
         else {
-            if (get2PlayerController().getPlayers().allPlayersComputer()) {
+            if (get2PlayerController().getPlayers().allPlayersComputer() && evt.getMove() != null) {
                 continuePlay((TwoPlayerMove)evt.getMove());
             }
         }
@@ -277,7 +277,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * let the computer go next if one of the players is a computer.
      *
-     * @param move the current move
+     * @param move the current move (it must not be null)
      * @return false if the game is at an end, otherwise return true
      */
      public final boolean continuePlay( TwoPlayerMove move ) {

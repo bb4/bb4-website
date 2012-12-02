@@ -155,6 +155,7 @@ public class PerformanceResults {
         StringBuilder bldr = new StringBuilder();
         if (!substring)
             bldr.append("<html>");
+        bldr.append("<b>" + description + "</b><br>");
         if (getWasTie()) {
             bldr.append("it was a tie");
         }
@@ -173,6 +174,7 @@ public class PerformanceResults {
 
     public String toString() {
         StringBuilder bldr = new StringBuilder();
+        bldr.append(description + "\n");
         if (getWasTie()) {
             bldr.append("it was a tie");
         }

@@ -30,7 +30,6 @@ public class MultiPlayerMarker extends GamePiece {
         return owner_;
     }
 
-
     public boolean isHighlighted() {
         return highlighted_;
     }
@@ -56,7 +55,7 @@ public class MultiPlayerMarker extends GamePiece {
     }
 
     /**
-      * get the textual representation of thel marker.
+      * Get the textual representation of the marker.
       * @return string form
       */
      public String toString() {

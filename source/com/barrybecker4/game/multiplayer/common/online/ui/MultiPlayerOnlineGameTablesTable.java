@@ -49,8 +49,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
      * constructor
      * @param tableButtonListener called when join button clicked.
      */
-    public MultiPlayerOnlineGameTablesTable(TableButtonListener tableButtonListener)
-    {
+    public MultiPlayerOnlineGameTablesTable(TableButtonListener tableButtonListener) {
         this(COLUMN_NAMES, tableButtonListener);
     }
 
@@ -95,6 +94,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     public OnlineGameTable getGameTable(int i) {
         return tableList_.get(i);
     }
+
     /**
      *
      * @return the table that the player has chosen to sit at if any (at most 1.) return null is not sitting.
@@ -104,8 +104,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     }
 
 
-    BasicTableModel getPlayerModel()
-    {
+    BasicTableModel getPlayerModel() {
         return (BasicTableModel)getModel();
     }
 
@@ -155,8 +154,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     /**
      * add another row to the end of the table.
      */
-    public void addRow(String playersName, MultiGameOptions options)
-    {
+    public void addRow(String playersName, MultiGameOptions options) {
         OnlineGameTable onlineTable = createOnlineTable(playersName, options);
         addRow(onlineTable, true);
     }

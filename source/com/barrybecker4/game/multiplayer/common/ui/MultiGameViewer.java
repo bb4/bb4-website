@@ -1,4 +1,4 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+// Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.multiplayer.common.ui;
 
 import com.barrybecker4.common.geometry.Location;
@@ -17,13 +17,12 @@ import java.awt.event.MouseEvent;
 
 /**
  *  Takes a TrivialController as input and displays the
- *  current state of the Game. The TrivalController contains a TrivialTable object
+ *  current state of the Game. For example, the TrivialController contains a TrivialTable object
  *  which describes this state.
  *
  *  @author Barry Becker
  */
-public abstract class MultiGameViewer extends GameBoardViewer
-{
+public abstract class MultiGameViewer extends GameBoardViewer {
 
     private boolean winnerDialogShown_;
 
@@ -37,8 +36,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
      * start over with a new game using the current options.
      */
     @Override
-    public void startNewGame()
-    {
+    public void startNewGame()  {
         reset();
         winnerDialogShown_ = false;
         this.sendGameChangedEvent(null);  // get the info panel to refresh with 1st players name
@@ -56,8 +54,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
       * game specific information.
       */
     @Override
-    public void showWinnerDialog()
-    {
+    public void showWinnerDialog() {
         String message = getGameOverMessage();
         JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
                    JOptionPane.INFORMATION_MESSAGE );
@@ -103,8 +100,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
      * @param evt
      */
     @Override
-    public void gameChanged(GameChangedEvent evt)
-    {
+    public void gameChanged(GameChangedEvent evt) {
         if (controller_.isDone() && !winnerDialogShown_)  {
             winnerDialogShown_ = true;
             showWinnerDialog();

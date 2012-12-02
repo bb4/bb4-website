@@ -19,8 +19,8 @@ import java.awt.event.ActionEvent;
  *
  * @author Barry Becker
  */
-public abstract class TallyDialog extends OptionsDialog
-{
+public abstract class TallyDialog extends OptionsDialog {
+
     protected MultiGameController controller_;
 
     private GradientButton okButton_;
@@ -35,8 +35,7 @@ public abstract class TallyDialog extends OptionsDialog
      * @param parent frame to display relative to
      * @param controller pass in game controller.
      */
-    protected TallyDialog(Component parent, MultiGameController controller )
-    {
+    protected TallyDialog(Component parent, MultiGameController controller ) {
         super( parent );
         controller_ = controller;
 
@@ -44,8 +43,7 @@ public abstract class TallyDialog extends OptionsDialog
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("TALLY_TITLE");
     }
 
@@ -53,8 +51,7 @@ public abstract class TallyDialog extends OptionsDialog
      * ui initialization of the tree control.
      */
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
@@ -81,16 +78,14 @@ public abstract class TallyDialog extends OptionsDialog
 
     protected abstract SummaryTable createSummaryTable(PlayerList players);
 
-
     protected abstract MultiGamePlayer findWinner(PlayerList players);
 
 
     /**
-     *  create the OK Cancel buttons that go at the botton
+     *  create the OK Cancel buttons that go at the bottom
      */
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         okButton_ = new GradientButton();
@@ -104,8 +99,7 @@ public abstract class TallyDialog extends OptionsDialog
     }
 
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
         if (source == okButton_) {

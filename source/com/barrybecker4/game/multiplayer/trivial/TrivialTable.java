@@ -87,7 +87,6 @@ public class TrivialTable extends Board {
         return true;
     }
 
-
     /**
      * For Trivial, undoing a move means turning time back a round and
      * restoring the state of the game one full round earlier

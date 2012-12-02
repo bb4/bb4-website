@@ -13,13 +13,13 @@ import java.awt.event.WindowListener;
 
 /**
  * UI Frame to show what the GameServer is doing.
- * There is nothing game specific about the server it just accepts commands and delegates to the controller
+ * There is nothing game specific about the server it just accepts commands and delegates to the controller.
  * Invoke with
  *   java OnlineGameServer -game <game>
  * for example:
  *   java OnlineGameServer -game poker
  *
- * @author Barry Becker Date: Jan 20, 2007
+ * @author Barry Becker
  */
 public class OnlineGameServerFrame  extends JFrame {
 

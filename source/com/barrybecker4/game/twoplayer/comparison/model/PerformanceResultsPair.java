@@ -102,8 +102,8 @@ public class PerformanceResultsPair {
     private String getOutcomeVerb(PerformanceResults results, boolean player1Perpective)  {
         String verb = "";
         switch (results.getOutcome()) {
-            case PLAYER1_WON : verb = player1Perpective?"won":"lost"; break;
-            case PLAYER2_WON : verb = player1Perpective?"lost":"won"; break;
+            case PLAYER1_WON : verb = player1Perpective ? "won" : "lost"; break;
+            case PLAYER2_WON : verb = player1Perpective ? "lost" : "won"; break;
             case TIE: verb = "tied"; break;
         }
         return verb;

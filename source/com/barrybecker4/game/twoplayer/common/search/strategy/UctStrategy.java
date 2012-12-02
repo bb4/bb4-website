@@ -17,7 +17,7 @@ import java.util.List;
  *  This method uses a monte carlo (stochastic) method and is fundamentally different than minimax and its derivatives.
  *  It's subclasses define the key search algorithms for 2 player zero sum games with perfect information.
  *
- *    - add option to use concurrency. Need lock on uctNodes
+ *   - add option to use concurrency. Need lock on uctNodes
  *
  *  @author Barry Becker
  */
@@ -31,6 +31,8 @@ public class UctStrategy extends AbstractSearchStrategy {
 
     /** When selecting a random move for a random game, select from only this many of the top moves. */
     private int percentLessThanBestThresh;
+
+    //private boolean maxim
 
 
     /**
@@ -47,11 +49,23 @@ public class UctStrategy extends AbstractSearchStrategy {
 
     @Override
     public SearchOptions getOptions() {
-        return searchable_.getSearchOptions();
+        return searchable.getSearchOptions();
     }
 
     /**
      * {@inheritDoc}
+     *
+     *  Move UCTSearch(int numsim) {
+     *     root = new Node(-1,-1); //init uct tree
+     *     createChildren(root);
+     *     Board clone=new Board();
+     *     for (int i=0; i<numsim; i++) {
+     *         clone.copyStateFrom(this);
+     *         clone.playSimulation(root);
+     *     }
+     *     Node n = getBestChild(root);
+     *     return new Move(n.x, n.y);
+     * }
      */
     public TwoPlayerMove search(TwoPlayerMove lastMove, SearchTreeNode parent) {
 
@@ -62,29 +76,48 @@ public class UctStrategy extends AbstractSearchStrategy {
         while (numSimulations < maxSimulations ) {
             playSimulation(root, parent);
             numSimulations++;
-            percentDone_ = (100 *  numSimulations) / maxSimulations;
+            percentDone = (100 *  numSimulations) / maxSimulations;
         }
 
-        return root.findBestChildMove();
+        return root.findBestChildMove(getOptions().getMonteCarloSearchOptions().getMaxStyle());
     }
 
     /**
      * This recursive method ultimately expands the in memory game try by one node and updates that nodes parents.
-     * @return true if player1 wins when running a simulation from this board position.
+     *
+     *  return 0=lose 1=win for current player to move
+     * int playSimulation(Node n) {
+           int randomresult=0;
+           if (n.child==null && n.visits<10) { // 10 simulations until chilren are expanded (saves memory)
+               randomresult = playRandomGame();
+           }
+           else {
+               if (n.child == null)  createChildren(n);
+               Node next = UCTSelect(n); // select a move
+               if (next==null) {  ERROR }
+               makeMove(next.x, next.y);
+               int res=playSimulation(next);
+               randomresult = 1-res;
+           }
+           n.update(1-randomresult); //update node (Node-wins are associated with moves in the Nodes)
+           return randomresult;
+     * }
+     * @return chance of player1 winning when running a simulation from this board position.
+     *   This probability is a number between 0 and 1 inclusive.
      */
     public float playSimulation(UctNode lastMoveNode, SearchTreeNode parent) {
 
-        float p1Score;
+        float player1Score;
         if (lastMoveNode.getNumVisits() == 0) {
-            p1Score = playRandomGame(lastMoveNode.move);
-            movesConsidered_++;
+            player1Score = playRandomGame(lastMoveNode.move);
+            movesConsidered++;
         }
         else {
             UctNode nextNode = null;
 
-            if (!searchable_.done(lastMoveNode.move, false))  {
+            if (!searchable.done(lastMoveNode.move, false))  {
                if (!lastMoveNode.hasChildren()) {
-                   int added = lastMoveNode.addChildren(searchable_.generateMoves(lastMoveNode.move, weights_));
+                   int added = lastMoveNode.addChildren(searchable.generateMoves(lastMoveNode.move, weights_));
                    if (added == 0) {
                        GameContext.log(0, "No moves added for " + lastMoveNode);
                    }
@@ -96,22 +129,39 @@ public class UctStrategy extends AbstractSearchStrategy {
             // may be null if there are no move valid moves or lastMoveNode won the game.
             if (nextNode != null) {
                 SearchTreeNode nextParent = parent!=null ? parent.findChild(nextNode.move) : null;
-                searchable_.makeInternalMove(nextNode.move);
-                p1Score = playSimulation(nextNode, nextParent);
-                searchable_.undoInternalMove(nextNode.move);
+                searchable.makeInternalMove(nextNode.move);
+                player1Score = playSimulation(nextNode, nextParent);
+                searchable.undoInternalMove(nextNode.move);
             } else {
-                p1Score = WinProbabilityCaclulator.getChanceOfPlayer1Winning(lastMoveNode.move.getValue());
+                player1Score = WinProbabilityCaclulator.getChanceOfPlayer1Winning(lastMoveNode.move.getValue());
             }
         }
 
-        lastMoveNode.update(p1Score);
+        lastMoveNode.update(player1Score);
         if (parent != null)
             parent.attributes = lastMoveNode.getAttributes();
-        return p1Score;
+        return player1Score;
     }
 
     /**
      * Selects the best child of parentNode.
+     *
+     *  // Larger values give uniform search
+    // Smaller values give very selective search
+    public Node UCTSelect(Node node) {
+        Node res=null;
+        Node next = node.child;
+        double best_uct=0;
+        while (next!=null) { // for all children
+            uctvalue = next.calcUctValue(exploreExploit, numVisists)
+            if (uctvalue > best_uct) { // get max uctvalue of all children
+                    best_uct = uctvalue;
+                    res = next;
+            }
+            next = next.sibling;
+        }
+        return res;
+    }
      * @return the best child of parentNode. May be null if there are no next moves.
      */
     private UctNode uctSelect(UctNode parentNode) {
@@ -135,13 +185,35 @@ public class UctStrategy extends AbstractSearchStrategy {
      */
     private float playRandomGame(TwoPlayerMove lastMove) {
 
-        Searchable s = searchable_.copy();
+        Searchable s = searchable.copy();
         return playRandomMove(lastMove, s, s.getNumMoves());
     }
 
     /**
      * Plays a semi-random game from the current node position.
      * Its semi-random in the sense that we try to avoid obviously bad moves.
+     *
+     *
+     * public void makeRandomMove() {
+     *     int x=0;
+     *     int y=0;
+     *     while (true) {
+     *         x=rand.nextInt(BOARD_SIZE);
+     *         y=rand.nextInt(BOARD_SIZE);
+     *         if (f[x][y]==0 && isOnBoard(x,y))  break;
+     *     }
+     *     makeMove(x,y);
+     * }
+     *
+     * // return 0=lose 1=win for current player to move
+     * int playRandomGame() {
+     * int cur_player1=cur_player;
+     * while (!isGameOver()) {
+     *     makeRandomMove();
+     * }
+     * return getWinner() == curplayer1 ? 1 : 0;
+
+     * @param startNumMoves how many moves have already been played.
      * @return a score (0 = p1 lost; 0.5 = tie; or 1= p1 won) indication p1 advantage.
      */
     private float playRandomMove(TwoPlayerMove lastMove, Searchable searchable, int startNumMoves) {

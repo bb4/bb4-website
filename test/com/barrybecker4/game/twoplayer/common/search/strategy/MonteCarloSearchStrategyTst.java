@@ -31,7 +31,7 @@ public abstract class MonteCarloSearchStrategyTst extends AbstractSearchStrategy
     */
    @Override
    public SearchOptions createSearchOptions() {
-       SearchOptions opts =  super.createSearchOptions();
+       SearchOptions opts = super.createSearchOptions();
        // consider all moves (effectively)
        opts.getBestMovesSearchOptions().setMinBestMoves(100);
 

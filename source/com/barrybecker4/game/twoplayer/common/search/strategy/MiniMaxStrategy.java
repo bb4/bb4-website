@@ -44,13 +44,13 @@ public final class MiniMaxStrategy extends AbstractBruteSearchStrategy
             TwoPlayerMove theMove = getNextMove(list);
             updatePercentDone(depth, list);
 
-            searchable_.makeInternalMove( theMove );
+            searchable.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, window); i++;
 
             // recursive call
             selectedMove = searchInternal( theMove, depth-1, window.copy(), child );
 
-            searchable_.undoInternalMove( theMove );
+            searchable.undoInternalMove( theMove );
 
             if (selectedMove != null) {
                 selectedValue = selectedMove.getInheritedValue();

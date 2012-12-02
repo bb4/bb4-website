@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Allow the user to specify a poker action
+ * Allow the user to specify an action
  * @author Barry Becker
  */
 public abstract class ActionDialog extends OptionsDialog {
@@ -19,14 +19,14 @@ public abstract class ActionDialog extends OptionsDialog {
 
     /**
      * constructor - create the tree dialog.
-     * @param gc pokerController
+     * @param gc game controller
      */
     protected ActionDialog(MultiGameController gc, Component parent) {
         controller_ = gc;
         player_ = controller_.getCurrentPlayer();
         Point p = parent.getLocationOnScreen();
         // offset the dlg so the board is visible as a reference
-        setLocation((int)(p.getX() + 0.7*getParent().getWidth()),
+        setLocation((int)(p.getX() + 0.7 * getParent().getWidth()),
                                  (int)(p.getY() + getParent().getHeight()/3.0));
         showContent();
     }

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Handles the processing of all commands send to the online game server.
  *
- * @author Barry Becker Date: Sep 16, 2006
+ * @author Barry Becker
  */
 class ServerCommandProcessor {
 
@@ -57,7 +57,7 @@ class ServerCommandProcessor {
     }
 
     /**
-     * Update our internal game table list, or server controlller given the cmd from the client.
+     * Update our internal game table list, or server controller given the cmd from the client.
      * @param cmd to process. The command that the player has issued.
      * @return the response command(s) to send to all the clients.
      */
@@ -96,7 +96,8 @@ class ServerCommandProcessor {
                 responses.add(cmd);
                 break;
             case DO_ACTION :
-                // a player or robot moves, this action is sent here to the server, then we broadcast it out so the surrogate(s) can be updated.
+                // a player or robot moves, this action is sent here to the server,
+                // then we broadcast it out so the surrogate(s) can be updated.
                 useUpdateTable = false;
                 GameContext.log(2, "Ignoring DO_ACTION in ServerCommandProcessor. Surrogates to handle");
                 // one of the client players has acted. We need to apply this to the server controller.
@@ -117,7 +118,6 @@ class ServerCommandProcessor {
     }
 
     /**
-     *
      * @param table
      */
     private void addTable(OnlineGameTable table) {
@@ -163,7 +163,6 @@ class ServerCommandProcessor {
         tables_.changeName(oldName, newName);
     }
 
-
     /**
      * When all the conditions are met for starting a new game, we create a new game controller of the
      * appropriate type and start the game here on the server.
@@ -191,7 +190,6 @@ class ServerCommandProcessor {
         if (controller_.getPlayers().getFirstPlayer() != null &&  !controller_.getPlayers().getFirstPlayer().isHuman()) {
             controller_.computerMovesFirst();
         }
-
     }
 
     /**
