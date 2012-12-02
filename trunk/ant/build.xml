@@ -131,7 +131,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.game.common.online.ui.OnlineGameServerFrame"/>
       <param name="libPath" value="${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-name trivial"/>
+      <param name="args" value="-game trivial"/>
     </antcall>
   </target>
 
@@ -166,7 +166,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.game.common.online.ui.OnlineGameServerFrame"/>
       <param name="libPath" value="${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-name poker -locale ENGLISH"/>
+      <param name="args" value="-game poker -locale ENGLISH"/>
     </antcall>
   </target>
 

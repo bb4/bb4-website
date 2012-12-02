@@ -44,7 +44,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
      * @return default search options for all games
      */
     public SearchOptions createSearchOptions() {
-        SearchOptions opts =  new SearchOptions();
+        SearchOptions opts = new SearchOptions();
         opts.getBestMovesSearchOptions().setPercentageBestMoves(100);
         opts.getBestMovesSearchOptions().setPercentLessThanBestThresh(0);
         return opts;

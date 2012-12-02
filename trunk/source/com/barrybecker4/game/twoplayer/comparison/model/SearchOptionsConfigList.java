@@ -21,6 +21,7 @@ public class SearchOptionsConfigList extends ArrayList<SearchOptionsConfig> {
     /**
      * @throws IllegalStateException if we already have a configuration with that name.
      */
+    @Override
     public boolean add(SearchOptionsConfig config) {
 
         for (SearchOptionsConfig element : this) {

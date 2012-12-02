@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
 /**
  * Allows IM chatting with other online players.
  *
- * @author Barry Becker Date: Jan 7, 2007
+ * @author Barry Becker
  */
 public class ChatWindow extends JPanel implements OnlineChangeListener, KeyListener {
 

@@ -20,13 +20,13 @@ import com.barrybecker4.optimization.parameter.ParameterArray;
 public abstract class AbstractSearchStrategy implements SearchStrategy {
 
     /** the interface implemented by the generic game controller that provides standard methods. */
-    protected Searchable searchable_;
+    protected Searchable searchable;
 
     /** keep track of the number of moves searched so far. Long because there could be quite a few. */
-    protected long movesConsidered_ = 0;
+    protected long movesConsidered = 0;
 
     /** approximate percent of search that is complete at given moment. */
-    protected int percentDone_ = 0;
+    protected int percentDone = 0;
 
     /** weights coefficients for the evaluation polynomial that indirectly determines the best move.   */
     protected ParameterArray weights_;
@@ -45,12 +45,12 @@ public abstract class AbstractSearchStrategy implements SearchStrategy {
      * @param weights coefficients for the evaluation polynomial that indirectly determines the best move.
      */
     AbstractSearchStrategy( Searchable searchable, ParameterArray weights ) {
-        searchable_ = searchable;
+        this.searchable = searchable;
         weights_ = weights;
     }
 
     public SearchOptions getOptions() {
-        return searchable_.getSearchOptions();
+        return searchable.getSearchOptions();
     }
 
     /**
@@ -103,11 +103,11 @@ public abstract class AbstractSearchStrategy implements SearchStrategy {
     }
 
     public final long getNumMovesConsidered() {
-        return movesConsidered_;
+        return movesConsidered;
     }
 
     public final int getPercentDone() {
-        return percentDone_;
+        return percentDone;
     }
 
     /**

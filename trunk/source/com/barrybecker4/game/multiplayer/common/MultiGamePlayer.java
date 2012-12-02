@@ -10,11 +10,9 @@ import com.barrybecker4.ui.util.ColorUtil;
 
 import java.awt.*;
 
-
-
 /**
  * A player in a multi-player game.
- * @author Barry Becker Date: Mar 19, 2006
+ * @author Barry Becker
  */
 public abstract class MultiGamePlayer extends Player {
 
@@ -23,8 +21,7 @@ public abstract class MultiGamePlayer extends Player {
     private static final float SATURATION = 0.8f;
     private static final float BRIGHTNESS = 0.999f;
 
-    protected MultiGamePlayer(String name, Color color, boolean isHuman)
-    {
+    protected MultiGamePlayer(String name, Color color, boolean isHuman) {
         super(name, color, isHuman);
     }
 
@@ -45,8 +42,7 @@ public abstract class MultiGamePlayer extends Player {
      * and knowing what the current player colors are.
      * @return new player color
      */
-    public static Color getNewPlayerColor(PlayerList players)
-    {
+    public static Color getNewPlayerColor(PlayerList players) {
         boolean uniqueEnough;
         float candidateHue;
 
@@ -65,8 +61,7 @@ public abstract class MultiGamePlayer extends Player {
      * @param players
      * @return true if hue is different enough from the others.
      */
-    private static boolean isHueUniqueEnough(float hue, PlayerList players)
-    {
+    private static boolean isHueUniqueEnough(float hue, PlayerList players) {
         int ct=0;
         float tolerance = 1.0f/(1.0f+1.8f*players.size());
         while ( ct < players.size()) {
@@ -88,6 +83,5 @@ public abstract class MultiGamePlayer extends Player {
     public Player createSurrogate(IServerConnection connection) {
         return new SurrogateMultiPlayer(this, connection);
     }
-
 
 }

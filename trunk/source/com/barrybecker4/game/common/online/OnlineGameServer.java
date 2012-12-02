@@ -212,7 +212,6 @@ public class OnlineGameServer  {
                 t.printStackTrace();
             }
         }
-
     }
 
     /**
@@ -241,8 +240,7 @@ public class OnlineGameServer  {
          boolean status = true;
          GameCommand cmd = new GameCommand(GameCommand.Name.valueOf(cmdStr), cmdStr);
          return processCmd(cmd);
-     } */
-
+    } */
 
     /**
      * create and show the server.

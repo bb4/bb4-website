@@ -60,7 +60,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
 
     @Override
     public SearchOptions getOptions() {
-        return searchable_.getSearchOptions();
+        return searchable.getSearchOptions();
     }
 
     /**
@@ -78,7 +78,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
     TwoPlayerMove searchInternal(TwoPlayerMove lastMove,
                                 int depth, SearchWindow window, SearchTreeNode parent) {
 
-        boolean done = searchable_.done( lastMove, false);
+        boolean done = searchable.done( lastMove, false);
         if ( depth <= 0 || done ) {
             if (doQuiescentSearch(depth, done, lastMove)) {
                 return quiescentSearch(lastMove, depth, window, parent);
@@ -91,7 +91,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
         }
 
         // generate a list of all (or bestPercent) candidate next moves, and pick the best one
-        MoveList list = searchable_.generateMoves(lastMove,  weights_);
+        MoveList list = searchable.generateMoves(lastMove,  weights_);
 
         if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
@@ -111,7 +111,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
      * @return next move in sorted generated next move list.
      */
     protected TwoPlayerMove getNextMove(MoveList list) {
-        movesConsidered_++;
+        movesConsidered++;
         return (TwoPlayerMove)list.remove(0);
     }
 
@@ -121,7 +121,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
      * @return true of we should continue searching a bit to find a stable/quiescent move.
      */
     protected boolean doQuiescentSearch(int depth, boolean done, TwoPlayerMove lastMove) {
-        boolean inJeopardy = searchable_.inJeopardy(lastMove, weights_);
+        boolean inJeopardy = searchable.inJeopardy(lastMove, weights_);
         return quiescence_
                  && depth > -maxQuiescentDepth_
                  && !done
@@ -137,7 +137,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
     TwoPlayerMove quiescentSearch(TwoPlayerMove lastMove,
                                   int depth, SearchWindow window, SearchTreeNode parent) {
 
-        MoveList urgentMoves = searchable_.generateUrgentMoves(lastMove, weights_);
+        MoveList urgentMoves = searchable.generateUrgentMoves(lastMove, weights_);
         if (emptyMoveList(urgentMoves, lastMove)) return null;
 
         return findBestMove(lastMove, depth, urgentMoves, window, parent);
@@ -194,7 +194,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
      */
     protected void updatePercentDone(int depth, List remainingNextMoves) {
         if (depth == lookAhead_)   {
-            percentDone_ = (numTopLevelMoves_  == 0) ? 100 :
+            percentDone = (numTopLevelMoves_  == 0) ? 100 :
                     100 * (numTopLevelMoves_ - remainingNextMoves.size()) / numTopLevelMoves_;
         }
     }

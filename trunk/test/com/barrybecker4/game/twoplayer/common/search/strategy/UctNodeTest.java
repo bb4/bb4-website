@@ -6,9 +6,9 @@ import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 import com.barrybecker4.game.twoplayer.common.search.TwoPlayerMoveStub;
-import junit.framework.Test;
+import com.barrybecker4.game.twoplayer.common.search.options.MonteCarloSearchOptions;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static com.barrybecker4.game.twoplayer.common.search.options.MonteCarloSearchOptions.MaximizationStyle.WIN_RATE;
 
 /**
  * Test node in in-memory UCT tree.
@@ -33,7 +33,7 @@ public class UctNodeTest extends TestCase  {
         uctNode = new UctNode(P2_MOVE);
 
         assertEquals("Unexpected move", P2_MOVE, uctNode.move);
-        assertEquals("Unexpected bestNode", null, uctNode.findBestChildMove());
+        assertEquals("Unexpected bestNode", null, uctNode.findBestChildMove(WIN_RATE));
         assertFalse("Unexpected children", uctNode.hasChildren());
         assertEquals("Unexpected numVisits", 0, uctNode.getNumVisits());
         // The winrate is 0.5 (tie) + 10/WINNING = 0.50122
@@ -80,7 +80,7 @@ public class UctNodeTest extends TestCase  {
         uctNode.addChildren(moves);
 
         // good move is selected first because it has a better winrate using static evaluation.
-        assertEquals("Unexpected bestMove", goodMove, uctNode.findBestChildMove());
+        assertEquals("Unexpected bestMove", goodMove, uctNode.findBestChildMove(WIN_RATE));
     }
 
     public void testSetBestNode() {
@@ -101,7 +101,7 @@ public class UctNodeTest extends TestCase  {
         secondNode.update(0.0);
 
         // secondMove is selected since it has a winrate of 0.6667
-        assertEquals("Unexpected bestMove", secondNode.move, uctNode.findBestChildMove());
+        assertEquals("Unexpected bestMove", secondNode.move, uctNode.findBestChildMove(WIN_RATE));
     }
 
     /** It should be a large value in this case so it gets selected to be visited first. */

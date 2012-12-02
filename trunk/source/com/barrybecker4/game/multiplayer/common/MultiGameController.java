@@ -22,29 +22,30 @@ import java.util.List;
  *
  * Online play should work like this:
  *  Case One: no robot players, all players are humans on client computers.
- *    - One of the human players creates a table with certain parameters that define
- *      the game to be played.
- *   - Each client and the server create an instance of the game controller.
+ *  <ul>
+ *    <li>One of the human players creates a table with certain parameters that define
+ *     the game to be played.  </li>
+ *   <li>Each client and the server create an instance of the game controller.
  *     On each client there is a human player representing the player on that client,
- *     and surrogate player objects representing all the other human players.
- *   - The server will have surrogates for all the human players.
- *   - When it is a given players turn, they specify their action.
+ *     and surrogate player objects representing all the other human players. </li>
+ *   <li>The server will have surrogates for all the human players. </li>
+ *   <li>When it is a given players turn, they specify their action. </li>
  *     That action is sent in a message to the server. The server then broadcasts
  *     the response (in this case the players action) to all OnlineChangeListeners.
  *     Since all the surrogates for that player (one on the server and one on each client
- *     except the one representing that acutal player) are OnlineChangeListeners,
+ *     except the one representing that actual player) are OnlineChangeListeners,
  *     they will get the event and know to set the action so that it can be retrieved by
  *     that controller.
- *   - When a surrogate is asked for its action, it blocks until it actually recieved the action
- *     in that response message from the server.
- *
+ *   <li>When a surrogate is asked for its action, it blocks until it actually received the action
+ *     in that response message from the server.  </li>
+ *  </ul>
  * @author Barry Becker
  */
 public abstract class MultiGameController extends GameController {
 
     protected int currentPlayerIndex_;
 
-    // there is a different starting player each round
+    /** there is a different starting player each round */
     protected int startingPlayerIndex_ = 0;
 
     // the ith play in a given round
@@ -211,8 +212,7 @@ public abstract class MultiGameController extends GameController {
      *  @return the lastMoves value modified by the value add of the new move.
      *   a large positive value means that the move is good from the specified players viewpoint
      */
-    protected double worth( Move lastMove, ParameterArray weights )
-    {
+    protected double worth( Move lastMove, ParameterArray weights ) {
         return lastMove.getValue();
     }
 
@@ -220,16 +220,14 @@ public abstract class MultiGameController extends GameController {
      * generate all possible next moves.
      * impossible for this game.
      */
-    public MoveList generateMoves( Move lastMove, ParameterArray weights)
-    {
+    public MoveList generateMoves( Move lastMove, ParameterArray weights) {
         return new MoveList();
     }
 
     /**
      * return any moves that result in a win
      */
-    public List generateUrgentMoves( Move lastMove, ParameterArray weights)
-    {
+    public List generateUrgentMoves( Move lastMove, ParameterArray weights) {
         return null;
     }
 
@@ -238,8 +236,7 @@ public abstract class MultiGameController extends GameController {
      * @param weights
      * @return true if the last move created a big change in the score
      */
-    public boolean inJeopardy( Move m, ParameterArray weights)
-    {
+    public boolean inJeopardy( Move m, ParameterArray weights) {
         return false;
     }
 

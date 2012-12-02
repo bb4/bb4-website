@@ -29,7 +29,8 @@ public abstract class MultiGameOptionsDialog extends GameOptionsDialog
     protected void initMultiControllerParamComponents(MultiGameOptions options) {
         maxNumPlayers_ =
             new NumberInput(GameContext.getLabel("MAX_NUM_PLAYERS"), options.getMaxNumPlayers(),
-                                GameContext.getLabel("MAX_NUM_PLAYERS_TIP"), options.getMinNumPlayers(), ABS_MAX_NUM_PLAYERS, true);
+                            GameContext.getLabel("MAX_NUM_PLAYERS_TIP"), options.getMinNumPlayers(),
+                            ABS_MAX_NUM_PLAYERS, true);
         maxNumPlayers_.addKeyListener(this);
 
         numRobotPlayers_ =

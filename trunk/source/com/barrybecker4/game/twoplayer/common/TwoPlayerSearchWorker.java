@@ -87,9 +87,7 @@ class TwoPlayerSearchWorker {
 
              // this blocks until the value is available
              TwoPlayerMove m = (TwoPlayerMove)worker_.get();
-             System.out.println("before checkdone");
              boolean d = controller_.getSearchable().done(m, true);
-             System.out.println("after checkdone");
              return d;
          }
          return false;

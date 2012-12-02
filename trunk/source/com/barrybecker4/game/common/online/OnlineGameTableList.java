@@ -78,25 +78,19 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
      * @return true if there is at least one table in the list that is ready to start playing.
      */
     public boolean hasTableReadyToPlay() {
-        Iterator<OnlineGameTable> it = this.iterator();
-        while (it.hasNext()) {
-            OnlineGameTable table = it.next();
+        for (OnlineGameTable table : this) {
             if (table.isReadyToPlay())
                 return true;
         }
         return false;
     }
 
-
-
     /**
      * @return a list of all the tables that are currently ready to begin playing.
      */
     public List<OnlineGameTable> getTablesReadyToPlay() {
         List<OnlineGameTable> readyTables = new ArrayList<OnlineGameTable>();
-        Iterator<OnlineGameTable> it = this.iterator();
-        while (it.hasNext()) {
-            OnlineGameTable table = it.next();
+        for (OnlineGameTable table : this) {
             if (table.isReadyToPlay())
                 readyTables.add(table);
         }
@@ -107,9 +101,7 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
      * @return the table which is ready to play and has playerName, otherwise return null of no tables like that.
      */
     public OnlineGameTable getTableReadyToPlay(String playerName) {
-        Iterator<OnlineGameTable> it = this.iterator();
-        while (it.hasNext()) {
-            OnlineGameTable table = it.next();
+        for (OnlineGameTable table : this) {
             if (table.isReadyToPlay() && table.hasPlayer(playerName)) {
                 return table;
             }
@@ -121,10 +113,8 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
      * Add a new player to specified table.
      */
     public void join(String tableName, Player newPlayer) {
-        Iterator<OnlineGameTable> it = this.iterator();
-        while (it.hasNext()) {
-            OnlineGameTable table = it.next();
-            if (table.getName().equals(tableName))  {
+        for (OnlineGameTable table : this) {
+            if (table.getName().equals(tableName)) {
                 table.addPlayer(newPlayer);
                 return;
             }

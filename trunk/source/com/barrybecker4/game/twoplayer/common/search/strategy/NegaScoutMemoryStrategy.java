@@ -73,13 +73,13 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
     @Override
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove, int depth,
                                           SearchWindow window, SearchTreeNode parent ) {
-        //System.out.println("moves="+ searchable_.getMoveList());
-        HashKey key = searchable_.getHashKey();
+        //System.out.println("moves="+ searchable.getMoveList());
+        HashKey key = searchable.getHashKey();
         Entry entry = lookupTable.get(key);
         if (lookupTable.entryExists(entry, lastMove, depth, window))
             return entry.bestMove;
 
-        boolean done = searchable_.done( lastMove, false);
+        boolean done = searchable.done( lastMove, false);
         if ( depth <= 0 || done ) {
             if (doQuiescentSearch(depth, done, lastMove))  {
                 TwoPlayerMove qMove = quiescentSearch(lastMove, depth, window, parent);
@@ -96,7 +96,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
             return lastMove;
         }
 
-        MoveList list = searchable_.generateMoves(lastMove, weights_);
+        MoveList list = searchable.generateMoves(lastMove, weights_);
 
         if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
@@ -126,13 +126,13 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
                 return lastMove;
             updatePercentDone(depth, list);
 
-            searchable_.makeInternalMove( theMove );
+            searchable.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, window );
 
             // search with minimal search window
             selectedMove = searchInternal( theMove, depth-1, new SearchWindow(-newBeta, -window.alpha), child );
 
-            searchable_.undoInternalMove( theMove );
+            searchable.undoInternalMove( theMove );
             if (selectedMove != null) {
 
                 int selectedValue = -selectedMove.getInheritedValue();
@@ -148,9 +148,9 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
                 }
                 if (window.alpha >= newBeta) {
                     // re-search with narrower window (typical alpha beta search).
-                    searchable_.makeInternalMove( theMove );
+                    searchable.makeInternalMove( theMove );
                     selectedMove = searchInternal( theMove, depth-1, window.negateAndSwap(), child );
-                    searchable_.undoInternalMove( theMove );
+                    searchable.undoInternalMove( theMove );
 
                     selectedValue = -selectedMove.getInheritedValue();
                     theMove.setInheritedValue(selectedValue);
@@ -184,6 +184,6 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
         else if (bestValue >= window.beta) {
             entry.lowerValue = bestValue;
         }
-        lookupTable.put(searchable_.getHashKey(), entry);
+        lookupTable.put(searchable.getHashKey(), entry);
     }
 }

@@ -24,8 +24,12 @@ import java.util.List;
  */
 public class ServerConnection implements IServerConnection {
 
-    /** Hardcoded for now, but should be configurable. */
-    private static final String DEFAULT_HOST = "127.0.0.1"; // localhost // "192.168.1.100";
+    /**
+     * Hardcoded for now, but should be configurable.
+     * localhost "127.0.0.1";
+     * or maybe "192.168.1.100";
+     */
+    private static final String DEFAULT_HOST = "192.168.1.66";
 
     private ObjectOutputStream oStream_;
 

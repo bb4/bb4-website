@@ -129,7 +129,6 @@ class ConfigurationsTable extends TableBase {
         d[BEST_MOVE_OPTIONS_INDEX ] = sOptions.getBestMovesSearchOptions().toString();
         d[MONTE_CARLO_OPTIONS_INDEX ] = sOptions.getMonteCarloSearchOptions().toString();
         d[INSTANCE_INDEX] = optionsConfig;
-        System.out.println("d[5]=" + d[5].toString());
 
         getPlayerModel().addRow(d);
     }
@@ -150,7 +149,6 @@ class ConfigurationsTable extends TableBase {
         d[BEST_MOVE_OPTIONS_INDEX ] = sOptions.getBestMovesSearchOptions().toString();
         d[MONTE_CARLO_OPTIONS_INDEX ] = sOptions.getMonteCarloSearchOptions().toString();
         d[INSTANCE_INDEX] = optionsConfig;
-        System.out.println("d[5]=" + d[5].toString());
 
         getPlayerModel().removeRow(row);
         getPlayerModel().insertRow(row, d);

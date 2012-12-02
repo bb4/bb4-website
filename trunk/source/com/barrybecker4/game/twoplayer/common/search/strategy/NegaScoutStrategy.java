@@ -97,12 +97,12 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                 return lastMove;
             updatePercentDone(depth, list);
 
-            searchable_.makeInternalMove( theMove );
+            searchable.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, window );
 
             // search with minimal search window
             selectedMove = searchInternal( theMove, depth-1, new SearchWindow(-newBeta, -window.alpha), child);
-            searchable_.undoInternalMove( theMove );
+            searchable.undoInternalMove( theMove );
 
             if (selectedMove != null) {
 
@@ -120,10 +120,10 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                 }
                 if (window.alpha >= newBeta) {
                     // re-search with narrower window (typical alpha beta search).
-                    searchable_.makeInternalMove( theMove );
+                    searchable.makeInternalMove( theMove );
                     selectedMove = searchInternal( theMove, depth-1, window.negateAndSwap(), child );
                     if (selectedMove != null)  {
-                        searchable_.undoInternalMove( theMove );
+                        searchable.undoInternalMove( theMove );
 
                         selectedValue = -selectedMove.getInheritedValue();
                         theMove.setInheritedValue(selectedValue);

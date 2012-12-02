@@ -30,7 +30,7 @@ import java.awt.event.MouseListener;
 import java.util.Iterator;
 
 /**
- * Manage multiplayer online game tables.
+ * Manage multi-player online game tables.
  * Shows a list of the currently active tables to the user in a table.
  * Used only on the client to show list of active game tables.
  *
@@ -39,7 +39,6 @@ import java.util.Iterator;
 public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPanel
                                                   implements ActionListener, MouseListener,
                                                                       KeyListener, TableButtonListener {
-
     private static final String DEFAULT_NAME = "<name>";
 
     private JTextField localPlayerName_;
@@ -57,7 +56,6 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
         super(viewer, dlg);
     }
 
-
     /**
      *  There is a button for creating a new online table at the top.
      *
@@ -70,8 +68,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
      * A table (row) is removed if everyone leaves it.
      */
     @Override
-    protected JPanel createPlayOnlinePanel()
-    {
+    protected JPanel createPlayOnlinePanel()  {
         createGameTableDialog_ = createNewGameTableDialog();
 
         JPanel playOnlinePanel = new JPanel(new BorderLayout());
@@ -160,7 +157,6 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     }
 
     /**
-     *
      * @param tableList list of tables to update.
      */
     void updateTables(OnlineGameTableList tableList) {
@@ -194,9 +190,9 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
      * An online table has filled with players and is ready to start.
      * Initiallize the players for the controller with surrogates for all but the single current player on this client.
      */
-    void startGame()
-    {
-        System.out.println("Start the game for player:" + currentName_ +" on the client. Table=" +  onlineGameTablesTable_.getSelectedTable());
+    void startGame() {
+        System.out.println("Start the game for player:" + currentName_
+                + " on the client. Table=" +  onlineGameTablesTable_.getSelectedTable());
 
         // since we are on the client we need to create surrogates for the players which are not the current player
         Iterator<Player> it = onlineGameTablesTable_.getSelectedTable().getPlayers().iterator();
@@ -216,7 +212,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     }
 
     /**
-     * Implements actionlistener.
+     * Implements actionListener.
      * The user has done something to change the table list
      * (e.g. added a new game).
      */
@@ -231,7 +227,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     }
 
     /**
-     * Implements tableButtonLlistener.
+     * Implements tableButtonListener.
      * User has joined a different table.
      */
     public void tableButtonClicked( int row, int col, String id ) {
@@ -328,7 +324,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     }
 
     /**
-     * Implement moustListener interface.
+     * Implement mouseListener interface.
      */
     public void mouseClicked(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {

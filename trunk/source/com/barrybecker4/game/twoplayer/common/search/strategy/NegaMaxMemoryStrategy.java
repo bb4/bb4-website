@@ -54,7 +54,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
                                            int depth,
                                            SearchWindow window, SearchTreeNode parent ) {
-        HashKey key = searchable_.getHashKey();
+        HashKey key = searchable.getHashKey();
         Entry entry = lookupTable.get(key);
         if (lookupTable.entryExists(entry, lastMove, depth, window)) {
             if (entry.lowerValue > window.alpha) {
@@ -69,7 +69,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
 
         entry = new Entry(lastMove, depth, new SearchWindow(-SearchStrategy.INFINITY, SearchStrategy.INFINITY));
 
-        boolean done = searchable_.done( lastMove, false);
+        boolean done = searchable.done( lastMove, false);
         if ( depth <= 0 || done ) {
             if (doQuiescentSearch(depth, done, lastMove))  {
                 TwoPlayerMove qMove = quiescentSearch(lastMove, depth, window, parent);
@@ -88,7 +88,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
             return lastMove;
         }
 
-        MoveList list = searchable_.generateMoves(lastMove, weights_);
+        MoveList list = searchable.generateMoves(lastMove, weights_);
 
         if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
@@ -118,12 +118,12 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
                 return lastMove;
             updatePercentDone(depth, list);
 
-            searchable_.makeInternalMove( theMove );
+            searchable.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, window); i++;
 
             selectedMove = searchInternal( theMove, depth-1, window.negateAndSwap(), child );
 
-            searchable_.undoInternalMove( theMove );
+            searchable.undoInternalMove( theMove );
 
             if (selectedMove != null) {
 
@@ -157,6 +157,6 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
         else  {
             entry.lowerValue = bestValue;
         }
-        lookupTable.put(searchable_.getHashKey(), entry);
+        lookupTable.put(searchable.getHashKey(), entry);
     }
 }

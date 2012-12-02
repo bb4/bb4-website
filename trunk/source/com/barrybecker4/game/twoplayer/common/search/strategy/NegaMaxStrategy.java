@@ -50,13 +50,13 @@ public class NegaMaxStrategy extends AbstractBruteSearchStrategy {
                 return lastMove;
             updatePercentDone(depth, list);
 
-            searchable_.makeInternalMove( theMove );
+            searchable.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, window); i++;
 
             selectedMove = searchInternal( theMove, depth-1,
                      new SearchWindow(-window.beta, -Math.max(window.alpha, bestInheritedValue)), child );
 
-            searchable_.undoInternalMove( theMove );
+            searchable.undoInternalMove( theMove );
 
             if (selectedMove != null) {
                 int selectedValue = -selectedMove.getInheritedValue();

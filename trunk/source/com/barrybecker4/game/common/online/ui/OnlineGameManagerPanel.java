@@ -21,14 +21,15 @@ import java.awt.event.ActionListener;
  * The server maintains the global state.
  * Any time something changes, the server broadcasts the global state to the online clients.
  *
- * @author Barry Becker Date: May 14, 2006
+ * @author Barry Becker
  */
 public abstract class OnlineGameManagerPanel extends JPanel
                                              implements OnlineChangeListener, ActionListener {
 
     /** the options get set directly on the game controller that is passed in. */
     protected GameController controller_;
-    // typically the dlg that we live in. Called when table ready to play.
+
+    /** typically the dlg that we live in. Called when table ready to play.   */
     protected ChangeListener gameStartedListener_;
 
 
