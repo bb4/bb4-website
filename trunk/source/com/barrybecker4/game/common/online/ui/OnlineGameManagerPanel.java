@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 /**
  * Manage the online game tables.
@@ -23,16 +24,17 @@ import java.awt.event.ActionListener;
  *
  * @author Barry Becker
  */
-public abstract class OnlineGameManagerPanel extends JPanel
-                                             implements OnlineChangeListener, ActionListener {
+public abstract class OnlineGameManagerPanel
+              extends JPanel
+              implements OnlineChangeListener, ActionListener {
 
     /** the options get set directly on the game controller that is passed in. */
     protected GameController controller_;
 
-    /** typically the dlg that we live in. Called when table ready to play.   */
+    /** typically the dialog that we live in. Called when table ready to play.   */
     protected ChangeListener gameStartedListener_;
 
-
+    /** Constructor */
     protected OnlineGameManagerPanel(GameViewable viewer, ChangeListener dlg) {
 
         controller_ = viewer.getController();
@@ -70,8 +72,7 @@ public abstract class OnlineGameManagerPanel extends JPanel
      * Subclasses need to provide a more interesting implementation of this if they
      * want to support online play.
      */
-    protected JPanel createPlayOnlinePanel()
-    {
+    protected JPanel createPlayOnlinePanel() {
         JPanel playOnlinePanel = new JPanel();
         playOnlinePanel.setLayout( new BoxLayout( playOnlinePanel, BoxLayout.Y_AXIS ) );
 

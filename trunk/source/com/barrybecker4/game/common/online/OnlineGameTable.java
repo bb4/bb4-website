@@ -86,7 +86,7 @@ public class OnlineGameTable implements Serializable {
     }
 
     /**
-     * @return the list of players at the table in a comman delimited list.
+     * @return the list of players at the table in a command delimited list.
      */
     public String getPlayerNames() {
         StringBuilder buf = new StringBuilder("");
@@ -129,7 +129,6 @@ public class OnlineGameTable implements Serializable {
     }
 
     /**
-     *
      * @return true if no players or only robots
      */
     public boolean hasNoHumanPlayers() {
@@ -142,7 +141,6 @@ public class OnlineGameTable implements Serializable {
     }
 
     /**
-     *
      * @return the names of the players in a comma delimited list.
      */
     public String getPlayersString() {

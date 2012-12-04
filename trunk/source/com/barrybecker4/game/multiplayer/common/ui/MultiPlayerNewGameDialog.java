@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 /**
  * Manager players for new local game.
@@ -81,9 +82,8 @@ public abstract class MultiPlayerNewGameDialog
      */
     protected abstract PlayerTable createPlayerTable();
 
-
     /**
-     * panel which allows changin board specific properties.
+     * panel which allows changing board specific properties.
      */
     @Override
     protected JPanel createBoardParamPanel() {

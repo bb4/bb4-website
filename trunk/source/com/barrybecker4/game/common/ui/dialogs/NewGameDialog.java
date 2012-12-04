@@ -194,7 +194,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
                  tabbedPanel_.add(playOnlinePanel_, 0);
                  tabbedPanel_.setTitleAt(0, "Play Online");
                  tabbedPanel_.setSelectedIndex(0);
-                 //pack();
+                 pack();
              }
              tabbedPanel_.setEnabledAt(0, true);
         }
@@ -210,8 +210,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
      * Called when one of the buttons at the bottom pressed
      */
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e )  {
         super.actionPerformed(e);
         Object source = e.getSource();
 
@@ -224,8 +223,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
      * cancel button pressed
      */
     @Override
-    protected void cancel()
-    {
+    protected void cancel() {
         // You are only allowed to participate in only games when the dialog is open.
         if (playOnlinePanel_ != null) {
             playOnlinePanel_.closing();
@@ -258,8 +256,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
      * If the window gets closed, then the player has stood up from his table if online.
      */
     @Override
-    protected void processWindowEvent( WindowEvent e )
-    {
+    protected void processWindowEvent( WindowEvent e ) {
         if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
 
             System.err.println("Window closing!");
@@ -268,6 +265,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
                 playOnlinePanel_.closing();
             }
         }
+        super.processWindowEvent( e );
     }
 
 }

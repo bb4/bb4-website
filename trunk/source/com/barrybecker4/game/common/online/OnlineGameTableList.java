@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * A list of tables that players can sit down at in order to play a game in an online environment.
  *
- * @author Barry Becker Date: May 21, 2006
+ * @author Barry Becker
  */
 public class OnlineGameTableList extends ArrayList<OnlineGameTable>
                                  implements Serializable {
@@ -29,7 +29,6 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
             table.changeName(oldName, newName);
         }
     }
-
 
     /**
      * Remove this player from all tables. If last player at a table, remove the table too.

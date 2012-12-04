@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Implements command pattern.
  * Immutable.
  *
- * @author Barry Becker Date: May 20, 2006
+ * @author Barry Becker
  */
 public class GameCommand implements Serializable {
 
