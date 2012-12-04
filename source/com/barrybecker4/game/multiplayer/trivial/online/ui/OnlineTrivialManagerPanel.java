@@ -25,8 +25,7 @@ public class OnlineTrivialManagerPanel extends MultiPlayerOnlineManagerPanel {
     }
 
     @Override
-    protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String playersName,
-                                                                      TableButtonListener tableButtonListener) {
+    protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(TableButtonListener tableButtonListener) {
         return new TrivialOnlineGameTablesTable(tableButtonListener);
     }
 

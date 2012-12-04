@@ -32,7 +32,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     protected static final String MIN_NUM_PLAYERS = GameContext.getLabel("MIN_NUM_PLAYERS");
     protected static final String PLAYER_NAMES = GameContext.getLabel("PLAYER_NAMES");
 
-    protected static final String JOIN_TIP = GameContext.getLabel("ACTION_TIP");
+    private static final String JOIN_TIP = GameContext.getLabel("ACTION_TIP");
     private static final String MIN_NUM_PLAYERS_TIP = GameContext.getLabel("MIN_NUM_PLAYERS_TIP");
     protected static final String PLAYER_NAMES_TIP = GameContext.getLabel("PLAYER_NAMES_TIP");
 
@@ -104,7 +104,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     }
 
 
-    BasicTableModel getPlayerModel() {
+    public BasicTableModel getPlayerModel() {
         return (BasicTableModel)getModel();
     }
 
@@ -139,7 +139,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
      * @param onlineTable to add
      * @param localPlayerAtTable you cannot join a table you are already at.
      */
-    void addRow(OnlineGameTable onlineTable, boolean localPlayerAtTable) {
+    public void addRow(OnlineGameTable onlineTable, boolean localPlayerAtTable) {
 
         getPlayerModel().addRow(getRowObject(onlineTable, localPlayerAtTable));
         tableList_.add(onlineTable);
