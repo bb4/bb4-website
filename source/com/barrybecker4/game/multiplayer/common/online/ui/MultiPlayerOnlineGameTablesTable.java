@@ -80,7 +80,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
 
         TableButton joinCellEditor = new TableButton(GameContext.getLabel("JOIN"), "id");
         joinCellEditor.addTableButtonListener(tableButtonListener_);
-        joinCellEditor.setToolTipText(GameContext.getLabel("JOIN_TIP"));
+        joinCellEditor.setToolTipText(JOIN_TIP);
         actionCol.setCellRenderer(joinCellEditor);
         actionCol.setCellEditor(joinCellEditor);
         actionCol.setPreferredWidth(55);

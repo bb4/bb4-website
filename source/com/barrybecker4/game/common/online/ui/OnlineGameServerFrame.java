@@ -23,8 +23,8 @@ import java.awt.event.WindowListener;
  */
 public class OnlineGameServerFrame  extends JFrame {
 
-    private OnlineGameServer server_;
-    private JTextArea textArea_;
+    private OnlineGameServer server;
+    private JTextArea textArea;
 
 
     /**
@@ -32,7 +32,7 @@ public class OnlineGameServerFrame  extends JFrame {
      */
     private OnlineGameServerFrame(String gameName) {
         initUI(gameName);
-        server_ = new OnlineGameServer(gameName, textArea_);
+        server = new OnlineGameServer(gameName, textArea);
     }
 
     /**
@@ -41,15 +41,14 @@ public class OnlineGameServerFrame  extends JFrame {
     private void initUI(String gameName) {
         JPanel panel = new JPanel();
         JLabel label = new JLabel("Commands received over the socket:");
-        textArea_ = new JTextArea(20, 44);
-        textArea_.setLineWrap(true);
-        textArea_.setWrapStyleWord(true);
+        textArea = new JTextArea(20, 44);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
 
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.white);
         panel.add("North", label);
-
-        panel.add("Center", new JScrollPane(textArea_));
+        panel.add("Center", new JScrollPane(textArea));
         String gameLabel = PluginManager.getInstance().getPlugin(gameName).getLabel();
         setTitle(gameLabel + " Server");
 
@@ -74,7 +73,7 @@ public class OnlineGameServerFrame  extends JFrame {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        server_ = null;
+        server = null;
     }
 
     /**
@@ -90,5 +89,4 @@ public class OnlineGameServerFrame  extends JFrame {
             frame.setVisible(true);
         }
     }
-
 }

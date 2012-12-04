@@ -1,4 +1,4 @@
-/** Copyright by Barry G. Becker, 2000-2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.multiplayer.common.online.ui;
 
 import com.barrybecker4.game.common.GameContext;
@@ -10,6 +10,7 @@ import com.barrybecker4.game.common.online.ui.OnlineGameManagerPanel;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.dialogs.GameOptionsDialog;
+import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGameOptions;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
@@ -36,8 +37,8 @@ import java.util.Iterator;
  *
  * @author Barry Becker
  */
-public abstract class MultiPlayerOnlineManagerPanel
-                extends OnlineGameManagerPanel
+public abstract class PlayOnlinePanel
+                extends JPanel
                 implements ActionListener, MouseListener, KeyListener, TableButtonListener {
 
     private static final String DEFAULT_NAME = "<name>";
@@ -48,16 +49,11 @@ public abstract class MultiPlayerOnlineManagerPanel
     private GameOptionsDialog createGameTableDialog_;
     private String currentName_;
     private String oldName_;
+    private MultiGameController controller_;
 
 
     /**
      * Constructor
-     */
-    protected MultiPlayerOnlineManagerPanel(GameViewable viewer, ChangeListener dlg) {
-        super(viewer, dlg);
-    }
-
-    /**
      * There is a button for creating a new online table at the top.
      *
      * The play online table as a row for each virtual table that an online player can join.
@@ -68,14 +64,17 @@ public abstract class MultiPlayerOnlineManagerPanel
      * If you join a different table, you leave the last one that you joined.
      * A table (row) is removed if everyone leaves it.
      */
-    @Override
-    protected JPanel createPlayOnlinePanel()  {
-        createGameTableDialog_ = createNewGameTableDialog();
+    protected PlayOnlinePanel(MultiGameController controller,
+                              MultiPlayerOnlineGameTablesTable tablesTable,
+                              GameOptionsDialog createGameTableDialog) {
 
-        JPanel playOnlinePanel = new JPanel(new BorderLayout());
-        playOnlinePanel.setBorder(
-                BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
-                                                  GameContext.getLabel("ONLINE_DLG_TITLE")));
+        controller_ = controller;
+        createGameTableDialog_ = createGameTableDialog;
+
+        setLayout(new BorderLayout());
+        this.setBorder(
+                BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
+                        GameContext.getLabel("ONLINE_DLG_TITLE")));
 
         JPanel headerPanel = new JPanel(new BorderLayout());
         //JLabel titleLabel = new JLabel(GameContext.getLabel("ONLINE_TABLES"));
@@ -98,17 +97,17 @@ public abstract class MultiPlayerOnlineManagerPanel
         //headerPanel.add(titleLabel, BorderLayout.CENTER);
         headerPanel.add(bottomFill, BorderLayout.SOUTH);
         headerPanel.add(buttonsPanel, BorderLayout.EAST);
-        playOnlinePanel.add(headerPanel, BorderLayout.NORTH);
+        this.add(headerPanel, BorderLayout.NORTH);
 
-        onlineGameTablesTable_ = createOnlineGamesTable(localPlayerName_.getText(), this);
+        onlineGameTablesTable_ = tablesTable;
+              //  createOnlineGamesTable(localPlayerName_.getText(), this);
 
-        playOnlinePanel.setPreferredSize( new Dimension(600, 300) );
-        playOnlinePanel.add( new JScrollPane(onlineGameTablesTable_.getTable()) , BorderLayout.CENTER );
+        this.setPreferredSize( new Dimension(600, 300) );
+        this.add(new JScrollPane(onlineGameTablesTable_.getTable()), BorderLayout.CENTER);
 
         if (controller_.getServerConnection().isConnected()) {
             controller_.getServerConnection().enterRoom();
         }
-        return playOnlinePanel;
     }
 
     private JPanel createNamePanel() {
@@ -124,20 +123,10 @@ public abstract class MultiPlayerOnlineManagerPanel
         return namePanel;
     }
 
-
-    protected abstract MultiPlayerOnlineGameTablesTable createOnlineGamesTable(
-            String name, TableButtonListener tableButtonListener);
-
-    /**
-     * You are free to set your own options for the table that you are creating.
-     */
-    protected abstract GameOptionsDialog createNewGameTableDialog();
-
     /**
      * The server has sent out a message to all the clients.
      * @param cmd the command to handle.
      */
-    @Override
     public void handleServerUpdate(GameCommand cmd) {
 
         if (onlineGameTablesTable_ == null)
@@ -179,16 +168,18 @@ public abstract class MultiPlayerOnlineManagerPanel
 
             // send an event to close the new player window. (perhaps we could know its a dialog and close it directly?)
             ChangeEvent event = new ChangeEvent(this);
-            gameStartedListener_.stateChanged(event);
+/////
+//////// gameStartedListener_.stateChanged(event);
 
             //GameCommand startCmd = new GameCommand(GameCommand.Name.START_GAME, readyTable);
             //controller_.getServerConnection().sendCommand(startCmd);
         }
     }
 
+
     /**
      * An online table has filled with players and is ready to start.
-     * Initialize the players for the controller with surrogates for all but the single current player on this client.
+     * Initiallize the players for the controller with surrogates for all but the single current player on this client.
      */
     void startGame() {
         System.out.println("Start the game for player:" + currentName_
@@ -295,16 +286,6 @@ public abstract class MultiPlayerOnlineManagerPanel
                           onlineGameTablesTable_.getGameTable(joinRow));
 
         onlineGameTablesTable_.getTable().removeEditor();
-    }
-
-    /**
-     * called when the user closes the online game dialog.
-     * We remove them form the active tables.
-     */
-    @Override
-    public void closing() {
-        System.out.println(currentName_+ " is now leaving the room ");
-        controller_.getServerConnection().leaveRoom(currentName_);
     }
 
 

@@ -34,15 +34,15 @@ public class OnlineGameServer  {
 
     public static final String GAME_OPTION = "game";
 
-    private JTextArea textArea_;
-    private ServerSocket server_;
-    private int port_;
+    private JTextArea textArea;
+    private ServerSocket server;
+    private int port;
 
-    /** processes server commands. May someday need sublassing.  */
-    private ServerCommandProcessor cmdProcessor_;
+    /** processes server commands. May someday need subclassing.  */
+    private ServerCommandProcessor cmdProcessor;
 
     /** keep a list of the threads that we have for each client connection.  */
-    private List<ClientWorker> clientConnections_;
+    private List<ClientWorker> clientConnections;
 
     /**
      * Create the online game server to serve all online clients.
@@ -51,14 +51,13 @@ public class OnlineGameServer  {
      */
     public OnlineGameServer(String gameType, JTextArea textArea) {
 
-        //port_ = PluginManager.getInstance().getPlugin(gameType).getPort();
-        textArea_ = textArea;
-        cmdProcessor_ = new ServerCommandProcessor(gameType);
-        port_ = cmdProcessor_.getPort();
-        clientConnections_ = new LinkedList<ClientWorker>();
+        //port = PluginManager.getInstance().getPlugin(gameType).getPort();
+        this.textArea = textArea;
+        cmdProcessor = new ServerCommandProcessor(gameType);
+        port = cmdProcessor.getPort();
+        clientConnections = new LinkedList<ClientWorker>();
         openListenSocket();
     }
-
 
     /**
      * open a server socket to listen on our assigned port for
@@ -69,14 +68,14 @@ public class OnlineGameServer  {
     void openListenSocket() {
 
         try {
-            server_ = new ServerSocket(port_);
+            server = new ServerSocket(port);
         }
         catch (BindException e) {
-            GameContext.log(0, "Address already in use! Perhaps there is already another game server sunning on this port:" + port_);
+            GameContext.log(0, "Address already in use! Perhaps there is already another game server sunning on this port:" + port);
             throw new RuntimeException(e);
         }
         catch (IOException e) {
-            GameContext.log(0, "Could not listen on port " + port_);
+            GameContext.log(0, "Could not listen on port " + port);
             e.printStackTrace();
             throw new RuntimeException(e);
         }
@@ -85,19 +84,18 @@ public class OnlineGameServer  {
             OnlineGameServer.ClientWorker w;
             try {
                 // accept new connections from players wanting to join.
-                w = new ClientWorker(server_.accept(), textArea_);
+                w = new ClientWorker(server.accept(), textArea);
                 Thread t = new Thread(w);
-                clientConnections_.add(w);
+                clientConnections.add(w);
                 t.start();
             }
             catch (IOException e) {
-                GameContext.log(0, "Accept failed: " + port_);
+                GameContext.log(0, "Accept failed: " + port);
                 e.printStackTrace();
                 break;
             }
         }
     }
-
 
     /**
      * Objects created in run method are finalized when
@@ -107,7 +105,7 @@ public class OnlineGameServer  {
     protected void finalize() {
         try {
             super.finalize();
-            server_.close();
+            server.close();
         }
         catch (IOException e) {
             GameContext.log(0, "Could not close socket");
@@ -118,7 +116,6 @@ public class OnlineGameServer  {
             t.printStackTrace();
         }
     }
-
 
     /**
      * A client worker is created for each client player connection to this server.
@@ -149,7 +146,7 @@ public class OnlineGameServer  {
 
             try {
                 // initial update to the game tables for someone entering the room.
-                update(new GameCommand(GameCommand.Name.UPDATE_TABLES, cmdProcessor_.getTables()));
+                update(new GameCommand(GameCommand.Name.UPDATE_TABLES, cmdProcessor.getTables()));
 
                 while (true) {
 
@@ -157,10 +154,10 @@ public class OnlineGameServer  {
                     GameCommand cmd = (GameCommand) iStream_.readObject();
 
                     // we got a change to the tables, update internal structure and broadcast new list.
-                    List<GameCommand> responses = cmdProcessor_.processCommand(cmd);
+                    List<GameCommand> responses = cmdProcessor.processCommand(cmd);
 
                     for (GameCommand response: responses) {
-                        for (ClientWorker w : clientConnections_) {
+                        for (ClientWorker w : clientConnections) {
                             w.update(response);
                         }
                     }
@@ -183,7 +180,7 @@ public class OnlineGameServer  {
             }
 
             GameContext.log(1, "Connection closed removing thread");
-            clientConnections_.remove(this);
+            clientConnections.remove(this);
         }
 
         /**
@@ -191,7 +188,7 @@ public class OnlineGameServer  {
          */
         public synchronized void update(GameCommand response) throws IOException {
 
-            GameContext.log(1, "OnlineGameServer: sending:"+cmdProcessor_.getTables());
+            GameContext.log(1, "OnlineGameServer: sending:" + cmdProcessor.getTables());
 
             // must reset the stream first, otherwise tables_ will always be the same as first sent.
             oStream_.reset();
