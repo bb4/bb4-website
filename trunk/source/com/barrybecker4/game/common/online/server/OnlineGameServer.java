@@ -72,7 +72,8 @@ public class OnlineGameServer  {
             server = new ServerSocket(port);
         }
         catch (BindException e) {
-            GameContext.log(0, "Address already in use! Perhaps there is already another game server sunning on this port:" + port);
+            GameContext.log(0, "Address already in use! " +
+                    "Perhaps there is already another game server sunning on this port:" + port);
             throw new RuntimeException(e);
         }
         catch (IOException e) {

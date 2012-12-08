@@ -5,6 +5,7 @@ import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
+import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameBoardRenderer;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 import com.barrybecker4.game.multiplayer.poker.PokerPlayerMarker;
@@ -46,7 +47,6 @@ public class PokerGameRenderer extends MultiGameBoardRenderer {
     protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
                             int nrows1, int ncols1, int gridOffset) {}
 
-
     @Override
     protected void drawBackground( Graphics g, Board board, int startPos,
                                    int rightEdgePos, int bottomEdgePos,
@@ -66,15 +66,30 @@ public class PokerGameRenderer extends MultiGameBoardRenderer {
         int pot = ((PokerController)controller).getPotValue();
         new ChipRenderer().render(g2, loc, pot, this.getCellSize());
 
-
-        // draw a backroung circle for the player whose turn it is
-        PokerPlayer player = (PokerPlayer)controller.getCurrentPlayer();
+        // draw a background circle for the player whose turn it is
+        PokerPlayer player = getPlayer(controller);
         PokerPlayerMarker m = player.getPiece();
         g2.setColor(PokerPlayerRenderer.HIGHLIGHT_COLOR);
-        g2.fillOval(cellSize *(m.getLocation().getCol()-2), cellSize *(m.getLocation().getRow()-2), 10* cellSize, 10* cellSize);
+        g2.fillOval(cellSize *(m.getLocation().getCol()-2),
+                    cellSize *(m.getLocation().getRow()-2),
+                    10* cellSize, 10* cellSize);
 
-        // now draw the players and their stuff (face, anme, chips, cards, etc)
+        // now draw the players and their stuff (face, name, chips, cards, etc)
         super.drawMarkers(controller, g2);
+    }
+
+    /**
+     * @return the poker player (not the surrogate if that is what played)
+     */
+    private PokerPlayer getPlayer(IGameController controller) {
+        PokerPlayer player;
+        if (controller.getCurrentPlayer() instanceof SurrogateMultiPlayer) {
+            player = (PokerPlayer)((SurrogateMultiPlayer) controller.getCurrentPlayer()).getPlayer();
+        }
+        else {
+            player = (PokerPlayer) controller.getCurrentPlayer();
+        }
+        return player;
     }
 
 }

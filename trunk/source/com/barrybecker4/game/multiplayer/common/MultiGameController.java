@@ -196,11 +196,10 @@ public abstract class MultiGameController extends GameController {
 
     /**
      *  @return the player that goes first.
-     */
-    public Player getFirstPlayer()
-    {
+     *
+    public Player getFirstPlayer() {
         return getPlayers().get(startingPlayerIndex_);
-    }
+    }*/
 
     protected MultiGamePlayer getPlayer(int index) {
         return (MultiGamePlayer) getPlayers().get(index);
