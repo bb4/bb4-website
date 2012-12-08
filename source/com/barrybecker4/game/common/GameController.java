@@ -2,7 +2,7 @@
 package com.barrybecker4.game.common;
 
 import com.barrybecker4.game.common.board.Board;
-import com.barrybecker4.game.common.online.IServerConnection;
+import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.persistence.GameExporter;
 import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.common.player.PlayerList;

@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +9,9 @@ import java.util.List;
 /**
  * Represents a standard playing card.
  */
-public class Card {
+public class Card implements Serializable {
+
+    private static final long serialVersionUID = 1;
 
     private final Rank rank_;
     private final Suit suit_;

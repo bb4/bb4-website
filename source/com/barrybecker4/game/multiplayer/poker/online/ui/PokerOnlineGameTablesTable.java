@@ -14,11 +14,9 @@ import com.barrybecker4.ui.table.TableButtonListener;
 /**
  * Show poker specific game options in the table row.
  *
- * @author Barry Becker Date: May 13, 2006
+ * @author Barry Becker
  */
  public class PokerOnlineGameTablesTable extends MultiPlayerOnlineGameTablesTable {
-
-
 
     private static final int ANTE_INDEX = NUM_BASE_COLUMNS;
     private static final int MAX_RAISE_INDEX = NUM_BASE_COLUMNS + 1;
@@ -32,7 +30,7 @@ import com.barrybecker4.ui.table.TableButtonListener;
 
     /**
      *
-     * @param actionListener  that gets called when the player selects a different table to join.
+     * @param tableButtonListener  that gets called when the player selects a different table to join.
      */
     public PokerOnlineGameTablesTable(TableButtonListener tableButtonListener) {
          super(POKER_COLUMN_NAMES, tableButtonListener);
@@ -45,7 +43,7 @@ import com.barrybecker4.ui.table.TableButtonListener;
         Object d[] = new Object[getNumColumns()];
         // false if active player is in this table.
         // You cannot join a table you are already at
-        d[JOIN_INDEX] = !(localPlayerAtTable);
+        d[JOIN_INDEX] = localPlayerAtTable ? "leave" : "join";
         d[NUM_PLAYERS_INDEX] = onlineTable.getNumPlayersNeeded();
         d[PLAYER_NAMES_INDEX] = onlineTable.getPlayerNames();
         PokerOptions options = (PokerOptions) onlineTable.getGameOptions();

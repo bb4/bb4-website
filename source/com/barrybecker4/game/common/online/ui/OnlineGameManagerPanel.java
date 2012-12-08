@@ -5,14 +5,13 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.GameViewable;
 import com.barrybecker4.game.common.online.GameCommand;
-import com.barrybecker4.game.common.online.IServerConnection;
+import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 /**
  * Manage the online game tables.
@@ -59,13 +58,14 @@ public abstract class OnlineGameManagerPanel
 
     public abstract void closing();
 
+    /*
     public boolean isServerAvailable() {
         return (controller_.getServerConnection() != null && controller_.getServerConnection().isConnected());
-    }
+    }  */
 
     public void handleServerUpdate(GameCommand cmd) {
 
-        GameContext.log(1, "got an update of the table from the server:\n" + cmd);
+        GameContext.log(1, "GameManagerPanel: got an update of the table from the server:\n" + cmd);
     }
 
     /**

@@ -2,7 +2,7 @@
 package com.barrybecker4.game.common.online.ui;
 
 import com.barrybecker4.common.CommandLineOptions;
-import com.barrybecker4.game.common.online.OnlineGameServer;
+import com.barrybecker4.game.common.online.server.OnlineGameServer;
 import com.barrybecker4.game.common.plugin.PluginManager;
 
 import javax.swing.*;
@@ -23,7 +23,6 @@ import java.awt.event.WindowListener;
  */
 public class OnlineGameServerFrame  extends JFrame {
 
-    private OnlineGameServer server;
     private JTextArea textArea;
 
 
@@ -32,7 +31,7 @@ public class OnlineGameServerFrame  extends JFrame {
      */
     private OnlineGameServerFrame(String gameName) {
         initUI(gameName);
-        server = new OnlineGameServer(gameName, textArea);
+        new OnlineGameServer(gameName, textArea);
     }
 
     /**
@@ -73,7 +72,6 @@ public class OnlineGameServerFrame  extends JFrame {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        server = null;
     }
 
     /**

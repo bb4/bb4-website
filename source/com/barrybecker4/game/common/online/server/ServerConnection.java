@@ -1,8 +1,11 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.common.online;
+package com.barrybecker4.game.common.online.server;
 
 
 import com.barrybecker4.game.common.GameContext;
+import com.barrybecker4.game.common.online.GameCommand;
+import com.barrybecker4.game.common.online.OnlineChangeListener;
+import com.barrybecker4.game.common.online.OnlineGameTable;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerAction;
 
@@ -14,6 +17,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.AccessControlException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -181,12 +185,14 @@ public class ServerConnection implements IServerConnection {
             while (true) {
                 try {
                     GameCommand cmd = (GameCommand) inputStream_.readObject();
+                    GameContext.log(1, "Connection: got an update of the table from the server:\n" + cmd);
 
                     // we got a change to the tables on the server, update our client listeners.
-                    int num = changeListeners_.size();
-                    for (OnlineChangeListener aChangeListeners_ : changeListeners_)
+                    // @@ better fix for concurrent modification error
+                    List<OnlineChangeListener> list = Collections.unmodifiableList(changeListeners_);
+                    for (OnlineChangeListener aChangeListeners_ : list) {
                         aChangeListeners_.handleServerUpdate(cmd);
-
+                    }
                 }
                 catch (IOException e) {
                     GameContext.log(0, "Read failed. Breaking connection.");

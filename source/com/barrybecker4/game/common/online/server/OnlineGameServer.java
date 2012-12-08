@@ -1,8 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.common.online;
+package com.barrybecker4.game.common.online.server;
 
 import com.barrybecker4.common.CommandLineOptions;
 import com.barrybecker4.game.common.GameContext;
+import com.barrybecker4.game.common.online.GameCommand;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -248,7 +249,7 @@ public class OnlineGameServer  {
 
         if (verifyCmdLineOptions(options))  {
             String gameName = options.getValueForOption(GAME_OPTION);
-            OnlineGameServer server = new OnlineGameServer(gameName, null);
+            new OnlineGameServer(gameName, null);
         }
     }
 }

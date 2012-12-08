@@ -110,8 +110,6 @@ public abstract class MultiPlayerOnlineManagerPanel
      */
     @Override
     public void handleServerUpdate(GameCommand cmd) {
-
-        // check for null??
         tableManager.handleServerUpdate(cmd);
     }
 

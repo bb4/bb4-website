@@ -153,7 +153,7 @@ public abstract class GameBoardRenderer {
      */
     public void setGridColor( Color c ) {
         gridColor_ = c;
-        GameContext.log(1, "setting gridColor to " + c);
+        GameContext.log(3, "setting gridColor to " + c);
     }
 
     /**
