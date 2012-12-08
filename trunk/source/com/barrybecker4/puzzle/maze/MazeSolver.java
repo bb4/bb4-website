@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Solves a maze.
  * @author Barry Becker
  */
 public class MazeSolver {

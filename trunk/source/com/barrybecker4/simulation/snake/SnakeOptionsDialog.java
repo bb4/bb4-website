@@ -51,8 +51,6 @@ class SnakeOptionsDialog extends NewtonianSimOptionsDialog
         snakeParamPanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Snake Parameters" ) );
 
-        Snake snake = ((SnakeSimulator) getSimulator()).getSnake();
-
         ComboBoxModel snakeModel = new DefaultComboBoxModel(SnakeType.values());
         snakeCombo_ = new JComboBox(snakeModel);
         snakeCombo_.setToolTipText("Select a type of snake to show.");
@@ -61,7 +59,7 @@ class SnakeOptionsDialog extends NewtonianSimOptionsDialog
         waveTypeCombo_ = new JComboBox(waveModel);
         waveTypeCombo_.setToolTipText("Select a type of wave form to use for muscle contractions.");
 
-        LocomotionParameters params = snake.getLocomotionParams();
+        LocomotionParameters params = ((SnakeSimulator) getSimulator()).getLocomotionParams();
 
         waveSpeedField_ =
                 new NumberInput("Wave Speed (.001 slow - .9 fast):  ", params.getWaveSpeed(),
@@ -113,7 +111,7 @@ class SnakeOptionsDialog extends NewtonianSimOptionsDialog
         // set the snake params
         SnakeSimulator simulator = (SnakeSimulator) getSimulator();
 
-        LocomotionParameters params = simulator.getSnake().getLocomotionParams();
+        LocomotionParameters params = simulator.getLocomotionParams();
         params.setWaveSpeed(waveSpeedField_.getValue());
         params.setWaveAmplitude(waveAmplitudeField_.getValue());
         params.setWavePeriod(wavePeriodField_.getValue());

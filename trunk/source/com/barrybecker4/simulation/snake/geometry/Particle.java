@@ -14,16 +14,16 @@ import javax.vecmath.Vector2d;
 public class Particle extends Point2d {
 
     /** the velocity vector of the particle in m/s */
-    public Vector2d velocity = new Vector2d( 0.0, 0.0 );
+    public Vector2d velocity;
 
     /** the acceleration vector of the particle in m/s^2 */
-    public Vector2d acceleration = new Vector2d( 0.0, 0.0 );
+    public Vector2d acceleration;
 
     /** the force vector (sum of all forces acting on the particle) */
-    public Vector2d force = new Vector2d( 0.0, 0.0 );
+    public Vector2d force;
 
     /** the frictional force if used */
-    public Vector2d frictionalForce = new Vector2d( 0.0, 0.0 );
+    public Vector2d frictionalForce;
 
     /** the mass of the particle in kg*/
     public double mass = 0;
@@ -34,7 +34,10 @@ public class Particle extends Point2d {
      */
     public Particle( double x, double y, double m ) {
         super( x, y );
+        velocity = new Vector2d( 0.0, 0.0);
+        acceleration = new Vector2d( 0.0, 0.0 );
+        force = new Vector2d( 0.0, 0.0 );
+        frictionalForce = new Vector2d( 0.0, 0.0 );
         mass = m;
     }
-
 }

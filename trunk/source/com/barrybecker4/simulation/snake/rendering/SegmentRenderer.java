@@ -17,44 +17,46 @@ public class SegmentRenderer {
 
     // rendering attributes
     private static final Color FORCE_COLOR = new Color( 230, 0, 20, 100 );
-    private static final Color FRICTIONAL_FORCE_COLOR = new Color( 50, 10, 0, 200 );
+    private static final Color FRICTIONAL_FORCE_COLOR = new Color( 50, 10, 0, 70 );
     private static final Color VELOCITY_COLOR = new Color( 80, 100, 250, 100 );
 
     private static final double VECTOR_SIZE = 130.0;
     private static final BasicStroke VECTOR_STROKE = new BasicStroke( 1 );
 
+    private RenderingParameters renderParams = new RenderingParameters();
+    private EdgeRenderer edgeRenderer;
     private Graphics2D g;
 
     /**
      * constructor for the head segment
      */
-    public SegmentRenderer(Graphics2D g) {
-        this.g = g;
+    public SegmentRenderer(RenderingParameters params) {
+        renderParams = params;
+        edgeRenderer = new EdgeRenderer(params);
     }
 
     /**
      * @param segment the segment to render.
      */
-    public void render(Segment segment)  {
+    public void render(Segment segment, final Graphics2D g)  {
 
-        EdgeRenderer edgeRenderer = new EdgeRenderer(g);
-        Snake snake = segment.getSnake();
+        this.g = g;
+
         Edge[] edges = segment.getEdges();
         Particle[] particles = segment.getParticles();
-        RenderingParameters renderParams = snake.getRenderingParams();
 
         if (renderParams.getDrawMesh()) {
             for ( int i = 0; i < edges.length; i++ ) {
-                if ( i != 3 ) edgeRenderer.render(edges[i] );
+                if ( i != 3 ) edgeRenderer.render(edges[i], g);
             }
         }
         else {
-            edgeRenderer.render(edges[0]);
-            edgeRenderer.render(edges[2]);
+            edgeRenderer.render(edges[0], g);
+            edgeRenderer.render(edges[2], g);
         }
 
-        if ( segment.isHead() ) edgeRenderer.render(edges[1]);
-        if ( segment.isTail() ) edgeRenderer.render(edges[3]);
+        if ( segment.isHead() ) edgeRenderer.render(edges[1], g);
+        if ( segment.isTail() ) edgeRenderer.render(edges[3], g);
 
         // draw the force and velocity vectors acting on each particle
         if (renderParams.getShowForceVectors()) {
@@ -68,30 +70,34 @@ public class SegmentRenderer {
 
     private void renderForceVectors(Particle[] particles) {
         g.setStroke( VECTOR_STROKE );
-
         g.setColor( FORCE_COLOR );
+        double scale = renderParams.getScale();
+
         for (Particle particle : particles) {
-            g.drawLine((int) particle.x, (int) particle.y,
-                    (int) (particle.x + VECTOR_SIZE * particle.force.x),
-                    (int) (particle.y + VECTOR_SIZE * particle.force.y));
+            int x = (int) (scale * particle.x);
+            int y = (int) (scale * particle.y);
+            g.drawLine(x, y,
+                    (int) (x + VECTOR_SIZE * particle.force.x),
+                    (int) (y + VECTOR_SIZE * particle.force.y));
         }
 
         g.setColor( FRICTIONAL_FORCE_COLOR );
         for (Particle particle : particles) {
-            g.drawLine((int) particle.x, (int) particle.y,
-                    (int) (particle.x + VECTOR_SIZE * particle.frictionalForce.x),
-                    (int) (particle.y + VECTOR_SIZE * particle.frictionalForce.y));
+            g.drawLine((int) (scale * particle.x), (int) (scale * particle.y),
+                    (int) (scale * particle.x + VECTOR_SIZE * particle.frictionalForce.x),
+                    (int) (scale * particle.y + VECTOR_SIZE * particle.frictionalForce.y));
         }
     }
 
     private void renderVelocityVectors(Particle[] particles) {
         g.setStroke( VECTOR_STROKE );
-
         g.setColor( VELOCITY_COLOR );
+        double scale = renderParams.getScale();
+
         for (Particle particle : particles) {
-            g.drawLine((int) particle.x, (int) particle.y,
-                    (int) (particle.x + VECTOR_SIZE * particle.velocity.x),
-                    (int) (particle.y + VECTOR_SIZE * particle.velocity.y));
+            g.drawLine((int) (scale * particle.x), (int) (scale * particle.y),
+                    (int) (scale * particle.x + VECTOR_SIZE * particle.velocity.x),
+                    (int) (scale * particle.y + VECTOR_SIZE * particle.velocity.y));
         }
     }
 }

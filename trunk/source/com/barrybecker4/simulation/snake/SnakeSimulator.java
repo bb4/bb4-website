@@ -15,6 +15,8 @@ import com.barrybecker4.simulation.common.ui.NewtonianSimulator;
 import com.barrybecker4.simulation.common.ui.SimulatorOptionsDialog;
 import com.barrybecker4.simulation.snake.data.ISnakeData;
 import com.barrybecker4.simulation.snake.data.LongSnakeData;
+import com.barrybecker4.simulation.snake.rendering.RenderingParameters;
+import com.barrybecker4.simulation.snake.rendering.SnakeRenderer;
 import com.barrybecker4.ui.util.GUIUtil;
 
 import javax.swing.*;
@@ -39,6 +41,7 @@ public class SnakeSimulator extends NewtonianSimulator {
     private static final ParameterArray INITIAL_PARAMS = new NumericParameterArray( PARAMS);
 
     private Snake snake_ = new Snake(new LongSnakeData());
+    private SnakeUpdater updater = new SnakeUpdater();
 
     /** change in center of the snake between time steps */
     private Point2d oldCenter_;
@@ -60,6 +63,9 @@ public class SnakeSimulator extends NewtonianSimulator {
     private static final Color GRID_COLOR = new Color( 0, 0, 60, 100 );
 
     private Color gridColor_ = GRID_COLOR;
+
+    private RenderingParameters renderParams = new RenderingParameters();
+    private SnakeRenderer renderer;
 
 
     public SnakeSimulator() {
@@ -89,6 +95,7 @@ public class SnakeSimulator extends NewtonianSimulator {
 
     private void commonInit() {
         oldCenter_ = snake_.getCenter();
+        renderer = new SnakeRenderer(renderParams);
         setNumStepsPerFrame(NUM_STEPS_PER_FRAME);
 
         this.setPreferredSize(new Dimension( (int) (CELL_SIZE * XDIM), (int) (CELL_SIZE * YDIM)) );
@@ -96,66 +103,66 @@ public class SnakeSimulator extends NewtonianSimulator {
     }
 
     public LocomotionParameters getLocomotionParams() {
-        return snake_.getLocomotionParams();
+        return updater.getLocomotionParams();
     }
 
     @Override
     public void setScale( double scale ) {
-        snake_.getRenderingParams().setScale(scale);
+        renderParams.setScale(scale);
     }
 
     @Override
     public double getScale() {
-        return snake_.getRenderingParams().getScale();
+        return renderParams.getScale();
     }
 
     @Override
     public void setShowVelocityVectors(boolean show) {
-        snake_.getRenderingParams().setShowVelocityVectors(show);
+        renderParams.setShowVelocityVectors(show);
     }
     @Override
     public boolean getShowVelocityVectors() {
-        return snake_.getRenderingParams().getShowVelocityVectors();
+        return renderParams.getShowVelocityVectors();
     }
 
     @Override
     public void setShowForceVectors( boolean show ) {
-        snake_.getRenderingParams().setShowForceVectors(show);
+        renderParams.setShowForceVectors(show);
     }
     @Override
     public boolean getShowForceVectors() {
-        return snake_.getRenderingParams().getShowForceVectors();
+        return renderParams.getShowForceVectors();
     }
 
     @Override
     public void setDrawMesh( boolean use ) {
-        snake_.getRenderingParams().setDrawMesh(use);
+        renderParams.setDrawMesh(use);
     }
     @Override
     public boolean getDrawMesh() {
-        return snake_.getRenderingParams().getDrawMesh();
+        return renderParams.getDrawMesh();
     }
 
     @Override
     public void setStaticFriction( double staticFriction ) {
-        snake_.getLocomotionParams().setStaticFriction( staticFriction );
+        updater.getLocomotionParams().setStaticFriction( staticFriction );
     }
     @Override
     public double getStaticFriction() {
-        return snake_.getLocomotionParams().getStaticFriction();
+        return updater.getLocomotionParams().getStaticFriction();
     }
 
     @Override
     public void setDynamicFriction( double dynamicFriction ) {
-        snake_.getLocomotionParams().setDynamicFriction(dynamicFriction);
+        updater.getLocomotionParams().setDynamicFriction(dynamicFriction);
     }
     @Override
     public double getDynamicFriction() {
-        return snake_.getLocomotionParams().getDynamicFriction();
+        return updater.getLocomotionParams().getDynamicFriction();
     }
 
     public void setDirection(double direction) {
-        snake_.getLocomotionParams().setDirection(direction);
+        updater.getLocomotionParams().setDirection(direction);
     }
 
     @Override
@@ -178,7 +185,7 @@ public class SnakeSimulator extends NewtonianSimulator {
     @Override
     public double timeStep() {
         if ( !isPaused() ) {
-            timeStep_ = snake_.stepForward( timeStep_ );
+            timeStep_ = updater.stepForward( snake_, timeStep_ );
         }
         return timeStep_;
     }
@@ -201,16 +208,13 @@ public class SnakeSimulator extends NewtonianSimulator {
 
         // draw the snake on the grid
         snake_.translate( distanceDelta );
-        snake_.render( g2 );
+
+        renderer.render(snake_, g2);
 
         oldCenter_ = snake_.getCenter();
     }
 
     // api for setting snake params  /////////////////////////////////
-
-    public Snake getSnake() {
-        return snake_;
-    }
 
     @Override
     protected SimulatorOptionsDialog createOptionsDialog() {
@@ -232,7 +236,7 @@ public class SnakeSimulator extends NewtonianSimulator {
     @Override
     public double evaluateFitness( ParameterArray params ) {
 
-        LocomotionParameters locoParams = snake_.getLocomotionParams();
+        LocomotionParameters locoParams = updater.getLocomotionParams();
         locoParams.setWaveSpeed( params.get( 0 ).getValue() );
         locoParams.setWaveAmplitude( params.get( 1 ).getValue() );
         locoParams.setWavePeriod( params.get( 2 ).getValue() );

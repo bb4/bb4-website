@@ -25,6 +25,7 @@ class SnakeDynamicOptions extends JPanel
     private static final String MASS_SCALE_SLIDER = "Mass Scale";
     private static final String SPRING_CONST_SLIDER = "Spring Constant";
     private static final String SPRING_DAMPING_SLIDER = "Spring Damping";
+    private static final String SCALE_SLIDER = "Scale";
     private static final String TIMESTEP_SLIDER = "Time Step Size";
 
     private SliderGroup sliderGroup_;
@@ -63,6 +64,7 @@ class SnakeDynamicOptions extends JPanel
                 new SliderProperties(MASS_SCALE_SLIDER, 0.1, 6.0, params.getMassScale(), 100),
                 new SliderProperties(SPRING_CONST_SLIDER, 0.1, 4.0, params.getSpringK(), 100),
                 new SliderProperties(SPRING_DAMPING_SLIDER, 0.1, 4.0, params.getSpringDamping(), 100),
+                new SliderProperties(SCALE_SLIDER, 0.2, 2.0, snakeSim_.getScale(), 100),
                 new SliderProperties(TIMESTEP_SLIDER, 0.001, 0.5, SnakeSimulator.INITIAL_TIME_STEP, 1000)};
          return sliderProps;
     }
@@ -99,6 +101,9 @@ class SnakeDynamicOptions extends JPanel
         }
         else if (sliderName.equals(SPRING_DAMPING_SLIDER)) {
             params.setSpringDamping(value);
+        }
+        else if (sliderName.equals(SCALE_SLIDER)) {
+            snakeSim_.setScale(value);
         }
         else if (sliderName.equals(TIMESTEP_SLIDER)) {
             snakeSim_.setTimeStep(value);

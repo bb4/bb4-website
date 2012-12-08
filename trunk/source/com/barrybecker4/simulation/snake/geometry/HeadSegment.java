@@ -22,7 +22,7 @@ public class HeadSegment extends Segment {
         length_ = length;
         halfLength_ = length_ / 2.0;
         commonInit( width1, width2, xpos, ypos, segmentIndex, snake );
-        double scale = snake.getRenderingParams().getScale();
+        double scale = 1.0; //snake.getRenderingParams().getScale();
 
         particles_[1] = new Particle( xpos + halfLength_, ypos + scale * width1 / 2.0, particleMass_ );
         particles_[2] = new Particle( xpos + halfLength_, ypos - scale * width1 / 2.0, particleMass_ );
