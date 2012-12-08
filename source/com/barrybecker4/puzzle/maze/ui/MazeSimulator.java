@@ -95,9 +95,6 @@ public class MazeSimulator extends ApplicationApplet
      * and current size of the panel.
      */
     public void regenerate() {
-        //if ( controlPanel_ == null )   {
-        //    return; // not initialized yet
-        //}
 
         int thickness = controlPanel_.getThickness();
 

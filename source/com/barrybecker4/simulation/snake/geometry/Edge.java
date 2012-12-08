@@ -24,26 +24,25 @@ public class Edge {
     /** the damping coefficient */
     private static final double D = 1.2; // default
 
-    private static final double EPS = 0.00000017287893433;
-
     /** the spring constant K (large K = stiffer) */
     private double k_;
+
     /** damping constant  */
     private double damping;
 
     /** the resting magnitude of the spring  */
-    private double restingLength_;
+    private double restingLength;
 
-    /** usually the effectiveLength_ is the same as restingLength_ except when muscular contraction are happening  */
-    private double effectiveLength_;
+    /** usually the effectiveLength is the same as restingLength except when muscular contraction are happening  */
+    private double effectiveLength;
 
     /** the current magnitude of the spring */
-    private double length_;
+    private double length;
 
     /** these act like temporary variables for some calculations avoiding many object constructions */
-    private final Vector2d direction_ = new Vector2d();
-    private final Vector2d force_ = new Vector2d();
-    private final Vector2d damping_ = new Vector2d();
+    private final Vector2d direction = new Vector2d();
+    private final Vector2d force = new Vector2d();
+    private final Vector2d dampingVec = new Vector2d();
 
     /**
      * Constructor - assumes defaults for the spring constant and damping
@@ -63,11 +62,11 @@ public class Edge {
     }
 
     public double getRestingLength() {
-        return restingLength_;
+        return restingLength;
     }
 
     public double getLength() {
-        return length_;
+        return length;
     }
 
 
@@ -78,14 +77,14 @@ public class Edge {
 
         k_ = k;
         damping = d;
-        restingLength_ = firstParticle_.distance( secondParticle_ );
-        effectiveLength_ = restingLength_;
-        length_ = restingLength_; // current magnitude
+        restingLength = firstParticle_.distance( secondParticle_ );
+        effectiveLength = restingLength;
+        length = restingLength; // current magnitude
     }
 
     /**
      *  This method simulates the contraction or expansion of a muscle
-     *  the rest magnitude restingLength_ is effectively changed by the contraction factor.
+     *  the rest magnitude restingLength is effectively changed by the contraction factor.
      *  @param contraction the amount that the spring model for the edge is contracting
      */
     public void setContraction( double contraction )  {
@@ -93,7 +92,7 @@ public class Edge {
             throw new IllegalArgumentException( "Error contraction <=0 = "+contraction );
             //contraction = EPS;
         }
-        effectiveLength_ = contraction * restingLength_;
+        effectiveLength = contraction * restingLength;
     }
 
     /**
@@ -104,43 +103,44 @@ public class Edge {
      * @return the computed force exerted on the particle.
      */
     public Vector2d getForce() {
-        force_.set( secondParticle_ );
-        force_.sub( firstParticle_ );
-        direction_.set( force_ );
-        direction_.normalize();
+        force.set(secondParticle_);
+        force.sub(firstParticle_);
+        direction.set(force);
+        direction.normalize();
 
         // adjust the force by the damping term
-        damping_.set( secondParticle_.velocity );
-        damping_.sub( firstParticle_.velocity );
-        double d = damping * damping_.dot( direction_ );
+        dampingVec.set(secondParticle_.velocity);
+        dampingVec.sub(firstParticle_.velocity);
+        double halfEffectiveL = effectiveLength / 2.0;
+        double damp = damping * dampingVec.dot(direction);
 
-        double halfEffectiveL = effectiveLength_ / 2.0;
-
-        length_ = force_.length();
+        length = force.length();
         // never let the force get too great or too small
-        if ( length_ > 2.0 * effectiveLength_)
-            force_.scale( (-k_ * (effectiveLength_ - length_) * (effectiveLength_ - length_) / effectiveLength_ - d) );
-        else if ( length_ < halfEffectiveL ) {
+        if ( length > 2.0 * effectiveLength)
+            force.scale( (-k_ * (effectiveLength - length) * (effectiveLength - length) / effectiveLength - damp) );
+        else if ( length < halfEffectiveL ) {
             // prevent the springs from getting too compressed
-            force_.scale( (k_ * (restingLength_ - length_) + k_ * 100000.0 * (halfEffectiveL - length_) / halfEffectiveL - d) );
+            double lengthDiff =  restingLength - length;
+            force.scale(k_ * (lengthDiff + 100000.0 * (halfEffectiveL - length)) / halfEffectiveL - damp);
         }
         else {
+
             //if (d>1.0)
-            //   System.out.println("f="+k_*(effectiveLength_-length_)+" - d="+d);
-            force_.scale( (k_ * (effectiveLength_ - length_) - d) );
+            //   System.out.println("f="+k_*(effectiveLength-length)+" - d="+d);
+            force.scale( (k_ * (effectiveLength - length) - damp) );
         }
 
-        return force_;
+        return force;
     }
 
     /**
      * A unit vector in the direction p2-p1
      */
     public Vector2d getDirection() {
-        direction_.set( secondParticle_ );
-        direction_.sub( firstParticle_ );
-        direction_.normalize();
-        return direction_;
+        direction.set(secondParticle_);
+        direction.sub(firstParticle_);
+        direction.normalize();
+        return direction;
     }
 
     public boolean intersects( Rectangle2D.Double rect ) {

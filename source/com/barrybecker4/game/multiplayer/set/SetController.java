@@ -255,11 +255,11 @@ public class SetController extends MultiGameController {
 
     /**
      *  @return the player that goes first.
-     */
+     *
     @Override
     public Player getFirstPlayer() {
         GameContext.log(0,"There is not actual first player in set");
         return null;
-    }
+    }  */
 
 }

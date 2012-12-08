@@ -16,6 +16,7 @@ public final class EdgeRenderer {
 
     private static final double EDGE_SCALE = 30.0;
 
+
     /** show the edge different colors depending on percentage stretched  ( one being 100% stretched)  */
     private static final double stretchVals_[] = {0.3, 0.9, 1.0, 1.1, 3.0};
     private static final Color stretchColors_[] = {
@@ -28,27 +29,32 @@ public final class EdgeRenderer {
     private static final ColorMap stretchColorMap_ =
             new ColorMap( stretchVals_, stretchColors_ );
 
-    private Graphics2D graphics;
+    private RenderingParameters renderParams;
 
     /**
      * Constructor
      */
-    public EdgeRenderer( Graphics2D g) {
-        this.graphics = g;
+    public EdgeRenderer(RenderingParameters params) {
+        renderParams = params;
     }
 
-    public void render(Edge edge) {
+    public void render(Edge edge, Graphics2D g) {
         //graphics.setColor(EDGE_COLOR);
-        graphics.setColor( stretchColorMap_.getColorForValue( edge.getLength() / edge.getRestingLength() ) );
+        g.setColor( stretchColorMap_.getColorForValue( edge.getLength() / edge.getRestingLength() ) );
 
         double ratio = edge.getRestingLength() / edge.getLength();
         double width = EDGE_SCALE * Math.max(0, (ratio - 0.95));
         BasicStroke stroke =
                 new BasicStroke( (float) width );
-        graphics.setStroke( stroke );
+        g.setStroke( stroke );
+        double scale = renderParams.getScale();
         Particle part1 = edge.getFirstParticle();
         Particle part2 = edge.getSecondParticle();
-        graphics.drawLine((int) part1.x, (int) part1.y,
-                          (int) part2.x, (int) part2.y);
+        int x1 = (int) (scale * part1.x);
+        int y1 = (int) (scale * part1.y);
+        int x2 = (int) (scale * part2.x);
+        int y2 = (int) (scale * part2.y);
+
+        g.drawLine(x1, y1, x2, y2);
     }
 }

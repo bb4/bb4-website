@@ -17,7 +17,7 @@ import java.util.List;
 public class StateStack extends LinkedList<GenState> {
 
     /**
-     * From currentPosition try moving in each direction in a random order.
+     * From currentPosition, try moving in each direction in a random order.
      * Assigning different probabilities to the order in which we check these directions
      * can give interesting effects.
      */

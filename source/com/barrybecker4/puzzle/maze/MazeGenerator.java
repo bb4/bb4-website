@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.maze;
 
-import com.barrybecker4.common.concurrency.ThreadUtil;
 import com.barrybecker4.common.geometry.IntLocation;
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.puzzle.maze.model.Direction;
@@ -30,7 +29,7 @@ public class MazeGenerator {
     /** put the stop point at the maximum search depth. */
     private int maxDepth_ = 0;
 
-
+    /** Constructor */
     public MazeGenerator(MazePanel panel) {
         maze_ = panel.getMaze();
         panel_ = panel;
@@ -80,12 +79,15 @@ public class MazeGenerator {
         }
     }
 
+    /** find the next cell to visit, given the last cell */
     private MazeCell findNextCell(MazeCell lastCell) {
+
+        boolean moved = false;
+
         IntLocation currentPosition;
         MazeCell nextCell;
         int depth;
         IntLocation dir;
-        boolean moved = false;
 
         do {
             GenState state = stack.remove(0);  // pop
@@ -128,13 +130,13 @@ public class MazeGenerator {
 
     private void addWall(MazeCell currentCell, IntLocation dir, MazeCell nextCell) {
         // add a wall
-        if ( dir.getX() == 1 ) {// east
+        if ( dir.getX() == 1 ) {         // east
             currentCell.eastWall = true;
-        } else if ( dir.getY() == 1 ) { // south
+        } else if ( dir.getY() == 1 ) {  // south
             currentCell.southWall = true;
         } else if ( dir.getX() == -1 )  { // west
             nextCell.eastWall = true;
-        } else if ( dir.getY() == -1 ) { // north
+        } else if ( dir.getY() == -1 ) {  // north
             nextCell.southWall = true;
         }
     }
@@ -146,6 +148,5 @@ public class MazeGenerator {
             panel_.paintAll();
         }
     }
-
 
 }
