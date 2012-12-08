@@ -13,11 +13,13 @@ import com.barrybecker4.game.multiplayer.trivial.player.TrivialRobotPlayer;
 
 /**
  * Defines everything the computer needs to know to play Trivial game.
+ * In this simplistic game, players either keep their card hidden or revealed
+ * when it is their turn. When all cards are revealed the highest value card
+ * wins. The purpose is to test multi-player poker without all the poker rules.
  *
  * @author Barry Becker
  */
-public class TrivialController extends MultiGameController
-{
+public class TrivialController extends MultiGameController {
 
     private static final int DEFAULT_NUM_ROWS = 32;
     private static final int DEFAULT_NUM_COLS = 32;
@@ -26,10 +28,9 @@ public class TrivialController extends MultiGameController
 
 
     /**
-     *  Construct the game controller
+     * Construct the game controller
      */
-    public TrivialController()
-    {
+    public TrivialController() {
         super(DEFAULT_NUM_ROWS, DEFAULT_NUM_COLS);
     }
 
@@ -37,8 +38,7 @@ public class TrivialController extends MultiGameController
      *  Construct the game controller given an initial board size
      */
     @Override
-    protected Board createTable(int nrows, int ncols )
-    {
+    protected Board createTable(int nrows, int ncols) {
         return new TrivialTable(nrows, ncols);
     }
 
@@ -52,8 +52,7 @@ public class TrivialController extends MultiGameController
      * by default we start with one human and one robot player.
      */
     @Override
-    protected void initPlayers()
-    {
+    protected void initPlayers() {
         // we just init the first time.
         // After that, they can change manually to get different players.
         if (getPlayers() == null) {
@@ -128,8 +127,7 @@ public class TrivialController extends MultiGameController
      * @return the index of the next player
      */
     @Override
-    public int advanceToNextPlayerIndex()
-    {
+    public int advanceToNextPlayerIndex() {
         playIndex_++;
         MultiGamePlayer player;
         do {

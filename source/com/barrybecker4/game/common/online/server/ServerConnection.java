@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.online.server;
 
-
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
@@ -14,11 +13,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Opens a socket to the Game server from the client so we can talk to it.
@@ -39,14 +40,18 @@ public class ServerConnection implements IServerConnection {
 
     private boolean isConnected_ = false;
 
-    /** a list of things that want to hear about broadcasts form the server about changed game state. */
+    /** a list of things that want to hear about broadcasts from the server about changed game state. */
     private List<OnlineChangeListener> changeListeners_;
 
     /**
+     * Constructor
+     * Note that the list of listeners is a CopyOnWriteArrayList to
+     * avoid ConcurrentModificationErrors when we iterate over the list when
+     * new listeners may be added concurrently.
      * @param port to open the connection on.
      */
     public ServerConnection(int port) {
-        changeListeners_ = new ArrayList<OnlineChangeListener>();
+        changeListeners_ = new CopyOnWriteArrayList<OnlineChangeListener>();
         createListenSocket(port);
     }
 
@@ -66,13 +71,13 @@ public class ServerConnection implements IServerConnection {
     }
 
     /**
+     * Send data over the socket to the server using the output stream.
      * @param cmd object to serialize over the wire.
      */
     public void sendCommand(GameCommand cmd)  {
 
         try {
-            // Send data over socket
-            assert(oStream_!=null && cmd!=null): "No socket: oStream="+ oStream_ +" cmd=" + cmd;
+            assert(oStream_ != null && cmd != null) : "No socket: oStream="+ oStream_ +" cmd=" + cmd;
             oStream_.writeObject(cmd);
             oStream_.flush();
         }
@@ -106,7 +111,6 @@ public class ServerConnection implements IServerConnection {
              GameContext.log(0, "failed to get connection. " +
                                 "Probably because the server is not running or accessable. " +
                                 "Playing a local game instead. " + e.getMessage());
-            //e.printStackTrace();
             isConnected_ = false;
         }
         catch (UnknownHostException e) {
@@ -187,15 +191,16 @@ public class ServerConnection implements IServerConnection {
                     GameCommand cmd = (GameCommand) inputStream_.readObject();
                     GameContext.log(1, "Connection: got an update of the table from the server:\n" + cmd);
 
-                    // we got a change to the tables on the server, update our client listeners.
-                    // @@ better fix for concurrent modification error
-                    List<OnlineChangeListener> list = Collections.unmodifiableList(changeListeners_);
-                    for (OnlineChangeListener aChangeListeners_ : list) {
+                    for (OnlineChangeListener aChangeListeners_ : changeListeners_) {
                         aChangeListeners_.handleServerUpdate(cmd);
                     }
                 }
+                catch (SocketException e) {
+                    GameContext.log(0, "Read failed (probably because player closed client).  Breaking connection.");
+                    isConnected_ = false;
+                }
                 catch (IOException e) {
-                    GameContext.log(0, "Read failed. Breaking connection.");
+                    GameContext.log(0, "Read failed.  Breaking connection.");
                     isConnected_ = false;
                     e.printStackTrace();
                     break;

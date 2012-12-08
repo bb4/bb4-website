@@ -56,8 +56,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class PokerController extends MultiGameController
-{
+public class PokerController extends MultiGameController {
 
     private static final int DEFAULT_NUM_ROWS = 32;
     private static final int DEFAULT_NUM_COLS = 32;
