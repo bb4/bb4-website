@@ -3,7 +3,7 @@ package com.barrybecker4.game.common.ui.panel;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.online.ui.ChatWindow;
+import com.barrybecker4.game.common.online.ui.ChatPanel;
 import com.barrybecker4.ui.components.TexturedPanel;
 import com.barrybecker4.ui.util.GUIUtil;
 
@@ -48,14 +48,14 @@ public abstract class GameInfoPanel extends TexturedPanel
         createSubPanels();
 
         if (controller_.isOnlinePlayAvailable())  {
-            ChatWindow chat = new ChatWindow(controller_.getServerConnection());
+            ChatPanel chat = new ChatPanel(controller_.getServerConnection());
             chat.setPreferredSize(new Dimension( getMinWidth(), MAX_HEIGHT));
             add( chat );
         }
         else {
             // this pushes everything to the top
             JPanel filler = createPanel();
-            filler.setPreferredSize(new Dimension( getMinWidth(), MAX_HEIGHT));
+            filler.setPreferredSize(new Dimension(getMinWidth(), MAX_HEIGHT));
             add( filler );
         }
     }

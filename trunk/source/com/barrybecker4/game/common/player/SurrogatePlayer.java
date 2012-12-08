@@ -2,7 +2,7 @@
 package com.barrybecker4.game.common.player;
 
 import com.barrybecker4.game.common.online.GameCommand;
-import com.barrybecker4.game.common.online.IServerConnection;
+import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
 
 /**

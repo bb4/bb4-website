@@ -5,12 +5,15 @@ import com.barrybecker4.game.card.Card;
 import com.barrybecker4.game.card.Rank;
 import com.barrybecker4.game.card.Suit;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * @author Barry Becker
  */
-public class PokerHand implements Comparable {
+public class PokerHand implements Comparable, Serializable {
+
+    private static final long serialVersionUID = 1;
 
     private List<Card> hand_;
     private Map matchMap_;

@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * My own custom UI theme.
- * @author  barrybecker4
+ * @author  Barry Becker
  */
 public class BarryTheme extends DefaultMetalTheme {
 

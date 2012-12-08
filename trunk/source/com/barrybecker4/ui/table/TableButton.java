@@ -49,7 +49,7 @@ public class TableButton extends GradientButton
      * Constructor
      *
      * @param columnIndex the column that has the label to show in the button.
-     * @param id          used to identify the button clicked in the tableButton handler.
+     * @param id   used to identify the button clicked in the tableButton handler.
      */
     public TableButton(int columnIndex, String id) {
         id_ = id;
@@ -59,7 +59,7 @@ public class TableButton extends GradientButton
 
     private void commonInit() {
         listeners = new ArrayList<TableButtonListener>();
-        this.addActionListener(new ActionListener() {
+        addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 for (TableButtonListener l : listeners) {
                     l.tableButtonClicked(selectedRow, selectedColumn, id_);

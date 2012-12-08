@@ -13,16 +13,14 @@ import com.barrybecker4.ui.table.TableButtonListener;
 /**
  * Show Trivial specific game options in the table row.
  *
- * @author Barry Becker Date: May 13, 2006
+ * @author Barry Becker
  */
 public class TrivialOnlineGameTablesTable extends MultiPlayerOnlineGameTablesTable {
-
 
     private static final String[] TRIVIAL_COLUMN_NAMES = {JOIN, MIN_NUM_PLAYERS, PLAYER_NAMES};
 
     /**
-     *
-     * @param actionListener  that gets called when the player selects a different table to join.
+     * @param tableButtonListener  that gets called when the player selects a different table to join.
      */
     public TrivialOnlineGameTablesTable(TableButtonListener tableButtonListener) {
          super(TRIVIAL_COLUMN_NAMES, tableButtonListener);
@@ -30,12 +28,12 @@ public class TrivialOnlineGameTablesTable extends MultiPlayerOnlineGameTablesTab
 
 
     @Override
-    protected Object[] getRowObject(OnlineGameTable onlineTable, boolean localPlayerAtTable)
-    {
+    protected Object[] getRowObject(OnlineGameTable onlineTable, boolean localPlayerAtTable) {
+
         Object d[] = new Object[getNumColumns()];
         // false if active player is in this table.
-        // You cannot join a table you are already at
-        d[JOIN_INDEX] = !localPlayerAtTable;
+        // You cannot join a table that you are already at
+        d[JOIN_INDEX] = localPlayerAtTable ? "Leave" : "Join";
         d[NUM_PLAYERS_INDEX] = onlineTable.getNumPlayersNeeded();
         d[PLAYER_NAMES_INDEX] = onlineTable.getPlayerNames();
         TrivialOptions options = (TrivialOptions) onlineTable.getGameOptions();

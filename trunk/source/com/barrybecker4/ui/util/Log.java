@@ -59,28 +59,17 @@ public class Log implements ILog {
      */
     public void setDestination( int logDestination ) {
         logDestination_ = logDestination;
+        System.out.println("log.setDestination vis="+ (logDestination_ == LOG_TO_WINDOW));
         if ( logWindow_ != null ) {
-            if ( logDestination_ == LOG_TO_WINDOW )
-                logWindow_.setVisible(true);
-            else
-                logWindow_.setVisible(false);
+            logWindow_.setVisible(logDestination_ == LOG_TO_WINDOW);
         }
     }
-
-    /**
-     * @param w The static log window to send the output to.
-     */
-    public void setLogWindow( OutputWindow w ) {
-        logWindow_ = w;
-    }
-
 
     public void setLogFile( String fileName ) throws FileNotFoundException {
         fileOutStream_ = new BufferedOutputStream(new FileOutputStream(fileName));
     }
 
-    public void setStringBuilder(StringBuilder bldr)
-    {
+    public void setStringBuilder(StringBuilder bldr)  {
         logBuffer_ = bldr;
     }
 
@@ -117,7 +106,9 @@ public class Log implements ILog {
                 if (logBuffer_ != null)  {
                     logBuffer_.append(message);
                 }
-                else System.err.println("no StringBuilder buffer was set to print to. First specify with setStringBuilder.  message="+message);
+                else System.err.println(
+                        "no StringBuilder buffer was set to print to. First specify with setStringBuilder.  " +
+                        "message="+message);
             }
         }
     }

@@ -2,7 +2,7 @@
 package com.barrybecker4.game.common.online.ui;
 
 import com.barrybecker4.game.common.online.GameCommand;
-import com.barrybecker4.game.common.online.IServerConnection;
+import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
 
 import javax.swing.*;
@@ -15,14 +15,14 @@ import java.awt.event.KeyListener;
  *
  * @author Barry Becker
  */
-public class ChatWindow extends JPanel implements OnlineChangeListener, KeyListener {
+public class ChatPanel extends JPanel implements OnlineChangeListener, KeyListener {
 
     private IServerConnection connection_;
     private final JTextArea textArea_;
     private final JScrollPane scrollPane_;
     private JTextField messageField_;
 
-    public ChatWindow(IServerConnection connection) {
+    public ChatPanel(IServerConnection connection) {
         setLayout(new BorderLayout());
         connection_ = connection;
         connection_.addOnlineChangeListener(this);

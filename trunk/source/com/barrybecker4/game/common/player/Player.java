@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.player;
 
-import com.barrybecker4.game.common.online.IServerConnection;
+import com.barrybecker4.game.common.online.server.IServerConnection;
 
 import java.awt.*;
 import java.io.Serializable;

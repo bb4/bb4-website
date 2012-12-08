@@ -149,6 +149,7 @@ public abstract class GamePanel extends TexturedPanel
         boardViewer_ = createBoardViewer();
 
         OutputWindow logWindow = new OutputWindow( GameContext.getLabel("LOG_OUTPUT"), null);
+        System.out.println("setting the logger to new window");
         GameContext.setLogger( new Log(logWindow) );
 
         newGameDialog_ = createNewGameDialog( parent, boardViewer_ );

@@ -1,9 +1,12 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.common.online;
+package com.barrybecker4.game.common.online.server;
 
 import com.barrybecker4.common.ClassLoaderSingleton;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
+import com.barrybecker4.game.common.online.GameCommand;
+import com.barrybecker4.game.common.online.OnlineGameTable;
+import com.barrybecker4.game.common.online.OnlineGameTableList;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.plugin.PluginManager;
@@ -171,7 +174,7 @@ class ServerCommandProcessor {
      */
     private void startGame(OnlineGameTable table) {
 
-        GameContext.log(1, "NOW starting game on Server! "+ table);
+        GameContext.log(1, "Now starting game on Server! "+ table);
 
         // Create players from the table and start.
         PlayerList players = table.getPlayers();

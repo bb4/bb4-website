@@ -75,15 +75,17 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
 
         // more space needed for the names list.
         columnMeta[PLAYER_NAMES_INDEX].setPreferredWidth(200);
+        columnMeta[PLAYER_NAMES_INDEX].setTooltip(PLAYER_NAMES_TIP);
 
         TableColumnMeta actionCol = columnMeta[JOIN_INDEX];
+        actionCol.setTooltip("Select which table you want to joint");
 
         TableButton joinCellEditor = new TableButton(GameContext.getLabel("JOIN"), "id");
         joinCellEditor.addTableButtonListener(tableButtonListener_);
         joinCellEditor.setToolTipText(JOIN_TIP);
         actionCol.setCellRenderer(joinCellEditor);
         actionCol.setCellEditor(joinCellEditor);
-        actionCol.setPreferredWidth(55);
+        actionCol.setPreferredWidth(70);
     }
 
     @Override
@@ -102,7 +104,6 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     public OnlineGameTable getSelectedTable() {
         return selectedTable_;
     }
-
 
     public BasicTableModel getPlayerModel() {
         return (BasicTableModel)getModel();
@@ -161,7 +162,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
 
 
     protected static synchronized String getUniqueName() {
-          return "Table "+ counter_++;
+          return "Table " + counter_++;
     }
 
      protected static Color getRandomColor() {

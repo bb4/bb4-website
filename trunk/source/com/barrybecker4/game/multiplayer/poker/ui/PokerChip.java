@@ -9,11 +9,11 @@ import java.awt.*;
  */
 public enum PokerChip {
 
-    FIVE_HUNDRED("500 Dollar Chip", 500, new Color(200, 0, 180), 1000, 500),
-    TWENTY_FIVE("25 Dollar Chip", 25, Color.GREEN, 300, 200),
-    TEN("Ten Dollar Chip", 10, Color.BLUE, 100, 70),
-    FIVE("Five Dollar Chip", 5, Color.RED, 20, 15),
-    ONE("One Dollar Chip", 1, Color.WHITE, 1, 1);
+    FIVE_HUNDRED("500 Dollar Chip", 500, new Color(220, 0, 200), 1000, 500),
+    TWENTY_FIVE("25 Dollar Chip", 25, new Color(0, 200, 10), 300, 200),
+    TEN("Ten Dollar Chip", 10, new Color(0, 80, 255), 100, 70),
+    FIVE("Five Dollar Chip", 5, new Color(200, 0, 0), 20, 15),
+    ONE("One Dollar Chip", 1, new Color(255, 200, 0), 1, 1);
 
     private final String label_;
 
