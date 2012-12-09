@@ -1,14 +1,11 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.poker;
-
-
+package com.barrybecker4.game.multiplayer.poker.hand;
 
 /**
- * User: Barry Becker
- * Date: Feb 26, 2005
- * Time: 6:16:43 AM
+ * Types of poker hands. For example, royal flush, straight, full house, three of a kind, etc.
+ * @author Barry Becker
  */
-public enum PokerHandEnum {
+public enum PokerHandType {
 
     // note: five of a kind can only happen if using wild cards
     FIVE_OF_A_KIND("Five of a Kind", 749740),
@@ -26,11 +23,16 @@ public enum PokerHandEnum {
 
     private final String label_;
 
-    // occurs one in this many hands
+    /** occurs one in this many hands  */
     private final float odds_;
 
 
-    PokerHandEnum(String label, float odds) {
+    /**
+     * Constructor
+     * @param label name of the type of poker hand
+     * @param odds the odds of having this sort of hand
+     */
+    PokerHandType(String label, float odds) {
         label_ = label;
         odds_ = odds;
     }

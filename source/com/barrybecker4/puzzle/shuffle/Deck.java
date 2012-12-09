@@ -2,7 +2,7 @@
 package com.barrybecker4.puzzle.shuffle;
 
 /**
- * @author Barry Becker Date: Jan 3, 2006
+ * @author Barry Becker
  */
 public class Deck {
 

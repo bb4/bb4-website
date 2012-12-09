@@ -6,7 +6,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.common.ui.ActionDialog;
 import com.barrybecker4.game.multiplayer.poker.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
-import com.barrybecker4.game.multiplayer.poker.PokerHand;
+import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
 import com.barrybecker4.game.multiplayer.poker.PokerOptions;
 import com.barrybecker4.game.multiplayer.poker.player.PokerHumanPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;

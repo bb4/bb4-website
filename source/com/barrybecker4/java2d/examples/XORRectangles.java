@@ -7,9 +7,13 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 public class XORRectangles {
+
+    private XORRectangles() {}
+
     public static void main( String[] args ) {
         ApplicationFrame f = new ApplicationFrame( "XORRectangles v1.0" ) {
 
+            @Override
             public void paint( Graphics g ) {
                 Graphics2D g2 = (Graphics2D) g;
 
