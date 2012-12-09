@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.poker;
 
-import com.barrybecker4.game.card.Card;
+import com.barrybecker4.game.card.Deck;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameOptions;
 import com.barrybecker4.game.common.board.Board;
@@ -10,11 +10,11 @@ import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
+import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
+import com.barrybecker4.game.multiplayer.poker.hand.PokerHandComparator;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerRobotPlayer;
 import com.barrybecker4.game.multiplayer.poker.ui.PokerGameViewer;
-
-import java.util.List;
 
 /**
  * Defines everything the computer needs to know to play Poker.
@@ -127,17 +127,17 @@ public class PokerController extends MultiGameController {
     }
 
     /**
-     * deat the casrds.
+     * Deal the cards. Give the default players some cards.
      * @param numCardsToDealToEachPlayer
      */
     private void dealCardsToPlayers(int numCardsToDealToEachPlayer) {
-         // give the default players some cards.
-        List<Card> deck = Card.newDeck();
+         //
+        Deck deck = new Deck();
         assert (getPlayers() != null) : "No players! (players_ is null)";
         for (Player p : getPlayers()) {
             if (deck.size() < numCardsToDealToEachPlayer) {
                 // ran out of cards. start a new shuffled deck.
-                deck = Card.newDeck();
+                deck = new Deck();
             }
             PokerPlayer player = null;
             if (p.isSurrogate()) {
@@ -375,10 +375,11 @@ public class PokerController extends MultiGameController {
 
         winner = (PokerPlayer)players.get(first);
         bestHand = winner.getHand();
+        PokerHandComparator comparator = new PokerHandComparator();
 
         for (int i = first+1; i < players.size(); i++) {
             PokerPlayer p = (PokerPlayer) players.get(i);
-            if (!p.hasFolded() && p.getHand().compareTo(bestHand) > 0) {
+            if (!p.hasFolded() && comparator.compare(p.getHand(), bestHand) > 0) {
                 bestHand = p.getHand();
                 winner = p;
 

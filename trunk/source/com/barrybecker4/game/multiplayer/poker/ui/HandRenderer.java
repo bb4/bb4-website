@@ -5,7 +5,7 @@ import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.card.Card;
 import com.barrybecker4.game.card.Suit;
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.multiplayer.poker.PokerHand;
+import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
 import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.barrybecker4.ui.util.GUIUtil;
 
@@ -26,9 +26,12 @@ public class HandRenderer  {
     private static ImageIcon[] suitImages_ = new ImageIcon[Suit.values().length];
 
     private static final String IMAGE_DIR = GameContext.GAME_ROOT + "multiplayer/poker/ui/images/";
+
+    /**
+     * gets the images from resources or the filesystem
+     * depending if we are running as an applet or application respectively.
+     */
     static {
-        // gets the images from resources or the filesystem
-        // depending if we are running as an applet or application respectively.
         suitImages_[Suit.CLUBS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "club_small.gif");
         suitImages_[Suit.SPADES.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "spade_small.gif");
         suitImages_[Suit.HEARTS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "heart_small.gif");

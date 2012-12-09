@@ -5,7 +5,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.poker.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
-import com.barrybecker4.game.multiplayer.poker.PokerHand;
+import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
 import com.barrybecker4.game.multiplayer.poker.PokerPlayerMarker;
 
 import java.awt.*;

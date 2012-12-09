@@ -14,7 +14,7 @@ import com.barrybecker4.game.common.Move;
 public class PokerRound extends Move {
 
     /**
-     *  Constructor.
+     * Constructor.
      */
     public PokerRound() {}
 

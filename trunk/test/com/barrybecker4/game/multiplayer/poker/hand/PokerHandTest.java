@@ -1,9 +1,11 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.poker;
+package com.barrybecker4.game.multiplayer.poker.hand;
 
 import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.game.card.Card;
 import com.barrybecker4.game.common.GameContext;
+import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
+import com.barrybecker4.game.multiplayer.poker.hand.PokerHandComparator;
 import junit.framework.TestCase;
 
 import java.io.BufferedReader;
@@ -28,7 +30,7 @@ public class PokerHandTest extends TestCase {
      * Expects input file to contain something like   2H 3H 4H 5H 6H 3C 4C 5C 6C 7C
      * where the 5 black cards appear first, then the white cards.
      */
-    private static final String TEST_FILE = "multiplayer/poker/test_hands.data";
+    private static final String TEST_FILE = "multiplayer/poker/hand/test_hands.data";
 
     enum Result {WHITE_WIN, BLACK_WIN, TIE}
 
@@ -41,7 +43,7 @@ public class PokerHandTest extends TestCase {
 
         List<Result> results = evaluate(TEST_FILE);
 
-        assertEquals("Number of reuslts was not what was expected.",
+        assertEquals("Number of results was not what was expected.",
                 EXPECTED_RESULTS.length, results.size());
 
         for (int i=0; i<EXPECTED_RESULTS.length; i++) {
@@ -95,7 +97,9 @@ public class PokerHandTest extends TestCase {
         PokerHand blackHand = new PokerHand(blackCards);
         PokerHand whiteHand = new PokerHand(whiteCards);
 
-        int blackWin = blackHand.compareTo(whiteHand);
+        PokerHandComparator comparator = new PokerHandComparator();
+
+        int blackWin = comparator.compare(blackHand, whiteHand);
         //System.out.println("comparing blackCards=" + blackCards +" with whiteCards=" + whiteCards + " bwin="+ blackWin );
         if (blackWin > 0) {
             return Result.BLACK_WIN;

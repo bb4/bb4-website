@@ -4,7 +4,7 @@ package com.barrybecker4.game.multiplayer.poker;
 import com.barrybecker4.game.multiplayer.common.MultiGameOptions;
 
 /**
- * @author Barry Becker Date: Sep 2, 2006
+ * @author Barry Becker
  */
 public class PokerOptions extends MultiGameOptions {
 

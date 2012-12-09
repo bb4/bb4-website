@@ -14,25 +14,25 @@ public enum Suit {
     CLUBS("C"),
     SPADES("S");
 
-    private final String symbol_;
-    private static final Map<String, Suit> suitFromSymbol_ = new HashMap<String, Suit>();
+    private final String symbol;
+    private static final Map<String, Suit> SUIT_FROM_SYMBOL = new HashMap<String, Suit>();
 
     static {
         for (Suit r : values()) {
-            suitFromSymbol_.put(r.getSymbol(), r);
+            SUIT_FROM_SYMBOL.put(r.getSymbol(), r);
         }
     }
 
     Suit(String symbol) {
-        symbol_ = symbol;
+        this.symbol = symbol;
     }
 
     String getSymbol() {
-        return symbol_;
+        return symbol;
     }
 
     public static Suit getSuitForSymbol(String symbol) {
-        return suitFromSymbol_.get(symbol);
+        return SUIT_FROM_SYMBOL.get(symbol);
     }
 
 }

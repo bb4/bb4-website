@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Barry Becker  Date: Mar 5, 2005
+ * @author Barry Becker
  */
-@SuppressWarnings({"StaticMethodOnlyUsedInOneClass", "UnusedDeclaration", "ClassWithTooManyFields"})
+@SuppressWarnings({"StaticMethodOnlyUsedInOneClass","ClassWithTooManyFields"})
 public enum Rank {
 
     DEUCE("2"),
@@ -25,26 +25,25 @@ public enum Rank {
     ACE("A");
 
 
-    private final String symbol_;
-    private static final Map<String,Rank> rankFromSymbol_ = new HashMap<String,Rank>();
+    private final String symbol;
+    private static final Map<String,Rank> RANK_FROM_SYMBOL = new HashMap<String,Rank>();
 
     static {
         for (Rank r : values()) {
-            rankFromSymbol_.put(r.getSymbol(), r);
+            RANK_FROM_SYMBOL.put(r.getSymbol(), r);
         }
     }
 
     Rank(String symbol) {
-        symbol_ = symbol;
-
+        this.symbol = symbol;
     }
 
     public String getSymbol() {
-        return symbol_;
+        return symbol;
     }
 
     public static Rank getRankForSymbol(String symbol) {
-        return rankFromSymbol_.get(symbol);
+        return RANK_FROM_SYMBOL.get(symbol);
     }
 
 }
