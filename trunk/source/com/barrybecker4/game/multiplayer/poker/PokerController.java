@@ -11,7 +11,6 @@ import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHandComparator;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerRobotPlayer;
 import com.barrybecker4.game.multiplayer.poker.ui.PokerGameViewer;
@@ -375,11 +374,11 @@ public class PokerController extends MultiGameController {
 
         winner = (PokerPlayer)players.get(first);
         bestHand = winner.getHand();
-        PokerHandComparator comparator = new PokerHandComparator();
+
 
         for (int i = first+1; i < players.size(); i++) {
             PokerPlayer p = (PokerPlayer) players.get(i);
-            if (!p.hasFolded() && comparator.compare(p.getHand(), bestHand) > 0) {
+            if (!p.hasFolded() && p.getHand().compareTo(bestHand) > 0) {
                 bestHand = p.getHand();
                 winner = p;
 

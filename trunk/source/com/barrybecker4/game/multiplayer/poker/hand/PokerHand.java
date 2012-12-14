@@ -13,14 +13,14 @@ import java.util.*;
  * A poker hand typically has 5 cards from a deck of normal playing cards.
  * @author Barry Becker
  */
-public class PokerHand implements Serializable {
+public class PokerHand implements Serializable, Comparable<PokerHand> {
 
     private static final long serialVersionUID = 1;
 
-    /** internal list of cards in the hand. Always sorted */
+    /** internal list of cards in the hand. Always sorted from high to low */
     private final List<Card> hand;
 
-    private Map matchMap;
+    private MatchMap matchMap;
     private boolean faceUp;
 
     /** scores the hand for comparison purposes with other hands */
@@ -51,7 +51,7 @@ public class PokerHand implements Serializable {
         return new ArrayList<Card>(hand);
     }
 
-    /** @return the rank of the lowest ranked card. Assumed that the cards are sorted */
+    /** @return the rank of the lowest ranked card. Assumed that the cards are sorted from high to low. */
     Rank getLowestRank() {
         return hand.get(0).rank();
     }
@@ -59,7 +59,7 @@ public class PokerHand implements Serializable {
     private void update() {
         assert (!hand.isEmpty()): "You can't have an empty poker hand!";
         sort();
-        matchMap = computeMatchMap();
+        matchMap = new MatchMap(hand);
     }
 
     /**
@@ -135,42 +135,27 @@ public class PokerHand implements Serializable {
      * (note: there is not 2 of a kind if there is 4 of a kind)
      */
     boolean hasNofaKind(int num) {
-
-        Collection values = matchMap.values();
-        for (Object value : values) {
-            if ((Integer) value == num)
-                return true;
-        }
-        return false;
+        return matchMap.hasNofaKind(num);
     }
 
     /**
-     * @return the rank of the n of a kind specified, null if does not have n of a kind.
+     * @return the rank of the n of a kind specified. Error thrown if it does not have n of a kind.
      * (note: the is not 2 of a kind if there is 4 of a kind)
      * (note: if there is more than 1 n of a kind the highest rank is returned)
      */
-    private Rank getRankOfNofaKind(int num) {
-
-        Set entries = matchMap.entrySet();
-        Rank highestRank = null;
-        for (Object entry : entries) {
-            Map.Entry e = (Map.Entry) entry;
-            if (((Integer)e.getValue()) == num) {
-                Rank r = (Rank)e.getKey();
-                if (highestRank == null || (r.ordinal() > highestRank.ordinal())) {
-                    highestRank = r;
-                }
-            }
-        }
-
-        return highestRank;
+    List<Rank> getRankOfNofaKind(int num) {
+        return matchMap.getRankOfNofaKind(num);
     }
 
     /**
-     * @return  the highest valued card in this hand
+     * @return the highest valued card in this hand
      */
     public Card getHighCard() {
         return hand.get(hand.size()-1);
+    }
+
+    public Card getSecondaryHighCard() {
+        return matchMap.getSecondaryHighCard(hand);
     }
 
     /**
@@ -178,37 +163,12 @@ public class PokerHand implements Serializable {
      * @return true if there is exactly 2 pairs
      */
     boolean hasTwoPairs() {
-
-        Collection values = matchMap.values();
-        int numPairs = 0;
-        for (Object value : values) {
-            if ((Integer) value == 2)
-                numPairs++;
-        }
-        return (numPairs == 2);
+        return matchMap.hasTwoPairs();
     }
 
     public int size() {
         return hand.size();
     }
-
-    /**
-     * @return a map which has an entry for each card rank represented in the hand and its associated count.
-     */
-    private Map computeMatchMap() {
-        Map<Rank, Integer> map = new HashMap<Rank, Integer>();
-
-        for (Card c : hand) {
-            Integer num = map.get(c.rank());
-            if (num != null)  {
-               map.put(c.rank(), num+1);
-            }
-            else
-               map.put(c.rank(), 1);
-        }
-        return map;
-    }
-
 
     private static List<Card> dealCards(final Deck deck, int numCards) {
         List<Card> hand = new ArrayList<Card>();
@@ -220,6 +180,14 @@ public class PokerHand implements Serializable {
     }
 
     public String toString() { return "[" + hand + "]"; }
+
+    /**
+     * compare this poker hand to another
+     * @return 1 if this hand is higher than the other hand, -1 if lower, else 0.
+     */
+    public int compareTo(PokerHand hand) {
+        return (int)(scorer.getScore(this) - scorer.getScore(hand));
+    }
 
     /**
      * inner class used to define a sort order on cards in a poker hand.
