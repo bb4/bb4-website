@@ -1,6 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.poker.hand;
 
+import com.barrybecker4.game.card.Card;
+
 /**
  * Types of poker hands. For example, royal flush, straight, full house, three of a kind, etc.
  * @author Barry Becker
@@ -44,16 +46,5 @@ public enum PokerHandType {
     public String toString() {
         return label_;
     }
-
-
-    public int getTieBreakerScore(PokerHand hand) {
-        int numCards = hand.size();
-        int score = 0;
-        for (int i = numCards-1; i>=0; i--) {
-            score = score * numCards + hand.getCards().get(i).rank().ordinal();
-        }
-        return score;
-    }
-
 }
 

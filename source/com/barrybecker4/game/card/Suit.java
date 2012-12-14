@@ -9,10 +9,11 @@ import java.util.Map;
  */
 public enum Suit {
 
-    HEARTS("H"),
-    DIAMONDS("D"),
+    // listed in increasing order of value
+    SPADES("S"),
     CLUBS("C"),
-    SPADES("S");
+    DIAMONDS("D"),
+    HEARTS("H");
 
     private final String symbol;
     private static final Map<String, Suit> SUIT_FROM_SYMBOL = new HashMap<String, Suit>();

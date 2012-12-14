@@ -1,113 +1,84 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.poker.hand;
 
-import com.barrybecker4.common.util.FileUtil;
-import com.barrybecker4.game.card.Card;
-import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHandComparator;
 import junit.framework.TestCase;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.StringTokenizer;
+import static com.barrybecker4.game.multiplayer.poker.hand.PokerHandTstUtil.*;
 
 
 /**
  * programming challenge to test which poker hands are better
- * see  http://www.programming-challenges.com/pg.php?page=downloadproblem&probid=110202&format=html
+ * see http://www.programming-challenges.com/pg.php?page=downloadproblem&probid=110202&format=html
  *
  * author Barry Becker
  */
 public class PokerHandTest extends TestCase {
 
+    PokerHandScorer scorer = new PokerHandScorer();
+
+    enum CompareType {BIGGER, SMALLER, SAME}
+
+    public void testAceHighBeatsKingHighOrdered() {
+        compareHands(createHand("2H 3D 5S 9C KD"), createHand("2C 3H 4S 8C AH"), CompareType.SMALLER);
+    }
+
+    public void testAceHighBeatsKingHighUnrdered() {
+        compareHands(createHand("2H KD 3D 5S 9C "), createHand("2C 3H 4S AH 8C"), CompareType.SMALLER);
+    }
+
+    public void testThreeOfAKindBeatsTwoPair() {
+        compareHands(createHand("2H 5D 5S 5C 3D"), createHand("KC AH 4S 4C AH"), CompareType.BIGGER);
+    }
+
+    public void testPairBeatsHighCard() {
+        compareHands(createHand("2H 4S 4C 2D 4H"), createHand("2S 8S AS QS 3S"), CompareType.BIGGER);
+    }
+
+    public void testHighOfHeartsBeatsKingOfDiamonds() {
+        compareHands(createHand("2H 3D 5S 9C KD"), createHand("2C 3H 4S 8C KH"), CompareType.SMALLER);
+    }
+
+    public void testKingOfDiamondsLessThanKingOfHeartsWithSecondaryCardsLower() {
+        compareHands(createHand("6H QD 5S 9C KD"), createHand("2D 3H 5C 9S KH"), CompareType.SMALLER);
+    }
+
+    public void testPairOf7sLessThanPairOfJacks() {
+        compareHands(createHand("7C 7H 5S 9C KD"), createHand("JC 3H JH 8C KH"), CompareType.SMALLER);
+    }
+
+    public void testPairOf9sBiggerThanKingHigh() {
+        compareHands(createHand("9C 9H 5S 9C KD"), createHand("3C 4H 3H 8C KH"), CompareType.BIGGER);
+    }
+
+    public void testPairOf9sBiggerThanPairOf4s() {
+        compareHands(createHand("9C 9H 5S 3C 2D"), createHand("4C 4H AH 8C KH"), CompareType.BIGGER);
+    }
+
+    public void testPairOf7sSmallerThanPairOf8s() {
+        compareHands(createHand("7C 7H JS 9C KD"), createHand("8C 8H 3H 5C 4H"), CompareType.SMALLER);
+    }
+
+
     /**
-     * Expects input file to contain something like   2H 3H 4H 5H 6H 3C 4C 5C 6C 7C
-     * where the 5 black cards appear first, then the white cards.
+     * @param hand1 first hand
+     * @param hand2 second hand
+     * @param type expectation for hand1 compared to hand2
      */
-    private static final String TEST_FILE = "multiplayer/poker/hand/test_hands.data";
+    private void compareHands(PokerHand hand1, PokerHand hand2, CompareType type) {
 
-    enum Result {WHITE_WIN, BLACK_WIN, TIE}
+        int result = hand1.compareTo(hand2);
+        String h1 =  hand1 + " score=" + hand1.getScore() + " type="+ scorer.determineType(hand1);
+        String h2 =  hand2 + " score=" + hand2.getScore() + " type="+ scorer.determineType(hand2);
 
-    /** These are the expected winning hands - used to verify */
-    private static final Result[] EXPECTED_RESULTS =
-            {Result.WHITE_WIN, Result.BLACK_WIN, Result.BLACK_WIN, Result.TIE, Result.WHITE_WIN, Result.BLACK_WIN};
-
-
-    public void testPokerHandComparison() throws IOException {
-
-        List<Result> results = evaluate(TEST_FILE);
-
-        assertEquals("Number of results was not what was expected.",
-                EXPECTED_RESULTS.length, results.size());
-
-        for (int i=0; i<EXPECTED_RESULTS.length; i++) {
-            assertEquals(i + ") ", EXPECTED_RESULTS[i], results.get(i));
+        switch (type) {
+         case BIGGER:
+             assertTrue("Unexpected " + h1 + " unexpectedly less than or equals to " + h2, result > 0);
+             break;
+         case SMALLER:
+             assertTrue("Unexpected " + h1 + " unexpectedly greater than or equal to " + h2,  result < 0);
+             break;
+        case SAME :
+             assertTrue("Unexpected " + h1 + " unexpectedly not equal to " + h2, result == 0);
+             break;
         }
     }
-
-    public List<Result> evaluate(String file) throws IOException {
-
-        List<Result> results = new LinkedList<Result>();
-        BufferedReader breader;
-        String fullPath = FileUtil.PROJECT_HOME + "test/" + GameContext.GAME_ROOT + file;
-        try {
-            FileReader reader = new FileReader(fullPath);
-            breader = new BufferedReader(reader);
-
-            String line;
-            while ((line = breader.readLine()) != null)  {
-                results.add(evaluateLine(line));
-            }
-            breader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Could not find : "+fullPath);
-        }
-        return results;
-    }
-
-    private Result evaluateLine(String line) {
-        if (line == null || line.length() <2) {
-            throw new IllegalArgumentException("Cannot evaluate line: " + line);
-        }
-
-        List<Card> blackCards = new ArrayList<Card>(5);
-        List<Card> whiteCards = new ArrayList<Card>(5);
-
-        StringTokenizer tokenizer = new StringTokenizer(line, " ");
-
-        // the first five entries for for black the second five are for white
-        int ct = 0;
-        while (tokenizer.hasMoreElements()) {
-            String cardToken = (String) tokenizer.nextElement();
-
-            if (ct < 5)  {
-                blackCards.add(new Card(cardToken));
-            } else if (ct < 10)  {
-                whiteCards.add(new Card(cardToken));
-            }
-            ct++;
-        }
-
-        PokerHand blackHand = new PokerHand(blackCards);
-        PokerHand whiteHand = new PokerHand(whiteCards);
-
-        PokerHandComparator comparator = new PokerHandComparator();
-
-        int blackWin = comparator.compare(blackHand, whiteHand);
-        //System.out.println("comparing blackCards=" + blackCards +" with whiteCards=" + whiteCards + " bwin="+ blackWin );
-        if (blackWin > 0) {
-            return Result.BLACK_WIN;
-        } else if (blackWin < 0)  {
-            return Result.WHITE_WIN;
-        } else {
-            return Result.TIE;
-        }
-    }
-
 }
