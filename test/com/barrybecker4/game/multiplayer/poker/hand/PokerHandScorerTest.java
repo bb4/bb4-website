@@ -11,7 +11,7 @@ import static com.barrybecker4.game.multiplayer.poker.hand.PokerHandTstUtil.*;
  *
  * author Barry Becker
  */
-public class PokerHandTest extends TestCase {
+public class PokerHandScorerTest extends TestCase {
 
     PokerHandScorer scorer = new PokerHandScorer();
 
@@ -57,6 +57,22 @@ public class PokerHandTest extends TestCase {
         compareHands(createHand("7C 7H JS 9C KD"), createHand("8C 8H 3H 5C 4H"), CompareType.SMALLER);
     }
 
+    public void testSamePairUsesHighSecondaryCardToResolve() {
+        compareHands(createHand("9H AS AD QC 3D"), createHand("AC AH QS 4C JD"), CompareType.BIGGER);
+    }
+
+    public void testThreeInFullHouseUsedFirst() {
+        compareHands(createHand("KH 3S KD 3C 3D"), createHand("4C JH JS 4D JD"), CompareType.SMALLER);
+    }
+
+    // impossible without wild cards
+    public void testTwoInFullHouseUsedIfThreeTie() {
+        compareHands(createHand("10H JS 10D 10C JD"), createHand("AC AH 10S 10C 10D"), CompareType.BIGGER);
+    }
+
+    public void testSecondPairUsedToBreakTie() {
+        compareHands(createHand("10H JS 10D 3C JD"), createHand("AC AH 10S 10C AS"), CompareType.SMALLER);
+    }
 
     /**
      * @param hand1 first hand
