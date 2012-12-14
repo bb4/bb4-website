@@ -53,7 +53,7 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
 
     /** @return the rank of the lowest ranked card. Assumed that the cards are sorted from high to low. */
     Rank getLowestRank() {
-        return hand.get(0).rank();
+        return hand.get(hand.size()-1).rank();
     }
 
     private void update() {
@@ -108,11 +108,11 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
      */
     boolean hasStraight() {
 
-        Rank rank = hand.get(0).rank();
+        Rank rank = this.getHighCard().rank();
         int run = 1;
         int start = 1;
         // special case for when ace is the low card in a straight
-        if ((hand.get(0).rank() == Rank.ACE) &&  (hand.get(1).rank() == Rank.DEUCE)) {
+        if (rank == Rank.ACE && getLowestRank() == Rank.DEUCE) {
             rank = hand.get(1).rank();
             run = 2;
         }
@@ -151,7 +151,7 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
      * @return the highest valued card in this hand
      */
     public Card getHighCard() {
-        return hand.get(hand.size()-1);
+        return hand.get(0);
     }
 
     public Card getSecondaryHighCard() {
@@ -186,21 +186,23 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
      * @return 1 if this hand is higher than the other hand, -1 if lower, else 0.
      */
     public int compareTo(PokerHand hand) {
-        return (int)(scorer.getScore(this) - scorer.getScore(hand));
+        float diff = scorer.getScore(this) - scorer.getScore(hand);
+        return diff > 0 ? 1 : (diff < 0 ? -1 :0);
     }
 
     /**
      * inner class used to define a sort order on cards in a poker hand.
+     * Sorts them from high to low.
      */
     private static class CardComparator implements Comparator<Card> {
 
         public int compare(Card card1, Card card2) {
 
             if (card1.rank() == card2.rank())   {
-                return card1.suit().ordinal() - card2.suit().ordinal();
+                return card2.suit().ordinal() - card1.suit().ordinal();
             }
             else {
-                return card1.rank().ordinal() - card2.rank().ordinal();
+                return card2.rank().ordinal() - card1.rank().ordinal();
             }
         }
     }
