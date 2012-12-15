@@ -11,6 +11,7 @@ import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
 import com.barrybecker4.game.multiplayer.galactic.GalacticController;
 import com.barrybecker4.game.multiplayer.galactic.Galaxy;
 import com.barrybecker4.game.multiplayer.galactic.player.GalacticPlayer;
+import com.barrybecker4.game.multiplayer.galactic.ui.dialog.OrdersDialog;
 import com.barrybecker4.ui.components.GradientButton;
 
 import javax.swing.*;
@@ -23,30 +24,28 @@ import java.text.MessageFormat;
 
 /**
  *  Show information and statistics about the game.
+ *  Also allow the player to enter their commmands for the turn.
  *
  *  @author Barry Becker
  */
-class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, ActionListener
-{
+class GalacticInfoPanel extends GameInfoPanel
+                        implements GameChangedListener, ActionListener {
 
-    //  buttons to either give comands or pass
+    /** buttons to either give commands or pass  */
     private JButton commandButton_;
     private JButton passButton_;
-
     private JPanel commandPanel_;
 
 
     /**
      * Constructor
      */
-    GalacticInfoPanel( GameController controller )
-    {
+    GalacticInfoPanel( GameController controller ) {
         super(controller);
     }
 
     @Override
-    protected void createSubPanels()
-    {
+    protected void createSubPanels() {
         this.add( createGeneralInfoPanel() );
 
         // the custom panel shows game specific info. In this case the command button.
@@ -58,10 +57,10 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
     /**
      * This panel shows information that is specific to the game type.
      * For Galactic Empire we have a button that allows the current player to enter his commands
+     * Should split this out into a separate PlayerCommandPanel class.
      */
     @Override
-    protected JPanel createCustomInfoPanel()
-    {
+    protected JPanel createCustomInfoPanel() {
 
         commandPanel_ = createSectionPanel("");
         setCommandPanelTitle();
@@ -82,8 +81,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
         return commandPanel_;
     }
 
-    private void setCommandPanelTitle()
-    {
+    private void setCommandPanelTitle() {
         Object[] args = {controller_.getCurrentPlayer().getName()};
         String title = MessageFormat.format(GameContext.getLabel("GIVE_YOUR_ORDERS"), args);
 
@@ -93,24 +91,20 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
 
 
     @Override
-    protected String getMoveNumLabel()
-    {
+    protected String getMoveNumLabel() {
         return GameContext.getLabel("CURRENT_YEAR" + COLON);
     }
-
 
     /**
      * The Orders button was pressed.
      * open the Orders dialog to get the players commands
      * @param e
      */
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         GalacticController gc = (GalacticController)controller_;
         gameChanged(null); // update the current player in the label
 
-        if (e.getSource() == commandButton_)
-        {
+        if (e.getSource() == commandButton_) {
 
            // open the command dialog to get the players commands
            GalacticPlayer currentPlayer = (GalacticPlayer)gc.getCurrentPlayer();
@@ -134,19 +128,16 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
                gc.advanceToNextPlayer();
            }
         }
-        else if (e.getSource() == passButton_)
-        {
+        else if (e.getSource() == passButton_) {
            gc.advanceToNextPlayer();
         }
     }
-
 
     /**
      * set the appropriate text and color for the player label.
      */
     @Override
-    protected void setPlayerLabel()
-    {
+    protected void setPlayerLabel() {
         Player player = controller_.getCurrentPlayer();
 
         String playerName = player.getName();
@@ -164,23 +155,17 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
         this.repaint();
     }
 
-
     /**
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
     @Override
-    public void gameChanged( GameChangedEvent gce )
-    {
+    public void gameChanged(GameChangedEvent gce) {
         if ( controller_ == null )
             return;
-        //Player currentPlayer = controller_.getCurrentPlayer();
         setPlayerLabel();
-        //Galaxy g = (Galaxy)controller_.getBoard();
         Move lastMove =  controller_.getLastMove();
         if (lastMove != null)  {
-            //moveNumLabel_.setText( lastMove.moveNumber * controller_.getNumPlayers()
-            //                      + ((GalacticController)controller_).getCurrentPlayerIndex()+" " );
             moveNumLabel_.setText( (controller_.getPlayers().getNumPlayers() + 2) + " " );
         }
         else {

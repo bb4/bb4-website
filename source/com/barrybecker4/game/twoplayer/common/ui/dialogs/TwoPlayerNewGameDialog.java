@@ -96,7 +96,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
         else {
             playersPanel_.ok();
         }
-        board_.setSize( rowSizeField_.getIntValue(), colSizeField_.getIntValue() );
+        board_.setSize( gridParamPanel_.getRowSize(), gridParamPanel_.getColSize() );
         canceled_ = false;
         setVisible( false );
     }
@@ -104,7 +104,6 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
     @Override
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
-        GameWeights gameWeights = get2PlayerController().getComputerWeights();
 
         if ( source == startButton_ ) {
             ok();
@@ -116,9 +115,9 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
             boolean checked = optimizationCheckbox_.isSelected();
             if (checked)  {
                 // open a dlg to get a location for the optimization log
-                // if they cancel this dlg then we leave the checkbox uchecked
-                 if (GUIUtil.isStandAlone())  {
-                   JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_RUN_OPT_WHEN_STANDALONE"));
+                // if they cancel this dlg then we leave the checkbox unchecked
+                if (GUIUtil.isStandAlone())  {
+                    JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_RUN_OPT_WHEN_STANDALONE"));
                 }
                 else {
                     JFileChooser chooser = FileChooserUtil.getFileChooser();

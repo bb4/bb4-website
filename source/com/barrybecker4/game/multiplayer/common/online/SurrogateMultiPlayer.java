@@ -18,10 +18,9 @@ import com.barrybecker4.game.multiplayer.common.MultiPlayerMarker;
  */
 public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChangeListener {
 
-    private IServerConnection connection_;
-    private MultiGamePlayer player_;
+    private MultiGamePlayer player;
 
-    // wait about 10 seconds for the player to move before timing out.
+    /** wait about 40 seconds for the player to move before timing out. */
     private static final int TIMEOUT_DURATION = 40000;
 
 
@@ -31,9 +30,8 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
      */
     public SurrogateMultiPlayer(MultiGamePlayer player, IServerConnection connection) {
         super(player.getName(), player.getColor(), player.isHuman());
-        player_ = player;
-        connection_ = connection;
-        connection_.addOnlineChangeListener(this);
+        this.player = player;
+        connection.addOnlineChangeListener(this);
     }
 
     /**
@@ -45,16 +43,16 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
         if (cmd.getName() == GameCommand.Name.DO_ACTION) {
             PlayerAction action = (PlayerAction) cmd.getArgument();
             if (action.getPlayerName().equals(getName())) {
-                GameContext.log(0, "Setting surrogate(" + player_.getName()
+                GameContext.log(0, "Setting surrogate(" + player.getName()
                         + ") action="+action + " on "+this+",  Thread=" + Thread.currentThread().getName());
-                player_.setAction(action);
+                player.setAction(action);
                 notifyAll();  // unblock the wait below
             }
         }
     }
 
     @Override
-    public  void setAction(PlayerAction action) {
+    public void setAction(PlayerAction action) {
         assert false : "must not set action directly on a surrogate";
     }
 
@@ -71,15 +69,15 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
 
             long t1 = System.currentTimeMillis();
             // wait gives other threads time to execute until we receive a notify and can continue.
-            System.out.println(player_.getName() + " now waiting for surrogate action on "
+            System.out.println(player.getName() + " now waiting for surrogate action on "
                     + this + ",  Thread=" + Thread.currentThread().getName());
             wait(TIMEOUT_DURATION);
             if ((System.currentTimeMillis() - t1) > (TIMEOUT_DURATION - 10)) {
-                  System.out.println("****** TIMEOUT! "+ player_.getName() +" is waiting for someone to play.");
+                  System.out.println("****** TIMEOUT! "+ player.getName() +" is waiting for someone to play.");
             }
-            PlayerAction a = player_.getAction(controller);
+            PlayerAction a = player.getAction(controller);
             float time = (float)(System.currentTimeMillis() - t1)/1000.0f;
-            System.out.println("got action =" + a + " for "+player_.getName()+" after " + time +"s   on "
+            System.out.println("got action =" + a + " for " + player.getName() + " after " + time + "s   on "
                     + this + ",  Thread=" + Thread.currentThread().getName());
             return a;
 
@@ -93,13 +91,13 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
      * The player that we are representing (that is actually located somewhere else)
      * @return the specific game player backed by another player of the same type somewhere else.
      */
-    public MultiGamePlayer getPlayer() {
-        return player_;
+    public synchronized MultiGamePlayer getPlayer() {
+        return player;
     }
 
     @Override
-    public MultiPlayerMarker getPiece() {
-        return player_.getPiece();
+    public synchronized MultiPlayerMarker getPiece() {
+        return player.getPiece();
     }
 
     @Override

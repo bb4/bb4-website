@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.galactic.ui;
+package com.barrybecker4.game.multiplayer.galactic.ui.dialog;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.player.PlayerList;
@@ -17,8 +17,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-class GalacticSummaryTable extends SummaryTable
-{
+class GalacticSummaryTable extends SummaryTable {
 
     private static final int NUM_PLANETS_INDEX = 2;
     private static final int SHIPS_INDEX = 3;
@@ -28,18 +27,19 @@ class GalacticSummaryTable extends SummaryTable
     private static final String NUM_SHIPS = GameContext.getLabel("NUM_SHIPS");
     private static final String PRODUCTION = GameContext.getLabel("PRODUCTION");
 
-    private static final String[] COLUMN_NAMES =  {NAME,
-                                             COLOR,
-                                             NUM_PLANETS,
-                                             NUM_SHIPS,
-                                             PRODUCTION };
+    private static final String[] COLUMN_NAMES =  {
+        NAME,
+        COLOR,
+        NUM_PLANETS,
+        NUM_SHIPS,
+        PRODUCTION
+    };
 
     /**
      * constructor
-     * @param players to initializet the rows in the table with.
+     * @param players to initializes the rows in the table with.
      */
-    public GalacticSummaryTable(PlayerList players)
-    {
+    public GalacticSummaryTable(PlayerList players) {
         super(players, COLUMN_NAMES);
     }
 
@@ -49,8 +49,7 @@ class GalacticSummaryTable extends SummaryTable
      * @param player to add
      */
     @Override
-    protected void addRow(Object player)
-    {
+    protected void addRow(Object player) {
         GalacticPlayer p = (GalacticPlayer)player;
         Object d[] = new Object[getNumColumns()];
         List planets = Galaxy.getPlanets(p);

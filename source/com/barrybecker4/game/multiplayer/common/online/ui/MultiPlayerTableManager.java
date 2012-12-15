@@ -127,6 +127,7 @@ class MultiPlayerTableManager {
         }
         System.out.println("starting game with players="+players);
         controller_.setPlayers(players);
+
     }
 
     /**

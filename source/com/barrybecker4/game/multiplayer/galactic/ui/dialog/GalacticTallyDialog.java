@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.galactic.ui;
+package com.barrybecker4.game.multiplayer.galactic.ui.dialog;
 
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
@@ -19,13 +19,13 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-final class GalacticTallyDialog extends TallyDialog {
+public final class GalacticTallyDialog extends TallyDialog {
     /**
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
      * @param controller
      */
-    GalacticTallyDialog(Component parent, GalacticController controller ) {
+    public GalacticTallyDialog(Component parent, GalacticController controller ) {
         super( parent, controller );
     }
 

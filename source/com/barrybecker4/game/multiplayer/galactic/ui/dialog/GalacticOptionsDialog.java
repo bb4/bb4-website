@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.galactic.ui;
+package com.barrybecker4.game.multiplayer.galactic.ui.dialog;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
@@ -20,7 +20,7 @@ import java.awt.event.ItemListener;
  *
  * @author Barry Becker
  */
-class GalacticOptionsDialog extends MultiGameOptionsDialog
+public class GalacticOptionsDialog extends MultiGameOptionsDialog
                             implements ActionListener, ItemListener {
 
     // game params
@@ -32,7 +32,7 @@ class GalacticOptionsDialog extends MultiGameOptionsDialog
 
 
     // constructor
-    GalacticOptionsDialog( Component parent, GameController controller ) {
+    public GalacticOptionsDialog( Component parent, GameController controller ) {
         super( parent, controller);
     }
 

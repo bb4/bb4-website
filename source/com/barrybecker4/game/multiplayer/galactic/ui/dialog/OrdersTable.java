@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.galactic.ui;
+package com.barrybecker4.game.multiplayer.galactic.ui.dialog;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.galactic.Galaxy;
@@ -62,7 +62,7 @@ class OrdersTable extends TableBase {
      * constructor
      * @param orders to initialize the rows in the table with.
      */
-    public OrdersTable(List<Order> orders)  {
+    OrdersTable(List<Order> orders)  {
         super(orders, columnNames_);
 
          lastOrders_ = orders;

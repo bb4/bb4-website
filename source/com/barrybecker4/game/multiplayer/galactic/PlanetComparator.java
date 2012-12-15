@@ -4,7 +4,7 @@ package com.barrybecker4.game.multiplayer.galactic;
 import java.util.Comparator;
 
 /**
- * Sort planets by how far they are from a comparisonPlanet.
+ * Sort planets by how far they are from a comparison planet.
  *
  * @author Barry Becker
  */
@@ -24,12 +24,15 @@ public class PlanetComparator implements Comparator<Planet> {
         double p1Dist = p1.getDistanceFrom(comparisonPlanet_);
         double p2Dist = p2.getDistanceFrom(comparisonPlanet_);
 
-        if (p1Dist < p2Dist )
+        if (p1Dist < p2Dist ) {
             return -1;
-        else if ( p1Dist > p2Dist )
+        }
+        else if ( p1Dist > p2Dist )  {
             return 1;
-        else
+        }
+        else  {
             return 0;
+        }
     }
 
 }
