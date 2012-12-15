@@ -38,6 +38,18 @@ public class PokerHandTest extends TestCase {
         assertTrue(createHand("AH 3S 4C 5D 6H").hasStraight());
     }
 
+    public void testNotFlush() {
+        assertFalse(createHand("AH 3S 4C 5D 6H").hasFlush());
+    }
+
+    public void testHasFlush() {
+        assertTrue(createHand("AS 3S 4S 9S 6S").hasFlush());
+    }
+
+    public void testStraightFlushHasFlush() {
+        assertTrue(createHand("AS 3S 4S 5S 6S").hasFlush());
+    }
+
 
 
 }
