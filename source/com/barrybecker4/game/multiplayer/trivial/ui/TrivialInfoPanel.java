@@ -20,30 +20,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 
-
 /**
  *  Show information and statistics about the game.
  *
  *  @author Barry Becker
  */
-class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, ActionListener
-{
+class TrivialInfoPanel extends GameInfoPanel
+                       implements GameChangedListener, ActionListener {
 
-    //  buttons to either give comands or pass
+    // buttons to either give commands or pass
     private JButton commandButton_;
     private JPanel commandPanel_;
 
     /**
      * Constructor
      */
-    TrivialInfoPanel( GameController controller )
-    {
+    TrivialInfoPanel( GameController controller ) {
         super(controller);
     }
 
     @Override
-    protected void createSubPanels()
-    {
+    protected void createSubPanels() {
         add( createGeneralInfoPanel() );
 
         // the custom panel shows game specific info. In this case, the command button.
@@ -58,8 +55,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
      * For Trivial, we have a button that allows the current player to enter his commands
      */
     @Override
-    protected JPanel createCustomInfoPanel()
-    {
+    protected JPanel createCustomInfoPanel() {
         commandPanel_ = createSectionPanel("");
         setCommandPanelTitle();
 
@@ -75,8 +71,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
         return commandPanel_;
     }
 
-    private void setCommandPanelTitle()
-    {
+    private void setCommandPanelTitle() {
         Object[] args = {controller_.getCurrentPlayer().getName()};
         String title = MessageFormat.format(GameContext.getLabel("MAKE_YOUR_MOVE"), args);
 
@@ -86,8 +81,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
 
 
     @Override
-    protected String getMoveNumLabel()
-    {
+    protected String getMoveNumLabel() {
         return GameContext.getLabel("CURRENT_ROUND" + COLON);
     }
 
@@ -97,11 +91,9 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
      * open the Orders dialog to get the players commands
      * @param e
      */
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == commandButton_)
-        {
+        if (e.getSource() == commandButton_)  {
             TrivialController pc = (TrivialController)controller_;
             gameChanged(null); // update the current player in the label
 
@@ -132,8 +124,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
      * set the appropriate text and color for the player label.
      */
     @Override
-    protected void setPlayerLabel()
-    {
+    protected void setPlayerLabel() {
         Player player = controller_.getCurrentPlayer();
 
         String playerName = player.getName();
@@ -151,16 +142,15 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
         this.repaint();
     }
 
-
     /**
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
     @Override
-    public void gameChanged( GameChangedEvent gce )
-    {
-        if ( controller_ == null )
+    public void gameChanged( GameChangedEvent gce ) {
+        if ( controller_ == null ) {
             return;
+        }
 
         setPlayerLabel();
         Move lastMove =  controller_.getLastMove();
@@ -171,7 +161,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
             moveNumLabel_.setText( 1 + " " );
         }
 
-        // disable if the game is done or the current player is a surrpgate
+        // disable if the game is done or the current player is a surrogate
         boolean enabled = !controller_.isDone() && !controller_.getCurrentPlayer().isSurrogate();
         commandButton_.setEnabled(enabled);
     }

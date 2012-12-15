@@ -14,7 +14,7 @@ class TrivialHand implements Comparable {
      * The trivial hand contains a value between 0 and 1 million.
      */
     public TrivialHand() {
-        value = (int) (100000.99999 *Math.random());
+        value = (int) (100000.99999 * Math.random());
     }
 
     /**

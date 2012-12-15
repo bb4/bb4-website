@@ -20,8 +20,8 @@ import java.awt.geom.Ellipse2D;
  *
  * @author Barry Becker
  */
-public class TrivialPlayerRenderer extends GamePieceRenderer
-{
+public class TrivialPlayerRenderer extends GamePieceRenderer {
+
     private static GamePieceRenderer renderer_ = null;
 
     public static final Color HIGHLIGHT_COLOR = new Color(245, 255, 0, 50);
@@ -36,8 +36,7 @@ public class TrivialPlayerRenderer extends GamePieceRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead.
      */
-    private TrivialPlayerRenderer()
-    {}
+    private TrivialPlayerRenderer() {}
 
     public static GamePieceRenderer getRenderer() {
         if (renderer_ == null) {
@@ -48,8 +47,7 @@ public class TrivialPlayerRenderer extends GamePieceRenderer
 
     @Override
     protected int getPieceSize(int cellSize, GamePiece piece) {
-        int pieceSize = (int) (0.85f * cellSize * 2);
-        return pieceSize;
+        return (int) (0.85f * cellSize * 2);
     }
 
     @Override
@@ -65,11 +63,11 @@ public class TrivialPlayerRenderer extends GamePieceRenderer
      * @param position the position of the piece to render
      */
     @Override
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
-    {
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b) {
         MultiPlayerMarker playerMarker = (MultiPlayerMarker)position.getPiece();
-        if (playerMarker == null)
+        if (playerMarker == null) {
             return; // nothing to render
+        }
 
         int pieceSize = getPieceSize(cellSize, playerMarker);
         Point pos = getPosition(position, cellSize, pieceSize, margin);
@@ -97,8 +95,7 @@ public class TrivialPlayerRenderer extends GamePieceRenderer
         }
 
         TrivialPlayer p = (TrivialPlayer)playerMarker.getOwner();
-        if (p.isRevealed())
-        {
+        if (p.isRevealed()) {
              renderValue(g2, position.getLocation(), p.getValue(), cellSize);
         }
     }

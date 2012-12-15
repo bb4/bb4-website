@@ -67,11 +67,15 @@ public class PokerHandScorerTest extends TestCase {
 
     // impossible without wild cards
     public void testTwoInFullHouseUsedIfThreeTie() {
-        compareHands(createHand("10H JS 10D 10C JD"), createHand("AC AH 10S 10C 10D"), CompareType.BIGGER);
+        compareHands(createHand("10H JS 10D 10C JD"), createHand("AC AH 10S 10C 10D"), CompareType.SMALLER);
     }
 
     public void testSecondPairUsedToBreakTie() {
         compareHands(createHand("10H JS 10D 3C JD"), createHand("AC AH 10S 10C AS"), CompareType.SMALLER);
+    }
+
+    public void testStraightHigherThanTriple() {
+        compareHands(createHand("9H 10S JD QC KD"), createHand("AC AH 10S 9C AS"), CompareType.BIGGER);
     }
 
     /**

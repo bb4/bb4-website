@@ -16,8 +16,7 @@ import java.awt.event.ActionEvent;
  * Allow the user to specify a trivial action: keep hidden or reveal.
  * @author Barry Becker
  */
-public final class RevealDialog extends ActionDialog
-{
+public final class RevealDialog extends ActionDialog {
 
     // selected when the user desires to reveal his value.
     private JRadioButton revealButton_;
@@ -28,14 +27,12 @@ public final class RevealDialog extends ActionDialog
      * constructor - create the tree dialog.
      * @param pc TrivialController
      */
-    public RevealDialog(TrivialController pc, Component parent)
-    {
+    public RevealDialog(TrivialController pc, Component parent) {
         super(pc, parent);
     }
 
     @Override
-    protected JPanel createPersonalInfoPanel()
-    {
+    protected JPanel createPersonalInfoPanel() {
         JPanel p = new JPanel(new BorderLayout());
         JLabel label = new JLabel("Value = "+ ((TrivialPlayer)player_).getValue());
         p.add(label, BorderLayout.CENTER);
@@ -70,8 +67,7 @@ public final class RevealDialog extends ActionDialog
      *  create the OK/Cancel buttons that go at the bottom.
      */
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         okButton_ = new GradientButton();
@@ -83,8 +79,7 @@ public final class RevealDialog extends ActionDialog
 
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return "Hide or Reveal?";
     }
 
@@ -94,8 +89,7 @@ public final class RevealDialog extends ActionDialog
      * @param e
      */
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         TrivialAction.Name actionName = TrivialAction.Name.KEEP_HIDDEN;
         if (source == okButton_) {
@@ -106,7 +100,7 @@ public final class RevealDialog extends ActionDialog
             this.setVisible(false);
         }
 
-        ((TrivialHumanPlayer)player_).setAction(new TrivialAction(player_.getName(), actionName));
+        (player_).setAction(new TrivialAction(player_.getName(), actionName));
     }
 
 }

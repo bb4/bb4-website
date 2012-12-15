@@ -18,7 +18,6 @@ class MatchMap extends LinkedHashMap<Rank, Integer> {
      *             but it must be sorted by rank from high to low!
      */
     MatchMap(List<Card> hand) {
-        System.out.println("hand=" + hand);
         init(hand);
     }
 

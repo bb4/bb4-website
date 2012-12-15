@@ -104,30 +104,28 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
     }
 
     /**
-     * returns true if there is a sequence of 5 cards
+     * @return true if there is a sequence of 5 cards
      */
     boolean hasStraight() {
 
-        Rank rank = this.getHighCard().rank();
+        boolean acePresent = getHighCard().rank() == Rank.ACE;
         int run = 1;
-        int start = 1;
-        // special case for when ace is the low card in a straight
-        if (rank == Rank.ACE && getLowestRank() == Rank.DEUCE) {
-            rank = hand.get(1).rank();
-            run = 2;
-        }
-        for (Card c : hand.subList(start, size())) {
-            Rank[] ranks = Rank.values();
-            int nextRank = rank.ordinal()+1;
-            if (nextRank < ranks.length &&  c.rank() == ranks[nextRank]) {
+        int start = acePresent ? 1 : 0;
+        Rank[] ranks = Rank.values();
+        Rank lastRank = hand.get(start++).rank();
+
+        for (Card card : hand.subList(start, size())) {
+
+            int nextRank = lastRank.ordinal() - 1;
+            if (nextRank >= 0 && card.rank() == ranks[nextRank]) {
                 run++;
             }
             else {
                 run = 1;  // start over
             }
-            rank = c.rank();
-         }
-        return run >= 5;
+            lastRank = card.rank();
+        }
+        return run >= 5 || (acePresent && run == 4);
     }
 
     /**
@@ -199,6 +197,8 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
         public int compare(Card card1, Card card2) {
 
             if (card1.rank() == card2.rank())   {
+                assert card1.suit() != null;
+                assert card2.suit() != null;
                 return card2.suit().ordinal() - card1.suit().ordinal();
             }
             else {

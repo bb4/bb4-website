@@ -17,8 +17,8 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class TrivialGameRenderer extends MultiGameBoardRenderer
-{
+public class TrivialGameRenderer extends MultiGameBoardRenderer {
+
     private  static GameBoardRenderer renderer_;
 
 
@@ -26,13 +26,11 @@ public class TrivialGameRenderer extends MultiGameBoardRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    private TrivialGameRenderer()
-    {
+    private TrivialGameRenderer() {
         pieceRenderer_ = TrivialPlayerRenderer.getRenderer();
     }
 
-    public static GameBoardRenderer getRenderer()
-    {
+    public static GameBoardRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new TrivialGameRenderer();
         return renderer_;
@@ -48,19 +46,18 @@ public class TrivialGameRenderer extends MultiGameBoardRenderer
 
     @Override
     protected void drawBackground( Graphics g, Board board, int startPos, int rightEdgePos, int bottomEdgePos,
-                                   int panelWidth, int panelHeight )
-    {
+                                   int panelWidth, int panelHeight ) {
         super.drawBackground(g, board, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight);
         drawTable(g, board, panelWidth, panelHeight);
     }
 
     /**
      * Draw the pieces and possibly other game markers for both players.
+     * Draw a cicle on the background  for the player whose turn it is.
      */
     @Override
-    protected void drawMarkers( IGameController controller, Graphics2D g2 )
-    {
-        // draw a backround circle for the player whose turn it is
+    protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
+
         MultiGamePlayer player = (MultiGamePlayer)controller.getCurrentPlayer();
         MultiPlayerMarker m = player.getPiece();
         assert m != null;
