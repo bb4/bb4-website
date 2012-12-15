@@ -18,14 +18,12 @@ import java.awt.*;
  *
  *  @author Barry Becker
  */
-public class TrivialPanel extends GamePanel
-{
+public class TrivialPanel extends GamePanel {
 
     /**
      *  Construct the panel.
      */
-    public TrivialPanel()
-    {}
+    public TrivialPanel() {}
 
 
     @Override

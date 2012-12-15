@@ -24,18 +24,15 @@ import java.awt.*;
  *
  *  @author Barry Becker
  */
-public class PokerGameViewer extends MultiGameViewer
-{
+public class PokerGameViewer extends MultiGameViewer {
 
     /**
      * Construct the application
      */
-    public PokerGameViewer()
-    {}
+    public PokerGameViewer() {}
 
     @Override
-    protected PokerController createController()
-    {
+    protected PokerController createController() {
         return new PokerController();
     }
 
@@ -48,8 +45,7 @@ public class PokerGameViewer extends MultiGameViewer
      * @return   the message to display at the completion of the game.
      */
     @Override
-    protected String getGameOverMessage()
-    {
+    protected String getGameOverMessage() {
         StringBuilder buf = new StringBuilder("Game Over\n");
 
         // find the player with the most money. That's the winner.
@@ -63,7 +59,7 @@ public class PokerGameViewer extends MultiGameViewer
                 winner = pp;
             }
         }
-
+        assert winner != null;
         buf.append(winner.getName()).append(" won the game with $").append(winner.getCash()).append('.');
         return buf.toString();
     }
@@ -76,8 +72,7 @@ public class PokerGameViewer extends MultiGameViewer
      * @return done return true if the game is over after moving
      */
     @Override
-    public boolean doComputerMove(Player player)
-    {
+    public boolean doComputerMove(Player player) {
         assert(!player.isHuman());
         PokerRobotPlayer robot = (PokerRobotPlayer)player;
         PokerController pc = (PokerController) controller_;
@@ -91,7 +86,6 @@ public class PokerGameViewer extends MultiGameViewer
         return false;
     }
 
-
     /**
      * make the computer move and show it on the screen.
      *
@@ -99,8 +93,8 @@ public class PokerGameViewer extends MultiGameViewer
      * @return done return true if the game is over after moving
      */
     @Override
-    public boolean doSurrogateMove(SurrogateMultiPlayer player)
-    {
+    public boolean doSurrogateMove(SurrogateMultiPlayer player) {
+
         PokerController pc = (PokerController) controller_;
         PlayerAction action = player.getAction(pc);
 

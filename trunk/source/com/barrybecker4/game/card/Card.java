@@ -28,10 +28,10 @@ public class Card implements Serializable {
 
     public Card(String cardToken) {
         int len = cardToken.length();
-        assert (len < 3);
+        assert (len < 4);
 
         this.rank = Rank.getRankForSymbol(cardToken.substring(0, len-1));
-        this.suit = Suit.getSuitForSymbol(cardToken.substring(1));
+        this.suit = Suit.getSuitForSymbol(cardToken.substring(len-1));
     }
 
     public Rank rank() { return rank; }

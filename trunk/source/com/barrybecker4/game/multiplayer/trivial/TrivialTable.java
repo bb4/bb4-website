@@ -96,5 +96,4 @@ public class TrivialTable extends Board {
     protected void undoInternalMove( Move move ) {
         GameContext.log(0,  "undo not implemented yet for Trivial." );
     }
-
 }

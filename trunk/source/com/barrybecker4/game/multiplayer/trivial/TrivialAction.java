@@ -7,7 +7,7 @@ import com.barrybecker4.game.common.player.PlayerAction;
  * This is what will get sent between client and server as an action for a particular player.
  * Encapsulates the state change.
  *
- * @author Barry Becker Date: Sep 24, 2006
+ * @author Barry Becker
  */
 public class TrivialAction extends PlayerAction {
 

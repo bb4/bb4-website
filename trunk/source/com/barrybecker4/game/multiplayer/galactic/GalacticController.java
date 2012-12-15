@@ -27,13 +27,13 @@ import java.util.List;
  *  - in addition to order dialog should be able to directly click on source, then dest planet,
  *    then enter number of ships.
  *
- *  - Brian's wishlist
+ *  - Brian's wish list
  *    - show pictures of humans and aliens in battle.
  *    -
  *
  * @@ bugs
  *  - after click on fight, it should change immediately to close
- *  - lines showing armada trajectories do not always line up with panet centers
+ *  - lines showing armada trajectories do not always line up with planet centers
  *  - remove selected source planet from dest list.
  *  - summary dialog should show number of years.
  *
