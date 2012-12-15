@@ -178,8 +178,9 @@ public abstract class TwoPlayerController extends GameController {
      */
     @Override
     public int getStrengthOfWin() {
-        if (!getPlayers().anyPlayerWon())
+        if (!getPlayers().anyPlayerWon()) {
             return 0;
+        }
         return getBoard().getTypicalNumMoves() / getNumMoves();
     }
 

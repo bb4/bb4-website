@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.galactic.ui;
+package com.barrybecker4.game.multiplayer.galactic.ui.dialog;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.galactic.Order;
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-final class OrdersDialog extends OptionsDialog  {
+public final class OrdersDialog extends OptionsDialog  {
 
     private GalacticPlayer player_;
     //private Galaxy galaxy_;
@@ -38,8 +38,7 @@ final class OrdersDialog extends OptionsDialog  {
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
      */
-    OrdersDialog(Component parent, GalacticPlayer player, int numYearsRemaining)
-    {
+    public OrdersDialog(Component parent, GalacticPlayer player, int numYearsRemaining) {
         super(parent);
         player_ = player;
         ordersTable_ = new OrdersTable(player.getOrders());

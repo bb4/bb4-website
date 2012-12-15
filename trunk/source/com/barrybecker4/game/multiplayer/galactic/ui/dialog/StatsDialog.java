@@ -1,7 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.galactic.ui;
+package com.barrybecker4.game.multiplayer.galactic.ui.dialog;
 
 import com.barrybecker4.game.common.GameController;
+import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.dialogs.AbstractDialog;
@@ -9,31 +10,30 @@ import com.barrybecker4.ui.dialogs.AbstractDialog;
 import javax.swing.*;
 import java.awt.*;
 
-
 /**
- * Show summary information about all planets (or maybe just the ones that you own).
+ * Draw stats about the players and planet ownership in the Galaxy.
  *
  * @author Barry Becker
  */
-final class PlanetDetailsDialog extends AbstractDialog {
+final class StatsDialog extends AbstractDialog {
 
     private final JPanel mainPanel_ = new JPanel();
 
     private final GradientButton closeButton_ = new GradientButton();
-    private final JLabel infoLabel_ = new JLabel();
 
 
     /**
-     * constructor - create the tree dialog.
+     * constructor.
      * @param parent frame to display relative to
      * @param boardViewer
      */
-    public PlanetDetailsDialog(Component parent, GameBoardViewer boardViewer ) {
+    public StatsDialog(Component parent, GameBoardViewer boardViewer ) {
         super( parent );
+        GameBoardViewer boardViewer_=boardViewer;
         GameController controller_=boardViewer.getController();
+        Board board_=controller_.getBoard();
         showContent();
     }
-
 
     /**
      * ui initialization of the tree control.
@@ -42,6 +42,5 @@ final class PlanetDetailsDialog extends AbstractDialog {
     protected JComponent createDialogContent() {
         return new JPanel();
     }
-
 }
 

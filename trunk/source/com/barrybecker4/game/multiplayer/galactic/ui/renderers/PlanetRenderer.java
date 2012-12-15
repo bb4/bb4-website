@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.galactic.ui;
+package com.barrybecker4.game.multiplayer.galactic.ui.renderers;
 
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.BoardPosition;
@@ -14,12 +14,12 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
 /**
- *  a singleton class that takes a checkers piece and renders it for the CheckersBoardViewer.
+ * A singleton class that takes a planet instance and renders it for the GalacticBoardViewer.
  * @see Galaxy
  * @author Barry Becker
  */
-public class PlanetRenderer extends GamePieceRenderer
-{
+public class PlanetRenderer extends GamePieceRenderer {
+
     private static GamePieceRenderer renderer_ = null;
 
     private static final Color ATTACK_COLOR = new Color(255, 100, 0);
@@ -34,19 +34,16 @@ public class PlanetRenderer extends GamePieceRenderer
      * private constructor because this class is a singleton.
      * Use getPieceRenderer instead
      */
-    private PlanetRenderer()
-    {}
+    private PlanetRenderer() {}
 
-    public static GamePieceRenderer getRenderer()
-    {
+    public static GamePieceRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new PlanetRenderer();
         return renderer_;
     }
 
     @Override
-    protected int getPieceSize(int cellSize, GamePiece piece)
-    {
+    protected int getPieceSize(int cellSize, GamePiece piece) {
         Planet planet = (Planet)piece;
 
         double rad = planet.getRadius();
@@ -59,7 +56,6 @@ public class PlanetRenderer extends GamePieceRenderer
         return planet.getColor();
     }
 
-
     /**
      * this draws the actual piece at this location (if there is one).
      * Uses the RoundGradientFill from Knudsen to put a specular highlight on the planet.
@@ -68,12 +64,11 @@ public class PlanetRenderer extends GamePieceRenderer
      * @param position the position of the piece to render
      */
     @Override
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
-    {
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b) {
         Planet planet = (Planet)position.getPiece();
-        if (planet == null)
+        if (planet == null) {
             return; // nothing to render
-
+        }
 
         int pieceSize = getPieceSize(cellSize, planet);
         Point pos = getPosition(position, cellSize, pieceSize, margin);

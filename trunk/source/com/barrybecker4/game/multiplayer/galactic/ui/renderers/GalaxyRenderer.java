@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.galactic.ui;
+package com.barrybecker4.game.multiplayer.galactic.ui.renderers;
 
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.IGameController;
@@ -21,22 +21,19 @@ import java.awt.geom.Point2D;
  *
  * @author Barry Becker
  */
-public class GalaxyRenderer extends MultiGameBoardRenderer
-{
-    private  static GameBoardRenderer renderer_;
+public class GalaxyRenderer extends MultiGameBoardRenderer {
 
+    private  static GameBoardRenderer renderer_;
 
     /**
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    private GalaxyRenderer()
-    {
+    private GalaxyRenderer() {
         pieceRenderer_ = PlanetRenderer.getRenderer();
     }
 
-    public static GameBoardRenderer getRenderer()
-    {
+    public static GameBoardRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new GalaxyRenderer();
         return renderer_;
@@ -44,8 +41,7 @@ public class GalaxyRenderer extends MultiGameBoardRenderer
 
 
     @Override
-    protected int getPreferredCellSize()
-    {
+    protected int getPreferredCellSize() {
         return 16;
     }
 
@@ -53,8 +49,8 @@ public class GalaxyRenderer extends MultiGameBoardRenderer
      * Draw the pieces and possibly other game markers for both players.
      */
     @Override
-    protected void drawMarkers(IGameController controller, Graphics2D g2 )
-    {
+    protected void drawMarkers(IGameController controller, Graphics2D g2 ) {
+
         // before we draw the planets, draw the fleets and their paths
         PlayerList players = controller.getPlayers();
         for (final Player player : players) {

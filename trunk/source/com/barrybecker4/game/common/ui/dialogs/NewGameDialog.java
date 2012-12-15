@@ -6,8 +6,8 @@ import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.GameViewable;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.online.ui.OnlineGameManagerPanel;
+import com.barrybecker4.game.common.ui.panel.GridBoardParamPanel;
 import com.barrybecker4.ui.components.GradientButton;
-import com.barrybecker4.ui.components.NumberInput;
 import com.barrybecker4.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;
@@ -35,8 +35,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     protected JPanel playLocalPanel_;
     private OnlineGameManagerPanel playOnlinePanel_;
 
-    protected NumberInput rowSizeField_;
-    protected NumberInput colSizeField_;
+    protected GridBoardParamPanel gridParamPanel_;
 
     protected GradientButton startButton_;
 
@@ -85,14 +84,14 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         JPanel playLocalPanel = new JPanel();
         playLocalPanel.setLayout( new BoxLayout( playLocalPanel, BoxLayout.Y_AXIS ) );
         JPanel playerPanel = createPlayerAssignmentPanel();
-        JPanel boardParamPanel = createBoardParamPanel();
+        gridParamPanel_ = createBoardParamPanel();
         JPanel customPanel = createCustomPanel();
 
         if (playerPanel != null) {
             playLocalPanel.add( playerPanel );
         }
-        if (boardParamPanel != null)   {
-            playLocalPanel.add( boardParamPanel );
+        if (gridParamPanel_ != null)   {
+            playLocalPanel.add( gridParamPanel_ );
         }
         if (customPanel != null )  {
             playLocalPanel.add( customPanel );
@@ -122,62 +121,33 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
      * Subclasses use this to create their own custom options
      * Default is to have no custom panel.
      */
-    protected JPanel createCustomPanel()
-    {
+    protected JPanel createCustomPanel() {
         return null;
+    }
+
+    /**
+     * panel which allows changing board specific properties.
+     */
+    protected GridBoardParamPanel createBoardParamPanel() {
+        return new GridBoardParamPanel(board_.getNumRows(), board_.getNumCols(), createCustomBoardConfigPanel());
     }
 
     /**
      * Subclasses use this to create their own custom board configuration options
      * Default is to have no custom panel.
      */
-    protected JPanel createCustomBoardConfigPanel()
-    {
+    protected JPanel createCustomBoardConfigPanel() {
         return null;
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("NEW_GAME_DLG_TITLE");
     }
 
-
-    protected JPanel createBoardParamPanel()
-    {
-        JPanel outerPanel = new JPanel();
-        outerPanel.setLayout(new BorderLayout());
-        JPanel p = new JPanel();
-        p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
-        p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Board Configuration" ) );
-        JLabel label = new JLabel( GameContext.getLabel("BOARD_SIZE") + COLON );
-        label.setAlignmentX( Component.LEFT_ALIGNMENT );
-        p.add( label );
-
-        if (board_!=null) {
-            rowSizeField_ = new NumberInput(GameContext.getLabel("NUMBER_OF_ROWS"), board_.getNumRows());
-            colSizeField_ = new NumberInput( GameContext.getLabel("NUMBER_OF_COLS"), board_.getNumCols());
-
-            rowSizeField_.setAlignmentX( Component.LEFT_ALIGNMENT );
-            colSizeField_.setAlignmentX( Component.LEFT_ALIGNMENT );
-            p.add( rowSizeField_ );
-            p.add( colSizeField_ );
-        }
-
-        // add a custom section if desired (override createCustomBoardConfigPanel in derived class)
-        JPanel customConfigPanel = createCustomBoardConfigPanel();
-        if ( customConfigPanel != null )
-            p.add( customConfigPanel );
-
-        outerPanel.add(p, BorderLayout.CENTER);
-        outerPanel.add(new JPanel(), BorderLayout.EAST);
-        return outerPanel;
-    }
-
-    protected void ok()
-    {
-        if (board_ != null && rowSizeField_!= null) {
-            board_.setSize( rowSizeField_.getIntValue(), colSizeField_.getIntValue() );
+    protected void ok() {
+        if (board_ != null && gridParamPanel_!= null) {
+            board_.setSize(gridParamPanel_.getRowSize(), gridParamPanel_.getColSize());
         }
 
         canceled_ = false;
@@ -251,7 +221,6 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         }
     }
 
-
     /**
      * If the window gets closed, then the player has stood up from his table if online.
      */
@@ -267,5 +236,4 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         }
         super.processWindowEvent( e );
     }
-
 }

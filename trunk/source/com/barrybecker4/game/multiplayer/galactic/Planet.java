@@ -30,8 +30,7 @@ public class Planet extends GamePiece {
 
     public static final Color NEUTRAL_COLOR = Color.LIGHT_GRAY;
 
-
-
+    /** Constructor */
     public Planet( char name, int initialNumShips, int productionCapacity, Location pos)  {
         type_ = name;
         setAnnotation(""+name);
@@ -168,8 +167,7 @@ public class Planet extends GamePiece {
       * get the textual representation of the group.
       * @return string form
       */
-     public String toString()
-     {
+     public String toString() {
          return toString( "\n" );
      }
 
@@ -177,14 +175,12 @@ public class Planet extends GamePiece {
       * get the html representation of the group.
       * @return html form
       */
-     public String toHtml()
-     {
+     public String toHtml() {
          return toString( "<br>" );
      }
 
 
-    String toString(String newLine)
-    {
+    String toString(String newLine) {
         StringBuilder sb = new StringBuilder("Planet: "+type_+newLine);
 
         if (getOwner()!=null)

@@ -16,8 +16,7 @@ import java.awt.geom.Point2D;
  *
  * @author Barry Becker
  */
-public class Order
-{
+public class Order {
 
     private Planet origin_;
     private Planet destination_;
@@ -29,20 +28,17 @@ public class Order
     private static final int NORMAL_SPEED = 2;
     private static final double INTERSECT_TOLERANCE = 0.2;
 
-    public Order(Planet origin, Planet target, int fleetSize, Point2D loc)
-    {
+    public Order(Planet origin, Planet target, int fleetSize, Point2D loc) {
         commonInit(origin, target, fleetSize);
         currentLocation_ = loc;
     }
 
-    public Order(Planet origin, Planet target, int fleetSize)
-    {
+    public Order(Planet origin, Planet target, int fleetSize) {
        commonInit(origin, target, fleetSize);
        currentLocation_ = new Point2D.Double(origin.getLocation().getCol(), origin.getLocation().getRow());
     }
 
-    private void commonInit(Planet origin, Planet target, int fleetSize)
-    {
+    private void commonInit(Planet origin, Planet target, int fleetSize) {
         origin_ = origin;
         assert(origin!=null);
         destination_ = target;
@@ -54,65 +50,54 @@ public class Order
     }
 
 
-    public Planet getOrigin()
-    {
+    public Planet getOrigin()  {
         return origin_;
     }
 
-    public void setOrigin( Planet origin)
-    {
+    public void setOrigin( Planet origin) {
         this.origin_ = origin;
     }
 
-    public Planet getDestination()
-    {
+    public Planet getDestination() {
         return destination_;
     }
 
-    public void setDestination( Planet destination )
-    {
+    public void setDestination( Planet destination ) {
         this.destination_ = destination;
     }
 
-    public int getFleetSize()
-    {
+    public int getFleetSize() {
         return fleetSize_;
     }
 
-    public void setFleetSize( int fleetSize )
-    {
+    public void setFleetSize( int fleetSize ) {
         this.fleetSize_ = fleetSize;
     }
 
     /**
      * @return the player who issued this order
      */
-    public GalacticPlayer getOwner()
-    {
+    public GalacticPlayer getOwner() {
         assert(owner_!=null);
         return owner_;
     }
 
-    double getDistanceRemaining()
-    {
+    double getDistanceRemaining() {
         return destination_.getDistanceFrom( getCurrentLocation() );
     }
 
-    public double getTimeRemaining()
-    {
+    public double getTimeRemaining() {
         return getDistanceRemaining() / NORMAL_SPEED;
     }
 
-    public boolean hasArrived()
-    {
+    public boolean hasArrived() {
         return hasArrived_;
     }
 
     /**
      * adjust the current location so it represents the position of the fleet a year later.
      */
-    public void incrementYear()
-    {
+    public void incrementYear() {
         Point2D oldLocation = new Point2D.Double(currentLocation_.getX(), currentLocation_.getY());
 
         Vector2d v = getUnitDirection();
@@ -138,8 +123,7 @@ public class Order
     /**
      * @return a unit vector pointing in the current direction of movement.
      */
-    private Vector2d getUnitDirection()
-    {
+    private Vector2d getUnitDirection() {
         Location dLoc = destination_.getLocation();
         Vector2d unitVec = new Vector2d(dLoc.getCol() - currentLocation_.getX(), dLoc.getRow() - currentLocation_.getY());
         unitVec.normalize();

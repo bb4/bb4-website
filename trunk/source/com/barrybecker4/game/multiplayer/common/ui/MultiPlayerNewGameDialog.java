@@ -4,6 +4,7 @@ package com.barrybecker4.game.multiplayer.common.ui;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameViewable;
 import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
+import com.barrybecker4.game.common.ui.panel.GridBoardParamPanel;
 import com.barrybecker4.game.multiplayer.common.MultiGameOptions;
 import com.barrybecker4.ui.components.GradientButton;
 
@@ -86,7 +87,7 @@ public abstract class MultiPlayerNewGameDialog
      * panel which allows changing board specific properties.
      */
     @Override
-    protected JPanel createBoardParamPanel() {
+    protected GridBoardParamPanel createBoardParamPanel() {
         return null;
     }
 

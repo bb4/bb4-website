@@ -47,8 +47,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class GalacticController extends MultiGameController
-{
+public class GalacticController extends MultiGameController {
 
     private static final int DEFAULT_NUM_ROWS = 16;
     private static final int DEFAULT_NUM_COLS = 16;
@@ -68,13 +67,11 @@ public class GalacticController extends MultiGameController
         return new Galaxy( nrows, ncols );
     }
 
-
      /**
-     * by default we start with one human and one robot player.
-     */
+      * by default we start with one human and one robot player.
+      */
     @Override
-    protected void initPlayers()
-    {
+    protected void initPlayers() {
         // we just init the first time.
         // After that, they can change manually to get different players.
         if (getPlayers() == null) {
@@ -110,17 +107,17 @@ public class GalacticController extends MultiGameController
     public boolean isOnlinePlayAvailable() {return false; }
 
     /**
-     *
      * @return true if the game is over.
      */
-    public boolean isDone()
-    {
-        if (getLastMove()==null)
+    public boolean isDone() {
+        if (getLastMove()==null) {
             return false;
+        }
         // add one so indexed by 1 instead of 0, add 1 because its the "last" move
-        if ((this.getNumMoves() + 2) >= ((GalacticOptions)getOptions()).getMaxYearsToPlay())
+        if ((this.getNumMoves() + 2) >= ((GalacticOptions)getOptions()).getMaxYearsToPlay()) {
             return true; // done
-        return (Galaxy.allPlanetsOwnedByOnePlayer());
+        }
+        return Galaxy.allPlanetsOwnedByOnePlayer();
     }
 
     /**
@@ -149,8 +146,7 @@ public class GalacticController extends MultiGameController
      * @return the index of the next player to play.
      */
     @Override
-    public int advanceToNextPlayer()
-    {
+    public int advanceToNextPlayer() {
         GalaxyViewer gviewer  = (GalaxyViewer)this.getViewer();
 
         // show message when done.
@@ -191,8 +187,7 @@ public class GalacticController extends MultiGameController
      * @return the index of the next player
      */
     @Override
-    protected int advanceToNextPlayerIndex()
-    {
+    protected int advanceToNextPlayerIndex() {
         currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
         return currentPlayerIndex_;
     }
@@ -208,14 +203,11 @@ public class GalacticController extends MultiGameController
     /**
      * @return number of planets in the galaxy
      */
-    public int getNumPlanets()
-    {
+    public int getNumPlanets() {
         return Galaxy.getNumPlanets();
     }
 
-    public void setNumPlanets(int numPlanets)
-    {
+    public void setNumPlanets(int numPlanets) {
         ((Galaxy)getBoard()).setNumPlanets(numPlanets);
     }
-
 }

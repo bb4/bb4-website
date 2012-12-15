@@ -9,7 +9,6 @@ import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.online.server.ServerConnection;
-import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameViewer;
 import com.barrybecker4.optimization.parameter.ParameterArray;
@@ -21,14 +20,13 @@ import java.util.List;
  * Abstract base class for multi player game controllers.
  *
  * Online play should work like this:
- *  Case One: no robot players, all players are humans on client computers.
  *  <ul>
  *    <li>One of the human players creates a table with certain parameters that define
  *     the game to be played.  </li>
  *   <li>Each client and the server create an instance of the game controller.
  *     On each client there is a human player representing the player on that client,
- *     and surrogate player objects representing all the other human players. </li>
- *   <li>The server will have surrogates for all the human players. </li>
+ *     and surrogate player objects representing all the other human and robot players. </li>
+ *   <li>The server will have surrogates for all the human players, and robot players for the computer players. </li>
  *   <li>When it is a given players turn, they specify their action. </li>
  *     That action is sent in a message to the server. The server then broadcasts
  *     the response (in this case the players action) to all OnlineChangeListeners.
@@ -48,9 +46,10 @@ public abstract class MultiGameController extends GameController {
     /** there is a different starting player each round */
     protected int startingPlayerIndex_ = 0;
 
-    // the ith play in a given round
+    /** the ith play in a given round */
     protected int playIndex_ = 0;
 
+    /** size of the board. Assumed to be a grid. Probably should be abstracted to an options class */
     private Dimension size;
 
     protected  MultiGameController()  {
@@ -107,16 +106,15 @@ public abstract class MultiGameController extends GameController {
 
 
     /**
-     *
-     * @return the player whos turn it is now.
+     * @return the player who's turn it is now.
      */
     public MultiGamePlayer getCurrentPlayer() {
         return (MultiGamePlayer)getPlayers().get(currentPlayerIndex_);
     }
 
     public void computerMovesFirst() {
-        MultiGameViewer gviewer  = (MultiGameViewer) this.getViewer();
-        gviewer.doComputerMove(getCurrentPlayer());
+        MultiGameViewer viewer  = (MultiGameViewer) this.getViewer();
+        viewer.doComputerMove(getCurrentPlayer());
     }
 
     /**

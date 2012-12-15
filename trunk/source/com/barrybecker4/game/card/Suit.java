@@ -5,11 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Card suits listed in increasing order of value.
+ * This is the order prescribed by 13 (Vietnamese card came).
  * @author Barry Becker
  */
 public enum Suit {
 
-    // listed in increasing order of value
     SPADES("S"),
     CLUBS("C"),
     DIAMONDS("D"),

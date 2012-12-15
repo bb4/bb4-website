@@ -1,11 +1,12 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.galactic.ui;
+package com.barrybecker4.game.multiplayer.galactic.ui.dialog;
 
 import com.barrybecker4.common.concurrency.ThreadUtil;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.galactic.BattleSimulation;
 import com.barrybecker4.game.multiplayer.galactic.Planet;
 import com.barrybecker4.game.multiplayer.galactic.player.GalacticPlayer;
+import com.barrybecker4.game.multiplayer.galactic.ui.GalaxyViewer;
 import com.barrybecker4.sound.MusicMaker;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.dialogs.OptionsDialog;
@@ -23,7 +24,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-final class BattleDialog extends OptionsDialog
+public final class BattleDialog extends OptionsDialog
                          implements ActionListener {
 
     // smaller number means faster battle sequence
@@ -58,7 +59,7 @@ final class BattleDialog extends OptionsDialog
      * @param battle the simulation
      * @param viewer send in the viewer so we can give feedback about the battle while it is occurring
      */
-    BattleDialog( Component parent, BattleSimulation battle, GalaxyViewer viewer ) {
+    public BattleDialog( Component parent, BattleSimulation battle, GalaxyViewer viewer ) {
         super( parent );
         this.setResizable(false);
         this.setModal(true);

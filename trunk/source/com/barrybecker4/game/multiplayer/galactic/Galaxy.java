@@ -20,8 +20,8 @@ import java.util.Map;
  *
  * @author Barry Becker
  */
-public class Galaxy extends Board
-{
+public class Galaxy extends Board {
+
     private static final int DEFAULT_NUM_PLANETS = 20;
     public static final int MAX_NUM_PLANETS = 80;
     public static final int MIN_NUM_PLANETS = 3;
@@ -41,7 +41,7 @@ public class Galaxy extends Board
         }
     }
 
-
+    // @@ I don't think the following 3 props should not be static. Not sure why I made them that way.
     private static int numPlanets_ = DEFAULT_NUM_PLANETS;
 
     // the list of planets on the board.
@@ -202,7 +202,6 @@ public class Galaxy extends Board
 
 
     public void higlightPlanet() {
-
     }
 
     /**
