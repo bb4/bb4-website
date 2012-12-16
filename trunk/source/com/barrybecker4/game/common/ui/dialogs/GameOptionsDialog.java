@@ -366,12 +366,13 @@ public abstract class GameOptionsDialog extends OptionsDialog
      * Invoked when a radio button has changed its selection state.
      */
     public void itemStateChanged( ItemEvent e ) {
-        if ( consoleOutputButton_ != null && consoleOutputButton_.isSelected() )
+        if ( consoleOutputButton_ != null && consoleOutputButton_.isSelected() ) {
             logDestination_ = ILog.LOG_TO_CONSOLE;
-        else if ( windowOutputButton_ != null && windowOutputButton_.isSelected() )
+        } else if ( windowOutputButton_ != null && windowOutputButton_.isSelected() ) {
             logDestination_ = ILog.LOG_TO_WINDOW;
-        else if ( fileOutputButton_ != null && fileOutputButton_.isSelected() )
+        } else if ( fileOutputButton_ != null && fileOutputButton_.isSelected() )    {
             logDestination_ = ILog.LOG_TO_FILE;
+        }
     }
 
 }

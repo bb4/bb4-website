@@ -32,7 +32,6 @@ public abstract class MultiGamePlayer extends Player {
     public abstract PlayerAction getAction(MultiGameController controller);
 
     /**
-     *
      * @param action to set.
      */
     public abstract void setAction(PlayerAction action);

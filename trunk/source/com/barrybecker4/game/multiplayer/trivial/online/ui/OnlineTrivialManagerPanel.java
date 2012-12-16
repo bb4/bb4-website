@@ -3,6 +3,7 @@ package com.barrybecker4.game.multiplayer.trivial.online.ui;
 
 import com.barrybecker4.game.common.GameViewable;
 import com.barrybecker4.game.common.ui.dialogs.GameOptionsDialog;
+import com.barrybecker4.game.common.ui.dialogs.GameStartListener;
 import com.barrybecker4.game.multiplayer.common.online.ui.MultiPlayerOnlineGameTablesTable;
 import com.barrybecker4.game.multiplayer.common.online.ui.MultiPlayerOnlineManagerPanel;
 import com.barrybecker4.game.multiplayer.trivial.ui.TrivialOptionsDialog;
@@ -20,7 +21,7 @@ public class OnlineTrivialManagerPanel extends MultiPlayerOnlineManagerPanel {
 
     private static final long serialVersionUID = 1;
 
-    public OnlineTrivialManagerPanel(GameViewable viewer, ChangeListener dlg) {
+    public OnlineTrivialManagerPanel(GameViewable viewer, GameStartListener dlg) {
         super(viewer, dlg);
     }
 

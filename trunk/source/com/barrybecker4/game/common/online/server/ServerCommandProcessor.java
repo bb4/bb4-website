@@ -98,6 +98,9 @@ class ServerCommandProcessor {
                 useUpdateTable = false;
                 responses.add(cmd);
                 break;
+            case START_GAME:
+                startGame((OnlineGameTable) cmd.getArgument());
+                break;
             case DO_ACTION :
                 // a player or robot moves, this action is sent here to the server,
                 // then we broadcast it out so the surrogate(s) can be updated.

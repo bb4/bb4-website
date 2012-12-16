@@ -157,8 +157,15 @@ public class PokerController extends MultiGameController {
     void anteUp() {
         // get players to ante up, if they have not already
         if (this.getPotValue() == 0) {
-            for (final Player p : getPlayers()) {
-                PokerPlayer player = ((PokerPlayer) p);
+            for (Player p : getPlayers()) {
+                PokerPlayer player;
+                if (p instanceof SurrogateMultiPlayer) {
+                   player = (PokerPlayer) ((SurrogateMultiPlayer) p).getPlayer();
+                }
+                else {
+                   player = (PokerPlayer) p;
+                }
+
                 // if a player does not have enough money to ante up, he is out of the game
                 player.contributeToPot(this, ((PokerOptions)getOptions()).getAnte());
             }
