@@ -109,7 +109,7 @@ public abstract class MultiGameController extends GameController {
      * @return the player who's turn it is now.
      */
     public MultiGamePlayer getCurrentPlayer() {
-        return (MultiGamePlayer)getPlayers().get(currentPlayerIndex_);
+        return (MultiGamePlayer) getPlayers().get(currentPlayerIndex_);
     }
 
     public void computerMovesFirst() {

@@ -42,9 +42,6 @@ public abstract class GameOptionsDialog extends OptionsDialog
     private int logDestination_;
     private JCheckBox profileCheckbox_;
 
-    // look and feel params
-    private JCheckBox soundCheckbox_;
-    private JCheckBox imagesCheckbox_;
     private JButton boardColorButton_;
     private JButton gridColorButton_;
 
@@ -242,19 +239,19 @@ public abstract class GameOptionsDialog extends OptionsDialog
         p.add( label );
 
         // sound option
-        soundCheckbox_ = new JCheckBox( GameContext.getLabel("USE_SOUND"),  GameContext.getUseSound());
-        soundCheckbox_.setToolTipText( GameContext.getLabel("USE_SOUND_TIP") );
-        soundCheckbox_.addActionListener( this );
-        soundCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
-        p.add( soundCheckbox_ );
+        JCheckBox soundCheckbox = new JCheckBox(GameContext.getLabel("USE_SOUND"), GameContext.getUseSound());
+        soundCheckbox.setToolTipText(GameContext.getLabel("USE_SOUND_TIP"));
+        soundCheckbox.addActionListener(this);
+        soundCheckbox.setAlignmentX(Component.LEFT_ALIGNMENT);
+        p.add(soundCheckbox);
 
         // use images
-        imagesCheckbox_ = new JCheckBox( GameContext.getLabel("USE_IMAGES"), GameContext.getDebugMode() > 1 );
-        imagesCheckbox_.setToolTipText( GameContext.getLabel("USE_IMAGES_TIP") );
-        imagesCheckbox_.setEnabled( false );  // not yet implemented
-        imagesCheckbox_.addActionListener( this );
-        imagesCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
-        p.add( imagesCheckbox_ );
+        JCheckBox imagesCheckbox = new JCheckBox(GameContext.getLabel("USE_IMAGES"), GameContext.getDebugMode() > 1);
+        imagesCheckbox.setToolTipText(GameContext.getLabel("USE_IMAGES_TIP"));
+        imagesCheckbox.setEnabled(false);  // not yet implemented
+        imagesCheckbox.addActionListener(this);
+        imagesCheckbox.setAlignmentX(Component.LEFT_ALIGNMENT);
+        p.add(imagesCheckbox);
 
         //call super methods to add color select entries
         boardColorButton_ = new JButton("...");
@@ -360,7 +357,6 @@ public abstract class GameOptionsDialog extends OptionsDialog
             GameContext.log(0, "locale="+localeComboBox_.getSelectedItem());
         }
     }
-
 
     /**
      * Invoked when a radio button has changed its selection state.

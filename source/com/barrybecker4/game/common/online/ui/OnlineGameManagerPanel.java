@@ -24,8 +24,8 @@ import java.awt.event.ActionListener;
  * @author Barry Becker
  */
 public abstract class OnlineGameManagerPanel
-              extends JPanel
-              implements OnlineChangeListener, ActionListener {
+                extends JPanel
+                implements OnlineChangeListener, ActionListener {
 
     /** the options get set directly on the game controller that is passed in. */
     protected GameController controller_;
@@ -58,10 +58,6 @@ public abstract class OnlineGameManagerPanel
 
     public abstract void closing();
 
-    /*
-    public boolean isServerAvailable() {
-        return (controller_.getServerConnection() != null && controller_.getServerConnection().isConnected());
-    }  */
 
     public void handleServerUpdate(GameCommand cmd) {
 
@@ -75,7 +71,6 @@ public abstract class OnlineGameManagerPanel
     protected JPanel createPlayOnlinePanel() {
         JPanel playOnlinePanel = new JPanel();
         playOnlinePanel.setLayout( new BoxLayout( playOnlinePanel, BoxLayout.Y_AXIS ) );
-
 
         JPanel p = new JPanel();
         p.setLayout( new BorderLayout() );

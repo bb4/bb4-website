@@ -191,7 +191,7 @@ public class PossibleMoveAnalyzer {
      private void addIf2HopLegal(boolean directionOpen, boolean blocked,
                                  Location toLocation) {
 
-         BlockadeBoardPosition dirDirPosition =  (BlockadeBoardPosition) board.getPosition(toLocation);
+         BlockadeBoardPosition dirDirPosition = board.getPosition(toLocation);
          if (directionOpen && (dirDirPosition != null) && !blocked
               && (dirDirPosition.isUnoccupied() || dirDirPosition.isHomeBase(opponentPlayer1))
               && !dirDirPosition.isVisited()) { //DD

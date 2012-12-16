@@ -18,7 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Manager players for new local game.
+ * Manager players for new local multi-player game.
  *
  * @author Barry Becker
  */
@@ -78,13 +78,14 @@ public abstract class MultiPlayerNewGameDialog
         return playerPanel;
     }
 
+    /** sets the selected players and closes the dialog */
     public void startGame(PlayerList players) {
         controller_.setPlayers(players);
         ok();
     }
 
     /**
-     * @return  shows the list of local playes that will play this local game
+     * @return  shows the list of local players that will play this local game
      */
     protected abstract PlayerTable createPlayerTable();
 

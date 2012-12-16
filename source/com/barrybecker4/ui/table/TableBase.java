@@ -47,7 +47,6 @@ public abstract class TableBase {
         columnMeta_ = columnMeta;
     }
 
-
     /**
      * @param rows initial data to show in the table.
      */

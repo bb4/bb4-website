@@ -139,17 +139,17 @@
       <parallel>
           <antcall target="executeTrivialServer"/>
           <sequential>
-              <sleep seconds="4" />
+              <sleep seconds="3" />
               <antcall target="executeTrivial"/>
           </sequential>
            <sequential>
+              <sleep seconds="4"/>
+              <antcall target="executeTrivial"/>
+          </sequential>
+          <!--sequential>
               <sleep seconds="5"/>
               <antcall target="executeTrivial"/>
-          </sequential>
-          <sequential>
-              <sleep seconds="6"/>
-              <antcall target="executeTrivial"/>
-          </sequential>
+          </sequential-->
       </parallel>
   </target>
 
@@ -174,17 +174,17 @@
       <parallel>
           <antcall target="executePokerServer"/>
           <sequential>
-              <sleep seconds="5" />
+              <sleep seconds="1" />
               <antcall target="executePoker"/>
           </sequential>
            <sequential>
-              <sleep seconds="5"/>
+              <sleep seconds="2"/>
               <antcall target="executePoker"/>
           </sequential>
-          <sequential>
-              <sleep seconds="5"/>
+          <!--sequential>
+              <sleep seconds="3"/>
               <antcall target="executePoker"/>
-          </sequential>
+          </sequential-->
       </parallel>
   </target>
 

@@ -3,6 +3,7 @@ package com.barrybecker4.game.multiplayer.poker.player;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
+import com.barrybecker4.game.multiplayer.common.online.OnlinePlayer;
 import com.barrybecker4.game.multiplayer.poker.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
@@ -16,29 +17,30 @@ import java.text.MessageFormat;
  *
  * @author Barry Becker
  */
-public abstract class PokerPlayer extends MultiGamePlayer
-{
+public abstract class PokerPlayer extends MultiGamePlayer  {
+
     private static final long serialVersionUID = 1;
 
-    // this player's home planet. (like earth is for humans)
+    /** this player's home planet. (like earth is for humans)  */
     private PokerHand hand_;
     private PokerPlayerMarker piece_;
 
-    // in dollars
+    /** the players current cash amount in dollars */
     private int cash_;
-    private boolean hasFolded_;
-    // this becomes true when the player has no money left or not enough to ante up.
-    private boolean outOfGame_;
-    // the maount that this player has contributed to the pot
-    private int contribution_;
 
-    public static final int DEFAULT_CASH = 100;
+    /** becomes true once the player has folded */
+    private boolean hasFolded_;
+
+    /** this becomes true when the player has no money left or not enough to ante up. */
+    private boolean outOfGame_;
+
+    // the amount that this player has contributed to the pot
+    private int contribution_;
 
     PokerAction action_;
 
 
-    PokerPlayer(String name, int money, Color color, boolean isHuman)
-    {
+    PokerPlayer(String name, int money, Color color, boolean isHuman) {
         super(name, color, isHuman);
         cash_ = money;
         contribution_ = 0;
@@ -67,24 +69,20 @@ public abstract class PokerPlayer extends MultiGamePlayer
      * @param i index of player
      * @return  the default name for player i
      */
-    public String getDefaultName(int i)
-    {
+    public String getDefaultName(int i) {
         Object[] args = {Integer.toString(i)};
         return MessageFormat.format(GameContext.getLabel("POKER_DEFAULT_NAME"), args );
     }
 
-    public PokerHand getHand()
-    {
+    public PokerHand getHand() {
         return hand_;
     }
 
-    public void setHand( PokerHand hand )
-    {
+    public void setHand( PokerHand hand ) {
         this.hand_ = hand;
     }
 
-    public int getCash()
-    {
+    public int getCash() {
         return cash_;
     }
 
@@ -108,7 +106,6 @@ public abstract class PokerPlayer extends MultiGamePlayer
     public void setPiece(PokerPlayerMarker piece) {
         piece_ = piece;
     }
-
 
     /**
      * have this player contribute some amount to the pot.
@@ -135,7 +132,6 @@ public abstract class PokerPlayer extends MultiGamePlayer
         int currentMaxContrib = pc.getCurrentMaxContribution();
         return (currentMaxContrib - getContribution());
     }
-
 
     /**
      * start the player over fresh for a new round

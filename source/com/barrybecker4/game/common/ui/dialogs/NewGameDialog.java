@@ -24,9 +24,8 @@ import java.awt.event.WindowEvent;
  * @author Barry Becker
  */
 public abstract class NewGameDialog extends OptionsDialog implements ChangeListener {
-    /**
-     * the options get set directly on the game controller that is passed in.
-     */
+
+    /** the options get set directly on the game controller that is passed in. */
     protected GameController controller_;
 
     /** contains potentially 2 tabs that shows options for creating a new game, or playing online */
@@ -39,7 +38,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
 
     protected GradientButton startButton_;
 
-    // the options get set directly on the game controller and viewer that are passed in
+    /** the options get set directly on the game controller and viewer that are passed in  */
     protected final Board board_;
     protected final GameViewable viewer_;
 

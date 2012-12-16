@@ -82,12 +82,13 @@ class ServerCommandProcessor {
                 break;
             case JOIN_TABLE :
                 GameCommand startCmd = joinTable((OnlineGameTable) cmd.getArgument());
-                if (startCmd != null)
+                if (startCmd != null) {
                     responses.add(startCmd);
+                }
                 break;
             case CHANGE_NAME :
                 String[] names = ((String)cmd.getArgument()).split(GameCommand.CHANGE_TO);
-                if (names.length >1) {
+                if (names.length > 1) {
                     changeName(names[0], names[1]);
                 }
                 break;
@@ -100,6 +101,7 @@ class ServerCommandProcessor {
                 break;
             case START_GAME:
                 startGame((OnlineGameTable) cmd.getArgument());
+                useUpdateTable = false;
                 break;
             case DO_ACTION :
                 // a player or robot moves, this action is sent here to the server,
@@ -141,7 +143,7 @@ class ServerCommandProcessor {
     }
 
     /**
-     * Get the most recently added human player from table and have them join the table with the same name.
+     * Get the most recently added human player from the table and have them join the table with the same name.
      * If there is a table now ready to play after this change, then start it.
      */
     private GameCommand joinTable(OnlineGameTable table) {
@@ -193,7 +195,7 @@ class ServerCommandProcessor {
         controller_.reset();
         controller_.setPlayers(newPlayers);
         // if getFirstPlayer returns null, then it is not a turn based game
-        if (controller_.getPlayers().getFirstPlayer() != null &&  !controller_.getPlayers().getFirstPlayer().isHuman()) {
+        if (controller_.getPlayers().getFirstPlayer() != null && !controller_.getPlayers().getFirstPlayer().isHuman()) {
             controller_.computerMovesFirst();
         }
     }

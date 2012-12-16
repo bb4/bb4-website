@@ -83,7 +83,7 @@ public class PokerGameRenderer extends MultiGameBoardRenderer {
      */
     private PokerPlayer getPlayer(IGameController controller) {
         PokerPlayer player;
-        if (controller.getCurrentPlayer() instanceof SurrogateMultiPlayer) {
+        if (controller.getCurrentPlayer().isSurrogate()) {
             player = (PokerPlayer)((SurrogateMultiPlayer) controller.getCurrentPlayer()).getPlayer();
         }
         else {

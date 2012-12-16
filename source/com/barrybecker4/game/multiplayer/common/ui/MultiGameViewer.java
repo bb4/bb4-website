@@ -121,7 +121,7 @@ public abstract class MultiGameViewer extends GameBoardViewer {
     }
 
     /**
-     * show who won the round and dispurse the pot.
+     * show who won the round and disburse the pot.
      * Don't show anything by default.
      */
     public void showRoundOver() {}

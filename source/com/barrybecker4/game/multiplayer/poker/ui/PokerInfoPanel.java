@@ -8,6 +8,7 @@ import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
+import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.poker.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
@@ -21,14 +22,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 
-
 /**
- *  Show information and statistics about the game.
+ * Show information and statistics about the game.
  *
- *  @author Barry Becker
+ * @author Barry Becker
  */
-class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, ActionListener
-{
+class PokerInfoPanel extends GameInfoPanel
+                     implements GameChangedListener, ActionListener {
 
     //  buttons to either give comands or pass
     private JButton commandButton_;
@@ -38,8 +38,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
     /**
      * Constructor
      */
-    PokerInfoPanel( GameController controller )
-    {
+    PokerInfoPanel( GameController controller ) {
         super(controller);
     }
 
@@ -48,11 +47,10 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
      * if all the players are robots, don't even show this panel.
      */
     @Override
-    protected void createSubPanels()
-    {
+    protected void createSubPanels() {
         add( createGeneralInfoPanel() );
 
-        if (!controller_.getPlayers().allPlayersComputer())   {
+        if (!controller_.getPlayers().allPlayersComputer())  {
             add( createCustomInfoPanel() );
         }
 
@@ -64,8 +62,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
      * For Poker, we have a button that allows the current player to enter his commands
      */
     @Override
-    protected JPanel createCustomInfoPanel()
-    {
+    protected JPanel createCustomInfoPanel() {
         commandPanel_ = createSectionPanel("");
         setCommandPanelTitle();
 
@@ -81,12 +78,10 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
         return commandPanel_;
     }
 
-
     /**
      * This panel shows a discrete color legend for the poker chip values
      */
-    JPanel createChipLegendPanel()
-    {
+    JPanel createChipLegendPanel() {
         JPanel legendPanel = createSectionPanel("Chip Values");
         PokerChip[] chipTypes = PokerChip.values();
         int n = chipTypes.length;
@@ -104,8 +99,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
     }
 
 
-    private void setCommandPanelTitle()
-    {
+    private void setCommandPanelTitle() {
         Object[] args = {controller_.getCurrentPlayer().getName()};
         String title = MessageFormat.format(GameContext.getLabel("MAKE_YOUR_MOVE"), args);
 
@@ -113,75 +107,86 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
         b.setTitle(title);
     }
 
-
     @Override
-    protected String getMoveNumLabel()
-    {
+    protected String getMoveNumLabel() {
         return GameContext.getLabel("CURRENT_ROUND" + COLON);
     }
 
-
     /**
-     * The Comman button was pressed.
+     * The Common button was pressed.
      * open the dialog to get the players command.
      * @param e
      */
-    public void actionPerformed(ActionEvent e)
-    {
-        if (e.getSource() == commandButton_)
-        {
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == commandButton_) {
             PokerController pc = (PokerController)controller_;
             gameChanged(null); // update the current player in the label
 
            // open the command dialog to get the players commands
-           PokerPlayer currentPlayer = (PokerPlayer)pc.getCurrentPlayer();
-
+           PokerPlayer currentPlayer = getActualPlayer(pc.getCurrentPlayer());
 
            // if the current player has folded, then advance to the next player.
            if (currentPlayer.hasFolded())  {
-              pc.advanceToNextPlayer();
+               pc.advanceToNextPlayer();
            }
-
-           int callAmount = pc.getCurrentMaxContribution() - currentPlayer.getContribution();
 
            BettingDialog bettingDialog = new BettingDialog(pc, getParent());
 
            boolean canceled = bettingDialog.showDialog();
            if ( !canceled ) {
                PokerAction action = (PokerAction)currentPlayer.getAction(pc);
-               // apply the players action : fold, check, call, raise
-               switch (action.getActionName()) {
-                    case FOLD :
-                        currentPlayer.setFold(true);
-                        break;
-                    case CALL :
-                        if (callAmount <= currentPlayer.getCash())  {
-                            currentPlayer.contributeToPot(pc, callAmount);
-                        } else {
-                            currentPlayer.setFold(true);
-                            // if this happens it was probably because someone was allowed to raise by more than the all in amount.
-                            assert false:"callAmount=" + callAmount +" currentPlayer cash="+currentPlayer.getCash();
-                        }
-                        break;
-                    case RAISE :
-                        currentPlayer.contributeToPot(pc, callAmount);
-                        int raise = action.getRaiseAmount();
-                        currentPlayer.contributeToPot(pc, raise);
-                        break;
-                }
+               applyPokerAction(action, currentPlayer);
 
                pc.advanceToNextPlayer();
            }
         }
     }
 
+    // temp hack
+    private PokerPlayer getActualPlayer(Player currentPlayer) {
+        PokerPlayer player;
+        if (currentPlayer.isSurrogate()) {
+            player = (PokerPlayer) ((SurrogateMultiPlayer) currentPlayer).getPlayer();
+        } else {
+            player = (PokerPlayer) currentPlayer;
+        }
+        return player;
+    }
+
+    /**  apply the players action : fold, check, call, raise */
+    private void applyPokerAction(PokerAction action, PokerPlayer currentPlayer) {
+
+         PokerController pc = (PokerController)controller_;
+         int callAmount = pc.getCurrentMaxContribution() - currentPlayer.getContribution();
+
+         switch (action.getActionName()) {
+             case FOLD :
+                 currentPlayer.setFold(true);
+                 break;
+             case CALL :
+                 if (callAmount <= currentPlayer.getCash())  {
+                     currentPlayer.contributeToPot(pc, callAmount);
+                 } else {
+                     currentPlayer.setFold(true);
+                     // if this happens it was probably because someone was allowed
+                     // to raise by more than the all in amount.
+                     assert false:"callAmount=" + callAmount +" currentPlayer cash="+currentPlayer.getCash();
+                 }
+                 break;
+             case RAISE :
+                 currentPlayer.contributeToPot(pc, callAmount);
+                 int raise = action.getRaiseAmount();
+                 currentPlayer.contributeToPot(pc, raise);
+                 break;
+          }
+    }
 
     /**
-     * set the appropriate text and color for the player label.
+     * Set the appropriate text and color for the player label.
      */
     @Override
-    protected void setPlayerLabel()
-    {
+    protected void setPlayerLabel() {
         Player player = controller_.getCurrentPlayer();
 
         String playerName = player.getName();
@@ -189,7 +194,6 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
 
         Color pColor = player.getColor();
 
-        //Border playerLabelBorder = BorderFactory.createLineBorder(pColor, 2);
         playerLabel_.setBorder(getPlayerLabelBorder(pColor));
 
         if (commandPanel_ != null) {
@@ -199,20 +203,17 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
         this.repaint();
     }
 
-
     /**
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
     @Override
-    public void gameChanged( GameChangedEvent gce )
-    {
-        if ( controller_ == null )
+    public void gameChanged( GameChangedEvent gce ) {
+        if ( controller_ == null )  {
             return;
+        }
 
-        //Player currentPlayer = controller_.getCurrentPlayer();
         setPlayerLabel();
-        //Galaxy g = (Galaxy)controller_.getBoard();
         Move lastMove =  controller_.getLastMove();
         if (lastMove != null)  {
             moveNumLabel_.setText( (controller_.getNumMoves() + 2) + " " );
