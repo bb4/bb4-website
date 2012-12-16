@@ -98,7 +98,6 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     }
 
     /**
-     *
      * @return the table that the player has chosen to sit at if any (at most 1.) return null is not sitting.
      */
     public OnlineGameTable getSelectedTable() {
@@ -107,6 +106,10 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
 
     public BasicTableModel getPlayerModel() {
         return (BasicTableModel)getModel();
+    }
+
+    public void removeRow(OnlineGameTable table) {
+        tableList_.remove(table);
     }
 
     /**
@@ -122,7 +125,6 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     }
 
     /**
-     *
      * @param initialPlayerName
      * @return the new online table to add as a new row.
      */

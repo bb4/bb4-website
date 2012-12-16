@@ -38,8 +38,7 @@ import com.barrybecker4.ui.table.TableButtonListener;
 
 
     @Override
-    protected Object[] getRowObject(OnlineGameTable onlineTable, boolean localPlayerAtTable)
-    {
+    protected Object[] getRowObject(OnlineGameTable onlineTable, boolean localPlayerAtTable)  {
         Object d[] = new Object[getNumColumns()];
         // false if active player is in this table.
         // You cannot join a table you are already at

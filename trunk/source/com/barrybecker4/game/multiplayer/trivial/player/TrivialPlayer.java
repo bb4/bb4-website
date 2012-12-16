@@ -6,6 +6,7 @@ import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.common.MultiPlayerMarker;
+import com.barrybecker4.game.multiplayer.common.online.OnlinePlayer;
 import com.barrybecker4.game.multiplayer.trivial.TrivialAction;
 
 import java.awt.*;
@@ -16,8 +17,8 @@ import java.text.MessageFormat;
  *
  * @author Barry Becker
  */
-public abstract class TrivialPlayer extends MultiGamePlayer
-{
+public abstract class TrivialPlayer extends MultiGamePlayer {
+
     private static final long serialVersionUID = 1;
 
     private MultiPlayerMarker piece_;
@@ -33,10 +34,9 @@ public abstract class TrivialPlayer extends MultiGamePlayer
 
 
     /**
-     *
+     * Constructor
      */
-    TrivialPlayer(String name, Color color, boolean isHuman)
-    {
+    TrivialPlayer(String name, Color color, boolean isHuman) {
         super(name, color, isHuman);
 
         value = (int) ((MAX_VALUE + 0.9999) * Math.random());
@@ -46,7 +46,6 @@ public abstract class TrivialPlayer extends MultiGamePlayer
     }
 
     /**
-
      * @return a number between 0 and 1000.
      */
     public int getValue() {

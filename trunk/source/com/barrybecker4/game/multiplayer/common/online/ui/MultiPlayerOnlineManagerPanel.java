@@ -12,7 +12,6 @@ import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.table.TableButtonListener;
 
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -142,6 +141,7 @@ public abstract class MultiPlayerOnlineManagerPanel
 
     /**
      * The create new table button at the top was clicked.
+     * Creates a new row in the GameTableTable representing a table that players can come and sit at.
      */
     void createNewGameTable() {
         String currentName = namePanel_.getCurrentName();
@@ -168,13 +168,13 @@ public abstract class MultiPlayerOnlineManagerPanel
 
     /**
      * called when the user closes the online game dialog.
-     * We remove them form the active tables.
+     * We remove them from the active tables.
      */
     @Override
     public void closing() {
         String name = namePanel_.getCurrentName();
         System.out.println(name + " cancelled online dlg");
-        //controller_.getServerConnection().leaveRoom(name);
+        //controller_.getServerConnection().leaveRoom(name);   // was commented
     }
 
     /**

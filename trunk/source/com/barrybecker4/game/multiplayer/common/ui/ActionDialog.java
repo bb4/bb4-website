@@ -3,6 +3,7 @@ package com.barrybecker4.game.multiplayer.common.ui;
 
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
+import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;
@@ -18,12 +19,15 @@ public abstract class ActionDialog extends OptionsDialog {
     protected MultiGameController controller_;
 
     /**
-     * constructor - create the tree dialog.
+     * Constructor - create the tree dialog.
      * @param gc game controller
      */
     protected ActionDialog(MultiGameController gc, Component parent) {
         controller_ = gc;
         player_ = controller_.getCurrentPlayer();
+        if (player_.isSurrogate()) {
+            player_ = ((SurrogateMultiPlayer)player_).getPlayer();
+        }
         Point p = parent.getLocationOnScreen();
         // offset the dlg so the board is visible as a reference
         setLocation((int)(p.getX() + 0.7 * getParent().getWidth()),
@@ -38,9 +42,9 @@ public abstract class ActionDialog extends OptionsDialog {
     protected JComponent createDialogContent() {
         setResizable( true );
         JPanel mainPanel = new JPanel();
-        mainPanel =  new JPanel();
+
         mainPanel.setLayout( new BorderLayout() );
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         JPanel personalInfoPanel = createPersonalInfoPanel();
         JPanel buttonsPanel = createButtonsPanel();

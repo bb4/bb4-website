@@ -35,7 +35,7 @@ public class OnlineGameServerFrame  extends JFrame {
     }
 
     /**
-     * In the long term there will not be a UI, that is why this class is not itn the ui subpackage.
+     * initialize UI for server.
      */
     private void initUI(String gameName) {
         JPanel panel = new JPanel();
@@ -63,7 +63,6 @@ public class OnlineGameServerFrame  extends JFrame {
         pack();
         setVisible(true);
     }
-
 
     /**
      * Objects created in run method are finalized when

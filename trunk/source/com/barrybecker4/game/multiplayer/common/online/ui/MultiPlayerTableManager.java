@@ -60,16 +60,17 @@ class MultiPlayerTableManager {
             return; // not initialized yet.
         }
 
-        //System.out.println("got an update of the multi-player table list from the server:\n" + cmd);
+        System.out.println("got an update of the multi-player table list from the server:\n" + cmd);
         switch (cmd.getName())  {
             case UPDATE_TABLES :
                 updateTables( (OnlineGameTableList) cmd.getArgument());
                 break;
            case START_GAME :
-                startGame();
+                OnlineGameTable readyTable = onlineGameTablesTable_.getSelectedTable();
+                startGame(readyTable);
                 break;
            case CHAT_MESSAGE : break;
-           case DO_ACTION: break;
+           case DO_ACTION : break;
            default : assert false : "Unexpected command name :"+ cmd.getName();
         }
     }
@@ -87,6 +88,7 @@ class MultiPlayerTableManager {
 
         // see if the table that the player is at is ready to start playing.
         OnlineGameTable readyTable = tableList.getTableReadyToPlay(currentName_);
+
         if (readyTable != null) {
             // then the table the player is sitting at is ready to begin play.
             JOptionPane.showMessageDialog(null,
@@ -100,6 +102,8 @@ class MultiPlayerTableManager {
             //gameStartedListener_.stateChanged(event);
             //startListener.startGame();
 
+            startGame(readyTable);
+
             GameCommand startCmd = new GameCommand(GameCommand.Name.START_GAME, readyTable);
             connection_.sendCommand(startCmd);
         }
@@ -108,13 +112,17 @@ class MultiPlayerTableManager {
     /**
      * An online table has filled with players and is ready to start.
      * Initialize the players for the controller with surrogates for all but the single current player on this client.
+     * @param readyTable with the participants for the game that will now be started.
      */
-    void startGame() {
+    void startGame(OnlineGameTable readyTable) {
         GameContext.log(0, "Start the game for player:" + currentName_
-                + " on the client. Table=" + onlineGameTablesTable_.getSelectedTable());
+                + " on the client. Table=" + readyTable);
+
+        // now tht the game has started, remove it so it does not get started again.
+        onlineGameTablesTable_.removeRow(readyTable);
 
         // since we are on the client we need to create surrogates for the players which are not the current player
-        Iterator<Player> it = onlineGameTablesTable_.getSelectedTable().getPlayers().iterator();
+        Iterator<Player> it = readyTable.getPlayers().iterator();
         PlayerList players = new PlayerList();
         while (it.hasNext()) {
             MultiGamePlayer player = (MultiGamePlayer)it.next();
@@ -126,10 +134,9 @@ class MultiPlayerTableManager {
                 players.add(player);
             }
         }
-        GameContext.log(0, "starting game with players=" + players);
 
+        GameContext.log(0, "starting game with players=" + players);
         startListener_.startGame(players);
-        //controller_.setPlayers(players);
     }
 
     /**
