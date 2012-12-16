@@ -209,16 +209,11 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
      */
     public void stateChanged( ChangeEvent e) {
         if (e.getSource() == tabbedPanel_) {
-            if (tabbedPanel_.getSelectedComponent() == playOnlinePanel_) {
-                startButton_.setVisible(false);
-            }
-            else {
-                startButton_.setVisible(true);
-            }
+            startButton_.setVisible(tabbedPanel_.getSelectedComponent() != playOnlinePanel_);
         }
-        else if (e.getSource() == playOnlinePanel_) {
-            this.setVisible(false);
-        }
+        //else if (e.getSource() == playOnlinePanel_) {
+        //    this.setVisible(false);
+        //}
     }
 
     /**

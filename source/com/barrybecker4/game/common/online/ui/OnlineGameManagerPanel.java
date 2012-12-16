@@ -7,9 +7,9 @@ import com.barrybecker4.game.common.GameViewable;
 import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
+import com.barrybecker4.game.common.ui.dialogs.GameStartListener;
 
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -31,10 +31,10 @@ public abstract class OnlineGameManagerPanel
     protected GameController controller_;
 
     /** typically the dialog that we live in. Called when table ready to play.   */
-    protected ChangeListener gameStartedListener_;
+    protected GameStartListener gameStartedListener_;
 
     /** Constructor */
-    protected OnlineGameManagerPanel(GameViewable viewer, ChangeListener dlg) {
+    protected OnlineGameManagerPanel(GameViewable viewer, GameStartListener dlg) {
 
         controller_ = viewer.getController();
         gameStartedListener_ = dlg;

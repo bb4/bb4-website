@@ -3,9 +3,11 @@ package com.barrybecker4.game.multiplayer.common.ui;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
 import com.barrybecker4.game.common.ui.panel.GridBoardParamPanel;
 import com.barrybecker4.game.multiplayer.common.MultiGameOptions;
+import com.barrybecker4.game.common.ui.dialogs.GameStartListener;
 import com.barrybecker4.ui.components.GradientButton;
 
 import javax.swing.*;
@@ -14,7 +16,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 /**
  * Manager players for new local game.
@@ -23,7 +24,7 @@ import java.awt.event.WindowEvent;
  */
 public abstract class MultiPlayerNewGameDialog
                 extends NewGameDialog
-                implements ActionListener, ListSelectionListener {
+                implements ActionListener, ListSelectionListener, GameStartListener {
 
     // add / remove players
     private GradientButton addButton_;
@@ -77,6 +78,10 @@ public abstract class MultiPlayerNewGameDialog
         return playerPanel;
     }
 
+    public void startGame(PlayerList players) {
+        controller_.setPlayers(players);
+        ok();
+    }
 
     /**
      * @return  shows the list of local playes that will play this local game
@@ -117,7 +122,6 @@ public abstract class MultiPlayerNewGameDialog
         }
         MultiGameOptions options = (MultiGameOptions) controller_.getOptions();
         addButton_.setEnabled(playerTable_.getModel().getRowCount() < options.getMaxNumPlayers());
-
     }
 
     /**

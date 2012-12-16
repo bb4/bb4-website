@@ -6,6 +6,7 @@ import com.barrybecker4.game.common.GameViewable;
 import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.game.common.online.ui.OnlineGameManagerPanel;
 import com.barrybecker4.game.common.ui.dialogs.GameOptionsDialog;
+import com.barrybecker4.game.common.ui.dialogs.GameStartListener;
 import com.barrybecker4.game.multiplayer.common.MultiGameOptions;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.table.TableButtonListener;
@@ -40,7 +41,7 @@ public abstract class MultiPlayerOnlineManagerPanel
     /**
      * Constructor
      */
-    protected MultiPlayerOnlineManagerPanel(GameViewable viewer, ChangeListener dlg) {
+    protected MultiPlayerOnlineManagerPanel(GameViewable viewer, GameStartListener dlg) {
         super(viewer, dlg);
     }
 
@@ -84,8 +85,8 @@ public abstract class MultiPlayerOnlineManagerPanel
         playOnlinePanel.add(headerPanel, BorderLayout.NORTH);
 
         MultiPlayerOnlineGameTablesTable onlineGameTablesTable = createOnlineGamesTable(this);
-        tableManager = new MultiPlayerTableManager(controller_,
-                onlineGameTablesTable, gameStartedListener_);
+        tableManager = new MultiPlayerTableManager(
+                controller_.getServerConnection(), onlineGameTablesTable, gameStartedListener_);
 
         playOnlinePanel.setPreferredSize( new Dimension(600, 300) );
         playOnlinePanel.add( new JScrollPane(onlineGameTablesTable.getTable()) , BorderLayout.CENTER );
@@ -172,19 +173,19 @@ public abstract class MultiPlayerOnlineManagerPanel
     @Override
     public void closing() {
         String name = namePanel_.getCurrentName();
-        System.out.println(name + " is now leaving the room ");
-        controller_.getServerConnection().leaveRoom(name);
+        System.out.println(name + " cancelled online dlg");
+        //controller_.getServerConnection().leaveRoom(name);
     }
 
     /**
      * Implement keyListener interface.
-     * @param key
+     * @param key key that was pressed
      */
     public void keyTyped( KeyEvent key )  {}
     public void keyPressed(KeyEvent key) {}
     public void keyReleased(KeyEvent key) {
-        char c = key.getKeyChar();
-        if ( c == '\n' ) {
+        char keyChar = key.getKeyChar();
+        if ( keyChar == '\n' ) {
             String currentName = namePanel_.getCurrentName();
             controller_.getServerConnection().nameChanged(oldName_, currentName);
             tableManager.setCurrentName(currentName);

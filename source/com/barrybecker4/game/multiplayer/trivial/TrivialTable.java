@@ -59,7 +59,7 @@ public class TrivialTable extends Board {
         reset();
 
         for (Player p : players) {
-            TrivialPlayer tp = null;
+            TrivialPlayer tp;
             if (p.isSurrogate()) {
                 tp = (TrivialPlayer) ((SurrogateMultiPlayer) p).getPlayer();
             }

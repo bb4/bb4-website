@@ -1,21 +1,20 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.multiplayer.common.online.ui;
 
-import com.barrybecker4.game.common.GameController;
+import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.game.common.online.OnlineGameTable;
 import com.barrybecker4.game.common.online.OnlineGameTableList;
+import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
+import com.barrybecker4.game.common.ui.dialogs.GameStartListener;
 import com.barrybecker4.game.multiplayer.common.MultiGameOptions;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
-import com.barrybecker4.game.multiplayer.common.online.ui.MultiPlayerOnlineGameTablesTable;
 import com.barrybecker4.ui.table.BasicTableModel;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.util.Iterator;
 
 /**
@@ -28,21 +27,22 @@ import java.util.Iterator;
 class MultiPlayerTableManager {
 
     private String currentName_;
-    private GameController controller_;
+    private IServerConnection connection_;
     private MultiPlayerOnlineGameTablesTable onlineGameTablesTable_;
 
     /** typically the dialog that we live in. Called when table ready to play.   */
-    protected ChangeListener gameStartedListener_;
+    private GameStartListener startListener_;
 
 
     /**
      * Constructor
      */
-    public MultiPlayerTableManager(GameController controller,
-            MultiPlayerOnlineGameTablesTable onlineGameTablesTable, ChangeListener startedListener) {
-        controller_ = controller;
+    public MultiPlayerTableManager(IServerConnection connection,
+            MultiPlayerOnlineGameTablesTable onlineGameTablesTable,
+            GameStartListener startListener) {
+        connection_ = connection;
         onlineGameTablesTable_ = onlineGameTablesTable;
-        gameStartedListener_ = startedListener;
+        startListener_ = startListener;
     }
 
     public void setCurrentName(String name) {
@@ -95,12 +95,13 @@ class MultiPlayerTableManager {
                       "Ready to Start", JOptionPane.INFORMATION_MESSAGE);
             // close the dlg and tell the server to start a thread to play the game
 
-            // send an event to close the new player window. (perhaps we could know its a dialog and close it directly?)
-            ChangeEvent event = new ChangeEvent(this);
-            gameStartedListener_.stateChanged(event);
+            // send an event to close the new game window. (perhaps we could know its a dialog and close it directly?)
+            //ChangeEvent event = new ChangeEvent(this);
+            //gameStartedListener_.stateChanged(event);
+            //startListener.startGame();
 
-            //GameCommand startCmd = new GameCommand(GameCommand.Name.START_GAME, readyTable);
-            //controller_.getServerConnection().sendCommand(startCmd);
+            GameCommand startCmd = new GameCommand(GameCommand.Name.START_GAME, readyTable);
+            connection_.sendCommand(startCmd);
         }
     }
 
@@ -109,8 +110,8 @@ class MultiPlayerTableManager {
      * Initialize the players for the controller with surrogates for all but the single current player on this client.
      */
     void startGame() {
-        System.out.println("Start the game for player:" + currentName_
-                + " on the client. Table=" +  onlineGameTablesTable_.getSelectedTable());
+        GameContext.log(0, "Start the game for player:" + currentName_
+                + " on the client. Table=" + onlineGameTablesTable_.getSelectedTable());
 
         // since we are on the client we need to create surrogates for the players which are not the current player
         Iterator<Player> it = onlineGameTablesTable_.getSelectedTable().getPlayers().iterator();
@@ -119,15 +120,16 @@ class MultiPlayerTableManager {
             MultiGamePlayer player = (MultiGamePlayer)it.next();
             if (!player.getName().equals(this.currentName_)) {
                 // add surrogate
-                players.add(new SurrogateMultiPlayer(player, controller_.getServerConnection()));
+                players.add(new SurrogateMultiPlayer(player, connection_));
             }
             else {
                 players.add(player);
             }
         }
-        System.out.println("starting game with players="+players);
-        controller_.setPlayers(players);
+        GameContext.log(0, "starting game with players=" + players);
 
+        startListener_.startGame(players);
+        //controller_.setPlayers(players);
     }
 
     /**
@@ -140,7 +142,7 @@ class MultiPlayerTableManager {
 
         // now add it to this list as a new row and tell the server to add it.
         // onlineGameTablesTable_.addRow(newTable);
-        controller_.getServerConnection().addGameTable(newTable);
+        connection_.addGameTable(newTable);
     }
 
     /**
@@ -157,9 +159,9 @@ class MultiPlayerTableManager {
             boolean enableJoin = (i != joinRow) && !onlineGameTablesTable_.getGameTable(i).isReadyToPlay();
             m.setValueAt(enableJoin, i, 0);
         }
-        controller_.getServerConnection().joinTable(
-                  onlineGameTablesTable_.createPlayerForName(currentName_),
-                  onlineGameTablesTable_.getGameTable(joinRow));
+        connection_.joinTable(
+            onlineGameTablesTable_.createPlayerForName(currentName_),
+            onlineGameTablesTable_.getGameTable(joinRow));
 
         onlineGameTablesTable_.getTable().removeEditor();
     }
