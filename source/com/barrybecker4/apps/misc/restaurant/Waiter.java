@@ -2,26 +2,27 @@ package com.barrybecker4.apps.misc.restaurant;
 
 class Waiter extends Thread {
 
-    private Restaurant restaurant;
+    private final Kitchen kitchen;
 
-    public Waiter(Restaurant r) {
-        restaurant = r;
-        start();
+    public Waiter(Kitchen k) {
+        kitchen = k;
     }
 
     @Override
     public void run() {
+
         while (true) {
-            while (restaurant.order == null)
-                synchronized(this) {
-                try {
-                     wait();
-                } catch(InterruptedException e) {
-                     throw new RuntimeException(e);
+            while (kitchen.getOrder() == null) {
+                synchronized (kitchen) {
+                    try {
+                        kitchen.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
-            System.out.println("Waitperson got " + restaurant.order);
-            restaurant.order = null;
+            System.out.println("Waitperson got " + kitchen.getOrder());
+            kitchen.order = null;
         }
     }
 }

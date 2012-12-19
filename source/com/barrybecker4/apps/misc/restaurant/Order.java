@@ -6,18 +6,13 @@ package com.barrybecker4.apps.misc.restaurant;
  */
 class Order {
 
-    private static final int INITIAL_FOOD_SUPPLY = 10;
-    private static int currentFoodSupply = INITIAL_FOOD_SUPPLY;
-    private int count = INITIAL_FOOD_SUPPLY - --currentFoodSupply;
+    static int id;
 
-    public Order() {
-        if (currentFoodSupply == 0) {
-            System.out.println("Out of food, closing");
-            System.exit(0);
-        }
+    public Order(int orderId) {
+       id = orderId;
     }
 
     public String toString() {
-        return "Order " + count;
+        return "Order " + id;
     }
 }
