@@ -2,24 +2,21 @@ package com.barrybecker4.apps.misc.restaurant;
 
 class Chef extends Thread {
 
-    private Restaurant restaurant;
-    private final Waiter waitPerson;
+    private final Kitchen kitchen;
 
-    public Chef(Restaurant r, Waiter w) {
-        restaurant = r;
-        waitPerson = w;
-        start();
+    Chef(Kitchen k) {
+        kitchen = k;
     }
 
     @Override
     public void run() {
 
         while (true) {
-            if(restaurant.order == null) {
-                restaurant.order = new Order();
+            if(kitchen.getOrder() == null) {
+                kitchen.createOrder();
                 System.out.print("Order up! ");
-                synchronized(waitPerson) {
-                    waitPerson.notify();
+                synchronized(kitchen) {
+                    kitchen.notify();
                 }
             }
             try {

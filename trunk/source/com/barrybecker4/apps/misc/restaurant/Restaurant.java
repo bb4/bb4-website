@@ -6,11 +6,13 @@ package com.barrybecker4.apps.misc.restaurant;
  */
 public class Restaurant {
 
-    Order order;
-
     public static void main(String[] args) {
-        Restaurant restaurant = new Restaurant();
-        Waiter waitPerson = new Waiter(restaurant);
-        new Chef(restaurant, waitPerson);
+
+        Kitchen kitchen = new Kitchen(10);
+
+        new Waiter(kitchen).start();
+        new Chef(kitchen).start();
     }
+
+    private Restaurant() {}
 }
