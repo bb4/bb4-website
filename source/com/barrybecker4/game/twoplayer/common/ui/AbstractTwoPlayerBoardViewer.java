@@ -213,7 +213,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
 
         try {
             boolean done =  moveProgress_.doComputerMove(isPlayer1);
-            repaint(); //paint( this.getGraphics() );
+            repaint();
             return done;
         }
         catch  (AssertionError ae) {

@@ -18,7 +18,7 @@ import com.barrybecker4.game.multiplayer.common.MultiPlayerMarker;
  */
 public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChangeListener {
 
-    private MultiGamePlayer player;
+    private final MultiGamePlayer player;
 
     /** wait about 40 seconds for the player to move before timing out. */
     private static final int TIMEOUT_DURATION = 40000;
@@ -45,8 +45,10 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
             if (action.getPlayerName().equals(getName())) {
                 GameContext.log(0, "Setting surrogate(" + player.getName()
                         + ") action="+action + " on "+this+",  Thread=" + Thread.currentThread().getName());
-                player.setAction(action);
-                notifyAll();  // unblock the wait below
+                synchronized (player) {
+                    player.setAction(action);
+                    player.notifyAll();  // unblock the wait below
+                }
             }
         }
     }
@@ -57,25 +59,32 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
     }
 
     /**
-     *
+     * Blocks until the action has been received.
+     * Wait gives other threads time to execute until we receive a notify and can continue.
      * @param controller
      * @return an action for this player. Block until the real player, for which we are a surrogate,
-     *    has played and we have an  action to return.
+     *    has played and we have an action to return.
      */
     @Override
-    public synchronized PlayerAction getAction(MultiGameController controller) {
+    public PlayerAction getAction(MultiGameController controller) {
 
         try {
-
             long t1 = System.currentTimeMillis();
-            // wait gives other threads time to execute until we receive a notify and can continue.
             System.out.println(player.getName() + " now waiting for surrogate action on "
                     + this + ",  Thread=" + Thread.currentThread().getName());
-            wait(TIMEOUT_DURATION);
-            if ((System.currentTimeMillis() - t1) > (TIMEOUT_DURATION - 10)) {
-                  System.out.println("****** TIMEOUT! "+ player.getName() +" is waiting for someone to play.");
+
+            PlayerAction a = null;
+            synchronized (player) {
+
+                while (a == null) {
+                    player.wait(TIMEOUT_DURATION);
+                    if ((System.currentTimeMillis() - t1) > (TIMEOUT_DURATION - 10)) {
+                      System.out.println("****** TIMEOUT! "+ player.getName() +" is waiting for someone to play.");
+                    }
+                    a = player.getAction(controller);
+                }
             }
-            PlayerAction a = player.getAction(controller);
+
             float time = (float)(System.currentTimeMillis() - t1)/1000.0f;
             System.out.println("got action =" + a + " for " + player.getName() + " after " + time + "s   on "
                     + this + ",  Thread=" + Thread.currentThread().getName());

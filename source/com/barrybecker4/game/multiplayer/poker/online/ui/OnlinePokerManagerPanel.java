@@ -37,6 +37,4 @@ public class OnlinePokerManagerPanel extends MultiPlayerOnlineManagerPanel {
     protected GameOptionsDialog createNewGameTableDialog() {
         return new PokerOptionsDialog(null, controller_);
     }
-
-
 }

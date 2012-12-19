@@ -50,7 +50,7 @@ public class TrivialGameViewer extends MultiGameViewer {
         int max = -1;
         TrivialPlayer winner = null;
         for (final Player p : players) {
-            TrivialPlayer tp = (TrivialPlayer) p;
+            TrivialPlayer tp = (TrivialPlayer) (p.isSurrogate() ? ((SurrogateMultiPlayer)p).getPlayer() : p);
             if (tp.getValue() > max) {
                 max = tp.getValue();
                 winner = tp;
@@ -91,8 +91,8 @@ public class TrivialGameViewer extends MultiGameViewer {
      * @return done return true if the game is over after moving
      */
     @Override
-    public boolean doSurrogateMove(SurrogateMultiPlayer player)
-    {
+    public boolean doSurrogateMove(SurrogateMultiPlayer player) {
+
         TrivialController pc = (TrivialController) controller_;
         // this should block until there is an action to get,
         PlayerAction action = player.getAction(pc);
