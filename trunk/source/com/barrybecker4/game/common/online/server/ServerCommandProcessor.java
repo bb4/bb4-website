@@ -100,8 +100,10 @@ class ServerCommandProcessor {
                 responses.add(cmd);
                 break;
             case START_GAME:
-                startGame((OnlineGameTable) cmd.getArgument());
+                OnlineGameTable tableToStart = (OnlineGameTable) cmd.getArgument();
+                startGame(tableToStart);
                 useUpdateTable = false;
+                tables_.remove(tableToStart);
                 break;
             case DO_ACTION :
                 // a player or robot moves, this action is sent here to the server,

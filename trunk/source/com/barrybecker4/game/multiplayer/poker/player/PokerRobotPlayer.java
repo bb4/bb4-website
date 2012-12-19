@@ -16,18 +16,16 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public abstract class PokerRobotPlayer extends PokerPlayer
-{
+public abstract class PokerRobotPlayer extends PokerPlayer {
+
     private static final long serialVersionUID = 1;
 
     private RobotType robotType_;
 
-    PokerRobotPlayer(String name, int money, Color color, RobotType rType)
-    {
+    PokerRobotPlayer(String name, int money, Color color, RobotType rType) {
         super(name, money, color, false);
         robotType_ = rType;
     }
-
 
     @Override
     public void setAction(PlayerAction action) {
@@ -72,8 +70,7 @@ public abstract class PokerRobotPlayer extends PokerPlayer
      * just pass in options instead of money
      * @return a random robot player
      */
-    public static PokerRobotPlayer getRandomRobotPlayer(String name, int money, Color color)
-    {
+    public static PokerRobotPlayer getRandomRobotPlayer(String name, int money, Color color) {
         int r = (int)(RobotType.values().length * Math.random());
         return getRobotPlayer(RobotType.values()[r], name, money, color);
     }
@@ -84,15 +81,13 @@ public abstract class PokerRobotPlayer extends PokerPlayer
      *
      * @return  robot players in round robin order (not randomly)
      */
-    public static PokerRobotPlayer getSequencedRobotPlayer(String name, int money, Color color)
-    {
+    public static PokerRobotPlayer getSequencedRobotPlayer(String name, int money, Color color) {
         int r = seq_++ % RobotType.values().length;
         return getRobotPlayer(RobotType.values()[r], name, money, color);
     }
 
 
-    private static PokerRobotPlayer getRobotPlayer(RobotType type, String name, int money, Color color)
-    {
+    private static PokerRobotPlayer getRobotPlayer(RobotType type, String name, int money, Color color) {
          switch (type) {
             case CRAZY_ROBOT: return new CrazyRobotPlayer(name, money, color, RobotType.CRAZY_ROBOT);
             case METHODICAL_ROBOT: return new MethodicalRobotPlayer(name, money, color, RobotType.METHODICAL_ROBOT);

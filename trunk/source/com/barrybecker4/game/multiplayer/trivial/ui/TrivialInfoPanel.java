@@ -85,10 +85,9 @@ class TrivialInfoPanel extends GameInfoPanel
         return GameContext.getLabel("CURRENT_ROUND" + COLON);
     }
 
-
     /**
      * The Orders button was pressed.
-     * open the Orders dialog to get the players commands
+     * open the Orders dialog to get the players directives for their move.
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
@@ -105,7 +104,7 @@ class TrivialInfoPanel extends GameInfoPanel
            boolean canceled = bettingDialog.showDialog();
            if ( !canceled ) {
                TrivialAction action = (TrivialAction) currentPlayer.getAction(pc);
-               // apply the players action : fold, check, call, raise
+               // apply the players action : to review their cards or not
                switch (action.getActionName()) {
                     case KEEP_HIDDEN :
                         break;
@@ -113,7 +112,7 @@ class TrivialInfoPanel extends GameInfoPanel
                         currentPlayer.revealValue();
                         break;
                 }
-                // tell the server that we have moved. All the surrogates need to update.
+                // tell the server that we have moved. All the surrogates need to then make their moves.
                 controller_.getServerConnection().playerActionPerformed(action);
                 pc.advanceToNextPlayer();
            }

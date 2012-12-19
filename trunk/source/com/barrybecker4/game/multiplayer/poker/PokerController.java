@@ -298,7 +298,7 @@ public class PokerController extends MultiGameController {
         GameContext.log(0, "in roundover check max contrib="+contrib);
 
         for (Player pp : getPlayers()) {
-            PokerPlayer p = (PokerPlayer)pp;
+            PokerPlayer p = getActualPlayer(pp);
             if (!p.hasFolded()) {
                 assert(p.getContribution() <= contrib) :
                        "contrib was supposed to be the max, but " + p + " contradicats that.";
@@ -405,9 +405,9 @@ public class PokerController extends MultiGameController {
     protected int advanceToNextPlayerIndex() {
         playIndex_++;
         currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
-        while ((getActualPlayer(getPlayer(currentPlayerIndex_))).hasFolded())
+        while ((getActualPlayer(getPlayer(currentPlayerIndex_))).hasFolded()) {
             currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
-
+        }
         return currentPlayerIndex_;
     }
 

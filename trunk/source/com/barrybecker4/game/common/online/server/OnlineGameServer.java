@@ -168,8 +168,8 @@ public class OnlineGameServer  {
                        GameContext.log(0,cmd.toString());
                     }  else {
                        text_.append(cmd.toString() + '\n');
-                       JScrollPane spane = ((JScrollPane)text_.getParent().getParent());
-                       spane.getVerticalScrollBar().setValue(spane.getVerticalScrollBar().getMaximum());
+                       JScrollPane scrollpane = ((JScrollPane)text_.getParent().getParent());
+                       scrollpane.getVerticalScrollBar().setValue(scrollpane.getVerticalScrollBar().getMaximum());
                     }
                 }
             }
