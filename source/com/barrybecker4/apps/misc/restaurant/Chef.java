@@ -1,5 +1,7 @@
 package com.barrybecker4.apps.misc.restaurant;
 
+import com.barrybecker4.common.concurrency.ThreadUtil;
+
 class Chef extends Thread {
 
     private final Kitchen kitchen;
@@ -12,18 +14,23 @@ class Chef extends Thread {
     public void run() {
 
         while (true) {
-            if(kitchen.getOrder() == null) {
-                kitchen.createOrder();
-                System.out.print("Order up! ");
-                synchronized(kitchen) {
-                    kitchen.notify();
-                }
-            }
-            try {
-                sleep(10);
-            } catch(InterruptedException e) {
-                throw new RuntimeException(e);
+            if (!kitchen.hasOrder()) {
+                prepareOrder();
             }
         }
+    }
+
+    private void prepareOrder() {
+        kitchen.createOrder();
+        prepareFood();
+
+        System.out.print("Order up! ");
+        synchronized(kitchen) {
+            kitchen.notify();
+        }
+    }
+
+    private void prepareFood() {
+        ThreadUtil.sleep((int)(1000 * Math.random()));
     }
 }

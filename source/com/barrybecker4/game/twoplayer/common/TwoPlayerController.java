@@ -285,7 +285,7 @@ public abstract class TwoPlayerController extends GameController {
 
     /**
      * Request the next computer move. It will be the best move that the computer can find.
-     * Launches a separate thread to do the search for the next move.
+     * Launches a separate thread to do the search for the next move so the UI is not blocked.
      * @param player1ToMove true if player one to move.
      * @param synchronous if true then the method does not return until the next move has been found.
      * @return true if the game is over

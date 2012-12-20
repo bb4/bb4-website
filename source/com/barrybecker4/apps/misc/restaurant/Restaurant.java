@@ -10,8 +10,8 @@ public class Restaurant {
 
         Kitchen kitchen = new Kitchen(10);
 
-        new Waiter(kitchen).start();
         new Chef(kitchen).start();
+        new Waiter(kitchen).start();
     }
 
     private Restaurant() {}

@@ -4,7 +4,7 @@ package com.barrybecker4.game.multiplayer.trivial;
 import com.barrybecker4.game.multiplayer.common.MultiGameOptions;
 
 /**
- * @author Barry Becker Date: Sep 2, 2006
+ * @author Barry Becker
  */
 public class TrivialOptions extends MultiGameOptions {
 

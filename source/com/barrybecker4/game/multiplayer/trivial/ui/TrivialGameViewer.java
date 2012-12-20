@@ -62,7 +62,6 @@ public class TrivialGameViewer extends MultiGameViewer {
         return buf.toString();
     }
 
-
     /**
      * make the computer move and show it on the screen.
      *
@@ -81,25 +80,6 @@ public class TrivialGameViewer extends MultiGameViewer {
         refresh();
         pc.advanceToNextPlayer();
 
-        return false;
-    }
-
-    /**
-     * make the surrogate move.
-     *
-     * @param player computer player to move
-     * @return done return true if the game is over after moving
-     */
-    @Override
-    public boolean doSurrogateMove(SurrogateMultiPlayer player) {
-
-        TrivialController pc = (TrivialController) controller_;
-        // this should block until there is an action to get,
-        PlayerAction action = player.getAction(pc);
-
-        applyAction(action, player.getPlayer());
-        refresh();
-        pc.advanceToNextPlayer();
         return false;
     }
 

@@ -82,7 +82,7 @@ public final class SetGameViewer extends MultiGameViewer {
     @Override
     public boolean doSurrogateMove(SurrogateMultiPlayer player)
     {
-        assert false : " no online pla for set yet. coming soon!";
+        assert false : " no online play for Set game yet. coming soon!";
         return false;
     }
 

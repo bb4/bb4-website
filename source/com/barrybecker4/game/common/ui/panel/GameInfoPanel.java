@@ -227,7 +227,7 @@ public abstract class GameInfoPanel extends TexturedPanel
             return;
         if ( controller_.getLastMove() != null ) {
             setPlayerLabel();
-            moveNumLabel_.setText( " "+ controller_.getNumMoves() );
+            moveNumLabel_.setText( " " + controller_.getNumMoves() );
         }
     }
 

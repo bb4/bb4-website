@@ -7,39 +7,42 @@ package com.barrybecker4.apps.misc.restaurant;
  */
 public class Kitchen {
 
-    private final int initialFoodSupply;
-    private int foodSupply ;
+    private FoodSupply foodSupply;
 
-    Order order;
+    /**
+     * must be volatile or we can have deadlock.
+     * or alternatively synchronize all the methods in this class.
+     */
+    private volatile Order order;
 
     Kitchen(int supply) {
-        initialFoodSupply = supply;
-        foodSupply = initialFoodSupply;
+        foodSupply = new FoodSupply(supply);
+    }
+
+    boolean hasOrder() {
+        return order != null;
     }
 
     Order getOrder() {
         return order;
     }
 
+    void clearOrder() {
+        order = null;
+    }
+
     void createOrder() {
         order = new Order(getNewOrderId());
     }
 
-    private boolean hasFood() {
-        return foodSupply > 0;
-    }
+    private synchronized int getNewOrderId() {
 
-    private void takeSomeFood() {
-        foodSupply--;
-    }
-
-    private int getNewOrderId() {
-
-        if (!hasFood()) {
+        if (!foodSupply.hasFood()) {
             System.out.println("Out of food, closing");
             System.exit(0);
         }
-        takeSomeFood();
-        return initialFoodSupply - foodSupply;
+        foodSupply.takeSomeFood();
+        return foodSupply.getRemainingAmount();
     }
+
 }

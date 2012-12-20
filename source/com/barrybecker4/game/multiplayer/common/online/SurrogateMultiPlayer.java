@@ -20,8 +20,8 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
 
     private final MultiGamePlayer player;
 
-    /** wait about 40 seconds for the player to move before timing out. */
-    private static final int TIMEOUT_DURATION = 40000;
+    /** wait about 4 seconds for the player to move before timing out. */
+    private static final int TIMEOUT_DURATION = 4000;
 
 
     /**
@@ -73,22 +73,23 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
             System.out.println(player.getName() + " now waiting for surrogate action on "
                     + this + ",  Thread=" + Thread.currentThread().getName());
 
-            PlayerAction a = null;
+            PlayerAction action = null;
             synchronized (player) {
 
-                while (a == null) {
+                while (action == null) {
                     player.wait(TIMEOUT_DURATION);
                     if ((System.currentTimeMillis() - t1) > (TIMEOUT_DURATION - 10)) {
-                      System.out.println("****** TIMEOUT! "+ player.getName() +" is waiting for someone to play.");
+                      System.out.println("****** TIMEOUT! Waiting for "+ player.getName() + " to play.");
                     }
-                    a = player.getAction(controller);
+                    action = player.getAction(controller);
                 }
             }
 
             float time = (float)(System.currentTimeMillis() - t1)/1000.0f;
-            System.out.println("got action =" + a + " for " + player.getName() + " after " + time + "s   on "
+            System.out.println("got action =" + action + " for "
+                    + player.getName() + " after " + time + "seconds on "
                     + this + ",  Thread=" + Thread.currentThread().getName());
-            return a;
+            return action;
 
         } catch (InterruptedException e) {
             e.printStackTrace();
