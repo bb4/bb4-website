@@ -17,6 +17,9 @@ import com.barrybecker4.game.multiplayer.trivial.player.TrivialPlayer;
  */
 public class TrivialTable extends Board {
 
+    /** size of a players marker */
+    private static final double RADIUS = 0.65;
+
     /**
      * constructor
      *  @param numRows num rows
@@ -36,22 +39,18 @@ public class TrivialTable extends Board {
     }
 
     /**
-     * A trivial game has no real limit so we just reutnr a huge number.
+     * A trivial game has no real limit so we just return a huge number.
      * @return max number of trivial rounds allowed.
      */
     public int getMaxNumMoves() {
-        return 1000000;
+        return 100000;
     }
 
-    // size of a players marker
-    private static final double RADIUS = 0.65;
-
     /**
-     * place the players around the trival table
+     * place the players around the trivial table
      * @param players
-     * @param controller
      */
-    public void initPlayers(PlayerList players, TrivialController controller) {
+    public void initPlayers(PlayerList players) {
         double angle = 0.6 * Math.PI;
         double angleIncrement = 2.0 * Math.PI / (players.size());
         double rowRad = getNumRows() >> 1;

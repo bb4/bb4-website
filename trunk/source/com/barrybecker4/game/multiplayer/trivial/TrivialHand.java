@@ -3,8 +3,8 @@ package com.barrybecker4.game.multiplayer.trivial;
 
 
 /**
- * User: Barry Becker
- * Date: Feb 26, 2005
+ * The trivial hand is jsut a number from one to 100,000.
+ * @author Barry Becker
  */
 class TrivialHand implements Comparable {
 

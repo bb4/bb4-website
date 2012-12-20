@@ -245,12 +245,12 @@ public class CommandHandler {
 
     private boolean cmdGenmove(StringBuffer response) {
         boolean blackPlays = controller_.getCurrentPlayer().equals(controller_.getPlayers().getPlayer1());
-        controller_.requestComputerMove( blackPlays, true );
+        controller_.requestComputerMove(blackPlays, true);
 
         GoMove m = (GoMove) controller_.getLastMove();
         //System.out.println("got " + m);
 
-        Point  point = new Point(m.getToRow()-1, m.getToCol()-1);
+        Point point = new Point(m.getToRow()-1, m.getToCol()-1);
         response.append(Point.toString(point));
 
         return true;

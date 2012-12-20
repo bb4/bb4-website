@@ -49,12 +49,13 @@ public class TrivialController extends MultiGameController {
     }
 
     /**
-     * by default we start with one human and one robot player.
+     * By default we start with one human and one robot player.
+     * Just initialize the first time.
+     * After that, they can change manually to get different players.
      */
     @Override
     protected void initPlayers() {
-        // we just init the first time.
-        // After that, they can change manually to get different players.
+
         if (getPlayers() == null) {
             // create the default players. One human and one robot.
             PlayerList players = new PlayerList();
@@ -69,9 +70,8 @@ public class TrivialController extends MultiGameController {
         }
 
         currentPlayerIndex_ = 0;
-        ((TrivialTable)getBoard()).initPlayers(getPlayers(), this);
+        ((TrivialTable)getBoard()).initPlayers(getPlayers());
     }
-
 
     @Override
     public int getServerPort() {
@@ -99,7 +99,6 @@ public class TrivialController extends MultiGameController {
         }
         return (numPlayersStillHidden == 0);
     }
-
 
     /**
      * @return the player with the best Trivial hand

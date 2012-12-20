@@ -84,8 +84,7 @@ public class GalaxyViewer extends MultiGameViewer {
 
         robot.makeOrders((Galaxy)getBoard(), gc.getNumberOfYearsRemaining());
 
-        /*
-        // records the result on the board.
+        /* // records the result on the board.
         Move lastMove = getController().getLastMove();
         GalacticTurn gmove = GalacticTurn.createMove((lastMove==null)? 0 : lastMove.moveNumber + 1);
         gc.makeMove(gmove);
@@ -93,21 +92,6 @@ public class GalaxyViewer extends MultiGameViewer {
         this.refresh();
 
         gc.advanceToNextPlayer();
-        return false;
-    }
-
-    /**
-     * make the computer move and show it on the screen.
-     *
-     * @param player computer player to move
-     * @return done return true if the game is over after moving
-     */
-    @Override
-    public boolean doSurrogateMove(SurrogateMultiPlayer player) {
-        GalacticController pc = (GalacticController) controller_;
-        // simply blocks until action set?
-        PlayerAction action = player.getAction(pc);
-        pc.advanceToNextPlayer();
         return false;
     }
 

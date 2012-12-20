@@ -16,11 +16,11 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 
 /**
- *  Takes a TrivialController as input and displays the
- *  current state of the Game. For example, the TrivialController contains a TrivialTable object
- *  which describes this state.
+ * Takes a TrivialController as input and displays the
+ * current state of the Game. For example, the TrivialController contains a TrivialTable object
+ * which describes this state.
  *
- *  @author Barry Becker
+ * @author Barry Becker
  */
 public abstract class MultiGameViewer extends GameBoardViewer {
 
@@ -60,13 +60,11 @@ public abstract class MultiGameViewer extends GameBoardViewer {
                    JOptionPane.INFORMATION_MESSAGE );
     }
 
-
     /**
      * @return   the message to display at the completion of the game.
      */
     @Override
     protected abstract String getGameOverMessage();
-
 
     /**
      * make the computer move and show it on the screen.
@@ -77,15 +75,24 @@ public abstract class MultiGameViewer extends GameBoardViewer {
     public abstract boolean doComputerMove(Player player);
 
     /**
-     * make the computer move and show it on the screen.
+     * Wait for the surrogate player to move and show it on the screen when done.
      *
-     * @param player computer player to move
+     * @param player surrogate player to move
      * @return done return true if the game is over after moving
      */
-    public abstract boolean doSurrogateMove(SurrogateMultiPlayer player);
+    public boolean doSurrogateMove(SurrogateMultiPlayer player) {
+
+        MultiGameController pc = (MultiGameController) controller_;
+        PlayerAction action = player.getAction(pc);  // blocks
+
+        applyAction(action, player.getPlayer());
+        refresh();
+        pc.advanceToNextPlayer();
+        return false;
+    }
 
     /**
-     * Do nothting by default.
+     * Does nothing by default.
      * @param action to take
      * @param player to apply it to
      * @return message to show if on client.

@@ -87,25 +87,6 @@ public class PokerGameViewer extends MultiGameViewer {
     }
 
     /**
-     * make the computer move and show it on the screen.
-     *
-     * @param player computer player to move
-     * @return done return true if the game is over after moving
-     */
-    @Override
-    public boolean doSurrogateMove(SurrogateMultiPlayer player) {
-
-        PokerController pc = (PokerController) controller_;
-        PlayerAction action = player.getAction(pc);
-
-        applyAction(action, player.getPlayer());
-
-        pc.advanceToNextPlayer();
-
-        return false;
-    }
-
-    /**
      * @param action to take
      * @param player to apply it to
      * @return message to show if on client.
