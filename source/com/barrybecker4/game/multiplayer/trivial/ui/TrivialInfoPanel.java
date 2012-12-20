@@ -8,6 +8,7 @@ import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
+import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.trivial.TrivialAction;
 import com.barrybecker4.game.multiplayer.trivial.TrivialController;
 import com.barrybecker4.game.multiplayer.trivial.player.TrivialPlayer;
@@ -97,7 +98,8 @@ class TrivialInfoPanel extends GameInfoPanel
             gameChanged(null); // update the current player in the label
 
            // open the command dialog to get the players commands
-           TrivialPlayer currentPlayer = (TrivialPlayer)pc.getCurrentPlayer();
+           Player p = pc.getCurrentPlayer();
+           TrivialPlayer currentPlayer = (TrivialPlayer) (p.isSurrogate() ? ((SurrogateMultiPlayer)p).getPlayer() : p);
 
            RevealDialog bettingDialog = new RevealDialog(pc, getParent());
 

@@ -82,12 +82,8 @@ public abstract class MultiGameViewer extends GameBoardViewer {
      */
     public boolean doSurrogateMove(SurrogateMultiPlayer player) {
 
-        MultiGameController pc = (MultiGameController) controller_;
-        PlayerAction action = player.getAction(pc);  // blocks
-
-        applyAction(action, player.getPlayer());
-        refresh();
-        pc.advanceToNextPlayer();
+        SurrogateMoveWorker worker = new SurrogateMoveWorker(this);
+        worker.requestSurrogateMove(player);
         return false;
     }
 

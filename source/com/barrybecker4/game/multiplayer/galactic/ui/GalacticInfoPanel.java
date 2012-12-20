@@ -110,9 +110,9 @@ class GalacticInfoPanel extends GameInfoPanel
            GalacticPlayer currentPlayer = (GalacticPlayer)gc.getCurrentPlayer();
 
            // if the current player does not own any planets, then advance to the next player
-           if (Galaxy.getPlanets(currentPlayer).size() == 0)
-              gc.advanceToNextPlayer();
-
+           if (Galaxy.getPlanets(currentPlayer).size() == 0)  {
+               gc.advanceToNextPlayer();
+           }
 
            OrdersDialog ordersDialog =
                    new OrdersDialog(null, currentPlayer, gc.getNumberOfYearsRemaining());

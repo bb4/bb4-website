@@ -30,7 +30,7 @@ import java.text.MessageFormat;
 class PokerInfoPanel extends GameInfoPanel
                      implements GameChangedListener, ActionListener {
 
-    //  buttons to either give comands or pass
+    //  buttons to either give commands or pass
     private JButton commandButton_;
     private JPanel commandPanel_;
 
@@ -113,7 +113,7 @@ class PokerInfoPanel extends GameInfoPanel
     }
 
     /**
-     * The Common button was pressed.
+     * The Command button was pressed.
      * open the dialog to get the players command.
      * @param e
      */
@@ -121,6 +121,10 @@ class PokerInfoPanel extends GameInfoPanel
 
         if (e.getSource() == commandButton_) {
             PokerController pc = (PokerController)controller_;
+            if (!pc.getCurrentPlayer().isHuman()) {
+                JOptionPane.showMessageDialog(this, "It's not your turn", "Warning", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             gameChanged(null); // update the current player in the label
 
            // open the command dialog to get the players commands

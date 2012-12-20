@@ -13,6 +13,7 @@ import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameViewer;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
@@ -154,16 +155,23 @@ public abstract class MultiGameController extends GameController {
      * advance to the next player turn in order.
      * @return the index of the next player to play.
      */
-    public int advanceToNextPlayer() {
-        MultiGameViewer pviewer = (MultiGameViewer) getViewer();
+    public void advanceToNextPlayer() {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                doAdvanceToNextPlayer();
+            }
+        });
+    }
+
+    protected void doAdvanceToNextPlayer() {
+         MultiGameViewer pviewer = (MultiGameViewer) getViewer();
         pviewer.refresh();
 
         // show message when done.
         if (isDone()) {
             pviewer.sendGameChangedEvent(null);
-            return 0;
         }
-        int nextIndex = advanceToNextPlayerIndex();
+        advanceToNextPlayerIndex();
 
         if (!isDone()) {
             if (getCurrentPlayer().isSurrogate()) {
@@ -177,7 +185,6 @@ public abstract class MultiGameController extends GameController {
         }
         // fire game changed event
         pviewer.sendGameChangedEvent(null);
-        return nextIndex;
     }
 
     /**

@@ -146,17 +146,15 @@ public class GalacticController extends MultiGameController {
      * @return the index of the next player to play.
      */
     @Override
-    public int advanceToNextPlayer() {
+    protected void doAdvanceToNextPlayer() {
         GalaxyViewer gviewer  = (GalaxyViewer)this.getViewer();
 
         // show message when done.
         if (isDone()) {
             GameContext.log(1, "advanceToNextPlayer done" );
             ((GameBoardViewer)getViewer()).sendGameChangedEvent(null);
-            return 0;
         }
-
-        int nextIndex = advanceToNextPlayerIndex();
+        advanceToNextPlayerIndex();
 
         if (getCurrentPlayer() == getPlayers().getFirstPlayer()) {
 
@@ -178,8 +176,6 @@ public class GalacticController extends MultiGameController {
 
         // fire game changed event
         ((GameBoardViewer)getViewer()).sendGameChangedEvent(null);
-
-        return nextIndex;
     }
 
     /**

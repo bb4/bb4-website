@@ -15,6 +15,8 @@ import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerRobotPlayer;
 import com.barrybecker4.game.multiplayer.poker.ui.PokerGameViewer;
 
+import javax.swing.*;
+
 /**
  * Defines everything the computer needs to know to play Poker.
  *
@@ -241,18 +243,16 @@ public class PokerController extends MultiGameController {
         return (numPlayersStillPlaying == 1);
     }
 
-
     /**
      * advance to the next player turn in order.
      * @return the index of the next player to play.
      */
     @Override
-    public int advanceToNextPlayer()
-    {
+    protected void doAdvanceToNextPlayer() {
+
         PokerGameViewer pviewer = (PokerGameViewer) getViewer();
         pviewer.refresh();
-
-        int nextIndex = advanceToNextPlayerIndex();
+        advanceToNextPlayerIndex();
 
         if (roundOver()) {
             // every player left in the game has called.
@@ -268,7 +268,6 @@ public class PokerController extends MultiGameController {
         // moved from above.
         if (isDone()) {
             pviewer.sendGameChangedEvent(null);
-            return 0;
         }
 
         if (!getCurrentPlayer().isHuman() && !isDone()) {
@@ -277,8 +276,6 @@ public class PokerController extends MultiGameController {
 
         // fire game changed event
         pviewer.sendGameChangedEvent(null);
-
-        return nextIndex;
     }
 
 
