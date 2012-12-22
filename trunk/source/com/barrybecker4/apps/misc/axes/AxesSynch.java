@@ -9,14 +9,13 @@ import java.awt.*;
 
 public class AxesSynch extends JApplet {
 
-    ResizableAppletPanel resizablePanel_ = null;
+    ResizableAppletPanel resizablePanel = null;
 
-    // constructor
+    /** constructor*/
     public AxesSynch() {
         commonInit();
     }
 
-    // constructor
     public void commonInit() {
         GUIUtil.setCustomLookAndFeel();
 
@@ -25,8 +24,8 @@ public class AxesSynch extends JApplet {
 
         JPanel mainPanel = createMainPanel();
 
-        resizablePanel_ = new ResizableAppletPanel( mainPanel );
-        this.getContentPane().add( resizablePanel_ );
+        resizablePanel = new ResizableAppletPanel( mainPanel );
+        this.getContentPane().add(resizablePanel);
     }
 
     private JPanel createMainPanel() {
@@ -55,14 +54,13 @@ public class AxesSynch extends JApplet {
     @Override
     public void setSize( int width, int height ) {
 
-        resizablePanel_.setSize( width, height );
+        resizablePanel.setSize(width, height);
     }
 
 
     //------ Main method --------------------------------------------------------
 
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         AxesSynch simulator = new AxesSynch();
         GUIUtil.showApplet( simulator, "Axes Synchronizer" );
     }

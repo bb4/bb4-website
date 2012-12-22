@@ -20,8 +20,10 @@ public class CombinationApp {
 
     private static final int NUM_RIGHT = 30;
     private static final int NUM_QUESTIONS = 40;
+
     /** num answers for one of the multiple choice questions. */
     private static final int CHOICES_PER_QUESTION = 4;
+
     /** The chance of getting any given problem wrong. */
     private static final double CHANGE_WRONG = (CHOICES_PER_QUESTION-1.0)/(double)CHOICES_PER_QUESTION;
 
