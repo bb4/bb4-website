@@ -141,7 +141,6 @@ public class PokerController extends MultiGameController {
             PokerPlayer player = null;
             if (p.isSurrogate()) {
                 player = (PokerPlayer) ((SurrogateMultiPlayer)p).getPlayer();
-
             }
             else {
                 player = (PokerPlayer) p;

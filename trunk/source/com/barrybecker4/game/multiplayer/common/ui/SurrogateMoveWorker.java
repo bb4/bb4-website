@@ -29,15 +29,14 @@ class SurrogateMoveWorker {
     }
 
     /**
-     * Request the next computer move. It will be the best move that the computer can find.
-     * Launches a separate thread to do the search for the next move.
-     * @param player true if player one to move.
+     * Request the next move from the player that the surrogate represents.
+     * Launches a separate thread to do the search for the next move so the UI is not blocked.
      * @return true if the game is over
-     * @throws AssertionError  if something bad happened while searching.
+     * @throws AssertionError if something bad happened while waiting.
      */
      public boolean requestSurrogateMove(final SurrogateMultiPlayer player) throws AssertionError {
 
-         /** Worker represents a separate thread for computing the next move. */
+         /** Worker represents a separate thread for getting the next move. */
          Worker worker = new Worker() {
 
              private PlayerAction action;
