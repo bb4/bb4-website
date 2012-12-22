@@ -59,7 +59,7 @@ public class TrivialGameRenderer extends MultiGameBoardRenderer {
     protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
 
         MultiGamePlayer player = (MultiGamePlayer)controller.getCurrentPlayer();
-        MultiPlayerMarker m = player.getPiece();
+        MultiPlayerMarker m = ((MultiGamePlayer) player.getActualPlayer()).getPiece();
         assert m != null;
         assert g2 != null;
         assert m.getLocation() != null;

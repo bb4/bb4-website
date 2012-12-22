@@ -58,13 +58,8 @@ public class TrivialTable extends Board {
         reset();
 
         for (Player p : players) {
-            TrivialPlayer tp;
-            if (p.isSurrogate()) {
-                tp = (TrivialPlayer) ((SurrogateMultiPlayer) p).getPlayer();
-            }
-            else {
-                tp = (TrivialPlayer)p;
-            }
+            TrivialPlayer tp = (TrivialPlayer) p.getActualPlayer();
+
             int row = (int) (0.93 * rowRad + (RADIUS * rowRad) * (Math.sin(angle)));
             int col = (int) (0.9 * colRad + (RADIUS * colRad) * (Math.cos(angle)));
 

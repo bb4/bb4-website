@@ -99,7 +99,7 @@ class TrivialInfoPanel extends GameInfoPanel
 
            // open the command dialog to get the players commands
            Player p = pc.getCurrentPlayer();
-           TrivialPlayer currentPlayer = (TrivialPlayer) (p.isSurrogate() ? ((SurrogateMultiPlayer)p).getPlayer() : p);
+           TrivialPlayer currentPlayer = (TrivialPlayer) p.getActualPlayer();
 
            RevealDialog bettingDialog = new RevealDialog(pc, getParent());
 

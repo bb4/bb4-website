@@ -198,6 +198,7 @@ public class ServerConnection implements IServerConnection {
                 catch (SocketException e) {
                     GameContext.log(0, "Read failed (probably because player closed client).  Breaking connection.");
                     isConnected_ = false;
+                    break;
                 }
                 catch (IOException e) {
                     GameContext.log(0, "Read failed.  Breaking connection.");

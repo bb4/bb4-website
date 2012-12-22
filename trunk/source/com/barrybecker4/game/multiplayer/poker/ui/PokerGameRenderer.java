@@ -57,10 +57,11 @@ public class PokerGameRenderer extends MultiGameBoardRenderer {
 
     /**
      * Draw the pieces and possibly other game markers for both players.
+     * The pot will be drawn in the middle of the table.
      */
     @Override
     protected void drawMarkers(IGameController controller, Graphics2D g2  ) {
-        // draw the pot in the middle
+
         Board board = controller.getBoard();
         Location loc = new Location(board.getNumRows() >> 1, (board.getNumCols() >> 1) - 3);
         int pot = ((PokerController)controller).getPotValue();
@@ -82,14 +83,7 @@ public class PokerGameRenderer extends MultiGameBoardRenderer {
      * @return the poker player (not the surrogate if that is what played)
      */
     private PokerPlayer getPlayer(IGameController controller) {
-        PokerPlayer player;
-        if (controller.getCurrentPlayer().isSurrogate()) {
-            player = (PokerPlayer)((SurrogateMultiPlayer) controller.getCurrentPlayer()).getPlayer();
-        }
-        else {
-            player = (PokerPlayer) controller.getCurrentPlayer();
-        }
-        return player;
+        return (PokerPlayer)controller.getCurrentPlayer().getActualPlayer();
     }
 
 }

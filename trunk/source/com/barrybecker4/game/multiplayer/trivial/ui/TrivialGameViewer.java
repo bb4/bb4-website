@@ -50,7 +50,7 @@ public class TrivialGameViewer extends MultiGameViewer {
         int max = -1;
         TrivialPlayer winner = null;
         for (final Player p : players) {
-            TrivialPlayer tp = (TrivialPlayer) (p.isSurrogate() ? ((SurrogateMultiPlayer)p).getPlayer() : p);
+            TrivialPlayer tp = (TrivialPlayer) p.getActualPlayer();
             if (tp.getValue() > max) {
                 max = tp.getValue();
                 winner = tp;

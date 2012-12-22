@@ -87,13 +87,8 @@ public class TrivialController extends MultiGameController {
 
         int numPlayersStillHidden = 0;
         for (Player p : getPlayers()) {
-            TrivialPlayer tp  = null;
-            if (p.isSurrogate()) {
-                tp = (TrivialPlayer)((SurrogateMultiPlayer) p).getPlayer();
-            }
-            else {
-                tp = (TrivialPlayer) p;
-            }
+            TrivialPlayer tp  = (TrivialPlayer) p.getActualPlayer();
+
             if (!tp.isRevealed())
                 numPlayersStillHidden++;
         }
@@ -127,14 +122,12 @@ public class TrivialController extends MultiGameController {
     @Override
     public int advanceToNextPlayerIndex() {
         playIndex_++;
-        MultiGamePlayer player;
+        Player player;
         do {
             // if the current player has revealed, then advance to the next player.
             currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
-            player = getPlayer(currentPlayerIndex_);
-            if (player.isSurrogate()) {
-                player = ((SurrogateMultiPlayer)player).getPlayer();
-            }
+            player = getPlayer(currentPlayerIndex_).getActualPlayer();
+
         }  while (((TrivialPlayer)player).isRevealed());
 
         return currentPlayerIndex_;

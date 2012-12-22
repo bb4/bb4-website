@@ -101,13 +101,9 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
      * The player that we are representing (that is actually located somewhere else)
      * @return the specific game player backed by another player of the same type somewhere else.
      */
-    public synchronized MultiGamePlayer getPlayer() {
-        return player;
-    }
-
     @Override
-    public synchronized MultiPlayerMarker getPiece() {
-        return player.getPiece();
+    public MultiGamePlayer getActualPlayer() {
+        return player;
     }
 
     @Override
