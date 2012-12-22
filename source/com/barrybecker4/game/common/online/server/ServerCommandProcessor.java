@@ -9,6 +9,7 @@ import com.barrybecker4.game.common.online.OnlineGameTable;
 import com.barrybecker4.game.common.online.OnlineGameTableList;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
+import com.barrybecker4.game.common.player.SurrogatePlayer;
 import com.barrybecker4.game.common.plugin.PluginManager;
 
 import java.util.LinkedList;
@@ -161,6 +162,7 @@ class ServerCommandProcessor {
         if (tableToStart != null) {
             startGame(tableToStart);
             response = new GameCommand(GameCommand.Name.START_GAME,  tableToStart);
+            tables_.remove(tableToStart);
         }
         return response;
     }
@@ -176,7 +178,7 @@ class ServerCommandProcessor {
     /**
      * When all the conditions are met for starting a new game, we create a new game controller of the
      * appropriate type and start the game here on the server.
-     * All human players will be surrogate and robots will be themselves.
+     * All human players will be surrogates and robots will be themselves.
      * @param table
      */
     private void startGame(OnlineGameTable table) {
@@ -196,8 +198,10 @@ class ServerCommandProcessor {
         }
         controller_.reset();
         controller_.setPlayers(newPlayers);
+
         // if getFirstPlayer returns null, then it is not a turn based game
-        if (controller_.getPlayers().getFirstPlayer() != null && !controller_.getPlayers().getFirstPlayer().isHuman()) {
+        Player firstPlayer = controller_.getPlayers().getFirstPlayer();
+        if (firstPlayer != null && !firstPlayer.isHuman()) {
             controller_.computerMovesFirst();
         }
     }

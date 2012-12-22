@@ -13,14 +13,11 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class PokerHumanPlayer extends PokerPlayer
-
-{
+public class PokerHumanPlayer extends PokerPlayer {
     private static final long serialVersionUID = 1;
 
 
-    public PokerHumanPlayer(String name,  int money, Color color)
-    {
+    public PokerHumanPlayer(String name,  int money, Color color) {
         super(name, money, color, true);
     }
 

@@ -34,7 +34,6 @@ public abstract class PokerRobotPlayer extends PokerPlayer {
     }
 
     /**
-     *
      * @return an appropriate action based on the situation
      */
     @Override

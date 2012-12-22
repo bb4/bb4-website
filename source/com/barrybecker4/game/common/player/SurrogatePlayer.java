@@ -13,11 +13,7 @@ import com.barrybecker4.game.common.online.OnlineChangeListener;
  */
 public  class SurrogatePlayer extends Player implements OnlineChangeListener {
 
-    private IServerConnection connection_;
     private Player player_;
-
-    // wait about 10 seconds for the player to move before timing out.
-    private static final int TIMEOUT_DURATION = 40000;
 
 
     /**
@@ -27,8 +23,7 @@ public  class SurrogatePlayer extends Player implements OnlineChangeListener {
     public SurrogatePlayer(Player player, IServerConnection connection) {
         super(player.getName(), player.getColor(), player.isHuman());
         player_ = player;
-        connection_ = connection;
-        connection_.addOnlineChangeListener(this);
+        connection.addOnlineChangeListener(this);
     }
 
     /**
