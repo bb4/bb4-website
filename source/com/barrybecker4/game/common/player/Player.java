@@ -2,6 +2,7 @@
 package com.barrybecker4.game.common.player;
 
 import com.barrybecker4.game.common.online.server.IServerConnection;
+import com.barrybecker4.game.multiplayer.common.online.OnlinePlayer;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.io.Serializable;
  *
  * @author Barry Becker
  */
-public class Player implements Serializable {
+public class Player implements Serializable, OnlinePlayer {
 
     private static final long serialVersionUID = 1;
 
@@ -90,6 +91,11 @@ public class Player implements Serializable {
 
     public Player createSurrogate(IServerConnection connection) {
         return new SurrogatePlayer(this, connection);
+    }
+
+    /** if this is a surrogate player then this method should return the actual player behind the surrogate */
+    public Player getActualPlayer() {
+        return this;
     }
 
     /**

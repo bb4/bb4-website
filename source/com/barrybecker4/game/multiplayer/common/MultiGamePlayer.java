@@ -74,7 +74,7 @@ public abstract class MultiGamePlayer extends Player {
     }
 
     public MultiPlayerMarker getPiece() {
-        assert false: "no piece support for " + this.getClass().getName();
+        assert false: "no piece support for " + this.getClass().getName() + ". Use getActualPlayer().getPiece()";
         return null;
     }
 

@@ -51,7 +51,7 @@ class SurrogateMoveWorker {
               @Override
               public void finished() {
 
-                  viewer_.applyAction(action, player.getPlayer());
+                  viewer_.applyAction(action, player.getActualPlayer());
                   viewer_.refresh();
                   controller_.advanceToNextPlayer();
 

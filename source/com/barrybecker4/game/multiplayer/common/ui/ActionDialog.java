@@ -24,10 +24,8 @@ public abstract class ActionDialog extends OptionsDialog {
      */
     protected ActionDialog(MultiGameController gc, Component parent) {
         controller_ = gc;
-        player_ = controller_.getCurrentPlayer();
-        if (player_.isSurrogate()) {
-            player_ = ((SurrogateMultiPlayer)player_).getPlayer();
-        }
+        player_ = (MultiGamePlayer) controller_.getCurrentPlayer().getActualPlayer();
+
         Point p = parent.getLocationOnScreen();
         // offset the dlg so the board is visible as a reference
         setLocation((int)(p.getX() + 0.7 * getParent().getWidth()),

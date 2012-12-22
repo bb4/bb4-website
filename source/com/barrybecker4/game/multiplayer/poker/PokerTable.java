@@ -59,13 +59,8 @@ public class PokerTable extends Board {
         reset();
         for (final Player p : players) {
 
-            PokerPlayer pp = null;
-            if (p.isSurrogate()) {
-                pp = (PokerPlayer) ((SurrogateMultiPlayer) p).getPlayer();
-            }
-            else {
-                pp = (PokerPlayer)p;
-            }
+            PokerPlayer pp = (PokerPlayer) p.getActualPlayer();
+
             int row = (int) (0.93 * rowRad + (RADIUS * rowRad) * (Math.sin(angle)));
             int col = (int) (0.9 * colRad + (RADIUS * colRad) * (Math.cos(angle)));
 

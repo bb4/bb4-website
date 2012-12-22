@@ -43,7 +43,7 @@ public abstract class MultiGameViewer extends GameBoardViewer {
         Player firstPlayer = controller_.getPlayers().getFirstPlayer();
 
         if (firstPlayer.isSurrogate()) {
-            doSurrogateMove((SurrogateMultiPlayer) controller_.getCurrentPlayer());
+            doSurrogateMove((SurrogateMultiPlayer) firstPlayer);
         }
         else if (!firstPlayer.isHuman()) {
             controller_.computerMovesFirst();

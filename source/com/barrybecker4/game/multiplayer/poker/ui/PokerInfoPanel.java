@@ -128,7 +128,7 @@ class PokerInfoPanel extends GameInfoPanel
             gameChanged(null); // update the current player in the label
 
            // open the command dialog to get the players commands
-           PokerPlayer currentPlayer = getActualPlayer(pc.getCurrentPlayer());
+           PokerPlayer currentPlayer = (PokerPlayer) pc.getCurrentPlayer().getActualPlayer();
 
            // if the current player has folded, then advance to the next player.
            if (currentPlayer.hasFolded())  {
@@ -145,17 +145,6 @@ class PokerInfoPanel extends GameInfoPanel
                pc.advanceToNextPlayer();
            }
         }
-    }
-
-    // temp hack
-    private PokerPlayer getActualPlayer(Player currentPlayer) {
-        PokerPlayer player;
-        if (currentPlayer.isSurrogate()) {
-            player = (PokerPlayer) ((SurrogateMultiPlayer) currentPlayer).getPlayer();
-        } else {
-            player = (PokerPlayer) currentPlayer;
-        }
-        return player;
     }
 
     /**  apply the players action : fold, check, call, raise */

@@ -42,7 +42,8 @@ public  class SurrogatePlayer extends Player implements OnlineChangeListener {
      * The player that we are representing (that is actually located somewhere else)
      * @return the specific game player backed by another player of the same type somewhere else.
      */
-    public Player getPlayer() {
+    @Override
+    public Player getActualPlayer() {
         return player_;
     }
 

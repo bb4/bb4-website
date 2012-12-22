@@ -15,8 +15,6 @@ import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerRobotPlayer;
 import com.barrybecker4.game.multiplayer.poker.ui.PokerGameViewer;
 
-import javax.swing.*;
-
 /**
  * Defines everything the computer needs to know to play Poker.
  *
@@ -130,7 +128,7 @@ public class PokerController extends MultiGameController {
      * @param numCardsToDealToEachPlayer
      */
     private void dealCardsToPlayers(int numCardsToDealToEachPlayer) {
-         //
+
         Deck deck = new Deck();
         assert (getPlayers() != null) : "No players! (players_ is null)";
         for (Player p : getPlayers()) {
@@ -138,13 +136,7 @@ public class PokerController extends MultiGameController {
                 // ran out of cards. start a new shuffled deck.
                 deck = new Deck();
             }
-            PokerPlayer player = null;
-            if (p.isSurrogate()) {
-                player = (PokerPlayer) ((SurrogateMultiPlayer)p).getPlayer();
-            }
-            else {
-                player = (PokerPlayer) p;
-            }
+            PokerPlayer player = (PokerPlayer) p.getActualPlayer();
             player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
             player.resetPlayerForNewRound();
         }
@@ -157,24 +149,12 @@ public class PokerController extends MultiGameController {
         // get players to ante up, if they have not already
         if (this.getPotValue() == 0) {
             for (Player p : getPlayers()) {
-                PokerPlayer player = getActualPlayer(p);
+                PokerPlayer player = (PokerPlayer) p.getActualPlayer();
 
                 // if a player does not have enough money to ante up, he is out of the game
                 player.contributeToPot(this, ((PokerOptions)getOptions()).getAnte());
             }
         }
-    }
-
-    // @@ temporary hack
-    private PokerPlayer getActualPlayer(Player p) {
-        PokerPlayer player;
-        if (p.isSurrogate()) {
-           player = (PokerPlayer) ((SurrogateMultiPlayer) p).getPlayer();
-        }
-        else {
-           player = (PokerPlayer) p;
-        }
-        return player;
     }
 
     public void addToPot(int amount) {
@@ -188,7 +168,7 @@ public class PokerController extends MultiGameController {
     public int getCurrentMaxContribution() {
        int max = Integer.MIN_VALUE;
         for (Player p : getPlayers()) {
-            PokerPlayer player = getActualPlayer(p);
+            PokerPlayer player = (PokerPlayer) p.getActualPlayer();
             if (player.getContribution() > max) {
                 max = player.getContribution();
             }
@@ -203,7 +183,7 @@ public class PokerController extends MultiGameController {
         // loop through the players and return the min number of chips of any player
         int min = Integer.MAX_VALUE;
         for (Player p : getPlayers()) {
-            PokerPlayer player = getActualPlayer(p);
+            PokerPlayer player = (PokerPlayer) p.getActualPlayer();
             if (!player.hasFolded() && ((player.getCash() + player.getContribution()) < min)) {
                 min = player.getCash() + player.getContribution();
             }
@@ -235,7 +215,7 @@ public class PokerController extends MultiGameController {
             return false;
         int numPlayersStillPlaying = 0;
         for (Player p : getPlayers()) {
-            PokerPlayer player = getActualPlayer(p);
+            PokerPlayer player = (PokerPlayer) p.getActualPlayer();
             if (!player.isOutOfGame())
                 numPlayersStillPlaying++;
         }
@@ -294,7 +274,7 @@ public class PokerController extends MultiGameController {
         GameContext.log(0, "in roundover check max contrib="+contrib);
 
         for (Player pp : getPlayers()) {
-            PokerPlayer p = getActualPlayer(pp);
+            PokerPlayer p = (PokerPlayer) pp.getActualPlayer();
             if (!p.hasFolded()) {
                 assert(p.getContribution() <= contrib) :
                        "contrib was supposed to be the max, but " + p + " contradicats that.";
@@ -314,7 +294,7 @@ public class PokerController extends MultiGameController {
      int getNumNonFoldedPlayers() {
         int count = 0;
         for (final Player p : getPlayers()) {
-            PokerPlayer player = getActualPlayer(p);
+            PokerPlayer player = (PokerPlayer) p.getActualPlayer();
             if (!player.isOutOfGame())
                count++;
         }
@@ -352,7 +332,7 @@ public class PokerController extends MultiGameController {
 
         int numNotFolded = 0;
         for (final Player pp : getPlayers()) {
-            PokerPlayer player = getActualPlayer(pp);
+            PokerPlayer player = (PokerPlayer) pp.getActualPlayer();
             if (!player.hasFolded()) {
                 numNotFolded++;
             }
@@ -371,7 +351,7 @@ public class PokerController extends MultiGameController {
         PokerHand bestHand;
         int first=0;
 
-        while (((PokerPlayer)players.get(first)).hasFolded() && first < players.size()) {
+        while (((PokerPlayer) players.get(first).getActualPlayer()).hasFolded() && first < players.size()) {
             first++;
         }
         if (((PokerPlayer)players.get(first)).hasFolded())
@@ -382,7 +362,7 @@ public class PokerController extends MultiGameController {
 
 
         for (int i = first+1; i < players.size(); i++) {
-            PokerPlayer p = (PokerPlayer) players.get(i);
+            PokerPlayer p = (PokerPlayer) players.get(i).getActualPlayer();
             if (!p.hasFolded() && p.getHand().compareTo(bestHand) > 0) {
                 bestHand = p.getHand();
                 winner = p;
@@ -401,7 +381,7 @@ public class PokerController extends MultiGameController {
     protected int advanceToNextPlayerIndex() {
         playIndex_++;
         currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
-        while ((getActualPlayer(getPlayer(currentPlayerIndex_))).hasFolded()) {
+        while (((PokerPlayer) getPlayer(currentPlayerIndex_).getActualPlayer()).hasFolded()) {
             currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
         }
         return currentPlayerIndex_;
