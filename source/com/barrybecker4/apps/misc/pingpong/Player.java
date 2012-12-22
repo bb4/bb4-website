@@ -2,21 +2,22 @@
 package com.barrybecker4.apps.misc.pingpong;
 
 /**
- *
+ *  Ping pong player
  */
 public class Player implements Runnable {
 
-      PingPongTable myTable;   // Table where they play
-      String myOpponent;
+    /** Table where they play */
+    PingPongTable table;
+    String opponent;
 
 
-      public Player(String opponent, PingPongTable table) {
-          myTable  = table;
-          myOpponent = opponent;
-      }
+    public Player(String opponent, PingPongTable table) {
+        this.table = table;
+        this.opponent = opponent;
+    }
 
 
-      public void run() {
-          while (myTable.hit(myOpponent));
-     }
+    public void run() {
+        while (table.hit(opponent)) {};
+   }
 }

@@ -10,9 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * User: Barry Becker
- * Date: Feb 21, 2005
- * Time: 3:07:56 PM
+ * @author  Barry Becker
  */
 public class AxesPanel extends JPanel implements ActionListener {
 
@@ -20,11 +18,11 @@ public class AxesPanel extends JPanel implements ActionListener {
     private static final double[] values2_ = {-1.1, 0.5, 1.1};
 
     private static final int CM_TRANS = 150;
-    // this colormap is used to show a spectrum of colors representing a groups health status.
+
+    /** this colormap is used to show a spectrum of colors representing a groups health status.   */
     private static final Color[] colors_ = {new Color( 200, 0, 0, CM_TRANS + 40 ),
                                             new Color( 220, 220, 220, 0 ),
                                             new Color( 150, 0, 250, CM_TRANS + 40 )};
-    private JButton synchButton_;
 
     private ContinuousColorLegend legend1_;
     private ContinuousColorLegend legend2_;
@@ -42,12 +40,12 @@ public class AxesPanel extends JPanel implements ActionListener {
         legend2_ = new ContinuousColorLegend("test2", colormap2);
 
 
-        synchButton_ = new JButton("Synchronize O point");
-        synchButton_.setMaximumSize(new Dimension(100, 22));
-        synchButton_.addActionListener(this);
+        JButton synchButton = new JButton("Synchronize O point");
+        synchButton.setMaximumSize(new Dimension(100, 22));
+        synchButton.addActionListener(this);
 
         JPanel buttonContainer = new JPanel(new FlowLayout());
-        buttonContainer.add(synchButton_);
+        buttonContainer.add(synchButton);
 
         this.add(buttonContainer, BorderLayout.NORTH);
         this.add(legend1_, BorderLayout.CENTER);
