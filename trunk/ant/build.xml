@@ -377,7 +377,7 @@
 
   <target name="executeSimpleEditor" depends="compile" description="A simple editor.">
     <echo message="now executing simple editor"/>
-    <java classname="com.barrybecker4.apps.misc.sedit.SimpleEditor"
+    <java classname="com.barrybecker4.apps.misc.sedit.SimpleEditorFrame"
           classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar"
           fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
