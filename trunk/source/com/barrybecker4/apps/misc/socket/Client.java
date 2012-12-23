@@ -3,17 +3,9 @@ package com.barrybecker4.apps.misc.socket;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.awt.event.*;
+import java.io.*;
+import java.net.*;
 
 /**
  * Socket portion of client-server program using sockets.
@@ -24,7 +16,6 @@ import java.net.UnknownHostException;
 public class Client extends JFrame implements ActionListener {
 
     private static final String DEFAULT_HOST = "127.0.0.1"; /// "192.168.1.100";
-    private Socket socket_;
     private PrintWriter out_;
     private BufferedReader in_;
 
@@ -41,7 +32,8 @@ public class Client extends JFrame implements ActionListener {
 
         textField_ = new JTextField(40);
 
-        button_ = new JButton("Click Me");
+        button_ = new JButton("Send message");
+        button_.setToolTipText("Send data to server");
         button_.addActionListener(this);
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
@@ -82,7 +74,7 @@ public class Client extends JFrame implements ActionListener {
 
     public void createListenSocket() {
         try {
-            socket_ = new Socket(DEFAULT_HOST, Server.PORT);
+            Socket socket_ = new Socket(DEFAULT_HOST, Server.PORT);
             out_ = new PrintWriter(socket_.getOutputStream(), true);
             in_ = new BufferedReader(new InputStreamReader(socket_.getInputStream()));
             System.out.println("create listen out_1 = "+ out_);
@@ -105,13 +97,13 @@ public class Client extends JFrame implements ActionListener {
     public static void main(String[] args) {
         Client frame = new Client();
         frame.setTitle("Client Program");
-        WindowListener l = new WindowAdapter() {
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
-        };
-
-        frame.addWindowListener(l);
+        });
         frame.pack();
         frame.setVisible(true);
         frame.createListenSocket();

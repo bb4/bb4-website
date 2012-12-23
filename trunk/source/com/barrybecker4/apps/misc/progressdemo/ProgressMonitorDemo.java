@@ -1,6 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.misc.progressdemo;
 
+import com.barrybecker4.ui.components.ScrollingTextArea;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +18,7 @@ public class ProgressMonitorDemo extends JFrame {
     private Timer timer;
     private JButton startButton;
     private LongTask task;
-    private JTextArea taskOutput;
+    private ScrollingTextArea taskOutput;
 
     public ProgressMonitorDemo() {
         super("SimpleFrame");
@@ -27,14 +29,12 @@ public class ProgressMonitorDemo extends JFrame {
         startButton.setActionCommand("start");
         startButton.addActionListener(new ButtonListener());
 
-        taskOutput = new JTextArea(5, 20);
-        taskOutput.setMargin(new Insets(5,5,5,5));
-        taskOutput.setEditable(false);
+        taskOutput = new ScrollingTextArea(5, 20);
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         contentPane.add(startButton, BorderLayout.NORTH);
-        contentPane.add(new JScrollPane(taskOutput), BorderLayout.CENTER);
+        contentPane.add(taskOutput, BorderLayout.CENTER);
         contentPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         setContentPane(contentPane);
 
@@ -72,8 +72,6 @@ public class ProgressMonitorDemo extends JFrame {
                 progressMonitor.setNote(task.getMessage());
                 progressMonitor.setProgress(task.getCurrent());
                 taskOutput.append(task.getMessage() + newline);
-                taskOutput.setCaretPosition(
-                    taskOutput.getDocument().getLength());
             }
         }
     }
@@ -97,7 +95,6 @@ public class ProgressMonitorDemo extends JFrame {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new ProgressMonitorDemo();
-
+        new ProgressMonitorDemo();
     }
 }

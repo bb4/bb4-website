@@ -148,7 +148,6 @@ public final class HelpDialog extends AbstractDialog
         return summaryPanel;
     }
 
-
     @Override
     public void actionPerformed( ActionEvent e ) {
         super.actionPerformed(e);

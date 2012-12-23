@@ -2,6 +2,7 @@
 package com.barrybecker4.apps.misc.sedit;
 
 import com.barrybecker4.common.util.Base64Codec;
+import com.barrybecker4.ui.components.ScrollingTextArea;
 import com.barrybecker4.ui.file.ExtensionFileFilter;
 import com.barrybecker4.ui.file.FileChooserUtil;
 import com.barrybecker4.ui.util.GUIUtil;
@@ -22,7 +23,7 @@ import java.io.IOException;
 
 public class SimpleEditor extends JFrame implements ActionListener {
 
-    private JTextArea editArea;
+    private ScrollingTextArea editArea;
 
     // menu options
     private JMenuItem openItem_;
@@ -48,21 +49,19 @@ public class SimpleEditor extends JFrame implements ActionListener {
 
         getRootPane().setJMenuBar(createMenuBar());
 
-        editArea = new JTextArea(40, 75);
-        editArea.setMargin(new Insets(5, 5, 5, 5));
+        editArea = new ScrollingTextArea(40, 75);
         editArea.setEditable(true);
         editArea.setFont(new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12));
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
-        contentPane.add(new JScrollPane(editArea), BorderLayout.CENTER);
+        contentPane.add(editArea, BorderLayout.CENTER);
         contentPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         setContentPane(contentPane);
 
         pack();
         setVisible(true);
     }
-
 
     /**
      * Add a top level menu to allow opening and saving of edited files.

@@ -4,6 +4,7 @@ package com.barrybecker4.puzzle.adventure.ui.editor;
 import com.barrybecker4.puzzle.adventure.Scene;
 import com.barrybecker4.puzzle.adventure.ui.StoryPanel;
 import com.barrybecker4.ui.components.GradientButton;
+import com.barrybecker4.ui.components.ScrollingTextArea;
 import com.barrybecker4.ui.components.TextInput;
 import com.barrybecker4.ui.dialogs.ImagePreviewDialog;
 
@@ -25,7 +26,7 @@ class SceneEditorPanel extends JPanel implements ActionListener {
     private GradientButton playSoundButton_;
 
     private TextInput nameInput_ ;
-    private JTextArea sceneText_;
+    private ScrollingTextArea sceneText_;
 
     private String oldSceneName_;
 
@@ -53,12 +54,13 @@ class SceneEditorPanel extends JPanel implements ActionListener {
         nameInput_= new TextInput("name:", scene_.getName());
         nameInput_.setColumns(50);
 
-        sceneText_ = new JTextArea();
+        sceneText_ = new ScrollingTextArea();
+        sceneText_.setEditable(true);
         sceneText_.setFont(StoryPanel.TEXT_FONT);
         sceneText_.setText(scene_.getText());
 
         add(nameInput_, BorderLayout.NORTH);
-        add(new JScrollPane(sceneText_), BorderLayout.CENTER);
+        add(sceneText_, BorderLayout.CENTER);
         add(createMediaButtons(), BorderLayout.SOUTH);
     }
 

@@ -1,6 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.dialogs;
 
+import com.barrybecker4.ui.components.ScrollingTextArea;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,10 +13,9 @@ import java.awt.*;
  */
 public class OutputWindow extends AbstractDialog {
 
-    protected JTextArea textArea_ = null;
+    protected ScrollingTextArea textArea_ = null;
 
     private static final Font TEXT_FONT = new Font("Times-Roman", Font.PLAIN, 10 );
-    private static final Dimension DEFAUT_SIZE = new Dimension( 500, 400 );
     private static final long serialVersionUID = 1234L;
 
     /**
@@ -29,16 +30,12 @@ public class OutputWindow extends AbstractDialog {
 
     @Override
     protected JComponent createDialogContent() {
-        textArea_ = new JTextArea( "" );
-        textArea_.setWrapStyleWord( true );
+        textArea_ = new ScrollingTextArea();
+
         // if its editable then we can copy from it
         textArea_.setEditable( true );
         textArea_.setFont( TEXT_FONT );
-
-        JScrollPane scrollPane = new JScrollPane( textArea_ );
-        scrollPane.setPreferredSize( DEFAUT_SIZE );
-
-        return scrollPane;
+        return textArea_;
     }
 
     /**

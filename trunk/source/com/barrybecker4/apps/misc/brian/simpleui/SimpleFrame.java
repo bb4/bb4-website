@@ -1,5 +1,7 @@
 package com.barrybecker4.apps.misc.brian.simpleui;
 
+import com.barrybecker4.ui.components.ScrollingTextArea;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +12,7 @@ public class SimpleFrame extends JFrame
                          implements ActionListener {
 
     /** Used to show some text after a button is clicked */
-    JTextArea taskOutput;
+    ScrollingTextArea taskOutput;
 
     /** Constructor */
     public SimpleFrame() {
@@ -26,8 +28,7 @@ public class SimpleFrame extends JFrame
         JButton startButton = new JButton("Start");
         startButton.addActionListener(this);
 
-        taskOutput = new JTextArea(5, 20);
-        taskOutput.setLineWrap(true);
+        taskOutput = new ScrollingTextArea(5, 20);
 
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BorderLayout());

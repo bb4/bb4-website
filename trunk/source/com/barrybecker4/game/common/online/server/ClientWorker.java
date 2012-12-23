@@ -4,12 +4,12 @@ package com.barrybecker4.game.common.online.server;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.online.GameCommand;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
+import com.barrybecker4.ui.components.Appendable;
 
 /**
  * A client worker is created for each client player connection to this server.
@@ -17,15 +17,16 @@ import java.util.List;
 class ClientWorker implements Runnable {
 
     private Socket clientConnection_;
-    private JTextArea text;
+    private Appendable text;
     private volatile ObjectOutputStream oStream_;
     private volatile ServerCommandProcessor cmdProcessor;
     private List<ClientWorker> clientConnections;
 
     /** Constructor */
-    ClientWorker(Socket clientConnection, JTextArea textArea, ServerCommandProcessor cmdProcessor, List<ClientWorker> clientConnections) {
+    ClientWorker(Socket clientConnection, Appendable text,
+                 ServerCommandProcessor cmdProcessor, List<ClientWorker> clientConnections) {
         clientConnection_ = clientConnection;
-        text = textArea;
+        this.text = text;
         this.cmdProcessor = cmdProcessor;
         this.clientConnections = clientConnections;
     }
@@ -84,8 +85,6 @@ class ClientWorker implements Runnable {
            GameContext.log(0, cmd.toString());
         }  else {
            text.append(cmd.toString() + '\n');
-           //JScrollPane scrollpane = ((JScrollPane)text.getParent().getParent());
-           //scrollpane.getVerticalScrollBar().setValue(scrollpane.getVerticalScrollBar().getMaximum());
         }
     }
 

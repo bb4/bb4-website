@@ -4,12 +4,12 @@ package com.barrybecker4.game.common.online.server;
 import com.barrybecker4.common.CommandLineOptions;
 import com.barrybecker4.game.common.GameContext;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.util.LinkedList;
 import java.util.List;
+import com.barrybecker4.ui.components.Appendable;
 
 /**
  * The abstract server for online games.
@@ -31,7 +31,7 @@ public class OnlineGameServer  {
 
     public static final String GAME_OPTION = "game";
 
-    private JTextArea textArea;
+    private Appendable text;
     private ServerSocket server;
 
     /** keep a list of the threads that we have for each client connection.  */
@@ -42,9 +42,9 @@ public class OnlineGameServer  {
      * @param gameType - one of the supported games (see plugin file)
      * @param textArea - may be null if not running in UI, else shows traffic messages.
      */
-    public OnlineGameServer(String gameType, JTextArea textArea) {
+    public OnlineGameServer(String gameType, Appendable textArea) {
 
-        this.textArea = textArea;
+        this.text = textArea;
         clientConnections = new LinkedList<ClientWorker>();
         openListenSocket(gameType);
     }
@@ -78,7 +78,7 @@ public class OnlineGameServer  {
 
             try {
                 // accept new connections from players wanting to join.
-                ClientWorker worker = new ClientWorker(server.accept(), textArea, cmdProcessor, clientConnections);
+                ClientWorker worker = new ClientWorker(server.accept(), text, cmdProcessor, clientConnections);
                 new Thread(worker).start();
                 clientConnections.add(worker);
             }
