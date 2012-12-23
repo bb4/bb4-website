@@ -46,8 +46,7 @@ class NamePanel extends JPanel
         return localPlayerName_.getText();
     }
 
-    // Implement mouseListener interface.
-
+    // Implement mouseListener interface
     public void mouseClicked(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {
         giveFocus();

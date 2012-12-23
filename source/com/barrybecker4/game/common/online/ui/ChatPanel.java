@@ -56,7 +56,6 @@ public class ChatPanel extends JPanel implements OnlineChangeListener, KeyListen
         }
     }
 
-
     /**
      * Send the message when you press enter.
      */

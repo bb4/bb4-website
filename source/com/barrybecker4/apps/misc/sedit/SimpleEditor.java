@@ -45,9 +45,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
                 System.exit(0);
             }
         });
-        //setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        // Create the menu.
         getRootPane().setJMenuBar(createMenuBar());
 
         editArea = new JTextArea(40, 75);
@@ -61,16 +59,15 @@ public class SimpleEditor extends JFrame implements ActionListener {
         contentPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         setContentPane(contentPane);
 
-         pack();
-         setVisible(true);
+        pack();
+        setVisible(true);
     }
 
 
     /**
      * Add a top level menu to allow opening and saving of edited files.
      */
-    private JMenuBar createMenuBar()
-    {
+    private JMenuBar createMenuBar() {
         JMenu fileMenu = new JMenu("File");
         fileMenu.setBorder(BorderFactory.createEtchedBorder());
 
@@ -87,8 +84,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
         return menuBar;
     }
 
-    private JMenuItem createMenuItem(String name)
-    {
+    private JMenuItem createMenuItem(String name) {
         JMenuItem item = new JMenuItem(name);
         item.addActionListener(this);
         return item;
@@ -98,8 +94,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
      * The actionPerformed method in this class
      * Opena nd save files.
      */
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         JMenuItem item = (JMenuItem) e.getSource();
         if (item == openItem_)  {
             openDoc();
@@ -116,8 +111,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
      * restore a game from a previously saved file (in SGF = Smart Game Format)
      * Derived classes should implement the details of the open
      */
-    public void openDoc()
-    {
+    public void openDoc() {
         JFileChooser chooser = getFileChooser();
         int state = chooser.showOpenDialog( null );
         File file = chooser.getSelectedFile();
@@ -130,8 +124,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
      * save the current game to the specified file (in SGF = Smart Game Format)
      * Derived classes should implement the details of the save
      */
-    public void saveDoc()
-    {
+    public void saveDoc() {
         JFileChooser chooser = getFileChooser();
         int state = chooser.showSaveDialog( null );
         File file = chooser.getSelectedFile();
@@ -173,7 +166,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
             reader.close();
         } catch (IOException e) {
              e.printStackTrace();
-         }
+        }
     }
 
      private void saveFile(String fileName) {

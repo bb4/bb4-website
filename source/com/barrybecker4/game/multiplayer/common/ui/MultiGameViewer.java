@@ -16,8 +16,8 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 
 /**
- * Takes a TrivialController as input and displays the
- * current state of the Game. For example, the TrivialController contains a TrivialTable object
+ * Takes a Controller as input and displays the current state of the game.
+ * For example, the TrivialController contains a TrivialTable object
  * which describes this state.
  *
  * @author Barry Becker
@@ -129,12 +129,6 @@ public abstract class MultiGameViewer extends GameBoardViewer {
      * Don't show anything by default.
      */
     public void showRoundOver() {}
-
-
-    public void highlightPlayer(Player player, boolean highlighted) {
-        // player.setHighlighted(highlighted);
-        this.refresh();
-    }
 
     /**
      * @return the tooltip for the panel given a mouse event

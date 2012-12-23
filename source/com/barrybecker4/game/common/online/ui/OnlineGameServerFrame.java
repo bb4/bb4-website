@@ -44,22 +44,23 @@ public class OnlineGameServerFrame  extends JFrame {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
+
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.white);
         panel.add("North", label);
-        panel.add("Center", new JScrollPane(textArea));
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        panel.add("Center", scrollPane);
         String gameLabel = PluginManager.getInstance().getPlugin(gameName).getLabel();
         setTitle(gameLabel + " Server");
 
         getContentPane().add(panel);
 
-        WindowListener l = new WindowAdapter() {
+        addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
-        };
-        addWindowListener(l);
+        });
         pack();
         setVisible(true);
     }

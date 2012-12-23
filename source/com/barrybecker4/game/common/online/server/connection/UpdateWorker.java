@@ -51,7 +51,7 @@ class UpdateWorker implements Runnable {
 
     private void exceptionOccurred(String msg, Throwable e) {
          GameContext.log(0, msg);
-         e.printStackTrace();
+         //e.printStackTrace();
          isConnected = false;
     }
 

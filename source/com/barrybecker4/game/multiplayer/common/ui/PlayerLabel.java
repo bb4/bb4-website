@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- *
+ * UI element for showing the players name.
  * @author Barry Becker
  */
 public class PlayerLabel extends JPanel {
