@@ -3,15 +3,11 @@ package com.barrybecker4.game.common.online.server;
 
 import com.barrybecker4.common.CommandLineOptions;
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.online.GameCommand;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.BindException;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,10 +33,6 @@ public class OnlineGameServer  {
 
     private JTextArea textArea;
     private ServerSocket server;
-    private int port;
-
-    /** processes server commands. May someday need subclassing.  */
-    private ServerCommandProcessor cmdProcessor;
 
     /** keep a list of the threads that we have for each client connection.  */
     private List<ClientWorker> clientConnections;
@@ -48,16 +40,13 @@ public class OnlineGameServer  {
     /**
      * Create the online game server to serve all online clients.
      * @param gameType - one of the supported games (see plugin file)
-     * @param textArea - may be null if not running in UI, elese shows traffic messages.
+     * @param textArea - may be null if not running in UI, else shows traffic messages.
      */
     public OnlineGameServer(String gameType, JTextArea textArea) {
 
-        //port = PluginManager.getInstance().getPlugin(gameType).getPort();
         this.textArea = textArea;
-        cmdProcessor = new ServerCommandProcessor(gameType);
-        port = cmdProcessor.getPort();
         clientConnections = new LinkedList<ClientWorker>();
-        openListenSocket();
+        openListenSocket(gameType);
     }
 
     /**
@@ -66,7 +55,10 @@ public class OnlineGameServer  {
      * Maintain a list of clientConnections corresponding to the players
      * that we need to broadcast to when something changes.
      */
-    void openListenSocket() {
+    void openListenSocket(String gameType) {
+
+        ServerCommandProcessor cmdProcessor = new ServerCommandProcessor(gameType);
+        int port = cmdProcessor.getPort();
 
         try {
             server = new ServerSocket(port);
@@ -83,13 +75,12 @@ public class OnlineGameServer  {
         }
 
         while (true) {
-            OnlineGameServer.ClientWorker w;
+
             try {
                 // accept new connections from players wanting to join.
-                w = new ClientWorker(server.accept(), textArea);
-                Thread t = new Thread(w);
-                clientConnections.add(w);
-                t.start();
+                ClientWorker worker = new ClientWorker(server.accept(), textArea, cmdProcessor, clientConnections);
+                new Thread(worker).start();
+                clientConnections.add(worker);
             }
             catch (IOException e) {
                 GameContext.log(0, "Accept failed: " + port);
@@ -116,100 +107,6 @@ public class OnlineGameServer  {
         }
         catch (Throwable t) {
             t.printStackTrace();
-        }
-    }
-
-    /**
-     * A client worker is created for each client player connection to this server.
-     */
-    private class ClientWorker implements Runnable {
-        private Socket clientConnection_;
-        private JTextArea text_;
-
-        private ObjectInputStream iStream_;
-        private ObjectOutputStream oStream_;
-
-        ClientWorker(Socket client, JTextArea textArea) {
-            clientConnection_ = client;
-            text_ = textArea;
-        }
-
-        public void run() {
-
-            try {
-                iStream_ = new ObjectInputStream(clientConnection_.getInputStream());
-                oStream_ = new ObjectOutputStream(clientConnection_.getOutputStream());
-            }
-            catch (IOException e) {
-                GameContext.log(0, "in or out stream creation failed.");
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-
-            try {
-                // initial update to the game tables for someone entering the room.
-                update(new GameCommand(GameCommand.Name.UPDATE_TABLES, cmdProcessor.getTables()));
-
-                while (true) {
-
-                    // receive the serialized commands that are sent and process them.
-                    GameCommand cmd = (GameCommand) iStream_.readObject();
-
-                    // we got a change to the tables, update internal structure and broadcast new list.
-                    List<GameCommand> responses = cmdProcessor.processCommand(cmd);
-
-                    for (GameCommand response: responses) {
-                        for (ClientWorker w : clientConnections) {
-                            w.update(response);
-                        }
-                    }
-
-                    if (text_ == null)  {
-                       GameContext.log(0,cmd.toString());
-                    }  else {
-                       text_.append(cmd.toString() + '\n');
-                       JScrollPane scrollpane = ((JScrollPane)text_.getParent().getParent());
-                       scrollpane.getVerticalScrollBar().setValue(scrollpane.getVerticalScrollBar().getMaximum());
-                    }
-                }
-            }
-            catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            catch (IOException e) {
-                GameContext.log(0, "Read failed.");
-                e.printStackTrace();
-            }
-
-            GameContext.log(1, "Connection closed removing thread");
-            clientConnections.remove(this);
-        }
-
-        /**
-         * broadcast the current list of tables to all the online clients.
-         */
-        public synchronized void update(GameCommand response) throws IOException {
-
-            GameContext.log(1, "OnlineGameServer: sending:" + cmdProcessor.getTables());
-
-            // must reset the stream first, otherwise tables_ will always be the same as first sent.
-            oStream_.reset();
-            oStream_.writeObject(response);
-            oStream_.flush();
-
-        }
-
-        @Override
-        protected void finalize() {
-            try {
-               super.finalize();
-               oStream_.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            catch (Throwable t) {
-                t.printStackTrace();
-            }
         }
     }
 

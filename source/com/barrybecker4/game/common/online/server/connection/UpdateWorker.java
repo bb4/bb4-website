@@ -54,4 +54,14 @@ class UpdateWorker implements Runnable {
          e.printStackTrace();
          isConnected = false;
     }
+
+    @Override
+    protected void finalize() {
+        try {
+           super.finalize();
+           inputStream.close();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
 }
