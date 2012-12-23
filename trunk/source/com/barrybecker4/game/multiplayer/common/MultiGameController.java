@@ -197,7 +197,6 @@ public abstract class MultiGameController extends GameController {
      */
     protected abstract int advanceToNextPlayerIndex();
 
-
     /**
      *  @return the player that goes first.
      *
@@ -208,7 +207,6 @@ public abstract class MultiGameController extends GameController {
     protected MultiGamePlayer getPlayer(int index) {
         return (MultiGamePlayer) getPlayers().get(index);
     }
-
 
     /**
      *  Statically evaluate the board position
@@ -238,9 +236,9 @@ public abstract class MultiGameController extends GameController {
      * @param m
      * @param weights
      * @return true if the last move created a big change in the score
-     */
+     *
     public boolean inJeopardy( Move m, ParameterArray weights) {
         return false;
-    }
+    } */
 
 }

@@ -84,8 +84,8 @@ class ClientWorker implements Runnable {
            GameContext.log(0, cmd.toString());
         }  else {
            text.append(cmd.toString() + '\n');
-           JScrollPane scrollpane = ((JScrollPane)text.getParent().getParent());
-           scrollpane.getVerticalScrollBar().setValue(scrollpane.getVerticalScrollBar().getMaximum());
+           //JScrollPane scrollpane = ((JScrollPane)text.getParent().getParent());
+           //scrollpane.getVerticalScrollBar().setValue(scrollpane.getVerticalScrollBar().getMaximum());
         }
     }
 

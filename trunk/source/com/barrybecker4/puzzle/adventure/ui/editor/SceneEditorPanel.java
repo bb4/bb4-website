@@ -106,6 +106,7 @@ class SceneEditorPanel extends JPanel implements ActionListener {
     public Scene getEditedScene() {
         return scene_;
     }
+
     /**
      * Persist the scene changes to the story.
      */

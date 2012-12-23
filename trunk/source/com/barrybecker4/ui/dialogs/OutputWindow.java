@@ -34,12 +34,10 @@ public class OutputWindow extends AbstractDialog {
         // if its editable then we can copy from it
         textArea_.setEditable( true );
         textArea_.setFont( TEXT_FONT );
-        //textArea_.setMaximumSize(new Dimension(DEFAULT_SIZE.getWidths());
 
         JScrollPane scrollPane = new JScrollPane( textArea_ );
         scrollPane.setPreferredSize( DEFAUT_SIZE );
 
-        //this.getContentPane().add( scrollPane, "Center" );
         return scrollPane;
     }
 
