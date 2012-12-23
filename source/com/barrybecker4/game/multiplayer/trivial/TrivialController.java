@@ -89,8 +89,9 @@ public class TrivialController extends MultiGameController {
         for (Player p : getPlayers()) {
             TrivialPlayer tp  = (TrivialPlayer) p.getActualPlayer();
 
-            if (!tp.isRevealed())
+            if (!tp.isRevealed())  {
                 numPlayersStillHidden++;
+            }
         }
         return (numPlayersStillHidden == 0);
     }
