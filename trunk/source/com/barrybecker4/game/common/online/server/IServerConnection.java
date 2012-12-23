@@ -21,8 +21,6 @@ public interface IServerConnection {
 
     void addOnlineChangeListener(OnlineChangeListener listener);
 
-    void removeOnlineChangeListener(OnlineChangeListener listener);
-
     /**
      * @param cmd object to serialize over the wire.
      */
