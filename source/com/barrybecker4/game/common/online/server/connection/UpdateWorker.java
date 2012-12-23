@@ -29,12 +29,7 @@ class UpdateWorker implements Runnable {
 
         while (isConnected) {
             try {
-                GameCommand cmd = (GameCommand) inputStream.readObject();
-                GameContext.log(1, "Connection: got an update of the table from the server:\n" + cmd);
-
-                for (OnlineChangeListener aChangeListeners_ : changeListeners) {
-                    aChangeListeners_.handleServerUpdate(cmd);
-                }
+                processNextCommand();
             }
             catch (SocketException e) {
                 exceptionOccurred("Read failed (probably because player closed client).", e);
@@ -47,6 +42,15 @@ class UpdateWorker implements Runnable {
             }
         }
         GameContext.log(0, "UpdateWorker terminated.");
+    }
+
+    private void processNextCommand() throws IOException, ClassNotFoundException {
+        GameCommand cmd = (GameCommand) inputStream.readObject();
+        GameContext.log(1, "Connection: got an update of the table from the server:\n" + cmd);
+
+        for (OnlineChangeListener aChangeListeners_ : changeListeners) {
+            aChangeListeners_.handleServerUpdate(cmd);
+        }
     }
 
     private void exceptionOccurred(String msg, Throwable e) {

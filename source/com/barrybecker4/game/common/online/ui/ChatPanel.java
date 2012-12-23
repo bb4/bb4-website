@@ -4,6 +4,7 @@ package com.barrybecker4.game.common.online.ui;
 import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
+import com.barrybecker4.ui.components.ScrollingTextArea;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +19,7 @@ import java.awt.event.KeyListener;
 public class ChatPanel extends JPanel implements OnlineChangeListener, KeyListener {
 
     private IServerConnection connection_;
-    private final JTextArea textArea_;
-    private final JScrollPane scrollPane_;
+    private final ScrollingTextArea textArea_;
     private JTextField messageField_;
 
     public ChatPanel(IServerConnection connection) {
@@ -27,12 +27,9 @@ public class ChatPanel extends JPanel implements OnlineChangeListener, KeyListen
         connection_ = connection;
         connection_.addOnlineChangeListener(this);
 
-        textArea_ = new JTextArea();
+        textArea_ = new ScrollingTextArea();
         textArea_.setBackground(getBackground());
-        textArea_.setWrapStyleWord(true);
-        textArea_.setLineWrap(true);
-        scrollPane_ = new JScrollPane(textArea_);
-        scrollPane_.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        textArea_.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         messageField_ = new JTextField();
         messageField_.addKeyListener(this);
@@ -40,7 +37,7 @@ public class ChatPanel extends JPanel implements OnlineChangeListener, KeyListen
         messagePanel.add(new JLabel("Chat:"), BorderLayout.WEST);
         messagePanel.add(messageField_, BorderLayout.CENTER);
 
-        add(scrollPane_, BorderLayout.CENTER);
+        add(textArea_, BorderLayout.CENTER);
         add(messagePanel, BorderLayout.SOUTH);
     }
 
@@ -50,8 +47,6 @@ public class ChatPanel extends JPanel implements OnlineChangeListener, KeyListen
     public void handleServerUpdate(GameCommand cmd) {
         if (cmd.getName() == GameCommand.Name.CHAT_MESSAGE)  {
             textArea_.append(cmd.getArgument().toString());
-            // if a scrollbar is showing, then make sure it is scrolled to the bottom to see the latest message.
-            scrollPane_.getVerticalScrollBar().setValue(scrollPane_.getVerticalScrollBar().getMaximum());
             textArea_.append("\n");
         }
     }

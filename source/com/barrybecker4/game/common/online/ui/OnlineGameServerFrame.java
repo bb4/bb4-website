@@ -4,6 +4,7 @@ package com.barrybecker4.game.common.online.ui;
 import com.barrybecker4.common.CommandLineOptions;
 import com.barrybecker4.game.common.online.server.OnlineGameServer;
 import com.barrybecker4.game.common.plugin.PluginManager;
+import com.barrybecker4.ui.components.ScrollingTextArea;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,7 @@ import java.awt.event.WindowListener;
  */
 public class OnlineGameServerFrame  extends JFrame {
 
-    private JTextArea textArea;
+    private ScrollingTextArea textArea;
 
 
     /**
@@ -40,9 +41,7 @@ public class OnlineGameServerFrame  extends JFrame {
     private void initUI(String gameName) {
         JPanel panel = new JPanel();
         JLabel label = new JLabel("Commands received over the socket:");
-        textArea = new JTextArea(20, 44);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
+        textArea = new ScrollingTextArea(20, 44);
 
 
         panel.setLayout(new BorderLayout());
