@@ -8,7 +8,7 @@ import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.online.server.IServerConnection;
-import com.barrybecker4.game.common.online.server.ServerConnection;
+import com.barrybecker4.game.common.online.server.connection.ServerConnection;
 import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameViewer;
 import com.barrybecker4.optimization.parameter.ParameterArray;
@@ -171,12 +171,11 @@ public abstract class MultiGameController extends GameController {
         if (isDone()) {
             pviewer.sendGameChangedEvent(null);
         }
-        advanceToNextPlayerIndex();
-
-        if (!isDone()) {
+        else  {
+            advanceToNextPlayerIndex();
             if (getCurrentPlayer().isSurrogate()) {
                 GameContext.log(0, "about to do surrogate move for " + getCurrentPlayer()
-                        + " in controller="+this + " in thread="+Thread.currentThread().getName());
+                        + " in controller=" + this + " in thread="+Thread.currentThread().getName());
                 pviewer.doSurrogateMove((SurrogateMultiPlayer)getCurrentPlayer());
             }
             else if (!getCurrentPlayer().isHuman()) {
