@@ -44,7 +44,6 @@ public class OnlineGameTable implements Serializable {
         players_ = new PlayerList();
         gameOptions_ = options;
         players_.addAll(Arrays.asList(initialPlayers));
-
     }
 
     /**
@@ -155,4 +154,29 @@ public class OnlineGameTable implements Serializable {
         return buf.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OnlineGameTable)) return false;
+
+        OnlineGameTable that = (OnlineGameTable) o;
+
+        if (name_ != null ? !name_.equals(that.name_) : that.name_ != null) return false;
+        if (newestHumanPlayer_ != null ?
+                !newestHumanPlayer_.equals(that.newestHumanPlayer_) : that.newestHumanPlayer_ != null)
+            return false;
+        if (owner_ != null ? !owner_.equals(that.owner_) : that.owner_ != null) return false;
+        if (players_ != null ? !players_.equals(that.players_) : that.players_ != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name_ != null ? name_.hashCode() : 0;
+        result = 31 * result + (owner_ != null ? owner_.hashCode() : 0);
+        result = 31 * result + (players_ != null ? players_.hashCode() : 0);
+        result = 31 * result + (newestHumanPlayer_ != null ? newestHumanPlayer_.hashCode() : 0);
+        return result;
+    }
 }

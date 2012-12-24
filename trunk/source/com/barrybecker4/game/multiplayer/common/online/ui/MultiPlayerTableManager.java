@@ -65,13 +65,13 @@ class MultiPlayerTableManager {
             case UPDATE_TABLES :
                 updateTables( (OnlineGameTableList) cmd.getArgument());
                 break;
-           case START_GAME :
+            case START_GAME :
                 OnlineGameTable readyTable = onlineGameTablesTable_.getSelectedTable();
                 startGame(readyTable);
                 break;
-           case CHAT_MESSAGE : break;
-           case DO_ACTION : break;
-           default : assert false : "Unexpected command name :"+ cmd.getName();
+            case CHAT_MESSAGE : break;
+            case DO_ACTION : break;
+            default : assert false : "Unexpected command name :"+ cmd.getName();
         }
     }
 
@@ -95,12 +95,6 @@ class MultiPlayerTableManager {
                       "All the players required \n(" + readyTable.getPlayersString()
                       + ")\n have joined this table. Play will now begin. ",
                       "Ready to Start", JOptionPane.INFORMATION_MESSAGE);
-            // close the dlg and tell the server to start a thread to play the game
-
-            // send an event to close the new game window. (perhaps we could know its a dialog and close it directly?)
-            //ChangeEvent event = new ChangeEvent(this);
-            //gameStartedListener_.stateChanged(event);
-            //startListener.startGame();
 
             startGame(readyTable);
 
@@ -120,6 +114,8 @@ class MultiPlayerTableManager {
 
         // now tht the game has started, remove it so it does not get started again.
         onlineGameTablesTable_.removeRow(readyTable);
+        assert onlineGameTablesTable_.getNumRows() == 0 :
+                "still have game tables even though just removed "+readyTable + " tables:" + onlineGameTablesTable_.toString();
 
         // since we are on the client we need to create surrogates for the players which are not the current player
         Iterator<Player> it = readyTable.getPlayers().iterator();
@@ -141,14 +137,13 @@ class MultiPlayerTableManager {
 
     /**
      * The create new table button at the top was clicked.
+     * Add the new table to this list as a new row and tell the server to add it.
      */
     public void createNewGameTable(MultiGameOptions options) {
 
         OnlineGameTable newTable =
             onlineGameTablesTable_.createOnlineTable(currentName_, options);
 
-        // now add it to this list as a new row and tell the server to add it.
-        // onlineGameTablesTable_.addRow(newTable);
         connection_.addGameTable(newTable);
     }
 

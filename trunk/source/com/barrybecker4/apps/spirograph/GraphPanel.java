@@ -43,8 +43,7 @@ public class GraphPanel extends JPanel implements Runnable {
         graphRenderer_ = new GraphRenderer(state_, this);
         this.addComponentListener( new ComponentAdapter()  {
             @Override
-            public void componentResized( ComponentEvent ce )
-            {
+            public void componentResized( ComponentEvent ce ) {
                 graphRenderer_.clear();
             }
         } );

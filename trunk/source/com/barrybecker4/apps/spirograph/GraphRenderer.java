@@ -86,7 +86,7 @@ public class GraphRenderer {
     }
 
     /**
-     * Draw a small line segment that makes up the larger sprial curve.
+     * Draw a small line segment that makes up the larger spiral curve.
      * Drawn into the offline image.
      */
     private void drawSegment(int count, int revs, float n) {

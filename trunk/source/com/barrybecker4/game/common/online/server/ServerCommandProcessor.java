@@ -81,11 +81,7 @@ class ServerCommandProcessor {
                 tableManager.addTable((OnlineGameTable) cmd.getArgument());
                 break;
             case JOIN_TABLE :
-                GameCommand startCmd = tableManager.joinTable((OnlineGameTable) cmd.getArgument());
-                if (startCmd != null) {
-                    startGame((OnlineGameTable) startCmd.getArgument());
-                    responses.add(startCmd);
-                }
+                tableManager.joinTable((OnlineGameTable) cmd.getArgument());
                 break;
             case CHANGE_NAME :
                 String[] names = ((String)cmd.getArgument()).split(GameCommand.CHANGE_TO);
@@ -136,7 +132,7 @@ class ServerCommandProcessor {
      */
     private void startGame(OnlineGameTable table) {
 
-        GameContext.log(1, "Now starting game on Server! "+ table);
+        GameContext.log(0, "Now starting game on Server! "+ table);
 
         // Create players from the table and start.
         PlayerList players = table.getPlayers();
