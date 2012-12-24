@@ -88,8 +88,10 @@ public abstract class PokerRobotPlayer extends PokerPlayer {
 
     private static PokerRobotPlayer getRobotPlayer(RobotType type, String name, int money, Color color) {
          switch (type) {
-            case CRAZY_ROBOT: return new CrazyRobotPlayer(name, money, color, RobotType.CRAZY_ROBOT);
-            case METHODICAL_ROBOT: return new MethodicalRobotPlayer(name, money, color, RobotType.METHODICAL_ROBOT);
+            case CRAZY_ROBOT:
+                return new CrazyRobotPlayer(name, money, color, RobotType.CRAZY_ROBOT);
+            case METHODICAL_ROBOT:
+                return new MethodicalRobotPlayer(name, money, color, RobotType.METHODICAL_ROBOT);
         }
         return null;
     }

@@ -40,9 +40,10 @@ class ListenerSocket {
             GameContext.log(0, "connected.");
         }
         catch (ConnectException e) {
-            exceptionOccurred("failed to get connection. "
+            isConnected = false;
+            GameContext.log(0, "failed to get connection. "
                     + "Probably because the server is not running or is inaccessable. "
-                    + "Playing a local game instead. " + e.getMessage(), e);
+                    + "Playing a local game instead. " + e.getMessage());
         }
         catch (UnknownHostException e) {
             exceptionOccurred("Unknown host: "+ host, e);

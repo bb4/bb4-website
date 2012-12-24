@@ -1,21 +1,17 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.poker.ui;
 
-import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.common.ui.ActionDialog;
 import com.barrybecker4.game.multiplayer.poker.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
 import com.barrybecker4.game.multiplayer.poker.PokerOptions;
-import com.barrybecker4.game.multiplayer.poker.player.PokerHumanPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.ui.components.GradientButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.text.NumberFormat;
 
 /**
  * Allow the user to specify a poker action
@@ -28,57 +24,32 @@ public final class BettingDialog extends ActionDialog {
     private GradientButton raiseButton_;
 
     private int callAmount_;
-    private int contributeAmount_;
     private int raiseAmount_ = 0;
 
     /**
-     * constructor - create the tree dialog.
+     * Constructor - create the tree dialog.
      * @param pc pokerController
      */
     public BettingDialog(PokerController pc, Component parent) {
         super(pc, parent);
         callAmount_ = ((PokerPlayer)player_).getCallAmount(pc);
-        contributeAmount_ = 0;
     }
 
-
-    /**
-     * ui initialization of the tree control.
-     */
     @Override
     protected JPanel createPersonalInfoPanel() {
-
-        return new PokerHandPanel(((PokerPlayer)player_).getHand());
+        return new PokerHandViewer(((PokerPlayer)player_).getHand());
     }
-
 
     @Override
     protected JPanel createGameInstructionsPanel() {
-
-        NumberFormat cf = getCurrencyFormat();
-        String cash = cf.format(((PokerPlayer)player_).getCash());
-        JPanel instr = new JPanel();
-        instr.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        JLabel currentCash = new JLabel("You currently have "+cash);
-
-        JLabel amountToCall = new JLabel("To call, you need to add "+cf.format(callAmount_));
-
-
-        JPanel gameInstructions = new JPanel(new BorderLayout());
-        gameInstructions.add(currentCash, BorderLayout.CENTER);
-        if (callAmount_ > 0)  {
-            gameInstructions.add(amountToCall, BorderLayout.SOUTH);
-        }
-        return gameInstructions;
+        return new GameInstructionsPanel((PokerPlayer) player_,  callAmount_);
     }
-
 
     /**
      *  create the OK/Cancel buttons that go at the bottom.
      */
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         foldButton_ = new GradientButton();
@@ -97,26 +68,17 @@ public final class BettingDialog extends ActionDialog {
         return buttonsPanel;
     }
 
-
-    public static NumberFormat getCurrencyFormat() {
-        //@@ fix i18n
-        return NumberFormat.getCurrencyInstance(JComponent.getDefaultLocale());
-    }
-
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("MAKE_YOUR_BET");
     }
-
 
     /**
      * called when one of the buttons at the bottom have been pressed.
      * @param e
      */
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         PokerAction.Name actionName = null;
         if (source == foldButton_) {
@@ -126,8 +88,6 @@ public final class BettingDialog extends ActionDialog {
         }
         else if ( source == callButton_ ) {
             actionName = PokerAction.Name.CALL;
-            // add the amount of money needed to call
-            contributeAmount_ = callAmount_;
             this.setVisible(false);
         }
         else if ( source == raiseButton_ ) {
@@ -138,9 +98,8 @@ public final class BettingDialog extends ActionDialog {
             assert false :"actionPerformed source="+source+". not recognized";
         }
 
-        ((PokerHumanPlayer)player_).setAction(new PokerAction(player_.getName(), actionName, raiseAmount_));
+        player_.setAction(new PokerAction(player_.getName(), actionName, raiseAmount_));
     }
-
 
     void showRaiseDialog() {
         // open a dlg to get an order
@@ -156,34 +115,8 @@ public final class BettingDialog extends ActionDialog {
 
         if ( !canceled ) {
             raiseAmount_ = raiseDialog.getRaiseAmount();
-            contributeAmount_  = callAmount_ + raiseAmount_;
             this.setVisible(false);
         }
     }
-
-    public int getContributeAmount() {
-        return contributeAmount_;
-    }
-
-    /**
-     * this panel shows the player the contents of their hand so they can bet on it.
-     */
-    private static class PokerHandPanel extends JPanel {
-        PokerHand hand_;
-        HandRenderer handRenderer = new HandRenderer();
-
-
-        public PokerHandPanel(PokerHand hand) {
-            hand_ = new PokerHand(hand.getCards());
-            hand_.setFaceUp(true);
-            this.setPreferredSize(new Dimension(400, 120));
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-             handRenderer.render((Graphics2D) g, new Location(0, 2), hand_, 22);
-        }
-    }
-
 }
 

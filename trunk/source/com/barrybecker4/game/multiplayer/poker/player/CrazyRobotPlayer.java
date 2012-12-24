@@ -12,15 +12,13 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class CrazyRobotPlayer extends PokerRobotPlayer
-{
+public class CrazyRobotPlayer extends PokerRobotPlayer {
     private static final long serialVersionUID = 1;
 
     private static final int DESIRED_RAISE = 20;
 
 
-    public CrazyRobotPlayer(String name, int cash, Color color, RobotType rType)
-    {
+    public CrazyRobotPlayer(String name, int cash, Color color, RobotType rType) {
         super(name, cash, color, rType);
     }
 
