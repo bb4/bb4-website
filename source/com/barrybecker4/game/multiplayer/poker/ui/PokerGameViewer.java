@@ -143,7 +143,7 @@ public class PokerGameViewer extends MultiGameViewer {
 
         PlayerList players = controller_.getPlayers();
         for (final Player p : players) {
-            PokerPlayer player = (PokerPlayer) p;
+            PokerPlayer player = (PokerPlayer) p.getActualPlayer();
             player.getHand().setFaceUp(true);
         }
         refresh();

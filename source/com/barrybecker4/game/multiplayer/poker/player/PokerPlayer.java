@@ -56,8 +56,7 @@ public abstract class PokerPlayer extends MultiGamePlayer  {
      * @param isHuman
      * @return
      */
-    public static PokerPlayer createPokerPlayer(String name, int money, Color color, boolean isHuman)
-    {
+    public static PokerPlayer createPokerPlayer(String name, int money, Color color, boolean isHuman) {
        if (isHuman)
            return new PokerHumanPlayer(name, money, color);
         else

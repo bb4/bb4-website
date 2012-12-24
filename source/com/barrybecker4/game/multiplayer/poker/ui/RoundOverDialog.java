@@ -71,7 +71,7 @@ class RoundOverDialog extends OptionsDialog {
     }
 
     private void initWonMessage() {
-         NumberFormat cf = BettingDialog.getCurrencyFormat();
+        NumberFormat cf = GameContext.getCurrencyFormat();
         String cash = cf.format(winnings_);
         winLabel_.setText("won " + cash + " from the pot!");
         //JLabel amountToCall = new JLabel("To call, you need to add " + cf.format(callAmount_));

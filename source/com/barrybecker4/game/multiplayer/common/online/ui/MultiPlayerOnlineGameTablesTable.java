@@ -111,7 +111,11 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     public void removeRow(OnlineGameTable table) {
 
         tableList_.remove(table);
+        removeRowFromModel(table);
+        //GameContext.log(0, "selected row =" + (ct-1) + " found="+ found +  "  modelRows="+ model.getRowCount() +"   tables="+ model.getDataVector());
+    }
 
+    private void removeRowFromModel(OnlineGameTable table) {
         boolean found = false;
         BasicTableModel model = getPlayerModel();
         int ct = 0;
@@ -123,7 +127,6 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
             }
             ct++;
         }
-        //GameContext.log(0, "selected row =" + (ct-1) + " found="+ found +  "  modelRows="+ model.getRowCount() +"   tables="+ model.getDataVector());
     }
 
     /**

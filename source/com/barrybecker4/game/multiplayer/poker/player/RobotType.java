@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Available robot player types.
  *
- * @author Barry Becker Date: Sep 10, 2006
+ * @author Barry Becker
  */
 public enum RobotType implements Serializable {
 

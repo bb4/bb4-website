@@ -9,6 +9,8 @@ import com.barrybecker4.game.common.plugin.PluginManager;
 import com.barrybecker4.sound.MusicMaker;
 import com.barrybecker4.ui.util.Log;
 
+import javax.swing.*;
+import java.text.NumberFormat;
 import java.util.Random;
 
 /**
@@ -157,6 +159,10 @@ public final class GameContext {
      */
     public static void setLocale(LocaleType locale) {
         messageContext_.setLocale(locale);
+    }
+
+    public static NumberFormat getCurrencyFormat() {
+        return NumberFormat.getCurrencyInstance(messageContext_.getLocale());
     }
 
     /**

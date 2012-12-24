@@ -12,12 +12,11 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class MethodicalRobotPlayer extends PokerRobotPlayer
-{
+public class MethodicalRobotPlayer extends PokerRobotPlayer {
+
     private static final long serialVersionUID = 1;
 
-    public MethodicalRobotPlayer(String name, int cash, Color color, RobotType rType)
-    {
+    public MethodicalRobotPlayer(String name, int cash, Color color, RobotType rType) {
         super(name, cash, color, rType);
     }
 

@@ -12,7 +12,7 @@ import com.barrybecker4.ui.table.TableButtonListener;
 import javax.swing.event.ChangeListener;
 
 /**
- * Manage online player games.
+ * Manage online poker games.
  * Player can join no more than one table at a time.
  *
  * @author Barry Becker

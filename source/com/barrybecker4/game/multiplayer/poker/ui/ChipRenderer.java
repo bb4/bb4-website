@@ -19,14 +19,8 @@ import static com.barrybecker4.game.multiplayer.poker.ui.PokerPlayerRenderer.POK
 public class ChipRenderer {
 
     private static final Color BLACK_COLOR   = Color.black;
-
     private static final double CHIP_PILE_WIDTH = 0.9;
     private static final double CHIP_HEIGHT = 0.15;
-
-    /**
-     * Constructor
-     */
-    public ChipRenderer() {}
 
 
     /**
@@ -34,38 +28,42 @@ public class ChipRenderer {
      */
     public void render( Graphics2D g2, Location location, int amount, int cellSize) {
 
-        int[] numChips = PokerChip.getChips(amount);
-        int i,x, width, height=0, firstNonZeroPile=0;
-        int y = (cellSize * (location.getRow()));
-        GameContext.log(3,"chips stacks = "+numChips[1]+" "+numChips[2] + " "+numChips[3] + " "+numChips[4]);
-        for (i=0; i<numChips.length; i++) {
+        PokerChips chips = new PokerChips(amount);
 
-            if (numChips[i] > 0) {
-                if (firstNonZeroPile == 0) {
-                   firstNonZeroPile = i;
-                }
-                height = (int)(cellSize * numChips[i] * CHIP_HEIGHT);
-                width = (int)(CHIP_PILE_WIDTH * cellSize);
-                g2.setColor(PokerChip.values()[i].getColor());
-                x = (int)(((float)i*CHIP_PILE_WIDTH + location.getCol() +1) * cellSize);
-                y = location.getRow() * cellSize - height;
-                g2.fillRect(x, y, width, height);
-                g2.setColor(BLACK_COLOR);
-                g2.drawRect(x, y, width, height);
-                for (int j=1; j<numChips[i]; j++) {
-                     y = (int)(cellSize * (location.getRow() - j * CHIP_HEIGHT));
-                     g2.drawLine(x, y, (int)(x + cellSize*CHIP_PILE_WIDTH), y);
-                }
+        GameContext.log(3,"chips stacks = "+ chips);
+
+        int x;
+        int width;
+        int height = 0;
+        int y = cellSize * location.getRow();
+
+        for (PokerChip chipType : chips.keySet()) {
+
+            int numChips = chips.get(chipType);
+            height = (int)(cellSize * numChips * CHIP_HEIGHT);
+            width = (int)(CHIP_PILE_WIDTH * cellSize);
+            g2.setColor(chipType.getColor());
+            x = (int)((chipType.ordinal() * CHIP_PILE_WIDTH + location.getCol() + 1) * cellSize);
+            y = location.getRow() * cellSize - height;
+
+            g2.fillRect(x, y, width, height);
+            g2.setColor(BLACK_COLOR);
+            g2.drawRect(x, y, width, height);
+            for (int j = 1; j < numChips; j++) {
+                 y = (int)(cellSize * (location.getRow() - j * CHIP_HEIGHT));
+                 g2.drawLine(x, y, (int)(x + cellSize * CHIP_PILE_WIDTH), y);
             }
-
         }
+
         // amount of cash represented by chips
         g2.setColor(BLACK_COLOR);
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(JComponent.getDefaultLocale());
+
         String cashAmount = currencyFormat.format(amount);
-        x = (int)((location.getCol() +1 +firstNonZeroPile*CHIP_PILE_WIDTH) * cellSize);
+        x = (location.getCol() + 1) * cellSize;
         Font f = POKER_FONT.deriveFont((float) cellSize /
                  TwoPlayerBoardRenderer.MINIMUM_CELL_SIZE * FONT_SIZE);
+
         g2.setFont(f);
         g2.drawString(cashAmount, x , (int)(y + height + cellSize/1.2));
     }
