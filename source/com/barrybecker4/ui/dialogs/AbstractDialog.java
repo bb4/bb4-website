@@ -95,8 +95,7 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
     }
 
 
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         if ( source == cancelButton) {
             cancel();

@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * A set of different sorts of poker chips.
+ * This set of chips can be rendered as the stacks in from of the player or in the pot in the middle.
  * @author Barry Becker
  *
  */

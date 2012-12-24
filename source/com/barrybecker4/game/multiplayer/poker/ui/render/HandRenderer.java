@@ -20,7 +20,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class HandRenderer  {
 
-    // the suit images
+    /** the suit images   */
     private static ImageIcon[] suitImages_ = new ImageIcon[Suit.values().length];
 
     private static final String IMAGE_DIR = GameContext.GAME_ROOT + "multiplayer/poker/ui/images/";

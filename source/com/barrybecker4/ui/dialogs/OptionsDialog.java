@@ -11,8 +11,7 @@ import java.awt.event.ActionListener;
  *
  * @author Barry Becker
  */
-public abstract class OptionsDialog extends AbstractDialog
-                                    implements ActionListener {
+public abstract class OptionsDialog extends AbstractDialog {
 
     public static final String COLON = " : ";
 

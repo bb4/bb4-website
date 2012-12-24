@@ -89,10 +89,8 @@ final class RaiseDialog extends OptionsDialog {
         mainPanel.add(primaryPanel, BorderLayout.CENTER);
         mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
-
         return mainPanel;
     }
-
 
     /**
      *  create the OK/Cancel buttons that go at the bottom.
@@ -131,7 +129,7 @@ final class RaiseDialog extends OptionsDialog {
                 JOptionPane.showMessageDialog(this, "You cannot raise by more money than you have!");
             }
             else if ((maxRaiseAllowed_ < allInAmount_) && (getRaiseAmount() > maxRaiseAllowed_))  {
-               JOptionPane.showMessageDialog(this, "The maximum raise allowed is $"+maxRaiseAllowed_+". You cannot raise by more than that.");
+                JOptionPane.showMessageDialog(this, "The maximum raise allowed is $"+maxRaiseAllowed_+". You cannot raise by more than that.");
             }
             else if (contrib > allInAmount_ - player_.getContribution()) {
                 JOptionPane.showMessageDialog(this, "You cannot raise by more money than the poorest player.");
@@ -148,12 +146,10 @@ final class RaiseDialog extends OptionsDialog {
         }
     }
 
-
     /**
      * @return retrieve the specified order.
      */
-    public int getRaiseAmount()
-    {
+    public int getRaiseAmount() {
         return raiseAmount_.getIntValue();
     }
 

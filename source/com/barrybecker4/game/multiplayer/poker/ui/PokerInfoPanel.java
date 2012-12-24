@@ -31,7 +31,6 @@ import java.text.MessageFormat;
 class PokerInfoPanel extends GameInfoPanel
                      implements GameChangedListener, ActionListener {
 
-    //  buttons to either give commands or pass
     private JButton commandButton_;
     private JPanel commandPanel_;
 
@@ -64,7 +63,7 @@ class PokerInfoPanel extends GameInfoPanel
      */
     @Override
     protected JPanel createCustomInfoPanel() {
-        commandPanel_ = createSectionPanel("");
+        commandPanel_ = styleSectionPanel(new JPanel(), "");
         setCommandPanelTitle();
 
         // the command button
@@ -83,19 +82,8 @@ class PokerInfoPanel extends GameInfoPanel
      * This panel shows a discrete color legend for the poker chip values
      */
     JPanel createChipLegendPanel() {
-        JPanel legendPanel = createSectionPanel("Chip Values");
-        PokerChip[] chipTypes = PokerChip.values();
-        int n = chipTypes.length;
-        Color[] colors = new Color[n];
-        String[] values = new String[n];
-        for (int i = n; i > 0; i--) {
-            colors[n-i] = chipTypes[i-1].getColor();
-            values[n-i] = chipTypes[i-1].getLabel();
-        }
-        JPanel legend = new DiscreteColorLegend(null, colors, values);
-        legend.setPreferredSize(new Dimension(500, 100));
-        legendPanel.add(legend);
-
+        JPanel legendPanel = new ChipLegendPanel();
+        styleSectionPanel(legendPanel, "Chip Values");
         return legendPanel;
     }
 
