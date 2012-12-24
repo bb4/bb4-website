@@ -1,20 +1,12 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.game.multiplayer.poker.ui;
+package com.barrybecker4.game.multiplayer.poker.ui.dialog;
 
 import com.barrybecker4.common.geometry.Location;
-import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.multiplayer.common.ui.ActionDialog;
-import com.barrybecker4.game.multiplayer.poker.PokerAction;
-import com.barrybecker4.game.multiplayer.poker.PokerController;
-import com.barrybecker4.game.multiplayer.poker.PokerOptions;
 import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
-import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
-import com.barrybecker4.ui.components.GradientButton;
+import com.barrybecker4.game.multiplayer.poker.ui.render.HandRenderer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.text.NumberFormat;
 
 /**
  * Shows the player the contents of their hand so they can bet on it.

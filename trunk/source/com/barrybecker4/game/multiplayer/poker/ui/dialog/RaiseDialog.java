@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.poker.ui;
+package com.barrybecker4.game.multiplayer.poker.ui.dialog;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
@@ -16,10 +16,9 @@ import java.awt.event.ActionEvent;
  *
  * @author Barry Becker
  */
-final class RaiseDialog extends OptionsDialog
-{
-    private PokerPlayer player_;
+final class RaiseDialog extends OptionsDialog {
 
+    private PokerPlayer player_;
     private GradientButton okButton_;
     private NumberInput raiseAmount_;
     private int callAmount_;
@@ -36,8 +35,7 @@ final class RaiseDialog extends OptionsDialog
      * @param callAmount
      * @param allInAmount
      */
-    public RaiseDialog(PokerPlayer player, int callAmount, int allInAmount, int maxRaiseAllowed, int ante)
-    {
+    public RaiseDialog(PokerPlayer player, int callAmount, int allInAmount, int maxRaiseAllowed, int ante) {
         setResizable( true );
         player_ = player;
         callAmount_ = callAmount;
@@ -52,8 +50,7 @@ final class RaiseDialog extends OptionsDialog
      * ui initialization of the tree control.
      */
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent() {
         JPanel mainPanel =  new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
@@ -87,7 +84,6 @@ final class RaiseDialog extends OptionsDialog
             raiseAmount_ = new NumberInput(GameContext.getLabel("AMOUNT_TO_RAISE2"), DEFAULT_RAISE_AMOUNT);
         }
 
-
         primaryPanel.add(instructionsPanel, BorderLayout.NORTH);
         primaryPanel.add(raiseAmount_, BorderLayout.CENTER);
         mainPanel.add(primaryPanel, BorderLayout.CENTER);
@@ -102,8 +98,7 @@ final class RaiseDialog extends OptionsDialog
      *  create the OK/Cancel buttons that go at the bottom.
      */
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         okButton_ = new GradientButton();
@@ -117,19 +112,17 @@ final class RaiseDialog extends OptionsDialog
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("MAKE_RAISE");
     }
-
 
     /**
      * called when one of the buttons at the bottom have been pressed.
      * @param e
      */
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
+
         super.actionPerformed(e);
         Object source = e.getSource();
         if (source == okButton_) {

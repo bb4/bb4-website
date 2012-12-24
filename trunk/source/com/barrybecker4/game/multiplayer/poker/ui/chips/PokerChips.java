@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.game.multiplayer.poker.ui;
+package com.barrybecker4.game.multiplayer.poker.ui.chips;
 
 import com.barrybecker4.common.math.Range;
 
@@ -10,7 +10,7 @@ import java.util.Map;
  * @author Barry Becker
  *
  */
-class PokerChips extends LinkedHashMap<PokerChip, Integer> {
+public class PokerChips extends LinkedHashMap<PokerChip, Integer> {
 
     private static final Map<PokerChip, Range> THRESHOLDS = new LinkedHashMap<PokerChip, Range>();
     static {

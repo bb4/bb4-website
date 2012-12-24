@@ -9,6 +9,8 @@ import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
 import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
 import com.barrybecker4.game.common.ui.panel.GamePanel;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
+import com.barrybecker4.game.multiplayer.poker.ui.dialog.PokerNewGameDialog;
+import com.barrybecker4.game.multiplayer.poker.ui.dialog.PokerOptionsDialog;
 
 import java.awt.*;
 

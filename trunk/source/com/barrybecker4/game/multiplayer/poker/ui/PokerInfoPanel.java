@@ -8,10 +8,11 @@ import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
-import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.poker.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
+import com.barrybecker4.game.multiplayer.poker.ui.chips.PokerChip;
+import com.barrybecker4.game.multiplayer.poker.ui.dialog.BettingDialog;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.legend.DiscreteColorLegend;
 
