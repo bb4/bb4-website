@@ -72,14 +72,14 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         p1TerritoryLabel_ = createLabel();
         p2TerritoryLabel_ = createLabel();
 
-        JPanel capturesPanel = createSectionPanel(GameContext.getLabel("NUMBER_OF_CAPTURES"));
+        JPanel capturesPanel = styleSectionPanel(new JPanel(), GameContext.getLabel("NUMBER_OF_CAPTURES"));
         PlayerList players = getController().getPlayers();
         JLabel p1 = createLabel( players.getPlayer1().getName() + COLON );
         JLabel p2 = createLabel( players.getPlayer2().getName() + COLON );
         capturesPanel.add(createRowEntryPanel( p1, p1CapturesLabel_ ));
         capturesPanel.add(createRowEntryPanel( p2, p2CapturesLabel_ ));
 
-        JPanel territoryPanel = createSectionPanel(GameContext.getLabel("EST_TERRITORY"));
+        JPanel territoryPanel = styleSectionPanel(new JPanel(), GameContext.getLabel("EST_TERRITORY"));
         JLabel blackTerr = createLabel( GameContext.getLabel("EST_BLACK_TERR") + COLON );
         JLabel whiteTerr = createLabel( GameContext.getLabel("EST_WHITE_TERR") + COLON );
         territoryPanel.add(createRowEntryPanel( blackTerr, p1TerritoryLabel_ ));
@@ -92,7 +92,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
     }
 
     private JPanel createLegendPanel() {
-        JPanel legendPanel = createSectionPanel("Group Health Legend");
+        JPanel legendPanel = styleSectionPanel(new JPanel(), "Group Health Legend");
         ContinuousColorLegend legend =
                 new ContinuousColorLegend(null, GoBoardRenderer.COLORMAP, false);
         legendPanel.add(legend);

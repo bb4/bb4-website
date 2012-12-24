@@ -42,7 +42,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
     @Override
     protected JPanel createGeneralInfoPanel()  {
 
-        JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
+        JPanel generalPanel = styleSectionPanel(new JPanel(), GameContext.getLabel("GENERAL_INFO"));
 
         JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
         initPlayerLabel();

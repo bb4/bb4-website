@@ -27,7 +27,7 @@ public class ChipRenderer {
      */
     public void render( Graphics2D g2, Location location, int amount, int cellSize) {
 
-        PokerChips chips = new PokerChips(amount);
+        final PokerChips chips = new PokerChips(amount);
 
         GameContext.log(3,"chips stacks = "+ chips);
 

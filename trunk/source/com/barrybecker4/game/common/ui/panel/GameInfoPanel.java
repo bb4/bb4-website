@@ -110,7 +110,7 @@ public abstract class GameInfoPanel extends TexturedPanel
      */
     protected JPanel createGeneralInfoPanel() {
 
-        JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
+        JPanel generalPanel = styleSectionPanel(new JPanel(), GameContext.getLabel("GENERAL_INFO"));
 
         JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
         initPlayerLabel();
@@ -127,25 +127,6 @@ public abstract class GameInfoPanel extends TexturedPanel
         generalPanel.add( Box.createGlue() );
 
         return generalPanel;
-        /*
-        JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
-
-        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
-        initPlayerLabel();
-
-        JLabel moveNumTextLabel = createLabel( getMoveNumLabel());
-        moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
-        moveNumLabel_ = createLabel( " 0" );
-
-        generalPanel.add( createRowEntryPanel( turnLabel, playerLabel_ ) );
-        generalPanel.add( createRowEntryPanel( moveNumTextLabel, moveNumLabel_ ) );
-
-        // add this back in when it is implemented
-        //generalPanel.add( createRowEntryPanel(showRecommendedMove_) );
-        generalPanel.add( Box.createGlue() );
-
-        return generalPanel;
-         * */
     }
 
     protected String getMoveNumLabel() {
@@ -187,15 +168,15 @@ public abstract class GameInfoPanel extends TexturedPanel
 
     /**
      * Create a panel with an etched border for the section.
+     * @param panel the panel to style
      * @param title  the title of the panel.
-     * @return  the constructed panel
      */
-    protected final JPanel createSectionPanel(String title) {
-        JPanel p = createPanel();
-        p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
-        p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), title,
+    protected JPanel styleSectionPanel(JPanel panel, String title) {
+
+        panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ) );
+        panel.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), title,
                      TitledBorder.LEFT, TitledBorder.TOP, SECTION_TITLE_FONT) );
-        return p;
+        return panel;
     }
 
     protected final JLabel createLabel() {

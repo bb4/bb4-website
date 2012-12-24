@@ -57,7 +57,7 @@ class TrivialInfoPanel extends GameInfoPanel
      */
     @Override
     protected JPanel createCustomInfoPanel() {
-        commandPanel_ = createSectionPanel("");
+        commandPanel_ = styleSectionPanel(new JPanel(), "");
         setCommandPanelTitle();
 
         // the command button

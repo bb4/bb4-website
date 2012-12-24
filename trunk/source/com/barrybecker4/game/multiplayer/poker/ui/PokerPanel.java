@@ -20,21 +20,17 @@ import java.awt.*;
  *
  *  @author Barry Becker
  */
-public class PokerPanel extends GamePanel
-{
+public class PokerPanel extends GamePanel {
 
     /**
-     *  Construct the panel.
+     * Construct the panel. Needed for reflective creation.
      */
-    public PokerPanel()
-    {}
-
+    public PokerPanel() {}
 
     @Override
     public String getTitle() {
         return  GameContext.getLabel("POKER_TITLE");
     }
-
 
     @Override
     protected GameBoardViewer createBoardViewer() {

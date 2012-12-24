@@ -59,7 +59,7 @@ class SetInfoPanel extends GameInfoPanel
     @Override
     protected JPanel createCustomInfoPanel()
     {
-        JPanel pp = createSectionPanel("Players");
+        JPanel pp = styleSectionPanel(new JPanel(), "Players");
 
         playerPanel_ = createPanel();
         playerPanel_.setLayout(new BorderLayout());
@@ -78,7 +78,7 @@ class SetInfoPanel extends GameInfoPanel
     @Override
     protected JPanel createGeneralInfoPanel()
     {
-        JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
+        JPanel generalPanel = styleSectionPanel(new JPanel(), GameContext.getLabel("GENERAL_INFO"));
 
         JLabel numSetsOnBoardText = createLabel(GameContext.getLabel("NUMBER_OF_SETS_ON_BOARD") + COLON);
         numSetsOnBoardLabel_ = createLabel( " " );
