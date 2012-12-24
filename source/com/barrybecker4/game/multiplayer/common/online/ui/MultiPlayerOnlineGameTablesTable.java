@@ -109,7 +109,21 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     }
 
     public void removeRow(OnlineGameTable table) {
+
         tableList_.remove(table);
+
+        boolean found = false;
+        BasicTableModel model = getPlayerModel();
+        int ct = 0;
+        while (ct < model.getRowCount() && !found)  {
+            String names = (String) model.getValueAt(ct, PLAYER_NAMES_INDEX);
+            if (names.equals(table.getPlayerNames())) {
+                model.removeRow(ct);
+                found = true;
+            }
+            ct++;
+        }
+        //GameContext.log(0, "selected row =" + (ct-1) + " found="+ found +  "  modelRows="+ model.getRowCount() +"   tables="+ model.getDataVector());
     }
 
     /**
@@ -134,7 +148,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
 
     @Override
     protected void addRow(Object onlineTable) {
-        this.addRow((OnlineGameTable) onlineTable, true);
+        addRow((OnlineGameTable) onlineTable, true);
     }
 
     /**
@@ -171,6 +185,10 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
 
         int r = GameContext.random().nextInt(256);
         return new Color(r, 255 - r, GameContext.random().nextInt(256));
+    }
+
+    public String toString() {
+        return tableList_.toString();
     }
 
 }

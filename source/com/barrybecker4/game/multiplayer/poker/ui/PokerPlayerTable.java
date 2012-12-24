@@ -86,9 +86,7 @@ public class PokerPlayerTable extends PlayerTable
     protected Player createPlayer() {
         int ct = table_.getRowCount();
         Color newColor = PokerPlayer.getNewPlayerColor(getPlayers());
-        PokerPlayer player = PokerPlayer.createPokerPlayer(
+        return PokerPlayer.createPokerPlayer(
                                              "Robot "+(ct+1), DEFAULT_CASH_AMOUNT, newColor, true);
-
-        return player;
     }
 }

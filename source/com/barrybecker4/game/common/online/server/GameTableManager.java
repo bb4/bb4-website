@@ -36,18 +36,19 @@ class GameTableManager {
 
     void removeTable(OnlineGameTable table) {
         tables_.remove(table);
+        assert tables_.isEmpty():  "Game table removed on server. Should have been 0 now, but was "+ tables_;
     }
 
     /**
+     * If the table we are adding has the same name as an existing table change it to something unique.
+     * If the player at this new table is already sitting at another table,
+     * remove him from the other tables, and delete those other tables if no one else is there.
      * @param table the table to add
      */
     void addTable(OnlineGameTable table) {
 
-        // if the table we are adding has the same name as an existing table change it to something unique
         String uniqueName = verifyUniqueName(table.getName());
         table.setName(uniqueName);
-        // if the player at this new table is already sitting at another table,
-        // remove him from the other tables, and delete those other tables if no one else is there.
         assert(table.getPlayers().size() >= 1):
             "It is expected that when you add a new table there is at least one player at it" +
             " (exactly one human owner and 0 or more robots).";
@@ -57,25 +58,15 @@ class GameTableManager {
 
     /**
      * Get the most recently added human player from the table and have them join the table with the same name.
-     * If there is a table now ready to play after this change, then start it.
-     * @return start game command if all players present, else returns null.
+     * If the player at this new table is already sitting at another table,
+     * remove him from the other tables(s) and delete those other tables (if no one else is there).
      */
-    GameCommand joinTable(OnlineGameTable table) {
+    void joinTable(OnlineGameTable table) {
 
-        GameCommand response = null;
-        // if the player at this new table is already sitting at another table,
-        // remove him from the other tables(s) and delete those other tables (if no one else is there).
         Player p = table.getNewestHumanPlayer();
-        GameContext.log(2, "in join table on the server p="+p);
+
         tables_.removePlayer(p);
         tables_.join(table.getName(), p);
-        OnlineGameTable tableToStart = tables_.getTableReadyToPlay(p.getName());
-        if (tableToStart != null) {
-
-            response = new GameCommand(GameCommand.Name.START_GAME,  tableToStart);
-            tables_.remove(tableToStart);
-        }
-        return response;
     }
 
     /**

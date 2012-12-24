@@ -17,8 +17,7 @@ import com.barrybecker4.ui.sliders.SliderProperties;
  * @author Barry Becker
  */
 public class ControlSliderGroup extends SliderGroup
-                                implements SliderGroupChangeListener
-{
+                                implements SliderGroupChangeListener {
     // slider indices
     private static final int RADIUS1 = 0;
     private static final int RADIUS2 = 1;
