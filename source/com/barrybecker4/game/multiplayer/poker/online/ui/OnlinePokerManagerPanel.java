@@ -6,10 +6,8 @@ import com.barrybecker4.game.common.ui.dialogs.GameOptionsDialog;
 import com.barrybecker4.game.common.ui.dialogs.GameStartListener;
 import com.barrybecker4.game.multiplayer.common.online.ui.MultiPlayerOnlineGameTablesTable;
 import com.barrybecker4.game.multiplayer.common.online.ui.MultiPlayerOnlineManagerPanel;
-import com.barrybecker4.game.multiplayer.poker.ui.PokerOptionsDialog;
+import com.barrybecker4.game.multiplayer.poker.ui.dialog.PokerOptionsDialog;
 import com.barrybecker4.ui.table.TableButtonListener;
-
-import javax.swing.event.ChangeListener;
 
 /**
  * Manage online poker games.

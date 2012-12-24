@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.game.multiplayer.poker.ui;
+package com.barrybecker4.game.multiplayer.poker.ui.render;
 
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.card.Card;
@@ -12,8 +12,6 @@ import com.barrybecker4.ui.util.GUIUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-
-import static com.barrybecker4.game.multiplayer.poker.ui.PokerPlayerRenderer.POKER_FONT;
 
 /**
  *  A singleton class renders a playing card.
@@ -87,7 +85,7 @@ public class HandRenderer  {
      */
     private static void renderFaceUpCard(Graphics2D g2, int x, int y,
                                          int cellSize, int cardArc, Card c) {
-        Font font = POKER_FONT.deriveFont((float) cellSize /
+        Font font = PokerPlayerRenderer.POKER_FONT.deriveFont((float) cellSize /
                     TwoPlayerBoardRenderer.MINIMUM_CELL_SIZE  * POKER_CARD_FONT_SIZE);
 
         ImageIcon imgIcon = suitImages_[c.suit().ordinal()];

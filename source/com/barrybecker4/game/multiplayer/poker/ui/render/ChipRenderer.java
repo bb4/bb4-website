@@ -1,16 +1,15 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.game.multiplayer.poker.ui;
+package com.barrybecker4.game.multiplayer.poker.ui.render;
 
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
+import com.barrybecker4.game.multiplayer.poker.ui.chips.PokerChip;
+import com.barrybecker4.game.multiplayer.poker.ui.chips.PokerChips;
 import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.NumberFormat;
-
-import static com.barrybecker4.game.multiplayer.poker.ui.PokerPlayerRenderer.FONT_SIZE;
-import static com.barrybecker4.game.multiplayer.poker.ui.PokerPlayerRenderer.POKER_FONT;
 
 /**
  * Renders a players poker chips
@@ -61,8 +60,8 @@ public class ChipRenderer {
 
         String cashAmount = currencyFormat.format(amount);
         x = (location.getCol() + 1) * cellSize;
-        Font f = POKER_FONT.deriveFont((float) cellSize /
-                 TwoPlayerBoardRenderer.MINIMUM_CELL_SIZE * FONT_SIZE);
+        Font f = PokerPlayerRenderer.POKER_FONT.deriveFont((float) cellSize /
+                 TwoPlayerBoardRenderer.MINIMUM_CELL_SIZE * PokerPlayerRenderer.FONT_SIZE);
 
         g2.setFont(f);
         g2.drawString(cashAmount, x , (int)(y + height + cellSize/1.2));

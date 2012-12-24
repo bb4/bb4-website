@@ -1,11 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.poker.ui;
+package com.barrybecker4.game.multiplayer.poker.ui.render;
 
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
-import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameBoardRenderer;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 import com.barrybecker4.game.multiplayer.poker.PokerPlayerMarker;
