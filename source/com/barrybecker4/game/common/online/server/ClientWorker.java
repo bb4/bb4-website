@@ -3,13 +3,13 @@ package com.barrybecker4.game.common.online.server;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.online.GameCommand;
+import com.barrybecker4.ui.components.Appendable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
-import com.barrybecker4.ui.components.Appendable;
 
 /**
  * A client worker is created for each client player connection to this server.

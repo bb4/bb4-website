@@ -3,7 +3,17 @@ package com.barrybecker4.game.twoplayer.common.persistence;
 
 import ca.dj.jigo.sgf.SGFException;
 import ca.dj.jigo.sgf.SGFLoader;
-import ca.dj.jigo.sgf.tokens.*;
+import ca.dj.jigo.sgf.tokens.CommentToken;
+import ca.dj.jigo.sgf.tokens.DateToken;
+import ca.dj.jigo.sgf.tokens.FileFormatToken;
+import ca.dj.jigo.sgf.tokens.GameCommentToken;
+import ca.dj.jigo.sgf.tokens.GameIDToken;
+import ca.dj.jigo.sgf.tokens.GameNameToken;
+import ca.dj.jigo.sgf.tokens.GameTypeToken;
+import ca.dj.jigo.sgf.tokens.NodeNameToken;
+import ca.dj.jigo.sgf.tokens.ResultToken;
+import ca.dj.jigo.sgf.tokens.SGFToken;
+import ca.dj.jigo.sgf.tokens.TextToken;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.twoplayer.common.persistence.tokens.Player1MoveToken;
 import com.barrybecker4.game.twoplayer.common.persistence.tokens.Player1NameToken;

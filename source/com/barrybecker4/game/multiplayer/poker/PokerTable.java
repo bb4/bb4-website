@@ -7,7 +7,6 @@ import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
-import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 
 /**

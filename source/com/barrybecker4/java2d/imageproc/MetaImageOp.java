@@ -1,12 +1,8 @@
 package com.barrybecker4.java2d.imageproc;
 
-import com.barrybecker4.optimization.parameter.types.BooleanParameter;
 import com.barrybecker4.optimization.parameter.types.Parameter;
 
 import java.awt.image.BufferedImageOp;
-import java.lang.IllegalAccessException;
-import java.lang.IllegalArgumentException;
-import java.lang.NoSuchMethodException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;

@@ -26,7 +26,9 @@ import com.barrybecker4.ui.table.TableButtonListener;
     private static final String MAX_RAISE = GameContext.getLabel("MAX_RAISE");
     private static final String INITIAL_CASH = GameContext.getLabel("INITIAL_CASH");
 
-    private static final String[] POKER_COLUMN_NAMES = {JOIN, MIN_NUM_PLAYERS, PLAYER_NAMES, ANTE, MAX_RAISE, INITIAL_CASH};
+    private static final String[] POKER_COLUMN_NAMES = {
+            JOIN, MIN_NUM_PLAYERS, PLAYER_NAMES, ANTE, MAX_RAISE, INITIAL_CASH
+    };
 
     /**
      *

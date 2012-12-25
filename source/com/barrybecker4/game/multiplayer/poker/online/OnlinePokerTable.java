@@ -12,7 +12,7 @@ import com.barrybecker4.game.multiplayer.poker.player.PokerRobotPlayer;
 import java.awt.*;
 
 /**
- * @author Barry Becker Date: May 13, 2006
+ * @author Barry Becker
  */
 public class OnlinePokerTable extends MultiPlayerOnlineTable {
 

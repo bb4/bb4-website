@@ -5,7 +5,6 @@ import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
-import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameViewer;
 import com.barrybecker4.game.multiplayer.trivial.TrivialAction;
 import com.barrybecker4.game.multiplayer.trivial.TrivialController;

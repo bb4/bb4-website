@@ -2,8 +2,8 @@
 package com.barrybecker4.game.common.player;
 
 import com.barrybecker4.game.common.online.GameCommand;
-import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
+import com.barrybecker4.game.common.online.server.IServerConnection;
 
 /**
  * On the server, all players are surrogates except for the robot players.

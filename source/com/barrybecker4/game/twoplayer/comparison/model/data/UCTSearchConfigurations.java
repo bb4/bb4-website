@@ -8,8 +8,10 @@ import com.barrybecker4.game.twoplayer.common.search.options.SearchOptions;
 import com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.barrybecker4.game.twoplayer.comparison.model.SearchOptionsConfig;
 import com.barrybecker4.game.twoplayer.comparison.model.SearchOptionsConfigList;
+
 import static com.barrybecker4.game.twoplayer.common.search.options.MonteCarloSearchOptions.MaximizationStyle;
-import static com.barrybecker4.game.twoplayer.common.search.options.MonteCarloSearchOptions.MaximizationStyle.*;
+import static com.barrybecker4.game.twoplayer.common.search.options.MonteCarloSearchOptions.MaximizationStyle.NUM_VISITS;
+import static com.barrybecker4.game.twoplayer.common.search.options.MonteCarloSearchOptions.MaximizationStyle.WIN_RATE;
 
 /**
  * A default list of search config options so we do not have to enter them every time.

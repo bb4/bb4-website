@@ -9,8 +9,6 @@ import com.barrybecker4.game.multiplayer.common.online.ui.MultiPlayerOnlineManag
 import com.barrybecker4.game.multiplayer.trivial.ui.TrivialOptionsDialog;
 import com.barrybecker4.ui.table.TableButtonListener;
 
-import javax.swing.event.ChangeListener;
-
 /**
  * Manage online player games.
  * Player can join no more than one table at a time.

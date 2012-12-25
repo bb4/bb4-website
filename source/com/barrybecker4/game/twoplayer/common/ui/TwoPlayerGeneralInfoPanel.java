@@ -12,7 +12,6 @@ import com.barrybecker4.game.common.ui.panel.SectionPanel;
 import com.barrybecker4.game.twoplayer.common.WinProbabilityCaclulator;
 
 import javax.swing.*;
-import java.awt.*;
 import java.text.MessageFormat;
 
 /**

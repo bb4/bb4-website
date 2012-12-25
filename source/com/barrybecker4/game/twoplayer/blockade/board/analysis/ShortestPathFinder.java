@@ -2,7 +2,6 @@
 package com.barrybecker4.game.twoplayer.blockade.board.analysis;
 
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.Homes;

@@ -1,8 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.poker.hand;
 
-import com.barrybecker4.game.card.Card;
-
 /**
  * Types of poker hands. For example, royal flush, straight, full house, three of a kind, etc.
  * @author Barry Becker

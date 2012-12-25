@@ -6,7 +6,6 @@ import com.barrybecker4.game.common.AbstractGameProfiler;
 import com.barrybecker4.game.common.GameProfiler;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.board.BoardPosition;
-import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.analysis.BoardAnalyzer;
 import com.barrybecker4.game.twoplayer.blockade.board.analysis.PossibleMoveAnalyzer;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;

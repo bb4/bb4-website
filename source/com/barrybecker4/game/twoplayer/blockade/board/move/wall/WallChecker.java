@@ -2,8 +2,6 @@
 package com.barrybecker4.game.twoplayer.blockade.board.move.wall;
 
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
-import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import com.barrybecker4.game.twoplayer.blockade.board.Direction;
 
 /**
  * Find walls not blocking straight moves.

@@ -7,7 +7,13 @@ import com.barrybecker4.puzzle.tantrix.model.TilePlacementList;
 import com.barrybecker4.puzzle.tantrix.solver.path.permuting.PathPivotPermuter;
 import com.barrybecker4.puzzle.tantrix.solver.path.permuting.SameTypeTileMixer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * When finding a random neighbor, we select a tile at random and then consider all the

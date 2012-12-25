@@ -12,8 +12,6 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URL;
 import java.text.MessageFormat;
 
 /**

@@ -1,15 +1,9 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.common.ui.panel;
 
-import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.online.ui.ChatPanel;
-import com.barrybecker4.game.common.player.Player;
-import com.barrybecker4.ui.components.TexturedPanel;
 import com.barrybecker4.ui.util.GUIUtil;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 

@@ -10,7 +10,6 @@ import com.barrybecker4.ui.util.GUIUtil;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 /**
@@ -37,7 +36,7 @@ public abstract class GameInfoPanel extends TexturedPanel
 
         this.setBorder( BorderFactory.createLoweredBevelBorder() );
         this.setToolTipText( getTitleText() );
-        this.setPreferredSize( new Dimension( getMinWidth(), MAX_HEIGHT ) );
+        this.setPreferredSize(new Dimension(getMinWidth(), MAX_HEIGHT));
         this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 
         createSubPanels();

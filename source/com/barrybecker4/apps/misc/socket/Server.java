@@ -1,14 +1,14 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.misc.socket;
 
-import com.barrybecker4.ui.components.*;
-import com.barrybecker4.ui.components.Appendable;
+import com.barrybecker4.ui.components.ScrollingTextArea;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.ServerSocket;
 
 /**
  * Multi threaded server for client-server application.

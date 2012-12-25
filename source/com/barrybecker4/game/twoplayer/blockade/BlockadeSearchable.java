@@ -7,15 +7,13 @@ import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
-import com.barrybecker4.game.twoplayer.blockade.board.path.PlayerPathLengths;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 import com.barrybecker4.game.twoplayer.blockade.board.move.MoveGenerator;
+import com.barrybecker4.game.twoplayer.blockade.board.path.PlayerPathLengths;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerBoard;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerSearchable;
 import com.barrybecker4.optimization.parameter.ParameterArray;
-
-import java.util.Arrays;
 
 import static com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 

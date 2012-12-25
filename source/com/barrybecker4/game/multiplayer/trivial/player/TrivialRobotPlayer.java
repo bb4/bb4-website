@@ -4,9 +4,11 @@ package com.barrybecker4.game.multiplayer.trivial.player;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.trivial.TrivialAction;
 import com.barrybecker4.game.multiplayer.trivial.TrivialController;
-import static com.barrybecker4.game.multiplayer.trivial.TrivialAction.Name.*;
 
 import java.awt.*;
+
+import static com.barrybecker4.game.multiplayer.trivial.TrivialAction.Name.KEEP_HIDDEN;
+import static com.barrybecker4.game.multiplayer.trivial.TrivialAction.Name.REVEAL;
 
 /**
  * Represents a Robot player.

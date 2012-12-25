@@ -6,7 +6,6 @@ import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.common.MultiPlayerMarker;
-import com.barrybecker4.game.multiplayer.common.online.OnlinePlayer;
 import com.barrybecker4.game.multiplayer.trivial.TrivialAction;
 
 import java.awt.*;

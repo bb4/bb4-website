@@ -5,21 +5,11 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.player.Player;
-import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
-import com.barrybecker4.game.common.ui.panel.GameChangedListener;
-import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
 import com.barrybecker4.game.common.ui.panel.GeneralInfoPanel;
-import com.barrybecker4.game.multiplayer.galactic.GalacticController;
-import com.barrybecker4.game.multiplayer.galactic.Galaxy;
-import com.barrybecker4.game.multiplayer.galactic.player.GalacticPlayer;
-import com.barrybecker4.game.multiplayer.galactic.ui.dialog.OrdersDialog;
-import com.barrybecker4.ui.components.GradientButton;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 
 

@@ -5,8 +5,8 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.GameViewable;
 import com.barrybecker4.game.common.online.GameCommand;
-import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
+import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.ui.dialogs.GameStartListener;
 
 import javax.swing.*;

@@ -3,7 +3,6 @@ package com.barrybecker4.game.multiplayer.common.ui;
 
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
-import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;

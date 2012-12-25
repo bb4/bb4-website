@@ -5,8 +5,6 @@ import com.barrybecker4.ui.util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 
 public class SimpleEditorFrame extends JFrame {

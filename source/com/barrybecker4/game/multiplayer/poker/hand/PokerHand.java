@@ -2,12 +2,15 @@
 package com.barrybecker4.game.multiplayer.poker.hand;
 
 import com.barrybecker4.game.card.Card;
+import com.barrybecker4.game.card.Deck;
 import com.barrybecker4.game.card.Rank;
 import com.barrybecker4.game.card.Suit;
-import com.barrybecker4.game.card.Deck;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * A poker hand typically has 5 cards from a deck of normal playing cards.

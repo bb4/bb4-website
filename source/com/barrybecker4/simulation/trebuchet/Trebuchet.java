@@ -9,7 +9,15 @@ import javax.vecmath.Vector2d;
 import java.awt.*;
 
 import static com.barrybecker4.simulation.common.PhysicsConstants.GRAVITY;
-import static com.barrybecker4.simulation.trebuchet.TrebuchetConstants.*;
+import static com.barrybecker4.simulation.trebuchet.TrebuchetConstants.DEFAULT_COUNTER_WEIGHT_MASS;
+import static com.barrybecker4.simulation.trebuchet.TrebuchetConstants.DEFAULT_CW_LEVER_LENGTH;
+import static com.barrybecker4.simulation.trebuchet.TrebuchetConstants.DEFAULT_PROJECTILE_MASS;
+import static com.barrybecker4.simulation.trebuchet.TrebuchetConstants.DEFAULT_SLING_LENGTH;
+import static com.barrybecker4.simulation.trebuchet.TrebuchetConstants.DEFAULT_SLING_LEVER_LENGTH;
+import static com.barrybecker4.simulation.trebuchet.TrebuchetConstants.DEFAULT_SLING_RELEASE_ANGLE;
+import static com.barrybecker4.simulation.trebuchet.TrebuchetConstants.HEIGHT;
+import static com.barrybecker4.simulation.trebuchet.TrebuchetConstants.RAMP_FRICTION;
+import static com.barrybecker4.simulation.trebuchet.TrebuchetConstants.SCALE;
 import static java.lang.Math.PI;
 import static java.lang.Math.asin;
 import static java.lang.Math.cos;
