@@ -1,15 +1,13 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.set;
 
-import com.barrybecker4.game.common.GameContext;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author Barry Becker Date: Feb 4, 2006
+ * @author Barry Becker
  */
 public class Card {
 
@@ -26,7 +24,7 @@ public class Card {
     private boolean isHighlighted_ = false;
     private boolean isSelected_ = false;
 
-    public Card(AttributeValue color, AttributeValue shape, AttributeValue number, AttributeValue texture) {
+    Card(AttributeValue color, AttributeValue shape, AttributeValue number, AttributeValue texture) {
         attributes_[Attribute.COLOR.ordinal()] = color;
         attributes_[Attribute.SHAPE.ordinal()] = shape;
         attributes_[Attribute.NUMBER.ordinal()] = number;
@@ -37,11 +35,11 @@ public class Card {
     AttributeValue valueOfAttribute(Attribute a) {
          return attributes_[a.ordinal()];
     }
+
     public AttributeValue color() { return attributes_[Attribute.COLOR.ordinal()]; }
     public AttributeValue shape() { return attributes_[Attribute.SHAPE.ordinal()]; }
     public AttributeValue number() { return attributes_[Attribute.NUMBER.ordinal()]; }
     public AttributeValue texture() { return attributes_[Attribute.TEXTURE.ordinal()]; }
-
 
     public String toString() {
         StringBuilder buf = new StringBuilder();
@@ -51,9 +49,6 @@ public class Card {
         }
         return buf.toString();
     }
-
-    private static final List<Card> protoDeck = new ArrayList<Card>();
-
 
     public boolean isSelected() {
         return isSelected_;
@@ -73,21 +68,6 @@ public class Card {
 
     public void toggleSelect() {
         isSelected_ = !isSelected_;
-    }
-
-    // Initialize prototype deck
-    static {
-        for (AttributeValue color : AttributeValue.values())
-            for (AttributeValue shape : AttributeValue.values())
-                 for (AttributeValue number : AttributeValue.values())
-                     for (AttributeValue texture : AttributeValue.values())
-                         protoDeck.add(new Card(color, shape, number, texture));
-    }
-
-    public static List<Card> newDeck() {
-        List<Card> deck = new ArrayList<Card>(protoDeck); // Return copy of prototype deck
-        Collections.shuffle(deck);
-        return deck;
     }
 
     /**
@@ -122,7 +102,7 @@ public class Card {
      */
      public static boolean hasSet(List<Card> cards) {
         return getSetsInternal(cards, true).size() / 3 > 0;
-    }
+     }
 
     /**
      * @param cards
@@ -130,7 +110,7 @@ public class Card {
      */
      public static int numSets(List<Card> cards) {
         return getSetsInternal(cards, false).size() / 3;
-    }
+     }
 
 
     /**
@@ -146,7 +126,7 @@ public class Card {
     /**
      * Usually used to determine if a set game is over.
      *
-     * @param cards
+     * @param cards sets of cards. Each triplet of consecutive cards in the returned list is a set.
      * @param terminateEarly if true we return one after finding the first set.
      * @return the number of sets in cards (unless terminateEarly is true in which case we return 0 or 1)
      */
@@ -188,11 +168,5 @@ public class Card {
      */
     public int hashCode() {
         return color().ordinal() * 1000 + number().ordinal() * 100 + texture().ordinal() * 10 + shape().ordinal();
-    }
-
-    public static void main(String[] args) {
-
-        List deck = newDeck();
-        GameContext.log(0, "deck="+deck);
     }
 }

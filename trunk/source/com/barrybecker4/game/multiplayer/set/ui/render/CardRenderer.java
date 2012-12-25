@@ -8,6 +8,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import static com.barrybecker4.game.multiplayer.set.ui.render.SymbolColors.ColorType.*;
 
 /**
  * Takes a card and renders it to the Viewer.
@@ -23,7 +24,6 @@ public final class CardRenderer {
 
     public static final float CARD_HEIGHT_RAT = 1.5f;
 
-    //private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 11 );
     private static final Color BACKGROUND_COLOR = new Color(250, 250, 255);
 
     private static final Color BORDER_COLOR = new Color(45, 45, 55);
@@ -43,27 +43,7 @@ public final class CardRenderer {
         SOLID, BORDER, HATCHED, HIGHLIGHT
     }
 
-    private static final Color[][] symbolColors = {
-
-        {   // FIRST
-                new Color(210, 90, 80),   //  solid
-                new Color(170, 5, 2),    //  border
-                new Color(230, 42, 22),  //  hatched
-                new Color(255, 22, 12)   //  highlight
-        },
-        {     // SECOND
-                new Color(100, 210, 100),
-                new Color(0, 140, 0),
-                new Color(0, 200, 10),
-                new Color(10, 252, 2)
-        },
-        {    // THIRD
-                new Color(85, 95, 220),
-                new Color(0, 0, 190),
-                new Color(25, 25, 245),
-                new Color(70, 60, 255)
-        }
-    };
+    private static SymbolColors symbolColors = new SymbolColors();
 
     /** rounded edge   */
     private static final float ARC_RATIO = 0.12f;
@@ -72,39 +52,21 @@ public final class CardRenderer {
      * private constructor because this class is a singleton.
      * Use getPieceRenderer instead
      */
-    private CardRenderer()
-    {}
+    private CardRenderer() {}
 
-    private static Color getColorForValue(Card.AttributeValue val, ColorType style)
-    {
-        return symbolColors[val.ordinal()][style.ordinal()];
-    }
-
-    private static Color getCardColor(Card card)
-    {
-        return getColorForValue(card.color(), ColorType.SOLID);
-    }
-
-    private static Color getBorderCardColor(Card card)
-    {
-        return getColorForValue(card.color(), card.isHighlighted() ? ColorType.HIGHLIGHT: ColorType.BORDER);
-    }
-
-    private static Paint getCardTexture(Card card)
-    {
+    private static Paint getCardTexture(Card card) {
         switch (card.texture()) {
             case FIRST : return BACKGROUND_COLOR;
-            case SECOND : return getCardColor(card);
+            case SECOND : return symbolColors.getCardColor(card);
             case THIRD :
                 return new GradientPaint(75, 75, BACKGROUND_COLOR, 80, 75,
-                                      getColorForValue(card.color(), ColorType.HATCHED), true);
+                                      symbolColors.getColorForValue(card.color(), HATCHED), true);
         }
         return  null;
     }
 
 
-    private static Shape getShape(Card card, int width, int height)
-    {
+    private static Shape getShape(Card card, int width, int height) {
         Shape shape = null;
         int topMargin = (int) ((1.0 - SHAPE_SIZE_FRAC) * height);
         int leftMargin = (int) ((1.0 - SHAPE_SIZE_FRAC) * width);
@@ -131,8 +93,7 @@ public final class CardRenderer {
         return shape;
     }
 
-    private static int getNumber(Card card)
-    {
+    private static int getNumber(Card card) {
         switch (card.number()) {
             case FIRST : return 1;
             case SECOND : return 2;
@@ -172,7 +133,7 @@ public final class CardRenderer {
        g2.setColor(BACKGROUND_COLOR);
        g2.fillRoundRect(x + 2*margin, y + 2*margin, width - 3 * margin, height - 3 * margin, cardArc, cardArc);
 
-       g2.setColor(getCardColor(card));
+       g2.setColor(symbolColors.getCardColor(card));
 
        Shape shape = getShape(card, (int) (width * SHAPE_WIDTH_FRAC), (int) (height * SHAPE_HEIGHT_FRAC));
        int num = getNumber(card);
@@ -188,12 +149,11 @@ public final class CardRenderer {
            g2.translate(0, startYoffset + i*offset);
            g2.setPaint(getCardTexture(card));
            g2.fill(shape);
-           g2.setPaint(getBorderCardColor(card));
+           g2.setPaint(symbolColors.getBorderCardColor(card));
            g2.draw(shape);
            g2.translate(0, -startYoffset - i*offset);
        }
        g2.translate(-x - startXoffset, -y);
     }
-
 }
 
