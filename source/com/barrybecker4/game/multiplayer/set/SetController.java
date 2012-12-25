@@ -62,7 +62,7 @@ public class SetController extends MultiGameController {
 
     @Override
     protected void initializeData() {
-        deck_ = Card.newDeck();
+        deck_ = new Deck();
         numCardsShown_ = ((SetOptions)getOptions()).getInitialNumCardsShown();
 
         initPlayers();
