@@ -3,9 +3,14 @@ package com.barrybecker4.game.multiplayer.set.ui;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
+import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
+import com.barrybecker4.game.common.ui.panel.GeneralInfoPanel;
+import com.barrybecker4.game.common.ui.panel.InfoLabel;
+import com.barrybecker4.game.common.ui.panel.RowEntryPanel;
+import com.barrybecker4.game.common.ui.panel.SectionPanel;
 import com.barrybecker4.game.multiplayer.set.SetController;
 import com.barrybecker4.game.multiplayer.set.SetPlayer;
 
@@ -21,29 +26,24 @@ import java.awt.*;
  *  @author Barry Becker
  */
 class SetInfoPanel extends GameInfoPanel
-                   implements GameChangedListener, ListSelectionListener
-{
+                   implements GameChangedListener, ListSelectionListener {
 
     private SetSummaryTable playerTable_;
 
     private JPanel playerPanel_;
 
-    private JLabel numSetsOnBoardLabel_;
-    private JLabel numCardsRemainingLabel_;
-
 
     /**
      * Constructor
      */
-    SetInfoPanel( GameController controller )
-    {
+    SetInfoPanel( GameController controller ) {
         super(controller);
     }
 
     @Override
-    protected void createSubPanels()
-    {
-        add( createGeneralInfoPanel() );
+    protected void createSubPanels() {
+        generalInfoPanel_ = createGeneralInfoPanel(controller_.getCurrentPlayer());
+        add( generalInfoPanel_ );
         add( createCustomInfoPanel() );
     }
 
@@ -57,9 +57,8 @@ class SetInfoPanel extends GameInfoPanel
      * For Set, we have a button that allows the current player to enter his commands
      */
     @Override
-    protected JPanel createCustomInfoPanel()
-    {
-        JPanel pp = styleSectionPanel(new JPanel(), "Players");
+    protected JPanel createCustomInfoPanel() {
+        JPanel pp = new SectionPanel("Players");
 
         playerPanel_ = createPanel();
         playerPanel_.setLayout(new BorderLayout());
@@ -71,32 +70,9 @@ class SetInfoPanel extends GameInfoPanel
         return pp;
     }
 
-
-    /**
-     * this is general information that is applicable to every 2 player game.
-     */
     @Override
-    protected JPanel createGeneralInfoPanel()
-    {
-        JPanel generalPanel = styleSectionPanel(new JPanel(), GameContext.getLabel("GENERAL_INFO"));
-
-        JLabel numSetsOnBoardText = createLabel(GameContext.getLabel("NUMBER_OF_SETS_ON_BOARD") + COLON);
-        numSetsOnBoardLabel_ = createLabel( " " );
-
-        JLabel numCardsRemainingText = createLabel( GameContext.getLabel("NUMBER_OF_CARDS_REMAINING") + COLON);
-        numCardsRemainingLabel_ = createLabel( " " );
-        numCardsRemainingLabel_.setHorizontalAlignment(JLabel.LEFT);
-
-        generalPanel.add( createRowEntryPanel( numSetsOnBoardText, numSetsOnBoardLabel_ ) );
-        generalPanel.add( createRowEntryPanel( numCardsRemainingText, numCardsRemainingLabel_ ) );
-
-        generalPanel.add( Box.createGlue() );
-
-        return generalPanel;
-    }
-
-    @Override
-    protected void setPlayerLabel() {
+    protected GeneralInfoPanel createGeneralInfoPanel(Player player) {
+        return new SetGeneralInfoPanel(player);
     }
 
     void insertPlayerTable() {
@@ -124,25 +100,20 @@ class SetInfoPanel extends GameInfoPanel
      * This method called whenever something on the board has changed.
      */
     @Override
-    public void gameChanged( GameChangedEvent gce )
-    {
-        if ( controller_ == null )
+    public void gameChanged( GameChangedEvent gce ) {
+        if ( controller_ == null )  {
             return;
+        }
 
-        SetController c = (SetController)controller_;
-        numSetsOnBoardLabel_.setText( c.getNumSetsOnBoard() + " " );
-
-        int cardsInDeck = c.getDeck().size() - c.getNumCardsShowing();
-        numCardsRemainingLabel_.setText( cardsInDeck + " " );
+        generalInfoPanel_.update(controller_);
 
         SetPlayer player = getSelectedPlayer();
         if (player != null) {
             int r = playerTable_.getTable().getSelectedRow();
-            playerTable_.getTable().getModel().setValueAt(""+player.getNumSetsFound(), r, 2);
+            playerTable_.getTable().getModel().setValueAt("" + player.getNumSetsFound(), r, 2);
             playerTable_.getTable().clearSelection();
         }
     }
-
 
     /**
      * @return null if no current player

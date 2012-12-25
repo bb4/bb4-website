@@ -8,6 +8,8 @@ import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
+import com.barrybecker4.game.common.ui.panel.GeneralInfoPanel;
+import com.barrybecker4.game.common.ui.panel.SectionPanel;
 import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.trivial.TrivialAction;
 import com.barrybecker4.game.multiplayer.trivial.TrivialController;
@@ -42,7 +44,8 @@ class TrivialInfoPanel extends GameInfoPanel
 
     @Override
     protected void createSubPanels() {
-        add( createGeneralInfoPanel() );
+        generalInfoPanel_ = createGeneralInfoPanel(controller_.getCurrentPlayer());
+        add(generalInfoPanel_);
 
         // the custom panel shows game specific info. In this case, the command button.
         // if all the players are robots, don't even show this panel.
@@ -57,8 +60,8 @@ class TrivialInfoPanel extends GameInfoPanel
      */
     @Override
     protected JPanel createCustomInfoPanel() {
-        commandPanel_ = styleSectionPanel(new JPanel(), "");
-        setCommandPanelTitle();
+        commandPanel_ = new SectionPanel();
+        //setCommandPanelTitle();
 
         // the command button
         JPanel bp = createPanel();
@@ -72,18 +75,9 @@ class TrivialInfoPanel extends GameInfoPanel
         return commandPanel_;
     }
 
-    private void setCommandPanelTitle() {
-        Object[] args = {controller_.getCurrentPlayer().getName()};
-        String title = MessageFormat.format(GameContext.getLabel("MAKE_YOUR_MOVE"), args);
-
-        TitledBorder b = (TitledBorder)commandPanel_.getBorder();
-        b.setTitle(title);
-    }
-
-
     @Override
-    protected String getMoveNumLabel() {
-        return GameContext.getLabel("CURRENT_ROUND" + COLON);
+    protected GeneralInfoPanel createGeneralInfoPanel(Player player) {
+        return new TrivialGeneralInfoPanel(player, commandPanel_);
     }
 
     /**
@@ -122,28 +116,6 @@ class TrivialInfoPanel extends GameInfoPanel
     }
 
     /**
-     * set the appropriate text and color for the player label.
-     */
-    @Override
-    protected void setPlayerLabel() {
-        Player player = controller_.getCurrentPlayer();
-
-        String playerName = player.getName();
-        playerLabel_.setText(' ' + playerName + ' ');
-
-        Color pColor = player.getColor();
-
-        //Border playerLabelBorder = BorderFactory.createLineBorder(pColor, 2);
-        playerLabel_.setBorder(getPlayerLabelBorder(pColor));
-
-        if (commandPanel_ != null) {
-            commandPanel_.setForeground(pColor);
-            setCommandPanelTitle();
-        }
-        this.repaint();
-    }
-
-    /**
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
@@ -153,14 +125,7 @@ class TrivialInfoPanel extends GameInfoPanel
             return;
         }
 
-        setPlayerLabel();
-        Move lastMove =  controller_.getLastMove();
-        if (lastMove != null)  {
-            moveNumLabel_.setText( (controller_.getNumMoves() + 2) + " " );
-        }
-        else {
-            moveNumLabel_.setText( 1 + " " );
-        }
+        generalInfoPanel_.update(controller_);
 
         // disable if the game is done or the current player is a surrogate
         boolean enabled = !controller_.isDone() && !controller_.getCurrentPlayer().isSurrogate();

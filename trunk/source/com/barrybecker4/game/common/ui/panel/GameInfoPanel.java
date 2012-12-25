@@ -4,6 +4,7 @@ package com.barrybecker4.game.common.ui.panel;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.online.ui.ChatPanel;
+import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.ui.components.TexturedPanel;
 import com.barrybecker4.ui.util.GUIUtil;
 
@@ -20,16 +21,10 @@ import java.awt.*;
 public abstract class GameInfoPanel extends TexturedPanel
                                     implements GameChangedListener {
 
-    protected static final String COLON = ' ' + GameContext.getLabel("COLON")+ ' ';
-
     protected GameController controller_ = null;
-
-    protected JLabel moveNumLabel_;
-    protected JLabel playerLabel_;
+    protected GeneralInfoPanel generalInfoPanel_;
 
     private static final Font SECTION_TITLE_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.BOLD, 12 );
-    private static final Font PLAYER_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.BOLD, 12 );
-    private static final Font LABEL_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12 );
     private static final int DEFAULT_MIN_WIDTH = 210;
     private static final int MAX_HEIGHT = 1000;
 
@@ -72,18 +67,12 @@ public abstract class GameInfoPanel extends TexturedPanel
             this.add( customPanel );
         }
 
-        this.add( createGeneralInfoPanel() );
+        generalInfoPanel_ = createGeneralInfoPanel(controller_.getCurrentPlayer());
+        add( generalInfoPanel_);
     }
 
     protected int getMinWidth() {
         return DEFAULT_MIN_WIDTH;
-    }
-
-    protected void initPlayerLabel() {
-        playerLabel_ = new JLabel();
-        playerLabel_.setOpaque(true);
-        playerLabel_.setFont(PLAYER_FONT);
-        setPlayerLabel();
     }
 
     /**
@@ -108,92 +97,14 @@ public abstract class GameInfoPanel extends TexturedPanel
     /**
      * this is general information that is applicable to every 2 player game.
      */
-    protected JPanel createGeneralInfoPanel() {
+    protected abstract GeneralInfoPanel createGeneralInfoPanel(Player player);
 
-        JPanel generalPanel = styleSectionPanel(new JPanel(), GameContext.getLabel("GENERAL_INFO"));
-
-        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
-        initPlayerLabel();
-
-        JLabel moveNumTextLabel = createLabel( GameContext.getLabel("CURRENT_MOVE_NUM") + COLON);
-        moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
-        moveNumLabel_ = createLabel( "  " );
-
-        generalPanel.add( createRowEntryPanel( turnLabel, playerLabel_ ) );
-        generalPanel.add( createRowEntryPanel( moveNumTextLabel, moveNumLabel_ ) );
-
-        // add this back in when it is implemented
-        //generalPanel.add( createRowEntryPanel(showRecommendedMove_) );
-        generalPanel.add( Box.createGlue() );
-
-        return generalPanel;
-    }
-
-    protected String getMoveNumLabel() {
-        return GameContext.getLabel("CURRENT_MOVE_NUM" + COLON);
-    }
-
-
-    protected Border getPlayerLabelBorder(Color pColor) {
-        return BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0),
-                                                  BorderFactory.createEtchedBorder(pColor, pColor.darker()));
-    }
-
-    /**
-     * create a row in a panel that has one or 2 components.
-     */
-    protected final JPanel createRowEntryPanel( JComponent firstComp, JComponent secondComp ) {
-        JPanel rowPanel = createPanel();
-
-        rowPanel.setLayout( new BoxLayout( rowPanel, BoxLayout.X_AXIS ) );
-        rowPanel.setMaximumSize( new Dimension( 300, 16 ) );
-        if ( firstComp != null ) {
-            rowPanel.add( firstComp );
-        }
-        if ( secondComp != null ) {
-            rowPanel.add( secondComp );
-        }
-        return rowPanel;
-    }
-
-    protected final JPanel createRowEntryPanel( JComponent firstComp ) {
-        return createRowEntryPanel( firstComp, null );
-    }
 
     protected final JPanel createPanel() {
         JPanel p = new JPanel();
         p.setOpaque(false);
         return p;
     }
-
-    /**
-     * Create a panel with an etched border for the section.
-     * @param panel the panel to style
-     * @param title  the title of the panel.
-     */
-    protected JPanel styleSectionPanel(JPanel panel, String title) {
-
-        panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ) );
-        panel.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), title,
-                     TitledBorder.LEFT, TitledBorder.TOP, SECTION_TITLE_FONT) );
-        return panel;
-    }
-
-    protected final JLabel createLabel() {
-       return createLabel(null);
-    }
-
-    protected final JLabel createLabel(String s) {
-        JLabel l = new JLabel(s);
-        l.setFont(LABEL_FONT);
-        l.setOpaque(false);
-        return l;
-    }
-
-    /**
-     * set the appropriate text and color for the player label.
-     */
-    protected abstract void setPlayerLabel();
 
     protected static Border createMarginBorder() {
         return BorderFactory.createEmptyBorder(3,3,3,3);
@@ -204,12 +115,10 @@ public abstract class GameInfoPanel extends TexturedPanel
      * This method called whenever a move has been made.
      */
     public void gameChanged( GameChangedEvent gce ) {
-        if ( controller_ == null )
+        if ( controller_ == null ) {
             return;
-        if ( controller_.getLastMove() != null ) {
-            setPlayerLabel();
-            moveNumLabel_.setText( " " + controller_.getNumMoves() );
         }
-    }
 
+        generalInfoPanel_.update(controller_);
+    }
 }
