@@ -11,6 +11,7 @@ import com.barrybecker4.game.multiplayer.common.ui.MultiGameViewer;
 import com.barrybecker4.game.multiplayer.set.Card;
 import com.barrybecker4.game.multiplayer.set.SetController;
 import com.barrybecker4.game.multiplayer.set.SetPlayer;
+import com.barrybecker4.game.multiplayer.set.ui.render.SetGameRenderer;
 
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
@@ -28,8 +29,7 @@ public final class SetGameViewer extends MultiGameViewer {
     /**
      * Constructor
      */
-    SetGameViewer()
-    {
+    SetGameViewer() {
         NumberFormat formatter_=new DecimalFormat();
         formatter_.setGroupingUsed(true);
         formatter_.setMaximumFractionDigits(0);
@@ -59,7 +59,6 @@ public final class SetGameViewer extends MultiGameViewer {
         return SetGameRenderer.getRenderer();
     }
 
-
     /**
      * make the computer move and show it on the screen.
      *
@@ -67,8 +66,7 @@ public final class SetGameViewer extends MultiGameViewer {
      * @return done return true if the game is over after moving
      */
     @Override
-    public boolean doComputerMove(Player player)
-    {
+    public boolean doComputerMove(Player player) {
         assert false : " no computer player for set yet. coming soon!";
         return false;
     }
@@ -80,8 +78,7 @@ public final class SetGameViewer extends MultiGameViewer {
      * @return done return true if the game is over after moving
      */
     @Override
-    public boolean doSurrogateMove(SurrogateMultiPlayer player)
-    {
+    public boolean doSurrogateMove(SurrogateMultiPlayer player) {
         assert false : " no online play for Set game yet. coming soon!";
         return false;
     }
@@ -91,8 +88,6 @@ public final class SetGameViewer extends MultiGameViewer {
         SetPlayer winner = ((SetController) controller_).determineWinner();
         return "the game is over. The winner is " + winner.getName() + " with " + winner.getNumSetsFound() + "sets";
     }
-
-
 
     public List<Card> getSelectedCards() {
 
@@ -108,13 +103,11 @@ public final class SetGameViewer extends MultiGameViewer {
         return selected;
     }
 
-
     /**
      * @return the tooltip for the panel given a mouse event
      */
     @Override
-    public String getToolTipText( MouseEvent e )
-    {
+    public String getToolTipText( MouseEvent e ) {
         return null;
     }
 }

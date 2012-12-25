@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.set.ui;
+package com.barrybecker4.game.multiplayer.set.ui.render;
 
 import com.barrybecker4.game.multiplayer.set.Card;
 
@@ -44,10 +44,25 @@ public final class CardRenderer {
     }
 
     private static final Color[][] symbolColors = {
-        //   solid                  border                 hatched                highlight
-        {new Color(255, 32, 1),  new Color(200, 5, 0), new Color(255, 42, 22), new Color(205, 22, 12)},   // FIRST
-        {new Color(0, 250, 0),   new Color(0, 180, 0), new Color(0, 243, 1),   new Color(10, 202, 2)},    // SECOND
-        {new Color(85, 85, 255), new Color(0, 0, 210), new Color(75, 75, 255), new Color(10, 5, 245)}    // THIRD
+
+        {   // FIRST
+                new Color(210, 90, 80),   //  solid
+                new Color(170, 5, 2),    //  border
+                new Color(230, 42, 22),  //  hatched
+                new Color(255, 22, 12)   //  highlight
+        },
+        {     // SECOND
+                new Color(100, 210, 100),
+                new Color(0, 140, 0),
+                new Color(0, 200, 10),
+                new Color(10, 252, 2)
+        },
+        {    // THIRD
+                new Color(85, 95, 220),
+                new Color(0, 0, 190),
+                new Color(25, 25, 245),
+                new Color(70, 60, 255)
+        }
     };
 
     /** rounded edge   */
