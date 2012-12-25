@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.set.ui;
+package com.barrybecker4.game.multiplayer.set.ui.render;
 
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
@@ -10,7 +10,6 @@ import com.barrybecker4.game.multiplayer.set.SetController;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-
 /**
  * Singleton class that takes a game board and renders it for the GameBoardViewer.
  * Having the board renderer separate from the viewer helps to separate out the rendering logic
@@ -18,21 +17,18 @@ import java.awt.geom.Point2D;
  *
  * @author Barry Becker
  */
-public class SetGameRenderer extends MultiGameBoardRenderer
-{
-    private  static GameBoardRenderer renderer_;
+public class SetGameRenderer extends MultiGameBoardRenderer {
 
+    private  static GameBoardRenderer renderer_;
 
     /**
      * private constructor because this class is a singleton.
      * Use getRenderer instead.
      * Note: there is no piece renderer for set.
      */
-    private SetGameRenderer()
-    {}
+    private SetGameRenderer() {}
 
-    public static GameBoardRenderer getRenderer()
-    {
+    public static GameBoardRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new SetGameRenderer();
         return renderer_;
@@ -110,8 +106,7 @@ public class SetGameRenderer extends MultiGameBoardRenderer
      * This renders the current state of the Board to the screen.
      */
     @Override
-    public void render( Graphics g, IGameController controller, int panelWidth, int panelHeight )
-    {
+    public void render( Graphics g, IGameController controller, int panelWidth, int panelHeight ) {
         // erase what's there and redraw.
         SetController c = (SetController)controller;
         int numCards = c.getNumCardsShowing();

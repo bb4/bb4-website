@@ -7,6 +7,7 @@ import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.panel.GeneralInfoPanel;
 import com.barrybecker4.game.common.ui.panel.InfoLabel;
 import com.barrybecker4.game.common.ui.panel.RowEntryPanel;
+import com.barrybecker4.game.common.ui.panel.SectionPanel;
 import com.barrybecker4.game.multiplayer.set.SetController;
 
 import javax.swing.*;
@@ -28,8 +29,7 @@ class SetGeneralInfoPanel extends GeneralInfoPanel {
      * Constructor
      */
     SetGeneralInfoPanel(Player player) {
-        //super(player);
-        //JPanel generalPanel = new SectionPanel(GameContext.getLabel("GENERAL_INFO"));
+        SectionPanel.styleSectionPanel(this, GameContext.getLabel("GENERAL_INFO"));
 
         JLabel numSetsOnBoardText = new InfoLabel(GameContext.getLabel("NUMBER_OF_SETS_ON_BOARD"));
         numSetsOnBoardLabel_ = new InfoLabel( " " );
@@ -43,7 +43,6 @@ class SetGeneralInfoPanel extends GeneralInfoPanel {
 
         add(Box.createGlue());
     }
-
 
     @Override
     protected void setPlayerLabel(Player player) {

@@ -6,6 +6,7 @@ import com.barrybecker4.game.common.ui.viewer.ViewerMouseListener;
 import com.barrybecker4.game.multiplayer.set.Card;
 import com.barrybecker4.game.multiplayer.set.SetController;
 import com.barrybecker4.game.multiplayer.set.SetPlayer;
+import com.barrybecker4.game.multiplayer.set.ui.render.SetGameRenderer;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;

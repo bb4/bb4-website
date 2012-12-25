@@ -2,6 +2,7 @@
 package com.barrybecker4.game.multiplayer.set.ui;
 
 import com.barrybecker4.game.multiplayer.set.Card;
+import com.barrybecker4.game.multiplayer.set.ui.render.CardRenderer;
 import com.barrybecker4.ui.themes.BarryTheme;
 
 import javax.swing.*;
