@@ -3,22 +3,20 @@ package com.barrybecker4.game.multiplayer.poker.ui;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
+import com.barrybecker4.game.common.ui.panel.GeneralInfoPanel;
+import com.barrybecker4.game.common.ui.panel.SectionPanel;
 import com.barrybecker4.game.multiplayer.poker.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
-import com.barrybecker4.game.multiplayer.poker.ui.chips.PokerChip;
 import com.barrybecker4.game.multiplayer.poker.ui.dialog.BettingDialog;
 import com.barrybecker4.ui.components.GradientButton;
-import com.barrybecker4.ui.legend.DiscreteColorLegend;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
@@ -48,10 +46,12 @@ class PokerInfoPanel extends GameInfoPanel
      */
     @Override
     protected void createSubPanels() {
-        add( createGeneralInfoPanel() );
+        JPanel customInfoPanel = createCustomInfoPanel();
+        generalInfoPanel_ = createGeneralInfoPanel(controller_.getCurrentPlayer());
+        add(generalInfoPanel_);
 
         if (!controller_.getPlayers().allPlayersComputer())  {
-            add( createCustomInfoPanel() );
+            add(customInfoPanel);
         }
 
         add( createChipLegendPanel());
@@ -63,7 +63,7 @@ class PokerInfoPanel extends GameInfoPanel
      */
     @Override
     protected JPanel createCustomInfoPanel() {
-        commandPanel_ = styleSectionPanel(new JPanel(), "");
+        commandPanel_ = new SectionPanel("");
         setCommandPanelTitle();
 
         // the command button
@@ -78,12 +78,17 @@ class PokerInfoPanel extends GameInfoPanel
         return commandPanel_;
     }
 
+    @Override
+    protected GeneralInfoPanel createGeneralInfoPanel(Player player) {
+        return new PokerGeneralInfoPanel(player, commandPanel_);
+    }
+
     /**
      * This panel shows a discrete color legend for the poker chip values
      */
     JPanel createChipLegendPanel() {
         JPanel legendPanel = new ChipLegendPanel();
-        styleSectionPanel(legendPanel, "Chip Values");
+        SectionPanel.styleSectionPanel(legendPanel, "Chip Values");
         return legendPanel;
     }
 
@@ -94,11 +99,6 @@ class PokerInfoPanel extends GameInfoPanel
 
         TitledBorder b = (TitledBorder)commandPanel_.getBorder();
         b.setTitle(title);
-    }
-
-    @Override
-    protected String getMoveNumLabel() {
-        return GameContext.getLabel("CURRENT_ROUND" + COLON);
     }
 
     /**
@@ -165,27 +165,6 @@ class PokerInfoPanel extends GameInfoPanel
     }
 
     /**
-     * Set the appropriate text and color for the player label.
-     */
-    @Override
-    protected void setPlayerLabel() {
-        Player player = controller_.getCurrentPlayer();
-
-        String playerName = player.getName();
-        playerLabel_.setText(' ' + playerName + ' ');
-
-        Color pColor = player.getColor();
-
-        playerLabel_.setBorder(getPlayerLabelBorder(pColor));
-
-        if (commandPanel_ != null) {
-            commandPanel_.setForeground(pColor);
-            setCommandPanelTitle();
-        }
-        this.repaint();
-    }
-
-    /**
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
@@ -195,14 +174,7 @@ class PokerInfoPanel extends GameInfoPanel
             return;
         }
 
-        setPlayerLabel();
-        Move lastMove =  controller_.getLastMove();
-        if (lastMove != null)  {
-            moveNumLabel_.setText( (controller_.getNumMoves() + 2) + " " );
-        }
-        else {
-            moveNumLabel_.setText( 1 + " " );
-        }
+        generalInfoPanel_.update(controller_);
 
         // don't allow any more actions when the game is done.
         commandButton_.setEnabled(!controller_.isDone());

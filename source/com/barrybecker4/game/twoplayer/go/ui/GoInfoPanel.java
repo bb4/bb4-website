@@ -3,9 +3,15 @@ package com.barrybecker4.game.twoplayer.go.ui;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
+import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
+import com.barrybecker4.game.common.ui.panel.GeneralInfoPanel;
+import com.barrybecker4.game.common.ui.panel.InfoLabel;
+import com.barrybecker4.game.common.ui.panel.RowEntryPanel;
+import com.barrybecker4.game.common.ui.panel.SectionPanel;
+import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerGeneralInfoPanel;
 import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerInfoPanel;
 import com.barrybecker4.game.twoplayer.go.GoController;
 import com.barrybecker4.game.twoplayer.go.board.BoardValidator;
@@ -16,7 +22,7 @@ import com.barrybecker4.ui.legend.ContinuousColorLegend;
 import javax.swing.*;
 
 /**
- *  Show information and statistics specific to the game of go
+ *  Show information and statistics specific to the current game of go.
  *
  *  @author Barry Becker
  */
@@ -45,7 +51,6 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         return GameContext.getLabel("GO_INFO");
     }
 
-
     @Override
     protected void createSubPanels() {
         super.createSubPanels();
@@ -55,6 +60,10 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         legendPanel_.setVisible(GameContext.getDebugMode() > 0);
     }
 
+    @Override
+    protected GeneralInfoPanel createGeneralInfoPanel(Player player) {
+        return new TwoPlayerGeneralInfoPanel(player);
+    }
 
     /**
      * This panel shows information that is specific to go - specifically
@@ -66,24 +75,24 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         JPanel customPanel = createPanel();
         customPanel.setLayout( new BoxLayout( customPanel, BoxLayout.Y_AXIS ) );
 
-        p1CapturesLabel_ = createLabel();
-        p2CapturesLabel_ = createLabel();
+        p1CapturesLabel_ = new InfoLabel();
+        p2CapturesLabel_ = new InfoLabel();
 
-        p1TerritoryLabel_ = createLabel();
-        p2TerritoryLabel_ = createLabel();
+        p1TerritoryLabel_ = new InfoLabel();
+        p2TerritoryLabel_ = new InfoLabel();
 
-        JPanel capturesPanel = styleSectionPanel(new JPanel(), GameContext.getLabel("NUMBER_OF_CAPTURES"));
+        JPanel capturesPanel = new SectionPanel(GameContext.getLabel("NUMBER_OF_CAPTURES"));
         PlayerList players = getController().getPlayers();
-        JLabel p1 = createLabel( players.getPlayer1().getName() + COLON );
-        JLabel p2 = createLabel( players.getPlayer2().getName() + COLON );
-        capturesPanel.add(createRowEntryPanel( p1, p1CapturesLabel_ ));
-        capturesPanel.add(createRowEntryPanel( p2, p2CapturesLabel_ ));
+        JLabel p1 = new InfoLabel( players.getPlayer1().getName());
+        JLabel p2 = new InfoLabel( players.getPlayer2().getName());
+        capturesPanel.add(new RowEntryPanel( p1, p1CapturesLabel_ ));
+        capturesPanel.add(new RowEntryPanel( p2, p2CapturesLabel_ ));
 
-        JPanel territoryPanel = styleSectionPanel(new JPanel(), GameContext.getLabel("EST_TERRITORY"));
-        JLabel blackTerr = createLabel( GameContext.getLabel("EST_BLACK_TERR") + COLON );
-        JLabel whiteTerr = createLabel( GameContext.getLabel("EST_WHITE_TERR") + COLON );
-        territoryPanel.add(createRowEntryPanel( blackTerr, p1TerritoryLabel_ ));
-        territoryPanel.add(createRowEntryPanel( whiteTerr, p2TerritoryLabel_ ));
+        JPanel territoryPanel = new SectionPanel(GameContext.getLabel("EST_TERRITORY"));
+        JLabel blackTerr = new InfoLabel( GameContext.getLabel("EST_BLACK_TERR"));
+        JLabel whiteTerr = new InfoLabel( GameContext.getLabel("EST_WHITE_TERR"));
+        territoryPanel.add(new RowEntryPanel( blackTerr, p1TerritoryLabel_ ));
+        territoryPanel.add(new RowEntryPanel( whiteTerr, p2TerritoryLabel_ ));
 
         customPanel.add( capturesPanel );
         customPanel.add( territoryPanel );
@@ -92,7 +101,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
     }
 
     private JPanel createLegendPanel() {
-        JPanel legendPanel = styleSectionPanel(new JPanel(), "Group Health Legend");
+        JPanel legendPanel = new SectionPanel("Group Health Legend");
         ContinuousColorLegend legend =
                 new ContinuousColorLegend(null, GoBoardRenderer.COLORMAP, false);
         legendPanel.add(legend);

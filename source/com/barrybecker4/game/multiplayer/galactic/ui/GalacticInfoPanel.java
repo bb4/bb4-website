@@ -3,11 +3,12 @@ package com.barrybecker4.game.multiplayer.galactic.ui;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
+import com.barrybecker4.game.common.ui.panel.GeneralInfoPanel;
+import com.barrybecker4.game.common.ui.panel.SectionPanel;
 import com.barrybecker4.game.multiplayer.galactic.GalacticController;
 import com.barrybecker4.game.multiplayer.galactic.Galaxy;
 import com.barrybecker4.game.multiplayer.galactic.player.GalacticPlayer;
@@ -15,16 +16,13 @@ import com.barrybecker4.game.multiplayer.galactic.ui.dialog.OrdersDialog;
 import com.barrybecker4.ui.components.GradientButton;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.MessageFormat;
-
 
 /**
  *  Show information and statistics about the game.
- *  Also allow the player to enter their commmands for the turn.
+ *  Also allow the player to enter their commands for the turn.
  *
  *  @author Barry Becker
  */
@@ -46,12 +44,20 @@ class GalacticInfoPanel extends GameInfoPanel
 
     @Override
     protected void createSubPanels() {
-        this.add( createGeneralInfoPanel() );
+        JPanel customInfoPanel = createCustomInfoPanel();
+        generalInfoPanel_ = createGeneralInfoPanel(controller_.getCurrentPlayer());
+        add(generalInfoPanel_);
 
         // the custom panel shows game specific info. In this case the command button.
         // if all the players are robots, don't even show this panel.
         if (!controller_.getPlayers().allPlayersComputer())
-            this.add( createCustomInfoPanel() );
+            add(customInfoPanel);
+    }
+
+
+    @Override
+    protected GeneralInfoPanel createGeneralInfoPanel(Player player) {
+        return new GalacticGeneralInfoPanel(player, commandPanel_);
     }
 
     /**
@@ -62,10 +68,10 @@ class GalacticInfoPanel extends GameInfoPanel
     @Override
     protected JPanel createCustomInfoPanel() {
 
-        commandPanel_ = styleSectionPanel(new JPanel(), "");
-        setCommandPanelTitle();
+        commandPanel_ = new SectionPanel();
 
-        // the command button
+        //setCommandPanelTitle(Player player)
+
         JPanel bp = createPanel();
         bp.setBorder(createMarginBorder());
 
@@ -81,20 +87,6 @@ class GalacticInfoPanel extends GameInfoPanel
         return commandPanel_;
     }
 
-    private void setCommandPanelTitle() {
-        Object[] args = {controller_.getCurrentPlayer().getName()};
-        String title = MessageFormat.format(GameContext.getLabel("GIVE_YOUR_ORDERS"), args);
-
-        TitledBorder b = (TitledBorder)commandPanel_.getBorder();
-        b.setTitle(title);
-    }
-
-
-    @Override
-    protected String getMoveNumLabel() {
-        return GameContext.getLabel("CURRENT_YEAR" + COLON);
-    }
-
     /**
      * The Orders button was pressed.
      * open the Orders dialog to get the players commands
@@ -106,27 +98,12 @@ class GalacticInfoPanel extends GameInfoPanel
 
         if (e.getSource() == commandButton_) {
 
-           // open the command dialog to get the players commands
-           GalacticPlayer currentPlayer = (GalacticPlayer)gc.getCurrentPlayer();
+            // if the current player does not own any planets, then advance to the next player
+            if (Galaxy.getPlanets((GalacticPlayer)gc.getCurrentPlayer()).size() == 0)  {
+                gc.advanceToNextPlayer();
+            }
 
-           // if the current player does not own any planets, then advance to the next player
-           if (Galaxy.getPlanets(currentPlayer).size() == 0)  {
-               gc.advanceToNextPlayer();
-           }
-
-           OrdersDialog ordersDialog =
-                   new OrdersDialog(null, currentPlayer, gc.getNumberOfYearsRemaining());
-           //ordersDialog.setLocationRelativeTo( this );
-           Point p = this.getParent().getLocationOnScreen();
-
-           // offset the dlg so the Galaxy grid is visible as a reference
-           ordersDialog.setLocation((int)(p.getX()+0.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3.0));
-
-           boolean canceled = ordersDialog.showDialog();
-           if ( !canceled ) { // newGame a game with the newly defined options
-               currentPlayer.setOrders( ordersDialog.getOrders() );
-               gc.advanceToNextPlayer();
-           }
+            showOrdersDialog(gc);
         }
         else if (e.getSource() == passButton_) {
            gc.advanceToNextPlayer();
@@ -134,25 +111,25 @@ class GalacticInfoPanel extends GameInfoPanel
     }
 
     /**
-     * set the appropriate text and color for the player label.
+     * Open the command dialog to get the players commands
+     * @param gc
      */
-    @Override
-    protected void setPlayerLabel() {
-        Player player = controller_.getCurrentPlayer();
+    private void showOrdersDialog(GalacticController gc) {
 
-        String playerName = player.getName();
-        playerLabel_.setText(' ' + playerName + ' ');
+        GalacticPlayer currentPlayer = (GalacticPlayer)gc.getCurrentPlayer();
 
-        Color pColor = player.getColor();
+        OrdersDialog ordersDialog =
+                new OrdersDialog(null, currentPlayer, gc.getNumberOfYearsRemaining());
+        Point p = getParent().getLocationOnScreen();
 
-        //Border playerLabelBorder = BorderFactory.createLineBorder(pColor, 2);
-        playerLabel_.setBorder(getPlayerLabelBorder(pColor));
+        // offset the dlg so the Galaxy grid is visible as a reference
+        ordersDialog.setLocation((int)(p.getX()+0.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3.0));
 
-        if (commandPanel_ != null) {
-            commandPanel_.setForeground(pColor);
-            setCommandPanelTitle();
+        boolean canceled = ordersDialog.showDialog();
+        if ( !canceled ) { // newGame a game with the newly defined options
+            currentPlayer.setOrders( ordersDialog.getOrders() );
+            gc.advanceToNextPlayer();
         }
-        this.repaint();
     }
 
     /**
@@ -161,16 +138,10 @@ class GalacticInfoPanel extends GameInfoPanel
      */
     @Override
     public void gameChanged(GameChangedEvent gce) {
-        if ( controller_ == null )
+        if ( controller_ == null )  {
             return;
-        setPlayerLabel();
-        Move lastMove =  controller_.getLastMove();
-        if (lastMove != null)  {
-            moveNumLabel_.setText( (controller_.getPlayers().getNumPlayers() + 2) + " " );
         }
-        else {
-            moveNumLabel_.setText( 1 + " " );
-        }
+        generalInfoPanel_.update(controller_);
     }
 
 }
