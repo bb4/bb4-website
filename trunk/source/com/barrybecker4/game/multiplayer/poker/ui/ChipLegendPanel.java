@@ -1,27 +1,11 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.multiplayer.poker.ui;
 
-import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.Move;
-import com.barrybecker4.game.common.player.Player;
-import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
-import com.barrybecker4.game.common.ui.panel.GameChangedListener;
-import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
-import com.barrybecker4.game.multiplayer.poker.PokerAction;
-import com.barrybecker4.game.multiplayer.poker.PokerController;
-import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.multiplayer.poker.ui.chips.PokerChip;
-import com.barrybecker4.game.multiplayer.poker.ui.dialog.BettingDialog;
-import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.legend.DiscreteColorLegend;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.MessageFormat;
 
 /**
  * Show legend for the different chip amounts.

@@ -2,10 +2,11 @@
 package com.barrybecker4.simulation.snake.geometry;
 
 import com.barrybecker4.simulation.snake.LocomotionParameters;
-import static com.barrybecker4.simulation.snake.geometry.Segment.CENTER_INDEX;
-import static com.barrybecker4.simulation.snake.geometry.Segment.NUM_PARTICLES;
 
 import javax.vecmath.Vector2d;
+
+import static com.barrybecker4.simulation.snake.geometry.Segment.CENTER_INDEX;
+import static com.barrybecker4.simulation.snake.geometry.Segment.NUM_PARTICLES;
 
 
 /**

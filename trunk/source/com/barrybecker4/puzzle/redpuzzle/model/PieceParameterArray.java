@@ -4,9 +4,6 @@ package com.barrybecker4.puzzle.redpuzzle.model;
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 import com.barrybecker4.optimization.parameter.PermutedParameterArray;
-import com.barrybecker4.optimization.parameter.types.Parameter;
-
-import java.util.Arrays;
 
 /**
  * The parameter array to use when searching (using optimization) to find a red puzzle solution.

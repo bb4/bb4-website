@@ -3,7 +3,6 @@ package com.barrybecker4.ui.dialogs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 /**
  * Use this modal dialog as an abstract base for other modal option dialogs.

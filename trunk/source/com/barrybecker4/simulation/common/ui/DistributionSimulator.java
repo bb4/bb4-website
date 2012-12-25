@@ -4,7 +4,6 @@ package com.barrybecker4.simulation.common.ui;
 import com.barrybecker4.ui.animation.AnimationFrame;
 import com.barrybecker4.ui.renderers.HistogramRenderer;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 

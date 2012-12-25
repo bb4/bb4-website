@@ -2,8 +2,6 @@
 package com.barrybecker4.game.twoplayer.blockade.ui;
 
 import com.barrybecker4.common.geometry.Location;
-import com.barrybecker4.game.common.board.Board;
-import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 

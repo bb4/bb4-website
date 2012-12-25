@@ -7,7 +7,6 @@ import com.barrybecker4.simulation.common.ui.SimulatorOptionsDialog;
 import com.barrybecker4.ui.animation.AnimationFrame;
 import com.barrybecker4.ui.renderers.SingleFunctionRenderer;
 
-import javax.swing.*;
 import java.awt.*;
 
 

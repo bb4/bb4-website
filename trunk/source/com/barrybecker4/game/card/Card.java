@@ -2,9 +2,6 @@
 package com.barrybecker4.game.card;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Represents a standard playing card.

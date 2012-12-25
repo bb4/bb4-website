@@ -3,12 +3,11 @@ package com.barrybecker4.game.multiplayer.common.online;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.online.GameCommand;
-import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
+import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
-import com.barrybecker4.game.multiplayer.common.MultiPlayerMarker;
 
 /**
  * On the server, all players are surrogates except for the robot players.

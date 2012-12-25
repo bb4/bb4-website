@@ -19,8 +19,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- *  Takes a PokerController as input and displays the
- *  current state of the Poker Game. The PokerController contains a PokerTable object
+ *  Takes a PokerController as input and displays the current state of the Poker Game.
+ *  The PokerController contains a PokerTable object
  *  which describes this state.
  *
  *  @author Barry Becker
@@ -47,22 +47,7 @@ public class PokerGameViewer extends MultiGameViewer {
      */
     @Override
     protected String getGameOverMessage() {
-        StringBuilder buf = new StringBuilder("Game Over\n");
-
-        // find the player with the most money. That's the winner.
-        PlayerList players = controller_.getPlayers();
-        int max = -1;
-        PokerPlayer winner = null;
-        for (final Player p : players) {
-            PokerPlayer pp = (PokerPlayer) p;
-            if (pp.getCash() > max) {
-                max = pp.getCash();
-                winner = pp;
-            }
-        }
-        assert winner != null;
-        buf.append(winner.getName()).append(" won the game with $").append(winner.getCash()).append('.');
-        return buf.toString();
+        return new GameOverMessage(controller_.getPlayers()).toString();
     }
 
 

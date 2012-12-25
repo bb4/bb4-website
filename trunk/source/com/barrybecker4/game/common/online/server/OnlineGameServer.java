@@ -3,13 +3,13 @@ package com.barrybecker4.game.common.online.server;
 
 import com.barrybecker4.common.CommandLineOptions;
 import com.barrybecker4.game.common.GameContext;
+import com.barrybecker4.ui.components.Appendable;
 
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.util.LinkedList;
 import java.util.List;
-import com.barrybecker4.ui.components.Appendable;
 
 /**
  * The abstract server for online games.

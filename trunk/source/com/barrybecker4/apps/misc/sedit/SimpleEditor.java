@@ -3,15 +3,9 @@ package com.barrybecker4.apps.misc.sedit;
 
 import com.barrybecker4.common.util.Base64Codec;
 import com.barrybecker4.ui.components.ScrollingTextArea;
-import com.barrybecker4.ui.file.ExtensionFileFilter;
-import com.barrybecker4.ui.file.FileChooserUtil;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;

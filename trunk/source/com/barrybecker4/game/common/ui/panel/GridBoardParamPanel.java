@@ -2,20 +2,10 @@
 package com.barrybecker4.game.common.ui.panel;
 
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.GameViewable;
-import com.barrybecker4.game.common.board.Board;
-import com.barrybecker4.game.common.online.ui.OnlineGameManagerPanel;
-import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.components.NumberInput;
-import com.barrybecker4.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
 
 /**
  * Panel to show params for a game board that has a rectilinear grid.

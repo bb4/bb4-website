@@ -4,7 +4,6 @@ package com.barrybecker4.game.multiplayer.trivial.ui;
 import com.barrybecker4.game.multiplayer.common.ui.ActionDialog;
 import com.barrybecker4.game.multiplayer.trivial.TrivialAction;
 import com.barrybecker4.game.multiplayer.trivial.TrivialController;
-import com.barrybecker4.game.multiplayer.trivial.player.TrivialHumanPlayer;
 import com.barrybecker4.game.multiplayer.trivial.player.TrivialPlayer;
 import com.barrybecker4.ui.components.GradientButton;
 

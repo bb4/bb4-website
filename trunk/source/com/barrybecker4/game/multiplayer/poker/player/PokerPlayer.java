@@ -3,11 +3,10 @@ package com.barrybecker4.game.multiplayer.poker.player;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
-import com.barrybecker4.game.multiplayer.common.online.OnlinePlayer;
 import com.barrybecker4.game.multiplayer.poker.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
 import com.barrybecker4.game.multiplayer.poker.PokerPlayerMarker;
+import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
 
 import java.awt.*;
 import java.text.MessageFormat;

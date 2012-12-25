@@ -4,7 +4,6 @@ package com.barrybecker4.game.twoplayer.common.ui.dialogs;
 import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameViewable;
-import com.barrybecker4.game.common.GameWeights;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
