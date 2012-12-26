@@ -94,9 +94,7 @@ public abstract class MultiGameViewer extends GameBoardViewer {
      * @param player to apply it to
      * @return message to show if on client.
      */
-    protected String applyAction(PlayerAction action,  Player player) {
-        return null;
-    }
+    protected abstract String applyAction(PlayerAction action,  Player player);
 
     /**
      * Implements the GameChangedListener interface.

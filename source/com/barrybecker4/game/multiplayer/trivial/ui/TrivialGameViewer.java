@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.trivial.ui;
 
+import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.common.player.PlayerList;
@@ -74,7 +75,13 @@ public class TrivialGameViewer extends MultiGameViewer {
         TrivialRobotPlayer robot = (TrivialRobotPlayer)player;
         TrivialController pc = (TrivialController) controller_;
 
-        String msg = applyAction( robot.getAction(pc), robot);
+        PlayerAction action = robot.getAction(pc);
+        GameContext.log(0, "making trivial robot move! : " + action );
+
+        // also broadcast move to clients     @@@
+        pc.getServerConnection().playerActionPerformed(action);
+
+        String msg = applyAction( action, robot);
 
         JOptionPane.showMessageDialog(parent_, msg, robot.getName(), JOptionPane.INFORMATION_MESSAGE);
         refresh();
@@ -93,7 +100,6 @@ public class TrivialGameViewer extends MultiGameViewer {
         assert action != null;
         TrivialPlayer p = (TrivialPlayer) player;
         TrivialAction act = (TrivialAction) action;
-        TrivialController tc = (TrivialController) controller_;
         String msg = null;
 
         switch (act.getActionName()) {

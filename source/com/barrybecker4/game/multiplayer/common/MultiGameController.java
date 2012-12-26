@@ -9,6 +9,8 @@ import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.online.server.connection.ServerConnection;
+import com.barrybecker4.game.common.player.Player;
+import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameViewer;
 import com.barrybecker4.optimization.parameter.ParameterArray;
@@ -141,19 +143,20 @@ public abstract class MultiGameController extends GameController {
     /**
      * Apply the action from the client for the associated player.
      * @param action
-     *
+     */
+    @Override
     public void handlePlayerAction(PlayerAction action) {
         // find the player and set his action
-        for (Player p : players_) {
-            if (p.getName().equals(action.getPlayerName())) {
-                ((MultiGamePlayer)p).setAction(action);
+        for (Player p : getPlayers()) {
+            if (p.getActualPlayer().getName().equals(action.getPlayerName())) {
+                ((MultiGamePlayer)p.getActualPlayer()).setAction(action);
             }
         }
-    }*/
+    }
 
     /**
-     * advance to the next player turn in order.
-     * @return the index of the next player to play.
+     * Advance to the next player turn in order.
+     * Do so in a separate thread so the UI is not blocked.
      */
     public void advanceToNextPlayer() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -164,7 +167,8 @@ public abstract class MultiGameController extends GameController {
     }
 
     protected void doAdvanceToNextPlayer() {
-         MultiGameViewer pviewer = (MultiGameViewer) getViewer();
+
+        MultiGameViewer pviewer = (MultiGameViewer) getViewer();
         pviewer.refresh();
 
         // show message when done.
@@ -173,13 +177,15 @@ public abstract class MultiGameController extends GameController {
         }
         else  {
             advanceToNextPlayerIndex();
-            if (getCurrentPlayer().isSurrogate()) {
-                GameContext.log(0, "about to do surrogate move for " + getCurrentPlayer()
-                        + " in controller=" + this + " in thread="+Thread.currentThread().getName());
-                pviewer.doSurrogateMove((SurrogateMultiPlayer)getCurrentPlayer());
+            Player currentPlayer = getCurrentPlayer();
+            if (currentPlayer.isSurrogate()) {
+                GameContext.log(0, "about to do surrogate move for " + currentPlayer
+                        + " in controller=" + this + " in thread=" + Thread.currentThread().getName());
+                pviewer.doSurrogateMove((SurrogateMultiPlayer)currentPlayer);
             }
-            else if (!getCurrentPlayer().isHuman()) {
-                pviewer.doComputerMove(getCurrentPlayer());
+            else if (!currentPlayer.isHuman()) {
+                GameContext.log(0, "now moving for computer player  = " + currentPlayer);
+                pviewer.doComputerMove(currentPlayer);
             }
         }
         // fire game changed event
@@ -231,14 +237,4 @@ public abstract class MultiGameController extends GameController {
     public List generateUrgentMoves( Move lastMove, ParameterArray weights) {
         return null;
     }
-
-    /**
-     * @param m
-     * @param weights
-     * @return true if the last move created a big change in the score
-     *
-    public boolean inJeopardy( Move m, ParameterArray weights) {
-        return false;
-    } */
-
 }

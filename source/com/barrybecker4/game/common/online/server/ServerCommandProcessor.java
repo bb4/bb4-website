@@ -8,6 +8,7 @@ import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.game.common.online.OnlineGameTable;
 import com.barrybecker4.game.common.online.OnlineGameTableList;
 import com.barrybecker4.game.common.player.Player;
+import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.plugin.PluginManager;
 
@@ -41,10 +42,11 @@ class ServerCommandProcessor {
     }
 
     /**
-     * Factory method to create the game controller.
+     * Factory method to create the game controller via reflection.
      */
     private void createController(String gameName) {
-        String controllerClass = PluginManager.getInstance().getPlugin(gameName).getControllerClass();
+        String controllerClass =
+                PluginManager.getInstance().getPlugin(gameName).getControllerClass();
         Class c = ClassLoaderSingleton.loadClass(controllerClass);
         try {
             controller_ = (GameController) c.newInstance();
@@ -103,13 +105,16 @@ class ServerCommandProcessor {
                 tableManager.removeTable(tableToStart);
                 break;
             case DO_ACTION :
-                // a player or robot moves, this action is sent here to the server,
-                // then we broadcast it out so the surrogate(s) can be updated.
+                // When a player on some client moves, the action is sent here to the server,
+                // and then broadcast out so the surrogate(s) can be updated.
+                // When a robot (on the server) moves, then that action is broadcast to the clients so
+                // the surrogates on the clients can be updated.
                 useUpdateTable = false;
-                GameContext.log(2, "Ignoring DO_ACTION in ServerCommandProcessor. Surrogates to handle");
+                PlayerAction action = (PlayerAction) cmd.getArgument();
+                GameContext.log(0, "Ignoring DO_ACTION ("+action+") in ServerCommandProcessor. Surrogates to handle");
                 // one of the client players has acted. We need to apply this to the server controller.
-                //PlayerAction action = (PlayerAction) cmd.getArgument();
-                //controller_.handlePlayerAction(action);
+
+                controller_.handlePlayerAction(action);
                 responses.add(cmd);
                 break;
             default:

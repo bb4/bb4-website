@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.common.online.server;
 
+import com.barrybecker4.common.concurrency.ThreadUtil;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.ui.components.Appendable;
@@ -21,6 +22,7 @@ class ClientWorker implements Runnable {
     private volatile ObjectOutputStream oStream_;
     private volatile ServerCommandProcessor cmdProcessor;
     private List<ClientWorker> clientConnections;
+    private volatile boolean stopped = false;
 
     /** Constructor */
     ClientWorker(Socket clientConnection, Appendable text,
@@ -29,6 +31,10 @@ class ClientWorker implements Runnable {
         this.text = text;
         this.cmdProcessor = cmdProcessor;
         this.clientConnections = clientConnections;
+    }
+
+    public void stop() {
+        stopped = true;
     }
 
     public void run() {
@@ -49,10 +55,11 @@ class ClientWorker implements Runnable {
             GameCommand cmd = new GameCommand(GameCommand.Name.UPDATE_TABLES, cmdProcessor.getTables());
             update(cmd);
 
-            while (true) {
+            while (!stopped) {
                 // receive the serialized commands that are sent and process them.
                 cmd = (GameCommand) iStream.readObject();
                 processCommand(cmd);
+                ThreadUtil.sleep(100);
             }
         }
         catch (ClassNotFoundException e) {

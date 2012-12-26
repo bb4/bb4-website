@@ -24,6 +24,7 @@ import java.awt.event.WindowEvent;
 public class OnlineGameServerFrame  extends JFrame {
 
     private ScrollingTextArea textArea;
+    private OnlineGameServer server;
 
 
     /**
@@ -31,7 +32,7 @@ public class OnlineGameServerFrame  extends JFrame {
      */
     private OnlineGameServerFrame(String gameName) {
         initUI(gameName);
-        new OnlineGameServer(gameName, textArea);
+        server = new OnlineGameServer(gameName, textArea);
     }
 
     /**
@@ -41,7 +42,6 @@ public class OnlineGameServerFrame  extends JFrame {
         JPanel panel = new JPanel();
         JLabel label = new JLabel("Commands received over the socket:");
         textArea = new ScrollingTextArea(20, 44);
-
 
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.white);
@@ -53,12 +53,6 @@ public class OnlineGameServerFrame  extends JFrame {
 
         getContentPane().add(panel);
 
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
         pack();
         setVisible(true);
     }
@@ -69,6 +63,7 @@ public class OnlineGameServerFrame  extends JFrame {
      */
     @Override
     protected void finalize() throws Throwable {
+        server.shutDown();
         super.finalize();
     }
 

@@ -7,7 +7,7 @@ import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 
 /**
- * Searches for the next computer move in a separate thread.
+ * Waits for the next computer move in a separate thread.
  *
  * @author Barry Becker
  */
@@ -44,7 +44,8 @@ class SurrogateMoveWorker {
              @Override
              public Object construct() {
                  processing_ = true;
-                 action = player.getAction(controller_);  // blocks
+                 // blocks until the move action is available
+                 action = player.getAction(controller_);
                  return action;
              }
 
@@ -54,7 +55,6 @@ class SurrogateMoveWorker {
                   viewer_.applyAction(action, player.getActualPlayer());
                   viewer_.refresh();
                   controller_.advanceToNextPlayer();
-
                   processing_ = false;
               }
          };
