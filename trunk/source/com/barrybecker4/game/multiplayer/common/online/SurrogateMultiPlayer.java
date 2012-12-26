@@ -17,6 +17,7 @@ import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
  */
 public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChangeListener {
 
+    /** the player we are a surrogate for */
     private final MultiGamePlayer player;
 
     /** wait about 4 seconds for the player to move before timing out. */
@@ -24,7 +25,7 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
 
 
     /**
-     * @param player
+     * @param player the player we are a surrogate for.
      * @param connection to the server so we can get updated actions.
      */
     public SurrogateMultiPlayer(MultiGamePlayer player, IServerConnection connection) {
@@ -41,7 +42,7 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
 
         if (cmd.getName() == GameCommand.Name.DO_ACTION) {
             PlayerAction action = (PlayerAction) cmd.getArgument();
-            if (action.getPlayerName().equals(getName())) {
+            if (action.getPlayerName().equals(player.getName())) {
                 GameContext.log(0, "Setting surrogate(" + player.getName()
                         + ") action="+action + " on "+this+",  Thread=" + Thread.currentThread().getName());
                 synchronized (player) {
@@ -54,7 +55,7 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
 
     @Override
     public void setAction(PlayerAction action) {
-        assert false : "must not set action directly on a surrogate";
+        throw new IllegalStateException("must not set action directly on a surrogate");
     }
 
     /**
@@ -78,7 +79,7 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
                 while (action == null) {
                     player.wait(TIMEOUT_DURATION);
                     if ((System.currentTimeMillis() - t1) > (TIMEOUT_DURATION - 10)) {
-                      System.out.println("****** TIMEOUT! Waiting for "+ player.getName() + " to play.");
+                        System.out.println("****** TIMEOUT! Waiting for "+ player.getName() + " to play.");
                     }
                     action = player.getAction(controller);
                 }

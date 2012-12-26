@@ -148,7 +148,7 @@ public class PokerInfoPanel extends GameInfoPanel
                  break;
              case CALL :
                  if (callAmount <= currentPlayer.getCash())  {
-                     currentPlayer.contributeToPot(pc, callAmount);
+                     currentPlayer.contributeToPot(pc.getRound(), callAmount);
                  } else {
                      currentPlayer.setFold(true);
                      // if this happens it was probably because someone was allowed
@@ -157,11 +157,12 @@ public class PokerInfoPanel extends GameInfoPanel
                  }
                  break;
              case RAISE :
-                 currentPlayer.contributeToPot(pc, callAmount);
+                 currentPlayer.contributeToPot(pc.getRound(), callAmount);
                  int raise = action.getRaiseAmount();
-                 currentPlayer.contributeToPot(pc, raise);
+                 currentPlayer.contributeToPot(pc.getRound(), raise);
                  break;
-          }
+        }
+        controller_.getServerConnection().playerActionPerformed(action);
     }
 
     /**

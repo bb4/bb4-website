@@ -33,6 +33,7 @@ public class OnlineGameServer  {
 
     private Appendable text;
     private ServerSocket server;
+    private volatile boolean stopped = false;
 
     /** keep a list of the threads that we have for each client connection.  */
     private List<ClientWorker> clientConnections;
@@ -49,6 +50,17 @@ public class OnlineGameServer  {
         openListenSocket(gameType);
     }
 
+    public void shutDown() {
+        stopped = true;
+        for (ClientWorker worker : clientConnections) {
+            worker.stop();
+        }
+        try {
+            server.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * open a server socket to listen on our assigned port for
      * requests from clients. Updates will be broadcast on this socket.
@@ -60,8 +72,19 @@ public class OnlineGameServer  {
         ServerCommandProcessor cmdProcessor = new ServerCommandProcessor(gameType);
         int port = cmdProcessor.getPort();
 
+        server = createServerSocket(port);
+        acceptClientConnections(cmdProcessor);
+    }
+
+    /**
+     * Allows the server to listen for client messages.
+     * @param port port to listen on.
+     * @return new server socket
+     */
+    private ServerSocket createServerSocket(int port) {
+        ServerSocket socket;
         try {
-            server = new ServerSocket(port);
+            socket = new ServerSocket(port);
         }
         catch (BindException e) {
             GameContext.log(0, "Address already in use! " +
@@ -73,17 +96,24 @@ public class OnlineGameServer  {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+        return socket;
+    }
 
-        while (true) {
+    /**
+     *
+     * @param cmdProcessor
+     */
+    private void acceptClientConnections(ServerCommandProcessor cmdProcessor) {
 
+        while (!stopped) {
             try {
                 // accept new connections from players wanting to join.
                 ClientWorker worker = new ClientWorker(server.accept(), text, cmdProcessor, clientConnections);
-                new Thread(worker).start();
                 clientConnections.add(worker);
+                new Thread(worker).start();
             }
             catch (IOException e) {
-                GameContext.log(0, "Accept failed: " + port);
+                GameContext.log(0, "Accept failed on port " + server.getLocalPort());
                 e.printStackTrace();
                 break;
             }
@@ -92,13 +122,14 @@ public class OnlineGameServer  {
 
     /**
      * Objects created in run method are finalized when
-     * program terminates and thread exits
+     * program terminates and thread exits.
+     * Also shuts down all client workers so they do not keep waiting for commands to process.
      */
     @Override
     protected void finalize() {
         try {
+            shutDown();
             super.finalize();
-            server.close();
         }
         catch (IOException e) {
             GameContext.log(0, "Could not close socket");

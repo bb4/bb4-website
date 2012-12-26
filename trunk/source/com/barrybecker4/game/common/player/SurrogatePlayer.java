@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.player;
 
+import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
 import com.barrybecker4.game.common.online.server.IServerConnection;
@@ -34,6 +35,7 @@ public  class SurrogatePlayer extends Player implements OnlineChangeListener {
 
         if (cmd.getName() == GameCommand.Name.DO_ACTION) {
             PlayerAction action = (PlayerAction) cmd.getArgument();
+            GameContext.log(0, "in SurrogatePlayer handleServerUpdate (currently ignored) action =" + action);
             /// @@ need to do something for regular players here.
         }
     }

@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.poker.player;
 
+import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
@@ -47,6 +48,7 @@ public abstract class PokerRobotPlayer extends PokerPlayer {
             a = action_;
         }
         action_ = null;
+        GameContext.log(0, "in PokerRobotPlayer.getAction a=" + a);
         return a;
     }
 

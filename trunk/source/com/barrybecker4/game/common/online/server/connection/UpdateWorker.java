@@ -62,8 +62,9 @@ class UpdateWorker implements Runnable {
     @Override
     protected void finalize() {
         try {
-           super.finalize();
-           inputStream.close();
+            inputStream.close();
+            changeListeners.clear();
+            super.finalize();
         } catch (Throwable t) {
             t.printStackTrace();
         }

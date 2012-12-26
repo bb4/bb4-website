@@ -83,6 +83,10 @@ public class PokerController extends MultiGameController {
         return new PokerTable(nrows, ncols);
     }
 
+    public PokerRound getRound() {
+        return round;
+    }
+
     /**
      * By default we start with one human and one robot player.
      * We just init the first time,
