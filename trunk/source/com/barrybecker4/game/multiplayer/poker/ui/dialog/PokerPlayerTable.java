@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.poker.ui;
+package com.barrybecker4.game.multiplayer.poker.ui.dialog;
 
 
 import com.barrybecker4.game.common.GameContext;
@@ -20,8 +20,7 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class PokerPlayerTable extends PlayerTable
-{
+class PokerPlayerTable extends PlayerTable {
 
     private static final int CASH_INDEX = 3;
 
@@ -39,9 +38,9 @@ public class PokerPlayerTable extends PlayerTable
 
     /**
      * constructor
-     * @param players to initializet the rows in the table with.
+     * @param players to initialize the rows in the table with.
      */
-    public PokerPlayerTable(PlayerList players) {
+    PokerPlayerTable(PlayerList players) {
         super(players, pokerColumnNames_);
     }
 

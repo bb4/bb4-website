@@ -31,12 +31,12 @@ public class TrivialOnlineGameTablesTable extends MultiPlayerOnlineGameTablesTab
     protected Object[] getRowObject(OnlineGameTable onlineTable, boolean localPlayerAtTable) {
 
         Object d[] = new Object[getNumColumns()];
+
         // false if active player is in this table.
         // You cannot join a table that you are already at
         d[JOIN_INDEX] = localPlayerAtTable ? "Leave" : "Join";
         d[NUM_PLAYERS_INDEX] = onlineTable.getNumPlayersNeeded();
         d[PLAYER_NAMES_INDEX] = onlineTable.getPlayerNames();
-        TrivialOptions options = (TrivialOptions) onlineTable.getGameOptions();
         return d;
     }
 

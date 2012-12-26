@@ -16,6 +16,7 @@ import static com.barrybecker4.game.multiplayer.trivial.TrivialAction.Name.REVEA
  * @author Barry Becker
  */
 public class TrivialRobotPlayer extends TrivialPlayer {
+
     private static final long serialVersionUID = 1;
 
 

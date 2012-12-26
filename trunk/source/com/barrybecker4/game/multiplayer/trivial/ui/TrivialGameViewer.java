@@ -10,6 +10,7 @@ import com.barrybecker4.game.multiplayer.trivial.TrivialAction;
 import com.barrybecker4.game.multiplayer.trivial.TrivialController;
 import com.barrybecker4.game.multiplayer.trivial.player.TrivialPlayer;
 import com.barrybecker4.game.multiplayer.trivial.player.TrivialRobotPlayer;
+import com.barrybecker4.game.multiplayer.trivial.ui.render.TrivialGameRenderer;
 
 import javax.swing.*;
 

@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.trivial.ui;
+package com.barrybecker4.game.multiplayer.trivial.ui.dialog;
 
 import com.barrybecker4.game.common.GameViewable;
 import com.barrybecker4.game.common.online.ui.OnlineGameManagerPanel;

@@ -10,7 +10,7 @@ import com.barrybecker4.game.multiplayer.trivial.player.TrivialRobotPlayer;
 import java.awt.*;
 
 /**
- * @author Barry Becker Date: May 13, 2006
+ * @author Barry Becker
  */
 public class OnlineTrivialTable extends MultiPlayerOnlineTable {
 

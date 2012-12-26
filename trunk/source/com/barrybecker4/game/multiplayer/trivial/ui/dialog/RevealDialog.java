@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.trivial.ui;
+package com.barrybecker4.game.multiplayer.trivial.ui.dialog;
 
 import com.barrybecker4.game.multiplayer.common.ui.ActionDialog;
 import com.barrybecker4.game.multiplayer.trivial.TrivialAction;
@@ -17,9 +17,8 @@ import java.awt.event.ActionEvent;
  */
 public final class RevealDialog extends ActionDialog {
 
-    // selected when the user desires to reveal his value.
+    /** selected when the user desires to reveal his value.*/
     private JRadioButton revealButton_;
-
     private GradientButton okButton_;
 
     /**
@@ -57,13 +56,12 @@ public final class RevealDialog extends ActionDialog {
         choicesPanel.add( revealButton_ );
 
         panel.add(choicesPanel, BorderLayout.CENTER);
-        //panel.add(createButtonsPanel(), BorderLayout.SOUTH);
 
         return panel;
     }
 
     /**
-     *  create the OK/Cancel buttons that go at the bottom.
+     * Create the OK/Cancel buttons that go at the bottom.
      */
     @Override
     protected JPanel createButtonsPanel() {
@@ -76,12 +74,10 @@ public final class RevealDialog extends ActionDialog {
         return buttonsPanel;
     }
 
-
     @Override
     public String getTitle() {
         return "Hide or Reveal?";
     }
-
 
     /**
      * called when one of the buttons at the bottom have been pressed.
@@ -101,6 +97,5 @@ public final class RevealDialog extends ActionDialog {
 
         (player_).setAction(new TrivialAction(player_.getName(), actionName));
     }
-
 }
 

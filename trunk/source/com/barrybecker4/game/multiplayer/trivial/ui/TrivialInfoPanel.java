@@ -12,6 +12,7 @@ import com.barrybecker4.game.common.ui.panel.SectionPanel;
 import com.barrybecker4.game.multiplayer.trivial.TrivialAction;
 import com.barrybecker4.game.multiplayer.trivial.TrivialController;
 import com.barrybecker4.game.multiplayer.trivial.player.TrivialPlayer;
+import com.barrybecker4.game.multiplayer.trivial.ui.dialog.RevealDialog;
 import com.barrybecker4.ui.components.GradientButton;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ import java.awt.event.ActionListener;
 class TrivialInfoPanel extends GameInfoPanel
                        implements GameChangedListener, ActionListener {
 
-    // buttons to either give commands or pass
+    /** buttons to either give commands or pass*/
     private JButton commandButton_;
     private JPanel commandPanel_;
 

@@ -42,7 +42,7 @@ public class TrivialTable extends Board {
      * @return max number of trivial rounds allowed.
      */
     public int getMaxNumMoves() {
-        return 100000;
+        return 1000;
     }
 
     /**

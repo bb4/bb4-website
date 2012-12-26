@@ -19,7 +19,7 @@ import java.text.MessageFormat;
  */
 class TrivialGeneralInfoPanel extends GeneralInfoPanel {
 
-    // buttons to either give commands or pass
+    /** buttons to either give commands or pass*/
     private JPanel commandPanel_;
 
     /**

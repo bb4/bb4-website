@@ -9,6 +9,7 @@ import java.awt.*;
  * @author Barry Becker
  */
 public class TrivialHumanPlayer extends TrivialPlayer {
+
     private static final long serialVersionUID = 1;
 
 
