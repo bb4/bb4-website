@@ -120,7 +120,7 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
         }
     }
 
-    public String toString()  {
+    public synchronized String toString()  {
         StringBuilder bldr = new StringBuilder("Tables:\n");
         for (OnlineGameTable t : this) {
             bldr.append(t).append("\n");

@@ -6,6 +6,7 @@ import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.poker.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 import com.barrybecker4.game.multiplayer.poker.PokerPlayerMarker;
+import com.barrybecker4.game.multiplayer.poker.PokerRound;
 import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
 
 import java.awt.*;
@@ -111,7 +112,7 @@ public abstract class PokerPlayer extends MultiGamePlayer  {
      * If it is greater, then he/she is out of the game.
      * @param amount
      */
-    public void contributeToPot(PokerController controller, int amount) {
+    public void contributeToPot(PokerRound round, int amount) {
 
         if (cash_ < amount)  {
             // the player is out of the game if he is asked to contribute more than he has.
@@ -122,7 +123,7 @@ public abstract class PokerPlayer extends MultiGamePlayer  {
         if (amount > 0) {
             cash_ -= amount;
             contribution_ += amount;
-            controller.addToPot(amount);
+            round.addToPot(amount);
         }
     }
 
@@ -152,7 +153,7 @@ public abstract class PokerPlayer extends MultiGamePlayer  {
      */
     public void claimPot(PokerController controller)  {
         cash_ += controller.getPotValue();
-        controller.setPotValue(0);
+        controller.clearPot();
     }
 
     @Override

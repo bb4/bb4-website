@@ -61,13 +61,15 @@ public abstract class MultiGamePlayer extends Player {
      * @return true if hue is different enough from the others.
      */
     private static boolean isHueUniqueEnough(float hue, PlayerList players) {
-        int ct=0;
-        float tolerance = 1.0f/(1.0f+1.8f*players.size());
+        int ct = 0;
+        float tolerance = 1.0f / (1.0f + 1.8f * players.size());
         while ( ct < players.size()) {
-            if (players.get(ct) == null)
+            if (players.get(ct) == null) {
                 ct++;
-            else if (Math.abs(ColorUtil.getColorHue(players.get(ct).getColor()) - hue) > tolerance)
+            }
+            else if (Math.abs(ColorUtil.getColorHue(players.get(ct).getColor()) - hue) > tolerance) {
                 ct++;
+            }
             else break;
         }
         return (ct == players.size());

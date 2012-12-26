@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 /**
  * Some number of players sitting around a virtual game table online.
- * Each table has a name, set of PlayerList and other game specific properties.
+ * Each table has a name, set of Players and other game specific properties.
  *
  * @author Barry Becker
  */
@@ -18,7 +18,7 @@ public class OnlineGameTable implements Serializable {
 
     private static final long serialVersionUID = 1;
 
-    /** the name of the virtual online table.  */
+    /** the unique name of the virtual online table.  */
     private String name_;
 
     /** the player who created this table, even if they are not sitting here anymore.  */
