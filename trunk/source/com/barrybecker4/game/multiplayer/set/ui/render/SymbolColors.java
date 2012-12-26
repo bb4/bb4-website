@@ -6,14 +6,11 @@ import com.barrybecker4.game.multiplayer.set.Card;
 import java.awt.*;
 
 /**
- * Takes a card and renders it to the Viewer.
- * We use a separate card rendering class to avoid having ui in the card class itself.
- * This allows us to more cleanly separate the view from the model.
+ * Colors for the different symbol patterns on the set cards.
  *
  * @author Barry Becker
  */
 public final class SymbolColors {
-
 
     enum ColorType {
         SOLID, BORDER, HATCHED, HIGHLIGHT

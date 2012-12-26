@@ -39,13 +39,14 @@ class TrivialInfoPanel extends GameInfoPanel
 
     @Override
     protected void createSubPanels() {
+        JPanel customPanel = createCustomInfoPanel();
         generalInfoPanel_ = createGeneralInfoPanel(controller_.getCurrentPlayer());
         add(generalInfoPanel_);
 
         // the custom panel shows game specific info. In this case, the command button.
         // if all the players are robots, don't even show this panel.
         if (!controller_.getPlayers().allPlayersComputer())   {
-            add( createCustomInfoPanel() );
+            add( customPanel );
         }
     }
 
@@ -56,7 +57,6 @@ class TrivialInfoPanel extends GameInfoPanel
     @Override
     protected JPanel createCustomInfoPanel() {
         commandPanel_ = new SectionPanel();
-        //setCommandPanelTitle();
 
         // the command button
         JPanel bp = createPanel();
