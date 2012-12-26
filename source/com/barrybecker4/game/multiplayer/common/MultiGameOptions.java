@@ -11,17 +11,19 @@ public class MultiGameOptions extends GameOptions {
     private static final int DEFAULT_PLAYER_LIMIT = 8;
     private static final int DEFAULT_NUM_ROBOT_PLAYERS = 1;
 
-    // no more than this many allowed at the table.
+    /** no more than this many allowed at the table. */
     private int maxNumPlayers_ = DEFAULT_PLAYER_LIMIT;
-    // number of robot players at the table.
-    // You can change this in the new game dlg if stand alone.
+
+    /**
+     * The number of robot players at the table.
+     * You can change this in the new game dlg if stand alone.
+     */
     private int numRobotPlayers_ = DEFAULT_NUM_ROBOT_PLAYERS;
 
 
     protected MultiGameOptions() {
           this(DEFAULT_PLAYER_LIMIT, DEFAULT_NUM_ROBOT_PLAYERS);
     }
-
 
     protected MultiGameOptions(int maxNumPlayers, int numRobotPlayers) {
          maxNumPlayers_ = maxNumPlayers;

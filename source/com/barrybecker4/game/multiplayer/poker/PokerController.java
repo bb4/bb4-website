@@ -1,15 +1,12 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.poker;
 
-import com.barrybecker4.game.card.Deck;
-import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameOptions;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerRobotPlayer;
 import com.barrybecker4.game.multiplayer.poker.ui.PokerGameViewer;
@@ -18,14 +15,10 @@ import com.barrybecker4.game.multiplayer.poker.ui.PokerGameViewer;
  * Defines everything the computer needs to know to play Poker.
  *
  * ToDo list
- *  - for chat, you should only chat with those at your table if you are in t a game, else chat only with those not in a game.
+ *  - for chat, you should only chat with those at your table if you are in a game, else chat only with those not in a game.
  * - something screwed up adding players out of order
  * - fix TrivialMarker not showing number.
- * - move most of what is in the trivial game up to multi-player common.
- * - Make PokerHumanPlayer return a PokerAction
- * - SurrogatePokerPlayer should wait (block) on an Action from the client or server.
  * - All players should have an action that they perform (for all games. This action is like a move in a 2 player game.)
- *
  * - add host and port to game options
  * - use real faces for players
  *
@@ -47,9 +40,6 @@ import com.barrybecker4.game.multiplayer.poker.ui.PokerGameViewer;
  *     - robot player keeps adding last raise amount even though competitor is calling.
  *     - Raise amount not always matched! seems to happen in a multiplayer game when robots involved.
  *       this is because it should only include the callAmount if the player has not already gone.
- *     - reduce player radii
- *  possible bugs
- *    - ante getting subtracted twice
  *
  * @author Barry Becker
  */
@@ -60,7 +50,7 @@ public class PokerController extends MultiGameController {
 
     private static final int POKER_SERVER_PORT = 4443;
 
-    private int pot_;
+    private PokerRound round;
 
     /**
      *  Construct the Poker game controller
@@ -76,8 +66,8 @@ public class PokerController extends MultiGameController {
     public void reset() {
         super.reset();
         initializeData();
-        pot_ = 0;
-        anteUp();
+        round = new PokerRound();
+        round.anteUp(getPlayers(), ((PokerOptions)getOptions()).getAnte());
     }
 
     @Override
@@ -116,87 +106,37 @@ public class PokerController extends MultiGameController {
             setPlayers(players);
         }
 
-        dealCardsToPlayers(5);
+        deal();
         currentPlayerIndex_ = 0;
 
         ((PokerTable)getBoard()).initPlayers(getPlayers());
     }
 
-    /**
-     * Deal the cards. Give the default players some cards.
-     * @param numCardsToDealToEachPlayer
-     */
-    private void dealCardsToPlayers(int numCardsToDealToEachPlayer) {
-
-        Deck deck = new Deck();
-        assert (getPlayers() != null) : "No players! (players_ is null)";
-        for (Player p : getPlayers()) {
-            if (deck.size() < numCardsToDealToEachPlayer) {
-                // ran out of cards. start a new shuffled deck.
-                deck = new Deck();
-            }
-            PokerPlayer player = (PokerPlayer) p.getActualPlayer();
-            player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
-            player.resetPlayerForNewRound();
-        }
-    }
-
-    /**
-     * collect the antes
-     */
-    void anteUp() {
-        // get players to ante up, if they have not already
-        if (this.getPotValue() == 0) {
-            for (Player p : getPlayers()) {
-                PokerPlayer player = (PokerPlayer) p.getActualPlayer();
-
-                // if a player does not have enough money to ante up, he is out of the game
-                player.contributeToPot(this, ((PokerOptions)getOptions()).getAnte());
-            }
-        }
-    }
-
+    /*
     public void addToPot(int amount) {
-        assert(amount > 0) : "You must add a positive amount";
-        pot_ += amount;
-    }
+        round.addToPot(amount);
+    } */
 
     /**
-     * @return the maximum contribution made by any player so far
+     * @return the maximum contribution made by any player so far this round
      */
     public int getCurrentMaxContribution() {
-       int max = Integer.MIN_VALUE;
-        for (Player p : getPlayers()) {
-            PokerPlayer player = (PokerPlayer) p.getActualPlayer();
-            if (player.getContribution() > max) {
-                max = player.getContribution();
-            }
-        }
-        return max;
+        return round.getCurrentMaxContribution(getPlayers());
     }
 
     /**
      * @return the min number of chips of any player
      */
     public int getAllInAmount() {
-        // loop through the players and return the min number of chips of any player
-        int min = Integer.MAX_VALUE;
-        for (Player p : getPlayers()) {
-            PokerPlayer player = (PokerPlayer) p.getActualPlayer();
-            if (!player.hasFolded() && ((player.getCash() + player.getContribution()) < min)) {
-                min = player.getCash() + player.getContribution();
-            }
-        }
-        return min;
+        return round.getAllInAmount(getPlayers());
     }
-
 
     public int getPotValue() {
-        return pot_;
+        return round.getPotValue();
     }
 
-    public void setPotValue(int potValue) {
-        pot_ = potValue;
+    public void clearPot() {
+        round.clearPot();
     }
 
     @Override
@@ -205,7 +145,7 @@ public class PokerController extends MultiGameController {
     }
 
     /**
-     * Game is over when only one player has enough money left to play
+     * Game is over when only one player has enough money left.
      *
      * @return true if the game is over.
      */
@@ -215,15 +155,15 @@ public class PokerController extends MultiGameController {
         int numPlayersStillPlaying = 0;
         for (Player p : getPlayers()) {
             PokerPlayer player = (PokerPlayer) p.getActualPlayer();
-            if (!player.isOutOfGame())
+            if (!player.isOutOfGame()) {
                 numPlayersStillPlaying++;
+            }
         }
         return (numPlayersStillPlaying == 1);
     }
 
     /**
-     * advance to the next player turn in order.
-     * @return the index of the next player to play.
+     * Advance to the next player turn in order.
      */
     @Override
     protected void doAdvanceToNextPlayer() {
@@ -232,9 +172,9 @@ public class PokerController extends MultiGameController {
         pviewer.refresh();
         advanceToNextPlayerIndex();
 
-        if (roundOver()) {
+        if (round.roundOver(getPlayers(), playIndex_)) {
             // every player left in the game has called.
-            PokerRound round = pviewer.createMove(getLastMove());
+            //PokerRound round = pviewer.createMove(getLastMove());
             // records the result on the board.
             makeMove(round);
             pviewer.refresh();
@@ -256,51 +196,6 @@ public class PokerController extends MultiGameController {
         pviewer.sendGameChangedEvent(null);
     }
 
-
-    /**
-     * the round is over if there is only one player left who has not folded, or
-     * everyone has had a chance to call.
-     * @return true of the round is over
-     */
-    private boolean roundOver() {
-
-        if (allButOneFolded())  {
-            return true;
-        }
-
-        // special case of no one raising
-        int contrib = this.getCurrentMaxContribution();
-        GameContext.log(0, "in roundover check max contrib="+contrib);
-
-        for (Player pp : getPlayers()) {
-            PokerPlayer p = (PokerPlayer) pp.getActualPlayer();
-            if (!p.hasFolded()) {
-                assert(p.getContribution() <= contrib) :
-                       "contrib was supposed to be the max, but " + p + " contradicats that.";
-                if (p.getContribution() != contrib) {
-                    return false;
-                }
-            }
-        }
-
-        return ((playIndex_ >= getNumNonFoldedPlayers()) );
-    }
-
-     /**
-      * a player is not counted as active if he is "out of the game".
-      * @return  number of active players.
-      */
-     int getNumNonFoldedPlayers() {
-        int count = 0;
-        for (final Player p : getPlayers()) {
-            PokerPlayer player = (PokerPlayer) p.getActualPlayer();
-            if (!player.isOutOfGame())
-               count++;
-        }
-        return count;
-     }
-
-
     /**
      * take care of distributing the pot, dealing, anteing.
      * @param pviewer poker viewer
@@ -310,12 +205,11 @@ public class PokerController extends MultiGameController {
         int winnings = this.getPotValue();
         winner.claimPot(this);
         pviewer.showRoundOver(winner, winnings);
-        // start a new round deal new cards and ante
 
-        // if the game is over, we don't want to continue.
+        // if round not over yet, start a new round deal new cards and ante
         if (!isDone()) {
-            dealCardsToPlayers(5);
-            anteUp();
+            deal();
+            round.anteUp(getPlayers(), ((PokerOptions)getOptions()).getAnte());
             // the player to start the betting in the next round is the next player who still has some money left.
             do {
                startingPlayerIndex_ = (++startingPlayerIndex_) % this.getPlayers().getNumPlayers();
@@ -327,49 +221,13 @@ public class PokerController extends MultiGameController {
         }
     }
 
-    private boolean allButOneFolded() {
-
-        int numNotFolded = 0;
-        for (final Player pp : getPlayers()) {
-            PokerPlayer player = (PokerPlayer) pp.getActualPlayer();
-            if (!player.hasFolded()) {
-                numNotFolded++;
-            }
-        }
-        return (numNotFolded == 1);
-    }
-
     /**
      *
-     * @return the player with the best poker hand
+     * @return the player with the best poker hand for this round
      */
     @Override
     public MultiGamePlayer determineWinner() {
-        PlayerList players = getPlayers();
-        PokerPlayer winner;
-        PokerHand bestHand;
-        int first=0;
-
-        while (((PokerPlayer) players.get(first).getActualPlayer()).hasFolded() && first < players.size()) {
-            first++;
-        }
-        if (((PokerPlayer)players.get(first)).hasFolded())
-            GameContext.log(0, "All players folded. That was dumb. The winner will be random.");
-
-        winner = (PokerPlayer)players.get(first);
-        bestHand = winner.getHand();
-
-
-        for (int i = first+1; i < players.size(); i++) {
-            PokerPlayer p = (PokerPlayer) players.get(i).getActualPlayer();
-            if (!p.hasFolded() && p.getHand().compareTo(bestHand) > 0) {
-                bestHand = p.getHand();
-                winner = p;
-
-            }
-        }
-        GameContext.log(0, "The winning hand was " + winner.getHand());
-        return winner;
+        return round.determineWinner(getPlayers());
     }
 
     /**
@@ -393,8 +251,10 @@ public class PokerController extends MultiGameController {
     public void setPlayers( PlayerList players ) {
         super.setPlayers(players);
         // deal cards to the players
-        dealCardsToPlayers(5);
+        deal();
     }
 
-
+    private void deal() {
+        new Dealer().dealCardsToPlayers(getPlayers(), 5);
+    }
 }

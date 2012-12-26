@@ -115,7 +115,8 @@ class MultiPlayerTableManager {
         // now tht the game has started, remove it so it does not get started again.
         onlineGameTablesTable_.removeRow(readyTable);
         assert onlineGameTablesTable_.getNumRows() == 0 :
-                "still have game tables even though just removed "+readyTable + " tables:" + onlineGameTablesTable_.toString();
+                "still have game tables even though just removed "+readyTable
+                        + " tables:" + onlineGameTablesTable_.toString();
 
         // since we are on the client we need to create surrogates for the players which are not the current player
         Iterator<Player> it = readyTable.getPlayers().iterator();
@@ -124,6 +125,7 @@ class MultiPlayerTableManager {
             MultiGamePlayer player = (MultiGamePlayer)it.next();
             if (!player.getName().equals(this.currentName_)) {
                 // add surrogate
+                GameContext.log(0, "creating surrogate for "+ player.getName());
                 players.add(new SurrogateMultiPlayer(player, connection_));
             }
             else {

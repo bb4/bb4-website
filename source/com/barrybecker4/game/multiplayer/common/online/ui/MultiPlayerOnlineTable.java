@@ -7,11 +7,10 @@ import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.multiplayer.common.MultiGameOptions;
 
 /**
- *
+ * Some number of players sitting around a virtual game table online.
  * @author Barry Becker
  */
 public abstract class MultiPlayerOnlineTable extends OnlineGameTable {
-
 
     protected MultiPlayerOnlineTable(String name, Player initialPlayer, GameOptions options) {
         super(name, initialPlayer, options);

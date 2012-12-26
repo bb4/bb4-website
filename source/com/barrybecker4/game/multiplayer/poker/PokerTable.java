@@ -39,7 +39,7 @@ public class PokerTable extends Board {
     }
 
     /**
-     * A poker game has no real limit so we just reutnr a huge number.
+     * A poker game has no real limit so we just reuturn a huge number.
      * @return max number of poker rounds allowed.
      */
     public int getMaxNumMoves() {

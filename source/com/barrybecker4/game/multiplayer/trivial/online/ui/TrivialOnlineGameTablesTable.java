@@ -5,7 +5,6 @@ import com.barrybecker4.game.common.online.OnlineGameTable;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.multiplayer.common.MultiGameOptions;
 import com.barrybecker4.game.multiplayer.common.online.ui.MultiPlayerOnlineGameTablesTable;
-import com.barrybecker4.game.multiplayer.trivial.TrivialOptions;
 import com.barrybecker4.game.multiplayer.trivial.online.OnlineTrivialTable;
 import com.barrybecker4.game.multiplayer.trivial.player.TrivialHumanPlayer;
 import com.barrybecker4.ui.table.TableButtonListener;
