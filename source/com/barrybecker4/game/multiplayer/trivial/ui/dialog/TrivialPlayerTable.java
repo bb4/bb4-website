@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.trivial.ui;
+package com.barrybecker4.game.multiplayer.trivial.ui.dialog;
 
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
@@ -16,7 +16,7 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class TrivialPlayerTable extends PlayerTable {
+class TrivialPlayerTable extends PlayerTable {
 
     private static String[] trivialColumnNames_ =  {
        NAME,
@@ -28,7 +28,7 @@ public class TrivialPlayerTable extends PlayerTable {
      * constructor
      * @param players to initialize the rows in the table with.
      */
-    public TrivialPlayerTable(PlayerList players) {
+    TrivialPlayerTable(PlayerList players) {
         super(players, trivialColumnNames_);
     }
 

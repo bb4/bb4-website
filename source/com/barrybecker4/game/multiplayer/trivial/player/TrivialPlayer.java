@@ -19,14 +19,12 @@ import java.text.MessageFormat;
 public abstract class TrivialPlayer extends MultiGamePlayer {
 
     private static final long serialVersionUID = 1;
+    private static final int MAX_VALUE = 1000;
 
     private MultiPlayerMarker piece_;
-
     private int value;
-
     private TrivialAction action_;
 
-    private static final int MAX_VALUE = 1000;
 
     /** only becomes true when the player decides to reveal his value */
     private boolean revealed_ = false;
@@ -45,7 +43,7 @@ public abstract class TrivialPlayer extends MultiGamePlayer {
     }
 
     /**
-     * @return a number between 0 and 1000.
+     * @return a number between 0 and MAX_VALUE.
      */
     public int getValue() {
         return value;
@@ -82,14 +80,12 @@ public abstract class TrivialPlayer extends MultiGamePlayer {
      * @param name
      * @param color
      * @param isHuman
-     * @return
+     * @return the new player
      */
-    public static TrivialPlayer createTrivialPlayer(String name, Color color, boolean isHuman)
-    {
-       if (isHuman)
-           return new TrivialHumanPlayer(name,  color);
-        else
-           return new TrivialRobotPlayer(name, color);
+    public static TrivialPlayer createTrivialPlayer(String name, Color color, boolean isHuman) {
+           return isHuman ?
+                   new TrivialHumanPlayer(name, color):
+                   new TrivialRobotPlayer(name, color);
     }
 
     /**
@@ -97,8 +93,7 @@ public abstract class TrivialPlayer extends MultiGamePlayer {
      * @param i index of player
      * @return  the default name for player i
      */
-    public String getDefaultName(int i)
-    {
+    public String getDefaultName(int i) {
         Object[] args = {Integer.toString(i)};
         return MessageFormat.format(GameContext.getLabel("TRIVIAL_DEFAULT_NAME"), args );
     }

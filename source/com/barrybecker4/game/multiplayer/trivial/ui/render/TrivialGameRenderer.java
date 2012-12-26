@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.trivial.ui;
+package com.barrybecker4.game.multiplayer.trivial.ui.render;
 
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.board.Board;
@@ -64,7 +64,9 @@ public class TrivialGameRenderer extends MultiGameBoardRenderer {
         assert g2 != null;
         assert m.getLocation() != null;
         g2.setColor(TrivialPlayerRenderer.HIGHLIGHT_COLOR);
-        g2.fillOval(cellSize *(m.getLocation().getCol()-2), cellSize *(m.getLocation().getRow()-2), 10* cellSize, 10* cellSize);
+        g2.fillOval(cellSize *(m.getLocation().getCol()-2),
+                    cellSize *(m.getLocation().getRow()-2),
+                    10* cellSize, 10* cellSize);
 
         // now draw the players and their stuff (face, name, chips, cards, etc)
         super.drawMarkers(controller, g2);

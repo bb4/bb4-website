@@ -6,7 +6,7 @@ import com.barrybecker4.game.common.ui.dialogs.GameOptionsDialog;
 import com.barrybecker4.game.common.ui.dialogs.GameStartListener;
 import com.barrybecker4.game.multiplayer.common.online.ui.MultiPlayerOnlineGameTablesTable;
 import com.barrybecker4.game.multiplayer.common.online.ui.MultiPlayerOnlineManagerPanel;
-import com.barrybecker4.game.multiplayer.trivial.ui.TrivialOptionsDialog;
+import com.barrybecker4.game.multiplayer.trivial.ui.dialog.TrivialOptionsDialog;
 import com.barrybecker4.ui.table.TableButtonListener;
 
 /**

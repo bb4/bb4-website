@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.game.multiplayer.poker.ui;
+package com.barrybecker4.game.multiplayer.poker.ui.infopanel;
 
 import com.barrybecker4.game.multiplayer.poker.ui.chips.PokerChip;
 import com.barrybecker4.ui.legend.DiscreteColorLegend;

@@ -14,7 +14,7 @@ import com.barrybecker4.game.multiplayer.trivial.player.TrivialRobotPlayer;
  * Defines everything the computer needs to know to play Trivial game.
  * In this simplistic game, players either keep their card hidden or revealed
  * when it is their turn. When all cards are revealed the highest value card
- * wins. The purpose is to test multi-player poker without all the poker rules.
+ * wins. The purpose is to test multi-player game without complex rules.
  *
  * @author Barry Becker
  */

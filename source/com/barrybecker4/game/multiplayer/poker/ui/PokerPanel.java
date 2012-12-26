@@ -11,6 +11,7 @@ import com.barrybecker4.game.common.ui.panel.GamePanel;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
 import com.barrybecker4.game.multiplayer.poker.ui.dialog.PokerNewGameDialog;
 import com.barrybecker4.game.multiplayer.poker.ui.dialog.PokerOptionsDialog;
+import com.barrybecker4.game.multiplayer.poker.ui.infopanel.PokerInfoPanel;
 
 import java.awt.*;
 

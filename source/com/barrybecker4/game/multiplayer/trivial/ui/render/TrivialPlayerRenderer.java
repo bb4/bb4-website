@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.trivial.ui;
+package com.barrybecker4.game.multiplayer.trivial.ui.render;
 
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.board.Board;
@@ -16,7 +16,7 @@ import java.awt.geom.Ellipse2D;
 
 
 /**
- *  A singleton class that takes a trivial player and renders it for the TrivialGameViewer.
+ * A singleton class that takes a trivial player and renders it for the TrivialGameViewer.
  *
  * @author Barry Becker
  */
@@ -86,18 +86,29 @@ public class TrivialPlayerRenderer extends GamePieceRenderer {
             g2.fillOval( pos.x, pos.y, 3*pieceSize , 3*pieceSize );
         }
 
-        Font font = BASE_FONT.deriveFont(Font.BOLD, (float) cellSize / (float) GameBoardRenderer.MINIMUM_CELL_SIZE  * 8);
-        int offset = (pieceSize<(0.6*cellSize))? -1 : cellSize/5;
-        if ( playerMarker.getAnnotation() != null ) {
-            g2.setColor( Color.black );
-            g2.setFont( font );
-            g2.drawString( playerMarker.getAnnotation(), pos.x - cellSize, pos.y - 3*offset);
-        }
+        drawOptionalAnnotation(g2, cellSize, playerMarker, pieceSize, pos);
 
         TrivialPlayer p = (TrivialPlayer)playerMarker.getOwner();
         if (p.isRevealed()) {
              renderValue(g2, position.getLocation(), p.getValue(), cellSize);
         }
+    }
+
+    private void drawOptionalAnnotation(Graphics2D g2, int cellSize,
+                                        MultiPlayerMarker playerMarker, int pieceSize, Point pos) {
+        Font font = getAnnotationFont(cellSize);
+
+        int offset = (pieceSize<(0.6*cellSize))? -1 : cellSize/5;
+        if ( playerMarker.getAnnotation() != null ) {
+            g2.setColor( Color.black );
+            g2.setFont( font );
+            g2.drawString( playerMarker.getAnnotation(), pos.x - cellSize, pos.y - 3 * offset);
+        }
+    }
+
+    private Font getAnnotationFont(float cellSize) {
+        float fontSize = cellSize / (float) GameBoardRenderer.MINIMUM_CELL_SIZE  * 8;
+        return BASE_FONT.deriveFont(Font.BOLD, fontSize);
     }
 
     /**

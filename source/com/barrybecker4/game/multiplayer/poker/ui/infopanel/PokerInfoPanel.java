@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.poker.ui;
+package com.barrybecker4.game.multiplayer.poker.ui.infopanel;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
@@ -26,7 +26,7 @@ import java.text.MessageFormat;
  *
  * @author Barry Becker
  */
-class PokerInfoPanel extends GameInfoPanel
+public class PokerInfoPanel extends GameInfoPanel
                      implements GameChangedListener, ActionListener {
 
     private JButton commandButton_;
@@ -36,7 +36,7 @@ class PokerInfoPanel extends GameInfoPanel
     /**
      * Constructor
      */
-    PokerInfoPanel( GameController controller ) {
+    public PokerInfoPanel( GameController controller ) {
         super(controller);
     }
 
