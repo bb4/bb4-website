@@ -305,14 +305,14 @@ public abstract class TwoPlayerController extends GameController {
 
         ParameterArray optimizedParams;
         optimizedParams =
-                optimizer.doOptimization( OptimizationStrategyType.HILL_CLIMBING,
-                                          getComputerWeights().getDefaultWeights(),
-                                          WINNING_VALUE);
+                optimizer.doOptimization(OptimizationStrategyType.HILL_CLIMBING,
+                                         getComputerWeights().getDefaultWeights(),
+                                         WINNING_VALUE);
         return optimizedParams;
     }
 
     /**
-     *  @return true if the viewer is currently processing (i.e. searching)
+     * @return true if the viewer is currently processing (i.e. searching)
      */
     public boolean isProcessing() {
         return worker_.isProcessing();

@@ -63,7 +63,9 @@ public class PokerGameViewer extends MultiGameViewer {
         PokerRobotPlayer robot = (PokerRobotPlayer)player;
         PokerController pc = (PokerController) controller_;
 
-        String msg = applyAction(robot.getAction(pc), robot);
+        PlayerAction action = robot.getAction(pc);
+        String msg = applyAction(action, robot);
+        pc.addRecentRobotAction(action);
 
         JOptionPane.showMessageDialog(parent_, msg, robot.getName(), JOptionPane.INFORMATION_MESSAGE);
         refresh();
@@ -86,6 +88,7 @@ public class PokerGameViewer extends MultiGameViewer {
 
         String msg = null;
         int callAmount = pc.getCurrentMaxContribution() - p.getContribution();
+        PokerRound round = pc.getRound();
 
         switch (act.getActionName()) {
             case FOLD :
@@ -96,7 +99,7 @@ public class PokerGameViewer extends MultiGameViewer {
                 // GameContext.log(0,"PGV: robot call amount = currentMaxContrib - robot.getContrib) = "
                 //                   + pc.getCurrentMaxContribution()+" - "+robot.getContribution());
                 if (callAmount <= p.getCash())  {
-                    p.contributeToPot(pc, callAmount);
+                    p.contributeToPot(round, callAmount);
                     msg = p.getName() + " has called by adding "+ callAmount + " to the pot.";
                 } else {
                     p.setFold(true);
@@ -104,10 +107,10 @@ public class PokerGameViewer extends MultiGameViewer {
                 }
                 break;
             case RAISE :
-                p.contributeToPot(pc, callAmount);
+                p.contributeToPot(round, callAmount);
                 int raise = act.getRaiseAmount();
-                p.contributeToPot(pc, raise);
-                msg = p.getName() + " has met the "+callAmount + ", and rasied the pot by " + raise;
+                p.contributeToPot(round, raise);
+                msg = p.getName() + " has met the " + callAmount + ", and rasied the pot by " + raise;
                 break;
         }
         return msg;

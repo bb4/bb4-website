@@ -78,10 +78,8 @@ public class TrivialGameViewer extends MultiGameViewer {
         PlayerAction action = robot.getAction(pc);
         GameContext.log(0, "making trivial robot move! : " + action );
 
-        // also broadcast move to clients     @@@
-        pc.getServerConnection().playerActionPerformed(action);
-
-        String msg = applyAction( action, robot);
+        String msg = applyAction(action, robot);
+        pc.addRecentRobotAction(action);
 
         JOptionPane.showMessageDialog(parent_, msg, robot.getName(), JOptionPane.INFORMATION_MESSAGE);
         refresh();
