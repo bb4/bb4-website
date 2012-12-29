@@ -17,6 +17,7 @@ import com.barrybecker4.optimization.parameter.ParameterArray;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +56,9 @@ public abstract class MultiGameController extends GameController {
     /** size of the board. Assumed to be a grid. Probably should be abstracted to an options class */
     private Dimension size;
 
+    private List<PlayerAction> recentRobotActions_;
+
+    /** Constructor */
     protected  MultiGameController()  {
         size = new Dimension(0, 0);
     }
@@ -89,6 +93,7 @@ public abstract class MultiGameController extends GameController {
         startingPlayerIndex_ = 0;
         playIndex_ = 0;
         currentPlayerIndex_ = 0;
+        recentRobotActions_ = new ArrayList<PlayerAction>();
         initPlayers();
     }
 
@@ -146,10 +151,11 @@ public abstract class MultiGameController extends GameController {
      */
     @Override
     public void handlePlayerAction(PlayerAction action) {
-        // find the player and set his action
+
         for (Player p : getPlayers()) {
             if (p.getActualPlayer().getName().equals(action.getPlayerName())) {
                 ((MultiGamePlayer)p.getActualPlayer()).setAction(action);
+                doAdvanceToNextPlayer();
             }
         }
     }
@@ -172,10 +178,7 @@ public abstract class MultiGameController extends GameController {
         pviewer.refresh();
 
         // show message when done.
-        if (isDone()) {
-            pviewer.sendGameChangedEvent(null);
-        }
-        else  {
+        if (!isDone()) {
             advanceToNextPlayerIndex();
             Player currentPlayer = getCurrentPlayer();
             if (currentPlayer.isSurrogate()) {
@@ -190,6 +193,18 @@ public abstract class MultiGameController extends GameController {
         }
         // fire game changed event
         pviewer.sendGameChangedEvent(null);
+    }
+
+    public void addRecentRobotAction(PlayerAction action) {
+        recentRobotActions_.add(action);
+    }
+
+    /** get all the actions since last asked and clear them out */
+    public List<PlayerAction> getRecentRobotActions() {
+        List<PlayerAction> actions = new ArrayList<PlayerAction>();
+        actions.addAll(recentRobotActions_);
+        recentRobotActions_.clear();
+        return actions;
     }
 
     /**

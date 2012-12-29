@@ -33,8 +33,7 @@ public class ChessBoardViewer extends CheckersBoardViewer
 
 
     @Override
-    protected GameController createController()
-    {
+    protected GameController createController() {
         return new ChessController();
     }
 

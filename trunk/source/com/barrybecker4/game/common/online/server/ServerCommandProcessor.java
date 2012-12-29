@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.online.server;
 
-import com.barrybecker4.common.ClassLoaderSingleton;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.online.GameCommand;
@@ -10,13 +9,21 @@ import com.barrybecker4.game.common.online.OnlineGameTableList;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.common.player.PlayerList;
+import com.barrybecker4.game.common.plugin.GamePlugin;
 import com.barrybecker4.game.common.plugin.PluginManager;
+import com.barrybecker4.game.common.ui.panel.GamePanel;
+import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
+import com.barrybecker4.game.multiplayer.common.MultiGameController;
+import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Handles the processing of all commands send to the online game server.
+ * Handles the processing of all commands send to the online game server from human players.
+ * All the human players will be surrogates but the robots are here and the server needs to
+ * issue their actions to their corresponding surrogates on the clients.
  *
  * @author Barry Becker
  */
@@ -45,16 +52,25 @@ class ServerCommandProcessor {
      * Factory method to create the game controller via reflection.
      */
     private void createController(String gameName) {
-        String controllerClass =
-                PluginManager.getInstance().getPlugin(gameName).getControllerClass();
-        Class c = ClassLoaderSingleton.loadClass(controllerClass);
+
+        GamePlugin plugin = PluginManager.getInstance().getPlugin(gameName);
+        GameContext.loadGameResources(gameName);
+        /*
+        Class c = ClassLoaderSingleton.loadClass(plugin.getControllerClass());
         try {
             controller_ = (GameController) c.newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        }
+        } */
+
+        // for now, also create a corresponding viewer. The server should really not have a UI component.
+        GamePanel panel  = plugin.getPanelInstance();
+        panel.init(null);
+        GameBoardViewer viewer = panel.getViewer();
+
+        controller_ = viewer.getController();
     }
 
     public int getPort() {
@@ -105,17 +121,8 @@ class ServerCommandProcessor {
                 tableManager.removeTable(tableToStart);
                 break;
             case DO_ACTION :
-                // When a player on some client moves, the action is sent here to the server,
-                // and then broadcast out so the surrogate(s) can be updated.
-                // When a robot (on the server) moves, then that action is broadcast to the clients so
-                // the surrogates on the clients can be updated.
+                doPlayerAction(cmd, responses);
                 useUpdateTable = false;
-                PlayerAction action = (PlayerAction) cmd.getArgument();
-                GameContext.log(0, "Ignoring DO_ACTION ("+action+") in ServerCommandProcessor. Surrogates to handle");
-                // one of the client players has acted. We need to apply this to the server controller.
-
-                controller_.handlePlayerAction(action);
-                responses.add(cmd);
                 break;
             default:
                 assert false : "Unhandled command: "+ cmd;
@@ -127,6 +134,31 @@ class ServerCommandProcessor {
         }
 
         return responses;
+    }
+
+    /**
+     * One of the client players has acted. We need to apply this to the server controller
+     * and then broadcast out the same command so the surrogate(s) can be updated.
+     * When a robot (on the server) moves, then that action is broadcast to the clients so
+     * the surrogates on the clients can be updated.
+     * @param cmd the client players command/action
+     * @param responses at the least this will be the players action that we received, but it may contain robot
+     *       actions for the robots on the server that play immediately after the player.
+     */
+    private void doPlayerAction(GameCommand cmd, List<GameCommand> responses) {
+
+        PlayerAction action = (PlayerAction) cmd.getArgument();
+        GameContext.log(0, "Ignoring DO_ACTION (" + action + ") in ServerCommandProcessor. Surrogates to handle");
+        controller_.handlePlayerAction(action);
+
+        responses.add(cmd);
+
+        List<PlayerAction> robotActions = ((MultiGameController)controller_).getRecentRobotActions();
+        for (PlayerAction act : robotActions) {
+            GameCommand robotCmd = new GameCommand(GameCommand.Name.DO_ACTION, act);
+            GameContext.log(0, "adding commad for robot to respone :" + robotCmd);
+            responses.add(robotCmd);
+        }
     }
 
     /**

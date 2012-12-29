@@ -82,6 +82,10 @@ public abstract class GamePanel extends TexturedPanel
         super(BG_TEXTURE);
     }
 
+    public GameBoardViewer getViewer() {
+        return boardViewer_;
+    }
+
     /**
      * common initialization in the event that there are multiple constructors.
      */

@@ -139,7 +139,7 @@ public final class MessageContext {
      */
     private void loadAppResources() {
 
-        assert  applicationResourcePath_!=null :
+        assert (applicationResourcePath_ != null) :
                 "Cannot load app resources until applicationResourcePath has been set.";
         try {
             applicationMessages_ = ResourceBundle.getBundle(
