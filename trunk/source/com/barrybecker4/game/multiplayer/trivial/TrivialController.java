@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.trivial;
 
+import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameOptions;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.player.Player;
@@ -125,8 +126,9 @@ public class TrivialController extends MultiGameController {
         Player player;
         do {
             // if the current player has revealed, then advance to the next player.
-            currentPlayerIndex_ = (currentPlayerIndex_+1) % getPlayers().size();
+            currentPlayerIndex_ = (currentPlayerIndex_ + 1) % getPlayers().size();
             player = getPlayer(currentPlayerIndex_).getActualPlayer();
+            GameContext.log(0, "currentPlayerIndex=" + currentPlayerIndex_);
 
         }  while (((TrivialPlayer)player).isRevealed());
 

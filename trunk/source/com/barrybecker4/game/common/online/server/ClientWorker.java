@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * A client worker is created for each client player connection to this server.
+ * It runns on the server and sends commands to its particular client.
  */
 class ClientWorker implements Runnable {
 
@@ -83,8 +84,8 @@ class ClientWorker implements Runnable {
         List<GameCommand> responses = cmdProcessor.processCommand(cmd);
 
         for (GameCommand response: responses) {
-            for (ClientWorker w : clientConnections) {
-                w.update(response);
+            for (ClientWorker worker : clientConnections) {
+                worker.update(response);
             }
         }
 

@@ -21,7 +21,7 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
     private final MultiGamePlayer player;
 
     /** wait about 4 seconds for the player to move before timing out. */
-    private static final int TIMEOUT_DURATION = 4000;
+    private static final int TIMEOUT_DURATION = 6000;
 
 
     /**
@@ -82,6 +82,7 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
                         System.out.println("****** TIMEOUT! Waiting for "+ player.getName() + " to play.");
                     }
                     action = player.getAction(controller);
+                    player.setAction(null);
                 }
             }
 

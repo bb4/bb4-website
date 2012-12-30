@@ -14,7 +14,6 @@ import com.barrybecker4.game.common.plugin.PluginManager;
 import com.barrybecker4.game.common.ui.panel.GamePanel;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
-import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -138,7 +137,7 @@ class ServerCommandProcessor {
 
     /**
      * One of the client players has acted. We need to apply this to the server controller
-     * and then broadcast out the same command so the surrogate(s) can be updated.
+     * and then broadcast out the same command so the surrogate(s) on the client can be updated.
      * When a robot (on the server) moves, then that action is broadcast to the clients so
      * the surrogates on the clients can be updated.
      * @param cmd the client players command/action
@@ -148,15 +147,16 @@ class ServerCommandProcessor {
     private void doPlayerAction(GameCommand cmd, List<GameCommand> responses) {
 
         PlayerAction action = (PlayerAction) cmd.getArgument();
-        GameContext.log(0, "Ignoring DO_ACTION (" + action + ") in ServerCommandProcessor. Surrogates to handle");
+        GameContext.log(0, "ServerCmdProc: doPlayerAction (" + action + "). Surrogates to handle");
         controller_.handlePlayerAction(action);
 
         responses.add(cmd);
 
+        // sending the robot actions before the clients ask for them is a problem
         List<PlayerAction> robotActions = ((MultiGameController)controller_).getRecentRobotActions();
         for (PlayerAction act : robotActions) {
             GameCommand robotCmd = new GameCommand(GameCommand.Name.DO_ACTION, act);
-            GameContext.log(0, "adding commad for robot to respone :" + robotCmd);
+            GameContext.log(0, "adding command for robot to respond :" + robotCmd);
             responses.add(robotCmd);
         }
     }
