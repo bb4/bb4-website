@@ -12,14 +12,14 @@ import java.awt.*;
 import java.text.MessageFormat;
 
 /**
- * Represents a Player in a game
+ * Represents a trivial player in a game
  *
  * @author Barry Becker
  */
 public abstract class TrivialPlayer extends MultiGamePlayer {
 
     private static final long serialVersionUID = 1;
-    private static final int MAX_VALUE = 1000;
+    private static final int MAX_VALUE = 100;
 
     private MultiPlayerMarker piece_;
     private int value;
@@ -36,7 +36,7 @@ public abstract class TrivialPlayer extends MultiGamePlayer {
     TrivialPlayer(String name, Color color, boolean isHuman) {
         super(name, color, isHuman);
 
-        value = (int) ((MAX_VALUE + 0.9999) * Math.random());
+        value = (int) (MAX_VALUE * Math.random()) + 1;
 
         piece_ = new MultiPlayerMarker(this);
         revealed_ = false;
@@ -77,7 +77,7 @@ public abstract class TrivialPlayer extends MultiGamePlayer {
 
     /**
      * Factory method for creating players of the appropriate type.
-     * @param name
+     * @param name name of the trivial player
      * @param color
      * @param isHuman
      * @return the new player
@@ -89,7 +89,6 @@ public abstract class TrivialPlayer extends MultiGamePlayer {
     }
 
     /**
-     *
      * @param i index of player
      * @return  the default name for player i
      */

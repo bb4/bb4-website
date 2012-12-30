@@ -142,10 +142,11 @@
               <sleep seconds="1" />
               <antcall target="executeTrivial"/>
           </sequential>
+          <!--
            <sequential>
               <sleep seconds="2"/>
               <antcall target="executeTrivial"/>
-          </sequential>
+          </sequential-->
           <!--sequential>
               <sleep seconds="3"/>
               <antcall target="executeTrivial"/>
@@ -467,7 +468,7 @@
   <target name="executeProgram" depends="compile">
       <echo message="compiler loc= ${java_compiler}"/>
     <java classname="${className}" classpath="${classesDir};${libPath}"
-          fork="true" jvm="${java_compiler}">
+          fork="false" jvm="${java_compiler}">
         <sysproperty key="DEBUG" value="true"/>
         <arg line="${args}"/>
         <!-- use this if running Yourkit profiler -->

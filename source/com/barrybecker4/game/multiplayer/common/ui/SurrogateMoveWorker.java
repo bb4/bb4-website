@@ -32,7 +32,6 @@ class SurrogateMoveWorker {
      * Request the next move from the player that the surrogate represents.
      * Launches a separate thread to do the search for the next move so the UI is not blocked.
      * @return true if the game is over
-     * @throws AssertionError if something bad happened while waiting.
      */
      public boolean requestSurrogateMove(final SurrogateMultiPlayer player) throws AssertionError {
 
@@ -53,6 +52,7 @@ class SurrogateMoveWorker {
               public void finished() {
 
                   viewer_.applyAction(action, player.getActualPlayer());
+                  //viewer_.sendGameChangedEvent(null);
                   viewer_.refresh();
                   controller_.advanceToNextPlayer();
                   processing_ = false;

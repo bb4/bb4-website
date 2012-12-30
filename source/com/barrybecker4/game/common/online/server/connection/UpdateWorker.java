@@ -45,6 +45,7 @@ class UpdateWorker implements Runnable {
     }
 
     private void processNextCommand() throws IOException, ClassNotFoundException {
+
         GameCommand cmd = (GameCommand) inputStream.readObject();
         GameContext.log(1, "Connection: got an update of the table from the server:\n" + cmd);
 
