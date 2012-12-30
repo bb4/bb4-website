@@ -84,8 +84,7 @@ public class ProcessingOperators {
                     new Kernel( 3, 3, sharp ) ) ));
     }
 
-    private void createColorOps()
-    {
+    private void createColorOps() {
         mOps.put( "Grayscale", new MetaImageOp(new GrayscaleFilter()));
 
         short[] brighten = new short[256];
@@ -140,8 +139,7 @@ public class ProcessingOperators {
     }
 
 
-    private void createJHLabsOps()
-    {
+    private void createJHLabsOps() {
          List<Parameter> params = new ArrayList<Parameter>();
          mOps.put( "Caustics", createCausticsOp());
 

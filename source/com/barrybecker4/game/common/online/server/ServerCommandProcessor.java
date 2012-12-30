@@ -15,7 +15,6 @@ import com.barrybecker4.game.common.ui.panel.GamePanel;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,6 +48,7 @@ class ServerCommandProcessor {
 
     /**
      * Factory method to create the game controller via reflection.
+     * The server should not have a ui component.
      */
     private void createController(String gameName) {
 

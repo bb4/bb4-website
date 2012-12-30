@@ -3,6 +3,7 @@ package com.barrybecker4.apps.misc.axes;
 
 import com.barrybecker4.common.ColorMap;
 import com.barrybecker4.ui.legend.ContinuousColorLegend;
+import com.barrybecker4.ui.legend.LegendSynchronizer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +55,7 @@ public class AxesPanel extends JPanel implements ActionListener {
 
 
     public void actionPerformed(ActionEvent e) {
-        ContinuousColorLegend.synchronizeLegends(legend1_, legend2_);
+        new LegendSynchronizer().synchronizeLegends(legend1_, legend2_);
         this.repaint();
     }
 }

@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  Static Utility methods for rendering GoGroup description.
+ *  Static Utility methods for rendering a GoGroup.
  *  A GoString by comparison, is composed of a strongly connected set of one or more same color stones.
  *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi
  *
@@ -174,8 +174,7 @@ final class GoGroupRenderer {
     /**
      * @return a path marking the border between the 2 specified stones.
      */
-    private GeneralPath getBorderBetween( GoBoardPosition s1, GoBoardPosition s2)
-    {
+    private GeneralPath getBorderBetween( GoBoardPosition s1, GoBoardPosition s2) {
         // we can tell which case we have by how far apart the two stones are
         double dist = s1.getDistanceFrom( s2 );
         GeneralPath border = null;
@@ -374,8 +373,7 @@ final class GoGroupRenderer {
     /**
      * draw the group's eyes (for debugging/understanding purposes).
      */
-    private void drawEyes(GoEyeSet eyes)
-    {
+    private void drawEyes(GoEyeSet eyes) {
         if ( !eyes.isEmpty() ) {
             Font font = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, (int) (1.6 * Math.sqrt( cellSize_ ) - 1) );
             g2_.setFont( font );

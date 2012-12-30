@@ -67,7 +67,7 @@
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="com.sixrr.metrics.MetricsReloaded">
-    <option name="selectedProfile" value="BarryMetrics" />
+    <option name="selectedProfile" value="Class count metrics" />
     <option name="autoscroll" value="false" />
     <option name="showOnlyWarnings" value="false" />
   </component>
