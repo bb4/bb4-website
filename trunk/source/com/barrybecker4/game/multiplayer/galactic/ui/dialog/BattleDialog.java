@@ -7,6 +7,7 @@ import com.barrybecker4.game.multiplayer.galactic.BattleSimulation;
 import com.barrybecker4.game.multiplayer.galactic.Planet;
 import com.barrybecker4.game.multiplayer.galactic.player.GalacticPlayer;
 import com.barrybecker4.game.multiplayer.galactic.ui.GalaxyViewer;
+import com.barrybecker4.sound.Instruments;
 import com.barrybecker4.sound.MusicMaker;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.dialogs.OptionsDialog;
@@ -202,7 +203,7 @@ public final class BattleDialog extends OptionsDialog
              List sequence = battle_.getHitSequence();
              if (sequence.isEmpty()) {
                  // reinforced!
-                 GameContext.getMusicMaker().playNote( MusicMaker.APPLAUSE, 45, 0, 200, 1000 );
+                 GameContext.getMusicMaker().playNote( Instruments.APPLAUSE, 45, 0, 200, 1000 );
                  GameContext.getMusicMaker().playNote(70, 50, 900);
                  GameContext.getMusicMaker().playNote(90, 40, 1000);
                  descriptionLabel_.setText("Planet "+destPlanet.getName()+" has been reinforced.");
@@ -211,7 +212,7 @@ public final class BattleDialog extends OptionsDialog
                  boolean useSound = GameContext.getUseSound();
                  Iterator it = sequence.iterator();
                  if (useSound)
-                     GameContext.getMusicMaker().playNote( MusicMaker.GUNSHOT, 45, 0, 200, 1000 );
+                     GameContext.getMusicMaker().playNote( Instruments.GUNSHOT, 45, 0, 200, 1000 );
 
                  while (it.hasNext()) {
                      GalacticPlayer p = (GalacticPlayer)it.next();

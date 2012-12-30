@@ -47,24 +47,17 @@ public abstract class GamePanel extends TexturedPanel
      */
     protected GameToolBar toolBar_;
 
-    private final JScrollPane boardViewerScrollPane_ = new JScrollPane();
-
     /** must contain a GameBoardViewer to graphically represent the status of the board.  */
     protected GameBoardViewer boardViewer_;
 
     protected NewGameDialog newGameDialog_;
 
     protected GameOptionsDialog optionsDialog_;
+
     private GameInfoPanel infoPanel_;
 
     /** for a resizable applet   */
     private ResizableAppletPanel resizablePanel_;
-
-    /** font for the undo/redo buttons    */
-    private static final Font STATUS_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 10 );
-
-    /** A greeting specified using allophones. See SpeechSynthesizer.    */
-    protected static final String[] GREETING = {"w|u|d", "y|ouu", "l|ii|k", "t|ouu", "p|l|ay", "aa", "gg|AY|M"};
 
     private static final String CORE_IMAGE_PATH = GameContext.GAME_ROOT+"common/ui/images/";
     protected static final ImageIcon BG_TEXTURE;
@@ -109,7 +102,6 @@ public abstract class GamePanel extends TexturedPanel
     }
 
     public void saveGame() {
-
         boardViewer_.saveGame();
     }
 
@@ -137,15 +129,6 @@ public abstract class GamePanel extends TexturedPanel
 
         JPanel mainPanel = new JPanel( new BorderLayout() );
 
-        JLabel statusBarLabel = new JLabel();
-        statusBarLabel.setFont(STATUS_FONT);
-        statusBarLabel.setOpaque(false);
-        statusBarLabel.setText( GameContext.getLabel("STATUS_MSG"));
-        TexturedPanel statusBar_ = new TexturedPanel(BG_TEXTURE);
-        statusBar_.setLayout(new BorderLayout());
-        statusBar_.setMaximumSize(new Dimension(1000, 16));
-        statusBar_.add(statusBarLabel, BorderLayout.WEST);
-
         toolBar_ = createToolbar();
 
         // the main board viewer, It displays the current state of the board.
@@ -153,15 +136,10 @@ public abstract class GamePanel extends TexturedPanel
         boardViewer_ = createBoardViewer();
 
         OutputWindow logWindow = new OutputWindow( GameContext.getLabel("LOG_OUTPUT"), null);
-        System.out.println("setting the logger to new window");
         GameContext.setLogger( new Log(logWindow) );
 
         newGameDialog_ = createNewGameDialog( parent, boardViewer_ );
-        // onlineGameDialog_ = createOnlineGameDialog(parent, boardViewer_);
         optionsDialog_ = createOptionsDialog( parent, boardViewer_.getController() );
-
-        // if the board is too big, allow it to be scrolled.
-        boardViewerScrollPane_.setViewportView( boardViewer_ );
 
         infoPanel_ = createInfoPanel(boardViewer_.getController());
         infoPanel_.setTexture( BG_TEXTURE );
@@ -171,50 +149,43 @@ public abstract class GamePanel extends TexturedPanel
         // allows the undo button to update initially
         boardViewer_.addGameChangedListener(this);
 
-        // for showing a progress bar for example.
-        JPanel bottomDecorationPanel = createBottomDecorationPanel();
-
-        JPanel viewerPanel = new JPanel();
-        viewerPanel.setLayout(new BorderLayout());
-        viewerPanel.add( boardViewerScrollPane_, BorderLayout.CENTER );
-        if (bottomDecorationPanel!=null)
-            viewerPanel.add( bottomDecorationPanel, BorderLayout.SOUTH);
-
         mainPanel.setBorder( BorderFactory.createRaisedBevelBorder() );
         mainPanel.add( toolBar_, BorderLayout.NORTH );
-        mainPanel.add(statusBar_, BorderLayout.SOUTH );
+        mainPanel.add(new StatusBar(BG_TEXTURE), BorderLayout.SOUTH );
         mainPanel.add( infoPanel_, BorderLayout.EAST );
-        mainPanel.add( viewerPanel, BorderLayout.CENTER );
+        mainPanel.add( createViewerPanel(boardViewer_), BorderLayout.CENTER );
 
         resizablePanel_ = new ResizableAppletPanel( mainPanel );
 
         setLayout(new BorderLayout());
-        add( resizablePanel_, BorderLayout.CENTER ); //mainPanel_ );
-
+        add( resizablePanel_, BorderLayout.CENTER );
 
         //start and initialize a new game with the default options
         boardViewer_.startNewGame();
 
-        // Intro speech. Applets sometimes throw security exceptions for this.
-        if ( GameContext.getUseSound() ) {
-            // This works for arbitrary strings, but is not as nice sounding as the pre-generated wav file.
-            /* npe in applet (why?) */
-            //SpeechSynthesizer speech = new SpeechSynthesizer();
-            //speech.sayPhoneWords( GREETING );
+        Greeter.doGreeting();
+    }
 
-            // use when sound card available
-            /* causing security exception in applet? */
-            //URL url = GUIUtil.getURL("com/barrybecker4/sound/play_game_voice.wav");
-            //AudioClip clip = new AppletAudioClip(url);
-            //clip.play();
+    private JPanel createViewerPanel(GameBoardViewer boardViewer) {
+        JPanel viewerPanel = new JPanel();
+
+        // if the board is too big, allow it to be scrolled.
+        JScrollPane boardViewerScrollPane = new JScrollPane();
+        boardViewerScrollPane.setViewportView(boardViewer);
+
+        // for showing a progress bar for example.
+        JPanel bottomDecorationPanel = createBottomDecorationPanel();
+        viewerPanel.setLayout(new BorderLayout());
+        viewerPanel.add( boardViewerScrollPane, BorderLayout.CENTER );
+        if (bottomDecorationPanel != null) {
+            viewerPanel.add( bottomDecorationPanel, BorderLayout.SOUTH);
         }
-       // this.setDoubleBuffered(false);
+        return viewerPanel;
     }
 
     protected JPanel createBottomDecorationPanel() {
         return null;
     }
-
 
     /**
      * @return the ui component used to display the current board state.
@@ -282,7 +253,7 @@ public abstract class GamePanel extends TexturedPanel
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         if ( source == toolBar_.getNewGameButton() ) {
-            //newGameDialog_.setLocationRelativeTo( this );
+            newGameDialog_.setLocationRelativeTo(this);
 
             // if there is an active server and the game supports online play then there will be a tab for online games
             // otherwise user can only create a local game.
@@ -308,7 +279,8 @@ public abstract class GamePanel extends TexturedPanel
             //optionsDialog_.setLocationRelativeTo( this );
             optionsDialog_.showDialog();
         }
-        else if ( source == toolBar_.getHelpButton() )
+        else if ( source == toolBar_.getHelpButton() )  {
             showHelpDialog();
+        }
     }
 }

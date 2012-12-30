@@ -6,6 +6,7 @@ import com.barrybecker4.common.i18n.LocaleType;
 import com.barrybecker4.common.i18n.MessageContext;
 import com.barrybecker4.game.common.plugin.GamePlugin;
 import com.barrybecker4.game.common.plugin.PluginManager;
+import com.barrybecker4.sound.Instruments;
 import com.barrybecker4.sound.MusicMaker;
 import com.barrybecker4.ui.util.Log;
 
@@ -41,7 +42,7 @@ public final class GameContext {
 
         if ( useSound_ ) {
             getMusicMaker().stopAllSounds();
-            getMusicMaker().startNote( MusicMaker.SEASHORE, 40, 2, 3 );
+            getMusicMaker().startNote( Instruments.SEASHORE, 40, 2, 3 );
         }
     }
 

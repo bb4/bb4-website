@@ -2,6 +2,7 @@
 package com.barrybecker4.game.twoplayer.common;
 
 import com.barrybecker4.game.common.GameOptions;
+import com.barrybecker4.sound.Instruments;
 import com.barrybecker4.sound.MusicMaker;
 
 /**
@@ -12,7 +13,7 @@ import com.barrybecker4.sound.MusicMaker;
 public class TwoPlayerOptions extends GameOptions {
 
     /** Sound played when move is made */
-    private static final String DEFAULT_TONE = MusicMaker.TAIKO_DRUM;
+    private static final String DEFAULT_TONE = Instruments.TAIKO_DRUM;
 
     /** if true, then try to show a dialog visualizing the game tree.  */
     private boolean showGameTree_ = false;
@@ -39,7 +40,7 @@ public class TwoPlayerOptions extends GameOptions {
 
         preferredTone_ = preferredTone;
         if (preferredTone == null) {
-           preferredTone_ = MusicMaker.TAIKO_DRUM;
+           preferredTone_ = Instruments.TAIKO_DRUM;
         }
     }
 

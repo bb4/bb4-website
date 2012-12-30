@@ -183,11 +183,12 @@ public final class GUIUtil {
         // so the user knows something is happening
         ImageIcon splash;
         URL url = ClassLoaderSingleton.getClassLoader().getResource(imagePath);
-        if (url == null) // then use a default
+        if (url == null) {
+            // use a default
             splash = new ImageIcon( new BufferedImage( 300, 300, BufferedImage.TYPE_INT_RGB ) );
-        else
+        } else  {
             splash = new ImageIcon( url );
-
+        }
         return new SplashScreen( splash, null, waitMillis );
     }
 
@@ -244,12 +245,11 @@ public final class GUIUtil {
         return baseFrame;
     }
 
-
     /**
      * Paint with specified texture.
      */
     public static void paintComponentWithTexture(ImageIcon texture, Component c, Graphics g) {
-        if (texture==null) {
+        if (texture == null) {
             System.out.println( "warning no texture to tile with" );
             return;
         }
@@ -285,7 +285,6 @@ public final class GUIUtil {
         component.paint(img.createGraphics());
         return img;
     }
-
 
     /**
      * Get the suffix of a file name.

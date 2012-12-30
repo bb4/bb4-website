@@ -140,7 +140,6 @@ public abstract class GameOptionsDialog extends OptionsDialog
         return buttonsPanel;
     }
 
-
     /**
      * @return debug params tab panel
      */

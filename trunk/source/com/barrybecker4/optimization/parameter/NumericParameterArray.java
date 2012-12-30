@@ -90,13 +90,12 @@ public class NumericParameterArray extends AbstractParameterArray {
      */
     public List<ParameterArray> findGlobalSamples(int requestedNumSamples) {
         int numDims = size();
-        System.out.println("reqNumSamples=" + requestedNumSamples);
         int i;
         int[] dims = new int[numDims];
 
         int samplingRate = (int)Math.pow((double)requestedNumSamples, 1.0/numDims);
         int numSamples = determineNumSamples(dims, samplingRate);
-        System.out.println("dims="+Arrays.toString(dims) + " samplingRate="  + samplingRate);
+        //System.out.println("dims="+Arrays.toString(dims) + " samplingRate="  + samplingRate);
         MultiArray samples = new MultiArray( dims );
         List<ParameterArray> globalSamples = new ArrayList<ParameterArray>(numSamples);
 
