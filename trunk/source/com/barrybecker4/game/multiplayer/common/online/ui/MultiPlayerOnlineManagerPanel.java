@@ -107,10 +107,11 @@ public abstract class MultiPlayerOnlineManagerPanel
     /**
      * The server has sent out a message to all the clients.
      * @param cmd the command to handle.
+     * @return true if handled.
      */
     @Override
-    public void handleServerUpdate(GameCommand cmd) {
-        tableManager.handleServerUpdate(cmd);
+    public boolean handleServerUpdate(GameCommand cmd) {
+        return tableManager.handleServerUpdate(cmd);
     }
 
     /**

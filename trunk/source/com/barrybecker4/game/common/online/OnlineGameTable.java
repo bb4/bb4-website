@@ -149,8 +149,8 @@ public class OnlineGameTable implements Serializable {
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder(20);
-        buf.append("Name: ").append(name_).append('\n');
-        buf.append("Players:\n").append(getPlayersString()).append('\n');
+        buf.append("Name: ").append(name_).append(" - ");
+        buf.append("Players:").append(getPlayersString());
         return buf.toString();
     }
 

@@ -468,7 +468,7 @@
   <target name="executeProgram" depends="compile">
       <echo message="compiler loc= ${java_compiler}"/>
     <java classname="${className}" classpath="${classesDir};${libPath}"
-          fork="false" jvm="${java_compiler}">
+          fork="true" jvm="${java_compiler}">
         <sysproperty key="DEBUG" value="true"/>
         <arg line="${args}"/>
         <!-- use this if running Yourkit profiler -->
@@ -485,7 +485,7 @@
   <!-- call this to run java programs with two arguments -->
   <target name="executeProgram2" depends="compile">
     <java classname="${className}" classpath="${classesDir};${libPath}"
-          fork="true" jvm="${java_compiler}">
+          fork="false" jvm="${java_compiler}">
         <sysproperty key="DEBUG" value="true"/>
         <arg value="${arg1}"/>
         <arg value="${arg2}"/>

@@ -59,7 +59,7 @@ public class GameCommand implements Serializable {
     }
 
     public String toString() {
-        StringBuilder buf = new StringBuilder("Command: "+ name_ + '\n');
+        StringBuilder buf = new StringBuilder("Command: "+ name_ + " ");
         buf.append(argument_.toString());
         return buf.toString();
     }

@@ -85,7 +85,9 @@ class ClientWorker implements Runnable {
 
         for (GameCommand response: responses) {
             for (ClientWorker worker : clientConnections) {
+                GameContext.log(0, "sending resonse to client: " + response);
                 worker.update(response);
+                ThreadUtil.sleep(100);
             }
         }
 
@@ -97,13 +99,11 @@ class ClientWorker implements Runnable {
     }
 
     /**
-     * broadcast the current list of tables to all the online clients.
+     * Broadcast the current list of tables to all the online clients.
+     * Must reset the stream first, otherwise tables_ will always be the same as first sent.
      */
     public synchronized void update(GameCommand response) throws IOException {
 
-        GameContext.log(1, "OnlineGameServer: sending:" + cmdProcessor.getTables());
-
-        // must reset the stream first, otherwise tables_ will always be the same as first sent.
         oStream_.reset();
         oStream_.writeObject(response);
         oStream_.flush();

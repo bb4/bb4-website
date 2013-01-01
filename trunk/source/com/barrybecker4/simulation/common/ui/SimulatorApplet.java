@@ -13,7 +13,7 @@ import java.awt.*;
  * Base class for all simulator applets.
  * Resizable applet for showing simulations.
  *
- * @author Barry Becker   Date: Sep 17, 2005
+ * @author Barry Becker
  */
 public class SimulatorApplet extends ApplicationApplet {
 
@@ -22,7 +22,7 @@ public class SimulatorApplet extends ApplicationApplet {
     private static final boolean RUN_OPTIMIZATION = false;
     private static final String DEFAULT_SIMULATOR = "com.barrybecker4.simulation.fluid.ui.FluidSimulator";
 
-    public  SimulatorApplet() {
+    public SimulatorApplet() {
         GUIUtil.setStandAlone(true);
         simulator_ = null;
     }
@@ -95,8 +95,9 @@ public class SimulatorApplet extends ApplicationApplet {
     @Override
     public void start() {
         super.start();
-        if (RUN_OPTIMIZATION)
+        if (RUN_OPTIMIZATION)  {
             simulator_.doOptimization();
+        }
         this.repaint();
     }
 
@@ -108,10 +109,11 @@ public class SimulatorApplet extends ApplicationApplet {
         // create a simulator panel of the appropriate type based on the name of the class passed in.
         // if no simulator is specified as an argument, then we use the default.
         String simulatorClassName = DEFAULT_SIMULATOR;
-        if (args.length == 1)
+        if (args.length == 1) {
             simulatorClassName = args[0];
-        else if (args.length > 1)
+        } else if (args.length > 1) {
             simulatorClassName = args[1];
+        }
 
         System.out.println("get class="+ simulatorClassName);
         SimulatorApplet applet = new SimulatorApplet(simulatorClassName);

@@ -54,25 +54,29 @@ class MultiPlayerTableManager {
      * The server has sent out a message to all the clients.
      * @param cmd the command to handle.
      */
-    public void handleServerUpdate(GameCommand cmd) {
+    public boolean handleServerUpdate(GameCommand cmd) {
 
         if (onlineGameTablesTable_ == null) {
-            return; // not initialized yet.
+            return false; // not initialized yet.
         }
 
+        boolean handled = false;
         System.out.println("got an update of the multi-player table list from the server:\n" + cmd);
         switch (cmd.getName())  {
             case UPDATE_TABLES :
                 updateTables( (OnlineGameTableList) cmd.getArgument());
+                handled = true;
                 break;
             case START_GAME :
                 OnlineGameTable readyTable = onlineGameTablesTable_.getSelectedTable();
                 startGame(readyTable);
+                handled = true;
                 break;
             case CHAT_MESSAGE : break;
             case DO_ACTION : break;
             default : assert false : "Unexpected command name :"+ cmd.getName();
         }
+        return handled;
     }
 
     /**
@@ -130,6 +134,7 @@ class MultiPlayerTableManager {
             }
             else {
                 players.add(player);
+                connection_.addOnlineChangeListener(new NoOpOnlineGameChangeListener(player));
             }
         }
 

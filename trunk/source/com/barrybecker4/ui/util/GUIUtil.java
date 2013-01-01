@@ -212,17 +212,18 @@ public final class GUIUtil {
      */
     private static JFrame createAndShowAppletFrame(JApplet applet, String title) {
         JFrame baseFrame = new JFrame();
-
+        /* not needed since java 1.6? */
         baseFrame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
         baseFrame.addWindowListener( new WindowAdapter() {
             @Override
-            public void windowClosed( WindowEvent e )
-            {
+            public void windowClosed( WindowEvent e ) {
                 System.exit( 0 );
             }
-        } );
-        baseFrame.setTitle( title );
-        baseFrame.setContentPane( applet.getContentPane() );
+        });
+
+        baseFrame.setTitle(title);
+        baseFrame.setContentPane(applet.getContentPane());
+
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         int height = (int) (2.0 * d.getHeight()  / 3.0) ;

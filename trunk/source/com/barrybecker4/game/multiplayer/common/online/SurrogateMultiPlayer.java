@@ -38,7 +38,7 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
      * Update ourselves based on what was broadcast to or from the server.
      * @param cmd
      */
-    public synchronized void handleServerUpdate(GameCommand cmd) {
+    public synchronized boolean handleServerUpdate(GameCommand cmd) {
 
         if (cmd.getName() == GameCommand.Name.DO_ACTION) {
             PlayerAction action = (PlayerAction) cmd.getArgument();
@@ -49,8 +49,10 @@ public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChang
                     player.setAction(action);
                     player.notifyAll();  // unblock the wait below
                 }
+                return true;
             }
         }
+        return false;
     }
 
     @Override

@@ -81,7 +81,9 @@ public class TrivialGameViewer extends MultiGameViewer {
         String msg = applyAction(action, robot);
         pc.addRecentRobotAction(action);
 
-        JOptionPane.showMessageDialog(parent_, msg, robot.getName(), JOptionPane.INFORMATION_MESSAGE);
+        if (parent_ != null) {
+            JOptionPane.showMessageDialog(parent_, msg, robot.getName(), JOptionPane.INFORMATION_MESSAGE);
+        }
         //sendGameChangedEvent(null);   need?
         refresh();
         pc.advanceToNextPlayer();

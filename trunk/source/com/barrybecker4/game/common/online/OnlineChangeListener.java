@@ -12,5 +12,10 @@ package com.barrybecker4.game.common.online;
  */
 public interface OnlineChangeListener {
 
-    void handleServerUpdate(GameCommand cmd);
+    /**
+     * @param cmd  the command to handle. Depending on which class is doing the handling, the command
+     *            may or may not actually be handled.
+     * @return true if the command was handled by the call to this method.
+     */
+    boolean handleServerUpdate(GameCommand cmd);
 }

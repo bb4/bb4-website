@@ -58,11 +58,7 @@ public abstract class OnlineGameManagerPanel
 
     public abstract void closing();
 
-
-    public void handleServerUpdate(GameCommand cmd) {
-
-        GameContext.log(1, "GameManagerPanel: got an update of the table from the server:\n" + cmd);
-    }
+    public abstract boolean handleServerUpdate(GameCommand cmd);
 
     /**
      * Subclasses need to provide a more interesting implementation of this if they

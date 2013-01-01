@@ -75,26 +75,14 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
 
     /**
      * @return true if there is at least one table in the list that is ready to start playing.
-     */
+     *
     public boolean hasTableReadyToPlay() {
         for (OnlineGameTable table : this) {
             if (table.isReadyToPlay())
                 return true;
         }
         return false;
-    }
-
-    /**
-     * @return a list of all the tables that are currently ready to begin playing.
-     */
-    public List<OnlineGameTable> getTablesReadyToPlay() {
-        List<OnlineGameTable> readyTables = new ArrayList<OnlineGameTable>();
-        for (OnlineGameTable table : this) {
-            if (table.isReadyToPlay())
-                readyTables.add(table);
-        }
-        return readyTables;
-    }
+    } */
 
     /**
      * @return the table which is ready to play and has playerName, otherwise return null of no tables like that.
@@ -121,9 +109,9 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
     }
 
     public synchronized String toString()  {
-        StringBuilder bldr = new StringBuilder("Tables:\n");
+        StringBuilder bldr = new StringBuilder("Tables:");
         for (OnlineGameTable t : this) {
-            bldr.append(t).append("\n");
+            bldr.append(t); //.append("\n");
         }
         return bldr.toString();
     }

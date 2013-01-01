@@ -110,7 +110,6 @@ public abstract class Simulator extends AnimationComponent
         controls.add( createResetButton() );
 
         controls.add( createOptionsButton() );
-        //controls.add(simulator.getStepButton());
         return controls;
     }
 
@@ -135,7 +134,6 @@ public abstract class Simulator extends AnimationComponent
         });
         return resetButton;
     }
-
 
     /**
      * Override this to return ui elements that can be used to modify the simulation as it is running.

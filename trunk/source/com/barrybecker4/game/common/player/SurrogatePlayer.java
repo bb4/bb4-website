@@ -28,16 +28,17 @@ public  class SurrogatePlayer extends Player implements OnlineChangeListener {
     }
 
     /**
-     * Update ourselves based on what was broadcast to or from the server.
-     * @param cmd
+     * {@inheritDoc}
      */
-    public synchronized void handleServerUpdate(GameCommand cmd) {
+    public synchronized boolean handleServerUpdate(GameCommand cmd) {
 
         if (cmd.getName() == GameCommand.Name.DO_ACTION) {
             PlayerAction action = (PlayerAction) cmd.getArgument();
             GameContext.log(0, "in SurrogatePlayer handleServerUpdate (currently ignored) action =" + action);
             /// @@ need to do something for regular players here.
+            return true;
         }
+        return false;
     }
 
     /**
