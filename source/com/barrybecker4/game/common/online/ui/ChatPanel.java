@@ -44,11 +44,13 @@ public class ChatPanel extends JPanel implements OnlineChangeListener, KeyListen
     /**
      * Post messages from other players.
      */
-    public void handleServerUpdate(GameCommand cmd) {
+    public boolean handleServerUpdate(GameCommand cmd) {
         if (cmd.getName() == GameCommand.Name.CHAT_MESSAGE)  {
             textArea_.append(cmd.getArgument().toString());
             textArea_.append("\n");
+            return true;
         }
+        return false;
     }
 
     /**

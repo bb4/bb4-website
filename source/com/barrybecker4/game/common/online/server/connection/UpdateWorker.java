@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.common.online.server.connection;
 
+import com.barrybecker4.common.concurrency.ThreadUtil;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
@@ -47,10 +48,26 @@ class UpdateWorker implements Runnable {
     private void processNextCommand() throws IOException, ClassNotFoundException {
 
         GameCommand cmd = (GameCommand) inputStream.readObject();
-        GameContext.log(1, "Connection: got an update of the table from the server:\n" + cmd);
+        GameContext.log(0, "Client Connection: got an update from the server:" + cmd);
 
-        for (OnlineChangeListener aChangeListeners_ : changeListeners) {
-            aChangeListeners_.handleServerUpdate(cmd);
+        boolean processed = false;
+        int count = 0;
+
+        // the command may not get processed right away if the surrogate player is not waiting for it yet.
+        while (!processed && count <10) {
+            for (OnlineChangeListener aChangeListeners_ : changeListeners) {
+                if (aChangeListeners_.handleServerUpdate(cmd)) {
+                    processed = true;
+                }
+            }
+            if (!processed) {
+                GameContext.log(0, " --- Unable to process cmd="+ cmd + " yet.");
+                ThreadUtil.sleep(1000);
+                count++;
+            }
+            else{
+                GameContext.log(0, " --- Cmd "+ cmd + " processed on client.");
+            }
         }
     }
 

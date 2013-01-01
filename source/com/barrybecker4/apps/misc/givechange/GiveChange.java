@@ -16,7 +16,7 @@ import java.io.IOException;
 public final class GiveChange {
 
     /** maximum amount of money (in cents) to give change for. */
-    private static final Long MAX_AMOUNT = 99L;
+    private static final Long MAX_AMOUNT = 999L;
 
     /** private constructor for class with all static methods. */
     private GiveChange() {}

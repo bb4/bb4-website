@@ -59,7 +59,6 @@ public class Log implements ILog {
      */
     public void setDestination( int logDestination ) {
         logDestination_ = logDestination;
-        System.out.println("log.setDestination vis="+ (logDestination_ == LOG_TO_WINDOW));
         if ( logWindow_ != null ) {
             logWindow_.setVisible(logDestination_ == LOG_TO_WINDOW);
         }

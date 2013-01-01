@@ -177,12 +177,12 @@ public abstract class MultiGameController extends GameController {
         MultiGameViewer pviewer = (MultiGameViewer) getViewer();
         pviewer.refresh();
 
-        // show message when done.
         if (!isDone()) {
             advanceToNextPlayerIndex();
             Player currentPlayer = getCurrentPlayer();
+            GameContext.log(0, "advanced to player="+ currentPlayer.getName());
             if (currentPlayer.isSurrogate()) {
-                GameContext.log(0, "about to do surrogate move for " + currentPlayer
+                GameContext.log(0, "about to request surrogate move for " + currentPlayer
                         + " in controller=" + this + " in thread=" + Thread.currentThread().getName());
                 pviewer.doSurrogateMove((SurrogateMultiPlayer)currentPlayer);
             }
@@ -191,7 +191,7 @@ public abstract class MultiGameController extends GameController {
                 pviewer.doComputerMove(currentPlayer);
             }
         }
-        // fire game changed event
+
         pviewer.sendGameChangedEvent(null);
     }
 
@@ -202,6 +202,7 @@ public abstract class MultiGameController extends GameController {
     /** get all the actions since last asked and clear them out */
     public List<PlayerAction> getRecentRobotActions() {
         List<PlayerAction> actions = new ArrayList<PlayerAction>();
+        GameContext.log(0, "There were " + recentRobotActions_.size() +"recent robot actions.");
         actions.addAll(recentRobotActions_);
         recentRobotActions_.clear();
         return actions;
@@ -217,13 +218,6 @@ public abstract class MultiGameController extends GameController {
      * @return the index of the next player
      */
     protected abstract int advanceToNextPlayerIndex();
-
-    /**
-     *  @return the player that goes first.
-     *
-    public Player getFirstPlayer() {
-        return getPlayers().get(startingPlayerIndex_);
-    }*/
 
     protected MultiGamePlayer getPlayer(int index) {
         return (MultiGamePlayer) getPlayers().get(index);

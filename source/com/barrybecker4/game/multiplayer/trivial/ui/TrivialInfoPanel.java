@@ -105,7 +105,9 @@ class TrivialInfoPanel extends GameInfoPanel
                         break;
                 }
                 // tell the server that we have moved. All the surrogates need to then make their moves.
-                controller_.getServerConnection().playerActionPerformed(action);
+                if (controller_.isOnlinePlayAvailable())  {
+                    controller_.getServerConnection().playerActionPerformed(action);
+                }
                 pc.advanceToNextPlayer();
            }
         }

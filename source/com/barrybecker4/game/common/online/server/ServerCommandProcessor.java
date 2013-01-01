@@ -152,11 +152,12 @@ class ServerCommandProcessor {
 
         responses.add(cmd);
 
-        // sending the robot actions before the clients ask for them is a problem
+        // get all robot player actions until the next human player
         List<PlayerAction> robotActions = ((MultiGameController)controller_).getRecentRobotActions();
+
         for (PlayerAction act : robotActions) {
             GameCommand robotCmd = new GameCommand(GameCommand.Name.DO_ACTION, act);
-            GameContext.log(0, "adding command for robot to respond :" + robotCmd);
+            GameContext.log(0, "adding response command for robot action on server :" + robotCmd);
             responses.add(robotCmd);
         }
     }

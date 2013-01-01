@@ -60,7 +60,7 @@ public class PokerGameViewer extends MultiGameViewer {
     @Override
     public boolean doComputerMove(Player player) {
         assert(!player.isHuman());
-        PokerRobotPlayer robot = (PokerRobotPlayer)player;
+        PokerRobotPlayer robot = (PokerRobotPlayer)player.getActualPlayer();
         PokerController pc = (PokerController) controller_;
 
         PlayerAction action = robot.getAction(pc);
