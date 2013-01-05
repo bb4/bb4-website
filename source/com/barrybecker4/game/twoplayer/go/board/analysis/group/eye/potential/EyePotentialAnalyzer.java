@@ -65,6 +65,7 @@ public class EyePotentialAnalyzer {
      */
     private float findTotalEyePotential() {
 
+        if (group_.getMembers().isEmpty()) return 0;
         IGoString groupString = group_.getMembers().iterator().next();
 
         int rMin = boundingBox_.getMinRow();

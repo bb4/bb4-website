@@ -104,10 +104,11 @@ public class SetGameRenderer extends MultiGameBoardRenderer {
 
     /**
      * This renders the current state of the Board to the screen.
+     * Erase what's there and redraw.
      */
     @Override
     public void render( Graphics g, IGameController controller, int panelWidth, int panelHeight ) {
-        // erase what's there and redraw.
+
         SetController c = (SetController)controller;
         int numCards = c.getNumCardsShowing();
 
