@@ -23,7 +23,6 @@ public abstract class GameInfoPanel extends TexturedPanel
     protected GameController controller_ = null;
     protected GeneralInfoPanel generalInfoPanel_;
 
-    private static final Font SECTION_TITLE_FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.BOLD, 12 );
     private static final int DEFAULT_MIN_WIDTH = 210;
     private static final int MAX_HEIGHT = 1000;
 

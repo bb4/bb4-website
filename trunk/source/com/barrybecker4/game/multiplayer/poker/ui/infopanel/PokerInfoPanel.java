@@ -162,7 +162,9 @@ public class PokerInfoPanel extends GameInfoPanel
                  currentPlayer.contributeToPot(pc.getRound(), raise);
                  break;
         }
-        controller_.getServerConnection().playerActionPerformed(action);
+        if (controller_.isOnlinePlayAvailable())  {
+            controller_.getServerConnection().playerActionPerformed(action);
+        }
     }
 
     /**
