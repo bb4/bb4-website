@@ -3,8 +3,7 @@ package com.barrybecker4.game.common.ui.panel;
 
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.Move;
-
-import java.awt.*;
+import java.util.EventObject;
 
 /**
  * This event gets fired whenever the Game state changes.
@@ -13,12 +12,10 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public final class GameChangedEvent extends AWTEvent {
+public final class GameChangedEvent extends EventObject {
 
-    private static final int GAME_CHANGED_EVENT = AWTEvent.RESERVED_ID_MAX + 4003;
     private final Move move_;
     private final IGameController controller_;
-    private static final long serialVersionUID = 0L;
 
     /**
      * constructor
@@ -26,7 +23,7 @@ public final class GameChangedEvent extends AWTEvent {
      * @param controller
      */
     public GameChangedEvent(Move mv, IGameController controller, Object source ) {
-        super(source, GAME_CHANGED_EVENT );
+        super(source);
         move_ = mv;
         controller_ = controller;
     }

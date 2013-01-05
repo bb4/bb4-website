@@ -46,8 +46,6 @@ public abstract class GameBoardViewer extends JPanel
 
     private ViewerMouseListener mouseListener_;
 
-    /** for dispatching events */
-    private final EventQueue evtq_;
     /** list of listeners for handling those events. */
     private final List<GameChangedListener> gameListeners_ = new ArrayList<GameChangedListener>();
 
@@ -62,9 +60,6 @@ public abstract class GameBoardViewer extends JPanel
     public GameBoardViewer() {
         controller_ = createController();
         controller_.setViewer(this);
-        // = createController();  used to do this, but I want only one controller, while I may have several viewers.
-        evtq_ = Toolkit.getDefaultToolkit().getSystemEventQueue();
-        enableEvents( 0 );
 
         // this activates tooltip text for the component
         this.setToolTipText( "" );
@@ -185,7 +180,6 @@ public abstract class GameBoardViewer extends JPanel
      */
     public abstract void startNewGame();
 
-
     /**
      * in some cases the viewer is used to show games only.
      */
@@ -212,11 +206,13 @@ public abstract class GameBoardViewer extends JPanel
 
     /**
      * This method gets called when the game has changed in some way.
-     * Most likely because a move has been played.
+     * Most likely because a move has been played. It does not need to be on the eventDispatch thread.
      */
     public void sendGameChangedEvent(Move m) {
         GameChangedEvent gce = new GameChangedEvent( m, controller_, this );
-        evtq_.postEvent( gce );
+         for (GameChangedListener gcl : gameListeners_) {
+            gcl.gameChanged(gce);
+         }
     }
 
     /**
@@ -239,7 +235,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void showWinnerDialog() {
         String message = getGameOverMessage();
-        JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
+        JOptionPane.showMessageDialog(this, message, GameContext.getLabel("GAME_OVER"),
                 JOptionPane.INFORMATION_MESSAGE );
     }
 
@@ -295,22 +291,6 @@ public abstract class GameBoardViewer extends JPanel
      */
     private void removeGameChangedListener( GameChangedListener gcl ) {
         gameListeners_.remove(gcl);
-    }
-
-    /**
-     * This overrides Component's processEvent.
-     */
-    @Override
-    public void processEvent( AWTEvent evt ) {
-        if ( evt instanceof GameChangedEvent) {
-            for (GameChangedListener gcl : gameListeners_) {
-                gcl.gameChanged((GameChangedEvent) evt);
-            }
-        }
-        else  {
-            // defer to the super's handling
-            super.processEvent( evt );
-        }
     }
 
     /**
