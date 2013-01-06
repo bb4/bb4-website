@@ -19,6 +19,8 @@ public class PokerTable extends Board {
     /** size of a players marker  */
     private static final double RADIUS = 0.65;
 
+    private PokerRound round;
+
 
     /**
      * Constructor
@@ -27,19 +29,29 @@ public class PokerTable extends Board {
      */
     public PokerTable( int numRows, int numCols )  {
         setSize( numRows, numCols );
+        round = new PokerRound();
     }
 
     /** Copy constructor */
     public PokerTable(PokerTable table) {
         super(table);
+        round = new PokerRound();
+        round.addToPot(table.getPotValue());
     }
 
     public PokerTable copy() {
         return new PokerTable(this);
     }
 
+    public PokerRound getRound() {
+        return round;
+    }
+
+    public int getPotValue() {
+        return round.getPotValue();
+    }
     /**
-     * A poker game has no real limit so we just reuturn a huge number.
+     * A poker game has no real limit so we just return a huge number.
      * @return max number of poker rounds allowed.
      */
     public int getMaxNumMoves() {
@@ -81,7 +93,6 @@ public class PokerTable extends Board {
         //PokerTurn gmove = (PokerTurn)move;
         return true;
     }
-
 
     /**
      * For Poker, undoing a move means turning time back a round and

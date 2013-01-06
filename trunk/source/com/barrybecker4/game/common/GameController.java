@@ -2,6 +2,8 @@
 package com.barrybecker4.game.common;
 
 import com.barrybecker4.game.common.board.Board;
+import com.barrybecker4.game.common.board.IBoard;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.online.server.IServerConnection;
 import com.barrybecker4.game.common.persistence.GameExporter;
 import com.barrybecker4.game.common.player.PlayerAction;
@@ -19,7 +21,7 @@ public abstract class GameController
            implements IGameController {
 
     /** the board has the layout of the pieces. */
-    private Board board_;
+    private IBoard board_;
 
     /** Use this to draw directly to the ui while thinking (for debugging purposes) . */
     protected GameViewable viewer_;
@@ -61,7 +63,7 @@ public abstract class GameController
 
 
     public MoveList getMoveList() {
-        return getBoard().getMoveList();
+        return ((Board)getBoard()).getMoveList();
     }
 
     /**
@@ -75,7 +77,7 @@ public abstract class GameController
      * @return number of moves made so far.
      */
     public int getNumMoves() {
-        return getBoard().getMoveList().getNumMoves();
+        return ((Board)getBoard()).getMoveList().getNumMoves();
     }
 
     /**
@@ -97,14 +99,14 @@ public abstract class GameController
     /**
      * @return the board representation object.
      */
-    public final Board getBoard() {
+    public final IBoard getBoard() {
         if (board_ == null) {
             board_ = createBoard();
         }
         return board_;
     }
 
-    protected abstract Board createBoard();
+    protected abstract IBoard createBoard();
 
     /**
      * Setup the initial game state.
@@ -113,7 +115,7 @@ public abstract class GameController
 
 
     public void makeMove(Move move) {
-        getBoard().makeMove(move);
+        ((IRectangularBoard)getBoard()).makeMove(move);
     }
 
     /**
@@ -121,7 +123,7 @@ public abstract class GameController
      * @return  the move which was undone (null returned if no prior move)
      */
     public Move undoLastMove() {
-        return getBoard().undoMove();
+        return ((IRectangularBoard)getBoard()).undoMove();
     }
 
     /**
@@ -185,9 +187,6 @@ public abstract class GameController
         }
         return serverConnection_;
     }
-
-
-
 
     /**
      * Most games do not support online play so returning null is the default

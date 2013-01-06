@@ -6,6 +6,7 @@ import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.GameOptions;
 import com.barrybecker4.game.common.GameWeights;
 import com.barrybecker4.game.common.Move;
+import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.player.PlayerOptions;
@@ -181,7 +182,7 @@ public abstract class TwoPlayerController extends GameController {
         if (!getPlayers().anyPlayerWon()) {
             return 0;
         }
-        return getBoard().getTypicalNumMoves() / getNumMoves();
+        return ((Board)getBoard()).getTypicalNumMoves() / getNumMoves();
     }
 
     /**

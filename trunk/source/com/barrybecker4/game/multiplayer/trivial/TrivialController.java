@@ -38,7 +38,7 @@ public class TrivialController extends MultiGameController {
      *  Construct the game controller given an initial board size
      */
     @Override
-    protected Board createTable(int nrows, int ncols) {
+    protected TrivialTable createTable(int nrows, int ncols) {
         return new TrivialTable(nrows, ncols);
     }
 

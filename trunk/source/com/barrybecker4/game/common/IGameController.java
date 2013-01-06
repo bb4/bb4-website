@@ -3,6 +3,7 @@ package com.barrybecker4.game.common;
 
 
 import com.barrybecker4.game.common.board.Board;
+import com.barrybecker4.game.common.board.IBoard;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 
@@ -24,7 +25,7 @@ public interface IGameController {
     /**
      * @return the board representation object.
      */
-    Board getBoard();
+    IBoard getBoard();
 
     /**
      * @return the class which shows the current state of the game board.

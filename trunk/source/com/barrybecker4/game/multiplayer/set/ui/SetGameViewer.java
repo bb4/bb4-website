@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.set.ui;
 
-
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.common.ui.viewer.ViewerMouseListener;
@@ -9,6 +8,7 @@ import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameViewer;
 import com.barrybecker4.game.multiplayer.set.Card;
+import com.barrybecker4.game.multiplayer.set.SetBoard;
 import com.barrybecker4.game.multiplayer.set.SetController;
 import com.barrybecker4.game.multiplayer.set.SetPlayer;
 import com.barrybecker4.game.multiplayer.set.ui.render.SetGameRenderer;
@@ -60,6 +60,14 @@ public final class SetGameViewer extends MultiGameViewer {
     }
 
     /**
+     * @return the cached game board if we are in the middle of processing.
+     */
+    @Override
+    public SetBoard getBoard() {
+        return (SetBoard) controller_.getBoard();
+    }
+
+    /**
      * make the computer move and show it on the screen.
      *
      * @param player computer player to move
@@ -90,17 +98,7 @@ public final class SetGameViewer extends MultiGameViewer {
     }
 
     public List<Card> getSelectedCards() {
-
-        List<Card> selected = new ArrayList<Card>();
-        SetController c = (SetController)controller_;
-
-        for (int i = 0; i<c.getNumCardsShowing(); i++ ) {
-            Card card = c.getDeck().get(i);
-            if (card.isSelected()) {
-                selected.add(card);
-            }
-        }
-        return selected;
+        return ((SetBoard)controller_.getBoard()).getSelectedCards();
     }
 
     /**

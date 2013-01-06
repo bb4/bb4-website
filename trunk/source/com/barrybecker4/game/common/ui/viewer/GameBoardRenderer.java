@@ -6,6 +6,9 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.BoardPosition;
+import com.barrybecker4.game.common.board.IBoard;
+import com.barrybecker4.game.common.player.Player;
+import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.ui.themes.BarryTheme;
 import com.barrybecker4.ui.util.GUIUtil;
 
@@ -181,7 +184,7 @@ public abstract class GameBoardRenderer {
     }
 
     /**
-     * Compute the cell size based on the the dimenions of the viewer
+     * Compute the cell size based on the the dimensions of the viewer
      * The viewer window may be resized causing the cell size to change dynamically
      * @return the current cell size given the board and panel dimensions.
      */
@@ -230,14 +233,12 @@ public abstract class GameBoardRenderer {
      * Draw some indication of where the last move was made.
      * The default is to show nothing.
      */
-    protected void drawLastMoveMarker(Graphics2D g2, IGameController controller)
-    {}
+    protected void drawLastMoveMarker(Graphics2D g2, Player currentPlayer, Board board) {}
 
     /**
      * Draw the pieces and possibly other game markers for both players.
      */
-    protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
-        Board board = controller.getBoard();
+    protected void drawMarkers(Board board, PlayerList players, Graphics2D g2 ) {
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();
         for ( int i = 1; i <= nrows; i++ ) {
@@ -250,9 +251,11 @@ public abstract class GameBoardRenderer {
     /**
      * This renders the current state of the Board to the screen.
      */
-    public void render( Graphics g, IGameController controller, int panelWidth, int panelHeight ) {
-        Board board = controller.getBoard();
-        cellSize = calcCellSize( board, panelWidth, panelHeight );
+    public void render(Graphics g, Player currentPlayer, PlayerList players,
+                       IBoard board, int panelWidth, int panelHeight ) {
+
+        Board b = (Board)board;
+        cellSize = calcCellSize( b, panelWidth, panelHeight );
 
         if ( draggedShowPiece_!=null) {
             draggedShowPiece_.getPiece().setTransparency( DRAG_TRANSPARENCY );
@@ -262,8 +265,8 @@ public abstract class GameBoardRenderer {
 
         int gridOffset = 0;
         int start = 0;
-        int nrows = board.getNumRows();
-        int ncols = board.getNumCols();
+        int nrows = b.getNumRows();
+        int ncols = b.getNumCols();
         int nrows1 = nrows;
         int ncols1 = ncols;
         // if the grid is offset, it means the pieces will be shown at the vertices.
@@ -277,20 +280,21 @@ public abstract class GameBoardRenderer {
         int rightEdgePos = getMargin() + cellSize * ncols1 + gridOffset;
         int bottomEdgePos = getMargin() + cellSize * nrows1 + gridOffset;
 
-        drawBackground( g2, board, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight );
+        drawBackground( g2, b, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight );
 
         drawGrid(g2, startPos, rightEdgePos, bottomEdgePos, start, nrows1, ncols1, gridOffset);
 
         g2.setFont( VIEWER_FONT );
+
         // now draw both player markers
-        drawMarkers( controller, g2 );
+        drawMarkers(b, players, g2);
 
         // if there is a piece being dragged, draw it
         if ( draggedShowPiece_ != null ) {
-            pieceRenderer_.render(g2, draggedShowPiece_, cellSize, getMargin(), board);
+            pieceRenderer_.render(g2, draggedShowPiece_, cellSize, getMargin(), b);
         }
 
-        drawLastMoveMarker(g2, controller);
+        drawLastMoveMarker(g2, currentPlayer, b);
     }
 }
 

@@ -13,6 +13,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.MoveList;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 
 import java.util.Enumeration;
 
@@ -69,7 +70,7 @@ public abstract class GameImporter {
                 size = sizeToken.getSize();
             }
         }
-        controller_.getBoard().setSize(size, size);
+        ((IRectangularBoard)controller_.getBoard()).setSize(size, size);
     }
 
     /**

@@ -9,7 +9,7 @@ import com.barrybecker4.game.common.MoveList;
 /**
  *  the Board describes the physical layout of the game.
  *  It is an abstract class that provides a common implementation for many of the
- *  methods in the IBoard.
+ *  methods in the IRectangularBoard.
  *  Assumes an M*N grid.
  *  Legal positions are [1, numRows_][1, numCols_]
  *
@@ -21,7 +21,7 @@ import com.barrybecker4.game.common.MoveList;
  *
  *  @author Barry Becker
  */
-public abstract class Board implements IBoard {
+public abstract class Board implements IRectangularBoard {
 
     /** the internal data structures representing the game board and the positions on it. */
     protected BoardPositions positions_;

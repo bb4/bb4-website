@@ -8,6 +8,7 @@ import com.barrybecker4.game.common.ui.panel.GeneralInfoPanel;
 import com.barrybecker4.game.common.ui.panel.InfoLabel;
 import com.barrybecker4.game.common.ui.panel.RowEntryPanel;
 import com.barrybecker4.game.common.ui.panel.SectionPanel;
+import com.barrybecker4.game.multiplayer.set.SetBoard;
 import com.barrybecker4.game.multiplayer.set.SetController;
 
 import javax.swing.*;
@@ -56,10 +57,10 @@ class SetGeneralInfoPanel extends GeneralInfoPanel {
     @Override
     public void update(GameController controller) {
 
-        SetController c = (SetController) controller;
-        numSetsOnBoardLabel_.setText( c.getNumSetsOnBoard() + " " );
+        SetBoard b = (SetBoard) controller.getBoard();
+        numSetsOnBoardLabel_.setText( b.getNumSetsOnBoard() + " " );
 
-        int cardsInDeck = c.getDeck().size() - c.getNumCardsShowing();
+        int cardsInDeck = b.getDeck().size() - b.getNumCardsShowing();
         numCardsRemainingLabel_.setText( cardsInDeck + " " );
     }
 }

@@ -7,6 +7,7 @@ import com.barrybecker4.game.common.GameViewable;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.Board;
+import com.barrybecker4.game.common.board.IBoard;
 import com.barrybecker4.game.common.persistence.GameExporter;
 import com.barrybecker4.game.common.ui.SgfFileFilter;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
@@ -39,7 +40,7 @@ public abstract class GameBoardViewer extends JPanel
                                       implements GameViewable, GameChangedListener {
 
     /** every GameBoardViewer must contain a controller. */
-    protected GameController controller_ = null;
+    protected GameController controller_;
 
     /** for restoring undone moves. */
     protected final MoveList undoneMoves_ = new MoveList();
@@ -156,7 +157,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void reset() {
         controller_.reset();  //clear what's there and start over
-        Board board = controller_.getBoard();
+        Board board = (Board) controller_.getBoard();
         commonReset(board);
     }
 
@@ -200,8 +201,8 @@ public abstract class GameBoardViewer extends JPanel
      * @param evt
      */
     public void gameChanged(GameChangedEvent evt) {
-        GameContext.log(1, "game changed" );
-        this.refresh();
+        GameContext.log(1, "game changed. refreshing viewer." );
+        refresh();
     }
 
     /**
@@ -210,9 +211,9 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void sendGameChangedEvent(Move m) {
         GameChangedEvent gce = new GameChangedEvent( m, controller_, this );
-         for (GameChangedListener gcl : gameListeners_) {
+        for (GameChangedListener gcl : gameListeners_) {
             gcl.gameChanged(gce);
-         }
+        }
     }
 
     /**
@@ -300,13 +301,17 @@ public abstract class GameBoardViewer extends JPanel
     protected void paintComponent( Graphics g ) {
         super.paintComponents( g );
 
-        getBoardRenderer().render( g, controller_, this.getWidth(), this.getHeight());
+        getBoardRenderer().render( g,
+                controller_.getCurrentPlayer(),
+                controller_.getPlayers(),
+                controller_.getBoard(),
+                getWidth(), getHeight());
     }
 
     /**
      * @return the cached game board if we are in the middle of processing.
      */
-    public Board getBoard() {
+    public IBoard getBoard() {
         return controller_.getBoard();
     }
 

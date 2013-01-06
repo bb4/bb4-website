@@ -41,7 +41,7 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
             return;
         Location loc = getRenderer().createLocation(e);
 
-        Board board = controller.getBoard();
+        Board board = (Board)controller.getBoard();
         BoardPosition position = board.getPosition( loc );
         // if there is no piece or out of bounds, then return without doing anything
         if ( (position == null) || (position.isUnoccupied()) ) {
@@ -65,7 +65,7 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
         if ( getRenderer().getDraggedPiece() == null )
             return; // nothing being dragged
 
-        Board board = controller.getBoard();
+        Board board = (Board)controller.getBoard();
         // get the original position.
         BoardPosition position = board.getPosition( getRenderer().getDraggedPiece().getLocation());
 

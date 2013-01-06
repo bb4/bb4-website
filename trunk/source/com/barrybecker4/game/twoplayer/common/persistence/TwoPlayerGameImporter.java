@@ -12,6 +12,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.GamePiece;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.persistence.GameImporter;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
@@ -101,7 +102,7 @@ public class TwoPlayerGameImporter extends GameImporter {
                 gc.getPlayers().getPlayer1().setName(nameToken.getName());
             }
         }
-        gc.getBoard().setSize(numRows, numCols);
+        ((IRectangularBoard)gc.getBoard()).setSize(numRows, numCols);
     }
 
     /**

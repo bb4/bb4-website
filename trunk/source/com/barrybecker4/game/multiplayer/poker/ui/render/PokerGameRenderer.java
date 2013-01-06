@@ -4,10 +4,13 @@ package com.barrybecker4.game.multiplayer.poker.ui.render;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.board.Board;
+import com.barrybecker4.game.common.player.Player;
+import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameBoardRenderer;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 import com.barrybecker4.game.multiplayer.poker.PokerPlayerMarker;
+import com.barrybecker4.game.multiplayer.poker.PokerTable;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 
 import java.awt.*;
@@ -51,7 +54,7 @@ public class PokerGameRenderer extends MultiGameBoardRenderer {
                                    int rightEdgePos, int bottomEdgePos,
                                    int panelWidth, int panelHeight ) {
         super.drawBackground(g, board, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight);
-        drawTable(g, board, panelWidth, panelHeight);
+        drawTable(g, board);
     }
 
     /**
@@ -59,30 +62,29 @@ public class PokerGameRenderer extends MultiGameBoardRenderer {
      * The pot will be drawn in the middle of the table.
      */
     @Override
-    protected void drawMarkers(IGameController controller, Graphics2D g2  ) {
+    protected void drawMarkers(Board board, PlayerList players, Graphics2D g2  ) {
 
-        Board board = controller.getBoard();
         Location loc = new Location(board.getNumRows() >> 1, (board.getNumCols() >> 1) - 3);
-        int pot = ((PokerController)controller).getPotValue();
+        int pot = ((PokerTable)board).getPotValue();
         new ChipRenderer().render(g2, loc, pot, this.getCellSize());
 
-        // draw a background circle for the player whose turn it is
-        PokerPlayer player = getPlayer(controller);
+        // now draw the players and their stuff (face, name, chips, cards, etc)
+        super.drawMarkers(board, players, g2);
+    }
+
+    /**
+     * Draw some indication of where the last move was made.
+     * The default is to show nothing.
+     */
+    @Override
+    protected void drawLastMoveMarker(Graphics2D g2, Player currentPlayer, Board board) {
+         // draw a background circle for the player whose turn it is
+        PokerPlayer player = (PokerPlayer) currentPlayer.getActualPlayer();
         PokerPlayerMarker m = player.getPiece();
         g2.setColor(PokerPlayerRenderer.HIGHLIGHT_COLOR);
         g2.fillOval(cellSize *(m.getLocation().getCol()-2),
                     cellSize *(m.getLocation().getRow()-2),
                     10* cellSize, 10* cellSize);
-
-        // now draw the players and their stuff (face, name, chips, cards, etc)
-        super.drawMarkers(controller, g2);
-    }
-
-    /**
-     * @return the poker player (not the surrogate if that is what played)
-     */
-    private PokerPlayer getPlayer(IGameController controller) {
-        return (PokerPlayer)controller.getCurrentPlayer().getActualPlayer();
     }
 
 }

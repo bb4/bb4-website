@@ -4,7 +4,8 @@ package com.barrybecker4.game.common.ui.dialogs;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.GameViewable;
-import com.barrybecker4.game.common.board.Board;
+import com.barrybecker4.game.common.board.IBoard;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.online.ui.OnlineGameManagerPanel;
 import com.barrybecker4.game.common.ui.panel.GridBoardParamPanel;
 import com.barrybecker4.ui.components.GradientButton;
@@ -39,7 +40,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     protected GradientButton startButton_;
 
     /** the options get set directly on the game controller and viewer that are passed in  */
-    protected final Board board_;
+    protected final IBoard board_;
     protected final GameViewable viewer_;
 
 
@@ -127,9 +128,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     /**
      * panel which allows changing board specific properties.
      */
-    protected GridBoardParamPanel createBoardParamPanel() {
-        return new GridBoardParamPanel(board_.getNumRows(), board_.getNumCols(), createCustomBoardConfigPanel());
-    }
+    protected abstract GridBoardParamPanel createBoardParamPanel();
 
     /**
      * Subclasses use this to create their own custom board configuration options
@@ -145,9 +144,6 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     }
 
     protected void ok() {
-        if (board_ != null && gridParamPanel_!= null) {
-            board_.setSize(gridParamPanel_.getRowSize(), gridParamPanel_.getColSize());
-        }
 
         canceled_ = false;
         this.setVisible( false );

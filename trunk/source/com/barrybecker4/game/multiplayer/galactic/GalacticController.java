@@ -63,7 +63,7 @@ public class GalacticController extends MultiGameController {
      *  Construct the Galactic game controller given an initial board size
      */
     @Override
-    protected Board createTable(int nrows, int ncols ) {
+    protected Galaxy createTable(int nrows, int ncols ) {
         return new Galaxy( nrows, ncols );
     }
 

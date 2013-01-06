@@ -2,14 +2,11 @@
 package com.barrybecker4.game.multiplayer.set;
 
 import com.barrybecker4.game.common.GameOptions;
-import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
-
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,32 +21,25 @@ import java.util.List;
  */
 public class SetController extends MultiGameController {
 
-    /** the deck is like the board or model  */
-    private List<Card> deck_;
-
-    /** num cards on the board at the current moment.  */
-    private int numCardsShown_;
+    /** represents the deck and cards shown on the board  */
+    private SetBoard board_;
 
     private static final int NO_PLAYER_SELECTED = -1;
 
     /** currently selected player. -1 if none selected        */
     private int currentPlayerIndex_ = NO_PLAYER_SELECTED;
 
-    /** the maximum number of cards you can have and still not have a set (exceedingly rare). */
-    private static final int MAX_CARDS_BEFORE_SET = 20;
-
 
     /**
      *  Construct the Set game controller
      */
     public SetController() {
-         initializeData();
+        initializeData();
     }
 
-
     @Override
-    protected Board createTable(int rowl, int cols) {
-        return null;
+    protected SetBoard createTable(int rows, int cols) {
+        return new SetBoard(((SetOptions)getOptions()).getInitialNumCardsShown());
     }
 
     /**
@@ -62,9 +52,7 @@ public class SetController extends MultiGameController {
 
     @Override
     protected void initializeData() {
-        deck_ = new Deck();
-        numCardsShown_ = ((SetOptions)getOptions()).getInitialNumCardsShown();
-
+        board_ = (SetBoard) getBoard(); //createTable(0, 0);
         initPlayers();
         gameChanged();
     }
@@ -78,14 +66,6 @@ public class SetController extends MultiGameController {
         return 0;
     }
 
-    /**
-     *
-     * @return the deck of cards (numCardsShown of which are shown face up on the board)
-     */
-    public List<Card> getDeck()  {
-        return deck_;
-    }
-
     @Override
     public GameOptions createOptions() {
         return new SetOptions();
@@ -97,21 +77,10 @@ public class SetController extends MultiGameController {
     }
 
     /**
-     * @return the number of face up cards on the board.
-     */
-    public int getNumCardsShowing() {
-        return numCardsShown_;
-    }
-
-    /**
      * @param num  the number of cards to turn face up on the board.
      */
     public void addCards(int num) {
-        for (int i=0; i<num; i++) {
-            if (hasCardsToAdd()) {
-                numCardsShown_++;
-            }
-        }
+        board_.addCards(num);
         gameChanged();
     }
 
@@ -119,9 +88,7 @@ public class SetController extends MultiGameController {
      * remove a card from the board and put it back in the deck.
      */
     public void removeCard() {
-        if (canRemoveCards()) {
-            numCardsShown_--;
-        }
+        board_.removeCard();
         gameChanged();
     }
 
@@ -129,14 +96,14 @@ public class SetController extends MultiGameController {
      * @return true if legal to remove more cards from the board.
      */
     public boolean canRemoveCards() {
-        return (numCardsShown_ > 3);
+        return board_.canRemoveCards();
     }
 
     /**
      * @return true if not showing cards remain in deck, or we have not yet reached MAX_CARDS_BEFORE_SET visible cards.
      */
     public boolean hasCardsToAdd() {
-        return (numCardsShown_ < deck_.size() && numCardsShown_ < MAX_CARDS_BEFORE_SET);
+        return board_.hasCardsToAdd();
     }
 
 
@@ -144,17 +111,8 @@ public class SetController extends MultiGameController {
      * @param cards to remove (usually a set that has been discovered by a player)
      */
     public void removeCards(List<Card> cards) {
-        deck_.removeAll(cards);
-        numCardsShown_ -= 3;
+        board_.removeCards(cards);
         gameChanged();
-    }
-
-    private List<Card> getCardsOnBoard() {
-        List<Card> cardsOnBoard = new LinkedList<Card>();
-        for (int i = 0; i<getNumCardsShowing(); i++ ) {
-            cardsOnBoard.add(getDeck().get(i));
-        }
-        return cardsOnBoard;
     }
 
     public void setCurrentPlayer(Player player)  {
@@ -171,14 +129,7 @@ public class SetController extends MultiGameController {
     }
 
     public List<Card> getSetsOnBoard()  {
-       return Card.getSets(getCardsOnBoard());
-    }
-
-    /**
-     * @return  the number of sets that are currently on the board and have not yet been discovered.
-     */
-    public int getNumSetsOnBoard() {
-        return Card.numSets(getCardsOnBoard());
+       return board_.getSetsOnBoard();
     }
 
      /**
@@ -217,18 +168,16 @@ public class SetController extends MultiGameController {
         assert false : "No one moves first in set.";
     }
 
-
     /**
      * Game is over when there are no more sets to be found.
      *
      * @return true if the game is over.
      */
     public boolean isDone() {
-        return !Card.hasSet(deck_);
+        return board_.isDone();
     }
 
     /**
-     *
      * @return the player with the most sets
      */
     @Override
@@ -251,14 +200,4 @@ public class SetController extends MultiGameController {
 
         return winner;
     }
-
-    /**
-     *  @return the player that goes first.
-     *
-    @Override
-    public Player getFirstPlayer() {
-        GameContext.log(0,"There is not actual first player in set");
-        return null;
-    }  */
-
 }

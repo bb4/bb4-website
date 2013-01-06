@@ -404,7 +404,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
            return cachedGameBoard_;
        }
        else {
-           return c.getBoard();
+           return (Board)c.getBoard();
        }
     }
 

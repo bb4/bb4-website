@@ -2,7 +2,6 @@
 package com.barrybecker4.game.multiplayer.poker;
 
 import com.barrybecker4.game.common.GameOptions;
-import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
@@ -53,7 +52,7 @@ public class PokerController extends MultiGameController {
     private PokerRound round;
 
     /**
-     *  Construct the Poker game controller
+     * Construct the Poker game controller
      */
     public PokerController() {
         super( DEFAULT_NUM_ROWS, DEFAULT_NUM_COLS );
@@ -66,7 +65,7 @@ public class PokerController extends MultiGameController {
     public void reset() {
         super.reset();
         initializeData();
-        round = new PokerRound();
+        round = ((PokerTable) getBoard()).getRound();
         round.anteUp(getPlayers(), ((PokerOptions)getOptions()).getAnte());
     }
 
@@ -79,7 +78,7 @@ public class PokerController extends MultiGameController {
      *  Construct the game controller given an initial board size
      */
     @Override
-    protected Board createTable(int nrows, int ncols ) {
+    protected PokerTable createTable(int nrows, int ncols ) {
         return new PokerTable(nrows, ncols);
     }
 
@@ -115,11 +114,6 @@ public class PokerController extends MultiGameController {
 
         ((PokerTable)getBoard()).initPlayers(getPlayers());
     }
-
-    /*
-    public void addToPot(int amount) {
-        round.addToPot(amount);
-    } */
 
     /**
      * @return the maximum contribution made by any player so far this round
