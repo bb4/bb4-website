@@ -5,6 +5,7 @@ import com.barrybecker4.common.ColorMap;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.board.Board;
+import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
@@ -13,6 +14,8 @@ import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
 import com.barrybecker4.game.twoplayer.go.board.GoSearchable;
+import com.barrybecker4.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
+import com.barrybecker4.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
 import com.barrybecker4.game.twoplayer.go.board.elements.group.IGoGroup;
 import com.barrybecker4.game.twoplayer.go.board.elements.position.GoBoardPosition;
 import com.barrybecker4.ui.util.GUIUtil;
@@ -138,51 +141,49 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
      * first draw borders for the groups in the appropriate color, then draw the pieces for both players.
      */
     @Override
-    protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
-        GoBoard board = (GoBoard)controller.getBoard();
+    protected void drawMarkers(Board board, PlayerList players, Graphics2D g2 ) {
 
+        GoBoard b = (GoBoard) board;
         // draw the star point markers
-        List starpoints = board.getHandicapPositions();
+        List starpoints = b.getHandicapPositions();
         Iterator it = starpoints.iterator();
         g2.setColor(Color.black);
-        double rad = (float) cellSize /21.0 + 0.46;
+        double rad = (float) cellSize / 21.0 + 0.46;
         while (it.hasNext()) {
             GoBoardPosition p = (GoBoardPosition)it.next();
             g2.fillOval(getMargin() + (int)(cellSize *(p.getCol()-0.505)-rad),
                         getMargin() +(int)(cellSize *(p.getRow()-0.505)-rad),
-                        (int)(2.0*rad+1.7), (int)(2.0*rad+1.7));
+                        (int)(2.0 * rad + 1.7), (int)(2.0 * rad + 1.7));
         }
 
         // draw the group borders
         if ( GameContext.getDebugMode() > 0 ) {
-            GoGroupRenderer groupRenderer = new GoGroupRenderer(board, COLORMAP, (float) cellSize, getMargin(), g2);
-            GoSearchable searchable = ((GoSearchable)((TwoPlayerController) controller).getSearchable());
-            for (IGoGroup group : board.getGroups()) {
+            GoGroupRenderer groupRenderer = new GoGroupRenderer(b, COLORMAP, (float) cellSize, getMargin(), g2);
 
-                groupRenderer.drawGroupDecoration(searchable.getGroupAnalyzer(group));
+            GroupAnalyzerMap map = new GroupAnalyzerMap();
+            for (IGoGroup group : b.getGroups()) {
+
+                GroupAnalyzer analyzer = new GroupAnalyzer(group, map);
+                groupRenderer.drawGroupDecoration(analyzer);
             }
         }
 
-        super.drawMarkers( controller, g2 );
-
-        drawNextMoveMarkers(controller, g2);
+        super.drawMarkers(board, players, g2);
+        //drawNextMoveMarkers(board, g2);
     }
-
-
 
     /**
      * draw markers for the next moves (if they have been specified)
-     */
-    void drawNextMoveMarkers(IGameController controller, Graphics2D g2) {
+     *
+    void drawNextMoveMarkers(Board board, Graphics2D g2) {
 
-        TwoPlayerMove[] nextMoves = ((AbstractTwoPlayerBoardViewer) controller.getViewer()).getNextMoves();
-        Board board = controller.getBoard();
+        //TwoPlayerMove[] nextMoves = ((AbstractTwoPlayerBoardViewer) controller.getViewer()).getNextMoves();
         if (nextMoves != null) {
             for (TwoPlayerMove move : nextMoves) {
                 ((TwoPlayerPieceRenderer) pieceRenderer_).renderNextMove(g2, move, cellSize, getMargin(), board);
             }
         }
-    }
+    }  */
 
 }
 

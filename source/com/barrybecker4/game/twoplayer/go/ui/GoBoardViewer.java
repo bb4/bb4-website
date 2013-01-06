@@ -4,6 +4,7 @@ package com.barrybecker4.game.twoplayer.go.ui;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.common.ui.viewer.ViewerMouseListener;
 import com.barrybecker4.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
@@ -95,7 +96,7 @@ public final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
         Location loc = getBoardRenderer().createLocation(e);
         StringBuilder sb = new StringBuilder( "<html><font=-3>" );
 
-        GoBoardPosition space = (GoBoardPosition) controller_.getBoard().getPosition( loc );
+        GoBoardPosition space = (GoBoardPosition) ((IRectangularBoard)controller_.getBoard()).getPosition( loc );
         if ( space != null && GameContext.getDebugMode() > 0 ) {
             String spaceText = space.getDescription();
             sb.append( spaceText);

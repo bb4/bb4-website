@@ -2,6 +2,7 @@
 package com.barrybecker4.game.twoplayer.pente;
 
 import com.barrybecker4.game.common.GameContext;
+import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.player.PlayerOptions;
@@ -70,8 +71,9 @@ public class PenteController extends TwoPlayerController {
      */
     public void computerMovesFirst() {
         int delta = getWinRunLength() - 1;
-        int c = (int) (GameContext.random().nextFloat() * (getBoard().getNumCols() - 2 * delta) + delta + 1);
-        int r = (int) (GameContext.random().nextFloat() * (getBoard().getNumRows() - 2 * delta) + delta + 1);
+        Board b = (Board) getBoard();
+        int c = (int) (GameContext.random().nextFloat() * (b.getNumCols() - 2 * delta) + delta + 1);
+        int r = (int) (GameContext.random().nextFloat() * (b.getNumRows() - 2 * delta) + delta + 1);
         TwoPlayerMove m = TwoPlayerMove.createMove( r, c, 0, new GamePiece(true) );
         makeMove( m );
     }

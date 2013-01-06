@@ -122,11 +122,12 @@ public class PokerGameViewer extends MultiGameViewer {
      */
     @Override
     public PokerRound createMove(Move lastMove) {
+        assert false :"did not expec tto call this";
         return new PokerRound();
     }
 
     /**
-     * show who won the round and dispurse the pot
+     * show who won the round and disperse the pot
      */
     public void showRoundOver(PokerPlayer winner, int winnings) {
 

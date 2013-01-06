@@ -41,7 +41,7 @@ public class SetViewerMouseListener extends ViewerMouseListener {
         if (playerSelected()) {
 
             SetGameRenderer renderer = (SetGameRenderer)viewer.getBoardRenderer();
-            Card card = renderer.findCardOver(viewer_.getController(), e.getX(), e.getY(),
+            Card card = renderer.findCardOver(viewer_.getBoard(), e.getX(), e.getY(),
                                               viewer.getWidth(), viewer.getHeight());
             if (card != null) {
                card.toggleSelect();
@@ -58,7 +58,7 @@ public class SetViewerMouseListener extends ViewerMouseListener {
         SetGameViewer viewer = (SetGameViewer)viewer_;
         SetGameRenderer renderer = (SetGameRenderer)viewer.getBoardRenderer();
         Card card =
-             renderer.findCardOver(viewer.getController(), e.getX(), e.getY(),
+             renderer.findCardOver(viewer.getBoard(), e.getX(), e.getY(),
                                    viewer.getWidth(), viewer.getHeight());
 
         boolean changed = card != currentlyHighlightedCard_;

@@ -14,8 +14,8 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
-{
+public class CheckersBoardRenderer extends TwoPlayerBoardRenderer {
+
     private  static GameBoardRenderer renderer_;
 
     // colors of the squares on the chess board.
@@ -37,15 +37,14 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
         return renderer_;
     }
 
-
     @Override
     protected int getPreferredCellSize() {
         return 34;
     }
 
     @Override
-    protected void drawBackground( Graphics g, Board b, int startPos, int rightEdgePos, int bottomEdgePos,
-                                   int panelWidth, int panelHeight)  {
+    protected void drawBackground(Graphics g, Board b, int startPos, int rightEdgePos, int bottomEdgePos,
+                                  int panelWidth, int panelHeight)  {
         super.drawBackground(g, b, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight);
 
         int nrows = b.getNumRows();
@@ -60,7 +59,6 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
             }
         }
     }
-
 
     /**
      * draw a grid of some sort if there is one.

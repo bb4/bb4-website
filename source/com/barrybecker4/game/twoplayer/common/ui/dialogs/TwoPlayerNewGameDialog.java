@@ -4,8 +4,10 @@ package com.barrybecker4.game.twoplayer.common.ui.dialogs;
 import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
+import com.barrybecker4.game.common.ui.panel.GridBoardParamPanel;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.ui.file.FileChooserUtil;
 import com.barrybecker4.ui.file.TextFileFilter;
@@ -61,6 +63,16 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
         return playLocalPanel;
     }
 
+    /**
+     * panel which allows changing board specific properties.
+     */
+    @Override
+    protected GridBoardParamPanel createBoardParamPanel() {
+        IRectangularBoard b = (IRectangularBoard) board_;
+        return new GridBoardParamPanel(b.getNumRows(), b.getNumCols(), createCustomBoardConfigPanel());
+    }
+
+
     private JPanel createOptimizationPanel() {
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
@@ -84,6 +96,11 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
     @Override
     protected void ok() {
         TwoPlayerController c = get2PlayerController();
+        IRectangularBoard b = (IRectangularBoard) board_;
+
+        if (b != null && gridParamPanel_!= null) {
+            b.setSize(gridParamPanel_.getRowSize(), gridParamPanel_.getColSize());
+        }
 
         PlayerList players = c.getPlayers();
         if (optimizationCheckbox_.isSelected())
@@ -95,9 +112,10 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
         else {
             playersPanel_.ok();
         }
-        board_.setSize( gridParamPanel_.getRowSize(), gridParamPanel_.getColSize() );
-        canceled_ = false;
-        setVisible( false );
+        if (b != null) {
+            b.setSize( gridParamPanel_.getRowSize(), gridParamPanel_.getColSize() );
+        }
+        super.ok();
     }
 
     @Override

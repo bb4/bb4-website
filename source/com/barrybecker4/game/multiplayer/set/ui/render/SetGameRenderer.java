@@ -1,11 +1,13 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.set.ui.render;
 
-import com.barrybecker4.game.common.IGameController;
+import com.barrybecker4.game.common.board.IBoard;
+import com.barrybecker4.game.common.player.Player;
+import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameBoardRenderer;
 import com.barrybecker4.game.multiplayer.set.Card;
-import com.barrybecker4.game.multiplayer.set.SetController;
+import com.barrybecker4.game.multiplayer.set.SetBoard;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -39,7 +41,10 @@ public class SetGameRenderer extends MultiGameBoardRenderer {
         return panelWidth - 2 * CardRenderer.LEFT_MARGIN;
     }
 
-
+    /**
+     *  The number of card columns is computed based on the panel width/height ratio.
+     * @return the number of columns of cards to show
+     */
     private int getNumColumns(int panelWidth, int panelHeight, int numCards) {
         float rat = (float) getCanvasWidth(panelWidth) / (panelHeight - 2 * CardRenderer.TOP_MARGIN);
 
@@ -72,12 +77,12 @@ public class SetGameRenderer extends MultiGameBoardRenderer {
     }
 
     /**
-     * @return  the card that the mouse is currently over (at x, y coords)
+     * @return  the card that the mouse is currently over (at x, y coordinates)
      */
-    public Card findCardOver(IGameController controller, int x, int y, int panelWidth, int panelHeight) {
-        SetController c = (SetController)controller;
+    public Card findCardOver(IBoard board, int x, int y, int panelWidth, int panelHeight) {
+        SetBoard b = (SetBoard)board;
 
-        int numCards = c.getNumCardsShowing();
+        int numCards = b.getNumCardsShowing();
         int numCols = getNumColumns(panelWidth, panelHeight, numCards);
 
         Dimension cardDim = calcCardDimension(numCols, panelWidth);
@@ -99,7 +104,7 @@ public class SetGameRenderer extends MultiGameBoardRenderer {
         if (selectedIndex == -1) {
             return null;
         }
-        return c.getDeck().get(selectedIndex);
+        return b.getDeck().get(selectedIndex);
     }
 
     /**
@@ -107,10 +112,11 @@ public class SetGameRenderer extends MultiGameBoardRenderer {
      * Erase what's there and redraw.
      */
     @Override
-    public void render( Graphics g, IGameController controller, int panelWidth, int panelHeight ) {
+    public void render( Graphics g, Player currentPlayer, PlayerList players,
+                        IBoard board, int panelWidth, int panelHeight ) {
 
-        SetController c = (SetController)controller;
-        int numCards = c.getNumCardsShowing();
+        SetBoard b = (SetBoard) board;
+        int numCards = b.getNumCardsShowing();
 
         g.clearRect( 0, 0, panelWidth, panelHeight );
         g.setColor( getBackground() );
@@ -122,12 +128,12 @@ public class SetGameRenderer extends MultiGameBoardRenderer {
         int cardWidth = (int) cardDim.getWidth();
         int cardHeight = (int) cardDim.getHeight();
 
-        for (int i = 0; i < c.getNumCardsShowing(); i++ ) {
+        for (int i = 0; i < numCards; i++ ) {
             int row = i / numCols;
             int col = i % numCols;
             int colPos = col * cardWidth + CardRenderer.LEFT_MARGIN;
             int rowPos = row * cardHeight + CardRenderer.TOP_MARGIN;
-            CardRenderer.render((Graphics2D) g, c.getDeck().get(i),
+            CardRenderer.render((Graphics2D) g, b.getDeck().get(i),
                                 new Point2D.Float(colPos, rowPos), cardWidth, cardHeight, false);
         }
     }

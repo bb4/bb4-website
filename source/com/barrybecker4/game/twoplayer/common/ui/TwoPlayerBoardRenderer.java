@@ -1,7 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.common.ui;
 
-import com.barrybecker4.game.common.IGameController;
+import com.barrybecker4.game.common.board.Board;
+import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 
@@ -23,9 +24,9 @@ public abstract class TwoPlayerBoardRenderer extends GameBoardRenderer {
     protected TwoPlayerBoardRenderer()  {}
 
     @Override
-    protected void drawLastMoveMarker(Graphics2D g2, IGameController controller) {
+    protected void drawLastMoveMarker(Graphics2D g2, Player player, Board board) {
 
-        TwoPlayerMove last = (TwoPlayerMove)controller.getBoard().getMoveList().getLastMove();
+        TwoPlayerMove last = (TwoPlayerMove) board.getMoveList().getLastMove();
         // this draws a small indicator on the last move to show where it was played
         if ( last != null ) {
             g2.setColor( LAST_MOVE_INDICATOR_COLOR );

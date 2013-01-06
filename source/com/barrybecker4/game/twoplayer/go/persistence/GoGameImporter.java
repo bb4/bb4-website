@@ -19,6 +19,7 @@ import ca.dj.jigo.sgf.tokens.WhiteNameToken;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.MoveList;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.game.twoplayer.common.persistence.TwoPlayerGameImporter;
@@ -89,7 +90,7 @@ public class GoGameImporter extends TwoPlayerGameImporter {
                 GameContext.log(1, "Ignoring  token =" + token.getClass().getName() + " while parsing.");
             }
         }
-        gc.getBoard().setSize(size, size);
+        ((IRectangularBoard)gc.getBoard()).setSize(size, size);
     }
 
 

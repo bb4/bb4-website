@@ -147,8 +147,8 @@ public final class GameTreeDialog extends AbstractDialog
         gameTreeButtons_.setMainController(mainController_);
         // it is possible that the size of the game has changed since the game tree controller
         // was initialized. Make sure that it is synched up.
-        Board mainBoard = mainController_.getBoard();
-        Board board = controller_.getBoard();
+        Board mainBoard = (Board)mainController_.getBoard();
+        Board board = (Board)controller_.getBoard();
         if ( mainBoard.getNumRows() != board.getNumRows() || mainBoard.getNumCols() != board.getNumCols() ) {
             board.setSize( mainBoard.getNumRows(), mainBoard.getNumCols() );
         }

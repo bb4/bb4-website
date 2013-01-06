@@ -5,6 +5,7 @@ import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.board.BoardPosition;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
@@ -188,7 +189,7 @@ public class GalaxyViewer extends MultiGameViewer {
         Location loc = getBoardRenderer().createLocation(e);
         StringBuilder sb = new StringBuilder( "<html><font=-3>" );
 
-        BoardPosition space = controller_.getBoard().getPosition( loc );
+        BoardPosition space = ((IRectangularBoard)controller_.getBoard()).getPosition( loc );
         if ( space != null && space.isOccupied() && GameContext.getDebugMode() >= 0 ) {
             sb.append(((Planet)space.getPiece()).toHtml());
             sb.append("<br>");

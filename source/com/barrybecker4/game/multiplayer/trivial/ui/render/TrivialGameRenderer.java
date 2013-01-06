@@ -3,6 +3,7 @@ package com.barrybecker4.game.multiplayer.trivial.ui.render;
 
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.board.Board;
+import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.common.MultiPlayerMarker;
@@ -45,32 +46,31 @@ public class TrivialGameRenderer extends MultiGameBoardRenderer {
                             int nrows1, int ncols1, int gridOffset) {}
 
     @Override
-    protected void drawBackground( Graphics g, Board board, int startPos, int rightEdgePos, int bottomEdgePos,
-                                   int panelWidth, int panelHeight ) {
+    protected void drawBackground(Graphics g, Board board, int startPos, int rightEdgePos, int bottomEdgePos,
+                                  int panelWidth, int panelHeight ) {
         super.drawBackground(g, board, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight);
-        drawTable(g, board, panelWidth, panelHeight);
+        drawTable(g, board);
     }
 
     /**
-     * Draw the pieces and possibly other game markers for both players.
-     * Draw a cicle on the background  for the player whose turn it is.
+     * Draw some indication of where the last move was made.
+     * The default is to show nothing.  Draw a background circle for the player whose turn it is
      */
     @Override
-    protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
+    protected void drawLastMoveMarker(Graphics2D g2, Player currentPlayer, Board board) {
 
-        MultiGamePlayer player = (MultiGamePlayer)controller.getCurrentPlayer();
-        MultiPlayerMarker m = ((MultiGamePlayer) player.getActualPlayer()).getPiece();
+        MultiPlayerMarker m = ((MultiGamePlayer) currentPlayer.getActualPlayer()).getPiece();
         assert m != null;
         assert g2 != null;
         assert m.getLocation() != null;
+
         g2.setColor(TrivialPlayerRenderer.HIGHLIGHT_COLOR);
         g2.fillOval(cellSize *(m.getLocation().getCol()-2),
                     cellSize *(m.getLocation().getRow()-2),
                     10* cellSize, 10* cellSize);
 
-        // now draw the players and their stuff (face, name, chips, cards, etc)
-        super.drawMarkers(controller, g2);
     }
+
 
 }
 

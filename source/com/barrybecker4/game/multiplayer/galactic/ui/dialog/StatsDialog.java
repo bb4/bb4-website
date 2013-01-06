@@ -29,9 +29,6 @@ final class StatsDialog extends AbstractDialog {
      */
     public StatsDialog(Component parent, GameBoardViewer boardViewer ) {
         super( parent );
-        GameBoardViewer boardViewer_=boardViewer;
-        GameController controller_=boardViewer.getController();
-        Board board_=controller_.getBoard();
         showContent();
     }
 

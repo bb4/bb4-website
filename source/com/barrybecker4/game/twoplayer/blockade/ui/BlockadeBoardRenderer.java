@@ -5,6 +5,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.BoardPosition;
+import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
@@ -86,11 +87,9 @@ class BlockadeBoardRenderer extends TwoPlayerBoardRenderer {
     }
 
     @Override
-    protected void drawMarkers( IGameController controller, Graphics2D g2 ) {
-        BlockadeBoard board = (BlockadeBoard)controller.getBoard();
-
-        drawWalls(g2, board);
-        drawShortestPaths(g2, board);
+    protected void drawMarkers( Board board, PlayerList players, Graphics2D g2 ) {
+        drawWalls(g2, (BlockadeBoard)board);
+        drawShortestPaths(g2, (BlockadeBoard)board);
     }
 
     private void drawWalls(Graphics2D g2, BlockadeBoard board) {

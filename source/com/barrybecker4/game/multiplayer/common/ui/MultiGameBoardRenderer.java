@@ -48,7 +48,7 @@ public abstract class MultiGameBoardRenderer extends GameBoardRenderer {
      * Draw the background and a depiction of a circular game table.
      * Used only by games with a table (like poker)
      */
-    protected void drawTable(Graphics g, Board board, int panelWidth, int panelHeight ) {
+    protected void drawTable(Graphics g, Board board) {
         g.setColor( backgroundColor_ );
         int width = board.getNumCols() * getCellSize();
         int height = board.getNumRows() * getCellSize();

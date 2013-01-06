@@ -7,6 +7,7 @@ import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.common.ui.viewer.ViewerMouseListener;
 import com.barrybecker4.game.twoplayer.blockade.BlockadeController;
+import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 
@@ -49,7 +50,7 @@ class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer {
         Location loc = getBoardRenderer().createLocation(e);
         StringBuilder sb = new StringBuilder( "<html><font=-3>" );
 
-        BlockadeBoardPosition space = (BlockadeBoardPosition)controller_.getBoard().getPosition( loc );
+        BlockadeBoardPosition space = ((BlockadeBoard)controller_.getBoard()).getPosition( loc );
         if ( space != null && GameContext.getDebugMode() > 0 ) {
             sb.append(space.toString());
             sb.append(space.isVisited()?":Visited":"");

@@ -11,6 +11,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.GamePiece;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.twoplayer.blockade.BlockadeController;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
@@ -68,7 +69,7 @@ public class BlockadeGameImporter extends TwoPlayerGameImporter {
                 gc.getPlayers().getPlayer1().setName(nameToken.getName());
             }
         }
-        gc.getBoard().setSize(numRows, numCols);
+        ((IRectangularBoard)gc.getBoard()).setSize(numRows, numCols);
     }
 
     /**

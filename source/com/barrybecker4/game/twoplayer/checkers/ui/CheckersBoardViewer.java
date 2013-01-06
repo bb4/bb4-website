@@ -4,7 +4,9 @@ package com.barrybecker4.game.twoplayer.checkers.ui;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
+import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.BoardPosition;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.common.ui.viewer.ViewerMouseListener;
 import com.barrybecker4.game.twoplayer.checkers.CheckersController;
@@ -52,7 +54,7 @@ public class CheckersBoardViewer extends AbstractTwoPlayerBoardViewer {
         Location loc = getBoardRenderer().createLocation(e);
         StringBuilder sb = new StringBuilder( "<html><font=-3>" );
 
-        BoardPosition space = controller_.getBoard().getPosition( loc );
+        BoardPosition space = ((IRectangularBoard) controller_.getBoard()).getPosition( loc );
         if ( space != null && space.isOccupied() && GameContext.getDebugMode() > 0 ) {
             sb.append( loc );
             sb.append("<br>");

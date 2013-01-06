@@ -3,6 +3,7 @@ package com.barrybecker4.game.multiplayer.galactic.ui.renderers;
 
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.IGameController;
+import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
@@ -49,10 +50,9 @@ public class GalaxyRenderer extends MultiGameBoardRenderer {
      * Draw the pieces and possibly other game markers for both players.
      */
     @Override
-    protected void drawMarkers(IGameController controller, Graphics2D g2 ) {
+    protected void drawMarkers(Board board, PlayerList players, Graphics2D g2 ) {
 
         // before we draw the planets, draw the fleets and their paths
-        PlayerList players = controller.getPlayers();
         for (final Player player : players) {
             for (Order order : ((GalacticPlayer) player).getOrders()) {
 
@@ -76,7 +76,7 @@ public class GalaxyRenderer extends MultiGameBoardRenderer {
         }
 
         // now draw the planets on top
-        super.drawMarkers(controller, g2);
+        super.drawMarkers(board, players, g2);
     }
 
 }

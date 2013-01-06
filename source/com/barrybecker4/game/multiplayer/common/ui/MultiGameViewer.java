@@ -5,6 +5,7 @@ import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.board.BoardPosition;
+import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
@@ -126,12 +127,6 @@ public abstract class MultiGameViewer extends GameBoardViewer {
     }
 
     /**
-     * show who won the round and disburse the pot.
-     * Don't show anything by default.
-     */
-    public void showRoundOver() {}
-
-    /**
      * @return the tooltip for the panel given a mouse event
      */
     @Override
@@ -140,7 +135,7 @@ public abstract class MultiGameViewer extends GameBoardViewer {
         StringBuilder sb = new StringBuilder( "<html><font=-3>" );
 
         if (controller_.getBoard() != null) {
-            BoardPosition space = controller_.getBoard().getPosition( loc );
+            BoardPosition space = ((IRectangularBoard)controller_.getBoard()).getPosition(loc);
             if ( space != null && space.isOccupied() && GameContext.getDebugMode() >= 0 ) {
                 sb.append("<br>");
                 sb.append( loc );
@@ -149,5 +144,4 @@ public abstract class MultiGameViewer extends GameBoardViewer {
         }
         return sb.toString();
     }
-
 }
