@@ -1,13 +1,14 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.twoplayer.common.ui;
 
 import com.barrybecker4.common.format.FormatUtil;
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
-import com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategy;
+import com.barrybecker4.game.twoplayer.common.search.strategy.SearchProgress;
+import com.barrybecker4.ui.themes.BarryTheme;
 
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,13 +18,13 @@ import java.awt.event.ActionListener;
  *
  * @author Barry Becker
  */
-class ComputerMoveProgress {
+public class ComputerMoveProgressBar extends JProgressBar {
 
+    private static final Color PROGRESS_BAR_COLOR = new Color(20, 80, 230, 130);
     private static final int PROGRESS_UPDATE_DELAY = 700;
     private static final int PROGRESS_STEP_DELAY = 100;
 
-    private TwoPlayerController controller_;
-    private JProgressBar progressBar_;
+    private SearchProgress searchProgress;
 
     /** Periodically updates the progress bar.  */
     private Timer timer_;
@@ -34,12 +35,15 @@ class ComputerMoveProgress {
     /**
      * Constructor.
      */
-    public ComputerMoveProgress(TwoPlayerController controller) {
-        controller_ = controller;
-    }
-
-    public void setProgressBar(JProgressBar progressBar) {
-        progressBar_ = progressBar;
+    public ComputerMoveProgressBar() {
+        setOpaque(false);
+        setMinimum(0);
+        setMaximum(100);
+        setBackground(BarryTheme.UI_COLOR_SECONDARY2);
+        setForeground(PROGRESS_BAR_COLOR);
+        setStringPainted(true);
+        setBorderPainted(false);
+        setString(" ");
     }
 
     /**
@@ -52,27 +56,24 @@ class ComputerMoveProgress {
      *   Some moves can be complex (like multiple jumps in checkers). For these
      * We animate these types of moves so the human player does not get disoriented.
      *
-     * @param isPlayer1 if the computer player now moving is player 1.
+     * @param moveRequester thing requesting the next computer move.
      * @return true if done. Always returns false unless auto optimizing
      */
-    boolean doComputerMove( boolean isPlayer1 ) {
+    public void doComputerMove(SearchProgress moveRequester) {
 
-        if (progressBar_ != null) {
-            // initialize the progress bar if there is one.
-            progressBar_.setValue(0);
-            progressBar_.setVisible(true);
+        assert moveRequester != null;
+        searchProgress = moveRequester;
 
-            // start a thread to update the progress bar at fixed time intervals
-            // The timer gets killed when the worker thread is done searching.
-            timer_ = new Timer(PROGRESS_UPDATE_DELAY, new TimerListener());
+        // initialize the progress bar if there is one.
+        setValue(0);
+        setVisible(true);
 
-            timer_.start();
-        }
+        // start a thread to update the progress bar at fixed time intervals
+        // The timer gets killed when the worker thread is done searching.
+        timer_ = new Timer(PROGRESS_UPDATE_DELAY, new TimerListener());
 
-        // this will spawn the worker thread and return immediately (unless autoOptimize on)
-        return controller_.requestComputerMove(isPlayer1);
+        timer_.start();
     }
-
 
     /**
      * Currently this does not actually step forward just one search step, but instead
@@ -83,7 +84,7 @@ class ComputerMoveProgress {
             timer_.setDelay(PROGRESS_STEP_DELAY);
             timer_.restart();
             stepping_ = true;
-            controller_.getSearchStrategy().continueProcessing();
+            searchProgress.continueProcessing();
         }
         else {
             GameContext.log(0,  "step error : timer is null" );
@@ -95,18 +96,15 @@ class ComputerMoveProgress {
      */
     public final void continueProcessing()  {
         /*
-        if (controller_.getSearchStrategy()!=null) {
-            timer_.setDelay(PROGRESS_UPDATE_DELAY);
-            controller_.getSearchStrategy().continueProcessing();
-        } */
+        timer_.setDelay(PROGRESS_UPDATE_DELAY);
+        searchProgress.continueProcessing();
+        */
     }
 
     public void cleanup() {
         timer_.stop();
-        if (progressBar_ != null) {
-            progressBar_.setValue(0);
-            progressBar_.setString("");
-        }
+        setValue(0);
+        setString("");
     }
 
     /**
@@ -114,21 +112,21 @@ class ComputerMoveProgress {
      * is called each time the Timer "goes off".
      */
     private class TimerListener implements ActionListener {
+
         public void actionPerformed(ActionEvent evt) {
-            SearchStrategy strategy = controller_.getSearchStrategy();
-            if (strategy == null) return;
-            int percentDone = strategy.getPercentDone();
-            progressBar_.setValue( percentDone );
-            String numMoves = FormatUtil.formatNumber(strategy.getNumMovesConsidered());
+
+            int percentDone = searchProgress.getPercentDone();
+            setValue(percentDone);
+            String numMoves = FormatUtil.formatNumber(searchProgress.getNumMovesConsidered());
             String note = GameContext.getLabel("MOVES_CONSIDERED") + ' '
                    + numMoves + "  ("+ percentDone +"%)";
 
-            progressBar_.setToolTipText(note);
-            progressBar_.setString(note);
+            setToolTipText(note);
+            setString(note);
 
             if (stepping_) {
                 stepping_ = false;
-                controller_.pause();
+                searchProgress.pause();
             }
         }
     }

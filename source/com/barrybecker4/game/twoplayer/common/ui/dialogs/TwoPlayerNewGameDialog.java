@@ -96,10 +96,10 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
     @Override
     protected void ok() {
         TwoPlayerController c = get2PlayerController();
-        IRectangularBoard b = (IRectangularBoard) board_;
+        IRectangularBoard board = (IRectangularBoard) board_;
 
-        if (b != null && gridParamPanel_!= null) {
-            b.setSize(gridParamPanel_.getRowSize(), gridParamPanel_.getColSize());
+        if (board != null && gridParamPanel_!= null) {
+            board.setSize(gridParamPanel_.getRowSize(), gridParamPanel_.getColSize());
         }
 
         PlayerList players = c.getPlayers();
@@ -112,8 +112,8 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
         else {
             playersPanel_.ok();
         }
-        if (b != null) {
-            b.setSize( gridParamPanel_.getRowSize(), gridParamPanel_.getColSize() );
+        if (board != null && gridParamPanel_ != null) {
+            board.setSize( gridParamPanel_.getRowSize(), gridParamPanel_.getColSize() );
         }
         super.ok();
     }

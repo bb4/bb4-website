@@ -9,6 +9,7 @@ import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
 import com.barrybecker4.game.common.ui.viewer.GamePieceRenderer;
+import com.barrybecker4.game.twoplayer.common.ComputerMoveRequester;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerViewModel;
@@ -51,7 +52,9 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
                                                    implements GameChangedListener, TwoPlayerViewModel {
 
     /** Responsible for showing move progress visually (with a progress bar). */
-    private ComputerMoveProgress moveProgress_;
+    private ComputerMoveRequester moveRequester_;
+
+    private ComputerMoveProgressBar progressBar;
 
     /**
      * Show this cached board if we are in the middle of processing the next one
@@ -62,6 +65,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /** we occasionally want to show the computer's considered next moves in the ui. */
     private TwoPlayerMove[] nextMoves_;
 
+    /** playback a sequence of moves  */
     private MoveSequencePlayback moveSequencePlayer_;
 
 
@@ -70,7 +74,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      */
     protected AbstractTwoPlayerBoardViewer() {
         controller_.setViewer(this);
-        moveProgress_ = new ComputerMoveProgress(get2PlayerController());
+        moveRequester_ = new ComputerMoveRequester(get2PlayerController());
         moveSequencePlayer_ = new MoveSequencePlayback(get2PlayerController());
     }
 
@@ -82,11 +86,11 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     }
 
     /**
-     * set an optional progress bar for showing progress as the computer thinks about its next move.
+     * Set an optional progress bar for showing progress as the computer thinks about its next move.
      */
     @Override
-    public void setProgressBar(JProgressBar progressBar) {
-        moveProgress_.setProgressBar(progressBar);
+    public void setProgressBar(ComputerMoveProgressBar progressBar) {
+        this.progressBar = progressBar;
     }
 
     public TwoPlayerMove[] getNextMoves() {
@@ -108,7 +112,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     private void runOptimization() {
         ParameterArray optimizedParams = get2PlayerController().runOptimization();
 
-        JOptionPane.showMessageDialog(this, GameContext.getLabel("OPTIMIZED_WEIGHTS_TXT")+
+        JOptionPane.showMessageDialog(this, GameContext.getLabel("OPTIMIZED_WEIGHTS_TXT") +
                 optimizedParams, GameContext.getLabel("OPTIMIZED_WEIGHTS"), JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -209,10 +213,13 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * @return done always returns false unless auto optimizing
      */
     private boolean doComputerMove( boolean isPlayer1 ) {
-        setCursor( waitCursor_ );
+        setCursor(waitCursor_);
 
         try {
-            boolean done = moveProgress_.doComputerMove(isPlayer1);
+            if (progressBar != null) {
+                progressBar.doComputerMove(moveRequester_);
+            }
+            boolean done = moveRequester_.requestComputerMove(isPlayer1);
             repaint();
             return done;
         }
@@ -230,14 +237,14 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * stops after PROGRESS_STEP_DELAY more milliseconds.
      */
     public final void step() {
-        moveProgress_.step();
+        progressBar.step();
     }
 
     /**
      * resume computation
      */
     public final void continueProcessing()  {
-        moveProgress_.continueProcessing();
+        moveRequester_.continueProcessing();
     }
 
     /**
@@ -429,7 +436,8 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
                 warnOnSpecialMoves((TwoPlayerMove) lastMove);
                 sendGameChangedEvent(lastMove);
             }
-            moveProgress_.cleanup();
+            if (progressBar != null)
+                progressBar.cleanup();
        }
     }
 }

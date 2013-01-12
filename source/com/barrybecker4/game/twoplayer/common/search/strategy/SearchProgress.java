@@ -26,4 +26,20 @@ public interface SearchProgress {
      */
     int getPercentDone();
 
+    // these methods give an external thread debugging controls over the search.
+
+    /**
+     * Cause search to become paused.
+     */
+    void pause();
+
+    /**
+     * @return true if search is paused.
+     */
+    boolean isPaused();
+
+    /**
+     * Continue processing if the search was paused.
+     */
+    void continueProcessing();
 }
