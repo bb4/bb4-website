@@ -25,11 +25,6 @@ public class ComputerMoveRequester implements SearchProgress {
      * make the computer move and show it on the screen.
      * Since this can take a very long time we will show the user a progress bar
      * to give feedback.
-     *   The computer needs to search through vast numbers of moves to find the best one.
-     * This will happen asynchronously in a separate thread so that the event dispatch
-     * thread can return immediately and not lock up the user interface (UI).
-     *   Some moves can be complex (like multiple jumps in checkers). For these
-     * We animate these types of moves so the human player does not get disoriented.
      *
      * @param isPlayer1 if the computer player now moving is player 1.
      * @return true if done. Always returns false unless auto optimizing
@@ -45,7 +40,6 @@ public class ComputerMoveRequester implements SearchProgress {
     }
 
     public int getPercentDone() {
-
         return (controller_.getSearchStrategy() != null) ? controller_.getSearchStrategy().getPercentDone() : 0;
     }
 
