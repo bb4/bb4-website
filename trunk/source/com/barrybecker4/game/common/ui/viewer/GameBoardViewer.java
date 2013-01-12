@@ -12,6 +12,7 @@ import com.barrybecker4.game.common.persistence.GameExporter;
 import com.barrybecker4.game.common.ui.SgfFileFilter;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
+import com.barrybecker4.game.twoplayer.common.ui.ComputerMoveProgressBar;
 import com.barrybecker4.ui.file.FileChooserUtil;
 
 import javax.swing.*;
@@ -93,7 +94,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * @param progressBar an optional progress bar for showing progress as the computer thinks about its next move.
      */
-    public void setProgressBar(JProgressBar progressBar) {
+    public void setProgressBar(ComputerMoveProgressBar progressBar) {
         // not used
     }
 

@@ -12,7 +12,6 @@ import com.barrybecker4.game.twoplayer.common.ui.dialogs.TwoPlayerOptionsDialog;
 import com.barrybecker4.game.twoplayer.common.ui.gametree.GameTreeCellRenderer;
 import com.barrybecker4.game.twoplayer.common.ui.gametree.GameTreeDialog;
 import com.barrybecker4.ui.components.TexturedPanel;
-import com.barrybecker4.ui.themes.BarryTheme;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,10 +36,8 @@ import java.awt.event.ActionListener;
 public abstract class TwoPlayerPanel extends GamePanel
                                   implements ActionListener, GameChangedListener {
 
-    private static final Color PROGRESS_BAR_COLOR = new Color(20, 80, 230, 130);
-
     /** for showing progress while the computer thinks. */
-    private JProgressBar progressBar_;
+    private ComputerMoveProgressBar progressBar_;
 
     /** dialog to show the game tree while processing and other debug info. */
     private GameTreeDialog treeDialog_;
@@ -87,18 +84,11 @@ public abstract class TwoPlayerPanel extends GamePanel
         return progressPanel;
     }
 
-    JProgressBar createProgressBar()  {
-        JProgressBar progressBar = new JProgressBar();
-        progressBar.setOpaque(false);
+
+    ComputerMoveProgressBar createProgressBar()  {
+        ComputerMoveProgressBar progressBar = new ComputerMoveProgressBar();
         // show only when used
-        progressBar.setVisible(!get2PlayerController().getPlayers().allPlayersHuman());
-        progressBar.setMinimum(0);
-        progressBar.setMaximum(100);
-        progressBar.setBackground(BarryTheme.UI_COLOR_SECONDARY2);
-        progressBar.setForeground(PROGRESS_BAR_COLOR);
-        progressBar.setStringPainted(true);
-        progressBar.setBorderPainted(false);
-        progressBar.setString(" ");
+        setVisible(!get2PlayerController().getPlayers().allPlayersHuman());
         return progressBar;
     }
 
@@ -173,7 +163,8 @@ public abstract class TwoPlayerPanel extends GamePanel
             boolean canceled = optionsDialog_.showDialog();
             GameContext.log(2, "options selected  canceled=" + canceled );
             if ( !canceled ) { // start a game with the newly defined options
-                GameContext.log(0, "options selected not canceled  show game tree=" + get2PlayerController().getTwoPlayerOptions().getShowGameTree() );
+                GameContext.log(0, "options selected not canceled  show game tree="
+                        + get2PlayerController().getTwoPlayerOptions().getShowGameTree() );
                 if ( get2PlayerController().getTwoPlayerOptions().getShowGameTree() ) {
                     showGameTreeDialog();
                 }

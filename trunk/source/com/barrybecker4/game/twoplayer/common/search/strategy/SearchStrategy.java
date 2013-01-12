@@ -41,22 +41,4 @@ public interface SearchStrategy extends SearchProgress {
      * @param listener event listener
      */
     void setGameTreeEventListener(IGameTreeViewable listener);
-
-
-    // these methods give an external thread debugging controls over the search.
-
-    /**
-     * Cause search to become paused.
-     */
-    void pause();
-
-    /**
-     * @return true if search is paused.
-     */
-    boolean isPaused();
-
-    /**
-     * Continue processing if the search was paused.
-     */
-    void continueProcessing();
 }
