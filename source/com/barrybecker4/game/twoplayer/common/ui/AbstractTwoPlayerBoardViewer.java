@@ -11,7 +11,7 @@ import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
 import com.barrybecker4.game.common.ui.viewer.GamePieceRenderer;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
-import com.barrybecker4.game.twoplayer.common.TwoPlayerViewable;
+import com.barrybecker4.game.twoplayer.common.TwoPlayerViewModel;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 
 import javax.swing.*;
@@ -48,7 +48,7 @@ import java.util.List;
  *  @author Barry Becker
  */
 public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
-                                                   implements GameChangedListener, TwoPlayerViewable {
+                                                   implements GameChangedListener, TwoPlayerViewModel {
 
     /** Responsible for showing move progress visually (with a progress bar). */
     private ComputerMoveProgress moveProgress_;
@@ -174,7 +174,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * The computer plays against itself.
      */
-    public void showComputerVsComputerGame() {
+    public void doComputerVsComputerGame() {
 
         boolean done = false;
 
@@ -212,7 +212,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         setCursor( waitCursor_ );
 
         try {
-            boolean done =  moveProgress_.doComputerMove(isPlayer1);
+            boolean done = moveProgress_.doComputerMove(isPlayer1);
             repaint();
             return done;
         }

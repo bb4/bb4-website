@@ -2,24 +2,6 @@
 package com.barrybecker4.game.common.ui.panel;
 
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.GameViewable;
-import com.barrybecker4.game.common.ui.dialogs.GameOptionsDialog;
-import com.barrybecker4.game.common.ui.dialogs.HelpDialog;
-import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
-import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
-import com.barrybecker4.ui.components.ResizableAppletPanel;
-import com.barrybecker4.ui.components.TexturedPanel;
-import com.barrybecker4.ui.dialogs.OutputWindow;
-import com.barrybecker4.ui.util.GUIUtil;
-import com.barrybecker4.ui.util.Log;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 /**
  * Give a simple verbal greeting when the game is about to start

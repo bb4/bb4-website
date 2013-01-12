@@ -5,7 +5,7 @@ import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
-import com.barrybecker4.game.twoplayer.common.TwoPlayerViewable;
+import com.barrybecker4.game.twoplayer.common.TwoPlayerViewModel;
 import com.barrybecker4.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.barrybecker4.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.barrybecker4.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
@@ -38,7 +38,7 @@ public final class GameTreeDialog extends AbstractDialog
     private MoveInfoPanel moveInfo_;
 
     /** the viewer in the debug window. */
-    private volatile TwoPlayerViewable boardViewer_;
+    private volatile TwoPlayerViewModel boardViewer_;
 
     /** the controller that is actually being played in the normal view. */
     private TwoPlayerController mainController_;
@@ -59,7 +59,7 @@ public final class GameTreeDialog extends AbstractDialog
         initialize(boardViewer, cellRenderer);
     }
 
-    synchronized void initialize(TwoPlayerViewable boardViewer, GameTreeCellRenderer cellRenderer) {
+    synchronized void initialize(TwoPlayerViewModel boardViewer, GameTreeCellRenderer cellRenderer) {
         tree_ = new GameTreeViewable(null);
         boardViewer_ = boardViewer;
         controller_ = (TwoPlayerController)boardViewer.getController();

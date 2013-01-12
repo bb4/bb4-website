@@ -31,7 +31,7 @@ public interface IGameController {
      * @return the class which shows the current state of the game board.
      * May be null if there is no user visible representation of the game.
      */
-    GameViewable getViewer();
+    GameViewModel getViewer();
 
     /**
      * retract the most recently played move

@@ -2,7 +2,7 @@
 package com.barrybecker4.game.multiplayer.common.online.ui;
 
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.game.common.online.ui.OnlineGameManagerPanel;
 import com.barrybecker4.game.common.ui.dialogs.GameOptionsDialog;
@@ -40,7 +40,7 @@ public abstract class MultiPlayerOnlineManagerPanel
     /**
      * Constructor
      */
-    protected MultiPlayerOnlineManagerPanel(GameViewable viewer, GameStartListener dlg) {
+    protected MultiPlayerOnlineManagerPanel(GameViewModel viewer, GameStartListener dlg) {
         super(viewer, dlg);
     }
 

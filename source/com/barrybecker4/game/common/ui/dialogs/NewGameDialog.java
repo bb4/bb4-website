@@ -3,9 +3,8 @@ package com.barrybecker4.game.common.ui.dialogs;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.board.IBoard;
-import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.online.ui.OnlineGameManagerPanel;
 import com.barrybecker4.game.common.ui.panel.GridBoardParamPanel;
 import com.barrybecker4.ui.components.GradientButton;
@@ -41,13 +40,13 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
 
     /** the options get set directly on the game controller and viewer that are passed in  */
     protected final IBoard board_;
-    protected final GameViewable viewer_;
+    protected final GameViewModel viewer_;
 
 
     /**
      *  constructor
      */
-    protected NewGameDialog(Component parent, GameViewable viewer) {
+    protected NewGameDialog(Component parent, GameViewModel viewer) {
         super( parent );
         controller_ = viewer.getController();
         board_ = controller_.getBoard();

@@ -11,7 +11,7 @@ import com.barrybecker4.game.twoplayer.common.search.tree.SearchTreeNode;
  *
  * @author Barry Becker
  */
-public interface SearchStrategy {
+public interface SearchStrategy extends SearchProgress {
 
     /** anything greater than this is considered a won game. */
     int WINNING_VALUE = 4096;
@@ -35,19 +35,6 @@ public interface SearchStrategy {
      * @return  parameters for defining the search.
      */
     SearchOptions getOptions();
-
-    /**
-     * @return the number of moves considered in the search so far.
-     */
-    long getNumMovesConsidered();
-
-    /**
-     * Approximate percent completed for the search.
-     * Approximate because pruning can cause the search to speed up considerably toward the end.
-     *
-     * @return the approximate percentage of total search time that has been completed.
-     */
-    int getPercentDone();
 
     /**
      * An optional game tree event listener. There can be at most one.

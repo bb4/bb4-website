@@ -8,7 +8,7 @@ import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerOptions;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerPlayerOptions;
-import com.barrybecker4.game.twoplayer.common.TwoPlayerViewable;
+import com.barrybecker4.game.twoplayer.common.TwoPlayerViewModel;
 import com.barrybecker4.game.twoplayer.comparison.model.PerformanceResults;
 import com.barrybecker4.game.twoplayer.comparison.model.PerformanceResultsPair;
 import com.barrybecker4.game.twoplayer.comparison.model.ResultsModel;
@@ -99,7 +99,7 @@ public class PerformanceWorker implements Runnable {
         players.set(1, player2);
 
         // this is freezing the UI and reporting that the first move is null.
-        ((TwoPlayerViewable)controller.getViewer()).showComputerVsComputerGame();
+        ((TwoPlayerViewModel)controller.getViewer()).doComputerVsComputerGame();
 
         assert (controller.isDone());
         System.out.println("******** game is done = " + controller.isDone() +" ******");

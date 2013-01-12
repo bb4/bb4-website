@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.common;
 
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.Move;
 
 /**
@@ -12,7 +12,7 @@ import com.barrybecker4.game.common.Move;
  *
  * @author Barry Becker
  */
-public interface TwoPlayerViewable extends GameViewable {
+public interface TwoPlayerViewModel extends GameViewModel {
 
     /**
      * Called when the controller has found the next computer move and needs to make the viewer aware of it.
@@ -24,7 +24,7 @@ public interface TwoPlayerViewable extends GameViewable {
      * Used when the computer is playing against itself, and you want the game to show up in the viewer and
      * be synchronous (block and not in separate thread).
      */
-    void showComputerVsComputerGame();
+    void doComputerVsComputerGame();
 
     /**
      * Currently this does not actually step forward just one search step, but instead

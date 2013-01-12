@@ -3,7 +3,6 @@ package com.barrybecker4.game.common.ui.viewer;
 
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.IBoard;
@@ -30,7 +29,7 @@ public abstract class GameBoardRenderer {
     /** to move pieces you drag them (if the move is valid) */
     private BoardPosition draggedPiece_ = null;
 
-    /**  this copy of the dragged piece is only for show   */
+    /** this copy of the dragged piece is only for show   */
     private BoardPosition draggedShowPiece_ = null;
 
     /**
@@ -82,14 +81,14 @@ public abstract class GameBoardRenderer {
     }
 
     /**
-     * @param c  the new color of the board.
+     * @param c the new color of the board.
      */
     public void setBackground( Color c ) {
         backgroundColor_ = c;
     }
 
     /**
-     * @return c  the board color
+     * @return the board color
      */
     public Color getBackground() {
         return backgroundColor_;

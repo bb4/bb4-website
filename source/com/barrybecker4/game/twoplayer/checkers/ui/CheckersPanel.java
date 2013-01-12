@@ -3,7 +3,7 @@ package com.barrybecker4.game.twoplayer.checkers.ui;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
 import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
@@ -37,7 +37,7 @@ public class CheckersPanel extends TwoPlayerPanel {
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog(Component parent, GameViewable viewer ) {
+    protected NewGameDialog createNewGameDialog(Component parent, GameViewModel viewer ) {
         return new CheckersNewGameDialog( parent, viewer );
     }
 

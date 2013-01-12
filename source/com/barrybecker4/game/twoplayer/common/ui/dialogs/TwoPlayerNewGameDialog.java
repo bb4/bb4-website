@@ -3,7 +3,7 @@ package com.barrybecker4.game.twoplayer.common.ui.dialogs;
 
 import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.board.IRectangularBoard;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
@@ -34,7 +34,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
     /**
      * constructor
      */
-    protected TwoPlayerNewGameDialog(Component parent, GameViewable viewer ) {
+    protected TwoPlayerNewGameDialog(Component parent, GameViewModel viewer ) {
         super(parent, viewer );
     }
 

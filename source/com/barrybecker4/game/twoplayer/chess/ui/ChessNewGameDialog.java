@@ -2,7 +2,7 @@
 package com.barrybecker4.game.twoplayer.chess.ui;
 
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.twoplayer.common.ui.dialogs.TwoPlayerNewGameDialog;
 
 import java.awt.*;
@@ -17,7 +17,7 @@ public class ChessNewGameDialog extends TwoPlayerNewGameDialog
                                 implements ActionListener {
 
     /** constructor  */
-    public ChessNewGameDialog(Component parent, GameViewable viewer ) {
+    public ChessNewGameDialog(Component parent, GameViewModel viewer ) {
         super(parent, viewer );
     }
 

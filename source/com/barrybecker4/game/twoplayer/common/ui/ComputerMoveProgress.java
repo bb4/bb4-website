@@ -6,7 +6,8 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategy;
 
-import javax.swing.*;
+import javax.swing.JProgressBar;
+import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

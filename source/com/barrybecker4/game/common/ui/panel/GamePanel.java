@@ -3,7 +3,7 @@ package com.barrybecker4.game.common.ui.panel;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.ui.dialogs.GameOptionsDialog;
 import com.barrybecker4.game.common.ui.dialogs.HelpDialog;
 import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
@@ -195,7 +195,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * @return the dialog used for configuring a new game to play.
      */
-    protected abstract NewGameDialog createNewGameDialog(Component parent, GameViewable viewer );
+    protected abstract NewGameDialog createNewGameDialog(Component parent, GameViewModel viewer );
 
     /**
      * @return  the dialog used to specify various game options and parameters.
