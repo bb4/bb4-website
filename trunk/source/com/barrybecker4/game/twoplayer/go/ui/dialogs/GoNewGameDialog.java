@@ -2,7 +2,7 @@
 package com.barrybecker4.game.twoplayer.go.ui.dialogs;
 
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.twoplayer.common.ui.dialogs.PlayerAssignmentPanel;
 import com.barrybecker4.game.twoplayer.common.ui.dialogs.TwoPlayerNewGameDialog;
 import com.barrybecker4.game.twoplayer.go.GoController;
@@ -21,7 +21,7 @@ public final class GoNewGameDialog extends TwoPlayerNewGameDialog
 
 
     /** constructor */
-    public GoNewGameDialog( Component parent, GameViewable viewer ) {
+    public GoNewGameDialog( Component parent, GameViewModel viewer ) {
         super( parent, viewer );
     }
 

@@ -87,8 +87,8 @@ public abstract class TwoPlayerController extends GameController {
         return (TwoPlayerOptions) getOptions();
     }
 
-    public TwoPlayerViewable getTwoPlayerViewer() {
-       return (TwoPlayerViewable)viewer_;
+    public TwoPlayerViewModel getTwoPlayerViewer() {
+       return (TwoPlayerViewModel)viewer_;
     }
 
     /**

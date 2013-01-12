@@ -2,7 +2,7 @@
 package com.barrybecker4.game.multiplayer.common.ui;
 
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.dialogs.GameStartListener;
 import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
@@ -36,7 +36,7 @@ public abstract class MultiPlayerNewGameDialog
     /**
      * Constructor.
      */
-    protected MultiPlayerNewGameDialog( Component parent, GameViewable viewer) {
+    protected MultiPlayerNewGameDialog( Component parent, GameViewModel viewer) {
         super( parent, viewer);
         this.setResizable(true);
     }

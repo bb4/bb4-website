@@ -5,7 +5,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
-import com.barrybecker4.game.twoplayer.common.TwoPlayerViewable;
+import com.barrybecker4.game.twoplayer.common.TwoPlayerViewModel;
 import com.barrybecker4.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.barrybecker4.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 
@@ -30,7 +30,7 @@ public final class GameTreeMotionListener implements MouseMotionListener {
     private MoveInfoPanel moveInfoPanel_;
 
     /** the viewer in the debug window. */
-    private TwoPlayerViewable boardViewer_;
+    private TwoPlayerViewModel boardViewer_;
 
     private int oldChainLength_;
 
@@ -42,7 +42,7 @@ public final class GameTreeMotionListener implements MouseMotionListener {
      * constructor - create the tree dialog.
      */
     public GameTreeMotionListener(GameTreeViewer treeViewer,
-                                  TwoPlayerViewable boardViewer,
+                                  TwoPlayerViewModel boardViewer,
                                   MoveInfoPanel detailsPanel) {
         treeViewer_ = treeViewer;
         moveInfoPanel_ = detailsPanel;

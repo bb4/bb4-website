@@ -24,7 +24,7 @@ public abstract class GameController
     private IBoard board_;
 
     /** Use this to draw directly to the ui while thinking (for debugging purposes) . */
-    protected GameViewable viewer_;
+    protected GameViewModel viewer_;
 
     /** the list of players actively playing the game, in the order that they move. */
     private PlayerList players_;
@@ -50,7 +50,7 @@ public abstract class GameController
      * optionally set a viewer for the controller.
      * @param viewer
      */
-    public void setViewer(GameViewable viewer) {
+    public void setViewer(GameViewModel viewer) {
        viewer_ = viewer;
     }
 
@@ -84,7 +84,7 @@ public abstract class GameController
      * @return the class which shows the current state of the game board.
      * May be null if the viewer was never set.
      */
-    public GameViewable getViewer() {
+    public GameViewModel getViewer() {
         return viewer_;
     }
 

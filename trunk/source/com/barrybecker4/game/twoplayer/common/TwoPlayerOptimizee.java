@@ -91,7 +91,7 @@ class TwoPlayerOptimizee implements Optimizee {
         controller_.computerMovesFirst();
 
         if (controller_.getTwoPlayerViewer() != null)  {
-            controller_.getTwoPlayerViewer().showComputerVsComputerGame();
+            controller_.getTwoPlayerViewer().doComputerVsComputerGame();
         }
         else {
             // run in batch mode where the viewer is not available.

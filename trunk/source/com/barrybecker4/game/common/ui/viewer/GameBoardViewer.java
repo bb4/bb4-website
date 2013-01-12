@@ -3,7 +3,7 @@ package com.barrybecker4.game.common.ui.viewer;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.Board;
@@ -37,7 +37,7 @@ import java.util.List;
  *  @author Barry Becker
  */
 public abstract class GameBoardViewer extends JPanel
-                                      implements GameViewable, GameChangedListener {
+                                      implements GameViewModel, GameChangedListener {
 
     /** every GameBoardViewer must contain a controller. */
     protected GameController controller_;

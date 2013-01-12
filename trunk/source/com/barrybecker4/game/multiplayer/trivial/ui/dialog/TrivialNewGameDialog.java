@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.trivial.ui.dialog;
 
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.online.ui.OnlineGameManagerPanel;
 import com.barrybecker4.game.multiplayer.common.ui.MultiPlayerNewGameDialog;
 import com.barrybecker4.game.multiplayer.common.ui.PlayerTable;
@@ -14,7 +14,7 @@ import java.awt.*;
  */
 public class TrivialNewGameDialog extends MultiPlayerNewGameDialog {
 
-    public TrivialNewGameDialog(Component parent, GameViewable viewer ) {
+    public TrivialNewGameDialog(Component parent, GameViewModel viewer ) {
         super( parent, viewer );
     }
 

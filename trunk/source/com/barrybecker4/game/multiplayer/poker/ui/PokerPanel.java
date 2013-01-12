@@ -3,7 +3,7 @@ package com.barrybecker4.game.multiplayer.poker.ui;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.ui.dialogs.GameOptionsDialog;
 import com.barrybecker4.game.common.ui.dialogs.NewGameDialog;
 import com.barrybecker4.game.common.ui.panel.GameInfoPanel;
@@ -39,7 +39,7 @@ public class PokerPanel extends GamePanel {
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog(Component parent, GameViewable viewer ) {
+    protected NewGameDialog createNewGameDialog(Component parent, GameViewModel viewer ) {
         return new PokerNewGameDialog( parent, viewer );
     }
 

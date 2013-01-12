@@ -1,9 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.online.ui;
 
-import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.GameViewable;
+import com.barrybecker4.game.common.GameViewModel;
 import com.barrybecker4.game.common.online.GameCommand;
 import com.barrybecker4.game.common.online.OnlineChangeListener;
 import com.barrybecker4.game.common.online.server.IServerConnection;
@@ -34,7 +33,7 @@ public abstract class OnlineGameManagerPanel
     protected GameStartListener gameStartedListener_;
 
     /** Constructor */
-    protected OnlineGameManagerPanel(GameViewable viewer, GameStartListener dlg) {
+    protected OnlineGameManagerPanel(GameViewModel viewer, GameStartListener dlg) {
 
         controller_ = viewer.getController();
         gameStartedListener_ = dlg;

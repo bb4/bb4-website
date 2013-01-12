@@ -8,7 +8,7 @@ package com.barrybecker4.game.common;
  *
  * @author Barry Becker
  */
-public interface GameViewable {
+public interface GameViewModel {
 
     /**
      * return the game to its original state.
