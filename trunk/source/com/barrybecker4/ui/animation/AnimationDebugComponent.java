@@ -27,7 +27,6 @@ public abstract class AnimationDebugComponent extends AnimationComponent
             if ( runNextStep_ ) {
                 render();
                 timeStep();
-                calculateFrameRate();
                 runNextStep_ = false;
                 repaint();
             }
