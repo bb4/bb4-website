@@ -116,7 +116,7 @@ public abstract class Simulator extends AnimationComponent
     @Override
     protected String getFileNameBase() {
 
-        return this.getClass().getName();
+        return ANIMATION_FRAME_FILE_NAME_PREFIX + getClass().getName();
     }
 
     /**
