@@ -11,63 +11,40 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 /**
- * Create a zoombox while dragging.
+ * Create a zoom box while dragging.
  * Maintain aspect if control key or shift key while dragging.
  *
- * Created on September
  * @author Barry Becker
  */
 public class ZoomHandler implements MouseListener, MouseMotionListener {
 
     FractalAlgorithm algorithm_;
 
-    private static final Color BOUNDING_BOX_COLOR = new Color(255, 100, 0);
+    /** if control or shift key held down while dragging, maintain aspect ratio */
+    private boolean keepAspectRatio = false;
 
-    private static final int UNSET = -1;
-
-    // drag start position
-    private int dragStartX = UNSET;
-    private int dragStartY = UNSET;
-
-    // other corner position while dragging.
-    private int currentX = UNSET;
-    private int currentY = UNSET;
-    private int width;
-    private int height;
-    private int left;
-    private int top;
-
-    /** if control or shift key held down while dragging, maintain aspect ratio. */
-    boolean keepAspectRatio = false;
+    /** the physical representation of the dragged rectangle */
+    private ZoomBox zoomBox;
 
     /**
      * Constructor
      */
     public ZoomHandler(FractalAlgorithm algorithm) {
         algorithm_ = algorithm;
+        zoomBox = new ZoomBox();
+    }
+
+    /**
+     * Remember the location of the mouse when pressed,
+     * and determine if aspect ration should be preserved based on control/shit key.
+     */
+    public void mousePressed(MouseEvent e) {
+        keepAspectRatio = determineIfKeepAspectRation(e);
+        zoomBox.setFirstCorner(e.getX(), e.getY());
     }
 
     public void mouseDragged(MouseEvent e) {
-        currentX = e.getX();
-        currentY = e.getY();
-    }
-
-    public void mouseMoved(MouseEvent e) {}
-
-    /**
-     * The following methods implement MouseListener
-     */
-    public void mouseClicked(MouseEvent e) {}
-
-    /**
-     * Remember the mouse button that is pressed.
-     */
-    public void mousePressed(MouseEvent e) {
-
-        keepAspectRatio = determineIfKeepAspectRation(e);
-
-        dragStartX = e.getX();
-        dragStartY = e.getY();
+        zoomBox.setSecondCorner(e.getX(), e.getY());
     }
 
     private boolean determineIfKeepAspectRation(MouseEvent e) {
@@ -76,45 +53,23 @@ public class ZoomHandler implements MouseListener, MouseMotionListener {
 
     public void mouseReleased(MouseEvent e) {
 
-        if (currentX != dragStartX && currentY != dragStartY)   {
-
-            ComplexNumber firstCorner = algorithm_.getComplexPosition(left, top);
-            ComplexNumber secondCorner = algorithm_.getComplexPosition(left + width, top + height);
-            ComplexNumberRange range = new   ComplexNumberRange(firstCorner, secondCorner);
+        if (zoomBox.isValidBox())   {
+            ComplexNumberRange range = algorithm_.getRange(zoomBox.getBox());
             algorithm_.setRange(range);
         }
-        dragStartX = UNSET;
-        dragStartY = UNSET;
-        currentX = UNSET;
-        currentY = UNSET;
+        zoomBox.clearBox();
     }
-
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseExited(MouseEvent e) {}
 
     /**
-     * Draw the bounding box if dragging.
+     * Draw the bounding box rectangle when dragging.
      */
     public void render(Graphics g, double aspectRatio) {
-        Graphics2D g2 = (Graphics2D) g;
-
-        if (dragStartX != UNSET && currentX != UNSET)  {
-
-            left = Math.min(currentX, dragStartX);
-            top = Math.min(currentY, dragStartY);
-            width = Math.abs(currentX - dragStartX);
-            height = Math.abs(currentY - dragStartY);
-
-            if (keepAspectRatio)  {
-                if (width > height) {
-                   height = (int)(width / aspectRatio);
-                } else {
-                   width = (int)(height * aspectRatio);
-                }
-            }
-
-            g2.setColor(BOUNDING_BOX_COLOR);
-            g2.drawRect(left,  top, width, height);
-        }
+        zoomBox.render(g, aspectRatio, keepAspectRatio);
     }
+
+    // unused mouse interface methods
+    public void mouseMoved(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
 }

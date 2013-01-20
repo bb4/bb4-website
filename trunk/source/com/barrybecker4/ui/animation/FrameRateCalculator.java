@@ -57,7 +57,6 @@ class FrameRateCalculator {
     }
 
     public void setPaused(boolean paused){
-        System.out.println("p="+paused);
         if (paused != isPaused)  {
             if (paused) {
                 startPauseTime = System.currentTimeMillis();
