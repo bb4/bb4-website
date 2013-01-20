@@ -9,6 +9,7 @@ import java.io.Serializable;
  * The range of bytes are only -127 to 127.
  *
  * Immutable. Use MutableLocation if you really need to modify it (rare).
+ * @@ should have ILocation IntLocation and ByteLocation box should work with ILocation.
  *
  * @author Barry Becker
  */

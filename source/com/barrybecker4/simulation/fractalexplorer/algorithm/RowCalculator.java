@@ -44,7 +44,6 @@ public class RowCalculator {
         }
     }
 
-
     /**
      * Computes values for a row.
      */
@@ -93,7 +92,6 @@ public class RowCalculator {
 
             if (lastValue == currentValue) {
                 runLength += increment;
-
                 /*
                 if (increment == N) {
                     // make sure w do not skip over a narrow peninsula
@@ -118,7 +116,6 @@ public class RowCalculator {
                 }
                 runLength = 0;
             }
-
 
             if (runLength > M) {
                 increment = N;

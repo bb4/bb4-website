@@ -2,6 +2,8 @@
 package com.barrybecker4.simulation.fractalexplorer.algorithm;
 
 import com.barrybecker4.common.concurrency.Parallelizer;
+import com.barrybecker4.common.geometry.Box;
+import com.barrybecker4.common.geometry.IntLocation;
 import com.barrybecker4.common.math.ComplexNumber;
 import com.barrybecker4.common.math.ComplexNumberRange;
 import com.barrybecker4.simulation.common.Profiler;
@@ -171,6 +173,16 @@ public abstract class FractalAlgorithm {
      */
     public ComplexNumber getComplexPosition(int x, int y) {
         return range.getInterpolatedPosition((double)x / model.getWidth(), (double)y / model.getHeight());
+    }
+
+    public ComplexNumber getComplexPosition(IntLocation loc) {
+        return getComplexPosition(loc.getX(), loc.getY());
+    }
+
+    public ComplexNumberRange getRange(Box box)  {
+        ComplexNumber firstCorner = getComplexPosition(box.getTopLeftCorner());
+        ComplexNumber secondCorner =getComplexPosition(box.getBottomRightCorner());
+        return new ComplexNumberRange(firstCorner, secondCorner);
     }
 
 

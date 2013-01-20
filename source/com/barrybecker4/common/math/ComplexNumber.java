@@ -89,7 +89,6 @@ public class ComplexNumber {
         return current;
     }
 
-
     /**
      * @return the result of dividing c1 by c2.
      */
@@ -103,16 +102,15 @@ public class ComplexNumber {
      * @return the sum of two complex numbers.
      */
     public static ComplexNumber add(ComplexNumber c1, ComplexNumber c2) {
-        return new ComplexNumber(c1.a+c2.a, c1.b+c2.b);
+        return new ComplexNumber(c1.a + c2.a, c1.b + c2.b);
     }
 
     /**
      * @return result of subtracting two ComplexNumber from this one.
      */
     public static ComplexNumber subtract(ComplexNumber c1, ComplexNumber c2) {
-        return new ComplexNumber(c1.a-c2.a, c1.b-c2.b);
+        return new ComplexNumber(c1.a - c2.a, c1.b - c2.b);
     }
-
 
     /**
      * @return result of Multipling two complex numbers.
@@ -120,8 +118,6 @@ public class ComplexNumber {
     public static ComplexNumber multiply(ComplexNumber c1, ComplexNumber c2) {
         return new ComplexNumber(c1.a*c2.a - c1.b*c2.b, c1.a*c2.b + c1.b*c2.a);
     }
-
-
 
     @Override
     public boolean equals(Object o) {
@@ -137,23 +133,22 @@ public class ComplexNumber {
     public int hashCode() {
         int result;
         long temp;
-        temp = a != +0.0d ? Double.doubleToLongBits(a) : 0L;
+        temp = a == +0.0d ? 0L : Double.doubleToLongBits(a);
         result = (int) (temp ^ (temp >>> 32));
-        temp = b != +0.0d ? Double.doubleToLongBits(b) : 0L;
+        temp = b == +0.0d ? 0L : Double.doubleToLongBits(b);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
-
 
     /**
      * @return string form.
      */
     public String toString() {
         StringBuilder sb = new StringBuilder().append(a);
-        if (Math.abs(a) > 0 && Math.abs(b) > 0)
+        if (Math.abs(a) > 0 && b > 0) {
           sb.append('+');
+        }
         sb.append(b).append('i');
-          return sb.toString();
+        return sb.toString();
     }
-
 }

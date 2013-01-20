@@ -3,13 +3,13 @@ package com.barrybecker4.common.geometry;
 
 /**
  * A box defined by 2 locations.
- * The coordinates have only the resolution of bytes.
+ * The coordinates have the resolution of integers.
  * @author Barry Becker
  */
 public class Box {
 
-    private Location topLeftCorner_;
-    private Location bottomRightCorner_;
+    private IntLocation topLeftCorner_;
+    private IntLocation bottomRightCorner_;
 
     /**
      * Constructor
@@ -18,6 +18,18 @@ public class Box {
      * @param pt1 the opposite corner of the box.
      */
     public Box(Location pt0, Location pt1) {
+
+        this(Math.min(pt0.getRow(), pt1.getRow()), Math.min(pt0.getCol(), pt1.getCol()),
+             Math.max(pt0.getRow(), pt1.getRow()), Math.max(pt0.getCol(), pt1.getCol()));
+    }
+
+    /**
+     * Constructor
+     * Two points that define the box.
+     * @param pt0 one corner of the box
+     * @param pt1 the opposite corner of the box.
+     */
+    public Box(IntLocation pt0, IntLocation pt1) {
 
         this(Math.min(pt0.getRow(), pt1.getRow()), Math.min(pt0.getCol(), pt1.getCol()),
              Math.max(pt0.getRow(), pt1.getRow()), Math.max(pt0.getCol(), pt1.getCol()));
@@ -44,8 +56,8 @@ public class Box {
             colMax = temp;
         }
 
-        topLeftCorner_ = new Location(rowMin, colMin);
-        bottomRightCorner_ = new Location(rowMax, colMax);
+        topLeftCorner_ = new IntLocation(rowMin, colMin);
+        bottomRightCorner_ = new IntLocation(rowMax, colMax);
     }
 
     /**
@@ -72,11 +84,11 @@ public class Box {
         return Math.max(getWidth(), getHeight());
     }
 
-    public Location getTopLeftCorner() {
+    public IntLocation getTopLeftCorner() {
        return topLeftCorner_;
     }
 
-    public Location getBottomRightCorner() {
+    public IntLocation getBottomRightCorner() {
        return bottomRightCorner_;
     }
 
@@ -115,17 +127,25 @@ public class Box {
      * @param loc location to expand out box by.
      */
     public void expandBy(Location loc) {
+        expandBy(new IntLocation(loc));
+    }
+
+    /**
+     * Note that the corner locations are immutable so we create new objects for them if they change.
+     * @param loc location to expand out box by.
+     */
+    public void expandBy(IntLocation loc) {
         if (loc.getRow() < topLeftCorner_.getRow()) {
-            topLeftCorner_ = new Location(loc.getRow(), topLeftCorner_.getCol());
+            topLeftCorner_ = new IntLocation(loc.getRow(), topLeftCorner_.getCol());
         }
         else if (loc.getRow() > bottomRightCorner_.getRow()) {
-            bottomRightCorner_ = new Location(loc.getRow(), bottomRightCorner_.getCol());
+            bottomRightCorner_ = new IntLocation(loc.getRow(), bottomRightCorner_.getCol());
         }
         if (loc.getCol() < topLeftCorner_.getCol())  {
-            topLeftCorner_ = new Location(topLeftCorner_.getRow(), loc.getCol());
+            topLeftCorner_ = new IntLocation(topLeftCorner_.getRow(), loc.getCol());
         }
         else if (loc.getCol() > bottomRightCorner_.getCol()) {
-            bottomRightCorner_ = new Location(bottomRightCorner_.getRow(), loc.getCol());
+            bottomRightCorner_ = new IntLocation(bottomRightCorner_.getRow(), loc.getCol());
         }
     }
 
@@ -139,7 +159,6 @@ public class Box {
             || location.getCol() == bottomRightCorner_.getCol()
             || location.getCol() == topLeftCorner_.getCol());
     }
-
 
     /**
      * @param location the location to check if on board.
@@ -162,11 +181,11 @@ public class Box {
     public void expandGloballyBy(int amount, int maxRow, int maxCol) {
 
         topLeftCorner_ =
-                new Location(Math.max(topLeftCorner_.getRow() - amount, 1),
+                new IntLocation(Math.max(topLeftCorner_.getRow() - amount, 1),
                              Math.max(topLeftCorner_.getCol() - amount, 1));
 
         bottomRightCorner_ =
-                new Location(Math.min(bottomRightCorner_.getRow() + amount, maxRow),
+                new IntLocation(Math.min(bottomRightCorner_.getRow() + amount, maxRow),
                              Math.min(bottomRightCorner_.getCol() + amount, maxCol));
     }
 
@@ -177,16 +196,16 @@ public class Box {
      */
     public void expandBordersToEdge(int threshold, int maxRow, int maxCol) {
         if (topLeftCorner_.getRow() <= threshold + 1) {
-            topLeftCorner_ = new Location(1, topLeftCorner_.getCol());
+            topLeftCorner_ = new IntLocation(1, topLeftCorner_.getCol());
         }
         if (topLeftCorner_.getCol() <= threshold + 1) {
-            topLeftCorner_ = new Location(topLeftCorner_.getRow(), 1);
+            topLeftCorner_ = new IntLocation(topLeftCorner_.getRow(), 1);
         }
         if (maxRow - bottomRightCorner_.getRow() <= threshold) {
-            bottomRightCorner_ = new Location(maxRow, bottomRightCorner_.getCol());
+            bottomRightCorner_ = new IntLocation(maxRow, bottomRightCorner_.getCol());
         }
         if (maxCol - bottomRightCorner_.getCol() <= threshold) {
-            bottomRightCorner_ = new Location(bottomRightCorner_.getRow(), maxCol);
+            bottomRightCorner_ = new IntLocation(bottomRightCorner_.getRow(), maxCol);
         }
     }
 
@@ -199,7 +218,6 @@ public class Box {
         return buf.toString();
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -209,7 +227,6 @@ public class Box {
 
         return !(bottomRightCorner_ != null ? !bottomRightCorner_.equals(box.bottomRightCorner_) : box.bottomRightCorner_ != null)
             && !(topLeftCorner_ != null ? !topLeftCorner_.equals(box.topLeftCorner_) : box.topLeftCorner_ != null);
-
     }
 
     @Override

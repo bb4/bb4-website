@@ -24,6 +24,12 @@ public class IntLocation implements Serializable {
     public IntLocation() {
     }
 
+    public IntLocation(Location loc) {
+        row_ = loc.getRow();
+        col_ = loc.getCol();
+    }
+
+
     /**
      * Constructs a new Location at the given coordinates.
      *
