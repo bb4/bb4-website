@@ -99,7 +99,9 @@ public class FractalExplorer extends Simulator {
         super.paint(g);
 
         Profiler.getInstance().startRenderingTime();
-        g.drawImage(modelImage_.getImage(), 0, 0, null);
+        if (g!=null) {
+            g.drawImage(modelImage_.getImage(), 0, 0, null);
+        }
         zoomHandler_.render(g, model_.getAspectRatio());
         Profiler.getInstance().stopRenderingTime();
     }

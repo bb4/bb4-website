@@ -77,8 +77,8 @@ public abstract class AnimationComponent extends Container
                 ThreadUtil.sleep(500);
             }
             else {
-                render();
                 frameRateCalc.incrementFrameCount();
+                render();
 
                 if (params.recordAnimation) {
                     recorder.saveFrame(frameRateCalc.getFrameCount());
@@ -152,6 +152,7 @@ public abstract class AnimationComponent extends Container
      */
     public void setPaused( boolean paused ) {
         params.paused = paused;
+        frameRateCalc.setPaused(paused);
     }
 
     /**
