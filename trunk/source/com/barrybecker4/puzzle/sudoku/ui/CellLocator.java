@@ -4,7 +4,7 @@ package com.barrybecker4.puzzle.sudoku.ui;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.sudoku.model.board.Board;
 
-import java.awt.*;
+import java.awt.Point;
 
 /**
  * Locates cell coordinates given a point location on the screen.

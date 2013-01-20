@@ -7,97 +7,39 @@ import java.io.Serializable;
 /**
  * Represents a location location of something in byte coordinates.
  * The range of bytes are only -127 to 127.
- *
- * Immutable. Use MutableLocation if you really need to modify it (rare).
- * @@ should have ILocation IntLocation and ByteLocation box should work with ILocation.
+ * Immutable. Use MutableIntLocation if you really need to modify it (rare).
  *
  * @author Barry Becker
  */
-public class Location implements Serializable {
+public abstract class Location implements Serializable {
 
-    private static final long serialVersionUID = 1;
-    protected byte row_ = 0;
-    protected byte col_ = 0;
+    public abstract int getRow();
 
-    /**
-     * Constructs a new point at (0, 0).
-     * Default empty constructor
-     */
-    public Location() {
-    }
+    public abstract int getCol();
 
-    /**
-     * Constructs a new Location at the given coordinates.
-     *
-     * @param row  the row  coordinate (0 - 255).
-     * @param col  the column coordinate (0 - 255).
-     */
-    public Location( int row, int col ) {
-        row_ = (byte) row;
-        col_ = (byte) col;
-    }
+    public abstract int getX();
 
-    public byte getRow() {
-        return row_;
-    }
+    public abstract int getY();
 
-    public byte getCol() {
-        return col_;
-    }
-
-    public byte getX() {
-        return col_;
-    }
-
-    public byte getY() {
-        return row_;
-    }
-
-    public Location copy() {
-        return new Location(row_, col_);
-    }
+    public abstract Location copy();
 
     /**
-     * @return an immutable copy of the original incremented by the amount specified.
-     */
-    public Location incrementOnCopy(int rowChange, int colChange) {
-        return new Location(row_ + rowChange, col_+colChange);
-    }
-
-    /**
-     * @return an immutable copy of the original incremented by the amount specified.
-     */
-    public Location incrementOnCopy(Location loc) {
-        return new Location(row_ + loc.getRow(), col_+ loc.getCol());
-    }
-
-    /**
-     * @return an immutable copy of the original incremented by the amount specified.
-     */
-    public Location decrementOnCopy(Location loc) {
-        return new Location(row_ - loc.getRow(), col_ - loc.getCol());
-    }
-
-    /**
-     * Checks to see if the given location has the same coordinates as this
-     * one.
-     *
+     * Checks to see if the given location has the same coordinates as this one.
      * @param location  The location whose coordinates are to be compared.
      * @return true  The location's coordinates exactly equal this location's.
      */
     @Override
     public boolean equals( Object location ) {
-
         if (!(location instanceof Location)) return false;
         Location loc = (Location) location;
-        return (loc.getRow() == row_) && (loc.getCol() == col_);
+        return (loc.getRow() == getRow()) && (loc.getCol() == getCol());
     }
 
     /**
      * If override equals, should also override hashCode
      */
     public int hashCode() {
-        return (100 * row_ + col_);
+        return (100 * getRow() + getCol());
     }
 
     /**
@@ -105,9 +47,9 @@ public class Location implements Serializable {
      * @return the euclidean distance from this location to another.
      */
     public double getDistanceFrom(Location loc) {
-        float xDif = Math.abs(col_ - loc.getCol());
-        float yDif = Math.abs(row_ - loc.getRow());
-        return Math.sqrt( xDif*xDif + yDif*yDif);
+        float xDif = Math.abs(getCol() - loc.getCol());
+        float yDif = Math.abs(getRow() - loc.getRow());
+        return Math.sqrt(xDif*xDif + yDif*yDif);
     }
 
     /**
@@ -115,16 +57,35 @@ public class Location implements Serializable {
      * @return the euclidean distance from this location to another.
      */
     public double getDistanceFrom(Point2D loc) {
-        double xDif = Math.abs(col_ - loc.getX());
-        double yDif = Math.abs(row_ - loc.getY());
-        return Math.sqrt( xDif*xDif + yDif*yDif);
+        double xDif = Math.abs(getRow() - loc.getX());
+        double yDif = Math.abs(getCol() - loc.getY());
+        return Math.sqrt(xDif*xDif + yDif*yDif);
+    }
+
+    /**
+     * @return an immutable copy of the original incremented by the amount specified.
+     */
+    public abstract Location incrementOnCopy(int rowChange, int colChange);
+
+    /**
+     * @return an immutable copy of the original incremented by the amount specified.
+     */
+    public Location incrementOnCopy(Location loc) {
+        return incrementOnCopy(loc.getRow(), loc.getCol());
+    }
+
+    /**
+     * @return an immutable copy of the original incremented by the amount specified.
+     */
+    public Location decrementOnCopy(Location loc) {
+        return incrementOnCopy(-loc.getRow(), -loc.getCol());
     }
 
     /**
      * @return the string form
      */
     public String toString() {
-        return "(row=" + row_ + ", column=" + col_ + ")";
+        return "(row=" + getRow() + ", column=" + getCol() + ")";
     }
 }
 

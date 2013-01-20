@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.sudoku.ui;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.sudoku.model.ValueConverter;
 import com.barrybecker4.puzzle.sudoku.model.board.Board;
@@ -8,7 +9,13 @@ import com.barrybecker4.puzzle.sudoku.model.board.Candidates;
 import com.barrybecker4.puzzle.sudoku.model.board.Cell;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Stroke;
 import java.util.Iterator;
 
 /**
@@ -104,7 +111,7 @@ public class SudokuRenderer implements CellLocator {
 
         int row = (int)((point.getY() - MARGIN) / pieceSize);
         int col = (int)((point.getX() - MARGIN) / pieceSize);
-        return new Location(row, col);
+        return new ByteLocation(row, col);
     }
 
     /**

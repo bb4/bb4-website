@@ -2,6 +2,7 @@
 package com.barrybecker4.puzzle.maze.model;
 
 import com.barrybecker4.common.geometry.IntLocation;
+import com.barrybecker4.common.geometry.Location;
 
 
 /**
@@ -15,15 +16,15 @@ public enum Direction {
 
     FORWARD(0.5) {
         @Override
-        public IntLocation apply(IntLocation p) { return p; }
+        public Location apply(Location p) { return p; }
     },
     LEFT(0.28) {
         @Override
-        public IntLocation apply(IntLocation p) { return leftOf(p); }
+        public Location apply(Location p) { return leftOf(p); }
     },
     RIGHT(0.22) {
         @Override
-        public IntLocation apply(IntLocation p) { return rightOf(p); }
+        public Location apply(Location p) { return rightOf(p); }
     };
 
     private double probability_;
@@ -41,13 +42,13 @@ public enum Direction {
         probability_ = probability;
     }
 
-    public abstract IntLocation apply(IntLocation dir);
+    public abstract Location apply(Location dir);
 
 
     /**
      *  find the direction which is counterclockwise 90 (to the left) of the specified dir.
      */
-    protected IntLocation leftOf( IntLocation dir ) {
+    protected Location leftOf( Location dir ) {
         IntLocation newDir;
         if ( dir.getX() == 0 ) {
             newDir = new IntLocation(0, (dir.getY() > 0)? -1 : 1 );
@@ -61,7 +62,7 @@ public enum Direction {
     /**
      * find the direction which is clockwise 90 (to the right) of the specified dir.
      */
-    protected IntLocation rightOf( IntLocation dir ) {
+    protected Location rightOf( Location dir ) {
         IntLocation newDir ;
         if ( dir.getX() == 0 ) {
             newDir = new IntLocation(0, (dir.getY() > 0)? 1 : -1);

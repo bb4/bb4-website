@@ -2,6 +2,7 @@
 package com.barrybecker4.puzzle.hiq.model;
 
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 
 /**
@@ -29,8 +30,8 @@ public final class PegMove {
      */
     PegMove( byte fromRow, byte fromCol,
              byte destinationRow, byte destinationCol) {
-        fromPosition = new Location(fromRow, fromCol);
-        toPosition = new Location(destinationRow, destinationCol);
+        fromPosition = new ByteLocation(fromRow, fromCol);
+        toPosition = new ByteLocation(destinationRow, destinationCol);
     }
 
     PegMove( Location fromPosition,
@@ -47,17 +48,17 @@ public final class PegMove {
     }
 
     public byte getFromRow() {
-        return fromPosition.getRow();
+        return (byte) fromPosition.getRow();
     }
     public byte getFromCol() {
-        return fromPosition.getCol();
+        return (byte) fromPosition.getCol();
     }
 
     public byte getToRow() {
-        return toPosition.getRow();
+        return (byte) toPosition.getRow();
     }
     public byte getToCol() {
-        return toPosition.getCol();
+        return (byte) toPosition.getCol();
     }
 
     @Override

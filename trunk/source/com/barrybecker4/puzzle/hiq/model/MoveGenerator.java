@@ -47,8 +47,8 @@ public class MoveGenerator  {
      */
     private List<PegMove> findMovesForLocation(Location location, boolean undo) {
         List<PegMove> moves = new LinkedList<PegMove>();
-        byte r = location.getRow();
-        byte c = location.getCol();
+        byte r = (byte) location.getRow();
+        byte c = (byte) location.getCol();
 
         // 4 cases to consider: NEWS
         checkMoveForDirection(r, c, 0, -2, undo, moves);

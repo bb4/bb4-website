@@ -9,7 +9,7 @@ package com.barrybecker4.common.geometry;
  *
  * @author Barry Becker
  */
-public final class MutableLocation extends Location {
+public final class MutableIntLocation extends IntLocation {
 
     /**
      * Constructs a new Location at the given coordinates.
@@ -17,11 +17,11 @@ public final class MutableLocation extends Location {
      * @param row  the row  coordinate (0 - 255).
      * @param col  the column coordinate (0 - 255).
      */
-    public MutableLocation( int row, int col ) {
+    public MutableIntLocation(int row, int col) {
         super(row, col);
     }
 
-    public MutableLocation(Location loc) {
+    public MutableIntLocation(Location loc) {
         super(loc.getRow(), loc.getCol());
     }
 

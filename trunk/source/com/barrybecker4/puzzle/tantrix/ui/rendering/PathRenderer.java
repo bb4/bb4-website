@@ -5,7 +5,11 @@ import com.barrybecker4.puzzle.tantrix.model.HexTile;
 import com.barrybecker4.puzzle.tantrix.model.PathColor;
 import com.barrybecker4.puzzle.tantrix.model.TilePlacement;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;

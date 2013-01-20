@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.galactic.ui.dialog;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.player.Player;
@@ -124,7 +125,7 @@ public class GalacticPlayerTable extends PlayerTable
     @Override
     protected Player createPlayer() {
         int ct = table_.getRowCount();
-        Planet planet = new Planet((char)('A'+ct), GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(0,0));
+        Planet planet = new Planet((char)('A'+ct), GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new ByteLocation(0,0));
         Color newColor = MultiGamePlayer.getNewPlayerColor(getPlayers());
         GalacticPlayer player = GalacticPlayer.createGalacticPlayer(
                                              "Admiral "+(ct+1), planet, newColor, true);

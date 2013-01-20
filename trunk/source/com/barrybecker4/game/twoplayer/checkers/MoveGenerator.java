@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.checkers;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.MoveList;
@@ -161,7 +162,7 @@ public class MoveGenerator  {
               && (m.captureList != null) && (!m.captureList.alreadyCaptured( next )) ) {
             // then there is another jump. We must take it.
             CheckersMove mm = m.copy();  // base it on the original jump
-            mm.setToLocation(new Location(beyondNext.getLocation().getRow(), beyondNext.getLocation().getCol()));
+            mm.setToLocation(new ByteLocation(beyondNext.getLocation().getRow(), beyondNext.getLocation().getCol()));
             mm.captureList.add( next.copy() );
             // next.setPiece(null); ?
 

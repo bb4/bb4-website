@@ -3,7 +3,7 @@ package com.barrybecker4.puzzle.tantrix.ui.rendering;
 
 import com.barrybecker4.puzzle.tantrix.model.PathColor;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Renders a single tantrix tile.

@@ -4,7 +4,11 @@ package com.barrybecker4.puzzle.adventure.ui;
 import com.barrybecker4.puzzle.adventure.Choice;
 import com.barrybecker4.puzzle.adventure.ChoiceList;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;

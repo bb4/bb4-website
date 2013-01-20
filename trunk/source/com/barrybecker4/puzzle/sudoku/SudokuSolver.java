@@ -7,7 +7,7 @@ import com.barrybecker4.puzzle.sudoku.model.update.IBoardUpdater;
 import com.barrybecker4.puzzle.sudoku.model.update.NonReflectiveBoardUpdater;
 import com.barrybecker4.puzzle.sudoku.model.update.ReflectiveBoardUpdater;
 
-import java.awt.*;
+import java.awt.Container;
 
 /**
  * This does the hard work of actually solving the puzzle.

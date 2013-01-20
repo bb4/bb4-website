@@ -4,7 +4,7 @@ package com.barrybecker4.puzzle.sudoku;
 import com.barrybecker4.common.concurrency.Worker;
 import com.barrybecker4.puzzle.sudoku.ui.SudokuPanel;
 
-import java.awt.*;
+import java.awt.Cursor;
 
 
 /**

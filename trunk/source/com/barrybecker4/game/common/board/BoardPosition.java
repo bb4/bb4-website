@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.board;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 
 /**
@@ -25,12 +26,12 @@ public class BoardPosition {
      * @param piece - the piece to put at this position (use null if there is none).
      */
     public BoardPosition( int row, int col, GamePiece piece)  {
-        this(new Location(row, col), piece);
+        this(new ByteLocation(row, col), piece);
     }
 
     public BoardPosition(BoardPosition p) {
 
-        location_ = new Location(p.getRow(), p.getCol());
+        location_ = new ByteLocation(p.getRow(), p.getCol());
         if (p.piece_ != null)
             piece_ = p.piece_.copy();
         else

@@ -4,8 +4,11 @@ package com.barrybecker4.puzzle.adventure.ui;
 import com.barrybecker4.puzzle.adventure.Story;
 import com.barrybecker4.ui.components.ImageListPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 
 /**
  * This panel is responsible for drawing the Text describing the current scene.

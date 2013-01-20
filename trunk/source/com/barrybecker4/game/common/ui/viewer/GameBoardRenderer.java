@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.ui.viewer;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.board.Board;
@@ -127,7 +128,7 @@ public abstract class GameBoardRenderer {
         int size = Math.max(1, getCellSize());
         int row = (e.getY()- getMargin())/ size + 1;
         int col = (e.getX()- getMargin())/ size + 1;
-        return new Location(row, col);
+        return new ByteLocation(row, col);
     }
 
 

@@ -6,8 +6,8 @@ import com.barrybecker4.puzzle.sudoku.SudokuGenerator;
 import com.barrybecker4.puzzle.sudoku.SudokuSolver;
 import com.barrybecker4.puzzle.sudoku.model.board.Board;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Graphics;
 
 /**
  * Draws the current best solution to the puzzle in a panel.

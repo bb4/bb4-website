@@ -5,7 +5,7 @@ import com.barrybecker4.puzzle.common.ui.PuzzleViewer;
 import com.barrybecker4.puzzle.hiq.model.PegBoard;
 import com.barrybecker4.puzzle.hiq.model.PegMove;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.util.List;
 
 /**

@@ -6,7 +6,13 @@ import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.tantrix.model.TilePlacement;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.Stroke;
 
 import static com.barrybecker4.puzzle.tantrix.ui.rendering.TantrixBoardRenderer.TOP_MARGIN;
 

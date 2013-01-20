@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2004-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board.move;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
@@ -76,7 +77,7 @@ public final class GoMoveGenerator {
             for (int j = 1; j <= nRows; j++ )  {
                 // if its a candidate move and not an immediate take-back (which would break the rule of ko)
                 if ( candidateMoves.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, board ) ) {
-                    GoMove m = new GoMove( new Location(j, i), lastMoveValue, new GoStone(player1) );
+                    GoMove m = new GoMove( new ByteLocation(j, i), lastMoveValue, new GoStone(player1) );
 
                     if ( m.isSuicidal(board) ) {
                         GameContext.log( 3, "The move was a suicide (can't add it to the list): " + m );

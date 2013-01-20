@@ -6,6 +6,7 @@ import ca.dj.jigo.sgf.SGFLoader;
 import ca.dj.jigo.sgf.tokens.InfoToken;
 import ca.dj.jigo.sgf.tokens.SGFToken;
 import ca.dj.jigo.sgf.tokens.TextToken;
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
@@ -107,8 +108,8 @@ public class BlockadeGameImporter extends TwoPlayerGameImporter {
              wall = new BlockadeWall(new BlockadeBoardPosition(mvToken.getWallPoint1().y, mvToken.getWallPoint1().x),
                                                        new BlockadeBoardPosition(mvToken.getWallPoint2().y, mvToken.getWallPoint2().x));
 
-         return BlockadeMove.createMove(new Location(mvToken.getFromY(), mvToken.getFromX()),
-                 new Location(mvToken.getToY(), mvToken.getToX()),
+         return BlockadeMove.createMove(new ByteLocation(mvToken.getFromY(), mvToken.getFromX()),
+                 new ByteLocation(mvToken.getToY(), mvToken.getToX()),
                  0, new GamePiece(player1), wall);
     }
 

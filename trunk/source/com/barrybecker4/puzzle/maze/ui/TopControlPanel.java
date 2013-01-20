@@ -4,7 +4,8 @@ package com.barrybecker4.puzzle.maze.ui;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.components.NumberInput;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 
 /**

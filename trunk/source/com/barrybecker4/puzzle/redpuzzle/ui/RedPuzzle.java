@@ -14,7 +14,7 @@ import com.barrybecker4.ui.sliders.LabeledSlider;
 import com.barrybecker4.ui.sliders.SliderChangeListener;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 /**
  * Red Puzzle Application to show the solving of the puzzle.

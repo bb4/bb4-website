@@ -5,8 +5,10 @@ import com.barrybecker4.puzzle.sudoku.Data;
 import com.barrybecker4.puzzle.sudoku.SudokuController;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JApplet;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
 
 /**
  * Sudoku Puzzle UI.

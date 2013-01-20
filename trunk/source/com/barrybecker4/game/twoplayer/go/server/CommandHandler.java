@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.twoplayer.go.server;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
@@ -273,7 +274,7 @@ public class CommandHandler {
 
         if (point != null)  {
             boolean isBlack = controller_.getCurrentPlayer().equals(controller_.getPlayers().getPlayer1());
-            GoMove move = new GoMove(new Location(point.getX()+1, point.getY()+1),  0, new GoStone(isBlack));
+            GoMove move = new GoMove(new ByteLocation(point.getX()+1, point.getY()+1),  0, new GoStone(isBlack));
             controller_.manMoves(move);
         }
         return true;

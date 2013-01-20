@@ -4,7 +4,8 @@ package com.barrybecker4.puzzle.hiq.ui;
 import com.barrybecker4.puzzle.common.PuzzleRenderer;
 import com.barrybecker4.puzzle.hiq.model.PegBoard;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  * Singleton class that takes a PieceList and renders it for the PegBoardViewer.

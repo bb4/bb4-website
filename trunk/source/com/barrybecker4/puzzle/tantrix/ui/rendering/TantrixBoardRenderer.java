@@ -6,7 +6,10 @@ import com.barrybecker4.puzzle.common.PuzzleRenderer;
 import com.barrybecker4.puzzle.tantrix.model.TantrixBoard;
 import com.barrybecker4.puzzle.tantrix.model.TilePlacement;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import static com.barrybecker4.puzzle.tantrix.ui.rendering.HexUtil.ROOT3;
 

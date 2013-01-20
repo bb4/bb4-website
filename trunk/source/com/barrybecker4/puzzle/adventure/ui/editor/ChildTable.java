@@ -8,7 +8,7 @@ import com.barrybecker4.ui.table.TableButton;
 import com.barrybecker4.ui.table.TableButtonListener;
 import com.barrybecker4.ui.table.TableColumnMeta;
 
-import javax.swing.*;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.TableModel;
 
 

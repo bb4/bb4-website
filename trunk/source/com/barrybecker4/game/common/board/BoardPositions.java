@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.board;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 
@@ -59,7 +60,7 @@ public class BoardPositions {
     public void clear(BoardPosition proto) {
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
-                proto.setLocation(new Location(i, j));
+                proto.setLocation(new ByteLocation(i, j));
                 positions_[i][j] = proto.copy();
             }
         }

@@ -1,12 +1,16 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.maze.ui;
 
-import com.barrybecker4.common.geometry.IntLocation;
+import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.maze.model.MazeCell;
 import com.barrybecker4.puzzle.maze.model.MazeModel;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 
 /**
  * Responsible for drawing the Maze (see MazeModel).
@@ -153,7 +157,7 @@ public class MazeRenderer {
         drawChar("F", maze.getStopPosition(), cellSize, g2);
     }
 
-    private static void drawChar(String c, IntLocation pos,  int cellSize, Graphics2D g2) {
+    private static void drawChar(String c, Location pos,  int cellSize, Graphics2D g2) {
         if (pos != null)  {
             g2.drawString( c, (int) ((pos.getX() + 0.32) * cellSize), (int) ((pos.getY() + 0.76) * cellSize) );
         }

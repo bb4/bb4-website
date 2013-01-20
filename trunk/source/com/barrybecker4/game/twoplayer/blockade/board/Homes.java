@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.twoplayer.blockade.board;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
@@ -54,9 +55,9 @@ public class Homes  {
         for (int i=0; i<NUM_HOMES; i++) {
             int c = baseOffset + Math.round(i*increment);
 
-            p1Homes_[i] = new BlockadeBoardPosition(new Location(homeRow1, c), null, null, null, true, false);
+            p1Homes_[i] = new BlockadeBoardPosition(new ByteLocation(homeRow1, c), null, null, null, true, false);
             p1Homes_[i].setPiece(new GamePiece(true));
-            p2Homes_[i] = new BlockadeBoardPosition(new Location(homeRow2, c), null, null, null, false, true);
+            p2Homes_[i] = new BlockadeBoardPosition(new ByteLocation(homeRow2, c), null, null, null, false, true);
             p2Homes_[i].setPiece(new GamePiece(false));
         }
     }

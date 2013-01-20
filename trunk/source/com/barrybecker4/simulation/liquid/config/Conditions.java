@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.simulation.liquid.config;
 
+import com.barrybecker4.common.geometry.IntLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.common.xml.DomUtil;
 import com.barrybecker4.ui.util.GUIUtil;
@@ -182,7 +183,7 @@ public class Conditions {
          assert (xPos <=  this.gridWidth_ && xPos > 0) : "invalid xpos = "+ xPos;
          assert (yPos <=  this.gridHeight_ && yPos > 0) : "invalid ypos = "+ yPos;
 
-         return new Location(yPos, xPos);
+         return new IntLocation(yPos, xPos);
     }
 
     private Vector2d parseVector(Node n, String vecAttribute) {

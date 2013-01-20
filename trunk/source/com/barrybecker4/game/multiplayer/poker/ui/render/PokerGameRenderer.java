@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.poker.ui.render;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.IGameController;
 import com.barrybecker4.game.common.board.Board;
@@ -64,7 +65,7 @@ public class PokerGameRenderer extends MultiGameBoardRenderer {
     @Override
     protected void drawMarkers(Board board, PlayerList players, Graphics2D g2  ) {
 
-        Location loc = new Location(board.getNumRows() >> 1, (board.getNumCols() >> 1) - 3);
+        Location loc = new ByteLocation(board.getNumRows() >> 1, (board.getNumCols() >> 1) - 3);
         int pot = ((PokerTable)board).getPotValue();
         new ChipRenderer().render(g2, loc, pot, this.getCellSize());
 
