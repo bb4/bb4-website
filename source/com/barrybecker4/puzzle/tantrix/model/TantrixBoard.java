@@ -2,6 +2,7 @@
 package com.barrybecker4.puzzle.tantrix.model;
 
 import com.barrybecker4.common.geometry.Box;
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.tantrix.model.fitting.TantrixTileFitter;
 import com.barrybecker4.puzzle.tantrix.model.verfication.SolutionVerifier;
@@ -16,7 +17,7 @@ import java.util.Set;
 public class TantrixBoard {
 
     /** starting position. must be odd I believe. */
-    public static final Location INITIAL_LOCATION = new Location(21, 21);
+    public static final Location INITIAL_LOCATION = new ByteLocation(21, 21);
 
     /** The 'tantrix'. Map of locations to currently placed tiles. */
     private Tantrix tantrix;

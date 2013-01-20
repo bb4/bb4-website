@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.sudoku.ui;
 
-import java.awt.*;
+import java.awt.Choice;
 
 /**
  * A combo box that allows the user to select the speed at which the puzzle is generated or solved.

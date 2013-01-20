@@ -2,6 +2,7 @@
 package com.barrybecker4.puzzle.tantrix.model;
 
 import com.barrybecker4.common.geometry.Box;
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 
 import java.util.HashMap;
@@ -110,7 +111,7 @@ public class Tantrix extends HashMap<Location, TilePlacement>{
      * @return the placement at the specified location.
      */
     public TilePlacement getTilePlacement(int row, int col) {
-        return get(new Location(row, col));
+        return get(new ByteLocation(row, col));
     }
 
     private void setTilePlacement(TilePlacement placement) {

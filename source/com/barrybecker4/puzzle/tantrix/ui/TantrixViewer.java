@@ -7,7 +7,7 @@ import com.barrybecker4.puzzle.tantrix.model.TilePlacement;
 import com.barrybecker4.puzzle.tantrix.ui.rendering.TantrixBoardRenderer;
 import com.barrybecker4.sound.MusicMaker;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 /**
  * Draws the current best solution to the puzzle in a panel.

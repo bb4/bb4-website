@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.maze.model;
 
-import com.barrybecker4.common.geometry.IntLocation;
+import com.barrybecker4.common.geometry.Location;
 
 /**
  *  A region of space bounded by walls in the maze.
@@ -43,7 +43,7 @@ public class MazeCell {
         depth = d;
     }
 
-    public IntLocation getNextPosition(IntLocation currentPosition, IntLocation dir) {
+    public Location getNextPosition(Location currentPosition, Location dir) {
         visited = true;
         return currentPosition.incrementOnCopy(dir);
     }

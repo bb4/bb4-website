@@ -10,8 +10,11 @@ import com.barrybecker4.ui.dialogs.PasswordDialog;
 import com.barrybecker4.ui.util.GUIUtil;
 import org.w3c.dom.Document;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 

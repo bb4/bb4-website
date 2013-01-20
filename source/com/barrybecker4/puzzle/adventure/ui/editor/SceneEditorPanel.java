@@ -8,8 +8,11 @@ import com.barrybecker4.ui.components.ScrollingTextArea;
 import com.barrybecker4.ui.components.TextInput;
 import com.barrybecker4.ui.dialogs.ImagePreviewDialog;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

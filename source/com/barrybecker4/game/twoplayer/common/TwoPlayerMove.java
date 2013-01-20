@@ -2,6 +2,7 @@
 package com.barrybecker4.game.twoplayer.common;
 
 import com.barrybecker4.common.format.FormatUtil;
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
@@ -119,7 +120,7 @@ public class TwoPlayerMove extends Move {
      */
     public static TwoPlayerMove createMove( int destinationRow, int destinationCol,
                                             int val, GamePiece piece ) {
-        return new TwoPlayerMove(new Location(destinationRow, destinationCol), val, piece);
+        return new TwoPlayerMove(new ByteLocation(destinationRow, destinationCol), val, piece);
     }
 
     /**
@@ -132,11 +133,11 @@ public class TwoPlayerMove extends Move {
     }
 
     public final byte getToRow()  {
-        return toLocation_.getRow();
+        return (byte) toLocation_.getRow();
     }
 
     public final byte getToCol() {
-        return toLocation_.getCol();
+        return (byte) toLocation_.getCol();
     }
 
     public final Location getToLocation() {

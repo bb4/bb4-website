@@ -6,11 +6,7 @@ import com.barrybecker4.common.math.MathUtil;
 import java.util.Collections;
 import java.util.Random;
 
-import static com.barrybecker4.puzzle.tantrix.model.PathColor.BLUE;
-import static com.barrybecker4.puzzle.tantrix.model.PathColor.GREEN;
-import static com.barrybecker4.puzzle.tantrix.model.PathColor.RED;
-import static com.barrybecker4.puzzle.tantrix.model.PathColor.WHITE;
-import static com.barrybecker4.puzzle.tantrix.model.PathColor.YELLOW;
+import static com.barrybecker4.puzzle.tantrix.model.PathColor.*;
 
 /**
  * The complete set of hexagonal tantrix tiles

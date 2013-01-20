@@ -6,7 +6,10 @@ import com.barrybecker4.ui.file.ExtensionFileFilter;
 import com.barrybecker4.ui.file.FileChooserUtil;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

@@ -16,6 +16,7 @@ import ca.dj.jigo.sgf.tokens.SGFToken;
 import ca.dj.jigo.sgf.tokens.SizeToken;
 import ca.dj.jigo.sgf.tokens.TextToken;
 import ca.dj.jigo.sgf.tokens.WhiteNameToken;
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.MoveList;
@@ -141,7 +142,7 @@ public class GoGameImporter extends TwoPlayerGameImporter {
         while (points.hasNext()) {
             Point point = points.next();
             //System.out.println("adding move at row=" + point.y+" col="+ point.x);
-            moveList.add( new GoMove( new Location(point.y, point.x), 0, new GoStone(player1)));
+            moveList.add( new GoMove( new ByteLocation(point.y, point.x), 0, new GoStone(player1)));
         }
     }
 
@@ -153,7 +154,9 @@ public class GoGameImporter extends TwoPlayerGameImporter {
           if (mvToken.isPass()) {
               return GoMove.createPassMove(0, !mvToken.isWhite());
           }
-          return new GoMove( new Location(mvToken.getY(), mvToken.getX()), 0, new GoStone(!mvToken.isWhite()));
+          return new GoMove(
+                  new ByteLocation(mvToken.getY(), mvToken.getX()),
+                  0, new GoStone(!mvToken.isWhite()));
     }
 
 }

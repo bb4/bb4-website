@@ -3,6 +3,7 @@ package com.barrybecker4.puzzle.maze.model;
 
 
 import com.barrybecker4.common.geometry.IntLocation;
+import com.barrybecker4.common.geometry.Location;
 
 /**
  * The model part of the model view controller pattern for the maze.
@@ -20,8 +21,8 @@ public class MazeModel {
     private MazeCell[][] grid_;
 
     // the start and stop positions
-    private IntLocation startPosition_;
-    private IntLocation stopPosition_;
+    private Location startPosition_;
+    private Location stopPosition_;
 
     /**
      * Constructs a maze with specified width and height.
@@ -44,19 +45,19 @@ public class MazeModel {
         startPosition_ = new IntLocation( 2, 2 );
     }
 
-    public IntLocation getStartPosition() {
+    public Location getStartPosition() {
         return startPosition_;
     }
 
-    public void setStopPosition(IntLocation stopPos) {
+    public void setStopPosition(Location stopPos) {
         stopPosition_ = stopPos;
     }
 
-    public IntLocation getStopPosition() {
+    public Location getStopPosition() {
         return stopPosition_;
     }
 
-    public MazeCell getCell(IntLocation p) {
+    public MazeCell getCell(Location p) {
         return getCell(p.getX(), p.getY());
     }
 

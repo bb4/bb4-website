@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.multiplayer.poker.ui.dialog;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
 import com.barrybecker4.game.multiplayer.poker.ui.render.HandRenderer;
@@ -25,7 +26,7 @@ final class PokerHandViewer extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-         handRenderer.render((Graphics2D) g, new Location(0, 2), hand_, 22);
+         handRenderer.render((Graphics2D) g, new ByteLocation(0, 2), hand_, 22);
     }
 }
 

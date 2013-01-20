@@ -2,7 +2,7 @@
 package com.barrybecker4.game.twoplayer.go.board.analysis.group.eye.potential;
 
 import com.barrybecker4.common.geometry.Location;
-import com.barrybecker4.common.geometry.MutableLocation;
+import com.barrybecker4.common.geometry.MutableIntLocation;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
 import com.barrybecker4.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.barrybecker4.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
@@ -36,7 +36,7 @@ class RunPotentialAnalyzer {
      * @return eye potential for row and column at pos
      */
     public float getRunPotential(Location position, int rowInc, int colInc, int maxRow, int maxCol) {
-        MutableLocation pos = new MutableLocation(position);
+        MutableIntLocation pos = new MutableIntLocation(position);
         float runPotential = 0;
         int breadth = (rowInc == 1) ? (maxRow - pos.getRow()) : (maxCol - pos.getCol());
         GoBoardPosition startSpace = (GoBoardPosition) board_.getPosition( pos );

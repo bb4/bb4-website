@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.tantrix.model;
 
+import com.barrybecker4.common.geometry.IntLocation;
 import com.barrybecker4.common.geometry.Location;
 
 import javax.vecmath.Point2d;
@@ -31,12 +32,12 @@ public class HexUtil {
         Location nbrLoc = null;
 
         switch (direction) {
-            case 0 : nbrLoc = new Location(row, col + 1); break;
-            case 1 : nbrLoc = new Location(row - 1, col + colOffset + 1); break;
-            case 2 : nbrLoc = new Location(row - 1, col + colOffset); break;
-            case 3 : nbrLoc = new Location(row, col - 1); break;
-            case 4 : nbrLoc = new Location(row + 1, col + colOffset); break;
-            case 5 : nbrLoc = new Location(row + 1, col + colOffset + 1); break;
+            case 0 : nbrLoc = new IntLocation(row, col + 1); break;
+            case 1 : nbrLoc = new IntLocation(row - 1, col + colOffset + 1); break;
+            case 2 : nbrLoc = new IntLocation(row - 1, col + colOffset); break;
+            case 3 : nbrLoc = new IntLocation(row, col - 1); break;
+            case 4 : nbrLoc = new IntLocation(row + 1, col + colOffset); break;
+            case 5 : nbrLoc = new IntLocation(row + 1, col + colOffset + 1); break;
             default : assert false;
         }
         return nbrLoc;

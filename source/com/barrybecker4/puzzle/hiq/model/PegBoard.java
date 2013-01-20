@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.hiq.model;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 
 import java.util.LinkedList;
@@ -160,7 +161,7 @@ public class PegBoard {
         for (byte i = 0; i<SIZE; i++) {
             for (byte j = 0; j<SIZE; j++) {
                 if (isValidPosition(i, j) && getPosition(i, j) == pegged) {
-                    list.add(new Location(i, j));
+                    list.add(new ByteLocation(i, j));
                 }
             }
         }

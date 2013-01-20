@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board.move;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
@@ -56,7 +57,7 @@ public class GoMove extends TwoPlayerMove {
      * @return new passing move
      */
     public static GoMove createPassMove(int val, boolean player1) {
-        GoMove m = new GoMove(new Location(1, 1), val, null );
+        GoMove m = new GoMove(new ByteLocation(1, 1), val, null );
         m.isPass_ = true;
         m.setPlayer1(player1);
         return m;
@@ -67,7 +68,7 @@ public class GoMove extends TwoPlayerMove {
      * @return new resignation move
      */
     public static GoMove createResignationMove(boolean player1) {
-        GoMove m = new GoMove( new Location(1, 1), 0, null );
+        GoMove m = new GoMove( new ByteLocation(1, 1), 0, null );
         m.isResignation_ = true;
         m.setPlayer1(player1);
         return m;

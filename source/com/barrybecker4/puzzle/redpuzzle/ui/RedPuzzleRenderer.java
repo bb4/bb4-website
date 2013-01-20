@@ -8,7 +8,10 @@ import com.barrybecker4.puzzle.redpuzzle.model.Piece;
 import com.barrybecker4.puzzle.redpuzzle.model.PieceList;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * Singleton class that takes a PieceList and renders it for the RedPuzzleViewer.

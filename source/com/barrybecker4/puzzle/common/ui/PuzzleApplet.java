@@ -6,8 +6,8 @@ import com.barrybecker4.puzzle.common.PuzzleController;
 import com.barrybecker4.puzzle.common.Refreshable;
 import com.barrybecker4.ui.application.ApplicationApplet;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
 
 /**
  * Base class for Puzzle applets.

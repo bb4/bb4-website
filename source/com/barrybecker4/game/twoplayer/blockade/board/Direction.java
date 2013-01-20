@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.blockade.board;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 
 import java.util.HashMap;
@@ -72,7 +73,7 @@ public enum Direction {
     public Location getOffset() {
         int colDif = (hashKey_ % 10) - 2;
         int rowDif = (hashKey_ / 10) - 2;
-        return new Location(rowDif, colDif);
+        return new ByteLocation(rowDif, colDif);
     }
 
 }

@@ -2,14 +2,16 @@
 package com.barrybecker4.puzzle.maze.ui;
 
 import com.barrybecker4.common.concurrency.ThreadUtil;
-import com.barrybecker4.common.geometry.IntLocation;
+import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.puzzle.maze.MazeGenerator;
 import com.barrybecker4.puzzle.maze.MazeSolver;
 import com.barrybecker4.puzzle.maze.model.MazeModel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * This panel is responsible for drawing the Maze (see MazeModel).
@@ -81,7 +83,7 @@ public class MazePanel extends JComponent {
      * paint just the region around a single cell for performance.
      * @param pt
      */
-    public void paintCell(IntLocation pt) {
+    public void paintCell(Location pt) {
         int csized2 = (cellSize/2)+2;
         int xpos = (pt.getX() * cellSize);
         int ypos = (pt.getY() * cellSize);

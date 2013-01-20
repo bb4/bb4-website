@@ -5,8 +5,14 @@ import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.components.TextInput;
 import com.barrybecker4.ui.dialogs.AbstractDialog;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;

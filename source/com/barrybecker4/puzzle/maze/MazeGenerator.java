@@ -2,6 +2,7 @@
 package com.barrybecker4.puzzle.maze;
 
 import com.barrybecker4.common.geometry.IntLocation;
+import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.puzzle.maze.model.Direction;
 import com.barrybecker4.puzzle.maze.model.GenState;
@@ -67,7 +68,7 @@ public class MazeGenerator {
     public void search() {
         stack.clear();
 
-        IntLocation currentPosition = maze_.getStartPosition();
+        Location currentPosition = maze_.getStartPosition();
         MazeCell currentCell = maze_.getCell(currentPosition);
         currentCell.visited = true;
 
@@ -84,10 +85,10 @@ public class MazeGenerator {
 
         boolean moved = false;
 
-        IntLocation currentPosition;
+        Location currentPosition;
         MazeCell nextCell;
         int depth;
-        IntLocation dir;
+        Location dir;
 
         do {
             GenState state = stack.remove(0);  // pop
@@ -105,7 +106,7 @@ public class MazeGenerator {
             }
 
             MazeCell currentCell = maze_.getCell(currentPosition);
-            IntLocation nextPosition = currentCell.getNextPosition(currentPosition, dir);
+            Location nextPosition = currentCell.getNextPosition(currentPosition, dir);
             nextCell = maze_.getCell(nextPosition);
 
             if (nextCell.visited) {
@@ -128,7 +129,7 @@ public class MazeGenerator {
         return nextCell;
     }
 
-    private void addWall(MazeCell currentCell, IntLocation dir, MazeCell nextCell) {
+    private void addWall(MazeCell currentCell, Location dir, MazeCell nextCell) {
         // add a wall
         if ( dir.getX() == 1 ) {         // east
             currentCell.eastWall = true;

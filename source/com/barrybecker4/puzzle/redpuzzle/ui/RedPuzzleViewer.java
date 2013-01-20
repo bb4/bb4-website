@@ -7,7 +7,8 @@ import com.barrybecker4.puzzle.redpuzzle.model.Piece;
 import com.barrybecker4.puzzle.redpuzzle.model.PieceList;
 import com.barrybecker4.sound.MusicMaker;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.util.List;
 
 

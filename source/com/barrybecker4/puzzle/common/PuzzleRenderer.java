@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.common;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 /**
  * Singleton class that takes a PieceList and renders it for the PuzzleViewer.

@@ -1,42 +1,33 @@
-// Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.common.geometry;
 
 import java.awt.geom.Point2D;
-import java.io.Serializable;
 
 /**
- * Represents a location location of something in integer coordinates.
+ * Represents a location location of something in byte coordinates.
+ * The range of bytes are only -127 to 127.
+ *
  * Immutable. Use MutableIntLocation if you really need to modify it (rare).
+ * @@ should have ILocation IntLocation and ByteLocation box should work with ILocation.
  *
  * @author Barry Becker
  */
-public class IntLocation extends Location {
+public class ByteLocation extends Location {
 
     private static final long serialVersionUID = 1;
-    protected int row_ = 0;
-    protected int col_ = 0;
-
-    /**
-     * Constructs a new point at (0, 0).
-     * Default empty constructor
-     */
-    public IntLocation() {
-    }
-
-    public IntLocation(Location loc) {
-        row_ = loc.getRow();
-        col_ = loc.getCol();
-    }
+    protected byte row_ = 0;
+    protected byte col_ = 0;
 
     /**
      * Constructs a new Location at the given coordinates.
      *
-     * @param row  the row  coordinate (0 - 255).
+     * @param row  the row coordinate (0 - 255).
      * @param col  the column coordinate (0 - 255).
      */
-    public IntLocation(int row, int col) {
-        row_ = row;
-        col_ = col;
+    public ByteLocation(int row, int col) {
+        assert Math.abs(row) < 128 && Math.abs(col) < 128 : "row=" + row + " or col="+ col +" was out of range.";
+        row_ = (byte) row;
+        col_ = (byte) col;
     }
 
     @Override
@@ -61,12 +52,12 @@ public class IntLocation extends Location {
 
     @Override
     public Location copy() {
-        return new IntLocation(row_, col_);
+        return new ByteLocation(row_, col_);
     }
 
     @Override
     public Location incrementOnCopy(int rowChange, int colChange) {
-        return new IntLocation(row_ + rowChange, col_+colChange);
+        return new ByteLocation(row_ + rowChange, col_ + colChange);
     }
 }
 

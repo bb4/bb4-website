@@ -4,8 +4,9 @@ package com.barrybecker4.puzzle.common.ui;
 import com.barrybecker4.common.format.FormatUtil;
 import com.barrybecker4.puzzle.common.Refreshable;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.List;
 
 /**

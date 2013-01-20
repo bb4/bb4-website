@@ -2,6 +2,7 @@
 package com.barrybecker4.game.twoplayer.go.board.analysis.group.eye.potential;
 
 import com.barrybecker4.common.geometry.Box;
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
 import com.barrybecker4.game.twoplayer.go.board.analysis.group.GroupAnalyzerMap;
@@ -89,7 +90,7 @@ public class EyePotentialAnalyzer {
         RunPotentialAnalyzer runAnalyzer = new RunPotentialAnalyzer(groupString, board_, analyzerMap_);
 
         for ( int r = rMin; r <= rMax; r++ ) {
-            totalPotential += runAnalyzer.getRunPotential(new Location(r, cMin), 0, 1, rMax, cMax);
+            totalPotential += runAnalyzer.getRunPotential(new ByteLocation(r, cMin), 0, 1, rMax, cMax);
         }
         return totalPotential;
     }
@@ -103,7 +104,7 @@ public class EyePotentialAnalyzer {
         RunPotentialAnalyzer runAnalyzer = new RunPotentialAnalyzer(groupString, board_, analyzerMap_);
 
         for ( int c = cMin; c <= cMax; c++ ) {
-            totalPotential += runAnalyzer.getRunPotential(new Location(rMin, c), 1, 0, rMax, cMax);
+            totalPotential += runAnalyzer.getRunPotential(new ByteLocation(rMin, c), 1, 0, rMax, cMax);
         }
         return totalPotential;
     }

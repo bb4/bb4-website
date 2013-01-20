@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.chess;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.board.Board;
@@ -231,7 +232,8 @@ public enum ChessPieceType {
       BoardPosition next = board.getPosition( row, col );
 
       while ((next != null) && next.isUnoccupied() )   {
-          ChessMove m = ChessMove.createMove( new Location(curRow, curCol), new Location(row, col),
+          ChessMove m = ChessMove.createMove( new ByteLocation(curRow, curCol),
+                                              new ByteLocation(row, col),
                                               null, 0,  piece );
           // no need to evaluate it since there were no captures
           moveList.add( m );
@@ -254,7 +256,8 @@ public enum ChessPieceType {
     private static List<ChessMove> checkForNonCapture(BoardPosition next, int row, int col, List<ChessMove> moveList,
                                                       ChessPiece piece) {
         if ( (next != null) &&  next.isUnoccupied()) {
-            ChessMove m = ChessMove.createMove(new Location(row, col), new Location(next.getRow(), next.getCol()),
+            ChessMove m = ChessMove.createMove(new ByteLocation(row, col),
+                                               new ByteLocation(next.getRow(), next.getCol()),
                                                null, 0, piece);
             moveList.add( m );
         }
@@ -273,8 +276,9 @@ public enum ChessPieceType {
             // there can only be one capture in chess.
             CaptureList capture = new CaptureList();
             capture.add( next.copy() );
-            ChessMove m = ChessMove.createMove( new Location(row, col), new Location(next.getRow(), next.getCol()),
-                                                capture, 0, piece);
+            ChessMove m = ChessMove.createMove(new ByteLocation(row, col),
+                                               new ByteLocation(next.getRow(), next.getCol()),
+                                               capture, 0, piece);
             moveList.add( m );
         }
         return moveList;

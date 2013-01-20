@@ -6,7 +6,7 @@ import com.barrybecker4.puzzle.sudoku.model.ValueConverter;
 import com.barrybecker4.puzzle.sudoku.model.board.Board;
 import com.barrybecker4.puzzle.sudoku.model.board.Cell;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;

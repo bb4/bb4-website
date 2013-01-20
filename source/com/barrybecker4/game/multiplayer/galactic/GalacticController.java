@@ -1,11 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.galactic;
 
-import com.barrybecker4.common.geometry.Location;
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameOptions;
 import com.barrybecker4.game.common.Move;
-import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
@@ -78,12 +77,12 @@ public class GalacticController extends MultiGameController {
             // create the default players. One human and one robot.
             PlayerList players = new PlayerList();
 
-            Planet homePlanet = new Planet('A', GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(5, 5));
+            Planet homePlanet = new Planet('A', GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new ByteLocation(5, 5));
             players.add(GalacticPlayer.createGalacticPlayer("Admiral 1",
                                       homePlanet, MultiGamePlayer.getNewPlayerColor(players), true));
             homePlanet.setOwner((GalacticPlayer)players.get(0));
 
-            homePlanet = new Planet('B', GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(10, 10));
+            homePlanet = new Planet('B', GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new ByteLocation(10, 10));
             players.add(GalacticPlayer.createGalacticPlayer("Admiral 2",
                                       homePlanet, MultiGamePlayer.getNewPlayerColor(players), false));
             homePlanet.setOwner((GalacticPlayer)players.get(1));

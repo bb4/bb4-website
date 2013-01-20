@@ -2,6 +2,7 @@
 package com.barrybecker4.puzzle.maze;
 
 import com.barrybecker4.common.geometry.IntLocation;
+import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.maze.model.GenState;
 import com.barrybecker4.puzzle.maze.model.MazeCell;
 import com.barrybecker4.puzzle.maze.model.MazeModel;
@@ -38,14 +39,14 @@ public class MazeSolver {
         stack.clear();
 
         // Keep track of our current path. We may need to backtrack along it if we encounter a dead end.
-        List<IntLocation> solutionPath = new LinkedList<IntLocation>();
+        List<Location> solutionPath = new LinkedList<Location>();
 
-        IntLocation currentPosition = maze.getStartPosition();
+        Location currentPosition = maze.getStartPosition();
         MazeCell currentCell = maze.getCell(currentPosition);
 
         // push the initial moves
         stack.pushMoves( currentPosition, new IntLocation(0, 1), 1);
-        IntLocation dir;
+        Location dir;
         int depth;
         boolean solved = false;
         panel_.paintAll();
@@ -69,15 +70,15 @@ public class MazeSolver {
             }
 
             currentCell = maze.getCell(currentPosition);
-            IntLocation nextPosition = currentCell.getNextPosition(currentPosition,  dir);
+            Location nextPosition = currentCell.getNextPosition(currentPosition,  dir);
 
             search(solutionPath, currentCell, dir, depth, nextPosition);
         }
         panel_.paintAll();
     }
 
-    private void search(List<IntLocation> solutionPath, MazeCell currentCell,
-                        IntLocation dir, int depth, IntLocation nextPosition) {
+    private void search(List<Location> solutionPath, MazeCell currentCell,
+                        Location dir, int depth, Location nextPosition) {
         MazeCell nextCell = maze.getCell(nextPosition);
         boolean eastBlocked = dir.getX() ==  1 && currentCell.eastWall;
         boolean westBlocked =  dir.getX() == -1 && nextCell.eastWall;
@@ -95,9 +96,9 @@ public class MazeSolver {
     }
 
 
-    private void advanceToNextCell(MazeCell currentCell, IntLocation dir, int depth,
-                                   IntLocation nextPosition, MazeCell nextCell) {
-        IntLocation currentPosition;
+    private void advanceToNextCell(MazeCell currentCell, Location dir, int depth,
+                                   Location nextPosition, MazeCell nextCell) {
+        Location currentPosition;
         if ( dir.getX() == 1 ) {// east
             currentCell.eastPath = true;
             nextCell.westPath = true;
@@ -124,11 +125,11 @@ public class MazeSolver {
     }
 
 
-    private void backTrack(List<IntLocation> solutionPath) {
+    private void backTrack(List<Location> solutionPath) {
         // need to back up to the next path we will try
         GenState lastState = stack.get(0);
 
-        IntLocation pos;
+        Location pos;
         do {
             pos =  solutionPath.remove(0);
             MazeCell cell = maze.getCell(pos);

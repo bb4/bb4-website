@@ -2,6 +2,7 @@
 package com.barrybecker4.puzzle.tantrix.model.verfication;
 
 import com.barrybecker4.common.geometry.Box;
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.tantrix.model.HexUtil;
 import com.barrybecker4.puzzle.tantrix.model.Tantrix;
@@ -55,22 +56,22 @@ public class InnerSpaceDetector {
         Set<Location> empties = new HashSet<Location>();
 
         for (int i = bbox.getMinCol(); i <= bbox.getMaxCol(); i++) {
-            Location loc = new Location(bbox.getMinRow(), i);
+            Location loc = new ByteLocation(bbox.getMinRow(), i);
             if (tantrix.get(loc) == null)  {
                 empties.add(loc);
             }
-            loc = new Location(bbox.getMaxRow(), i);
+            loc = new ByteLocation(bbox.getMaxRow(), i);
             if (tantrix.get(loc) == null)  {
                 empties.add(loc);
             }
         }
 
         for (int i = bbox.getMinRow() + 1; i < bbox.getMaxRow(); i++) {
-            Location loc = new Location(i, bbox.getMinCol());
+            Location loc = new ByteLocation(i, bbox.getMinCol());
             if (tantrix.get(loc) == null)  {
                 empties.add(loc);
             }
-            loc = new Location(i, bbox.getMaxCol());
+            loc = new ByteLocation(i, bbox.getMaxCol());
             if (tantrix.get(loc) == null)  {
                 empties.add(loc);
             }
@@ -129,7 +130,7 @@ public class InnerSpaceDetector {
         Box bbox = tantrix.getBoundingBox();
         for (int i = bbox.getMinRow(); i < bbox.getMaxRow(); i++) {
             for (int j = bbox.getMinCol(); j <= bbox.getMaxCol(); j++)  {
-                Location loc = new Location(i, j);
+                Location loc = new ByteLocation(i, j);
                 if (tantrix.get(loc) == null && !visited.contains(loc))  {
                     return false;
                 }
