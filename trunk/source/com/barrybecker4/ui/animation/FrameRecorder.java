@@ -30,10 +30,10 @@ public class FrameRecorder {
      * Same the current frame image if there is one.
      * @return true if the image was successfully saved.
      */
-    public boolean saveFrame(int frameIndex) {
+    public boolean saveFrame(long frameIndex) {
 
         if (image != null) {
-            String fname = fileNameBase + Integer.toString( 1000000 + frameIndex);
+            String fname = fileNameBase + Long.toString( 1000000 + frameIndex);
             ImageUtil.saveAsImage(fname, image, ImageUtil.ImageType.PNG);
             return true;
         }

@@ -28,7 +28,9 @@ public class RDOnscreenRenderer extends RDRenderer {
     public void renderStrip(int minX, ColorRect rect, Graphics2D g2) {
 
         Image img = rect.getAsImage();
-        g2.drawImage(img, minX, 0, null);
+        if (g2 != null)  {
+            g2.drawImage(img, minX, 0, null);
+        }
     }
 
     @Override
