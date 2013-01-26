@@ -2,6 +2,7 @@
 package com.barrybecker4.game.twoplayer.go.board.elements.group;
 
 import com.barrybecker4.common.geometry.Box;
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.GoTestCase;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
@@ -27,7 +28,7 @@ public class TestGoGroup extends GoTestCase {
         assertFalse(group.containsStone(new GoBoardPosition(3, 3, null, new GoStone(true, 0.5f))));
         assertTrue(group.containsStone(stone));
         assertEquals("Unexpected bounding box.",
-               new Box(new Location(4, 4), new Location(4, 4)), group.findBoundingBox());
+               new Box(new ByteLocation(4, 4), new ByteLocation(4, 4)), group.findBoundingBox());
         assertEquals("Unexpected number of liberties", 4, group.getNumLiberties(board));
         assertTrue(group.isOwnedByPlayer1());
     }

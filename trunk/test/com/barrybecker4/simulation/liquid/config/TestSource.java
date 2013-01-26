@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.simulation.liquid.config;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import junit.framework.TestCase;
 
@@ -15,8 +16,8 @@ public class TestSource extends TestCase {
     /** class under test. */
     private Source src;
 
-    private static final Location LOCATION_START = new Location(1,1);
-    private static final Location LOCATION_STOP = new Location(1,1);
+    private static final Location LOCATION_START = new ByteLocation(1,1);
+    private static final Location LOCATION_STOP = new ByteLocation(1,1);
 
     private static final Vector2d VELOCITY1 = new Vector2d(1,1);
 

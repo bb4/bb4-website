@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board.update;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
 import com.barrybecker4.game.twoplayer.go.board.elements.position.GoStone;
@@ -23,7 +24,7 @@ public class GoMoveStub extends GoMove {
      * use createMove to get moves, and dispose to recycle them
      */
     public GoMoveStub( GoStone stone ) {
-        super( new Location(1, 1), 1, stone );
+        super( new ByteLocation(1, 1), 1, stone );
     }
 
     @Override

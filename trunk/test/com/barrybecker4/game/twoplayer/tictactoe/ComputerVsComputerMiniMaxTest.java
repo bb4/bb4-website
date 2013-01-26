@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.tictactoe;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
@@ -52,10 +53,10 @@ public class ComputerVsComputerMiniMaxTest extends TestCase {
 
         controller.computerMovesFirst();
         TwoPlayerMove move = (TwoPlayerMove)controller.getLastMove();
-        assertEquals("Unexpected first move for computer.", new Location(2, 2), move.getToLocation());
+        assertEquals("Unexpected first move for computer.", new ByteLocation(2, 2), move.getToLocation());
 
         controller.requestComputerMove(false, true);
         move = (TwoPlayerMove)controller.getLastMove();
-        assertEquals("Unexpected second move for computer.", new Location(1, 1), move.getToLocation());
+        assertEquals("Unexpected second move for computer.", new ByteLocation(1, 1), move.getToLocation());
     }
 }

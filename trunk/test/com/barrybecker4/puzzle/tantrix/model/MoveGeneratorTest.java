@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.tantrix.model;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import junit.framework.TestCase;
 
@@ -26,9 +27,9 @@ public class MoveGeneratorTest extends TestCase {
 
         assertEquals("Unexpected number of next moves.", 1, moves.size());
         assertEquals("Unexpected first next move.",
-            new TilePlacement(TILES.getTile(3), new Location(22, 20), Rotation.ANGLE_120), moves.get(0));
+            new TilePlacement(TILES.getTile(3), new ByteLocation(22, 20), Rotation.ANGLE_120), moves.get(0));
         //assertEquals("Unexpected second next move.",
-        //    new TilePlacement(TILES.getTile(3), new Location(1, 0), Rotation.ANGLE_0), moves.get(1));
+        //    new TilePlacement(TILES.getTile(3), new ByteLocation(1, 0), Rotation.ANGLE_0), moves.get(1));
     }
 
     public void testMoveGenerationFromTwoOfThreeTilesB() {

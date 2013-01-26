@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board.analysis;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.GoTestCase;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
@@ -49,10 +50,10 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
 
         PositionalScore totalScore = PositionalScore.createZeroScore();
                                                                             //    badShp  posScore health
-        verifyPositionalScore(new Location(2,2), PositionalScore.createOccupiedScore(0.0, 0.025, 0.0), totalScore);
-        verifyPositionalScore(new Location(2,3), PositionalScore.createOccupiedScore(0.0, -0.016667, 0.0), totalScore);
-        verifyPositionalScore(new Location(3,3), PositionalScore.createOccupiedScore(0.0, 0.0, 0.0), totalScore);
-        verifyPositionalScore(new Location(3,2), PositionalScore.createOccupiedScore(0.0, 0.01667, 0.0), totalScore);
+        verifyPositionalScore(new ByteLocation(2,2), PositionalScore.createOccupiedScore(0.0, 0.025, 0.0), totalScore);
+        verifyPositionalScore(new ByteLocation(2,3), PositionalScore.createOccupiedScore(0.0, -0.016667, 0.0), totalScore);
+        verifyPositionalScore(new ByteLocation(3,3), PositionalScore.createOccupiedScore(0.0, 0.0, 0.0), totalScore);
+        verifyPositionalScore(new ByteLocation(3,2), PositionalScore.createOccupiedScore(0.0, 0.01667, 0.0), totalScore);
 
         verifyScoresEqual(PositionalScore.createOccupiedScore(0.0, 0.025, 0.0), totalScore);
         Assert.assertEquals("Unexpected final position score.  ",
@@ -78,10 +79,10 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
 
         PositionalScore totalScore = PositionalScore.createZeroScore();
                                                                          //    badShp  posScore health
-        verifyPositionalScore(new Location(2,2), PositionalScore.createOccupiedScore(0.0, 0.0, 0.0), totalScore);
-        verifyPositionalScore(new Location(2,3), PositionalScore.createOccupiedScore(0.0, -0.01667, 0.0), totalScore);
-        verifyPositionalScore(new Location(3,2), PositionalScore.createOccupiedScore(0.0, 0.01667, 0.0), totalScore);
-        verifyPositionalScore(new Location(3,3), PositionalScore.createOccupiedScore(0.0, 0.25, 0.0), totalScore);
+        verifyPositionalScore(new ByteLocation(2,2), PositionalScore.createOccupiedScore(0.0, 0.0, 0.0), totalScore);
+        verifyPositionalScore(new ByteLocation(2,3), PositionalScore.createOccupiedScore(0.0, -0.01667, 0.0), totalScore);
+        verifyPositionalScore(new ByteLocation(3,2), PositionalScore.createOccupiedScore(0.0, 0.01667, 0.0), totalScore);
+        verifyPositionalScore(new ByteLocation(3,3), PositionalScore.createOccupiedScore(0.0, 0.25, 0.0), totalScore);
 
         verifyScoresEqual(PositionalScore.createOccupiedScore(0.0, 0.25, 0.0), totalScore);
         Assert.assertEquals("Unexpected final position score.  ",
@@ -106,15 +107,15 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
 
         PositionalScore totalScore = PositionalScore.createZeroScore();
                                                                            //       badShp  posScore health
-        verifyPositionalScore(new Location(2,2), PositionalScore.createOccupiedScore(-1.0f, 0.025f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(2,3), PositionalScore.createOccupiedScore(-0.666667f, .01666667f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(3,3), PositionalScore.createOccupiedScore(-0.333333f, 0.25f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(3,2), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
+        verifyPositionalScore(new ByteLocation(2,2), PositionalScore.createOccupiedScore(-1.0f, 0.025f, 0.0f), totalScore);
+        verifyPositionalScore(new ByteLocation(2,3), PositionalScore.createOccupiedScore(-0.666667f, .01666667f, 0.0f), totalScore);
+        verifyPositionalScore(new ByteLocation(3,3), PositionalScore.createOccupiedScore(-0.333333f, 0.25f, 0.0f), totalScore);
+        verifyPositionalScore(new ByteLocation(3,2), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
 
-        verifyPositionalScore(new Location(8,2), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(8,3), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(9,3), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
-        verifyPositionalScore(new Location(9,2), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
+        verifyPositionalScore(new ByteLocation(8,2), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
+        verifyPositionalScore(new ByteLocation(8,3), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
+        verifyPositionalScore(new ByteLocation(9,3), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
+        verifyPositionalScore(new ByteLocation(9,2), PositionalScore.createOccupiedScore(0.0f, 0.0f, 0.0f), totalScore);
 
         verifyScoresEqual(PositionalScore.createOccupiedScore(-2.0f, 0.2917f, 0.0f), totalScore);
         Assert.assertEquals("Unexpected final position score.  ",

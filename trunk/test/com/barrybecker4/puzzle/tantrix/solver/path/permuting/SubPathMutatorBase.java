@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.tantrix.solver.path.permuting;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.tantrix.model.*;
 import com.barrybecker4.puzzle.tantrix.solver.path.TantrixPath;
@@ -66,14 +67,14 @@ public abstract class SubPathMutatorBase extends TestCase {
         HexTile pivotTile = TILES.getTile(3);
 
         TilePlacement pivotTilePlacement =
-                new TilePlacement(pivotTile, new Location(20, 19), Rotation.ANGLE_300);
+                new TilePlacement(pivotTile, new ByteLocation(20, 19), Rotation.ANGLE_300);
 
         TilePlacement firstTilePlacement =
-                new TilePlacement(TILES.getTile(1), new Location(19, 19), Rotation.ANGLE_300);
+                new TilePlacement(TILES.getTile(1), new ByteLocation(19, 19), Rotation.ANGLE_300);
         TilePlacement secondTilePlacement =
-                new TilePlacement(TILES.getTile(5), new Location(18, 19), Rotation.ANGLE_60);
+                new TilePlacement(TILES.getTile(5), new ByteLocation(18, 19), Rotation.ANGLE_60);
         TilePlacement thirdTilePlacement =
-                new TilePlacement(TILES.getTile(2), new Location(17, 20), Rotation.ANGLE_300);
+                new TilePlacement(TILES.getTile(2), new ByteLocation(17, 20), Rotation.ANGLE_300);
 
         TilePlacementList tileList = new TilePlacementList();
         tileList.add(firstTilePlacement);
@@ -91,14 +92,14 @@ public abstract class SubPathMutatorBase extends TestCase {
         HexTile pivotTile = TILES.getTile(3);
 
         TilePlacement pivotTilePlacement =
-                new TilePlacement(pivotTile, new Location(22, 21), Rotation.ANGLE_120);
+                new TilePlacement(pivotTile, new ByteLocation(22, 21), Rotation.ANGLE_120);
 
         TilePlacement firstTilePlacement =
-                new TilePlacement(TILES.getTile(2), new Location(23, 21), Rotation.ANGLE_180);
+                new TilePlacement(TILES.getTile(2), new ByteLocation(23, 21), Rotation.ANGLE_180);
         TilePlacement secondTilePlacement =
-                new TilePlacement(TILES.getTile(1), new Location(22, 20), Rotation.ANGLE_300);
+                new TilePlacement(TILES.getTile(1), new ByteLocation(22, 20), Rotation.ANGLE_300);
         TilePlacement thirdTilePlacement =
-                new TilePlacement(TILES.getTile(4), new Location(21, 21), Rotation.ANGLE_0);
+                new TilePlacement(TILES.getTile(4), new ByteLocation(21, 21), Rotation.ANGLE_0);
 
         TilePlacementList tileList = new TilePlacementList();
         tileList.add(firstTilePlacement);

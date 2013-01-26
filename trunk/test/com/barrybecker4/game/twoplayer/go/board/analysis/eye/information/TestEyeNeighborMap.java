@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board.analysis.eye.information;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.board.GoBoardConfigurator;
 import com.barrybecker4.game.twoplayer.go.board.elements.eye.IGoEye;
@@ -17,20 +18,20 @@ public class TestEyeNeighborMap extends TestCase {
 
     private EyeNeighborMap nbrMap;
 
-    private static final Location[] RABBITY_SIX = new Location[] {
-            new Location(4, 2), new Location(3, 2), new Location(2, 3),
-            new Location(3, 3), new Location(4, 3), new Location(3, 4)
+    private static final Location[] RABBITY_SIX = new ByteLocation[] {
+            new ByteLocation(4, 2), new ByteLocation(3, 2), new ByteLocation(2, 3),
+            new ByteLocation(3, 3), new ByteLocation(4, 3), new ByteLocation(3, 4)
     };
 
-    private static final Location[] BLOCK_OF_SIX = new Location[] {
-            new Location(13, 6), new Location(12, 5), new Location(12, 4),
-            new Location(13, 4), new Location(13, 5), new Location(12, 6)
+    private static final Location[] BLOCK_OF_SIX = new ByteLocation[] {
+            new ByteLocation(13, 6), new ByteLocation(12, 5), new ByteLocation(12, 4),
+            new ByteLocation(13, 4), new ByteLocation(13, 5), new ByteLocation(12, 6)
     };
 
     public void testSingleEyeSpace() {
 
         IGoEye eye =
-                new StubGoEye(GoBoardConfigurator.createPositionList(new Location[]{new Location(2, 2)}));
+                new StubGoEye(GoBoardConfigurator.createPositionList(new ByteLocation[]{new ByteLocation(2, 2)}));
         nbrMap = new EyeNeighborMap(eye);
 
         assertEquals("unexpected size", 1, nbrMap.keySet().size());
@@ -38,7 +39,7 @@ public class TestEyeNeighborMap extends TestCase {
 
     public void testTwoSpaceEye() {
 
-        Location[] positions = new Location[] {new Location(2, 2), new Location(2, 3)};
+        Location[] positions = new ByteLocation[] {new ByteLocation(2, 2), new ByteLocation(2, 3)};
         IGoEye eye = new StubGoEye(GoBoardConfigurator.createPositionList(positions));
         nbrMap = new EyeNeighborMap(eye);
 
@@ -50,7 +51,7 @@ public class TestEyeNeighborMap extends TestCase {
      */
     public void testDisjointEye() {
 
-        Location[] positions = new Location[] {new Location(2, 2), new Location(3, 3)};
+        Location[] positions = new ByteLocation[] {new ByteLocation(2, 2), new ByteLocation(3, 3)};
         IGoEye eye = new StubGoEye(GoBoardConfigurator.createPositionList(positions));
         try{
             nbrMap = new EyeNeighborMap(eye);
@@ -63,7 +64,7 @@ public class TestEyeNeighborMap extends TestCase {
 
     public void testThreeSpaceEye() {
 
-        Location[] positions = new Location[] {new Location(2, 2), new Location(2, 3), new Location(3, 3)};
+        Location[] positions = new ByteLocation[] {new ByteLocation(2, 2), new ByteLocation(2, 3), new ByteLocation(3, 3)};
         List<GoBoardPosition> spaces = GoBoardConfigurator.createPositionList(positions);
         IGoEye eye = new StubGoEye(spaces);
         nbrMap = new EyeNeighborMap(eye);

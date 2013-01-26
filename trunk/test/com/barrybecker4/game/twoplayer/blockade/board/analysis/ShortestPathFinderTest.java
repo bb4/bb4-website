@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.twoplayer.blockade.board.analysis;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.BlockadeTestCase;
@@ -32,7 +33,7 @@ public class ShortestPathFinderTest extends BlockadeTestCase {
             }),
         });
 
-        verifyShortestPaths("board/analysis/initial5x7", new Location(2, 2), expPaths);
+        verifyShortestPaths("board/analysis/initial5x7", new ByteLocation(2, 2), expPaths);
     }
 
 
@@ -50,7 +51,7 @@ public class ShortestPathFinderTest extends BlockadeTestCase {
             }),
         });
 
-        verifyShortestPaths("board/analysis/initial5x7", new Location(2, 2), expPaths);
+        verifyShortestPaths("board/analysis/initial5x7", new ByteLocation(2, 2), expPaths);
     }
 
     /**

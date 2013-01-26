@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.tantrix.solver.path.permuting;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.tantrix.model.PathColor;
 import com.barrybecker4.puzzle.tantrix.model.Rotation;
@@ -48,11 +49,11 @@ public class SubPathReverserTest extends SubPathMutatorBase {
         assertEquals("unexpected size.", 3, resultPath.size());
 
         TilePlacement first =
-                new TilePlacement(TILES.getTile(2), new Location(19, 19), Rotation.ANGLE_60);
+                new TilePlacement(TILES.getTile(2), new ByteLocation(19, 19), Rotation.ANGLE_60);
         TilePlacement second =
-                new TilePlacement(TILES.getTile(5), new Location(19, 20), Rotation.ANGLE_180);
+                new TilePlacement(TILES.getTile(5), new ByteLocation(19, 20), Rotation.ANGLE_180);
         TilePlacement third =
-                new TilePlacement(TILES.getTile(1), new Location(19, 21), Rotation.ANGLE_60);
+                new TilePlacement(TILES.getTile(1), new ByteLocation(19, 21), Rotation.ANGLE_60);
 
         TilePlacementList expList = new TilePlacementList(first, second, third);
         assertEquals("Unexpected reversal.", expList, resultPath.getTilePlacements());
@@ -63,11 +64,11 @@ public class SubPathReverserTest extends SubPathMutatorBase {
         assertEquals("unexpected size.", 3, resultPath.size());
 
         TilePlacement first =
-                new TilePlacement(TILES.getTile(4), new Location(23, 21), Rotation.ANGLE_300);
+                new TilePlacement(TILES.getTile(4), new ByteLocation(23, 21), Rotation.ANGLE_300);
         TilePlacement second =
-                new TilePlacement(TILES.getTile(1), new Location(23, 20), Rotation.ANGLE_240);
+                new TilePlacement(TILES.getTile(1), new ByteLocation(23, 20), Rotation.ANGLE_240);
         TilePlacement third =
-                new TilePlacement(TILES.getTile(2), new Location(24, 19), Rotation.ANGLE_120);
+                new TilePlacement(TILES.getTile(2), new ByteLocation(24, 19), Rotation.ANGLE_120);
 
         TilePlacementList expList = new TilePlacementList(first, second, third);
         assertEquals("Unexpected reversal.", expList, resultPath.getTilePlacements());

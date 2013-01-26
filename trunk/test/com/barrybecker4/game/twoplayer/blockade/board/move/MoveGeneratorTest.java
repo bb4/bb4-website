@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.blockade.board.move;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.board.GamePiece;
@@ -52,8 +53,8 @@ public class MoveGeneratorTest extends BlockadeTestCase {
         BlockadeWall wall2 =
                 new BlockadeWall(board.getPosition(12, 6), board.getPosition(12, 7));
 
-        BlockadeMove move1 = BlockadeMove.createMove(new Location(8, 11), new Location(6, 11),  1 /*0.1*/, piece2, wall2);
-        BlockadeMove move2 = BlockadeMove.createMove(new Location(12,6), new Location(10, 6), 1 /*0.1*/, piece1, wall1);
+        BlockadeMove move1 = BlockadeMove.createMove(new ByteLocation(8, 11), new ByteLocation(6, 11),  1 /*0.1*/, piece2, wall2);
+        BlockadeMove move2 = BlockadeMove.createMove(new ByteLocation(12,6), new ByteLocation(10, 6), 1 /*0.1*/, piece1, wall1);
 
         controller_.makeMove(move1);
         controller_.makeMove(move2);

@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.GoTestCase;
 import com.barrybecker4.game.twoplayer.go.board.elements.position.GoBoardPosition;
@@ -18,23 +19,23 @@ public class TestGoBoard extends GoTestCase {
 
     /** verify that the right stones are captured by a given move. */
     public void testFindCaptures1() {
-        verifyCaptures("findCaptures1", new Location(5, 6), 6);
+        verifyCaptures("findCaptures1", new ByteLocation(5, 6), 6);
     }
 
     public void testFindCaptures2() {
-        verifyCaptures("findCaptures2", new Location(6, 6), 9);
+        verifyCaptures("findCaptures2", new ByteLocation(6, 6), 9);
     }
 
     public void testFindCaptures3() {
-        verifyCaptures("findCaptures3", new Location(5, 4), 7);
+        verifyCaptures("findCaptures3", new ByteLocation(5, 4), 7);
     }
 
     public void testFindCaptures4() {
-        verifyCaptures("findCaptures4", new Location(4, 8), 16);
+        verifyCaptures("findCaptures4", new ByteLocation(4, 8), 16);
     }
 
     public void testFindCaptures5() {
-        verifyCaptures("findCaptures5", new Location(10, 2), 11);
+        verifyCaptures("findCaptures5", new ByteLocation(10, 2), 11);
     }
 
     private void verifyCaptures(String file, Location moveLocation, int expNnumCaptures) {
@@ -69,7 +70,7 @@ public class TestGoBoard extends GoTestCase {
     public void testCausedAtari1() {
         restore(PREFIX + "causedAtari1");
 
-        GoMove m = new GoMove(new Location(4, 4), 0, new GoStone(false));
+        GoMove m = new GoMove(new ByteLocation(4, 4), 0, new GoStone(false));
         int numInAtari = m.numStonesAtaried(getBoard());
         Assert.assertTrue("numInAtri="+numInAtari+" expected="+4, numInAtari == 4);
     }
@@ -78,7 +79,7 @@ public class TestGoBoard extends GoTestCase {
     public void testCausedAtari2() {
         restore(PREFIX + "causedAtari2");
 
-        GoMove m = new GoMove(new Location(2, 12), 0, new GoStone(true));
+        GoMove m = new GoMove(new ByteLocation(2, 12), 0, new GoStone(true));
         controller_.makeMove(m);
         GoBoard board = (GoBoard)controller_.getBoard();
         int numInAtari = m.numStonesAtaried(board);
@@ -96,7 +97,7 @@ public class TestGoBoard extends GoTestCase {
 
     public void testCopy() {
         GoBoard board = new GoBoard(3, 0);
-        Location center = new Location(2, 2);
+        Location center = new ByteLocation(2, 2);
         board.makeMove(new GoMove(center, 1, new GoStone(true)));
         GoBoard boardCopy = board.copy();
 

@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.twoplayer.blockade.board.analysis;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.BlockadeTestCase;
@@ -32,7 +33,7 @@ public class PossibleMoveAnalyzerTest extends BlockadeTestCase {
                 createMove(3, 3,  3, 5, 0, null, null)
         );
 
-        verifyPossibleMoves("board/analysis/initial5x7", new Location(3, 3), expMoves);
+        verifyPossibleMoves("board/analysis/initial5x7", new ByteLocation(3, 3), expMoves);
     }
 
     public void testFindPossibleMovesWhenWalls() {
@@ -45,7 +46,7 @@ public class PossibleMoveAnalyzerTest extends BlockadeTestCase {
                 createMove(3, 3,  3, 5, 0, null, null)
         );
 
-        verifyPossibleMoves("board/analysis/midGame5x7", new Location(3, 3), expMoves);
+        verifyPossibleMoves("board/analysis/midGame5x7", new ByteLocation(3, 3), expMoves);
     }
 
     /**

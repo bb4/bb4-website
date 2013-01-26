@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.tantrix.model;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.common.math.MathUtil;
 import junit.framework.TestCase;
@@ -23,7 +24,7 @@ public class TantrixBoardTest extends TestCase {
     public void testBoardConstruction() {
         board = place3UnsolvedTiles();
         TilePlacement expLastPlaced =
-                new TilePlacement(TILES.getTile(3), new Location(22, 21), Rotation.ANGLE_180);
+                new TilePlacement(TILES.getTile(3), new ByteLocation(22, 21), Rotation.ANGLE_180);
         assertEquals("Unexpected last tile placed", expLastPlaced, board.getLastTile());
         assertEquals("Unexpected edge length", 2, board.getEdgeLength());
         assertEquals("Unexpected primary path color",

@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.blockade.board;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.board.BoardPosition;
@@ -60,48 +61,48 @@ public class BlockadeBoardTest extends BlockadeTestCase {
      */
     private static final Map<Location, Integer> P1_NUM_MAP = new HashMap<Location, Integer>() {
         {
-             put(new Location(3, 4), 9);
-             put(new Location(3, 4), 9);
-             put(new Location(3, 8), 9);
-             put(new Location(4, 3), 9);
-             put(new Location(4, 5), 9);
-             put(new Location(4, 9), 9);
-             put(new Location(5, 4), 9);
-             put(new Location(5, 3), 9);
-             put(new Location(5, 7), 6);
-             put(new Location(5, 8), 7);
-             put(new Location(6, 7), 6);
-             put(new Location(6, 8), 6);
-             put(new Location(5, 5), 9);
-             put(new Location(7, 3), 9);
-             put(new Location(7, 5), 9);
-             put(new Location(7, 8), 7);
-             put(new Location(7, 9), 9);
-             put(new Location(8, 3), 9);
-             put(new Location(8, 4), 7);
-             put(new Location(8, 5), 7);
-             put(new Location(8, 6), 6);
-             put(new Location(8, 7), 7);
-             put(new Location(8, 8), 7);
-             put(new Location(8, 9), 9);
-             put(new Location(9, 4), 6);
-             put(new Location(9, 5), 5);
-             put(new Location(9, 6), 6);
-             put(new Location(9, 7), 5);
-             put(new Location(9, 8), 6);
-             put(new Location(10, 3), 8);
-             put(new Location(10, 4), 6);
-             put(new Location(10, 5), 6);
-             put(new Location(10, 7), 7);
-             put(new Location(10, 8), 6);
-             put(new Location(10, 9), 9);
-             put(new Location(10, 10), 7);
-             put(new Location(11, 5), 7);
-             put(new Location(11, 7), 6);
-             put(new Location(11, 8), 6);
-             put(new Location(12, 7), 7);
-             put(new Location(12, 8), 7);
-             put(new Location(13, 10), 6);
+             put(new ByteLocation(3, 4), 9);
+             put(new ByteLocation(3, 4), 9);
+             put(new ByteLocation(3, 8), 9);
+             put(new ByteLocation(4, 3), 9);
+             put(new ByteLocation(4, 5), 9);
+             put(new ByteLocation(4, 9), 9);
+             put(new ByteLocation(5, 4), 9);
+             put(new ByteLocation(5, 3), 9);
+             put(new ByteLocation(5, 7), 6);
+             put(new ByteLocation(5, 8), 7);
+             put(new ByteLocation(6, 7), 6);
+             put(new ByteLocation(6, 8), 6);
+             put(new ByteLocation(5, 5), 9);
+             put(new ByteLocation(7, 3), 9);
+             put(new ByteLocation(7, 5), 9);
+             put(new ByteLocation(7, 8), 7);
+             put(new ByteLocation(7, 9), 9);
+             put(new ByteLocation(8, 3), 9);
+             put(new ByteLocation(8, 4), 7);
+             put(new ByteLocation(8, 5), 7);
+             put(new ByteLocation(8, 6), 6);
+             put(new ByteLocation(8, 7), 7);
+             put(new ByteLocation(8, 8), 7);
+             put(new ByteLocation(8, 9), 9);
+             put(new ByteLocation(9, 4), 6);
+             put(new ByteLocation(9, 5), 5);
+             put(new ByteLocation(9, 6), 6);
+             put(new ByteLocation(9, 7), 5);
+             put(new ByteLocation(9, 8), 6);
+             put(new ByteLocation(10, 3), 8);
+             put(new ByteLocation(10, 4), 6);
+             put(new ByteLocation(10, 5), 6);
+             put(new ByteLocation(10, 7), 7);
+             put(new ByteLocation(10, 8), 6);
+             put(new ByteLocation(10, 9), 9);
+             put(new ByteLocation(10, 10), 7);
+             put(new ByteLocation(11, 5), 7);
+             put(new ByteLocation(11, 7), 6);
+             put(new ByteLocation(11, 8), 6);
+             put(new ByteLocation(12, 7), 7);
+             put(new ByteLocation(12, 8), 7);
+             put(new ByteLocation(13, 10), 6);
          }
     };
 
@@ -229,7 +230,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
     };
 
     private static BlockadeMove createMove(int r1, int c1, int r2, int c2, GamePiece piece) {
-        return new BlockadeMove(new Location(r1, c1), new Location(r2, c2), 0, piece, null);
+        return new BlockadeMove(new ByteLocation(r1, c1), new ByteLocation(r2, c2), 0, piece, null);
     }
 
     private static final Path[] EXPECTED_P1_PATHS = {
@@ -332,8 +333,8 @@ public class BlockadeBoardTest extends BlockadeTestCase {
          BlockadeWall wall1 = new BlockadeWall(board.getPosition(8, 10), board.getPosition(9, 10));
          BlockadeWall wall2 = new BlockadeWall(board.getPosition(12, 6), board.getPosition(12, 7));
 
-         BlockadeMove move1 = BlockadeMove.createMove(new Location(8, 11), new Location(6, 11), 1 /*0.1*/, piece2, wall2);
-         BlockadeMove move2 = BlockadeMove.createMove(new Location(12, 6), new Location(10, 6), 1 /*0.1*/, piece1, wall1);
+         BlockadeMove move1 = BlockadeMove.createMove(new ByteLocation(8, 11), new ByteLocation(6, 11), 1 /*0.1*/, piece2, wall2);
+         BlockadeMove move2 = BlockadeMove.createMove(new ByteLocation(12, 6), new ByteLocation(10, 6), 1 /*0.1*/, piece1, wall1);
 
          controller_.makeMove(move1);
          controller_.makeMove(move2);

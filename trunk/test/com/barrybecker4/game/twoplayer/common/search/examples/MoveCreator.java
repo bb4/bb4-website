@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.common.search.examples;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.common.search.TwoPlayerMoveStub;
 
@@ -33,7 +34,7 @@ public class MoveCreator {
      */
     private Location createToLocation() {
         moveCount++;
-        return new Location(moveCount / FAKE_BOARD_SIZE, moveCount % FAKE_BOARD_SIZE);
+        return new ByteLocation(moveCount / FAKE_BOARD_SIZE, moveCount % FAKE_BOARD_SIZE);
     }
 
     /**

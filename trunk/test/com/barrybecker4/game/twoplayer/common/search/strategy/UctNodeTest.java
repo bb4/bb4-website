@@ -2,6 +2,7 @@
 package com.barrybecker4.game.twoplayer.common.search.strategy;
 
 import com.barrybecker4.common.format.FormatUtil;
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
@@ -20,10 +21,10 @@ public class UctNodeTest extends TestCase  {
     UctNode  uctNode;
 
     /** a Player2 move to put in the node */
-    private static final TwoPlayerMove P1_MOVE = new TwoPlayerMoveStub(10, true, new Location(1,1), null);
+    private static final TwoPlayerMove P1_MOVE = new TwoPlayerMoveStub(10, true, new ByteLocation(1,1), null);
 
     /** a Player2 move to put in the node */
-    private static final TwoPlayerMove P2_MOVE = new TwoPlayerMoveStub(10, false, new Location(1,1), null);
+    private static final TwoPlayerMove P2_MOVE = new TwoPlayerMoveStub(10, false, new ByteLocation(1,1), null);
 
     private static final double TOL = 0.0001;
 
@@ -71,11 +72,11 @@ public class UctNodeTest extends TestCase  {
         uctNode = new UctNode(P2_MOVE);
 
         MoveList moves = new MoveList();
-        TwoPlayerMove firstMove = new TwoPlayerMoveStub(5, false, new Location(1,1), null);
-        TwoPlayerMove goodMove = new TwoPlayerMoveStub(10, false, new Location(1,2), null);
+        TwoPlayerMove firstMove = new TwoPlayerMoveStub(5, false, new ByteLocation(1,1), null);
+        TwoPlayerMove goodMove = new TwoPlayerMoveStub(10, false, new ByteLocation(1,2), null);
         moves.add(firstMove);
         moves.add(goodMove);
-        moves.add(new TwoPlayerMoveStub(9, false, new Location(1,3), null));
+        moves.add(new TwoPlayerMoveStub(9, false, new ByteLocation(1,3), null));
 
         uctNode.addChildren(moves);
 
@@ -88,11 +89,11 @@ public class UctNodeTest extends TestCase  {
         uctNode = new UctNode(P2_MOVE);
 
         MoveList moves = new MoveList();
-        TwoPlayerMove firstMove = new TwoPlayerMoveStub(5, false, new Location(1,1), null);
-        TwoPlayerMove goodMove = new TwoPlayerMoveStub(10, false, new Location(1,2), null);
+        TwoPlayerMove firstMove = new TwoPlayerMoveStub(5, false, new ByteLocation(1,1), null);
+        TwoPlayerMove goodMove = new TwoPlayerMoveStub(10, false, new ByteLocation(1,2), null);
         moves.add(firstMove);
         moves.add(goodMove);
-        moves.add(new TwoPlayerMoveStub(9, false, new Location(1,3), null));
+        moves.add(new TwoPlayerMoveStub(9, false, new ByteLocation(1,3), null));
 
         uctNode.addChildren(moves);
         UctNode secondNode = uctNode.getChildren().get(1);
