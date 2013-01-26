@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board.update;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.GoTestCase;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
@@ -25,7 +26,7 @@ public class TestPostMoveUpdater extends GoTestCase {
         board = new GoBoard(5, 0);
 
         // a black move on a virgin board.
-        Location location = new Location(2, 2);
+        Location location = new ByteLocation(2, 2);
         GoMove move = new GoMove(location, 0, new GoStone(true));
         board.makeMove(move);  // the board already has its own update. Should we use that or inject?
 
@@ -37,27 +38,27 @@ public class TestPostMoveUpdater extends GoTestCase {
 
     public void testMoveWhichJoinsTwoStrings() {
         UpdateStats stats = new UpdateStats(0, 10, 4, 1, 0, 3, true);
-        verifyPostMove("join_two_strings", new Location(4, 4), stats);
+        verifyPostMove("join_two_strings", new ByteLocation(4, 4), stats);
     }
 
     public void testMoveWhichJoinsThreeStrings() {
         UpdateStats stats = new UpdateStats(0, 13, 7, 1, 0, 2, true);
-        verifyPostMove("join_three_strings", new Location(5, 5), stats);
+        verifyPostMove("join_three_strings", new ByteLocation(5, 5), stats);
     }
 
     public void testMoveWhichJoinsFourStrings() {
         UpdateStats stats = new UpdateStats(0, 15, 9, 1, 0, 2, true);
-        verifyPostMove("join_four_strings", new Location(5, 5), stats);
+        verifyPostMove("join_four_strings", new ByteLocation(5, 5), stats);
     }
 
     public void testTigerMouthCapture() {
         UpdateStats stats = new UpdateStats(1, 4, 1, 4, 1, 2, true);
-        verifyPostMove("tiger_mouth_capture", new Location(6, 5), stats);
+        verifyPostMove("tiger_mouth_capture", new ByteLocation(6, 5), stats);
     }
 
     public void testJoinTwoGroups() {
         UpdateStats stats = new UpdateStats(0, 4, 1, 5, 0, 2, true);
-        verifyPostMove("join_two_groups", new Location(5, 8), stats);
+        verifyPostMove("join_two_groups", new ByteLocation(5, 8), stats);
     }
 
     private void verifyPostMove(String file, Location moveLocation, UpdateStats stats) {

@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board.analysis;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.GoTestCase;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
@@ -30,10 +31,10 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
 
     public void testCandidateMoves3() {
         List<Location> expCandidates = new ArrayList<Location>(10);
-        expCandidates.add(new Location(2, 5));
-        expCandidates.add(new Location(1, 4));
-        expCandidates.add(new Location(4, 3));
-        expCandidates.add(new Location(5, 2));
+        expCandidates.add(new ByteLocation(2, 5));
+        expCandidates.add(new ByteLocation(1, 4));
+        expCandidates.add(new ByteLocation(4, 3));
+        expCandidates.add(new ByteLocation(5, 2));
 
         verifyCandidateMoves("problem_score55a", 10/*4*/, expCandidates);
     }
@@ -43,16 +44,16 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
 
         System.out.println("------------cm4 --------------------------");
         List<Location> expCandidates = new ArrayList<Location>(20);
-        expCandidates.add(new Location(1, 1));
-        expCandidates.add(new Location(1, 5));
-        expCandidates.add(new Location(2, 1));
-        expCandidates.add(new Location(2, 3));
-        expCandidates.add(new Location(2, 4));
-        expCandidates.add(new Location(3, 2));
-        expCandidates.add(new Location(4, 1));
-        expCandidates.add(new Location(5, 1));
-        expCandidates.add(new Location(5, 4));
-        expCandidates.add(new Location(5, 5));
+        expCandidates.add(new ByteLocation(1, 1));
+        expCandidates.add(new ByteLocation(1, 5));
+        expCandidates.add(new ByteLocation(2, 1));
+        expCandidates.add(new ByteLocation(2, 3));
+        expCandidates.add(new ByteLocation(2, 4));
+        expCandidates.add(new ByteLocation(3, 2));
+        expCandidates.add(new ByteLocation(4, 1));
+        expCandidates.add(new ByteLocation(5, 1));
+        expCandidates.add(new ByteLocation(5, 4));
+        expCandidates.add(new ByteLocation(5, 5));
 
         verifyCandidateMoves("problem_score55b", 10, expCandidates);
     }

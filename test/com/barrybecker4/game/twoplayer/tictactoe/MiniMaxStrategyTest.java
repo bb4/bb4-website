@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.tictactoe;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 import com.barrybecker4.game.twoplayer.common.search.SearchableHelper;
@@ -53,12 +54,12 @@ public class MiniMaxStrategyTest extends MiniMaxStrategyTst {
     protected ExpectedMoveMatrix getExpectedFourLevelLookaheadMoves() {
         //return ExpectedSearchStrategyResults.EXPECTED_FOUR_LEVEL_LOOKAHEAD;
         return new ExpectedMoveMatrix(
-            new MoveInfo(TwoPlayerMove.createMove(new Location(1, 1), 8, PLAYER2_PIECE), 756),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 113),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 20),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 29),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 4),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 1), -12, PLAYER1_PIECE), 15)
+            new MoveInfo(TwoPlayerMove.createMove(new ByteLocation(1, 1), 8, PLAYER2_PIECE), 756),
+            new MoveInfo(TwoPlayerMove.createMove(new ByteLocation(2, 1), 48, PLAYER1_PIECE), 113),
+            new MoveInfo(TwoPlayerMove.createMove(new ByteLocation(3, 2), 28, PLAYER2_PIECE), 20),
+            new MoveInfo(TwoPlayerMove.createMove(new ByteLocation(1, 2), 0, PLAYER1_PIECE), 29),
+            new MoveInfo(TwoPlayerMove.createMove(new ByteLocation(2, 1), 0, PLAYER2_PIECE), 4),
+            new MoveInfo(TwoPlayerMove.createMove(new ByteLocation(3, 1), -12, PLAYER1_PIECE), 15)
         );
     }
 

@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board.analysis.group;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.GoTestCase;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
@@ -26,29 +27,29 @@ public class TestGroupFinding extends GoTestCase {
         GoBoard b = initializeBoard("false_ko_eye1");
 
         // white group neighbors
-        verifyGroupNeighbors(b, new Location(4, 5), 3);
-        verifyGroupNeighbors(b, new Location(5, 6), 6);
-        verifyGroupNeighbors(b, new Location(6, 7), 5);
-        verifyGroupNeighbors(b, new Location(7, 5), 7);   // 8?
+        verifyGroupNeighbors(b, new ByteLocation(4, 5), 3);
+        verifyGroupNeighbors(b, new ByteLocation(5, 6), 6);
+        verifyGroupNeighbors(b, new ByteLocation(6, 7), 5);
+        verifyGroupNeighbors(b, new ByteLocation(7, 5), 7);   // 8?
 
         // black group neighbors
-        verifyGroupNeighbors(b, new Location(4, 6), 3);
-        verifyGroupNeighbors(b, new Location(8, 8), 6);
-        verifyGroupNeighbors(b, new Location(6, 7), 5);
-        verifyGroupNeighbors(b, new Location(9, 7), 5);
-        verifyGroupNeighbors(b, new Location(8, 6), 5);
+        verifyGroupNeighbors(b, new ByteLocation(4, 6), 3);
+        verifyGroupNeighbors(b, new ByteLocation(8, 8), 6);
+        verifyGroupNeighbors(b, new ByteLocation(6, 7), 5);
+        verifyGroupNeighbors(b, new ByteLocation(9, 7), 5);
+        verifyGroupNeighbors(b, new ByteLocation(8, 6), 5);
     }
 
     public void testFindKoGroupNeighbors2() {
         GoBoard b = initializeBoard("false_ko_eye2");
 
         // white group neighbors
-        verifyGroupNeighbors(b, new Location(13, 7), 6);
-        verifyGroupNeighbors(b, new Location(12, 8), 3);
+        verifyGroupNeighbors(b, new ByteLocation(13, 7), 6);
+        verifyGroupNeighbors(b, new ByteLocation(12, 8), 3);
 
         // black group neighbors
-        verifyGroupNeighbors(b, new Location(10, 8), 9);
-        verifyGroupNeighbors(b, new Location(12, 7), 1);
+        verifyGroupNeighbors(b, new ByteLocation(10, 8), 9);
+        verifyGroupNeighbors(b, new ByteLocation(12, 7), 1);
 
     }
 
@@ -61,7 +62,7 @@ public class TestGroupFinding extends GoTestCase {
     public void testFindNoGroup() {
         GoBoard b = initializeBoard("false_ko_eye1");
         try {
-            verifyGroup(b, new Location(2, 3), 6);
+            verifyGroup(b, new ByteLocation(2, 3), 6);
             fail();
         } catch (NullPointerException e) {
             // expected, but maybe we should throw illegal argument exception instead.
@@ -70,14 +71,14 @@ public class TestGroupFinding extends GoTestCase {
 
     public void testFindFalseEyeGroup1() {
         GoBoard b = initializeBoard("false_ko_eye1");
-        verifyGroup(b, new Location(5, 5), 10);
-        verifyGroup(b, new Location(6, 8), 11);
+        verifyGroup(b, new ByteLocation(5, 5), 10);
+        verifyGroup(b, new ByteLocation(6, 8), 11);
     }
 
     public void testFindFalseEyeGroup2() {
         GoBoard b = initializeBoard("false_ko_eye2");
-        verifyGroup(b, new Location(8, 8), 18);
-        verifyGroup(b, new Location(13, 10), 18);
+        verifyGroup(b, new ByteLocation(8, 8), 18);
+        verifyGroup(b, new ByteLocation(13, 10), 18);
     }
 
 

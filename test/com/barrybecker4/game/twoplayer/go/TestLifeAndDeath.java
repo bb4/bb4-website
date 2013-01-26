@@ -68,13 +68,13 @@ public class TestLifeAndDeath extends GoTestCase {
 
     /*
     public void testProblem3() {
-        Location[] acceptableMoves = {new Location(5, 18), new Location(11, 18)};
+        Location[] acceptableMoves = {new ByteLocation(5, 18), new ByteLocation(11, 18)};
         doLifeAndDeathTest2("life_death.3", acceptableMoves, WHITE_TO_PLAY);  // [E18|K18]
     } */
 
     /** takes too long
     public void testProblem4() {
-        Location[] acceptableMoves = {new Location(11, 18)};
+        Location[] acceptableMoves = {new ByteLocation(11, 18)};
         doLifeAndDeathTest2("life_death.4", acceptableMoves, BLACK_TO_PLAY); // [K18]
     }  */
 

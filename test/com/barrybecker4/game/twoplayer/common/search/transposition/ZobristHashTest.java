@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.common.search.transposition;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
@@ -41,7 +42,7 @@ public class ZobristHashTest extends TestCase {
     }
 
     public void testCenterXBoard() {
-        TwoPlayerMove m = TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true));
+        TwoPlayerMove m = TwoPlayerMove.createMove(new ByteLocation(2, 2), 0, new GamePiece(true));
         board.makeMove(m);
 
         hash = createZHash(board);
@@ -56,7 +57,7 @@ public class ZobristHashTest extends TestCase {
     }
 
     public void testCornerOBoard() {
-        TwoPlayerMove m = TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false));
+        TwoPlayerMove m = TwoPlayerMove.createMove(new ByteLocation(1, 1), 0, new GamePiece(false));
         board.makeMove(m);
         hash = createZHash(board);
         assertEquals("Unexpected hashkey for board with corner O",
@@ -102,8 +103,8 @@ public class ZobristHashTest extends TestCase {
 
     public void testHashAfterTwoMovesThenUndoMoveO() {
 
-        board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
-        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(1, 1), 0, new GamePiece(false)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(2, 2), 0, new GamePiece(true)));
 
         board.undoMove();
         hash = createZHash(board);
@@ -113,8 +114,8 @@ public class ZobristHashTest extends TestCase {
 
     public void testHashAfterTwoMovesThenUndoMoveX() {
 
-        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
-        board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(1, 1), 0, new GamePiece(false)));
 
         board.undoMove();
         hash = createZHash(board);
@@ -125,8 +126,8 @@ public class ZobristHashTest extends TestCase {
 
     public void testHashAfterTwoMovesThenTwoUndos() {
 
-        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
-        board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(1, 1), 0, new GamePiece(false)));
 
         board.undoMove();
         board.undoMove();
@@ -136,14 +137,14 @@ public class ZobristHashTest extends TestCase {
     }
 
     public void testHashesForDifferentBoardsStatesUnequal() {
-        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
-        board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(1, 1), 0, new GamePiece(false)));
         hash = createZHash(board);
         HashKey hash1 = hash.getKey();
 
         board = new TicTacToeBoard();
-        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
-        board.makeMove(TwoPlayerMove.createMove(new Location(3, 1), 0, new GamePiece(false)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(3, 1), 0, new GamePiece(false)));
         hash = createZHash(board);
 
         assertFalse("Hash keys for different moves unexpectedly equal. both=" + hash1,
@@ -151,15 +152,15 @@ public class ZobristHashTest extends TestCase {
     }
 
     public void testHashesForDifferentBoardsStatesUnequalUsingUndo() {
-        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
-        board.makeMove(TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(1, 1), 0, new GamePiece(false)));
         hash = createZHash(board);
         HashKey hash1 = hash.getKey();
 
         board.undoMove();
         board.undoMove();
-        board.makeMove(TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true)));
-        board.makeMove(TwoPlayerMove.createMove(new Location(3, 1), 0, new GamePiece(false)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(2, 2), 0, new GamePiece(true)));
+        board.makeMove(TwoPlayerMove.createMove(new ByteLocation(3, 1), 0, new GamePiece(false)));
         hash = createZHash(board);
 
         assertFalse("Hash keys for different moves unexpectedly equal. both=" + hash1,
@@ -168,8 +169,8 @@ public class ZobristHashTest extends TestCase {
 
     public void testGoHash()  {
         GoBoard board = new GoBoard(5, 0);
-        board.makeMove(new GoMove(new Location(3, 3), 0, new GoStone(true)));
-        board.makeMove(new GoMove(new Location(1, 3), 0, new GoStone(false)));
+        board.makeMove(new GoMove(new ByteLocation(3, 3), 0, new GoStone(true)));
+        board.makeMove(new GoMove(new ByteLocation(1, 3), 0, new GoStone(false)));
         hash = createZHash(board);
 
         assertEquals("Unexpected hashkey for GoBoard",
@@ -178,7 +179,7 @@ public class ZobristHashTest extends TestCase {
 
     private void applyMoveToHash(int row, int col, boolean player1) {
         GamePiece p = new GamePiece(player1);
-        Location loc = new Location(row, col);
+        Location loc = new ByteLocation(row, col);
         TwoPlayerMove m = TwoPlayerMove.createMove(loc, 0, p);
         int stateIndex = board.getStateIndex(new BoardPosition(row, col, p));
         hash.applyMove(loc, stateIndex);

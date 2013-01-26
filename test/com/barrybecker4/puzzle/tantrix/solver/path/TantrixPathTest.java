@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.tantrix.solver.path;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.puzzle.tantrix.model.*;
@@ -40,15 +41,15 @@ public class TantrixPathTest extends TestCase {
     public void test5TilePathConstructionWhenPathTilesUnorder() {
 
         TilePlacement first =
-                new TilePlacement(TILES.getTile(4), new Location(21, 22), Rotation.ANGLE_0);
+                new TilePlacement(TILES.getTile(4), new ByteLocation(21, 22), Rotation.ANGLE_0);
         TilePlacement second =
-                new TilePlacement(TILES.getTile(1), new Location(22, 21), Rotation.ANGLE_300);
+                new TilePlacement(TILES.getTile(1), new ByteLocation(22, 21), Rotation.ANGLE_300);
         TilePlacement third =
-                new TilePlacement(TILES.getTile(2), new Location(23, 22), Rotation.ANGLE_180);
+                new TilePlacement(TILES.getTile(2), new ByteLocation(23, 22), Rotation.ANGLE_180);
         TilePlacement fourth =
-                new TilePlacement(TILES.getTile(3), new Location(20, 21), Rotation.ANGLE_120);
+                new TilePlacement(TILES.getTile(3), new ByteLocation(20, 21), Rotation.ANGLE_120);
         TilePlacement fifth =
-                new TilePlacement(TILES.getTile(5), new Location(21, 21), Rotation.ANGLE_240);
+                new TilePlacement(TILES.getTile(5), new ByteLocation(21, 21), Rotation.ANGLE_240);
 
         TilePlacementList tileList = new TilePlacementList(first, second, third, fourth, fifth);
 
@@ -103,9 +104,9 @@ public class TantrixPathTest extends TestCase {
 
         TilePlacementList tiles =
                 new TilePlacementList(
-                        new TilePlacement(TILES.getTile(2), new Location(22, 20), Rotation.ANGLE_300),
-                        new TilePlacement(TILES.getTile(1), new Location(21, 21), Rotation.ANGLE_0),
-                        new TilePlacement(TILES.getTile(3), new Location(22, 21), Rotation.ANGLE_240));
+                        new TilePlacement(TILES.getTile(2), new ByteLocation(22, 20), Rotation.ANGLE_300),
+                        new TilePlacement(TILES.getTile(1), new ByteLocation(21, 21), Rotation.ANGLE_0),
+                        new TilePlacement(TILES.getTile(3), new ByteLocation(22, 21), Rotation.ANGLE_240));
         TantrixPath expectedPath = new TantrixPath(tiles, PathColor.YELLOW);
 
         TantrixPath expNbr = new TantrixPath(tiles, board.getPrimaryColor());

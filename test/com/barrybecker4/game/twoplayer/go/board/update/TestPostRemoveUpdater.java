@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board.update;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.GoTestCase;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
@@ -23,7 +24,7 @@ public class TestPostRemoveUpdater extends GoTestCase {
         PostRemoveUpdater removeUpdater = new PostRemoveUpdater(board, captureCounts);
 
         // a black move on a virgin board.
-        Location location = new Location(2, 2);
+        Location location = new ByteLocation(2, 2);
         GoMove move = new GoMove(location, 0, new GoStone(true));
         board.makeMove(move);  // the board already has its own update. Should we use that or inject?
         removeUpdater.update(move);

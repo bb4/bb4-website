@@ -2,6 +2,7 @@
 package com.barrybecker4.puzzle.tantrix.solver.path.permuting;
 
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.puzzle.tantrix.TantrixTstUtil;
@@ -83,11 +84,11 @@ public class SameTypeTileMixerTest extends TestCase {
 
         List<TantrixPath> expPathList = Arrays.asList(
                 new TantrixPath(new TilePlacementList(
-                        new TilePlacement(TILES.getTile(5), new Location(21, 22), Rotation.ANGLE_120),
-                        new TilePlacement(TILES.getTile(2), new Location(20, 21), Rotation.ANGLE_0),
-                        new TilePlacement(TILES.getTile(3), new Location(21, 21), Rotation.ANGLE_300),
-                        new TilePlacement(TILES.getTile(1), new Location(20, 20), Rotation.ANGLE_300),
-                        new TilePlacement(TILES.getTile(4), new Location(19, 21), Rotation.ANGLE_120)), PathColor.RED)
+                        new TilePlacement(TILES.getTile(5), new ByteLocation(21, 22), Rotation.ANGLE_120),
+                        new TilePlacement(TILES.getTile(2), new ByteLocation(20, 21), Rotation.ANGLE_0),
+                        new TilePlacement(TILES.getTile(3), new ByteLocation(21, 21), Rotation.ANGLE_300),
+                        new TilePlacement(TILES.getTile(1), new ByteLocation(20, 20), Rotation.ANGLE_300),
+                        new TilePlacement(TILES.getTile(4), new ByteLocation(19, 21), Rotation.ANGLE_120)), PathColor.RED)
 
         );
         assertEquals("Unexpected permuted paths.", expPathList, permutedPathList);
@@ -103,11 +104,11 @@ public class SameTypeTileMixerTest extends TestCase {
 
         List<TantrixPath> expPathList = Arrays.asList(
                 new TantrixPath(new TilePlacementList(
-                        new TilePlacement(TILES.getTile(5), new Location(21, 22), Rotation.ANGLE_120),
-                        new TilePlacement(TILES.getTile(3), new Location(20, 21), Rotation.ANGLE_120),
-                        new TilePlacement(TILES.getTile(2), new Location(21, 21), Rotation.ANGLE_180),
-                        new TilePlacement(TILES.getTile(4), new Location(20, 20), Rotation.ANGLE_180),
-                        new TilePlacement(TILES.getTile(1), new Location(19, 21), Rotation.ANGLE_120)),  // or 240
+                        new TilePlacement(TILES.getTile(5), new ByteLocation(21, 22), Rotation.ANGLE_120),
+                        new TilePlacement(TILES.getTile(3), new ByteLocation(20, 21), Rotation.ANGLE_120),
+                        new TilePlacement(TILES.getTile(2), new ByteLocation(21, 21), Rotation.ANGLE_180),
+                        new TilePlacement(TILES.getTile(4), new ByteLocation(20, 20), Rotation.ANGLE_180),
+                        new TilePlacement(TILES.getTile(1), new ByteLocation(19, 21), Rotation.ANGLE_120)),  // or 240
                     PathColor.RED)
 
         );
@@ -125,11 +126,11 @@ public class SameTypeTileMixerTest extends TestCase {
 
     private TantrixPath createPathOf5Tiles() {
         TilePlacementList tiles = new TilePlacementList(
-                new TilePlacement(TILES.getTile(5), new Location(21, 22), Rotation.ANGLE_120),
-                new TilePlacement(TILES.getTile(3), new Location(20, 21), Rotation.ANGLE_120),
-                new TilePlacement(TILES.getTile(2), new Location(21, 21), Rotation.ANGLE_180),
-                new TilePlacement(TILES.getTile(1), new Location(20, 20), Rotation.ANGLE_300),
-                new TilePlacement(TILES.getTile(4), new Location(19, 21), Rotation.ANGLE_120)
+                new TilePlacement(TILES.getTile(5), new ByteLocation(21, 22), Rotation.ANGLE_120),
+                new TilePlacement(TILES.getTile(3), new ByteLocation(20, 21), Rotation.ANGLE_120),
+                new TilePlacement(TILES.getTile(2), new ByteLocation(21, 21), Rotation.ANGLE_180),
+                new TilePlacement(TILES.getTile(1), new ByteLocation(20, 20), Rotation.ANGLE_300),
+                new TilePlacement(TILES.getTile(4), new ByteLocation(19, 21), Rotation.ANGLE_120)
         );
         return new TantrixPath(tiles, PathColor.RED);
     }

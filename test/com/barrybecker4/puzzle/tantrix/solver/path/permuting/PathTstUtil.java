@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.tantrix.solver.path.permuting;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.tantrix.model.*;
 import com.barrybecker4.puzzle.tantrix.solver.path.TantrixPath;
@@ -12,10 +13,10 @@ import static com.barrybecker4.puzzle.tantrix.TantrixTstUtil.TILES;
  */
 class PathTstUtil {
 
-    static final Location LOWER_LEFT = new Location(22, 20);
-    static final Location LOWER_RIGHT = new Location(22, 21);
-    static final Location UPPER = new Location(21, 21);
-    static final Location UPPER_LEFT = new Location(21, 20);
+    static final Location LOWER_LEFT = new ByteLocation(22, 20);
+    static final Location LOWER_RIGHT = new ByteLocation(22, 21);
+    static final Location UPPER = new ByteLocation(21, 21);
+    static final Location UPPER_LEFT = new ByteLocation(21, 20);
 
     static final HexTile TILE1 = TILES.getTile(1);
     static final HexTile TILE2 = TILES.getTile(2);

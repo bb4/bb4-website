@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.board.analysis.neighbor;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.go.GoTestCase;
 import com.barrybecker4.game.twoplayer.go.board.GoBoard;
@@ -22,23 +23,23 @@ public class TestNobiNeighborAnalyzer extends GoTestCase {
 
 
     public void testNoOccupiedNobiNbrs() {
-        verifyOccupiedNobiNbrs("nobiNbr_NoneOccupied", new Location[] {new Location(5, 5)}, 0);
+        verifyOccupiedNobiNbrs("nobiNbr_NoneOccupied", new Location[] {new ByteLocation(5, 5)}, 0);
     }
 
     public void testBlackOccupiedNobiNbrs() {
-        verifyOccupiedNobiNbrs("nobiNbr_BlackOccupied", new Location[] {new Location(7, 7)}, 3);
+        verifyOccupiedNobiNbrs("nobiNbr_BlackOccupied", new Location[] {new ByteLocation(7, 7)}, 3);
     }
 
     public void testMixOccupiedNobiNbrs() {
-        verifyOccupiedNobiNbrs("nobiNbr_MixOccupied", new Location[] {new Location(7, 7)}, 3);
+        verifyOccupiedNobiNbrs("nobiNbr_MixOccupied", new Location[] {new ByteLocation(7, 7)}, 3);
     }
 
     public void testMixOccupiedNobiNbrsOnEdge() {
-        verifyOccupiedNobiNbrs("nobiNbr_MixOccupiedOnEdge", new Location[] {new Location(5, 1)}, 2);
+        verifyOccupiedNobiNbrs("nobiNbr_MixOccupiedOnEdge", new Location[] {new ByteLocation(5, 1)}, 2);
     }
 
     public void testNobiNbrsOnEdge() {
-        verifyOccupiedNobiNbrs("nobiNbr_MixOccupiedOnEdge", new Location[] {new Location(5, 1)}, 2);
+        verifyOccupiedNobiNbrs("nobiNbr_MixOccupiedOnEdge", new Location[] {new ByteLocation(5, 1)}, 2);
     }
 
 

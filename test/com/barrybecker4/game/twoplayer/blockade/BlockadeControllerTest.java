@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.blockade;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
@@ -29,7 +30,7 @@ public class BlockadeControllerTest extends BlockadeTestCase {
         restore("whitebox/endGame");
 
         BlockadeMove winningMove =
-            new BlockadeMove(new Location(5, 8), new Location(4, 8), 0, new GamePiece(true),
+            new BlockadeMove(new ByteLocation(5, 8), new ByteLocation(4, 8), 0, new GamePiece(true),
                              new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))
             );
 

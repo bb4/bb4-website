@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.tantrix;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.puzzle.tantrix.model.*;
 
@@ -120,6 +121,6 @@ public class TantrixTstUtil {
     }
 
     public static Location loc(int row, int col) {
-        return new Location(row, col).incrementOnCopy(INITIAL_LOCATION).incrementOnCopy(-1, -1);
+        return new ByteLocation(row, col).incrementOnCopy(INITIAL_LOCATION).incrementOnCopy(-1, -1);
     }
 }

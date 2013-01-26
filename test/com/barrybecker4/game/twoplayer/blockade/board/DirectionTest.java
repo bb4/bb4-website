@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.twoplayer.blockade.board;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import junit.framework.TestCase;
 
@@ -11,7 +12,7 @@ public class DirectionTest extends TestCase {
 
 
     public void  testGetEastOffset() {
-        assertEquals(new Location(0, 1), Direction.EAST.getOffset());
+        assertEquals(new ByteLocation(0, 1), Direction.EAST.getOffset());
     }
 
     public void testGetEastDir() {
@@ -19,7 +20,7 @@ public class DirectionTest extends TestCase {
     }
 
     public void  testGetNorhtNorthOffset() {
-        assertEquals(new Location(-2, 0), Direction.NORTH_NORTH.getOffset());
+        assertEquals(new ByteLocation(-2, 0), Direction.NORTH_NORTH.getOffset());
     }
 
     public void testGetNorthNorthDir() {
@@ -27,7 +28,7 @@ public class DirectionTest extends TestCase {
     }
 
     public void  testGetSourthOffset() {
-        assertEquals(new Location(1, 0), Direction.SOUTH.getOffset());
+        assertEquals(new ByteLocation(1, 0), Direction.SOUTH.getOffset());
     }
 
     public void testGetSouthDir() {

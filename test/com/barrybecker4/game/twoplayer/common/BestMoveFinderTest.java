@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.common;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.common.math.Range;
 import com.barrybecker4.game.common.MoveList;
@@ -117,9 +118,9 @@ public class BestMoveFinderTest extends TestCase {
 
     private MoveList createSimpleThreeMoveList() {
         MoveList moveList = new MoveList();
-        moveList.add(TwoPlayerMoveStub.createMove(new Location(1, 2), 100, new GamePiece(true)));
-        moveList.add(TwoPlayerMoveStub.createMove(new Location(1, 3), 50, new GamePiece(true)));
-        moveList.add(TwoPlayerMoveStub.createMove(new Location(1, 4), -10, new GamePiece(true)));
+        moveList.add(TwoPlayerMoveStub.createMove(new ByteLocation(1, 2), 100, new GamePiece(true)));
+        moveList.add(TwoPlayerMoveStub.createMove(new ByteLocation(1, 3), 50, new GamePiece(true)));
+        moveList.add(TwoPlayerMoveStub.createMove(new ByteLocation(1, 4), -10, new GamePiece(true)));
         return moveList;
     }
 
@@ -147,7 +148,7 @@ public class BestMoveFinderTest extends TestCase {
     private MoveList createRangeMoveList(Range range) {
         MoveList moveList = new MoveList();
         for (int i=(int)range.getMin(); i<=range.getMax(); i++) {
-             moveList.add(TwoPlayerMoveStub.createMove(new Location(i / 40, i % 40), i, new GamePiece(true)));
+             moveList.add(TwoPlayerMoveStub.createMove(new ByteLocation(i / 40, i % 40), i, new GamePiece(true)));
         }
         return moveList;
     }

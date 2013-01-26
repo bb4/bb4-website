@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.twoplayer.blockade.board;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
@@ -19,11 +20,11 @@ public class BlockadeTstUtil {
 
 
     public static BlockadeMove createMove(int r1, int c1, int r2, int c2, int val, GamePiece piece, BlockadeWall wall) {
-        return new BlockadeMove(new Location(r1, c1), new Location(r2, c2), val, piece, wall);
+        return new BlockadeMove(new ByteLocation(r1, c1), new ByteLocation(r2, c2), val, piece, wall);
     }
 
     public static BlockadeMove createMove(int r1, int c1, int r2, int c2) {
-        return new BlockadeMove(new Location(r1, c1), new Location(r2, c2), 0, new GamePiece(true), null);
+        return new BlockadeMove(new ByteLocation(r1, c1), new ByteLocation(r2, c2), 0, new GamePiece(true), null);
     }
 
     public static Path createPath(Location... locations) {

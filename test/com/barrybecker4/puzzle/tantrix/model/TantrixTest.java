@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.tantrix.model;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.geometry.Location;
 import junit.framework.TestCase;
 
@@ -20,9 +21,9 @@ public class TantrixTest extends TestCase {
         tantrix = place3SolvedTiles().getTantrix();
 
         System.out.println(tantrix);
-        verifyPlacement(new Location(22, 21));
-        verifyPlacement(new Location(22, 20));
-        verifyPlacement(new Location(21, 21));
+        verifyPlacement(new ByteLocation(22, 21));
+        verifyPlacement(new ByteLocation(22, 20));
+        verifyPlacement(new ByteLocation(21, 21));
     }
 
     private void verifyPlacement(Location loc) {
@@ -35,26 +36,26 @@ public class TantrixTest extends TestCase {
     public void testGetNeighborLocationOnOddRow() {
         tantrix = place3UnsolvedTiles().getTantrix();
 
-        Location loc = new Location(1, 1);
+        Location loc = new ByteLocation(1, 1);
 
         assertEquals("Unexpected right neighbor",
-                new Location(1, 2), HexUtil.getNeighborLocation(loc, 0));
+                new ByteLocation(1, 2), HexUtil.getNeighborLocation(loc, 0));
         assertEquals("Unexpected bottom left neighbor",
-                new Location(2, 0), HexUtil.getNeighborLocation(loc, 4));
+                new ByteLocation(2, 0), HexUtil.getNeighborLocation(loc, 4));
         assertEquals("Unexpected bottom right neighbor",
-                new Location(2, 1), HexUtil.getNeighborLocation(loc, 5));
+                new ByteLocation(2, 1), HexUtil.getNeighborLocation(loc, 5));
     }
 
     public void testGetNeighborLocationOnEvenRow() {
         tantrix = place3UnsolvedTiles().getTantrix();
 
-        Location loc = new Location(2, 2);
+        Location loc = new ByteLocation(2, 2);
         assertEquals("Unexpected right neighbor",
-                new Location(2, 3), HexUtil.getNeighborLocation(loc, 0));
+                new ByteLocation(2, 3), HexUtil.getNeighborLocation(loc, 0));
         assertEquals("Unexpected bottom left neighbor",
-                new Location(3, 2), HexUtil.getNeighborLocation(loc, 4));
+                new ByteLocation(3, 2), HexUtil.getNeighborLocation(loc, 4));
         assertEquals("Unexpected bottom right neighbor",
-                new Location(3, 3), HexUtil.getNeighborLocation(loc, 5));
+                new ByteLocation(3, 3), HexUtil.getNeighborLocation(loc, 5));
     }
 
     public void testGetNeighborFromUnrotatedTile() {
