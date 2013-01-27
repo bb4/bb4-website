@@ -16,8 +16,7 @@ public class WinProbabilityCaclulator {
     /**
      * Constructor.
      */
-    public WinProbabilityCaclulator() {
-    }
+    public WinProbabilityCaclulator() {}
 
     /**
      * Returns a number between 0 and 1 representing the estimated probability of player 1 winning the game.

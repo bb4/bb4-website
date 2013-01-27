@@ -10,7 +10,7 @@ import java.util.Collections;
 /**
  * Find the best moves from a list of reasonable next moves using configured search options
  *
- *  @author Barry Becker
+ * @author Barry Becker
  */
 public class BestMoveFinder {
 

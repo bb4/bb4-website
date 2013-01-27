@@ -55,9 +55,6 @@ public class TwoPlayerGeneralInfoPanel extends GeneralInfoPanel {
     @Override
     protected void setPlayerLabel(Player player) {
 
-        //PlayerList players = getController().getPlayers();
-        //boolean p1sturn = getController().isPlayer1sTurn();
-        //String player = p1sturn? players.getPlayer1().getName() : players.getPlayer2().getName();
         playerLabel_.setText(' ' + player.getName() + ' ');
         playerLabel_.setBorder(getPlayerLabelBorder(player.getColor()));
         repaint();

@@ -27,7 +27,9 @@ public class NodeAttributes extends HashMap<String, String>  {
      */
     public NodeAttributes() {}
 
-
+    /**
+     * Factory method to create a pruned node.
+     */
     public static NodeAttributes createPrunedNode(int selectedValue, SearchWindow window) {
         NodeAttributes attributes = new NodeAttributes();
         attributes.put("value", FormatUtil.formatNumber(selectedValue) );
@@ -37,6 +39,9 @@ public class NodeAttributes extends HashMap<String, String>  {
         return attributes;
     }
 
+    /**
+     * Factory method to create an inner node.
+     */
     public static NodeAttributes createInnerNode(TwoPlayerMove theMove, SearchWindow window ) {
         NodeAttributes attributes =  new NodeAttributes();
         attributes.put("value", FormatUtil.formatNumber(theMove.getValue()) );

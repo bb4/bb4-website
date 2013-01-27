@@ -10,16 +10,8 @@ import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.GamePiece;
 
 /**
- *  This base class describes a change in state from one board
- * position to the next in a game.
- *
- * Note: when I first created this class I used a freeList to recycle
- * old moves and avoid unnecessary object creation. However, while profiling,
- * I found that this was actually slower than not using it.
- *
- * We could save significant space by removing some of these members,
- * and reducing the size of the remaining ones. eg toRow, toCol can be byte, value can be float, etc.
- *
+ * This base class describes a change in state from one board position to the next in a game.
+ * Perhaps save space by removing some of these members.
  * Consider splitting this into TwoPlayerMove (immutable part) and TwoPlayerMoveNode (game tree parts)
  *
  * @see Board
@@ -69,29 +61,29 @@ public class TwoPlayerMove extends Move {
 
 
     /**
-     * protected Constructor.
-     * use the factory method createMove instead.
+     * Protected Constructor.
+     * Use the factory method createMove instead.
      */
     protected TwoPlayerMove() {}
 
     /**
-     * create a move object representing a transition on the board.
+     * Create a move object representing a transition on the board.
      */
-    protected TwoPlayerMove( Location destination,
-                    int val, GamePiece p ) {
+    protected TwoPlayerMove( Location destination, int val, GamePiece p ) {
         toLocation_ = destination;
 
         setValue(val);
         inheritedValue_ = getValue();
         selected_ = false;
         piece_ = p;
-        if (p != null)
+        if (p != null) {
             player1_ = p.isOwnedByPlayer1();
+        }
         isPass_ = false;
     }
 
     /**
-     * copy constructor
+     * Copy constructor
      */
     protected TwoPlayerMove(TwoPlayerMove move) {
 
@@ -165,13 +157,13 @@ public class TwoPlayerMove extends Move {
             return 1;
         else {
             // if still tie, break using col position.
-            if ( this.getToCol() < move.getToCol() )
+            if ( this.getToCol() < move.getToCol() ) {
                 return -1;
-            else if ( this.getToCol() > move.getToCol() )
+            } else if ( this.getToCol() > move.getToCol() )  {
                 return 1;
-            else {
+            } else {
                 return 0;
-          }
+            }
         }
     }
 
@@ -273,7 +265,7 @@ public class TwoPlayerMove extends Move {
 
         }
         return "TwoPlayerMove.createMove(new Location("
-                +  getToLocation().getRow()  + ", " + getToLocation().getCol()  + "), " + getValue() + ", "
+                + getToLocation().getRow()  + ", " + getToLocation().getCol()  + "), " + getValue() + ", "
                 + pieceCreator + "),";
     }
 

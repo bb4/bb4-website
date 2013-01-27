@@ -9,7 +9,6 @@ import com.barrybecker4.game.common.board.GamePiece;
 
 import java.util.List;
 
-
 /**
  * Defines the structure of the board and the pieces on it.
  * Each BoardPosition can contain a piece.

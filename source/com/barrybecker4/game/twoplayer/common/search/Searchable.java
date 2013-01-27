@@ -31,7 +31,7 @@ public interface Searchable {
     void makeInternalMove( TwoPlayerMove move );
 
     /**
-     * takes back the most recent move.
+     * Takes back the most recent move.
      * @param move move to undo.
      */
     void undoInternalMove( TwoPlayerMove move );
@@ -117,7 +117,6 @@ public interface Searchable {
     Searchable copy();
 
     /**
-     *
      * @return  the Zobrist hash for the currently searched position
      */
     HashKey getHashKey();

@@ -7,8 +7,8 @@ import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 /**
  * This interface is implemented by classes that can show the game tree as it is searched.
  * I used to modify the game tree nodes directly during search, but found that I got a lot of intermittent
- * concurrent modification exceptions and null pointer exceptions while showing the game tree. Now events are thrown to
- * indicate changes to the tree should be made during search, and the handler should make the changes
+ * concurrent modification exceptions and null pointer exceptions while showing the game tree. Now events are thrown
+ * to indicate changes to the tree should be made during search, and the handler should make the changes
  * to the tree in the eventDispatch thread.
  *
  * @author Barry Becker
@@ -16,7 +16,6 @@ import com.barrybecker4.game.twoplayer.common.TwoPlayerMove;
 public interface IGameTreeViewable {
 
     /**
-     *
      * @return the root node of the search tree.
      */
     SearchTreeNode getRootNode();

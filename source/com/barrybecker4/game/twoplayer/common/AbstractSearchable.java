@@ -13,7 +13,7 @@ import com.barrybecker4.optimization.parameter.ParameterArray;
 
 
 /**
- * For searching two player games
+ * Base class for all classes that can search two player games for the next best move.
  *
  * @author Barry Becker
  */
@@ -24,6 +24,7 @@ public abstract class AbstractSearchable implements Searchable {
 
     /**
      * Constructor.
+     * @param moveList list of moves that have been made so far.
      */
     public AbstractSearchable(MoveList moveList) {
 

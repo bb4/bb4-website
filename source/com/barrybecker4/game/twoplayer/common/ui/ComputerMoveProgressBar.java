@@ -91,16 +91,6 @@ public class ComputerMoveProgressBar extends JProgressBar {
         }
     }
 
-    /**
-     * resume computation
-     */
-    public final void continueProcessing()  {
-        /*
-        timer_.setDelay(PROGRESS_UPDATE_DELAY);
-        searchProgress.continueProcessing();
-        */
-    }
-
     public void cleanup() {
         timer_.stop();
         setValue(0);
