@@ -115,7 +115,7 @@ public abstract class TwoPlayerPanel extends GamePanel
     }
 
     /**
-     *  Take the root from the treeDialog and set it on the TwoPlayerController so it can
+     * Take the root from the treeDialog and set it on the TwoPlayerController so it can
      * create the tree and allow the treeDialog to show it when the
      * change event happens.
      */
@@ -147,34 +147,47 @@ public abstract class TwoPlayerPanel extends GamePanel
             }
         }
         else if ( source == toolBar_.getUndoButton() ) {
-            getBoardViewer().undoLastManMove();
-            // gray it if there are now no more moves to undo
-            toolBar_.getUndoButton().setEnabled(boardViewer_.canUndoMove());
-            toolBar_.getRedoButton().setEnabled(true);
+            undoMove();
         }
         else if ( source == toolBar_.getRedoButton() ) {
-            getBoardViewer().redoLastManMove();
-            // gray it if there are now no more moves to undo
-            toolBar_.getRedoButton().setEnabled(boardViewer_.canRedoMove());
-            toolBar_.getUndoButton().setEnabled(true);
+            redoMove();
         }
         if ( source == toolBar_.getOptionsButton() ) {
-            //optionsDialog_.setLocationRelativeTo( this );
-            boolean canceled = optionsDialog_.showDialog();
-            GameContext.log(2, "options selected  canceled=" + canceled );
-            if ( !canceled ) { // start a game with the newly defined options
-                GameContext.log(0, "options selected not canceled  show game tree="
-                        + get2PlayerController().getTwoPlayerOptions().getShowGameTree() );
-                if ( get2PlayerController().getTwoPlayerOptions().getShowGameTree() ) {
-                    showGameTreeDialog();
-                }
-                else {
-                    treeDialog_.setVisible(false);
-                }
-            }
+            showOptionsDialog();
+
         }
         else if ( source == toolBar_.getHelpButton() )  {
             showHelpDialog();
+        }
+    }
+
+    private void undoMove() {
+        getBoardViewer().undoLastManMove();
+        // gray it if there are now no more moves to undo
+        toolBar_.getUndoButton().setEnabled(boardViewer_.canUndoMove());
+        toolBar_.getRedoButton().setEnabled(true);
+    }
+
+    private void redoMove() {
+        getBoardViewer().redoLastManMove();
+        // gray it if there are now no more moves to undo
+        toolBar_.getRedoButton().setEnabled(boardViewer_.canRedoMove());
+        toolBar_.getUndoButton().setEnabled(true);
+    }
+
+    private void showOptionsDialog() {
+        //optionsDialog_.setLocationRelativeTo( this );
+        boolean canceled = optionsDialog_.showDialog();
+        GameContext.log(2, "options selected  canceled=" + canceled);
+        if ( !canceled ) { // start a game with the newly defined options
+            GameContext.log(0, "options selected not canceled  show game tree="
+                    + get2PlayerController().getTwoPlayerOptions().getShowGameTree() );
+            if ( get2PlayerController().getTwoPlayerOptions().getShowGameTree() ) {
+                showGameTreeDialog();
+            }
+            else {
+                treeDialog_.setVisible(false);
+            }
         }
     }
 
@@ -189,5 +202,4 @@ public abstract class TwoPlayerPanel extends GamePanel
          progressBar_.setVisible(!get2PlayerController().getPlayers().allPlayersHuman());
          getBoardViewer().startNewGame();
     }
-
 }

@@ -99,8 +99,6 @@ public abstract class TwoPlayerSearchable extends AbstractSearchable {
 
     @Override
     public SearchOptions getSearchOptions() {
-        //System.out.println("getCurrentPlayer()=" + getCurrentPlayer() +" opts = "
-        // + ((TwoPlayerPlayerOptions) getCurrentPlayer().getOptions()).getSearchOptions());
         return ((TwoPlayerPlayerOptions) getCurrentPlayer().getOptions()).getSearchOptions();
     }
 

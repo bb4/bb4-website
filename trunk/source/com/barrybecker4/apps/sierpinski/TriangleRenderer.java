@@ -25,7 +25,7 @@ public class TriangleRenderer {
     }
 
     public void setDepth(int depth) {
-        assert depth > 0 && depth < 20 : "Unreasonable max depth of "+ depth +" specified.";
+        assert depth > 0 && depth < 20 : "Unreasonable max depth of " + depth + " specified.";
         maxDepth = depth;
     }
 

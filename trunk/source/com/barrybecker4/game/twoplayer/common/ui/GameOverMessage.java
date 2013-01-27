@@ -36,26 +36,31 @@ public class GameOverMessage {
         String text;
 
         if ( players.anyPlayerWon())    {
-            Player winningPlayer = players.getPlayer1().hasWon() ? players.getPlayer1() : players.getPlayer2();
-            Player losingPlayer = players.getPlayer1().hasWon() ? players.getPlayer2() : players.getPlayer1();
-
-            MessageFormat formatter = new MessageFormat(GameContext.getLabel("WON_MSG"));
-            Object[] args = new String[5];
-            if (players.allPlayersHuman()) {
-                args[0] = "";
-            } else {
-                args[0] = winningPlayer.isHuman() ? GameContext.getLabel("YOU") : GameContext.getLabel("THE_COMPUTER");
-            }
-            args[1] = winningPlayer.getName();
-            args[2] = Integer.toString(controller_.getNumMoves());
-            args[3] = FormatUtil.formatNumber(controller_.getStrengthOfWin());
-            text = formatter.format(args);
-
-            assert(!losingPlayer.hasWon()) : "Both players should not win. Players=" + players;
+            text = createWonMessage(players);
         }
         else {
             text = GameContext.getLabel("TIE_MSG");
         }
+        return text;
+    }
+
+    private String createWonMessage(PlayerList players) {
+        String text;Player winningPlayer = players.getPlayer1().hasWon() ? players.getPlayer1() : players.getPlayer2();
+        Player losingPlayer = players.getPlayer1().hasWon() ? players.getPlayer2() : players.getPlayer1();
+
+        MessageFormat formatter = new MessageFormat(GameContext.getLabel("WON_MSG"));
+        Object[] args = new String[5];
+        if (players.allPlayersHuman()) {
+            args[0] = "";
+        } else {
+            args[0] = winningPlayer.isHuman() ? GameContext.getLabel("YOU") : GameContext.getLabel("THE_COMPUTER");
+        }
+        args[1] = winningPlayer.getName();
+        args[2] = Integer.toString(controller_.getNumMoves());
+        args[3] = FormatUtil.formatNumber(controller_.getStrengthOfWin());
+        text = formatter.format(args);
+
+        assert(!losingPlayer.hasWon()) : "Both players should not win. Players=" + players;
         return text;
     }
 

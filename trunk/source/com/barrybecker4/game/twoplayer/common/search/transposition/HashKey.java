@@ -17,7 +17,6 @@ public class HashKey {
      * Create the static table of random numbers to use for the Hash from a sample board.
      */
     public HashKey() {
-
         key = 0L;
     }
 

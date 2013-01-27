@@ -24,7 +24,7 @@ import java.util.List;
  * The game specific TwoPlayerController is created upon construction to be used internally.
  * This class delegates to a boardRenderer to render the board and its pieces.
  * There should be no references to swing classes outside this ui subpackage.
- *   This class sends a GameChangedEvent after each move in case there are other
+ *    This class sends a GameChangedEvent after each move in case there are other
  * components (like the GameTreeViewer) that need to updated based on the new board state.
  * Since the computer can take a long time to think about its move before playing it, that
  * computation is handled asynchronously in a separate thread. The way it works is that the
@@ -104,7 +104,6 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     public GamePieceRenderer getPieceRenderer() {
         return getBoardRenderer().getPieceRenderer();
     }
-
 
     /**
      * run many games and use hill-climbing to find optimal weights.

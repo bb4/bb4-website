@@ -17,8 +17,8 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public class SearchTreeNode extends DefaultMutableTreeNode
-{
+public class SearchTreeNode extends DefaultMutableTreeNode {
+
     private static final long serialVersionUID = 1L;
 
     public NodeAttributes attributes;
@@ -48,14 +48,14 @@ public class SearchTreeNode extends DefaultMutableTreeNode
      * @param move a twoplayer board move.
      * @param attributes set of name value pairs describing the node.
      */
-    public SearchTreeNode(TwoPlayerMove move, NodeAttributes attributes) {
+    public SearchTreeNode(TwoPlayerMove move, final NodeAttributes attributes) {
         setUserObject(move);
         this.attributes = attributes;
     }
 
     public TwoPlayerMove[] getChildMoves() {
-        if (children == null)
-            return null;
+
+        if (children == null) return null;
         TwoPlayerMove[] moves = new TwoPlayerMove[children.size()];
         Enumeration enumeration = children();
         int i = 0;
@@ -88,8 +88,8 @@ public class SearchTreeNode extends DefaultMutableTreeNode
      * @return the move that the computer expects will be played next
      */
     public SearchTreeNode getExpectedNextNode() {
-        if (children == null)
-            return null;
+
+        if (children == null) return null;
         Enumeration enumeration = children();
 
         while (enumeration.hasMoreElements()) {
@@ -119,6 +119,10 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         return null;
     }
 
+    /**
+     * Serialize all the children.
+     * @return children represented in string form
+     */
     private String childrenAsString() {
         StringBuilder bld = new StringBuilder();
         Enumeration enumeration = this.children();
@@ -143,7 +147,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
 
         return s.toString();
     }
-
 
     public int getSpaceAllocation() {
         return spaceAllocation_;
