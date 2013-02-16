@@ -129,6 +129,3 @@ public class Player implements Serializable, OnlinePlayer {
         return "";
     }
 }
-
-
-

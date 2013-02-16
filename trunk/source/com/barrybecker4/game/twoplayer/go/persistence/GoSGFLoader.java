@@ -53,7 +53,7 @@ class GoSGFLoader extends SGFLoader {
     else if( tokenName.equals( "FG" ) )
         token = new FigureToken();
 
-    // Tokens which apply to a leaf are next most common (board mark-up,
+    // LTokens which apply to a leaf are next most common (board mark-up,
     // estimated score, etc.).
     //
     else if( tokenName.equals( "AR" ) )

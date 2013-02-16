@@ -64,7 +64,8 @@ class ServerCommandProcessor {
             e.printStackTrace();
         } */
 
-        // for now, also create a corresponding viewer. The server should really not have a UI component.
+        // for now, also create a corresponding viewer. The server should really not have knowledge of a UI component.
+        // fix this by doing plugin.getModelInstance, then getting the controller from that.
         GamePanel panel  = plugin.getPanelInstance();
         panel.init(null);
         GameBoardViewer viewer = panel.getViewer();

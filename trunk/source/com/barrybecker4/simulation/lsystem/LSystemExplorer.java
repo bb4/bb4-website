@@ -1,14 +1,13 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.simulation.henonphase;
+// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+package com.barrybecker4.simulation.lsystem;
 
-import com.barrybecker4.common.ColorMap;
 import com.barrybecker4.simulation.common.Profiler;
 import com.barrybecker4.simulation.common.ui.Simulator;
 import com.barrybecker4.simulation.common.ui.SimulatorOptionsDialog;
-import com.barrybecker4.simulation.henonphase.algorithm.HenonAlgorithm;
+import com.barrybecker4.simulation.lsystem.algorithm.LSystemAlgorithm;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Graphics;
 
 /**
  * Interactively explores the Henon Phase attractors.
@@ -17,9 +16,9 @@ import java.awt.*;
  *
  * @author Barry Becker.
  */
-public class HenonPhaseExplorer extends Simulator {
+public class LSystemExplorer extends Simulator {
 
-    private HenonAlgorithm algorithm_;
+    private LSystemAlgorithm algorithm_;
     private DynamicOptions options_;
 
     private boolean useFixedSize_ = false;
@@ -28,8 +27,8 @@ public class HenonPhaseExplorer extends Simulator {
     protected static final int DEFAULT_STEPS_PER_FRAME = 10;
 
 
-    public HenonPhaseExplorer() {
-        super("Henon Phase Explorer");
+    public LSystemExplorer() {
+        super("LSystem Tree Explorer");
         commonInit();
     }
 
@@ -45,7 +44,7 @@ public class HenonPhaseExplorer extends Simulator {
     }
 
     private void commonInit() {
-        algorithm_ = new HenonAlgorithm();
+        algorithm_ = new LSystemAlgorithm();
         initCommonUI();
         reset();
     }
@@ -105,9 +104,5 @@ public class HenonPhaseExplorer extends Simulator {
     public JPanel createDynamicControls() {
         options_ = new DynamicOptions(algorithm_, this);
         return options_;
-    }
-
-    public ColorMap getColorMap() {
-        return algorithm_.getColorMap();
     }
 }

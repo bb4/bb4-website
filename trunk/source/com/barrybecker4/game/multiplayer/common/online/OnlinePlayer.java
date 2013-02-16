@@ -11,7 +11,7 @@ public interface OnlinePlayer {
     /**
      * @return either the player itself, or it a surrogate player, then the player that ht surrogate contains.
      */
-    Player getActualPlayer();
+    OnlinePlayer getActualPlayer();
 
     /** @return true if this is a surrogate player */
     boolean isSurrogate();
