@@ -39,7 +39,7 @@ public final class GoController extends TwoPlayerController {
     public static final boolean USE_RELATIVE_GROUP_SCORING = true;
 
     /** default num row and columns for a default square go board.   */
-    private static final int DEFAULT_SIZE = 9;
+    private static final int DEFAULT_SIZE = 5;
 
     /** if difference greater than this, then consider a win. */
     public static final int WIN_THRESHOLD = 2000;

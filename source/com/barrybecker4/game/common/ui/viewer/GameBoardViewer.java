@@ -34,6 +34,7 @@ import java.util.List;
  * what the computer's move is.
  *
  *  note: subclasses must override paintComponent to have the board show up.
+ *  @@ split out GameViewModel parts into a separate class. The viewer should have a model not be a model.
  *
  *  @author Barry Becker
  */

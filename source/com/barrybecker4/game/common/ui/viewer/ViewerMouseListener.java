@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 /**
- *  Do nothing be default for all these. Subclasses must override some of them.
+ *  Do nothing by default for all these. Subclasses must override some of them.
  *
  *  @author Barry Becker
  */

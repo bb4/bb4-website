@@ -33,7 +33,7 @@ public abstract class TwoPlayerMoveToken extends PlacementToken {
 
   /**
    * Parses a point, sets the X and Y values of the PlacementToken
-   * accordingly.  This can be called repeatedly for Tokens which take
+   * accordingly.  This can be called repeatedly for LTokens which take
    * any number of points (see: PlacementListToken).
    * <P>
    * The first opening '[' must have already been read; thus leaving two
