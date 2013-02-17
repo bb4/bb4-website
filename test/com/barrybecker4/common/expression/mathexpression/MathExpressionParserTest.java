@@ -14,7 +14,6 @@ public class MathExpressionParserTest extends TestCase {
     private MathExpressionParser parser;
 
 
-
     /** used to verify parsed tree */
     private TreeSerializer serializer;
 
@@ -66,13 +65,35 @@ public class MathExpressionParserTest extends TestCase {
         verifyParse("x*-x", "x * -1 * x");
     }
 
+    public void testXRaisedToXMinus3XExp() {
+        verifyParse("x^x-3x", "x ^ x - 3.0 * x");
+    }
+
+    public void testXRaisedToNegXMinus3XExp() {
+        verifyParse("x^-x-3x", "x ^ -1 * x - 3.0 * x");
+    }
+
+    public void testXXXExp() {
+        verifyParse("x*x *  x", "x * x * x");
+    }
+
+    public void testXCubedMinusXCubedExp() {
+        verifyParse("x^3 - x^3", "x ^ 3.0 - x ^ 3.0");
+    }
+
+    public void testParenExpMinus3() {
+        verifyParse("(2x + 1) - 3", "(2.0 * x + 1.0) - 3.0");
+    }
+
+    public void test3MinusParenExp() {
+        verifyParse("3 - (2x + 1)", "3.0 - (2.0 * x + 1.0)");
+    }
+
+    public void testComplexNestedExp() {
+        verifyParse("(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1)))) *(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))))");
+    }
+
     /*
-            "x^x-3x",
-            "x^-x-3x",
-            "-x*x",
-            "x*x*x",
-            "x^2",
-            "x^3 - x^3",
             "x-2",
             "2-x",
             "5x",
@@ -92,7 +113,7 @@ public class MathExpressionParserTest extends TestCase {
             "((x + 4) / (x^2 - 1)) + 1",
             "1 + ((x + 4) / (x^2 - 1))",
             "2 + (x^2 - (x + (x  + (x + (x - (3x -(x + (x + 1))))))))/ 2",
-            "(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1)))) *(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))))"
+            ""
                   */
 
     /**

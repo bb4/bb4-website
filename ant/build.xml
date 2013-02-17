@@ -322,7 +322,7 @@
   <target name="executeLSystemExplorer" description="Run the LSystem Tree Explorer">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar;${libDir}/vecmath.jar"/>
       <param name="args" value="com.barrybecker4.simulation.lsystem.LSystemExplorer"/>
     </antcall>
   </target>

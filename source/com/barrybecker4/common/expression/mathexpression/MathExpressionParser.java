@@ -4,7 +4,6 @@ package com.barrybecker4.common.expression.mathexpression;
 import com.barrybecker4.common.expression.ExpressionParser;
 import com.barrybecker4.common.expression.Operator;
 import com.barrybecker4.common.expression.OperatorsDefinition;
-import com.barrybecker4.common.expression.Tokens;
 import com.barrybecker4.common.expression.TreeNode;
 import static com.barrybecker4.common.expression.Tokens.*;
 
@@ -48,9 +47,9 @@ public class MathExpressionParser extends ExpressionParser {
                 // spaces are ignored
             }
             else if (ch == LEFT_PAREN.getSymbol()) {
-                int closingParenPos = findClosingParen(exp, pos);
+                int closingParenPos = findClosingParen(exp, pos + 1);
                 // this method will make the recursive call
-                token = processSubExpression(exp, pos, token, closingParenPos, nodes);
+                token = processSubExpression(exp, pos + 1, token, closingParenPos, nodes);
                 pos = closingParenPos + 1;
             }
             else if (ch == MathOperator.MINUS.getSymbol() && token.length() == 0 && opDef.isLastNodeOperator(nodes)) {
@@ -122,7 +121,7 @@ public class MathExpressionParser extends ExpressionParser {
     @Override
     protected void pushNodesForToken(String token, List<TreeNode> nodes) {
 
-        if (token == null) return;
+        if (token == null || token.length() == 0) return;
 
         int len = token.length();
         if (token.charAt(len - 1) == 'x') {
@@ -150,6 +149,7 @@ public class MathExpressionParser extends ExpressionParser {
     protected TreeNode makeTreeFromNodes(List<TreeNode> nodes) {
 
         for (Operator[] ops : opDef.getOperatorPrecedence()) {
+            System.out.println("nodes="+ nodes + " ops="+ ops);
             nodes = reduceNodes(ops, nodes);
         }
 
@@ -164,7 +164,7 @@ public class MathExpressionParser extends ExpressionParser {
         return nodes.get(0);
     }
 
-      /**
+    /**
      * Simplify the list of terms by evaluating the terms joined by the specified operators.
      * Reduce the nodes list to a single node and return it.
      * @param ops list of operators that all have the same precedence.
@@ -184,7 +184,9 @@ public class MathExpressionParser extends ExpressionParser {
                 if (nodes.size() < index + 1) {
                     throw new Error("Not enough operands for operator in nodes=" + nodes);
                 }
+                System.out.println("before splice : " + nodes);
                 splice(nodes, index-1, 3, nodes.get(index));
+                System.out.println("after splice : " + nodes);
             } else {
                 index += 2;
             }

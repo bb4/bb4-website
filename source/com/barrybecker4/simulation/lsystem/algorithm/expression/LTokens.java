@@ -19,7 +19,7 @@ public enum LTokens {
        symbol = c;
     }
 
-    char getSymbol() {
+    public char getSymbol() {
         return symbol;
     }
 

@@ -19,8 +19,7 @@ public class LOperatorsDefinition implements OperatorsDefinition {
      * Defines the order of precedence for the operators
      * This at the same level are evaluated from left to right.
      */
-    private static LOperator[][] OPERATOR_PRECEDENCE = {
-    };
+    private static Operator[][] OPERATOR_PRECEDENCE = {};
 
     public Operator[][] getOperatorPrecedence() {
         return OPERATOR_PRECEDENCE;

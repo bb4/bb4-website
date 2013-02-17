@@ -21,9 +21,11 @@ public abstract class ExpressionParser {
     /**
      * Parses an expression.
      * Called recursively to parse sub-expressions nested within parenthesis.
+     * @param textExpression the expression to parse. Must not be null or empty.
      * @return the root node in the parsed expression tree.
      */
     public TreeNode parse(String textExpression) {
+
         List<TreeNode> nodes = getNodesAtLevel(textExpression);
         return makeTreeFromNodes(nodes);
     }
