@@ -10,9 +10,8 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 
 /**
- * Interactively explores the Henon Phase attractors.
- * See   http://mathworld.wolfram.com/HenonMap.html
- * See   http://www.complexification.net/gallery/machines/henonPhaseDeep/
+ * Interactively explores LSystem generated trees based on a user supplied expression.
+ * See http://en.wikipedia.org/wiki/L-system
  *
  * @author Barry Becker.
  */

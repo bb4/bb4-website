@@ -85,6 +85,7 @@ public class LSystemAlgorithm {
             model.reset();
             Profiler.getInstance().startCalculationTime();
         }
+        model.render();
 
         return false;
     }

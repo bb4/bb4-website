@@ -2,13 +2,10 @@
 package com.barrybecker4.simulation.lsystem.algorithm.expression;
 
 import com.barrybecker4.common.expression.ExpressionParser;
-import com.barrybecker4.common.expression.Operator;
-import com.barrybecker4.common.expression.OperatorsDefinition;
 import com.barrybecker4.common.expression.Tokens;
 import com.barrybecker4.common.expression.TreeNode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,8 +14,9 @@ import java.util.List;
  */
 public class LExpressionParser extends ExpressionParser {
 
-    public LExpressionParser(OperatorsDefinition opDef) {
-        super(opDef);
+    /** Constructor */
+    public LExpressionParser() {
+        super(new LOperatorsDefinition());
     }
 
     /**

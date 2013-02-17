@@ -23,28 +23,24 @@ public class LExpressionParserTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        OperatorsDefinition opDef = new LOperatorsDefinition();
-        parser = new LExpressionParser(opDef);
+        parser = new LExpressionParser();
         serializer = new LTreeSerializer();
     }
 
-    public void testFOnlyExp() {
 
+    public void testFOnlyExp() {
         verifyParse("F");
     }
 
     public void testSimpleExp() {
-
         verifyParse("F(-F)");
     }
 
     public void testExpWithSpaces() {
-
         verifyParse("F (- F)", "(F(-F))");
     }
 
     public void testTwoLevelNestedExp() {
-
         verifyParse("FF(F(-F))(++F)");
     }
 
