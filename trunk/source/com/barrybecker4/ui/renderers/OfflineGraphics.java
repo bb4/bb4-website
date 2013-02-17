@@ -61,6 +61,11 @@ public class OfflineGraphics  {
             offlineGraphics_.drawLine(x1, y1, x1, y1);
     }
 
+    public void fillCircle(int x1, int y1, int rad) {
+        if (offlineGraphics_ != null)
+            offlineGraphics_.fillOval(x1- rad, y1 - rad, rad*2, rad*2);
+    }
+
     public void drawRect(int x1, int y1, int width, int height) {
         if (offlineGraphics_ != null)
             offlineGraphics_.drawRect(x1, y1, x1, y1);

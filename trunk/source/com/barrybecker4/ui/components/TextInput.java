@@ -3,6 +3,7 @@ package com.barrybecker4.ui.components;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 
 /**
  * A panel that has a label on the left
@@ -32,6 +33,12 @@ public class TextInput extends JPanel {
     public TextInput( String labelText, String initialValue, int numColumns ) {
         this(labelText, initialValue);
         this.setColumns(numColumns);
+    }
+
+
+    @Override
+    public void addKeyListener(KeyListener listener) {
+        textField_.addKeyListener(listener);
     }
 
     /**

@@ -1,7 +1,7 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.simulation.lsystem;
 
-import com.barrybecker4.simulation.lsystem.algorithm.LSystemAlgorithm;
+import com.barrybecker4.simulation.lsystem.algorithm.LSystemModel;
 import com.barrybecker4.ui.components.TextInput;
 import com.barrybecker4.ui.sliders.SliderGroup;
 import com.barrybecker4.ui.sliders.SliderGroupChangeListener;
@@ -19,6 +19,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Dynamic controls for the RD simulation that will show on the right.
@@ -26,9 +28,9 @@ import java.awt.event.ActionListener;
  * @author Barry Becker
  */
 class DynamicOptions extends JPanel
-                     implements ActionListener, SliderGroupChangeListener {
+                     implements ActionListener, KeyListener, SliderGroupChangeListener {
 
-    private LSystemAlgorithm algorithm_;
+    private LSystemModel algorithm_;
     private LSystemExplorer simulator_;
     private JCheckBox useFixedSize_;
     private TextInput expression_;
@@ -36,6 +38,7 @@ class DynamicOptions extends JPanel
     private static final String NUM_ITERATIONS_SLIDER = "Num Iterations";
     private static final String ANGLE_SLIDER = "Angle";
     private static final String SCALE_SLIDER = "Sale";
+    private static final String SCALE_FACTOR_SLIDER = "Sale Factor";
 
     private SliderGroup sliderGroup_;
     private JTextArea formulaText_;
@@ -43,16 +46,17 @@ class DynamicOptions extends JPanel
 
     private static final SliderProperties[] SLIDER_PROPS = {
 
-        new SliderProperties(NUM_ITERATIONS_SLIDER,   0,    10,    LSystemAlgorithm.DEFAULT_ITERATIONS),
-        new SliderProperties(ANGLE_SLIDER,   0,    180,    LSystemAlgorithm.DEFAULT_ANGLE, 100),
-        new SliderProperties(SCALE_SLIDER,   0.2,    1.2,    LSystemAlgorithm.DEFAULT_SCALE,  1000.0),
+        new SliderProperties(NUM_ITERATIONS_SLIDER,   0,    10,    LSystemModel.DEFAULT_ITERATIONS),
+        new SliderProperties(ANGLE_SLIDER,   0,    180,    LSystemModel.DEFAULT_ANGLE, 100),
+        new SliderProperties(SCALE_SLIDER,   0.2,    2.2,    LSystemModel.DEFAULT_SCALE,  1000.0),
+        new SliderProperties(SCALE_FACTOR_SLIDER,   0.2,    1.2,    LSystemModel.DEFAULT_SCALE_FACTOR,  1000.0),
     };
 
 
     /**
      * Constructor
      */
-    DynamicOptions(LSystemAlgorithm algorithm, LSystemExplorer simulator) {
+    DynamicOptions(LSystemModel algorithm, LSystemExplorer simulator) {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEtchedBorder());
@@ -77,7 +81,8 @@ class DynamicOptions extends JPanel
 
     private JPanel createExpressionInput() {
         JPanel p = new JPanel(new FlowLayout());
-        expression_ = new TextInput("Expression", "F(+F)F(-F)", 18);
+        expression_ = new TextInput("Expression", LSystemModel.DEFAULT_EXPRESSION, 18);
+        expression_.addKeyListener(this);
         p.add(expression_);
         return p;
     }
@@ -93,7 +98,6 @@ class DynamicOptions extends JPanel
         checkBoxes.setBorder(BorderFactory.createEtchedBorder());
         return checkBoxes;
     }
-
 
     private JPanel createFormulaText() {
 
@@ -142,8 +146,24 @@ class DynamicOptions extends JPanel
             algorithm_.setAngle(value);
         }
         else if (sliderName.equals(SCALE_SLIDER)) {
-
             algorithm_.setScale(value);
+        }
+        else if (sliderName.equals(SCALE_FACTOR_SLIDER)) {
+            algorithm_.setScaleFactor(value);
+        }
+    }
+
+
+    /**
+     * Implement keyListener interface.
+     * @param key key that was pressed
+     */
+    public void keyTyped( KeyEvent key )  {}
+    public void keyPressed(KeyEvent key) {}
+    public void keyReleased(KeyEvent key) {
+        char keyChar = key.getKeyChar();
+        if ( keyChar == '\n' ) {
+            algorithm_.setExpression(expression_.getValue());
         }
     }
 

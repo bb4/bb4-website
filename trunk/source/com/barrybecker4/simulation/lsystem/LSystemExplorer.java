@@ -4,7 +4,7 @@ package com.barrybecker4.simulation.lsystem;
 import com.barrybecker4.simulation.common.Profiler;
 import com.barrybecker4.simulation.common.ui.Simulator;
 import com.barrybecker4.simulation.common.ui.SimulatorOptionsDialog;
-import com.barrybecker4.simulation.lsystem.algorithm.LSystemAlgorithm;
+import com.barrybecker4.simulation.lsystem.algorithm.LSystemModel;
 
 import javax.swing.JPanel;
 import java.awt.Graphics;
@@ -17,7 +17,7 @@ import java.awt.Graphics;
  */
 public class LSystemExplorer extends Simulator {
 
-    private LSystemAlgorithm algorithm_;
+    private LSystemModel algorithm_;
     private DynamicOptions options_;
 
     private boolean useFixedSize_ = false;
@@ -43,7 +43,7 @@ public class LSystemExplorer extends Simulator {
     }
 
     private void commonInit() {
-        algorithm_ = new LSystemAlgorithm();
+        algorithm_ = new LSystemModel();
         initCommonUI();
         reset();
     }
