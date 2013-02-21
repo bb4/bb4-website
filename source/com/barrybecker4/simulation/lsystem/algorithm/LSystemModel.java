@@ -2,6 +2,8 @@
 package com.barrybecker4.simulation.lsystem.algorithm;
 
 import com.barrybecker4.simulation.common.Profiler;
+
+import javax.swing.JOptionPane;
 import java.awt.image.BufferedImage;
 
 /**
@@ -13,8 +15,8 @@ public class LSystemModel {
     public static final String DEFAULT_EXPRESSION = "F(+F)F(-F)F";
     public static final int DEFAULT_ITERATIONS = 1;
     public static final double DEFAULT_ANGLE = 90.0;
-    public static final double DEFAULT_SCALE = 0.5;
-    public static final double DEFAULT_SCALE_FACTOR = 0.9;
+    public static final double DEFAULT_SCALE = 0.9;
+    public static final double DEFAULT_SCALE_FACTOR = 0.7;
     public static final int DEFAULT_SIZE = 256;
 
     private LSystemRenderer model;
@@ -47,8 +49,7 @@ public class LSystemModel {
         scaleFactor = DEFAULT_SCALE_FACTOR;
         expression = DEFAULT_EXPRESSION;
 
-        model = new LSystemRenderer(DEFAULT_SIZE, DEFAULT_SIZE, expression, numIterations, angle,
-                                    scale, scaleFactor);
+        model = new LSystemRenderer(DEFAULT_SIZE, DEFAULT_SIZE, expression, numIterations, angle, scale, scaleFactor);
     }
 
     public void setNumIterations(int num) {
@@ -87,8 +88,12 @@ public class LSystemModel {
     }
 
     private void requestRestart(int width, int height) {
-        model = new LSystemRenderer(width, height, expression, numIterations, angle, scale, scaleFactor);
-        restartRequested = true;
+        try {
+            model = new LSystemRenderer(width, height, expression, numIterations, angle, scale, scaleFactor);
+            restartRequested = true;
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
     public BufferedImage getImage() {

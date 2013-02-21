@@ -30,7 +30,7 @@ public class OfflineGraphics  {
         assert backgroundColor!=null;
         width_ = dim.width;
         height_ = dim.height;
-        assert width_ >0 && height_ > 0;
+        assert width_  >0  && height_ > 0;
         bgColor_ = backgroundColor;
         offlineGraphics_ = createOfflineGraphics();
         clear();
