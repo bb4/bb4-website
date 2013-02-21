@@ -1,14 +1,17 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.simulation.lsystem.algorithm;
 
+import com.barrybecker4.common.ColorMap;
 import com.barrybecker4.common.expression.TreeNode;
 import com.barrybecker4.simulation.lsystem.algorithm.expression.LExpressionParser;
 import com.barrybecker4.ui.renderers.OfflineGraphics;
 
-import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
+
 import static com.barrybecker4.simulation.lsystem.algorithm.expression.LTokens.*;
 
 /**
@@ -20,6 +23,8 @@ public class LSystemRenderer {
 
     private static final double LENGTH = 1.0;
     private static final Color BG_COLOR = new Color(0, 30, 10);
+    // use a colormap instead
+    private ColorMap cmap = new DepthColorMap();
     private final int width;
     private final int height;
 
@@ -40,7 +45,7 @@ public class LSystemRenderer {
         this.width = width;
         this.height = height;
         this.numIterations = numIterations;
-        this.angleIncrement = Math.PI - angleInc * Math.PI / 180;
+        this.angleIncrement = angleInc * Math.PI / 180;
         this.scale = scale;
         this.scaleFactor = scaleFactor;
         LExpressionParser parser = new LExpressionParser();
@@ -69,63 +74,70 @@ public class LSystemRenderer {
     public void render() {
 
         offlineGraphics_.setColor(Color.RED);
-        Vector2d initialPosition = new Vector2d(width/2, height/3.0);
+        OrientedPosition initialPosition = new OrientedPosition(width/2.0, height/8.0, Math.PI/2.0);
         double length = LENGTH * width / 10.0;
 
-        drawTree(Math.PI/2.0, length, initialPosition, root, numIterations);
+        drawTree(initialPosition, length, root, numIterations, false);
     }
 
 	/**
-	 * Recompute the polygon set by translating the expression.
-	 * @param angle angle in radians that the turtle graphics used when rotating '+' or '-'
+	 * Draw the tree recursively.
+	 * @param pos the position and angle in radians that the turtle graphics used when rotating '+' or '-'
 	 */
-	private void drawTree(double angle, double length, Vector2d pos, TreeNode tree, int numIterations) {
-        Vector2d newPos = pos;
-        double newAngle = angle;
+	private void drawTree(OrientedPosition pos, double length, TreeNode tree, int numIterations, boolean parenthesied) {
 
-        for (TreeNode child : tree.children) {
+        OrientedPosition currentPos = parenthesied ? new OrientedPosition(pos) : pos;
+        List<TreeNode> list = new LinkedList<TreeNode>(tree.children);
+
+        for (TreeNode child : list) {
             if (child.hasParens) {
-                drawTree(newAngle, length, newPos, child, numIterations);
+                drawTree(currentPos, length, child, numIterations, true);
             }
             else {
                 String baseExp = child.getData();
 
                 for (int i = 0; i<baseExp.length(); i++) {
-                    char c = baseExp.charAt(i);
-
-                    if (c == F.getSymbol())  {
-                        newPos = drawF(newAngle, length, tree, numIterations, newPos);
-                        if (numIterations > 0) {
-                            drawTree(newAngle, scaleFactor * length, newPos, tree, numIterations - 1);
-                        }
-                    }
-                    else if (c == MINUS.getSymbol()) {
-                        newAngle -= angleIncrement;
-                    }
-                    else if (c == PLUS.getSymbol()) {
-                        newAngle += angleIncrement;
-                    }
-                    else {
-                        throw new IllegalStateException("Unexpected char: "+ c);
-                    }
+                    processSymbol(length, numIterations, currentPos, baseExp.charAt(i));
                 }
             }
         }
     }
 
-    private Vector2d drawF(double angle, double length, TreeNode tree, int numIterations, Vector2d pos) {
+    /** note: current position is changed by the processing of the symbol */
+    private void processSymbol(
+            double length, int numIterations, OrientedPosition currentPos, char c) {
+
+        if (c == F.getSymbol())  {
+            drawF(currentPos, length, numIterations);
+
+            if (numIterations > 0) {
+                drawTree(currentPos, scaleFactor * length, root, numIterations - 1, false);
+            }
+        }
+        else if (c == MINUS.getSymbol()) {
+            currentPos.angle -= angleIncrement;
+        }
+        else if (c == PLUS.getSymbol()) {
+            currentPos.angle += angleIncrement;
+        }
+        else {
+            throw new IllegalStateException("Unexpected char: "+ c);
+        }
+    }
+
+    private void drawF(OrientedPosition pos, double length, int num) {
 
         int startX = (int)(pos.x);
         int startY = (int)(pos.y);
 
-        int stopX = (int)(pos.x + scale * length * Math.cos(angle));
-        int stopY = (int)(pos.y + scale * length * Math.sin(angle));
+        int stopX = (int)(pos.x + scale * length * Math.cos(pos.angle));
+        int stopY = (int)(pos.y + scale * length * Math.sin(pos.angle));
 
-        Vector2d newPos = new Vector2d(stopX, stopY);
+        pos.x = stopX;
+        pos.y = stopY;
 
-        offlineGraphics_.drawLine(startX, startY, stopX, stopY);
-        offlineGraphics_.fillCircle(stopX, stopY, (int)(length/12) );
-
-        return newPos;
+        offlineGraphics_.setColor(cmap.getColorForValue(num));
+        offlineGraphics_.drawLine(startX, height - startY, stopX, height - stopY);
+        offlineGraphics_.fillCircle(stopX, height - stopY, (int)(length/20) );
     }
 }

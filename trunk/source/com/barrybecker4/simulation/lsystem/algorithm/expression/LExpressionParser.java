@@ -97,7 +97,6 @@ public class LExpressionParser extends ExpressionParser {
     protected TreeNode makeTreeFromNodes(List<TreeNode> nodes) {
 
         TreeNode node = new TreeNode("", opDef);
-        node.hasParens = true;
         node.children.addAll(nodes);
 
         nodes.clear();

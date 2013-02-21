@@ -13,7 +13,7 @@ public class LSystemModel {
     public static final String DEFAULT_EXPRESSION = "F(+F)F(-F)F";
     public static final int DEFAULT_ITERATIONS = 1;
     public static final double DEFAULT_ANGLE = 90.0;
-    public static final double DEFAULT_SCALE = 1.0;
+    public static final double DEFAULT_SCALE = 0.5;
     public static final double DEFAULT_SCALE_FACTOR = 0.9;
     public static final int DEFAULT_SIZE = 256;
 
