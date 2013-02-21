@@ -77,27 +77,26 @@ public class LSystemRenderer {
         OrientedPosition initialPosition = new OrientedPosition(width/2.0, height/8.0, Math.PI/2.0);
         double length = LENGTH * width / 10.0;
 
-        drawTree(initialPosition, length, root, numIterations, false);
+        drawTree(initialPosition, length, root, numIterations);
     }
 
 	/**
 	 * Draw the tree recursively.
 	 * @param pos the position and angle in radians that the turtle graphics used when rotating '+' or '-'
 	 */
-	private void drawTree(OrientedPosition pos, double length, TreeNode tree, int numIterations, boolean parenthesied) {
+	private void drawTree(OrientedPosition pos, double length, TreeNode tree, int numIterations) {
 
-        OrientedPosition currentPos = parenthesied ? new OrientedPosition(pos) : pos;
         List<TreeNode> list = new LinkedList<TreeNode>(tree.children);
 
         for (TreeNode child : list) {
             if (child.hasParens) {
-                drawTree(currentPos, length, child, numIterations, true);
+                drawTree(new OrientedPosition(pos), length, child, numIterations);
             }
             else {
                 String baseExp = child.getData();
 
                 for (int i = 0; i<baseExp.length(); i++) {
-                    processSymbol(length, numIterations, currentPos, baseExp.charAt(i));
+                    processSymbol(length, numIterations, pos, baseExp.charAt(i));
                 }
             }
         }
@@ -108,10 +107,11 @@ public class LSystemRenderer {
             double length, int numIterations, OrientedPosition currentPos, char c) {
 
         if (c == F.getSymbol())  {
-            drawF(currentPos, length, numIterations);
-
             if (numIterations > 0) {
-                drawTree(currentPos, scaleFactor * length, root, numIterations - 1, false);
+                drawTree(currentPos, scaleFactor * length, root, numIterations - 1);
+            }
+            else {
+                drawF(currentPos, length, numIterations);
             }
         }
         else if (c == MINUS.getSymbol()) {
