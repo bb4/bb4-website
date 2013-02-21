@@ -59,7 +59,7 @@ public class LExpressionParser extends ExpressionParser {
                 token += ch;
             }
             else {
-                throw new Error("Unexpected character " + ch +" in expression: " + exp);
+                throw new IllegalStateException("Unexpected character " + ch +" in expression: " + exp);
             }
             pos++;
             if (pos < exp.length()) {

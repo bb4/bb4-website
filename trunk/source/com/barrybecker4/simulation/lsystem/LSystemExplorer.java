@@ -102,6 +102,7 @@ public class LSystemExplorer extends Simulator {
     @Override
     public JPanel createDynamicControls() {
         options_ = new DynamicOptions(algorithm_, this);
+        setPaused(false);
         return options_;
     }
 }
