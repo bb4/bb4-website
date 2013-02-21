@@ -37,7 +37,7 @@ public class LExpressionParserTest extends TestCase {
     }
 
     public void testExpWithSpaces() {
-        verifyParse("F (- F)", "(F(-F))");
+        verifyParse("F (- F)", "F(-F)");
     }
 
     public void testTwoLevelNestedExp() {
@@ -48,7 +48,7 @@ public class LExpressionParserTest extends TestCase {
      * @param exp the expression to parse
      */
     private void verifyParse(String exp) {
-        verifyParse(exp, "(" + exp + ")");
+        verifyParse(exp, exp);
     }
 
 
