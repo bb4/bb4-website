@@ -1,7 +1,7 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.simulation.lsystem;
 
-import com.barrybecker4.simulation.lsystem.algorithm.LSystemModel;
+import com.barrybecker4.simulation.lsystem.model.LSystemModel;
 import com.barrybecker4.ui.components.TextInput;
 import com.barrybecker4.ui.sliders.SliderGroup;
 import com.barrybecker4.ui.sliders.SliderGroupChangeListener;
@@ -48,8 +48,8 @@ class DynamicOptions extends JPanel
 
         new SliderProperties(NUM_ITERATIONS_SLIDER,   0,    10,    LSystemModel.DEFAULT_ITERATIONS),
         new SliderProperties(ANGLE_SLIDER,   0,    180,    LSystemModel.DEFAULT_ANGLE, 100),
-        new SliderProperties(SCALE_SLIDER,   0.2,    1.4,   LSystemModel.DEFAULT_SCALE,  1000.0),
-        new SliderProperties(SCALE_FACTOR_SLIDER,   0.2,    1.4,   LSystemModel.DEFAULT_SCALE_FACTOR,  1000.0),
+        new SliderProperties(SCALE_SLIDER,   0.01,    2.2,   LSystemModel.DEFAULT_SCALE,  1000.0),
+        new SliderProperties(SCALE_FACTOR_SLIDER,   0.2,    2.0,   LSystemModel.DEFAULT_SCALE_FACTOR,  1000.0),
     };
 
 

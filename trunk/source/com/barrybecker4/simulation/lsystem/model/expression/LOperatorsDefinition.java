@@ -1,13 +1,10 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.simulation.lsystem.algorithm.expression;
+package com.barrybecker4.simulation.lsystem.model.expression;
 import com.barrybecker4.common.expression.Operator;
 import com.barrybecker4.common.expression.OperatorsDefinition;
 import com.barrybecker4.common.expression.TreeNode;
-import com.barrybecker4.common.expression.mathexpression.MathOperator;
 
 import java.util.List;
-
-import static com.barrybecker4.common.expression.mathexpression.MathOperator.*;
 
 /**
  * The expected binary operators in the text expression.

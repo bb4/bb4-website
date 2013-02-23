@@ -1,7 +1,6 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.simulation.lsystem.algorithm.expression;
+package com.barrybecker4.simulation.lsystem.model.expression;
 
-import com.barrybecker4.common.expression.OperatorsDefinition;
 import com.barrybecker4.common.expression.TreeNode;
 import junit.framework.TestCase;
 
