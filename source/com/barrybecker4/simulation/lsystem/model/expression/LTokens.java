@@ -1,7 +1,5 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.simulation.lsystem.algorithm.expression;
-
-import com.barrybecker4.common.expression.Tokens;
+package com.barrybecker4.simulation.lsystem.model.expression;
 
 /**
  * Terminal L-system tokens

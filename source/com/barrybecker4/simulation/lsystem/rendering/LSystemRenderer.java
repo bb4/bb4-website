@@ -1,9 +1,9 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.simulation.lsystem.algorithm;
+package com.barrybecker4.simulation.lsystem.rendering;
 
 import com.barrybecker4.common.ColorMap;
 import com.barrybecker4.common.expression.TreeNode;
-import com.barrybecker4.simulation.lsystem.algorithm.expression.LExpressionParser;
+import com.barrybecker4.simulation.lsystem.model.expression.LExpressionParser;
 import com.barrybecker4.ui.renderers.OfflineGraphics;
 
 import java.awt.Color;
@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.barrybecker4.simulation.lsystem.algorithm.expression.LTokens.*;
+import static com.barrybecker4.simulation.lsystem.model.expression.LTokens.*;
 
 /**
  * Everything we need to know to compute the l-System tree.
@@ -47,7 +47,6 @@ public class LSystemRenderer {
         this.height = height;
         this.numIterations = numIterations;
         this.angleIncrement = angleInc * Math.PI / 180;
-        this.scale = scale;
         this.scaleFactor = scaleFactor;
 
         LExpressionParser parser = new LExpressionParser();
@@ -57,6 +56,7 @@ public class LSystemRenderer {
         catch (Exception e){
             throw new IllegalArgumentException(e.getMessage(), e);
         }
+        this.scale = scale;
 
         offlineGraphics_ = new OfflineGraphics(new Dimension(width, height), BG_COLOR);
     }
@@ -81,7 +81,7 @@ public class LSystemRenderer {
     public void render() {
 
         offlineGraphics_.setColor(Color.RED);
-        OrientedPosition initialPosition = new OrientedPosition(width/2.0, height/8.0, Math.PI/2.0);
+        OrientedPosition initialPosition = new OrientedPosition(width/2.0,  height/8.0 - height, Math.PI/2.0);
         double length = LENGTH * width / 10.0;
 
         drawTree(initialPosition, length, root, numIterations, 0);
@@ -135,16 +135,17 @@ public class LSystemRenderer {
     private void drawF(OrientedPosition pos, double length, int num) {
 
         int startX = (int) (pos.x);
-        int startY = height - (int) (pos.y);
+        int startY = - (int) (pos.y);
 
-        pos.x +=  scale * length * Math.cos(pos.angle);
-        pos.y +=  scale * length * Math.sin(pos.angle);
+        pos.x += scale * length * Math.cos(pos.angle);
+        pos.y += scale * length * Math.sin(pos.angle);
 
         int stopX = (int) (pos.x);
-        int stopY = height - (int) (pos.y);
+        int stopY = - (int) (pos.y);
 
         offlineGraphics_.setColor(cmap.getColorForValue(num));
         offlineGraphics_.drawLine(startX, startY, stopX, stopY);
-        offlineGraphics_.fillCircle(stopX, stopY, (int)(length/20) );
+        int radius = (int)(scale * (length-0.4)/10);
+        offlineGraphics_.fillCircle(stopX, stopY, radius);
     }
 }

@@ -4,7 +4,7 @@ package com.barrybecker4.simulation.lsystem;
 import com.barrybecker4.simulation.common.Profiler;
 import com.barrybecker4.simulation.common.ui.Simulator;
 import com.barrybecker4.simulation.common.ui.SimulatorOptionsDialog;
-import com.barrybecker4.simulation.lsystem.algorithm.LSystemModel;
+import com.barrybecker4.simulation.lsystem.model.LSystemModel;
 
 import javax.swing.JPanel;
 import java.awt.Graphics;
