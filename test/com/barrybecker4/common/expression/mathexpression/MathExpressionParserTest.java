@@ -6,6 +6,7 @@ import com.barrybecker4.common.expression.TreeNode;
 import junit.framework.TestCase;
 
 /**
+ * Ported from flex project.
  * @author Barry Becker
  */
 public class MathExpressionParserTest extends TestCase {
@@ -89,14 +90,25 @@ public class MathExpressionParserTest extends TestCase {
         verifyParse("3 - (2x + 1)", "3.0 - (2.0 * x + 1.0)");
     }
 
+    public void testXMinus2() {
+        verifyParse("x - 2", "x - 2.0");
+    }
+
+    public void test2MinusX() {
+        verifyParse("2 - x", "2.0 - x");
+    }
+
+    public void test5X() {
+        verifyParse("5x", "5.0 * x");
+    }
+
+
     public void testComplexNestedExp() {
-        verifyParse("(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1)))) *(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))))");
+        verifyParse("(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1)))) *(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))))",
+                "(1.0 + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)) + (x + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)))) * (1.0 + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)) + (x + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0))))");
     }
 
     /*
-            "x-2",
-            "2-x",
-            "5x",
             "1/6x",
             "3x - 1",
             "(2x + 1) - 3",

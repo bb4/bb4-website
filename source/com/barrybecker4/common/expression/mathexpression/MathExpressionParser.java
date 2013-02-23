@@ -94,10 +94,11 @@ public class MathExpressionParser extends ExpressionParser {
         String exp, int pos, String token, int closingParenPos, List<TreeNode> nodes) {
 
         // recursive call for sub expression
-        TreeNode subTree = parse(exp.substring(pos, closingParenPos));
+        String subExp = exp.substring(pos, closingParenPos);
+        TreeNode subTree = parse(subExp);
         subTree.hasParens = true;
 
-        if (token != null) {
+        if (token != null && token.length() > 0) {
             // there was some leading token before the parenthesized expression.
             pushNodesForToken(token, nodes);
             token = "";
