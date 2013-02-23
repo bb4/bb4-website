@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.common.math;
+package com.barrybecker4.common.math.cutpoints;
 
+import com.barrybecker4.common.math.cutpoints.NiceNumberRounder;
 import junit.framework.TestCase;
 
 /**
@@ -14,12 +15,14 @@ public class NiceNumberRounderTest extends TestCase {
     private static double[] EXPECTED_ROUNDED_VALUES = {
         100.0, 100.0, 200.0, 200.0, 200.0, 200.0, 200.0,
         500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0,
-        1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0
+        1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0,
+        1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0
     };
     private static double[] EXPECTED_CEILED_VALUES = {
         200.0, 200.0, 200.0, 200.0,
         500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0,
-        1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0,
+        1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0,
+        1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0,
         2000.0, 2000.0, 2000.0, 2000.0,
     };
 

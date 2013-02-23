@@ -13,7 +13,8 @@ public class Range {
 
     /** Default constructor */
     public Range() {
-        this(Double.MAX_VALUE, -Double.MAX_VALUE);
+        min_ = Double.MAX_VALUE;
+        max_ = -Double.MAX_VALUE;
     }
 
     /**
@@ -22,6 +23,9 @@ public class Range {
      * @param maximum max value for range
      */
     public Range(double minimum, double maximum) {
+        if (minimum > maximum) {
+            throw new IllegalArgumentException("min greater than max");
+        }
         min_ = minimum;
         max_ = maximum;
     }
