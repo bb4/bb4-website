@@ -5,7 +5,7 @@
 // Perhaps an alternative is to create the different jars using different source sets.
 
 apply plugin: 'java'
-apply plugin:'application'
+apply plugin: 'application'
 apply plugin: 'project-reports'
 
 // simple task test at root level. Why don't the other top level tasks show up?
@@ -73,22 +73,6 @@ sourceSets {
             srcDir 'test'
         }
     }
-    /*
-    gameSrc {
-          set.java.srcDirs = ["source/com/barrybecker4/game"]
-          set.resources.srcDirs = ["source/com/barrybecker4/game"]
-    }
-
-    main {
-         set.java.srcDirs = ["source/com/barrybecker4/common", "source/com/barrybecker4/java2d",
-                    "source/com/barrybecker4/optimization", "source/com/barrybecker4/sound", "source/com/barrybecker4/ui"]
-         set.resources.srcDirs = ["source/com/barrybecker4/common", "source/com/barrybecker4/java2d",
-                    "source/com/barrybecker4/optimization", "source/com/barrybecker4/sound", "source/com/barrybecker4/ui"]
-    }
-    test {
-         set.java.srcDirs = ["test"]
-         set.resources.srcDirs = ["test"]
-    }*/
 }
 
 

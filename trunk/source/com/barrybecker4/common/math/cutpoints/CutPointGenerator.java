@@ -4,8 +4,6 @@ import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.common.math.Range;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Calculates nicely rounded intervals for a specified range.
