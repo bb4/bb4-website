@@ -1,4 +1,6 @@
-package com.barrybecker4.common.math;
+package com.barrybecker4.common.math.cutpoints;
+
+import com.barrybecker4.common.math.MathUtil;
 
 /**
  * Rounds numbers in a "nice" way so that they are easy to read.

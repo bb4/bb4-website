@@ -1,6 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.common.math;
+package com.barrybecker4.common.math.cutpoints;
 
+import com.barrybecker4.common.math.Range;
+import com.barrybecker4.common.math.cutpoints.CutPointGenerator;
 import junit.framework.TestCase;
 
 import java.util.Arrays;
@@ -61,14 +63,12 @@ public class NiceNumbersTest extends TestCase {
     }
 
     /** Min > max/ Expect an error */
-    public void testFracDigitsWhenMinGreaterThanMax() {
-        Range range = new Range(0.001, -0.002);
-        try {
-            generator.getNumberOfFractionDigits(range, 300);
-            fail();
-        } catch(IllegalArgumentException e) {
-            // success
-        }
+    public void testFracDigitsWithHighMaxTicks() {
+
+        Range range = new Range(-0.002, 0.001);
+        double f = generator.getNumberOfFractionDigits(range, 900);
+
+        assertEquals("Unexpected.", 6.0, f);
     }
 
     public void testFracDigitsInThirdDecimalPlace200Ticks() {

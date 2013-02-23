@@ -55,7 +55,6 @@ public class ArrayFunction implements InvertibleFunction {
         inverseInterpolator_ = interpMethod.createInterpolator(inverseFunc);
     }
 
-
     /**
      * Constructor.
      * @param funcMap
