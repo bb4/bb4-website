@@ -1,0 +1,30 @@
+// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// This gradle build file will build all applet subprojects.
+// @author Barry Becker
+
+version = '1.0'
+mainClassName = "com.barrybecker4.apps.misc.brian.GCFProgram"
+
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile project(':common')
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    compile fileTree(dir: 'lib', include: '*.jar')
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+
+    testCompile 'junit:junit:3.+'
+}
+
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Applets Main',
+            'Implementation-Version': version,
+            'Main-Class': mainClassName
+    }
+}
