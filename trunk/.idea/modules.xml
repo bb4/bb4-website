@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/applets.iml" filepath="$PROJECT_DIR$/applets.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/../jhlabs/jhlabs.iml" filepath="$PROJECT_DIR$/../jhlabs/jhlabs.iml" />
       <module fileurl="file://$PROJECT_DIR$/../jigo/jigo.iml" filepath="$PROJECT_DIR$/../jigo/jigo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/main/main.iml" filepath="$PROJECT_DIR$/main/main.iml" />
     </modules>
   </component>
 </project>
