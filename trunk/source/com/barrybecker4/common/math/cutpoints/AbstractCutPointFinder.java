@@ -10,7 +10,7 @@ import java.util.List;
  * Base class for cut point finders.
  * @author Barry Becker
  */
-public abstract class AbstractCutPointFinder {
+abstract class AbstractCutPointFinder {
 
     /** The range should not be less than this. */
     private static final double SMALLEST_ALLOWED_RANGE = 1.0E-10;
@@ -47,7 +47,7 @@ public abstract class AbstractCutPointFinder {
         return result;
     }
 
-    public void determineCutPoints(int maxTicks, Range finalRange, List<Double> positions) {
+    void determineCutPoints(int maxTicks, Range finalRange, List<Double> positions) {
 
         double extent = NiceNumberRounder.round(finalRange.getExtent(), false);
         double d = NiceNumberRounder.round(extent / (maxTicks - 1), true);
@@ -80,7 +80,7 @@ public abstract class AbstractCutPointFinder {
      * @param value the value to check.
      * @return zero if value is below the smallest allowed range, else return value.
      */
-    protected double checkSmallNumber(double value) {
+    double checkSmallNumber(double value) {
         if (Math.abs(value) < SMALLEST_ALLOWED_RANGE) {
             return 0;
         }
