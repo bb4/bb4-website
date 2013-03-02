@@ -5,6 +5,7 @@ import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.optimization.Optimizer;
 import com.barrybecker4.optimization.strategy.OptimizationStrategyType;
 import com.barrybecker4.optimization.viewer.OptimizerEvalFrame;
+import com.barrybecker4.ui.util.GUIUtil;
 
 import javax.vecmath.Point2d;
 
@@ -24,6 +25,7 @@ public class GraphAnalyticFunctionSolution extends AnalyticFunctionTestProblem {
     /** Constructor */
     public GraphAnalyticFunctionSolution(AnalyticVariation v) {
         super(v);
+        GUIUtil.setStandAlone(false);
     }
 
     /**

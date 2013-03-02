@@ -72,7 +72,7 @@ public class NavigationBar extends TexturedToolBar  {
     @Override
     public GradientButton createToolBarButton( String text, String tooltip, Icon icon ) {
         GradientButton button = super.createToolBarButton(text, tooltip, icon);
-        button.setMaximumSize( new Dimension(48, 48));
+        button.setMaximumSize( new Dimension(52, 52));
         return button;
     }
 
