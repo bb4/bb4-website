@@ -48,10 +48,11 @@ public abstract class AnimationComponent extends Container
 
     /**
      * set the number of time steps to computer for every frame of animation
-     *  for unstable calculations using simple numerical methods (like Eulers integration for eg)
-     *  this can speed things a lot.
+     * for unstable calculations using simple numerical methods (like Eulers integration for eg)
+     * this can speed things a lot.
+     * @param num number of time steps to calculate each animation frame.
      */
-    public void setNumStepsPerFrame( int num ) {
+    public void setNumStepsPerFrame(int num) {
         params.numStepsPerFrame = num;
     }
 
@@ -128,11 +129,7 @@ public abstract class AnimationComponent extends Container
      * render the animation component as an image
      */
     protected void render() {
-        if (params.recordAnimation) {
-            recorder.renderImage(this);
-        } else {
-            paint(getGraphics());
-        }
+        recorder.renderImage(this);
     }
 
     /**

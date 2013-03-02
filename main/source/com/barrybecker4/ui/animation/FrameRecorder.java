@@ -10,7 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 /**
- * Records animation frame images to the disk with a name tht includes the frame number.
+ * Records animation frame images to the disk with a name that includes the frame number.
  * @author Barry Becker
  */
 public class FrameRecorder {

@@ -36,8 +36,8 @@ public abstract class Simulator extends AnimationComponent
     protected boolean useAntialiasing_ = true;
 
     /**
-     *
-     * @param name the name fo the simulator (eg Snake, Liquid, or Trebuchet)
+     * Constructor
+     * @param name the name of the simulator (eg Snake, Liquid, or Trebuchet)
      */
     public Simulator(String name) {
         setName(name);
@@ -93,7 +93,6 @@ public abstract class Simulator extends AnimationComponent
         return button;
     }
 
-
     protected abstract SimulatorOptionsDialog createOptionsDialog();
 
     /**
@@ -101,14 +100,10 @@ public abstract class Simulator extends AnimationComponent
      */
     protected abstract void reset();
 
-
     public JPanel createTopControls() {
-
         JPanel controls = new JPanel();
         controls.add( createStartButton() );
-
         controls.add( createResetButton() );
-
         controls.add( createOptionsButton() );
         return controls;
     }
