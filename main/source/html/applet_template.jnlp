@@ -30,7 +30,7 @@
             <jar href="poker.jar" main="false"/>
             <jar href="set.jar" main="false"/>
             <jar href="vecmath.jar" main="false"/>
-            <jar href="jai_codec.jar" main="false"/>
+            <jar href="jai-codec-1.1.3.jar" main="false"/>
             <jar href="bb4-imageproc.jar" main="false"/>
             {jarElement1}
             {jarElement2}

@@ -345,7 +345,7 @@
       <!-- some thirdparty libs needed by the applets. -->
       <copy file="../lib/vecmath.jar" tofile="${distributionGameDir}/vecmath.jar"/>
       <copy file="${libDir}/sun.jar" tofile="${distributionGameDir}/sun.jar"/>
-      <copy file="../lib/jai_codec.jar" tofile="${distributionGameDir}/jai_codec.jar"/>
+      <copy file="../lib/jai-codec-1.1.3.jar" tofile="${distributionGameDir}/jai-codec-1.1.3.jar"/>
       <copy file="../lib/jhlabs-1.0.2.jar" tofile="${distributionGameDir}/jhlabs-1.0.2.jar"/>
       <copy file="../lib/jigo-sgf-1.0.jar" tofile="${distributionGameDir}/jigo-sgf-1.0.jar"/>
   </target>     <!-- end distributeJars -->
