@@ -6,7 +6,7 @@ package com.barrybecker4.common.math.interplolation;
  */
 public abstract class AbstractSmoothInterpolator extends AbstractInterpolator {
 
-    public AbstractSmoothInterpolator(double[] function) {
+    AbstractSmoothInterpolator(double[] function) {
         super(function);
     }
 

@@ -28,7 +28,7 @@ public class ArrayFunction implements InvertibleFunction {
      * @param func
      * @parma interpolationMethod
      */
-    public ArrayFunction(double[] func, InterpolationMethod interpMethod) {
+    private ArrayFunction(double[] func, InterpolationMethod interpMethod) {
         this(func, new FunctionInverter(func).createInverseFunction(new Range(0, 1.0)), interpMethod);
     }
 
@@ -48,7 +48,7 @@ public class ArrayFunction implements InvertibleFunction {
      * want to compute it (because computing it will not be as accurate).
      * @param func
      */
-    public ArrayFunction(double[] func, double[] inverseFunc, InterpolationMethod interpMethod) {
+    private ArrayFunction(double[] func, double[] inverseFunc, InterpolationMethod interpMethod) {
         functionMap = func;
         inverseFunctionMap = inverseFunc;
         interpolator_ = interpMethod.createInterpolator(func);

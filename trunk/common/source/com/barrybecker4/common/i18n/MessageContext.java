@@ -3,7 +3,7 @@ package com.barrybecker4.common.i18n;
 
 import com.barrybecker4.common.ILog;
 
-import javax.swing.*;
+import javax.swing.JComponent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
