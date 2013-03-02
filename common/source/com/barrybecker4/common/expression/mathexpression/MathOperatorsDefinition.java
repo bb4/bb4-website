@@ -18,7 +18,7 @@ public class MathOperatorsDefinition implements OperatorsDefinition {
      * Defines the order of precedence for the operators
      * This at the same level are evaluated from left to right.
      */
-    private static MathOperator[][] OPERATOR_PRECEDENCE = {
+    private static final MathOperator[][] OPERATOR_PRECEDENCE = {
             new MathOperator[] {EXPONENT},
             new MathOperator[] {TIMES, DIVIDE},
             new MathOperator[] {PLUS, MINUS}

@@ -5,11 +5,13 @@ import com.barrybecker4.common.expression.ExpressionParser;
 import com.barrybecker4.common.expression.Operator;
 import com.barrybecker4.common.expression.OperatorsDefinition;
 import com.barrybecker4.common.expression.TreeNode;
-import static com.barrybecker4.common.expression.Tokens.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.barrybecker4.common.expression.Tokens.LEFT_PAREN;
+import static com.barrybecker4.common.expression.Tokens.RIGHT_PAREN;
 
 /**
  * Parses the text form of an expression (in x) into a tree representation.
@@ -150,7 +152,7 @@ public class MathExpressionParser extends ExpressionParser {
     protected TreeNode makeTreeFromNodes(List<TreeNode> nodes) {
 
         for (Operator[] ops : opDef.getOperatorPrecedence()) {
-            System.out.println("nodes="+ nodes + " ops="+ ops);
+            System.out.println("nodes=" + nodes + " ops="+ Arrays.toString(ops));
             nodes = reduceNodes(ops, nodes);
         }
 

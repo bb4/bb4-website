@@ -2,7 +2,9 @@
 package com.barrybecker4.common.expression;
 
 import java.util.List;
-import static com.barrybecker4.common.expression.Tokens.*;
+
+import static com.barrybecker4.common.expression.Tokens.LEFT_PAREN;
+import static com.barrybecker4.common.expression.Tokens.RIGHT_PAREN;
 
 /**
  * Parses the text form of an expression into a tree representation.

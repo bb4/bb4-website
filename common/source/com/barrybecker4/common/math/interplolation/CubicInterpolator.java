@@ -17,8 +17,7 @@ public class CubicInterpolator extends AbstractSmoothInterpolator {
         double a0 = y3 - y2 - y0 + y1;
         double a1 = y0 - y1 - a0;
         double a2 = y2 - y0;
-        double a3 = y1;
 
-       return (a0 * mu * mu2 + a1 * mu2 + a2 * mu + a3);
+        return (a0 * mu * mu2 + a1 * mu2 + a2 * mu + y1);
     }
 }

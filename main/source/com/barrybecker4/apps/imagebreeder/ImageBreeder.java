@@ -45,7 +45,7 @@ public class ImageBreeder {
 
     /**
      *
-     * @param numChildImages
+     * @param numChildImages number ot child images
      * @return list of bred images
      */
     public List<BufferedImage> breedImages(int numChildImages)  {

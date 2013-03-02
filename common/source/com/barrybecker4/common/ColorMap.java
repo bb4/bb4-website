@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class ColorMap {
 
     final private List<Double> values_;
-    private List<Color> colors_;
+    private volatile List<Color> colors_;
 
     /**
      * give a list of (increasing) values and colors to map to.
@@ -159,7 +159,7 @@ public class ColorMap {
         if ( value <= values_.get(0)) {
             return 0;
         }
-        else if (value >= values_.get(len-1)) {
+        if (value >= values_.get(len-1)) {
             return len-1;
         }
 
