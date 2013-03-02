@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/main/lib/jai_codec.jar!/" />
+      <root url="jar://$PROJECT_DIR$/main/lib/jai-codec-1.1.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/sun.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/commons-codec-1.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/gogui7.1.jar!/" />

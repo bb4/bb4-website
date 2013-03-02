@@ -26,7 +26,7 @@
     <pathelement location="${commonJar}"/>
     <pathelement location="${libDir}/vecmath.jar"/>
     <pathelement location="${libDir}/sun.jar"/>
-    <pathelement location="${libDir}/jai_codec.jar"/>
+    <pathelement location="${libDir}/jai-codec-1.1.3.jar"/>
     <pathelement location="${libDir}/jnlp.jar"/>
     <pathelement location="${libDir}/junit.jar"/>
     <pathelement location="${libDir}/gogui7.1.jar"/>
@@ -73,7 +73,7 @@
   <target name="executeGalactic" description="Run the Galactic Empire program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-name galactic -locale ENGLISH"/>
     </antcall>
   </target>
@@ -81,7 +81,7 @@
   <target name="executePente" description="Run the pente program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-sgf-1.0.jar;/"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;${libDir}/jigo-sgf-1.0.jar;/"/>
       <param name="args" value="-name pente -locale ENGLISH"/>
     </antcall>
   </target>
@@ -89,7 +89,7 @@
   <target name="executeTicTacToe" description="Run the tic-tac-toe program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-sgf-1.0.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;${libDir}/jigo-sgf-1.0.jar;"/>
       <param name="args" value="-name tictactoe -locale ENGLISH"/>
     </antcall>
   </target>
@@ -97,7 +97,7 @@
   <target name="executeBlockade" description="Run the blockade program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-sgf-1.0.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;${libDir}/jigo-sgf-1.0.jar;"/>
       <param name="args" value="-name blockade -locale ENGLISH"/>
     </antcall>
   </target>
@@ -105,7 +105,7 @@
   <target name="executeCheckers" description="Run the checkers program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-sgf-1.0.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;${libDir}/jigo-sgf-1.0.jar;"/>
       <param name="args" value="-name checkers -locale ENGLISH"/>
     </antcall>
   </target>
@@ -113,7 +113,7 @@
   <target name="executeChess" description="Run the chess program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo-sgf-1.0.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;${libDir}/jigo-sgf-1.0.jar;"/>
       <param name="args" value="-name chess -locale ENGLISH"/>
     </antcall>
   </target>
@@ -122,7 +122,7 @@
   <target name="executeTrivial" depends="compile" description="Run trivial test game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-name trivial -locale ENGLISH"/>
     </antcall>
   </target>
@@ -130,7 +130,7 @@
    <target name="executeTrivialServer" depends="compile" description="Run online trivial server">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.game.common.online.ui.OnlineGameServerFrame"/>
-      <param name="libPath" value="${libDir}/jai_codec.jar;"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-game trivial"/>
     </antcall>
   </target>
@@ -158,7 +158,7 @@
   <target name="executePoker" depends="compile" description="Run poker card game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-name poker -locale ENGLISH"/>
     </antcall>
   </target>
@@ -166,7 +166,7 @@
    <target name="executePokerServer" depends="compile" description="Run online poker server">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.game.common.online.ui.OnlineGameServerFrame"/>
-      <param name="libPath" value="${libDir}/jai_codec.jar;"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-game poker -locale ENGLISH"/>
     </antcall>
   </target>
@@ -193,7 +193,7 @@
   <target name="executeSetGame" description="Run the Set Game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>  <!-- com.barrybecker4ecker4.game.multiplayer.set.SetApplet -->
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-name set -locale ENGLISH"/>
     </antcall>
   </target>
@@ -201,7 +201,7 @@
   <target name="executeGo" description="Run the go program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/gtpserver.jar;${libDir}/jigo-sgf-1.0.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;${libDir}/gtpserver.jar;${libDir}/jigo-sgf-1.0.jar;"/>
       <param name="args" value="-name go -locale ENGLISH"/>
     </antcall>
   </target>
@@ -209,7 +209,7 @@
   <target name="executeImageBreeder" description="Run the Image Breeder">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.apps.imagebreeder.ImageBreederApplet" />
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jhlabs-1.0.2.jar;" />
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;${libDir}/jhlabs-1.0.2.jar;" />
       <param name="args" value=""/>
     </antcall>
   </target>
@@ -217,7 +217,7 @@
   <target name="executeDice" description="Run the Dice simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
       <param name="args" value="com.barrybecker4.simulation.dice.DiceSimulator"/>
     </antcall>
   </target>
@@ -225,7 +225,7 @@
   <target name="executeStock" description="Run the Stock simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
       <param name="args" value="com.barrybecker4.simulation.stock.StockSimulator"/>
     </antcall>
   </target>
@@ -233,7 +233,7 @@
   <target name="executePredPrey" description="Run the Predator/Prey simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
       <param name="args" value="com.barrybecker4.simulation.predprey.PredPreySimulator"/>
     </antcall>
   </target>
@@ -241,7 +241,7 @@
   <target name="executeVerhulst" description="Run the Verhulst dynamics simulator">
       <antcall target="executeProgram">
           <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-          <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+          <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
           <param name="args" value="com.barrybecker4.simulation.verhulst.VerhulstSimulator"/>
       </antcall>
   </target>
@@ -249,7 +249,7 @@
   <target name="executeHabitat" description="Run the Habitat simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
       <param name="args" value="com.barrybecker4.simulation.habitat.HabitatSimulator"/>
     </antcall>
   </target>
@@ -257,7 +257,7 @@
   <target name="executeGraph" description="Run the Graph simulator">
       <antcall target="executeProgram">
         <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-        <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+        <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
         <param name="args" value="com.barrybecker4.simulation.graphing.GraphSimulator"/>
       </antcall>
     </target>
@@ -266,7 +266,7 @@
   <target name="executeParameterDistribution" description="Run the Parameter Distribution simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
       <param name="args" value="com.barrybecker4.simulation.parameter.ParameterSimulator"/>
     </antcall>
   </target>
@@ -283,14 +283,14 @@
   <target name="executeSpirograph" description="Run the SpiroGraph program">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.apps.spirograph.SpiroGraph"/>
-      <param name="libPath" value="${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar"/>
     </antcall>
   </target>
 
   <target name="executeSnake" description="Run the Snake simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
       <param name="args" value="com.barrybecker4.simulation.snake.SnakeSimulator"/>
     </antcall>
   </target>
@@ -298,7 +298,7 @@
   <target name="executeReactionDiffusion" description="Run the Reaction Diffusion simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
       <param name="args" value="com.barrybecker4.simulation.reactiondiffusion.RDSimulator"/>
     </antcall>
   </target>
@@ -306,7 +306,7 @@
   <target name="executeFractalExplorer" description="Run the Fractal Explorer">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar"/>
       <param name="args" value="com.barrybecker4.simulation.fractalexplorer.FractalExplorer"/>
     </antcall>
   </target>
@@ -314,7 +314,7 @@
   <target name="executeHenonPhaseExplorer" description="Run the Henon Phase Explorer">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar"/>
       <param name="args" value="com.barrybecker4.simulation.henonphase.HenonPhaseExplorer"/>
     </antcall>
   </target>
@@ -322,7 +322,7 @@
   <target name="executeLSystemExplorer" description="Run the LSystem Tree Explorer">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/jai_codec.jar;${libDir}/vecmath.jar"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;${libDir}/vecmath.jar"/>
       <param name="args" value="com.barrybecker4.simulation.lsystem.LSystemExplorer"/>
     </antcall>
   </target>
@@ -338,7 +338,7 @@
   <target name="executeFluid" description="Run the Fluid simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
       <param name="args" value="com.barrybecker4.simulation.fluid.ui.FluidSimulator"/>
     </antcall>
   </target>
@@ -364,7 +364,7 @@
     <antcall target="executeProgram">
       <param name="args" value="ludlow/ludlowScript.xml"/>
       <param name="className" value="com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure"/>
-      <param name="libPath" value="${libDir}/jai_codec.jar" />
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar" />
     </antcall>
   </target>
 
