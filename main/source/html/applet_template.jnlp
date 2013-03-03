@@ -13,12 +13,12 @@
         </information>
         <resources>
             <j2se version="1.6+" initial-heap-size="64m" max-heap-size="900m" href="http://java.sun.com/products/autodl/j2se"/>
-            <jar href="bb4-common.jar" main="false"/>
+            <jar href="bb4-common-1.0.jar" main="false"/>
             <jar href="bb4-game2Common.jar" main="false"/>
             <jar href="bb4-multiPlayerCommon.jar" main="false"/>
             <jar href="bb4-puzzle.jar" main="false"/>
             <jar href="bb4-sound.jar" main="false"/>
-            <jar href="bb4-ui.jar" main="false"/>
+            <jar href="bb4-ui-1.0.jar" main="false"/>
             <jar href="bb4-optimization.jar" main="false"/>
             <jar href="pente.jar" main="false"/>
             <jar href="checkers.jar" main="false"/>
