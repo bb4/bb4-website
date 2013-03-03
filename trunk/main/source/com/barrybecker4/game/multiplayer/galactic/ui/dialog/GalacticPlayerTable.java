@@ -2,7 +2,6 @@
 package com.barrybecker4.game.multiplayer.galactic.ui.dialog;
 
 import com.barrybecker4.common.geometry.ByteLocation;
-import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;

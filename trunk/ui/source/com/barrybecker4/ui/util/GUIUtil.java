@@ -300,6 +300,10 @@ public final class GUIUtil {
         return suffix;
     }
 
+    public static boolean hasBasicService() {
+        return getBasicService() != null;
+    }
+
     /**
      * @return the basic jnlp service or null if it is not available.
      */

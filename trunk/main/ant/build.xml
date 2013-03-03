@@ -24,10 +24,10 @@
 
   <path id="compile.classpath">
     <pathelement location="${commonJar}"/>
+    <pathelement location="${uiJar}"/>
     <pathelement location="${libDir}/vecmath.jar"/>
     <pathelement location="${libDir}/sun.jar"/>
     <pathelement location="${libDir}/jai-codec-1.1.3.jar"/>
-    <pathelement location="${libDir}/jnlp.jar"/>
     <pathelement location="${libDir}/junit.jar"/>
     <pathelement location="${libDir}/gogui7.1.jar"/>
     <pathelement location="${libDir}/kgsGtp.jar"/>
@@ -370,7 +370,7 @@
 
   <target name="executeGiveChange" depends="compile" description="A simple educational program for computing change.">
     <echo message="now executing GiveChange"/>
-    <java classname="com.barrybecker4.apps.misc.givechange.GiveChange" classpath="${classesDir};${commonJar}"
+    <java classname="com.barrybecker4.apps.misc.givechange.GiveChange" classpath="${run.classPath}"
           fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
@@ -378,7 +378,7 @@
 
   <target name="executeStringUtil" depends="compile">
     <echo message="now executing StringUtil test"/>
-    <java classname="com.barrybecker4.apps.misc.string.StringUtil" classpath="${classesDir};${commonJar}"
+    <java classname="com.barrybecker4.apps.misc.string.StringUtil" classpath="${run.classPath}"
           fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
@@ -387,7 +387,7 @@
   <target name="executeSimpleEditor" depends="compile" description="A simple editor.">
     <echo message="now executing simple editor"/>
     <java classname="com.barrybecker4.apps.misc.sedit.SimpleEditorFrame"
-          classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar"
+          classpath="${run.classPath};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar"
           fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
@@ -395,7 +395,7 @@
 
   <target name="executeNativeRender" depends="compile" description="A simple test of the native graphics renderer.">
       <echo message="now executing NativeRender"/>
-      <java classname="com.barrybecker4.apps.misc.nativeRender.NativeRenderTest" classpath="${classesDir};${commonJar}"
+      <java classname="com.barrybecker4.apps.misc.nativeRender.NativeRenderTest" classpath="${run.classPath}"
             fork="true" jvm="${java_compiler}" maxmemory="128M">
           <jvmarg value="${assertionsFlag}"/>
       </java>
@@ -403,7 +403,7 @@
 
   <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle">
      <echo message="now executing red puzzle"/>
-     <java classname="com.barrybecker4.puzzle.redpuzzle.ui.RedPuzzle" classpath="${classesDir};${commonJar}"
+     <java classname="com.barrybecker4.puzzle.redpuzzle.ui.RedPuzzle" classpath="${run.classPath}"
            fork="true" jvm="${java_compiler}" maxmemory="128M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
@@ -411,11 +411,6 @@
 
   <target name="executeTantrixPuzzle" depends="compile" description=" run the Tantrix Puzzle">
      <echo message="now executing tantrix puzzle"/>
-     <!--java classname="com.barrybecker4ecker4.puzzle.tantrix.ui.TantrixPuzzle" classpath="${classesDir};${commonJar}"
-           fork="true" jvm="${java_compiler}" maxmemory="4096M">
-         <jvmarg value="${assertionsFlag}"/>
-     </java-->
-
       <antcall target="executeProgram">
           <param name="className" value="com.barrybecker4.puzzle.tantrix.ui.TantrixPuzzle"/>
           <param name="libPath" value="${libDir}/vecmath.jar;"/>
@@ -425,7 +420,7 @@
 
   <target name="executeSudoku" depends="compile" description=" run the Sudoku solver">
      <echo message="now executing Sudoku"/>
-     <java classname="com.barrybecker4.puzzle.sudoku.ui.SudokuPuzzle" classpath="${classesDir};${commonJar}"
+     <java classname="com.barrybecker4.puzzle.sudoku.ui.SudokuPuzzle" classpath="${run.classPath}"
            fork="true" jvm="${java_compiler}" maxmemory="256M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
@@ -433,7 +428,7 @@
 
   <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle">
      <echo message="now executing Hi-Q"/>
-     <java classname="com.barrybecker4.puzzle.hiq.ui.HiQPuzzle" classpath="${classesDir};${commonJar}"
+     <java classname="com.barrybecker4.puzzle.hiq.ui.HiQPuzzle" classpath="${run.classPath}"
            fork="true" jvm="${java_compiler}" maxmemory="512M">
          <jvmarg value="${assertionsFlag}"/>
      </java>
@@ -474,8 +469,8 @@
 
   <!-- call this to run java programs  -->
   <target name="executeProgram" depends="compile">
-      <echo message="compiler loc= ${java_compiler}"/>
-    <java classname="${className}" classpath="${classesDir};${libPath};${commonJar}"
+    <echo message="compiler loc= ${java_compiler}"/>
+    <java classname="${className}" classpath="${run.classPath};${libPath}"
           fork="true" jvm="${java_compiler}">
         <sysproperty key="DEBUG" value="true"/>
         <arg line="${args}"/>
@@ -492,7 +487,7 @@
 
   <!-- call this to run java programs with two arguments -->
   <target name="executeProgram2" depends="compile">
-    <java classname="${className}" classpath="${classesDir};${libPath};${commonJar}"
+    <java classname="${className}" classpath="${run.classPath};${libPath}"
           fork="false" jvm="${java_compiler}">
         <sysproperty key="DEBUG" value="true"/>
         <arg value="${arg1}"/>

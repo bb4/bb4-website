@@ -15,7 +15,7 @@ dependencies {
 jar {
     archiveName = 'bb4-common-' + version + '.jar'
     manifest {
-        attributes 'Implementation-Title': 'Applets Common',
+        attributes 'Implementation-Title': 'Common code for all applications',
             'Implementation-Version': version,
             provider: 'gradle',
             'Main-Class': mainClassName

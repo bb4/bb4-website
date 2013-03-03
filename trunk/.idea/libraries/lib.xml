@@ -8,7 +8,7 @@
       <root url="jar://$PROJECT_DIR$/main/lib/kgsGtp.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/gtpserver.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/xerces_2_3_0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/main/lib/jnlp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/ui/lib/jnlp.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/junit.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/vecmath.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/xml-apis.jar!/" />
