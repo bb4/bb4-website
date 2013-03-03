@@ -32,28 +32,19 @@
       <!-- the class files are first put here so that we can create the jar, then removed -->
       <mkdir dir="${stagingDir}"/>
 
-      <!-- copy the common jar needed for all  applets. Produces bb4-common.jar -->
+      <!-- copy the common jar needed for all  applets. Produces bb4-common*.jar -->
       <copy todir="${distributionGameDir}">
         <fileset dir="${commonDir}/build/libs">
-          <include name="bb4-common-1.0.jar"/>
+          <include name="bb4-common*.jar"/>
         </fileset>
       </copy>
 
-      <!-- copy the ui jar needed for most applets. Produces bb4-ui.jar -->
+      <!-- copy the ui jar needed for most applets. Produces bb4-ui*.jar -->
       <copy todir="${distributionGameDir}">
         <fileset dir="${uiDir}/build/libs">
-          <include name="bb4-ui-1.0.jar"/>
+          <include name="bb4-ui*.jar"/>
         </fileset>
       </copy>
-
-      <!-- copy the shared ui class files that are needed for most applets. Produces bb4-ui.jar -->
-      <copy todir="${stagingDir}">
-          <fileset dir="${classesDir}">
-              <include name="com/barrybecker4/ui/**/*.class"/>
-          </fileset>
-      </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-ui.jar"/>
-      <delete dir="${stagingDir}/com"/>
 
       <!-- copy my class files that are needed for programs that want to do image processing. Produces bb4-imageproc.jar-->
       <copy todir="${stagingDir}">
@@ -322,6 +313,12 @@
       <antcall target="deployJar">
           <param name="componentDir" value="simulation/liquid"/>
           <param name="jarFile" value="liquid.jar"/>
+      </antcall>
+
+      <!-- copy the class files that are needed for lsystem deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="simulation/lsystem"/>
+          <param name="jarFile" value="lsystem.jar"/>
       </antcall>
 
       <!-- copy the class files that are needed for fluid deployment -->
