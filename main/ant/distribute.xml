@@ -39,6 +39,12 @@
         </fileset>
       </copy>
 
+      <!-- copy the ui jar needed for most applets. Produces bb4-ui.jar -->
+      <copy todir="${distributionGameDir}">
+        <fileset dir="${uiDir}/build/libs">
+          <include name="bb4-ui-1.0.jar"/>
+        </fileset>
+      </copy>
 
       <!-- copy the shared ui class files that are needed for most applets. Produces bb4-ui.jar -->
       <copy todir="${stagingDir}">

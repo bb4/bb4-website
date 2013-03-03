@@ -30,6 +30,7 @@ public class ClipImage extends ApplicationFrame {
         // in.close();
     }
 
+    @Override
     public void paint( Graphics g ) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -50,8 +51,7 @@ public class ClipImage extends ApplicationFrame {
         return mClippingShape;
     }
 
-    public static void main( String[] args ) throws IOException {
-
+    public static void main( String[] args ) throws Exception {
 
         ClipImage frame = new ClipImage( "ClipImage v1.0" );
         frame.setSize( 400, 250 );

@@ -1,0 +1,25 @@
+/*
+ * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+ */
+
+version = '1.0'
+mainClassName = "com.barrybecker4.ui.application.ApplicationFrame"
+
+
+dependencies {
+   compile project(':common')
+   compile fileTree(dir: 'lib', include: '*.jar')
+   //compile 'org.codehaus.mojo.webstart:webstart-jnlp-servlet:1.0-6.0-02_ea_b02'
+   //compile 'org.codehaus.mojo:webstart-jnlp-servlet:1.0-beta-3'
+   //compile 'javax.jnlp:jnlp-api:5.0'
+}
+
+jar {
+    archiveName = 'bb4-ui-' + version + '.jar'
+    manifest {
+        attributes 'Implementation-Title': 'Common UI code',
+            'Implementation-Version': version,
+            provider: 'gradle',
+            'Main-Class': mainClassName
+    }
+}

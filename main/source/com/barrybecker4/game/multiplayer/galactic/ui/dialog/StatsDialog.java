@@ -1,8 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.galactic.ui.dialog;
 
-import com.barrybecker4.game.common.GameController;
-import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.dialogs.AbstractDialog;

@@ -79,7 +79,7 @@ public class GameComparisonApp {
      */
     public static void main(String[] args) {
 
-        GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
+        GUIUtil.setStandAlone((GUIUtil.hasBasicService()));
 
         String defaultGame = DEFAULT_GAME;
         String gameName = defaultGame;

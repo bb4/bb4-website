@@ -56,7 +56,7 @@ public class StoryEditorDialog extends AbstractDialog
     private JComboBox sceneSelector_;
 
     /** location for images. */
-    private static final String IMAGE_PATH =  "com/barrybecker4/puzzle/adventure/ui/images/";
+    private static final String IMAGE_PATH = "com/barrybecker4/puzzle/adventure/ui/images/";
 
     private int selectedChildRow_ = -1;
 

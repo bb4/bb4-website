@@ -28,7 +28,10 @@ import java.io.IOException;
 public final class GraphicalAdventure extends ApplicationApplet
                                       implements SceneChangeListener {
 
-    /** The top secret password - don't tell anyone. */
+    /**
+     * The top secret password - don't tell anyone.
+     * This could be Base64 encoded or encrypted to make more secure.
+     */
     private static final String PASSWORD = "ludlow";
 
     private Story story_;
@@ -183,8 +186,7 @@ public final class GraphicalAdventure extends ApplicationApplet
     public void init()  {
         super.init();
         if (story_ == null)  {
-            String scriptName = getParameter("name");
-            Document document = Story.importStoryDocument(new String[]{}); //new String[]{scriptName});
+            Document document = Story.importStoryDocument(new String[]{});
             Story story = new Story(document);
             setStory(story);
         }

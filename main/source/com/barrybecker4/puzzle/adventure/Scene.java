@@ -99,7 +99,7 @@ public class Scene {
             String imagePath = resourcePath + "images/" +name + ".jpg";
             image_ = GUIUtil.getBufferedImage(imagePath);
         } catch (NoClassDefFoundError e) {
-            System.err.println("You are trying to load sounds and images when text only scenes are supported. " +
+            System.err.println("You are trying to load sounds and images when only text scenes are supported. " +
                     "If you need this to work add the jai library to your classpath");
         }
     }

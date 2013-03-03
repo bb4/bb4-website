@@ -10,7 +10,7 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class ColorCellEditor extends AbstractCellEditor {
+public class ColorCellEditor extends com.barrybecker4.ui.table.AbstractCellEditor {
 
     ColorCellRenderer cellRenderer_ = new ColorCellRenderer();
     String title_;
