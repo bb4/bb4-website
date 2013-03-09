@@ -32,19 +32,27 @@
       <!-- the class files are first put here so that we can create the jar, then removed -->
       <mkdir dir="${stagingDir}"/>
 
-      <!-- copy the common jar needed for all  applets. Produces bb4-common*.jar -->
+      <!-- copy the common jar needed for all applets. -->
       <copy todir="${distributionGameDir}">
         <fileset dir="${commonDir}/build/libs">
           <include name="bb4-common*.jar"/>
         </fileset>
       </copy>
 
-      <!-- copy the ui jar needed for most applets. Produces bb4-ui*.jar -->
+      <!-- copy the ui jar needed for applets. -->
       <copy todir="${distributionGameDir}">
         <fileset dir="${uiDir}/build/libs">
           <include name="bb4-ui*.jar"/>
         </fileset>
       </copy>
+
+      <!-- copy the optimization jar needed for all  applets. -->
+      <copy todir="${distributionGameDir}">
+        <fileset dir="${optimizationDir}/build/libs">
+          <include name="bb4-optimization*.jar"/>
+        </fileset>
+      </copy>
+
 
       <!-- copy my class files that are needed for programs that want to do image processing. Produces bb4-imageproc.jar-->
       <copy todir="${stagingDir}">
@@ -70,12 +78,6 @@
       </antcall>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-sound.jar"/>
       <delete dir="${stagingDir}/com"/>
-
-      <!-- copy the class files that are needed for programs that want to do optimization. Produces bb4-optimization.jar-->
-      <antcall target="deployJar">
-          <param name="componentDir" value="optimization"/>
-          <param name="jarFile" value="bb4-optimization.jar"/>
-      </antcall>
 
       <!-- copy the class files that are needed for simulation programs . Produces bb4-simulation.jar-->
       <copy todir="${stagingDir}">

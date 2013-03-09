@@ -25,6 +25,7 @@
   <path id="compile.classpath">
     <pathelement location="${commonJar}"/>
     <pathelement location="${uiJar}"/>
+    <pathelement location="${optimizationJar}"/>
     <pathelement location="${libDir}/vecmath.jar"/>
     <pathelement location="${libDir}/sun.jar"/>
     <pathelement location="${libDir}/jai-codec-1.1.3.jar"/>

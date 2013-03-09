@@ -7,11 +7,16 @@ mainClassName = "com.barrybecker4.ui.application.ApplicationFrame"
 
 dependencies {
    compile project(':common')
-   compile fileTree(dir: 'lib', include: '*.jar')
+
    //compile 'org.codehaus.mojo.webstart:webstart-jnlp-servlet:1.0-6.0-02_ea_b02'
    //compile 'org.codehaus.mojo:webstart-jnlp-servlet:1.0-beta-3'
+
+   //compile group: 'javax.jnlp', name: 'jnlp-api', version: '5.0', systemPath: '${java.home}/sample/jnlp/servlet/jnlp.jar'
+   //compile fileTree(dir: System.getenv()['JAVA_HOME'] + '/sample/jnlp/servlet', include: 'jnlp.jar')
    //compile 'javax.jnlp:jnlp-api:5.0'
+  compile fileTree(dir: 'lib', include: '*.jar')
 }
+
 
 jar {
     archiveName = 'bb4-ui-' + version + '.jar'
