@@ -2,7 +2,8 @@
 // @author Barry Becker
 
 version = '1.0'
-mainClassName = "com.barrybecker4.optimization.optimizees.GraphAnalyticFunctionSolution"
+//mainClassName = "com.barrybecker4.optimization.optimizees.GraphAnalyticFunctionSolution"
+mainClassName = "com.barrybecker4.optimization.viewer.OptimizerEvalFrame"
 
 dependencies {
    compile project(':common')
@@ -13,7 +14,7 @@ dependencies {
 jar {
     archiveName = 'bb4-optimization-' + version + '.jar'
     manifest {
-        attributes 'Implementation-Title': 'Common UI code',
+        attributes 'Implementation-Title': 'Optimization library',
             'Implementation-Version': version,
             provider: 'gradle',
             'Main-Class': mainClassName
