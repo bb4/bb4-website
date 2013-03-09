@@ -108,8 +108,9 @@ public class Instruments {
     int getInstrumentIndex( String instrument ) {
         int i = 0;
         if ( instruments_ == null ) return -1;
-        while ( i < instruments_.length && !(instruments_[i].getName().equals( instrument )) )
+        while ( i < instruments_.length && !(instruments_[i].getName().equals( instrument )) )  {
             i++;
+        }
         if ( i == instruments_.length ) {
             System.out.println( "not found ****:     " + instrument );
             return -1;

@@ -9,7 +9,7 @@ import com.barrybecker4.optimization.parameter.ParameterArray;
  *
  * @author Barry Becker
  */
-public abstract class OptimizeeTestProblem implements Optimizee {
+public abstract class OptimizeeProblem implements Optimizee {
 
     /**
      * @return  the exact solution for this problem.
@@ -30,6 +30,7 @@ public abstract class OptimizeeTestProblem implements Optimizee {
         return 100.0 * sol.distance(getExactSolution()) / getFitnessRange();
     }
 
+    @Override
     public double getOptimalFitness() {
         return 0;
     }

@@ -11,16 +11,17 @@ import com.barrybecker4.optimization.strategy.OptimizationStrategyType;
  *
  * @author Barry Becker
  */
-public class TravelingSalesmanTestProblem extends OptimizeeTestProblem {
+public class TravelingSalesmanProblem extends OptimizeeProblem {
 
     private TravelingSalesmanVariation variation_ = TravelingSalesmanVariation.SIMPLE;
 
 
     /** constructor */
-    public TravelingSalesmanTestProblem(TravelingSalesmanVariation variation) {
+    public TravelingSalesmanProblem(TravelingSalesmanVariation variation) {
         variation_ = variation;
     }
 
+    @Override
     public String getName() {
         return "Traveling Salesman Problem";
     }
@@ -28,11 +29,13 @@ public class TravelingSalesmanTestProblem extends OptimizeeTestProblem {
     /**
      * we evaluate directly not by comparing with a different trial.
      */
+    @Override
     public boolean evaluateByComparison() {
         return false;
     }
 
     // not used
+    @Override
     public double compareFitness(ParameterArray a, ParameterArray b) {
         return 0.0;
     }
@@ -41,6 +44,7 @@ public class TravelingSalesmanTestProblem extends OptimizeeTestProblem {
      * Use the cost matrix for the TSP variation to determine this.
      * @return fitness value
      */
+    @Override
     public double evaluateFitness(ParameterArray a) {
         return variation_.evaluateFitness(a);
     }
@@ -65,7 +69,7 @@ public class TravelingSalesmanTestProblem extends OptimizeeTestProblem {
      */
     public static void main(String[] args) {
         TravelingSalesmanVariation v = TravelingSalesmanVariation.SIMPLE;
-        OptimizeeTestProblem problem = new TravelingSalesmanTestProblem(v);
+        OptimizeeProblem problem = new TravelingSalesmanProblem(v);
         Optimizer optimizer =
                 new Optimizer(problem, FileUtil.PROJECT_HOME + "performance/test_optimizer/tsp_optimization.txt");
 

@@ -34,9 +34,6 @@ public class MusicMaker {
                 }
             }
             synthesizer_.open();
-
-            //Sequencer sequencer = MidiSystem.getSequencer();
-            //Sequence sequence = new Sequence(Sequence.PPQ, 10);
         }
         catch (MidiUnavailableException ex) {
             System.out.println("Midi Anavailable. No Synthesizer will be present.");
@@ -52,7 +49,7 @@ public class MusicMaker {
         }
         else {
             System.out.println( "Error: no sound bank present on this system" );
-            //Assert.exception( "no sound bank" );
+            assert false : "no sound bank";
         }
 
         midiChannels_ = synthesizer_.getChannels();

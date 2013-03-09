@@ -2,9 +2,9 @@
 package com.barrybecker4.optimization;
 
 import com.barrybecker4.common.math.MathUtil;
-import com.barrybecker4.optimization.optimizees.AnalyticFunctionTestProblem;
+import com.barrybecker4.optimization.optimizees.AnalyticFunctionProblem;
 import com.barrybecker4.optimization.optimizees.AnalyticVariation;
-import com.barrybecker4.optimization.optimizees.OptimizeeTestProblem;
+import com.barrybecker4.optimization.optimizees.OptimizeeProblem;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 import com.barrybecker4.optimization.strategy.OptimizationStrategyType;
 
@@ -21,7 +21,7 @@ public class TestAnalyticFunctionProblem extends OptimizerTestCase {
         for (AnalyticVariation variation : AnalyticVariation.values()) {
 
             MathUtil.RANDOM.setSeed(0);
-            OptimizeeTestProblem problem = new AnalyticFunctionTestProblem(variation);
+            OptimizeeProblem problem = new AnalyticFunctionProblem(variation);
             String logFile =  LOG_FILE_HOME + "analytic_" + variation + "_optimization.txt";
 
             Optimizer optimizer = new Optimizer(problem, logFile);

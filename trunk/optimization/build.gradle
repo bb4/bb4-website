@@ -2,19 +2,16 @@
 // @author Barry Becker
 
 version = '1.0'
-mainClassName = "com.barrybecker4.ui.application.ApplicationFrame"
-
+mainClassName = "com.barrybecker4.optimization.optimizees.GraphAnalyticFunctionSolution"
 
 dependencies {
    compile project(':common')
-   compile fileTree(dir: 'lib', include: '*.jar')
-   //compile 'org.codehaus.mojo.webstart:webstart-jnlp-servlet:1.0-6.0-02_ea_b02'
-   //compile 'org.codehaus.mojo:webstart-jnlp-servlet:1.0-beta-3'
-   //compile 'javax.jnlp:jnlp-api:5.0'
+   compile project(':ui')
+   //compile fileTree(dir: 'lib', include: '*.jar')
 }
 
 jar {
-    archiveName = 'bb4-ui-' + version + '.jar'
+    archiveName = 'bb4-optimization-' + version + '.jar'
     manifest {
         attributes 'Implementation-Title': 'Common UI code',
             'Implementation-Version': version,

@@ -19,7 +19,6 @@ import static com.barrybecker4.optimization.optimizees.AnalyticFunctionConsts.*;
 public enum TravelingSalesmanVariation {
 
     SIMPLE {
-
         /**
          * Trivial example.
          * There are three cities, A, B, C. This is the adjacency cost matrix.
