@@ -3,7 +3,7 @@ package com.barrybecker4.optimization;
 
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.common.util.FileUtil;
-import com.barrybecker4.optimization.optimizees.OptimizeeTestProblem;
+import com.barrybecker4.optimization.optimizees.OptimizeeProblem;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 import com.barrybecker4.optimization.strategy.OptimizationStrategyType;
 import junit.framework.Assert;
@@ -63,7 +63,7 @@ public abstract class OptimizerTestCase extends TestCase {
      * Give an error if not withing errorThresh of the exact solution.
      */
     protected static void verifyTest(OptimizationStrategyType optType,
-                                     OptimizeeTestProblem problem,
+                                     OptimizeeProblem problem,
                                      ParameterArray initialGuess,
                                      Optimizer optimizer, double fitnessRange,
                                      double errorThresh, String title) {

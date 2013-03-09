@@ -16,11 +16,11 @@ import javax.vecmath.Point2d;
  *
  * @author Barry Becker
  */
-public class GraphAnalyticFunctionSolution extends AnalyticFunctionTestProblem {
+public class GraphAnalyticFunctionSolution extends AnalyticFunctionProblem {
 
     /** Place to put performance results from the tests */
     private static final String PERFORMANCE_DIR =
-            FileUtil.PROJECT_HOME + "performance/test_optimizer/poly_optimization.txt";
+            FileUtil.PROJECT_HOME + "optimization/test/results/poly_optimization.txt";
 
     /** Constructor */
     public GraphAnalyticFunctionSolution(AnalyticVariation v) {
@@ -34,7 +34,7 @@ public class GraphAnalyticFunctionSolution extends AnalyticFunctionTestProblem {
      */
     public static void main(String[] args) {
         AnalyticVariation v = AnalyticVariation.PARABOLA;
-        OptimizeeTestProblem testProblem = new GraphAnalyticFunctionSolution(v);
+        OptimizeeProblem testProblem = new GraphAnalyticFunctionSolution(v);
 
         Optimizer optimizer = new Optimizer(testProblem, PERFORMANCE_DIR);
 

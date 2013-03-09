@@ -2,7 +2,7 @@
 package com.barrybecker4.optimization.viewer;
 
 import com.barrybecker4.optimization.Optimizer;
-import com.barrybecker4.optimization.optimizees.OptimizeeTestProblem;
+import com.barrybecker4.optimization.optimizees.OptimizeeProblem;
 import com.barrybecker4.optimization.strategy.OptimizationStrategyType;
 
 import javax.swing.*;
@@ -23,7 +23,7 @@ public class OptimizerEvalFrame extends JFrame implements ActionListener {
     private JComboBox strategyDropDown;
 
     private Optimizer optimizer;
-    private OptimizeeTestProblem testProblem;
+    private OptimizeeProblem testProblem;
     private OptimizationStrategyType initialStrategy;
     /**
      * Constructor
@@ -32,7 +32,7 @@ public class OptimizerEvalFrame extends JFrame implements ActionListener {
      */
     public OptimizerEvalFrame(Optimizer optimizer, Point2d solutionPosition,
                               OptimizationStrategyType initialStrategy,
-                              OptimizeeTestProblem testProblem) {
+                              OptimizeeProblem testProblem) {
 
         this.setTitle("Optimization Animation of " + optimizer.getOptimizee().getName());
         this.setSize(OptimizerEvalPanel.SIZE);
@@ -84,6 +84,7 @@ public class OptimizerEvalFrame extends JFrame implements ActionListener {
         return strategyPanel;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == strategyDropDown) {
             System.out.println("changed strategy to " + strategyDropDown.getSelectedItem());

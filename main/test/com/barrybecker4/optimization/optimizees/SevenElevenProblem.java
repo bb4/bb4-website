@@ -25,11 +25,11 @@ import com.barrybecker4.optimization.strategy.OptimizationStrategyType;
  * Our choice of evaluation function to maximize is somewhat arbitrary.
  * When this function evaluates to 0, we have a solution.
  *
- * @see AnalyticFunctionTestProblem for an easier optimization example.
+ * @see AnalyticFunctionProblem for an easier optimization example.
  *
  * @author Barry Becker
  */
-public class SevenElevenTestProblem extends OptimizeeTestProblem {
+public class SevenElevenProblem extends OptimizeeProblem {
 
   private static final Parameter[] INITIAL_GUESS_PARAMS =  {
              new IntegerParameter(100, 0, 708, "p1"),
@@ -54,21 +54,24 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem {
     private static final double FITNESS_RANGE = 5000000.0;
 
     /** constructor */
-    public SevenElevenTestProblem() {
+    public SevenElevenProblem() {
     }
 
     /**
      * we evaluate directly not by comparing with a different trial.
      */
+    @Override
     public boolean evaluateByComparison() {
         return false;
     }
 
     // not used
+    @Override
     public double compareFitness(ParameterArray a, ParameterArray b) {
         return 0.0;
     }
 
+    @Override
     public String getName() {
         return "Zeven Eleven Problem";
     }
@@ -81,6 +84,7 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem {
      * @param a the position in the search space given values of p1, p2, p4, p4.
      * @return fitness value
      */
+    @Override
     public double evaluateFitness(ParameterArray a) {
 
         double sum = a.get(0).getValue() + a.get(1).getValue() + a.get(2).getValue() + a.get(3).getValue();
@@ -109,7 +113,7 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem {
      */
     public static void main(String[] args)
     {
-        OptimizeeTestProblem problem = new SevenElevenTestProblem();
+        OptimizeeProblem problem = new SevenElevenProblem();
         Optimizer optimizer =
                 new Optimizer(problem, FileUtil.PROJECT_HOME + "performance/test_optimizer/seven11_optimization.txt");
 
@@ -121,6 +125,5 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem {
         System.out.println( "The solution to the 7-11 Test Problem is :\n"+solution );
         System.out.println( "Which evaluates to: "+ problem.evaluateFitness(solution));
         System.out.println( "We expected to get exactly 711000000:  p1-4 = {316, 125, 120, 150} " );
-
     }
 }

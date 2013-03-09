@@ -20,31 +20,34 @@ import com.barrybecker4.optimization.parameter.ParameterArray;
  * is an inverted parabola centered at p1 = 1 and p2 = 2.
  *
  * There are a few variations on the analytic function to choose from, but they all have the same solution.
- * @see SevenElevenTestProblem for somewhat harder example.
+ * @see SevenElevenProblem for somewhat harder example.
  *
  * @author Barry Becker
  */
-public class AnalyticFunctionTestProblem extends OptimizeeTestProblem {
+public class AnalyticFunctionProblem extends OptimizeeProblem {
 
     private static final double FITNESS_RANGE = 1000.0;
 
     private AnalyticVariation variation_ = AnalyticVariation.PARABOLA;
 
     /** Constructor */
-    public AnalyticFunctionTestProblem(AnalyticVariation v) {
+    public AnalyticFunctionProblem(AnalyticVariation v) {
         variation_ = v;
     }
 
+    @Override
     public String getName() {
         return variation_.name();
     }
 
     // we evaluate directly not by comparing with a different trial.
+    @Override
     public boolean evaluateByComparison() {
         return false;
     }
 
     // not used
+    @Override
     public double compareFitness(ParameterArray a, ParameterArray b) {
         return 0.0;
     }
@@ -53,6 +56,7 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem {
      * @param a the position on the parabolic surface given the specified values of p1 and p2
      * @return fitness value
      */
+    @Override
     public double evaluateFitness(ParameterArray a) {
         return variation_.evaluateFitness(a);
     }
