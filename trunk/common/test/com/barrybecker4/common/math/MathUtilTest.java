@@ -93,7 +93,7 @@ public class MathUtilTest extends TestCase {
 
         Point2d point = new Point2d(1.0, 1.0);
         for (double x = 0; x < 2.0 * Math.PI; x += 0.3) {
-            Point2d toPoint = new Point2d(point.getX() + Math.cos(x), point.getY() + Math.sin(x));
+            Point2d toPoint = new Point2d(point.x + Math.cos(x), point.y + Math.sin(x));
             System.out.println("angle to " + toPoint +" is " + MathUtil.getDirectionTo(point, toPoint));
         }
         assertEquals("Unexpected angle.",

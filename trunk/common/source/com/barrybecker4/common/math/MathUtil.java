@@ -184,8 +184,8 @@ public final class MathUtil {
     }
 
     public static double getDirectionTo(Point2d fromPoint, Point2d toPoint) {
-        double xDiff = toPoint.getX() - fromPoint.getX();
-        double yDiff = toPoint.getY() - fromPoint.getY();
+        double xDiff = toPoint.x - fromPoint.x;
+        double yDiff = toPoint.y - fromPoint.y;
 
         return  Math.atan2(yDiff,  xDiff);
     }
