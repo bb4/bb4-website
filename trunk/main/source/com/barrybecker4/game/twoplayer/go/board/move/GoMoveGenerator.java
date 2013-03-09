@@ -2,7 +2,6 @@
 package com.barrybecker4.game.twoplayer.go.board.move;
 
 import com.barrybecker4.common.geometry.ByteLocation;
-import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.MoveList;

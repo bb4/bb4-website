@@ -98,4 +98,8 @@ public class OptimizerEvalFrame extends JFrame implements ActionListener {
         evalPanel.doTest(strategy, optimizer, testProblem.getInitialGuess(), testProblem.getFitnessRange());
         repaint();
     }
+
+    public static void main(String[] args) {
+        System.out.println("Hello");
+    }
 }

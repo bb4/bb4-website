@@ -20,7 +20,6 @@ public class NumberInput extends JPanel {
     private double min_;
     private double max_;
 
-
     /**
      * Often the initial value cannot be set when initializing the content of a dialog.
      * This uses a default of 0 until the real default can be set with setInitialValue.
