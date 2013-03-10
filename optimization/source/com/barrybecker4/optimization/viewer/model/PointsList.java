@@ -51,8 +51,8 @@ public class PointsList implements NavigationListener {
     }
 
     public Point getSolutionPosition() {
-        return new Point(getScaledXValue(rawSolutionPosition_.getX()),
-                         getScaledYValue(rawSolutionPosition_.getY()));
+        return new Point(getScaledXValue(rawSolutionPosition_.x),
+                         getScaledYValue(rawSolutionPosition_.y));
     }
 
     public Point2d getRawPoint(int i) {
@@ -61,7 +61,7 @@ public class PointsList implements NavigationListener {
 
     public Point getScaledPoint(int i) {
         Point2d pt = rawPoints_.get(i);
-        return new Point(getScaledXValue(pt.getX()), getScaledYValue(pt.getY()));
+        return new Point(getScaledXValue(pt.x), getScaledYValue(pt.y));
         //return scaledPoints_.get(i);
     }
 

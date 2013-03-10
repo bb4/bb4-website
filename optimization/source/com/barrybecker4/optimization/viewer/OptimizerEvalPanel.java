@@ -54,8 +54,8 @@ public class OptimizerEvalPanel extends JPanel implements OptimizationListener, 
                 + optimizer.getOptimizee().getName() + ") Polynomial Test Problem using "
                 + optType + " is :\n" + solution);
         System.out.println( "Which evaluates to: "+ optimizer.getOptimizee().evaluateFitness(solution));
-        System.out.println( "We expected to get exactly p1 = "+ solutionPosition.getX()
-                + " and p2 = " + solutionPosition.getY() );
+        System.out.println( "We expected to get exactly p1 = "+ solutionPosition.x
+                + " and p2 = " + solutionPosition.x );
     }
 
     /**
