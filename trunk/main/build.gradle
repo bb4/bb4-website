@@ -7,11 +7,11 @@ mainClassName = "com.barrybecker4.apps.misc.brian.GCFProgram"
 
 dependencies {
     compile project(':optimization')
-    //compile project(':common')
-    //compile project(':ui')
+
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    compile 'commons-codec:commons-codec:1.3'
+    compile 'java3d:vecmath:1.3.1'
     compile fileTree(dir: 'lib', include: '*.jar')
-    //testCompile 'junit:junit:3.+'
 }
 
 jar {
