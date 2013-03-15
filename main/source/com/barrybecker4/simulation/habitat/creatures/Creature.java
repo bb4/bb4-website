@@ -94,7 +94,7 @@ public class Creature  {
 
     private Point2d computeNewPosition() {
         Vector2d vel = getVelocity();
-        return new Point2d( absMod(location.getX() + vel.getX()),  absMod(location.getY() + vel.getY()));
+        return new Point2d( absMod(location.x + vel.x),  absMod(location.y + vel.y));
     }
 
     private double absMod(double value) {

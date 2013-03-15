@@ -32,7 +32,7 @@ public class ParticleAdvectorTest extends TestCase {
         particleAdvector.advectParticles(DT, particles);
 
         assertEquals("Unexpected age for particle", 0.1, part.getAge());
-        Vector2d pos =  new Vector2d(part.getX(), part.getY());
+        Vector2d pos =  new Vector2d(part.x, part.y);
         assertTrue("Unexpected new particle position: " + pos,
             LinearUtil.appxVectorsEqual(new Vector2d(2.1, 2.5), pos , MathUtil.EPS_MEDIUM));
     }
@@ -49,7 +49,7 @@ public class ParticleAdvectorTest extends TestCase {
         double newDt = particleAdvector.advectParticles(DT, particles);
 
         assertEquals("Unexpected age for particle", 0.1, part.getAge());
-        Vector2d pos =  new Vector2d(part.getX(), part.getY());
+        Vector2d pos =  new Vector2d(part.x, part.y);
         assertTrue("Unexpected new particle position: " + pos,
             LinearUtil.appxVectorsEqual(new Vector2d(2.105, 2.505), pos , MathUtil.EPS_MEDIUM));
         assertEquals("Timestep unexpectedly changed", DT, newDt);
@@ -68,7 +68,7 @@ public class ParticleAdvectorTest extends TestCase {
         double newDt = particleAdvector.advectParticles(DT, particles);
 
         assertEquals("Unexpected age for particle", 0.1, part.getAge());
-        Vector2d pos =  new Vector2d(part.getX(), part.getY());
+        Vector2d pos =  new Vector2d(part.x, part.y);
         assertTrue("Unexpected new particle position: " + pos,
             LinearUtil.appxVectorsEqual(new Vector2d(2.1021351463835316, 2.5021703194194225), pos , MathUtil.EPS_MEDIUM));
         assertEquals("Timestep unexpectedly changed", DT, newDt);

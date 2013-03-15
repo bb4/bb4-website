@@ -45,4 +45,6 @@ public class Bandito {
         f.getContentPane().setLayout( new BorderLayout() );
         f.getContentPane().add( sic, BorderLayout.CENTER );
     }
+
+    private Bandito() {}
 }

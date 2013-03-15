@@ -31,8 +31,8 @@ public class HabitatGrid {
 
     public Cell getCellForPosition(Point2d position) {
 
-        int x = (int) (position.getX() * xDim);
-        int y = (int) (position.getY() * yDim);
+        int x = (int) (position.x * xDim);
+        int y = (int) (position.y * yDim);
 
         return cells[x][y];
     }

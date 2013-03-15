@@ -74,8 +74,8 @@ public class Population {
 
             if (spawn) {
                 Point2d loc = creature.getLocation();
-                spawnLocations.add(new Point2d(absMod(loc.getX() + SPAWN_RADIUS * MathUtil.RANDOM.nextDouble()),
-                                               absMod(loc.getY() + SPAWN_RADIUS * MathUtil.RANDOM.nextDouble())));
+                spawnLocations.add(new Point2d(absMod(loc.x + SPAWN_RADIUS * MathUtil.RANDOM.nextDouble()),
+                                               absMod(loc.y + SPAWN_RADIUS * MathUtil.RANDOM.nextDouble())));
             }
         }
 

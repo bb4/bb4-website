@@ -172,7 +172,7 @@ public final class EnvironmentRenderer {
 
     private Color getColorForParticle(Particle part) {
 
-        int green = ((int)part.getY() % 2) == 0  ? 150 : 50;
+        int green = ((int)part.y % 2) == 0  ? 150 : 50;
         int comp = (int) (256.0 * part.getAge() / 20.0);
         comp = (comp > 255) ? 255 : comp;
         return new Color(comp, green, 255 - comp, 80);
