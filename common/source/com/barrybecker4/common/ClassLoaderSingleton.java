@@ -7,6 +7,7 @@ package com.barrybecker4.common;
  * @author Barry Becker
  */
 public class ClassLoaderSingleton {
+
     private static ClassLoaderSingleton cls_;
     private static ClassLoader loader_;
 
@@ -16,7 +17,7 @@ public class ClassLoaderSingleton {
     }
 
     public static synchronized ClassLoader getClassLoader() {
-        if (cls_==null) {
+        if (cls_ == null) {
             cls_ = new ClassLoaderSingleton();
         }
         return loader_;
@@ -26,32 +27,15 @@ public class ClassLoaderSingleton {
      * @param className the class to load.
      * @return  the loaded class.
      */
-    public static Class loadClass(String className){
-        return loadClass(className, null);
-    }
-
-    /**
-     * @param className  the class to load.
-     * @param defaultClassName  the backup class to load if className does not exist.
-     * @return  the loaded class.
-     */
-    public static Class loadClass(String className, String defaultClassName) {
+    public static Class loadClass(String className) {
         Class theClass = null;
         try {
             theClass = Class.forName(className);
         }
         catch (ClassNotFoundException e) {
-            System.out.println("Unable to find the class "+ className+". Check your classpath.");
-            if (defaultClassName == null) {
-                e.printStackTrace();
-                return null;
-            }
-            System.out.println("Attempting to load "+defaultClassName+" instead.");
-            try {
-                theClass = Class.forName(defaultClassName);
-            } catch (ClassNotFoundException cne) {
-                 cne.printStackTrace();
-            }
+            System.out.println("Unable to find the class " + className + ". Verify that it is in the classpath.");
+
+            e.printStackTrace();
         }
         return theClass;
     }

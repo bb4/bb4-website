@@ -133,10 +133,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
             if (checked)  {
                 // open a dlg to get a location for the optimization log
                 // if they cancel this dlg then we leave the checkbox unchecked
-                if (GUIUtil.isStandAlone())  {
-                    JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_RUN_OPT_WHEN_STANDALONE"));
-                }
-                else {
+                if (GUIUtil.hasBasicService())  {
                     JFileChooser chooser = FileChooserUtil.getFileChooser();
                     chooser.setCurrentDirectory( new File( FileUtil.getHomeDir() + "/main" ) );
                     chooser.setFileFilter(new TextFileFilter());
@@ -146,8 +143,12 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
                         optimizationCheckbox_.setSelected(false);
                         return;
                     }
-                    else
+                    else {
                         get2PlayerController().getTwoPlayerOptions().setAutoOptimizeFile( file.getAbsolutePath() );
+                    }
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_RUN_OPT_WHEN_STANDALONE"));
                  }
             }
 

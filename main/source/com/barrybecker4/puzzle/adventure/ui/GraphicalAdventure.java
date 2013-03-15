@@ -39,10 +39,6 @@ public final class GraphicalAdventure extends ApplicationApplet
     private JPanel mainPanel_;
     private boolean storyEdited_ = false;
 
-    static {
-        GUIUtil.setStandAlone(true);
-    }
-
 
     public GraphicalAdventure() {}
 

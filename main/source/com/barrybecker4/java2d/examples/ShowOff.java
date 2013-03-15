@@ -174,7 +174,7 @@ public class ShowOff
      */
     public static void main( String[] args ) throws IOException
     {
-        String filename = Utilities.DEFAULT_IMAGE_DIR +"Raphael.jpg";
+        String filename = Utilities.DEFAULT_IMAGE_DIR + "Raphael.jpg";
         String message = "Java2D";
         int split = 4;
         if ( args.length > 0 ) filename = args[0];

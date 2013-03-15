@@ -23,7 +23,7 @@ public class HandRenderer  {
     /** the suit images   */
     private static ImageIcon[] suitImages_ = new ImageIcon[Suit.values().length];
 
-    private static final String IMAGE_DIR = GameContext.GAME_ROOT + "multiplayer/poker/ui/images/";
+    private static final String IMAGE_DIR = GameContext.GAME_RESOURCE_ROOT + "multiplayer/poker/ui/images/";
 
     /**
      * gets the images from resources or the filesystem

@@ -11,12 +11,13 @@
       <entry name="?*.xml" />
       <entry name="?*.gif" />
       <entry name="?*.png" />
-      <entry name="?*.jpeg" />
+      <entry name="?*.jpg" />
       <entry name="?*.jpg" />
       <entry name="?*.html" />
       <entry name="?*.dtd" />
       <entry name="?*.tld" />
       <entry name="?*.ftl" />
+      <entry name="?*.au" />
     </wildcardResourcePatterns>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="false">

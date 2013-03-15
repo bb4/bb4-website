@@ -26,7 +26,6 @@ public class GameApplet extends JApplet {
     @Override
     public void init() {
         GUIUtil.setCustomLookAndFeel();
-        GUIUtil.setStandAlone(true);
 
         String gameName = getParameter("name");
         String localeName = getParameter("locale");

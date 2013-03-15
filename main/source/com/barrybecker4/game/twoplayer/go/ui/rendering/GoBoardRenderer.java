@@ -39,7 +39,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
 
     /** the image for the wooden board. */
     private static final ImageIcon woodGrainImage_ =
-            GUIUtil.getIcon(GameContext.GAME_ROOT + "twoplayer/go/ui/images/goBoard1.gif");
+            GUIUtil.getIcon(GameContext.GAME_RESOURCE_ROOT + "twoplayer/go/ui/images/goBoard1.gif");
 
     /**
      * private constructor because this class is a singleton.

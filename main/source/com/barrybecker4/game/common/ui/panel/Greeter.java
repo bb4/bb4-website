@@ -27,7 +27,7 @@ public class Greeter {
 
             // use when sound card available
             /* causing security exception in applet? */
-            //URL url = GUIUtil.getURL("com/barrybecker4/sound/play_game_voice.wav");
+            //URL url = FileUtil.getURL("com/barrybecker4/sound/play_game_voice.wav");
             //AudioClip clip = new AppletAudioClip(url);
             //clip.play();
         }

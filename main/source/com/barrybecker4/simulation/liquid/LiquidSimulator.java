@@ -149,7 +149,7 @@ public class LiquidSimulator extends Simulator implements MouseListener {
     public void doOptimization() {
 
         Optimizer optimizer;
-        if (GUIUtil.isStandAlone())
+        if (GUIUtil.hasBasicService())   // need to verify
             optimizer = new Optimizer( this );
         else
             optimizer = new Optimizer( this, FileUtil.PROJECT_HOME + "performance/liquid/liquid_optimization.txt" );

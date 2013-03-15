@@ -17,7 +17,7 @@ public class ClipImage extends ApplicationFrame {
     public ClipImage(String title) throws IOException {
         super(title);
 
-        String filename = Utilities.DEFAULT_IMAGE_DIR+ "roa2.jpg";
+        String filename = Utilities.DEFAULT_IMAGE_DIR + "roa2.jpg";
 
         Image img = Utilities.blockingLoad( filename );
         image = Utilities.makeBufferedImage( img );

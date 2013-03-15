@@ -3,8 +3,8 @@ package com.barrybecker4.simulation.liquid.config;
 
 import com.barrybecker4.common.geometry.IntLocation;
 import com.barrybecker4.common.geometry.Location;
+import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.common.xml.DomUtil;
-import com.barrybecker4.ui.util.GUIUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -47,7 +47,7 @@ public class Conditions {
     public Conditions(String configFile) {
         // use a default if null passed in.
         String file = configFile == null ? ConfigurationEnum.BASIC.getFileName() :  configFile;
-        URL url = GUIUtil.getURL(file);
+        URL url = FileUtil.getURL(file);
         Document document = DomUtil.parseXML(url);
 
         DomUtil.printTree(document, 0);

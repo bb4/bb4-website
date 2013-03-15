@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.adventure;
 
+import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.common.xml.DomUtil;
 import com.barrybecker4.sound.SoundUtil;
 import com.barrybecker4.ui.util.GUIUtil;
@@ -93,8 +94,9 @@ public class Scene {
 
     private void loadResources(String name, String resourcePath) {
         try {
+            System.out.println("Scene load resources path="+ resourcePath);
             String soundPath = resourcePath + "sounds/" + name + ".au";
-            soundURL_ = GUIUtil.getURL(soundPath, false);
+            soundURL_ = FileUtil.getURL(soundPath, false);
 
             String imagePath = resourcePath + "images/" +name + ".jpg";
             image_ = GUIUtil.getBufferedImage(imagePath);

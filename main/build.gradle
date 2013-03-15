@@ -3,10 +3,13 @@
 // @author Barry Becker
 
 version = '1.0'
-mainClassName = "com.barrybecker4.apps.misc.brian.GCFProgram"
+//mainClassName = "com.barrybecker4.apps.misc.brian.GCFProgram"
+mainClassName = "com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure"
 
 dependencies {
     compile project(':optimization')
+    compile project(':sound')
+  compile project(':ui')
 
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.7'
@@ -14,11 +17,11 @@ dependencies {
     compile 'java3d:vecmath:1.3.1'
     compile 'java3d:j3d-core-utils:1.3.1'
     compile 'java3d:j3d-core-utils:1.3.1'
-    compile 'xerces:xercesImpl:2.11.0'
-    compile 'xml-apis:xml-apis:2.0.2'
+    compile 'xerces:xercesImpl:2.3.0' //2.11.0'
+    compile 'xml-apis:xml-apis:1.4.01' //2.0.2'
+
     //compile 'javax.jms:jms:1.1'
     compile fileTree(dir: 'lib', include: '*.jar')
-
 }
 
 jar {

@@ -52,11 +52,11 @@ public class PentePatternsFile extends PentePatterns {
     }
 
      protected String getPatternFile() {
-        return  GameContext.GAME_ROOT + "pente/Pente.patterns1.dat";
+        return GameContext.GAME_RESOURCE_ROOT + "pente/Pente.patterns1.dat";
     }
 
     protected String getExportFile() {
-        return GameContext.GAME_ROOT + "pente/Pente.export.dat";
+        return GameContext.GAME_RESOURCE_ROOT + "pente/Pente.export.dat";
     }
 
 

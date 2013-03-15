@@ -1,9 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.plugin;
 
+import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.common.xml.DomUtil;
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.ui.util.GUIUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class PluginManager {
 
-    private static final String PLUGINS_FILE = GameContext.GAME_ROOT +  "plugins.xml";
+    private static final String PLUGINS_FILE = GameContext.GAME_RESOURCE_ROOT +  "plugins.xml";
 
     private static PluginManager manager_ = null;
     private List<GamePlugin> plugins_;
@@ -36,7 +36,7 @@ public class PluginManager {
      */
     private PluginManager() {
 
-        URL url = GUIUtil.getURL(PLUGINS_FILE);
+        URL url = FileUtil.getURL(PLUGINS_FILE);
         GameContext.log(1, "about to parse url="+url +"\n plugin file location=" + PLUGINS_FILE);
         Document xmlDocument = DomUtil.parseXML(url);
 

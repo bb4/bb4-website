@@ -22,6 +22,8 @@ import java.net.URL;
 
 /**
  * This class implements a number of static utility functions that are useful when creating UIs.
+ * I used to support running as applet or webstart separately from running as an application, but
+ * now I just run the applet as an application and it seems to work.
  *
  * @author Barry Becker
  */
@@ -29,31 +31,14 @@ public final class GUIUtil {
 
     private GUIUtil() {}
 
-    /** if true then running as an applet or webstart. if false, then running as an application. */
-    private static boolean isStandAlone_ = true;
-
     /** default location of files on the local system unless otherwise specified. */
-    public static final String RESOURCE_ROOT = FileUtil.PROJECT_HOME + "main/source/";
+    public static final String RESOURCE_ROOT = FileUtil.PROJECT_HOME;
 
     /** Some other interesting fonts: "Ænigma Scrawl 4 BRK"; "Nyala"; "Raavi"; */
     public static final String DEFAULT_FONT_FAMILY = "Verdana";
 
     /** webstart services  */
     private static BasicService basicService_ = null;
-
-    /**
-     * @param standAlone  if true then running as applet or through webstart; otherwise, application
-     */
-    public static void setStandAlone(boolean standAlone) {
-        isStandAlone_ = standAlone;
-    }
-
-    /**
-     * @return if true then running as applet or through webstart; otherwise, application.
-     */
-    public static boolean isStandAlone() {
-        return isStandAlone_;
-    }
 
     /**
      *  Set the ui look and feel to my very own.
@@ -107,20 +92,15 @@ public final class GUIUtil {
      */
     public static ImageIcon getIcon(String sPath, boolean failIfNotFound) {
         ImageIcon icon = null;
-        if (isStandAlone())   {
-            //System.out.println("spath="+ sPath);
-            URL url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
-            if (url != null) {
-                icon = new ImageIcon( url );
-            }
-            else if (failIfNotFound) {
-                throw new IllegalArgumentException("Invalid file or url path:"+ sPath);
-            }
+
+        URL url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
+        if (url != null) {
+            icon = new ImageIcon( url );
         }
-        else {
-            //System.out.println("not standalone: spath="+ sPath);
-            icon = new ImageIcon(RESOURCE_ROOT + sPath);
+        else if (failIfNotFound) {
+            throw new IllegalArgumentException("Invalid file or url path:"+ sPath);
         }
+
         return icon;
     }
 
@@ -138,41 +118,6 @@ public final class GUIUtil {
          }
          return image;
     }
-
-
-    /**
-     * @return a URL given the path to a file.
-     */
-    public static URL getURL(String sPath) {
-
-        return getURL(sPath, true);
-    }
-
-    /**
-     * @return a URL given the path to an existing file.
-     */
-    public static URL getURL(String sPath, boolean failIfNotFound) {
-
-        URL url = null;
-        System.out.println(" searching for url path=" + sPath + " standAlone="+ isStandAlone());
-        try {
-            if (isStandAlone())   {
-                url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
-            }
-            else {
-                String spec = "file:" + RESOURCE_ROOT + sPath;
-                url = new URL(spec);
-            }
-
-            assert (url != null || !failIfNotFound):
-                "failed to create url for  "+sPath + " standAlone=" + isStandAlone() + " resourceRoot=" + RESOURCE_ROOT;
-        } catch (MalformedURLException e) {
-            System.out.println( sPath + " is not a valid resource or URL" );
-            e.printStackTrace();
-        }
-
-        return url;
-     }
 
     /**
      * Displays a splash screen while the application is busy starting up.
@@ -200,8 +145,6 @@ public final class GUIUtil {
      * @return frame containing the applet.
      */
     public static JFrame showApplet( final JApplet applet, final String title) {
-        isStandAlone_ = false;
-
         return createAndShowAppletFrame(applet, title);
     }
 
@@ -258,6 +201,7 @@ public final class GUIUtil {
 
         int textureWidth = texture.getIconWidth();
         int textureHeight = texture.getIconHeight();
+        assert textureWidth > 0 && textureHeight > 0;
 
         g.setColor(c.getBackground());
         g.fillRect(0,0,size.width, size.height);
@@ -300,6 +244,7 @@ public final class GUIUtil {
         return suffix;
     }
 
+    /** @return true if running through webstart */
     public static boolean hasBasicService() {
         return getBasicService() != null;
     }

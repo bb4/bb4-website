@@ -1,8 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.adventure;
 
+import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.common.xml.DomUtil;
-import com.barrybecker4.ui.util.GUIUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -186,15 +186,14 @@ public class Story {
 
         assert args != null;
         // default story
-        URL url = GUIUtil.getURL(STORIES_ROOT + "ludlow/ludlowScript.xml");
-        System.out.println("num args="+ args.length);
+        URL url = FileUtil.getURL(STORIES_ROOT + "ludlow/ludlowScript.xml");
         if (args.length == 1) {
             System.out.println("args[0]=" + args[0]);
-            url = GUIUtil.getURL(STORIES_ROOT + args[0]);
+            url = FileUtil.getURL(STORIES_ROOT + args[0]);
         }
         else if (args.length > 1){
             System.out.println("importStoryDocument Args=" + Arrays.toString(args));
-            url = GUIUtil.getURL(STORIES_ROOT + args[1]);
+            url = FileUtil.getURL(STORIES_ROOT + args[1]);
         }
         //throw new IllegalStateException("bad url=" + url + "args="+ args);
         System.out.println("about to parse url=" + url + "\n story file location");
