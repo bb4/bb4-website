@@ -50,12 +50,12 @@ public class HabitatRenderer  {
     private void drawCreature(Creature creature, Graphics2D g2) {
         int w = (int) (creature.getSize() * width_ * SIZE_SCALE + 1.0);
         int h = (int) (creature.getSize() * height_ * SIZE_SCALE + 1.0);
-        int centerX = (int)(creature.getLocation().getX() * width_);
-        int centerY = (int)(creature.getLocation().getY() * height_);
+        int centerX = (int)(creature.getLocation().x * width_);
+        int centerY = (int)(creature.getLocation().y * height_);
         g2.fillOval(centerX - w/2, centerY - h/2, w, h);
 
-        int vectorEndpointX = (int)(centerX + creature.getVelocity().getX() * width_);
-        int vectorEndpointY = (int)(centerY + creature.getVelocity().getY() * height_);
+        int vectorEndpointX = (int)(centerX + creature.getVelocity().x * width_);
+        int vectorEndpointY = (int)(centerY + creature.getVelocity().y * height_);
         g2.drawLine(centerX, centerY, vectorEndpointX, vectorEndpointY);
 
         if (creature.isPursuing()) {

@@ -46,8 +46,8 @@ public class VelocityUpdater {
 
         double ipjp2 = u_ipjp * v_ipjp;
 
-        calcUTilde(cell, neighbors, cXp1Ym1.getV(), ipjp2, dt, force.getX(), viscosity);
-        calcVTilde(cell, neighbors, cXm1Yp1.getU(), ipjp2, dt, force.getY(), viscosity);
+        calcUTilde(cell, neighbors, cXp1Ym1.getV(), ipjp2, dt, force.x, viscosity);
+        calcVTilde(cell, neighbors, cXm1Yp1.getU(), ipjp2, dt, force.y, viscosity);
     }
 
     /**
