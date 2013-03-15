@@ -91,7 +91,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
     @Override
     public void doOptimization() {
         Optimizer optimizer;
-        if (GUIUtil.isStandAlone())
+        if (GUIUtil.hasBasicService())   // need to verify
             optimizer = new Optimizer( this );
         else
             optimizer = new Optimizer( this, FileUtil.PROJECT_HOME +"performance/trebuchet/trebuchet_optimization.txt" );

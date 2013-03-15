@@ -72,12 +72,12 @@ You find nothing in them except for leaves, dust, and 200 paperclips. ",
         </choices>
     </scene>
     <scene name="B.rat_room">
-        <description>The beams of the flashlights show a room paneled in redstained barn boards with a floor of the same substance. 
+        <description>The beams of the flashlights show a room paneled in redstained barn boards with a floor of the same substance.
 There is a couch in the northeast corner of the room and an opening out of theroom on the east wall.
 
-There are leaves on the floor, and an old worn out couch in the north east corner. 
+There are leaves on the floor, and an old worn out couch in the north east corner.
 There is a musty smell to the room, and leaves are littered on the floor.
-The couch is an old, dusty, overstuffed relic with several cushions and rips on all parts of it. 
+The couch is an old, dusty, overstuffed relic with several cushions and rips on all parts of it.
 The room measures sixty feet east and west and forty feet north and south, if paced out.
 There is a door on the east side of the room.
         </description>
@@ -103,11 +103,11 @@ The hall leads to another room at the end.
         <description>
 The beam of the flashlight shows a room with gray painted walls and a cement floor.
 It is filled with wooden crates and there are leaves all over the room in large piles.
-There are 200 empty wooden crates of differing sizes, and the biggest concentration of leaves is in the 
+There are 200 empty wooden crates of differing sizes, and the biggest concentration of leaves is in the
 southwest corner of the room.
-The room measures sixty feet east and west and forty feet north and south and has a side alcove to the 
+The room measures sixty feet east and west and forty feet north and south and has a side alcove to the
 south starting on the east wall that is forty feet long east and west and twenty feet long north and south.
-It is here that the concentration of leaves is located. Behind a big crate along the east wall, thirty 
+It is here that the concentration of leaves is located. Behind a big crate along the east wall, thirty
 feet from the north corner, one finds a door with a normal handle.
         </description>
         <choices>
@@ -161,12 +161,12 @@ He will never follow a retreating group out of the room, but will act dangerousl
 It is filled with boxes and barrels.
 There are thirteen barrels of grain alcohol each with the number "50" painted on it.
 There are thirteen boxes filled with pairs of white gloves.
-A metal chest contains a silver set made to serve eighteen people, four pairs of silver candlesticks, 
-three huge silver carving knives (like short swords), and eighteen solid silver goblets 
+A metal chest contains a silver set made to serve eighteen people, four pairs of silver candlesticks,
+three huge silver carving knives (like short swords), and eighteen solid silver goblets
 (total worth of the silver items is 20,000 silver pieces).
-There are thirteen chests filled with books about plants; 
-thirteen boxes filled with assorted sizes of clay pots; 
-and ten large crates with mattresses in them. 
+There are thirteen chests filled with books about plants;
+thirteen boxes filled with assorted sizes of clay pots;
+and ten large crates with mattresses in them.
 When paced out, the room is forty feet wide east and west and sixty feet wide north and south.
 A door on the east wall is originally hidden by the mattress crates.
 
@@ -233,9 +233,9 @@ south.</description>
     </scene>
     <scene name="H.inspect_wall">
         <description>If any tapping is done to the wall section marked with the secret door symbol it will
-show a hollow sound. If the wall is closely examined by hand, that whole section of
-fur will appear to be loose. It will easily move to the side with the push
-of a hand, revealing a normal door.</description>
+            show a hollow sound. If the wall is closely examined by hand, that whole section of
+            fur will appear to be loose. It will easily move to the side with the push
+            of a hand, revealing a normal door.</description>
         <choices>
             <choice description="Go through the secret door." resultScene="I.statue_room"/>
             <choice description="Stay in fur room." resultScene="H.fur_room"/>
@@ -318,7 +318,7 @@ end. This hall section starts on the south wall and is ten feet wide
     </scene>
     <scene name="J.medicine_cabinet">
         <description> The mirror over the sink has a recessed cabinet.
-In it are two small plastic bottles of pills: 
+In it are two small plastic bottles of pills:
    One has ten green pills.
    One has twenty pink pills.
 </description>

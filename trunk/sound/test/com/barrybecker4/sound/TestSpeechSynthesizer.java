@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.sound;
 
-import com.barrybecker4.ui.util.GUIUtil;
 import junit.framework.TestCase;
 
 /**
@@ -19,9 +18,7 @@ public class TestSpeechSynthesizer extends TestCase {
 
 
     @Override
-    public void setUp() {
-        GUIUtil.setStandAlone(false);
-    }
+    public void setUp() {}
 
     public void testSayEnterNumber() {
         speech.sayText( ENTER_NUMBER );

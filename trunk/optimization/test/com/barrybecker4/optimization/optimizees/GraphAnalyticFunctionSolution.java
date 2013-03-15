@@ -25,7 +25,6 @@ public class GraphAnalyticFunctionSolution extends AnalyticFunctionProblem {
     /** Constructor */
     public GraphAnalyticFunctionSolution(AnalyticVariation v) {
         super(v);
-        GUIUtil.setStandAlone(false);
     }
 
     /**

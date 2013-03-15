@@ -34,7 +34,7 @@
           ManVsComp,FirstTime:boolean; {MVC: if false then coomp plays itself}
           Pattern:patternType;
 
-***************************** 
+*****************************
 procedure INITIALIZE(var wts:vector);
       var i,j:integer;
           p:string[10];

@@ -23,7 +23,6 @@ public class SimulatorApplet extends ApplicationApplet {
     private static final String DEFAULT_SIMULATOR = "com.barrybecker4.simulation.fluid.ui.FluidSimulator";
 
     public SimulatorApplet() {
-        GUIUtil.setStandAlone(true);
         simulator_ = null;
     }
 

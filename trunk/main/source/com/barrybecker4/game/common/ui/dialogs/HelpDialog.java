@@ -81,7 +81,7 @@ public final class HelpDialog extends AbstractDialog
         JPanel summaryPanel = createSummaryPanel();
 
         JLabel logo = new JLabel();
-        logo.setIcon(GUIUtil.getIcon(GameContext.GAME_ROOT + "common/ui/images/help.gif"));
+        logo.setIcon(GUIUtil.getIcon(GameContext.GAME_RESOURCE_ROOT + "common/ui/images/help.gif"));
         logo.setForeground(Color.GREEN);
 
         logoInsetsPanel.add( logo, null );

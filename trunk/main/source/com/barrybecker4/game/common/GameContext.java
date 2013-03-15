@@ -47,6 +47,7 @@ public final class GameContext {
     }
 
     public static final String GAME_ROOT = "com/barrybecker4/game/";
+    public static final String GAME_RESOURCE_ROOT = GAME_ROOT;
 
     /** if greater than 0, then debug mode is on. the higher the number, the more info that is printed.  */
     private static final int DEBUG = 0;

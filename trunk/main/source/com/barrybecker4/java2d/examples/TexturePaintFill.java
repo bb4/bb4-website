@@ -22,7 +22,7 @@ public class TexturePaintFill extends ApplicationFrame {
     private BufferedImage mImage;
 
     public TexturePaintFill( String filename ) throws IOException  {
-        Image img = Utilities.blockingLoad( Utilities.DEFAULT_IMAGE_DIR +  filename );
+        Image img = Utilities.blockingLoad( Utilities.DEFAULT_IMAGE_DIR + filename );
         mImage = Utilities.makeBufferedImage( img );
     }
 

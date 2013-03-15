@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
  */
 public class GameToolBar extends TexturedToolBar {
 
-    private static final String CORE_IMAGE_PATH = GameContext.GAME_ROOT+"common/ui/images/";
+    private static final String CORE_IMAGE_PATH = GameContext.GAME_RESOURCE_ROOT + "common/ui/images/";
     private static final long serialVersionUID = 0L;
 
     private GradientButton newGameButton_;

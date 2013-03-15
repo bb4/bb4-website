@@ -151,7 +151,7 @@ public class FluidSimulator extends Simulator {
     public void doOptimization() {
 
         Optimizer optimizer;
-        if (GUIUtil.isStandAlone())
+        if (GUIUtil.hasBasicService())    // need to verify
             optimizer = new Optimizer( this );
         else
             optimizer = new Optimizer( this, FileUtil.PROJECT_HOME +"performance/fluid/fluid_optimization.txt" );

@@ -137,6 +137,7 @@ public class FilterSamplerApp extends ApplicationFrame
      * Called whenever one of the UI parameter widgets was changed by the user.
      * @param param
      */
+    @Override
     public void parameterChanged(Parameter param) {
         // we could use param.getName() to get the filter, but its just the currently selected one.
         String key = filterList.getSelectedItem();
@@ -163,6 +164,7 @@ public class FilterSamplerApp extends ApplicationFrame
       * Called when the load button is pressed.
       * @param ae
       */
+     @Override
      public void actionPerformed( ActionEvent ae ) {
 
         FileDialog fd = new FileDialog( FilterSamplerApp.this    );

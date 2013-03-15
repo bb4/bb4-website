@@ -75,8 +75,6 @@ public class GameApp {
      */
     public static void main(String[] args) {
 
-        GUIUtil.setStandAlone(GUIUtil.hasBasicService());
-
         String defaultGame = PluginManager.getInstance().getDefaultPlugin().getName();
         String gameName = defaultGame;
         if (args.length == 1) {

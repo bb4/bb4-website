@@ -42,7 +42,7 @@ public class GtpKgsTesujisoftGoClient {
 
             Properties props = new Properties();
             FileInputStream inStream = new FileInputStream(FileUtil.getHomeDir()
-                    + "/main/source/" +  GameContext.GAME_ROOT + "twoplayer/go/resources/tesujiBot.properties");
+                    + GameContext.GAME_RESOURCE_ROOT + "twoplayer/go/resources/tesujiBot.properties");
             props.load(inStream);
             log.println("props=" + props.toString());
             inStream.close();

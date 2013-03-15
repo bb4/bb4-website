@@ -32,7 +32,7 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
     private static ImageIcon[] queenImage_ = new ImageIcon[2];
     private static ImageIcon[] kingImage_ = new ImageIcon[2];
 
-    private static final String IMAGE_DIR = GameContext.GAME_ROOT+"twoplayer/chess/ui/images/";
+    private static final String IMAGE_DIR = GameContext.GAME_RESOURCE_ROOT + "twoplayer/chess/ui/images/";
     static {
         // gets the images from resources or the filesystem depending if we are running as an applet or application respectively.
         pawnImage_[0] = GUIUtil.getIcon(IMAGE_DIR + "pawn1.png");

@@ -59,7 +59,7 @@ public abstract class GamePanel extends TexturedPanel
     /** for a resizable applet   */
     private ResizableAppletPanel resizablePanel_;
 
-    private static final String CORE_IMAGE_PATH = GameContext.GAME_ROOT+"common/ui/images/";
+    private static final String CORE_IMAGE_PATH = GameContext.GAME_RESOURCE_ROOT + "common/ui/images/";
     protected static final ImageIcon BG_TEXTURE;
     static {
         // this image shows as the transparent background for textured panels.

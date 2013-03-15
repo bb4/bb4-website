@@ -14,7 +14,8 @@ dependencies {
    //compile group: 'javax.jnlp', name: 'jnlp-api', version: '5.0', systemPath: '${java.home}/sample/jnlp/servlet/jnlp.jar'
    //compile fileTree(dir: System.getenv()['JAVA_HOME'] + '/sample/jnlp/servlet', include: 'jnlp.jar')
    //compile 'javax.jnlp:jnlp-api:5.0'
-  compile fileTree(dir: 'lib', include: '*.jar')
+   //compile 'javax.jnlp:jnlp-api:7.0'
+   compile fileTree(dir: 'lib', include: 'jnlp.jar')
 }
 
 

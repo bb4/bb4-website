@@ -8,6 +8,7 @@ import java.math.BigInteger;
 import java.util.Scanner;
 
 /**
+ * Reads a positive integer entered by the user.
  * @author Barry Becker
  */
 public class ReadNumberApp {
@@ -48,7 +49,6 @@ public class ReadNumberApp {
     }
 
     public static void main(String[] args) {
-        GUIUtil.setStandAlone(false);
 
         System.out.println("Enter numbers to speak and write long hand (or Q to quit)");
         // This works for arbitrary strings, but is not as nice sounding as the pre-generated wav file.

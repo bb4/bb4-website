@@ -35,7 +35,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     // instead of rendering we can just show image icons which look even better.
     // gets the images from resources or the filesystem depending if we are running as an applet or
     // application respectively.
-    private static final String DIR = GameContext.GAME_ROOT + "twoplayer/go/ui/images/";
+    private static final String DIR = GameContext.GAME_RESOURCE_ROOT + "twoplayer/go/ui/images/";
     public static final ImageIcon BLACK_STONE_IMG = GUIUtil.getIcon(DIR + "goStoneBlack.png");
     public static final ImageIcon WHITE_STONE_IMG = GUIUtil.getIcon(DIR + "goStoneWhite.png");
     private static final ImageIcon BLACK_STONE_DEAD_IMG = GUIUtil.getIcon(DIR + "goStoneBlackDead.png");

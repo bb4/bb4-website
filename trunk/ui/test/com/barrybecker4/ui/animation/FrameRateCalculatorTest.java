@@ -46,7 +46,7 @@ public class FrameRateCalculatorTest extends TestCase {
     public void testFrameRateAfter1WithDelay() {
         calculator.incrementFrameCount();
         ThreadUtil.sleep(100);
-        assertEquals("Unexpected initial frame rate.", 10.0, calculator.getFrameRate(), 0.1);
+        assertEquals("Unexpected initial frame rate.", 9.9, calculator.getFrameRate(), 1.0);
     }
 
     public void testFrameRateAfter3() {

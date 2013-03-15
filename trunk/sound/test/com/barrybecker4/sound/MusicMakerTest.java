@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  */
 public class MusicMakerTest extends TestCase {
 
-
+    private static final int DURATION = 5;
     /** instance under test. */
     private static final MusicMaker music = new MusicMaker();
 
@@ -20,7 +20,7 @@ public class MusicMakerTest extends TestCase {
 
         Instruments instruments = music.getInstruments();
         for (int i=0; i<instruments.getNumInstruments(); i++) {
-            music.playNote(i/8, i%8, 50, 1, 10, 200);
+            music.playNote(i/8, i%8, 50, 1, DURATION, 200);
         }
     }
 
@@ -30,7 +30,7 @@ public class MusicMakerTest extends TestCase {
 
         for (int i=0; i<instruments.getNumInstruments(); i++) {
             music.startNote(i/8, i%8, 80, i%16, 200);
-            ThreadUtil.sleep(10);
+            ThreadUtil.sleep(DURATION);
         }
         music.stopAllSounds();
     }

@@ -11,10 +11,10 @@ import java.awt.*;
 public class OpaqueTest extends JFrame {
 
     public static void main( String[] args ) {
-        GUIUtil.setStandAlone(false);
         JFrame f = new OpaqueTest();
         Container contentPane = f.getContentPane();
-		TexturedPanel rainPanel = new TexturedPanel(GUIUtil.getIcon("com/barrybecker4/apps/misc/jfcbook/rain.gif"));
+		TexturedPanel rainPanel =
+                new TexturedPanel(GUIUtil.getIcon("com/barrybecker4/apps/misc/jfcbook/rain.gif"));
 
         ResizableAppletPanel resizablePanel = new ResizableAppletPanel( rainPanel );
 
@@ -23,7 +23,7 @@ public class OpaqueTest extends JFrame {
 
         JLabel textLabel = new JLabel("test");
         JPanel plain = new JPanel();
-        plain.setPreferredSize(new Dimension(100,100));
+        plain.setPreferredSize(new Dimension(100, 100));
         plain.add(textLabel);
 
 		// JComponents are opaque by default, so the opaque

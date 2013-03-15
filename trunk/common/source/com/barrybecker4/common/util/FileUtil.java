@@ -1,12 +1,15 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.util;
 
+import com.barrybecker4.common.ClassLoaderSingleton;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.URL;
 
 /**
  * Miscellaneous commonly used file related static utility methods.
@@ -87,4 +90,25 @@ public final class FileUtil {
         }
         return outfile;
     }
+
+
+    /**
+     * @return a URL given the path to a file.
+     */
+    public static URL getURL(String sPath) {
+
+        return getURL(sPath, true);
+    }
+
+    /**
+     * @return a URL given the path to an existing file.
+     */
+    public static URL getURL(String sPath, boolean failIfNotFound) {
+
+        URL url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
+        assert (url != null || !failIfNotFound):
+            "failed to create url for  " + sPath;
+
+        return url;
+     }
 }

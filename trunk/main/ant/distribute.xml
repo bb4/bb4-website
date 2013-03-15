@@ -65,20 +65,6 @@
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-imageproc.jar"/>
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy the class files that are needed for programs that want to have sound. Produces bb4-sound.jar-->
-      <copy todir="${stagingDir}">
-        <fileset dir="${classesDir}">
-          <include name="com/barrybecker4/sound/*.class"/>
-        </fileset>
-        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
-      </copy>
-      <antcall target="copyResources">
-        <param name="path" value="sound/allophones"/>
-        <param name="pattern" value="*.wav"/>
-      </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-sound.jar"/>
-      <delete dir="${stagingDir}/com"/>
-
       <!-- copy the class files that are needed for simulation programs . Produces bb4-simulation.jar-->
       <copy todir="${stagingDir}">
           <fileset dir="${classesDir}">
