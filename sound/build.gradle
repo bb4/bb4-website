@@ -3,7 +3,7 @@
  */
 
 version = '1.0'
-mainClassName = "com.barrybecker4.sound.MidiSynth"
+mainClassName = "com.barrybecker4.sound.midi.MidiSynth"
 
 
 dependencies {
