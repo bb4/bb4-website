@@ -20,14 +20,14 @@ subprojects {
     version = '1.0'
 
 
-  repositories {
-      mavenCentral()
-      maven {
-          url "http://repo1.maven.org/maven2/"
-          url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
-          //url "http://repository.jboss.org/maven2/"
-      }
-  }
+    repositories {
+        mavenCentral()
+        maven {
+            url "http://repo1.maven.org/maven2/"
+            url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
+            //url "http://repository.jboss.org/maven2/"
+        }
+    }
 
     dependencies {
         compile group: 'commons-collections', name: 'commons-collections', version: '3.2'

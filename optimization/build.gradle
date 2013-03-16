@@ -6,9 +6,7 @@ version = '1.0'
 mainClassName = "com.barrybecker4.optimization.viewer.OptimizerEvalFrame"
 
 dependencies {
-   compile project(':common')
    compile project(':ui')
-   //compile fileTree(dir: 'lib', include: '*.jar')
 }
 
 
