@@ -1,4 +1,4 @@
-package com.barrybecker4.sound;
+package com.barrybecker4.sound.midi;
 /*
  * @(#)MidiSynth.java	1.15	99/12/03
  *
@@ -86,10 +86,7 @@ public class MidiSynth extends JPanel {
     final static int ON = 0, OFF = 1;
     final Color jfcBlue = new Color(204, 204, 255);
     final Color pink = new Color(255, 175, 175);
-    Sequencer sequencer;
-    Sequence sequence;
-    Synthesizer synthesizer;
-    Instrument instruments[];
+    MidiSynthModel model;
     ChannelData channels[];
     ChannelData cc;    // current channel
     JCheckBox mouseOverCB = new JCheckBox("mouseOver", true);
@@ -107,6 +104,7 @@ public class MidiSynth extends JPanel {
 
 
     public MidiSynth() {
+        model = new MidiSynthModel();
         setLayout(new BorderLayout());
 
         JPanel p = new JPanel();
@@ -127,24 +125,9 @@ public class MidiSynth extends JPanel {
 
 
     public void open() {
-        try {
-            if (synthesizer == null) {
-                if ((synthesizer = MidiSystem.getSynthesizer()) == null) {
-                    System.out.println("getSynthesizer() failed!");
-                    return;
-                }
-            }
-            synthesizer.open();
-            sequencer = MidiSystem.getSequencer();
-            sequence = new Sequence(Sequence.PPQ, 10);
-        } catch (Exception ex) { ex.printStackTrace(); return; }
+        model.open();
 
-        Soundbank sb = synthesizer.getDefaultSoundbank();
-        if (sb != null) {
-            instruments = synthesizer.getDefaultSoundbank().getInstruments();
-            synthesizer.loadInstrument(instruments[0]);
-        }
-        MidiChannel midiChannels[] = synthesizer.getChannels();
+        MidiChannel midiChannels[] = model.getMidiChannels();
         channels = new ChannelData[midiChannels.length];
         for (int i = 0; i < channels.length; i++) {
             channels[i] = new ChannelData(midiChannels[i], i);
@@ -159,15 +142,7 @@ public class MidiSynth extends JPanel {
 
 
     public void close() {
-        if (synthesizer != null) {
-            synthesizer.close();
-        }
-        if (sequencer != null) {
-            sequencer.close();
-        }
-        sequencer = null;
-        synthesizer = null;
-        instruments = null;
+        model.close();
         channels = null;
         if (recordFrame != null) {
             recordFrame.dispose();
@@ -188,7 +163,7 @@ public class MidiSynth extends JPanel {
         ShortMessage message = new ShortMessage();
         try {
             long millis = System.currentTimeMillis() - startTime;
-            long tick = millis * sequence.getResolution() / 500;
+            long tick = millis * model.getResolution() / 500;
             message.setMessage(type+cc.num, num, cc.velocity);
             MidiEvent event = new MidiEvent(message, tick);
             track.add(event);
@@ -408,8 +383,8 @@ public class MidiSynth extends JPanel {
                 public int getColumnCount() { return nCols; }
                 public int getRowCount() { return nRows;}
                 public Object getValueAt(int r, int c) {
-                    if (instruments != null) {
-                        return instruments[c*nRows+r].getName();
+                    if (model.hasInstruments()) {
+                        return model.getInstrument(c*nRows+r).getName();
                     } else {
                         return Integer.toString(c*nRows+r);
                     }
@@ -474,8 +449,8 @@ public class MidiSynth extends JPanel {
         }
 
         private void programChange(int program) {
-            if (instruments != null) {
-                synthesizer.loadInstrument(instruments[program]);
+            if (model.hasInstruments()) {
+                model.loadInstrument(program);
             }
             cc.channel.programChange(program);
             if (record) {
@@ -647,10 +622,7 @@ public class MidiSynth extends JPanel {
                 public void windowClosing(WindowEvent e) {recordFrame = null;}
             });
 
-            sequencer.addMetaEventListener(this);
-            try {
-                sequence = new Sequence(Sequence.PPQ, 10);
-            } catch (Exception ex) { ex.printStackTrace(); }
+            model.addSequence(this);
 
             JPanel p2 = new JPanel();
             p2.setBorder(new EmptyBorder(5,5,5,5));
@@ -726,7 +698,7 @@ public class MidiSynth extends JPanel {
             if (button.equals(recordB)) {
                 record = recordB.getText().startsWith("Record");
                 if (record) {
-                    track = sequence.createTrack();
+                    track = model.getSequence().createTrack();
                     startTime = System.currentTimeMillis();
 
                     // add a program change right at the beginning of
@@ -738,8 +710,8 @@ public class MidiSynth extends JPanel {
                     saveB.setEnabled(false);
                 } else {
                     String name;
-                    if (instruments != null) {
-                        name = instruments[cc.col*8+cc.row].getName();
+                    if (model.hasInstruments()) {
+                        name = model.getInstrument(cc.col*8+cc.row).getName();
                     } else {
                         name = Integer.toString(cc.col*8+cc.row);
                     }
@@ -752,14 +724,14 @@ public class MidiSynth extends JPanel {
             } else if (button.equals(playB)) {
                 if (playB.getText().startsWith("Play")) {
                     try {
-                        sequencer.open();
-                        sequencer.setSequence(sequence);
+                        model.getSequencer().open();
+                        model.getSequencer().setSequence(model.getSequence());
                     } catch (Exception ex) { ex.printStackTrace(); }
-                    sequencer.start();
+                    model.getSequencer().start();
                     playB.setText("Stop");
                     recordB.setEnabled(false);
                 } else {
-                    sequencer.stop();
+                    model.getSequencer().stop();
                     playB.setText("Play");
                     recordB.setEnabled(true);
                 }
@@ -790,7 +762,6 @@ public class MidiSynth extends JPanel {
             }
         }
 
-
         public void meta(MetaMessage message) {
             if (message.getType() == 47) {  // 47 is end of track
                 playB.setText("Play");
@@ -798,28 +769,18 @@ public class MidiSynth extends JPanel {
             }
         }
 
-
         public void saveMidiFile(File file) {
             try {
-                int[] fileTypes = MidiSystem.getMidiFileTypes(sequence);
+                int[] fileTypes = MidiSystem.getMidiFileTypes(model.getSequence());
                 if (fileTypes.length == 0) {
                     System.out.println("Can't save sequence");
                 } else {
-                    if (MidiSystem.write(sequence, fileTypes[0], file) == -1) {
+                    if (MidiSystem.write(model.getSequence(), fileTypes[0], file) == -1) {
                         throw new IOException("Problems writing to file");
                     }
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-            }
-        }
-
-        class TrackData extends Object {
-            Integer chanNum; String name; Track track;
-            public TrackData(int chanNum, String name, Track track) {
-                this.chanNum = Integer.valueOf(chanNum);
-                this.name = name;
-                this.track = track;
             }
         }
     }
