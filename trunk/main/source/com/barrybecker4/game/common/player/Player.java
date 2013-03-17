@@ -2,7 +2,7 @@
 package com.barrybecker4.game.common.player;
 
 import com.barrybecker4.game.common.online.server.IServerConnection;
-import com.barrybecker4.game.multiplayer.common.online.OnlinePlayer;
+import com.barrybecker4.game.common.online.OnlinePlayer;
 
 import java.awt.*;
 import java.io.Serializable;
