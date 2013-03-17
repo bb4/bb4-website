@@ -1,7 +1,7 @@
 /*  Java Speech Synthesizer
  *  (C) LOTONtech Limited 2001
  */
-package com.barrybecker4.sound;
+package com.barrybecker4.sound.speech;
 
 import com.barrybecker4.common.concurrency.ThreadUtil;
 import com.barrybecker4.common.util.FileUtil;
@@ -12,14 +12,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 import java.net.URL;
-import java.util.StringTokenizer;
 
 /**
  * See http://www.javaworld.com/javaworld/jw-08-2001/jw-0817-javatalk.html?page=1
- *
- * The speech engine works by concatenating short sound samples that represent the smallest
- * units of human -- in this case English -- speech.
- * Those sound samples, called allophones, are labeled with a one-, two-, or three-letter identifier.
+
+ * Allophones, are labeled with a one-, two-, or three-letter identifier.
  * Some identifiers are obvious and some not so obvious, as you can see from the phonetic
  * representation of the word "hello."
 
@@ -27,131 +24,35 @@ import java.util.StringTokenizer;
     e -- sounds as you would expect
     l -- sounds as you would expect, but notice that I've reduced a double "l" to a single one
     oo -- is the sound for "hello," not for "bot," and not for "too"
-
-    Here is a list of the available allophones:
-
-    a -- as in cat
-    b -- as in cab
-    c -- as in cat
-    d -- as in dot
-    e -- as in bet
-    f -- as in frog
-    g -- as in frog
-    h -- as in hog
-    i -- as in pig
-    j -- as in jig
-    k -- as in keg
-    l -- as in leg
-    m -- as in met
-    n -- as in begin
-    o -- as in not
-    p -- as in pot
-    r -- as in rot
-    s -- as in sat
-    t -- as in sat
-    u -- as in put
-    v -- as in have
-    w -- as in wet
-    y -- as in yet
-    z -- as in zoo
-
-    aa -- as in fake
-    ay -- as in hay
-    ee -- as in bee
-    ii -- as in high
-    oo -- as in go
-
-    bb -- variation of b with different emphasis
-    dd -- variation of d with different emphasis
-    ggg -- variation of g with different emphasis
-    hh -- variation of h with different emphasis
-    ll -- variation of l with different emphasis
-    nn -- variation of n with different emphasis
-    rr -- variation of r with different emphasis
-    tt -- variation of t with different emphasis
-    yy -- variation of y with different emphasis
-
-    ar -- as in car
-    aer -- as in care
-    ch -- as in which
-    ck -- as in check
-    ear -- as in beer
-    er -- as in later
-    err -- as in later (longer sound)
-    ng -- as in feeding
-    or -- as in law
-    ou -- as in zoo
-    ouu -- as in zoo (longer sound)
-    ow -- as in cow
-    oy -- as in boy
-    sh -- as in shut
-    th -- as in thing
-    dth -- as in this
-    uh -- variation of u
-    wh -- as in where
-    zh -- as in Asian
  */
-public class SpeechSynthesizer {
-
-    private SourceDataLine line = null;
-
-    /** delay in millis between words. */
-    private static final int DELAY_BETWEEN_WORDS = 100;
+class PhoneToken {
 
     private static final String RESOURCE_PATH = "com/barrybecker4/sound/allophones/";
+    private static final int COMMA_PAUSE = 200;
+    private static final int PERIOD_PAUSE = 680;
+    private static final int MAX_MERGE_COUNT = 1000;
 
-    /*
-     * This method speaks a phonetic word specified on the command line.
-     */
-    public static void main( String args[] ) {
-        SpeechSynthesizer player = new SpeechSynthesizer();
-        if ( args.length > 0 ) player.sayPhoneWord( args[0] );
-        System.exit( 0 );
-    }
+    /** delay in millis between words. */
+    private static final int DELAY_BETWEEN_WORDS = 200;
 
-     /*
-     * This method speaks the given phonetic words.
-     */
-    public void sayText( String text )  {
-        sayPhoneWords( text.split(" "));
-    }
 
-    /*
-     * This method speaks the given phonetic words.
-     */
-    public void sayPhoneWords( String[] words ) {
-        for (final String newVar : words) {
-            sayPhoneWord(newVar);
-        }
-    }
+    private String phoneToken;
+    private SourceDataLine line = null;
 
-    /*
+    /**
+     * Constructor.
      * This method speaks the given phonetic word.
+     * Construct a file name for the allophone and load/say it
      */
-    public void sayPhoneWord( String word ) {
-        // -- set up a dummy byte array for the previous sound --
-        byte[] previousSound = null;
-
-        // -- split the input string into separate allophones --
-        StringTokenizer st = new StringTokenizer( word, "|", false );
-
-        //System.out.println("about to say: "+ word);
-        while ( st.hasMoreTokens() ) {
-            // -- construct a file name for the allophone --
-            String phoneToken = st.nextToken();
-
-            previousSound = processPhoneToken(previousSound, phoneToken);
-        }
-
-        // -- play the final sound and drain the sound channel --
-        playSound( previousSound );
-        drain();
+    PhoneToken(String token) {
+        phoneToken = token;
     }
+
 
     /** Speak the next allophone unless it is punctuation, in which case we just pause. */
-    private byte[] processPhoneToken(byte[] previousSound, String phoneToken) {
+    byte[] process(byte[] previousSound) {
 
-        if (!pauseForPunctuation(phoneToken)) {
+        if (!pauseForPunctuation()) {
 
             String phoneFile = RESOURCE_PATH + phoneToken + ".au";
 
@@ -165,17 +66,31 @@ public class SpeechSynthesizer {
     }
 
     /** Pause appropriately if we have encountered punctuation. */
-    private boolean pauseForPunctuation(String thisPhoneToken) {
-        if (thisPhoneToken.equals(",") || thisPhoneToken.equals(".")) {
-            if (thisPhoneToken.equals(",")) {
-                pause(180);
+    private boolean pauseForPunctuation() {
+        if (phoneToken.equals(",") || phoneToken.equals(".")) {
+            if (phoneToken.equals(",")) {
+                ThreadUtil.sleep(COMMA_PAUSE);
             }
             else {
-                pause(680);
+                ThreadUtil.sleep(PERIOD_PAUSE);
             }
             return true;
         }
         return false;
+    }
+
+    /*
+     * This method drains the sound channel.
+     */
+    void drain() {
+        if ( line != null )  {
+            // this used to be just drain, but I added flush to make it work post java 1.5
+            line.drain();
+            line.flush();
+            ThreadUtil.sleep(100);
+
+        }
+        ThreadUtil.sleep(DELAY_BETWEEN_WORDS);
     }
 
     /**
@@ -186,8 +101,8 @@ public class SpeechSynthesizer {
         if ( previousSound != null ) {
             // -- merge the previous allophone with this one if we can --
             int mergeCount = 0;
-            if ( previousSound.length >= 500 && thisSound.length >= 500 )  {
-                mergeCount = 500;
+            if ( previousSound.length >= MAX_MERGE_COUNT && thisSound.length >= MAX_MERGE_COUNT )  {
+                mergeCount = MAX_MERGE_COUNT;
             }
             for ( int i = 0; i < mergeCount; i++ ) {
                 previousSound[previousSound.length - mergeCount + i]
@@ -202,41 +117,26 @@ public class SpeechSynthesizer {
             System.arraycopy(thisSound, mergeCount, newSound, 0, newSound.length);
             return newSound;
         }
-        else  {
+        else {
             return thisSound;
         }
     }
 
-    /*
-     * This method drains the sound channel.
-     */
-    private void drain() {
-        if ( line != null )  {
-            // this used to be just drain, but I added flush to make it work post java 1.5
-            line.drain();
-            //System.out.println("draining fp=" + line.getFramePosition() + " info=" + line.getLineInfo());
-            pause(50);
-            line.flush();
-        }
-        pause(DELAY_BETWEEN_WORDS);
-    }
-
-    private void pause(int delay) {
-
-        ThreadUtil.sleep(delay);
-    }
-
-    /*
+    /**
      * This method plays a sound sample.
      */
-    private void playSound( byte[] data ) {
+    public void playSound( byte[] data ) {
         if (data == null) return;
+        if (line == null) {
+            throw new IllegalArgumentException("Problem processing " + phoneToken);
+        }
         if ( data.length > 0 ) {
             line.write( data, 0, data.length );
+            ThreadUtil.sleep(100);
         }
     }
 
-    /*
+    /**
      * This method reads the file for a single allophone and constructs a byte vector.
      */
     private byte[] getSound( String sPath ) {
@@ -280,7 +180,7 @@ public class SpeechSynthesizer {
 
             return newData;
         } catch (Exception e) {
-            System.out.println( "Something wrong with "+sPath );
+            System.out.println( "Something wrong with " + sPath );
             e.printStackTrace();
             return new byte[0];
         }
@@ -288,13 +188,13 @@ public class SpeechSynthesizer {
 
     private AudioFormat createAudioFormat(AudioFormat format) {
         return new AudioFormat(
-                AudioFormat.Encoding.PCM_SIGNED,
-                format.getSampleRate(),
-                format.getSampleSizeInBits() << 1,
-                format.getChannels(),
-                format.getFrameSize() << 1,
-                format.getFrameRate(),
-                true );
+            AudioFormat.Encoding.PCM_SIGNED,
+            format.getSampleRate(),
+            format.getSampleSizeInBits() << 1,
+            format.getChannels(),
+            format.getFrameSize() << 1,
+            format.getFrameRate(),
+            true );
     }
 
     private SourceDataLine createDataLine(AudioFormat format) throws Exception {
@@ -303,7 +203,6 @@ public class SpeechSynthesizer {
         // -- can we find a suitable kind of line? --
         DataLine.Info outInfo = new DataLine.Info( SourceDataLine.class, format );
         if ( !AudioSystem.isLineSupported( outInfo ) ) {
-            System.out.println( "Line matching " + outInfo + " not supported." );
             throw new Exception( "Line matching " + outInfo + " not supported." );
         }
 

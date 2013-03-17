@@ -1,8 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.misc.readnumber;
 
-import com.barrybecker4.sound.SpeechSynthesizer;
-import com.barrybecker4.ui.util.GUIUtil;
+import com.barrybecker4.sound.speech.SpeechSynthesizer;
 
 import java.math.BigInteger;
 import java.util.Scanner;
