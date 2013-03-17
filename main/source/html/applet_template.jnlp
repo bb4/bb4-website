@@ -17,7 +17,7 @@
             <jar href="bb4-game2Common.jar" main="false"/>
             <jar href="bb4-multiPlayerCommon.jar" main="false"/>
             <jar href="bb4-puzzle.jar" main="false"/>
-            <jar href="bb4-com.barrybecker4.sound.jar" main="false"/>
+            <jar href="bb4-sound-1.0.jar" main="false"/>
             <jar href="bb4-ui-1.0.jar" main="false"/>
             <jar href="bb4-optimization-1.0.jar" main="false"/>
             <jar href="pente.jar" main="false"/>
