@@ -92,7 +92,7 @@ public class GridUpdater {
         double div = updater.updatePressure(timeStep);
 
          if (updater.getNumIterations() > 10) {
-            Logger.log(0, " updatePress: converged to maxDiv = " + div
+            Logger.log(1, " updatePress: converged to maxDiv = " + div
                     + " after " + updater.getNumIterations() + " iterations.");
         }
         return div;

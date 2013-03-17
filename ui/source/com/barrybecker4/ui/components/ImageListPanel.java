@@ -165,7 +165,8 @@ public final class ImageListPanel extends JPanel
         int w = firstImage.getWidth();
         int h = firstImage.getHeight();
         for (BufferedImage img : images) {
-            assert (img.getWidth() == w) : "Image dimensions " + img.getWidth() + ", " + img.getHeight() +" do not match first: "+ w+ ", "+ h;
+            assert (img.getWidth() == w) :
+                    "Image dimensions " + img.getWidth() + ", " + img.getHeight() +" do not match first: "+ w+ ", "+ h;
         }
         w += TOTAL_MARGIN;
         h += TOTAL_MARGIN;

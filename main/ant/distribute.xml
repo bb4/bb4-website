@@ -46,6 +46,13 @@
         </fileset>
       </copy>
 
+      <!-- copy the ui jar needed for applets. -->
+      <copy todir="${distributionGameDir}">
+        <fileset dir="${soundDir}/build/libs">
+          <include name="bb4-sound*.jar"/>
+        </fileset>
+      </copy>
+
       <!-- copy the optimization jar needed for all  applets. -->
       <copy todir="${distributionGameDir}">
         <fileset dir="${optimizationDir}/build/libs">

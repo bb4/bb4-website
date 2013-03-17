@@ -38,7 +38,7 @@ public class ImageBreederApplet extends ApplicationApplet
     private static int NUM_CHILD_IMAGES = 20;
     private static float DEFAULT_VARIANCE = 0.2f;
     private float variance = DEFAULT_VARIANCE;
-    private static final String IMAGE_DIR = "mani/source/com/barrybecker4/apps/imagebreeder/ui/images/";
+    private static final String IMAGE_DIR = "com/barrybecker4/apps/imagebreeder/ui/images/";
 
     private static final String DEFAULT_IMAGE = "brian_in_surf1_big_hair_smaller.jpg";
 

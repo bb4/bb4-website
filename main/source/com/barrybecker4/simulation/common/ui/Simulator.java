@@ -79,6 +79,7 @@ public abstract class Simulator extends AnimationComponent
 
         button.addActionListener( new ActionListener() {
 
+            @Override
             public void actionPerformed( ActionEvent e ) {
 
                 optionsDialog_.setLocationRelativeTo( (Component) e.getSource() );
@@ -122,6 +123,7 @@ public abstract class Simulator extends AnimationComponent
 
         final JButton resetButton = new JButton( "Reset");
         resetButton.addActionListener( new ActionListener()  {
+            @Override
             public void actionPerformed( ActionEvent e )
             {
                 reset();
@@ -150,6 +152,7 @@ public abstract class Simulator extends AnimationComponent
        System.out.println("not implemented for this simulator");
     }
 
+    @Override
     public boolean evaluateByComparison() {
         return false;
     }
@@ -158,11 +161,13 @@ public abstract class Simulator extends AnimationComponent
     /**
      * part of the Optimizee interface
      */
+    @Override
     public double getOptimalFitness() {
         return 0;
     }
 
     /** {@inheritDoc} */
+    @Override
     public double compareFitness(ParameterArray params1, ParameterArray params2) {
         return evaluateFitness(params1) - evaluateFitness(params2);
     }
@@ -172,6 +177,7 @@ public abstract class Simulator extends AnimationComponent
      *
      * evaluates the fitness.
      */
+    @Override
     public double evaluateFitness( ParameterArray params ) {
         assert false : "not implemented yet";
         return 0.0;
