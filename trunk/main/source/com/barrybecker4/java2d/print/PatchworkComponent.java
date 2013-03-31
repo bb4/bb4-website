@@ -8,9 +8,11 @@ import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class PatchworkComponent extends JComponent
-                                implements Printable
-{
+                                implements Printable {
     private float mSide = 36;
     private float mOffset = 36;
     private int mColumns = 8;
@@ -20,8 +22,7 @@ public class PatchworkComponent extends JComponent
 
     private Paint mHorizontalGradient, mVerticalGradient;
 
-    public PatchworkComponent()
-    {
+    public PatchworkComponent() {
         float x = mOffset;
         float y = mOffset;
         float halfSide = mSide / 2;
@@ -39,14 +40,13 @@ public class PatchworkComponent extends JComponent
                 x0, y0, Color.darkGray, x1, y1, Color.lightGray, true );
     }
 
-    public PatchworkComponent( String s )
-    {
+    public PatchworkComponent( String s ) {
         this();
         mString = s;
     }
 
-    public void paintComponent( Graphics g )
-    {
+    @Override
+    public void paintComponent( Graphics g ) {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.rotate( Math.PI / 24, mOffset, mOffset );
@@ -76,8 +76,8 @@ public class PatchworkComponent extends JComponent
         g2.drawString( mString, x, y );
     }
 
-    public int print( Graphics g, PageFormat pageFormat, int pageIndex )
-    {
+    @Override
+    public int print( Graphics g, PageFormat pageFormat, int pageIndex ) {
         if ( pageIndex != 0 ) return NO_SUCH_PAGE;
         paintComponent( g );
         return PAGE_EXISTS;

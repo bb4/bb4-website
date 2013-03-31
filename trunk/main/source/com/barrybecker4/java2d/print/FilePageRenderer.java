@@ -11,19 +11,24 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Vector;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class FilePageRenderer extends JComponent
                               implements Printable {
-    private int mCurrentPage;
-    // mLines contains all the lines of the file.
-    private Vector<String> mLines;
-    // mPages is a Vector of Vectors. Each of its elements
-    //   represents a single page. Each of its elements is
-    //   a Vector containing Strings that are the lines for
-    //   a particular page.
-    private Vector<Vector<String>> mPages;
+    private int currentPage;
+
+    /** lines contains all the lines of the file.   */
+    private Vector<String> lines;
+
+    /**
+     * Each element represents a single page. Each page's elements is
+     * a Vector containing Strings that are the lines for a particular page.
+     */
+    private Vector<Vector<String>> pages;
     private Font mFont;
     private int mFontSize;
-    private Dimension mPreferredSize;
+    private Dimension preferredSize;
 
     public FilePageRenderer( File file, PageFormat pageFormat )
             throws IOException {
@@ -34,9 +39,9 @@ public class FilePageRenderer extends JComponent
                 new FileReader( file ) );
         // Read all the lines.
         String line;
-        mLines = new Vector<String>();
+        lines = new Vector<String>();
         while ( (line = in.readLine()) != null )
-            mLines.addElement( line );
+            lines.addElement( line );
         // Clean up.
         in.close();
         // Now paginate, based on the PageFormat.
@@ -44,24 +49,24 @@ public class FilePageRenderer extends JComponent
     }
 
     public void paginate( PageFormat pageFormat ) {
-        mCurrentPage = 0;
-        mPages = new Vector<Vector<String>>();
+        currentPage = 0;
+        pages = new Vector<Vector<String>>();
         float y = mFontSize;
         Vector<String> page = new Vector<String>();
-        for ( int i = 0; i < mLines.size(); i++ ) {
-            String line = mLines.elementAt( i );
+        for ( int i = 0; i < lines.size(); i++ ) {
+            String line = lines.elementAt( i );
             page.addElement( line );
             y += mFontSize;
             if ( y + mFontSize * 2 > pageFormat.getImageableHeight() ) {
                 y = 0;
-                mPages.addElement( page );
+                pages.addElement(page);
                 page = new Vector<String>();
             }
         }
         // Add the last page.
-        if ( page.size() > 0 ) mPages.addElement( page );
+        if ( page.size() > 0 ) pages.addElement( page );
         // Set our preferred size based on the PageFormat.
-        mPreferredSize = new Dimension( (int) pageFormat.getImageableWidth(),
+        preferredSize = new Dimension( (int) pageFormat.getImageableWidth(),
                 (int) pageFormat.getImageableHeight() );
         repaint();
     }
@@ -71,11 +76,11 @@ public class FilePageRenderer extends JComponent
         Graphics2D g2 = (Graphics2D) g;
         // Make the background white.
         Rectangle2D r = new Rectangle2D.Float( 0, 0,
-                mPreferredSize.width, mPreferredSize.height );
+                preferredSize.width, preferredSize.height );
         g2.setPaint( Color.white );
         g2.fill( r );
         // Get the current page.
-        Vector page = (Vector) mPages.elementAt( mCurrentPage );
+        Vector page = (Vector) pages.elementAt(currentPage);
         // Draw all the lines for this page.
         g2.setFont( mFont );
         g2.setPaint( Color.black );
@@ -88,39 +93,42 @@ public class FilePageRenderer extends JComponent
         }
     }
 
+    @Override
     public int print( Graphics g, PageFormat pageFormat, int pageIndex ) {
-        if ( pageIndex >= mPages.size() ) return NO_SUCH_PAGE;
-        int savedPage = mCurrentPage;
-        mCurrentPage = pageIndex;
+        if ( pageIndex >= pages.size() ) return NO_SUCH_PAGE;
+        int savedPage = currentPage;
+        currentPage = pageIndex;
         Graphics2D g2 = (Graphics2D) g;
         g2.translate( pageFormat.getImageableX(), pageFormat.getImageableY() );
-        paint( g2 );
-        mCurrentPage = savedPage;
+        paint(g2);
+        currentPage = savedPage;
         return PAGE_EXISTS;
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return mPreferredSize;
+        return preferredSize;
     }
 
     public int getCurrentPage()  {
-        return mCurrentPage;
+        return currentPage;
     }
 
     public int getNumPages() {
-        return mPages.size();
+        return pages.size();
     }
 
     public void nextPage() {
-        if ( mCurrentPage < mPages.size() - 1 )
-            mCurrentPage++;
+        if ( currentPage < pages.size() - 1 ) {
+            currentPage++;
+        }
         repaint();
     }
 
     public void previousPage() {
-        if ( mCurrentPage > 0 )
-            mCurrentPage--;
+        if ( currentPage > 0 ) {
+            currentPage--;
+        }
         repaint();
     }
 }

@@ -10,18 +10,14 @@ import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
-public class SwingPrinter
-        extends JFrame
-{
-    public static void main( String[] args )
-    {
+public class SwingPrinter extends JFrame {
+    public static void main( String[] args ) {
         new SwingPrinter();
     }
 
     private PageFormat mPageFormat;
 
-    public SwingPrinter()
-    {
+    public SwingPrinter() {
         super( "SwingPrinter v1.0" );
         createUI();
         PrinterJob pj = PrinterJob.getPrinterJob();
@@ -29,8 +25,7 @@ public class SwingPrinter
         setVisible( true );
     }
 
-    protected void createUI()
-    {
+    protected void createUI() {
         setSize( 300, 300 );
         center();
 
@@ -52,17 +47,15 @@ public class SwingPrinter
         getContentPane().add( new PatchworkComponent() );
 
         // Exit the application when the window is closed.
-        addWindowListener( new WindowAdapter()
-        {
-            public void windowClosing( WindowEvent e )
-            {
+        addWindowListener( new WindowAdapter() {
+            @Override
+            public void windowClosing( WindowEvent e ) {
                 System.exit( 0 );
             }
         } );
     }
 
-    protected void center()
-    {
+    protected void center() {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension us = getSize();
         int x = (screen.width - us.width) / 2;
@@ -71,15 +64,13 @@ public class SwingPrinter
     }
 
     public class FilePrintAction
-            extends AbstractAction
-    {
-        public FilePrintAction()
-        {
+            extends AbstractAction {
+        public FilePrintAction() {
             super( "Print" );
         }
 
-        public void actionPerformed( ActionEvent ae )
-        {
+        @Override
+        public void actionPerformed( ActionEvent ae ) {
             PrinterJob pj = PrinterJob.getPrinterJob();
             ComponentPrintable cp = new ComponentPrintable( getContentPane() );
             pj.setPrintable( cp, mPageFormat );
@@ -94,30 +85,25 @@ public class SwingPrinter
     }
 
     public class FilePageSetupAction
-            extends AbstractAction
-    {
-        public FilePageSetupAction()
-        {
+            extends AbstractAction {
+        public FilePageSetupAction() {
             super( "Page setup..." );
         }
 
-        public void actionPerformed( ActionEvent ae )
-        {
+        @Override
+        public void actionPerformed( ActionEvent ae ) {
             PrinterJob pj = PrinterJob.getPrinterJob();
             mPageFormat = pj.pageDialog( mPageFormat );
         }
     }
 
-    public static class FileQuitAction
-            extends AbstractAction
-    {
-        public FileQuitAction()
-        {
+    public static class FileQuitAction extends AbstractAction {
+        public FileQuitAction() {
             super( "Quit" );
         }
 
-        public void actionPerformed( ActionEvent ae )
-        {
+        @Override
+        public void actionPerformed( ActionEvent ae ) {
             System.exit( 0 );
         }
     }
