@@ -53,10 +53,17 @@
         </fileset>
       </copy>
 
-      <!-- copy the optimization jar needed for all  applets. -->
+      <!-- copy the optimization jar needed for many applets. -->
       <copy todir="${distributionGameDir}">
         <fileset dir="${optimizationDir}/build/libs">
           <include name="bb4-optimization*.jar"/>
+        </fileset>
+      </copy>
+
+      <!-- copy the puzzle jars needed for puzzle applets. -->
+      <copy todir="${distributionGameDir}">
+        <fileset dir="${puzzleDir}/build/libs">
+          <include name="bb4-*.jar"/>
         </fileset>
       </copy>
 
@@ -196,60 +203,6 @@
           <param name="jarFile" value="trivial.jar"/>
       </antcall>
 
-      <!-- copy the class files that are needed for puzzle deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="puzzle/common"/>
-          <param name="jarFile" value="bb4-puzzle.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for maze deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="puzzle/maze"/>
-          <param name="jarFile" value="maze.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for redpuzzle deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="puzzle/redpuzzle"/>
-          <param name="jarFile" value="redbb4-puzzle.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for sudoku deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="puzzle/sudoku"/>
-          <param name="jarFile" value="sudoku.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for hiq deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="puzzle/hiq"/>
-          <param name="jarFile" value="hiq.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for tantrix deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="puzzle/tantrix"/>
-          <param name="jarFile" value="tantrix.jar"/>
-      </antcall>
-
-       <!-- copy xml and media files for stories -->
-      <antcall target="copyImageResources">
-        <param name="path" value="puzzle/adventure/stories/**/images"/>
-      </antcall>
-      <antcall target="copyAudioResources">
-        <param name="path" value="puzzle/adventure/stories/**/sounds"/>
-      </antcall>
-      <antcall target="copyResources">
-          <param name="path" value="puzzle/adventure/stories/**"/>
-          <param name="pattern" value="*.xml"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for adventure deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="puzzle/adventure"/>
-          <param name="jarFile" value="adventure.jar"/>
-      </antcall>
-
       <!-- copy the class files that are needed for snake deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="simulation/snake"/>
@@ -274,7 +227,7 @@
           <param name="jarFile" value="predprey.jar"/>
       </antcall>
 
-      <!-- copy the class files that are needed for hab sim deployment -->
+      <!-- copy the class files that are needed for habitat sim deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="simulation/habitat"/>
           <param name="jarFile" value="habitat.jar"/>

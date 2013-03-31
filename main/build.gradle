@@ -9,7 +9,8 @@ mainClassName = "com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure"
 dependencies {
     compile project(':optimization')
     compile project(':sound')
-  compile project(':ui')
+    compile project(':ui')
+    compile project(':puzzle')
 
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.7'

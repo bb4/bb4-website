@@ -3,10 +3,6 @@
 // @author Barry Becker
 
 description = 'Applets'
-defaultTasks 'build'
-
-// simple task test at root level.
-task hello  { task->println "Project name === $task.project.name"}
 
 subprojects {
     apply plugin: 'java'
@@ -16,7 +12,7 @@ subprojects {
     apply plugin: 'application'
     apply plugin: 'idea'
 
-    defaultTasks 'build'
+    defaultTasks 'clean', 'build'
     version = '1.0'
 
 

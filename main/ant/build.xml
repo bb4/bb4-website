@@ -27,6 +27,7 @@
     <pathelement location="${uiJar}"/>
     <pathelement location="${optimizationJar}"/>
     <pathelement location="${soundJar}"/>
+    <pathelement path="${puzzlePath}"/>
     <pathelement location="${libDir}/vecmath.jar"/>
     <!--pathelement location="${libDir}/sun.jar"/-->
     <pathelement location="${libDir}/jai-codec-1.1.3.jar"/>
@@ -271,15 +272,6 @@
     </antcall>
   </target>
 
-  <target name="executeMaze" description="Run the maze generation program">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.puzzle.maze.ui.MazeSimulator"/>
-      <param name="libPath" value="${libDir}/vecmath.jar"/>
-      <param name="args" value=""/>
-    </antcall>
-  </target>
-
-
   <target name="executeSpirograph" description="Run the SpiroGraph program">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.apps.spirograph.SpiroGraph"/>
@@ -351,23 +343,6 @@
      </antcall>
   </target>
 
-  <target name="executeAdventure(Text)" depends="compile" description="An Exciting text based adventure game">
-    <echo message="now executing TextAdventure"/>
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.puzzle.adventure.TextAdventure"/>
-      <param name="args" value="ludlow/ludlowScript.xml"/>
-    </antcall>
-  </target>
-
-  <target name="executeAdventure(Graphical)" depends="compile" description="An Exciting graphical based adventure game">
-    <echo message="now executing GraphicalAdventure"/>
-    <antcall target="executeProgram">
-      <param name="args" value="ludlow/ludlowScript.xml"/>
-      <param name="className" value="com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure"/>
-      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar" />
-    </antcall>
-  </target>
-
   <target name="executeGiveChange" depends="compile" description="A simple educational program for computing change.">
     <echo message="now executing GiveChange"/>
     <java classname="com.barrybecker4.apps.misc.givechange.GiveChange" classpath="${run.classPath}"
@@ -400,40 +375,6 @@
           <jvmarg value="${assertionsFlag}"/>
       </java>
   </target>
-
-  <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle">
-     <echo message="now executing red puzzle"/>
-     <java classname="com.barrybecker4.puzzle.redpuzzle.ui.RedPuzzle" classpath="${run.classPath}"
-           fork="true" jvm="${java_compiler}" maxmemory="128M">
-         <jvmarg value="${assertionsFlag}"/>
-     </java>
-  </target>
-
-  <target name="executeTantrixPuzzle" depends="compile" description=" run the Tantrix Puzzle">
-     <echo message="now executing tantrix puzzle"/>
-      <antcall target="executeProgram">
-          <param name="className" value="com.barrybecker4.puzzle.tantrix.ui.TantrixPuzzle"/>
-          <param name="libPath" value="${libDir}/vecmath.jar;"/>
-          <param name="args" value="-name galactic -locale ENGLISH"/>
-      </antcall>
-  </target>
-
-  <target name="executeSudoku" depends="compile" description=" run the Sudoku solver">
-     <echo message="now executing Sudoku"/>
-     <java classname="com.barrybecker4.puzzle.sudoku.ui.SudokuPuzzle" classpath="${run.classPath}"
-           fork="true" jvm="${java_compiler}" maxmemory="256M">
-         <jvmarg value="${assertionsFlag}"/>
-     </java>
-  </target>
-
-  <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle">
-     <echo message="now executing Hi-Q"/>
-     <java classname="com.barrybecker4.puzzle.hiq.ui.HiQPuzzle" classpath="${run.classPath}"
-           fork="true" jvm="${java_compiler}" maxmemory="512M">
-         <jvmarg value="${assertionsFlag}"/>
-     </java>
-  </target>
-
 
   <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
     <antcall target="executeProgram">

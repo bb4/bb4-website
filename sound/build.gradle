@@ -14,7 +14,7 @@ dependencies {
 jar {
     archiveName = 'bb4-sound-' + version + '.jar'
     manifest {
-        attributes 'Implementation-Title': 'Sound realted code',
+        attributes 'Implementation-Title': 'Sound related code',
             'Implementation-Version': version,
             provider: 'gradle',
             'Main-Class': mainClassName
