@@ -10,112 +10,119 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
-public class SplitImageComponent
-        extends JPanel
-{
+/**
+ * Shows an image that can be split dow the middle according to where the user clicks.
+ * There are left and right images shown on either side of the split.
+ * @author Barry Becker
+ */
+public class SplitImageComponent extends JPanel {
+
     private BufferedImage mImage;
     private BufferedImage mSecondImage;
     private int mSplitX;
 
-    public SplitImageComponent( String path )
-    {
+    public SplitImageComponent( String path ) {
         setImage( path );
         init();
     }
 
-    public SplitImageComponent( BufferedImage image )
-    {
+    public SplitImageComponent( BufferedImage image ) {
         setImage( image );
         init();
     }
 
-    public void setImage( String path )
-    {
+    public void setImage( String path ) {
         Image image = Utilities.blockingLoad( path );
         mImage = Utilities.makeBufferedImage( image );
     }
 
-    public void setImage( BufferedImage image )
-    {
+    public void setImage( BufferedImage image ) {
         mImage = image;
     }
 
-    public void setSecondImage( BufferedImage image )
-    {
+    public void setSecondImage( BufferedImage image ) {
         mSecondImage = image;
         repaint();
     }
 
-    public BufferedImage getImage()
-    {
+    public BufferedImage getImage() {
         return mImage;
     }
 
-    public BufferedImage getSecondImage()
-    {
+    public BufferedImage getSecondImage() {
         return mSecondImage;
     }
 
-    private void init()
-    {
+    private void init() {
         setBackground( Color.white );
-        addMouseListener( new MouseAdapter()
-        {
+        addMouseListener( new MouseAdapter() {
             @Override
-            public void mousePressed( MouseEvent me )
-            {
-                mSplitX = me.getX();
-                repaint();
+            public void mousePressed( MouseEvent me ) {
+                setSplitX(me.getX());
             }
         } );
-        addMouseMotionListener( new MouseMotionAdapter()
-        {
+        addMouseMotionListener( new MouseMotionAdapter() {
             @Override
-            public void mouseDragged( MouseEvent me )
-            {
-                mSplitX = me.getX();
-                repaint();
+            public void mouseDragged( MouseEvent me ) {
+                setSplitX(me.getX());
             }
         } );
     }
 
-    @Override
-    public void paint( Graphics g )
+    public void setSplitX(int pos)
     {
+        mSplitX = pos;
+        repaint();
+    }
+
+    public int getSplitX() {
+        return mSplitX;
+    }
+
+
+    @Override
+    public void paint( Graphics g ) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         int width = getSize().width;
         int height = getSize().height;
+        int splitX = getSplitX();
+        clear(g2);
 
-        // Explicitly clear the window.
-        Rectangle clear = new Rectangle( 0, 0, width, height );
-        g2.setPaint( getBackground() );
-        g2.fill( clear );
         // Clip the first image, if appropriate,
         //   to be on the right side of the split.
-        if ( mSplitX != 0 && mSecondImage != null ) {
-            Rectangle firstClip = new Rectangle( mSplitX, 0,
-                    width - mSplitX, height );
+        if ( splitX != 0 && mSecondImage != null ) {
+            Rectangle firstClip = new Rectangle( splitX, 0,
+                    width - splitX, height );
             g2.setClip( firstClip );
         }
         g2.drawImage( getImage(), 0, 0, null );
 
-        if ( mSplitX == 0 || mSecondImage == null )
+        if ( splitX == 0 || mSecondImage == null )
             return;
 
-        Rectangle secondClip = new Rectangle( 0, 0, mSplitX, height );
+        Rectangle secondClip = new Rectangle( 0, 0, splitX, height );
         g2.setClip( secondClip );
         g2.drawImage( mSecondImage, 0, 0, null );
 
-        Line2D splitLine = new Line2D.Float( mSplitX, 0, mSplitX, height );
+        Line2D splitLine = new Line2D.Float( splitX, 0, splitX, height );
         g2.setClip( null );
         g2.setColor( Color.white );
         g2.draw( splitLine );
     }
 
+    /** Explicitly clear the window.  */
+    private void clear(Graphics2D g2) {
+        int width = getSize().width;
+        int height = getSize().height;
+
+        Rectangle clear = new Rectangle( 0, 0, width, height );
+        g2.setPaint( getBackground() );
+        g2.fill( clear );
+    }
+
     @Override
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         int width = 100;
         int height = 100;
         if (getImage() != null) {

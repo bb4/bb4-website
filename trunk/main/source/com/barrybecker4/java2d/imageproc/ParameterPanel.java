@@ -80,6 +80,7 @@ public class ParameterPanel extends JScrollPane
      * we only want to call parameterChange listeners if a parameter actually changed.
      * @param param the swing component that was activated.
      */
+    @Override
     public void parameterChanged(Parameter param) {
          for (ParameterChangeListener listener : changeListeners) {
              listener.parameterChanged(param);

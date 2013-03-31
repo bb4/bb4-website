@@ -23,7 +23,7 @@ public class MetaImageOp {
     private BufferedImageOp op;
 
     /** list of base params based for creating concrete imageOps. */
-    private List<Parameter> parameters;
+    private volatile List<Parameter> parameters;
 
     /** last used list of params used to create recent imageOp. */
     private List<Parameter> lastUsedParameters;
@@ -31,7 +31,7 @@ public class MetaImageOp {
     private boolean isDynamic;
 
     /** Ensures that all randomness is repeatable. */
-    private static Random RANDOM = new Random(1);
+    private static final Random RANDOM = new Random(1);
 
 
     /**

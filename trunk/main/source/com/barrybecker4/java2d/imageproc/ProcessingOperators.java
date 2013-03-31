@@ -28,10 +28,6 @@ public class ProcessingOperators {
         createOps();
     }
 
-    public Map getOperationsMap() {
-        return mOps;
-    }
-
     public MetaImageOp getOperation(String key) {
         return mOps.get(key);
     }
