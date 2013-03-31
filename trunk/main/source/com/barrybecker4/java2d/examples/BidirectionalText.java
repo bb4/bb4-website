@@ -4,6 +4,9 @@ import com.barrybecker4.ui.application.ApplicationFrame;
 
 import java.awt.*;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class BidirectionalText extends ApplicationFrame {
 
     public BidirectionalText(String title) {

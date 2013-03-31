@@ -5,10 +5,12 @@ import com.barrybecker4.ui.application.ApplicationFrame;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class AllFonts {
 
     private static final int ROW_HEIGHT = 30;
-
 
     private static void showAllFonts() {
         Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
@@ -36,7 +38,6 @@ public class AllFonts {
                     new JScrollPane(fontsPanel);
             this.getContentPane().add(pane);
         }
-
     }
 
     private static class FontsPanel extends JPanel {
@@ -70,4 +71,6 @@ public class AllFonts {
             g2.drawString("The quick brown fox jumped over the lazy dog.", 500, yPos );
         }
     }
+
+    private AllFonts() {}
 }

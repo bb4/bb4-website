@@ -9,6 +9,9 @@ import java.awt.font.GlyphVector;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class ClipImage extends ApplicationFrame {
     private Shape mClippingShape;
 
@@ -21,13 +24,6 @@ public class ClipImage extends ApplicationFrame {
 
         Image img = Utilities.blockingLoad( filename );
         image = Utilities.makeBufferedImage( img );
-
-        // this way does not work
-        //InputStream in = ClipImage.class.getResourceAsStream( filename );
-        //System.out.println("in="+in);
-        //JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder( in );
-        // image = decoder.decodeAsBufferedImage();
-        // in.close();
     }
 
     @Override
@@ -55,6 +51,5 @@ public class ClipImage extends ApplicationFrame {
 
         ClipImage frame = new ClipImage( "ClipImage v1.0" );
         frame.setSize( 400, 250 );
-        //f.setVisible( true );
     }
 }

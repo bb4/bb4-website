@@ -11,6 +11,7 @@ public class TransformersRotation extends Transformers {
         f.setVisible( true );
     }
 
+    @Override
     public AffineTransform getTransform() {
         return AffineTransform.getRotateInstance( -Math.PI / 6 );
     }

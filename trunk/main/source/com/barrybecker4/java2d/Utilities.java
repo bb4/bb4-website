@@ -52,8 +52,8 @@ public class Utilities {
     }
 
     public static BufferedImage makeBufferedImage( Image image ) {
-        System.out.println( "image="+image );
-        if (image==null)  {
+        System.out.println( "image=" + image );
+        if (image == null)  {
             System.out.println( "Warning image is null" );
             return null;
         }

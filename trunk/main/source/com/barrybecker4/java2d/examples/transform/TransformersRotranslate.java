@@ -11,6 +11,7 @@ public class TransformersRotranslate extends Transformers {
         f.setVisible( true );
     }
 
+    @Override
     public AffineTransform getTransform() {
         AffineTransform at = new AffineTransform();
         at.setToRotation( Math.PI / 6 );

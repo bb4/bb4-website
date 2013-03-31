@@ -11,9 +11,11 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class ShowOff
-        extends Component
-{
+        extends Component {
     private BufferedImage mImage;
     private Font mFont;
     private String mMessage;
@@ -27,8 +29,7 @@ public class ShowOff
      * @param split
      */
     public ShowOff( String filename, String message, int split )
-            throws IOException
-    {
+            throws IOException {
 
         Image img = Utilities.blockingLoad( filename );
         mImage = Utilities.makeBufferedImage( img );
@@ -43,8 +44,7 @@ public class ShowOff
     }
 
     @Override
-    public void paint( Graphics g )
-    {
+    public void paint( Graphics g ) {
         Graphics2D g2 = (Graphics2D) g;
 
         // Turn on anti-aliasing.
@@ -56,8 +56,7 @@ public class ShowOff
         drawText( g2 );
     }
 
-    protected void drawBackground( Graphics2D g2 )
-    {
+    protected void drawBackground( Graphics2D g2 ) {
         // Draw circles of different colors.
         int side = 45;
         int width = getSize().width;
@@ -74,8 +73,7 @@ public class ShowOff
         }
     }
 
-    protected void drawImageMosaic( Graphics2D g2 )
-    {
+    protected void drawImageMosaic( Graphics2D g2 ) {
         // Break the image up into tiles. Draw each
         //   tile with its own transparency, allowing
         //   the background to show through to varying
@@ -102,8 +100,7 @@ public class ShowOff
         g2.setComposite( AlphaComposite.getInstance( AlphaComposite.SRC_OVER ) );
     }
 
-    protected void drawText( Graphics2D g2 )
-    {
+    protected void drawText( Graphics2D g2 ) {
         // Find the bounds of the entire string.
         FontRenderContext frc = g2.getFontRenderContext();
         mLayout = new TextLayout( mMessage, mFont, frc );
@@ -122,8 +119,7 @@ public class ShowOff
     }
 
     protected void drawString( Graphics2D g2,
-                               double x, double y, double theta )
-    {
+                               double x, double y, double theta ) {
         // Transform to the requested location.
         g2.translate( x, y );
         // Rotate by the requested angle.
@@ -140,8 +136,7 @@ public class ShowOff
     }
 
     protected float drawBoxedString( Graphics2D g2,
-                                     String s, Color c1, Color c2, double x )
-    {
+                                     String s, Color c1, Color c2, double x ) {
         // Calculate the width of the string.
         FontRenderContext frc = g2.getFontRenderContext();
         TextLayout subLayout = new TextLayout( s, mFont, frc );

@@ -65,6 +65,7 @@ public abstract class Transformers extends Component {
         return new Rectangle2D.Float( cm, cm, 2 * cm, cm );
     }
 
+    @Override
     public void paint( Graphics g ) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;

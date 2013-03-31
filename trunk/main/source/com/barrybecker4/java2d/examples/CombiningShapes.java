@@ -10,6 +10,9 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class CombiningShapes  extends JComponent {
 
     public static void main( String[] args ) {
@@ -48,6 +51,7 @@ public class CombiningShapes  extends JComponent {
         add( controls, BorderLayout.SOUTH );
     }
 
+    @Override
     public void paintComponent( Graphics g ) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,

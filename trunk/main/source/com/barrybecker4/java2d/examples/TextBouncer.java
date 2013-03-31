@@ -12,6 +12,9 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class TextBouncer extends AnimationComponent {
 
     private static final float SHEAR_SCALE = 0.02f;
@@ -26,8 +29,8 @@ public class TextBouncer extends AnimationComponent {
         GraphicsEnvironment ge =
                 GraphicsEnvironment.getLocalGraphicsEnvironment();
         Font[] allFonts = ge.getAllFonts();
-        for ( int i = 0; i < allFonts.length; i++ )
-            choice.addItem( allFonts[i].getName() );
+        for (Font allFont : allFonts)
+            choice.addItem(allFont.getName());
         Font defaultFont = new Font( allFonts[0].getName(), Font.PLAIN, size );
 
         final TextBouncer bouncer = new TextBouncer( s, defaultFont );
@@ -42,6 +45,7 @@ public class TextBouncer extends AnimationComponent {
 
         Panel fontControls = new Panel();
         choice.addItemListener( new ItemListener() {
+            @Override
             public void itemStateChanged( ItemEvent ie )
             {
                 Font font = new Font( choice.getSelectedItem(), Font.PLAIN, size );
@@ -81,18 +85,7 @@ public class TextBouncer extends AnimationComponent {
         mWidth = (float) bounds.getWidth();
         mHeight = (float) bounds.getHeight();
         // Make sure points are within range.
-        addComponentListener( new ComponentAdapter()  {
-            public void componentResized( ComponentEvent ce )
-            {
-                Dimension d = getSize();
-                if ( mX < 0 )
-                    mX = 0;
-                else if ( mX + mWidth >= d.width ) mX = d.width - mWidth - 1;
-                if ( mY < 0 )
-                    mY = 0;
-                else if ( mY + mHeight >= d.height ) mY = d.height - mHeight - 1;
-            }
-        } );
+        addComponentListener(new BouncerComponentAdapter());
     }
 
     protected void reset() {
@@ -106,12 +99,12 @@ public class TextBouncer extends AnimationComponent {
         mShearDeltaX = mShearDeltaY = SHEAR_SCALE;
     }
 
+    @Override
     public String getFileNameBase() {
         return null;
     }
 
-    public void setSwitch( int item, boolean value )
-    {
+    public void setSwitch( int item, boolean value ) {
         switch (item) {
             case ANTIALIASING:
                 mAntialiasing = value;
@@ -138,6 +131,7 @@ public class TextBouncer extends AnimationComponent {
         Checkbox check = new Checkbox( label );
         check.addItemListener( new ItemListener()
         {
+            @Override
             public void itemStateChanged( ItemEvent ie )
             {
                 setSwitch( item, (ie.getStateChange() == ie.SELECTED) );
@@ -146,6 +140,7 @@ public class TextBouncer extends AnimationComponent {
         return check;
     }
 
+    @Override
     public double timeStep() {
         Dimension d = getSize();
         if ( mX + mDeltaX < 0 )
@@ -172,6 +167,7 @@ public class TextBouncer extends AnimationComponent {
         return 0;
     }
 
+    @Override
     public void paint( Graphics g ) {
         Graphics2D g2 = (Graphics2D) g;
         setAntialiasing( g2 );
@@ -184,7 +180,7 @@ public class TextBouncer extends AnimationComponent {
     }
 
     protected void setAntialiasing( Graphics2D g2 ) {
-        if ( mAntialiasing == false ) return;
+        if ( !mAntialiasing) return;
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON );
     }
@@ -210,7 +206,7 @@ public class TextBouncer extends AnimationComponent {
     }
 
     protected void drawAxes( Graphics2D g2 ) {
-        if ( mAxes == false ) return;
+        if ( !mAxes ) return;
         g2.setPaint( getForeground() );
         g2.setStroke( new BasicStroke() );
         Dimension d = getSize();
@@ -221,5 +217,18 @@ public class TextBouncer extends AnimationComponent {
         g2.drawLine( w + side - arrow, h - arrow, w + side, h );
         g2.drawLine( w, h - side, w, h + side );
         g2.drawLine( w + arrow, h + side - arrow, w, h + side );
+    }
+
+    private class BouncerComponentAdapter extends ComponentAdapter {
+        @Override
+        public void componentResized( ComponentEvent ce ) {
+            Dimension d = getSize();
+            if ( mX < 0 )
+                mX = 0;
+            else if ( mX + mWidth >= d.width ) mX = d.width - mWidth - 1;
+            if ( mY < 0 )
+                mY = 0;
+            else if ( mY + mHeight >= d.height ) mY = d.height - mHeight - 1;
+        }
     }
 }

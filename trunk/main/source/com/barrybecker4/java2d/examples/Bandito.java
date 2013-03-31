@@ -10,13 +10,16 @@ import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class Bandito {
 
     public static void main( String[] args ) {
         // Create a frame window to hold everything.
         ApplicationFrame f = new ApplicationFrame( "Bandito v1.0" );
         // Create a SplitImageComponent with the source image.
-        String filename = Utilities.DEFAULT_IMAGE_DIR + "EtholWithRoses.small.jpg"; //"Raphael.jpg";
+        String filename = Utilities.DEFAULT_IMAGE_DIR + "EtholWithRoses.small.jpg";
         SplitImageComponent sic = new SplitImageComponent( filename );
 
         // Create a BandCombineOp.

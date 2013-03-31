@@ -9,6 +9,9 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class TexturePaintFill extends ApplicationFrame {
 
     public static void main( String[] args ) throws Exception {
@@ -34,7 +37,12 @@ public class TexturePaintFill extends ApplicationFrame {
 
         RoundRectangle2D r = new RoundRectangle2D.Float(25, 35, 150, 150, 55, 55 );
 
-        // Create a texture rectangle the same size as the texture image.
+        if (mImage == null) {
+            System.out.println("mImage=" + mImage);
+            return;
+        }
+
+        // Create a texture rectangle with the same size as the texture image.
         Rectangle2D tr = new Rectangle2D.Double( 0, 0,
                 mImage.getWidth(), mImage.getHeight() );
 

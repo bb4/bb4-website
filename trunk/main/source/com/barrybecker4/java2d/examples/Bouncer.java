@@ -14,6 +14,9 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class Bouncer extends AnimationComponent {
 
     // Tweakable variables
@@ -38,8 +41,7 @@ public class Bouncer extends AnimationComponent {
     private int mN;
     private Shape mClipShape;
 
-    public Bouncer()
-    {
+    public Bouncer() {
         mN = NUM_BALLS;  //38
         mPoints = new float[mN + 3];
         mDeltas = new float[mN + 3];
@@ -49,19 +51,7 @@ public class Bouncer extends AnimationComponent {
             mDeltas[i] = random.nextFloat() * SPEED;
         }
         // Make sure points are within range.
-        addComponentListener( new ComponentAdapter()
-        {
-            public void componentResized( ComponentEvent ce )
-            {
-                Dimension d = getSize();
-                for ( int i = 0; i < mN; i++ ) {
-                    int limit = ((i % 2) == 0) ? d.width : d.height;
-                    if ( mPoints[i] < 0 )
-                        mPoints[i] = 0;
-                    else if ( mPoints[i] >= limit ) mPoints[i] = limit - 1;
-                }
-            }
-        } );
+        addComponentListener(new BouncerComponentAdapter());
     }
 
     public void setSwitch( int item, boolean value ) {
@@ -96,6 +86,7 @@ public class Bouncer extends AnimationComponent {
         Checkbox check = new Checkbox( label );
         check.addItemListener( new ItemListener()
         {
+            @Override
             public void itemStateChanged( ItemEvent ie )
             {
                 setSwitch( item, (ie.getStateChange() == ie.SELECTED) );
@@ -104,10 +95,12 @@ public class Bouncer extends AnimationComponent {
         return check;
     }
 
+    @Override
     public String getFileNameBase() {
         return "D:/f";
     }
 
+    @Override
     public double timeStep() {
         Dimension d = getSize();
         for ( int i = 0; i < mN; i++ ) {
@@ -131,8 +124,8 @@ public class Bouncer extends AnimationComponent {
         return 0;
     }
 
-    public void paint( Graphics g )
-    {
+    @Override
+    public void paint( Graphics g ) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         setAntialiasing( g2 );
@@ -151,16 +144,14 @@ public class Bouncer extends AnimationComponent {
         drawAxes( g2 );
     }
 
-    protected void setAntialiasing( Graphics2D g2 )
-    {
-        if ( mAntialiasing == false ) return;
+    protected void setAntialiasing( Graphics2D g2 ) {
+        if (!mAntialiasing) return;
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON );
     }
 
-    protected void setClip( Graphics2D g2 )
-    {
-        if ( mClip == false ) return;
+    protected void setClip( Graphics2D g2 ) {
+        if (!mClip) return;
         if ( mClipShape == null ) {
             Dimension d = getSize();
             FontRenderContext frc = g2.getFontRenderContext();
@@ -174,15 +165,13 @@ public class Bouncer extends AnimationComponent {
         g2.clip( mClipShape );
     }
 
-    protected void setTransform( Graphics2D g2 )
-    {
-        if ( mTransform == false ) return;
+    protected void setTransform( Graphics2D g2 ) {
+        if (!mTransform) return;
         Dimension d = getSize();
         g2.rotate( mTheta, d.width / 2, d.height / 2 );
     }
 
-    protected Shape createShape()
-    {
+    protected Shape createShape() {
         GeneralPath path = new GeneralPath( GeneralPath.WIND_EVEN_ODD,
                 mPoints.length );
         path.moveTo( mPoints[0], mPoints[1] );
@@ -194,8 +183,7 @@ public class Bouncer extends AnimationComponent {
         return path;
     }
 
-    protected void setPaint( Graphics2D g2 )
-    {
+    protected void setPaint( Graphics2D g2 ) {
         if ( mGradient ) {
             GradientPaint gp = new GradientPaint( 0, 0, Color.yellow,
                     50, 25, Color.red, true );
@@ -205,9 +193,8 @@ public class Bouncer extends AnimationComponent {
             g2.setPaint( Color.orange );
     }
 
-    protected void setStroke( Graphics2D g2 )
-    {
-        if ( mDotted == false ) return;
+    protected void setStroke( Graphics2D g2 ) {
+        if (!mDotted) return;
         // Create a dotted stroke.
         Stroke stroke = new BasicStroke( 1, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_ROUND, 10,
@@ -215,9 +202,8 @@ public class Bouncer extends AnimationComponent {
         g2.setStroke( stroke );
     }
 
-    protected void drawAxes( Graphics2D g2 )
-    {
-        if ( mAxes == false ) return;
+    protected void drawAxes( Graphics2D g2 ) {
+        if (!mAxes) return;
         g2.setPaint( getForeground() );
         g2.setStroke( new BasicStroke() );
         Dimension d = getSize();
@@ -230,8 +216,7 @@ public class Bouncer extends AnimationComponent {
         g2.drawLine( w + arrow, h + side - arrow, w, h + side );
     }
 
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) {
         final Bouncer bouncer = new Bouncer();
         AnimationFrame f = new AnimationFrame( bouncer );
         bouncer.setFont( new Font( "Serif", Font.PLAIN, 12 ) );
@@ -246,5 +231,18 @@ public class Bouncer extends AnimationComponent {
         controls.add( bouncer.createCheckbox( "Axes", Bouncer.AXES ) );
         controls.add( bouncer.createCheckbox( "Clip", Bouncer.CLIP ) );
         f.getContentPane().add( controls, BorderLayout.NORTH );
+    }
+
+    private class BouncerComponentAdapter extends ComponentAdapter {
+        @Override
+        public void componentResized( ComponentEvent ce ) {
+            Dimension d = getSize();
+            for ( int i = 0; i < mN; i++ ) {
+                int limit = ((i % 2) == 0) ? d.width : d.height;
+                if ( mPoints[i] < 0 )
+                    mPoints[i] = 0;
+                else if ( mPoints[i] >= limit ) mPoints[i] = limit - 1;
+            }
+        }
     }
 }

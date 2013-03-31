@@ -8,10 +8,11 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
-public class PageFormatMania
-{
-    public static void main( String[] args )
-    {
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
+public class PageFormatMania {
+    public static void main( String[] args ) {
         PrinterJob pj = PrinterJob.getPrinterJob();
 
         PageFormat pf = pj.defaultPage();
@@ -31,22 +32,24 @@ public class PageFormatMania
             }
         }
     }
-}
 
-class ManiaPrintable
-        implements Printable
-{
-    public int print( Graphics g, PageFormat pf, int pageIndex )
-    {
-        if ( pageIndex != 0 ) return NO_SUCH_PAGE;
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setFont( new Font( "Serif", Font.PLAIN, 36 ) );
-        g2.setPaint( Color.black );
-        g2.drawString( "ManiaPrintable", 100, 100 );
-        Rectangle2D outline = new Rectangle2D.Double(
-                pf.getImageableX(), pf.getImageableY(),
-                pf.getImageableWidth(), pf.getImageableHeight() );
-        g2.draw( outline );
-        return PAGE_EXISTS;
+    private PageFormatMania() {}
+
+
+    private static class ManiaPrintable
+            implements Printable {
+        @Override
+        public int print( Graphics g, PageFormat pf, int pageIndex ) {
+            if ( pageIndex != 0 ) return NO_SUCH_PAGE;
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setFont( new Font( "Serif", Font.PLAIN, 36 ) );
+            g2.setPaint( Color.black );
+            g2.drawString( "ManiaPrintable", 100, 100 );
+            Rectangle2D outline = new Rectangle2D.Double(
+                    pf.getImageableX(), pf.getImageableY(),
+                    pf.getImageableWidth(), pf.getImageableHeight() );
+            g2.draw( outline );
+            return PAGE_EXISTS;
+        }
     }
 }
