@@ -21,8 +21,8 @@ import java.awt.image.BufferedImageOp;
 public class FilterSamplerApp extends ApplicationFrame
                      implements ItemListener, ActionListener, ParameterChangeListener {
 
-    private Frame mImageFrame;
-    private SplitImageComponent mSplitImageComponent;
+    private Frame imageFrame;
+    private SplitImageComponent splitImageComponent;
     private ProcessingOperators operations;
 
     private Checkbox accumulateCheckbox;
@@ -39,19 +39,21 @@ public class FilterSamplerApp extends ApplicationFrame
 
     /**
      * The image to be manipulated goes in a separate frame.
-     * @param imageFile
+     * @param imageFile image to load
      */
     private void createImageFrame( String imageFile ) {
-        // Create the image frame.
-        mSplitImageComponent = new SplitImageComponent( imageFile );
-        mSplitImageComponent.setPreferredSize(new Dimension(600, 700));
-        mImageFrame = new Frame( imageFile );
-        mImageFrame.setLayout( new BorderLayout() );
-        mImageFrame.add( mSplitImageComponent, BorderLayout.CENTER );
 
-        Utilities.sizeContainerToComponent( mImageFrame, mSplitImageComponent );
-        Utilities.centerFrame( mImageFrame );
-        mImageFrame.setVisible( true );
+        splitImageComponent = new SplitImageComponent( imageFile );
+        splitImageComponent.setPreferredSize(new Dimension(600, 700));
+        splitImageComponent.setSplitX(40);
+
+        imageFrame = new Frame( imageFile );
+        imageFrame.setLayout(new BorderLayout());
+        imageFrame.add(splitImageComponent, BorderLayout.CENTER);
+
+        Utilities.sizeContainerToComponent(imageFrame, splitImageComponent);
+        Utilities.centerFrame(imageFrame);
+        imageFrame.setVisible(true);
     }
 
     @Override
@@ -66,7 +68,7 @@ public class FilterSamplerApp extends ApplicationFrame
     }
 
     protected void initializeUI() {
-        Point pt = mImageFrame.getLocation();
+        Point pt = imageFrame.getLocation();
         setLocation( pt.x - getSize().width, pt.y );
 
         filterList = operations.getSortedKeys();
@@ -95,6 +97,7 @@ public class FilterSamplerApp extends ApplicationFrame
      * Called when an item in the list of transformations is called.
      * @param ie
      */
+    @Override
     public void itemStateChanged( ItemEvent ie ) {
 
         if ( ie.getStateChange() != ItemEvent.SELECTED )
@@ -103,10 +106,10 @@ public class FilterSamplerApp extends ApplicationFrame
         MetaImageOp metaOp = operations.getOperation( key );
         BufferedImageOp op = metaOp.getInstance();
 
-        String previous = mImageFrame.getTitle() + " + ";
+        String previous = imageFrame.getTitle() + " + ";
         if (!accumulateCheckbox.getState())
             previous = "";
-        mImageFrame.setTitle( previous + key );
+        imageFrame.setTitle(previous + key);
         statusLabel.setText( "Performing " + key + "..." );
 
         // don't allow doing anything while processing
@@ -147,17 +150,17 @@ public class FilterSamplerApp extends ApplicationFrame
     }
 
     private void applyImageOperator(BufferedImageOp op) {
-        BufferedImage source = mSplitImageComponent.getSecondImage();
+        BufferedImage source = splitImageComponent.getSecondImage();
         if ( source == null || !accumulateCheckbox.getState()) {
-            source = mSplitImageComponent.getImage();
+            source = splitImageComponent.getImage();
         }
         BufferedImage destination = op.filter( source, null );
 
-        mSplitImageComponent.setSecondImage( destination );
-        mSplitImageComponent.setSize(
-                mSplitImageComponent.getPreferredSize() );
+        splitImageComponent.setSecondImage( destination );
+        splitImageComponent.setSize(
+                splitImageComponent.getPreferredSize());
 
-        mImageFrame.setSize( mImageFrame.getPreferredSize() );
+        imageFrame.setSize(imageFrame.getPreferredSize());
     }
 
      /**
@@ -171,12 +174,12 @@ public class FilterSamplerApp extends ApplicationFrame
         fd.setVisible(true);
         if ( fd.getFile() == null ) return;
         String path = fd.getDirectory() + fd.getFile();
-        mSplitImageComponent.setImage( path );
-        mSplitImageComponent.setSecondImage( null );
+        splitImageComponent.setImage(path);
+        splitImageComponent.setSecondImage(null);
         Utilities.sizeContainerToComponent(
-                mImageFrame, mSplitImageComponent );
-        mImageFrame.validate();
-        mImageFrame.repaint();
+                imageFrame, splitImageComponent);
+        imageFrame.validate();
+        imageFrame.repaint();
     }
 
     public static void main( String[] args ) {
