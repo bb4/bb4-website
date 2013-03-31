@@ -9,6 +9,9 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class Booker {
 
     public static void main( String[] args ) {
@@ -38,20 +41,24 @@ public class Booker {
             }
         }
     }
-}
 
-class BookComponentPrintable implements Printable {
+    private Booker() {}
 
-    private Component mComponent;
 
-    public BookComponentPrintable( Component c ) {
-        mComponent = c;
-    }
+    static final class BookComponentPrintable implements Printable {
 
-    public int print( Graphics g, PageFormat pageFormat, int pageIndex )  {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.translate( pageFormat.getImageableX(), pageFormat.getImageableY() );
-        mComponent.paint( g2 );
-        return PAGE_EXISTS;
+        private Component mComponent;
+
+        public BookComponentPrintable( Component c ) {
+            mComponent = c;
+        }
+
+        @Override
+        public int print( Graphics g, PageFormat pageFormat, int pageIndex )  {
+            Graphics2D g2 = (Graphics2D) g;
+            g2.translate( pageFormat.getImageableX(), pageFormat.getImageableY() );
+            mComponent.paint( g2 );
+            return PAGE_EXISTS;
+        }
     }
 }

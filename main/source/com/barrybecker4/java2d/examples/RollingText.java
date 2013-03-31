@@ -8,6 +8,9 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class RollingText {
 
     private static final String TEXT = "This an example of some pleasant rolling text...";

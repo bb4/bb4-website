@@ -12,6 +12,9 @@ import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class Splines extends ApplicationFrame
                       implements MouseListener, MouseMotionListener {
 
@@ -48,6 +51,7 @@ public class Splines extends ApplicationFrame
         addMouseMotionListener( this );
     }
 
+    @Override
     public void paint( Graphics g ) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -101,8 +105,10 @@ public class Splines extends ApplicationFrame
                 side, side );
     }
 
+    @Override
     public void mouseClicked( MouseEvent me ) {}
 
+    @Override
     public void mousePressed( MouseEvent me )  {
         mSelectedPoint = null;
         for ( int i = 0; i < mPoints.length; i++ ) {
@@ -115,10 +121,13 @@ public class Splines extends ApplicationFrame
         repaint();
     }
 
+    @Override
     public void mouseReleased( MouseEvent me ) {}
 
+    @Override
     public void mouseMoved( MouseEvent me ) {}
 
+    @Override
     public void mouseDragged( MouseEvent me ) {
         if ( mSelectedPoint != null ) {
             mSelectedPoint.setLocation( me.getPoint() );
@@ -126,7 +135,9 @@ public class Splines extends ApplicationFrame
         }
     }
 
+    @Override
     public void mouseEntered( MouseEvent me ) {}
 
+    @Override
     public void mouseExited( MouseEvent me ) {}
 }

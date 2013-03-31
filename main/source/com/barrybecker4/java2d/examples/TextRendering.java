@@ -5,10 +5,17 @@ import com.barrybecker4.ui.application.ApplicationFrame;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class TextRendering {
+
+    private TextRendering() {}
 
     public static void main( String[] args ) {
         Frame frame = new ApplicationFrame( "TextRendering v1.0" ) {
+
+            @Override
             public void paint( Graphics g ) {
                 super.paint(g);
                 Graphics2D g2 = (Graphics2D) g;

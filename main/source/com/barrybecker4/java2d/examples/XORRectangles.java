@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Derived from code accompanying "Java 2D Graphics" by Jonathan Knudsen.
+ */
 public class XORRectangles {
 
     private XORRectangles() {}
@@ -33,5 +36,6 @@ public class XORRectangles {
         f.setSize( 300, 200 );
         f.center();
         f.setVisible( true );
+        f.repaint();
     }
 }

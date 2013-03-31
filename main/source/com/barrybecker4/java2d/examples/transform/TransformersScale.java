@@ -12,6 +12,7 @@ public class TransformersScale
         f.setVisible( true );
     }
 
+    @Override
     public AffineTransform getTransform() {
         return AffineTransform.getScaleInstance( 3, 3 );
     }
