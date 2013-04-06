@@ -9,7 +9,6 @@ dependencies {
    compile project(':ui')
 }
 
-
 jar {
     archiveName = 'bb4-optimization-' + version + '.jar'
     manifest {

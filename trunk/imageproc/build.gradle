@@ -1,0 +1,25 @@
+/*
+ * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+ */
+
+version = '1.0'
+mainClassName = "com.barrybecker4.java2d.ui.RightSizer"
+
+dependencies {
+   compile project(':optimization')
+  compile fileTree(dir: 'lib', include: 'jhlabs-1.0.2.jar')
+}
+
+// not everything is included. There are a lot of examples that we do not need in the deployed jar.
+jar {
+    archiveName = 'bb4-imageproc-' + version + '.jar'
+    include 'com/barrybecker4/java2d/imageproc/**/*.class'
+    include 'com/barrybecker4/java2d/ui/**/*.class'
+    include 'com/barrybecker4/java2d/*.class'
+    manifest {
+        attributes 'Implementation-Title': 'Java2d library (based on code from Java 2D by J. Knudsen)',
+            'Implementation-Version': version,
+            provider: 'gradle',
+            'Main-Class': mainClassName
+    }
+}

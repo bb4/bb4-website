@@ -4,7 +4,12 @@ package com.barrybecker4.puzzle.adventure;
 import com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure;
 import org.w3c.dom.Document;
 
+import java.io.BufferedReader;
+import java.io.Console;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -35,7 +40,6 @@ public final class TextAdventure {
             System.out.println(currentScene.print());
 
             int nextSceneIndex = getNextSceneIndex(currentScene, scanner);
-
             story.advanceScene(nextSceneIndex);
 
         } while (!story.isOver());
@@ -51,7 +55,22 @@ public final class TextAdventure {
         int sceneIndex = -1;
 
         if (scene.hasChoices())  {
-            int nextInt = scanner.nextInt();
+
+            int nextInt = -1;
+            boolean valid = true;
+            while (nextInt < 1)
+            {
+                try {
+                    //do {} while (!scanner.hasNext());
+                    nextInt = scanner.nextInt();
+                } catch (InputMismatchException e) {
+                    valid = false;
+                    scanner.next();
+                }
+                if (nextInt < 1 || !valid) {
+                    System.out.println("You must enter a number from among the choices.");
+                }
+            }
             sceneIndex = nextInt - 1;
         }
         return sceneIndex;
