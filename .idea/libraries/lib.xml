@@ -14,7 +14,7 @@
       <root url="jar://$PROJECT_DIR$/main/lib/xml-apis.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/j3dutils.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/j3dcore.jar!/" />
-      <root url="jar://$PROJECT_DIR$/main/lib/jhlabs-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/imageproc/lib/jhlabs-1.0.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/main/lib/jigo-sgf-1.0.jar!/" />
     </CLASSES>
     <JAVADOC />

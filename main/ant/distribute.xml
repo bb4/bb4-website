@@ -67,18 +67,6 @@
         </fileset>
       </copy>
 
-
-      <!-- copy my class files that are needed for programs that want to do image processing. Produces bb4-imageproc.jar-->
-      <copy todir="${stagingDir}">
-        <fileset dir="${classesDir}">
-          <include name="com/barrybecker4/java2d/imageproc/**/*.class"/>
-          <include name="com/barrybecker4/java2d/ui/**/*.class"/>
-          <include name="com/barrybecker4/java2d/*.class"/>
-        </fileset>
-      </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-imageproc.jar"/>
-      <delete dir="${stagingDir}/com"/>
-
       <!-- copy the class files that are needed for simulation programs . Produces bb4-simulation.jar-->
       <copy todir="${stagingDir}">
           <fileset dir="${classesDir}">
@@ -96,7 +84,6 @@
           <include name="com/barrybecker4/game/common/**/*.class"/>
           <include name="com/barrybecker4/game/card/**/*.class"/>
           <include name="com/barrybecker4/game/*.xml"/>
-          <!--include name="com/barrybecker4/java2d/*Gradient*.class"/-->
           <exclude name="com/barrybecker4/game/**/test"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
@@ -297,7 +284,7 @@
       <copy file="../lib/vecmath.jar" tofile="${distributionGameDir}/vecmath.jar"/>
       <!--copy file="${libDir}/sun.jar" tofile="${distributionGameDir}/sun.jar"/-->
       <copy file="../lib/jai-codec-1.1.3.jar" tofile="${distributionGameDir}/jai-codec-1.1.3.jar"/>
-      <copy file="../lib/jhlabs-1.0.2.jar" tofile="${distributionGameDir}/jhlabs-1.0.2.jar"/>
+      <copy file="../../imageproc/lib/jhlabs-1.0.2.jar" tofile="${distributionGameDir}/jhlabs-1.0.2.jar"/>
       <copy file="../lib/jigo-sgf-1.0.jar" tofile="${distributionGameDir}/jigo-sgf-1.0.jar"/>
   </target>     <!-- end distributeJars -->
 

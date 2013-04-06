@@ -12,8 +12,7 @@ public class Utilities {
 
     private Utilities() {}
 
-    private static final Component sComponent = new Component()
-    {};
+    private static final Component sComponent = new Component() {};
 
     private static final MediaTracker sTracker = new MediaTracker( sComponent );
     private static int sID = 0;
