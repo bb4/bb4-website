@@ -24,7 +24,7 @@
             <jar href="checkers.jar" main="false"/>
             <jar href="chess.jar" main="false"/>
             <jar href="go.jar" main="false"/>
-            <jar href="jigo-sgf-1.0.jar" main="false"/>
+            <jar href="jigo-sgf-1.1.jar" main="false"/>
             <jar href="blockade.jar" main="false"/>
             <jar href="galactic.jar" main="false"/>
             <jar href="poker.jar" main="false"/>
