@@ -103,7 +103,7 @@ public class FrameRateCalculatorTest extends TestCase {
     }
 
     public void testFrameRateAfter3WithDelayOf100() {
-        verifyFrameRateAfterN(3, 100, 10.0);
+        verifyFrameRateAfterN(3, 100, 9.9);
     }
 
     public void testFrameRateAfter6WithDelayOf100() {

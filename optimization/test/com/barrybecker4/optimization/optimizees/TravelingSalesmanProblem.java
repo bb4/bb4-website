@@ -6,6 +6,8 @@ import com.barrybecker4.optimization.Optimizer;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 import com.barrybecker4.optimization.strategy.OptimizationStrategyType;
 
+import static com.barrybecker4.optimization.OptimizerTestCase.LOG_FILE_HOME;
+
 /**
  * This is a simple search space to test the optimization package.
  *
@@ -71,7 +73,7 @@ public class TravelingSalesmanProblem extends OptimizeeProblem {
         TravelingSalesmanVariation v = TravelingSalesmanVariation.SIMPLE;
         OptimizeeProblem problem = new TravelingSalesmanProblem(v);
         Optimizer optimizer =
-                new Optimizer(problem, FileUtil.PROJECT_HOME + "performance/test_optimizer/tsp_optimization.txt");
+                new Optimizer(problem, LOG_FILE_HOME + "tsp_optimization.txt");
 
         ParameterArray initialGuess = problem.getInitialGuess();
 
