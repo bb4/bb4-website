@@ -37,7 +37,7 @@
       <pathelement location="${libDir}/gtpserver.jar"/>
       <pathelement location="${libDir}/commons-codec-1.3.jar"/>
       <pathelement location="${libDir}/rt.jar"/>
-      <!--pathelement location="../../imageproc/lib/jhlabs-1.0.2.jar"/-->
+      <!--pathelement location="../../imageproc/lib/jhlabs-1.0.3.jar"/-->
      <pathelement location="${libDir}/jigo-sgf-1.1.jar"/>
   </path>
 
@@ -211,7 +211,7 @@
       <echo message="${imageprocJar}"/>
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.apps.imagebreeder.ImageBreederApplet" />
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;../../imageproc/lib/jhlabs-1.0.2.jar;${imageprocJar}" />
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;../../imageproc/lib/jhlabs-1.0.3.jar;${imageprocJar}" />
       <param name="args" value=""/>
     </antcall>
   </target>

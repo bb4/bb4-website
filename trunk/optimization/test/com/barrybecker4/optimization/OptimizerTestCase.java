@@ -15,7 +15,8 @@ import junit.framework.TestCase;
 public abstract class OptimizerTestCase extends TestCase {
 
     /** Where the log files will go */
-    protected static final String LOG_FILE_HOME = FileUtil.PROJECT_HOME + "performance/test_optimizer/";
+    public static final String LOG_FILE_HOME =
+            FileUtil.PROJECT_HOME + "optimization/performance/test_optimizer/";
 
     @Override
     public void setUp() {

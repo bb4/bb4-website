@@ -1,8 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.optimization.optimizees;
 
-import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.optimization.Optimizer;
+import static com.barrybecker4.optimization.OptimizerTestCase.LOG_FILE_HOME;
 import com.barrybecker4.optimization.parameter.NumericParameterArray;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 import com.barrybecker4.optimization.parameter.types.IntegerParameter;
@@ -115,11 +115,12 @@ public class SevenElevenProblem extends OptimizeeProblem {
     {
         OptimizeeProblem problem = new SevenElevenProblem();
         Optimizer optimizer =
-                new Optimizer(problem, FileUtil.PROJECT_HOME + "performance/test_optimizer/seven11_optimization.txt");
+                new Optimizer(problem, LOG_FILE_HOME + "seven11_optimization.txt");
 
         ParameterArray initialGuess = problem.getInitialGuess();
 
-        ParameterArray solution = optimizer.doOptimization(OptimizationStrategyType.GLOBAL_SAMPLING, initialGuess, FITNESS_RANGE);
+        ParameterArray solution =
+                optimizer.doOptimization(OptimizationStrategyType.GLOBAL_SAMPLING, initialGuess, FITNESS_RANGE);
 
         System.out.println( "\n************************************************************************" );
         System.out.println( "The solution to the 7-11 Test Problem is :\n"+solution );
