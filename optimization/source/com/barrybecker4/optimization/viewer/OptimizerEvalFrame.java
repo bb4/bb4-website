@@ -100,6 +100,6 @@ public class OptimizerEvalFrame extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        System.out.println("Hello");
+        System.out.println("OptimizerEvalFrame main");
     }
 }

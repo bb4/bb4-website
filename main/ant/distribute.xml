@@ -67,16 +67,12 @@
         </fileset>
       </copy>
 
-      <!-- copy the class files that are needed for simulation programs . Produces bb4-simulation.jar-->
-      <copy todir="${stagingDir}">
-          <fileset dir="${classesDir}">
-            <include name="com/barrybecker4/simulation/common/**/*.class"/>
-            <include name="com/barrybecker4/simulation/graphing/**/*.class"/>
-          </fileset>
+      <!-- copy the simulation jars needed for simulation applets. -->
+      <copy todir="${distributionGameDir}">
+        <fileset dir="${simulationDir}/build/libs">
+          <include name="bb4-*.jar"/>
+        </fileset>
       </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-simulation.jar"/>
-      <delete dir="${stagingDir}/com"/>
-
 
       <!-- copy just the core class files that are needed for all the games. Produces bb4-gameCommon.jar -->
       <copy todir="${stagingDir}">
@@ -188,78 +184,6 @@
       <antcall target="deployJar">
           <param name="componentDir" value="game/multiplayer/trivial"/>
           <param name="jarFile" value="trivial.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for snake deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/snake"/>
-          <param name="jarFile" value="snake.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for dice deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/dice"/>
-          <param name="jarFile" value="dice.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for stock sim deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/stock"/>
-          <param name="jarFile" value="stock.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for predprey sim deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/predprey"/>
-          <param name="jarFile" value="predprey.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for habitat sim deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/habitat"/>
-          <param name="jarFile" value="habitat.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for reaction diffusion deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/reactiondiffusion"/>
-          <param name="jarFile" value="reactiondiffusion.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for fractalexplorer deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/fractalexplorer"/>
-          <param name="jarFile" value="fractalexplorer.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for henonexplorer deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/henonphase"/>
-          <param name="jarFile" value="henonexplorer.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for trebuchet deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/trebuchet"/>
-          <param name="jarFile" value="trebuchet.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for liquid deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/liquid"/>
-          <param name="jarFile" value="liquid.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for lsystem deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/lsystem"/>
-          <param name="jarFile" value="lsystem.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for fluid deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/fluid"/>
-          <param name="jarFile" value="fluid.jar"/>
       </antcall>
 
       <!-- copy the class files that are needed for spirograph deployment -->

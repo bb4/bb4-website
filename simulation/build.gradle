@@ -1,0 +1,130 @@
+/*
+ * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+ */
+version = '1.0'
+mainClassName = "com.barrybecker4.simulation.dice.DiceSimulator"
+
+/*
+task runAdventure(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure'
+    classpath = sourceSets.main.runtimeClasspath
+}  */
+
+/*
+  <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle">
+     <java classname="com.barrybecker4.puzzle.hiq.ui.HiQPuzzle" classpath="${run.classPath}"
+           fork="true" jvm="${java_compiler}" maxmemory="512M">
+         <jvmarg value="${assertionsFlag}"/>
+     </java>
+  </target>
+*/
+
+dependencies {
+   compile project(':sound')
+   compile project(':ui')
+   compile project(':optimization')
+}
+
+
+task simulationJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/common/**'
+    include 'com/barrybecker4/simulation/graphing/**'
+    baseName = 'bb4-simulation'
+    manifest {
+        attributes 'Implementation-Title': 'Simulation common code',
+            'Implementation-Version': version,
+            provider: 'gradle',
+            'Main-Class': mainClassName
+    }
+}
+
+task diceJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/dice/**'
+    baseName = 'bb4-dice'
+}
+task fluidJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/fluid/**'
+    baseName = 'bb4-fluid'
+}
+task fractalexplorerJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/fractalexplorer/**'
+    baseName = 'bb4-fractalexplorer'
+}
+task habitatJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/habitat/**'
+    baseName = 'bb4-habitat'
+}
+task henonexplorerJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/henonphase/**'
+    baseName = 'bb4-henonexplorer'
+}
+task liquidJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/liquid/**'
+    baseName = 'bb4-liquid'
+}
+task lsystemJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/lsystem/**'
+    baseName = 'bb4-lsystem'
+}
+task predpreyJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/predprey/**'
+    baseName = 'bb4-predprey'
+}
+task reactiondiffusionJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/reactiondiffusion/**'
+    baseName = 'bb4-reactiondiffusion'
+}
+task snakeJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/snake/**'
+    baseName = 'bb4-snake'
+}
+task stockJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/stock/**'
+    baseName = 'bb4-stock'
+}
+task trebuchetJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/trebuchet/**'
+    baseName = 'bb4-trebuchet'
+}
+task verhulstJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/simulation/verhulst/**'
+    baseName = 'bb4-verhulst'
+}
+
+artifacts {
+    archives simulationJar
+    archives diceJar
+    archives fluidJar
+    archives fractalexplorerJar
+    archives habitatJar
+    archives henonexplorerJar
+    archives liquidJar
+    archives lsystemJar
+    archives predpreyJar
+    archives reactiondiffusionJar
+    archives snakeJar
+    archives stockJar
+    archives trebuchetJar
+    archives verhulstJar
+}
+
+jar {
+    // skip building the default jar that contains everything
+    enabled = false
+}
+
+
