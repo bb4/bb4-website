@@ -29,6 +29,7 @@
       <pathelement location="${soundJar}"/>
       <pathelement location="${imageprocJar}"/>
       <pathelement path="${puzzlePath}"/>
+      <pathelement path="${simulationPath}"/>
       <pathelement location="${libDir}/vecmath.jar"/>
       <pathelement location="${libDir}/jai-codec-1.1.3.jar"/>
       <pathelement location="${libDir}/junit.jar"/>
@@ -216,62 +217,6 @@
     </antcall>
   </target>
 
-  <target name="executeDice" description="Run the Dice simulator">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.dice.DiceSimulator"/>
-    </antcall>
-  </target>
-
-  <target name="executeStock" description="Run the Stock simulator">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.stock.StockSimulator"/>
-    </antcall>
-  </target>
-
-  <target name="executePredPrey" description="Run the Predator/Prey simulator">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.predprey.PredPreySimulator"/>
-    </antcall>
-  </target>
-
-  <target name="executeVerhulst" description="Run the Verhulst dynamics simulator">
-      <antcall target="executeProgram">
-          <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-          <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
-          <param name="args" value="com.barrybecker4.simulation.verhulst.VerhulstSimulator"/>
-      </antcall>
-  </target>
-
-  <target name="executeHabitat" description="Run the Habitat simulator">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.habitat.HabitatSimulator"/>
-    </antcall>
-  </target>
-
-  <target name="executeGraph" description="Run the Graph simulator">
-      <antcall target="executeProgram">
-        <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-        <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
-        <param name="args" value="com.barrybecker4.simulation.graphing.GraphSimulator"/>
-      </antcall>
-    </target>
-
-
-  <target name="executeParameterDistribution" description="Run the Parameter Distribution simulator">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.parameter.ParameterSimulator"/>
-    </antcall>
-  </target>
 
   <target name="executeSpirograph" description="Run the SpiroGraph program">
     <antcall target="executeProgram">
@@ -280,7 +225,7 @@
     </antcall>
   </target>
 
-  <target name="executeSnake" description="Run the Snake simulator">
+  <!--target name="executeSnake" description="Run the Snake simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
@@ -342,7 +287,7 @@
        <param name="libPath" value="${libDir}/vecmath.jar"/>
        <param name="args" value="com.barrybecker4.simulation.trebuchet.TrebuchetSimulator"/>
      </antcall>
-  </target>
+  </target-->
 
   <target name="executeGiveChange" depends="compile" description="A simple educational program for computing change.">
     <echo message="now executing GiveChange"/>
