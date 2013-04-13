@@ -8,10 +8,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="applets" />
-    <orderEntry type="module" module-name="optimization" />
-    <orderEntry type="module" module-name="sound" />
-    <orderEntry type="module" module-name="ui" />
+    <orderEntry type="module" module-name="optimization" exported="" />
+    <orderEntry type="module" module-name="sound" exported="" />
+    <orderEntry type="module" module-name="ui" exported="" />
+    <orderEntry type="library" scope="TEST" name="junit-3.8.2" level="project" />
+    <orderEntry type="library" exported="" name="commons-collections-3.2" level="project" />
   </component>
 </module>
 
