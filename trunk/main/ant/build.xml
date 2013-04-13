@@ -191,7 +191,6 @@
       </parallel>
   </target>
 
-
   <target name="executeSetGame" description="Run the Set Game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>  <!-- com.barrybecker4ecker4.game.multiplayer.set.SetApplet -->
@@ -224,70 +223,6 @@
       <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar"/>
     </antcall>
   </target>
-
-  <!--target name="executeSnake" description="Run the Snake simulator">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.snake.SnakeSimulator"/>
-    </antcall>
-  </target>
-
-  <target name="executeReactionDiffusion" description="Run the Reaction Diffusion simulator">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.reactiondiffusion.RDSimulator"/>
-    </antcall>
-  </target>
-
-  <target name="executeFractalExplorer" description="Run the Fractal Explorer">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.fractalexplorer.FractalExplorer"/>
-    </antcall>
-  </target>
-
-  <target name="executeHenonPhaseExplorer" description="Run the Henon Phase Explorer">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.henonphase.HenonPhaseExplorer"/>
-    </antcall>
-  </target>
-
-  <target name="executeLSystemExplorer" description="Run the LSystem Tree Explorer">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;${libDir}/vecmath.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.lsystem.LSystemExplorer"/>
-    </antcall>
-  </target>
-
-  <target name="executeLiquid" description="Run the Liquid simulator">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.liquid.LiquidSimulator"/>
-    </antcall>
-  </target>
-
-  <target name="executeFluid" description="Run the Fluid simulator">
-    <antcall target="executeProgram">
-      <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar"/>
-      <param name="args" value="com.barrybecker4.simulation.fluid.ui.FluidSimulator"/>
-    </antcall>
-  </target>
-
-   <target name="executeTrebuchet" depends="compile" description="Run the Trebuchet simulator">
-     <antcall target="executeProgram">
-       <param name="className" value="com.barrybecker4.simulation.common.ui.SimulatorApplet"/>
-       <param name="libPath" value="${libDir}/vecmath.jar"/>
-       <param name="args" value="com.barrybecker4.simulation.trebuchet.TrebuchetSimulator"/>
-     </antcall>
-  </target-->
 
   <target name="executeGiveChange" depends="compile" description="A simple educational program for computing change.">
     <echo message="now executing GiveChange"/>
