@@ -6,7 +6,7 @@ import com.barrybecker4.common.util.ImageUtil;
 import java.awt.*;
 
 /**
- * Renders the state of the  model to the screen.
+ * Creates a uniformly colored rectangle.
  * @author Barry Becker
  */
 public class ColorRect {
@@ -28,7 +28,7 @@ public class ColorRect {
 
     public void setColor(int x, int y, Color c) {
 
-        setColor(x, y,  c.getRGB()) ;
+        setColor(x, y,  c.getRGB());
     }
 
     /**
@@ -36,8 +36,8 @@ public class ColorRect {
      */
     public void setColorRect(int x, int y, int width, int height, Color c) {
         int color = c.getRGB();
-        for (int i=x; x<x+width; i++) {
-            for (int j=y; y<y+height; j++) {
+        for (int i = x; x < x + width; i++) {
+            for (int j = y; y < y + height; j++) {
                 setColor(x, y, color);
             }
         }
