@@ -13,9 +13,8 @@ subprojects {
     apply plugin: 'application'
     apply plugin: 'idea'
 
-    defaultTasks 'clean', 'build'
+    defaultTasks 'build'
     version = '1.0'
-
 
     repositories {
         mavenCentral()
