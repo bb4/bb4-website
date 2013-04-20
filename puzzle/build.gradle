@@ -53,7 +53,6 @@ task runHiQ(type: JavaExec, depends: classes) {
 
 dependencies {
    compile project(':sound')
-   compile project(':ui')
    compile project(':optimization')
 }
 

@@ -14,24 +14,23 @@
         <resources>
             <j2se version="1.6+" initial-heap-size="64m" max-heap-size="900m" href="http://java.sun.com/products/autodl/j2se"/>
             <jar href="bb4-common-1.0.jar" main="false"/>
-            <jar href="bb4-game2Common.jar" main="false"/>
-            <jar href="bb4-multiPlayerCommon.jar" main="false"/>
-            <jar href="bb4-puzzle.jar" main="false"/>
+            <jar href="bb4-twoplayer-common-1.0.jar" main="false"/>
+            <jar href="bb4-multiplayer-common-1.0.jar" main="false"/>
+            <jar href="bb4-puzzle-1.0.jar" main="false"/>
             <jar href="bb4-sound-1.0.jar" main="false"/>
             <jar href="bb4-ui-1.0.jar" main="false"/>
             <jar href="bb4-optimization-1.0.jar" main="false"/>
-            <jar href="pente.jar" main="false"/>
-            <jar href="checkers.jar" main="false"/>
-            <jar href="chess.jar" main="false"/>
-            <jar href="go.jar" main="false"/>
+            <jar href="bb4-pente-1.0.jar" main="false"/>
+            <jar href="bb4-chess-1.0.jar" main="false"/>
+            <jar href="bb4-go-1.0.jar" main="false"/>
             <jar href="jigo-sgf-1.1.jar" main="false"/>
-            <jar href="blockade.jar" main="false"/>
-            <jar href="galactic.jar" main="false"/>
-            <jar href="poker.jar" main="false"/>
-            <jar href="set.jar" main="false"/>
+            <jar href="bb4-blockade-1.0.jar" main="false"/>
+            <jar href="bb4-galactic-1.0.jar" main="false"/>
+            <jar href="bb4-poker-1.0.jar" main="false"/>
+            <jar href="bb4-set-1.0.jar" main="false"/>
             <jar href="vecmath.jar" main="false"/>
             <jar href="jai-codec-1.1.3.jar" main="false"/>
-            <jar href="bb4-imageproc.jar" main="false"/>
+            <jar href="bb4-imageproc-1.0.jar" main="false"/>
             {jarElement1}
             {jarElement2}
        </resources>
