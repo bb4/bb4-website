@@ -5,6 +5,13 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Generators random N digit id strings.
+ * Relies on the fact that the space of possible ids is much larger than
+ * the actual number of unique ids needed. If this is not the case, it could be slow.
+ *
+ * @author Barry Becker
+ */
 public class UniqueIdGenerator  {
 
     /** Number of ids to generate  */
