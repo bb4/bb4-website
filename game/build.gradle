@@ -210,7 +210,7 @@ task runPokerServerAndClients(type: JavaExec, depends: classes) {
 
    <target name="executeTrivialServer" depends="compile" description="Run online trivial server">
     <antcall target="executeProgram">
-      <param name="className" value="game.common.online.ui.OnlineGameServerFrame"/>
+      <param name="className" value="com.barrybecker4.game.common.online.ui.OnlineGameServerFrame"/>
       <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-game trivial"/>
     </antcall>

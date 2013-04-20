@@ -59,7 +59,7 @@ public class PokerHandTestOld extends TestCase {
 
         List<Result> results = new LinkedList<Result>();
         BufferedReader breader;
-        String fullPath = FileUtil.PROJECT_HOME + "game/test/" + GameContext.GAME_ROOT + file;
+        String fullPath = FileUtil.PROJECT_HOME + "game/test/com/barrybecker4/game/" + file;
         try {
             FileReader reader = new FileReader(fullPath);
             breader = new BufferedReader(reader);
@@ -94,6 +94,4 @@ public class PokerHandTestOld extends TestCase {
             return Result.TIE;
         }
     }
-
-
 }
