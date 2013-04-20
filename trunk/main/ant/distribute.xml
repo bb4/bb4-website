@@ -74,62 +74,26 @@
         </fileset>
       </copy>
 
-      <!-- copy just the core class files that are needed for all the games. Produces bb4-gameCommon.jar -->
-      <copy todir="${stagingDir}">
-        <fileset dir="${classesDir}">
-          <include name="com/barrybecker4/game/common/**/*.class"/>
-          <include name="com/barrybecker4/game/card/**/*.class"/>
-          <include name="com/barrybecker4/game/*.xml"/>
-          <exclude name="com/barrybecker4/game/**/test"/>
+      <!-- copy the game jars needed for game applets. -->
+      <copy todir="${distributionGameDir}">
+        <fileset dir="${gameDir}/build/libs">
+          <include name="bb4-*.jar"/>
         </fileset>
-        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
-      <antcall target="copyAllResources">
-          <param name="componentDir" value="game/common"/>
-      </antcall>
-      <antcall target="copyResources">
-        <param name="path" value="game"/>
-        <param name="pattern" value="*.xml"/>
-      </antcall>
 
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-gameCommon.jar"/>
-      <delete dir="${stagingDir}/com"/>
 
-      <!-- copy just the core class files that are needed for all the twoplayer games. Produces bb4-game2Common.jar -->
+      <!-- copy just the core class files that are needed for all the twoplayer games. Produces bb4-twoplayer-common-1.0.jar
       <antcall target="deployJar">
           <param name="componentDir" value="game/twoplayer/common"/>
-          <param name="jarFile" value="bb4-game2Common.jar"/>
-      </antcall>
+          <param name="jarFile" value="bb4-twoplayer-common-1.0.jar"/>
+      </antcall-->
 
-       <!-- copy just the core class files that are needed for all the multiplayer games. Produces bb4-multiPlayerCommon.jar -->
+       <!-- copy just the core class files that are needed for all the multiplayer games. Produces bb4-multiplayer-common-1.0.jar
        <antcall target="deployJar">
           <param name="componentDir" value="game/multiplayer/common"/>
-          <param name="jarFile" value="bb4-multiPlayerCommon.jar"/>
-      </antcall>
+          <param name="jarFile" value="bb4-multiplayer-common-1.0.jar"/>
+      </antcall -->
 
-      <!-- copy the class files that are needed for pente deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="game/twoplayer/pente"/>
-          <param name="jarFile" value="pente.jar"/>
-      </antcall>
-
-       <!-- copy the class files that are needed for pente deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="game/twoplayer/tictactoe"/>
-          <param name="jarFile" value="tictactoe.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for blockade deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="game/twoplayer/blockade"/>
-          <param name="jarFile" value="blockade.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for checkers deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="game/twoplayer/checkers"/>
-          <param name="jarFile" value="checkers.jar"/>
-      </antcall>
 
       <!-- copy the class files that are needed for chess deployment -->
       <copy todir="${stagingDir}">
@@ -158,33 +122,10 @@
       <antcall target="copyAllResources">
           <param name="componentDir" value="game/twoplayer/go"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/go.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-go-1.0.jar"/>
       <sleep milliseconds="${sleepTime}" />
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy the class files that are needed for galactic empire deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="game/multiplayer/galactic"/>
-          <param name="jarFile" value="galactic.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for Set deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="game/multiplayer/set"/>
-          <param name="jarFile" value="set.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for poker game deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="game/multiplayer/poker"/>
-          <param name="jarFile" value="poker.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for trivial game deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="game/multiplayer/trivial"/>
-          <param name="jarFile" value="trivial.jar"/>
-      </antcall>
 
       <!-- copy the class files that are needed for spirograph deployment -->
       <antcall target="deployJar">
@@ -209,7 +150,7 @@
       <!--copy file="${libDir}/sun.jar" tofile="${distributionGameDir}/sun.jar"/-->
       <copy file="../lib/jai-codec-1.1.3.jar" tofile="${distributionGameDir}/jai-codec-1.1.3.jar"/>
       <copy file="../../imageproc/lib/jhlabs-1.0.3.jar" tofile="${distributionGameDir}/jhlabs-1.0.3.jar"/>
-      <copy file="../lib/jigo-sgf-1.1.jar" tofile="${distributionGameDir}/jigo-sgf-1.1.jar"/>
+      <copy file="../../game/lib/jigo-sgf-1.1.jar" tofile="${distributionGameDir}/jigo-sgf-1.1.jar"/>
   </target>     <!-- end distributeJars -->
 
 

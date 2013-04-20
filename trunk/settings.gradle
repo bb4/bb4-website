@@ -2,4 +2,19 @@
  * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
  */
 
-include 'common', 'ui', 'sound', 'optimization', 'imageproc', 'puzzle', 'simulation', 'main'
+/**
+ * Here is the dependency hierarchy for the subprojects.
+ *
+ *                 _____ common _____
+ *               /                   \
+ *          __ ui __                sound
+ *        /         \                 |
+ *    apps       optimization         |
+ *      \        /           \        |
+ *       \  imageproc    puzzle/simulation/game
+ *        \      \         /    /  ________/
+ *         \____  \       /   /  /
+ *              \  \     /  /  /
+ *               webdeployment
+ */
+include 'common', 'ui', 'sound', 'optimization', 'imageproc', 'puzzle', 'simulation', 'game', 'main'

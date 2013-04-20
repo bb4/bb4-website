@@ -26,6 +26,7 @@ II. Get the source
 III. Building
 
  - run "gradle" at the root. This will compile all subprojects and run all tests.
+ - try running gradle --gui (suffix & if running with cygwin or *nix) to see a list of all tasks in a nuice UI.
 
 option 1 - ant only
  - Verify entries in ant/common.properties and ant/build.xml. No changes should be needed.
@@ -48,7 +49,7 @@ option 2 - intellij (recommended)
    in the project view and run them as applications.
  - Gradle tasks can also be run from with intellij by configuring build configurations for them.
 
-Additional source
+Additional sources
   I split out jigo (used by go) and jhlabs (used by image breeder) into separate gradle projects which build separate
   jars because they are based on other peoples open source code. In the rare case that you need to modify the source in
   these jars, do the following.
