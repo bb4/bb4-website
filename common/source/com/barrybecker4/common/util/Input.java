@@ -63,7 +63,7 @@ public final class Input {
                 valid = false;
             }
 
-        }  while (!valid);   // give them another change if not valid.
+        }  while (!valid);   // give them another chance if not valid.
         return value;
     }
 

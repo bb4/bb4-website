@@ -136,7 +136,7 @@ task runPokerServerAndClients(type: JavaExec, depends: classes) {
   <target name="executePoker" depends="compile" description="Run poker card game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-name poker -locale ENGLISH"/>
     </antcall>
   </target>
@@ -187,7 +187,7 @@ task runPokerServerAndClients(type: JavaExec, depends: classes) {
  <target name="executeGalactic" description="Run the Galactic Empire program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-name galactic -locale ENGLISH"/>
     </antcall>
   </target>
@@ -195,7 +195,7 @@ task runPokerServerAndClients(type: JavaExec, depends: classes) {
   <target name="executeChess" description="Run the chess program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;${libDir}/jigo-sgf-1.1.jar;"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;${libDir}/jigo-sgf-1.1.jar;"/>
       <param name="args" value="-name chess -locale ENGLISH"/>
     </antcall>
   </target>
@@ -203,7 +203,7 @@ task runPokerServerAndClients(type: JavaExec, depends: classes) {
   <target name="executeTrivial" depends="compile" description="Run trivial test game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-name trivial -locale ENGLISH"/>
     </antcall>
   </target>
@@ -219,7 +219,7 @@ task runPokerServerAndClients(type: JavaExec, depends: classes) {
   <!--target name="executeSetGame" description="Run the Set Game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;"/>
       <param name="args" value="-name set -locale ENGLISH"/>
     </antcall>
   </target>
@@ -227,7 +227,7 @@ task runPokerServerAndClients(type: JavaExec, depends: classes) {
   <target name="executeGo" description="Run the go program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;${libDir}/gtpserver.jar;${libDir}/jigo-sgf-1.1.jar;"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar;${libDir}/gtpserver.jar;${libDir}/jigo-sgf-1.1.jar;"/>
       <param name="args" value="-name go -locale ENGLISH"/>
     </antcall>
   </target>

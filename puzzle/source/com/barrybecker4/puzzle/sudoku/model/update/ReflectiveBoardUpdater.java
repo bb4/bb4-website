@@ -18,17 +18,17 @@ import java.util.List;
  */
 public class ReflectiveBoardUpdater implements IBoardUpdater {
 
-    private List<Class> updaterClasses;
+    private List<Class<? extends AbstractUpdater>> updaterClasses;
 
     /**
      * Constructor
      * @param updaterClasses the updater classes to use when updating the board during an interaction of the solver.
      */
-    public ReflectiveBoardUpdater(List<Class> updaterClasses) {
+    public ReflectiveBoardUpdater(List<Class<? extends AbstractUpdater>> updaterClasses) {
         this.updaterClasses = updaterClasses;
     }
 
-    public ReflectiveBoardUpdater(Class... classes) {
+    public ReflectiveBoardUpdater(Class<? extends AbstractUpdater>... classes) {
         updaterClasses = Arrays.asList(classes);
     }
 
@@ -36,6 +36,7 @@ public class ReflectiveBoardUpdater implements IBoardUpdater {
      * Update candidate lists for all cells then set the unique values that are determined.
      * First create the updaters using reflection, then apply them.
      */
+    @Override
     public void updateAndSet(Board board) {
 
         List<IUpdater> updaters = createUpdaters(board);
@@ -54,13 +55,13 @@ public class ReflectiveBoardUpdater implements IBoardUpdater {
 
         List<IUpdater> updaters = new LinkedList<IUpdater>();
 
-        for (Class clazz : updaterClasses) {
-            Constructor ctor;
+        for (Class<? extends IUpdater> clazz : updaterClasses) {
+            Constructor<? extends IUpdater> ctor;
             try {
                 ctor = clazz.getDeclaredConstructor(Board.class);
                 try {
                     ctor.setAccessible(true);
-                    IUpdater updater = (IUpdater)ctor.newInstance(board);
+                    IUpdater updater = ctor.newInstance(board);
                     updaters.add(updater);
                 } catch (InstantiationException e) {
                     throw new IllegalStateException("Could not instantiate " + clazz.getName(), e);

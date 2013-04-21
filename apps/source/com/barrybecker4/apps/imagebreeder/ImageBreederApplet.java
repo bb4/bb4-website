@@ -35,8 +35,8 @@ public class ImageBreederApplet extends ApplicationApplet
                                         ActionListener,
                                         ImageSelectionListener,
                                         SliderChangeListener {
-    private static int NUM_CHILD_IMAGES = 20;
-    private static float DEFAULT_VARIANCE = 0.2f;
+    private static final  int NUM_CHILD_IMAGES = 20;
+    private static final float DEFAULT_VARIANCE = 0.2f;
     private float variance = DEFAULT_VARIANCE;
     private static final String IMAGE_DIR = "com/barrybecker4/apps/imagebreeder/ui/images/";
 
