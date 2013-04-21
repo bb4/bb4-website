@@ -17,4 +17,4 @@
  *              \  \     /  /  /
  *               webdeployment
  */
-include 'common', 'ui', 'sound', 'optimization', 'imageproc', 'puzzle', 'simulation', 'game', 'main'
+include 'common', 'ui', 'sound', 'optimization', 'imageproc', 'puzzle', 'simulation', 'game', 'apps', 'main'

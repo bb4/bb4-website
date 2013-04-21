@@ -4,11 +4,8 @@ package com.barrybecker4.game.multiplayer.galactic;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.multiplayer.galactic.player.GalacticPlayer;
 
-import javax.vecmath.Vector2d;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-
-
 
 /**
  * An order describes how a fleet of ships should be deployed.
@@ -100,10 +97,10 @@ public class Order {
     public void incrementYear() {
         Point2D oldLocation = new Point2D.Double(currentLocation_.getX(), currentLocation_.getY());
 
-        Vector2d v = getUnitDirection();
-        v.scale(NORMAL_SPEED);
+        Point2D v = getUnitDirection();
+        v.setLocation(NORMAL_SPEED* v.getX(), NORMAL_SPEED * v.getY());
 
-        currentLocation_.setLocation( currentLocation_.getX() + v.x,  currentLocation_.getY() +v.y);
+        currentLocation_.setLocation( currentLocation_.getX() + v.getX(),  currentLocation_.getY() +v.getY());
 
         // if the destination planet lies on the line from where we were to where we are now,
         // then we overshot. set the currentLocation to the dest planet location.
@@ -123,10 +120,11 @@ public class Order {
     /**
      * @return a unit vector pointing in the current direction of movement.
      */
-    private Vector2d getUnitDirection() {
+    private Point2D getUnitDirection() {
         Location dLoc = destination_.getLocation();
-        Vector2d unitVec = new Vector2d(dLoc.getCol() - currentLocation_.getX(), dLoc.getRow() - currentLocation_.getY());
-        unitVec.normalize();
+        Point2D unitVec = new Point2D.Double(dLoc.getCol() - currentLocation_.getX(), dLoc.getRow() - currentLocation_.getY());
+        double dist = unitVec.distance(unitVec);
+        unitVec.setLocation(unitVec.getX()/dist, unitVec.getY()/dist);
         return unitVec;
     }
 

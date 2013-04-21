@@ -89,72 +89,15 @@
         </fileset>
       </copy>
 
-
-      <!-- copy just the core class files that are needed for all the twoplayer games. Produces bb4-twoplayer-common-1.0.jar
-      <antcall target="deployJar">
-          <param name="componentDir" value="game/twoplayer/common"/>
-          <param name="jarFile" value="bb4-twoplayer-common-1.0.jar"/>
-      </antcall-->
-
-       <!-- copy just the core class files that are needed for all the multiplayer games. Produces bb4-multiplayer-common-1.0.jar
-       <antcall target="deployJar">
-          <param name="componentDir" value="game/multiplayer/common"/>
-          <param name="jarFile" value="bb4-multiplayer-common-1.0.jar"/>
-      </antcall -->
-
-
-      <!-- copy the class files that are needed for chess deployment -->
-      <copy todir="${stagingDir}">
-        <fileset dir="${classesDir}">
-          <include name="com/barrybecker4/game/twoplayer/checkers/**/*.class"/>
-          <include name="com/barrybecker4/game/twoplayer/chess/**/*.class"/>
-          <exclude name="com/barrybecker4/game/twoplayer/**/test"/>
+      <!-- copy the apps jars needed for aps applets (i.e. spirograph, sierpinski, imagebreeder -->
+      <copy todir="${distributionGameDir}">
+        <fileset dir="${appsDir}/build/libs">
+          <include name="bb4-*.jar"/>
         </fileset>
-        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
-      <antcall target="copyAllResources">
-          <param name="componentDir" value="game/twoplayer/chess"/>
-      </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/chess.jar"/>
-      <sleep milliseconds="${sleepTime}" />
-      <delete dir="${stagingDir}/com"/>
-
-      <!-- copy the class files that are needed for go deployment -->
-      <copy todir="${stagingDir}">
-        <fileset dir="${classesDir}">
-          <include name="com/barrybecker4/game/twoplayer/go/**/*.class"/>
-          <exclude name="com/barrybecker4/game/twoplayer/go/**/test"/>
-        </fileset>
-        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy  -->
-      </copy>
-      <antcall target="copyAllResources">
-          <param name="componentDir" value="game/twoplayer/go"/>
-      </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/bb4-go-1.0.jar"/>
-      <sleep milliseconds="${sleepTime}" />
-      <delete dir="${stagingDir}/com"/>
-
-
-      <!-- copy the class files that are needed for spirograph deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="apps/spirograph"/>
-          <param name="jarFile" value="spirograph.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for imagebreeder deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="apps/imagebreeder"/>
-          <param name="jarFile" value="imagebreeder.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for sierpinski deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="apps/sierpinski"/>
-          <param name="jarFile" value="sierpinski.jar"/>
-      </antcall>
 
       <!-- some thirdparty libs needed by the applets. -->
-      <copy file="../lib/vecmath.jar" tofile="${distributionGameDir}/vecmath.jar"/>
+      <copy file="../lib/vecmath.jar.bak" tofile="${distributionGameDir}/vecmath.jar"/>
       <!--copy file="${libDir}/sun.jar" tofile="${distributionGameDir}/sun.jar"/-->
       <copy file="../lib/jai-codec-1.1.3.jar" tofile="${distributionGameDir}/jai-codec-1.1.3.jar"/>
       <copy file="../../imageproc/lib/jhlabs-1.0.3.jar" tofile="${distributionGameDir}/jhlabs-1.0.3.jar"/>

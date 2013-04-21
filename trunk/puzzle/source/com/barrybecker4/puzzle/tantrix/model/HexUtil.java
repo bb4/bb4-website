@@ -4,14 +4,15 @@ package com.barrybecker4.puzzle.tantrix.model;
 import com.barrybecker4.common.geometry.IntLocation;
 import com.barrybecker4.common.geometry.Location;
 
-import javax.vecmath.Point2d;
+import java.awt.geom.Point2D;
+
 
 /**
  *  Used to find neighboring locations in hex space.
  *  Tiles are arranged like this:
- *     0,0   0,1   0,2
- *   1,0  1,1   1,2   1,3
- *     2,0   2,1   2,2
+ *    0,0   0,1   0,2
+ *    1,0   1,1   1,2   1,3
+ *    2,0   2,1   2,2
  *
  *  @author Barry Becker
  */
@@ -52,8 +53,8 @@ public class HexUtil {
     public static double distanceBetween(Location loc1, Location loc2) {
         int row1 = loc1.getRow();
         int row2 = loc2.getRow();
-        Point2d point1 = new Point2d(loc1.getCol() + (row1 % 2 == 1 ? -0.5 : 0), row1);
-        Point2d point2 = new Point2d(loc2.getCol() + (row2 % 2 == 1 ? -0.5 : 0), row2);
+        Point2D point1 = new Point2D.Double(loc1.getCol() + (row1 % 2 == 1 ? -0.5 : 0), row1);
+        Point2D point2 = new Point2D.Double(loc2.getCol() + (row2 % 2 == 1 ? -0.5 : 0), row2);
 
         return point1.distance(point2);
     }

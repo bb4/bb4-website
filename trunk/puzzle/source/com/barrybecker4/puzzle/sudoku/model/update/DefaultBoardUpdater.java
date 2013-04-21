@@ -7,6 +7,7 @@ import com.barrybecker4.puzzle.sudoku.model.update.updaters.NakedSubsetUpdater;
 import com.barrybecker4.puzzle.sudoku.model.update.updaters.StandardCRBUpdater;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Default board updater applies all the standard updaters.
@@ -15,16 +16,20 @@ import java.util.Arrays;
  */
 public class DefaultBoardUpdater extends ReflectiveBoardUpdater {
 
-    private static final Class[] UPDATERS =  {
-         StandardCRBUpdater.class,
-         LoneRangerUpdater.class,
-         BigCellScoutUpdater.class,
-         NakedSubsetUpdater.class
-    };
+    private static final List<Class<? extends AbstractUpdater>> UPDATERS;
+
+    static {
+        UPDATERS = Arrays.asList(
+                StandardCRBUpdater.class,
+                LoneRangerUpdater.class,
+                BigCellScoutUpdater.class,
+                NakedSubsetUpdater.class
+        );
+    }
 
     /** Constructor */
     public DefaultBoardUpdater() {
 
-        super(Arrays.asList(UPDATERS));
+        super(UPDATERS);
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
  *   2. Take pictures corresponding to nodes in hierarchy using camcorder or other digital camera.
  *      Store the images in /projects/javascript_projects/aikido_builder/images/katate_dori (or whichever attack)
  *   3. Run this program on the xml file to generate technique_builder.html
- *     and all_techniques.html in barrybecker4/projects/javascript_projects/aikido_builder/.
+ *      and all_techniques.html in barrybecker4/projects/javascript_projects/aikido_builder/.
  *   4. upload technique_builder.html, all_techniques.html and corresponding images to website.
  *
  * @author Barry Becker
@@ -44,7 +44,7 @@ public class AikidoAppGenerator {
      * Used to be /projects/javascript_projects/aikido_builder/,
      * but I need everything in the PROJECT_HOME to be self contained and transferable.
      */
-    private static final String RESULT_PATH = FileUtil.PROJECT_HOME + "/dist/aikido_builder/";
+    private static final String RESULT_PATH = FileUtil.PROJECT_HOME + "/apps/dist/aikido_builder/";
 
     /** the builder DHTML application */
     private static final String RESULT_BULDER_FILE = "technique_builder.html";
@@ -460,7 +460,7 @@ public class AikidoAppGenerator {
      */
     public static void generateHTMLAppFromDom( Document document, String fileName) throws IOException
     {
-
+        System.out.println("file = " + fileName + " doc = " + document);
         FileOutputStream fos = new FileOutputStream(fileName);
 
         fos.write(getHTMLHead("Aikido Technique Builder").getBytes());
@@ -535,6 +535,7 @@ public class AikidoAppGenerator {
         }
 
         File file = new File(argv[0]);
+        System.out.println("parsing xml from " + file);
         document = DomUtil.parseXMLFile(file, !DEBUG_MODE);
 
         try {

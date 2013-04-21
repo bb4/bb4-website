@@ -11,7 +11,8 @@ dependencies {
     compile project(':sound')
     compile project(':imageproc')
     compile project(':puzzle')
-  compile project(':game')
+    compile project(':game')
+    compile project(':apps')
 
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.7'

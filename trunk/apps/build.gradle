@@ -1,0 +1,129 @@
+/*
+ * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+ */
+
+version = '1.0'
+mainClassName = "com.barrybecker4.apps.spirograph.SpiroGraph"
+
+task runImageBreeder(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.apps.imagebreeder.ImageBreederApplet'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runSpirograph(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.apps.spirograph.SpiroGraph'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runSierpinski(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.apps.sierpinski.SierpinskiApplet'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runSimpleEditor(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.apps.misc.sedit.SimpleEditorFrame'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runNativeRender(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.apps.misc.nativeRender.NativeTenderTest'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runXMLViewer(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.ui.xmlviewer.DomEcho'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['../apps/source/com/barrybecker4/apps/misc/yugioh/yugiohCards.xml']
+}
+
+task runXMLAppGenerator(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.apps.aikido.AikidoAppGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['../apps/source/com/barrybecker4/apps/aikido/katate_dori.xml']
+}
+
+/*
+  <target name="executeImageBreeder" description="Run the Image Breeder">
+    <echo message="${imageprocJar}"/>
+    <antcall target="executeProgram">
+      <param name="className" value="com.barrybecker4.apps.imagebreeder.ImageBreederApplet" />
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai-codec-1.1.3.jar;../../imageproc/lib/jhlabs-1.0.3.jar;${imageprocJar}" />
+      <param name="args" value=""/>
+    </antcall>
+  </target>
+
+  <target name="executeSpirograph" description="Run the SpiroGraph program">
+    <antcall target="executeProgram">
+      <param name="className" value="com.barrybecker4.apps.spirograph.SpiroGraph"/>
+      <param name="libPath" value="${libDir}/jai-codec-1.1.3.jar"/>
+    </antcall>
+  </target>
+
+  <target name="executeSimpleEditor" depends="compile" description="A simple editor.">
+    <echo message="now executing simple editor"/>
+    <java classname="com.barrybecker4.apps.misc.sedit.SimpleEditorFrame"
+          classpath="${run.classPath};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar"
+          fork="true" jvm="${java_compiler}" maxmemory="128M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+
+  <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
+    <antcall target="executeProgram">
+      <param name="className" value="com.barrybecker4.ui.xmlviewer.DomEcho"/>
+      <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <param name="args" value="${project_home}/source/com/barrybecker4/apps/misc/yugioh/yugiohCards.xml"/>
+    </antcall>
+  </target>
+
+  <target name="XMLAppGenerator" depends="compile" description=" run the XML App Generator">
+     <antcall target="executeProgram">
+       <param name="className" value="com.barrybecker4.apps.aikido.AikidoAppGenerator"/>
+       <param name="args" value="${project_home}/source/com/barrybecker4/apps/aikido/katate_dori.xml"/>
+     </antcall>
+  </target>
+ */
+
+task sierpinskiJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/apps/sierpinski/**'
+    baseName = 'bb4-sierpinski'
+}
+task spirographJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/apps/spirograph/**'
+    baseName = 'bb4-spirograph'
+}
+task imagebreederJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/apps/imagebreeder/**'
+    baseName = 'bb4-imagebreeder'
+}
+
+artifacts {
+     archives sierpinskiJar
+     archives spirographJar
+     archives imagebreederJar
+}
+
+dependencies {
+    compile project(':sound')
+    compile project(':imageproc')
+
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.7'
+    //compile group: 'com.sun.media', name: 'jai-codec', version: '1.1.3'
+    compile 'xerces:xercesImpl:2.3.0' //2.11.0'
+    compile 'xml-apis:xml-apis:1.4.01' //2.0.2'
+}
+
+jar {
+    manifest {
+      // skip building the default jar that contains everything
+      enabled = false
+      /*
+        attributes 'Implementation-Title': 'BB4 Applications',
+            'Implementation-Version': version,
+            'Main-Class': mainClassName   */
+    }
+}
