@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.misc.factorize.factorizers;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,17 +31,4 @@ public class BrutePrimeFactorizer extends AbstractPrimeFactorizer {
         return factors;
     }
 
-    @Override
-    protected AbstractPrimeFactorizer createInstance() {
-        return new BrutePrimeFactorizer();
-    }
-
-    //------ Main method: start here! -----------------------------------------------------------
-    public static void main( String[] args ) throws IOException {
-
-        BrutePrimeFactorizer factorizer = new BrutePrimeFactorizer();
-        factorizer.doTest(TEST_NUMBER_VERY_SMALL);
-        factorizer.doTest(TEST_NUMBER_SMALL);
-        //factorizer.doTest(TEST_NUMBER_MEDIUM);  // too slow
-    }
 }
