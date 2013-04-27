@@ -43,6 +43,6 @@ public class GameComparisonMenuController extends GameMenuController {
 
     @Override
     public void saveImage() {
-        GUIUtil.saveSnapshot((JComponent)frame_.getComponent(0), FileUtil.getHomeDir() + "/main");
+        GUIUtil.saveSnapshot((JComponent)frame_.getComponent(0), FileUtil.getHomeDir() + "/game");
     }
 }

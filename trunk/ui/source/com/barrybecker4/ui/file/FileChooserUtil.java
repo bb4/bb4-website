@@ -41,7 +41,7 @@ public final class FileChooserUtil {
         if (chooser_ == null) {
             chooser_ = new JFileChooser();
         }
-        chooser_.setCurrentDirectory( new File( FileUtil.getHomeDir() + "/main" ) );
+        chooser_.setCurrentDirectory( new File( FileUtil.getHomeDir() ) );
         chooser_.setFileFilter(filter);
         return chooser_;
     }
