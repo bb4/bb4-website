@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="deploy" name="applets">
+  <description>usage: ant {task}</description>
+  <property environment="env"/>
+
+  <property file="common.properties"/>
+
+  <!-- enable or disable assertions when runnning. Should disable before formally releasing a new version. -->
+  <property name="assertionsFlag" value="-enableassertions"/>
+
+  <!-- place to put .class files, images and resources, so they can be jar'd up -->
+  <property name="stagingDir" value="../temp/classes"/>
+
+  <!-- the jvm to use when executing -->
+  <property name="java6" value="${java_home}/bin/java"/>
+  <property name="java_compiler" value="${java6}"/>
+
+  <!-- Load additional tasks. this requies that ant-contrib-1.0b3.jar be dropped into <Intellij>/lib/ant/lib -->
+   <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+   </taskdef>
+
+  <target name="clean" description="Cleans out all the existing compiled classes and ${distributionDir}">
+     <delete dir="${classesDir}"/>
+     <delete dir="${distributionDir}"/>
+  </target>
+
+  <target name="init">
+     <mkdir dir="${classesDir}"/>
+     <mkdir dir="${distributionDir}"/>
+     <mkdir dir="${distributionGameDir}"/>
+  </target>
+
+
+  <target name="deploy"
+      description="deploys the built jars, html, and jnlp files to the ${distributionDir} dir so they can be bulk copied to a website">
+      <ant antfile="distribute.xml" inheritall="true" target="distribute"/>
+      <echo message="Done deploying." />
+  </target>
+
+</project>
+
+

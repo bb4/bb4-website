@@ -1,13 +1,13 @@
-//** Tab Content script v2.0- © Dynamic Drive DHTML code library (http://www.dynamicdrive.com)
+//** Tab Content script v2.0- ï¿½ Dynamic Drive DHTML code library (http://www.dynamicdrive.com)
 //** Updated Oct 7th, 07 to version 2.0. Contains numerous improvements:
 //   -Added Auto Mode: Script auto rotates the tabs based on an interval, until a tab is explicitly selected
 //   -Ability to expand/contract arbitrary DIVs on the page as the tabbed content is expanded/ contracted
 //   -Ability to dynamically select a tab either based on its position within its peers, or its ID attribute (give the target tab one 1st)
 //   -Ability to set where the CSS classname "selected" get assigned- either to the target tab's link ("A"), or its parent container
 //** Updated Feb 18th, 08 to version 2.1: Adds a "tabinstance.cycleit(dir)" method to cycle forward or backward between tabs dynamically
-//** Updated April 8th, 08 to version 2.2: Adds support for expanding a tab using a URL parameter (ie: http://mysite.com/tabcontent.htm?tabinterfaceid=0) 
+//** Updated April 8th, 08 to version 2.2: Adds support for expanding a tab using a URL parameter (ie: http://mysite.com/tabcontent.htm?tabinterfaceid=0)
 
-////NO NEED TO EDIT BELOW////////////////////////
+// NO NEED TO EDIT BELOW
 
 function ddtabcontent(tabinterfaceid){
 	this.tabinterfaceid=tabinterfaceid //ID of Tab Menu main container
@@ -20,7 +20,7 @@ function ddtabcontent(tabinterfaceid){
 	this.selectedClassTarget="link" //keyword to indicate which target element to assign "selected" CSS class ("linkparent" or "link")
 }
 
-ddtabcontent.getCookie=function(Name){ 
+ddtabcontent.getCookie=function(Name){
 	var re=new RegExp(Name+"=[^;]+", "i"); //construct RE to search for target name/value pair
 	if (document.cookie.match(re)) //if cookie found
 		return document.cookie.match(re)[0].split("=")[1] //return its value
@@ -142,8 +142,10 @@ ddtabcontent.prototype={
 				if (this.tabs[i].getAttribute("rev")){ //if "rev" attr defined, store each value within "rev" as an array element
 					this.revcontentids=this.revcontentids.concat(this.tabs[i].getAttribute("rev").split(/\s*,\s*/))
 				}
-				if (selectedtabfromurl==i || this.enabletabpersistence && selectedtab==-1 && parseInt(persistedtab)==i || !this.enabletabpersistence && selectedtab==-1 && this.getselectedClassTarget(this.tabs[i]).className=="selected"){
-					selectedtab=i //Selected tab index, if found
+				if (selectedtabfromurl==i
+				    || this.enabletabpersistence && selectedtab==-1 && parseInt(persistedtab)==i
+				    || !this.enabletabpersistence && selectedtab==-1 && this.getselectedClassTarget(this.tabs[i]).className=="selected") {
+				  	selectedtab=i //Selected tab index, if found
 				}
 			}
 		} //END for loop

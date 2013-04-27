@@ -1,0 +1,12 @@
+// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+
+version = '1.0'
+
+dependencies {
+    compile project(':optimization')
+    compile project(':sound')
+    compile project(':imageproc')
+    compile project(':puzzle')
+    compile project(':game')
+    compile project(':apps')
+}

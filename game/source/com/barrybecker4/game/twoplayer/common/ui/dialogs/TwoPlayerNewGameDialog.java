@@ -135,7 +135,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog
                 // if they cancel this dlg then we leave the checkbox unchecked
                 if (GUIUtil.hasBasicService())  {
                     JFileChooser chooser = FileChooserUtil.getFileChooser();
-                    chooser.setCurrentDirectory( new File( FileUtil.getHomeDir() + "/main" ) );
+                    chooser.setCurrentDirectory( new File( FileUtil.getHomeDir() + "/webdeployment" ) );
                     chooser.setFileFilter(new TextFileFilter());
                     int state = chooser.showOpenDialog( this );
                     File file = chooser.getSelectedFile();
