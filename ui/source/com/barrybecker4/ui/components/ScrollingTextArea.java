@@ -40,6 +40,7 @@ public class ScrollingTextArea extends JScrollPane implements Appendable {
      * Always scroll to the bottom so what was appended can be seen.
      * @param txt text to append
      */
+    @Override
     public void append(String txt)  {
         textArea.append(txt);
         // this is not needed for java 6 or above.
