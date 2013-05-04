@@ -96,8 +96,6 @@
       </copy>
 
       <!-- some thirdparty libs needed by the applets. -->
-      <!--copy file="../lib/vecmath.jar.bak" tofile="${distributionGameDir}/vecmath.jar"/>
-      <copy file="../lib/jai-codec-1.1.3.jar" tofile="${distributionGameDir}/jai-codec-1.1.3.jar"/-->
       <copy file="../../imageproc/lib/jhlabs-1.0.3.jar" tofile="${distributionGameDir}/jhlabs-1.0.3.jar"/>
       <copy file="../../game/lib/jigo-sgf-1.1.jar" tofile="${distributionGameDir}/jigo-sgf-1.1.jar"/>
   </target>     <!-- end distributeJars -->

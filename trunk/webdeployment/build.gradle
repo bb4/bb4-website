@@ -2,6 +2,19 @@
 
 version = '1.0'
 
+ext.distributionGameDir="$distributionDir/applets"
+ext.distributionSchemaDir="$distributionDir/schema"
+
+// Location of all the project related files.
+// The environment variable PROJECT_HOME needs to be set to something like:
+//    E:/projects/java_projects/trunk   (on Windows)   or
+//    /windows/projects/java_projects/trunk (on Linux)
+ext.project_home="$System.env.PROJECT_HOME"
+
+// Location of java SDK
+ext.java_home="$System.env.JAVA_HOME"
+
+
 dependencies {
     compile project(':optimization')
     compile project(':sound')
@@ -9,4 +22,21 @@ dependencies {
     compile project(':puzzle')
     compile project(':game')
     compile project(':apps')
+}
+
+task showProperties << {
+    println "Project: $project"
+    println "Name: $name"
+    println "Path: $path"
+    println "Project directory: $projectDir"
+    println "Build directory: $buildDir"
+    println "Version: $version"
+    println "Group: $project.group"
+    println "Description: $project.description"
+    println "AntBuilder: $ant"
+    println "codebase: $codebase"
+    println "distributionDir: $distributionDir"
+    println "distributionGameDir: $distributionGameDir"
+    println "projectHome: $project_home"
+
 }
