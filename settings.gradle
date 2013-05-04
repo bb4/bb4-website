@@ -3,18 +3,37 @@
  */
 
 /**
- * Here is the dependency hierarchy for the subprojects.
+ * Here is the dependency hierarchy for the subprojects in this multi-project build.
  *
- *                 _____ common _____
- *               /                   \
- *          __ ui __                sound
- *        /         \                 |
- *    apps       optimization         |
- *      \        /           \        |
- *       \  imageproc    puzzle/simulation/game
- *        \      \         /    /  ________/
- *         \____  \       /   /  /
- *              \  \     /  /  /
- *               webdeployment
+ *               __common_____
+ *             /              \
+ *            ui             sound
+ *             |              /  \__
+ *          optimization_   /     | \
+ *         /          \  \/      /\  \______
+ *      imageproc    apps \     /  \        \
+ *         \         /   puzzle/simulation/game
+ *          \       /     __/______/________/
+ *           \     /     /
+ *          webdeployment
  */
+
 include 'common', 'ui', 'sound', 'optimization', 'imageproc', 'puzzle', 'simulation', 'game', 'apps', 'webdeployment'
+
+
+
+/**
+ *  Another option would be to have to break up the multi-project build into separate repositories.
+ *  If common, ui, sound were joined into a "core" jar produces by a separate build, then this diagram would become
+ *
+ *            ___core__
+ *          /          \
+ *         /       optimization_____________
+ *        /       /         \    \          \
+ *     apps   imageproc   puzzle/simulation/game
+ *         \       |     __/______/________/
+ *           \     |   /
+ *          webdeployment
+ *
+ */
+
