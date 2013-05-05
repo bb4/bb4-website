@@ -139,7 +139,7 @@
           <param name="componentDir" value="${componentDir}"/>
       </antcall>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/${jarFile}"/>
-      <delete dir="${stagingDir}/com"/>
+      <delete dir="${stagingDir}"/>
   </target>
 
   <target name="copyAllResources">
