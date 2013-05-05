@@ -24,7 +24,7 @@ dependencies {
     compile project(':apps')
 }
 
-task showProperties << {
+task showProperties(description: "shows some properties") << {
     println "Project: $project"
     println "Name: $name"
     println "Path: $path"
@@ -38,5 +38,72 @@ task showProperties << {
     println "distributionDir: $distributionDir"
     println "distributionGameDir: $distributionGameDir"
     println "projectHome: $project_home"
+    println "projectHome: $uiDir"
+}
 
+clean.doLast {
+    // project. is needed to disambiguate from the clean tasks existing delete.
+    project.delete ("$distributionDir", "$stagingDir")
+}
+
+
+task deployImages(description: "Copy image files to $distributionGameDir")  {
+
+    doLast {
+        copy {
+            from "$sourceDir/images"
+            into "$distributionGameDir"
+            include '**/*.jpg'
+            include '**/*.png'
+            include '**/*.gif'
+        }
+    }
+}
+
+task deploySchemas(description: "Copy schema files to $distributionDir") {
+
+     doLast {
+        copy {
+            from fileTree("$project_home").files
+            into "$distributionSchemaDir"
+            include "**/*.dtd"
+            include "**/*.xsd"
+        }
+     }
+}
+
+task deployJars(description: "Deploys jar files needed for running applets and web start applications") {
+
+    doLast {
+        println "deployJars to $distributionGameDir from $project_home"
+        copy {
+            from fileTree("$project_home").files
+            into "$distributionGameDir"
+            include "bb4-*.jar"
+            include "jhlabs-1.0.3.jar"
+            include "jigo-sgf-1.1.jar"
+            //include "common/build/libs/bb4-common*.jar"
+            //include "ui/build/libs/bb4-ui*.jar"
+            //include "sound/build/libs/bb4-sound*.jar"
+            //include "imageproc/build/libs/bb4-imageproc*.jar"
+            //include "optimization/build/libs/bb4-optimization*.jar"
+            //include "puzzle/build/libs/bb4-*.jar"
+            //include "simulation/build/libs/bb4-*.jar"
+            //include "game/build/libs/bb4-*.jar"
+            //include "apps/build/libs/bb4-*.jar"
+            //include "../imageproc/lib/jhlabs-1.0.3.jar"
+            //include "../game/lib/jigo-sgf-1.1.jar"
+        }
+    }
+}
+
+task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
+            description: "Deploys all files  to $distributionGameDir so they can be bulk copied to a website") << {
+    apply from: 'appletHtmlCommon.gradle'
+
+    println "appletIndexFile: " + appletIndexFile
+    println "appletHtml.localesList: " + appletHtml.localesList
+    println "jnlp.replacementList=" + jnlp.replacementList
+    println "doResize=" + doResize
+    println "TRTemplate1=" + TRTemplate1
 }

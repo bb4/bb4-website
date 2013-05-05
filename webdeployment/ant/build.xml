@@ -13,12 +13,6 @@
      <delete dir="${distributionDir}"/>
   </target>
 
-  <target name="init">
-     <mkdir dir="${distributionDir}"/>
-     <mkdir dir="${distributionGameDir}"/>
-  </target>
-
-
   <target name="deploy"
       description="deploys the built jars, html, and jnlp files to the ${distributionDir} dir so they can be bulk copied to a website">
       <ant antfile="distribute.xml" inheritall="true" target="distribute"/>
