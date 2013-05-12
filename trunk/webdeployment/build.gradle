@@ -1,5 +1,6 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 
+import org.apache.tools.ant.filters.ReplaceTokens
 version = '1.0'
 
 ext.distributionGameDir="$distributionDir/applets"
@@ -132,14 +133,18 @@ void createHtmlForLocale(String locale) {
         include '*.gif'
     }
 
-    println "applet list for $locale = " + appletHtml[locale].appletList
-    println "appletIndexFile[ $locale ] = " + appletIndexFile[locale]
+    //println "applet list for $locale = " + appletHtml[locale].appletList
+    //println "appletIndexFile[ $locale ] = " + appletIndexFile[locale]
+    //println "tokens for $locale = " + appletHtml[locale]
+
     copy {
         from "$sourceDir/html/" + appletIndexFile['base']
         into "$distributionGameDir/.."
         rename { String fileName ->
             fileName.replace('.html', '_' + locale + '.html')
         }
+        // make these replacements when copying
+        filter(ReplaceTokens, tokens: appletHtml[locale], beginToken: '{', endToken: '}')
     }
 }
 
