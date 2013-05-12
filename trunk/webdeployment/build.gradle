@@ -46,7 +46,7 @@ clean.doLast {
     project.delete ("$distributionDir", "$stagingDir")
 }
 
-
+// Should be able to have a tyep: Copy taks and use << instead of doLast
 task deployImages(description: "Copy image files to $distributionGameDir")  {
 
     doLast {
@@ -60,15 +60,16 @@ task deployImages(description: "Copy image files to $distributionGameDir")  {
     }
 }
 
+// Should be able to have a tyep: Copy taks and use << instead of doLast
 task deploySchemas(description: "Copy schema files to $distributionDir") {
 
      doLast {
-        copy {
-            from fileTree("$project_home").files
-            into "$distributionSchemaDir"
-            include "**/*.dtd"
-            include "**/*.xsd"
-        }
+         copy {
+             from fileTree("$project_home").files
+             into "$distributionSchemaDir"
+             include "**/*.dtd"
+             include "**/*.xsd"
+         }
      }
 }
 
@@ -100,10 +101,54 @@ task deployJars(description: "Deploys jar files needed for running applets and w
 task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
             description: "Deploys all files  to $distributionGameDir so they can be bulk copied to a website") << {
     apply from: 'appletHtmlCommon.gradle'
-
+    apply from: 'resources/appletHtml_en.gradle'
+    apply from: 'resources/appletHtml_vi.gradle'
+   /*
     println "appletIndexFile: " + appletIndexFile
     println "appletHtml.localesList: " + appletHtml.localesList
     println "jnlp.replacementList=" + jnlp.replacementList
     println "doResize=" + doResize
     println "TRTemplate1=" + TRTemplate1
+    */
+
+    /* there needs to be a separate set of html files for each locale */
+    println "localesList="+ appletHtml.localesList
+    appletHtml.localesList.each { locale -> createHtmlForLocale(locale) }
+}
+
+/**
+ * Deploys all the html files for the given locale.
+ * This includes the index page, javascript, and individual applet/jnlp files.
+ */
+void createHtmlForLocale(String locale) {
+    //println "locale = " + locale
+
+    // copy all the js, css, image files (should only be done once, not once per locale)
+    copy {
+        from "$sourceDir/html"
+        into "$distributionGameDir"
+        include '*.js'
+        include '*.css'
+        include '*.gif'
+    }
+
+    println "applet list for $locale = " + appletHtml[locale].appletList
+    println "appletIndexFile[ $locale ] = " + appletIndexFile[locale]
+    copy {
+        from "$sourceDir/html/" + appletIndexFile['base']
+        into "$distributionGameDir/.."
+        rename { String fileName ->
+            fileName.replace('.html', '_' + locale + '.html')
+        }
+    }
+}
+
+
+task i18n(description:"i18n test") << {
+    def locales = [Locale.ENGLISH, Locale.JAPANESE, Locale.GERMAN]
+    def keys = [ "s1", "s2", "s3" ]
+    [locales, keys].combinations().each{ locale, key ->
+        def labels = ResourceBundle.getBundle('html', locale)
+        println "Locale = ${locale.toString()}, key = $key, value = ${labels.getString(key)}"
+    }
 }

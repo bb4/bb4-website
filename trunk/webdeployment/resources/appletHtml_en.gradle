@@ -1,0 +1,692 @@
+/* Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT*/
+
+ext {
+
+en = new HashMap()
+appletHtml.put("en", en);
+en.put('locale', 'en')
+en.put('charset','utf-8')
+en.put('appletList',
+        ['pente', 'checkers', 'chess', 'go', 'blockade', 'galactic', 'poker', 'set', 'maze',
+         'spirograph','redpuzzle', 'sudoku', 'hiq', 'tantrix', 'trebuchet',
+         'snake', 'dice', 'stock', 'fractalexplorer', 'reactiondiffusion',
+         'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder','adventure',
+         'predprey', 'habitat', 'henonexplorer'])
+
+en.put('appletGameEntries',
+        "{penteTR}  {checkersTR}  {chessTR}  {goTR}  {blockadeTR}  {galacticTR}  {pokerTR}  {setTR}")
+
+en.put('appletPuzzleEntries',
+        "{mazeTR}  {redpuzzleTR} {sudokuTR}  {hiqTR}  {tantrixTR}  {spirographTR}  {adventureTR}")
+
+en.put('appletSimulationEntries',
+ "{reactiondiffusionTR}  {henonexplorerTR}  {fractalexplorerTR}  {snakeTR}  {diceTR}  {stockTR} \
+ {habitatTR}  {predpreyTR}  {fluidTR} {liquidTR}  {trebuchetTR}  {sierpinskiTR}  {lsystemTR}  {imagebreederTR}")
+
+en.put("title", "Barry's Applets")
+
+en.put("introduction",
+"""&nbsp;&nbsp;&nbsp;From this page you can run some of the java programs that I have
+developed. You can access them either as <a href=\"http://java.sun.com/applets/\">applet</a>s
+or through <a href=\"http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136112.html\">java Web Start</a>.
+To run the applets, you need to have a browser that supports java and has the java 1.6 plugin or later.
+Not all of the features of these programs are
+available when run as unsigned applets, but most are. Send me <a href=\"mailto:barrybecker4@yahoo.com\">e-mail</a> if you
+have any difficulties. Many of the applets require java 1.6+ so they can take advantage of the concurrency libraries.
+<br/>&nbsp;&nbsp;&nbsp;
+You can group my programs into 3 main categories:
+games, simulations, and puzzles. I have created an infrastructure for " +
+experimenting with games of all sorts. It supports multiplayer games and two player games with perfect information (no chance involved).
+This makes it very easy to add new games in the future. So
+far I have Pente, Tic-tac-toe, Checkers, Chess, Blockade, Set, Galactic, Poker, and Go, but could add more easily. The Go
+program still has a lot of room for improvement.
+Most of the games and simulations have an automatic optimization mode where they can improve
+by having the computer play against itself. All the two player games on this page use
+the <a href=\"http://sourcemaking.com/design_patterns/strategy\">strategy
+design pattern</a> for determining how to search. This means it is easy
+to plug in alternative search algorithms. So far, I have implemented
+<a href=\"http://en.wikipedia.org/wiki/Minimax\">minimax</a>,
+<a href=\"http://en.wikipedia.org/wiki/Negamax\">negamax</a>,
+<a href=\"http://en.wikipedia.org/wiki/Negascout\">negascout</a>,
+negamax with memory, negascout with memory,
+<a href=\"http://en.wikipedia.org/wiki/MTD-f\">MTD-f</a>,
+and <a href=\"http://senseis.xmp.net/?UCT\">UCT</a>. Go may require a very different
+search strategy in order to be successful, but for now these
+methods provide a good starting point. If you look in the options you will see
+a way to show a visualization of the game tree while you are playing.
+This has proved instrumental while debugging, but also can be used to help
+understand how the computer \"thinks\".
+<br/>&nbsp;&nbsp;&nbsp;
+I consider all of the programs here to be works in progress.
+I have ideas all the time about things to simulate on the
+computer. I find it fascinating to discover how the computer can be used to
+solve problems. For some fraction of my ideas, I create
+implementations. I have only limited time on the weekends. All of the
+html pages in this section of the site are generated using an Ant and <a href=\"http://www.gradle.org/\">Gradle</a>.
+I have internationalized my source code and partially localized it to 4 languages:
+<a href=\"applet_index_en.html\">English</a>,
+<a href=\"applet_index_de.html\">German</a>,
+<a href=\"applet_index_vi.html\">Vietnamese</a>,
+<a href=\"applet_index_jp.html\">Japanese</a>.
+Sometime soon I hope to opensource the code and write a book about the experience of developing these programs.
+<br/>&nbsp;&nbsp;&nbsp; " +
+I hope you will have half as much fun playing with these programs as I had
+writing them!
+""")
+
+en = new HashMap()
+pente.put('en', en)
+en.put('name', 'pente')
+en.put('title', 'Pente')
+en.put('description', 'Try to win by getting five in a row before the computer does.')
+en.put('className', 'GameApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.game.common.ui.GameApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.game.common.ui.GameApp')
+en.put('panelClass', 'com.barrybecker4.game.twoplayer.pente.ui.PentePanel')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-twoplayer-common-1.0.jar,bb4-optimization-1.0.jar,bb4-pente-1.0.jar')
+en.put('jarElement1','<jar href="bb4-game-common-1.0.jar" main="true"/>')
+en.put('longDescription',
+ """Try to win by getting five in a row before the computer does.
+I used to play <a href="http://en.wikipedia.org/wiki/Pente">pente</a>
+a lot with my wife when we first met (she is quite good at it).
+Pente is the first game that I created using my game framework.  I first created a
+<a href="http://en.wikipedia.org/wiki/Turbo_Pascal">Turbo Pascal</a> version back in 1991,
+but this one is better. My motivation has been to make it good enough to beat my wife. The object of the game is
+to get 5 in a row (horizontally, vertically, or diagonally). As with all the games created using this framework,
+you can play against the computer, another person, or have the computer play against itself.
+""")
+
+en = new HashMap()
+checkers.put('en', en)
+en.put('name', 'checkers')
+en.put('title', 'Checkers')
+en.put('description', """Try to beat the computer by capturing all her pieces. \
+Your pieces are at the top. Move them using drag and drop.
+""")
+en.put('className', 'GameApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.game.common.ui.GameApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.game.common.ui.GameApp')
+en.put('panelClass', 'com.barrybecker4.game.twoplayer.checkers.ui.CheckersPanel')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-twoplayer-common-1.0.jar,bb4-optimization-1.0.jar,bb4-chess-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-game-common-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""<a href=\"http://www.ehow.com/way_5421915_checkers-game-instructions.html\">Checkers</a> is a simple game. \
+I implemented it in only 2 weekends after I got the pente program \
+running and already established a framework for creating additional games. Capture all of the opponents pieces to win.
+""")
+
+en = new HashMap()
+chess.put('en', en)
+en.put('name', 'chess')
+en.put('title', 'Chess')
+en.put('description', 'Try to beat the computer by checkmating her king. Your pieces are at the top. Move them using drag and drop.')
+en.put('className', 'GameApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.game.common.ui.GameApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.game.common.ui.GameApp')
+en.put('panelClass', 'com.barrybecker4.game.twoplayer.chess.ui.ChessPanel')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-twoplayer-common-1.0.jar,bb4-optimization-1.0.jar,chess.jar')
+en.put('jarElement1', '<jar href="bb4-game-common-1.0.jar" main="true"/>')
+en.put('longDescription', """<a href=\"http://en.wikipedia.org/wiki/Chess\">Chess</a> is a relatively simple game compared to go. I implemented it in only 3 days - \
+after I spent a year implementing go and the rest of my java game framework. \
+<br/>&nbsp;&nbsp;&nbsp;Try to beat the computer by checkmating her king. Your pieces are at the top. \
+Checkmate the opponent's King to win.
+""")
+
+en = new HashMap()
+go.put('en', en)
+en.put('name', 'go')
+en.put('title', 'Go')
+en.put('description',
+ 'Try to beat the computer by capturing more territory. When a group of stones is completely surrounded, they are removed from the board and become numDead.')
+en.put('className', 'GameApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.game.common.ui.GameApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.game.common.ui.GameApp')
+en.put('panelClass', 'com.barrybecker4.game.twoplayer.go.ui.GoPanel')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-twoplayer-common-1.0.jar,bb4-optimization-1.0.jar,jai-codec-1.1.3.jar,jigo-sgf-1.1.jar,bb4-go-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-game-common-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""Many people have tried to make a <a href=\"http://en.wikipedia.org/wiki/Go_(game)\">go</a> program \
+that could beat even an intermediate player. So far none have been successful. For a time there was a reward of a \
+million dollars to whoever can do it. I don't really expect to either, but my motivation is in making a testbed \
+to try different approaches. I (not this program) am ranked about 5 kyu on <a href=\"http://www.gokgs.com/\">KGS</a>. \
+<br/>&nbsp;&nbsp;&nbsp; The object of the game is to get as much territory as possible.
+""")
+
+en = new HashMap()
+blockade.put('en', en)
+en.put('name', 'blockade')
+en.put('title', 'Blockade')
+en.put('description', """Try to beat the computer by reaching her home base first. \
+After each piece movement you need to place a wall. \
+When placing a wall, however, you are not allowed to completely cut off any piece from reaching any opponent home base.
+""")
+en.put('className', 'GameApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.game.common.ui.GameApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.game.common.ui.GameApp')
+en.put('panelClass', 'com.barrybecker4.game.twoplayer.blockade.ui.BlockadePanel')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-twoplayer-common-1.0.jar,bb4-optimization-1.0.jar,bb4-blockade-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-game-common-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""<a href=\"http://boardgamegeek.com/boardgame/2559/blockade\">Blockade</a> \
+is a relatively new game created by Lakeside. \
+I used to play it as a kid, but I don't see it in the stores anymore. \
+Each player starts with two pawns on designated spaces near their side of the board. \
+They each have (typically) ten blue walls and ten green walls, which fit in the slots \
+between the grid squares and are two squares wide. A player's turn consists \
+of moving his pawn two spaces and then placing a wall anywhere on the grid. \
+The object is to get one of your pawns around the obstacles being set by your \
+opponent and onto one of his or her starting spaces. \
+It is illegal to block a pawn completely from being able to reach either goal.
+""")
+
+en = new HashMap()
+galactic.put('en', en)
+en.put('name', 'galactic')
+en.put('title', 'Galactic')
+en.put('description', 'Try to win by conquering the Galaxy before other players.')
+en.put('className', 'GameApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.game.common.ui.GameApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.game.common.ui.GameApp')
+en.put('panelClass', 'com.barrybecker4.game.multiplayer.galactic.ui.GalacticPanel')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-multiplayer-common-1.0.jar,vecmath.jar,bb4-galactic-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-game-common-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""This multi-player game is loosely based on a game I played on a Comodore 128 back in the 80's. \
+<a href="http://en.wikipedia.org/wiki/Galactic_Empire_(Br%C3%B8derbund_video_game)">the original game</a> had only text graphics, but was fun to play with friends in the college dorm at \
+<a href="http://rpi.edu/">RPI</a>. This version has several \
+improvements: better graphics, robot players, and there are visual indications of fleet sizes and locations.
+""")
+
+en = new HashMap()
+poker.put('en', en)
+en.put('name', 'poker')
+en.put('title', 'Poker')
+en.put('description', 'Try your hand at winning poker against other human and computer opponents.')
+en.put('className', 'GameApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.game.common.ui.GameApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.game.common.ui.GameApp')
+en.put('panelClass', 'com.barrybecker4.game.multiplayer.poker.ui.PokerPanel')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-multiplayer-common-1.0.jar,vecmath.jar,bb4-poker-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-game-common-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""This is basic 5 card stud <a href=\"http://en.wikipedia.org/wiki/Poker\">poker</a>. \
+I may expand it to play Texas holdem and other poker variations in the future. \
+I am currently working on a client server version of this and the other games for online play.
+""")
+
+en = new HashMap()
+trivial.put('en', en)
+en.put('name', 'trivial')
+en.put('title', 'Trivial')
+en.put('description', 'Try your hand at winning trivial against other human and computer opponents.')
+en.put('className', 'GameApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.game.common.ui.GameApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.game.common.ui.GameApp')
+en.put('panelClass', 'com.barrybecker4.game.multiplayer.trivial.ui.TrivialPanel')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-multiplayer-common-1.0.jar,vecmath.jar,bb4-trivial-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-game-common-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""This is a trivial game where the high value wins. \
+Its helping me to better understand the client server model that I want to use for other multiplayer games.
+""")
+
+en = new HashMap()
+set.put('en', en)
+en.put('name', 'set')
+en.put('title', 'Set Game')
+en.put('description', 'Try to find more "Sets" before other human and computer opponents. \
+A set is 3 cards that are all the same or all different for the 4 attributes: color, shape, texture, and number.')
+en.put('className', 'GameApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.game.common.ui.GameApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.game.common.ui.GameApp')
+en.put('panelClass','com.barrybecker4.game.multiplayer.set.ui.SetPanel')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-multiplayer-common-1.0.jar,vecmath.jar,bb4-set-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-game-common-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""<a href=\"http://www.setgame.com/set/index.html\">Set</a> is a simple card \
+card played with a deck of 81 cards. \
+A set is 3 cards that are all the same or all different for the 4 attributes: color, shape, texture, and number. \
+When you see a set, click on the player to claim it, then select the three cards you think are a set. Be careful - \
+you lose a point if you are wrong (but cannot go below 0). There is no computer player in this game because it would be \
+too easy for it to win.
+""")
+
+en = new HashMap()
+maze.put('en', en)
+en.put('name', 'maze')
+en.put('title', 'Maze')
+en.put('description', 'Specify parameters and generate lots of complex mazes for your enjoyment.')
+en.put('className', 'MazeSimulator')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.puzzle.maze.ui.MazeSimulator')
+en.put('qualifiedAppClassName', 'com.barrybecker4.puzzle.maze.ui.MazeSimulator')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-maze-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-maze-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""You can get different types of mazes by varying the parameters. \
+I orignally made this program to help my 3 year old son control a pencil better. \
+He really enjoys doing the mazes. I hope you will too!
+""")
+
+en = new HashMap()
+spirograph.put('en', en)
+en.put('name', 'spirograph')
+en.put('title', 'Spirograph')
+en.put('description', 'Modify the parameters and press the draw button. \
+Adapted from work done by <a href=\"http://www.math.psu.edu/dlittle/java/parametricequations/spirograph/index.html\">David Little</a>.')
+en.put('className', 'SpiroGraph')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.apps.spirograph.SpiroGraph')
+en.put('qualifiedAppClassName', 'com.barrybecker4.apps.spirograph.SpiroGraph')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,bb4-spirograph-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-spirograph-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""Remember that psychodelic toy from the 70's?  \
+Here's a version of <a href=\"http://en.wikipedia.org/wiki/Spirograph\">Spirograph</a> for the computer, \
+that can do things beyond what that old toy could do. \
+Adapted from work done by <a href=\"http://www.math.psu.edu/dlittle/java/parametricequations/spirograph/index.html\">David Little</a>.
+""")
+
+en = new HashMap()
+redpuzzle.put('en', en)
+en.put('name', 'redpuzzle')
+en.put('title', 'Red Puzzle')
+en.put('description', 'A 9 piece jigsaw puzzle that is nearly impossible to do without the aid of a computer. ')
+en.put('className', 'RedPuzzle')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.puzzle.redpuzzle.ui.RedPuzzle')
+en.put('qualifiedAppClassName', 'com.barrybecker4.puzzle.redpuzzle.ui.RedPuzzle')
+en.put('width', 450)
+en.put('height', 450)
+en.put('doResize', false)
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-puzzle-1.0.jar,bb4-sound-1.0.jar,bb4-optimization-1.0.jar,bb4-redpuzzle-1.0.jar')
+en.put('jarElement1', '<jar href=\"bb4-redpuzzle-1.0.jar\" main=\"true\"/>')
+en.put('longDescription',
+"""The Red Puzzle (Also Called \
+<a href=\"http://www.google.com/search?q=one+tough+puzzle&hl=en&rls=com.microsoft:en-us:IE-SearchBox&prmd=ivns&source=univ&tbs=shop:1&tbo=u&sa=X&ei=jhSFTeeyNYq4sQORpOzvAQ&sqi=2&ved=0CEwQrQQ\">\"One Tough Puzzle\"</a> from Great American Puzzle \
+Factory, Inc) is a 9 piece jigsaw puzzle. It is very hard because every \
+piece has four nubs. There are no edge pieces. There are over 300,000 incorrect \
+configurations. \
+<br/>&nbsp;&nbsp;&nbsp; The brute force solver will solve it in about 5,000 - 60,000 iterations. \
+It shuffles the pieces so there is a different result each time. The search \
+algorithm tries pieces until it finds one that doesn't fit. If none of \
+the remaining pieces fit after all rotations have been tried, it backtracks \
+one position and tries again. Its guaranteed to find a puzzlePanel if there \
+is one. \
+<br/>&nbsp;&nbsp;&nbsp; Brute force was too slow, so created other solvers that use concurrency and \
+genetic algorthm search to make finding the solution much faster/ \
+<br/>&nbsp;&nbsp;&nbsp; The letters indicate the shape of the nub: Heart, Diamond, Club \
+or Spade. Maybe someday I will draw the pieces as they really look.
+""")
+
+en = new HashMap()
+sudoku.put('en', en)
+en.put('name', 'sudoku')
+en.put('title', 'Sudoku Puzzle')
+en.put('description', 'A Sudoku puzzle generator and solver.')
+en.put('className', 'SudokuPuzzle')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.puzzle.sudoku.ui.SudokuPuzzle')
+en.put('qualifiedAppClassName', 'com.barrybecker4.puzzle.sudoku.ui.SudokuPuzzle')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-puzzle-1.0.jar,bb4-sound-1.0.jar,bb4-sudoku-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-sudoku-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""<a href=\"http://en.wikipedia.org/wiki/Sudoku\">Sudoku</a> \
+is the latest puzzle craze. I'm not all that good at solving them by hand, \
+so I wrote a program to do it. My mother and I created the design together. \
+She used to be a programmer at Bell Labs and plays sudoku quite a bit. \
+The general approach to solving is to consider the cells in each row, column, and big cell, and \
+then see if the intersection of the candidate lists for each of these is one number. \
+If so, fill it in. When you've done that for all cells, repeat. It usually only takes \
+a few iterations to find the solution. Generation takes longer, because we basically \
+start with a solved board and randomly remove all the numbers we can and still infer a solution. \
+This means we have to solve the whole board each time we remove a number.
+""")
+
+en = new HashMap()
+hiq.put('en', en)
+en.put('name', 'hiq')
+en.put('title', 'Hi-Q')
+en.put('description',
+"""The Hi-Q puzzle is supposed to test your intelligence. If you can jump all the pieces and end up with just \
+one in the middle, then you must be a genius. I couldn't do it, so I cheated and wrote this program \
+to find the puzzlePanel.
+""")
+en.put('className', 'HiQPuzzle')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.puzzle.hiq.ui.HiQPuzzle')
+en.put('qualifiedAppClassName', 'com.barrybecker4.puzzle.hiq.ui.HiQPuzzle')
+en.put('width', 450)
+en.put('height', 450)
+en.put('doResize', false)
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-puzzle-1.0.jar,bb4-sound-1.0.jar,bb4-hiq-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-hiq-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""<a href=\"http://www.educationallearninggames.com/hi-q.asp\">Hi-Q</a> \
+is another one of those games that can be very frustrating without the aid of a computer. \
+The object is to have only 1 peg in the center position when you are done. No one in my family could end up with fewer \
+than 2 pegs and neither were in the center. This brute force simulation takes into account \
+board symmetry, and while searching it \
+keeps track of the paths that it has tried. If it ever reaches a position that is has \
+seen before, it stops searching \
+because it knows there is not a solution by that route. \
+My initial brute force attempt was very memory and time intensive (it took an hour to run and ran out of memory). \
+Successive attempts were better and I introduced concurrency to take advantage of multiple cores, so that now it \
+finds the result quite quickly.
+""")
+
+en = new HashMap()
+tantrix.put('en', en)
+en.put('name', 'tantrix')
+en.put('title', 'Tantrix')
+en.put('description', '<a href="http://www.tantrix.com/">Tantrix</a> is both a puzzle and a game. Here I use my puzzle framework to solve tantrix puzzles of 3 to 30 pieces in size. ')
+en.put('className', 'HiQPuzzle')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.puzzle.tantrix.ui.TantrixPuzzle')
+en.put('qualifiedAppClassName', 'com.barrybecker4.puzzle.tantrix.ui.TantrixPuzzle')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-puzzle-1.0.jar,bb4-sound-1.0.jar,bb4-tantrix-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-tantrix-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""<a href=\"http://www.tantrix.com/\">Tantrix</a> \
+is another one of those games that can be very frustrating without the aid of a computer. \
+This solver is not practical when the number of tiles exceeds 10 or so. Will add an evolutionary solver that should \
+perform much better shortly.
+""")
+
+en = new HashMap()
+trebuchet.put('en', en)
+en.put('name', 'trebuchet')
+en.put('title', 'Trebuchet')
+en.put('description', 'Simulates the movement of a real trebuchet. You can adjust parameters to influence the way that the trebuchet operates. Uncheck pause to begin animation.')
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.trebuchet.TrebuchetSimulator')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-trebuchet-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-trebuchet-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""Simulate a <a href=\"http://en.wikipedia.org/wiki/Trebuchet\">trebuchet</a>.\
+This program uses a physically based model to represent a trebuchet. \
+When my son and I were watching Lord of the Rings, we noticed that Minas Tirith used trebuchets to defend itself. \
+We built one out of lego, but optimizing lego is tedious, so I made this virtual \
+trebuchet in order to try different designs. \
+The trebuchet can also "learn" to move more efficiently by a process of automated optimization. \
+It uses exactly the optimization code I use for improving the performance of the game programs. \
+This is still a work in progress. I need to use constrained dynamics for the projectile's attachement to the sling \
+(instead of a simple spring based restorative force which leads to instability). \
+When done, I hope to build a trebuchet with my son according to the optimized specifications.
+""")
+
+en = new HashMap()
+snake.put('en', en)
+en.put('name', 'snake')
+en.put('title', 'Snake')
+en.put('description', 'Simulates the movement of a real snake. Based on a 1988 SIGGRAPH paper by Gavin Miller. \
+by Gavin Miller. You can adjust parameters to influence the way that the snake moves. Uncheck pause to begin animation.')
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.snake.SnakeSimulator')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-snake-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-snake-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""Simulate a living snake. The program uses a spring based model to represent the snake. \
+There is a sinusoidal force function applied to each side to simulate muscular contractions. \
+Directional friction is used to make the snake go forward (as happens with a real snake). \
+Snakes have 4 ways of moving: rectilinear progression, horizontal undulatory progression, sindwinding, \
+and concertina progression (rarely used). I only used the most common gait, horizontal undulatory progression, \
+in this demo, but will probably add the others. You can also change \
+the parameters of this gait to get different behaviors. \
+The snake "learns" to move more efficiently by a process of automated optimization. \
+It uses exactly the optimization code I use for improving the performance of the game programs. \
+I now understand really well how a snake moves. \
+Based on work by <a href=\"http://www.snakerobots.com/simulation.html\">Gavin Miller</a> in his 1988 SIGGRAPH papaer.
+""")
+
+en = new HashMap()
+dice.put('en', en)
+en.put('name', 'dice')
+en.put('title', 'Dice')
+en.put('description', 'Simulates rolling N dice with M sides.')
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.dice.DiceSimulator')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-dice-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-dice-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""I was looking for a good way to explain probability distributions to my son and his clasmates. \
+This simple program illustrates the different sorts of bell-curve \
+(or <a href=\"http://en.wikipedia.org/wiki/Gaussian_function\">gaussian</a>) distributions that can \
+arise as you vary the number of dice and the number of sides that they have.
+""")
+
+en = new HashMap()
+stock.put('en', en)
+en.put('name', 'stock')
+en.put('title', 'Stock Price Simulation')
+en.put('description',
+"""Simulates the expected outcome for M stocks over N time periods. \
+  The stock(s) will go up U% or down D% with equal liklihood in each time period.
+""")
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.stock.StockSimulator')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-stock-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-stock-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""This simulation was motivated by the following \
+<a href=\"http://www.barrybecker4.com/puzzle_answers.html\">problem</a>.<br/>\
+You invest \$100,000 in a volatile stock. Each year, with equal probability, it either rises 60% or falls by 40%. \
+What would be the expected (mean), median, and mode stock valuations after 100 years? <br/> \
+The moral of the story is Diversify!
+""")
+
+en = new HashMap()
+henonexplorer.put('en', en)
+en.put('name', 'henonexplorer')
+en.put('title', 'Henon Phase Explorer')
+en.put('description', 'Allows you to explorer the parameters of a Henon phase attractor.')
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.henonphase.HenonPhaseExplorer')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-henonexplorer-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-henonexplorer-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""The  \
+<a href=\"http://www.complexification.net/gallery/machines/henonPhaseDeep/\">Henon Strange Attractor</a> \
+is defined by the following transformations:<br/> \
+Xn+1 = Xn cos(a) - (Yn - Xn^2) sin(a) <br/>\
+Yn+1 = Xn sin(a) + (Yn - Xn^2) cos(a)
+""")
+
+en = new HashMap()
+fractalexplorer.put('en', en)
+en.put('name', 'fractalexplorer')
+en.put('title', 'Fractal Explorer')
+en.put('description', 'Allows you to navigate through the Mandelbrot set. Drag open a bock to zoom, and click \
+the "go back" button to reverse your zooms.')
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.fractalexplorer.FractalExplorer')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-fractalexplorer-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-fractalexplorer-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""This program allows you to navigate through the most complex object in mathematics, \
+the <a href=\"http://en.wikipedia.org/wiki/Mandelbrot_set\">Mandelbrot set</a>. Drag open a bock to zoom, and click \
+the "go back" button to undo the last zoom. When I created my first implementation of this program in turbo pascal in high school, \
+I can remember waiting for hours for the images to generate (on a 640 by 200 pixel screen). Now its almost instantaneous.
+""")
+
+en = new HashMap()
+reactiondiffusion.put('en', en)
+en.put('name', 'reactiondiffusion')
+en.put('title', 'Reaction Diffusion')
+en.put('description',
+        """Simulates an interaction between 2 chemicals in a reaction diffusion simulation. \
+Based work by <a href=\"http://www.joakimlinde.se/java/ReactionDiffusion\"/>Joakim Linde</a>. \
+You can adjust parameters to influence simulation. Uncheck pause to begin animation.
+""");
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.reactiondiffusion.RDSimulator')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-reactiondiffusion-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-reactiondiffusion-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""Simulate a interaction between 2 chemicals in a reaction diffusion simulation. \
+The program is based on an applet by \
+<a href=http://www.joakimlinde.se/java/ReactionDiffusion/>Joakim Linde</a>. \
+There are 2 chemicals that react in complex ways as defined by a non-linear differential \
+equation that cannot be solved analytically. The simulation solves it numerically.
+""")
+
+en = new HashMap()
+liquid.put('en', en)
+en.put('name', 'liquid')
+en.put('title', 'Liquid Simulation')
+en.put('description', 'Particle based simulation of some liquid flowing.')
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.liquid.LiquidSimulator')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-liquid-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-liquid-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""Particle based fluid simulation based on \
+<a href="http://physbam.stanford.edu/~fedkiw/papers/stanford2001-02.pdf">Nick Fosters SIGGRAPH paper</a>. \
+Numerical instability (due to a bug) causes this simulation to blow up after a relatively short time unfortunately.
+""")
+
+en = new HashMap()
+fluid.put('en', en)
+en.put('name', 'fluid')
+en.put('title', 'Fluid Simulation')
+en.put('description', 'Simulates deep water dynamics. \
+Uncheck pause to begin animation. You can click and drag in the animaiton to introduce disturbances.')
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.fluid.ui.FluidSimulator')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-fluid-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-fluid-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""Deep water simulation based on work \
+by <a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf">Jos Stam</a>. \
+Use the mouse to stir up the fluid by clicking and dragging.
+""")
+
+en = new HashMap()
+sierpinski.put('en', en)
+en.put('name', 'sierpinski')
+en.put('title', 'Sierpinski')
+en.put('description', 'A triangular fractal discovered by Waclaw Sierpinski.')
+en.put('className', 'SierpinskiApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.apps.sierpinski.SierpinskiApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.apps.sierpinski.SierpinskiApplet')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,bb4-sierpinski-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-sierpinski-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""This is an example of a self-similar set. \
+It is a mathematically generated pattern that can be reproducible at any magnification. \
+See <a href="http://en.wikipedia.org/wiki/Sierpinski_triangle">Sierpinski Triangle</a>
+""")
+
+en = new HashMap()
+lsystem.put('en', en)
+en.put('name', 'lsystem')
+en.put('title', 'L-System Tree')
+en.put('description', 'A method for building realistic looking trees out of fractals defined by a simple expression.')
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.lsystem.LSystemExplorer')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-lsystem-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-lsystem-1.0.jar" main="false"/>')
+en.put('longDescription',
+ """Create trees from l-system expressions. \
+See <a href="http://www.javaview.de/vgp/tutor/lsystem/PaLSystem.html">Java View implementation</a> \
+or <a href="http://nodebox.net/code/index.php/L-system">NodeBox implemenation</a> for other examples.
+""")
+
+en = new HashMap()
+imagebreeder.put('en', en)
+en.put('name', 'imagebreeder')
+en.put('title', 'Image Breeder')
+en.put('description', 'Use a genetic algorithm to mix different image processing operators together.')
+en.put('className', 'ImageBreederApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.apps.imagebreeder.ImageBreederApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.apps.imagebreeder.ImageBreederApplet')
+en.put('width', 450)
+en.put('height', 550)
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,jhlabs-1.0.3.jar,bb4-imageproc-1.0.jar,bb4-imagebreeder-1.0.jar')
+en.put('jarElement1', '<jar href="jhlabs-1.0.3.jar" main="false"/>')
+en.put('jarElement2', '<jar href="bb4-imagebreeder-1.0.jar" main="true"/>')
+en.put('longDescription',
+"""Use a genetic algorithm to mix different image processing operator together. \
+The fitness function is the user's evaluation of the images.\
+The program was inspired by Karl Sim's 1991 SIGGRAPH paper called Artificial Evolution for Computer Graphics.
+""")
+
+en = new HashMap()
+adventure.put('en', en)
+en.put('name', 'adventure')
+en.put('title', 'Adventure')
+en.put('description', 'Explore a haunted house. ')
+en.put('className', 'GraphicalAdventure')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure')
+en.put('qualifiedAppClassName', 'com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,jai-codec-1.1.3.jar,bb4-puzzle-1.0.jar,bb4-adventure-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-adventure-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-puzzle-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""This started as a really simple text based adventure. The scenes were stored in an xml file. \
+I thought it would be cool to have images and sounds associated with the scenes, so I added a UI. \
+When editing the xml file got tedious, I decided to add the graphical editor. \
+You can edit the story if you know the password. \
+Next I may add support for keeping track of found items and hit points. \
+This story is based on a adventure in Dragon Magazine back in 1980.
+""")
+
+en = new HashMap()
+predprey.put('en', en)
+en.put('name', 'predprey')
+en.put('title', 'Predator Prey Simulation')
+en.put('description', 'Simulates foxes and rabbit populations over time.')
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.predprey.PredPreySimulator')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-predprey-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-predprey-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""Simulates foxes (predators) and rabbits (prey) in the wild. \
+Simulating the <a href="http://home.messiah.edu/~deroos/csc171/PredPrey/PPIntro.htm">predator prey relationship</a> \
+can help us understand how complex systems can arise from very simple rules.
+""")
+
+en = new HashMap()
+habitat.put('en', en)
+en.put('name', 'habitat')
+en.put('title', 'Habitat Simulation')
+en.put('description', 'Simulates a habitat with different creatures.')
+en.put('className', 'SimulatorApplet')
+en.put('qualifiedAppletClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('qualifiedAppClassName', 'com.barrybecker4.simulation.common.ui.SimulatorApplet')
+en.put('panelClass', 'com.barrybecker4.simulation.habitat.HabitatSimulator')
+en.put('jarList', 'bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-habitat-1.0.jar')
+en.put('jarElement1', '<jar href="bb4-simulation-1.0.jar" main="true"/>')
+en.put('jarElement2', '<jar href="bb4-habitat-1.0.jar" main="false"/>')
+en.put('longDescription',
+"""Create and maintain a set of creatures in a self-sustaining habitat. Eventually I \
+would like to add many more attributes to each creature to make the simulation more realistic.
+""")
+}

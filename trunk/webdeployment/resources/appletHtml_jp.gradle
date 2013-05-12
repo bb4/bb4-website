@@ -1,0 +1,182 @@
+
+appletHtml.jp.locale=jp
+appletHtml.jp.charset=EUC_JP
+
+appletHtml.jp.appletList=\
+  pente,\
+  blockade,\
+  checkers,\
+  chess,\
+  go
+
+appletHtml.jp.appletGameEntries=\
+ {penteTR}  {checkersTR}  {chessTR}  {goTR}  {blockadeTR}
+
+appletHtml.jp.appletPuzzleEntries=\
+ {redpuzzleTR} {sudokuTR}
+
+appletHtml.jp.appletSimulationEntries=\
+ {snakeTR}  {diceTR}
+
+
+appletHtml.jp.title=&#12450;&#12503;&#12524;&#12483;&#12488;
+
+appletHtml.jp.introduction=\
+&nbsp;&nbsp;&nbsp;&#12356;&#12367;&#12388;&#12363;&#31169;&#12364;&#38283;&#30330;&#12375;&#12383;Java&#12503;&#12525;&#12464;&#12521;&#12512;&#12434;&#12503;&#12524;&#12452;&#12377;&#12427;&#12371;&#12392;&#12364;&#12391;&#12365;&#12414;&#12377;&#12371;&#12398;&#12506;&#12540;&#12472;&#12363;&#12425;. \
+The japanese translations found in these localizeed applets were done by Bill Keese.\
+<a href="applet_index_en.html">English</a>, \
+<a href="applet_index_de.html">German</a>, \
+<a href="applet_index_vi.html">Vietnamese</a>, \
+<a href="applet_index_jp.html">Japanese</a>.
+
+pente.jp.name=pente
+pente.jp.title=&#36899;&#29664;
+pente.jp.description=&#34892;&#12395;&#12399;&#12289;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#12399;&#21069;&#12395;5&#12434;&#21462;&#24471;&#12375;&#12390;&#21213;&#21033;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#12290;
+pente.jp.className=GameApplet
+pente.jp.qualifiedAppletClassName=com.barrybecker4.game.common.ui.GameApplet
+pente.jp.qualifiedAppClassName=com.barrybecker4.game.common.ui.GameApp
+pente.jp.panelClass=com.barrybecker4.game.twoplayer.pente.ui.PentePanel
+pente.jp.language=JAPANESE
+pente.jp.locale=jp
+pente.jp.jarList=bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-twoplayer-common-1.0.jar,bb4-optimization-1.0.jar,bb4-pente-1.0.jar
+pente.jp.jarElement1=<jar href="bb4-game-common-1.0.jar" main="true"/>
+pente.jp.longDescription=&#34892;&#12395;&#12399;&#12289;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#12399;&#21069;&#12395;5&#12434;&#21462;&#24471;&#12375;&#12390;&#21213;&#21033;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#12290; \&#31169;&#12399;&#12503;&#12524;&#12540;&#12395;&#31169;&#12398;&#22971;&#12392;&#12398;&#12392;&#12365;&#12395;&#26368;&#21021;&#12395;&#20250;&#12387;&#12383;&#22810;&#12367;&#12398;&#36899;&#29664;&#20351;&#29992;&#12373;&#12428;&#12427;&#65288;&#24444;&#22899;&#12399;&#12363;&#12394;&#12426;&#12381;&#12428;&#12391;&#33391;&#12356;&#12391;&#12375;&#12423;&#12358;&#65289;&#12290;&#36899;&#29664;&#31169;&#12399;&#33258;&#20998;&#12398;&#12466;&#12540;&#12512;&#12398;&#12501;&#12524;&#12540;&#12512;&#12527;&#12540;&#12463;&#12434;&#20351;&#29992;&#12375;&#12390;&#20316;&#25104;&#12375;&#12383;&#26368;&#21021;&#12398;&#12466;&#12540;&#12512;&#12391;&#12377;&#12290;&#31169;&#12364;&#26368;&#21021;&#12395;&#25147;&#12427;1991&#24180;&#12395;&#12289;&#12371;&#12428;&#12399;1&#12388;&#12398;&#20778;&#12428;&#12390;&#12356;&#12427;Pascal&#12496;&#12540;&#12472;&#12519;&#12531;&#12434;&#20316;&#25104;&#12375;&#12414;&#12375;&#12383;&#12290;&#12466;&#12540;&#12512;&#12398;&#12458;&#12502;&#12472;&#12455;&#12463;&#12488;&#12399;&#12289;&#34892;&#65288;&#27700;&#24179;&#12289;&#22402;&#30452;&#12289;&#12414;&#12383;&#12399;&#26012;&#12417;&#12395;5&#65289;&#12434;&#21462;&#24471;&#12377;&#12427;&#12371;&#12392;&#12391;&#12377;&#12290;&#12377;&#12409;&#12390;&#12398;&#12466;&#12540;&#12512;&#12392;&#21516;&#27096;&#12395;&#12289;&#12371;&#12398;&#12501;&#12524;&#12540;&#12512;&#12527;&#12540;&#12463;&#12434;&#20351;&#29992;&#12377;&#12427;&#22580;&#21512;&#12399;&#12289;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#12289;&#21029;&#12398;&#20154;&#12289;&#12414;&#12383;&#12399;&#12381;&#12428;&#33258;&#20307;&#12395;&#23550;&#12375;&#12390;&#12399;&#12289;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#12466;&#12540;&#12512;&#12364;&#23550;&#25126;&#12377;&#12427;&#12371;&#12392;&#12364;&#12391;&#12365;&#12414;&#12377;&#12434;&#20316;&#25104;&#12375;&#12414;&#12375;&#12383;&#12290;
+
+checkers.jp.name=checkers
+checkers.jp.title=&#12481;&#12455;&#12483;&#12459;&#12540;
+checkers.jp.description=&#12377;&#12409;&#12390;&#12398;&#24444;&#22899;&#12398;&#20316;&#21697;&#12434;&#12461;&#12515;&#12503;&#12481;&#12515;&#12375;&#12390;&#12289;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#12398;&#12499;&#12540;&#12488;&#12395;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#12290;&#12354;&#12394;&#12383;&#12398;&#20316;&#21697;&#12398;&#19978;&#37096;&#12395;&#12354;&#12426;&#12414;&#12377;&#12290;&#12489;&#12521;&#12483;&#12464;&#12450;&#12531;&#12489;&#12489;&#12525;&#12483;&#12503;&#12434;&#20351;&#29992;&#12375;&#12390;&#31227;&#21205;&#12375;&#12414;&#12377;&#12290;
+checkers.jp.className=GameApplet
+checkers.jp.qualifiedAppletClassName=com.barrybecker4.game.common.ui.GameApplet
+checkers.jp.qualifiedAppClassName=com.barrybecker4.game.common.ui.GameApp
+checkers.jp.panelClass=com.barrybecker4.game.twoplayer.checkers.ui.CheckersPanel
+checkers.jp.language=JAPANESE
+checkers.jp.locale=jp
+checkers.jp.jarList=bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-twoplayer-common-1.0.jar,bb4-optimization-1.0.jar,bb4-chess-1.0.jar
+checkers.jp.jarElement1=<jar href="bb4-game-common-1.0.jar" main="true"/>
+checkers.jp.longDescription=&#12481;&#12455;&#12483;&#12459;&#12540;&#12399;&#12289;&#21336;&#32020;&#12394;&#12466;&#12540;&#12512;&#12391;&#12377;&#12290;&#24460;&#12289;&#31169;&#12399;&#12289;&#36899;&#29664;&#12398;&#12503;&#12525;&#12464;&#12521;&#12512;&#12434;&#23455;&#34892;&#12375;&#12390;&#24471;&#12383;&#26082;&#12395;&#36861;&#21152;&#12466;&#12540;&#12512;&#12434;&#20316;&#25104;&#12377;&#12427;&#12383;&#12417;&#12398;&#26528;&#32068;&#12415;&#12392;&#12375;&#12390;&#12289;&#31169;&#12399;&#12431;&#12378;&#12363;2&#36913;&#26411;&#12395;&#12381;&#12428;&#12434;&#23455;&#35013;&#12290;&#12377;&#12409;&#12390;&#12398;&#30456;&#25163;&#20316;&#21697;&#12398;&#25774;&#24433;&#12434;&#29554;&#24471;&#12375;&#12383;&#12290;
+
+chess.jp.name=chess
+chess.jp.title=&#12481;&#12455;&#12473;
+chess.jp.description=&#24444;&#22899;&#12398;&#29579;&#12481;&#12455;&#12483;&#12463;&#12513;&#12452;&#12488;&#12375;&#12390;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#12434;&#12499;&#12540;&#12488;&#12395;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#12290;&#12354;&#12394;&#12383;&#12398;&#20316;&#21697;&#12398;&#19978;&#37096;&#12395;&#12354;&#12426;&#12414;&#12377;&#12290;&#12489;&#12521;&#12483;&#12464;&#12450;&#12531;&#12489;&#12489;&#12525;&#12483;&#12503;&#12434;&#20351;&#29992;&#12375;&#12390;&#31227;&#21205;&#12375;&#12414;&#12377;&#12290;
+chess.jp.className=GameApplet
+chess.jp.qualifiedAppletClassName=com.barrybecker4.game.common.ui.GameApplet
+chess.jp.qualifiedAppClassName=com.barrybecker4.game.common.ui.GameApp
+chess.jp.panelClass=com.barrybecker4.game.twoplayer.chess.ui.ChessPanel
+chess.jp.language=JAPANESE
+chess.jp.locale=jp
+chess.jp.jarList=bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-twoplayer-common-1.0.jar,bb4-optimization-1.0.jar,chess.jar
+chess.jp.jarElement1=<jar href="bb4-game-common-1.0.jar" main="true"/>
+chess.jp.longDescription=&#12481;&#12455;&#12473;&#12399;&#12289;&#27604;&#36611;&#30340;&#31777;&#21336;&#12394;&#12466;&#12540;&#12512;&#12434;&#34892;&#12387;&#12390;&#27604;&#36611;&#12373;&#12428;&#12414;&#12377;&#12290;&#31169;&#12399;3&#26085;&#38291;&#12391;&#12371;&#12428;&#12434;&#23455;&#35013; - &#24460;&#12289;&#31169;&#12399;1&#24180;&#12392;&#31169;&#12398;&#12472;&#12515;&#12527;&#12398;&#12466;&#12540;&#12512;&#12398;&#12501;&#12524;&#12540;&#12512;&#12527;&#12540;&#12463;&#12398;&#27531;&#12426;&#12398;&#37096;&#20998;&#12408;&#12398;&#23455;&#35013;&#12434;&#36942;&#12372;&#12375;&#12383;&#12290;&#12481;&#12455;&#12483;&#12463;&#12513;&#12452;&#12488;&#30456;&#25163;&#12398;&#29579;&#12434;&#29554;&#24471;&#12375;&#12383;&#12290;
+
+go.jp.name=go
+go.jp.title=&#22258;&#30849;
+go.jp.description=&#20197;&#19978;&#12398;&#38936;&#22495;&#12434;&#12461;&#12515;&#12503;&#12481;&#12515;&#12375;&#12390;&#12289;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#12398;&#12499;&#12540;&#12488;&#12395;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#12290;&#12392;&#12365;&#12395;&#30707;&#12398;&#12464;&#12523;&#12540;&#12503;&#12395;&#23436;&#20840;&#12395;&#22258;&#12414;&#12428;&#12390;&#12289;&#24444;&#12425;&#12399;&#22522;&#26495;&#12363;&#12425;&#12392;&#12394;&#12426;&#12289;&#12461;&#12515;&#12503;&#12481;&#12515;&#12364;&#21066;&#38500;&#12373;&#12428;&#12414;&#12377;&#12290;
+go.jp.className=GameApplet
+go.jp.qualifiedAppletClassName=com.barrybecker4.game.common.ui.GameApplet
+go.jp.qualifiedAppClassName=com.barrybecker4.game.common.ui.GameApp
+go.jp.panelClass=com.barrybecker4.game.twoplayer.go.ui.GoPanel
+go.jp.language=JAPANESE
+go.jp.locale=jp
+go.jp.jarList=bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-twoplayer-common-1.0.jar,bb4-optimization-1.0.jar,jai-codec-1.1.3.jar,jigo-sgf-1.1.jar,bb4-go-1.0.jar
+go.jp.jarElement1=<jar href="bb4-game-common-1.0.jar" main="true"/>
+go.jp.longDescription=&#22810;&#12367;&#12398;&#20154;&#12293;&#12395;&#12418;&#12289;&#20013;&#38291;&#12398;&#36984;&#25163;&#12395;&#21213;&#12390;&#12427;&#12363;&#12418;&#30693;&#12428;&#12394;&#12356;&#12503;&#12525;&#12464;&#12521;&#12512;&#12434;&#34892;&#12367;&#12424;&#12358;&#12395;&#12375;&#12424;&#12358;&#12392;&#12375;&#12390;&#12356;&#12427;&#12290;&#12371;&#12428;&#12414;&#12391;&#12398;&#12392;&#12371;&#12429;&#12393;&#12428;&#12418;&#25104;&#21151;&#12375;&#12390;&#12356;&#12427;&#12290;&#12381;&#12371;&#12391;&#12418;&#35504;&#12391;&#12418;&#12381;&#12428;&#12434;&#34892;&#12358;&#12371;&#12392;&#12364;&#12391;&#12365;&#12414;&#12377;&#19975;&#12489;&#12523;&#12398;&#22577;&#37228;&#12391;&#12377;&#12290;&#31169;&#12399;&#12393;&#12385;&#12425;&#12363;&#12364;&#12289;&#26399;&#24453;&#12375;&#12390;&#12356;&#12394;&#12356;&#31169;&#12398;&#21205;&#27231;&#12399;&#12289;&#12486;&#12473;&#12488;&#12505;&#12483;&#12489;&#30064;&#12394;&#12427;&#12450;&#12503;&#12525;&#12540;&#12481;&#12434;&#12375;&#12424;&#12358;&#12392;&#12377;&#12427;&#12371;&#12392;&#12391;&#12377;&#12290;&#12381;&#12398;&#12466;&#12540;&#12512;&#12398;&#30446;&#30340;&#12399;&#12289;&#12391;&#12365;&#12427;&#12384;&#12369;&#22810;&#12367;&#12398;&#38936;&#22303;&#12434;&#24471;&#12427;&#12371;&#12392;&#12391;&#12354;&#12427;&#12290;&#12371;&#12398;&#12503;&#12525;&#12464;&#12521;&#12512;&#12399;&#12289;&#12414;&#12384;&#27491;&#30906;&#12394;&#24471;&#28857;&#12392;&#12356;&#12367;&#12388;&#12363;&#12398;&#21839;&#38988;&#12364;&#12354;&#12426;&#12414;&#12377;&#12290;
+
+blockade.jp.name=blockade
+blockade.jp.title=&#23553;&#37782;
+blockade.jp.description=&#24444;&#22899;&#12398;&#12507;&#12540;&#12512;&#12505;&#12540;&#12473;&#12289;&#26368;&#21021;&#12395;&#21040;&#36948;&#12375;&#12390;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#12434;&#12499;&#12540;&#12488;&#12395;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;&#12290;&#12354;&#12394;&#12383;&#12398;&#22721;&#12434;&#37197;&#32622;&#12377;&#12427;&#24517;&#35201;&#12364;&#12354;&#12427;&#21508;&#37096;&#20998;&#12398;&#21205;&#12365;&#12398;&#24460;&#12290;&#26178;&#12398;&#22721;&#12434;&#37197;&#32622;&#12377;&#12427;&#12289;&#12383;&#12384;&#12375;&#12289;&#23436;&#20840;&#12395;&#20219;&#24847;&#12398;&#30456;&#25163;&#12398;&#12507;&#12540;&#12512;&#12505;&#12540;&#12473;&#12395;&#21040;&#36948;&#12377;&#12427;&#12377;&#12409;&#12390;&#12398;&#37096;&#20998;&#12434;&#20999;&#26029;&#12377;&#12427;&#12371;&#12392;&#12399;&#12391;&#12365;&#12414;&#12379;&#12435;&#12290;
+blockade.jp.className=GameApplet
+blockade.jp.qualifiedAppletClassName=com.barrybecker4.game.common.ui.GameApplet
+blockade.jp.qualifiedAppClassName=com.barrybecker4.game.common.ui.GameApp
+blockade.jp.panelClass=com.barrybecker4.games.twoplayer.blockade.ui.BlockadePanel
+blockade.jp.language=JAPANESE
+blockade.jp.locale=jp
+blockade.jp.jarList=bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-sound-1.0.jar,bb4-game-common-1.0.jar,bb4-twoplayer-common-1.0.jar,bb4-optimization-1.0.jar,bb4-blockade-1.0.jar
+blockade.jp.jarElement1=<jar href="bb4-game-common-1.0.jar" main="true"/>
+blockade.jp.longDescription=&#23553;&#37782;&#12399;&#27604;&#36611;&#30340;&#26032;&#12375;&#12356;&#12466;&#12540;&#12512;\
+  &#12398;&#28246;&#30036;&#12391;&#20316;&#25104;&#12373;&#12428;&#12414;&#12377;&#12290;&#31169;&#12399;&#23376;&#20379;&#12398;\
+  &#12424;&#12358;&#12395;&#12503;&#12524;&#12452;&#12375;&#12390;&#12356;&#12383;&#12364;&#12289;&#31169;&#12398;&#24215;&#12391;&#12418;\
+  &#12358;&#12371;&#12428;&#20197;&#19978;&#12399;&#34920;&#31034;&#12373;&#12428;&#12414;&#12379;&#12435;&#12290;&#21508;&#36984;&#25163;\
+  &#12399;&#12289;&#21462;&#32224;&#24441;&#20250;&#12398;&#24444;&#12425;&#12398;&#20596;&#36817;&#12367;&#12395;&#25351;&#23450;&#12373;&#12428;\
+  &#12383;&#31354;&#38291;&#19978;&#12398;2&#12388;&#12398;&#12509;&#12540;&#12531;&#12391;&#22987;&#12414;&#12426;&#12414;&#12377;&#12290;&#12371;\
+  &#12428;&#12425;&#12398;&#12381;&#12428;&#12382;&#12428;&#12399;&#12289;&#12464;&#12522;&#12483;&#12489;&#12398;&#27491;&#26041;&#24418;&#12391;&#12354;\
+  &#12426;&#12289;2&#12388;&#12398;&#27491;&#26041;&#24418;&#20840;&#20307;&#12392;&#12398;&#38291;&#12398;&#12473;&#12525;&#12483;&#12488;&#12395;&#21454;\
+  &#12414;&#12427;10&#32209;&#12398;&#22721;&#12289;&#65288;&#36890;&#24120;&#12399;&#65289;10&#38738;&#33394;&#12398;&#22721;&#12364;&#12354;&#12426;&#12414;\
+  &#12377;&#12290;&#12503;&#12524;&#12452;&#12516;&#12540;&#12398;&#12479;&#12540;&#12531;&#12399;&#12289;&#12464;&#12522;&#12483;&#12489;&#19978;&#12398;&#12393;\
+  &#12371;&#12398;&#22721;&#12434;&#37197;&#32622;&#12377;&#12427;&#24444;&#12398;&#12509;&#12540;&#12531;2&#12388;&#12398;&#12473;&#12506;&#12540;&#12473;&#12392;\
+  &#12375;&#12390;&#12398;&#31227;&#21205;&#12391;&#27083;&#25104;&#12373;&#12428;&#12414;&#12377;&#12290;&#12458;&#12502;&#12472;&#12455;&#12463;&#12488;&#12399;\
+  &#12289;&#30456;&#25163;&#12395;&#12424;&#12387;&#12390;&#35373;&#23450;&#12373;&#12428;&#12427;&#12392;1&#12388;&#12398;&#24444;&#12414;&#12383;&#12399;&#24444;&\
+  #22899;&#12398;&#20986;&#30330;&#12398;&#12473;&#12506;&#12540;&#12473;&#12395;1&#12388;&#12398;&#38556;&#23475;&#29289;&#12398;&#21608;&#12426;&#12395;&#39378;\
+  &#12434;&#21462;&#24471;&#12377;&#12427;&#12371;&#12392;&#12391;&#12377;&#12290;&#12381;&#12428;&#12363;&#12425;&#23436;&#20840;&#12395;&#12509;&#12540;&#12531;\
+  &#12434;&#12502;&#12525;&#12483;&#12463;&#12377;&#12427;&#12398;&#12356;&#12378;&#12428;&#12363;&#12398;&#30446;&#27161;&#12434;&#36948;&#25104;&#12391;&#12365;\
+  &#12427;&#12371;&#12392;&#12399;&#36949;&#27861;&#12391;&#12377;&#12290;
+
+redpuzzle.jp.name=redpuzzle
+redpuzzle.jp.title=Red Puzzle
+redpuzzle.jp.description=A 9 piece jigsaw puzzle that is nearly impossible to do without the aid of a computer.
+redpuzzle.jp.className=RedPuzzle
+redpuzzle.jp.qualifiedAppletClassName=com.barrybecker4.puzzle.redpuzzle.ui.RedPuzzle
+redpuzzle.jp.qualifiedAppClassName=com.barrybecker4.puzzle.redpuzzle.ui.RedPuzzle
+redpuzzle.jp.language=JAPANESE
+redpuzzle.jp.locale=jp
+redpuzzle.jp.width=450
+redpuzzle.jp.height=450
+redpuzzle.jp.doResize=false
+redpuzzle.jp.jarList=bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-puzzle-1.0.jar,bb4-sound-1.0.jar,bb4-optimization-1.0.jar,bb4-redpuzzle-1.0.jar
+redpuzzle.jp.jarElement1=<jar href="bb4-redpuzzle-1.0.jar" main="true"/>
+redpuzzle.jp.longDescription=Japanese description of redpuzzle goes here.
+
+sudoku.jp.name=sudoku
+sudoku.jp.title=Sudoku Puzzle
+sudoku.jp.description=\
+Japanese Sudoku description to appear here...
+sudoku.jp.className=SudokuPuzzle
+sudoku.jp.qualifiedAppletClassName=com.barrybecker4.puzzle.sudoku.ui.SudokuPuzzle
+sudoku.jp.qualifiedAppClassName=com.barrybecker4.puzzle.sudoku.ui.SudokuPuzzle
+sudoku.jp.panelClass=xxx
+sudoku.jp.language=JAPANESE
+sudoku.jp.locale=jp
+sudoku.jp.width=600
+sudoku.jp.height=600
+sudoku.jp.doResize=false
+sudoku.jp.jarList=bb4-common-1.0.jar,bb4-ui-1.0.jar,bb4-puzzle-1.0.jar,bb4-sound-1.0.jar,bb4-sudoku-1.0.jar
+sudoku.jp.jarElement1=<jar href="bb4-sudoku-1.0.jar" main="true"/>
+sudoku.jp.longDescription=A Sudoku puzzle generator and solver (Japanese version).
+
+snake.jp.name=com.barrybecker4.simulation.snake.SnakeSimulator
+snake.jp.title=Snake
+snake.jp.description=Japanese description of snake program goes here.
+snake.jp.className=SimulatorApplet
+snake.jp.qualifiedAppletClassName=com.barrybecker4.simulation.common.ui.SimulatorApplet
+snake.jp.qualifiedAppClassName=com.barrybecker4.simulation.common.ui.SimulatorApplet
+snake.jp.panelClass=com.barrybecker4.simulation.snake.SnakeSimulator
+snake.jp.language=JAPANESE
+snake.jp.locale=jp
+snake.jp.jarList=bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-snake-1.0.jar
+snake.jp.jarElement1=<jar href="bb4-simulation-1.0.jar" main="true"/>
+snake.jp.jarElement2=<jar href="bb4-snake-1.0.jar" main="false"/>
+snake.jp.longDescription=Simulate a living snake. The program uses a spring based model to represent the snake. \
+There is a sinusoidal force function applied to each side to simulate muscular contractions. \
+Directional friction is used to make the snake go forward (as happens with a real snake). \
+Snakes have 4 ways of moving: rectilinear progression, horizontal undulatory progression, sindwinding, \
+and concertina progression (rarely used). I only used the most common gait, horizontal undulatory progression, \
+in this demo, but will probably add the others. You can also change \
+the parameters of this gait to get different behaviors. \
+The snake can also "learn" to move more efficiently by a process of automated optimization. \
+It uses exactly the optimization code I use for improving the performance of the game programs. \
+I now understand really well how a snake moves. Based on work by <a href="http://www.snakerobots.com/simulation.html">Gavin Miller</a>.
+
+dice.jp.name=com.barrybecker4.simulation.dice.DiceSimulator
+dice.jp.title=Dice
+dice.jp.description=Japanese description of Dice program goes here
+dice.jp.className=SimulatorApplet
+dice.jp.qualifiedAppletClassName=com.barrybecker4.simulation.common.ui.SimulatorApplet
+dice.jp.qualifiedAppClassName=com.barrybecker4.simulation.common.ui.SimulatorApplet
+dice.jp.panelClass=com.barrybecker4.simulation.dice.DiceSimulator
+dice.jp.language=JAPANESE
+dice.jp.locale=jp
+dice.jp.jarList=bb4-common-1.0.jar,bb4-ui-1.0.jar,jai-codec-1.1.3.jar,vecmath.jar,bb4-optimization-1.0.jar,bb4-simulation-1.0.jar,bb4-dice-1.0.jar
+dice.jp.jarElement1=<jar href="bb4-simulation-1.0.jar" main="true"/>
+dice.jp.jarElement2=<jar href="bb4-dice-1.0.jar" main="false"/>
+dice.jp.longDescription=I was looking for a good way to explain probability distributions to my son. \
+This simple program illustrates the different sorts of bell-curve (or gaussian) distributions that can \
+arise as you vary the number of dice and the number of sides that they have.
