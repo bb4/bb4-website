@@ -5,24 +5,27 @@ ext {
     appletIndexFile.put('base', 'applet_index.html')
 
     appletHtml = new HashMap()
-    appletHtml.put("localesList", ['en', 'vi']) //,'de', 'jp')
+    appletHtml.put("localesList", [Locale.ENGLISH, Locale.GERMAN, Locale.JAPANESE, new Locale("vi")])
 
+    // replacements for the top level index file (excluding the entries)
     htmlIndex = new HashMap()
     htmlIndex.put("replacementList",
       ["locale", "title", "introduction", "appletGameEntries", "appletPuzzleEntries", "appletSimulationEntries"])
 
+    // replacements for the entries within the top level index file
     htmlindexEntry = new HashMap()
     htmlindexEntry.put("replacementList", ["title",  "name",  "longDescription"])
 
+    // replacements for the individual html applet files
     html = new HashMap()
     html.put("replacementList",
-    ["title", "name", "longDescription", "qualifiedAppletClassName", "className",
-    "panelClass",  "language", "locale", "width", "height", "doResize", "jarList"])
+      ["title", "name", "longDescription", "qualifiedAppletClassName", "className",
+      "panelClass",  "language", "locale", "width", "height", "doResize", "jarList"])
 
+    // replacements for jnlp file
     jnlp = new HashMap()
     jnlp.put("replacementList",
-    ["title", "description", "qualifiedAppClassName", "className",
-    "panelClass", "name", "language", "jarElement1", "jarElement2"])
+      ["title", "description", "qualifiedAppClassName", "className", "panelClass", "name", "language", "jarElement1", "jarElement2"])
 
     TRTemplate1="<tr>\n<td style=\"vertical-align: top;\">\n<h2>{"
     TRTemplate2="}</h3>\n{"
@@ -37,15 +40,13 @@ ext {
     TRTemplate9="}\" alt=\"{"
     TRTemplate10="}\" style=\"width: 285px; height: 185px;\"></a>\n</td></tr>\n"
 
-    // default token values if they are not specified for a given locale/applet combo.
-    language="ENGLISH"
-    locale="en"
-    width=2600
-    height=1600
-    doResize=true
-    jarElement2=""
-    panelClass="x"
-
+    /* apletHtml.put("appletList.en",
+        ['pente', 'checkers', 'chess', 'go', 'blockade', 'galactic', 'poker', 'set', 'maze',
+         'spirograph','redpuzzle', 'sudoku', 'hiq', 'tantrix', 'trebuchet',
+         'snake', 'dice', 'stock', 'fractalexplorer', 'reactiondiffusion',
+         'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder','adventure',
+         'predprey', 'habitat', 'henonexplorer'])    */
+    /*
     pente = new HashMap()
     checkers = new HashMap()
     chess = new HashMap()
@@ -106,5 +107,7 @@ ext {
     appletHtml.put("predprey", predprey)
     appletHtml.put("predprey", predprey)
     appletHtml.put("habitat", habitat)
+    */
 }
+
 

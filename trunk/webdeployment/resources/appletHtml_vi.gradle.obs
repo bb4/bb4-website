@@ -3,7 +3,7 @@ ext {
 vi = new HashMap()
 appletHtml.put("vi", vi);
 
-vi.put('locale', 'vi')
+vi.put('locale', "vi")
 vi.put('charset', 'UTF-8')
 
 vi.put('appletList', ['pente', 'checkers'])
