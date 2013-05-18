@@ -124,8 +124,28 @@ void createHtmlForLocale(Locale locale) {
             replacements.put(key, labels.getString(key))
         }
     }
-    //println "repalcements="+replacements
-    //def secondReplacements = [penteTR:"penteNNNNEWEEWEWETRRTRTT"]
+    //
+    // create replacements for entries within the index page (make this a method)
+    // note: should use i18n replacements here. e.g   "a {0} b {1} c"
+    def entryReplacements = new HashMap()
+    appletHtml.get("appletList").each {
+        key ->
+            def appKey = key + '.name'
+            if (labels.containsKey(appKey)) {
+                def appName = labels.getString(appKey)
+                def titleKey = key + '.title'
+                def loc = locale.toString()
+                entryReplacements.put(key + "TR",
+                        TRTemplate1 + titleKey
+                      + TRTemplate2 + key + '.longDescription'
+                      + TRTemplate3 + appName + TRTemplate4 + loc
+                      + TRTemplate5 + appName + TRTemplate6 + loc
+                      + TRTemplate7 + appName + TRTemplate7a + loc
+                      + TRTemplate7b + appName + TRTemplate8 + titleKey
+                      + TRTemplate9 + titleKey + TRTemplate10)
+        }
+    }
+    //println "entryReplacements="+entryReplacements
 
     copy {
         from "$sourceDir/html/" + appletIndexFile['base']
@@ -134,7 +154,7 @@ void createHtmlForLocale(Locale locale) {
             fileName.replace('.html', '_' + locale.toString() + '.html')
         }
         filter(ReplaceTokens, tokens: replacements, beginToken: '{', endToken: '}')
-        //filter(ReplaceTokens, tokens: secondReplacements, beginToken: '{', endToken: '}')
+        filter(ReplaceTokens, tokens: entryReplacements, beginToken: '{', endToken: '}')
     }
 }
 
