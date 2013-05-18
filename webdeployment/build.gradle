@@ -47,7 +47,7 @@ clean.doLast {
     project.delete ("$distributionDir", "$stagingDir")
 }
 
-// Should be able to have a tyep: Copy taks and use << instead of doLast
+// Should be able to have a type: CopyTask and use << instead of doLast
 task deployImages(description: "Copy image files to $distributionGameDir")  {
 
     doLast {
@@ -61,7 +61,7 @@ task deployImages(description: "Copy image files to $distributionGameDir")  {
     }
 }
 
-// Should be able to have a tyep: Copy taks and use << instead of doLast
+// Should be able to have a type: CopyTask and use << instead of doLast
 task deploySchemas(description: "Copy schema files to $distributionDir") {
 
      doLast {
@@ -84,71 +84,61 @@ task deployJars(description: "Deploys jar files needed for running applets and w
             include "bb4-*.jar"
             include "jhlabs-1.0.3.jar"
             include "jigo-sgf-1.1.jar"
-            //include "common/build/libs/bb4-common*.jar"
-            //include "ui/build/libs/bb4-ui*.jar"
-            //include "sound/build/libs/bb4-sound*.jar"
-            //include "imageproc/build/libs/bb4-imageproc*.jar"
-            //include "optimization/build/libs/bb4-optimization*.jar"
-            //include "puzzle/build/libs/bb4-*.jar"
-            //include "simulation/build/libs/bb4-*.jar"
-            //include "game/build/libs/bb4-*.jar"
-            //include "apps/build/libs/bb4-*.jar"
-            //include "../imageproc/lib/jhlabs-1.0.3.jar"
-            //include "../game/lib/jigo-sgf-1.1.jar"
         }
     }
 }
 
-task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
+task deploy(dependsOn: [compileJava, deployImages, deploySchemas, deployJars],
             description: "Deploys all files  to $distributionGameDir so they can be bulk copied to a website") << {
     apply from: 'appletHtmlCommon.gradle'
-    apply from: 'resources/appletHtml_en.gradle'
-    apply from: 'resources/appletHtml_vi.gradle'
-   /*
-    println "appletIndexFile: " + appletIndexFile
-    println "appletHtml.localesList: " + appletHtml.localesList
-    println "jnlp.replacementList=" + jnlp.replacementList
-    println "doResize=" + doResize
-    println "TRTemplate1=" + TRTemplate1
-    */
+    //println "appletIndexFile: " + appletIndexFile
 
-    /* there needs to be a separate set of html files for each locale */
+    // copy all the js, css, image files (should only be done once, not once per locale)
+    copy {
+        from "$sourceDir/html"
+        into "$distributionGameDir/.."
+        include '*.js'
+        include '*.css'
+        include '*.gif'
+    }
+
+    /* there needs to be a separate set of html and jnlp files for each locale */
     println "localesList="+ appletHtml.localesList
-    appletHtml.localesList.each { locale -> createHtmlForLocale(locale) }
+    appletHtml.localesList.each {
+        locale -> createHtmlForLocale(locale)
+    }
 }
 
 /**
  * Deploys all the html files for the given locale.
  * This includes the index page, javascript, and individual applet/jnlp files.
  */
-void createHtmlForLocale(String locale) {
-    //println "locale = " + locale
+void createHtmlForLocale(Locale locale) {
 
-    // copy all the js, css, image files (should only be done once, not once per locale)
-    copy {
-        from "$sourceDir/html"
-        into "$distributionGameDir"
-        include '*.js'
-        include '*.css'
-        include '*.gif'
+    def labels = ResourceBundle.getBundle('html', locale)
+
+    // make these replacements when copying
+    def replacements = new HashMap()
+    htmlIndex.get("replacementList").each {
+        key -> if (labels.containsKey(key)) {
+            replacements.put(key, labels.getString(key))
+        }
     }
-
-    //println "applet list for $locale = " + appletHtml[locale].appletList
-    //println "appletIndexFile[ $locale ] = " + appletIndexFile[locale]
-    //println "tokens for $locale = " + appletHtml[locale]
+    //println "repalcements="+replacements
+    //def secondReplacements = [penteTR:"penteNNNNEWEEWEWETRRTRTT"]
 
     copy {
         from "$sourceDir/html/" + appletIndexFile['base']
         into "$distributionGameDir/.."
         rename { String fileName ->
-            fileName.replace('.html', '_' + locale + '.html')
+            fileName.replace('.html', '_' + locale.toString() + '.html')
         }
-        // make these replacements when copying
-        filter(ReplaceTokens, tokens: appletHtml[locale], beginToken: '{', endToken: '}')
+        filter(ReplaceTokens, tokens: replacements, beginToken: '{', endToken: '}')
+        //filter(ReplaceTokens, tokens: secondReplacements, beginToken: '{', endToken: '}')
     }
 }
 
-
+/*
 task i18n(description:"i18n test") << {
     def locales = [Locale.ENGLISH, Locale.JAPANESE, Locale.GERMAN]
     def keys = [ "s1", "s2", "s3" ]
@@ -156,4 +146,4 @@ task i18n(description:"i18n test") << {
         def labels = ResourceBundle.getBundle('html', locale)
         println "Locale = ${locale.toString()}, key = $key, value = ${labels.getString(key)}"
     }
-}
+} */

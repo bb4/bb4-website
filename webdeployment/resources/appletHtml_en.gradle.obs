@@ -1,10 +1,9 @@
-/* Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT*/
 
 ext {
 
 en = new HashMap()
 appletHtml.put("en", en);
-en.put('locale', 'en')
+en.put('locale', "en")
 en.put('charset','utf-8')
 en.put('appletList',
         ['pente', 'checkers', 'chess', 'go', 'blockade', 'galactic', 'poker', 'set', 'maze',
@@ -26,7 +25,7 @@ en.put('appletSimulationEntries',
 en.put("title", "Barry's Applets")
 
 en.put("introduction",
-"""&nbsp;&nbsp;&nbsp;From this page you can run some of the java programs that I have
+"""&nbsp;&nbsp;&nbsp;From this page you can run some of the java programs that I {s1} have {s2}
 developed. You can access them either as <a href=\"http://java.sun.com/applets/\">applet</a>s
 or through <a href=\"http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136112.html\">java Web Start</a>.
 To run the applets, you need to have a browser that supports java and has the java 1.6 plugin or later.
