@@ -25,10 +25,11 @@ dependencies {
     compile project(':apps')
 }
 
+/*
 clean.doLast {
     // project. is needed to disambiguate from the clean tasks existing delete.
-    project.delete ("$distributionDir", "$stagingDir")
-}
+    project.delete("$distributionDir", "$stagingDir")
+}  */
 
 // Should be able to have a type: CopyTask and use << instead of doLast
 task deployImages(description: "Copy image files to $distributionGameDir")  {
@@ -55,17 +56,14 @@ task deploySchemas(description: "Copy schema files to $distributionDir") {
      }
 }
 
-task deployJars(description: "Deploys jar files needed for running applets and web start applications") {
-    doLast {
-        println "deployJars to $distributionGameDir from $project_home"
-        copy {
-            from fileTree("$project_home").files
-            into "$distributionGameDir"
-            include "bb4-*.jar"
-            include "jhlabs-1.0.3.jar"
-            include "jigo-sgf-1.1.jar"
-        }
-    }
+task deployJars(type:Copy,
+    description: "Deploys jar files needed for running applets and web start applications") {
+
+    from fileTree("$project_home").files
+    into "$distributionGameDir"
+    include "bb4-*.jar"
+    include "jhlabs-1.0.3.jar"
+    include "jigo-sgf-1.1.jar"
 }
 
 task deploy(dependsOn: [compileJava, deployImages, deploySchemas, deployJars],
@@ -82,7 +80,6 @@ task deploy(dependsOn: [compileJava, deployImages, deploySchemas, deployJars],
         include '*.gif'
     }
 
-    /* there needs to be a separate set of html and jnlp files for each locale */
     println "localesList="+ appletHtml.localesList
     appletHtml.localesList.each {
         locale -> createHtmlForLocale(locale)
@@ -95,8 +92,16 @@ task deploy(dependsOn: [compileJava, deployImages, deploySchemas, deployJars],
  */
 void createHtmlForLocale(Locale locale) {
 
-    def labels = ResourceBundle.getBundle('html', locale)
+    createHtmlIndexPage(locale)
 
+    // there needs to be a set of html and jnlp files for each locale
+    createAppletFilesOfType(html, locale)
+    createAppletFilesOfType(jnlp, locale)
+}
+
+
+void createHtmlIndexPage(Locale locale) {
+    def labels = ResourceBundle.getBundle('html', locale)
     // make these replacements when copying
     def indexReplacements = getIndexReplacements(labels);
     def entryReplacements = getEntryReplacements(labels);
@@ -112,26 +117,19 @@ void createHtmlForLocale(Locale locale) {
         filter(ReplaceTokens, tokens: entryReplacements, beginToken: '{', endToken: '}')
         filter(ReplaceTokens, tokens: entryKeyReplacements, beginToken: '{', endToken: '}')
     }
+}
 
-
-    appletHtml.get("appletList").each { applet ->
-        def htmlReplacements = getHtmlReplacements(labels, applet)
+void createAppletFilesOfType(Map fileTypeMap, Locale locale) {
+    def labels = ResourceBundle.getBundle('html', locale)
+    appletHtml.get("appletList").each { String applet ->
+        def replacements = getFileTypeReplacements(labels, applet, fileTypeMap)
         copy {
-            from "$sourceDir/html/applet_template.html"
+            from "$sourceDir/html/applet_template." + fileTypeMap.get("type")
             into "$distributionGameDir"
             rename { String fileName ->
                 fileName.replace('applet_template', applet + '_' + locale.toString())
             }
-            filter(ReplaceTokens, tokens: htmlReplacements, beginToken: '{', endToken: '}')
-        }
-        def jnlpReplacements = getJnlpReplacements(labels, applet)
-        copy {
-            from "$sourceDir/html/applet_template.jnlp"
-            into "$distributionGameDir"
-            rename { String fileName ->
-                fileName.replace('applet_template', applet + '_' + locale.toString())
-            }
-            filter(ReplaceTokens, tokens: jnlpReplacements, beginToken: '{', endToken: '}')
+            filter(ReplaceTokens, tokens: replacements, beginToken: '{', endToken: '}')
         }
     }
 }
@@ -189,25 +187,20 @@ Map getEntryKeyReplacements(ResourceBundle labels) {
     return replacements
 }
 
-Map getHtmlReplacements(ResourceBundle labels, String applet) {
-    return getFileReplacements(labels, applet, html)
-}
 
-Map getJnlpReplacements(ResourceBundle labels, String applet) {
-    return getFileReplacements(labels, applet, jnlp)
-}
-
-Map getFileReplacements(ResourceBundle labels, String applet, Map fileType) {
+Map getFileTypeReplacements(ResourceBundle labels, String applet, Map fileType) {
     def replacements = new HashMap()
 
-    fileType.get("replacementList").each { key ->
+    fileType.get("replacementList").each { String key ->
         def appletKey = applet + '.' + key;
         if (labels.containsKey(appletKey))
-            replacements.put(appletKey, labels.getString(appletKey))
+            replacements.put(key, labels.getString(appletKey))
         else
-            replacements.put(appletKey, labels.getString(key))
+            replacements.put(key, labels.getString(key))
     }
+
     //println replacements
+    replacements.put("codebase", codebase)
     return replacements
 }
 
