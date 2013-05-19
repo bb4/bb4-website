@@ -118,34 +118,8 @@ void createHtmlForLocale(Locale locale) {
     def labels = ResourceBundle.getBundle('html', locale)
 
     // make these replacements when copying
-    def replacements = new HashMap()
-    htmlIndex.get("replacementList").each {
-        key -> if (labels.containsKey(key)) {
-            replacements.put(key, labels.getString(key))
-        }
-    }
-    //
-    // create replacements for entries within the index page (make this a method)
-    // note: should use i18n replacements here. e.g   "a {0} b {1} c"
-    def entryReplacements = new HashMap()
-    appletHtml.get("appletList").each {
-        key ->
-            def appKey = key + '.name'
-            if (labels.containsKey(appKey)) {
-                def appName = labels.getString(appKey)
-                def titleKey = key + '.title'
-                def loc = locale.toString()
-                entryReplacements.put(key + "TR",
-                        TRTemplate1 + titleKey
-                      + TRTemplate2 + key + '.longDescription'
-                      + TRTemplate3 + appName + TRTemplate4 + loc
-                      + TRTemplate5 + appName + TRTemplate6 + loc
-                      + TRTemplate7 + appName + TRTemplate7a + loc
-                      + TRTemplate7b + appName + TRTemplate8 + titleKey
-                      + TRTemplate9 + titleKey + TRTemplate10)
-        }
-    }
-    //println "entryReplacements="+entryReplacements
+    def indexReplacements = getIndexReplacements(labels);
+    def entryReplacements = getEntryReplacements(labels);
 
     copy {
         from "$sourceDir/html/" + appletIndexFile['base']
@@ -153,9 +127,51 @@ void createHtmlForLocale(Locale locale) {
         rename { String fileName ->
             fileName.replace('.html', '_' + locale.toString() + '.html')
         }
-        filter(ReplaceTokens, tokens: replacements, beginToken: '{', endToken: '}')
+        filter(ReplaceTokens, tokens: indexReplacements, beginToken: '{', endToken: '}')
         filter(ReplaceTokens, tokens: entryReplacements, beginToken: '{', endToken: '}')
     }
+}
+
+Map getIndexReplacements(ResourceBundle labels) {
+    def indexReplacements = new HashMap()
+    htmlIndex.get("replacementList").each {
+        key -> if (labels.containsKey(key)) {
+            indexReplacements.put(key, labels.getString(key))
+        }
+    }
+    return indexReplacements
+}
+
+/**
+ * note: should use i18n replacements here. e.g   "a {0} b {1} c" and have only one TRTemplate in messages.
+ * @return replacements for entries within the index page
+ */
+Map getEntryReplacements(ResourceBundle labels) {
+    def TRTemplates = [labels.getString("TRTemplate1"), labels.getString("TRTemplate2"),
+            labels.getString("TRTemplate3"), labels.getString("TRTemplate4"), labels.getString("TRTemplate5"),
+            labels.getString("TRTemplate6"), labels.getString("TRTemplate7"),
+            labels.getString("TRTemplate7a"), labels.getString("TRTemplate7b"),
+            labels.getString("TRTemplate8"), labels.getString("TRTemplate9"), labels.getString("TRTemplate10")]
+    def entryReplacements = new HashMap()
+
+    appletHtml.get("appletList").each {
+        key ->
+            def appKey = key + '.name'
+            if (labels.containsKey(appKey)) {
+                def appName = labels.getString(appKey)
+                def titleKey = key + '.title'
+                def loc = labels.getLocale().toString()
+                entryReplacements.put(key + "TR",
+                        TRTemplates[0] + titleKey
+                      + TRTemplates[1] + key + '.longDescription'
+                      + TRTemplates[2] + appName + TRTemplates[3] + loc
+                      + TRTemplates[4] + appName + TRTemplates[5] + loc
+                      + TRTemplates[6] + appName + TRTemplates[7] + loc
+                      + TRTemplates[8] + appName + TRTemplates[9] + titleKey
+                      + TRTemplates[10] + titleKey + TRTemplates[11])
+        }
+    }
+    return entryReplacements
 }
 
 /*
