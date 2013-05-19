@@ -3,7 +3,7 @@
 // @author Barry Becker
 
 description = 'Applets'
-defaultTasks 'clean', 'build'
+defaultTasks 'build'
 
 subprojects {
     apply plugin: 'java'
