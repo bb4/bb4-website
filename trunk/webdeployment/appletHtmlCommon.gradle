@@ -15,8 +15,7 @@ ext {
        "tab1", "tab2", "tab3"])
 
     // replacements for the entries within the top level index file
-    htmlindexEntry = new HashMap()
-    htmlindexEntry.put("replacementList", ["title",  "name",  "longDescription"])
+    htmlIndex.put("entryKeyReplacementList", ["title",  "name",  "longDescription"])
 
     // replacements for the individual html applet files
     html = new HashMap()

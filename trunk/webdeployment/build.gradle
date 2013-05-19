@@ -120,6 +120,7 @@ void createHtmlForLocale(Locale locale) {
     // make these replacements when copying
     def indexReplacements = getIndexReplacements(labels);
     def entryReplacements = getEntryReplacements(labels);
+    def entryKeyReplacements = getEntryKeyReplacements(labels);
 
     copy {
         from "$sourceDir/html/" + appletIndexFile['base']
@@ -129,17 +130,18 @@ void createHtmlForLocale(Locale locale) {
         }
         filter(ReplaceTokens, tokens: indexReplacements, beginToken: '{', endToken: '}')
         filter(ReplaceTokens, tokens: entryReplacements, beginToken: '{', endToken: '}')
+        filter(ReplaceTokens, tokens: entryKeyReplacements, beginToken: '{', endToken: '}')
     }
 }
 
 Map getIndexReplacements(ResourceBundle labels) {
-    def indexReplacements = new HashMap()
+    def replacements = new HashMap()
     htmlIndex.get("replacementList").each {
         key -> if (labels.containsKey(key)) {
-            indexReplacements.put(key, labels.getString(key))
+            replacements.put(key, labels.getString(key))
         }
     }
-    return indexReplacements
+    return replacements
 }
 
 /**
@@ -152,7 +154,7 @@ Map getEntryReplacements(ResourceBundle labels) {
             labels.getString("TRTemplate6"), labels.getString("TRTemplate7"),
             labels.getString("TRTemplate7a"), labels.getString("TRTemplate7b"),
             labels.getString("TRTemplate8"), labels.getString("TRTemplate9"), labels.getString("TRTemplate10")]
-    def entryReplacements = new HashMap()
+    def replacements = new HashMap()
 
     appletHtml.get("appletList").each {
         key ->
@@ -161,7 +163,7 @@ Map getEntryReplacements(ResourceBundle labels) {
                 def appName = labels.getString(appKey)
                 def titleKey = key + '.title'
                 def loc = labels.getLocale().toString()
-                entryReplacements.put(key + "TR",
+                replacements.put(key + "TR",
                         TRTemplates[0] + titleKey
                       + TRTemplates[1] + key + '.longDescription'
                       + TRTemplates[2] + appName + TRTemplates[3] + loc
@@ -171,15 +173,17 @@ Map getEntryReplacements(ResourceBundle labels) {
                       + TRTemplates[10] + titleKey + TRTemplates[11])
         }
     }
-    return entryReplacements
+    return replacements
 }
 
-/*
-task i18n(description:"i18n test") << {
-    def locales = [Locale.ENGLISH, Locale.JAPANESE, Locale.GERMAN]
-    def keys = [ "s1", "s2", "s3" ]
-    [locales, keys].combinations().each{ locale, key ->
-        def labels = ResourceBundle.getBundle('html', locale)
-        println "Locale = ${locale.toString()}, key = $key, value = ${labels.getString(key)}"
+Map getEntryKeyReplacements(ResourceBundle labels) {
+    def replacements = new HashMap()
+    appletHtml.get("appletList").each { applet ->
+        htmlIndex.get("entryKeyReplacementList").each { key ->
+            def appletKey = applet + '.' + key;
+            replacements.put(appletKey, labels.getString(appletKey))
+        }
     }
-} */
+    println replacements
+    return replacements
+}
