@@ -25,23 +25,6 @@ dependencies {
     compile project(':apps')
 }
 
-task showProperties(description: "shows some properties") << {
-    println "Project: $project"
-    println "Name: $name"
-    println "Path: $path"
-    println "Project directory: $projectDir"
-    println "Build directory: $buildDir"
-    println "Version: $version"
-    println "Group: $project.group"
-    println "Description: $project.description"
-    println "AntBuilder: $ant"
-    println "codebase: $codebase"
-    println "distributionDir: $distributionDir"
-    println "distributionGameDir: $distributionGameDir"
-    println "projectHome: $project_home"
-    println "projectHome: $uiDir"
-}
-
 clean.doLast {
     // project. is needed to disambiguate from the clean tasks existing delete.
     project.delete ("$distributionDir", "$stagingDir")
@@ -49,7 +32,6 @@ clean.doLast {
 
 // Should be able to have a type: CopyTask and use << instead of doLast
 task deployImages(description: "Copy image files to $distributionGameDir")  {
-
     doLast {
         copy {
             from "$sourceDir/images"
@@ -63,7 +45,6 @@ task deployImages(description: "Copy image files to $distributionGameDir")  {
 
 // Should be able to have a type: CopyTask and use << instead of doLast
 task deploySchemas(description: "Copy schema files to $distributionDir") {
-
      doLast {
          copy {
              from fileTree("$project_home").files
@@ -75,7 +56,6 @@ task deploySchemas(description: "Copy schema files to $distributionDir") {
 }
 
 task deployJars(description: "Deploys jar files needed for running applets and web start applications") {
-
     doLast {
         println "deployJars to $distributionGameDir from $project_home"
         copy {
@@ -132,6 +112,28 @@ void createHtmlForLocale(Locale locale) {
         filter(ReplaceTokens, tokens: entryReplacements, beginToken: '{', endToken: '}')
         filter(ReplaceTokens, tokens: entryKeyReplacements, beginToken: '{', endToken: '}')
     }
+
+
+    appletHtml.get("appletList").each { applet ->
+        def htmlReplacements = getHtmlReplacements(labels, applet)
+        copy {
+            from "$sourceDir/html/applet_template.html"
+            into "$distributionGameDir"
+            rename { String fileName ->
+                fileName.replace('applet_template', applet + '_' + locale.toString())
+            }
+            filter(ReplaceTokens, tokens: htmlReplacements, beginToken: '{', endToken: '}')
+        }
+        def jnlpReplacements = getJnlpReplacements(labels, applet)
+        copy {
+            from "$sourceDir/html/applet_template.jnlp"
+            into "$distributionGameDir"
+            rename { String fileName ->
+                fileName.replace('applet_template', applet + '_' + locale.toString())
+            }
+            filter(ReplaceTokens, tokens: jnlpReplacements, beginToken: '{', endToken: '}')
+        }
+    }
 }
 
 Map getIndexReplacements(ResourceBundle labels) {
@@ -184,6 +186,29 @@ Map getEntryKeyReplacements(ResourceBundle labels) {
             replacements.put(appletKey, labels.getString(appletKey))
         }
     }
-    println replacements
     return replacements
 }
+
+Map getHtmlReplacements(ResourceBundle labels, String applet) {
+    return getFileReplacements(labels, applet, html)
+}
+
+Map getJnlpReplacements(ResourceBundle labels, String applet) {
+    return getFileReplacements(labels, applet, jnlp)
+}
+
+Map getFileReplacements(ResourceBundle labels, String applet, Map fileType) {
+    def replacements = new HashMap()
+
+    fileType.get("replacementList").each { key ->
+        def appletKey = applet + '.' + key;
+        if (labels.containsKey(appletKey))
+            replacements.put(appletKey, labels.getString(appletKey))
+        else
+            replacements.put(appletKey, labels.getString(key))
+    }
+    //println replacements
+    return replacements
+}
+
+

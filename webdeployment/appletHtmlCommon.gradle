@@ -6,34 +6,34 @@ ext {
 
     appletHtml = new HashMap()
     appletHtml.put("localesList", [Locale.ENGLISH, Locale.GERMAN, Locale.JAPANESE, new Locale("vi")])
-
-    // replacements for the top level index file (excluding the entries)
-    htmlIndex = new HashMap()
-    htmlIndex.put("replacementList",
-      ["locale", "title", "introduction",
-       "appletGameEntries", "appletPuzzleEntries", "appletSimulationEntries",
-       "tab1", "tab2", "tab3"])
-
-    // replacements for the entries within the top level index file
-    htmlIndex.put("entryKeyReplacementList", ["title",  "name",  "longDescription"])
-
-    // replacements for the individual html applet files
-    html = new HashMap()
-    html.put("replacementList",
-      ["title", "name", "longDescription", "qualifiedAppletClassName", "className",
-      "panelClass",  "language", "locale", "width", "height", "doResize", "jarList"])
-
-    // replacements for jnlp file
-    jnlp = new HashMap()
-    jnlp.put("replacementList",
-      ["title", "description", "qualifiedAppClassName", "className", "panelClass", "name", "language", "jarElement1", "jarElement2"])
-
     appletHtml.put('appletList',
         ['pente', 'checkers', 'chess', 'go', 'blockade', 'galactic', 'poker', 'set', 'maze',
          'spirograph','redpuzzle', 'sudoku', 'hiq', 'tantrix', 'trebuchet',
          'snake', 'dice', 'stock', 'fractalexplorer', 'reactiondiffusion',
          'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder','adventure',
          'predprey', 'habitat', 'henonexplorer'])
+
+    // message replacements for the top level index file (excluding the entries)
+    htmlIndex = new HashMap()
+    htmlIndex.put("replacementList",
+          ["locale", "title", "introduction", "appletGameEntries", "appletPuzzleEntries", "appletSimulationEntries",
+           "tab1", "tab2", "tab3"])
+
+    // message replacements for the entries within the top level index file
+    htmlIndex.put("entryKeyReplacementList",
+          ["title",  "name",  "longDescription"])
+
+    // message replacements for the individual html applet files
+    html = new HashMap()
+    html.put("replacementList",
+          ["title", "name", "longDescription", "qualifiedAppletClassName", "className",
+           "panelClass", "width", "height", "doResize", "jarList"])
+
+    // replacements for jnlp file
+    jnlp = new HashMap()
+    jnlp.put("replacementList",
+          ["title", "description", "qualifiedAppClassName", "className", "panelClass", "name",
+           "jarElement1", "jarElement2"])
 }
 
 
