@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
+<module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
@@ -12,9 +12,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="sound" exported="" />
     <orderEntry type="module" module-name="imageproc" exported="" />
-    <orderEntry type="library" exported="" name="xml-apis-1.4.01" level="project" />
-    <orderEntry type="library" exported="" name="commons-collections-3.2" level="project" />
     <orderEntry type="library" scope="TEST" name="junit-3.8.2" level="project" />
+    <orderEntry type="library" exported="" name="commons-collections-3.2" level="project" />
+    <orderEntry type="library" exported="" name="xml-apis-1.4.01" level="project" />
     <orderEntry type="library" exported="" name="xercesImpl-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.7" level="project" />
   </component>

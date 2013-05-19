@@ -25,11 +25,11 @@ dependencies {
     compile project(':apps')
 }
 
-/*
+
 clean.doLast {
     // project. is needed to disambiguate from the clean tasks existing delete.
     project.delete("$distributionDir", "$stagingDir")
-}  */
+}
 
 // Should be able to have a type: CopyTask and use << instead of doLast
 task deployImages(description: "Copy image files to $distributionGameDir")  {
@@ -71,6 +71,7 @@ task deploy(dependsOn: [compileJava, deployImages, deploySchemas, deployJars],
     apply from: 'appletHtmlCommon.gradle'
     //println "appletIndexFile: " + appletIndexFile
 
+    println "webdeployment dir ="+ project.absoluteProjectPath("dist")
     // copy all the js, css, image files (should only be done once, not once per locale)
     copy {
         from "$sourceDir/html"
@@ -199,7 +200,6 @@ Map getFileTypeReplacements(ResourceBundle labels, String applet, Map fileType) 
             replacements.put(key, labels.getString(key))
     }
 
-    //println replacements
     replacements.put("codebase", codebase)
     return replacements
 }
