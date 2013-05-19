@@ -10,7 +10,9 @@ ext {
     // replacements for the top level index file (excluding the entries)
     htmlIndex = new HashMap()
     htmlIndex.put("replacementList",
-      ["locale", "title", "introduction", "appletGameEntries", "appletPuzzleEntries", "appletSimulationEntries"])
+      ["locale", "title", "introduction",
+       "appletGameEntries", "appletPuzzleEntries", "appletSimulationEntries",
+       "tab1", "tab2", "tab3"])
 
     // replacements for the entries within the top level index file
     htmlindexEntry = new HashMap()
@@ -27,88 +29,12 @@ ext {
     jnlp.put("replacementList",
       ["title", "description", "qualifiedAppClassName", "className", "panelClass", "name", "language", "jarElement1", "jarElement2"])
 
-    TRTemplate1="<tr>\n<td style=\"vertical-align: top;\">\n<h2>{"
-    TRTemplate2="}</h3>\n{"
-    TRTemplate3="}<br><br>&nbsp;&nbsp;&nbsp;Run as <a href=\"applets/"
-    TRTemplate4="_"
-    TRTemplate5=".html\">applet</a> or <a href=\"applets/"
-    TRTemplate6="_"
-    TRTemplate7=".jnlp\">webstart</a>.<br></td><td style=\"vertical-align: top;\"><a href=\"applets/"
-    TRTemplate7a="_"
-    TRTemplate7b=".jnlp\"><img src=\"applets/"
-    TRTemplate8="_applet.jpg\" title=\"{"
-    TRTemplate9="}\" alt=\"{"
-    TRTemplate10="}\" style=\"width: 285px; height: 185px;\"></a>\n</td></tr>\n"
-
     appletHtml.put('appletList',
         ['pente', 'checkers', 'chess', 'go', 'blockade', 'galactic', 'poker', 'set', 'maze',
          'spirograph','redpuzzle', 'sudoku', 'hiq', 'tantrix', 'trebuchet',
          'snake', 'dice', 'stock', 'fractalexplorer', 'reactiondiffusion',
          'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder','adventure',
          'predprey', 'habitat', 'henonexplorer'])
-
-    /*
-    pente = new HashMap()
-    checkers = new HashMap()
-    chess = new HashMap()
-    go = new HashMap()
-    blockade = new HashMap()
-    galactic = new HashMap()
-    poker = new HashMap()
-    trivial = new HashMap()
-    set = new HashMap()
-    maze = new HashMap()
-    spirograph = new HashMap()
-    redpuzzle = new HashMap()
-    sudoku = new HashMap()
-    hiq = new HashMap()
-    tantrix = new HashMap()
-    trebuchet = new HashMap()
-    snake = new HashMap()
-    dice = new HashMap()
-    stock = new HashMap()
-    henonexplorer = new HashMap()
-    fractalexplorer = new HashMap()
-    reactiondiffusion = new HashMap()
-    liquid = new HashMap()
-    fluid = new HashMap()
-    sierpinski = new HashMap()
-    lsystem = new HashMap()
-    imagebreeder = new HashMap()
-    adventure = new HashMap()
-    predprey = new HashMap()
-    habitat = new HashMap()
-
-    appletHtml.put("pente", pente)
-    appletHtml.put("checkers", checkers)
-    appletHtml.put("chess", chess)
-    appletHtml.put("go", go)
-    appletHtml.put("blockade", blockade)
-    appletHtml.put("galactic", galactic)
-    appletHtml.put("trivial", trivial)
-    appletHtml.put("set", set)
-    appletHtml.put("maze", maze)
-    appletHtml.put("spirograph", spirograph)
-    appletHtml.put("redpuzzle", redpuzzle)
-    appletHtml.put("sudoku", sudoku)
-    appletHtml.put("hiq", hiq)
-    appletHtml.put("tantrix", tantrix)
-    appletHtml.put("trebuchet", trebuchet)
-    appletHtml.put("snake", snake)
-    appletHtml.put("dice", dice)
-    appletHtml.put("stock", stock)
-    appletHtml.put("henonexplorer", henonexplorer)
-    appletHtml.put("fractalexplorer", fractalexplorer)
-    appletHtml.put("reactiondiffusion", reactiondiffusion)
-    appletHtml.put("liquid", liquid)
-    appletHtml.put("fluid", fluid)
-    appletHtml.put("sierpinski", sierpinski)
-    appletHtml.put("lsystem", lsystem)
-    appletHtml.put("imagebreeder", imagebreeder)
-    appletHtml.put("predprey", predprey)
-    appletHtml.put("predprey", predprey)
-    appletHtml.put("habitat", habitat)
-    */
 }
 
 
