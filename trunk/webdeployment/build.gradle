@@ -1,6 +1,8 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 
 import org.apache.tools.ant.filters.ReplaceTokens
+import java.text.MessageFormat
+
 version = '1.0'
 
 ext.distributionGameDir="$distributionDir/applets"
@@ -69,7 +71,6 @@ task deployJars(type:Copy,
 task deploy(dependsOn: [compileJava, deployImages, deploySchemas, deployJars],
             description: "Deploys all files  to $distributionGameDir so they can be bulk copied to a website") << {
     apply from: 'appletHtmlCommon.gradle'
-    //println "appletIndexFile: " + appletIndexFile
 
     println "webdeployment dir ="+ project.absoluteProjectPath("dist")
     // copy all the js, css, image files (should only be done once, not once per locale)
@@ -146,15 +147,12 @@ Map getIndexReplacements(ResourceBundle labels) {
 }
 
 /**
- * note: should use i18n replacements here. e.g   "a {0} b {1} c" and have only one TRTemplate in messages.
+ * Use parameterized message for html to launch.
  * @return replacements for entries within the index page
  */
 Map getEntryReplacements(ResourceBundle labels) {
-    def TRTemplates = [labels.getString("TRTemplate1"), labels.getString("TRTemplate2"),
-            labels.getString("TRTemplate3"), labels.getString("TRTemplate4"), labels.getString("TRTemplate5"),
-            labels.getString("TRTemplate6"), labels.getString("TRTemplate7"),
-            labels.getString("TRTemplate7a"), labels.getString("TRTemplate7b"),
-            labels.getString("TRTemplate8"), labels.getString("TRTemplate9"), labels.getString("TRTemplate10")]
+
+    def TRTemplate = labels.getString("TRTemplate")
     def replacements = new HashMap()
 
     appletHtml.get("appletList").each {
@@ -162,16 +160,11 @@ Map getEntryReplacements(ResourceBundle labels) {
             def appKey = key + '.name'
             if (labels.containsKey(appKey)) {
                 def appName = labels.getString(appKey)
-                def titleKey = key + '.title'
+                def titleKey = '{' + key + '.title}'
+                def longDescKey = '{' + key + '.longDescription}'
                 def loc = labels.getLocale().toString()
-                replacements.put(key + "TR",
-                        TRTemplates[0] + titleKey
-                      + TRTemplates[1] + key + '.longDescription'
-                      + TRTemplates[2] + appName + TRTemplates[3] + loc
-                      + TRTemplates[4] + appName + TRTemplates[5] + loc
-                      + TRTemplates[6] + appName + TRTemplates[7] + loc
-                      + TRTemplates[8] + appName + TRTemplates[9] + titleKey
-                      + TRTemplates[10] + titleKey + TRTemplates[11])
+                String str = MessageFormat.format(TRTemplate, titleKey, longDescKey, appName, loc)
+                replacements.put(key + "TR", str)
         }
     }
     return replacements
