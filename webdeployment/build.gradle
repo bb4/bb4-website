@@ -64,8 +64,10 @@ task deployJars(type:Copy,
     from fileTree("$project_home").files
     into "$distributionGameDir"
     include "bb4-*.jar"
-    include "jhlabs-1.0.3.jar"
-    include "jigo-sgf-1.1.jar"
+    include "jhlabs-*.jar"
+    include "jigo-sgf-*.jar"
+    include "jai-codec-*.jar"
+    include "vecmath*.jar"
 }
 
 task deploy(dependsOn: [compileJava, deployImages, deploySchemas, deployJars],
