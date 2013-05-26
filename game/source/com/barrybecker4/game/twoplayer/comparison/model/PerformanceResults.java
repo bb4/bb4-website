@@ -155,17 +155,17 @@ public class PerformanceResults {
         StringBuilder bldr = new StringBuilder();
         if (!substring)
             bldr.append("<html>");
-        bldr.append("<b>" + description + "</b><br>");
+        bldr.append("<b>").append(description).append("</b><br>");
         if (getWasTie()) {
             bldr.append("it was a tie");
         }
         else  {
-            bldr.append("player <b>" + (getPlayer1Won()?"1":"2") + "</b> won by ");
+            bldr.append("player <b>").append(getPlayer1Won() ? "1" : "2").append("</b> won by ");
             bldr.append(getStrengthOfWin());
         }
         bldr.append("<br> in ");
-        bldr.append("<b>" + getTimeFormatted() + "</b>");
-        bldr.append("<br> and " + getNumMoves() + " moves. ");
+        bldr.append("<b>").append(getTimeFormatted()).append("</b>");
+        bldr.append("<br> and ").append(getNumMoves()).append(" moves. ");
         if (!substring)
             bldr.append("</html>");
 
@@ -174,16 +174,16 @@ public class PerformanceResults {
 
     public String toString() {
         StringBuilder bldr = new StringBuilder();
-        bldr.append(description + "\n");
+        bldr.append(description).append("\n");
         if (getWasTie()) {
             bldr.append("it was a tie");
         }
         else  {
-            bldr.append("player " + (getPlayer1Won()?"1":"2") + " won by ");
+            bldr.append("player ").append(getPlayer1Won() ? "1" : "2").append(" won by ");
             bldr.append(getStrengthOfWin());
         }
         bldr.append("\n in ").append(getTimeFormatted());
-        bldr.append(" and " + getNumMoves() +" moves. ");
+        bldr.append(" and ").append(getNumMoves()).append(" moves. ");
         bldr.append("\ntime (sec) = ").append(FormatUtil.formatNumber((double)timeMillis/1000.0));
         bldr.append("\nnumMoves = ").append(numMoves);
         bldr.append("\nnormalized time = ").append(normalizedNumSeconds);

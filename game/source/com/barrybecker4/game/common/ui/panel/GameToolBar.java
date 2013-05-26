@@ -42,8 +42,7 @@ public class GameToolBar extends TexturedToolBar {
 
     private void init() {
         newGameButton_ = createToolBarButton( GameContext.getLabel("NEW_GAME_BTN"),
-                                                      GameContext.getLabel("NEW_GAME_BTN_TIP"),
-                                                      newGameImage );
+                GameContext.getLabel("NEW_GAME_BTN_TIP"), newGameImage );
         undoButton_ = createToolBarButton( "", GameContext.getLabel("UNDO_BTN_TIP"), undoImage );
         undoButton_.setDisabledIcon(undoImageDisabled);
         undoButton_.setEnabled(false);    // nothing to undo initially

@@ -32,7 +32,7 @@ public class GradientButton extends JButton
 
     /**
      * Constructor
-     *  default to colors from the UIManager
+     * default colors from the UIManager
      */
     public GradientButton() {
         commonDefaultInit();
@@ -99,15 +99,20 @@ public class GradientButton extends JButton
     }
 
 
+    @Override
     public void mouseClicked(MouseEvent e) {}
+    @Override
     public void mousePressed(MouseEvent e) {}
+    @Override
     public void mouseReleased(MouseEvent e) {}
 
+    @Override
     public void mouseEntered(MouseEvent e) {
         mousedOver_ = true;
         this.repaint();
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
         mousedOver_ = false;
         this.repaint();
@@ -118,18 +123,19 @@ public class GradientButton extends JButton
      * before text or an icon is painted on the button.
      */
     private class CustomUI extends BasicButtonUI {
+
+        /** if the button has an icon, add the gradient background */
         @Override
         protected void paintText( Graphics g, JComponent c, Rectangle textRect, String text ) {
-            //if the button has no icon, add the gradient background
             if ( c instanceof GradientButton && (((AbstractButton) c).getIcon() == null)) {
                 addGradientBackground( g );
             }
             super.paintText( g, c, textRect, text );
         }
 
+        /** if the button has an icon, add the gradient background */
         @Override
         protected void paintIcon( Graphics g, JComponent c, Rectangle iconRect ) {
-            //if the button has an icon, add the gradient background
             if ( c instanceof GradientButton && (((AbstractButton) c).getIcon() != null)) {
                 addGradientBackground( g );
             }
@@ -165,7 +171,7 @@ public class GradientButton extends JButton
             Color startColor = gradientStartColor_;
             Color endColor = gradientEndColor_;
             startColor = mousedOver_ ?  startColor.brighter() : startColor;
-            //endColor = mousedOver_ ? endColor.brighter() : endColor;
+            endColor = mousedOver_ ? endColor.brighter() : endColor;
 
             GradientPaint rtow;
             if ( isSelected() ) {

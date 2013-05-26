@@ -38,6 +38,7 @@ public class SectionPanel extends JPanel {
 
         panel.setOpaque(false);
         panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ) );
+
         panel.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), title,
                      TitledBorder.LEFT, TitledBorder.TOP, SECTION_TITLE_FONT) );
         return panel;

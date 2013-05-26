@@ -17,7 +17,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -34,8 +33,12 @@ public final class GUIUtil {
     /** default location of files on the local system unless otherwise specified. */
     public static final String RESOURCE_ROOT = FileUtil.PROJECT_HOME;
 
-    /** Some other interesting fonts: "Ænigma Scrawl 4 BRK"; "Nyala"; "Raavi"; */
-    public static final String DEFAULT_FONT_FAMILY = "Verdana";
+    /**
+     * Some other interesting fonts: "Ænigma Scrawl 4 BRK"; "Nyala"; "Raavi";
+     * Verdana is nice, but it does not support japanese or vietnamese character.
+     * Only Serif and SansSerif seem to suppprt everything.
+     */
+    public static final String DEFAULT_FONT_FAMILY = "SansSerif";
 
     /** webstart services  */
     private static BasicService basicService_ = null;
