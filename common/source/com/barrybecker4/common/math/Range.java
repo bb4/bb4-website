@@ -101,7 +101,7 @@ public class Range {
     }
 
     public String toString() {
-        return  this.getMin() + " to " + this.getMax();
+        return  this.getMin() + " to " + this.getMax(); //NON-NLS
     }
 
     @Override

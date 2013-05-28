@@ -30,9 +30,8 @@ public final class ColorUtil
             intColor = Long.decode("0x" + sColor);
         }
         catch (NumberFormatException e) {
-            System.out.println("bad color format: "+sColor);
-            System.out.println(e.getMessage());
-            return defaultColor;
+            throw new IllegalArgumentException("bad color format: " + sColor, e);
+
         }
         int blue =  (int)(intColor % 256);
         int green = (int)((intColor >> 8 ) % 256);

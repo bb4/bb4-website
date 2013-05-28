@@ -86,11 +86,11 @@ public class CountFunction implements Function {
         }
         double xValm1 = xVals.get(i-1);
         double denom = (xVals.get(i) - xValm1);
-        double ratio = 0;
+
         if (denom == 0) {
             return yVals.get(i-1);
         } else {
-            ratio = (xValue - xValm1) / denom;
+            double ratio = (xValue - xValm1) / denom;
             double yValm1 = yVals.get(i-1);
             return yValm1 + ratio * (yVals.get(i) -  yValm1);
         }
@@ -98,8 +98,10 @@ public class CountFunction implements Function {
 
     public String toString() {
         StringBuilder bldr = new StringBuilder("CountFunction: ");
-        for (int i=0; i< xValues.size(); i++) {
-            bldr.append("\nx=").append(xValues.get(i)).append(" y=").append(yValues.get(i));
+        for (int i = 0; i < xValues.size(); i++) {
+            bldr.append("\nx=")
+                .append(xValues.get(i))
+                .append(" y=").append(yValues.get(i));
         }
         return bldr.toString();
     }

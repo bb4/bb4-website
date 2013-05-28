@@ -18,6 +18,7 @@ import java.util.Set;
  *
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public final class MessageContext {
 
     public static final LocaleType DEFAULT_LOCALE = LocaleType.ENGLISH;
@@ -51,7 +52,7 @@ public final class MessageContext {
     /**
      * @param applicationResourcePath  application specific messages
      */
-    public void setApplicationResourcePath(String applicationResourcePath)    {
+    public void setApplicationResourcePath(String applicationResourcePath) {
         applicationResourcePath_ = applicationResourcePath;
         applicationMessages_ = null;
     }

@@ -85,7 +85,7 @@ public final class ImageUtil {
 
         if ( type == ImageType.JPG ) {
 
-            ImageWriter encoder = ImageIO.getImageWritersByFormatName("JPEG").next();
+            ImageWriter encoder = ImageIO.getImageWritersByFormatName("JPEG").next(); //NON-NLS
             JPEGImageWriteParam param = new JPEGImageWriteParam(null);
 
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
@@ -94,29 +94,28 @@ public final class ImageUtil {
             try {
                 encoder.write(null, new IIOImage((RenderedImage)img, null, null), param);
             } catch (IOException fne) {
-                System.err.println( "IOException error:" + fne.getMessage());
+                throw new IllegalStateException("IOException error:" + fne.getMessage(), fne);
             }
         }
         else { // PNG is the default
             PNGEncodeParam param = PNGEncodeParam.getDefaultEncodeParam( bi );
 
-            ImageEncoder encoder = ImageCodec.createImageEncoder( "PNG", out, param );
+            ImageEncoder encoder = ImageCodec.createImageEncoder( "PNG", out, param ); //NON-NLS
             try {
                 // Writes it to a file as a .png
                 encoder.encode( bi );
-            } catch (IOException fne) {
-                System.out.println( "IOException error:" +  fne.getMessage());
+            } catch (IOException e) {
+                throw new IllegalStateException("IOException error.", e);
             } catch (NullPointerException npe) {
-                System.out.println("bi="+bi);
-                throw npe;
+                throw new IllegalStateException("Could not encode buffered image because it was null.", npe);
             }
         }
 
         try {
             out.flush();
             out.close();
-        } catch (IOException fne) {
-            System.out.println( "IOException error:" + fne.getMessage());
+        } catch (IOException e) {
+            throw new IllegalStateException( "IOException error.", e);
         }
     }
 
@@ -141,7 +140,7 @@ public final class ImageUtil {
 
             os = new BufferedOutputStream( new FileOutputStream( fn ) );
         } catch (FileNotFoundException fne) {
-            System.out.println( "File " + fileName + " not found: " + fne.getMessage());
+            System.out.println( "File " + fileName + " not found: " + fne.getMessage()); //NON-NLS
         }
 
         writeImage( img, os, type );
@@ -150,7 +149,7 @@ public final class ImageUtil {
     /**
      * @param pixels one dimension array of pixels where a pixel at x and y can be located with
      *   3 *(x * height + y )
-     *   Note that there are 4 ints for every pixel (rgb)
+     *   Note that there are 4 integers for every pixel (rgb)
      * @param width
      * @param height
      * @return image from the pixel data

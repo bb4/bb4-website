@@ -62,7 +62,7 @@ task runGo(type: JavaExec, depends: classes) {
 
 task runGoJapanese(type: JavaExec, depends: classes) {
     main = 'com.barrybecker4.game.common.ui.GameApp'
-    args = ["-name", "go", "-locale", "VIETNAMESE"]
+    args = ["-name", "go", "-locale", "JAPANESE"]
     classpath = sourceSets.main.runtimeClasspath
 }
 

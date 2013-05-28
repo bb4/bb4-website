@@ -17,11 +17,13 @@
       <w>eerie</w>
       <w>eulers</w>
       <w>funge</w>
+      <w>getenv</w>
       <w>gradle</w>
       <w>gridlines</w>
       <w>hashcode</w>
       <w>hashkey</w>
       <w>hashmap</w>
+      <w>heckbert</w>
       <w>henon</w>
       <w>hyperthreading</w>
       <w>incentivize</w>
@@ -77,6 +79,8 @@
       <w>upperbound</w>
       <w>vigintillion</w>
       <w>webstart</w>
+      <w>xdiff</w>
+      <w>xsds</w>
     </words>
   </dictionary>
 </component>

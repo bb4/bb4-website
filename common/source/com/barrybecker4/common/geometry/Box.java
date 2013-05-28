@@ -211,7 +211,7 @@ public class Box {
 
     @Override
     public String toString() {
-        StringBuilder buf = new StringBuilder("Box:");
+        StringBuilder buf = new StringBuilder("Box:"); //NON-NLS
         buf.append(topLeftCorner_);
         buf.append(" - ");
         buf.append(bottomRightCorner_);

@@ -18,7 +18,7 @@ public class CommandLineOptions  {
     /**
      * Constructor.
      * Parse out the args and put them in a hashmap.
-     * We expect the args to be some set of flags of the form -<flagname> followed by and  optional value
+     * We expect the args to be some set of flags of the form -<flag name> followed by and  optional value
      * So an example argument list might be
      *   java someProgram -p 3434 -type pente -locale en -verbose -safe -title "my title"
      * Note: verbose and -safe are options and do not have values.
@@ -29,7 +29,6 @@ public class CommandLineOptions  {
         // System.out.println("creating cmd line options from  s= "+  args.magnitude);
         while (ct < args.length) {
             String arg = args[ct];
-            System.out.println("arg="+arg);
 
             assert (arg.charAt(0)=='-') :
                     "Command line Options must start with - and then be followed by an optional value";
@@ -67,7 +66,7 @@ public class CommandLineOptions  {
      * @return value for the arg (may be null if no value for the arg)
      */
     public String getValueForOption(String option, String defaultValue) {
-        System.out.println("getting option named " + option + " from " + optionsMap_);
+        //System.out.println("getting option named " + option + " from " + optionsMap_);
         return optionsMap_.get(option);
     }
 

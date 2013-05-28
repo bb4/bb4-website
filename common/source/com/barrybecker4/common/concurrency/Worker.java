@@ -48,7 +48,7 @@ public abstract class Worker {
         };
 
         Thread thread = new Thread(doConstruct);
-        thread.setName("Worker Thread");
+        thread.setName("Worker Thread"); //NON-NLS
         threadVar = new ThreadVar(thread);
     }
 

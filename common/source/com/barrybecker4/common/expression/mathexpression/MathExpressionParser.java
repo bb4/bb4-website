@@ -60,7 +60,7 @@ public class MathExpressionParser extends ExpressionParser {
             }
             else if (isNumericChar(ch)) {
                 token += ch;
-                if (token.contains("x")) {
+                if (token.contains("x")) { //NON-NLS
                     throw new Error("Cannot have numbers after x in a term "+ token +" within " + exp);
                 }
             }
@@ -137,7 +137,7 @@ public class MathExpressionParser extends ExpressionParser {
                 }
                 nodes.add(new TreeNode(MathOperator.TIMES.getSymbol(), opDef));
             }
-            nodes.add(new TreeNode("x", opDef));
+            nodes.add(new TreeNode("x", opDef)); //NON-NLS
         }
         else {
             nodes.add(getNodeForNumber(token));
@@ -152,7 +152,7 @@ public class MathExpressionParser extends ExpressionParser {
     protected TreeNode makeTreeFromNodes(List<TreeNode> nodes) {
 
         for (Operator[] ops : opDef.getOperatorPrecedence()) {
-            System.out.println("nodes=" + nodes + " ops="+ Arrays.toString(ops));
+            System.out.println("nodes=" + nodes + " ops="+ Arrays.toString(ops)); //NON-NLS
             nodes = reduceNodes(ops, nodes);
         }
 
@@ -187,9 +187,9 @@ public class MathExpressionParser extends ExpressionParser {
                 if (nodes.size() < index + 1) {
                     throw new Error("Not enough operands for operator in nodes=" + nodes);
                 }
-                System.out.println("before splice : " + nodes);
+                //System.out.println("before splice : " + nodes);
                 splice(nodes, index-1, 3, nodes.get(index));
-                System.out.println("after splice : " + nodes);
+                //System.out.println("after splice : " + nodes);
             } else {
                 index += 2;
             }

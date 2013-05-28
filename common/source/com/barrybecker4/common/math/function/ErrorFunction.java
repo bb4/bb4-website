@@ -57,13 +57,14 @@ public class ErrorFunction implements InvertibleFunction {
      * @param x
      * @return error function value for x.
      */
+    @Override
     public double getValue(double x) {
        double sign = (x >= 0)? 1.0 : -1.0;
        if (Math.abs(x) > MAX_ERROR_FUNCTION_TABLE_VALUE) {
 
            double v = (1.0 -  (100.0 - Math.abs(x) ) * MathUtil.EPS_MEDIUM);
            if (x > 50) {
-               System.out.println("erf("+x+")="+ v);
+               System.out.println("erf("+x+")="+ v); //NON-NLS
            }
            assert v > 0.0 : " x="+ x + " v="+ v;
            return sign *v;
@@ -75,15 +76,17 @@ public class ErrorFunction implements InvertibleFunction {
     * We expect x to be in the range [-1.0, 1.0].
     * Currently just using simple linear interpolation.
     * We could improve by using quadratic interpolation.
-    * @param x invers error function value for x.
+    * @param x inverse error function value for x.
     * @return inverse error function value for x.
-        */
+    */
+    @Override
     public double getInverseValue(double x) {
         assert (x >= -1.0 && x <= 1.0);
         double sign = (x>=0)? 1.0:-1.0;
         return sign * inverseInterpolator.interpolate(Math.abs(x));
     }
 
+    @Override
     public Range getDomain() {
         return new Range(-5.0, 5.0);
     }

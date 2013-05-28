@@ -17,13 +17,13 @@ public class PiecewiseFunction implements InvertibleFunction {
 
     /**
      * Constructor.
-     * @param xVals
-     * @param yVals
+     * @param xValues
+     * @param yValues
      */
-    public PiecewiseFunction(double[] xVals, double[] yVals ) {
-        xValues = xVals;
-        yValues = yVals;
-        assert xValues.length == yValues.length;
+    public PiecewiseFunction(double[] xValues, double[] yValues ) {
+        this.xValues = xValues;
+        this.yValues = yValues;
+        assert this.xValues.length == this.yValues.length;
     }
 
     /**
@@ -31,6 +31,7 @@ public class PiecewiseFunction implements InvertibleFunction {
      * @param value
      * @return
      */
+    @Override
     public double getValue(double value) {
 
         return getValue(value, xValues, yValues);
@@ -41,11 +42,13 @@ public class PiecewiseFunction implements InvertibleFunction {
      * @param value
      * @return inverse function value.
      */
+    @Override
     public double getInverseValue(double value) {
 
         return getValue(value, yValues, xValues);
     }
 
+    @Override
     public Range getDomain() {
         return new Range(xValues[0], xValues[xValues.length-1]);
     }
@@ -65,18 +68,18 @@ public class PiecewiseFunction implements InvertibleFunction {
         }
         double xValm1 = xVals[i - 1];
         double denom = (xVals[i] - xValm1);
-        double ratio = 0;
+
         if (denom == 0) {
             return yVals[i - 1];
         } else {
-            ratio = (value - xValm1) / denom;
+            double ratio = (value - xValm1) / denom;
             double yValm1 = yVals[i - 1];
             return yValm1 + ratio * (yVals[i] -  yValm1);
         }
     }
 
     public String toString() {
-        StringBuilder bldr = new StringBuilder("PiecewiseFunction: ");
+        StringBuilder bldr = new StringBuilder("PiecewiseFunction: "); //NON-NLS
         for (int i=0; i< xValues.length; i++) {
             bldr.append("x=").append(xValues[i]).append(" y=").append(yValues[i]);
         }

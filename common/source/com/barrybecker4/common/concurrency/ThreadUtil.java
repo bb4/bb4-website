@@ -16,7 +16,7 @@ public class ThreadUtil {
             try {
                 Thread.sleep(millis);
             } catch (InterruptedException e) {
-                System.out.println("Seep interrupted");
+                System.out.println("Seep interrupted"); //NON-NLS
             }
         }
     }

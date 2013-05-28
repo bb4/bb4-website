@@ -2,7 +2,7 @@
 package com.barrybecker4.common.math.interplolation;
 
 /**
- * Defines a way to interploate between 2 points in function that is defined by an array of y values
+ * Defines a way to interpolate between 2 points in function that is defined by an array of y values
  * .
  * @author Barry Becker
  */

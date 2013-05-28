@@ -61,7 +61,7 @@ public class Vector {
     public double normalizedDot(Vector b) {
         double magB = b.magnitude();
         double magThis = this.magnitude();
-        System.out.println("for v1=" + this + "v2="+ b + " magThis="+ magThis + " magB=" + magB);
+        System.out.println("for v1=" + this + "v2="+ b + " magThis="+ magThis + " magB=" + magB); //NON-NLS
         double divisor = magThis * magB;
         divisor = (divisor == 0) ? 1.0 : divisor;
         double dot = this.dot(b);

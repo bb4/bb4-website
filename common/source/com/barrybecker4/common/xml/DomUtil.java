@@ -45,6 +45,9 @@ public final class DomUtil {
     /** This URL is where I keep all my published xsds (xml schemas) and dtds (doc type definitions) */
     private static final String SCHEMA_LOCATION = "http://barrybecker4.com/schema/";
 
+    private static final String ROOT_ELEMENT = "rootElement";
+    private static final String USE = "rootElement";
+
     /**
      * Initialize a dom document structure.
      * @return dom Document
@@ -57,7 +60,7 @@ public final class DomUtil {
           DocumentBuilder builder = factory.newDocumentBuilder();
           document = builder.newDocument();  // Create from whole cloth
 
-          Element root = document.createElement("rootElement");
+          Element root = document.createElement(ROOT_ELEMENT);
           document.appendChild(root);
 
           // normalize text representation
@@ -90,7 +93,7 @@ public final class DomUtil {
     }
 
     /**
-     * go through the dom hier and remove spurious text nodes and alse
+     * go through the dom hierarchy and remove spurious text nodes and alse
      * replace "use" nodes with a deep copy of what they refer to.
      * @param root
      * @param document
@@ -115,14 +118,13 @@ public final class DomUtil {
 
             postProcessDocument(n, document, replaceUseWithDeepCopy);
 
-            if (name!=null && "use".equals(name)) {
+            if (name!=null && USE.equals(name)) {
                 // substitute the element with the specified id
                 NamedNodeMap attrs = n.getAttributes();
                 Node attr =  attrs.item(0);
                 assert "ref".equals(attr.getNodeName()): "attr name="+attr.getNodeName();
                 String attrValue = attr.getNodeValue();
 
-                System.out.println("searching for "+attrValue);
                 Node element = document.getElementById(attrValue);
                 Node clonedElement = element.cloneNode(replaceUseWithDeepCopy);
 
@@ -174,16 +176,16 @@ public final class DomUtil {
 
     /**
      * a concatenated list of the node's attributes.
-     * @param attribMap
+     * @param attributeMap
      * @return
      */
-    public static String getAttributeList(NamedNodeMap attribMap) {
+    public static String getAttributeList(NamedNodeMap attributeMap) {
         String attribs = "";
-        if (attribMap!= null) {
-            attribMap.getLength();
+        if (attributeMap!= null) {
+            attributeMap.getLength();
 
-            for (int i=0; i<attribMap.getLength(); i++) {
-                Node n = attribMap.item(i);
+            for (int i=0; i<attributeMap.getLength(); i++) {
+                Node n = attributeMap.item(i);
                 attribs += n.getNodeName()+"=\""+n.getNodeValue() +"\"  ";
             }
         }
@@ -263,19 +265,17 @@ public final class DomUtil {
 
     public static Document parseXML(URL url) {
         try {
-            System.out.println("url path=" + url.getPath());
+            //System.out.println("url path=" + url.getPath());
             URLConnection urlc = url.openConnection();
             InputStream is = urlc.getInputStream();
             return parseXML(is, true, null);
         } catch  (IOException e) {
-            System.err.println("Failed to open " +  url.getPath());
-            e.printStackTrace();
+            throw new IllegalArgumentException("Failed to open " +  url.getPath());
         }
-        return null;
     }
 
     public static Document parseXMLFile(File file) {
-        System.out.println("about to parse "+ file.getPath());
+        //System.out.println("about to parse "+ file.getPath());
         return parseXMLFile(file, true);
     }
 
@@ -296,7 +296,7 @@ public final class DomUtil {
      * @param schema of the schema to use if any (e.g. script.dtd of games.xsd). May be null.
      */
     public static void writeXMLFile(String destFileName, Document document, String schema)  {
-        System.out.println("writing to " + destFileName);
+        //System.out.println("writing to " + destFileName);
         OutputStream output;
         try {
             output = new BufferedOutputStream(new FileOutputStream(destFileName));
@@ -316,8 +316,8 @@ public final class DomUtil {
         Transformer transformer = null;
         try {
             transformer = transformerFactory.newTransformer();
-             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+             transformer.setOutputProperty(OutputKeys.INDENT, "yes"); //NON-NLS
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4"); //NON-NLS
             if (schema != null) {
                 transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,  DomUtil.SCHEMA_LOCATION + schema);
             }

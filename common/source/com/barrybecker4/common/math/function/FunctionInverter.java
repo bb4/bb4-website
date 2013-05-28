@@ -66,8 +66,6 @@ public class FunctionInverter {
                     denom = 1.0;
                 }
                 double y = ((double)(j-1) + nume/denom) / (double)lengthm1;
-                //System.out.println("i="+i+" j=" + j +"  func[j]="+ func[j]
-                // +" nume=" + nume + " denom="+denom +" lenm1=" + lenm1 + " y="+y + " xval="+xval);
                 invFunc[i] = xRange.getMin() + y * xRange.getExtent();
                 assert (invFunc[i] < xMax + EPS_BIG): invFunc[i] + " was not less than " + xMax;
             }

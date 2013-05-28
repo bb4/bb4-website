@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
  */
 public final class FormatUtil {
 
-    private static final DecimalFormat expFormat_ = new DecimalFormat("0.###E0");
+    private static final DecimalFormat expFormat_ = new DecimalFormat("0.###E0"); //NON-NLS
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");
     private static final DecimalFormat intFormat_ = new DecimalFormat("#,###");
 
@@ -76,9 +76,9 @@ public final class FormatUtil {
 
     public static void main(String[] args)
     {
-        System.out.println("formatted small number: " + FormatUtil.formatNumber(0.00000003456));
-        System.out.println("formatted medium number: " + FormatUtil.formatNumber(239909.034983456));
-        System.out.println("formatted large number: " + FormatUtil.formatNumber(1234981289879875329290.3456));
+        System.out.println("formatted small number: " + FormatUtil.formatNumber(0.00000003456)); //NON-NLS
+        System.out.println("formatted medium number: " + FormatUtil.formatNumber(239909.034983456)); //NON-NLS
+        System.out.println("formatted large number: " + FormatUtil.formatNumber(1234981289879875329290.3456)); //NON-NLS
     }
 }
 
