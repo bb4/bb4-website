@@ -85,7 +85,7 @@ public abstract class Location implements Serializable {
      * @return the string form
      */
     public String toString() {
-        return "(row=" + getRow() + ", column=" + getCol() + ")";
+        return "(row=" + getRow() + ", column=" + getCol() + ")"; //NON-NLS
     }
 }
 

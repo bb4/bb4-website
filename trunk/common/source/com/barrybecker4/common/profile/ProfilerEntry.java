@@ -96,6 +96,6 @@ public class ProfilerEntry {
 
     private String getFormattedTime() {
         double seconds = getTimeInSeconds();
-        return  "Time for " + name_ + " : " + FormatUtil.formatNumber(seconds) + " seconds";
+        return  "Time for " + name_ + " : " + FormatUtil.formatNumber(seconds) + " seconds"; //NON-NLS
     }
 }

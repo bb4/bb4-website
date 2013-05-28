@@ -11,6 +11,7 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class WonBar extends SegmentedBar {
 
     private static final int TEXT_INSET = 12;

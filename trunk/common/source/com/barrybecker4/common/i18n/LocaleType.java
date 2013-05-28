@@ -8,6 +8,7 @@ import java.util.Locale;
  *
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public enum LocaleType {
 
     // Currently supported locales

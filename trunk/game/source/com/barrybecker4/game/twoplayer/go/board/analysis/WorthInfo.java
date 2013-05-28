@@ -11,6 +11,7 @@ import com.barrybecker4.game.twoplayer.go.board.PositionalScore;
  *
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class WorthInfo {
 
     private double territoryDelta;

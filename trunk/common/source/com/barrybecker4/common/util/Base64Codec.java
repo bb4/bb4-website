@@ -42,10 +42,9 @@ public final class Base64Codec {
             oStream.flush();
             oStream.close();
         } catch (UnsupportedEncodingException e) {
-            System.out.println( "Unsupported encoding exception :" + e.getMessage() );
+            throw new IllegalArgumentException( "Unsupported encoding exception :" + e.getMessage(), e);
         } catch (IOException e) {
-            System.out.println( "io error :" + e.getMessage() );
-            e.printStackTrace();
+            throw new IllegalStateException( "io error :" + e.getMessage(), e);
         }
 
         return new String(Base64.encodeBase64( byteOut.toByteArray() ));
@@ -76,10 +75,9 @@ public final class Base64Codec {
                 sBuf.append( cBuffer, 0, numRead );
             }
         } catch (UnsupportedEncodingException e) {
-            System.out.println( "Unsupported encoding exceptin :" + e.getMessage() );
+            throw new IllegalArgumentException( "Unsupported encoding exception :" + e.getMessage(), e);
         } catch (IOException e) {
-            System.out.println( "io error :" + e.getMessage() );
-            e.printStackTrace();
+            throw new IllegalStateException( "io error :" + e.getMessage(), e);
         }
 
         return sBuf.toString();

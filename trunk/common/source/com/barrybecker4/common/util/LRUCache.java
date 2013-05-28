@@ -63,7 +63,7 @@ public class LRUCache<K,V> {
     public synchronized void put(K key, V value) {
         map.put(key,value);
         if (numEntries() > nextThreshold) {
-            System.out.println(this + " passed threshold ="+numEntries());
+            System.out.println(this + " passed threshold =" + numEntries()); //NON-NLS
             nextThreshold *= 10;
         }
     }

@@ -159,7 +159,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy {
             }
             return false;
         } catch (InterruptedException e) {
-            GameContext.log(2, "interrupted");
+            GameContext.log(2, "interrupted"); //NON-NLS
             e.printStackTrace();
             return true;
         }

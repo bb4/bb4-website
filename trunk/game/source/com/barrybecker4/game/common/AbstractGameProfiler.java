@@ -8,6 +8,7 @@ import com.barrybecker4.common.profile.Profiler;
  * Keep track of timing info for different game searching aspects.
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public abstract class AbstractGameProfiler extends Profiler {
 
     protected static final String GENERATE_MOVES = "generating moves";

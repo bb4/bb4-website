@@ -22,7 +22,7 @@ public class TreeSerializer {
         if (node != null) {
             serialized = traverse(node);
         }
-        return serialized.length()>0 ? serialized : "Invalid";
+        return serialized.length()>0 ? serialized : "Invalid"; //NON-NLS
     }
 
     /** processing for inner nodes */

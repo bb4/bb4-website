@@ -51,7 +51,7 @@ public class ComplexNumberRange {
     }
 
     public String toString() {
-        return  this.getPoint1() + " to " + this.getPoint2();
+        return getPoint1() + " to " + this.getPoint2(); //NON-NLS
     }
 
 

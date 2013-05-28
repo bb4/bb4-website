@@ -21,6 +21,7 @@ import com.barrybecker4.game.twoplayer.go.GoController;
  *
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class WorthCalculator {
 
     private GoBoard board_;

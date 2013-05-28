@@ -36,7 +36,7 @@ public final class Input {
      */
     public static long getLong(String prompt, long min, long max) throws IOException {
         long value = 0;
-        boolean valid = false;
+        boolean valid;
 
         do {
             System.out.println( prompt );
@@ -77,7 +77,7 @@ public final class Input {
      */
     public static BigInteger getBigInteger(String prompt) throws IOException {
         BigInteger value = new BigInteger("0");
-        boolean valid = false;
+        boolean valid;
 
         do {
             System.out.println( prompt );

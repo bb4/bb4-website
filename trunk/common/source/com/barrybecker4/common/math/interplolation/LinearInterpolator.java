@@ -28,7 +28,7 @@ public class LinearInterpolator extends AbstractInterpolator {
 
         assert (index0 >= 0) : "index0 must be greater than 0, but was "+index0;
         assert (index1 <= len) : "index1 must be less than the size of the array, but was "+index1;
-        //System.out.println("lin: xdif="+ xdiff + " f["+index0+"]="+ function[ index0 ]  +" f["+index1+"]="+function[ index1 ] );
+        //System.out.println("lin: xdiff="+ xdiff + " f["+index0+"]="+ function[ index0 ]  +" f["+index1+"]="+function[ index1 ] );
         return (1.0 - xdiff) * function[ index0 ] +  xdiff * function[ index1 ];
     }
 

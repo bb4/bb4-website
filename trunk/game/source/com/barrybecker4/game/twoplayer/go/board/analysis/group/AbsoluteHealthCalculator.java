@@ -14,6 +14,7 @@ import com.barrybecker4.game.twoplayer.go.board.elements.string.IGoString;
  * Determine the absolute health of a group independent of the health of neighboring groups.
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 class AbsoluteHealthCalculator {
 
     /** The group of go stones that we are analyzing. */

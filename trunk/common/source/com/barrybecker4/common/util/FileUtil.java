@@ -49,9 +49,9 @@ public final class FileUtil {
     private static String getProjectHomeDir() {
         String home = "";
          try {
-            home = System.getenv("PROJECT_HOME");
+            home = System.getenv("PROJECT_HOME"); //NON-NLS
          } catch (Exception e) {
-             System.err.println("Must set PROJECT_HOME environment variable.");
+             throw new IllegalStateException("Must set PROJECT_HOME environment variable.");
          }
         return home + FILE_SEPARATOR;
     }
@@ -84,7 +84,7 @@ public final class FileUtil {
                     new BufferedWriter(
                             new OutputStreamWriter(
                                     new FileOutputStream( filename, false ),
-                                    "UTF-8" ) ) );
+                                    "UTF-8" ) ) ); //NON-NLS
         } catch (IOException e) {
             e.printStackTrace();
         }

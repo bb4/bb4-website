@@ -33,8 +33,7 @@ public class MultiArray {
         numDims_ = dims_.length;
         numVals_ = getDimensionProduct();
         assert (numDims_ > 0) : "You must have > 0 dimension to use this class" ;
-        assert (numVals_ > 0) :  "The product of the dimension lengths must be greater than 0. It was " + numVals_;
-        System.out.println("numVals_="+numVals_);
+        assert (numVals_ > 0) : "The product of the dimension lengths must be greater than 0. It was " + numVals_;
         arrayData_ = new double[numVals_];
     }
 
@@ -96,7 +95,7 @@ public class MultiArray {
 
     /**
      * get a raw integer index from a integer array of indices.
-     * @param index ndim array of indices.
+     * @param index n dimensional array of indices.
      * @return raw index
      */
     private int getRawIndex( int[] index )  {

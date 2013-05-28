@@ -8,6 +8,7 @@ import org.xml.sax.SAXParseException;
 /**
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class XmlErrorHandler implements ErrorHandler {
 
     public void warning(SAXParseException exception) throws SAXException {

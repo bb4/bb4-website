@@ -23,7 +23,7 @@ public class CurrencyFormatter implements INumberFormatter {
         CurrencyFormatter fmtr = new CurrencyFormatter();
 
         for (double value = 50.0; value < 1000.0; value*=1.1) {
-            System.out.println(value + " formatted = " + fmtr.format(value));
+            System.out.println(value + " formatted = " + fmtr.format(value)); //NON-NLS
         }
     }
 }

@@ -78,7 +78,7 @@ public class ComplexNumber {
     /**
      *
      * @param exponent integer power to raise to
-     * @return  rais this complex number to the specified exponent (power).
+     * @return  raise this complex number to the specified exponent (power).
      */
     public ComplexNumber power(int exponent) {
         ComplexNumber current = new ComplexNumber(this);
@@ -113,7 +113,7 @@ public class ComplexNumber {
     }
 
     /**
-     * @return result of Multipling two complex numbers.
+     * @return result of Multiplying two complex numbers.
      */
     public static ComplexNumber multiply(ComplexNumber c1, ComplexNumber c2) {
         return new ComplexNumber(c1.a*c2.a - c1.b*c2.b, c1.a*c2.b + c1.b*c2.a);
