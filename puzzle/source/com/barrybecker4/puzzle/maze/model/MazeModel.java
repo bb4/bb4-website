@@ -28,6 +28,10 @@ public class MazeModel {
      * Constructs a maze with specified width and height.
      */
     public MazeModel(int width, int height)  {
+        setDimensions(width, height);
+    }
+
+    public void setDimensions(int width, int height) {
         width_ = width;
         height_ = height;
 

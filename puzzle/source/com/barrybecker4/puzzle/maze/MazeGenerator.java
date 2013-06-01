@@ -29,6 +29,7 @@ public class MazeGenerator {
 
     /** put the stop point at the maximum search depth. */
     private int maxDepth_ = 0;
+    private boolean interrupted;
 
     /** Constructor */
     public MazeGenerator(MazePanel panel) {
@@ -38,20 +39,12 @@ public class MazeGenerator {
     }
 
     /**
-     * generate the maze
-     */
-    public void generate() {
-        generate(Direction.FORWARD.getProbability(),
-                 Direction.LEFT.getProbability(),
-                 Direction.RIGHT.getProbability());
-    }
-
-    /**
      * generate the maze.
      */
     public void generate(double forwardProb, double leftProb, double rightProb) {
 
         maxDepth_ = 0;
+        interrupted = false;
         Direction.FORWARD.setProbability(forwardProb);
         Direction.LEFT.setProbability(leftProb);
         Direction.RIGHT.setProbability(rightProb);
@@ -75,9 +68,16 @@ public class MazeGenerator {
         // push the initial moves
         stack.pushMoves(currentPosition, new IntLocation(0, 1), 0);
 
-        while ( !stack.isEmpty() ) {
+        while ( !stack.isEmpty() && !interrupted ) {
             currentCell = findNextCell(currentCell);
         }
+    }
+
+
+    public void interrupt()
+    {
+        System.out.println("interrupted");
+        interrupted = true;
     }
 
     /** find the next cell to visit, given the last cell */
@@ -119,11 +119,11 @@ public class MazeGenerator {
             }
 
             refresh();
-        } while ( !moved && !stack.isEmpty() );
+        } while ( !moved && !stack.isEmpty() && !interrupted );
 
         refresh();
         // now at a new location
-        if ( moved )  {
+        if ( moved && !interrupted)  {
             stack.pushMoves(currentPosition, dir, ++depth);
         }
         return nextCell;

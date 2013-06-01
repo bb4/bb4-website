@@ -38,8 +38,6 @@ public final class GameContext {
 
 
     static {
-        log(1, "initing sound." );
-
         if ( useSound_ ) {
             getMusicMaker().stopAllSounds();
             getMusicMaker().startNote( Instruments.SEASHORE, 40, 2, 3 );
@@ -167,8 +165,8 @@ public final class GameContext {
     }
 
     /**
-     * @param key
-     * @return  the localized message label
+     * @param key message key
+     * @return the localized message label
      */
     public static String getLabel(String key) {
         return messageContext_.getLabel(key);

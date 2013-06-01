@@ -86,12 +86,11 @@ public class MazeRenderer {
         for (int j = 0; j < maze.getHeight(); j++ ) {
             for (int i = 0; i < maze.getWidth(); i++ ) {
                 MazeCell c = maze.getCell(i, j);
-                if ( c == null )
-                    System.out.println( "Error1 pos i=" + i + " j=" + j + " is out of bounds." );
+                assert c != null : "Error1 pos i=" + i + " j=" + j + " is out of bounds." ;
                 int xpos = i * cellSize;
                 int ypos = j * cellSize;
 
-                if ( c!=null && c.visited ) {
+                if ( c != null && c.visited ) {
                     g2.setColor( VISITED_COLOR );
                     g2.fillRect( xpos + 1, ypos + 1, cellSize, cellSize );
                     //g2.setColor(PathColor.black);
