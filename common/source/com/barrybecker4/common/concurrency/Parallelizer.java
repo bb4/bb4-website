@@ -40,7 +40,8 @@ public class Parallelizer <T> extends CallableParallelizer<T> {
 
         List<Future<T>> futures = invokeAll(callables);
 
-        // consider using ExecutorCompletionService
+        // consider using ExecutorCompletionService so that the results can be processed as they become available
+        // rather than blocking on one of them arbitrarily.
         for (Future<T> f : futures) {
             try {
                 // blocks until the result is available.

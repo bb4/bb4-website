@@ -58,7 +58,7 @@ task deploySchemas(description: "Copy schema files to $distributionDir") {
      }
 }
 
-task deployJars(type:Copy,
+task deployJars(type:Copy, dependsOn: ':common:copyToLib',
     description: "Deploys jar files needed for running applets and web start applications") {
 
     from fileTree("$project_home").files
