@@ -1,4 +1,4 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2000-2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.maze.ui;
 
 import com.barrybecker4.common.math.MathUtil;
@@ -15,8 +15,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 /**
- * A maze generator and solver
- *@author Barry Becker
+ * A maze generator and solver application.
+ * @author Barry Becker
  */
 public class MazeSimulator extends ApplicationApplet
                            implements ActionListener {
@@ -80,6 +80,7 @@ public class MazeSimulator extends ApplicationApplet
     /**
      * called when a button is pressed.
      */
+    @Override
     public void actionPerformed( ActionEvent e )  {
 
         Object source = e.getSource();

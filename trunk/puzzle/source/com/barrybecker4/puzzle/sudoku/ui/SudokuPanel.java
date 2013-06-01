@@ -95,14 +95,17 @@ public final class SudokuPanel extends JPanel
         return renderer_.getBoard();
     }
 
+    @Override
     public void valueEntered() {
         repaint();
     }
 
+    @Override
     public void cellSelected(Location location) {
         repaint();
     }
 
+    @Override
     public void requestValidation() {
         validatePuzzle();
     }

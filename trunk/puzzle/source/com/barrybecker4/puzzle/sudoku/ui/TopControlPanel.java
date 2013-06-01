@@ -100,6 +100,7 @@ public final class TopControlPanel extends JPanel
      * Must execute long tasks in a separate thread,
      * otherwise you don't see the steps of the animation.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         Object src = e.getSource();
@@ -136,6 +137,7 @@ public final class TopControlPanel extends JPanel
      * size choice selected.
      * @param e  item event.
      */
+    @Override
     public void itemStateChanged(ItemEvent e) {
 
         if (e.getSource() == sizeSelector_)  {

@@ -32,6 +32,8 @@ public abstract class Worker {
     public Worker() {
 
         Runnable doConstruct = new Runnable() {
+
+            @Override
             public void run() {
                 try {
                     returnValue = construct();

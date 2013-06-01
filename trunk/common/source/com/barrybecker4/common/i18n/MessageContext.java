@@ -50,7 +50,7 @@ public final class MessageContext {
     }
 
     /**
-     * @param applicationResourcePath  application specific messages
+     * @param applicationResourcePath application specific messages
      */
     public void setApplicationResourcePath(String applicationResourcePath) {
         applicationResourcePath_ = applicationResourcePath;
@@ -159,7 +159,7 @@ public final class MessageContext {
      * bundles for all locales and verify that they all have the
      * same keys. If any are missing for a given locale they need to be added.
      * @@ currently we only check the common common bundle, but we should do all.
-     * @@ This could be moved to a JUnit test.
+     * @@ There are probably thirdpary i18n tools that do this more effectively.
      */
     private void verifyConsistentMessageBundles() {
         log(1, "verifying consistency of message bundles... ");

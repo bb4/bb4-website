@@ -28,6 +28,7 @@ public final class SudokuController {
     }
 
     public void generatePuzzle(final int delay, final int size) {
+
         Worker worker = new Worker() {
 
             @Override
@@ -50,6 +51,7 @@ public final class SudokuController {
     }
 
     public void solvePuzzle(final int delay) {
+
         Worker worker = new Worker() {
 
             @Override
