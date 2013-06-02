@@ -65,7 +65,7 @@ public class MazeCell {
     }
 
     public String toString() {
-       return "Cell visited=" + visited + " eastWall="  + eastWall + " southWall=" + southWall;
+       return "Cell visited=" + visited + " eastWall="  + eastWall + " southWall=" + southWall; // NON-NLS
     }
 }
 

@@ -8,7 +8,7 @@ import com.barrybecker4.common.geometry.Location;
 /**
  * The model part of the model view controller pattern for the maze.
  *
- * @author Barry Becker Date: Jul 29, 2006
+ * @author Barry Becker
  */
 public class MazeModel {
 
@@ -35,18 +35,23 @@ public class MazeModel {
         width_ = width;
         height_ = height;
 
-        grid_ = new MazeCell[width][height];
-
-        for ( int j = 0; j < height_; j++ ) {
-            for ( int i = 0; i < width_; i++ ) {
-                grid_[i][j] = new MazeCell();
-            }
-        }
+        grid_ = createGrid(width, height);
 
         // a border around the whole maze
         setConstraints();
 
         startPosition_ = new IntLocation( 2, 2 );
+    }
+
+    private MazeCell[][] createGrid(int width, int height) {
+        MazeCell[][] grid = new MazeCell[width][height];
+
+        for ( int j = 0; j < height_; j++) {
+            for ( int i = 0; i < width_; i++) {
+                grid[i][j] = new MazeCell();
+            }
+        }
+        return grid;
     }
 
     public Location getStartPosition() {
@@ -69,8 +74,8 @@ public class MazeModel {
 
         assert(x<width_);
         assert(y<height_);
-        //return grid_[Math.min(x, width_-1)][Math.min(y, height_-1)];
-        return grid_[x][y];
+        return grid_[Math.min(x, grid_.length-1)][Math.min(y, grid_[0].length-1)];
+        //return grid_[x][y];
     }
 
     public int getWidth() {
@@ -93,32 +98,33 @@ public class MazeModel {
     }
 
     /**
-     *  set OBSTACLEs, walls
-     *  mark all the cells around the periphery as visited so there will be walls generated there
+     *  Set walls.
+     *  Mark all the cells around the periphery as visited so there will be walls generated there
      */
     private void setConstraints()  {
-        int i, j;
-        MazeCell c;
+        setRightLeftConstraints();
+        setTopAndBottomConstraints();
+    }
 
-        // right and left
-        for ( j = 0; j < height_; j++ ) {
+    private void setRightLeftConstraints() {
+        for (int j = 0; j < height_; j++ ) {
             // left
-            c = grid_[0][j];
-            c.visited = true;
+            MazeCell cell = grid_[0][j];
+            cell.visited = true;
             // right
-            c = grid_[width_ - 1][j];
-            c.visited = true;
-        }
-
-        // top and bottom
-        for ( i = 0; i < width_; i++ ) {
-            // bottom
-            c = grid_[i][0];
-            c.visited = true;
-            // top
-            c = grid_[i][height_ - 1];
-            c.visited = true;
+            cell = grid_[width_ - 1][j];
+            cell.visited = true;
         }
     }
 
+    private void setTopAndBottomConstraints() {
+        for (int i = 0; i < width_; i++ ) {
+            // bottom
+            MazeCell cell = grid_[i][0];
+            cell.visited = true;
+            // top
+            cell = grid_[i][height_ - 1];
+            cell.visited = true;
+        }
+    }
 }

@@ -82,6 +82,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * common initialization in the event that there are multiple constructors.
      */
+    @Override
     public void init(JFrame parent) {
 
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
@@ -97,10 +98,12 @@ public abstract class GamePanel extends TexturedPanel
         } );
     }
 
+    @Override
     public void openGame() {
         boardViewer_.openGame();
     }
 
+    @Override
     public void saveGame() {
         boardViewer_.saveGame();
     }
@@ -108,6 +111,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * @return the title for the applet/application window.
      */
+    @Override
     public abstract String getTitle();
 
     protected GameToolBar createToolbar() {
@@ -240,6 +244,7 @@ public abstract class GamePanel extends TexturedPanel
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
+    @Override
     public void gameChanged( GameChangedEvent gce ) {
         toolBar_.getUndoButton().setEnabled(boardViewer_.getController().getLastMove() != null);
     }
@@ -250,6 +255,7 @@ public abstract class GamePanel extends TexturedPanel
      * <P>
      * super.actionPerformed(e);
      */
+    @Override
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         if ( source == toolBar_.getNewGameButton() ) {

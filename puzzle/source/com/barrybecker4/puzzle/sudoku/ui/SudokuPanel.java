@@ -111,8 +111,7 @@ public final class SudokuPanel extends JPanel
     }
 
     /**
-     *  This renders the current state of the PuzzlePanel to the screen.
-     *  This method is part of the component interface.
+     * This renders the current state of the PuzzlePanel to the screen.
      */
     @Override
     protected void paintComponent( Graphics g ) {

@@ -21,7 +21,7 @@ public class StateStack extends LinkedList<GenState> {
      * Assigning different probabilities to the order in which we check these directions
      * can give interesting effects.
      */
-    public  void pushMoves(Location currentPosition, Location currentDir, int depth) {
+    public void pushMoves(Location currentPosition, Location currentDir, int depth) {
 
         List<Direction> directions = getShuffledDirections();
 

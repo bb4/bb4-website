@@ -143,20 +143,12 @@ public final class GUIUtil {
 
     /**
      * This method is useful for turning Applets into applications.
+     * For thread safety, this method should be invoked from the event-dispatching thread.
      * @param applet the applet to show
      * @param title title to appear in the titlebar of the application frame.
      * @return frame containing the applet.
      */
     public static JFrame showApplet( final JApplet applet, final String title) {
-        return createAndShowAppletFrame(applet, title);
-    }
-
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the event-dispatching thread.
-     * @return frame containing the applet.
-     */
-    private static JFrame createAndShowAppletFrame(JApplet applet, String title) {
         JFrame baseFrame = new JFrame();
         /* not needed since java 1.6? */
         baseFrame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
@@ -261,11 +253,11 @@ public final class GUIUtil {
                 basicService_ = (BasicService)ServiceManager.lookup("javax.jnlp.BasicService");
             }
             catch (Exception e) {
-                System.out.println( "Not running through webstart: "+e.getMessage() );
+                System.out.println("Not running through webstart: "+e.getMessage());  // NON-NLS
                 return null;
             }
             catch (NoClassDefFoundError ncde) {
-                System.out.println( "jnlp BasicService not available: "+ncde.getMessage() );
+                System.out.println("jnlp BasicService not available: "+ncde.getMessage()); // NON-NLS
                 return null;
             }
         }

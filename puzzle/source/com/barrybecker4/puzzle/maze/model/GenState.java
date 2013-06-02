@@ -34,7 +34,7 @@ public class GenState {
     }
 
     public String toString() {
-        return "[pos=" + position_ + " dir="+ direction_ + " depth="+ depth_ + "]";
+        return "[pos=" + position_ + " dir="+ direction_ + " depth="+ depth_ + "]";  // NON-NLS
     }
 }
 

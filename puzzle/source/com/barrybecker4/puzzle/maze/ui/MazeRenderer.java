@@ -23,7 +23,7 @@ public class MazeRenderer {
     private static final Color PATH_COLOR = new Color( 255, 220, 50);
 
     private static final Color TEXT_COLOR = new Color( 250, 0, 100 );
-    private static final Color BG_COLOR = new Color( 225, 240, 250 );
+    private static final Color BG_COLOR = new Color( 205, 220, 250 );
     private static final Color VISITED_COLOR = new Color( 255, 255, 255 );
 
     private static final int WALL_LINE_WIDTH = 3;
@@ -90,7 +90,7 @@ public class MazeRenderer {
                 int xpos = i * cellSize;
                 int ypos = j * cellSize;
 
-                if ( c != null && c.visited ) {
+                if ( c.visited ) {
                     g2.setColor( VISITED_COLOR );
                     g2.fillRect( xpos + 1, ypos + 1, cellSize, cellSize );
                     //g2.setColor(PathColor.black);

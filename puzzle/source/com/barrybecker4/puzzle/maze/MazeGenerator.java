@@ -1,4 +1,4 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2000-2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.maze;
 
 import com.barrybecker4.common.geometry.IntLocation;
@@ -25,16 +25,18 @@ public class MazeGenerator {
 
     private MazeModel maze_;
     private MazePanel panel_;
-    private StateStack stack;
+    private final StateStack stack;
 
     /** put the stop point at the maximum search depth. */
     private int maxDepth_ = 0;
+    /** set this to true to get the generator to stop generating */
     private boolean interrupted;
 
     /** Constructor */
-    public MazeGenerator(MazePanel panel) {
-        maze_ = panel.getMaze();
+    public  MazeGenerator(MazePanel panel) {
         panel_ = panel;
+        interrupted = false;
+        maze_ = panel_.getMaze();
         stack = new StateStack();
     }
 
@@ -44,7 +46,7 @@ public class MazeGenerator {
     public void generate(double forwardProb, double leftProb, double rightProb) {
 
         maxDepth_ = 0;
-        interrupted = false;
+
         Direction.FORWARD.setProbability(forwardProb);
         Direction.LEFT.setProbability(leftProb);
         Direction.RIGHT.setProbability(rightProb);
@@ -78,6 +80,9 @@ public class MazeGenerator {
     {
         System.out.println("interrupted");
         interrupted = true;
+        if (stack != null)  {
+            stack.clear();
+        }
     }
 
     /** find the next cell to visit, given the last cell */

@@ -1,18 +1,22 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.maze.ui;
 
+import com.barrybecker4.puzzle.maze.MazeController;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.components.NumberInput;
 
 import javax.swing.Box;
 import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 /**
  * A maze generator and solver
  *@author Barry Becker
  */
-public class TopControlPanel extends JPanel {
+public class TopControlPanel extends JPanel
+                             implements ActionListener {
 
     /** the passage thickness in pixels */
     private static final int PASSAGE_THICKNESS = 40;
@@ -29,10 +33,13 @@ public class TopControlPanel extends JPanel {
     protected GradientButton regenerateButton_;
     protected GradientButton solveButton_;
 
+    private MazeController controller;
+
 
     /** constructor */
-    public TopControlPanel(ActionListener buttonListener) {
+    public TopControlPanel(MazeController controller) {
 
+        this.controller = controller;
         thicknessField_ = new NumberInput("Thickness", PASSAGE_THICKNESS,
                                           "The passage thickness", 2, 200, true);
         animationSpeedField_ = new NumberInput("Speed", INITIAL_ANIMATION_SPEED,
@@ -53,40 +60,56 @@ public class TopControlPanel extends JPanel {
         add( rightProbField_ );
 
         regenerateButton_ = new GradientButton( "Generate" );
-        regenerateButton_.addActionListener( buttonListener );
+        regenerateButton_.addActionListener( this );
         add( regenerateButton_ );
 
         solveButton_ = new GradientButton( "Solve" );
-        solveButton_.addActionListener( buttonListener );
+        solveButton_.addActionListener( this );
         add( solveButton_ );
     }
 
 
-    public boolean isSolveButton(Object source) {
-        return solveButton_ == source;
+    /**
+     * called when a button is pressed.
+     */
+    @Override
+    public void actionPerformed( ActionEvent e )  {
+
+        Object source = e.getSource();
+
+        if (source == regenerateButton_) {
+            regenerate();
+        }
+        if (source == solveButton_) {
+            controller.solve(getAnimationSpeed());
+        }
     }
 
-    public boolean isRegenerateButton(Object source) {
-        return regenerateButton_ == source;
+    public void regenerate() {
+        controller.regenerate(getThickness(), getAnimationSpeed(),
+                    getForwardPropability(), getLeftProbability(), getRightProbability());
+        //this.repaint();
     }
 
-    public int getThickness() {
+
+    private int getThickness() {
         return  thicknessField_.getIntValue();
     }
 
-    public double getForwardPropability() {
+    private double getForwardPropability() {
         return forwardProbField_.getValue();
     }
 
-    public double getLeftProbability() {
+    private double getLeftProbability() {
         return leftProbField_.getValue();
     }
 
-    public double getRightProbability() {
+    private double getRightProbability() {
         return rightProbField_.getValue();
     }
 
-    public int getAnimationSpeed() {
+    private int getAnimationSpeed() {
         return animationSpeedField_.getIntValue();
     }
+
 }

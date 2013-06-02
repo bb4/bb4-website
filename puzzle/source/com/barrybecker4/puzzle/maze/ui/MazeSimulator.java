@@ -2,11 +2,14 @@
 package com.barrybecker4.puzzle.maze.ui;
 
 import com.barrybecker4.common.math.MathUtil;
+import com.barrybecker4.puzzle.maze.MazeController;
 import com.barrybecker4.ui.application.ApplicationApplet;
 import com.barrybecker4.ui.util.GUIUtil;
 
 import javax.swing.BorderFactory;
+import javax.swing.JApplet;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -18,12 +21,10 @@ import java.awt.event.ComponentEvent;
  * A maze generator and solver application.
  * @author Barry Becker
  */
-public class MazeSimulator extends ApplicationApplet
-                           implements ActionListener {
+public class MazeSimulator extends JApplet {
 
-    private MazePanel mazePanel_;
-    private Dimension oldSize_;
-    private TopControlPanel controlPanel_;
+    private TopControlPanel topControls;
+    private Dimension oldSize;
 
     /** constructor */
     public MazeSimulator() {
@@ -31,90 +32,40 @@ public class MazeSimulator extends ApplicationApplet
     }
 
     /**
-     * Build the user interface with parameter input controls at the top.
+     * Create and initialize the puzzle.
+     * (init required for applet)
      */
     @Override
-    protected JPanel createMainPanel() {
-        mazePanel_ = createMazePanel();
-
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout( new BorderLayout() );
-
-        controlPanel_ = new TopControlPanel(this);
-
-        JPanel mazePanel = new JPanel( new BorderLayout() );
-        mazePanel.add( mazePanel_, BorderLayout.CENTER );
-        mazePanel.setBorder(
-            BorderFactory.createCompoundBorder( BorderFactory.createEmptyBorder( 4, 4, 4, 4 ),
-                BorderFactory.createCompoundBorder( BorderFactory.createLoweredBevelBorder(),
-                    BorderFactory.createEmptyBorder( 4, 4, 4, 4 ) )
-            )
-        );
-        mainPanel.add( controlPanel_, BorderLayout.NORTH );
-        mainPanel.add( mazePanel, BorderLayout.CENTER );
-        return mainPanel;
-    }
-
-    private MazePanel createMazePanel() {
+    public void init() {
         final MazePanel mazePanel = new MazePanel();
+        MazeController controller = new MazeController(mazePanel);
+        topControls = new TopControlPanel(controller);
 
-        mazePanel.addComponentListener( new ComponentAdapter() {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        panel.add(topControls, BorderLayout.NORTH);
+        panel.add(mazePanel, BorderLayout.CENTER);
+        getContentPane().add(panel);
+
+        getContentPane().addComponentListener( new ComponentAdapter() {
             @Override
             public void componentResized( ComponentEvent ce )  {
+
                 // only resize if the dimensions have changed
                 Dimension newSize = mazePanel.getSize();
-                boolean changedSize = oldSize_ == null ||
-                        oldSize_.getWidth() != newSize.getWidth() ||
-                        oldSize_.getHeight() != newSize.getHeight();
+                boolean changedSize = oldSize== null ||
+                        oldSize.getWidth() != newSize.getWidth() ||
+                        oldSize.getHeight() != newSize.getHeight();
                 if ( changedSize ) {
-                    oldSize_ = newSize;
+                    oldSize = newSize;
                     if (newSize.getWidth() > 0) {
-                        regenerate();
+                        topControls.regenerate();
                     }
                 }
             }
-        } );
-        return mazePanel;
+        });
     }
 
-    /**
-     * called when a button is pressed.
-     */
-    @Override
-    public void actionPerformed( ActionEvent e )  {
-
-        Object source = e.getSource();
-
-        if ( controlPanel_.isRegenerateButton(source)) {
-            regenerate();
-        }
-        if ( controlPanel_.isSolveButton(source)) {
-            solve();
-        }
-    }
-
-    /**
-     * regenerate the maze based on the current UI parameter settings
-     * and current size of the panel.
-     */
-    public void regenerate() {
-
-        int thickness = controlPanel_.getThickness();
-
-        double forwardP = controlPanel_.getForwardPropability();
-        double leftP = controlPanel_.getLeftProbability();
-        double rightP = controlPanel_.getRightProbability();
-
-        double sum = forwardP + leftP + rightP;
-        mazePanel_.setAnimationSpeed(controlPanel_.getAnimationSpeed());
-        mazePanel_.setThickness(thickness);
-        mazePanel_.generate(forwardP / sum, leftP / sum, rightP / sum );
-    }
-
-    public void solve() {
-        mazePanel_.setAnimationSpeed(controlPanel_.getAnimationSpeed());
-        mazePanel_.solve();
-    }
 
     //------ Main method --------------------------------------------------------
 
