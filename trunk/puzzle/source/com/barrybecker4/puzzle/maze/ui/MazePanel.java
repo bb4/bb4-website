@@ -2,17 +2,11 @@
 package com.barrybecker4.puzzle.maze.ui;
 
 import com.barrybecker4.common.concurrency.ThreadUtil;
-import com.barrybecker4.common.concurrency.Worker;
 import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.common.math.MathUtil;
-import com.barrybecker4.puzzle.maze.MazeGenerator;
-import com.barrybecker4.puzzle.maze.MazeSolver;
 import com.barrybecker4.puzzle.maze.model.MazeModel;
-import com.barrybecker4.puzzle.sudoku.SudokuGenerator;
 
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -28,13 +22,12 @@ public class MazePanel extends JComponent {
     private int animationSpeed_;
     private int cellSize;
     private MazeRenderer renderer;
-    private MazeGenerator generator;
 
 
     public MazePanel() {
         maze_ = new MazeModel(100, 100);
         renderer = new MazeRenderer();
-        generator = new MazeGenerator(this);
+
     }
 
     public MazeModel getMaze() {
@@ -52,31 +45,16 @@ public class MazePanel extends JComponent {
     public void setThickness(int thickness) {
 
         Dimension dim = getSize();
-        if (dim.width <= 0 || dim.height < 0)
+        if (dim.width <= 0 || dim.height < 0)  {
             return;
+        }
 
         cellSize = thickness;
         renderer.setCellSize(cellSize);
-        int w = dim.width / thickness;
-        int h = dim.height / thickness;
-        maze_.setDimensions(w, h);
+        int width = dim.width / thickness;
+        int height = dim.height / thickness;
+        maze_.setDimensions(width, height);
 
-    }
-
-    /**
-     * Generate the maze in a separate thread so it does not block the UI.
-     */
-    public void generate(final double forwardProb, final double leftProb, final double rightProb) {
-
-        generator.generate(forwardProb, leftProb, rightProb);
-    }
-
-    /**
-     * solve the maze.
-     */
-    public void solve() {
-        MazeSolver solver = new MazeSolver(this);
-        solver.solve();
     }
 
     /**

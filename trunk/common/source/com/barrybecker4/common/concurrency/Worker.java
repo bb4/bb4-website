@@ -83,7 +83,7 @@ public abstract class Worker {
     }
 
     /**
-     * A new method that interrupts the worker thread.  Call this method
+     * Interrupts the worker thread.  Call this method
      * to force the worker to stop what it's doing.
      */
     public void interrupt() {
