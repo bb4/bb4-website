@@ -67,6 +67,8 @@ public final class MazeController {
 
     public void solve(final int animationSpeed) {
 
+        if (generateWorker.isWorking()) return;
+
         Worker worker = new Worker() {
 
             @Override

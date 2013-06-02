@@ -54,6 +54,10 @@ public abstract class Worker {
         threadVar = new ThreadVar(thread);
     }
 
+    public boolean isWorking() {
+        return getValue() == null;
+    }
+
     /**
      * @return the value produced by the worker thread, or null if it hasn't been constructed yet.
      */
@@ -63,7 +67,7 @@ public abstract class Worker {
 
     /**
      * Compute the value to be returned by the <code>get</code> method.
-     * @return the result.
+     * @return the result. Must not be null.
      */
     public abstract Object construct();
 

@@ -38,7 +38,7 @@ public final class SudokuController {
                 SudokuGenerator generator = new SudokuGenerator(size, puzzlePanel_);
                 generator.setDelay(delay);
                 puzzlePanel_.generateNewPuzzle(generator);
-                return null;
+                return true;
             }
 
             @Override
@@ -59,7 +59,7 @@ public final class SudokuController {
                 SudokuSolver solver = new SudokuSolver();
                 solver.setDelay(delay);
                 puzzlePanel_.startSolving(solver);
-                return null;
+                return true;
             }
 
             @Override
