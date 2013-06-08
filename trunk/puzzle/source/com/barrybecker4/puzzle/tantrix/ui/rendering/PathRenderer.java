@@ -14,9 +14,7 @@ import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.barrybecker4.puzzle.tantrix.ui.rendering.HexUtil.ROOT3;
-import static com.barrybecker4.puzzle.tantrix.ui.rendering.HexUtil.ROOT3D2;
-import static com.barrybecker4.puzzle.tantrix.ui.rendering.HexUtil.rad;
+import static com.barrybecker4.puzzle.tantrix.ui.rendering.HexUtil.*;
 
 /**
  * Renders a single tantrix tile.

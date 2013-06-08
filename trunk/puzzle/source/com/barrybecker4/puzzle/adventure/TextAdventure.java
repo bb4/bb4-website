@@ -4,12 +4,8 @@ package com.barrybecker4.puzzle.adventure;
 import com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure;
 import org.w3c.dom.Document;
 
-import java.io.BufferedReader;
-import java.io.Console;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
