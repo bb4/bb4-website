@@ -4,8 +4,7 @@
     <option name="PER_PROJECT_SETTINGS">
       <value>
         <option name="USE_FQ_CLASS_NAMES_IN_JAVADOC" value="false" />
-        <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="20" />
-        <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="5" />
+        <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="12" />
         <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
           <value />
         </option>

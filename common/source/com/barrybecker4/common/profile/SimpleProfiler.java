@@ -9,7 +9,7 @@ package com.barrybecker4.common.profile;
  */
 public class SimpleProfiler extends Profiler {
 
-    private static final String ROOT = "totalTime"; //NON-NLS
+    static final String ROOT = "totalTime"; //NON-NLS
 
     /**
      * Default constructor.

@@ -13,6 +13,7 @@ import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.components.NumberInput;
 import com.barrybecker4.ui.components.RadioButtonPanel;
 import com.barrybecker4.ui.dialogs.OptionsDialog;
+import com.barrybecker4.ui.util.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -194,13 +195,13 @@ public abstract class GameOptionsDialog extends OptionsDialog
         p.add( new RadioButtonPanel( fileOutputButton_, buttonGroup, false ) );
         logDestination_ = GameContext.getLogger().getDestination();
         switch (logDestination_) {
-            case ILog.LOG_TO_CONSOLE:
+            case Log.LOG_TO_CONSOLE:
                 consoleOutputButton_.setSelected( true );
                 break;
-            case ILog.LOG_TO_WINDOW:
+            case Log.LOG_TO_WINDOW:
                 windowOutputButton_.setSelected( true );
                 break;
-            case ILog.LOG_TO_FILE:
+            case Log.LOG_TO_FILE:
                 fileOutputButton_.setSelected( true );
                 break;
             default : assert false : "invalid destination : " + logDestination_;
@@ -362,11 +363,11 @@ public abstract class GameOptionsDialog extends OptionsDialog
      */
     public void itemStateChanged( ItemEvent e ) {
         if ( consoleOutputButton_ != null && consoleOutputButton_.isSelected() ) {
-            logDestination_ = ILog.LOG_TO_CONSOLE;
+            logDestination_ = Log.LOG_TO_CONSOLE;
         } else if ( windowOutputButton_ != null && windowOutputButton_.isSelected() ) {
-            logDestination_ = ILog.LOG_TO_WINDOW;
+            logDestination_ = Log.LOG_TO_WINDOW;
         } else if ( fileOutputButton_ != null && fileOutputButton_.isSelected() )    {
-            logDestination_ = ILog.LOG_TO_FILE;
+            logDestination_ = Log.LOG_TO_FILE;
         }
     }
 

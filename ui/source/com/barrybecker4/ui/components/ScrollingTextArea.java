@@ -49,7 +49,7 @@ public class ScrollingTextArea extends JScrollPane implements Appendable {
 
     private JTextArea createTextArea(int rows, int cols) {
         JTextArea text = new JTextArea(rows, cols);
-        text.setMargin(new Insets(5,5,5,5));
+        text.setMargin(new Insets(5, 5, 5, 5));
         text.setLineWrap(true);
         text.setWrapStyleWord( true );
         text.setEditable(false);

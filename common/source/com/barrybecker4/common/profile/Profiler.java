@@ -10,7 +10,8 @@ import java.util.Map;
 
 /**
  * Use this class to get performance numbers for your application
- * in order to eliminate bottlenecks.
+ * in order to eliminate bottlenecks. It is typically subclassed in order to
+ * identify (using entries) the specific parts of a program that need to be profiled.
  *
  * @author Barry Becker
  */
@@ -19,7 +20,7 @@ public class Profiler {
     private final Map<String,ProfilerEntry> hmEntries_ = new HashMap<String,ProfilerEntry>();
     private final List<ProfilerEntry> topLevelEntries_ = new LinkedList<ProfilerEntry>();
     private boolean enabled_ = true;
-    private static ILog logger_ = null;
+    private ILog logger_ = null;
 
     /**
      * Default constructor.
@@ -90,14 +91,7 @@ public class Profiler {
         }
     }
 
-    public String toString(ILog log) {
-        StringBuilder bldr = new StringBuilder();
-        for (ProfilerEntry p : topLevelEntries_) {
-            bldr.append(p.toString(log));
-        }
-        return bldr.toString();
-    }
-
+    /** turn on/off profiling */
     public void setEnabled(boolean enable) {
         enabled_ = enable;
     }
