@@ -22,7 +22,7 @@ import java.util.List;
 public class PokerHandTestOld extends TestCase {
 
     /**
-     * Expects input file to contain something like   2H 3H 4H 5H 6H 3C 4C 5C 6C 7C
+     * Expects input file to contain something like   2H 3H 4H 5H 6H, 3C 4C 5C 6C 7C
      * where the 5 player1 cards appear first, then the player2 cards.
      */
     private static final String TEST_FILE = "multiplayer/poker/hand/test_hands.data";

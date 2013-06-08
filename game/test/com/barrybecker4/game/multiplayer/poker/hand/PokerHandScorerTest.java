@@ -78,10 +78,14 @@ public class PokerHandScorerTest extends TestCase {
         compareHands(createHand("9H 10S JD QC KD"), createHand("AC AH 10S 9C AS"), CompareType.BIGGER);
     }
 
+    public void testTwoPairHigherThanAceHigh() {
+        compareHands(createHand("AH 8C 7H 6C 5H"), createHand("7D 7C 4C 3C 3S"), CompareType.SMALLER);
+    }
+
     /**
      * @param hand1 first hand
      * @param hand2 second hand
-     * @param type expectation for hand1 compared to hand2
+     * @param type expectation for hand1 compared to hand2. if smaller then hand1 expected to be smaller than hand2.
      */
     private void compareHands(PokerHand hand1, PokerHand hand2, CompareType type) {
 

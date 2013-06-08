@@ -15,7 +15,7 @@ public class PokerHandScorer implements Serializable {
 
     private static final long serialVersionUID = 1;
 
-    /** The weighting to give the odd (1/probability) of getting the hands basic type (like a straight) */
+    /** The weighting to give the odds (1/probability) of getting the hands basic type (like a straight) */
     private static final float ODDS_WEIGHT = 1000.0f;
 
     /**
@@ -120,7 +120,7 @@ public class PokerHandScorer implements Serializable {
 
         switch (handType) {
             case FIVE_OF_A_KIND: return highCardRank;
-            case ROYAL_FLUSH: return 0;   // there is only one sort of royal flush
+            case ROYAL_FLUSH: return 0;   // there is only one sort of royal flush (ace high)
             case STRAIGHT_FLUSH: return highCardRank * 4 + highSuit;
             case FOUR_OF_A_KIND: return hand.getRankOfNofaKind(4).get(0).ordinal();
             case FULL_HOUSE: return 14 * hand.getRankOfNofaKind(3).get(0).ordinal()

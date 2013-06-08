@@ -12,7 +12,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A poker hand typically has 5 cards from a deck of normal playing cards.
+ * Analyzes a poker hand and creates a map which has an entry for each card rank represented
+ * in the hand and its associated count. Given that information its easy to determine things like
+ * how many of a certain rank there is.
  * @author Barry Becker
  */
 class MatchMap extends LinkedHashMap<Rank, Integer> {
@@ -34,8 +36,9 @@ class MatchMap extends LinkedHashMap<Rank, Integer> {
 
         Collection values = values();
         for (Object value : values) {
-            if ((Integer) value == num)
+            if ((Integer) value == num) {
                 return true;
+            }
         }
         return false;
     }
@@ -62,9 +65,6 @@ class MatchMap extends LinkedHashMap<Rank, Integer> {
         if (ranks.isEmpty()) {
             throw new IllegalStateException("There were not " + num + " of a kind among " + this);
         }
-        // should not be needed if the hand is sorted
-        //Collections.sort(ranks);
-        //Collections.reverse(ranks);
         return ranks;
     }
 
