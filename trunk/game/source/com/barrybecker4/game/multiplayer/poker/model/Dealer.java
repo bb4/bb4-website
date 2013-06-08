@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.game.multiplayer.poker;
+package com.barrybecker4.game.multiplayer.poker.model;
 
 import com.barrybecker4.game.card.Deck;
 import com.barrybecker4.game.common.player.Player;
@@ -13,13 +13,6 @@ import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
  * @author Barry Becker
  */
 public class Dealer  {
-
-    /**
-     *  Construct the Poker game controller
-     */
-    public Dealer() {
-    }
-
 
     /**
      * Deal the cards. Give the default players some cards.

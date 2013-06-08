@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.game.multiplayer.poker;
+package com.barrybecker4.game.multiplayer.poker.model;
 
-import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.BoardPosition;
@@ -39,6 +38,7 @@ public class PokerTable extends Board {
         round.addToPot(table.getPotValue());
     }
 
+    @Override
     public PokerTable copy() {
         return new PokerTable(this);
     }
@@ -54,6 +54,7 @@ public class PokerTable extends Board {
      * A poker game has no real limit so we just return a huge number.
      * @return max number of poker rounds allowed.
      */
+    @Override
     public int getMaxNumMoves() {
         return 1000000;
     }
@@ -90,7 +91,6 @@ public class PokerTable extends Board {
      */
     @Override
     protected boolean makeInternalMove( Move move ) {
-        //PokerTurn gmove = (PokerTurn)move;
         return true;
     }
 
@@ -101,8 +101,7 @@ public class PokerTable extends Board {
      */
     @Override
     protected void undoInternalMove( Move move ) {
-        GameContext.log(0,  "undo no implemented yet for poker." );
-        //clear(positions_[move.getToRow()][move.getToCol()]);
+        throw new UnsupportedOperationException("undo no implemented yet for poker." );
     }
 
 }

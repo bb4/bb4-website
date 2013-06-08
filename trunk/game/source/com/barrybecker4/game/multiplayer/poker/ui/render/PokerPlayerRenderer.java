@@ -5,8 +5,7 @@ import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.board.GamePiece;
 import com.barrybecker4.game.common.ui.viewer.GamePieceRenderer;
-import com.barrybecker4.game.multiplayer.poker.PokerPlayerMarker;
-import com.barrybecker4.game.multiplayer.poker.PokerTable;
+import com.barrybecker4.game.multiplayer.poker.model.PokerTable;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.barrybecker4.ui.gradient.RoundGradientPaint;
@@ -59,7 +58,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer {
     }
 
     /**
-     * this draws the actual player marker, cards, and chips at this location (if there is one).
+     * This draws the actual player marker, cards, and chips at this location (if there is one).
      *
      * @param g2 graphics context
      * @param position the position of the piece to render
@@ -72,6 +71,40 @@ public class PokerPlayerRenderer extends GamePieceRenderer {
 
         int pieceSize = getPieceSize(cellSize, playerMarker);
         Point pos = getPosition(position, cellSize, pieceSize, margin);
+        drawMarker(g2, playerMarker, pieceSize, pos);
+
+        drawLabel(g2, cellSize, playerMarker, pieceSize, pos);
+
+        PokerPlayer player = (PokerPlayer)playerMarker.getOwner();
+        drawHand(g2, position, cellSize, player, pieceSize, pos);
+
+        chipRenderer.render(g2, position.getLocation(), player.getCash(), cellSize);
+    }
+
+    private void drawHand(Graphics2D g2, BoardPosition position, int cellSize, PokerPlayer player,
+                                  int pieceSize, Point pos) {
+
+        if (!player.hasFolded())
+            handRenderer.render(g2, position.getLocation(), player.getHand(), cellSize);
+        else {
+            // they have folded. Cover with a gray rectangle to indicate.
+            g2.setColor(FOLDED_COLOR);
+            g2.fillRect( pos.x - cellSize, pos.y - cellSize, 6*pieceSize , 6*pieceSize );
+        }
+    }
+
+    private void drawLabel(Graphics2D g2, int cellSize, PokerPlayerMarker playerMarker, int pieceSize, Point pos) {
+        Font font = BASE_FONT.deriveFont(Font.BOLD, (float) cellSize /
+                    TwoPlayerBoardRenderer.MINIMUM_CELL_SIZE  * 8);
+        int offset = (pieceSize<(0.6*cellSize))? -1 : cellSize/5;
+        if ( playerMarker.getAnnotation() != null ) {
+            g2.setColor( Color.black );
+            g2.setFont( font );
+            g2.drawString( playerMarker.getAnnotation(), pos.x - 2*cellSize-2, pos.y - 3*offset);
+        }
+    }
+
+    private void drawMarker(Graphics2D g2, PokerPlayerMarker playerMarker, int pieceSize, Point pos) {
         Ellipse2D circle = new Ellipse2D.Float( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
         int hlOffset = (int) (pieceSize / 2.3 + 0.5);  //spec highlight offset
         Color c = getPieceColor(playerMarker);
@@ -81,31 +114,9 @@ public class PokerPlayerRenderer extends GamePieceRenderer {
 
         g2.setPaint( rgp );
         g2.fill( circle );
-
         if ( playerMarker.isHighlighted() ) {
-            //g2.setStroke(HIGHLIGHT_STROKE);
             g2.setColor( HIGHLIGHT_COLOR );
             g2.fillOval( pos.x, pos.y, 3*pieceSize , 3*pieceSize );
         }
-
-        Font font = BASE_FONT.deriveFont(Font.BOLD, (float) cellSize /
-                    TwoPlayerBoardRenderer.MINIMUM_CELL_SIZE  * 8);
-        int offset = (pieceSize<(0.6*cellSize))? -1 : cellSize/5;
-        if ( playerMarker.getAnnotation() != null ) {
-            g2.setColor( Color.black );
-            g2.setFont( font );
-            g2.drawString( playerMarker.getAnnotation(), pos.x - cellSize, pos.y - 3*offset);
-        }
-
-        PokerPlayer p = (PokerPlayer)playerMarker.getOwner();
-        if (!p.hasFolded())
-            handRenderer.render(g2, position.getLocation(), p.getHand(), cellSize);
-        else {
-            // they have folded. Cover with a gray rectangle to indicate.
-            g2.setColor(FOLDED_COLOR);
-            g2.fillRect( pos.x - cellSize, pos.y - cellSize, 6*pieceSize , 6*pieceSize );
-        }
-
-        chipRenderer.render(g2, position.getLocation(), p.getCash(), cellSize);
     }
 }

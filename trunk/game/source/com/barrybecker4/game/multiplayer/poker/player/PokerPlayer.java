@@ -3,10 +3,10 @@ package com.barrybecker4.game.multiplayer.poker.player;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
-import com.barrybecker4.game.multiplayer.poker.PokerAction;
+import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
-import com.barrybecker4.game.multiplayer.poker.PokerPlayerMarker;
-import com.barrybecker4.game.multiplayer.poker.PokerRound;
+import com.barrybecker4.game.multiplayer.poker.ui.render.PokerPlayerMarker;
+import com.barrybecker4.game.multiplayer.poker.model.PokerRound;
 import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
 
 import java.awt.*;
@@ -18,8 +18,6 @@ import java.text.MessageFormat;
  * @author Barry Becker
  */
 public abstract class PokerPlayer extends MultiGamePlayer {
-
-    private static final long serialVersionUID = 1;
 
     /** this player's home planet. (like earth is for humans)  */
     private PokerHand hand_;
