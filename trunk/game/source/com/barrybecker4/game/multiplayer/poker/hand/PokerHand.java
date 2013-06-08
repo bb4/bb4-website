@@ -11,14 +11,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import static com.barrybecker4.game.card.Rank.*;
 
 /**
  * A poker hand typically has 5 cards from a deck of normal playing cards.
  * @author Barry Becker
  */
 public class PokerHand implements Serializable, Comparable<PokerHand> {
-
-    private static final long serialVersionUID = 1;
 
     /** internal list of cards in the hand. Always sorted from high to low */
     private final List<Card> hand;
@@ -111,11 +110,12 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
      */
     boolean hasStraight() {
 
-        boolean acePresent = getHighCard().rank() == Rank.ACE;
+        boolean acePresent = getHighCard().rank() == ACE;
         int run = 1;
         int start = acePresent ? 1 : 0;
         Rank[] ranks = Rank.values();
         Rank lastRank = hand.get(start++).rank();
+        Rank highRank = lastRank;
 
         for (Card card : hand.subList(start, size())) {
 
@@ -128,7 +128,8 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
             }
             lastRank = card.rank();
         }
-        return run >= 5 || (acePresent && run == 4);
+        return run >= 5
+                || (acePresent && run >= 4 && (highRank == FIVE || highRank == KING));
     }
 
     /**
@@ -186,6 +187,7 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
      * compare this poker hand to another
      * @return 1 if this hand is higher than the other hand, -1 if lower, else 0.
      */
+    @Override
     public int compareTo(PokerHand hand) {
         float diff = scorer.getScore(this) - scorer.getScore(hand);
         return diff > 0 ? 1 : (diff < 0 ? -1 :0);
@@ -197,6 +199,7 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
      */
     private static class CardComparator implements Comparator<Card> {
 
+        @Override
         public int compare(Card card1, Card card2) {
 
             if (card1.rank() == card2.rank())   {

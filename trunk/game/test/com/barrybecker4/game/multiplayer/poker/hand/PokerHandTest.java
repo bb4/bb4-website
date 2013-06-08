@@ -26,6 +26,11 @@ public class PokerHandTest extends TestCase {
         assertTrue("Straight not found", hand.hasStraight());
     }
 
+    public void testHasNormalStraightTwoLow() {
+        PokerHand hand = createHand("2H 3S 4C 5D 6H");
+        assertTrue("Straight not found", hand.hasStraight());
+    }
+
     public void testHasAceHighStraight() {
         assertTrue(createHand("10H JS QC KD AH").hasStraight());
     }
@@ -35,7 +40,7 @@ public class PokerHandTest extends TestCase {
     }
 
     public void testHasAceLowNoStraight() {
-        assertTrue(createHand("AH 3S 4C 5D 6H").hasStraight());
+        assertFalse(createHand("AH 3S 4C 5D 6H").hasStraight());
     }
 
     public void testNotFlush() {

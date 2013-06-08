@@ -16,7 +16,7 @@ import java.awt.*;
 public abstract class MultiGameBoardRenderer extends GameBoardRenderer {
 
     private static final Color DEFAULT_GRID_COLOR = Color.GRAY;
-    private static final Color DEFAULT_TABLE_COLOR = new Color(190, 160, 110);
+    private static final Color DEFAULT_TABLE_COLOR = new Color(200, 180, 170);
 
 
     /**
