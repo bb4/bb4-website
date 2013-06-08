@@ -21,12 +21,14 @@ public class MazeSolver {
     private MazePanel panel_;
     private MazeModel maze;
     private StateStack stack;
+    private boolean isWorking;
 
     /** Constructor */
     public MazeSolver(MazePanel panel) {
         panel_ = panel;
         maze = panel_.getMaze();
         stack = new StateStack();
+        isWorking = false;
     }
 
     /**
@@ -35,8 +37,17 @@ public class MazeSolver {
      */
     public void solve() {
 
+        isWorking = true;
         maze.unvisitAll();
         stack.clear();
+
+        findSolution();
+
+        panel_.paintAll();
+        isWorking = false;
+    }
+
+    private void findSolution() {
 
         // Keep track of our current path. We may need to backtrack along it if we encounter a dead end.
         List<Location> solutionPath = new LinkedList<Location>();
@@ -46,10 +57,11 @@ public class MazeSolver {
 
         // push the initial moves
         stack.pushMoves( currentPosition, new IntLocation(0, 1), 1);
+        panel_.paintAll();
+
         Location dir;
         int depth;
         boolean solved = false;
-        panel_.paintAll();
 
         // while there are still paths to try and we have not yet encountered the finish
         while ( !stack.isEmpty() && !solved ) {
@@ -74,7 +86,10 @@ public class MazeSolver {
 
             search(solutionPath, currentCell, dir, depth, nextPosition);
         }
-        panel_.paintAll();
+    }
+
+    public boolean isWorking() {
+        return isWorking;
     }
 
     private void search(List<Location> solutionPath, MazeCell currentCell,
@@ -124,9 +139,11 @@ public class MazeSolver {
         panel_.paintCell(currentPosition);
     }
 
-
+    /**
+     * Back up to the next path that will be tried
+     * @param solutionPath
+     */
     private void backTrack(List<Location> solutionPath) {
-        // need to back up to the next path we will try
         GenState lastState = stack.get(0);
 
         Location pos;

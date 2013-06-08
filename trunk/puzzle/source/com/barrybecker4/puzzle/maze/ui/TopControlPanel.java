@@ -9,7 +9,6 @@ import javax.swing.Box;
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 
 /**
  * A maze generator and solver
@@ -83,12 +82,12 @@ public class TopControlPanel extends JPanel
         if (source == solveButton_) {
             controller.solve(getAnimationSpeed());
         }
+        this.repaint();
     }
 
     public void regenerate() {
         controller.regenerate(getThickness(), getAnimationSpeed(),
                     getForwardPropability(), getLeftProbability(), getRightProbability());
-        //this.repaint();
     }
 
 
