@@ -1,7 +1,6 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.maze;
 
-
 import com.barrybecker4.common.concurrency.Worker;
 import com.barrybecker4.puzzle.maze.ui.MazePanel;
 
@@ -9,6 +8,7 @@ import java.awt.Cursor;
 
 /**
  * Controller part of the MVC pattern.
+ * Launches generator and solvers in separate threads so the UI is not locked.
  *
  * @author Barry Becker
  */
@@ -17,12 +17,14 @@ public final class MazeController {
     private MazePanel mazePanel;
     private Worker generateWorker;
     private MazeGenerator generator;
+    private MazeSolver solver;
 
     /**
      * Constructor.
      */
     public MazeController(MazePanel panel) {
         mazePanel = panel;
+        solver = new MazeSolver(mazePanel);
     }
 
 
@@ -33,10 +35,12 @@ public final class MazeController {
     public void regenerate(final int thickness, final int animationSpeed,
                            final double forwardP, final double leftP, final double rightP) {
 
+        if ((solver.isWorking())) return;
         if (generator != null)
         {
             generator.interrupt();
-            generateWorker.get(); // blocks until done
+            // blocks until done working (which will be soon now that it has been interrupted)
+            generateWorker.get();
         }
 
         generateWorker = new Worker() {
@@ -49,7 +53,6 @@ public final class MazeController {
                 double sum = forwardP + leftP + rightP;
                 mazePanel.setAnimationSpeed(animationSpeed);
                 mazePanel.setThickness(thickness);
-
 
                 generator.generate(forwardP / sum, leftP / sum, rightP / sum);
                 return true;
@@ -67,7 +70,7 @@ public final class MazeController {
 
     public void solve(final int animationSpeed) {
 
-        if (generateWorker.isWorking()) return;
+        if (generateWorker.isWorking() || solver.isWorking()) return;
 
         Worker worker = new Worker() {
 
@@ -75,7 +78,7 @@ public final class MazeController {
             public Object construct() {
 
                 mazePanel.setAnimationSpeed(animationSpeed);
-                MazeSolver solver = new MazeSolver(mazePanel);
+                solver = new MazeSolver(mazePanel);
                 solver.solve();
                 return true;
             }

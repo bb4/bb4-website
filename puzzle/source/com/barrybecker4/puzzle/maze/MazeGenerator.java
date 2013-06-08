@@ -29,6 +29,7 @@ public class MazeGenerator {
 
     /** put the stop point at the maximum search depth. */
     private int maxDepth_ = 0;
+
     /** set this to true to get the generator to stop generating */
     private boolean interrupted;
 
@@ -75,10 +76,8 @@ public class MazeGenerator {
         }
     }
 
-
     public void interrupt()
     {
-        System.out.println("interrupted");
         interrupted = true;
         if (stack != null)  {
             stack.clear();

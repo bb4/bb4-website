@@ -12,7 +12,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 /**
- * This panel is responsible for drawing the Maze (see MazeModel).
+ * This panel is responsible for drawing the MazeModel using the MazeRenderer.
  * @author Barry Becker
  */
 public class MazePanel extends JComponent {
@@ -27,7 +27,6 @@ public class MazePanel extends JComponent {
     public MazePanel() {
         maze_ = new MazeModel(100, 100);
         renderer = new MazeRenderer();
-
     }
 
     public MazeModel getMaze() {
@@ -66,18 +65,19 @@ public class MazePanel extends JComponent {
     }
 
     /**
-     * paint just the region around a single cell for performance.
-     * @param pt
+     * Paint just the region around a single cell for performance.
+     * @param point location of the cell to render.
      */
-    public void paintCell(Location pt) {
+    public void paintCell(Location point) {
         int csized2 = (cellSize/2)+2;
-        int xpos = (pt.getX() * cellSize);
-        int ypos = (pt.getY() * cellSize);
+        int xpos = (point.getX() * cellSize);
+        int ypos = (point.getY() * cellSize);
+
         if (animationSpeed_ <= 10)  {
             // this paints just the cell immediately (sorta slow)
             this.paintImmediately( xpos-csized2, ypos-csized2, (2*cellSize), (2*cellSize));
             if (animationSpeed_ < 9) {
-                ThreadUtil.sleep(200 / animationSpeed_ - 15);
+                ThreadUtil.sleep(200 / (animationSpeed_+2) - 20);
             }
         }
         else  {

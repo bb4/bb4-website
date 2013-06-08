@@ -13,7 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 
 /**
- * Responsible for drawing the Maze (see MazeModel).
+ * Responsible for drawing the Maze based on the MazeModel.
  * @author Barry Becker
  */
 public class MazeRenderer {

@@ -3,28 +3,17 @@ package com.barrybecker4.puzzle.maze.ui;
 
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.puzzle.maze.MazeController;
-import com.barrybecker4.ui.application.ApplicationApplet;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import javax.swing.BorderFactory;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 /**
  * A maze generator and solver application.
  * @author Barry Becker
  */
 public class MazeSimulator extends JApplet {
-
-    private TopControlPanel topControls;
-    private Dimension oldSize;
 
     /** constructor */
     public MazeSimulator() {
@@ -39,7 +28,7 @@ public class MazeSimulator extends JApplet {
     public void init() {
         final MazePanel mazePanel = new MazePanel();
         MazeController controller = new MazeController(mazePanel);
-        topControls = new TopControlPanel(controller);
+        TopControlPanel topControls = new TopControlPanel(controller);
 
         JPanel panel = new JPanel(new BorderLayout());
 
@@ -47,23 +36,8 @@ public class MazeSimulator extends JApplet {
         panel.add(mazePanel, BorderLayout.CENTER);
         getContentPane().add(panel);
 
-        getContentPane().addComponentListener( new ComponentAdapter() {
-            @Override
-            public void componentResized( ComponentEvent ce )  {
-
-                // only resize if the dimensions have changed
-                Dimension newSize = mazePanel.getSize();
-                boolean changedSize = oldSize== null ||
-                        oldSize.getWidth() != newSize.getWidth() ||
-                        oldSize.getHeight() != newSize.getHeight();
-                if ( changedSize ) {
-                    oldSize = newSize;
-                    if (newSize.getWidth() > 0) {
-                        topControls.regenerate();
-                    }
-                }
-            }
-        });
+        getContentPane().addComponentListener(
+                new ResizeAdapter(mazePanel, topControls));
     }
 
 
