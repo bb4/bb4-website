@@ -85,6 +85,7 @@ public class Player implements Serializable, OnlinePlayer {
         hasWon_ = won;
     }
 
+    @Override
     public boolean isSurrogate() {
         return false;
     }
@@ -94,6 +95,7 @@ public class Player implements Serializable, OnlinePlayer {
     }
 
     /** if this is a surrogate player then this method should return the actual player behind the surrogate */
+    @Override
     public Player getActualPlayer() {
         return this;
     }

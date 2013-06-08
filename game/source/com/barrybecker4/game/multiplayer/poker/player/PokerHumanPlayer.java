@@ -3,7 +3,7 @@ package com.barrybecker4.game.multiplayer.poker.player;
 
 import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
-import com.barrybecker4.game.multiplayer.poker.PokerAction;
+import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 
 import java.awt.*;
 
@@ -14,7 +14,6 @@ import java.awt.*;
  * @author Barry Becker
  */
 public class PokerHumanPlayer extends PokerPlayer {
-    private static final long serialVersionUID = 1;
 
 
     public PokerHumanPlayer(String name,  int money, Color color) {

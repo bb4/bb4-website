@@ -8,8 +8,7 @@ import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameBoardRenderer;
-import com.barrybecker4.game.multiplayer.poker.PokerPlayerMarker;
-import com.barrybecker4.game.multiplayer.poker.PokerTable;
+import com.barrybecker4.game.multiplayer.poker.model.PokerTable;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 
 import java.awt.*;

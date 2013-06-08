@@ -11,7 +11,8 @@ import java.io.Serializable;
 public enum RobotType implements Serializable {
 
     CRAZY_ROBOT("Crazy"),
-    METHODICAL_ROBOT("Methodical");
+    METHODICAL_ROBOT("Methodical"),
+    TIMID_ROBOT("Timid");
 
     private static final long serialVersionUID = 1;
 

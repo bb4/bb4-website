@@ -2,7 +2,7 @@
 package com.barrybecker4.game.multiplayer.poker.player;
 
 
-import com.barrybecker4.game.multiplayer.poker.PokerAction;
+import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 
 import java.awt.*;
@@ -13,8 +13,6 @@ import java.awt.*;
  * @author Barry Becker
  */
 public class MethodicalRobotPlayer extends PokerRobotPlayer {
-
-    private static final long serialVersionUID = 1;
 
     public MethodicalRobotPlayer(String name, int cash, Color color, RobotType rType) {
         super(name, cash, color, rType);

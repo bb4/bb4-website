@@ -1,23 +1,23 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.multiplayer.poker.player;
 
 
-import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
+import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Represents a Crazy Robot Poker player.
  *
  * @author Barry Becker
  */
-public class CrazyRobotPlayer extends PokerRobotPlayer {
+public class TimidRobotPlayer extends PokerRobotPlayer {
 
-    private static final int DESIRED_RAISE = 20;
+    private static final int DESIRED_RAISE = 5;
 
 
-    public CrazyRobotPlayer(String name, int cash, Color color, RobotType rType) {
+    public TimidRobotPlayer(String name, int cash, Color color, RobotType rType) {
         super(name, cash, color, rType);
     }
 
@@ -25,10 +25,10 @@ public class CrazyRobotPlayer extends PokerRobotPlayer {
     protected PokerAction createAction(PokerController pc) {
         PokerAction.Name action;
         int raise = 0;
-        if ((getCash() > getCallAmount(pc)) && (getHand().getScore() > 10 || Math.random() > 0.3)) {
-            action =  PokerAction.Name.RAISE;
+        if ((getCash() > getCallAmount(pc)) && (getHand().getScore() > 100 || Math.random() > 0.4)) {
+            action = PokerAction.Name.RAISE;
             raise = getRaise(pc);
-        } else if (getHand().getScore() > 1 || Math.random() > 0.2 || allOthersFolded(pc)) {
+        } else if (getHand().getScore() > 30 || Math.random() > 0.2 || allOthersFolded(pc)) {
             action =  PokerAction.Name.CALL;
         } else {
             action = PokerAction.Name.FOLD;
@@ -40,7 +40,7 @@ public class CrazyRobotPlayer extends PokerRobotPlayer {
     protected int getRaise(PokerController pc) {
         int allInAmt = pc.getAllInAmount() - getContribution() - getCallAmount(pc);
         int raiseAmt = 0;
-        if (getHand().getScore() > 100) {
+        if (getHand().getScore() > 500) {
             raiseAmt = min(DESIRED_RAISE, getCash(), allInAmt);
         }
         else {

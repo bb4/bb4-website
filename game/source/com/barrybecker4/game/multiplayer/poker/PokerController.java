@@ -6,6 +6,9 @@ import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
+import com.barrybecker4.game.multiplayer.poker.model.Dealer;
+import com.barrybecker4.game.multiplayer.poker.model.PokerRound;
+import com.barrybecker4.game.multiplayer.poker.model.PokerTable;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerRobotPlayer;
 import com.barrybecker4.game.multiplayer.poker.ui.PokerGameViewer;
@@ -147,6 +150,7 @@ public class PokerController extends MultiGameController {
      *
      * @return true if the game is over.
      */
+    @Override
     public boolean isDone() {
         if (getLastMove() == null)
             return false;

@@ -5,7 +5,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
-import com.barrybecker4.game.multiplayer.poker.PokerAction;
+import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 
 import java.awt.*;
@@ -18,8 +18,6 @@ import java.awt.*;
  * @author Barry Becker
  */
 public abstract class PokerRobotPlayer extends PokerPlayer {
-
-    private static final long serialVersionUID = 1;
 
     private RobotType robotType_;
 
@@ -94,6 +92,8 @@ public abstract class PokerRobotPlayer extends PokerPlayer {
                 return new CrazyRobotPlayer(name, money, color, RobotType.CRAZY_ROBOT);
             case METHODICAL_ROBOT:
                 return new MethodicalRobotPlayer(name, money, color, RobotType.METHODICAL_ROBOT);
+            case TIMID_ROBOT:
+                return new TimidRobotPlayer(name, money, color, RobotType.TIMID_ROBOT);
         }
         return null;
     }
