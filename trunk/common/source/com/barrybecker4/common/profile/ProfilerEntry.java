@@ -82,14 +82,6 @@ public class ProfilerEntry {
                 "child entries =" + children_;
     }
 
-    public String toString(ILog log) {
-        log.setDestination(ILog.LOG_TO_STRING);
-        StringBuilder bldr = new StringBuilder();
-        log.setStringBuilder(bldr);
-        print(INDENT, log);
-        return bldr.toString();
-    }
-
     public String toString() {
         return getFormattedTime();
     }

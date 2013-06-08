@@ -10,13 +10,6 @@ import java.io.FileNotFoundException;
  */
 public interface ILog {
 
-    // you can specify the debug, profile info, warning, and error resources to go to one
-    // or more of these places.
-    int LOG_TO_CONSOLE = 0x1;
-    int LOG_TO_WINDOW = 0x2;
-    int LOG_TO_FILE = 0x4;
-    int LOG_TO_STRING = 0x8;
-
     /**
      *  Set the log destination
      *  Should eventually allow multiples using | to combine the hex constants.

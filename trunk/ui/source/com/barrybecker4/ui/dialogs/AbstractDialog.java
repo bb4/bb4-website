@@ -39,7 +39,6 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
      * @param parent parent component to place ourselves relative to.
      */
     public AbstractDialog(Component parent) {
-        this();
         parent_ = parent;
     }
 
@@ -47,8 +46,8 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
      * Must be called once after the context has been created.
      */
     protected final void showContent() {
-        this.getContentPane().removeAll();
-        this.getContentPane().add(createDialogContent());
+        getContentPane().removeAll();
+        getContentPane().add(createDialogContent());
 
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
         pack();
@@ -91,13 +90,13 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
     }
 
 
+    @Override
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         if ( source == cancelButton) {
             cancel();
         }
     }
-
 
     /**
      *  If the user clicks the X in the upper right, its the same as pressing cancel

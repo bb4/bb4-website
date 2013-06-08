@@ -23,14 +23,14 @@ public class OutputWindow extends AbstractDialog {
      */
     public OutputWindow( String title, JFrame parent ) {
         super( parent );
-        this.setTitle( title );
-        this.setModal( false );
+        this.setTitle(title);
+        this.setModal(false);
         showContent();
     }
 
     @Override
     protected JComponent createDialogContent() {
-        textArea_ = new ScrollingTextArea();
+        textArea_ = new ScrollingTextArea(40, 30);
 
         // if its editable then we can copy from it
         textArea_.setEditable( true );
