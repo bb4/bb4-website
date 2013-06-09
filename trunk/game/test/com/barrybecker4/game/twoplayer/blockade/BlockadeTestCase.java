@@ -34,7 +34,7 @@ public abstract class BlockadeTestCase extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         // this will load the resources for the specified game.
-        GameContext.loadGameResources("blockade");
+        GameContext.loadResources("blockade");
         GameContext.setDebugMode(0);
 
         controller_ = new BlockadeController();

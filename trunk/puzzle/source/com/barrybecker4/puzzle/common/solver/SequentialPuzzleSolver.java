@@ -33,6 +33,7 @@ public class SequentialPuzzleSolver<P, M> implements PuzzleSolver<P, M> {
         this.ui = ui;
     }
 
+    @Override
     public List<M> solve() {
         P pos = puzzle.initialPosition();
         System.out.println("initial position=" + pos);

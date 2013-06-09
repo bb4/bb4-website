@@ -2,7 +2,6 @@
 package com.barrybecker4.game.twoplayer.go.server;
 
 import com.barrybecker4.common.geometry.ByteLocation;
-import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerPlayerOptions;
@@ -47,7 +46,7 @@ public class CommandHandler {
      */
     public CommandHandler() throws Exception {
 
-        GameContext.loadGameResources("go");
+        GameContext.loadResources("go");
         GameContext.setDebugMode(0);
         initSize(19);
     }

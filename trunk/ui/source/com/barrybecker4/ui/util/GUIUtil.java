@@ -36,9 +36,9 @@ public final class GUIUtil {
     /**
      * Some other interesting fonts: "Ænigma Scrawl 4 BRK"; "Nyala"; "Raavi";
      * Verdana is nice, but it does not support japanese or vietnamese character.
-     * Only Serif and SansSerif seem to suppprt everything.
+     * Only Serif and SansSerif seem to support everything.
      */
-    public static final String DEFAULT_FONT_FAMILY = "SansSerif";
+    public static final String DEFAULT_FONT_FAMILY = "SansSerif";  // NON-NLS
 
     /** webstart services  */
     private static BasicService basicService_ = null;
@@ -73,7 +73,7 @@ public final class GUIUtil {
             //UIManager.setLookAndFeel( new WindowsLookAndFeel() );
 
             // turn on auditory cues.
-            // @@ can't do this under linux until I upgrade java or get the right soundcard driver.
+            // @@ can't do this under linux until I upgrade java or get the right sound card driver.
             UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.allAuditoryCues"));
 
             theme.setUIManagerProperties();
@@ -162,7 +162,6 @@ public final class GUIUtil {
         baseFrame.setTitle(title);
         baseFrame.setContentPane(applet.getContentPane());
 
-
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         int height = (int) (2.0 * d.getHeight()  / 3.0) ;
         int width = (int) Math.min(height * 1.5, 2.0 * d.getWidth() / 3);
@@ -174,12 +173,10 @@ public final class GUIUtil {
         } else {
             baseFrame.setSize( applet.getSize() );
         }
-
         applet.init();
         baseFrame.repaint();
         baseFrame.setVisible( true );
 
-        // call the applet's start method
         applet.start();
         return baseFrame;
     }
@@ -189,7 +186,7 @@ public final class GUIUtil {
      */
     public static void paintComponentWithTexture(ImageIcon texture, Component c, Graphics g) {
         if (texture == null) {
-            System.out.println( "warning no texture to tile with" );
+            System.out.println( "warning no texture to tile with" ); // NON-NLS
             return;
         }
         Dimension size = c.getSize();
@@ -234,8 +231,9 @@ public final class GUIUtil {
     public static String getFileSuffix(File f) {
         String s = f.getPath(), suffix = null;
         int i = s.lastIndexOf('.');
-        if (i>0 && i< s.length()-1)
+        if (i > 0 && i < s.length()-1)  {
             suffix = s.substring(i+1).toLowerCase();
+        }
         return suffix;
     }
 

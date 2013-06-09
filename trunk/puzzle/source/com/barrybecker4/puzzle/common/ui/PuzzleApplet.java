@@ -18,10 +18,17 @@ public abstract class PuzzleApplet<P, M> extends ApplicationApplet {
     protected PuzzleController<P, M> controller_;
     protected PuzzleViewer<P, M> viewer_;
 
+
+    /**
+     * Construct the applet.
+     */
+    public PuzzleApplet() {}
     /**
      * Construct the application.
      */
-    public PuzzleApplet() {}
+    public PuzzleApplet(String[] args) {
+        super(args);
+    }
 
     /**
      * create and initialize the puzzle

@@ -152,7 +152,7 @@ public final class ComparisonGridPanel
     public IGamePanel createGamePanel(String gameName) {
 
         // this will load the resources for the specified game.
-        GameContext.loadGameResources(gameName);
+        GameContext.loadResources(gameName);
         grid_.setGameName(gameName);
         repaint();
 
