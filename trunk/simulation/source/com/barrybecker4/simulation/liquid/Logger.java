@@ -27,7 +27,7 @@ public class Logger {
         if (logger == null)   {
 
             logger = new Log( new OutputWindow( "Log", null ) );
-            logger.setDestination(ILog.LOG_TO_WINDOW);
+            logger.setDestination(Log.LOG_TO_WINDOW);
         }
         return logger;
     }
