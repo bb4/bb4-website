@@ -13,7 +13,6 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
-import static com.barrybecker4.common.i18n.EncodingConstants.CONVERTER_UTF8;
 
 
 /**
@@ -22,6 +21,8 @@ import static com.barrybecker4.common.i18n.EncodingConstants.CONVERTER_UTF8;
  * @author Barry Becker
  */
 public final class Base64Codec {
+
+    public static final String CONVERTER_UTF8 = "UTF8";
 
     private Base64Codec() {}
 

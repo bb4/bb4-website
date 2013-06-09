@@ -27,18 +27,22 @@ public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {
         algorithm_ = Algorithm.CONCURRENT_OPTIMUM;
     }
 
+    @Override
     public PegBoard initialPosition() {
         return PegBoard.INITIAL_BOARD_POSITION;
     }
 
+    @Override
     public boolean isGoal(PegBoard position) {
         return position.isSolved();
     }
 
+    @Override
     public List<PegMove> legalMoves(PegBoard position) {
         return new MoveGenerator(position).generateMoves();
     }
 
+    @Override
     public PegBoard move(PegBoard position, PegMove move) {
         return position.doMove(move, false);
     }

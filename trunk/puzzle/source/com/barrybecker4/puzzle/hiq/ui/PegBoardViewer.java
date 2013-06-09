@@ -12,7 +12,8 @@ import java.util.List;
  *  UI for drawing the current best solution to the puzzle.
  *  @author Barry Becker
  */
-final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove> {
+final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
+                           implements PathNavigator {
 
     private PegBoardRenderer renderer_ = new PegBoardRenderer();
     private List<PegMove> path_;
@@ -26,6 +27,7 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove> {
         board_ = board;
     }
 
+    @Override
     public List<PegMove> getPath() {
         return path_;
     }
@@ -44,8 +46,22 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove> {
         showPath(path, board);
     }
 
+    @Override
     public void makeSound() {
         // add sound
+    }
+
+
+    @Override
+    public void moveInPath(int currentPosition, int stepSize) {
+        int currentStep = currentPosition;
+        int inc = stepSize > 0 ? 1 : -1;
+        int toStep = currentStep + stepSize;
+        do {
+            makeMove(currentStep, (inc < 0));
+            currentStep += inc;
+        } while (currentStep != toStep);
+        repaint();
     }
 
     public void makeMove(int currentStep, boolean undo) {
