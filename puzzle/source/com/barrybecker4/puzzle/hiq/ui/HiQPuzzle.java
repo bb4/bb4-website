@@ -12,11 +12,7 @@ import com.barrybecker4.puzzle.hiq.model.PegBoard;
 import com.barrybecker4.puzzle.hiq.model.PegMove;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * HiQ Puzzle.
@@ -52,11 +48,9 @@ import java.awt.event.ActionListener;
  * After parallelizing the algorithm using ConcurrentPuzzleSolver it is down to 93 seconds on the CoreDuo.
  */
 public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
-                             implements ActionListener, DoneListener {
+                             implements DoneListener {
 
-    private JButton backButton_;
-    private JButton forwardButton_;
-    private int currentStep_;
+    private NavigationPanel navPanel;
 
     /**
      * Construct the application
@@ -83,54 +77,13 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
     @Override
     protected JPanel createCustomControls() {
 
-        backButton_ = new JButton("Back");
-        forwardButton_ = new JButton("Forward");
-        backButton_.addActionListener(this);
-        forwardButton_.addActionListener(this);
-        backButton_.setEnabled(false);
-        forwardButton_.setEnabled(false);
-
-        JPanel buttonPanel = new JPanel(new BorderLayout());
-        buttonPanel.add(backButton_, BorderLayout.WEST);
-        buttonPanel.add(forwardButton_, BorderLayout.EAST);
-
-        return buttonPanel;
+        navPanel = new NavigationPanel();
+        return navPanel;
     }
 
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == backButton_) {
-            moveInPath(-1);
-            backButton_.setEnabled((currentStep_ > 0));
-            forwardButton_.setEnabled(true);
-        }
-        else if (e.getSource() == forwardButton_) {
-            moveInPath(1);
-            boolean enable = (currentStep_ < ((PegBoardViewer)viewer_).getPath().size()-1);
-            forwardButton_.setEnabled(enable);
-            backButton_.setEnabled(true);
-        }
-    }
-
-
-    /**
-     * switch from the current move in the sequence forwards or backwards stepSize.
-     * @param stepSize num steps to move.
-     */
-    public void moveInPath(int stepSize) {
-        if (stepSize == 0) return;
-        int inc = stepSize > 0 ? 1 : -1;
-        int toStep = currentStep_ + stepSize;
-        do {
-            ((PegBoardViewer)viewer_).makeMove(currentStep_, (inc < 0));
-            currentStep_ += inc;
-        } while (currentStep_ != toStep);
-        viewer_.repaint();
-    }
-
+    @Override
     public void done() {
-        currentStep_ = ((PegBoardViewer)viewer_).getPath().size()-1;
-        backButton_.setEnabled(true);
-        forwardButton_.setEnabled(false);
+        navPanel.setPathNavigator((PathNavigator) viewer_);
     }
 
     /**
@@ -143,5 +96,6 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
         // this will call applet.init() and start() methods instead of the browser
         GUIUtil.showApplet(applet, "HiQ Puzzle Solver");
     }
+
 }
 

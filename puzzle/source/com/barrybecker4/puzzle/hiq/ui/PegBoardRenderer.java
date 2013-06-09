@@ -35,6 +35,7 @@ public class PegBoardRenderer implements PuzzleRenderer<PegBoard> {
     /**
      * This renders the current state of the Board to the screen.
      */
+    @Override
     public void render( Graphics g, PegBoard board, int width, int height ) {
 
         int i, xpos, ypos;

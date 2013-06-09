@@ -4,14 +4,14 @@ package com.barrybecker4.common.i18n;
 import java.util.Locale;
 
 /**
- * Enum for the supported locales.
+ * Enum for the currently supported locales.
+ * These are probably the most challenging to support. That is one of the reasons why they were selected.
  *
  * @author Barry Becker
  */
 @SuppressWarnings("HardCodedStringLiteral")
 public enum LocaleType {
 
-    // Currently supported locales
     ENGLISH ( new Locale("en", "US")),
     GERMAN ( new Locale("de", "DE")),
     JAPANESE ( new Locale("ja", "JP")),
