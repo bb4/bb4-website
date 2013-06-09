@@ -46,8 +46,8 @@ public final class GraphicalAdventure extends ApplicationApplet
      * Constructor.
      * @param story initial story to show.
      */
-    public GraphicalAdventure(Story story) {
-        this();
+    public GraphicalAdventure(String[] args, Story story) {
+        super(args);
         story_ = story;
         JFrame frame = GUIUtil.showApplet( this, story.getTitle());
 
@@ -198,7 +198,7 @@ public final class GraphicalAdventure extends ApplicationApplet
 
         Story story = new Story(document);
 
-        new GraphicalAdventure(story);
+        new GraphicalAdventure(args, story);
     }
 }
 

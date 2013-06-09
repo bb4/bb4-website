@@ -17,21 +17,19 @@ import java.awt.*;
  */
 public class SimulatorApplet extends ApplicationApplet {
 
-    private Simulator simulator_ = null;
+    private Simulator simulator_;
 
     private static final boolean RUN_OPTIMIZATION = false;
     private static final String DEFAULT_SIMULATOR = "com.barrybecker4.simulation.fluid.ui.FluidSimulator";
 
-    public SimulatorApplet() {
-        simulator_ = null;
-    }
 
     /**
      * Construct the applet
      * @param simulatorClassName  name of the simulator class to show.
      */
-    public SimulatorApplet(String simulatorClassName) {
+    public SimulatorApplet(String[] args, String simulatorClassName) {
 
+        super(args);
         System.out.println("simulatorClassName=" + simulatorClassName);
         simulator_ = createSimulationFromClassName(simulatorClassName);
     }
@@ -115,7 +113,7 @@ public class SimulatorApplet extends ApplicationApplet {
         }
 
         System.out.println("get class="+ simulatorClassName);
-        SimulatorApplet applet = new SimulatorApplet(simulatorClassName);
+        SimulatorApplet applet = new SimulatorApplet(args, simulatorClassName);
         GUIUtil.showApplet( applet, applet.getTitle() );
     }
 }
