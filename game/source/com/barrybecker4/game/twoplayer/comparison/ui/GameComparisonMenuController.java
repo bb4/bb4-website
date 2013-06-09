@@ -32,7 +32,7 @@ public class GameComparisonMenuController extends GameMenuController {
     protected void showGame(String gameName) {
 
         // this will load the resources for the specified game.
-        GameContext.loadGameResources(gameName);
+        GameContext.loadResources(gameName);
 
         gamePanel_ = PluginManager.getInstance().getPlugin(gameName).getPanelInstance();
         //gamePanel_.init(frame_);

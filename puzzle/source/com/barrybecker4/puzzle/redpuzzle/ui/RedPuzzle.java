@@ -38,7 +38,9 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
     /**
      * Construct the application and set the look and feel.
      */
-    public RedPuzzle() {}
+    public RedPuzzle(String[] args) {
+       super(args);
+    }
 
     @Override
     protected PuzzleViewer<PieceList, Piece> createViewer() {
@@ -79,7 +81,7 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
      */
     public static void main( String[] args )  {
 
-        PuzzleApplet applet = new RedPuzzle();
+        PuzzleApplet applet = new RedPuzzle(args);
 
         // this will call applet.init() and start() methods instead of the browser
         GUIUtil.showApplet(applet, "Red Puzzle Solver");

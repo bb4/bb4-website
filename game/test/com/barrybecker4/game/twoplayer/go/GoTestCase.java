@@ -42,7 +42,7 @@ public abstract class GoTestCase extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         // this will load the resources for the specified game.
-        GameContext.loadGameResources("go");
+        GameContext.loadResources("go");
         GameContext.setDebugMode(DEBUG_LEVEL);
 
         controller_ = new GoController(getBoardSize(), 0);

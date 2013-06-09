@@ -53,7 +53,7 @@ class ServerCommandProcessor {
     private void createController(String gameName) {
 
         GamePlugin plugin = PluginManager.getInstance().getPlugin(gameName);
-        GameContext.loadGameResources(gameName);
+        GameContext.loadResources(gameName);
         /*
         Class c = ClassLoaderSingleton.loadClass(plugin.getControllerClass());
         try {

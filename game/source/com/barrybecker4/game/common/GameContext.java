@@ -138,7 +138,7 @@ public final class GameContext {
      * be loaded for the game specified.
      * @param gameName the current game
      */
-    public static void loadGameResources(String gameName) {
+    public static void loadResources(String gameName) {
         log(0, "loadGameResources gameName=" + gameName);
         GamePlugin plugin = PluginManager.getInstance().getPlugin(gameName);
         assert plugin!=null : "Could not find plugin for " + gameName;

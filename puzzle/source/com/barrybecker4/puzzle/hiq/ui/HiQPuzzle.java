@@ -52,10 +52,13 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
 
     private NavigationPanel navPanel;
 
-    /**
-     * Construct the application
-     */
+    /** Construct the applet */
     public HiQPuzzle() {}
+
+    /** Construct the application */
+    public HiQPuzzle(String[] args) {
+        super(args);
+    }
 
 
     @Override
@@ -91,7 +94,7 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
      */
     public static void main(String[] args) {
 
-        PuzzleApplet applet = new HiQPuzzle();
+        PuzzleApplet applet = new HiQPuzzle(args);
 
         // this will call applet.init() and start() methods instead of the browser
         GUIUtil.showApplet(applet, "HiQ Puzzle Solver");

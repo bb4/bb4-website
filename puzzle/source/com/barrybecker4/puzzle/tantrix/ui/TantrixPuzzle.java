@@ -33,7 +33,9 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
     /**
      * Construct the application.
      */
-    public TantrixPuzzle() {}
+    public TantrixPuzzle(String[] args) {
+        super(args);
+    }
 
     @Override
     protected PuzzleViewer<TantrixBoard, TilePlacement> createViewer() {
@@ -83,7 +85,7 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
      */
     public static void main( String[] args )  {
 
-        PuzzleApplet applet = new TantrixPuzzle();
+        PuzzleApplet applet = new TantrixPuzzle(args);
 
         // this will call applet.init() and start() methods instead of the browser
         GUIUtil.showApplet(applet, "Tantrix Puzzle Solver");

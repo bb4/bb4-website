@@ -68,17 +68,18 @@ public class BaseConcurrentPuzzleSolver<P, M>  implements PuzzleSolver<P, M> {
         return Executors.newFixedThreadPool(THREAD_POOL_SIZE);
     }
 
+    @Override
     public List<M> solve() throws InterruptedException {
         try {
             P p = puzzle.initialPosition();
             long startTime = System.currentTimeMillis();
             exec.execute(newTask(p, null, null));
             // block until solution found
-            PuzzleNode<P, M> solnPuzzleNode = solution.getValue();
-            List<M> path = (solnPuzzleNode == null) ? null: solnPuzzleNode.asMoveList();
+            PuzzleNode<P, M> solutionnPuzzleNode = solution.getValue();
+            List<M> path = (solutionnPuzzleNode == null) ? null: solutionnPuzzleNode.asMoveList();
             if (ui != null) {
                 long elapsedTime = System.currentTimeMillis() - startTime;
-                ui.finalRefresh(path, solnPuzzleNode.position, numTries, elapsedTime);
+                ui.finalRefresh(path, solutionnPuzzleNode.position, numTries, elapsedTime);
             }
             return path;
         } finally {
@@ -103,6 +104,7 @@ public class BaseConcurrentPuzzleSolver<P, M>  implements PuzzleSolver<P, M> {
             super(pos, move, prev);
         }
 
+        @Override
         public void run() {
 
             numTries++;

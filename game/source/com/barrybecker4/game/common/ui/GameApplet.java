@@ -36,7 +36,7 @@ public class GameApplet extends JApplet {
         LocaleType locale = GameContext.getLocale(localeName, true);
         GameContext.log(0, "setting the locale to " + locale + " for language=" + localeName);
 
-        GameContext.loadGameResources(gameName);
+        GameContext.loadResources(gameName);
         GameContext.setLocale(locale);
 
         gamePanel_ = PluginManager.getInstance().getPlugin(gameName).getPanelInstance();

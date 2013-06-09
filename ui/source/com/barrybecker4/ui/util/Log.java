@@ -93,14 +93,14 @@ public class Log implements ILog {
     public void print( int logLevel, int appLogLevel, String message ) {
 
         if ( logLevel <= appLogLevel ) {
-            if ((logDestination_ & LOG_TO_CONSOLE) >0) {
+            if ((logDestination_ & LOG_TO_CONSOLE) > 0) {
                 System.err.println( message );
             }
             if ((logDestination_ & LOG_TO_WINDOW) > 0) {
                 if ( logWindow_ != null )
                     logWindow_.appendText( message );
                 else
-                    System.err.println("no logWindow to print to. First specify with setLogWindow. message="+message);
+                    System.err.println("no logWindow to print to. First specify with setLogWindow. message=" + message);
             }
             if ((logDestination_ & LOG_TO_FILE) > 0) {
                 if (fileOutStream_ != null)  {

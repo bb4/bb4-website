@@ -1,11 +1,15 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.hiq.ui;
 
+import com.barrybecker4.common.AppContext;
+import com.barrybecker4.common.i18n.LocaleType;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 /**
  * Shows two buttons to control stepping forward and backward through the puzzle solution.
@@ -21,8 +25,12 @@ public final class NavigationPanel extends JPanel
 
     NavigationPanel() {
         super(new BorderLayout());
-        backButton_ = new JButton("Back");
-        forwardButton_ = new JButton("Forward");
+
+        //ResourceBundle messages =
+        //    ResourceBundle.getBundle("com.barrybecker4.puzzle.hiq.ui.message", LocaleType.GERMAN.getLocale());
+
+        backButton_ = new JButton(AppContext.getLabel("BACKWARD"));
+        forwardButton_ = new JButton(AppContext.getLabel("FORWARD"));
         backButton_.addActionListener(this);
         forwardButton_.addActionListener(this);
         backButton_.setEnabled(false);

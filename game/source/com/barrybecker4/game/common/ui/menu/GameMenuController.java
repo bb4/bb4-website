@@ -59,7 +59,7 @@ public class GameMenuController
      */
     protected void showGame(String gameName) {
         // this will load the resources for the specified game.
-        GameContext.loadGameResources(gameName);
+        GameContext.loadResources(gameName);
 
         if (gamePanel_ != null) {
             System.out.println("frame="+ frame_);

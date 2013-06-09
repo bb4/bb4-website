@@ -62,6 +62,7 @@ public abstract class GameController
     }
 
 
+    @Override
     public MoveList getMoveList() {
         return ((Board)getBoard()).getMoveList();
     }
@@ -76,6 +77,7 @@ public abstract class GameController
     /**
      * @return number of moves made so far.
      */
+    @Override
     public int getNumMoves() {
         return ((Board)getBoard()).getMoveList().getNumMoves();
     }
@@ -84,6 +86,7 @@ public abstract class GameController
      * @return the class which shows the current state of the game board.
      * May be null if the viewer was never set.
      */
+    @Override
     public GameViewModel getViewer() {
         return viewer_;
     }
@@ -99,6 +102,7 @@ public abstract class GameController
     /**
      * @return the board representation object.
      */
+    @Override
     public final IBoard getBoard() {
         if (board_ == null) {
             board_ = createBoard();
@@ -114,6 +118,7 @@ public abstract class GameController
     protected abstract void initializeData();
 
 
+    @Override
     public void makeMove(Move move) {
         ((IRectangularBoard)getBoard()).makeMove(move);
     }
@@ -122,6 +127,7 @@ public abstract class GameController
      * retract the most recently played move
      * @return  the move which was undone (null returned if no prior move)
      */
+    @Override
     public Move undoLastMove() {
         return ((IRectangularBoard)getBoard()).undoMove();
     }
@@ -151,6 +157,7 @@ public abstract class GameController
      *
      * @return a list of the players playing the game (in the order that they move).
      */
+    @Override
     public PlayerList getPlayers() {
         return players_;
     }

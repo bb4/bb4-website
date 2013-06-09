@@ -79,6 +79,14 @@ public final class MessageContext {
 
     /**
      * Set or change the current locale.
+     * @param localeName name locale to use (something like ENGLISH, GERMAN, etc)
+     */
+    public void setLocale(String localeName) {
+        setLocale(getLocale(localeName, true));
+    }
+
+    /**
+     * Set or change the current locale.
      * @param locale locale to use
      */
     public void setLocale(LocaleType locale) {
@@ -222,7 +230,7 @@ public final class MessageContext {
     /**
      * Looks up an {@link LocaleType} for a given locale name.
      * @param finf fail if not found.
-     * @return locale
+     * @return locale the name of a local. Something like ENGLISH, GERMAN, etc
      * @throws Error if the name is not a member of the enumeration
      */
     public LocaleType getLocale(String name, boolean finf) {
