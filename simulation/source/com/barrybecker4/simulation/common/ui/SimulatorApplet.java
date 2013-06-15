@@ -34,7 +34,8 @@ public class SimulatorApplet extends ApplicationApplet {
         simulator_ = createSimulationFromClassName(simulatorClassName);
     }
 
-    public String getTitle() {
+    @Override
+    public String getName() {
         return simulator_.getName();
     }
 
@@ -114,7 +115,7 @@ public class SimulatorApplet extends ApplicationApplet {
 
         System.out.println("get class="+ simulatorClassName);
         SimulatorApplet applet = new SimulatorApplet(args, simulatorClassName);
-        GUIUtil.showApplet( applet, applet.getTitle() );
+        GUIUtil.showApplet( applet );
     }
 }
 

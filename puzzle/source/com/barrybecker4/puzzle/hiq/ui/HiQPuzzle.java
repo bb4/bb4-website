@@ -76,7 +76,6 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
         return Algorithm.values();
     }
 
-
     @Override
     protected JPanel createCustomControls() {
 
@@ -97,7 +96,7 @@ public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
         PuzzleApplet applet = new HiQPuzzle(args);
 
         // this will call applet.init() and start() methods instead of the browser
-        GUIUtil.showApplet(applet, "HiQ Puzzle Solver");
+        GUIUtil.showApplet(applet);
     }
 
 }

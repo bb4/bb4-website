@@ -41,10 +41,17 @@ public class MazeSimulator extends JApplet {
     }
 
 
+    @Override
+    public String getName() {
+        return "Maze Generator";
+    }
+
+
+
     //------ Main method --------------------------------------------------------
 
     public static void main( String[] args ) {
         MazeSimulator simulator = new MazeSimulator();
-        GUIUtil.showApplet( simulator, "Maze Generator");
+        GUIUtil.showApplet( simulator);
     }
 }

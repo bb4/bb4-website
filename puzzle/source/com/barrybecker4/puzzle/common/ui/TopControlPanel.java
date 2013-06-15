@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.common.ui;
 
+import com.barrybecker4.common.AppContext;
 import com.barrybecker4.puzzle.common.AlgorithmEnum;
 import com.barrybecker4.puzzle.common.PuzzleController;
 import com.barrybecker4.ui.components.GradientButton;
@@ -36,8 +37,8 @@ public class TopControlPanel<P, M> extends JPanel
         algorithmValues_ = algorithmValues;
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        solveButton_ = new GradientButton("Solve");
-        solveButton_.addActionListener(this);
+        solveButton_ = new GradientButton(AppContext.getLabel("SOLVE"));
+                solveButton_.addActionListener(this);
 
         add(solveButton_);
         add(createAlgorithmDropdown());
@@ -62,6 +63,7 @@ public class TopControlPanel<P, M> extends JPanel
      * algorithm selected.
      * @param e
      */
+    @Override
     public void itemStateChanged(ItemEvent e) {
 
         int selected = algorithmChoice_.getSelectedIndex();
@@ -73,6 +75,7 @@ public class TopControlPanel<P, M> extends JPanel
      * Must execute long tasks in a separate thread,
      * otherwise you don't see the steps of the animation.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         Object src = e.getSource();

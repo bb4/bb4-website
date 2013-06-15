@@ -71,6 +71,7 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
         return numTilesSelector;
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
 
         getController().setNumTiles((Integer)spinner.getValue());
@@ -88,6 +89,6 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
         PuzzleApplet applet = new TantrixPuzzle(args);
 
         // this will call applet.init() and start() methods instead of the browser
-        GUIUtil.showApplet(applet, "Tantrix Puzzle Solver");
+        GUIUtil.showApplet(applet);
     }
 }

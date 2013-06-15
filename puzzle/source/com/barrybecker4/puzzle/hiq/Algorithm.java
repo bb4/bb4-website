@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.hiq;
 
+import com.barrybecker4.common.AppContext;
 import com.barrybecker4.puzzle.common.AlgorithmEnum;
 import com.barrybecker4.puzzle.common.PuzzleController;
 import com.barrybecker4.puzzle.common.Refreshable;
@@ -17,21 +18,21 @@ import com.barrybecker4.puzzle.hiq.model.PegMove;
  */
 public enum Algorithm implements AlgorithmEnum<PegBoard, PegMove> {
 
-    SEQUENTIAL("Solve sequentially"),
-    CONCURRENT_BREADTH("Solve concurrently (mostly breadth first)"),
-    CONCURRENT_DEPTH("Solve concurrently (mostly depth first)"),
-    CONCURRENT_OPTIMUM("Solve concurrently (optimized between depth and breadth search)");
+    SEQUENTIAL,
+    CONCURRENT_BREADTH,
+    CONCURRENT_DEPTH,
+    CONCURRENT_OPTIMUM;
 
     private String label;
 
     /**
-     *Private constructor
-     * Creates a new instance of Algorithm
+     * Private constructor
      */
-    Algorithm(String label) {
-        this.label = label;
+    Algorithm() {
+        this.label = AppContext.getLabel(this.name());
     }
 
+    @Override
     public String getLabel() {
         return label;
     }
@@ -40,6 +41,7 @@ public enum Algorithm implements AlgorithmEnum<PegBoard, PegMove> {
     /**
      * Create an instance of the algorithm given the controller and a refreshable.
      */
+    @Override
     public PuzzleSolver<PegBoard, PegMove> createSolver(PuzzleController<PegBoard, PegMove> controller, Refreshable<PegBoard, PegMove> ui) {
 
         switch (this) {

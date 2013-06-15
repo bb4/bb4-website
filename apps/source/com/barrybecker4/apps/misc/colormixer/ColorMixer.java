@@ -102,7 +102,10 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
         }
     }
 
-
+    @Override
+    public String getName() {
+        return "Color Mixer";
+    }
 
     public void stateChanged(ChangeEvent ce) {
         Object source = ce.getSource();
@@ -117,6 +120,6 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
     public static void main( String[] args )
     {
         ColorMixer simulator = new ColorMixer();
-        GUIUtil.showApplet(simulator, "PathColor Mixer");
+        GUIUtil.showApplet(simulator);
     }
 }

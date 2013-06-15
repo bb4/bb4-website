@@ -38,13 +38,31 @@ public class PegBoardRenderer implements PuzzleRenderer<PegBoard> {
     @Override
     public void render( Graphics g, PegBoard board, int width, int height ) {
 
-        int i, xpos, ypos;
         int size = PegBoard.SIZE;
         int rightEdgePos = LEFT_MARGIN + 3 * INC * size;
         int bottomEdgePos = TOP_MARGIN + 3 * INC * size;
-        g.setColor( Color.black );
 
-        // draw the hatches which delineate the cells
+        drawGrid(g, size, rightEdgePos, bottomEdgePos);
+
+
+        // now draw the pieces that we have so far
+        for (byte row = 0; row < size; row++) {
+            for (byte col = 0; col < size; col++) {
+
+                if (PegBoard.isValidPosition(row, col)) {
+
+                    drawPegLocation(g, board, row, col);
+                }
+            }
+        }
+    }
+
+    /**
+     *  draw the hatches which delineate the cells
+     */
+    private void drawGrid(Graphics g, int size, int rightEdgePos, int bottomEdgePos) {
+        int i, ypos, xpos;
+
         g.setColor( Color.darkGray );
         for ( i = 0; i <= size; i++ )  //   -----
         {
@@ -56,26 +74,21 @@ public class PegBoardRenderer implements PuzzleRenderer<PegBoard> {
             xpos = LEFT_MARGIN + i * 3 * INC;
             g.drawLine( xpos, TOP_MARGIN, xpos, bottomEdgePos );
         }
+    }
 
-        // now draw the pieces that we have so far
-        for (byte row = 0; row < size; row++) {
-            for (byte col = 0; col < size; col++) {
+    private void drawPegLocation(Graphics g, PegBoard board, byte row, byte col) {
+        int xpos;
+        int ypos;
+        xpos = LEFT_MARGIN + col * 3 * INC + INC / 3;
+        ypos = TOP_MARGIN + row * 3 * INC + 2 * INC / 3;
 
-                if (PegBoard.isValidPosition(row, col)) {
+        boolean empty = board.isEmpty(row, col);
+        Color c = empty ?  EMPTY_HOLE_COLOR : FILLED_HOLE_COLOR;
+        int r = empty ? EMPTY_HOLE_RAD : FILLED_HOLE_RAD;
+        g.setColor(c);
+        int rr = r / 2;
 
-                    xpos = LEFT_MARGIN + col * 3 * INC + INC / 3;
-                    ypos = TOP_MARGIN + row * 3 * INC + 2 * INC / 3;
-
-                    boolean empty = board.isEmpty(row, col);
-                    Color c = empty ?  EMPTY_HOLE_COLOR : FILLED_HOLE_COLOR;
-                    int r = empty ? EMPTY_HOLE_RAD : FILLED_HOLE_RAD;
-                    g.setColor(c);
-                    int rr = r / 2;
-
-                    g.fillOval(xpos + INC - rr, ypos + INC - rr, r, r);
-                }
-            }
-        }
+        g.fillOval(xpos + INC - rr, ypos + INC - rr, r, r);
     }
 }
 

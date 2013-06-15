@@ -57,11 +57,16 @@ public class AxesSynch extends JApplet {
         resizablePanel.setSize(width, height);
     }
 
+    @Override
+    public String getName() {
+        return "Axes Synchronizer";
+    }
+
 
     //------ Main method --------------------------------------------------------
 
     public static void main( String[] args ) {
         AxesSynch simulator = new AxesSynch();
-        GUIUtil.showApplet( simulator, "Axes Synchronizer" );
+        GUIUtil.showApplet( simulator );
     }
 }

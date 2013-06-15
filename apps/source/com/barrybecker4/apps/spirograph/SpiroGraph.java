@@ -33,13 +33,19 @@ public class SpiroGraph extends ApplicationApplet {
         return mainPanel;
     }
 
+    @Override
+    public String getName() {
+        return "Spirograph";
+    }
+
+
     /**
      *  Main method - to allow running as an application instead of applet.
      */
     public static void main( String[] args ) {
 
         SpiroGraph applet = new SpiroGraph();
-        GUIUtil.showApplet( applet, "SpiroGraph" );
+        GUIUtil.showApplet( applet);
     }
 }
 

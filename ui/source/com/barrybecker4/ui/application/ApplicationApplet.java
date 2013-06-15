@@ -3,7 +3,6 @@ package com.barrybecker4.ui.application;
 
 import com.barrybecker4.common.AppContext;
 import com.barrybecker4.common.CommandLineOptions;
-import com.barrybecker4.common.i18n.LocaleType;
 import com.barrybecker4.ui.components.ResizableAppletPanel;
 import com.barrybecker4.ui.util.GUIUtil;
 import com.barrybecker4.ui.util.Log;
@@ -37,8 +36,8 @@ public abstract class ApplicationApplet extends JApplet{
         if (args.length > 0) {
             CommandLineOptions options = new CommandLineOptions(args);
 
-            if (options.contains("help")) {
-                System.out.println("Usage: [-locale <locale>]");
+            if (options.contains("help")) {                          // NON-NLS
+                System.out.println("Usage: [-locale <locale>]");     // NON-NLS
             }
             if (options.contains("locale")) {
                 // then a locale has been specified
@@ -46,7 +45,7 @@ public abstract class ApplicationApplet extends JApplet{
 
             }
         }
-        initailizeContext(localeName);
+        initializeContext(localeName);
     }
 
     /**
@@ -60,7 +59,7 @@ public abstract class ApplicationApplet extends JApplet{
             if (localeName == null) {
                 localeName = "ENGLISH";
             }
-            initailizeContext(localeName);
+            initializeContext(localeName);
         }
 
         resizablePanel_ = new ResizableAppletPanel(createMainPanel());
@@ -68,10 +67,8 @@ public abstract class ApplicationApplet extends JApplet{
     }
 
 
-    private void initailizeContext(String localeName) {
-        String resourceBaseName = getClass().getPackage().getName() + ".message";
-        System.out.println("localeName = "+ localeName);
-        System.out.println("resourceBase = "+ resourceBaseName);
+    private void initializeContext(String localeName) {
+        String resourceBaseName = getClass().getPackage().getName() + ".message";  // NON-NLS
         AppContext.initialize(localeName, resourceBaseName, new Log());
     }
 
@@ -93,12 +90,16 @@ public abstract class ApplicationApplet extends JApplet{
         }
     }
 
+    @Override
+    public String getName() {
+        return AppContext.getLabel("APP_TITLE");  // NON-NLS
+    }
+
     /**
      * called by the browser after init(), if running as an applet
      */
     @Override
     public void start() {
-        System.out.println("applet start");
         validate();
     }
 }
