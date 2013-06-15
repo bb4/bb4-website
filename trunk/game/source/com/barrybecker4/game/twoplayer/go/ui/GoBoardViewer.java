@@ -59,7 +59,7 @@ public final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
      * perform a pass for the current player.
      */
     public void pass() {
-        GameContext.log( 1, "passing" );
+        GameContext.log( 1, "passing" );   // NON-NLS
         GoMove m = GoMove.createPassMove( 0, get2PlayerController().isPlayer1sTurn() );
         continuePlay( m );
     }

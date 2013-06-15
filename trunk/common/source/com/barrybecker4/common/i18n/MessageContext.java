@@ -1,20 +1,19 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2000-2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.i18n;
 
 import com.barrybecker4.common.ILog;
 
 import javax.swing.JComponent;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 /**
- * Manage access to localize message bundles.
+ * Manage access to localized message bundles.
+ * When creating an instance specify the paths to the resource bundles to use.
  *
  * @author Barry Becker
  */
@@ -29,32 +28,39 @@ public final class MessageContext {
     /** now the variable forms of the above defaults */
     private int debug_ = 0;
 
-    private Set<String> commonMessageKeys_;
+    /** the list of paths the define where to get the messageBundles */
+    private List<String> resourcePaths_;
 
-    private final String commonResourcePath_;
-    private String applicationResourcePath_;
-
-    private ResourceBundle commonMessages_ = null;
-    private ResourceBundle applicationMessages_ = null;
+    /** the list of bundles to look for messages in */
+    private List<ResourceBundle> messagesBundles_ ;
 
     private LocaleType currentLocale_ = DEFAULT_LOCALE;
 
 
     /**
      * Constructor
-     * @param commonResourcePath  common messages
+     * @param resourcePath path to message bundle
      */
-    public MessageContext(String commonResourcePath) {
-
-        commonResourcePath_ = commonResourcePath;
+    public MessageContext(String resourcePath) {
+        this(new ArrayList<String>(Arrays.asList(resourcePath)));
     }
 
     /**
-     * @param applicationResourcePath application specific messages
+     * Constructor
+     * @param resourcePaths list of paths to message bundles
      */
-    public void setApplicationResourcePath(String applicationResourcePath) {
-        applicationResourcePath_ = applicationResourcePath;
-        applicationMessages_ = null;
+    public MessageContext(List<String> resourcePaths) {
+        resourcePaths_ = resourcePaths;
+        messagesBundles_ = new ArrayList<ResourceBundle>();
+    }
+
+    /**
+     * @param resourcePath another resource path to get a message bundle from.
+     */
+    public void addResourcePath(String resourcePath) {
+        assert !resourcePaths_.contains(resourcePath);
+        resourcePaths_.add(resourcePath);
+        messagesBundles_.clear();
     }
 
     public void setDebugMode(int debugMode) {
@@ -91,8 +97,8 @@ public final class MessageContext {
      */
     public void setLocale(LocaleType locale) {
         currentLocale_ = locale;
-        applicationMessages_ = null;
-        initCommonMessages(currentLocale_);
+        messagesBundles_.clear();
+        initMessageBundles(currentLocale_);
         JComponent.setDefaultLocale(currentLocale_.getLocale());
     }
 
@@ -108,57 +114,38 @@ public final class MessageContext {
      */
     public String getLabel(String key)  {
         String label = key;
-        if (commonMessages_ == null)  {
-            initCommonMessages(currentLocale_);
+        if (messagesBundles_.isEmpty())  {
+            initMessageBundles(currentLocale_);
         }
-        if (commonMessageKeys_.contains(key))  {
-            return commonMessages_.getString(key);
+        boolean found = false;
+        int numBundles = messagesBundles_.size();
+        int ct = 0;
+        while (!found && ct < numBundles)
+        {
+            ResourceBundle bundle = messagesBundles_.get(ct++);
+            if (bundle.containsKey(key))  {
+                label = bundle.getString(key);
+                found = true;
+            }
         }
-        if (applicationResourcePath_ != null) {
 
-            if (applicationMessages_ == null) {
-                loadAppResources();
-            }
-
-            try {
-               label = applicationMessages_.getString(key);
-            }
-            catch (MissingResourceException e) {
-               log(0,  e.getMessage() );
-            }
-
+        if (!found) {
+            String msg = "Could not find label for " + key + " among " + resourcePaths_.toString();
+            log(0, msg);
+            throw new MissingResourceException(msg, resourcePaths_.toString(), key);
         }
         return label;
     }
 
-    private void initCommonMessages(LocaleType locale) {
-        commonMessages_ =
-            ResourceBundle.getBundle(commonResourcePath_, locale.getLocale());
-        Enumeration enum1 = commonMessages_.getKeys();
+    private void initMessageBundles(LocaleType locale) {
 
-        commonMessageKeys_ = new HashSet<String>();
-        while (enum1.hasMoreElements()) {
-            commonMessageKeys_.add((String)enum1.nextElement());
+        for (String path :  resourcePaths_) {
+            ResourceBundle bundle = ResourceBundle.getBundle(path, locale.getLocale());
+            assert (bundle != null) : "Messages bundle for "+ path + " was not found.";
+            messagesBundles_.add(bundle);
         }
+
         JComponent.setDefaultLocale(locale.getLocale());
-    }
-
-    /**
-     * This method causes the appropriate message bundle to
-     * be loaded for the game specified.
-     */
-    private void loadAppResources() {
-
-        try {
-            applicationMessages_ =
-                    ResourceBundle.getBundle(applicationResourcePath_, currentLocale_.getLocale());
-        }
-        catch (MissingResourceException e) {
-            log(0, "could not find " + applicationResourcePath_);
-            e.printStackTrace();
-        }
-        assert (applicationMessages_ != null) : "gameMessages were null after loading them from :"
-                + applicationResourcePath_;
     }
 
     /**

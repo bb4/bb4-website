@@ -84,8 +84,8 @@ public class GameApp {
         else if (args.length > 1) {
             CommandLineOptions options = new CommandLineOptions(args);
 
-            if (options.contains("help")) {
-                GameContext.log(0, "Usage: -name <game> [-locale <locale>]");
+            if (options.contains("help")) {     // NON-NLS
+                GameContext.log(0, "Usage: -name <game> [-locale <locale>]"); // NON_NLS
             }
             // create a game panel of the appropriate type based on the name of the class passed in.
             // if no game is specified as an argument, then we show a menu for selecting a game

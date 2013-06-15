@@ -1,4 +1,4 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2000-2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common;
 
 import com.barrybecker4.common.ILog;
@@ -44,8 +44,8 @@ public final class GameContext {
         }
     }
 
-    public static final String GAME_ROOT = "game/source/com/barrybecker4/game/";
-    public static final String GAME_RESOURCE_ROOT = "com/barrybecker4/game/";
+    public static final String GAME_ROOT = "game/source/com/barrybecker4/game/"; // NON-NLS
+    public static final String GAME_RESOURCE_ROOT = "com/barrybecker4/game/";   // NON-NLS
 
     /** if greater than 0, then debug mode is on. the higher the number, the more info that is printed.  */
     private static final int DEBUG = 0;
@@ -57,7 +57,7 @@ public final class GameContext {
     private static final boolean PROFILING = false;
     private static boolean profiling_ = PROFILING;
 
-    private static final String COMMON_MESSAGE_BUNDLE = "com.barrybecker4.game.common.resources.coreMessages";
+    private static final String COMMON_MESSAGE_BUNDLE = "com.barrybecker4.game.common.resources.coreMessages"; // NON-NLS
     private static MessageContext messageContext_ = new MessageContext(COMMON_MESSAGE_BUNDLE);
 
 
@@ -139,17 +139,17 @@ public final class GameContext {
      * @param gameName the current game
      */
     public static void loadResources(String gameName) {
-        log(0, "loadGameResources gameName=" + gameName);
+        log(0, "loadGameResources gameName=" + gameName);             // NON-NLS
         GamePlugin plugin = PluginManager.getInstance().getPlugin(gameName);
         assert plugin!=null : "Could not find plugin for " + gameName;
-        log(0, "plugin = " + plugin);
-        log(0, "gameName=" + gameName + " plugin=" + plugin);
+        log(0, "plugin = " + plugin);     // NON-NLS
+        log(0, "gameName=" + gameName + " plugin=" + plugin);  // NON-NLS
         String resourcePath = plugin.getMsgBundleBase();
-        log(2, "searching for "+ resourcePath);
+        log(2, "searching for "+ resourcePath);          // NON-NLS
 
         messageContext_.setLogger(logger_);
         messageContext_.setDebugMode(debug_);
-        messageContext_.setApplicationResourcePath(resourcePath);
+        messageContext_.addResourcePath(resourcePath);
     }
 
     /**
