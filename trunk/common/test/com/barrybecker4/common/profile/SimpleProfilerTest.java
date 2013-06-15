@@ -27,7 +27,7 @@ public class SimpleProfilerTest extends TestCase {
         ThreadUtil.sleep(5);
 
         ProfilerEntry entry = profiler.getEntry(SimpleProfiler.ROOT);
-        assertEquals("Unexpected elapsed time", 10, entry.getTime());
+        assertTrue("Unexpected elapsed time", entry.getTime()>=10 && entry.getTime() <=11);
     }
 
     public void testProfilerTimeWhenDisabled() {
