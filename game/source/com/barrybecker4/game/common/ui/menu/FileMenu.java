@@ -33,7 +33,7 @@ public class FileMenu extends JMenu implements ActionListener {
         openItem_ = createMenuItem(GameContext.getLabel("OPEN"));
         saveItem_ = createMenuItem(GameContext.getLabel("SAVE"));
         saveImageItem_ = createMenuItem(GameContext.getLabel("SAVE_IMAGE"));
-        exitItem_ = createMenuItem("Exit");
+        exitItem_ = createMenuItem(GameContext.getLabel("EXIT"));
         add(openItem_);
         add(saveItem_);
         add(saveImageItem_);

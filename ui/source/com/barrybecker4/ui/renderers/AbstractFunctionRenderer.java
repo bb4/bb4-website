@@ -77,9 +77,9 @@ public abstract class AbstractFunctionRenderer {
         g2.drawLine(xOffset_ + MARGIN-1,        yOffset_ + height_- MARGIN -1,
                     xOffset_ + MARGIN-1 + width_, yOffset_ + height_ - MARGIN -1);
 
-        g2.drawString("max = " + FormatUtil.formatNumber(yRange.getMax()),
+        g2.drawString("max = " + FormatUtil.formatNumber(yRange.getMax()), // NON-NLS
                 xOffset_ + MARGIN/3, yOffset_ + MARGIN -2);
-        g2.drawString("min = " + FormatUtil.formatNumber(yRange.getMin()),
+        g2.drawString("min = " + FormatUtil.formatNumber(yRange.getMin()), // NON-NLS
                 xOffset_ + MARGIN/3, yOffset_ + height_ - MARGIN );
     }
 

@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.dialogs;
 
+import com.barrybecker4.common.AppContext;
 import com.barrybecker4.ui.components.ImageListPanel;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class ImagePreviewDialog extends AbstractDialog
 
         image_ = img;
         this.setResizable(true);
-        setTitle("Image Preview");
+        setTitle(AppContext.getLabel("IMAGE_PREVIEW"));
         this.setModal( true );
         showContent();
     }
@@ -52,7 +53,7 @@ public class ImagePreviewDialog extends AbstractDialog
     protected  JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
-        initBottomButton(cancelButton, "Cancel", "Cancel image prview" );
+        initBottomButton(cancelButton, AppContext.getLabel("CANCEL"), "Cancel image prview" );
         buttonsPanel.add(cancelButton);
 
         return buttonsPanel;

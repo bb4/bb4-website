@@ -88,6 +88,7 @@ public class GamePlugin {
         return isDefault_;
     }
 
+    @SuppressWarnings("HardCodedStringLiteral")
     @Override
     public String toString() {
         StringBuilder bldr = new StringBuilder(name_);

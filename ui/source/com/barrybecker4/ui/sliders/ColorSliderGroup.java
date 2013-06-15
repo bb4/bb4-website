@@ -1,6 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.sliders;
 
+import com.barrybecker4.common.AppContext;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -12,9 +14,9 @@ import java.awt.*;
  */
 public class ColorSliderGroup extends JPanel implements ChangeListener {
 
-    private static final String RED_LABEL = "Red : ";
-    private static final String GREEN_LABEL = "Green : ";
-    private static final String BLUE_LABEL = "Blue : ";
+    private static final String RED = "RED";
+    private static final String GREEN = "GREEN";
+    private static final String BLUE = "BLUE";
     private JLabel red_, green_, blue_;
     private JSlider redSlider_, greenSlider_, blueSlider_;
     private JPanel swatch_;
@@ -31,9 +33,9 @@ public class ColorSliderGroup extends JPanel implements ChangeListener {
         setLayout(bl);
         setBorder(BorderFactory.createEtchedBorder());
 
-        red_ = new JLabel( RED_LABEL + '0', JLabel.LEFT  );
-        green_ = new JLabel( GREEN_LABEL + '0', JLabel.LEFT );
-        blue_ = new JLabel( BLUE_LABEL + '0', JLabel.LEFT  );
+        red_ = new JLabel( getColorLabel(RED) + '0', JLabel.LEFT  );
+        green_ = new JLabel( getColorLabel(GREEN) + '0', JLabel.LEFT );
+        blue_ = new JLabel( getColorLabel(BLUE) + '0', JLabel.LEFT  );
 
         JPanel redPanel = createColorLabelPanel(red_ );
         JPanel greenPanel = createColorLabelPanel(green_ );
@@ -61,6 +63,10 @@ public class ColorSliderGroup extends JPanel implements ChangeListener {
         add( blueSlider_ );
 
         updateSwatch();
+    }
+
+    private String getColorLabel(String key) {
+        return AppContext.getLabel(key) + " : ";
     }
 
     private JPanel createColorLabelPanel(JLabel label) {
@@ -92,18 +98,19 @@ public class ColorSliderGroup extends JPanel implements ChangeListener {
      * one of the sliders has moved.
      * @param e
      */
+    @Override
     public void stateChanged( ChangeEvent e )
     {
         JSlider src = (JSlider) e.getSource();
 
         if ( src == redSlider_ ) {
-            red_.setText( RED_LABEL + redSlider_.getValue() );
+            red_.setText( getColorLabel(RED) + redSlider_.getValue() );
         }
         else if ( src == greenSlider_ ) {
-            green_.setText( GREEN_LABEL + greenSlider_.getValue() );
+            green_.setText( getColorLabel(GREEN) + greenSlider_.getValue() );
         }
         else if ( src == blueSlider_ ) {
-            blue_.setText( BLUE_LABEL + blueSlider_.getValue() );
+            blue_.setText( getColorLabel(BLUE) + blueSlider_.getValue() );
         }
         updateSwatch();
     }

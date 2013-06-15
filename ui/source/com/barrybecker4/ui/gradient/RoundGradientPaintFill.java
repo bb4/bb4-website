@@ -11,7 +11,7 @@ public class RoundGradientPaintFill
 
     public static void main( String[] args ) {
         RoundGradientPaintFill f = new RoundGradientPaintFill();
-        f.setTitle( "RoundGradientPaintFill v1.0" );
+        f.setTitle( "RoundGradientPaintFill v1.0" ); //NON-NLS
         f.setSize( 200, 200 );
         f.center();
         f.setVisible( true );

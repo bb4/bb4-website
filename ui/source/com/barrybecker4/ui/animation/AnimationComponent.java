@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.animation;
 
+import com.barrybecker4.common.AppContext;
 import com.barrybecker4.common.concurrency.ThreadUtil;
 import com.barrybecker4.common.format.FormatUtil;
 
@@ -69,6 +70,7 @@ public abstract class AnimationComponent extends Container
      * Do the timeStepping and rendering in a separate thread
      * so the rest of the GUI does not freeze and can still handle events.
      */
+    @Override
     public void run() {
 
         render();
@@ -114,11 +116,11 @@ public abstract class AnimationComponent extends Container
      */
     protected JToggleButton createStartButton()  {
 
-        final JToggleButton toggleButton = new JToggleButton( "Start", true);
+        final JToggleButton toggleButton = new JToggleButton( AppContext.getLabel("START"), true);
         toggleButton.addItemListener( new ItemListener() {
             public void itemStateChanged( ItemEvent ie ) {
                 boolean paused = ie.getStateChange() == ItemEvent.SELECTED;
-                toggleButton.setText(paused ? "Resume" : "Pause");
+                toggleButton.setText(paused ? AppContext.getLabel("RESUME") : AppContext.getLabel("PAUSE"));
                 setPaused(paused);
             }
         } );
@@ -136,7 +138,7 @@ public abstract class AnimationComponent extends Container
      * Message to show in the status bar at the bottom
      */
     protected String getStatusMessage() {
-        return FormatUtil.formatNumber(getFrameRate()) + " fps";
+        return FormatUtil.formatNumber(getFrameRate()) + AppContext.getLabel("FPS") + " ";
     }
 
     public double getFrameRate() {

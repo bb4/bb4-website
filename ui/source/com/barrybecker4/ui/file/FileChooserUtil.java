@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.file;
 
+import com.barrybecker4.common.AppContext;
 import com.barrybecker4.common.util.FileUtil;
 
 import javax.swing.*;
@@ -48,11 +49,11 @@ public final class FileChooserUtil {
 
 
     public static File getSelectedFileToSave(String extension, File defaultDir) {
-        return getSelectedFile("Save", extension, defaultDir);
+        return getSelectedFile(AppContext.getLabel("SAVE"), extension, defaultDir);
     }
 
     public static File getSelectedFileToOpen(String extension, File defaultDir) {
-         return getSelectedFile("Open", extension, defaultDir);
+         return getSelectedFile(AppContext.getLabel("OPEN"), extension, defaultDir);
     }
 
     private static File getSelectedFile(String action, String extension, File defaultDir) {
@@ -60,8 +61,7 @@ public final class FileChooserUtil {
         JFileChooser chooser = FileChooserUtil.getFileChooser(new ExtensionFileFilter(extension));
          chooser.setDialogTitle(action);
          chooser.setApproveButtonText(action);
-         // not really very i18nish, but oh ok for now.
-         chooser.setApproveButtonToolTipText(action + " the specified file.");
+         chooser.setApproveButtonToolTipText(AppContext.getLabel("ACTION_FILE", new Object[] {action}));
 
          if (defaultDir != null) {
              chooser.setCurrentDirectory(defaultDir);

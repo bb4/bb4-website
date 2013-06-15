@@ -15,7 +15,7 @@ public class OutputWindow extends AbstractDialog {
 
     protected ScrollingTextArea textArea_ = null;
 
-    private static final Font TEXT_FONT = new Font("Times-Roman", Font.PLAIN, 10 );
+    private static final Font TEXT_FONT = new Font("Times-Roman", Font.PLAIN, 10 ); //NON-NLS
     private static final long serialVersionUID = 1234L;
 
     /**

@@ -4,6 +4,7 @@ package com.barrybecker4.common;
 import com.barrybecker4.common.i18n.MessageContext;
 
 import java.text.NumberFormat;
+import java.util.List;
 
 /**
  * Manage application context such as logging, debugging, resources.
@@ -25,15 +26,15 @@ public final class AppContext {
     /**
      * Initialize the app context once a the start of a program
      * @param localeName name of the locale to use (ENGLISH, GERMAN, etc)
-     * @param resourceBaseName location of the properties file in the classpath
+     * @param resourcePaths locations of the properties file in the classpath pointing to message bundles
      * @param logger logging implementation
      */
-    public static void initialize(String localeName, String resourceBaseName, ILog logger) {
-        assert resourceBaseName != null;
+    public static void initialize(String localeName, List<String> resourcePaths, ILog logger) {
+        assert resourcePaths != null;
         assert logger != null;
         logger_ = logger;
 
-        messageContext_ = new MessageContext(resourceBaseName);
+        messageContext_ = new MessageContext(resourcePaths);
         messageContext_.setLogger(logger_);
         messageContext_.setDebugMode(debug_);
         messageContext_.setLocale(localeName);
@@ -75,6 +76,15 @@ public final class AppContext {
      */
     public static String getLabel(String key) {
         return messageContext_.getLabel(key);
+    }
+
+    /**
+     * Use this version if there are parameters to the localized string
+     * @param key message key
+     * @return the localized message label
+     */
+    public static String getLabel(String key, Object[] params) {
+        return messageContext_.getLabel(key, params);
     }
 
     /** private constructor for all static class. */

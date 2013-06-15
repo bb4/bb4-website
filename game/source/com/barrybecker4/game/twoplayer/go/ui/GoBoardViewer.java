@@ -68,7 +68,7 @@ public final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
      * Current player resigns from the game.
      */
     public void resign() {
-        GameContext.log( 1, "player resigns" );
+        GameContext.log( 1, "player resigns" );  // NON_NLS
         GoMove m = GoMove.createResignationMove(get2PlayerController().isPlayer1sTurn());
         continuePlay( m );
     }
@@ -94,7 +94,7 @@ public final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
             return "";  // avoids concurrent modification exception
 
         Location loc = getBoardRenderer().createLocation(e);
-        StringBuilder sb = new StringBuilder( "<html><font=-3>" );
+        StringBuilder sb = new StringBuilder( "<html><font=-3>" );  // NON_NLS
 
         GoBoardPosition space = (GoBoardPosition) ((IRectangularBoard)controller_.getBoard()).getPosition( loc );
         if ( space != null && GameContext.getDebugMode() > 0 ) {

@@ -17,6 +17,7 @@ import java.io.OutputStream;
  * @see OutputWindow
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class Log implements ILog {
 
     // you can specify the debug, profile info, warning, and error resources to go to one

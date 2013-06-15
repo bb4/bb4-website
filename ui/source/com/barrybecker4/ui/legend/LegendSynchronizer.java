@@ -9,6 +9,7 @@ import com.barrybecker4.common.math.Range;
  *
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class LegendSynchronizer {
 
     /**
