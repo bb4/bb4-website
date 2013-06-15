@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.ui.legend;
 
+import com.barrybecker4.common.AppContext;
 import com.barrybecker4.common.ColorMap;
 
 import javax.swing.*;
@@ -122,7 +123,7 @@ class LegendEditBar extends JPanel
         else if (e.getClickCount() > 1) {
             Color oldColor = cmap_.getColorForValue(getValueForPosition(xpos));
             Color newControlColor =
-                        JColorChooser.showDialog(this, "New Control Point PathColor", oldColor);
+                        JColorChooser.showDialog(this, AppContext.getLabel("NEW_POINT_PATH"), oldColor);
             if (newControlColor != null) {
                 if (index == -1) {
                     // add a new control point and marker here if no point is double clicked on.

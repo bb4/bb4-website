@@ -103,7 +103,7 @@ public enum SearchStrategyType {
      * @return localized description.
      */
     public String getTooltip() {
-        return GameContext.getLabel(labelKey_ + "_TIP");
+        return GameContext.getLabel(labelKey_ + "_TIP");  // NON-NLS
     }
 
 

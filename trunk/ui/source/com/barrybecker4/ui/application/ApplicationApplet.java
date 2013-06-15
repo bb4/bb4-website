@@ -8,6 +8,7 @@ import com.barrybecker4.ui.util.GUIUtil;
 import com.barrybecker4.ui.util.Log;
 
 import javax.swing.*;
+import java.util.Arrays;
 
 /**
  * Base class for programs that you want to be
@@ -68,8 +69,9 @@ public abstract class ApplicationApplet extends JApplet{
 
 
     private void initializeContext(String localeName) {
-        String resourceBaseName = getClass().getPackage().getName() + ".message";  // NON-NLS
-        AppContext.initialize(localeName, resourceBaseName, new Log());
+        String appResources = getClass().getPackage().getName() + ".message";  // NON-NLS
+        String commonUiResources = "com.barrybecker4.ui.message";   // NON-NLS
+        AppContext.initialize(localeName, Arrays.asList(appResources, commonUiResources), new Log());
     }
 
     /**

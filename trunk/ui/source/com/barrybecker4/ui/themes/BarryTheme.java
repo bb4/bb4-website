@@ -12,6 +12,7 @@ import java.util.Map;
  * My own custom UI theme.
  * @author  Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class BarryTheme extends DefaultMetalTheme {
 
     public static final Color UI_BLACK = new Color( 0, 0, 0 );

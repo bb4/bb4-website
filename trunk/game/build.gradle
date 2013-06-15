@@ -64,6 +64,7 @@ task runGoJapanese(type: JavaExec, depends: classes) {
     main = 'com.barrybecker4.game.common.ui.GameApp'
     args = ["-name", "go", "-locale", "JAPANESE"]
     classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = ["-ea"]   // in gradle 1.7 default  jvmArgs can be set with applicationDefaultJvmArgs
 }
 
 

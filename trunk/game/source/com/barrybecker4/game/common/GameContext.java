@@ -134,7 +134,7 @@ public final class GameContext {
 
 
     /**
-     * This method causes the appropriate message bundle to
+     * This method causes the appropriate message bundles to
      * be loaded for the game specified.
      * @param gameName the current game
      */
@@ -150,6 +150,7 @@ public final class GameContext {
         messageContext_.setLogger(logger_);
         messageContext_.setDebugMode(debug_);
         messageContext_.addResourcePath(resourcePath);
+        messageContext_.addResourcePath("com.barrybecker4.ui.message");   // NON_NLS
     }
 
     /**

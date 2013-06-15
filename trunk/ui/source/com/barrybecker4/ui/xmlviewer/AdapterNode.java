@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
  *  display in the tree. It also returns children, index values,
  *  and child counts.
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class AdapterNode {
 
     private Node domNode_;
@@ -19,9 +20,9 @@ public class AdapterNode {
      * Array indexes = nodeType() values.
      */
     private static final String[] typeName = {
-        "none", "Element", "Attr", "Text", "CDATA",                    // NON-NLS
-        "EntityRef", "Entity", "ProcInstr", "Comment", "Document",     // NON-NLS
-        "DocType", "DocFragment", "Notation", "Use"                    // NON-NLS
+        "none", "Element", "Attr", "Text", "CDATA",
+        "EntityRef", "Entity", "ProcInstr", "Comment", "Document",
+        "DocType", "DocFragment", "Notation", "Use"
     };
 
     private static final int ELEMENT_TYPE =   1;

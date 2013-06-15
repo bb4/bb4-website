@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.dialogs;
 
+import com.barrybecker4.common.AppContext;
 import com.barrybecker4.ui.components.GradientButton;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ import java.awt.event.KeyListener;
 public class PasswordDialog extends AbstractDialog
                             implements ActionListener, KeyListener {
 
-    private static final String DEFAULT_PASSWORD = "hello123";
+    private static final String DEFAULT_PASSWORD = "hello123"; //NON-NLS
     private String password_;
 
     private JPasswordField passwordField_;
@@ -52,7 +53,7 @@ public class PasswordDialog extends AbstractDialog
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         this.setResizable(false);
         this.setModal( true );
-        setTitle("Enter the top secret password");
+        setTitle(AppContext.getLabel("ENTER_PW"));
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel pwPanel = new JPanel(new FlowLayout());
@@ -61,7 +62,7 @@ public class PasswordDialog extends AbstractDialog
         passwordField_.addKeyListener(this);
         passwordField_.setColumns(password_.length());
 
-        pwPanel.add(new JLabel("password:"));
+        pwPanel.add(new JLabel(AppContext.getLabel("PASSWORD")));
         pwPanel.add(passwordField_);
 
         JPanel buttonsPanel = createButtonsPanel();
@@ -82,9 +83,9 @@ public class PasswordDialog extends AbstractDialog
 
         okButton_ = new GradientButton();
         initBottomButton( okButton_,
-                "OK", "Check to see if the password is correct. " );
+                AppContext.getLabel("OK"), "Check to see if the password is correct. " );
         initBottomButton(cancelButton,
-                "Cancel", "Go back to the main window without entering a password." );
+                AppContext.getLabel("CANCEL"), "Go back to the main window without entering a password." );
 
         buttonsPanel.add( okButton_ );
         buttonsPanel.add(cancelButton);
@@ -109,7 +110,7 @@ public class PasswordDialog extends AbstractDialog
         }
         else {
             JOptionPane.showMessageDialog( null,
-                    "Invalid Passord!", "Error", JOptionPane.ERROR_MESSAGE );
+                    AppContext.getLabel("INVALID_PW"), AppContext.getLabel("ERROR"), JOptionPane.ERROR_MESSAGE );
         }
     }
 

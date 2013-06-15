@@ -27,7 +27,7 @@ public final class ColorUtil
 
         long intColor;
         try {
-            intColor = Long.decode("0x" + sColor);
+            intColor = Long.decode("0x" + sColor);     // NON-NLS
         }
         catch (NumberFormatException e) {
             throw new IllegalArgumentException("bad color format: " + sColor, e);

@@ -98,7 +98,7 @@ class EditWeightsPanel extends JPanel {
             }
         }
         if (sErrors.length() >1)
-            JOptionPane.showMessageDialog(this, sErrors, "Parameters Out of Range", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, sErrors, "Parameter is out of Range", JOptionPane.WARNING_MESSAGE);
     }
 }
 

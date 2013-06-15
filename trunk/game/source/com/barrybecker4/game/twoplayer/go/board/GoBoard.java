@@ -207,7 +207,7 @@ public final class GoBoard extends TwoPlayerBoard {
 
         // if its a passing move, there is nothing to do
         if ( m.isPassOrResignation() ) {
-            GameContext.log(2, m.isPassingMove() ? "Making passing move" : "Resigning");
+            GameContext.log(2, m.isPassingMove() ? "Making passing move" : "Resigning");   // NON-NLS
             getProfiler().stopMakeMove();
             return true;
         }

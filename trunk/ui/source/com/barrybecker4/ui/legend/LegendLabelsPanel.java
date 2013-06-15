@@ -18,7 +18,7 @@ import java.awt.geom.Rectangle2D;
  */
 class LegendLabelsPanel extends JPanel {
 
-    private static final Font LABEL_FONT = new Font("Sanserif", Font.PLAIN, 10);
+    private static final Font LABEL_FONT = new Font("Sanserif", Font.PLAIN, 10); //NON-NLS
     private static final int LABEL_SPACING = 110;
 
     /**

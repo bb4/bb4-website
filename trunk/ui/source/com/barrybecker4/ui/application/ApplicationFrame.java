@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
  */
 public class ApplicationFrame extends JFrame {
 
-    public static final String DEFAULT_TITLE = "ApplicationFrame v1.0";
+    public static final String DEFAULT_TITLE = "ApplicationFrame v1.0";   // NON-NLS
 
     public ApplicationFrame()  {
         this( DEFAULT_TITLE );
@@ -48,6 +48,6 @@ public class ApplicationFrame extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-        new ApplicationFrame("Test Frame");
+        new ApplicationFrame("Test Frame");  // NON-NLS
     }
 }

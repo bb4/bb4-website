@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class OnlineGameServer  {
 
-    public static final String GAME_OPTION = "game";
+    public static final String GAME_OPTION = "game";  // NON-NLS
 
     private Appendable text;
     private ServerSocket server;

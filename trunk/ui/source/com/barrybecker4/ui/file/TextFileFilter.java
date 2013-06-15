@@ -10,7 +10,7 @@ package com.barrybecker4.ui.file;
 
 public class TextFileFilter extends ExtensionFileFilter {
 
-    public static final String TEXT_EXTENSION = "txt";
+    public static final String TEXT_EXTENSION = "txt"; //NON-NLS
 
     public TextFileFilter() {
        super(TEXT_EXTENSION);

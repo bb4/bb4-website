@@ -4,6 +4,7 @@ package com.barrybecker4.common.i18n;
 import com.barrybecker4.common.ILog;
 
 import javax.swing.JComponent;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -113,6 +114,17 @@ public final class MessageContext {
      * @return  the localized message label
      */
     public String getLabel(String key)  {
+        return getLabel(key, null);
+    }
+
+    /**
+     * Look first in the common message bundle.
+     * If not found there, look in the application specific bundle if there is one.
+     * @param key
+     * @param params typically a list of string sto use a parameters to the template defined by the message from key.
+     * @return  the localized message label
+     */
+    public String getLabel(String key, Object[] params)  {
         String label = key;
         if (messagesBundles_.isEmpty())  {
             initMessageBundles(currentLocale_);
@@ -125,6 +137,10 @@ public final class MessageContext {
             ResourceBundle bundle = messagesBundles_.get(ct++);
             if (bundle.containsKey(key))  {
                 label = bundle.getString(key);
+                if (params != null) {
+                    MessageFormat formatter = new MessageFormat(label, currentLocale_.getLocale());
+                    label = formatter.format(params);
+                }
                 found = true;
             }
         }
@@ -136,6 +152,7 @@ public final class MessageContext {
         }
         return label;
     }
+
 
     private void initMessageBundles(LocaleType locale) {
 

@@ -13,7 +13,7 @@ import java.io.File;
 
 public class DirFileFilter extends FileFilter {
 
-   protected static final String DIRECTORY_DESC = "dir";
+   protected static final String DIRECTORY_DESC = "dir"; //NON-NLS
 
    @Override
    public boolean accept(File f)

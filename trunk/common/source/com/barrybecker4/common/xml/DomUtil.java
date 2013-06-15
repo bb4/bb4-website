@@ -231,8 +231,6 @@ public final class DomUtil {
             if (xsdUri != null)  {
                 factory.setAttribute( "http://java.sun.com/xml/jaxp/properties/schemaLanguage",
                                        "http://www.w3.org/2001/XMLSchema");
-
-                //URI schemaURI = new URI("http://barrybecker4.com/schema/yugioh.xsd");
                 factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource", xsdUri);
             }
 

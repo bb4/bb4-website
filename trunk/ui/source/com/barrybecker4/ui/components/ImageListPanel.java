@@ -100,7 +100,7 @@ public final class ImageListPanel extends JPanel
      */
     public void setSingleImage(BufferedImage image) {
         if (image == null) {
-            System.out.println("warning: setting null image");
+            System.out.println("warning: setting null image"); //NON-NLS
             return;
         }
         List<BufferedImage> imageList = new ArrayList<BufferedImage>(1);

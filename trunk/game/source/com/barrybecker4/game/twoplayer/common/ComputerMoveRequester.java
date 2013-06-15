@@ -33,22 +33,27 @@ public class ComputerMoveRequester implements SearchProgress {
         return controller_.requestComputerMove(isPlayer1);
     }
 
+    @Override
     public long getNumMovesConsidered() {
         return controller_.getSearchStrategy().getNumMovesConsidered();
     }
 
+    @Override
     public int getPercentDone() {
         return (controller_.getSearchStrategy() != null) ? controller_.getSearchStrategy().getPercentDone() : 0;
     }
 
+    @Override
     public void pause() {
         controller_.pause();
     }
 
+    @Override
     public boolean isPaused() {
         return controller_.isPaused();
     }
 
+    @Override
     public void continueProcessing() {
         controller_.getSearchStrategy().continueProcessing();
     }

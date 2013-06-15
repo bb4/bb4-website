@@ -137,6 +137,7 @@ public class LabeledSlider extends JPanel implements ChangeListener {
     /**
      * one of the sliders was moved.
      */
+    @Override
     public void stateChanged(ChangeEvent e) {
 
         double val = getValue();
@@ -151,6 +152,7 @@ public class LabeledSlider extends JPanel implements ChangeListener {
 
     @Override
     public String toString() {
+        //noinspection HardCodedStringLiteral
         return "Slider " + labelText_ + " min=" + min_+ " max=" + max_ + "  value=" + getValue() + " ratio=" + ratio_;
     }
 }

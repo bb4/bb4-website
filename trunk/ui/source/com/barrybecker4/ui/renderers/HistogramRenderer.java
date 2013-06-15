@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.renderers;
 
+import com.barrybecker4.common.AppContext;
 import com.barrybecker4.common.format.DefaultNumberFormatter;
 import com.barrybecker4.common.format.FormatUtil;
 import com.barrybecker4.common.format.INumberFormatter;
@@ -124,22 +125,22 @@ public class HistogramRenderer {
         g2.drawLine(MARGIN-1,         height_- MARGIN -1,
                     MARGIN-1 + width, height_ - MARGIN -1);
 
-        g2.drawString("Height = " + FormatUtil.formatNumber(maxHeight), MARGIN/3, MARGIN -2);
-        g2.drawString("Number trials = " + FormatUtil.formatNumber(sum_), width_ - 300, MARGIN -2);
-        g2.drawString("Mean = " + FormatUtil.formatNumber(mean_), width_ - 130, MARGIN -2);
+        g2.drawString(AppContext.getLabel("HEIGHT") + " = " + FormatUtil.formatNumber(maxHeight), MARGIN/3, MARGIN -2);
+        g2.drawString(AppContext.getLabel("NUM_TRIALS") + " = " + FormatUtil.formatNumber(sum_), width_ - 300, MARGIN -2);
+        g2.drawString(AppContext.getLabel("MEAN") + " = " + FormatUtil.formatNumber(mean_), width_ - 130, MARGIN -2);
 
         // draw a vertical line for the mean
         int meanXpos = (int)(MARGIN  + (double)width * xFunction_.getValue(mean_) / numBars_ + barWidth_/2);
         g2.drawLine(meanXpos,    height_ - MARGIN,
                     meanXpos,    MARGIN);
-        g2.drawString("Mean", meanXpos + 4, MARGIN + 12);
+        g2.drawString(AppContext.getLabel("MEAN"), meanXpos + 4, MARGIN + 12);
 
         // draw a vertical line for the median
         double median = calcMedian();
         int medianXpos = (int)(MARGIN  + (double)width * median / numBars_ + barWidth_/2);
         g2.drawLine(medianXpos,    height_ - MARGIN,
                     medianXpos,    MARGIN);
-        g2.drawString("Median", medianXpos + 4, MARGIN  + 28);
+        g2.drawString(AppContext.getLabel("MEDIAN"), medianXpos + 4, MARGIN  + 28);
     }
 
     private double calcMedian() {

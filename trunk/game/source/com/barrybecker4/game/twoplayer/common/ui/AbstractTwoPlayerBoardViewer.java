@@ -177,6 +177,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * The computer plays against itself.
      */
+    @Override
     public void doComputerVsComputerGame() {
 
         boolean done = false;
@@ -235,6 +236,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * Currently this does not actually step forward just one search step, but instead
      * stops after PROGRESS_STEP_DELAY more milliseconds.
      */
+    @Override
     public final void step() {
         progressBar.step();
     }
@@ -242,6 +244,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * resume computation
      */
+    @Override
     public final void continueProcessing()  {
         moveRequester_.continueProcessing();
     }
@@ -251,6 +254,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * The runnable body will run on the event-dispatch thread when the search has completed.
      * @param m the move that was selected by the computer.
      */
+    @Override
     public void computerMoved(final Move m) {
 
         final Runnable postMoveCleanup = new PostMoveCleanup(m);
@@ -421,6 +425,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
             this.lastMove = lastMove;
         }
 
+        @Override
         public void run() {
 
             setCursor( origCursor_ );

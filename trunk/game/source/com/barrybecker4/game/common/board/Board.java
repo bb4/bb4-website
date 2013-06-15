@@ -55,6 +55,7 @@ public abstract class Board implements IRectangularBoard {
     /**
      *  Reset the board to its initial state.
      */
+    @Override
     public void reset() {
         getMoveList().clear();
         positions_.clear(getPositionPrototype());
@@ -70,6 +71,7 @@ public abstract class Board implements IRectangularBoard {
      *  @param numRows the new number of rows for the board to have.
      *  @param numCols the new number of cols for the board to have.
      */
+    @Override
     public void setSize( int numRows, int numCols ) {
         GameContext.log(3, "Board rows cols== " + numRows + ", " + numCols);
         positions_ = new BoardPositions(numRows, numCols);
@@ -79,6 +81,7 @@ public abstract class Board implements IRectangularBoard {
     /**
      * @return  retrieve the number of rows that the board has.
      */
+    @Override
     public final int getNumRows() {
         return positions_.getNumRows();
     }
@@ -86,6 +89,7 @@ public abstract class Board implements IRectangularBoard {
     /**
      * @return  retrieve the number of columns that the board has.
      */
+    @Override
     public final int getNumCols() {
         return positions_.getNumCols();
     }
@@ -105,6 +109,7 @@ public abstract class Board implements IRectangularBoard {
     /**
      * {@inheritDoc}
      */
+    @Override
     public BoardPosition getPosition( int row, int col ) {
         return positions_.getPosition(row, col);
     }
@@ -112,6 +117,7 @@ public abstract class Board implements IRectangularBoard {
     /**
      * {@inheritDoc}
      */
+    @Override
     public BoardPosition getPosition( Location loc ) {
         return getPosition(loc.getRow(), loc.getCol());
     }
@@ -124,6 +130,7 @@ public abstract class Board implements IRectangularBoard {
      * @param move  to make
      * @return false if the move is illegal
      */
+    @Override
     public final boolean makeMove( Move move ) {
         boolean legal = makeInternalMove(move);
         getMoveList().add( move );
@@ -134,6 +141,7 @@ public abstract class Board implements IRectangularBoard {
      * undo the last move made.
      * @return  the move that got undone
      */
+    @Override
     public Move undoMove() {
         if ( !getMoveList().isEmpty() ) {
             Move move = getMoveList().removeLast();
@@ -163,7 +171,7 @@ public abstract class Board implements IRectangularBoard {
 
     /**
      * @param move the move to make
-     * @return false if the move is illegal (true if leagl)
+     * @return false if the move is illegal (true if legal)
      */
     protected abstract boolean makeInternalMove( Move move );
 
@@ -176,6 +184,7 @@ public abstract class Board implements IRectangularBoard {
     /**
      * @return true if the specified position is within the bounds of the board
      */
+    @Override
     public final boolean inBounds( int r, int c ) {
         return positions_.inBounds(r, c);
     }

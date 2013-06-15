@@ -19,9 +19,10 @@ import java.util.Map;
  *
  * @author Barry Becker Date: Jan 20, 2007
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class PluginManager {
 
-    private static final String PLUGINS_FILE = GameContext.GAME_RESOURCE_ROOT +  "plugins.xml";
+    private static final String PLUGINS_FILE = GameContext.GAME_RESOURCE_ROOT + "plugins.xml";
 
     private static PluginManager manager_ = null;
     private List<GamePlugin> plugins_;
@@ -37,14 +38,15 @@ public class PluginManager {
     private PluginManager() {
 
         URL url = FileUtil.getURL(PLUGINS_FILE);
-        GameContext.log(0, "about to parse url=" + url +"\n plugin file location=" + PLUGINS_FILE);
+        GameContext.log(0,
+            "about to parse url=" + url +"\n plugin file location=" + PLUGINS_FILE);
         Document xmlDocument = DomUtil.parseXML(url);
 
         initializePlugins(xmlDocument);
     }
 
     /**
-     * Get the pligins from the xml document
+     * Get the plugins from the xml document
      * @param document parsed xml from the plugins.xml file.
      */
     private void initializePlugins(Document document) {

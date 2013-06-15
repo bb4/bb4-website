@@ -22,13 +22,17 @@ import java.io.File;
 /**
  * Graphically view some XML document in a swing UI.
  */
-public class DomEcho  extends JPanel {
+public class DomEcho extends JPanel {
 
     private static final int WINDOW_HEIGHT = 460;
     private static final int LEFT_WIDTH = 300;
     private static final int RIGHT_WIDTH = 340;
     private static final int WINDOW_WIDTH = LEFT_WIDTH + RIGHT_WIDTH;
 
+    /**
+     * Constructor
+     * @param document the xml document to show
+     */
     public DomEcho(Document document) {
 
         this.setBorder(createBorder());
@@ -47,37 +51,51 @@ public class DomEcho  extends JPanel {
         htmlView.setPreferredSize(
            new Dimension( RIGHT_WIDTH, WINDOW_HEIGHT ));
 
-        // Wire the two views together. Use a selection listener
-        // created with an anonymous inner-class adapter.
-        tree.addTreeSelectionListener(
-           new TreeSelectionListener() {
-               public void valueChanged(TreeSelectionEvent e) {
-                 TreePath p = e.getNewLeadSelectionPath();
-                 if (p != null) {
-                     AdapterNode adpNode =
-                        (AdapterNode) p.getLastPathComponent();
-                     NamedNodeMap attribMap = adpNode.getDomNode().getAttributes();
-                     String attribs = DomUtil.getAttributeList(attribMap);
-
-                     htmlPane.setText(attribs);
-                 }
-               }
-         }
-       );
-
-       // Build split-pane view
-       JSplitPane splitPane =
-          new JSplitPane( JSplitPane.HORIZONTAL_SPLIT,
-                          treeView,
-                          htmlView );
-       splitPane.setContinuousLayout( true );
-       splitPane.setDividerLocation( LEFT_WIDTH );
-       splitPane.setPreferredSize(
-            new Dimension( WINDOW_WIDTH + 10, WINDOW_HEIGHT+10 ));
+        connectViews(tree, htmlPane);
+        JSplitPane splitPane = createSplitPane(treeView, htmlView);
 
        // Add GUI components
        this.setLayout(new BorderLayout());
-       this.add("Center", splitPane );
+       this.add(splitPane );
+    }
+
+    /**
+     * Wire the two views together. Use a selection listener
+     * created with an anonymous inner-class adapter.
+     * @param tree left view
+     * @param htmlPane right view detail
+     */
+    private void connectViews(JTree tree, final JEditorPane htmlPane) {
+        tree.addTreeSelectionListener(
+            new TreeSelectionListener() {
+                @Override
+                public void valueChanged(TreeSelectionEvent e) {
+                    TreePath p = e.getNewLeadSelectionPath();
+                    if (p != null) {
+                        AdapterNode adpNode = (AdapterNode) p.getLastPathComponent();
+                        NamedNodeMap attribMap = adpNode.getDomNode().getAttributes();
+                        String attribs = DomUtil.getAttributeList(attribMap);
+
+                        htmlPane.setText(attribs);
+                    }
+                }
+            }
+       );
+    }
+
+    /**
+     * @retrun new split-pane view with left and right view children
+     */
+    private JSplitPane createSplitPane(JScrollPane treeView, JScrollPane htmlView) {
+        JSplitPane splitPane =
+           new JSplitPane( JSplitPane.HORIZONTAL_SPLIT,
+                           treeView,
+                           htmlView );
+        splitPane.setContinuousLayout( true );
+        splitPane.setDividerLocation( LEFT_WIDTH );
+        splitPane.setPreferredSize(
+             new Dimension( WINDOW_WIDTH + 10, WINDOW_HEIGHT+10 ));
+        return splitPane;
     }
 
     /** Make a nice border */
@@ -91,10 +109,11 @@ public class DomEcho  extends JPanel {
 
 
     public static void makeFrame(Document document) {
-        // Set up a GUI framework
+
         JFrame frame = new JFrame("DOM Echo");
         frame.addWindowListener(
           new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {System.exit(0);}
           }
         );
@@ -102,7 +121,7 @@ public class DomEcho  extends JPanel {
         // Set up the tree, the views, and display it all
         final DomEcho echoPanel = new DomEcho(document);
 
-        frame.getContentPane().add("Center", echoPanel );
+        frame.getContentPane().add(echoPanel );
         frame.pack();
         Dimension screenSize =
            Toolkit.getDefaultToolkit().getScreenSize();
