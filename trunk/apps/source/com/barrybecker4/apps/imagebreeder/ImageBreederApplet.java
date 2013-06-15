@@ -314,6 +314,11 @@ public class ImageBreederApplet extends ApplicationApplet
          paramPanel.updateParameters(params);
     }
 
+    @Override
+    public String getName() {
+        return "Image Breeder";
+    }
+
 
     public static void main( String[] args ) {
         String imageFile = IMAGE_DIR + DEFAULT_IMAGE;
@@ -323,6 +328,6 @@ public class ImageBreederApplet extends ApplicationApplet
         System.out.println("imageFile=" + imageFile);
 
         ImageBreederApplet breeder = new ImageBreederApplet(imageFile);
-        GUIUtil.showApplet( breeder, "Image Breeder");
+        GUIUtil.showApplet( breeder);
     }
 }

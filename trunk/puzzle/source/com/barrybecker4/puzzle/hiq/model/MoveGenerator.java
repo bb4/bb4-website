@@ -35,7 +35,6 @@ public class MoveGenerator  {
                 moves.addAll(findMovesForLocation(pos, false));
             }
         }
-        //Collections.shuffle(moves);
         return moves;
     }
 
@@ -61,9 +60,9 @@ public class MoveGenerator  {
     private void checkMoveForDirection(byte r, byte c, int rowOffset, int colOffset, boolean undo, List<PegMove> moves) {
         byte fromRow = (byte)(r + rowOffset);
         byte fromCol = (byte)(c + colOffset);
-        if (board.isValidPosition(fromRow, fromCol)
-                && board.getPosition(fromRow, fromCol)!=undo
-                && board.getPosition((byte)(r + rowOffset/2), (byte)(c + colOffset/2))!=undo) {
+        if (PegBoard.isValidPosition(fromRow, fromCol)
+             && board.getPosition(fromRow, fromCol)!=undo
+             && board.getPosition((byte)(r + rowOffset/2), (byte)(c + colOffset/2))!=undo) {
             moves.add(new PegMove(fromRow, fromCol, r, c));
         }
     }

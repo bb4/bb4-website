@@ -1,4 +1,3 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.xmlviewer;
 
 import org.w3c.dom.Node;
@@ -20,20 +19,9 @@ public class AdapterNode {
      * Array indexes = nodeType() values.
      */
     private static final String[] typeName = {
-        "none",
-        "Element",
-        "Attr",
-        "Text",
-        "CDATA",
-        "EntityRef",
-        "Entity",
-        "ProcInstr",
-        "Comment",
-        "Document",
-        "DocType",
-        "DocFragment",
-        "Notation",
-        "Use"
+        "none", "Element", "Attr", "Text", "CDATA",                    // NON-NLS
+        "EntityRef", "Entity", "ProcInstr", "Comment", "Document",     // NON-NLS
+        "DocType", "DocFragment", "Notation", "Use"                    // NON-NLS
     };
 
     private static final int ELEMENT_TYPE =   1;
@@ -74,7 +62,7 @@ public class AdapterNode {
            return s;
         }
         if (domNode_.getNodeValue() != null) {
-           if (s.startsWith("ProcInstr"))
+           if (s.startsWith("ProcInstr"))      // NON-NLS
               s += ", ";
            else
               s += ": ";
@@ -128,16 +116,16 @@ public class AdapterNode {
                 while (j<sb.length()) {
                 if (sb.charAt(j) == '<') {
                     sb.setCharAt(j, '&');
-                    sb.insert(j+1, "lt;");
+                    sb.insert(j+1, "lt;");     // NON-NLS
                     j += 3;
                 } else if (sb.charAt(j) == '&') {
                     sb.setCharAt(j, '&');
-                    sb.insert(j+1, "amp;");
+                    sb.insert(j+1, "amp;");     // NON-NLS
                     j += 4;
                 }
                 j++;
             }
-            s.append("<pre>").append(sb).append("\n</pre>");
+            s.append("<pre>").append(sb).append("\n</pre>");       // NON-NLS
         }
         // Ignoring these:
         //   ATTR_TYPE      -- not in the DOM tree
@@ -201,19 +189,16 @@ public class AdapterNode {
       return count;
   }
 
-     // The list of elements to display in the tree
-    // Could set this with a command-line argument, but
-    // not much point -- the list of tree elements still
-    // has to be defined internally.
-    // Extra credit: Read the list from a file
-    // Super-extra credit: Process a DTD and build the list.
-   private static String[] treeElementNames = {
-        "slideshow",
-        "slide",
-        "title",         // For slideshow #1
-        "slide-title",   // For slideshow #10
-        "item",
-    };
+   /**
+    * The list of elements to display in the tree
+    */
+  private static String[] treeElementNames = {
+     "slideshow",
+     "slide",
+     "title",         // For slideshow #1
+     "slide-title",   // For slideshow #10
+     "item",
+  };
 
     boolean treeElement(String elementName) {
         for (final String n : treeElementNames) {

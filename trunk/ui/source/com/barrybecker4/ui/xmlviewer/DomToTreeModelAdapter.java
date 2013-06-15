@@ -1,4 +1,3 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.xmlviewer;
 
 import org.w3c.dom.Document;
@@ -22,37 +21,42 @@ public class DomToTreeModelAdapter implements TreeModel {
 
 
     public DomToTreeModelAdapter(Document document) {
-      document_ = document;
+        document_ = document;
     }
 
     // Basic TreeModel operations
-    public Object  getRoot() {
-      return new AdapterNode(document_);
+    @Override
+    public Object getRoot() {
+        return new AdapterNode(document_);
     }
 
     /**
      * Determines whether the icon shows up to the left.
-     * @param aNode
+     * @param node node to check to see if leaf
      * @return  true for any node with no children
      */
-    public boolean isLeaf(Object aNode) {
-      AdapterNode node = (AdapterNode) aNode;
-      return node.childCount() <= 0;
+    @Override
+    public boolean isLeaf(Object node) {
+        AdapterNode n = (AdapterNode) node;
+        return n.childCount() <= 0;
     }
 
+    @Override
     public int getChildCount(Object parent) {
-    AdapterNode node = (AdapterNode) parent;
-    return node.childCount();
+        AdapterNode node = (AdapterNode) parent;
+        return node.childCount();
     }
 
+    @Override
     public Object getChild(Object parent, int index) {
-    AdapterNode node = (AdapterNode) parent;
-    return node.child(index);
+        AdapterNode node = (AdapterNode) parent;
+        return node.child(index);
     }
 
+    @Override
     public int getIndexOfChild(Object parent, Object child) {
-    AdapterNode node = (AdapterNode) parent;
-    return node.index((AdapterNode) child);
+        AdapterNode node = (AdapterNode) parent;
+        return node.index((AdapterNode) child);
     }
 
     /**
@@ -62,18 +66,21 @@ public class DomToTreeModelAdapter implements TreeModel {
      * @param path
      * @param newValue
      */
+    @Override
     public void valueForPathChanged(TreePath path, Object newValue) {}
 
     /*
      * Use these methods to add and remove event listeners.
      * (Needed to satisfy TreeModel interface, but not used.)
      */
+    @Override
     public void addTreeModelListener(TreeModelListener listener) {
         if ( listener != null  && ! listenerList_.contains( listener ) ) {
            listenerList_.add( listener );
         }
     }
 
+    @Override
     public void removeTreeModelListener(TreeModelListener listener) {
         if ( listener != null ) {
            listenerList_.remove( listener );
@@ -86,8 +93,7 @@ public class DomToTreeModelAdapter implements TreeModel {
      * Methods taken from TreeModelSupport class described at
      *   http://java.sun.com/products/jfc/tsc/articles/jtree/index.html
      * That architecture (produced by Tom Santos and Steve Wilson)
-     * is more elegant. I just hacked 'em in here so they are
-     * immediately at hand.
+     * is more elegant.
      */
     public void fireTreeNodesChanged( TreeModelEvent e ) {
         for ( TreeModelListener listener : listenerList_ ) {

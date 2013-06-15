@@ -40,8 +40,6 @@ public final class GraphicalAdventure extends ApplicationApplet
     private boolean storyEdited_ = false;
 
 
-    public GraphicalAdventure() {}
-
     /**
      * Constructor.
      * @param story initial story to show.
@@ -49,7 +47,7 @@ public final class GraphicalAdventure extends ApplicationApplet
     public GraphicalAdventure(String[] args, Story story) {
         super(args);
         story_ = story;
-        JFrame frame = GUIUtil.showApplet( this, story.getTitle());
+        JFrame frame = GUIUtil.showApplet( this);
 
         StoryMenu storyMenu = new StoryMenu(this);
 
@@ -59,6 +57,11 @@ public final class GraphicalAdventure extends ApplicationApplet
         frame.setJMenuBar(menubar);
         frame.invalidate();
         frame.validate();
+    }
+
+    @Override
+    public String getName() {
+        return story_.getTitle();
     }
 
     /**
@@ -193,9 +196,7 @@ public final class GraphicalAdventure extends ApplicationApplet
      */
     public static void main( String[] args ) throws IOException {
 
-        System.out.println("in main");
         Document document = Story.importStoryDocument(new String[]{}); //args);
-
         Story story = new Story(document);
 
         new GraphicalAdventure(args, story);

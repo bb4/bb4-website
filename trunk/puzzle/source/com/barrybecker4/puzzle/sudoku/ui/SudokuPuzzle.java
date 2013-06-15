@@ -54,6 +54,11 @@ public final class SudokuPuzzle extends JApplet {
         });
     }
 
+    @Override
+    public String getName() {
+        return "Sudoku Puzzle Solver";
+    }
+
     /**
      * use this to run as an application instead of an applet.
      */
@@ -62,6 +67,6 @@ public final class SudokuPuzzle extends JApplet {
         SudokuPuzzle applet = new SudokuPuzzle();
 
         // this will call applet.init() and start() methods instead of the browser
-        GUIUtil.showApplet( applet, "Sudoku Puzzle Solver" );
+        GUIUtil.showApplet( applet);
     }
 }

@@ -28,14 +28,14 @@ public final class PegMove {
      * All we need to know is the from position (which can be stored in 6 bits) and the to direction (which can be stored in 2 bits)
      * I know that a jump is always 2 spaces.
      */
-    PegMove( byte fromRow, byte fromCol,
-             byte destinationRow, byte destinationCol) {
+    PegMove(byte fromRow, byte fromCol,
+            byte destinationRow, byte destinationCol) {
         fromPosition = new ByteLocation(fromRow, fromCol);
         toPosition = new ByteLocation(destinationRow, destinationCol);
     }
 
-    PegMove( Location fromPosition,
-             Location destinationPosition) {
+    PegMove(Location fromPosition,
+            Location destinationPosition) {
         this.fromPosition = fromPosition.copy();
         this.toPosition = destinationPosition.copy();
     }
@@ -64,8 +64,8 @@ public final class PegMove {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("from(").append(fromPosition).append(") to (");
-        s.append(toPosition).append(')');
+        s.append("from ").append(fromPosition).append(" to ");
+        s.append(toPosition);
         return s.toString();
     }
 }

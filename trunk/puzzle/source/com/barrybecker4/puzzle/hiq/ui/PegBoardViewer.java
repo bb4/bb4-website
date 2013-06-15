@@ -81,8 +81,7 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
 
         path_ = path;
         board_ = board;
-        System.out.println("path size="+ path.size());
-        System.out.println("path="+ path);
+        System.out.println("path size="+ path.size());  // NON-NLS
         if (doneListener != null) {
             doneListener.done();
         }

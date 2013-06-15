@@ -31,17 +31,19 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
     public PuzzleViewer() {}
 
 
+    @Override
     public void refresh(P board, long numTries) {
         status_ = createStatusMessage(numTries);
         simpleRefresh(board, numTries);
     }
 
+    @Override
     public void finalRefresh(List<M> path, P board, long numTries, long millis) {
 
         float time = (float)millis / 1000.0f;
         status_ = "Did not find solution.";
         if (path != null)  {
-            status_ = "Found solution in " + FormatUtil.formatNumber(time) +" seconds. "
+            status_ = "Found solution in " + FormatUtil.formatNumber(time) + " seconds. "
                     + createStatusMessage(numTries);
         }
         System.out.println(status_);

@@ -21,10 +21,15 @@ public class SierpinskiApplet extends ApplicationApplet {
         return mainPanel;
     }
 
+    @Override
+    public String getName() {
+        return "Sierpinski Triangle";
+    }
+
     //------ Main method --------------------------------------------------------
 
     public static void main( String[] args ) {
         SierpinskiApplet simulator = new SierpinskiApplet();
-        GUIUtil.showApplet( simulator, "Sierpinski Triangle" );
+        GUIUtil.showApplet( simulator);
     }
 }

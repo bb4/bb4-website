@@ -26,9 +26,6 @@ public final class NavigationPanel extends JPanel
     NavigationPanel() {
         super(new BorderLayout());
 
-        //ResourceBundle messages =
-        //    ResourceBundle.getBundle("com.barrybecker4.puzzle.hiq.ui.message", LocaleType.GERMAN.getLocale());
-
         backButton_ = new JButton(AppContext.getLabel("BACKWARD"));
         forwardButton_ = new JButton(AppContext.getLabel("FORWARD"));
         backButton_.addActionListener(this);

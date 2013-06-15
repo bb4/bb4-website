@@ -33,6 +33,7 @@ public class ColorInputPanel extends JPanel
 
         colorButton.addActionListener(
             new ActionListener() {
+                @Override
                 public void actionPerformed( ActionEvent evt ) {
                     Object source = evt.getSource();
                     if ( source == colorButton ) {

@@ -71,6 +71,7 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
         return animSpeedSlider_;
     }
 
+    @Override
     public void sliderChanged(LabeledSlider slider) {
         ((RedPuzzleViewer)viewer_).setAnimationSpeed((int) animSpeedSlider_.getValue());
     }
@@ -84,6 +85,6 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
         PuzzleApplet applet = new RedPuzzle(args);
 
         // this will call applet.init() and start() methods instead of the browser
-        GUIUtil.showApplet(applet, "Red Puzzle Solver");
+        GUIUtil.showApplet(applet);
     }
 }

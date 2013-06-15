@@ -145,10 +145,9 @@ public final class GUIUtil {
      * This method is useful for turning Applets into applications.
      * For thread safety, this method should be invoked from the event-dispatching thread.
      * @param applet the applet to show
-     * @param title title to appear in the titlebar of the application frame.
      * @return frame containing the applet.
      */
-    public static JFrame showApplet( final JApplet applet, final String title) {
+    public static JFrame showApplet(final JApplet applet) {
         JFrame baseFrame = new JFrame();
         /* not needed since java 1.6? */
         baseFrame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
@@ -159,7 +158,6 @@ public final class GUIUtil {
             }
         });
 
-        baseFrame.setTitle(title);
         baseFrame.setContentPane(applet.getContentPane());
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
@@ -174,6 +172,7 @@ public final class GUIUtil {
             baseFrame.setSize( applet.getSize() );
         }
         applet.init();
+        baseFrame.setTitle(applet.getName());
         baseFrame.repaint();
         baseFrame.setVisible( true );
 

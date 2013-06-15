@@ -40,17 +40,9 @@ task runSudoku(type: JavaExec, depends: classes) {
 task runHiQ(type: JavaExec, depends: classes) {
     main = 'com.barrybecker4.puzzle.hiq.ui.HiQPuzzle'
     classpath = sourceSets.main.runtimeClasspath
-    args = ['-locale', 'JAPANESE']
+    args = ['-locale', 'VIETNAMESE']
 }
 
-/*
-  <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle">
-     <java classname="com.barrybecker4.puzzle.hiq.ui.HiQPuzzle" classpath="${run.classPath}"
-           fork="true" jvm="${java_compiler}" maxmemory="512M">
-         <jvmarg value="${assertionsFlag}"/>
-     </java>
-  </target>
-*/
 
 dependencies {
    compile project(':sound')
