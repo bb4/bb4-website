@@ -33,7 +33,7 @@ public class PluginManager {
     private GamePlugin defaultGame_;
 
     /**
-     *  load plugin games from plugins.xml
+     * Load plugin games from plugins.xml
      */
     private PluginManager() {
 
@@ -43,6 +43,8 @@ public class PluginManager {
         Document xmlDocument = DomUtil.parseXML(url);
 
         initializePlugins(xmlDocument);
+        GameContext.log(0,
+            "plugin file parsed");
     }
 
     /**

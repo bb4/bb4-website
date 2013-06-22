@@ -1,7 +1,7 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.ui.animation;
 
-import com.barrybecker4.common.util.ImageUtil;
+import com.barrybecker4.ui.util.ImageUtil;
 
 import java.awt.Component;
 import java.awt.Dimension;

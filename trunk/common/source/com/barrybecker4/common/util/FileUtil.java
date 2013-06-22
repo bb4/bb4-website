@@ -1,8 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.util;
 
+import com.barrybecker4.common.AppContext;
 import com.barrybecker4.common.ClassLoaderSingleton;
 
+import java.applet.AppletContext;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,11 +50,12 @@ public final class FileUtil {
      */
     private static String getProjectHomeDir() {
         String home = "";
-         try {
+        try {
             home = System.getenv("PROJECT_HOME"); //NON-NLS
-         } catch (Exception e) {
-             throw new IllegalStateException("Must set PROJECT_HOME environment variable.");
-         }
+        } catch (Exception e) {
+            //throw new IllegalStateException("Must set PROJECT_HOME environment variable.");
+            System.out.println("Should set PROJECT_HOME environment variable if running locally."); // NON-NLS
+        }
         return home + FILE_SEPARATOR;
     }
     /**

@@ -3,7 +3,7 @@ package com.barrybecker4.game.twoplayer.comparison.model;
 
 import com.barrybecker4.common.format.FormatUtil;
 import com.barrybecker4.common.util.FileUtil;
-import com.barrybecker4.common.util.ImageUtil;
+import com.barrybecker4.ui.util.ImageUtil;
 import com.barrybecker4.game.common.persistence.GameExporter;
 
 import java.awt.image.BufferedImage;

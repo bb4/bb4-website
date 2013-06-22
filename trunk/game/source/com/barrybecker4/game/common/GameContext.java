@@ -132,7 +132,6 @@ public final class GameContext {
         return musicMaker_;
     }
 
-
     /**
      * This method causes the appropriate message bundles to
      * be loaded for the game specified.
@@ -150,7 +149,7 @@ public final class GameContext {
         messageContext_.setLogger(logger_);
         messageContext_.setDebugMode(debug_);
         messageContext_.addResourcePath(resourcePath);
-        messageContext_.addResourcePath("com.barrybecker4.ui.message");   // NON_NLS
+        messageContext_.addResourcePath("com.barrybecker4.ui.message");   // NON-NLS
     }
 
     /**

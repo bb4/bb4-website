@@ -62,7 +62,7 @@ public class GameMenuController
         GameContext.loadResources(gameName);
 
         if (gamePanel_ != null) {
-            GameContext.log(1, "game comp = " + getGameComponent());   //NON_NLS
+            GameContext.log(1, "game comp = " + getGameComponent());   //NON-NLS
             frame_.getContentPane().remove(getGameComponent());
         }
 

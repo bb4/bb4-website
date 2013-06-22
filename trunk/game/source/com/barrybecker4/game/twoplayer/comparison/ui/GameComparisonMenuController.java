@@ -20,7 +20,6 @@ public class GameComparisonMenuController extends GameMenuController {
      * GConstructor.
      */
     public GameComparisonMenuController(JFrame frame) {
-
         super(frame);
     }
 
@@ -38,11 +37,10 @@ public class GameComparisonMenuController extends GameMenuController {
         //gamePanel_.init(frame_);
 
         frame_.setTitle(gamePanel_.getTitle());
-        //frame_.setVisible(true);
     }
 
     @Override
     public void saveImage() {
-        GUIUtil.saveSnapshot((JComponent)frame_.getComponent(0), FileUtil.getHomeDir() + "/game");
+        GUIUtil.saveSnapshot((JComponent)frame_.getComponent(0), FileUtil.getHomeDir() + "/game");  // NON-NLS
     }
 }

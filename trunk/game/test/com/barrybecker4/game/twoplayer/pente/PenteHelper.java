@@ -9,6 +9,7 @@ import com.barrybecker4.game.twoplayer.common.search.SearchableHelper;
  */
 public class PenteHelper extends SearchableHelper {
 
+    @Override
     public TwoPlayerController createController() {
         return new PenteController(10, 10);
     }

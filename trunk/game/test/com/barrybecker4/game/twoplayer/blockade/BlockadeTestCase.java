@@ -21,11 +21,13 @@ public abstract class BlockadeTestCase extends TestCase {
 
     /** moved all test cases here so they are not included in the jar and do not need to be searched */
     private static final String EXTERNAL_TEST_CASE_DIR =
-            FileUtil.getHomeDir() +"/game/test/com/barrybecker4/game/twoplayer/blockade/cases/";
+            FileUtil.getHomeDir() +"/game/test/com/barrybecker4/game/twoplayer/blockade/cases/"; // NON-NLS
 
-    private static final String SGF_EXTENSION = ".sgf";
+    private static final String SGF_EXTENSION = ".sgf";  // NON-NLS
 
     protected BlockadeController controller_;
+
+
 
     /**
      * common initialization for all test cases.
@@ -33,8 +35,7 @@ public abstract class BlockadeTestCase extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        // this will load the resources for the specified game.
-        GameContext.loadResources("blockade");
+        GameContext.loadResources("blockade"); // NON-NLS
         GameContext.setDebugMode(0);
 
         controller_ = new BlockadeController();

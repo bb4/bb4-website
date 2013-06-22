@@ -12,6 +12,7 @@ subprojects {
     apply plugin: 'project-report'
     apply plugin: 'application'
     apply plugin: 'idea'
+    apply plugin: 'base'
 
     defaultTasks 'build'
     version = '1.0'
@@ -39,6 +40,14 @@ subprojects {
          manifest {
             attributes 'Implementation-Title': 'Applets', provider: 'gradle', 'Implementation-Version': version
         }
+    }
+
+    /**
+     * Copies the dependencies to the lib directory so they can be deployed (see webdeployment)
+     */
+    task copyToLib(dependsOn: jar, type: Copy) {
+        into "build/libs"
+        from configurations.runtime
     }
 
     uploadArchives {

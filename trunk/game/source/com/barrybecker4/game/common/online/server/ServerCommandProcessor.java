@@ -54,15 +54,6 @@ class ServerCommandProcessor {
 
         GamePlugin plugin = PluginManager.getInstance().getPlugin(gameName);
         GameContext.loadResources(gameName);
-        /*
-        Class c = ClassLoaderSingleton.loadClass(plugin.getControllerClass());
-        try {
-            controller_ = (GameController) c.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } */
 
         // for now, also create a corresponding viewer. The server should really not have knowledge of a UI component.
         // fix this by doing plugin.getModelInstance, then getting the controller from that.
@@ -89,7 +80,7 @@ class ServerCommandProcessor {
 
         switch (cmd.getName()) {
             case ENTER_ROOM :
-                GameContext.log(2,"Entering room.");
+                GameContext.log(2, "Entering room.");
                 break;
             case LEAVE_ROOM :
                 GameContext.log(0, "Player "+cmd.getArgument()+" is now leaving the room.");

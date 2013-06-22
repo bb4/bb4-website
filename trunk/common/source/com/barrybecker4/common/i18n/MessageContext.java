@@ -59,9 +59,10 @@ public final class MessageContext {
      * @param resourcePath another resource path to get a message bundle from.
      */
     public void addResourcePath(String resourcePath) {
-        assert !resourcePaths_.contains(resourcePath);
-        resourcePaths_.add(resourcePath);
-        messagesBundles_.clear();
+        if (!resourcePaths_.contains(resourcePath)) {
+            resourcePaths_.add(resourcePath);
+            messagesBundles_.clear();
+        }
     }
 
     public void setDebugMode(int debugMode) {

@@ -2,7 +2,7 @@
 package com.barrybecker4.simulation.common.rendering;
 
 import com.barrybecker4.common.ColorMap;
-import com.barrybecker4.common.util.ImageUtil;
+import com.barrybecker4.ui.util.ImageUtil;
 import com.barrybecker4.simulation.common.RectangularModel;
 
 import java.awt.*;

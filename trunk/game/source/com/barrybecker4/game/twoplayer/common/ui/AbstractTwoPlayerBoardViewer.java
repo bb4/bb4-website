@@ -5,6 +5,7 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.board.Board;
 import com.barrybecker4.game.common.player.PlayerList;
+import com.barrybecker4.game.common.ui.ComputerMoveProgressBar;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
