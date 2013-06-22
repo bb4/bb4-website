@@ -3,6 +3,7 @@ package com.barrybecker4.game.twoplayer.common.ui;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
+import com.barrybecker4.game.common.ui.ComputerMoveProgressBar;
 import com.barrybecker4.game.common.ui.dialogs.GameOptionsDialog;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
 import com.barrybecker4.game.common.ui.panel.GamePanel;

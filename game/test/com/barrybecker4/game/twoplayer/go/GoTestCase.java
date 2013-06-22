@@ -21,6 +21,7 @@ import java.util.Set;
  *
  * @author Barry Becker
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public abstract class GoTestCase extends TestCase {
 
     /** moved all test cases here so they are not included in the jar and do not need to be searched   */
@@ -41,7 +42,6 @@ public abstract class GoTestCase extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        // this will load the resources for the specified game.
         GameContext.loadResources("go");
         GameContext.setDebugMode(DEBUG_LEVEL);
 

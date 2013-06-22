@@ -3,7 +3,6 @@ package com.barrybecker4.ui.util;
 
 import com.barrybecker4.common.ClassLoaderSingleton;
 import com.barrybecker4.common.util.FileUtil;
-import com.barrybecker4.common.util.ImageUtil;
 import com.barrybecker4.ui.components.SplashScreen;
 import com.barrybecker4.ui.file.FileChooserUtil;
 import com.barrybecker4.ui.themes.BarryTheme;
@@ -106,7 +105,6 @@ public final class GUIUtil {
 
         return icon;
     }
-
 
     /**
      * Load a buffered image from a file or resource.

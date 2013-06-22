@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.game.twoplayer.common.ui;
+package com.barrybecker4.game.common.ui;
 
 import com.barrybecker4.common.format.FormatUtil;
 import com.barrybecker4.game.common.GameContext;
@@ -103,6 +103,7 @@ public class ComputerMoveProgressBar extends JProgressBar {
      */
     private class TimerListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent evt) {
 
             int percentDone = searchProgress.getPercentDone();

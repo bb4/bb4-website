@@ -58,7 +58,7 @@ task deploySchemas(description: "Copy schema files to $distributionDir") {
      }
 }
 
-task deployJars(type:Copy, dependsOn: ':common:copyToLib',
+task deployJars(type:Copy, dependsOn: [':common:copyToLib', ':ui:copyToLib'],
     description: "Deploys jar files needed for running applets and web start applications") {
 
     from fileTree("$project_home").files
@@ -70,7 +70,8 @@ task deployJars(type:Copy, dependsOn: ':common:copyToLib',
     include "vecmath*.jar"
 }
 
-task deploy(dependsOn: [compileJava, deployImages, deploySchemas, deployJars],
+// I would like this to trigger a top level build of everything, but right now it has to be done manually.
+task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
             description: "Deploys all files  to $distributionGameDir so they can be bulk copied to a website") << {
     apply from: 'appletHtmlCommon.gradle'
 

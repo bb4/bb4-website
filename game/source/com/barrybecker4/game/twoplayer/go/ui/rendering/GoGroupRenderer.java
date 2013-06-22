@@ -390,7 +390,6 @@ final class GoGroupRenderer {
         }
     }
 
-
     /**
      * Draw the border for the group.
      * fill in the cumulative group border.

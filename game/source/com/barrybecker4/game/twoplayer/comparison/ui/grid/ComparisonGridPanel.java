@@ -105,6 +105,7 @@ public final class ComparisonGridPanel
         return scrollPane;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         Object source = e.getSource();
@@ -144,8 +145,8 @@ public final class ComparisonGridPanel
         }
     }
 
+    @Override
     public void gameChanged(String gameName) {
-
         this.gameName = gameName;
     }
 
@@ -170,6 +171,7 @@ public final class ComparisonGridPanel
      * Update the grid with the results and allow the user to save the results to the filesystem.
      * @param model
      */
+    @Override
     public void performanceRunsDone(ResultsModel model) {
         finalResultsModel = model;
         grid_.updateWithResults(finalResultsModel);

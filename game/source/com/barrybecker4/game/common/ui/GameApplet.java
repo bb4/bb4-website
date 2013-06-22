@@ -34,7 +34,7 @@ public class GameApplet extends JApplet {
         }
 
         LocaleType locale = GameContext.getLocale(localeName, true);
-        GameContext.log(0, "setting the locale to " + locale + " for language=" + localeName);
+        GameContext.log(0, "setting the locale to " + locale + " for language=" + localeName);  // NON-NLS
 
         GameContext.loadResources(gameName);
         GameContext.setLocale(locale);
@@ -51,9 +51,9 @@ public class GameApplet extends JApplet {
      * Usually applets are not resizable within a web page, but this is a neat trick that allows you to do it.
      */
     @Override
-    public final void setSize( int width, int height )  {
+    public void setSize( int width, int height )  {
 
-        GameContext.log(3, "in setSize w="+width+" h="+height);
+        GameContext.log(0, "in setSize w="+width+" h="+height);  // NON-NLS
         gamePanel_.setSize( width, height );
     }
 }

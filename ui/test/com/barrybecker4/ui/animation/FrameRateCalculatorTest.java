@@ -115,7 +115,7 @@ public class FrameRateCalculatorTest extends TestCase {
     }
 
     public void testFrameRateAfter24WithDelayOf100() {
-        verifyFrameRateAfterN(24, 100, 10.0);
+        verifyFrameRateAfterN(24, 100, 9.9);
     }
 
     /*
@@ -134,7 +134,7 @@ public class FrameRateCalculatorTest extends TestCase {
     }
 
     public void testFrameRateWithDelayAfterFilled100() {
-        verifyFrameRateAfterN(100, 10, 98.0, 5.0);
+        verifyFrameRateAfterN(100, 10, 95.0, 11.0);
     }
 
     /*
@@ -143,7 +143,7 @@ public class FrameRateCalculatorTest extends TestCase {
     } */
 
     private void verifyFrameRateAfterN(int numFrames, int frameDelay, double expRate) {
-         verifyFrameRateAfterN(numFrames, frameDelay, expRate, 0.2);
+         verifyFrameRateAfterN(numFrames, frameDelay, expRate, 0.3);
     }
 
     /**

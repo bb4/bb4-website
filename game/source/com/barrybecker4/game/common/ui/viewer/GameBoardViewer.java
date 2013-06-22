@@ -12,7 +12,7 @@ import com.barrybecker4.game.common.persistence.GameExporter;
 import com.barrybecker4.game.common.ui.SgfFileFilter;
 import com.barrybecker4.game.common.ui.panel.GameChangedEvent;
 import com.barrybecker4.game.common.ui.panel.GameChangedListener;
-import com.barrybecker4.game.twoplayer.common.ui.ComputerMoveProgressBar;
+import com.barrybecker4.game.common.ui.ComputerMoveProgressBar;
 import com.barrybecker4.ui.file.FileChooserUtil;
 
 import javax.swing.*;
