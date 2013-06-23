@@ -34,40 +34,29 @@ clean.doLast {
 }
 
 // Should be able to have a type: CopyTask and use << instead of doLast
-task deployImages(description: "Copy image files to $distributionGameDir")  {
-    doLast {
-        copy {
-            from "$sourceDir/images"
-            into "$distributionGameDir"
-            include '**/*.jpg'
-            include '**/*.png'
-            include '**/*.gif'
-        }
-    }
+task deployImages(type: Copy, description: "Copy image files to $distributionGameDir")  {
+    from "$sourceDir/images"
+    into "$distributionGameDir"
+    include '**/*.jpg'
+    include '**/*.png'
+    include '**/*.gif'
 }
 
 // Should be able to have a type: CopyTask and use << instead of doLast
-task deploySchemas(description: "Copy schema files to $distributionDir") {
-     doLast {
-         copy {
-             from fileTree("$project_home").files
-             into "$distributionSchemaDir"
-             include "**/*.dtd"
-             include "**/*.xsd"
-         }
-     }
+task deploySchemas(type:Copy, description: "Copy schema files to $distributionDir") {
+
+     from fileTree("$project_home").files
+     into "$distributionSchemaDir"
+     include "**/*.dtd"
+     include "**/*.xsd"
 }
 
-task deployJars(type:Copy, dependsOn: [':common:copyToLib', ':ui:copyToLib'],
+task deployJars(type: Copy, dependsOn: [':common:copyToLib', ':ui:copyToLib', ':imageproc:copyToLib', ':game:copyToLib'],
     description: "Deploys jar files needed for running applets and web start applications") {
 
-    from fileTree("$project_home").files
+    from fileTree("$project_home").include('*/build/libs/**').files
     into "$distributionGameDir"
-    include "bb4-*.jar"
-    include "jhlabs-*.jar"
-    include "jigo-sgf-*.jar"
-    include "jai-codec-*.jar"
-    include "vecmath*.jar"
+    include 'bb4-*.jar', 'jhlabs-*.jar', 'jigo-sgf-*.jar', 'jai-codec-*.jar', 'vecmath-*.jar'
 }
 
 // I would like this to trigger a top level build of everything, but right now it has to be done manually.
@@ -80,9 +69,7 @@ task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
     copy {
         from "$sourceDir/html"
         into "$distributionGameDir/.."
-        include '*.js'
-        include '*.css'
-        include '*.gif'
+        include '*.js', '*.css', '*.gif'
     }
 
     println "localesList="+ appletHtml.localesList
