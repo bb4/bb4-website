@@ -96,7 +96,7 @@ class MatchMap extends LinkedHashMap<Rank, Integer> {
     }
 
     /**
-     * @return a map which has an entry for each card rank represented in the hand and its associated count.
+     * A map which has an entry for each card rank represented in the hand and its associated count.
      */
     private void init(List<Card> hand) {
 

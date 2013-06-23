@@ -4,16 +4,13 @@ package com.barrybecker4.game.multiplayer.poker.hand;
 import com.barrybecker4.game.card.Card;
 import com.barrybecker4.game.card.Rank;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * A poker hand typically has 5 cards from a deck of normal playing cards.
  * @author Barry Becker
  */
-public class PokerHandScorer implements Serializable {
-
-    private static final long serialVersionUID = 1;
+public class PokerHandScorer {
 
     /** The weighting to give the odds (1/probability) of getting the hands basic type (like a straight) */
     private static final float ODDS_WEIGHT = 1000.0f;

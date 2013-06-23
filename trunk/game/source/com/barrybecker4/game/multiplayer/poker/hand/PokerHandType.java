@@ -20,11 +20,11 @@ public enum PokerHandType {
     PAIR("Pair", 1.37f),
     HIGH_CARD("High Card", 1);
 
-
-    private final String label_;
+    /** Descriptive name for the type of hand */
+    private final String label;
 
     /** occurs one in this many hands  */
-    private final float odds_;
+    private final float odds;
 
 
     /**
@@ -33,16 +33,16 @@ public enum PokerHandType {
      * @param odds the odds of having this sort of hand
      */
     PokerHandType(String label, float odds) {
-        label_ = label;
-        odds_ = odds;
+        this.label = label;
+        this.odds = odds;
     }
 
-    public String label()   { return label_; }
+    public String label()   { return label; }
 
-    public float odds() { return odds_; }
+    public float odds() { return odds; }
 
     public String toString() {
-        return label_;
+        return label;
     }
 }
 

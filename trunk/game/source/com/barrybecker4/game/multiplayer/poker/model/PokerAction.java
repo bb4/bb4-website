@@ -13,23 +13,25 @@ public class PokerAction extends PlayerAction {
 
     public enum Name { FOLD, CALL, RAISE }
 
-    private Name name_;
+    /** name of the action taken by the player */
+    private Name name;
 
-    private int raiseAmount_;
+    /** the amount to raise the pot by, if RAISE is the action */
+    private int raiseAmount;
 
     public PokerAction(String playerName, Name name, int raiseAmount)  {
         super(playerName);
-        name_ = name;
-        raiseAmount_ = raiseAmount;
+        this.name = name;
+        this.raiseAmount = raiseAmount;
     }
 
     public Name getActionName() {
-        return name_;
+        return name;
     }
 
 
     public int getRaiseAmount() {
-        return raiseAmount_;
+        return raiseAmount;
     }
 
 }
