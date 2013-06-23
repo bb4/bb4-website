@@ -2,6 +2,7 @@
 package com.barrybecker4.game.multiplayer.poker.hand;
 
 import com.barrybecker4.game.card.Card;
+import com.barrybecker4.game.card.CardComparator;
 import com.barrybecker4.game.card.Deck;
 import com.barrybecker4.game.card.Rank;
 import com.barrybecker4.game.card.Suit;
@@ -36,7 +37,7 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
         this.hand = hand;
         faceUp = false;
         scorer = new PokerHandScorer();
-        update();
+        initialize();
     }
 
     /**
@@ -58,7 +59,7 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
         return hand.get(hand.size()-1).rank();
     }
 
-    private void update() {
+    private void initialize() {
         assert (!hand.isEmpty()): "You can't have an empty poker hand!";
         sort();
         matchMap = new MatchMap(hand);
@@ -87,8 +88,8 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
 
     /** sort the cards from low to high by rank. */
     void sort() {
-        CardComparator comparator = new CardComparator();
-        Collections.sort(hand, comparator);
+        Collections.sort(hand, new CardComparator());
+        Collections.reverse(hand);
     }
 
     /**
@@ -192,25 +193,4 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
         float diff = scorer.getScore(this) - scorer.getScore(hand);
         return diff > 0 ? 1 : (diff < 0 ? -1 :0);
     }
-
-    /**
-     * inner class used to define a sort order on cards in a poker hand.
-     * Sorts them from high to low.
-     */
-    private static class CardComparator implements Comparator<Card> {
-
-        @Override
-        public int compare(Card card1, Card card2) {
-
-            if (card1.rank() == card2.rank())   {
-                assert card1.suit() != null;
-                assert card2.suit() != null;
-                return card2.suit().ordinal() - card1.suit().ordinal();
-            }
-            else {
-                return card2.rank().ordinal() - card1.rank().ordinal();
-            }
-        }
-    }
-
 }

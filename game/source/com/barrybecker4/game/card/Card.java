@@ -23,6 +23,10 @@ public class Card implements Serializable {
         this.suit = suit;
     }
 
+    /**
+     * Create a card instance from a string
+     * @param cardToken string representation of the card (e.g. "JD", or "10H")
+     */
     public Card(String cardToken) {
         int len = cardToken.length();
         assert (len < 4);
