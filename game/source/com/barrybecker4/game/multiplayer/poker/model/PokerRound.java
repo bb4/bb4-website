@@ -143,7 +143,6 @@ public class PokerRound extends Move {
         return winner;
     }
 
-
     private boolean allButOneFolded(PlayerList players) {
 
         int numNotFolded = 0;
@@ -156,12 +155,11 @@ public class PokerRound extends Move {
         return (numNotFolded == 1);
     }
 
-
-     /**
-      * a player is not counted as active if he is "out of the game".
-      * @return  number of active players.
-      */
-     private int getNumNonFoldedPlayers(PlayerList players) {
+    /**
+     * a player is not counted as active if he is "out of the game".
+     * @return  number of active players.
+     */
+    private int getNumNonFoldedPlayers(PlayerList players) {
         int count = 0;
         for (final Player p : players) {
             PokerPlayer player = (PokerPlayer) p.getActualPlayer();
@@ -169,7 +167,7 @@ public class PokerRound extends Move {
                count++;
         }
         return count;
-     }
+    }
 
 }
 

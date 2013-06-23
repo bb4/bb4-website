@@ -56,7 +56,7 @@ public class PokerTable extends Board {
      */
     @Override
     public int getMaxNumMoves() {
-        return 1000000;
+        return 100000;
     }
 
     /**

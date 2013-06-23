@@ -213,19 +213,4 @@ public class PokerHand implements Serializable, Comparable<PokerHand> {
         }
     }
 
-    /**
-     * Test out the poker hand functionality
-     * @param args
-     */
-    public static void main(String[] args) {
-
-        Deck deck = new Deck();
-        System.out.println("deck="+deck+ "\n\n");
-
-        // test out a bunch of hands
-        for (int i=5; i<10; i++) {
-            PokerHand hand = new PokerHand(deck, i);
-             System.out.println("Poker Hand " + hand + "  score="+hand.getScore());
-        }
-    }
 }

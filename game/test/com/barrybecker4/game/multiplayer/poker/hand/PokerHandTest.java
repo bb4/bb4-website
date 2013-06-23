@@ -1,6 +1,7 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.game.multiplayer.poker.hand;
 
+import com.barrybecker4.game.card.Deck;
 import junit.framework.TestCase;
 
 import static com.barrybecker4.game.multiplayer.poker.hand.PokerHandTstUtil.createHand;
@@ -55,6 +56,17 @@ public class PokerHandTest extends TestCase {
         assertTrue(createHand("AS 3S 4S 5S 6S").hasFlush());
     }
 
+    /**
+     * est out a bunch of hands of different sizes
+     */
+    public void testHands() {
 
+        Deck deck = new Deck();
+
+        for (int i=5; i<9; i++) {
+            PokerHand hand = new PokerHand(deck, i);
+            assertEquals("Unexpected size of hand.", i, hand.size());
+        }
+    }
 
 }
