@@ -86,17 +86,18 @@ class MatchMap extends LinkedHashMap<Rank, Integer> {
 
     Card getSecondaryHighCard(List<Card> hand) {
         Card highestRankedCard = null;
-        for (Card c : hand) {
-            if (get(c.rank()) == 1
-                && (highestRankedCard == null || c.rank().ordinal() > highestRankedCard.rank().ordinal())) {
-               highestRankedCard = c;
+        for (Card card : hand) {
+            if (get(card.rank()) == 1
+                && (highestRankedCard == null || card.rank().ordinal() > highestRankedCard.rank().ordinal())) {
+               highestRankedCard = card;
             }
         }
         return highestRankedCard;
     }
 
     /**
-     * A map which has an entry for each card rank represented in the hand and its associated count.
+     * Builds the map which has an entry for each card rank represented in the hand and its associated count.
+     * Assumes that the cards in the hands are sorted descending by rank.
      */
     private void init(List<Card> hand) {
 

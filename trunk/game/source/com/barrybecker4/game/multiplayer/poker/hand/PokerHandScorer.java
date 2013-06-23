@@ -71,7 +71,8 @@ public class PokerHandScorer {
         hand.sort();
 
         // first check for a royal flush. If it exists return it, else check for straight flush, and so on.
-        for (PokerHandType handType : PokerHandType.values()) {
+        for (int i = PokerHandType.values().length-1; i >0 ; i--) {
+            PokerHandType handType = PokerHandType.values()[i];
             if (hasA(handType, hand)) {
                 return handType;
             }
