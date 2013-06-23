@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketPermission;
 import java.net.UnknownHostException;
 import java.security.AccessControlException;
 import java.util.List;
@@ -46,7 +47,7 @@ class ListenerSocket {
                     + "Playing a local game instead. " + e.getMessage());
         }
         catch (UnknownHostException e) {
-            exceptionOccurred("Unknown host: "+ host, e);
+            exceptionOccurred("Unknown host: " + host, e);
         }
         catch (IOException e) {
             exceptionOccurred("No I/O", e);
@@ -98,6 +99,7 @@ class ListenerSocket {
         isConnected = false;
         GameContext.log(0, msg);
         t.printStackTrace();
-        throw new RuntimeException(t);
+        // Don't stop execution. Online play simply won't be available.
+        // throw new RuntimeException(t);
     }
 }

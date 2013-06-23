@@ -17,15 +17,17 @@ import com.barrybecker4.game.multiplayer.poker.ui.PokerGameViewer;
  * Defines everything the computer needs to know to play Poker.
  *
  * ToDo list
- *  - for chat, you should only chat with those at your table if you are in a game, else chat only with those not in a game.
+ * - for chat, you should only chat with those at your table if you are in a game, else chat only with those not in a game.
  * - something screwed up adding players out of order
  * - fix TrivialMarker not showing number.
  * - All players should have an action that they perform (for all games. This action is like a move in a 2 player game.)
  * - add host and port to game options
  * - use real faces for players
+ * - Improve HandScore structure based on Peter Norvig's CS class
+ * - Allow for ties and split pot between winners.
  *
  *  - options dialog
- *     - Texas holdem
+ *     - Texas hold'em
  *     - N card stud
  *          - num cards for each
  *          - whether to use jokers

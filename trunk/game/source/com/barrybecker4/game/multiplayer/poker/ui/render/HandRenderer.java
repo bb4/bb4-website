@@ -23,17 +23,18 @@ public class HandRenderer  {
     /** the suit images   */
     private static ImageIcon[] suitImages_ = new ImageIcon[Suit.values().length];
 
-    private static final String IMAGE_DIR = GameContext.GAME_RESOURCE_ROOT + "multiplayer/poker/ui/images/";
+    private static final String IMAGE_DIR =
+            GameContext.GAME_RESOURCE_ROOT + "multiplayer/poker/ui/images/"; // NON-NLS
 
     /**
      * gets the images from resources or the filesystem
      * depending if we are running as an applet or application respectively.
      */
     static {
-        suitImages_[Suit.CLUBS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "club_small.gif");
-        suitImages_[Suit.SPADES.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "spade_small.gif");
-        suitImages_[Suit.HEARTS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "heart_small.gif");
-        suitImages_[Suit.DIAMONDS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "diamond_small.gif");
+        suitImages_[Suit.CLUBS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "club_small.gif");  // NON-NLS
+        suitImages_[Suit.SPADES.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "spade_small.gif");// NON-NLS
+        suitImages_[Suit.HEARTS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "heart_small.gif"); // NON-NLS
+        suitImages_[Suit.DIAMONDS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "diamond_small.gif"); // NON-NLS
     }
 
     private static final float CARD_WIDTH = 1.7f;
@@ -41,7 +42,7 @@ public class HandRenderer  {
     private static final float CARD_ARC = 0.28f;
     private static final int POKER_CARD_FONT_SIZE = 10;
     private static final Color CARD_BG_COLOR = Color.white;
-    private static final Color CARD_BACK_COLOR = new Color(170, 220, 255);
+    private static final Color CARD_BACK_COLOR = new Color(140, 220, 255);
     private static final Color RED_COLOR = new Color(200, 0, 0);
     private static final Color BLACK_COLOR   = Color.black;
 

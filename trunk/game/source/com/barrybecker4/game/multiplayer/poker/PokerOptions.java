@@ -12,12 +12,13 @@ public class PokerOptions extends MultiGameOptions {
     public static final int DEFAULT_MAX_ABS_RAISE = 50;
     public static final int DEFAULT_INITIAL_CASH = 100;
 
-
-    // starting bid
+    /** starting bid*/
     private int ante_ = DEFAULT_ANTE;
-    // can't raise by more than this
+
+    /** can't raise by more than this */
     private int maxAbsoluteRaise_ = DEFAULT_MAX_ABS_RAISE;
-    // default starting chips for each player
+
+    /** default starting chips for each player */
     private int initialChips_ = DEFAULT_INITIAL_CASH;
 
 

@@ -29,7 +29,7 @@ public class ChipRenderer {
 
         final PokerChips chips = new PokerChips(amount);
 
-        GameContext.log(3,"chips stacks = "+ chips);
+        GameContext.log(3, "chips stacks = " + chips);
 
         int x;
         int width;

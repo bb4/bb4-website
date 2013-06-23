@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.multiplayer.poker.ui.dialog;
 
-
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
@@ -11,10 +10,8 @@ import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import javax.swing.table.TableModel;
 import java.awt.*;
 
-
 /**
- * GalacticPlayerTable contains a list of players.
- * All the cells are editable.
+ * Contains a list of players. All the cells are editable.
  * It is initialized with a list of Players and returns a list of Players.
  * @see PokerPlayer
  *
@@ -64,7 +61,6 @@ class PokerPlayerTable extends PlayerTable {
         return players;
     }
 
-
     /**
      * add a row based on a player object
      * @param player to add
@@ -86,6 +82,6 @@ class PokerPlayerTable extends PlayerTable {
         int ct = table_.getRowCount();
         Color newColor = PokerPlayer.getNewPlayerColor(getPlayers());
         return PokerPlayer.createPokerPlayer(
-                                             "Robot "+(ct+1), DEFAULT_CASH_AMOUNT, newColor, true);
+                                             "Robot " + (ct+1), DEFAULT_CASH_AMOUNT, newColor, true);
     }
 }
