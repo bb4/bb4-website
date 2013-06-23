@@ -200,8 +200,8 @@ public abstract class GameController
      * @return the server connection if one can be created, else null.
      */
     protected IServerConnection createServerConnection() {
-        GameContext.log(0, "Cannot create a server connection for "+ this.getClass().getName()
-                           +". Online play not supported");
+        GameContext.log(0, "Cannot create a server connection for " + this.getClass().getName()
+                           + ". Online play not supported");
         return null;
     }
 

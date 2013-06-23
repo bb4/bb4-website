@@ -34,7 +34,7 @@ final class GameInstructionsPanel extends JPanel {
 
         JPanel instr = new JPanel();
         instr.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        JLabel currentCash = new JLabel("You currently have "+cash);
+        JLabel currentCash = new JLabel("You currently have "+ cash);
 
         JLabel amountToCall = new JLabel("To call, you need to add " + cf.format(callAmount));
 

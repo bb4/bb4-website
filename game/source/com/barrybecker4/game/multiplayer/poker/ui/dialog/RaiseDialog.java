@@ -129,20 +129,22 @@ final class RaiseDialog extends OptionsDialog {
                 JOptionPane.showMessageDialog(this, "You cannot raise by more money than you have!");
             }
             else if ((maxRaiseAllowed_ < allInAmount_) && (getRaiseAmount() > maxRaiseAllowed_))  {
-                JOptionPane.showMessageDialog(this, "The maximum raise allowed is $"+maxRaiseAllowed_+". You cannot raise by more than that.");
+                JOptionPane.showMessageDialog(this, "The maximum raise allowed is $"
+                        + maxRaiseAllowed_ + ". You cannot raise by more than that.");
             }
             else if (contrib > allInAmount_ - player_.getContribution()) {
                 JOptionPane.showMessageDialog(this, "You cannot raise by more money than the poorest player.");
             }
             else if (getRaiseAmount() > maxRaiseAllowed_) {
-                JOptionPane.showMessageDialog(this, "The maximum raise allowed is $"+maxRaiseAllowed_+". You cannot raise by more than that.");
+                JOptionPane.showMessageDialog(this, "The maximum raise allowed is $"
+                        + maxRaiseAllowed_ + ". You cannot raise by more than that.");
             }
             else {
                 this.setVisible(false);
             }
         }
         else {
-           System.out.println( "actionPerformed source="+source+". not cancel and not ok" );
+             throw new IllegalStateException("actionPerformed source=" + source + ". not cancel and not ok");
         }
     }
 
