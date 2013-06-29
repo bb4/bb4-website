@@ -34,7 +34,7 @@ public class PiecewiseFunction implements InvertibleFunction {
     @Override
     public double getValue(double value) {
 
-        return getValue(value, xValues, yValues);
+        return getInterpolatedValue(value);
     }
 
     /**
@@ -45,7 +45,7 @@ public class PiecewiseFunction implements InvertibleFunction {
     @Override
     public double getInverseValue(double value) {
 
-        return getValue(value, yValues, xValues);
+        return getInterpolatedValue(value);
     }
 
     @Override
@@ -54,27 +54,32 @@ public class PiecewiseFunction implements InvertibleFunction {
     }
 
 
-    private double getValue(double value, double[] xVals, double [] yVals) {
+    /**
+     *
+     * @param value
+     * @return the interpolated y value based on the key points in the arrays.
+     */
+    private double getInterpolatedValue(double value) {
 
         // first find the x value
         int i=0;
-        while (value > xVals[i]) {
+        while (value > xValues[i]) {
             i++;
         }
 
         // return the linearly interpolated y value
         if (i == 0) {
-            return yVals[0];
+            return yValues[0];
         }
-        double xValm1 = xVals[i - 1];
-        double denom = (xVals[i] - xValm1);
+        double xValm1 = xValues[i - 1];
+        double denom = (xValues[i] - xValm1);
 
         if (denom == 0) {
-            return yVals[i - 1];
+            return yValues[i - 1];
         } else {
             double ratio = (value - xValm1) / denom;
-            double yValm1 = yVals[i - 1];
-            return yValm1 + ratio * (yVals[i] -  yValm1);
+            double yValm1 = yValues[i - 1];
+            return yValm1 + ratio * (yValues[i] -  yValm1);
         }
     }
 

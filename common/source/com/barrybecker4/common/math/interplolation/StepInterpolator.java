@@ -10,6 +10,7 @@ public class StepInterpolator extends AbstractInterpolator {
         super(function);
     }
 
+    @Override
     public double interpolate(double value) {
         return function[(int)(value * function.length)];
     }

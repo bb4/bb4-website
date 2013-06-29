@@ -12,11 +12,11 @@ public class LinearInterpolator extends AbstractInterpolator {
         super(function);
     }
 
+    @Override
     public double interpolate(double value) {
         assert(value >= 0 && value <= 1.0) : "value out of range [0, 1] :" + value;
         int len =  function.length - 1;
         double x = value * (double) len;
-        //System.out.println("lin:  x=" + x);
 
         int index0 = (int) x;
 

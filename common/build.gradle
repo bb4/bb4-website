@@ -2,8 +2,6 @@
 // @author Barry Becker
 
 version = '1.0'
-mainClassName = "com.barrybecker4.apps.misc.brian.GCFProgram"
-
 
 dependencies {
     compile 'commons-collections:commons-collections:3.2'
@@ -13,11 +11,11 @@ dependencies {
 
 jar {
     archiveName = 'bb4-common-' + version + '.jar'
+
     manifest {
-        attributes 'Implementation-Title': 'Common code for all applications',
+        attributes 'Implementation-Title': 'Common code for all bb4 applications',
             'Implementation-Version': version,
-            provider: 'gradle',
-            'Main-Class': mainClassName
+            provider: 'gradle'
     }
 }
 

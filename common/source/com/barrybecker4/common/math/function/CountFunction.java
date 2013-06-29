@@ -54,6 +54,7 @@ public class CountFunction implements Function {
     }
 
     /** X axis domain */
+    @Override
     public Range getDomain() {
         return new Range(xValues.get(0), xValues.get(xValues.size()-1));
     }
@@ -62,6 +63,7 @@ public class CountFunction implements Function {
      * @param xValue x value to get y value for.
      * @return y value
      */
+    @Override
     public double getValue(double xValue) {
 
         return getValue(xValue, xValues, yValues);

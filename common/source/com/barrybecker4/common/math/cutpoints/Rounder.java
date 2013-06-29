@@ -8,7 +8,7 @@ import com.barrybecker4.common.math.MathUtil;
  *
  * @author Barry Becker
  */
-final class NiceNumberRounder {
+final class Rounder {
 
     /**
      * Find a "nice" number approximately equal to the numberToRound.
@@ -58,5 +58,5 @@ final class NiceNumberRounder {
     }
 
     /**  private constructor since all methods are static. */
-    private NiceNumberRounder() {}
+    private Rounder() {}
 }

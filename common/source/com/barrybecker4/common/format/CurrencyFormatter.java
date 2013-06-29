@@ -13,6 +13,7 @@ public class CurrencyFormatter implements INumberFormatter {
     private static final String CURRENCY_SYMBOL = Currency.getInstance(Locale.US).getSymbol();
 
 
+    @Override
     public String format(double number) {
         String formattedNumber = FormatUtil.formatNumber(number);
         return  CURRENCY_SYMBOL + formattedNumber;

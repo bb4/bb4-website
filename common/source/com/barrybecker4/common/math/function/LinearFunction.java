@@ -34,14 +34,17 @@ public class LinearFunction implements InvertibleFunction {
         }
     }
 
+    @Override
     public double getValue(double value) {
         return scale * value + offset;
     }
 
+    @Override
     public double getInverseValue(double value) {
         return (value - offset) / scale;
     }
 
+    @Override
     public Range getDomain() {
         return new Range(Double.MIN_VALUE, Double.MAX_VALUE);
     }
