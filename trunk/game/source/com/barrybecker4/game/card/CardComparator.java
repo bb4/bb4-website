@@ -4,7 +4,7 @@ package com.barrybecker4.game.card;
 import java.util.Comparator;
 
 /**
- * Used to sort a set of cards.
+ * Used to sort a set of cards in ascending order.
  * @author Barry Becker
  */
 public class CardComparator implements Comparator<Card> {

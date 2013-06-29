@@ -15,7 +15,7 @@ public class PokerHandTstUtil  {
 
     private PokerHandTstUtil() {}
 
-    public static PokerHand createHand(String line) {
+    public static Hand createHand(String line) {
          List<Card> cards = new ArrayList<Card>(5);
 
         StringTokenizer tokenizer = new StringTokenizer(line, " ");
@@ -26,7 +26,7 @@ public class PokerHandTstUtil  {
             cards.add(new Card(cardToken));
         }
 
-        return new PokerHand(cards);
+        return new Hand(cards);
     }
 
 }

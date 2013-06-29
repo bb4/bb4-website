@@ -6,7 +6,8 @@ import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
+import com.barrybecker4.game.multiplayer.poker.hand.Hand;
+import com.barrybecker4.game.multiplayer.poker.hand.PokerHandScorer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 
 /**
@@ -120,7 +121,7 @@ public class PokerRound extends Move {
      */
     public MultiGamePlayer determineWinner(PlayerList players) {
         PokerPlayer winner;
-        PokerHand bestHand;
+        Hand bestHand;
         int first=0;
 
         while (((PokerPlayer) players.get(first).getActualPlayer()).hasFolded() && first < players.size()) {
@@ -131,10 +132,11 @@ public class PokerRound extends Move {
 
         winner = (PokerPlayer)players.get(first);
         bestHand = winner.getHand();
+        PokerHandScorer scorer = new PokerHandScorer();
 
         for (int i = first+1; i < players.size(); i++) {
             PokerPlayer p = (PokerPlayer) players.get(i).getActualPlayer();
-            if (!p.hasFolded() && p.getHand().compareTo(bestHand) > 0) {
+            if (!p.hasFolded() && scorer.getScore(p.getHand()).compareTo(scorer.getScore(bestHand)) > 0) {
                 bestHand = p.getHand();
                 winner = p;
             }

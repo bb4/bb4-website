@@ -4,7 +4,8 @@ package com.barrybecker4.game.multiplayer.poker.hand;
 import com.barrybecker4.game.card.Deck;
 import junit.framework.TestCase;
 
-import static com.barrybecker4.game.multiplayer.poker.hand.PokerHandTstUtil.createHand;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -18,15 +19,27 @@ public class PokerHandDistributionTest extends TestCase {
     private static final int NUM_HANDS = 7000;
 
     /** instance under test */
-    PokerHand hand;
+    Hand hand;
 
     public void testHandDistributions() {
 
+        Map<HandType, Integer> distribution = new HashMap<HandType, Integer>();
+        PokerHandScorer scorer = new PokerHandScorer();
 
         for (int i=0; i<NUM_HANDS; i++) {
+            Hand hand = new Hand(new Deck(), 5);
+            HandType type = scorer.getScore(hand).getType();
 
+            if (distribution.containsKey(type)) {
+                distribution.put(type, distribution.get(type) + 1);
+            }
+            else {
+                distribution.put(type, 1);
+            }
         }
-        assertFalse("Unexpectedly had a straight", createHand("2H 4S 4C 2D 4H").hasStraight());
+
+        System.out.println("distribution = " + distribution);
+        assertTrue(true);
     }
 
 

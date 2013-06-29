@@ -3,36 +3,17 @@ package com.barrybecker4.game.multiplayer.poker.hand;
 
 import com.barrybecker4.game.card.Card;
 import com.barrybecker4.game.card.Rank;
+import com.barrybecker4.game.card.Suit;
 
 import java.util.List;
+
+import static com.barrybecker4.game.multiplayer.poker.hand.HandType.*;
 
 /**
  * A poker hand typically has 5 cards from a deck of normal playing cards.
  * @author Barry Becker
  */
 public class PokerHandScorer {
-
-    /** The weighting to give the odds (1/probability) of getting the hands basic type (like a straight) */
-    private static final float ODDS_WEIGHT = 1000.0f;
-
-    /**
-     * The weighting to give the cards that make up the type.
-     * For example if 3 kings then the we will add TYPE_RANK_WEIGHT * the rank of king
-     * If full house the type rank will be the rank of the card which appears three times plus the
-     * rank of the pair card.
-     */
-    private static final float TYPE_RANK_WEIGHT = 10.0f;
-
-    /**
-     * Only matters if the Primary score is a tie. The secondary cards are the cards not part of the
-     * primary hand. For example, if you have  three of a kind (QD QH QC 4D 6C)
-     * then the other two cards (4D 6c) are the secondary cards.  Only the highest ranked secondary
-     * card is used because it is impossible to have two cards with exactly the same value when suit is
-     * used to break ties (unless wild cards are used). I realize that I may be using a non-standard
-     * suit ordering (H, D, C, S) but its my game and I will do what I want. This is the same ordering used
-     * in 13 (Vietnamese card game).
-     */
-    private static final float SECONDARY_CARD_WEIGHT = 0.1f;
 
     /**
      * Constructor
@@ -46,93 +27,55 @@ public class PokerHandScorer {
      * First do a coarse comparison based on the type of the hand. If a tie, then look more closely
      * @return score for the hand
      */
-    public float getScore(PokerHand hand) {
+    public HandScore getScore(Hand hand) {
 
-        PokerHandType type = determineType(hand);
+        RankGrouping grouping = new RankGrouping(hand.getCards());
+        List<Rank> ranks = grouping.getRanks();
 
-        float score = ODDS_WEIGHT * type.odds()
-                + TYPE_RANK_WEIGHT * getTypeRank(type, hand);
+        boolean hasStraight = hasStraight(ranks);
+        boolean hasFlush = hasFlush(hand);
 
-        Card secondaryHighCard = hand.getSecondaryHighCard();
-        if (!type.equals(PokerHandType.HIGH_CARD) && secondaryHighCard != null) {
-            int value = secondaryHighCard.rank().ordinal() * 4 + secondaryHighCard.suit().ordinal();
-            score += SECONDARY_CARD_WEIGHT * value;
-        }
-        return score;
+        HandType type = determineType(grouping, hasStraight, hasFlush);
+
+        return new HandScore(type, ranks);
     }
 
     /**
-     * @param hand the hand to determine the type of
+     * @param grouping hand card grouping
      * @return the type of hand that we have. e.g. straight or flush
      */
-    PokerHandType determineType(PokerHand hand) {
+    private HandType determineType(RankGrouping grouping, boolean hasStraight, boolean hasFlush) {
 
-        // first sort the cards so its easier to tell what we have.
-        hand.sort();
+        if (grouping.matchesCounts(5)) return FIVE_OF_A_KIND;
+        else if (hasStraight && hasFlush) return STRAIGHT_FLUSH;
+        else if (grouping.matchesCounts(4, 1)) return FOUR_OF_A_KIND;
+        else if (grouping.matchesCounts(3, 2)) return FULL_HOUSE;
+        else if (hasFlush) return FLUSH;
+        else if (hasStraight) return STRAIGHT;
+        else if (grouping.matchesCounts(3, 1, 1)) return THREE_OF_A_KIND;
+        else if (grouping.matchesCounts(2, 2, 1)) return TWO_PAIR;
+        else if (grouping.matchesCounts(2, 1, 1, 1)) return PAIR;
+        else return HIGH_CARD;
+    }
 
-        // first check for a royal flush. If it exists return it, else check for straight flush, and so on.
-        for (int i = PokerHandType.values().length-1; i >0 ; i--) {
-            PokerHandType handType = PokerHandType.values()[i];
-            if (hasA(handType, hand)) {
-                return handType;
-            }
+    boolean hasFlush(Hand hand) {
+        List<Card> cards = hand.getCards();
+        Suit suit = cards.get(0).suit();
+
+        for (Card card : cards) {
+            if (card.suit() != suit) return false;
         }
-        return PokerHandType.HIGH_CARD;
+        return true;
     }
 
     /**
-     * @param handType type of poker hand to check for.
-     * @return true if we have the specified handType.
+     * Note the case of ace low needs to be considered.
+     * @param ranks the cards ranks, ordered from high to low.
+     * @return true if its a straight.
      */
-    boolean hasA(PokerHandType handType, PokerHand hand) {
-        boolean hasStraight = hand.hasStraight();
-        boolean hasFlush = hand.hasFlush();
+    boolean hasStraight(List<Rank> ranks) {
 
-        boolean hasPair = hand.hasNofaKind(2);
-
-        switch (handType) {
-            case FIVE_OF_A_KIND: return hand.hasNofaKind(5);
-            case ROYAL_FLUSH: return (hasStraight && hasFlush && (hand.getLowestRank() == Rank.TEN));
-            case STRAIGHT_FLUSH: return (hasStraight && hasFlush);
-            case FOUR_OF_A_KIND: return hand.hasNofaKind(4);
-            case FULL_HOUSE: return (hasPair && hand.hasNofaKind(3));
-            case FLUSH: return hasFlush;
-            case STRAIGHT: return hasStraight;
-            case THREE_OF_A_KIND: return hand.hasNofaKind(3);
-            case TWO_PAIR: return hasPair && hand.hasTwoPairs();
-            case PAIR: return hasPair;
-            case HIGH_CARD: return true;
-        }
-        return false;  // never reached
-    }
-
-    /**
-     * Used to differentiate between hands of the same type - like two full house hands
-     * or two hands that are both three of a kind.
-     */
-    private int getTypeRank(PokerHandType handType, PokerHand hand) {
-
-        Card highCard = hand.getHighCard();
-        int highCardRank = highCard.rank().ordinal();
-        int highSuit = highCard.suit().ordinal();
-
-        switch (handType) {
-            case FIVE_OF_A_KIND: return highCardRank;
-            case ROYAL_FLUSH: return 0;   // there is only one sort of royal flush (ace high)
-            case STRAIGHT_FLUSH: return highCardRank * 4 + highSuit;
-            case FOUR_OF_A_KIND: return hand.getRankOfNofaKind(4).get(0).ordinal();
-            case FULL_HOUSE: return 14 * hand.getRankOfNofaKind(3).get(0).ordinal()
-                                      +  hand.getRankOfNofaKind(2).get(0).ordinal();
-            case FLUSH:
-            case STRAIGHT: return 4 * highCardRank + highSuit;
-            case THREE_OF_A_KIND: return hand.getRankOfNofaKind(3).get(0).ordinal();
-            case TWO_PAIR:
-                List<Rank> pairRanks = hand.getRankOfNofaKind(2);
-                return 14 * pairRanks.get(0).ordinal() + pairRanks.get(1).ordinal();
-            case PAIR: return hand.getRankOfNofaKind(2).get(0).ordinal();
-            case HIGH_CARD: return highCardRank * 4 + highSuit;
-        }
-        assert false;
-        return 0;
+        return ranks.size() == 5
+                && (ranks.get(4) == Rank.ACE || (ranks.get(0).ordinal() - ranks.get(4).ordinal()) == 4);
     }
 }
