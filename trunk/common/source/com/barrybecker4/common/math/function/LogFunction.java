@@ -36,6 +36,7 @@ public class LogFunction implements InvertibleFunction {
         this.positiveOnly = positiveOnly;
     }
 
+    @Override
     public double getValue(double value) {
 
         if (value <= 0) {
@@ -46,11 +47,13 @@ public class LogFunction implements InvertibleFunction {
     }
 
 
+    @Override
     public double getInverseValue(double value) {
 
         return Math.pow(base, value / scale);
     }
 
+    @Override
     public Range getDomain() {
         return new Range(0, Double.MAX_VALUE);
     }

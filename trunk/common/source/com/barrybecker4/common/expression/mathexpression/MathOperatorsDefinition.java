@@ -24,12 +24,14 @@ public class MathOperatorsDefinition implements OperatorsDefinition {
             new MathOperator[] {PLUS, MINUS}
     };
 
+    @Override
     public Operator[][] getOperatorPrecedence() {
         return OPERATOR_PRECEDENCE;
     }
 
 
     /** @return true if the specified character is an operator */
+    @Override
     public boolean isOperator(char ch) {
         //if (ch.length() != 1) return false;
         //char c = ch.charAt(0);
@@ -41,6 +43,7 @@ public class MathOperatorsDefinition implements OperatorsDefinition {
     }
 
     /** @return true if the last node is an operator or there were no previous nodes  */
+    @Override
     public boolean isLastNodeOperator(List<TreeNode> nodes) {
         return nodes.isEmpty() || nodes.get(nodes.size() - 1).isOperator();
     }

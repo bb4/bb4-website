@@ -49,8 +49,8 @@ abstract class AbstractCutPointFinder {
 
     void determineCutPoints(int maxTicks, Range finalRange, List<Double> positions) {
 
-        double extent = NiceNumberRounder.round(finalRange.getExtent(), false);
-        double d = NiceNumberRounder.round(extent / (maxTicks - 1), true);
+        double extent = Rounder.round(finalRange.getExtent(), false);
+        double d = Rounder.round(extent / (maxTicks - 1), true);
         Range roundedRange =
                 new Range(Math.floor(finalRange.getMin() / d) * d, Math.ceil(finalRange.getMax() / d) * d);
 

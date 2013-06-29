@@ -33,9 +33,8 @@ public class LRUCache<K,V> {
     public LRUCache(int cacheSize) {
        this.cacheSize = cacheSize;
        int hashTableCapacity = (int)Math.ceil(cacheSize / hashTableLoadFactor) + 1;
+
        map = new LinkedHashMap<K,V>(hashTableCapacity, hashTableLoadFactor, true) {
-          // (an anonymous inner class)
-          private static final long serialVersionUID = 1;
 
           @Override
           protected boolean removeEldestEntry (Map.Entry<K,V> eldest) {
@@ -63,7 +62,6 @@ public class LRUCache<K,V> {
     public synchronized void put(K key, V value) {
         map.put(key,value);
         if (numEntries() > nextThreshold) {
-            System.out.println(this + " passed threshold =" + numEntries()); //NON-NLS
             nextThreshold *= 10;
         }
     }

@@ -18,7 +18,6 @@ import java.util.ResourceBundle;
  *
  * @author Barry Becker
  */
-@SuppressWarnings("HardCodedStringLiteral")
 public final class MessageContext {
 
     public static final LocaleType DEFAULT_LOCALE = LocaleType.ENGLISH;
@@ -147,7 +146,7 @@ public final class MessageContext {
         }
 
         if (!found) {
-            String msg = "Could not find label for " + key + " among " + resourcePaths_.toString();
+            String msg = "Could not find label for " + key + " among " + resourcePaths_.toString();   // NON-NLS
             log(0, msg);
             throw new MissingResourceException(msg, resourcePaths_.toString(), key);
         }
@@ -179,12 +178,12 @@ public final class MessageContext {
         }
         catch (IllegalAccessError e) {
             log(0,  "***************" );
-            log(0, name +" is not a valid locale. We currently only support: ");
+            log(0, name +" is not a valid locale. We currently only support: ");  // NON-NLS
             LocaleType[] values = LocaleType.values();
             for (final LocaleType newVar : values) {
                 log(0, newVar.toString());
             }
-            log(0,  "Defaulting to English." );
+            log(0,  "Defaulting to English." );  // NON-NLS
             log(0, "***************" );
             assert (!finf);
             throw e;

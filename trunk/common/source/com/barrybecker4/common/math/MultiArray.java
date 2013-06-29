@@ -87,13 +87,6 @@ public class MultiArray {
     }
 
     /**
-     * specify a tuple to set a given value
-     */
-    public void setRaw( int rawIndex, double value )  {
-        arrayData_[rawIndex] = value;
-    }
-
-    /**
      * get a raw integer index from a integer array of indices.
      * @param index n dimensional array of indices.
      * @return raw index

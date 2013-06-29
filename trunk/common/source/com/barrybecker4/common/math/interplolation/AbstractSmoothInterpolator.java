@@ -10,6 +10,7 @@ public abstract class AbstractSmoothInterpolator extends AbstractInterpolator {
         super(function);
     }
 
+    @Override
     public double interpolate(double value) {
         int len = function.length - 1;
         double x = value * (double) len;

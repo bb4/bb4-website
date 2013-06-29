@@ -73,7 +73,6 @@ public class FunctionInverter {
         assert (invFunc[lengthm1] > xMax - EPS_BIG): invFunc[lengthm1] + " was not greater than " + xMax;
         invFunc[lengthm1] = xMax;
 
-        //System.out.println("inverse fun=" + Arrays.toString(invFunc));
         return invFunc;
     }
 }

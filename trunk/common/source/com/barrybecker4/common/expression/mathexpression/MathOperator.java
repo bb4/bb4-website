@@ -21,11 +21,13 @@ public enum MathOperator implements Operator {
         symbol = c;
     }
 
+    @Override
     public char getSymbol() {
         return symbol;
     }
 
 
+    @Override
     public double operate(double operand1, double operand2) {
         double result;
         switch (this) {

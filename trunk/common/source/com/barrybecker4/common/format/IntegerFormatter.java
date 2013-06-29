@@ -6,6 +6,7 @@ package com.barrybecker4.common.format;
  */
 public class IntegerFormatter implements INumberFormatter {
 
+    @Override
     public String format(double number) {
         return FormatUtil.formatNumber((int) number);
     }

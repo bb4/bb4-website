@@ -68,11 +68,13 @@ public class ArrayFunction implements InvertibleFunction {
      * @param value
      * @return
      */
+    @Override
     public double getValue(double value) {
 
         return interpolator_.interpolate(value);
     }
 
+    @Override
     public Range getDomain() {
         return new Range(0, 1.0);
     }
@@ -82,6 +84,7 @@ public class ArrayFunction implements InvertibleFunction {
      * @param value
      * @return  inverse function value
      */
+    @Override
     public double getInverseValue(double value) {
 
         return inverseInterpolator_.interpolate(value);

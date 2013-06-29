@@ -8,5 +8,6 @@ package com.barrybecker4.common.expression;
 public interface Operator  {
 
     char getSymbol();
+
     double operate(double operand1, double operand2);
 }
