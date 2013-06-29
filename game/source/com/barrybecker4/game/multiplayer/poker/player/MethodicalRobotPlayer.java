@@ -2,10 +2,16 @@
 package com.barrybecker4.game.multiplayer.poker.player;
 
 
+import com.barrybecker4.game.multiplayer.poker.hand.HandScore;
+import com.barrybecker4.game.multiplayer.poker.hand.HandType;
 import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
 
 import java.awt.*;
+import java.util.Arrays;
+
+import static com.barrybecker4.game.card.Rank.*;
+
 
 /**
  * Represents a robotic Poker Player.
@@ -13,6 +19,10 @@ import java.awt.*;
  * @author Barry Becker
  */
 public class MethodicalRobotPlayer extends PokerRobotPlayer {
+
+    private static final HandScore HIGH_THRESHOLD_SCORE = new HandScore(HandType.TWO_PAIR, Arrays.asList(NINE));
+    private static final HandScore MEDIUM_THRESHOLD_SCORE = new HandScore(HandType.PAIR, Arrays.asList(KING));
+    private static final HandScore LOW_THRESHOLD_SCORE = new HandScore(HandType.HIGH_CARD, Arrays.asList(JACK));
 
     public MethodicalRobotPlayer(String name, int cash, Color color, RobotType rType) {
         super(name, cash, color, rType);
@@ -27,9 +37,10 @@ public class MethodicalRobotPlayer extends PokerRobotPlayer {
 
         PokerAction.Name action;
         int raise = 0;
-        if (getHand().getScore() >= 10 || Math.random() > 0.1 || othersFolded) {
+        if (getHandScore().compareTo(LOW_THRESHOLD_SCORE) > 0 || Math.random() > 0.6 || othersFolded) {
             action = PokerAction.Name.CALL;
-        } else if (getCash() > getCallAmount(pc) && Math.random() > 0.1) {
+        } else if (getCash() > getCallAmount(pc)
+                && (getHandScore().compareTo(MEDIUM_THRESHOLD_SCORE) > 0 || Math.random() > 0.9)) {
             action = PokerAction.Name.RAISE;
             raise = getRaise(pc);
         } else {
@@ -43,10 +54,10 @@ public class MethodicalRobotPlayer extends PokerRobotPlayer {
         int allInAmt = pc.getAllInAmount() - this.getContribution();
         int max = getCash();
 
-        if (getHand().getScore() > 100 || Math.random() > 0.8) {
+        if (getHandScore().compareTo(HIGH_THRESHOLD_SCORE) > 0 || Math.random() > 0.9) {
             return min(max/10, max, allInAmt);
         }
-        else if (getHand().getScore() > 10 || Math.random() > 0.1) {
+        else if (getHandScore().compareTo(LOW_THRESHOLD_SCORE) > 0 || Math.random() > 0.3) {
             return min(1 + max/40, max, allInAmt);
         } else {
             return min(1, max, allInAmt);

@@ -2,8 +2,7 @@
 package com.barrybecker4.game.multiplayer.poker.ui.dialog;
 
 import com.barrybecker4.common.geometry.ByteLocation;
-import com.barrybecker4.common.geometry.Location;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
+import com.barrybecker4.game.multiplayer.poker.hand.Hand;
 import com.barrybecker4.game.multiplayer.poker.ui.render.HandRenderer;
 
 import javax.swing.*;
@@ -15,11 +14,11 @@ import java.awt.*;
  */
 final class PokerHandViewer extends JPanel {
 
-    PokerHand hand_;
+    Hand hand_;
     HandRenderer handRenderer = new HandRenderer();
 
-    public PokerHandViewer(PokerHand hand) {
-        hand_ = new PokerHand(hand.getCards());
+    public PokerHandViewer(Hand hand) {
+        hand_ = new Hand(hand.getCards());
         hand_.setFaceUp(true);
         this.setPreferredSize(new Dimension(400, 120));
     }

@@ -3,13 +3,15 @@ package com.barrybecker4.game.multiplayer.poker.player;
 
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
-import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
-import com.barrybecker4.game.multiplayer.poker.ui.render.PokerPlayerMarker;
+import com.barrybecker4.game.multiplayer.poker.hand.Hand;
+import com.barrybecker4.game.multiplayer.poker.hand.HandScore;
+import com.barrybecker4.game.multiplayer.poker.hand.PokerHandScorer;
+import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.model.PokerRound;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
+import com.barrybecker4.game.multiplayer.poker.ui.render.PokerPlayerMarker;
 
-import java.awt.*;
+import java.awt.Color;
 import java.text.MessageFormat;
 
 /**
@@ -20,7 +22,7 @@ import java.text.MessageFormat;
 public abstract class PokerPlayer extends MultiGamePlayer {
 
     /** this player's home planet. (like earth is for humans)  */
-    private PokerHand hand_;
+    private Hand hand_;
     private PokerPlayerMarker piece_;
 
     /** the players current cash amount in dollars */
@@ -28,6 +30,9 @@ public abstract class PokerPlayer extends MultiGamePlayer {
 
     /** becomes true once the player has folded */
     private boolean hasFolded_;
+
+    /** the score of the current hand */
+    private HandScore handScore_;
 
     /** this becomes true when the player has no money left or not enough to ante up. */
     private boolean outOfGame_;
@@ -71,12 +76,17 @@ public abstract class PokerPlayer extends MultiGamePlayer {
         return MessageFormat.format(GameContext.getLabel("POKER_DEFAULT_NAME"), args );
     }
 
-    public PokerHand getHand() {
+    public Hand getHand() {
         return hand_;
     }
 
-    public void setHand( PokerHand hand ) {
+    public HandScore getHandScore() {
+        return handScore_;
+    }
+
+    public void setHand( Hand hand ) {
         this.hand_ = hand;
+        this.handScore_ = new PokerHandScorer().getScore(hand);
     }
 
     public int getCash() {

@@ -5,7 +5,7 @@ package com.barrybecker4.game.multiplayer.poker.hand;
  * Types of poker hands. For example, royal flush, straight, full house, three of a kind, etc.
  * @author Barry Becker
  */
-public enum PokerHandType {
+public enum HandType {
 
     // note: five of a kind can only happen if using wild cards
     HIGH_CARD("High Card", 1),
@@ -33,7 +33,7 @@ public enum PokerHandType {
      * @param label name of the type of poker hand
      * @param odds the odds of having this sort of hand
      */
-    PokerHandType(String label, float odds) {
+    HandType(String label, float odds) {
         this.label = label;
         this.odds = odds;
     }

@@ -5,7 +5,7 @@ import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.card.Card;
 import com.barrybecker4.game.card.Suit;
 import com.barrybecker4.game.common.GameContext;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
+import com.barrybecker4.game.multiplayer.poker.hand.Hand;
 import com.barrybecker4.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.barrybecker4.ui.util.GUIUtil;
 
@@ -54,7 +54,7 @@ public class HandRenderer  {
     /**
      * Draw the poker hand (the cards are all face up or all face down)
      */
-    public void render( Graphics2D g2, Location location, PokerHand hand, int cellSize) {
+    public void render( Graphics2D g2, Location location, Hand hand, int cellSize) {
 
         assert (hand!=null): "Did you forget to deal cards to one of the players?";
         int x = ((location.getCol()-1) * cellSize);

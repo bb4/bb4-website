@@ -4,7 +4,7 @@ package com.barrybecker4.game.multiplayer.poker.model;
 import com.barrybecker4.game.card.Deck;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
-import com.barrybecker4.game.multiplayer.poker.hand.PokerHand;
+import com.barrybecker4.game.multiplayer.poker.hand.Hand;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 
 /**
@@ -29,7 +29,7 @@ public class Dealer  {
                 deck = new Deck();
             }
             PokerPlayer player = (PokerPlayer) p.getActualPlayer();
-            player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
+            player.setHand(new Hand(deck, numCardsToDealToEachPlayer));
             player.resetPlayerForNewRound();
         }
     }

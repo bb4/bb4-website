@@ -81,10 +81,11 @@ class PokerHands110202 {
             ct++;
         }
 
-        PokerHand blackHand = new PokerHand(blackCards);
-        PokerHand whiteHand = new PokerHand(whiteCards);
+        Hand blackHand = new Hand(blackCards);
+        Hand whiteHand = new Hand(whiteCards);
 
-        int blackWin = blackHand.compareTo(whiteHand);
+        PokerHandScorer scorer = new PokerHandScorer();
+        int blackWin = scorer.getScore(blackHand).compareTo(scorer.getScore(whiteHand));
 
         if (blackWin > 0) {
             System.out.println("Black wins.");
