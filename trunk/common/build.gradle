@@ -2,6 +2,7 @@
 // @author Barry Becker
 
 version = '1.0'
+project.archivesBaseName = 'bb4-common'
 
 dependencies {
     compile 'commons-collections:commons-collections:3.2'
@@ -10,14 +11,11 @@ dependencies {
 }
 
 jar {
-    archiveName = 'bb4-common-' + version + '.jar'
-
+    //baseName = 'bb4-common'
+    //archiveName = 'bb4-common-' + version + '.jar'
     manifest {
         attributes 'Implementation-Title': 'Common code for all bb4 applications',
             'Implementation-Version': version,
             provider: 'gradle'
     }
 }
-
-
-

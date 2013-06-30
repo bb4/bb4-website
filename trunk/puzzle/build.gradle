@@ -2,6 +2,7 @@
  * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
  */
 version = '1.0'
+project.archivesBaseName = 'bb4-puzzle'
 mainClassName = "com.barrybecker4.puzzle.maze.ui.MazeSimulator"
 
 task runAdventure(type: JavaExec, depends: classes) {
@@ -94,13 +95,16 @@ task tantrixJar(type: Jar) {
 }
 
 artifacts {
-     archives puzzleJar
-     archives adventureJar
-     archives hiqJar
-     archives mazeJar
-     archives redpuzzleJar
-     archives sudokuJar
-     archives tantrixJar
+    archives puzzleJar
+    archives adventureJar
+    archives hiqJar
+    archives mazeJar
+    archives redpuzzleJar
+    archives sudokuJar
+    archives tantrixJar
+
+    archives sourcesJar
+    archives javadocJar
 }
 
 jar {

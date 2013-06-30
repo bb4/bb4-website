@@ -3,6 +3,7 @@
  */
 
 version = '1.0'
+project.archivesBaseName = 'bb4-apps'
 mainClassName = "com.barrybecker4.apps.spirograph.SpiroGraph"
 
 task runImageBreeder(type: JavaExec, depends: classes) {
@@ -108,9 +109,12 @@ task imagebreederJar(type: Jar) {
 
 
 artifacts {
-     archives sierpinskiJar
-     archives spirographJar
-     archives imagebreederJar
+    archives sierpinskiJar
+    archives spirographJar
+    archives imagebreederJar
+
+    archives sourcesJar
+    archives javadocJar
 }
 
 dependencies {

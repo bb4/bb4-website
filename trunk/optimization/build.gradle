@@ -2,7 +2,7 @@
 // @author Barry Becker
 
 version = '1.0'
-//mainClassName = "com.barrybecker4.optimization.optimizees.GraphAnalyticFunctionSolution"
+project.archivesBaseName = 'bb4-optimization'
 mainClassName = "com.barrybecker4.optimization.viewer.OptimizerEvalFrame"
 
 dependencies {
@@ -18,3 +18,4 @@ jar {
             'Main-Class': mainClassName
     }
 }
+

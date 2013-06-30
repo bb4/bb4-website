@@ -2,6 +2,7 @@
 // @author Barry Becker
 
 version = '1.0'
+project.archivesBaseName = 'bb4-ui'
 mainClassName = "com.barrybecker4.ui.application.ApplicationFrame"
 
 

@@ -2,6 +2,7 @@
  * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
  */
 version = '1.0'
+project.archivesBaseName = 'bb4-simulation'
 mainClassName = "com.barrybecker4.simulation.dice.DiceSimulator"
 
 
@@ -165,6 +166,9 @@ artifacts {
     archives stockJar
     archives trebuchetJar
     archives verhulstJar
+
+    archives sourcesJar
+    archives javadocJar
 }
 
 jar {

@@ -22,6 +22,10 @@ subprojects {
             url "http://repo1.maven.org/maven2/"
             url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
         }
+        flatDir {
+            name "fileRepo"
+            dirs "../repository"
+        }
     }
 
     dependencies {
@@ -29,16 +33,43 @@ subprojects {
         testCompile 'junit:junit:3.+'
     }
 
-    /*
-    task deployJar(type: Jar, dependsOn: compileJava) {
-        from sourceSets.main.output
-    } */
-
     jar {
          manifest {
             attributes 'Implementation-Title': 'Applets', provider: 'gradle', 'Implementation-Version': version
         }
     }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        //baseName = 'bb4-common'
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        //baseName = 'bb4-common'
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives jar
+        archives sourcesJar
+        archives javadocJar
+    }
+
+    javadoc.doLast {
+        copy {
+            from sourceSets.main.allSource
+            into javadoc.destinationDir
+            include '**/package.png'
+        }
+    }
+
+    clean.doLast {
+        // project. is needed to disambiguate from the clean tasks existing delete.
+        project.delete(project.repositories.fileRepo.dirs)
+    }
+
 
     task copyToLib(dependsOn: jar, type: Copy) {
         description = "Copies the downloaded dependencies to the lib directory so they can be deployed (see webdeployment)"
@@ -48,9 +79,7 @@ subprojects {
 
     uploadArchives {
         repositories {
-           flatDir {
-               dirs 'repos'
-           }
+            add project.repositories.fileRepo
         }
     }
 
