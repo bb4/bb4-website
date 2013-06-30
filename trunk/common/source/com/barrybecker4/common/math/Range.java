@@ -89,7 +89,7 @@ public class Range {
     }
 
     /**
-     * @param value
+     * @param value value to normalize on unit scale.
      * @return  normalized value assuming 0 for min. 1 for max.
      */
     public double mapToUnitScale(double value) {

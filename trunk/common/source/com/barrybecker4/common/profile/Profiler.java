@@ -39,12 +39,12 @@ public class Profiler {
 
     /**
      * add an entry into the profiler entry hierarchy.
-     * @param name
+     * @param name name for new entry
      * @param parent entry above us.
      */
     public void add(String name, String parent)  {
         ProfilerEntry par = getEntry(parent);
-        assert par!=null : "invalid parent: "+parent;
+        assert par!=null : "invalid parent: " + parent;
         ProfilerEntry e = new ProfilerEntry(name);
         par.addChild(e);
         hmEntries_.put(name, e);

@@ -27,7 +27,7 @@ public abstract class Worker {
 
     /**
      * Constructor.
-     * Start a thread that will call the <code>construct</code> method and then exit.
+     * Start a thread that will call the {@code construct} method and then exit.
      */
     public Worker() {
 
@@ -66,7 +66,7 @@ public abstract class Worker {
     }
 
     /**
-     * Compute the value to be returned by the <code>get</code> method.
+     * Compute the value to be returned by the {@code get} method.
      * @return the result. Must not be null.
      */
     public abstract Object construct();
@@ -80,7 +80,7 @@ public abstract class Worker {
 
     /**
      * Called on the event dispatching thread (not on the worker thread)
-     * after the <code>construct</code> method has returned.
+     * after the {@code construct} method has returned.
      */
     public void finished() {
         // intentionally empty
@@ -95,11 +95,11 @@ public abstract class Worker {
     }
 
     /**
-     * Return the value created by the <code>construct</code> method.
+     * Return the value created by the {@code construct} method.
      * Returns null if either the constructing thread or the current
      * thread was interrupted before a value was produced.
      *
-     * @return the value created by the <code>construct</code> method
+     * @return the value created by the {@code construct} method
      */
     public Object get() {
         while (true) {

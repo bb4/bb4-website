@@ -72,7 +72,7 @@ public class CountFunction implements Function {
     /**
      * get an interpolated y values for a specified x
      *
-     * @param xValue
+     * @param xValue x value
      * @return y value
      */
     private double getValue(double xValue, List<Double> xVals, List<Double> yVals) {

@@ -63,8 +63,8 @@ public final class MathUtil {
     }
 
     /**
-     * @param a
-     * @param b
+     * @param a numberator
+     * @param b denominator
      * @return the least common multiple of a and b
      */
     public static long lcm(long a, long b) {
@@ -73,7 +73,8 @@ public final class MathUtil {
 
 
     /**
-     * @param values
+     * Find the least common multiple of specified values.
+     * @param values values to find least common multiple of
      * @return the least common multiple of values[0], values[1],... values[i].
      */
     public static long lcm(int[] values) {

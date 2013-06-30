@@ -43,10 +43,10 @@ public final class DomUtil {
     private DomUtil() {}
 
     /** This URL is where I keep all my published xsds (xml schemas) and dtds (doc type definitions) */
-    private static final String SCHEMA_LOCATION = "http://barrybecker4.com/schema/";
+    private static final String SCHEMA_LOCATION = "http://barrybecker4.com/schema/"; //NON-NLS
 
-    private static final String ROOT_ELEMENT = "rootElement";
-    private static final String USE = "rootElement";
+    private static final String ROOT_ELEMENT = "rootElement";  //NON-NLS
+    private static final String USE_ELEMENT = "use";  //NON-NLS
 
     /**
      * Initialize a dom document structure.
@@ -93,10 +93,10 @@ public final class DomUtil {
     }
 
     /**
-     * go through the dom hierarchy and remove spurious text nodes and alse
+     * Go through the dom hierarchy and remove spurious text nodes and also
      * replace "use" nodes with a deep copy of what they refer to.
-     * @param root
-     * @param document
+     * @param root root of document
+     * @param document the xml document
      */
     private static void postProcessDocument(Node root, Document document, boolean replaceUseWithDeepCopy) {
         NodeList l = root.getChildNodes();
@@ -118,17 +118,17 @@ public final class DomUtil {
 
             postProcessDocument(n, document, replaceUseWithDeepCopy);
 
-            if (name!=null && USE.equals(name)) {
+            if (name != null && USE_ELEMENT.equals(name)) {
                 // substitute the element with the specified id
                 NamedNodeMap attrs = n.getAttributes();
                 Node attr =  attrs.item(0);
-                assert "ref".equals(attr.getNodeName()): "attr name="+attr.getNodeName();
+                assert "ref".equals(attr.getNodeName()): "attr name=" + attr.getNodeName();
                 String attrValue = attr.getNodeValue();
 
                 Node element = document.getElementById(attrValue);
                 Node clonedElement = element.cloneNode(replaceUseWithDeepCopy);
 
-                // now we still need to recursively clean the node that was replaced
+                // Still need to recursively clean the node that was replaced
                 // since it might also contain use nodes.
                 postProcessDocument(clonedElement, document, replaceUseWithDeepCopy);
 
@@ -176,8 +176,8 @@ public final class DomUtil {
 
     /**
      * a concatenated list of the node's attributes.
-     * @param attributeMap
-     * @return
+     * @param attributeMap maps names to nodes
+     * @return list of attributes
      */
     public static String getAttributeList(NamedNodeMap attributeMap) {
         String attribs = "";
@@ -194,8 +194,8 @@ public final class DomUtil {
 
     /**
      * print a text representation of the dom hierarchy.
-     * @param root
-     * @param level
+     * @param root document root node
+     * @param level level to print to
      */
     public static void printTree(Node root, int level) {
          NodeList l = root.getChildNodes();
@@ -288,16 +288,15 @@ public final class DomUtil {
     }
 
     /**
-     *
-     * @param destFileName file to write xml to
+     * Write out the xml document to a file.
+     * @param destinationFileName file to write xml to
      * @param document xml document to write.
      * @param schema of the schema to use if any (e.g. script.dtd of games.xsd). May be null.
      */
-    public static void writeXMLFile(String destFileName, Document document, String schema)  {
-        //System.out.println("writing to " + destFileName);
+    public static void writeXMLFile(String destinationFileName, Document document, String schema)  {
         OutputStream output;
         try {
-            output = new BufferedOutputStream(new FileOutputStream(destFileName));
+            output = new BufferedOutputStream(new FileOutputStream(destinationFileName));
             writeXML(output, document, schema);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DomUtil.class.getName()).log(Level.SEVERE, null, ex);

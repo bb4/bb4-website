@@ -6,7 +6,6 @@ package com.barrybecker4.common.geometry;
  * The range of bytes are only -127 to 127.
  *
  * Immutable. Use MutableIntLocation if you really need to modify it (rare).
- * @@ should have ILocation IntLocation and ByteLocation box should work with ILocation.
  *
  * @author Barry Becker
  */

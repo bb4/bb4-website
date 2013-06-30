@@ -22,7 +22,7 @@ public class CommandLineOptions  {
      * So an example argument list might be
      *   java someProgram -p 3434 -type pente -locale en -verbose -safe -title "my title"
      * Note: verbose and -safe are options and do not have values.
-     * @param args
+     * @param args an array of command line arguments. May be empty, but not null.
      */
     public CommandLineOptions(String[] args) {
         int ct = 0;
@@ -61,7 +61,7 @@ public class CommandLineOptions  {
     }
 
     /**
-     * @param option
+     * @param option the command line option.
      * @param defaultValue if option not found.
      * @return value for the arg (may be null if no value for the arg)
      */

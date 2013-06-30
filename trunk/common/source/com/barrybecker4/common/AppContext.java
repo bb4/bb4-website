@@ -52,7 +52,7 @@ public final class AppContext {
     }
 
     /**
-     * @param debug
+     * @param debug the debug level to use. If 0, then all logging performed.
      */
     public static void setDebugMode( int debug ) {
         debug_ = debug;

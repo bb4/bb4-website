@@ -54,7 +54,7 @@ public class ErrorFunction implements InvertibleFunction {
      * Values outside of -MAX_ERROR_FUNCTION_TABLE_VALUE to MAX_ERROR_FUNCTION_TABLE_VALUE are
      * Currently just using simple linear interpolation.
      * We could improve by using quadratic interpolation.
-     * @param x
+     * @param x x value to get y for
      * @return error function value for x.
      */
     @Override
