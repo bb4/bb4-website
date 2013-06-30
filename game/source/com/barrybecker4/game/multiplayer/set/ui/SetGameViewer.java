@@ -92,7 +92,7 @@ public final class SetGameViewer extends MultiGameViewer {
 
     @Override
     public String getGameOverMessage() {
-        SetPlayer winner = ((SetController) controller_).determineWinner();
+        SetPlayer winner = (SetPlayer) ((SetController) controller_).determineWinner().get(0);
         return "the game is over. The winner is " + winner.getName() + " with " + winner.getNumSetsFound() + "sets";
     }
 

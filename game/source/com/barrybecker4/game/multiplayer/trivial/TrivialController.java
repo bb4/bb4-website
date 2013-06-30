@@ -10,6 +10,9 @@ import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.trivial.player.TrivialPlayer;
 import com.barrybecker4.game.multiplayer.trivial.player.TrivialRobotPlayer;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Defines everything the computer needs to know to play Trivial game.
  * In this simplistic game, players either keep their card hidden or revealed
@@ -100,7 +103,7 @@ public class TrivialController extends MultiGameController {
      * @return the player with the best Trivial hand
      */
     @Override
-    public MultiGamePlayer determineWinner() {
+    public List<? extends MultiGamePlayer> determineWinner() {
         PlayerList players = getPlayers();
         TrivialPlayer winner = null;
 
@@ -113,7 +116,7 @@ public class TrivialController extends MultiGameController {
                 winner = p;
             }
         }
-        return winner;
+        return Arrays.asList(winner);
     }
 
     /**

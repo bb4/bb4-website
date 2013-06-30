@@ -211,9 +211,9 @@ public abstract class MultiGameController extends GameController {
     }
 
     /**
-     * @return the player with the best Trivial hand
+     * @return the player(s0 with the best score. In rare circumstances some game may have ties.
      */
-    public abstract MultiGamePlayer determineWinner();
+    public abstract List<? extends MultiGamePlayer> determineWinner();
 
     /**
      * make it the next players turn

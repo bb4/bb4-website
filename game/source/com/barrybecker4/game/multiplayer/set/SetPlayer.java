@@ -14,16 +14,12 @@ import java.text.MessageFormat;
  *
  * @author Barry Becker
  */
-public class SetPlayer extends MultiGamePlayer
-{
+public class SetPlayer extends MultiGamePlayer {
 
     private int numSetsFound_ = 0;
 
-    public static final int DEFAULT_CASH = 100;
 
-
-    SetPlayer(String name, Color color, boolean isHuman)
-    {
+    SetPlayer(String name, Color color, boolean isHuman) {
         super(name, color, isHuman);
     }
 
@@ -31,8 +27,7 @@ public class SetPlayer extends MultiGamePlayer
      * Factory method for creating set players of the appropriate type.
      * @return new player
      */
-    public static SetPlayer createSetPlayer(String name, Color color, boolean isHuman)
-    {
+    public static SetPlayer createSetPlayer(String name, Color color, boolean isHuman) {
        if (isHuman)
            return new SetPlayer(name, color, true);
         else
@@ -62,8 +57,7 @@ public class SetPlayer extends MultiGamePlayer
      * @param i index of player
      * @return the default name for player i
      */
-    public String getDefaultName(int i)
-    {
+    public String getDefaultName(int i) {
         Object[] args = {Integer.toString(i)};
         return MessageFormat.format(GameContext.getLabel("SET_DEFAULT_NAME"), args );
     }
@@ -109,8 +103,7 @@ public class SetPlayer extends MultiGamePlayer
     }
 
     @Override
-    public String additionalInfo()
-    {
+    public String additionalInfo() {
         return "Num Sets Found: "+numSetsFound_;
     }
 

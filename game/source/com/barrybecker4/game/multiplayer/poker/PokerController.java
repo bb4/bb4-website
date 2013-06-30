@@ -13,6 +13,8 @@ import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerRobotPlayer;
 import com.barrybecker4.game.multiplayer.poker.ui.PokerGameViewer;
 
+import java.util.List;
+
 /**
  * Defines everything the computer needs to know to play Poker.
  *
@@ -205,7 +207,8 @@ public class PokerController extends MultiGameController {
      * @param pviewer poker viewer
      */
     private void doRoundOverBookKeeping(PokerGameViewer pviewer) {
-        PokerPlayer winner = (PokerPlayer)determineWinner();
+        // TODO handle multiple winners
+        PokerPlayer winner = (PokerPlayer)determineWinner().get(0);
         int winnings = this.getPotValue();
         winner.claimPot(this);
         pviewer.showRoundOver(winner, winnings);
@@ -226,11 +229,11 @@ public class PokerController extends MultiGameController {
     }
 
     /**
-     *
-     * @return the player with the best poker hand for this round
+     * @return the player(s) with the best poker hand(s) for this round. In some very rare situations there
+     * may be ties.
      */
     @Override
-    public MultiGamePlayer determineWinner() {
+    public List<? extends MultiGamePlayer> determineWinner() {
         return round.determineWinner(getPlayers());
     }
 

@@ -8,9 +8,16 @@ import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.dialogs.OptionsDialog;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 /**
  * Show a summary of the final results.
@@ -56,7 +63,7 @@ public abstract class TallyDialog extends OptionsDialog {
         mainPanel.setLayout(new BorderLayout());
 
         PlayerList players = controller_.getPlayers();
-        String winningPlayer = findWinner(players).getName();
+        String winningPlayer = winnerLabel(findWinners(players));
 
         // show a label at the top with who the winner is
         JLabel winnerLabel = new JLabel();
@@ -76,9 +83,18 @@ public abstract class TallyDialog extends OptionsDialog {
         return mainPanel;
     }
 
+    private String winnerLabel(List<? extends MultiGamePlayer> winners) {
+        StringBuilder bldr = new StringBuilder();
+        for (MultiGamePlayer winner : winners) {
+            bldr.append(winner.getName()).append(", ");
+        }
+        return bldr.substring(0, bldr.length()-2);
+    }
+
     protected abstract SummaryTable createSummaryTable(PlayerList players);
 
-    protected abstract MultiGamePlayer findWinner(PlayerList players);
+
+    protected abstract List<? extends MultiGamePlayer> findWinners(PlayerList players);
 
 
     /**

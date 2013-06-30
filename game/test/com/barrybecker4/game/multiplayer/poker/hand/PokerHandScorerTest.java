@@ -64,6 +64,11 @@ public class PokerHandScorerTest extends TestCase {
         compareHands(createHand("7C 7H JS 9C KD"), createHand("8C 8H 3H 5C 4H"), CompareType.SMALLER);
     }
 
+    /** verify that it is possible, in rare circumstances, for two different hands to be ranked the same */
+    public void testTwoDifferentHandsWithSameValue() {
+        compareHands(createHand("9H 8D 7S 6C 5D"), createHand("9C 8H 7S 6C 5H"), CompareType.SAME);
+    }
+
     /**
      * Compare two hands with pair of aces. Secondary cards are Q 9 3 and Q J 4 respectively.
      * Second hand wins because J beats 9.

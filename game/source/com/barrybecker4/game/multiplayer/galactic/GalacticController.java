@@ -13,6 +13,7 @@ import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.galactic.player.GalacticPlayer;
 import com.barrybecker4.game.multiplayer.galactic.ui.GalaxyViewer;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -124,9 +125,9 @@ public class GalacticController extends MultiGameController {
      * @return the player with the most planets
      */
     @Override
-    public MultiGamePlayer determineWinner() {
+    public List<? extends MultiGamePlayer> determineWinner() {
 
-       GalacticPlayer winner = null;
+        GalacticPlayer winner = null;
         double maxCriteria = -1.0;
         for (final Player newVar : getPlayers()) {
             GalacticPlayer player = (GalacticPlayer) newVar;
@@ -138,7 +139,7 @@ public class GalacticController extends MultiGameController {
                 winner = player;
             }
         }
-        return winner;
+        return Arrays.asList(winner);
     }
 
     /**

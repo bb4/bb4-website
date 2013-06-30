@@ -7,7 +7,8 @@ import com.barrybecker4.game.multiplayer.common.ui.SummaryTable;
 import com.barrybecker4.game.multiplayer.common.ui.TallyDialog;
 import com.barrybecker4.game.multiplayer.galactic.GalacticController;
 
-import java.awt.*;
+import java.awt.Component;
+import java.util.List;
 
 
 /**
@@ -39,7 +40,7 @@ public final class GalacticTallyDialog extends TallyDialog {
      * @return the player with the most planets (num ships used only as a tie breaker).
      */
     @Override
-    public MultiGamePlayer findWinner(PlayerList players) {
+    public List<? extends MultiGamePlayer> findWinners(PlayerList players) {
         return controller_.determineWinner();
     }
 
