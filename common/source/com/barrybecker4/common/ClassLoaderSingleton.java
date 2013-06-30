@@ -26,7 +26,7 @@ public class ClassLoaderSingleton {
      * @return  the loaded class.
      */
     public static synchronized Class loadClass(String className) {
-        Class theClass = null;
+        Class theClass;
         try {
             theClass = Class.forName(className);
         }

@@ -18,10 +18,13 @@ import java.util.logging.Logger;
  */
 public class Parallelizer <T> extends CallableParallelizer<T> {
 
-    /** {@inheritDoc} */
+    /** Constructor */
     public Parallelizer() {}
 
-    /** {@inheritDoc} */
+    /**
+     * Constructor
+     * @param numThreads the number of threads that are assumed available on the hardware.
+     */
     public Parallelizer(int numThreads) {
         super(numThreads);
     }

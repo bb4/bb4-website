@@ -19,14 +19,14 @@ public class ArrayFunction implements InvertibleFunction {
     /** The inverse lookup for the main function. */
     private double[] inverseFunctionMap;
 
-    private Interpolator interpolator_;
-    private Interpolator inverseInterpolator_;
+    private Interpolator interpolator;
+    private Interpolator inverseInterpolator;
 
 
     /**
      * Constructor.
-     * @param func
-     * @parma interpolationMethod
+     * @param func the array representing function values.
+     * @param interpMethod method to use when interpolating
      */
     private ArrayFunction(double[] func, InterpolationMethod interpMethod) {
         this(func, new FunctionInverter(func).createInverseFunction(new Range(0, 1.0)), interpMethod);
@@ -46,32 +46,32 @@ public class ArrayFunction implements InvertibleFunction {
      * Constructor.
      * Use this version of the constructor if you already know the inverse function and do not
      * want to compute it (because computing it will not be as accurate).
-     * @param func
+     * @param func array values representing the function
      */
     private ArrayFunction(double[] func, double[] inverseFunc, InterpolationMethod interpMethod) {
         functionMap = func;
         inverseFunctionMap = inverseFunc;
-        interpolator_ = interpMethod.createInterpolator(func);
-        inverseInterpolator_ = interpMethod.createInterpolator(inverseFunc);
+        interpolator = interpMethod.createInterpolator(func);
+        inverseInterpolator = interpMethod.createInterpolator(inverseFunc);
     }
 
     /**
      * Constructor.
-     * @param funcMap
+     * @param funcMap array values representing the function
      */
     public ArrayFunction(double[] funcMap) {
         this(funcMap, InterpolationMethod.LINEAR);
     }
 
     /**
-     *
-     * @param value
-     * @return
+     * Evaluate the function at the specified point.
+     * @param value an x value
+     * @return y value for specified x value
      */
     @Override
     public double getValue(double value) {
 
-        return interpolator_.interpolate(value);
+        return interpolator.interpolate(value);
     }
 
     @Override
@@ -80,18 +80,18 @@ public class ArrayFunction implements InvertibleFunction {
     }
 
     /**
-     *
-     * @param value
-     * @return  inverse function value
+     * Get x for specified y.
+     * @param value y value
+     * @return inverse function value.
      */
     @Override
     public double getInverseValue(double value) {
 
-        return inverseInterpolator_.interpolate(value);
+        return inverseInterpolator.interpolate(value);
     }
 
     public void setInterpolationMethod(InterpolationMethod interp) {
-        interpolator_ = interp.createInterpolator(functionMap);
-        inverseInterpolator_ = interp.createInterpolator(inverseFunctionMap);
+        interpolator = interp.createInterpolator(functionMap);
+        inverseInterpolator = interp.createInterpolator(inverseFunctionMap);
     }
 }

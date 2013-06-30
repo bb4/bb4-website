@@ -11,14 +11,17 @@ import org.xml.sax.SAXParseException;
 @SuppressWarnings("HardCodedStringLiteral")
 public class XmlErrorHandler implements ErrorHandler {
 
+    @Override
     public void warning(SAXParseException exception) throws SAXException {
         handleException("Warning", exception);
     }
 
+    @Override
     public void error(SAXParseException exception) throws SAXException {
         handleException("Error", exception);
     }
 
+    @Override
     public void fatalError(SAXParseException exception) throws SAXException {
         handleException("Fatal Error while", exception);
     }

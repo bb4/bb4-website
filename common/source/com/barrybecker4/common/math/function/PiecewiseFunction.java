@@ -17,8 +17,8 @@ public class PiecewiseFunction implements InvertibleFunction {
 
     /**
      * Constructor.
-     * @param xValues
-     * @param yValues
+     * @param xValues x function values
+     * @param yValues y function values
      */
     public PiecewiseFunction(double[] xValues, double[] yValues ) {
         this.xValues = xValues;
@@ -26,11 +26,6 @@ public class PiecewiseFunction implements InvertibleFunction {
         assert this.xValues.length == this.yValues.length;
     }
 
-    /**
-     *
-     * @param value
-     * @return
-     */
     @Override
     public double getValue(double value) {
 
@@ -39,7 +34,7 @@ public class PiecewiseFunction implements InvertibleFunction {
 
     /**
      *
-     * @param value
+     * @param value y value to get x for
      * @return inverse function value.
      */
     @Override
@@ -56,7 +51,7 @@ public class PiecewiseFunction implements InvertibleFunction {
 
     /**
      *
-     * @param value
+     * @param value x value to get interpolated y for.
      * @return the interpolated y value based on the key points in the arrays.
      */
     private double getInterpolatedValue(double value) {

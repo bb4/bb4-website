@@ -110,7 +110,7 @@ public final class MessageContext {
     /**
      * Look first in the common message bundle.
      * If not found there, look in the application specific bundle if there is one.
-     * @param key
+     * @param key the message key to find in resource bundle.
      * @return  the localized message label
      */
     public String getLabel(String key)  {
@@ -120,7 +120,7 @@ public final class MessageContext {
     /**
      * Look first in the common message bundle.
      * If not found there, look in the application specific bundle if there is one.
-     * @param key
+     * @param key the message key to find in resource bundle.
      * @param params typically a list of string sto use a parameters to the template defined by the message from key.
      * @return  the localized message label
      */
