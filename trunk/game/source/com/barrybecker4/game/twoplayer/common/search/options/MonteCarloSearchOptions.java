@@ -34,7 +34,7 @@ public class MonteCarloSearchOptions {
     /**
      * Constructor
      * @param maxSimulations default number simulations to run.
-     * @param exploreExploitRatio
+     * @param exploreExploitRatio ratio of exploring nodes to exploiting them.
      * @param randomLookAhead amount to look ahead during random games.
      * @param maxStyle method by which to select the best node.
      */
@@ -49,7 +49,7 @@ public class MonteCarloSearchOptions {
     /**
      * Constructor
      * @param maxSimulations default number simulations to run.
-     * @param exploreExploitRatio
+     * @param exploreExploitRatio ratio of explor to explout
      * @param randomLookAhead amount to look ahead during random games.
      */
     public MonteCarloSearchOptions(int maxSimulations, double exploreExploitRatio, int randomLookAhead) {
@@ -95,7 +95,7 @@ public class MonteCarloSearchOptions {
     }
 
     /**
-     * @param randomLookAhead
+     * @param randomLookAhead amount of moves to randomly look ahead
      */
     public void setRandomLookAhead(int randomLookAhead) {
         randomLookAhead_ = randomLookAhead;

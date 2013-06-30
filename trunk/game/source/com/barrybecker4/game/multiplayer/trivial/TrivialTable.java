@@ -33,6 +33,7 @@ public class TrivialTable extends Board {
         super(table);
     }
 
+    @Override
     public TrivialTable copy() {
         return new TrivialTable(this);
     }
@@ -41,13 +42,13 @@ public class TrivialTable extends Board {
      * A trivial game has no real limit so we just return a huge number.
      * @return max number of trivial rounds allowed.
      */
+    @Override
     public int getMaxNumMoves() {
         return 1000;
     }
 
     /**
      * place the players around the trivial table
-     * @param players
      */
     public void initPlayers(PlayerList players) {
         double angle = 0.6 * Math.PI;
@@ -83,7 +84,7 @@ public class TrivialTable extends Board {
     /**
      * For Trivial, undoing a move means turning time back a round and
      * restoring the state of the game one full round earlier
-     * @@ todo
+     * TODO
      */
     @Override
     protected void undoInternalMove( Move move ) {

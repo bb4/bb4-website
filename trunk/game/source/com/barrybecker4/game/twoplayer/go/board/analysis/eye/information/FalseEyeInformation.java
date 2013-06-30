@@ -11,6 +11,7 @@ import com.barrybecker4.game.twoplayer.go.board.elements.eye.IGoEye;
  */
 public class FalseEyeInformation extends AbstractEyeInformation {
 
+    @Override
     public EyeStatus determineStatus(IGoEye eye, GoBoard board) {
         if (eye.getMembers().size() > 5)  {
             return EyeStatus.NAKADE;
@@ -21,6 +22,7 @@ public class FalseEyeInformation extends AbstractEyeInformation {
         else return EyeStatus.KO;
     }
 
+    @Override
     public String getTypeName() {
         return "False";
     }

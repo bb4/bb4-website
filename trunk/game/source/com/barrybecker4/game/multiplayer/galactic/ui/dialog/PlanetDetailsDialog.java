@@ -26,7 +26,7 @@ final class PlanetDetailsDialog extends AbstractDialog {
     /**
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
-     * @param boardViewer
+     * @param boardViewer baord viewer
      */
     public PlanetDetailsDialog(Component parent, GameBoardViewer boardViewer ) {
         super( parent );

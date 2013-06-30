@@ -54,10 +54,7 @@ public abstract class PokerPlayer extends MultiGamePlayer {
 
     /**
      * Factory method for creating poker players of the appropriate type.
-     * @param name
-     * @param color
-     * @param isHuman
-     * @return
+     * @return new poker player
      */
     public static PokerPlayer createPokerPlayer(String name, int money, Color color, boolean isHuman) {
        if (isHuman)

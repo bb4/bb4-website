@@ -80,6 +80,7 @@ public class CheckersBoard extends TwoPlayerBoard {
     /**
      * If a checkers game has more than this many moves, then we assume it is a draw.
      */
+    @Override
     public int getMaxNumMoves() {
         return 4 * SIZE * SIZE;
     }

@@ -27,67 +27,83 @@ public class StubGoEye implements IGoEye {
         this.members = members;
     }
 
+    @Override
     public GoBoardPositionSet getMembers() {
         return members;
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
 
+    @Override
     public boolean isEnemy(GoBoardPosition pos) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isOwnedByPlayer1() {
         return false;
     }
 
+    @Override
     public void setVisited(boolean visited) {
         visited = false;
     }
 
+    @Override
     public EyeInformation getInformation() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public EyeStatus getStatus() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String getEyeTypeName() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int getNumCornerPoints() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int getNumEdgePoints() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public GoGroup getGroup() {
         return null;
     }
 
+    @Override
     public boolean isUnconditionallyAlive() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setUnconditionallyAlive(boolean unconditionallyAlive) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int size() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public GoBoardPositionSet getLiberties(GoBoard board) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int getNumLiberties(GoBoard board) {
         throw new UnsupportedOperationException();
     }

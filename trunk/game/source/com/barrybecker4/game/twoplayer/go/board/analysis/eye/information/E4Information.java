@@ -49,6 +49,7 @@ public class E4Information extends AbstractEyeSubtypeInformation {
     }
 
 
+    @Override
     public String getTypeName() {
         return e4Type.toString();
     }

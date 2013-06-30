@@ -63,13 +63,11 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
         lookupTable = new TranspositionTable();
     }
 
+    @Override
     public TranspositionTable getTranspositionTable() {
         return lookupTable;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove, int depth,
                                           SearchWindow window, SearchTreeNode parent ) {
@@ -107,9 +105,6 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove,int depth,  MoveList list,
                                          SearchWindow window, SearchTreeNode parent) {

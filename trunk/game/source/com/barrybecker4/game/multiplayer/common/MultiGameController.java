@@ -115,10 +115,12 @@ public abstract class MultiGameController extends GameController {
     /**
      * @return the player who's turn it is now.
      */
+    @Override
     public MultiGamePlayer getCurrentPlayer() {
         return (MultiGamePlayer) getPlayers().get(currentPlayerIndex_);
     }
 
+    @Override
     public void computerMovesFirst() {
         MultiGameViewer viewer  = (MultiGameViewer) this.getViewer();
         viewer.doComputerMove(getCurrentPlayer());
@@ -146,7 +148,7 @@ public abstract class MultiGameController extends GameController {
 
     /**
      * Apply the action from the client for the associated player.
-     * @param action
+     * @param action action to perform during move
      */
     @Override
     public void handlePlayerAction(PlayerAction action) {
@@ -165,6 +167,7 @@ public abstract class MultiGameController extends GameController {
      */
     public void advanceToNextPlayer() {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 doAdvanceToNextPlayer();
             }

@@ -19,6 +19,7 @@ public class PlanetComparator implements Comparator<Planet> {
     }
 
 
+    @Override
     public int compare(Planet p1, Planet p2) {
 
         double p1Dist = p1.getDistanceFrom(comparisonPlanet_);

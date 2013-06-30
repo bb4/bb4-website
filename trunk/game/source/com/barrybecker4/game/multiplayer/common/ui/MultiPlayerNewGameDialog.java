@@ -79,6 +79,7 @@ public abstract class MultiPlayerNewGameDialog
     }
 
     /** sets the selected players and closes the dialog */
+    @Override
     public void startGame(PlayerList players) {
         controller_.setPlayers(players);
         ok();
@@ -127,8 +128,8 @@ public abstract class MultiPlayerNewGameDialog
 
     /**
      * Called when rows are selected/deselected in the player table.
-     * @param event
      */
+    @Override
     public void valueChanged(ListSelectionEvent event) {
         MultiGameOptions options = (MultiGameOptions) controller_.getOptions();
         boolean enabled = playerTable_.getTable().getSelectedRowCount() > 0

@@ -26,7 +26,6 @@ public class PerformanceRunner {
 
     /**
      * Run the NxN comparison and return the results.
-     * @return model with all the results
      */
     public void doComparisonRuns() {
 

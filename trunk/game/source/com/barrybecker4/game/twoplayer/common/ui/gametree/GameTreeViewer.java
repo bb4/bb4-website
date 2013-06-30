@@ -128,7 +128,9 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
 
 
     // ---  these methods implement the MouseMotionListener interface   ---
+    @Override
     public void mouseMoved( MouseEvent e ) {}
+    @Override
     public void mouseDragged( MouseEvent e ) {}
 
 
@@ -258,7 +260,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
 
     /**
      * draw colored bands to give an indication of who is moving on each ply.
-     * @param g2
+     * @param g2 graphics
      */
     private synchronized void drawBackground( Graphics2D g2 ) {
         g2.setColor( backgroundColor_ );

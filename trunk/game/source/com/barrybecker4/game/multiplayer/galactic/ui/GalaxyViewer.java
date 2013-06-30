@@ -128,9 +128,9 @@ public class GalaxyViewer extends MultiGameViewer {
      * Have we reached our destination?
      * if so, show and record the battle, or add reinforcements as appropriate, and then remove the order from the list.
      * If not, adjust the distance remaining.
-     * @param move
-     * @param orderIt
-     * @param order
+     * @param move move for all players in round
+     * @param orderIt iterates over the orders
+     * @param order current order
      */
     private void executeOrder(GalacticTurn move, Iterator orderIt, Order order) {
 

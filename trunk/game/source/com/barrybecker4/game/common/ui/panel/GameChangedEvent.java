@@ -21,7 +21,7 @@ public final class GameChangedEvent extends EventObject {
     /**
      * constructor
      * @param mv the most recently played move
-     * @param controller
+     * @param controller the controller
      */
     public GameChangedEvent(Move mv, IGameController controller, Object source ) {
         super(source);

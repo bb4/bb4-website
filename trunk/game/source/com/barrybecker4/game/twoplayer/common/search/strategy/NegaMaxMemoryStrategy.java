@@ -32,13 +32,11 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
         lookupTable = new TranspositionTable();
     }
 
+    @Override
     public TranspositionTable getTranspositionTable() {
         return lookupTable;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
         // need to negate alpha and beta on initial call.
@@ -47,9 +45,6 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
         return searchInternal( lastMove, lookAhead_, new SearchWindow(g, g), parent );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
                                            int depth,

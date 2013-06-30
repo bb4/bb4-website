@@ -72,12 +72,14 @@ public class GameComparisonPanel extends JPanel
      * <P>
      * super.actionPerformed(e);
      */
+    @Override
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         if ( source == null ) {
         }
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
 
         int index = tabbedPane.getSelectedIndex();

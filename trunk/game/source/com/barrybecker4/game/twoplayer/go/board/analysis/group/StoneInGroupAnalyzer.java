@@ -40,8 +40,6 @@ public class StoneInGroupAnalyzer {
     }
 
     /**
-     * @param stone
-     * @param threshold
      * @return return true of the stone is greater than threshold weaker than the group.
      */
     private boolean isStoneWeakerThanGroup(GoStone stone, float threshold, float groupHealth) {

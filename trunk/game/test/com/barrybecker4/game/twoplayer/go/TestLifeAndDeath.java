@@ -78,7 +78,7 @@ public class TestLifeAndDeath extends GoTestCase {
     }  */
 
     /**
-     * @param filename
+     * @param filename name of the file where test case resides
      * @param row row of expected next move.
      * @param column  column of expected next move.
      */

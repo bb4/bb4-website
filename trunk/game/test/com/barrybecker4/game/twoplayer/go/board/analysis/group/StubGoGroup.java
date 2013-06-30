@@ -31,10 +31,12 @@ public class StubGoGroup implements IGoGroup {
         return absHealth;
     }
 
+    @Override
     public boolean isOwnedByPlayer1() {
         return isOwnedByPlayer1;
     }
 
+    @Override
     public void addChangeListener(GroupChangeListener listener) {
         throw new UnsupportedOperationException();
     }
@@ -43,34 +45,42 @@ public class StubGoGroup implements IGoGroup {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void addMember(IGoString string) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public GoStringSet getMembers() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isEnemy(GoBoardPosition pos) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setVisited(boolean visited) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int size() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public GoBoardPositionSet getLiberties(GoBoard board) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int getNumLiberties(GoBoard board) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int getNumStones() {
         return numStones;
     }
@@ -83,14 +93,17 @@ public class StubGoGroup implements IGoGroup {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean containsStone(GoBoardPosition stone) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void remove(IGoString string) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public GoBoardPositionSet getStones() {
         throw new UnsupportedOperationException();
     }
@@ -103,10 +116,12 @@ public class StubGoGroup implements IGoGroup {
        throw new UnsupportedOperationException();
     }
 
+    @Override
     public void updateTerritory(float health) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Box findBoundingBox() {
         throw new UnsupportedOperationException();
     }
@@ -115,6 +130,7 @@ public class StubGoGroup implements IGoGroup {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public String toHtml() {
         throw new UnsupportedOperationException();
     }

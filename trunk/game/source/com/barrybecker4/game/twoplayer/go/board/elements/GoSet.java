@@ -25,6 +25,7 @@ public abstract class GoSet implements IGoSet {
     /**
      * @return  true if set is owned by player one
      */
+    @Override
     public final boolean isOwnedByPlayer1() {
         return ownedByPlayer1_;
     }
@@ -32,6 +33,7 @@ public abstract class GoSet implements IGoSet {
     /**
      * @return  the number of stones in the set
      */
+    @Override
     public final int size() {
         return getMembers().size();
     }
@@ -39,6 +41,7 @@ public abstract class GoSet implements IGoSet {
     /**
      * @return the hashSet containing the members
      */
+    @Override
     public abstract Set<? extends IGoMember> getMembers();
 
     /**

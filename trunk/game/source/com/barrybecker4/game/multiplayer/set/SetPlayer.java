@@ -29,10 +29,7 @@ public class SetPlayer extends MultiGamePlayer
 
     /**
      * Factory method for creating set players of the appropriate type.
-     * @param name
-     * @param color
-     * @param isHuman
-     * @return
+     * @return new player
      */
     public static SetPlayer createSetPlayer(String name, Color color, boolean isHuman)
     {
@@ -53,7 +50,7 @@ public class SetPlayer extends MultiGamePlayer
     }
 
     /**
-     * @return player action
+     * set the player action
      */
     @Override
     public void setAction(PlayerAction action) {
@@ -63,13 +60,12 @@ public class SetPlayer extends MultiGamePlayer
     /**
      *
      * @param i index of player
-     * @return  the default name for player i
+     * @return the default name for player i
      */
     public String getDefaultName(int i)
     {
         Object[] args = {Integer.toString(i)};
-        String dname = MessageFormat.format(GameContext.getLabel("SET_DEFAULT_NAME"), args );
-        return dname;
+        return MessageFormat.format(GameContext.getLabel("SET_DEFAULT_NAME"), args );
     }
 
 
@@ -106,7 +102,7 @@ public class SetPlayer extends MultiGamePlayer
 
     /**
      * Players with the same name hash to the smae colation. Rare.
-     * @return
+     * @return hash code
      */
     public int hashCode() {
         return getName().hashCode();

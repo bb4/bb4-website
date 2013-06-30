@@ -76,6 +76,7 @@ public class GoString extends GoSet
      * @param pos position to look for.
      * @return  true if we contain the specified position.
      */
+    @Override
     public boolean contains(GoBoardPosition pos) {
         return members_.contains(pos);
     }
@@ -85,10 +86,12 @@ public class GoString extends GoSet
         members_ = new GoBoardPositionSet();
     }
 
+    @Override
     public final void setGroup( IGoGroup group ) {
         group_ = group;
     }
 
+    @Override
     public IGoGroup getGroup() {
         return group_;
     }
@@ -160,6 +163,7 @@ public class GoString extends GoSet
      * What happens if the string gets split as a result?
      * The caller should handle this case since we cannot create new strings here.
      */
+    @Override
     public final void remove( GoBoardPosition stone, GoBoard board ) {
         removeInternal(stone);
         libertyAnalyzer_.invalidate();
@@ -174,14 +178,16 @@ public class GoString extends GoSet
        }
     }
 
+    @Override
     public int getNumLiberties(GoBoard board) {
         return getLiberties(board).size();
     }
 
     /**
      * return the set of liberty positions that the string has
-     * @param board
+     * @param board the go board
      */
+    @Override
     public final GoBoardPositionSet getLiberties(GoBoard board) {
         return libertyAnalyzer_.getLiberties();
     }
@@ -198,6 +204,7 @@ public class GoString extends GoSet
      * Set the health of members equal to the specified value
      * @param health range = [0-1]
      */
+    @Override
     public final void updateTerritory( float health ) {
         for (GoBoardPosition pos : getMembers()) {
             GoStone stone = (GoStone) pos.getPiece();
@@ -208,6 +215,7 @@ public class GoString extends GoSet
     /**
      *  @return true if the piece at the specified position is an enemy of the string owner
      */
+    @Override
     public boolean isEnemy(GoBoardPosition pos) {
         assert (group_ != null): "group for "+this+" is null";
         assert (pos.isOccupied()): "pos not occupied: ="+pos;
@@ -221,6 +229,7 @@ public class GoString extends GoSet
     /**
      * make sure all the stones in the string are visited/unvisited as specified.
      */
+    @Override
     public final void setVisited(boolean visited) {
         for (GoBoardPosition stone : getMembers()) {
             stone.setVisited(visited);
@@ -234,10 +243,12 @@ public class GoString extends GoSet
     /**
      * @return true if unconditionally alive.
      */
+    @Override
     public boolean isUnconditionallyAlive() {
         return unconditionallyAlive_;
     }
 
+    @Override
     public void setUnconditionallyAlive(boolean unconditionallyAlive) {
         this.unconditionallyAlive_ = unconditionallyAlive;
     }

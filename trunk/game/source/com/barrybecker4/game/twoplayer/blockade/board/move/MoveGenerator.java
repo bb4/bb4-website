@@ -38,7 +38,7 @@ public class MoveGenerator {
      * its shortest paths to the opponent homes and all reasonable wall placements.
      * To limit the number of wall placements we will restrict possibilities to those positions which
      * effect one of the *opponents* shortest paths.
-     * @param lastMove
+     * @param lastMove last move that was made on the board
      * @return list of generated moves.
      */
     public MoveList generateMoves(TwoPlayerMove lastMove) {

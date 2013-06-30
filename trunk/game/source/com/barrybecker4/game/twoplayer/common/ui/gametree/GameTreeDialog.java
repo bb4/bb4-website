@@ -50,7 +50,7 @@ public final class GameTreeDialog extends AbstractDialog
     /**
      * constructor - create the tree dialog.
      * @param parent component to display relative to
-     * @param boardViewer
+     * @param boardViewer board viewer
      * @param cellRenderer how to render cells in text tree view.
      */
     public GameTreeDialog(Component parent, AbstractTwoPlayerBoardViewer boardViewer,
@@ -127,11 +127,13 @@ public final class GameTreeDialog extends AbstractDialog
         treeViewer_.setRoot(tree_.getRootNode());
     }
 
+    @Override
     public synchronized void treeExpanded( TreeExpansionEvent e ) {
         refresh();
         treeViewer_.refresh();
     }
 
+    @Override
     public synchronized void treeCollapsed( TreeExpansionEvent e ) {
         refresh();
         treeViewer_.refresh();
@@ -141,6 +143,7 @@ public final class GameTreeDialog extends AbstractDialog
      * called when the game has changed.
      * @param gce the event spawned when the game changed.
      */
+    @Override
     public synchronized void gameChanged( GameChangedEvent gce ) {
         mainController_ = (TwoPlayerController)gce.getController();
         motionListener_.setMainController(mainController_);

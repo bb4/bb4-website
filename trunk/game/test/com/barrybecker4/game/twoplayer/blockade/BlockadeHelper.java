@@ -9,6 +9,7 @@ import com.barrybecker4.game.twoplayer.common.search.SearchableHelper;
  */
 public class BlockadeHelper extends SearchableHelper {
 
+    @Override
     public TwoPlayerController createController() {
         return new BlockadeController();
     }

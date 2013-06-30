@@ -27,6 +27,7 @@ public class CheckersSearchable extends TwoPlayerSearchable {
         super(searchable);
     }
 
+    @Override
     public CheckersSearchable copy() {
         return new CheckersSearchable(this);
     }
@@ -34,6 +35,7 @@ public class CheckersSearchable extends TwoPlayerSearchable {
     /**
      * Generate all possible next moves
      */
+    @Override
     public MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights) {
 
         MoveGenerator generator = new MoveGenerator(this, weights);
@@ -101,11 +103,12 @@ public class CheckersSearchable extends TwoPlayerSearchable {
     }
 
     /**
-     * @@ quiescent search not yet implemented for checkers
+     * Quiescent search not yet implemented for checkers
      * Probably we should return all moves that capture opponent pieces.
      *
      * @return list of urgent moves
      */
+    @Override
     public MoveList generateUrgentMoves(
             TwoPlayerMove lastMove, ParameterArray weights) {
         return new MoveList();

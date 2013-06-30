@@ -31,9 +31,6 @@ final class RaiseDialog extends OptionsDialog {
 
     /**
      * constructor - create the tree dialog.
-     * @param player
-     * @param callAmount
-     * @param allInAmount
      */
     public RaiseDialog(PokerPlayer player, int callAmount, int allInAmount, int maxRaiseAllowed, int ante) {
         setResizable( true );
@@ -116,7 +113,6 @@ final class RaiseDialog extends OptionsDialog {
 
     /**
      * called when one of the buttons at the bottom have been pressed.
-     * @param e
      */
     @Override
     public void actionPerformed( ActionEvent e ) {

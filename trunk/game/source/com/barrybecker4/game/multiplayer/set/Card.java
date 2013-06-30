@@ -95,7 +95,7 @@ public class Card {
     /**
      * Usually used to determine if a set game is over.
      *
-     * @param cards
+     * @param cards set of cards to check for a set within
      * @return true if a set of cards contains a set
      */
      public static boolean hasSet(List<Card> cards) {
@@ -103,7 +103,7 @@ public class Card {
      }
 
     /**
-     * @param cards
+     * @param cards cards to look at when determining the number of sets.
      * @return the number of sets in cards
      */
      public static int numSets(List<Card> cards) {

@@ -14,7 +14,7 @@ import java.util.List;
  *  A ChessPiece is either empty or contains one of the standard chess pieces.
  *  This class has in it the rules for how each chess move can move.
  *
- * @@ make this an enum with findMoves as an abstract method.
+ * TODO: make this an enum with findMoves as an abstract method.
  *  The images and label could also be part of the enum.
  *
  * @see ChessBoard
@@ -54,12 +54,14 @@ public class ChessPiece extends GamePiece {
     public ChessPieceType getPieceType() {
         return pieceType_;
     }
+
     /**
      * @return  true if this is the first time that this piece has been moved in the game.
      */
     public boolean isFirstTimeMoved() {
         return firstTimeMoved_;
     }
+
     /**
      * @param firstTimeMoved whether or not this piece has been moved yet this game.
      */

@@ -30,7 +30,7 @@ public class PathLengths {
 
     /**
      * Update the values of the shortest, secondShortest and furthest.
-     * @param paths
+     * @param paths paths to update lengths of.
      */
     public void updatePathLengths(PathList paths) {
         // if we don't have NUM_HOMES paths then this set of path lengths is invalid.

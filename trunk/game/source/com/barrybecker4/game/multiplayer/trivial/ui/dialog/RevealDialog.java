@@ -81,7 +81,6 @@ public final class RevealDialog extends ActionDialog {
 
     /**
      * called when one of the buttons at the bottom have been pressed.
-     * @param e
      */
     @Override
     public void actionPerformed( ActionEvent e ) {

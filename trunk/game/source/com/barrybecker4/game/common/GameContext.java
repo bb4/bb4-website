@@ -15,7 +15,7 @@ import java.util.Random;
 
 /**
  * Manage game context info such as logging, debugging, resources, and profiling.
- * @@ Perhaps use java properties or config file?
+ * Perhaps use java properties or config file to define options.
  *
  * @author Barry Becker
  */
@@ -72,7 +72,7 @@ public final class GameContext {
     }
 
     /**
-     * @param debug
+     * @param debug the debug level. 0 means all logging.
      */
     public static void setDebugMode( int debug ) {
         debug_ = debug;
@@ -154,7 +154,7 @@ public final class GameContext {
 
     /**
      * set the current locale .
-     * @param locale
+     * @param locale the locale to use
      */
     public static void setLocale(LocaleType locale) {
         messageContext_.setLocale(locale);

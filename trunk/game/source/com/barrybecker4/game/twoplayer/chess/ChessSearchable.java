@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * For searching the Chess game tree.
- * @@ extract aq MoveGenerator
+ * TODO: extract a MoveGenerator
  *
  * @author Barry Becker
  */
@@ -30,6 +30,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
         super(searchable);
     }
 
+    @Override
     public ChessSearchable copy() {
         return new ChessSearchable(this);
     }
@@ -72,6 +73,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
     /**
      *  generate all possible next moves.
      */
+   @Override
    public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights) {
        MoveList moveList = new MoveList();
        int row,col;
@@ -96,9 +98,10 @@ public class ChessSearchable extends TwoPlayerSearchable {
    }
 
    /**
-    * @@todo
+    * TODO
     * @return those moves that result in check or getting out of check.
     */
+   @Override
    public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights) {
        return new MoveList();
    }
@@ -129,7 +132,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
 
     /**
      * remove any moves that put the king in jeopardy.
-     * @param moveList
+     * @param moveList list of moves to examine and modify
      */
     public void removeSelfCheckingMoves(List moveList) {
 

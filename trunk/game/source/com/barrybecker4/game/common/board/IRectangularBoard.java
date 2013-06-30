@@ -22,6 +22,7 @@ public interface IRectangularBoard extends IBoard {
     /**
      *  Reset the board to its initial starting state.
      */
+    @Override
     void reset();
 
     /**
@@ -90,5 +91,6 @@ public interface IRectangularBoard extends IBoard {
      * We should be able to create a deep copy of ourselves
      * @return deep copy of the board.
      */
+    @Override
     IRectangularBoard copy();
 }

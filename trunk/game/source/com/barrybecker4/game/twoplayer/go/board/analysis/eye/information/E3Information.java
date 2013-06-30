@@ -26,6 +26,7 @@ public class E3Information extends AbstractEyeSubtypeInformation {
         return handleVitalPointCases(nbrMap, eye, 1);
     }
 
+    @Override
     public String getTypeName() {
        return "E112";
     }

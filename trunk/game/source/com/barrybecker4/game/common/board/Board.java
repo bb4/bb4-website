@@ -106,17 +106,11 @@ public abstract class Board implements IRectangularBoard {
         return 40;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BoardPosition getPosition( int row, int col ) {
         return positions_.getPosition(row, col);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BoardPosition getPosition( Location loc ) {
         return getPosition(loc.getRow(), loc.getCol());

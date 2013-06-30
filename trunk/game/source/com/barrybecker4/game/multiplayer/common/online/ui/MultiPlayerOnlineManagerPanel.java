@@ -119,6 +119,7 @@ public abstract class MultiPlayerOnlineManagerPanel
      * The user has done something to change the table list
      * (e.g. added a new game).
      */
+    @Override
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
 
@@ -133,6 +134,7 @@ public abstract class MultiPlayerOnlineManagerPanel
      * Implements tableButtonListener.
      * User has joined a different table.
      */
+    @Override
     public void tableButtonClicked( int row, int col, String id ) {
 
         if (namePanel_.nameChecksOut()) {
@@ -182,8 +184,11 @@ public abstract class MultiPlayerOnlineManagerPanel
      * Implement keyListener interface.
      * @param key key that was pressed
      */
+    @Override
     public void keyTyped( KeyEvent key )  {}
+    @Override
     public void keyPressed(KeyEvent key) {}
+    @Override
     public void keyReleased(KeyEvent key) {
         char keyChar = key.getKeyChar();
         if ( keyChar == '\n' ) {

@@ -31,6 +31,7 @@ public abstract class AbstractGameTreeExample implements GameTreeExample {
         return moveList;
     }
 
+    @Override
     public TwoPlayerMove getInitialMove() {
         return initialMove;
     }
@@ -38,6 +39,7 @@ public abstract class AbstractGameTreeExample implements GameTreeExample {
     /**
      * Print the tree in depth first search for debugging purposes
      */
+    @Override
     public void print() {
         initialMove.print();
     }

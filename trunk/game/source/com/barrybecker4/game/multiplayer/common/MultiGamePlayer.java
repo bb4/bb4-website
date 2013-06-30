@@ -57,7 +57,7 @@ public abstract class MultiGamePlayer extends Player {
     /**
      * @@ this method could use some improvement
      * @param hue to check for uniqueness compared to other players.
-     * @param players
+     * @param players players playing the game.
      * @return true if hue is different enough from the others.
      */
     private static boolean isHueUniqueEnough(float hue, PlayerList players) {

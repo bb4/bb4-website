@@ -49,6 +49,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy {
         weights_ = weights;
     }
 
+    @Override
     public SearchOptions getOptions() {
         return searchable.getSearchOptions();
     }
@@ -102,10 +103,12 @@ public abstract class AbstractSearchStrategy implements SearchStrategy {
         return true;
     }
 
+    @Override
     public final long getNumMovesConsidered() {
         return movesConsidered;
     }
 
+    @Override
     public final int getPercentDone() {
         return percentDone;
     }
@@ -114,6 +117,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy {
      * Set an optional ui component that will update when the search tree is modified.
      * @param listener game tree listener
      */
+    @Override
     public void setGameTreeEventListener(IGameTreeViewable listener) {
         gameTree_ = listener;
     }
@@ -132,16 +136,19 @@ public abstract class AbstractSearchStrategy implements SearchStrategy {
 
     // these methods give an external thread debugging controls over the search
 
+    @Override
     public void pause() {
         paused_ = true;
     }
 
 
+    @Override
     public final boolean isPaused() {
         return paused_;
     }
 
 
+    @Override
     public void continueProcessing() {
         paused_ = false;
     }

@@ -104,8 +104,8 @@ public class TwoPlayerSGFLoader extends SGFLoader {
      * Now that we know what type of token we have, ask it to parse itself.
      * Most of the parsing is done by the TextToken class.  All tokens are
      * subclasses of SGFToken.
-     * @param st
-     * @return
+     * @param token game token of some type.
+     * @param st stream tokenizer
      */
     private void parseToken(SGFToken token, StreamTokenizer st) throws IOException, SGFException {
         token.parse(st);

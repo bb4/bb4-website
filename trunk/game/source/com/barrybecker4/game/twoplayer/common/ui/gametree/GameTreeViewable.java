@@ -31,6 +31,7 @@ public final class GameTreeViewable implements IGameTreeViewable {
     /**
      * @return the root node so that it can be modified.
      */
+    @Override
     public SearchTreeNode getRootNode() {
         return root_;
     }
@@ -60,6 +61,7 @@ public final class GameTreeViewable implements IGameTreeViewable {
     /**
      * Add a child node at position i to the specified parent node.
      */
+    @Override
     public void addNode(final SearchTreeNode parent, final SearchTreeNode child) {
 
         synchronized (root_) {
@@ -70,6 +72,7 @@ public final class GameTreeViewable implements IGameTreeViewable {
     /**
      *  Show the specified list of pruned nodes under the specified parent.
      */
+    @Override
     public void addPrunedNodes(final MoveList list, final SearchTreeNode parent,
                                final int i, final NodeAttributes attributes) {
         synchronized (root_) {
@@ -83,6 +86,7 @@ public final class GameTreeViewable implements IGameTreeViewable {
      * Clear all nodes but the root.
      * @param p two player move to set the root to.
      */
+    @Override
     public void resetTree(final TwoPlayerMove p) {
 
         synchronized (root_) {

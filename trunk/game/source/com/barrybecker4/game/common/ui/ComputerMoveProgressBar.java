@@ -47,7 +47,7 @@ public class ComputerMoveProgressBar extends JProgressBar {
     }
 
     /**
-     * make the computer move and show it on the screen.
+     * Make the computer move and show it on the screen.
      * Since this can take a very long time we will show the user a progress bar
      * to give feedback.
      *   The computer needs to search through vast numbers of moves to find the best one.
@@ -57,7 +57,6 @@ public class ComputerMoveProgressBar extends JProgressBar {
      * We animate these types of moves so the human player does not get disoriented.
      *
      * @param moveRequester thing requesting the next computer move.
-     * @return true if done. Always returns false unless auto optimizing
      */
     public void doComputerMove(SearchProgress moveRequester) {
 

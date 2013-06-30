@@ -34,6 +34,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
         super(searchable);
     }
 
+    @Override
     public BlockadeSearchable copy() {
         return new BlockadeSearchable(this);
     }
@@ -96,6 +97,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
      * wall placements. So restrict wall placements to those that hinder the enemy while not hindering you.
      * lastMove may be null if there was no last move.
      */
+    @Override
     public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights)  {
         getProfiler().startGenerateMoves();
 
@@ -145,6 +147,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
      *
      * @return list of urgent moves
      */
+    @Override
     public MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights) {
         return new MoveList();
     }

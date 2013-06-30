@@ -101,7 +101,7 @@ public class CandidateMoveAnalyzer {
 
     /**
      * This method splats a footprint of trues around the specified move.
-     * @param stone
+     * @param stone position to add candidate moves around.
      */
     private void addCandidateMoves( GoBoardPosition stone ) {
         int startrow = Math.max( stone.getRow() - CANDIDATE_MOVE_OFFSET, 1 );

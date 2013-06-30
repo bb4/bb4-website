@@ -129,7 +129,6 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
 
     /**
      * @param file saved sgf game file to load
-     * @return the initialized board. Must have 2 groups.
      */
     protected void initializeBoard(String file) {
         restore(PREFIX + file);

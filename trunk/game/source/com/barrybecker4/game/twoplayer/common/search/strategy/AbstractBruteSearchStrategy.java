@@ -63,18 +63,13 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
         return searchable.getSearchOptions();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public TwoPlayerMove search(TwoPlayerMove lastMove, SearchTreeNode parent) {
 
         SearchWindow window = getOptions().getBruteSearchOptions().getInitialSearchWindow();
         return searchInternal( lastMove, lookAhead_, window,  parent );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     TwoPlayerMove searchInternal(TwoPlayerMove lastMove,
                                 int depth, SearchWindow window, SearchTreeNode parent) {
 

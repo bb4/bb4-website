@@ -23,9 +23,6 @@ public class NegaMaxStrategy extends AbstractBruteSearchStrategy {
         super( controller , weights);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
 
@@ -33,9 +30,6 @@ public class NegaMaxStrategy extends AbstractBruteSearchStrategy {
         return searchInternal( lastMove, lookAhead_, new SearchWindow(window.beta, window.alpha), parent);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
                                        SearchWindow window, SearchTreeNode parent) {

@@ -18,6 +18,7 @@ public interface IGoString extends IGoSet {
     /**
      * @return  set of member positions.
      */
+    @Override
     GoBoardPositionSet getMembers();
 
     /**

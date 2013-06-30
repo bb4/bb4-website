@@ -105,6 +105,7 @@ public class SearchOptionsPanel extends JPanel
     /**
      * Invoked when a radio button has changed its selection state.
      */
+    @Override
     public void itemStateChanged( ItemEvent e ) {
         //super.itemStateChanged(e);
         algorithm_ = getSelectedStrategy(searchOptions_.getSearchStrategyMethod());

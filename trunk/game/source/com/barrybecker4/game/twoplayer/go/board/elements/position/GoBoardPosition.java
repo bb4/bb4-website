@@ -91,12 +91,12 @@ public final class GoBoardPosition extends BoardPosition
      * The stone may also belong to to an eye in an opponent group, however.
      */
     public IGoGroup getGroup() {
-       if (string_ != null)
-           return string_.getGroup();
-       else if (eye_ != null) {
-           return eye_.getGroup();
-       }
-       return null;
+        if (string_ != null)
+            return string_.getGroup();
+        if (eye_ != null) {
+            return eye_.getGroup();
+        }
+        return null;
     }
 
     /**

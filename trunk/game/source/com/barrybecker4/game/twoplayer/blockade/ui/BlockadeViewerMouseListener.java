@@ -79,14 +79,13 @@ class BlockadeViewerMouseListener extends ViewerMouseListener {
     /**
      * When the mouse is released either the piece or a wall is being placed
      * depending on the value of wallPlacingMode.
-     * @param e
      */
     @Override
-    public void mouseReleased( MouseEvent e )
+    public void mouseReleased( MouseEvent event )
     {
         // compute the coordinates of the position that we dropped the piece on.
         BlockadeBoardViewer viewer = (BlockadeBoardViewer) viewer_;
-        Location loc = getRenderer().createLocation(e);
+        Location loc = getRenderer().createLocation(event);
 
         if (!wallPlacingMode)  {
             boolean placed = placePiece( loc );

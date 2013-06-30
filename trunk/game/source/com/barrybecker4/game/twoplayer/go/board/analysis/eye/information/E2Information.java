@@ -12,6 +12,7 @@ public class E2Information extends AbstractEyeSubtypeInformation {
         initialize(false, 2);
     }
 
+    @Override
     public String getTypeName() {
        return "E11";
     }

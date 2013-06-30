@@ -37,7 +37,7 @@ public class MonteCarloOptionsPanel extends JPanel {
     }
 
     /**
-     * @return brute search options
+     * update the options based on the user preferences.
      */
     public void updateMonteCarloOptionsOptions() {
 

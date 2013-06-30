@@ -40,31 +40,27 @@ public class SearchableStub extends AbstractSearchable {
     }
 
     /** @return a copy of this instnace */
+    @Override
     public Searchable copy() {
         return new SearchableStub(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public void makeInternalMove( TwoPlayerMove m )  {
         moveList_.add(m);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public void undoInternalMove( TwoPlayerMove m ) {
         moveList_.removeLast();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public boolean done( TwoPlayerMove m, boolean recordWin ) {
         return m.getInheritedValue() >= SearchStrategy.WINNING_VALUE;
     }
 
+    @Override
     public int worth(TwoPlayerMove lastMove, ParameterArray weights) {
         return lastMove.getValue();
     }
@@ -74,20 +70,17 @@ public class SearchableStub extends AbstractSearchable {
         return lastMove.getValue();
     } */
 
+    @Override
     public TwoPlayerBoard getBoard() {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         MoveList urgentMoves = new MoveList();
         for (Move m : ((TwoPlayerMoveStub) lastMove).getChildren()) {
@@ -99,16 +92,12 @@ public class SearchableStub extends AbstractSearchable {
         return urgentMoves;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights) {
         return ((TwoPlayerMoveStub)lastMove).causedUrgency();
     }
 
-    /**
-     *{@inheritDoc}
-     */
+    @Override
     public HashKey getHashKey() {
         HashKey key = new HashKey();
         for (Move m : moveList_) {

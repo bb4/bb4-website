@@ -22,6 +22,7 @@ class TwoPlayerOptimizee implements Optimizee {
         controller_ = controller;
     }
 
+    @Override
     public String getName() {
         return "TwoPlayer Game" ;
     }
@@ -31,6 +32,7 @@ class TwoPlayerOptimizee implements Optimizee {
      * otherwise the reverse will be true.
      * @return return true if we evaluate the fitness by comparison
      */
+    @Override
     public boolean  evaluateByComparison() {
         return true;
     }
@@ -43,10 +45,12 @@ class TwoPlayerOptimizee implements Optimizee {
      * @param params the set of parameters to misc
      * @return the fitness measure. The higher the better
      */
+    @Override
     public double evaluateFitness( ParameterArray params ) {
        return 0.0;
     }
 
+    @Override
     public double getOptimalFitness() {
         return 0;
     }
@@ -65,6 +69,7 @@ class TwoPlayerOptimizee implements Optimizee {
      * @param params2 set of weights for the other side
      * @return the amount that params1 are better than params2. May be negative if params2 are better.
      */
+    @Override
     public double compareFitness( ParameterArray params1, ParameterArray params2 ) {
         GameWeights weights = controller_.getComputerWeights();
         weights.setPlayer1Weights(params1);

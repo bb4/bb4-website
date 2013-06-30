@@ -59,7 +59,7 @@ public abstract class TwoPlayerMoveToken extends PlacementToken {
 
 
   /**
-   * @praram a token whose value ranges between 'a' through 'z', or 'A'  through 'Z',
+   * @param ch a token whose value ranges between 'a' through 'z', or 'A'  through 'Z',
    * @return the appropriate row/column value.  If
    * the token isn't between 'a' and 'z', or 'A' and 'Z', this returns 0;
    */

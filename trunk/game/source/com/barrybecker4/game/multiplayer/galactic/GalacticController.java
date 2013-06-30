@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Defines everything the computer needs to know to play Galactic Empire.
- * @@ todo:
+ * TODO:
  *  - mousing over menu item should highlight planet in the viewer
  *  - mouse over should still work when entering orders (non-modal?)
  *  - have robot players with different strategy.
@@ -30,7 +30,7 @@ import java.util.List;
  *    - show pictures of humans and aliens in battle.
  *    -
  *
- * @@ bugs
+ * bugs
  *  - after click on fight, it should change immediately to close
  *  - lines showing armada trajectories do not always line up with planet centers
  *  - remove selected source planet from dest list.
@@ -108,6 +108,7 @@ public class GalacticController extends MultiGameController {
     /**
      * @return true if the game is over.
      */
+    @Override
     public boolean isDone() {
         if (getLastMove()==null) {
             return false;
@@ -141,8 +142,7 @@ public class GalacticController extends MultiGameController {
     }
 
     /**
-     * advance to the next player turn in order.
-     * @return the index of the next player to play.
+     * Advance to the next player turn in order.
      */
     @Override
     protected void doAdvanceToNextPlayer() {
@@ -187,22 +187,8 @@ public class GalacticController extends MultiGameController {
         return currentPlayerIndex_;
     }
 
-
     @Override
     public GameOptions createOptions() {
          return new GalacticOptions();
-    }
-
-    ////////// some Galactic specific methods ///////////////////
-
-    /**
-     * @return number of planets in the galaxy
-     */
-    public int getNumPlanets() {
-        return Galaxy.getNumPlanets();
-    }
-
-    public void setNumPlanets(int numPlanets) {
-        ((Galaxy)getBoard()).setNumPlanets(numPlanets);
     }
 }

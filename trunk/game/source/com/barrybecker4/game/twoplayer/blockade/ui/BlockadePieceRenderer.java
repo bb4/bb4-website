@@ -54,7 +54,7 @@ class BlockadePieceRenderer extends TwoPlayerPieceRenderer {
     /**
      * @param g2 graphic context
      * @param bpos board position
-     * @param cellSize
+     * @param cellSize the cell size
      * @return true if at least one wall was rendered.
      */
     static boolean renderWallAtPosition( Graphics2D g2, BlockadeBoardPosition bpos, int cellSize, int margin ) {

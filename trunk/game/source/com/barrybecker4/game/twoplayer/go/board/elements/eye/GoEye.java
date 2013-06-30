@@ -53,24 +53,29 @@ public class GoEye extends GoString implements IGoEye {
         initializePositionCounts(board);
     }
 
+    @Override
     public EyeInformation getInformation() {
         return information_;
     }
 
+    @Override
     public EyeStatus getStatus() {
         return status_;
     }
 
+    @Override
     public String getEyeTypeName() {
         if (information_ == null)
             return "unknown eye type";
         return information_.getTypeName();
     }
 
+    @Override
     public int getNumCornerPoints() {
         return numCornerPoints_;
     }
 
+    @Override
     public int getNumEdgePoints() {
         return numEdgePoints_;
     }
@@ -138,7 +143,7 @@ public class GoEye extends GoString implements IGoEye {
         getMembers().add( space );
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void clear() {
         for (GoBoardPosition pos : getMembers()) {
             pos.setEye(null);

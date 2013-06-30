@@ -78,8 +78,8 @@ public abstract class TrivialPlayer extends MultiGamePlayer {
     /**
      * Factory method for creating players of the appropriate type.
      * @param name name of the trivial player
-     * @param color
-     * @param isHuman
+     * @param color color of the player
+     * @param isHuman true if human
      * @return the new player
      */
     public static TrivialPlayer createTrivialPlayer(String name, Color color, boolean isHuman) {

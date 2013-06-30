@@ -49,6 +49,7 @@ public class GtpKgsTesujisoftGoClient {
 
             log.println("step 0");
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     try {
                         gtpTSGoServer.mainLoop();

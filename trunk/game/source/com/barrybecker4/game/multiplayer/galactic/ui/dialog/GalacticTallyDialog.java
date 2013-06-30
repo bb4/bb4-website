@@ -23,7 +23,7 @@ public final class GalacticTallyDialog extends TallyDialog {
     /**
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
-     * @param controller
+     * @param controller the controller
      */
     public GalacticTallyDialog(Component parent, GalacticController controller ) {
         super( parent, controller );
@@ -35,8 +35,7 @@ public final class GalacticTallyDialog extends TallyDialog {
     }
 
     /**
-     *
-     * @param players
+     * @param players players to find winner among
      * @return the player with the most planets (num ships used only as a tie breaker).
      */
     @Override

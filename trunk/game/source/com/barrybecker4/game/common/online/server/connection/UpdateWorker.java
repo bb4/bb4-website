@@ -26,6 +26,7 @@ class UpdateWorker implements Runnable {
         this.changeListeners = changeListeners;
     }
 
+    @Override
     public void run() {
 
         while (isConnected) {

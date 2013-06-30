@@ -108,8 +108,7 @@ class PokerHands110202 {
 
 
     /**
-     *  entry point.
-     * @param args
+     * Entry point.
      */
     public static void main(String args[])  {
 

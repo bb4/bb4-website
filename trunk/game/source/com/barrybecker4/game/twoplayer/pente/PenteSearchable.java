@@ -34,6 +34,7 @@ public class PenteSearchable extends TwoPlayerSearchable {
         init();
     }
 
+    @Override
     public PenteSearchable copy() {
         return new PenteSearchable(this);
     }
@@ -65,6 +66,7 @@ public class PenteSearchable extends TwoPlayerSearchable {
     /**
      * generate all possible next moves.
      */
+    @Override
     public MoveList generateMoves(TwoPlayerMove lastMove,
                                   ParameterArray weights) {
         return generator.generateMoves(lastMove, weights);
@@ -75,6 +77,7 @@ public class PenteSearchable extends TwoPlayerSearchable {
      * Opponent moves that result in a win should be blocked.
      * @return Set of moves the moves that result in a certain win or a certain loss.
      */
+    @Override
     public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         return generator.generateUrgentMoves(lastMove, weights);
     }

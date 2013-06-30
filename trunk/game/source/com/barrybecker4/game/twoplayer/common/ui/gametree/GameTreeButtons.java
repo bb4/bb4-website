@@ -86,6 +86,7 @@ class GameTreeButtons extends JPanel implements ActionListener {
     /**
      * called when one of the buttons at the bottom have been pressed.
      */
+    @Override
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         if ( source.equals(pauseButton_) ) {

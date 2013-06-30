@@ -108,7 +108,7 @@ public enum SearchStrategyType {
 
 
     /**
-     * @param attribute
+     * @param attribute attribute to check for presence of
      * @return true if this search type has the specified attribute.
      */
     public boolean hasAttribute(SearchAttribute attribute) {

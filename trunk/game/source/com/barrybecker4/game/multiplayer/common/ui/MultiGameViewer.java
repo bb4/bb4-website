@@ -103,7 +103,6 @@ public abstract class MultiGameViewer extends GameBoardViewer {
     /**
      * Implements the GameChangedListener interface.
      * Called when the game has changed in some way
-     * @param evt
      */
     @Override
     public void gameChanged(GameChangedEvent evt) {

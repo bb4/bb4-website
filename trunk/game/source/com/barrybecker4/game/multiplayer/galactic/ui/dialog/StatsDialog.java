@@ -23,7 +23,7 @@ final class StatsDialog extends AbstractDialog {
     /**
      * constructor.
      * @param parent frame to display relative to
-     * @param boardViewer
+     * @param boardViewer board viewer
      */
     public StatsDialog(Component parent, GameBoardViewer boardViewer ) {
         super( parent );

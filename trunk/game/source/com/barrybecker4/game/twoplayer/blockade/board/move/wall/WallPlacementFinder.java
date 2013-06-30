@@ -39,7 +39,7 @@ public class WallPlacementFinder {
     /**
      * Find all wall placement variations for move firstStep that make the opponent
      * shortest paths longer, while not adversely affecting our own shortest paths.
-     * @@ optimize
+     * should optimize this.
      * Is it true that the set of walls we could add for any constant set
      * of opponent paths is always the same regardless of firstStep?
      * I think its only true as long as firstStep is not touching any of those opponent paths.
