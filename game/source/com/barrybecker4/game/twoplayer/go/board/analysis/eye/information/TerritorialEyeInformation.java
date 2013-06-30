@@ -13,10 +13,12 @@ import com.barrybecker4.game.twoplayer.go.board.elements.eye.IGoEye;
  */
 public class TerritorialEyeInformation extends AbstractEyeInformation {
 
+    @Override
     public EyeStatus determineStatus(IGoEye eye, GoBoard board) {
         return EyeStatus.ALIVE;
     }
 
+    @Override
     public String getTypeName() {
         return "Territorial";
     }

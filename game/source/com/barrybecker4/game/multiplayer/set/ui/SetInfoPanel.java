@@ -125,6 +125,7 @@ class SetInfoPanel extends GameInfoPanel
         return selectedPlayer;
     }
 
+    @Override
     public void valueChanged(ListSelectionEvent e) {
 
         SetController c = (SetController)controller_;

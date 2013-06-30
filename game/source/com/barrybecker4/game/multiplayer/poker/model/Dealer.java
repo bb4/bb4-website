@@ -17,7 +17,7 @@ public class Dealer  {
     /**
      * Deal the cards. Give the default players some cards.
      * @param players the players to deal to.
-     * @param numCardsToDealToEachPlayer
+     * @param numCardsToDealToEachPlayer number of cards to deal
      */
     public void dealCardsToPlayers(PlayerList players, int numCardsToDealToEachPlayer) {
 

@@ -99,10 +99,6 @@ public class OnlineGameServer  {
         return socket;
     }
 
-    /**
-     *
-     * @param cmdProcessor
-     */
     private void acceptClientConnections(ServerCommandProcessor cmdProcessor) {
 
         while (!stopped) {
@@ -142,7 +138,7 @@ public class OnlineGameServer  {
     }
 
     /**
-     * @param options
+     * @param options command line options to verify
      * @return true if valid.
      */
     public static boolean verifyCmdLineOptions(CommandLineOptions options) {

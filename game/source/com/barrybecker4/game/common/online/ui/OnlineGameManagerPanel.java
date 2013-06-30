@@ -57,6 +57,7 @@ public abstract class OnlineGameManagerPanel
 
     public abstract void closing();
 
+    @Override
     public abstract boolean handleServerUpdate(GameCommand cmd);
 
     /**

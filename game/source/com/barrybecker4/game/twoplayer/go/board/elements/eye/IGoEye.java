@@ -32,6 +32,7 @@ public interface IGoEye extends IGoSet {
     /**
      * @return the hashSet containing the members
      */
+    @Override
     GoBoardPositionSet getMembers();
 
     /**

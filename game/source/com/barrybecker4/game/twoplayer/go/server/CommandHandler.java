@@ -25,8 +25,9 @@ import java.util.List;
  *   clear_board
  *   gen_move
  *   play
- *   @@ implement req_genmove
- *   @@ implement final_status_list
+ *   TODO
+ *     implement req_genmove
+ *     implement final_status_list
  *
  *  @author Barry Becker
  */
@@ -41,7 +42,7 @@ public class CommandHandler {
     /**
      * Constructor
      * Load the resources for the go game, and initialize it.
-     * @@ pass in log?
+     * Perhaps pass in log?
      * @throws Exception
      */
     public CommandHandler() throws Exception {
@@ -204,7 +205,7 @@ public class CommandHandler {
     }
 
     /**
-     * @@ need to implement
+     * need to implement
      */
     private static boolean cmdFinalStatusList(String cmd, StringBuffer response) {
         assert false : "final_status_list command not yet implemented";
@@ -212,8 +213,8 @@ public class CommandHandler {
     }
 
     /**
-     *
-     * @return
+     * Create a fixed handicap command
+     * @return true if success
      */
     private boolean cmdFixedHandicap(String[] cmdArray, StringBuffer response) {
         GtpServer.IntegerArgument argument =
@@ -248,7 +249,6 @@ public class CommandHandler {
         controller_.requestComputerMove(blackPlays, true);
 
         GoMove m = (GoMove) controller_.getLastMove();
-        //System.out.println("got " + m);
 
         Point point = new Point(m.getToRow()-1, m.getToCol()-1);
         response.append(Point.toString(point));

@@ -26,7 +26,7 @@ import com.barrybecker4.game.twoplayer.common.search.tree.SearchTreeNode;
  *    return g;
  *</pre>
  *
- * @@ add iterative deepening (https://chessprogramming.wikispaces.com/MTD(f))
+ * TODO: add iterative deepening (https://chessprogramming.wikispaces.com/MTD(f))
  *
  * @author Barry Becker
  */
@@ -45,13 +45,12 @@ public final class MtdStrategy implements SearchStrategy
         searchWithMemory_ = testSearchStrategy;
     }
 
+    @Override
     public SearchOptions getOptions() {
         return searchWithMemory_.getOptions();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
         TwoPlayerMove selectedMove = searchInternal( lastMove, 0, parent);
         return (selectedMove != null) ? selectedMove : lastMove;
@@ -59,7 +58,7 @@ public final class MtdStrategy implements SearchStrategy
 
     /**
      * @param lastMove last move played on board.
-     * @param f
+     * @param f upper or lower bound
      * @param parent non-null if showing game tree.
      * @return best next move
      */
@@ -85,10 +84,12 @@ public final class MtdStrategy implements SearchStrategy
     }
 
 
+    @Override
     public final long getNumMovesConsidered() {
         return searchWithMemory_.getNumMovesConsidered();
     }
 
+    @Override
     public final int getPercentDone() {
         return  searchWithMemory_.getPercentDone();
     }
@@ -97,18 +98,22 @@ public final class MtdStrategy implements SearchStrategy
      * Set an optional ui component that will update when the search tree is modified.
      * @param listener listener
      */
+    @Override
     public void setGameTreeEventListener(IGameTreeViewable listener) {
          searchWithMemory_.setGameTreeEventListener(listener);
     }
 
+    @Override
     public void pause() {
        searchWithMemory_.pause();
     }
 
+    @Override
     public final boolean isPaused() {
         return searchWithMemory_.isPaused();
     }
 
+    @Override
     public void continueProcessing() {
        searchWithMemory_.continueProcessing();
     }

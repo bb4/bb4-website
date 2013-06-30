@@ -21,7 +21,7 @@ public class MoveList extends ArrayList<Move> {
 
     /**
      * Copy constructor. Does not make a deep copy.
-     * @param list
+     * @param list list of moves to initialize with
      */
     public MoveList(MoveList list) {
         super(list);

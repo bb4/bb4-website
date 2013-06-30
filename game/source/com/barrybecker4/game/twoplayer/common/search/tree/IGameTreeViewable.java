@@ -22,8 +22,8 @@ public interface IGameTreeViewable {
 
     /**
      * Add a node to the viewable search tree.
-     * @param parent
-     * @param child
+     * @param parent parent node
+     * @param child child node
      */
     void addNode(SearchTreeNode parent, SearchTreeNode child);
 

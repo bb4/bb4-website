@@ -35,7 +35,6 @@ public class TwoPlayerGameExporter extends GameExporter {
 
     /**
      * Use this version if you have only the board and not the controller.
-     * @param board
      */
     public TwoPlayerGameExporter(TwoPlayerBoard board) {
         super(board);

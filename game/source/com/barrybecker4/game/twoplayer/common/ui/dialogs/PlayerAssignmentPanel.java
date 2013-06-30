@@ -129,6 +129,7 @@ public class PlayerAssignmentPanel extends JPanel
         players.getPlayer2().setHuman( human2Button_.isSelected() );
     }
 
+    @Override
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
 

@@ -105,8 +105,6 @@ public class TestKiseido2002 extends GoTestCase {
     }
 
     /**
-     * @param directory
-     * @param pattern
      * @return all the files matching the supplied pattern in the specified directory
      */
     protected static String[] getFilesMatching(String directory, String pattern) {

@@ -73,6 +73,7 @@ public final class GoGroup extends GoSet
        changeListeners = new LinkedList<GroupChangeListener>();
     }
 
+    @Override
     public void addChangeListener(GroupChangeListener listener) {
         changeListeners.add(listener);
     }
@@ -87,6 +88,7 @@ public final class GoGroup extends GoSet
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
+    @Override
     public boolean isEnemy( GoBoardPosition pos) {
         assert (pos.isOccupied());
         GoStone stone = (GoStone)pos.getPiece();
@@ -94,8 +96,8 @@ public final class GoGroup extends GoSet
     }
 
     /**
-     * @param stones
-     * @param stone  the new stone to add to the group.
+     * @param stones stones to assimilate
+     * @param stone the new stone to add to the group.
      */
     private void assimilateStone(GoBoardPositionList stones, GoBoardPosition stone) {
         assert stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_ :
@@ -131,6 +133,7 @@ public final class GoGroup extends GoSet
     /**
      * make sure all the stones in the string are unvisited or visited, as specified
      */
+    @Override
     public void setVisited(boolean visited) {
         for (IGoString str : getMembers()) {
             str.setVisited(visited);
@@ -141,6 +144,7 @@ public final class GoGroup extends GoSet
      * add a string to the group.
      * @param string the string to add
      */
+    @Override
     public void addMember(IGoString string) {
 
         assert ( string.isOwnedByPlayer1() == ownedByPlayer1_):
@@ -166,6 +170,7 @@ public final class GoGroup extends GoSet
      * remove a string from this group
      * @param string the string to remove from the group
      */
+    @Override
     public void remove(IGoString string) {
         if (string == null) {
             GameContext.log(2, "attempting to remove " + string + " string from group. " + this);
@@ -183,6 +188,7 @@ public final class GoGroup extends GoSet
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
      */
+    @Override
     public GoBoardPositionSet getLiberties(GoBoard board) {
 
         if (board == null) {
@@ -202,6 +208,7 @@ public final class GoGroup extends GoSet
      * @param board if null, then the number of liberties returned is just what is in the cache and may not be accurate.
      * @return number of cached liberties if board is null, else exact number of liberties for group.
      */
+    @Override
     public int getNumLiberties(GoBoard board) {
         return getLiberties(board).size();
     }
@@ -209,6 +216,7 @@ public final class GoGroup extends GoSet
     /**
      * @return a list of the stones in this group.
      */
+    @Override
     public GoBoardPositionSet getStones() {
         GoBoardPositionSet stones = new GoBoardPositionSet();
         for (IGoString string : getMembers()) {
@@ -221,6 +229,7 @@ public final class GoGroup extends GoSet
      * Calculate the number of stones in the group.
      * @return number of stones in the group.
      */
+    @Override
     public int getNumStones() {
        return getStones().size();
     }
@@ -229,6 +238,7 @@ public final class GoGroup extends GoSet
      * Set the health of strings in this group
      * @param health the health of the group
      */
+    @Override
     public void updateTerritory( float health ) {
         for (IGoString string : getMembers()) {
             if (string.isUnconditionallyAlive()) {
@@ -244,6 +254,7 @@ public final class GoGroup extends GoSet
      * @param stone the stone to check for containment of
      * @return true if the stone is in this group
      */
+    @Override
     public boolean containsStone(GoBoardPosition stone ) {
         for (IGoString string : getMembers()) {
             if (string.getMembers().contains(stone))
@@ -255,6 +266,7 @@ public final class GoGroup extends GoSet
     /**
      * @return bounding box of set of stones/positions passed in
      */
+    @Override
     public Box findBoundingBox()  {
         int rMin = 10000; // something huge ( more than max rows)
         int rMax = 0;
@@ -289,6 +301,7 @@ public final class GoGroup extends GoSet
      * get the html representation of the group.
      * @return html form
      */
+    @Override
     public String toHtml() {
         return toString( "<br>" );
     }

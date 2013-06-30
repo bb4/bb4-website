@@ -34,7 +34,7 @@ import java.util.List;
  * what the computer's move is.
  *
  *  note: subclasses must override paintComponent to have the board show up.
- *  @@ split out GameViewModel parts into a separate class. The viewer should have a model not be a model.
+ *  TODO: split out GameViewModel parts into a separate class. The viewer should have a model not be a model.
  *
  *  @author Barry Becker
  */
@@ -88,6 +88,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * @return our game controller.
      */
+    @Override
     public GameController getController() {
        return controller_;
     }
@@ -157,6 +158,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * return the game to its original state.
      */
+    @Override
     public void reset() {
         controller_.reset();  //clear what's there and start over
         Board board = (Board) controller_.getBoard();
@@ -200,8 +202,8 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * Implements the GameChangedListener interface.
      * Called when the game has changed in some way
-     * @param evt
      */
+    @Override
     public void gameChanged(GameChangedEvent evt) {
         GameContext.log(1, "game changed. refreshing viewer.");
         refresh();

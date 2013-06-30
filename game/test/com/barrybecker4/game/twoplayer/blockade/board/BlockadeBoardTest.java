@@ -166,7 +166,8 @@ public class BlockadeBoardTest extends BlockadeTestCase {
         //if (player1Moves.size() != expectedNumMoves) {
         //    GameContext.log(1, "Expected "+expectedNumMoves+" moves for player1, but got "+player1Moves.size() +":" + player1Moves);
         //}
-        Assert.assertTrue("Expected "+expectedNumMoves+" moves for player1, but got "+player1Moves.size() +":" + player1Moves, player1Moves.size() == expectedNumMoves);
+        Assert.assertTrue("Expected " + expectedNumMoves + " moves for player1, but got " + player1Moves.size()
+                + ":" + player1Moves, player1Moves.size() == expectedNumMoves);
     }
 
     private static final BlockadeMove[][] moves1 =  {

@@ -14,7 +14,7 @@ public class GoEyeSet extends LinkedHashSet<IGoEye> {
 
     /**
      * Copy constructor.
-     * @param set
+     * @param set eye set
      */
     public GoEyeSet(GoEyeSet set) {
         super(set);

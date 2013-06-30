@@ -169,6 +169,7 @@ public abstract class TwoPlayerController extends GameController {
     /**
      * @return true if player2 is a computer player
      */
+    @Override
     public final Player getCurrentPlayer() {
         return player1sTurn_? getPlayers().getPlayer1() : getPlayers().getPlayer2();
     }
@@ -353,9 +354,7 @@ public abstract class TwoPlayerController extends GameController {
         gameTreeViewer_ = gameTreeViewable;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public boolean isDone() {
         TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
         return getSearchable().done(lastMove, false);

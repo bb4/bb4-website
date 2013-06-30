@@ -77,7 +77,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
     }
 
     /**
-     * @param i
+     * @param i number
      * @return i converted to a character string.
      */
     private String int2char(int i) {

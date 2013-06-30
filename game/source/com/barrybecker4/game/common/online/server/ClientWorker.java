@@ -38,6 +38,7 @@ class ClientWorker implements Runnable {
         stopped = true;
     }
 
+    @Override
     public void run() {
 
         ObjectInputStream iStream;

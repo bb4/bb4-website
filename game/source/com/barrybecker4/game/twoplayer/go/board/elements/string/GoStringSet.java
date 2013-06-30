@@ -16,7 +16,7 @@ public class GoStringSet extends LinkedHashSet<IGoString> {
 
     /**
      * Copy constructor.
-     * @param set
+     * @param set set of strings to initialize with
      */
     public GoStringSet(GoStringSet set) {
         super(set);
@@ -24,7 +24,7 @@ public class GoStringSet extends LinkedHashSet<IGoString> {
 
     /**
      *
-     * @param pos
+     * @param pos position
      * @return the string that contains pos if any. Null if none.
      */
     public IGoString findStringContainingPosition(GoBoardPosition pos) {

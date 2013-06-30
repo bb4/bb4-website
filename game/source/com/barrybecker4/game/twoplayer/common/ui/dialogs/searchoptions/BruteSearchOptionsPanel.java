@@ -32,7 +32,7 @@ public class BruteSearchOptionsPanel extends JPanel {
     }
 
     /**
-     * @return brute search options
+     * update the options based on the user selections.
      */
     public void updateBruteOptionsOptions() {
 

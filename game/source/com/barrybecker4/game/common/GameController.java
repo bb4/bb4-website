@@ -48,7 +48,7 @@ public abstract class GameController
 
     /**
      * optionally set a viewer for the controller.
-     * @param viewer
+     * @param viewer view model
      */
     public void setViewer(GameViewModel viewer) {
        viewer_ = viewer;

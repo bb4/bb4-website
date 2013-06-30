@@ -124,6 +124,7 @@ public class E6Information extends AbstractEyeSubtypeInformation {
         return Eye6Type.E112233b;
     }
 
+    @Override
     public String getTypeName() {
         return type.toString();
     }

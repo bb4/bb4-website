@@ -80,9 +80,6 @@ public class NegaScoutStrategy extends NegaMaxStrategy
         super( controller, weights );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
                                          SearchWindow window, SearchTreeNode parent) {

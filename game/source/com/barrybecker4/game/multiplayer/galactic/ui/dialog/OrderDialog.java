@@ -142,7 +142,7 @@ final class OrderDialog extends OptionsDialog
 
     /**
      * Shows the number of available ships remaining for the specified planet
-     * @param planet
+     * @param planet planet to show ships for
      */
     private void showAvailableShips(Planet planet)
     {
@@ -166,7 +166,6 @@ final class OrderDialog extends OptionsDialog
 
     /**
      * called when one of the buttons at the bottom have been pressed.
-     * @param e
      */
     @Override
     public void actionPerformed( ActionEvent e )
@@ -195,8 +194,8 @@ final class OrderDialog extends OptionsDialog
 
     /**
      * called when the origin combo changes
-     * @param e
      */
+    @Override
     public void itemStateChanged( ItemEvent e)
     {
         Object source = e.getSource();

@@ -52,6 +52,7 @@ public class CheckersController extends TwoPlayerController {
     /**
      * The computer makes the first move in the game.
      */
+    @Override
     public void computerMovesFirst() {
         // determine the possible moves and choose one at random.
         MoveList moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights());

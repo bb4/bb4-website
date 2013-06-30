@@ -63,6 +63,7 @@ public abstract class GameBoardViewerModel
     /**
      * @return our game controller.
      */
+    @Override
     public GameController getController() {
        return controller_;
     }
@@ -110,6 +111,7 @@ public abstract class GameBoardViewerModel
     /**
      * return the game to its original state.
      */
+    @Override
     public void reset() {
         controller_.reset();  //clear what's there and start over
         if (viewer != null) {
@@ -137,6 +139,7 @@ public abstract class GameBoardViewerModel
      * Called when the game has changed in some way
      * @param evt
      */
+    @Override
     public void gameChanged(GameChangedEvent evt) {
         GameContext.log(1, "game changed" );
         refresh();

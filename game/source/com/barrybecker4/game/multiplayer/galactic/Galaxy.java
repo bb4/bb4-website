@@ -64,6 +64,7 @@ public class Galaxy extends Board {
        super(g);
     }
 
+    @Override
     public Galaxy copy() {
         return new Galaxy(this);
     }
@@ -172,6 +173,7 @@ public class Galaxy extends Board {
         return p;
     }
 
+    @Override
     public int getMaxNumMoves() {
         return positions_.getNumBoardSpaces();
     }
@@ -207,7 +209,6 @@ public class Galaxy extends Board {
     /**
      * For galactic empire, undoing a move means turning time back a year and
      * restoring the state of the game one full turn earlier
-     * @@ todo
      */
     @Override
     protected void undoInternalMove( Move move ) {

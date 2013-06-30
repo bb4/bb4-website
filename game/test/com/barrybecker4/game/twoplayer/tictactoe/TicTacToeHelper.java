@@ -24,6 +24,7 @@ public class TicTacToeHelper extends SearchableHelper {
         return options;
     }
 
+    @Override
     public TwoPlayerController createController() {
         return new TicTacToeController();
     }

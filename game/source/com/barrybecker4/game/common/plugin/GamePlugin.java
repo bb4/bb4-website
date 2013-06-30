@@ -27,8 +27,8 @@ public class GamePlugin {
      * @param label user visible title for the game
      * @param type one of the PluginTypes.
      * @param msgBundleBase place to get localized strings from for this game.
-     * @param panelClass
-     * @param controllerClass
+     * @param panelClass name of the panel class to load with reflection.
+     * @param controllerClass name of the controller class to load with reflection.
      * @param isDefault if true, show this game initially.
      */
     public GamePlugin(String name, String label, PluginType type, String msgBundleBase,

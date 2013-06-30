@@ -40,8 +40,8 @@ public class GameMenu extends AbstractGameMenu
 
     /**
      * called when the user has selected a different game to play from the game menu
-     * @param e
      */
+    @Override
     public void actionPerformed( ActionEvent e ) {
         JMenuItem item = (JMenuItem) e.getSource();
 

@@ -12,22 +12,27 @@ import java.util.Arrays;
  * @author Barry Becker
  */
 public abstract class AbstractEyeInformation implements EyeInformation {
+    @Override
     public boolean hasLifeProperty() {
         return false;
     }
 
+    @Override
     public float[] getVitalPoints() {
         return new float[0];
     }
 
+    @Override
     public float[] getEndPoints() {
         return new float[0];
     }
 
+    @Override
     public boolean isInCorner(IGoEye eye) {
         return eye.getNumCornerPoints() == 3;
     }
 
+    @Override
     public boolean isOnEdge(IGoEye eye){
          return eye.getNumEdgePoints() >= 3;
     }

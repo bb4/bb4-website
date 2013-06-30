@@ -59,7 +59,7 @@ public class Planet extends GamePiece {
 
     /**
      * prefer using deductShips.
-     * @param numShips
+     * @param numShips number of ships
      */
     public void setNumShips( int numShips )  {
         numShips_ = numShips;

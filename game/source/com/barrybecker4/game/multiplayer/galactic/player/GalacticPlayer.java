@@ -11,10 +11,9 @@ import com.barrybecker4.game.multiplayer.galactic.Order;
 import com.barrybecker4.game.multiplayer.galactic.Planet;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 import java.text.MessageFormat;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,18 +59,21 @@ public class GalacticPlayer extends MultiGamePlayer
 
     /**
      * Factory method for creating Galactic players of the appropriate type.
-     * @return
+     * @return new galactic player
      */
     public static GalacticPlayer createGalacticPlayer(
-                                                   String name, Planet homePlanet, Color color, boolean isHuman) {
+              String name, Planet homePlanet, Color color, boolean isHuman) {
        if (isHuman)
            return new GalacticHumanPlayer(name, homePlanet, color);
         else
            return GalacticRobotPlayer.getSequencedRobotPlayer(name, homePlanet, color);
     }
 
-    public static GalacticPlayer createGalacticPlayer(
-                                                      String name, Planet homePlanet, Color color,
+    /**
+     * Factory method for creating Galactic players of the appropriate type.
+     * @return new galactic player
+     */
+    public static GalacticPlayer createGalacticPlayer(String name, Planet homePlanet, Color color,
                                                       boolean isHuman, ImageIcon icon) {
        if (isHuman)
            return new GalacticHumanPlayer(name, homePlanet, color, icon);
@@ -149,16 +151,13 @@ public class GalacticPlayer extends MultiGamePlayer
      */
     public int getTotalNumShips() {
         int totalNumShips = 0;
-        Iterator it = orders_.iterator();
-        while (it.hasNext()) {
-            Order order = (Order)it.next();
+        for (Order order : orders_) {
             totalNumShips += order.getFleetSize();
         }
-        List ownedPlanets = Galaxy.getPlanets(this);
-        Iterator pit = ownedPlanets.iterator();
-        while (pit.hasNext()) {
-            Planet p = (Planet)pit.next();
-            totalNumShips += p.getNumShips();
+        List<Planet> ownedPlanets = Galaxy.getPlanets(this);
+        for (Planet ownedPlanet : ownedPlanets) {
+
+            totalNumShips += ownedPlanet.getNumShips();
         }
         return totalNumShips;
     }
@@ -168,11 +167,10 @@ public class GalacticPlayer extends MultiGamePlayer
      */
     public int getTotalProductionCapacity()  {
          int totalCapacity = 0;
-        List ownedPlanets = Galaxy.getPlanets(this);
-        Iterator pit = ownedPlanets.iterator();
-        while (pit.hasNext()) {
-            Planet p = (Planet)pit.next();
-            totalCapacity += p.getProductionCapacity();
+        List<Planet> ownedPlanets = Galaxy.getPlanets(this);
+        for (Planet ownedPlanet : ownedPlanets) {
+
+            totalCapacity += ownedPlanet.getProductionCapacity();
         }
         return totalCapacity;
     }

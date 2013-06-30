@@ -18,7 +18,7 @@ public  class SurrogatePlayer extends Player implements OnlineChangeListener {
 
 
     /**
-     * @param player
+     * @param player player to act as surrogate for
      * @param connection to the server so we can get updated actions.
      */
     public SurrogatePlayer(Player player, IServerConnection connection) {
@@ -27,9 +27,7 @@ public  class SurrogatePlayer extends Player implements OnlineChangeListener {
         connection.addOnlineChangeListener(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public synchronized boolean handleServerUpdate(GameCommand cmd) {
 
         if (cmd.getName() == GameCommand.Name.DO_ACTION) {

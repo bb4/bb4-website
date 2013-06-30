@@ -37,9 +37,6 @@ public class PlayerPathLengths {
 
     /**
      * Calculate the worth of the recently placed move based on the path lengths.
-     *
-     * @param winningValue
-     * @param weights
      */
     public int determineWorth(double winningValue, ParameterArray weights) {
 

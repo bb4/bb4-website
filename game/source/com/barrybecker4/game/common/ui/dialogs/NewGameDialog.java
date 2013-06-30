@@ -199,10 +199,10 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
      * Called when the selected tab changes,
      * Or in the case of online play when the player has joined a table that is now ready to play.
      * I that case the dialog will close and play will begin.
-     * @param e
      */
-    public void stateChanged( ChangeEvent e) {
-        if (e.getSource() == tabbedPanel_) {
+    @Override
+    public void stateChanged( ChangeEvent event) {
+        if (event.getSource() == tabbedPanel_) {
             startButton_.setVisible(tabbedPanel_.getSelectedComponent() != playOnlinePanel_);
         }
         //else if (e.getSource() == playOnlinePanel_) {

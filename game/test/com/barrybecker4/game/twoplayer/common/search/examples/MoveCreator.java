@@ -29,8 +29,8 @@ public class MoveCreator {
     }
 
     /**
-     * The location is not really useed, just give it something unique so the hash works.
-     * @return
+     * The location is not really used, just give it something unique so the hash works.
+     * @return new to location
      */
     private Location createToLocation() {
         moveCount++;
@@ -39,7 +39,7 @@ public class MoveCreator {
 
     /**
      * We can tell our depth in the tree by looking at the number of ancestors we have.
-     * @param parent
+     * @param parent parent move
      * @return depth in game tree.
      */
     private int getDepth(TwoPlayerMoveStub parent) {

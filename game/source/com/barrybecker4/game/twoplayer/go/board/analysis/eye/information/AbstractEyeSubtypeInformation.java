@@ -91,6 +91,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      * @param board   board
      * @return status of the eye shape.
      */
+    @Override
     public EyeStatus determineStatus(IGoEye eye, GoBoard board) {
         return EyeStatus.NAKADE;
     }

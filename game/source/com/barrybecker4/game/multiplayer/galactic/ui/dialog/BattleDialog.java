@@ -142,16 +142,14 @@ public final class BattleDialog extends OptionsDialog
 
 
     /**
-     * called when one of the buttons at the bottom has been pressed.
-     * @param e
+     * Called when one of the buttons at the bottom has been pressed.
      */
     @Override
-    public void actionPerformed( ActionEvent e ) {
+    public void actionPerformed( ActionEvent event ) {
 
-        Object source = e.getSource();
+        Object source = event.getSource();
         if (source == closeButton_) {
             this.setVisible(false);
-
         }
         else if (source == startButton_) {
 
@@ -162,7 +160,6 @@ public final class BattleDialog extends OptionsDialog
 
             Thread battle =  new Thread(canvas_);
             SwingUtilities.invokeLater(battle);
-
             //doAnimation();
         }
     }
@@ -192,6 +189,7 @@ public final class BattleDialog extends OptionsDialog
             this.paint(this.getGraphics());
         }
 
+        @Override
         public void run() {
              Planet destPlanet = battle_.getPlanet();
              int numAttackShips = battle_.getOrder().getFleetSize();

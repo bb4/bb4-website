@@ -53,6 +53,7 @@ public class E5Information extends AbstractEyeSubtypeInformation {
     }
 
 
+    @Override
     public String getTypeName() {
         return e5Type.toString();
     }

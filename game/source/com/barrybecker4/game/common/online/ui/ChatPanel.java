@@ -44,6 +44,7 @@ public class ChatPanel extends JPanel implements OnlineChangeListener, KeyListen
     /**
      * Post messages from other players.
      */
+    @Override
     public boolean handleServerUpdate(GameCommand cmd) {
         if (cmd.getName() == GameCommand.Name.CHAT_MESSAGE)  {
             textArea_.append(cmd.getArgument().toString());
@@ -56,6 +57,7 @@ public class ChatPanel extends JPanel implements OnlineChangeListener, KeyListen
     /**
      * Send the message when you press enter.
      */
+    @Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == '\n') {
             String txt = messageField_.getText();
@@ -67,6 +69,8 @@ public class ChatPanel extends JPanel implements OnlineChangeListener, KeyListen
         }
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {}
+    @Override
     public void keyReleased(KeyEvent e) {}
 }

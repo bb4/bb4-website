@@ -7,7 +7,7 @@ import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
 
 /**
  * Maintain a list of best/shortest paths from a specific position.
- * @@ Perhaps the paths could be cached based on the pawn and wall positions.
+ * Perhaps the paths could be cached based on the pawn and wall positions.
  *
  * @author Barry Becker
  */

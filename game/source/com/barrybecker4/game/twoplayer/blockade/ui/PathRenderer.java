@@ -66,9 +66,6 @@ final class PathRenderer {
 
     /**
      * Draws the specified path in the board viewer window.
-     * @param g2
-     * @param path
-     * @param cellSize
      */
     private static void drawPath(Graphics2D g2, Path path, int cellSize)
     {

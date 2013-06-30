@@ -75,11 +75,10 @@ public final class BettingDialog extends ActionDialog {
 
     /**
      * called when one of the buttons at the bottom have been pressed.
-     * @param e
      */
     @Override
-    public void actionPerformed( ActionEvent e ) {
-        Object source = e.getSource();
+    public void actionPerformed( ActionEvent event ) {
+        Object source = event.getSource();
         PokerAction.Name actionName = null;
         if (source == foldButton_) {
             actionName = PokerAction.Name.FOLD;

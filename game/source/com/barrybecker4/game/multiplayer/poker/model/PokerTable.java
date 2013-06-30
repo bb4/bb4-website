@@ -61,7 +61,7 @@ public class PokerTable extends Board {
 
     /**
      * place the players around the poker table
-     * @param players
+     * @param players players to initialize
      */
     public void initPlayers(PlayerList players) {
         double angle = 0.6 * Math.PI;
@@ -97,7 +97,6 @@ public class PokerTable extends Board {
     /**
      * For Poker, undoing a move means turning time back a round and
      * restoring the state of the game one full round earlier
-     * @@ todo
      */
     @Override
     protected void undoInternalMove( Move move ) {

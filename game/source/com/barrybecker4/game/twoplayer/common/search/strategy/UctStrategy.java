@@ -67,6 +67,7 @@ public class UctStrategy extends AbstractSearchStrategy {
      *     return new Move(n.x, n.y);
      * }
      */
+    @Override
     public TwoPlayerMove search(TwoPlayerMove lastMove, SearchTreeNode parent) {
 
         int numSimulations = 0;

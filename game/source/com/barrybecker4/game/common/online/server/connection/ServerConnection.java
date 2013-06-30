@@ -47,6 +47,7 @@ public class ServerConnection implements IServerConnection {
     /**
      * @return true if we have a live connection to the server.
      */
+    @Override
     public boolean isConnected() {
         return socket.isConnected();
     }
@@ -55,10 +56,12 @@ public class ServerConnection implements IServerConnection {
      * Send data over the socket to the server using the output stream.
      * @param cmd object to serialize over the wire.
      */
+    @Override
     public void sendCommand(GameCommand cmd)  {
         socket.sendCommand(cmd);
     }
 
+    @Override
     public void addOnlineChangeListener(OnlineChangeListener listener) {
         changeListeners_.add(listener);
     }
@@ -70,6 +73,7 @@ public class ServerConnection implements IServerConnection {
     /**
      * Request an initial update when we enter the room with the game tables.
      */
+    @Override
     public void enterRoom() {
         sendCommand(new GameCommand(GameCommand.Name.ENTER_ROOM, ""));
     }
@@ -78,10 +82,12 @@ public class ServerConnection implements IServerConnection {
      * Tell the server to add another game table to the list that is available.
      * @param newTable  to add.
      */
+    @Override
     public void addGameTable(OnlineGameTable newTable) {
         sendCommand(new GameCommand(GameCommand.Name.ADD_TABLE, newTable));
     }
 
+    @Override
     public void nameChanged(String oldName, String newName) {
         String changer = oldName + GameCommand.CHANGE_TO + newName;
         sendCommand(new GameCommand(GameCommand.Name.CHANGE_NAME, changer));
@@ -91,15 +97,18 @@ public class ServerConnection implements IServerConnection {
      * Tell the server to add player p to this table.
      * The server will look at the most recently added player to this table to determine who was added.
      */
+    @Override
     public void joinTable(Player p, OnlineGameTable table) {
         table.addPlayer(p);
         sendCommand(new GameCommand(GameCommand.Name.JOIN_TABLE, table));
     }
 
+    @Override
     public void leaveRoom(String playerName) {
         sendCommand(new GameCommand(GameCommand.Name.LEAVE_ROOM, playerName));
     }
 
+    @Override
     public void playerActionPerformed(PlayerAction action) {
         sendCommand(new GameCommand(GameCommand.Name.DO_ACTION, action));
     }

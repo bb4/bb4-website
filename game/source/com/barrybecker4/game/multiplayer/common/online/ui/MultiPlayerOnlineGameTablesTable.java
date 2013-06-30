@@ -144,7 +144,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
 
     /**
      * @param initialPlayerName starting name
-     * @parm options
+     * @param options
      * @return the new online table to add as a new row.
      */
     public abstract OnlineGameTable createOnlineTable(String initialPlayerName, MultiGameOptions options);

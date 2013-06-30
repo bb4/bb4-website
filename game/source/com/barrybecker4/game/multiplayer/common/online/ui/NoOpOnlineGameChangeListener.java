@@ -22,6 +22,7 @@ public class NoOpOnlineGameChangeListener implements OnlineChangeListener {
      * Simple returns if the command is for the player passed to the constructor.
      * @return true if the command is for the player passed to the constructor.
      */
+    @Override
     public boolean handleServerUpdate(GameCommand cmd) {
 
          if (cmd.getName() == GameCommand.Name.DO_ACTION) {

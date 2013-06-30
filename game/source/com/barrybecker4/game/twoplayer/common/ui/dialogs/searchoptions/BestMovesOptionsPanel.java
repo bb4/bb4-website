@@ -30,7 +30,7 @@ public class BestMovesOptionsPanel extends JPanel {
     }
 
     /**
-     * @return brute search options
+     * update the options based on what the user selected.
      */
     public void updateBestMovesOptions() {
 

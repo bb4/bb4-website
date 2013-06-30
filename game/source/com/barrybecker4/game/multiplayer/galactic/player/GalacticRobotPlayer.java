@@ -39,7 +39,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
     /**
      * send atacks to numAttacks closest planets not owned by this robot player.
      * @param origin planet from which the attack fleet will originate
-     * @param numAttacks
+     * @param numAttacks number of attacks
      * @return list of orders
      */
     List<Order> getOrders(Planet origin, int numAttacks, int numShipsToLeaveBehind, int numYearsRemaining)

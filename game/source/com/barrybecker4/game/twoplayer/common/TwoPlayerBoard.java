@@ -25,6 +25,7 @@ public abstract class TwoPlayerBoard extends Board {
         super(board);
     }
 
+    @Override
     public abstract TwoPlayerBoard copy();
 
     /**

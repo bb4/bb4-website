@@ -83,7 +83,7 @@ public class PluginManager {
     }
 
     /**
-     * @param node
+     * @param node node to create game plugin based off of.
      * @return a plugin object that we created from the xml node.
      */
     private GamePlugin createPlugin(Node node) {

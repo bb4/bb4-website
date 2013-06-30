@@ -121,6 +121,7 @@ public final class GoBoard extends TwoPlayerBoard {
      * but practically if we exceed this then we award the game to whoever is ahead.
      * @return the maximum number of moves ever expected for this game.
      */
+    @Override
     public int getMaxNumMoves()
     {
         return 2 * positions_.getNumBoardSpaces();

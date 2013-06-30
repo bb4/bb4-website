@@ -57,17 +57,11 @@ public class BlockadeBoard extends TwoPlayerBoard {
         return new BlockadeBoard(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BlockadeBoardPosition getPosition(int row, int col) {
         return (BlockadeBoardPosition) super.getPosition(row, col);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final BlockadeBoardPosition getPosition( Location loc ) {
         return (BlockadeBoardPosition) super.getPosition(loc.getRow(), loc.getCol());
@@ -103,6 +97,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * the rows*cols.
      * @return assumed maximum number of moves.
      */
+    @Override
     public int getMaxNumMoves() {
         return Integer.MAX_VALUE;
     }

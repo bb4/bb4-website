@@ -90,8 +90,8 @@ class GalacticInfoPanel extends GameInfoPanel
     /**
      * The Orders button was pressed.
      * open the Orders dialog to get the players commands
-     * @param e
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         GalacticController gc = (GalacticController)controller_;
         gameChanged(null); // update the current player in the label
@@ -112,7 +112,7 @@ class GalacticInfoPanel extends GameInfoPanel
 
     /**
      * Open the command dialog to get the players commands
-     * @param gc
+     * @param gc the galactic controller
      */
     private void showOrdersDialog(GalacticController gc) {
 

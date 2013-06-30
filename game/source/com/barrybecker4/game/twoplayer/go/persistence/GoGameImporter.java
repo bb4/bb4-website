@@ -4,20 +4,8 @@ package com.barrybecker4.game.twoplayer.go.persistence;
 import ca.dj.jigo.sgf.Point;
 import ca.dj.jigo.sgf.SGFGame;
 import ca.dj.jigo.sgf.SGFLoader;
-import ca.dj.jigo.sgf.tokens.AddBlackToken;
-import ca.dj.jigo.sgf.tokens.AddWhiteToken;
-import ca.dj.jigo.sgf.tokens.BlackNameToken;
-import ca.dj.jigo.sgf.tokens.InfoToken;
-import ca.dj.jigo.sgf.tokens.KomiToken;
-import ca.dj.jigo.sgf.tokens.MoveToken;
-import ca.dj.jigo.sgf.tokens.PlacementListToken;
-import ca.dj.jigo.sgf.tokens.RuleSetToken;
-import ca.dj.jigo.sgf.tokens.SGFToken;
-import ca.dj.jigo.sgf.tokens.SizeToken;
-import ca.dj.jigo.sgf.tokens.TextToken;
-import ca.dj.jigo.sgf.tokens.WhiteNameToken;
+import ca.dj.jigo.sgf.tokens.*;
 import com.barrybecker4.common.geometry.ByteLocation;
-import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.IRectangularBoard;
@@ -131,7 +119,7 @@ public class GoGameImporter extends TwoPlayerGameImporter {
     /**
      * add a sequence of moves all at once.
      * Such as placing handicaps when reading from an sgf file.
-     * @param token
+     * @param token game token
      */
     private static void addMoves(PlacementListToken token, MoveList moveList) {
 

@@ -45,6 +45,7 @@ public class PerformanceWorker implements Runnable {
     }
 
     /** Run the process in a separate thread */
+    @Override
     public void run() {
 
         int size = model.getSize();

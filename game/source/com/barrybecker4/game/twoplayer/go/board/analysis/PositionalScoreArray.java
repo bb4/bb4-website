@@ -32,7 +32,7 @@ public final class PositionalScoreArray {
     /**
      * Factory method that will retrieve a positional array of the right size.
      * It will create it if needed, but only the first time a given size is requested.
-     * @param size
+     * @param size size of the score array
      */
     public static PositionalScoreArray getArray(int size) {
         if (scoreArrays.containsKey(size)) {

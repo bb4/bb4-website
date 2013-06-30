@@ -47,6 +47,7 @@ public class GoSearchable extends TwoPlayerSearchable {
         init(searchable.getScoreCache());
     }
 
+    @Override
     public GoSearchable copy() {
         return new GoSearchable(this);
     }
@@ -284,6 +285,7 @@ public class GoSearchable extends TwoPlayerSearchable {
     /**
      * @return any moves that take captures or get out of atari.
      */
+    @Override
     public final MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights) {
 
         UrgentMoveGenerator generator = new UrgentMoveGenerator(getBoard());
@@ -304,6 +306,7 @@ public class GoSearchable extends TwoPlayerSearchable {
     /**
      * generate all good next moves (statically evaluated)
      */
+    @Override
     public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights) {
         GoMoveGenerator generator = new GoMoveGenerator(this);
         return generator.generateEvaluatedMoves(lastMove, weights);

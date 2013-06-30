@@ -18,8 +18,10 @@ public interface IGoGroup extends IGoSet {
 
     void addMember(IGoString string);
 
+    @Override
     GoStringSet getMembers();
 
+    @Override
     boolean isOwnedByPlayer1();
 
     void addChangeListener(GroupChangeListener listener);

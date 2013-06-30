@@ -98,8 +98,10 @@ class SolutionPanel extends JPanel
         return getSet(selectedIndex);
     }
 
+    @Override
     public void mouseDragged(MouseEvent e) {}
 
+    @Override
     public void mouseMoved(MouseEvent e) {
         List<Card> set = findSetOver(e.getX(), e.getY());
 

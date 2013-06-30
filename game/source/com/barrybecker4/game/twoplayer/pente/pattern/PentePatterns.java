@@ -276,8 +276,8 @@ public class PentePatterns extends Patterns
     }
 
     public static void main(String[] args) {
-        for (int i=0; i<PAIRS.length; i++) {
-            System.out.println("new Pair(\""+ PAIRS[i].pattern + "\", "+ (PAIRS[i].weight-1) + "),");
+        for (Pair PAIR : PAIRS) {
+            System.out.println("new Pair(\"" + PAIR.pattern + "\", " + (PAIR.weight - 1) + "),");
         }
     }
 

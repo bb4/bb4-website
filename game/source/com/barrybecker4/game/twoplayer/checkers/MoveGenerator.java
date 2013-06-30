@@ -27,7 +27,7 @@ public class MoveGenerator  {
 
     /**
      * Construct the Checkers game controller.
-     * @param searchable
+     * @param searchable thing to search
      * @param weights to use.
      */
     public MoveGenerator(CheckersSearchable searchable, ParameterArray weights) {

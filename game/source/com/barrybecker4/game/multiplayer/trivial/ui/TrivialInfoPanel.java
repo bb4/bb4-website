@@ -79,8 +79,8 @@ class TrivialInfoPanel extends GameInfoPanel
     /**
      * The Orders button was pressed.
      * open the Orders dialog to get the players directives for their move.
-     * @param e
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == commandButton_)  {

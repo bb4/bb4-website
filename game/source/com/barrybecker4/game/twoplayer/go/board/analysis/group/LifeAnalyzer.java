@@ -140,8 +140,7 @@ public class LifeAnalyzer {
     }
 
     /**
-     *
-     * @param eye
+     * @param eye update the string neighbors of this eye
      */
     private void updateVitalEyesForStringNeighbors(IGoEye eye) {
 

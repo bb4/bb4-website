@@ -39,6 +39,7 @@ public abstract class MultiGameOptionsDialog extends GameOptionsDialog
     }
 
 
+    @Override
     public void keyTyped(KeyEvent e) {
 
          if (maxNumPlayers_.getIntValue() > 0) {
@@ -46,7 +47,9 @@ public abstract class MultiGameOptionsDialog extends GameOptionsDialog
          }
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {}
+    @Override
     public void keyReleased(KeyEvent e) {}
 }
 

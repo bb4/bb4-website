@@ -49,6 +49,7 @@ public class PenteBoard extends TwoPlayerBoard {
         candidateMoves = new CandidateMoves(numRows, numCols);
     }
 
+    @Override
     public int getMaxNumMoves() {
         return positions_.getNumBoardSpaces();
     }

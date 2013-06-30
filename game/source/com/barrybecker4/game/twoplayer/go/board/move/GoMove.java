@@ -131,7 +131,7 @@ public class GoMove extends TwoPlayerMove {
 
     /**
      * It's a ko if its a single stone string, it captured exactly one stone, and it has one liberty.
-     * @param board
+     * @param board the go board
      * @return true if this move is part of a ko fight sequence.
      */
     public boolean isKo(GoBoard board) {

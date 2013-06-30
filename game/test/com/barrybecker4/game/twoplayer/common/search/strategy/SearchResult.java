@@ -14,9 +14,6 @@ public class SearchResult {
 
     /**
      * The result of a search.
-     * @param moveId
-     * @param inheritedValue
-     * @param numConsideredMoves
      */
     public SearchResult(String moveId, int inheritedValue, long numConsideredMoves) {
         this.moveId = moveId;

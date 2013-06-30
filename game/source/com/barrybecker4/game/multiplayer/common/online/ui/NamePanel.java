@@ -47,12 +47,17 @@ class NamePanel extends JPanel
     }
 
     // Implement mouseListener interface
+    @Override
     public void mouseClicked(MouseEvent e) {}
+    @Override
     public void mousePressed(MouseEvent e) {
         giveFocus();
     }
+    @Override
     public void mouseReleased(MouseEvent e) {}
+    @Override
     public void mouseEntered(MouseEvent e) {}
+    @Override
     public void mouseExited(MouseEvent e) {}
 
 

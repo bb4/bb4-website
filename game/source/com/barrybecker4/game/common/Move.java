@@ -41,6 +41,7 @@ public class Move implements Comparable<Move> {
      *  because the inherited value is not known yet.
      *  @return  > 0 if move1 bigger, < 0 if smaller, = 0 if equal
      */
+    @Override
     public int compareTo( Move move ) {
         if ( getValue() < move.getValue() )   {
             return -1;

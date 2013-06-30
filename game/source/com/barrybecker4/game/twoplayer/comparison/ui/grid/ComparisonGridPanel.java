@@ -169,7 +169,7 @@ public final class ComparisonGridPanel
 
     /**
      * Update the grid with the results and allow the user to save the results to the filesystem.
-     * @param model
+     * @param model results model
      */
     @Override
     public void performanceRunsDone(ResultsModel model) {

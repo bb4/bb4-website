@@ -118,6 +118,7 @@ public final class ConfigurationPanel extends JPanel
     /**
      * Handle add/edit/remove button click, or droplist selection.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         Object source = e.getSource();
@@ -187,6 +188,7 @@ public final class ConfigurationPanel extends JPanel
     }
 
     /** called when one of the rows in the grid is selected */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         editConfigButton_.setEnabled(true);
         removeConfigButton_.setEnabled(true);

@@ -35,8 +35,8 @@ public class GalacticTurn extends Move {
 
     /**
      * given an order and destPlanet create a battle sequence that can be played back in the ui.
-     * @param order
-     * @param destPlanet
+     * @param order the directive from the admiral
+     * @param destPlanet destination planet
      */
     public void addSimulation(Order order, Planet destPlanet) {
         BattleSimulation battle = new BattleSimulation(order, destPlanet);
@@ -46,7 +46,7 @@ public class GalacticTurn extends Move {
 
     /**
      * given an order and destPlanet create a battle sequence that can be played back in the ui.
-     * @param battle
+     * @param battle ecapsulated battle simulation
      */
     public void addSimulation(BattleSimulation battle)  {
         if (battles_ == null) {

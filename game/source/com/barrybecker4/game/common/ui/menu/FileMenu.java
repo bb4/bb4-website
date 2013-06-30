@@ -50,10 +50,10 @@ public class FileMenu extends JMenu implements ActionListener {
 
     /**
      * called when the user has selected a different game to play from the game menu
-     * @param e
      */
-    public void actionPerformed( ActionEvent e )  {
-        JMenuItem item = (JMenuItem) e.getSource();
+    @Override
+    public void actionPerformed( ActionEvent event )  {
+        JMenuItem item = (JMenuItem) event.getSource();
         if (item == openItem_)  {
             listener.openFile();
         }

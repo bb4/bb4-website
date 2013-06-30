@@ -92,7 +92,7 @@ public class StringShapeAnalyzer {
         if (nearbySpace.isUnoccupied()) {
             return EMPTY_TRIANGLE_PENALTY;
         }
-        else if (nearbySpace.getPiece().isOwnedByPlayer1() == player1 )  {
+        if (nearbySpace.getPiece().isOwnedByPlayer1() == player1 )  {
             return CLUMP_OF_FOUR_PENALTY;
         }
         return 0;

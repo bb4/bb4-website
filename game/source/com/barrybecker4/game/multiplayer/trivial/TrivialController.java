@@ -82,6 +82,7 @@ public class TrivialController extends MultiGameController {
      *
      * @return true if the game is over.
      */
+    @Override
     public boolean isDone() {
 
         int numPlayersStillHidden = 0;

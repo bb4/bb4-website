@@ -114,7 +114,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
     /**
      * There is at least one neighbor string, so we will join to it/them.
      * @param stone position where we just placed a stone.
-     * @param nbrs
+     * @param nbrs neighbors
      */
     private void updateNeighborStringsAfterMove(GoBoardPosition stone, GoBoardPositionSet nbrs) {
 

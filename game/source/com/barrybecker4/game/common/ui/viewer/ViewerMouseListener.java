@@ -30,13 +30,20 @@ public class ViewerMouseListener implements MouseListener, MouseMotionListener {
      * make the human move and show it on the screen,
      * then depending on the options, the computer may move.
      */
+    @Override
     public void mouseClicked( MouseEvent e ) {}
+    @Override
     public void mousePressed( MouseEvent e ) {}
+    @Override
     public void mouseReleased( MouseEvent e ) {}
+    @Override
     public void mouseEntered( MouseEvent e ) {}
+    @Override
     public void mouseExited( MouseEvent e ) {}
 
     // implement MouseMotionListener interface
+    @Override
     public void mouseDragged(MouseEvent e) {}
+    @Override
     public void mouseMoved(MouseEvent e) {}
 }

@@ -54,8 +54,10 @@ public final class GameTreeMotionListener implements MouseMotionListener {
         mainController_ = mainController;
     }
 
+    @Override
     public void mouseDragged(MouseEvent e) {}
 
+    @Override
     public void mouseMoved(MouseEvent e) {
         selectCallback( e );
     }

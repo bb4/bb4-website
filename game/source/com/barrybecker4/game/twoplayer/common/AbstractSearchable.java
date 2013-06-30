@@ -31,6 +31,7 @@ public abstract class AbstractSearchable implements Searchable {
         moveList_ = moveList;
     }
 
+    @Override
     public TwoPlayerMove searchForNextMove(ParameterArray weights, TwoPlayerMove lastMove,
                                            IGameTreeViewable treeViewer) {
 
@@ -49,19 +50,23 @@ public abstract class AbstractSearchable implements Searchable {
         return nextMove;
     }
 
+    @Override
     public SearchStrategy getSearchStrategy() {
         return strategy_;
     }
 
+    @Override
     public int getNumMoves() {
         return moveList_.getNumMoves();
     }
 
+    @Override
     public MoveList getMoveList() {
         return moveList_;
     }
 
     /** @return the search options to use */
+    @Override
     public abstract SearchOptions getSearchOptions();
 
     protected AbstractGameProfiler getProfiler() {

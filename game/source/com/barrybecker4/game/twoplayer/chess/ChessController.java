@@ -81,7 +81,7 @@ public class ChessController extends CheckersController {
 
     /**
      * remove any moves that put the king in jeopardy.
-     * @param moveList
+     * @param moveList list of moves to examine.
      */
     public void removeSelfCheckingMoves(List moveList) {
         ChessBoard b = (ChessBoard)getBoard();

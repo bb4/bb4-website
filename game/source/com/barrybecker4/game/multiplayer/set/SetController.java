@@ -173,6 +173,7 @@ public class SetController extends MultiGameController {
      *
      * @return true if the game is over.
      */
+    @Override
     public boolean isDone() {
         return board_.isDone();
     }

@@ -69,6 +69,7 @@ public class PenteController extends TwoPlayerController {
     /**
      * the first move of the game (made by the computer)
      */
+    @Override
     public void computerMovesFirst() {
         int delta = getWinRunLength() - 1;
         Board b = (Board) getBoard();

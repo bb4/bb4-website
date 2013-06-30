@@ -6,11 +6,12 @@ import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.online.ui.ChatPanel;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.ui.components.TexturedPanel;
-import com.barrybecker4.ui.util.GUIUtil;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
-import java.awt.*;
+import java.awt.Dimension;
 
 /**
  *  Show information and statistics about the game.
@@ -112,6 +113,7 @@ public abstract class GameInfoPanel extends TexturedPanel
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
+    @Override
     public void gameChanged( GameChangedEvent gce ) {
         if ( controller_ == null ) {
             return;

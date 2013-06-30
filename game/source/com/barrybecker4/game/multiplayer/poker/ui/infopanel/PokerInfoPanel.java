@@ -104,8 +104,8 @@ public class PokerInfoPanel extends GameInfoPanel
     /**
      * The Command button was pressed.
      * open the dialog to get the players command.
-     * @param e
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == commandButton_) {

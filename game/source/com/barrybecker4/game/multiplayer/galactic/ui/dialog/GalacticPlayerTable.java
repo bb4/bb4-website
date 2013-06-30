@@ -134,8 +134,8 @@ public class GalacticPlayerTable extends PlayerTable
 
     /**
      * The user has changed from human to alien or vice versa.
-     * @param e
      */
+    @Override
     public void tableChanged(TableModelEvent e) {
         //To change body of implemented methods use File | Settings | File Templates.
         GameContext.log(0, "table changed " + e.getFirstRow() + " col="+ e.getColumn());

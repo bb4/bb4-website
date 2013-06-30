@@ -39,10 +39,12 @@ public class SetBoard implements IBoard {
     /**
      * Return the game board back to its initial opening state
      */
+    @Override
     public void reset() {
         initializeData();
     }
 
+    @Override
     public SetBoard copy() {
         SetBoard b =  new SetBoard(initialNumCardsShown_);
         b.numCardsShown_ = this.numCardsShown_;

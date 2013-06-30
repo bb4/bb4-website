@@ -11,21 +11,17 @@ import com.barrybecker4.optimization.parameter.ParameterArray;
 /**
  * This strategy class defines the MiniMax search algorithm.
  * This is the simplest search strategy to which the other variants are compared.
- *  @author Barry Becker
+ * @author Barry Becker
  */
 public final class MiniMaxStrategy extends AbstractBruteSearchStrategy
 {
     /**
      * Constructor for the strategy.
-     * {@inheritDoc}
      */
     public MiniMaxStrategy(Searchable controller, ParameterArray weights) {
         super(controller, weights);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
                                          SearchWindow window, SearchTreeNode parent) {

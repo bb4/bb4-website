@@ -31,10 +31,10 @@ public class TrivialRobotPlayer extends TrivialPlayer {
 
     /**
      * Only reveal action with  a certain probability.
-     * @param pc
+     * @param controller game controller
      * @return the action
      */
-    public TrivialAction getAction(TrivialController pc) {
+    public TrivialAction getAction(TrivialController controller) {
         // 60/40 chance to reveal value
         TrivialAction.Name opt = (Math.random() > 0.4) ? TrivialAction.Name.REVEAL : TrivialAction.Name.KEEP_HIDDEN;
         return new TrivialAction(this.getName(), opt);

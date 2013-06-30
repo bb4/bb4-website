@@ -28,7 +28,6 @@ import java.util.List;
 /**
  * Defines everything the computer needs to know to play Go.
  *
- * @see package.html for more info.
  * @author Barry Becker
  */
 public final class GoController extends TwoPlayerController {
@@ -170,6 +169,7 @@ public final class GoController extends TwoPlayerController {
         scoreCache_ = new ScoreCache();
     }
 
+    @Override
     public void computerMovesFirst()  {
         List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights());
         // select the best (first move, since they are sorted) move to use

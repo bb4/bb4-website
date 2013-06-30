@@ -44,7 +44,7 @@ public class MultiGameOptions extends GameOptions {
 
     /**
      * You wont be able to add more than this many players.
-     * @param playerLimit
+     * @param playerLimit no more than this many players allowed
      */
     protected void setMaxNumPlayers(int playerLimit) {
         maxNumPlayers_ = playerLimit;
