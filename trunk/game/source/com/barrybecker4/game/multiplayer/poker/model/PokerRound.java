@@ -10,6 +10,9 @@ import com.barrybecker4.game.multiplayer.poker.hand.Hand;
 import com.barrybecker4.game.multiplayer.poker.hand.PokerHandScorer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Everything that happened during one round of the poker game.
  * This should include the amount that each player has contributed to the pot.
@@ -117,12 +120,13 @@ public class PokerRound extends Move {
 
     /**
      * Determine the winner of the round.
+     * TODO handle ties
      * @return the player with the best poker hand for this round
      */
-    public MultiGamePlayer determineWinner(PlayerList players) {
+    public List<? extends MultiGamePlayer> determineWinner(PlayerList players) {
         PokerPlayer winner;
         Hand bestHand;
-        int first=0;
+        int first = 0;
 
         while (((PokerPlayer) players.get(first).getActualPlayer()).hasFolded() && first < players.size()) {
             first++;
@@ -142,7 +146,7 @@ public class PokerRound extends Move {
             }
         }
         GameContext.log(0, "The winning hand was " + winner.getHand());
-        return winner;
+        return Arrays.asList(winner);
     }
 
     private boolean allButOneFolded(PlayerList players) {

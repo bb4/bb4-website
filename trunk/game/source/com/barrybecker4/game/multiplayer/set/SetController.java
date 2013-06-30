@@ -7,6 +7,8 @@ import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardViewer;
 import com.barrybecker4.game.multiplayer.common.MultiGameController;
 import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
+
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -182,7 +184,7 @@ public class SetController extends MultiGameController {
      * @return the player with the most sets
      */
     @Override
-    public SetPlayer determineWinner() {
+    public List<? extends MultiGamePlayer> determineWinner() {
         PlayerList players = getPlayers();
         SetPlayer winner;
 
@@ -199,6 +201,6 @@ public class SetController extends MultiGameController {
             }
         }
 
-        return winner;
+        return Arrays.asList(winner);
     }
 }
