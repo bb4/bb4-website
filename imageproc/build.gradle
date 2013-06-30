@@ -3,6 +3,7 @@
  */
 
 version = '1.0'
+project.archivesBaseName = 'bb4-imageproc'
 mainClassName = "com.barrybecker4.java2d.ui.RightSizer"
 
 dependencies {

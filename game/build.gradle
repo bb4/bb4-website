@@ -2,9 +2,9 @@
  * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
  */
 version = '1.0'
+project.archivesBaseName = 'bb4-game'
 mainClassName = "com.barrybecker4.game.common.ui.GameApp"
 
-//java_compiler = "$java_home/bin/java"
 
 task show << {
    println sourceSets.main.runtimeClasspath.each { println it }
@@ -342,21 +342,23 @@ task trivialJar(type: Jar) {
     baseName = 'bb4-trivial'
 }
 
-
 artifacts {
-  archives gameCommonJar
-  archives twoPlayerCommonJar
-  archives multiPlayerCommonJar
-  archives cardJar
-  archives blockadeJar
-  archives chessJar
-  archives goJar
-  archives penteJar
-  archives tictactoeJar
-  archives galacticJar
-  archives pokerJar
-  archives setJar
-  archives trivialJar
+    archives gameCommonJar
+    archives twoPlayerCommonJar
+    archives multiPlayerCommonJar
+    archives cardJar
+    archives blockadeJar
+    archives chessJar
+    archives goJar
+    archives penteJar
+    archives tictactoeJar
+    archives galacticJar
+    archives pokerJar
+    archives setJar
+    archives trivialJar
+
+    archives sourcesJar
+    archives javadocJar
 }
 
 jar {
