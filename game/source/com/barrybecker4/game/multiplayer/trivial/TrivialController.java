@@ -103,7 +103,7 @@ public class TrivialController extends MultiGameController {
      * @return the player with the best Trivial hand
      */
     @Override
-    public List<? extends MultiGamePlayer> determineWinner() {
+    public List<? extends MultiGamePlayer> determineWinners() {
         PlayerList players = getPlayers();
         TrivialPlayer winner = null;
 

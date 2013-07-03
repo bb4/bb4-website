@@ -5,12 +5,12 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
-import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.poker.hand.Hand;
+import com.barrybecker4.game.multiplayer.poker.hand.HandScore;
 import com.barrybecker4.game.multiplayer.poker.hand.PokerHandScorer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -120,33 +120,42 @@ public class PokerRound extends Move {
 
     /**
      * Determine the winner of the round.
-     * TODO handle ties
+     * In rare cases there could be ties. That is why a list of players is returned instead of just one player.
      * @return the player with the best poker hand for this round
      */
-    public List<? extends MultiGamePlayer> determineWinner(PlayerList players) {
-        PokerPlayer winner;
-        Hand bestHand;
+    public List<PokerPlayer> determineWinners(PlayerList players) {
+        List<PokerPlayer> winners = new ArrayList<PokerPlayer>();
         int first = 0;
 
         while (((PokerPlayer) players.get(first).getActualPlayer()).hasFolded() && first < players.size()) {
             first++;
         }
         if (((PokerPlayer)players.get(first)).hasFolded())
-            GameContext.log(0, "All players folded. That was dumb. The winner will be random.");
+            GameContext.log(0, "All players have folded. That was dumb. The winner will be random.");
 
-        winner = (PokerPlayer)players.get(first);
-        bestHand = winner.getHand();
+        Hand bestHand = ((PokerPlayer) players.get(first)).getHand();
         PokerHandScorer scorer = new PokerHandScorer();
+        HandScore bestScore = scorer.getScore(bestHand);
 
-        for (int i = first+1; i < players.size(); i++) {
-            PokerPlayer p = (PokerPlayer) players.get(i).getActualPlayer();
-            if (!p.hasFolded() && scorer.getScore(p.getHand()).compareTo(scorer.getScore(bestHand)) > 0) {
-                bestHand = p.getHand();
-                winner = p;
+        // find the best hand
+        for (int i = first + 1; i < players.size(); i++) {
+            PokerPlayer player = (PokerPlayer) players.get(i).getActualPlayer();
+            HandScore score = scorer.getScore(player.getHand());
+            if (!player.hasFolded() && score.compareTo(bestScore) > 0) {
+                bestScore = score;
             }
         }
-        GameContext.log(0, "The winning hand was " + winner.getHand());
-        return Arrays.asList(winner);
+
+        // find all players with a hand that good (rare that there will be more than one
+        for (int i = first; i < players.size(); i++) {
+            PokerPlayer player = (PokerPlayer) players.get(i).getActualPlayer();
+            if (!player.hasFolded() && scorer.getScore(player.getHand()).compareTo(bestScore) == 0) {
+                winners.add(player);
+            }
+        }
+
+        GameContext.log(0, "The winning players were " + winners);
+        return winners;
     }
 
     private boolean allButOneFolded(PlayerList players) {

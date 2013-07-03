@@ -7,15 +7,21 @@ import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.dialogs.OptionsDialog;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
+import java.util.List;
 
 
 /**
  * Show a summary of the final results.
- * The winner is the player with al the chips.
+ * The winner(s) is the player with all the chips.
  *
  * @author Barry Becker
  */
@@ -23,7 +29,7 @@ public class RoundOverDialog extends OptionsDialog {
 
     private GradientButton closeButton_;
 
-    private PokerPlayer winner_;
+    private List<PokerPlayer> winners_;
     private int winnings_;
     private JLabel winLabel_;
 
@@ -32,9 +38,9 @@ public class RoundOverDialog extends OptionsDialog {
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
      */
-    public RoundOverDialog(Component parent, PokerPlayer winner, int winnings ) {
+    public RoundOverDialog(Component parent, List<PokerPlayer> winners, int winnings ) {
         super( parent );
-        winner_ = winner;
+        winners_ = winners;
         winnings_ = winnings;
         showContent();
     }
@@ -57,16 +63,16 @@ public class RoundOverDialog extends OptionsDialog {
 
     private JPanel createInstructionsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        PlayerLabel playerLabel = new PlayerLabel();
-        playerLabel.setPlayer(winner_);
 
         winLabel_ = new JLabel();
         initWonMessage();
 
-        //panel.setPreferredSize(new Dimension(400, 100));
-        panel.add(playerLabel, BorderLayout.NORTH);
+        for (PokerPlayer winner : winners_) {
+            PlayerLabel playerLabel = new PlayerLabel();
+            playerLabel.setPlayer(winner);
+            panel.add(playerLabel, BorderLayout.NORTH);
+        }
         panel.add(winLabel_, BorderLayout.CENTER);
-        //panel.add(amountToCall, BorderLayout.SOUTH);
         return panel;
     }
 
@@ -87,12 +93,11 @@ public class RoundOverDialog extends OptionsDialog {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         closeButton_ = new GradientButton();
-        initBottomButton( closeButton_, GameContext.getLabel("CLOSE"), GameContext.getLabel("CLOSE_TIP") );
+        initBottomButton(closeButton_, GameContext.getLabel("CLOSE"), GameContext.getLabel("CLOSE_TIP"));
 
-        buttonsPanel.add( closeButton_ );
+        buttonsPanel.add(closeButton_);
         return buttonsPanel;
     }
-
 
     @Override
     public void actionPerformed(ActionEvent evt) {

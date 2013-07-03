@@ -7,16 +7,17 @@ import com.barrybecker4.game.common.player.PlayerAction;
 import com.barrybecker4.game.common.player.PlayerList;
 import com.barrybecker4.game.common.ui.viewer.GameBoardRenderer;
 import com.barrybecker4.game.multiplayer.common.ui.MultiGameViewer;
-import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.PokerController;
+import com.barrybecker4.game.multiplayer.poker.model.PokerAction;
 import com.barrybecker4.game.multiplayer.poker.model.PokerRound;
 import com.barrybecker4.game.multiplayer.poker.player.PokerPlayer;
 import com.barrybecker4.game.multiplayer.poker.player.PokerRobotPlayer;
 import com.barrybecker4.game.multiplayer.poker.ui.dialog.RoundOverDialog;
 import com.barrybecker4.game.multiplayer.poker.ui.render.PokerGameRenderer;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JOptionPane;
+import java.awt.Point;
+import java.util.List;
 
 /**
  *  Takes a PokerController as input and displays the current state of the Poker Game.
@@ -129,7 +130,7 @@ public class PokerGameViewer extends MultiGameViewer {
     /**
      * show who won the round and disperse the pot
      */
-    public void showRoundOver(PokerPlayer winner, int winnings) {
+    public void showRoundOver(List<PokerPlayer> winners, int winnings) {
 
         PlayerList players = controller_.getPlayers();
         for (final Player p : players) {
@@ -138,13 +139,13 @@ public class PokerGameViewer extends MultiGameViewer {
         }
         refresh();
 
-        RoundOverDialog roundOverDlg = new RoundOverDialog(null, winner, winnings);
+        RoundOverDialog roundOverDlg = new RoundOverDialog(null, winners, winnings);
 
         Point p = this.getParent().getLocationOnScreen();
 
         // offset the dlg so the board is visible as a reference
-        roundOverDlg.setLocation((int)(p.getX()+ 0.9*getParent().getWidth()),
-                                 (int)(p.getY()+getParent().getHeight()/3.0));
+        roundOverDlg.setLocation((int)(p.getX() + 0.9 * getParent().getWidth()),
+                                 (int)(p.getY() + getParent().getHeight() / 3.0));
 
         roundOverDlg.setVisible(true);
     }

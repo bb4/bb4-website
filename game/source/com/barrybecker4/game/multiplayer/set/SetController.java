@@ -184,7 +184,7 @@ public class SetController extends MultiGameController {
      * @return the player with the most sets
      */
     @Override
-    public List<? extends MultiGamePlayer> determineWinner() {
+    public List<? extends MultiGamePlayer> determineWinners() {
         PlayerList players = getPlayers();
         SetPlayer winner;
 

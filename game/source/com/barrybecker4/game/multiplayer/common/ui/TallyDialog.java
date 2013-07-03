@@ -32,9 +32,6 @@ public abstract class TallyDialog extends OptionsDialog {
 
     private GradientButton okButton_;
 
-    private SummaryTable summaryTable_;
-
-    private JLabel winnerLabel_;
 
 
     /**
@@ -63,18 +60,18 @@ public abstract class TallyDialog extends OptionsDialog {
         mainPanel.setLayout(new BorderLayout());
 
         PlayerList players = controller_.getPlayers();
-        String winningPlayer = winnerLabel(findWinners(players));
+        String winningPlayers = winnersLabel(findWinners(players));
 
-        // show a label at the top with who the winner is
-        JLabel winnerLabel = new JLabel();
-        winnerLabel.setText("<html>" + GameContext.getLabel("GAME_OVER") + "<br>"
-                            + GameContext.getLabel("WINNER_IS")+"<br>" + winningPlayer + "</html>");
-        winnerLabel.setBorder(BorderFactory.createEmptyBorder(6,6,6,6));
-        mainPanel.add(winnerLabel, BorderLayout.NORTH);
+        // show a label at the top with who the winner(s) is
+        JLabel winnersLabel = new JLabel();
+        winnersLabel.setText("<html>" + GameContext.getLabel("GAME_OVER") + "<br>"
+                + GameContext.getLabel("WINNER_IS") + "<br>" + winningPlayers + "</html>");
+        winnersLabel.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
+        mainPanel.add(winnersLabel, BorderLayout.NORTH);
 
         SummaryTable summaryTable_= createSummaryTable(players);
         JPanel tablePanel = new JPanel();
-        tablePanel.setBorder(BorderFactory.createEmptyBorder(6,6,6,6));
+        tablePanel.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
         tablePanel.add(new JScrollPane(summaryTable_.getTable()), BorderLayout.CENTER);
 
         mainPanel.add(tablePanel, BorderLayout.CENTER);
@@ -83,7 +80,7 @@ public abstract class TallyDialog extends OptionsDialog {
         return mainPanel;
     }
 
-    private String winnerLabel(List<? extends MultiGamePlayer> winners) {
+    private String winnersLabel(List<? extends MultiGamePlayer> winners) {
         StringBuilder bldr = new StringBuilder();
         for (MultiGamePlayer winner : winners) {
             bldr.append(winner.getName()).append(", ");

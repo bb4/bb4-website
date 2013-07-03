@@ -203,15 +203,22 @@ public class PokerController extends MultiGameController {
     }
 
     /**
-     * take care of distributing the pot, dealing, anteing.
+     * Take care of distributing the pot, dealing, anteing up.
+     * In the rare case of a tie the pot will get split evenly among the winners.
      * @param pviewer poker viewer
      */
     private void doRoundOverBookKeeping(PokerGameViewer pviewer) {
-        // TODO handle multiple winners
-        PokerPlayer winner = (PokerPlayer)determineWinner().get(0);
-        int winnings = this.getPotValue();
-        winner.claimPot(this);
-        pviewer.showRoundOver(winner, winnings);
+
+        List<PokerPlayer> winners = determineWinners();
+        int numWinners = winners.size();
+        // house gets the remainder if there is any
+        int winnings = this.getPotValue() / numWinners;
+
+        for (PokerPlayer winner : winners) {
+            winner.claimPot(winnings);
+        }
+        this.clearPot();
+        pviewer.showRoundOver(winners, winnings);
 
         // if round not over yet, start a new round deal new cards and ante
         if (!isDone()) {
@@ -233,8 +240,8 @@ public class PokerController extends MultiGameController {
      * may be ties.
      */
     @Override
-    public List<? extends MultiGamePlayer> determineWinner() {
-        return round.determineWinner(getPlayers());
+    public List<PokerPlayer> determineWinners() {
+        return round.determineWinners(getPlayers());
     }
 
     /**
