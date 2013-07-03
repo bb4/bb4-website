@@ -13,7 +13,7 @@ import com.barrybecker4.game.multiplayer.common.MultiGamePlayer;
 import com.barrybecker4.game.multiplayer.galactic.player.GalacticPlayer;
 import com.barrybecker4.game.multiplayer.galactic.ui.GalaxyViewer;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -125,21 +125,30 @@ public class GalacticController extends MultiGameController {
      * @return the player with the most planets
      */
     @Override
-    public List<? extends MultiGamePlayer> determineWinner() {
+    public List<? extends MultiGamePlayer> determineWinners() {
 
-        GalacticPlayer winner = null;
+        GalacticPlayer winner;
         double maxCriteria = -1.0;
-        for (final Player newVar : getPlayers()) {
-            GalacticPlayer player = (GalacticPlayer) newVar;
-            List planets = Galaxy.getPlanets(player);
-            double criteria = planets.size() + (double) player.getTotalNumShips() / 100000000000.0;
+        Scorer scorer = new Scorer();
+
+        // first find the highest score
+        for (Player player : getPlayers()) {
+            double criteria = scorer.score((GalacticPlayer) player);
 
             if (criteria > maxCriteria) {
                 maxCriteria = criteria;
-                winner = player;
             }
         }
-        return Arrays.asList(winner);
+        // then find all players with the highest score
+        List<GalacticPlayer> winners = new ArrayList<GalacticPlayer>();
+        for (Player p : getPlayers()) {
+            GalacticPlayer player = (GalacticPlayer) p;
+            double criteria = scorer.score(player);
+            if (criteria == maxCriteria) {
+                winners.add(player);
+            }
+        }
+        return winners;
     }
 
     /**

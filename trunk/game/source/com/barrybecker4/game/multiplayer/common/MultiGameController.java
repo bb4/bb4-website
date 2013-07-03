@@ -211,9 +211,9 @@ public abstract class MultiGameController extends GameController {
     }
 
     /**
-     * @return the player(s0 with the best score. In rare circumstances some game may have ties.
+     * @return the player(s) with the best score. In rare circumstances some games may have ties.
      */
-    public abstract List<? extends MultiGamePlayer> determineWinner();
+    public abstract List<? extends MultiGamePlayer> determineWinners();
 
     /**
      * make it the next players turn

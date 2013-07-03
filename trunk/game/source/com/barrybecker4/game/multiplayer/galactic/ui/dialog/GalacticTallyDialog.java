@@ -41,7 +41,7 @@ public final class GalacticTallyDialog extends TallyDialog {
      */
     @Override
     public List<? extends MultiGamePlayer> findWinners(PlayerList players) {
-        return controller_.determineWinner();
+        return controller_.determineWinners();
     }
 
 }

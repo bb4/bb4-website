@@ -156,9 +156,8 @@ public abstract class PokerPlayer extends MultiGamePlayer {
     /**
      * the pot goes to this player
      */
-    public void claimPot(PokerController controller)  {
-        cash_ += controller.getPotValue();
-        controller.clearPot();
+    public void claimPot(int potAmount)  {
+        cash_ += potAmount;
     }
 
     @Override
