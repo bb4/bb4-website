@@ -11,7 +11,7 @@
  *             |              /  \__
  *          optimization_   /     | \
  *         /          \  \/      /\  \______
- *      imageproc    apps \     /  \        \
+ *      imageproc __ apps \     /  \        \
  *         \         /    puzzle  simulation game
  *          \       /     __/______/________/
  *           \     /     /
@@ -24,7 +24,8 @@ include 'common', 'ui', 'sound', 'optimization', 'imageproc', 'puzzle', 'simulat
 
 /**
  *  Another option would be to break up the multi-project build into separate repositories.
- *  If common, ui, sound were joined into a "core" jar produces by a separate build, then this diagram would become
+ *  If common, ui, and sound were joined into a "core" jar produced by a separate build,
+ *  then this diagram would become
  *
  *            ___core__   (common, ui, sound)
  *          /          \
