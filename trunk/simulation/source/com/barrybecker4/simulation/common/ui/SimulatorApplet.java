@@ -22,6 +22,9 @@ public class SimulatorApplet extends ApplicationApplet {
     private static final boolean RUN_OPTIMIZATION = false;
     private static final String DEFAULT_SIMULATOR = "com.barrybecker4.simulation.fluid.ui.FluidSimulator";
 
+    public SimulatorApplet() {
+        super(new String[] {});
+    }
 
     /**
      * Construct the applet
@@ -49,7 +52,7 @@ public class SimulatorApplet extends ApplicationApplet {
 
         if (simulator_ == null) {
 
-            String className = getParameter("panel_class");
+            String className = getParameter("panel_class"); //NON-NLS
             className = className == null ? DEFAULT_SIMULATOR : className;
             simulator_ = createSimulationFromClassName(className);
         }
@@ -79,7 +82,7 @@ public class SimulatorApplet extends ApplicationApplet {
             simulator = (Simulator) simulatorClass.newInstance();
 
         } catch (InstantiationException e) {
-            System.err.println("Could not create class for "  + className);
+            System.err.println("Could not create class for "  + className); //NON-NLS
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -113,7 +116,6 @@ public class SimulatorApplet extends ApplicationApplet {
             simulatorClassName = args[1];
         }
 
-        System.out.println("get class="+ simulatorClassName);
         SimulatorApplet applet = new SimulatorApplet(args, simulatorClassName);
         GUIUtil.showApplet( applet );
     }

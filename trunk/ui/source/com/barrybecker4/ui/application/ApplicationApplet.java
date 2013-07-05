@@ -24,14 +24,14 @@ public abstract class ApplicationApplet extends JApplet{
      * Construct the application.
      */
     public ApplicationApplet() {
-        GUIUtil.setCustomLookAndFeel();
+        this(new String[] {});
     }
 
     /**
      * Construct the application.
      */
     public ApplicationApplet(String[] args) {
-        this();
+        GUIUtil.setCustomLookAndFeel();
 
         String localeName = "ENGLISH";
         if (args.length > 0) {

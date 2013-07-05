@@ -108,6 +108,7 @@ public class GraphPanel extends JPanel implements Runnable {
     /**
      * starts the rendering thread.
      */
+    @Override
     public void run() {
         graphRenderer_.startDrawingGraph();
         thread_ = new Thread( this );

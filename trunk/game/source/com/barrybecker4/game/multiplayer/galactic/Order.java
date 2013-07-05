@@ -22,14 +22,18 @@ public class Order {
     private GalacticPlayer owner_;
     private boolean hasArrived_ = false;
 
+    /** distance traveled per year */
     private static final int NORMAL_SPEED = 2;
+
     private static final double INTERSECT_TOLERANCE = 0.2;
 
+    /** constructor */
     public Order(Planet origin, Planet target, int fleetSize, Point2D loc) {
         commonInit(origin, target, fleetSize);
         currentLocation_ = loc;
     }
 
+    /** constructor */
     public Order(Planet origin, Planet target, int fleetSize) {
        commonInit(origin, target, fleetSize);
        currentLocation_ = new Point2D.Double(origin.getLocation().getCol(), origin.getLocation().getRow());
@@ -51,31 +55,19 @@ public class Order {
         return origin_;
     }
 
-    public void setOrigin( Planet origin) {
-        this.origin_ = origin;
-    }
-
     public Planet getDestination() {
         return destination_;
-    }
-
-    public void setDestination( Planet destination ) {
-        this.destination_ = destination;
     }
 
     public int getFleetSize() {
         return fleetSize_;
     }
 
-    public void setFleetSize( int fleetSize ) {
-        this.fleetSize_ = fleetSize;
-    }
-
     /**
      * @return the player who issued this order
      */
     public GalacticPlayer getOwner() {
-        assert(owner_!=null);
+        assert(owner_ != null);
         return owner_;
     }
 
@@ -98,12 +90,12 @@ public class Order {
         Point2D oldLocation = new Point2D.Double(currentLocation_.getX(), currentLocation_.getY());
 
         Point2D v = getUnitDirection();
-        v.setLocation(NORMAL_SPEED* v.getX(), NORMAL_SPEED * v.getY());
+        v.setLocation(NORMAL_SPEED * v.getX(), NORMAL_SPEED * v.getY());
 
-        currentLocation_.setLocation( currentLocation_.getX() + v.getX(),  currentLocation_.getY() +v.getY());
+        currentLocation_.setLocation( currentLocation_.getX() + v.getX(),  currentLocation_.getY() + v.getY());
 
         // if the destination planet lies on the line from where we were to where we are now,
-        // then we overshot. set the currentLocation to the dest planet location.
+        // then we overshot. set the currentLocation to the destination planet location.
         Line2D.Double line = new Line2D.Double(oldLocation, currentLocation_);
         Location dLoc = destination_.getLocation();
         if (line.intersects(dLoc.getCol(),  dLoc.getRow(), INTERSECT_TOLERANCE, INTERSECT_TOLERANCE)) {
@@ -122,8 +114,9 @@ public class Order {
      */
     private Point2D getUnitDirection() {
         Location dLoc = destination_.getLocation();
-        Point2D unitVec = new Point2D.Double(dLoc.getCol() - currentLocation_.getX(), dLoc.getRow() - currentLocation_.getY());
-        double dist = unitVec.distance(unitVec);
+        Point2D unitVec =
+                new Point2D.Double(dLoc.getCol() - currentLocation_.getX(), dLoc.getRow() - currentLocation_.getY());
+        double dist = unitVec.distance(new Point2D.Double(0, 0));
         unitVec.setLocation(unitVec.getX()/dist, unitVec.getY()/dist);
         return unitVec;
     }
@@ -133,13 +126,12 @@ public class Order {
     }
 
 
-    public String toString()
-    {
+    public String toString() {
         StringBuilder sb = new StringBuilder(50);
-        sb.append("Target: ").append(destination_).append('\n');
-        sb.append("Fleet size: ").append(fleetSize_).append('\n');
-        sb.append("Location: ").append(currentLocation_).append('\n');
-        sb.append("Owner: ").append(owner_).append('\n');
+        sb.append("Target: ").append(destination_).append('\n');  // NON-NLS
+        sb.append("Fleet size: ").append(fleetSize_).append('\n');  // NON-NLS
+        sb.append("Location: ").append(currentLocation_).append('\n'); // NON-NLS
+        sb.append("Owner: ").append(owner_).append('\n');  // NON-NLS
         return sb.toString();
     }
 }

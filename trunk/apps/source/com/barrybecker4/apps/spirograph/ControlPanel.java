@@ -4,12 +4,19 @@ package com.barrybecker4.apps.spirograph;
 import com.barrybecker4.apps.spirograph.model.GraphState;
 import com.barrybecker4.apps.spirograph.model.GraphStateChangeListener;
 import com.barrybecker4.apps.spirograph.model.ParametricEquations;
+import com.barrybecker4.common.AppContext;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.sliders.ColorSliderGroup;
 
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,13 +27,6 @@ import java.awt.event.ActionListener;
  */
 public class ControlPanel extends JPanel
                           implements ActionListener, GraphStateChangeListener {
-
-    private static final String HIDE_DECORATION_LABEL = "Hide Decoration";
-    private static final String SHOW_DECORATIONLABEL = "Show Decoration";
-    private static final String RESET_LABEL = "Reset";
-    private static final String DRAW_LABEL = "Draw Graph";
-    private static final String PAUSE_LABEL = "Pause";
-    private static final String RESUME_LABEL = "Resume Drawing";
 
     private ControlSliderGroup sliderGroup_;
     private GraphState state_;
@@ -72,9 +72,9 @@ public class ControlPanel extends JPanel
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS) );
         p.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5),
                                                        BorderFactory.createEtchedBorder(EtchedBorder.RAISED)));
-        hide_ = createButton(HIDE_DECORATION_LABEL);
-        GradientButton reset = createButton(RESET_LABEL);
-        draw_ = createButton( DRAW_LABEL );
+        hide_ = createButton(AppContext.getLabel("HIDE_DECORATION"));
+        GradientButton reset = createButton(AppContext.getLabel("RESET"));
+        draw_ = createButton(AppContext.getLabel("DRAW"));
 
         JPanel bl= new JPanel(new BorderLayout());
         bl.add(hide_, BorderLayout.CENTER);
@@ -111,6 +111,7 @@ public class ControlPanel extends JPanel
      * a button was pressed.
      * @param e event
      */
+    @Override
     public void actionPerformed( ActionEvent e ) {
 
         Object source = e.getSource();
@@ -118,48 +119,50 @@ public class ControlPanel extends JPanel
         String obj = ((AbstractButton) source).getText();
 
         if ( sliderGroup_.getRadius2Value() != 0 ) {
-            if ( DRAW_LABEL.equals(obj) ) {
-                draw_.setText( PAUSE_LABEL );
+            if (AppContext.getLabel("DRAW").equals(obj) ) {
+                draw_.setText(AppContext.getLabel("PAUSE"));
                 graphPanel_.startDrawingGraph();
             }
-            else if ( PAUSE_LABEL.equals(obj) ) {
+            else if (AppContext.getLabel("PAUSE").equals(obj) ) {
                 graphPanel_.setPaused( true );
-                draw_.setText( RESUME_LABEL );
+                draw_.setText(AppContext.getLabel("RESUME"));
             }
-            else if ( RESUME_LABEL.equals(obj) ) {
+            else if (AppContext.getLabel("RESUME").equals(obj) ) {
                 graphPanel_.setPaused( false );
-                draw_.setText( PAUSE_LABEL );   // WAS DRAW
+                draw_.setText(AppContext.getLabel("PAUSE"));
             }
         }
 
-        if ( RESET_LABEL.equals(obj) ) {
+        if (AppContext.getLabel("RESET").equals(obj) ) {
             graphPanel_.reset();
-            draw_.setText( DRAW_LABEL );
+            draw_.setText(AppContext.getLabel("DRAW"));
         }
-        else if ( HIDE_DECORATION_LABEL.equals(obj) ) {
-            hide_.setText(SHOW_DECORATIONLABEL);
+        else if (AppContext.getLabel("HIDE_DECORATION").equals(obj) ) {
+            hide_.setText(AppContext.getLabel("SHOW_DECORATION"));
             state_.setShowDecoration(false);
             graphPanel_.repaint();
         }
-        else if ( SHOW_DECORATIONLABEL.equals(obj) ) {
-            hide_.setText(HIDE_DECORATION_LABEL);
+        else if (AppContext.getLabel("SHOW_DECORATION").equals(obj) ) {
+            hide_.setText(AppContext.getLabel("HIDE_DECORATION"));
             state_.setShowDecoration(true);
             graphPanel_.repaint();
         }
     }
 
     /** implements GraphStateChangeListener interface */
+    @Override
     public void parameterChanged() {
         ParametricEquations equations = sliderGroup_.getEquations();
         xFunction_.setText(equations.getXEquation());
         yFunction_.setText(equations.getYEquation());
         if (state_.isMaxVelocity()) {
-            draw_.setText( DRAW_LABEL );
+            draw_.setText(AppContext.getLabel("DRAW"));
         }
     }
 
     /** implements GraphStateChangeListener interface */
+    @Override
     public void renderingComplete() {
-        draw_.setText( DRAW_LABEL );
+        draw_.setText(AppContext.getLabel("DRAW"));
     }
 }

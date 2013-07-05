@@ -32,13 +32,16 @@ public final class GraphicalAdventure extends ApplicationApplet
      * The top secret password - don't tell anyone.
      * This could be Base64 encoded or encrypted to make more secure.
      */
-    private static final String PASSWORD = "ludlow";
+    private static final String PASSWORD = "ludlow"; //NON-NLS
 
     private Story story_;
     private ChoicePanel choicePanel_ = null;
     private JPanel mainPanel_;
     private boolean storyEdited_ = false;
 
+    public GraphicalAdventure() {
+        this(new String[] {}, getDefaultStory());
+    }
 
     /**
      * Constructor.
@@ -57,6 +60,11 @@ public final class GraphicalAdventure extends ApplicationApplet
         frame.setJMenuBar(menubar);
         frame.invalidate();
         frame.validate();
+    }
+
+    public static Story getDefaultStory() {
+        Document document = Story.importStoryDocument(new String[]{});
+        return new Story(document);
     }
 
     @Override
@@ -123,7 +131,6 @@ public final class GraphicalAdventure extends ApplicationApplet
         StoryEditorDialog storyEditor = new StoryEditorDialog(story_);
         boolean editingCanceled = storyEditor.showDialog();
         if (!editingCanceled) {
-            System.out.println("done editing");
             // show the edited version.
             story_.initializeFrom(storyEditor.getEditedStory());
             story_.resetToFirstScene();
@@ -165,6 +172,7 @@ public final class GraphicalAdventure extends ApplicationApplet
     /**
      * called when a button is pressed.
      */
+    @Override
     public void sceneChanged( int selectedChoiceIndex ) {
         story_.advanceScene(selectedChoiceIndex);
         refresh();
@@ -196,10 +204,8 @@ public final class GraphicalAdventure extends ApplicationApplet
      */
     public static void main( String[] args ) throws IOException {
 
-        Document document = Story.importStoryDocument(new String[]{}); //args);
-        Story story = new Story(document);
 
-        new GraphicalAdventure(args, story);
+        new GraphicalAdventure(args, getDefaultStory());
     }
 }
 

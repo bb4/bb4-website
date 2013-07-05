@@ -45,7 +45,7 @@ public class SpiroGraph extends ApplicationApplet {
     public static void main( String[] args ) {
 
         SpiroGraph applet = new SpiroGraph();
-        GUIUtil.showApplet( applet);
+        GUIUtil.showApplet(applet);
     }
 }
 

@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * For random number seed =5 and mutable piece objects it takes
  * BruteForce < 8.0s and Genetic= 3.0s
  * After refactoring and applying the generic solver pattern (see puzzle.common) things were faster
- * BruteForce Sequential <1.0s  BruteForce concurrent <.1s
+ * BruteForce Sequential &lt; 1.0s  BruteForce concurrent &lt; 0.1s
  * @author Barry Becker
  */
 public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
@@ -34,6 +34,12 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
 
     /** allows you to change the animation speed. */
     private LabeledSlider animSpeedSlider_;
+
+    /**
+     * No argument Construction so it can be created with reflection.
+     */
+    public RedPuzzle() {
+    }
 
     /**
      * Construct the application and set the look and feel.
@@ -80,7 +86,7 @@ public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
     /**
      * use this to run as an application instead of an applet.
      */
-    public static void main( String[] args )  {
+    public static void main(String[] args)  {
 
         PuzzleApplet applet = new RedPuzzle(args);
 

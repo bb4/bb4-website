@@ -57,6 +57,7 @@ task deployJars(type: Copy, dependsOn: [':common:copyToLib', ':ui:copyToLib', ':
     from fileTree("$project_home").include('*/build/libs/**').files
     into "$distributionGameDir"
     include 'bb4-*.jar', 'jhlabs-*.jar', 'jigo-sgf-*.jar', 'jai-codec-*.jar', 'vecmath-*.jar'
+    exclude '*-sources.jar', '*-javadoc.jar'
 }
 
 // I would like this to trigger a top level build of everything, but right now it has to be done manually.
