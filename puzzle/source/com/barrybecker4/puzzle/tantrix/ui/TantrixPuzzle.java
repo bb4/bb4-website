@@ -31,6 +31,11 @@ public final class TantrixPuzzle extends PuzzleApplet<TantrixBoard, TilePlacemen
     private static final int DEFAULT_NUM_TILES = 7;
 
     /**
+     * Required no arg constructor.
+     */
+    public TantrixPuzzle() {}
+
+    /**
      * Construct the application.
      */
     public TantrixPuzzle(String[] args) {

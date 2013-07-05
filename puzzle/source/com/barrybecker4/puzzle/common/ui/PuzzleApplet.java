@@ -15,14 +15,17 @@ import java.awt.BorderLayout;
  * @author Barry Becker
  */
 public abstract class PuzzleApplet<P, M> extends ApplicationApplet {
+
     protected PuzzleController<P, M> controller_;
     protected PuzzleViewer<P, M> viewer_;
 
 
     /**
      * Construct the applet.
+     * No argument constructor needed for applet instantiation by reflection.
      */
     public PuzzleApplet() {}
+
     /**
      * Construct the application.
      */

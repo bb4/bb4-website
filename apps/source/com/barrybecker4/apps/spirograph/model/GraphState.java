@@ -47,6 +47,7 @@ public class GraphState implements ColorChangeListener {
        listeners_.add(listener);
     }
 
+    @Override
     public void colorChanged(Color color) {
         setColor(color);
     }

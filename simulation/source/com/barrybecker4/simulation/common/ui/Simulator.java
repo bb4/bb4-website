@@ -25,9 +25,6 @@ public abstract class Simulator extends AnimationComponent
     protected static final String CONFIG_FILE_PATH_PREFIX = FileUtil.PROJECT_HOME + "source/com/barrybecker4/simulation/";
     protected static final String ANIMATION_FRAME_FILE_NAME_PREFIX = FileUtil.PROJECT_HOME + "temp/animations/simulation/";
 
-    /** debug level of 0 means no debug info, 3 is all debug info */
-    public static final int DEBUG_LEVEL = 0;
-
     protected SimulatorOptionsDialog optionsDialog_ = null;
     protected static JFrame frame_ = null;
 

@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * OrdersTable contains a list of orders that a player has made to direct his ships.
  * All the cells are editable.
@@ -57,7 +56,6 @@ class OrdersTable extends TableBase {
     private static final int NUM_COLS = columnNames_.length;
 
 
-
     /**
      * constructor
      * @param orders to initialize the rows in the table with.
@@ -87,7 +85,7 @@ class OrdersTable extends TableBase {
     }
 
     /**
-     * @return  the players represented by rows in the table
+     * @return the players represented by rows in the table
      */
     public List<Order> getOrders() {
 
@@ -119,7 +117,6 @@ class OrdersTable extends TableBase {
 
         return orders;
     }
-
 
     /**
      * @return total outgoing ships for new orders (excluding existing)
