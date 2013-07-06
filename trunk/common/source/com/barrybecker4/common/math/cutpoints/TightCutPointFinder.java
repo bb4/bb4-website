@@ -6,6 +6,8 @@ import com.barrybecker4.common.math.Range;
 import java.util.List;
 
 /**
+ * The min and max cut-points will be specific full precision numbers.
+ *
  * @author Barry Becker
  */
 public class TightCutPointFinder extends AbstractCutPointFinder {

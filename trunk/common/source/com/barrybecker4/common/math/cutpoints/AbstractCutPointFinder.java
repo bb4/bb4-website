@@ -12,8 +12,8 @@ import java.util.List;
  */
 abstract class AbstractCutPointFinder {
 
-    /** The range should not be less than this. */
-    private static final double SMALLEST_ALLOWED_RANGE = 1.0E-10;
+    /** The range should not get smaller than this. */
+    static final double MIN_RANGE = 1.0E-10;
 
 
     /**
@@ -27,13 +27,13 @@ abstract class AbstractCutPointFinder {
 
         validateArguments(range);
         Range finalRange = new Range(range);
-        if (range.getExtent() <= SMALLEST_ALLOWED_RANGE) {
-            finalRange.add(range.getMin() + SMALLEST_ALLOWED_RANGE);
+        if (range.getExtent() <= MIN_RANGE) {
+            finalRange.add(range.getMin() + MIN_RANGE);
         }
 
         List<Double> positions = new ArrayList<Double>(10);
 
-        if (finalRange.getExtent() < SMALLEST_ALLOWED_RANGE) {
+        if (finalRange.getExtent() < MIN_RANGE) {
             positions.add(finalRange.getMin());
         } else {
             determineCutPoints(maxNumTicks, finalRange, positions);
@@ -81,7 +81,7 @@ abstract class AbstractCutPointFinder {
      * @return zero if value is below the smallest allowed range, else return value.
      */
     double checkSmallNumber(double value) {
-        if (Math.abs(value) < SMALLEST_ALLOWED_RANGE) {
+        if (Math.abs(value) < MIN_RANGE) {
             return 0;
         }
         return value;

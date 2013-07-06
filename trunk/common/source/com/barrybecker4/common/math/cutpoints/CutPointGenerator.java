@@ -4,6 +4,7 @@ import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.common.math.Range;
 
 import java.text.DecimalFormat;
+import static com.barrybecker4.common.math.cutpoints.AbstractCutPointFinder.MIN_RANGE;
 
 /**
  * Calculates nicely rounded intervals for a specified range.
@@ -12,9 +13,6 @@ import java.text.DecimalFormat;
  * @author Barry Becker
  */
 public class CutPointGenerator {
-
-    /** The range should not be less than this. */
-    private static final double SMALLEST_ALLOWED_RANGE = 1.0E-10;
 
     /** Default way to show the numbers as labels */
     private DecimalFormat formatter;
@@ -82,8 +80,8 @@ public class CutPointGenerator {
     int getNumberOfFractionDigits(Range range, int maxNumTicks) {
 
         double max1 = range.getMax();
-        if (range.getExtent() <= SMALLEST_ALLOWED_RANGE) {
-            max1 = range.getMin() + SMALLEST_ALLOWED_RANGE;
+        if (range.getExtent() <= MIN_RANGE) {
+            max1 = range.getMin() + MIN_RANGE;
         }
 
         double extent = Rounder.round(max1 - range.getMin(), false);

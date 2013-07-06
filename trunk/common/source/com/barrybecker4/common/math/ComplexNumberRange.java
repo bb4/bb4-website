@@ -3,7 +3,7 @@ package com.barrybecker4.common.math;
 
 /**
  * A complex number range represents a box on the complex plane.
- * Currently immutable.
+ * Immutable.
  *
  * @author Barry Becker
  */

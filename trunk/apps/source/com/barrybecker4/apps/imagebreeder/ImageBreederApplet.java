@@ -27,7 +27,6 @@ import java.util.Map;
  * Allows you to mix filters together using a genetic algorithm
  * in order to produce very interesting results.
  *
- * TODO:
  *  - Brian big hair took 106 seconds to run caustics
  */
 public class ImageBreederApplet extends ApplicationApplet
@@ -38,9 +37,9 @@ public class ImageBreederApplet extends ApplicationApplet
     private static final  int NUM_CHILD_IMAGES = 20;
     private static final float DEFAULT_VARIANCE = 0.2f;
     private float variance = DEFAULT_VARIANCE;
-    private static final String IMAGE_DIR = "com/barrybecker4/apps/imagebreeder/ui/images/";
+    private static final String IMAGE_DIR = "com/barrybecker4/apps/imagebreeder/ui/images/"; // NON-NLS
 
-    private static final String DEFAULT_IMAGE = "brian_in_surf1_big_hair_smaller.jpg";
+    private static final String DEFAULT_IMAGE = "brian_in_surf1_big_hair_smaller.jpg";  // NON-NLS
 
     private BufferedImage currentImage;
 
