@@ -11,10 +11,8 @@
       var applet = null;
 
       // called when page done loading
-      function doInit()
-      {
-        if (document.applets == null || document.applets[0] == null)
-        {
+      function doInit() {
+        if (document.applets == null || document.applets[0] == null) {
           var errorMsg = "You must have the java plugin for this page to work. \n";
           errorMsg += "You can get it from http://www.oracle.com/technetwork/java/javase/downloads/index.html";
           alert(errorMsg);
@@ -22,33 +20,31 @@
         }
 
         applet = document.applets[0];
-
-        // resize the applet
         resizeApplet({doResize});
       }
-
 
       // This sets the size of the applet based on the available space in the browser window
       // if doIt is false, then this method does nothing
       //
-      function resizeApplet(doIt)
-      {
+      function resizeApplet(doIt) {
         if (!doIt) return;
 
         // allow for a huge double width screen because that's what I have
-        var nWidthMax = 2600;
-        var nHeightMax = 1600;
+        var widthMax = 2600;
+        var heightMax = 1600;
 
-        var nWidthNew = document.body.clientWidth;
-        var nHeightNew = document.body.clientHeight;
+        var widthNew = window.innerWidth;
+        var heightNew = window.innerHeight;
 
-        if (nWidthNew > nWidthMax)
-          nWidthNew = nWidthMax;
-        if (nHeightNew > nHeightMax)
-          nHeightNew = nHeightMax;
+        if (widthNew > widthMax) {
+          widthNew = widthMax;
+        }
+        if (heightNew > heightMax) {
+          heightNew = heightMax;
+        }
 
-        applet.setSize(nWidthNew, nHeightNew-90);
-        window.scroll(0, 0);
+        applet.setSize(widthNew, heightNew-90);
+        window.scrollTo(0, 0);
       }
     </script>
 
