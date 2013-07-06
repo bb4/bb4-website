@@ -13,7 +13,7 @@ import java.awt.*;
  *   - The viewable area in the browser will just be a portion of this and be represented by mainPanel.
  *   - The horizontal and vertical resize panel represent the unused margin areas to the right and bottom.
  *     These margin area will not be visible in the browser.
- *   - When you resize the browser window, java script will call the setSize method on the applet
+ *   - When you resize the browser window, javascript will call the setSize method on the applet
  *     This tells the mainWindow (and margin areas) to resize appropriately.
  *
  *  @author Barry Becker
@@ -21,25 +21,24 @@ import java.awt.*;
 public class ResizableAppletPanel extends JPanel {
 
     /** holds what would normally be put in the applet content pane   */
-    private JPanel mainPanel_;
-    private static final long serialVersionUID = 0L;
+    private JPanel mainPanel;
 
     /** Horizontal buffer panel allowing the applet to be resized horizontally. */
-    private JPanel resizeHorizontalPanel_ = new JPanel();
+    private JPanel resizeHorizontalPanel = new JPanel();
     /** Vertical buffer panel allowing the applet to be resized vertically. */
-    private JPanel resizeVerticalPanel_ = new JPanel();
+    private JPanel resizeVerticalPanel = new JPanel();
 
     /** Constructor */
     public ResizableAppletPanel( JPanel content ) {
 
-        mainPanel_ = content;
+        mainPanel = content;
         this.setLayout( new BorderLayout() );
 
-        resizeHorizontalPanel_.setPreferredSize( new Dimension( 1, 200 ) );
-        resizeVerticalPanel_.setPreferredSize( new Dimension( 200, 1 ) );
-        this.add( mainPanel_, BorderLayout.CENTER );
-        this.add( resizeHorizontalPanel_, BorderLayout.EAST );
-        this.add( resizeVerticalPanel_, BorderLayout.SOUTH );
+        resizeHorizontalPanel.setPreferredSize(new Dimension(1, 200));
+        resizeVerticalPanel.setPreferredSize(new Dimension(200, 1));
+        this.add(mainPanel, BorderLayout.CENTER );
+        this.add(resizeHorizontalPanel, BorderLayout.EAST );
+        this.add(resizeVerticalPanel, BorderLayout.SOUTH );
     }
 
     /**
@@ -48,6 +47,7 @@ public class ResizableAppletPanel extends JPanel {
     @Override
     public void setSize( int width, int height )  {
 
+        System.out.println("setSize( "+width +", " + height + ")");
         int totalWidth = this.getWidth();
         int w = width;
         int h = height;
@@ -55,21 +55,22 @@ public class ResizableAppletPanel extends JPanel {
             w = totalWidth;
         }
         Dimension sizeH = new Dimension( totalWidth - w, h );
-        resizeHorizontalPanel_.setPreferredSize(sizeH);
+        resizeHorizontalPanel.setPreferredSize(sizeH);
 
-        int totalHeight = this.getHeight();
+        int totalHeight = getHeight();
 
         if ( h > totalHeight ) {
             h = totalHeight;
         }
         Dimension sizeV = new Dimension( totalWidth, totalHeight - h );
-        resizeVerticalPanel_.setPreferredSize(sizeV);
+        resizeVerticalPanel.setPreferredSize(sizeV);
 
         Dimension mainSize = new Dimension(w, h);
-        mainPanel_.setPreferredSize(mainSize);
+        System.out.println("setting main size to "+w+ ", "+ h);
+        mainPanel.setPreferredSize(mainSize);
 
-        resizeHorizontalPanel_.invalidate();
-        resizeVerticalPanel_.invalidate();
-        this.validate();
+        resizeHorizontalPanel.invalidate();
+        resizeVerticalPanel.invalidate();
+        validate();
     }
 }
