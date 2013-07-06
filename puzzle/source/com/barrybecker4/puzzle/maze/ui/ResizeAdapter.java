@@ -25,9 +25,10 @@ public class ResizeAdapter extends ComponentAdapter {
 
         // only resize if the dimensions have changed
         Dimension newSize = mazePanel.getSize();
-        boolean changedSize = oldSize== null ||
+        boolean changedSize = (oldSize == null ||
                 oldSize.getWidth() != newSize.getWidth() ||
-                oldSize.getHeight() != newSize.getHeight();
+                oldSize.getHeight() != newSize.getHeight());
+
         if ( changedSize ) {
             oldSize = newSize;
             if (newSize.getWidth() > 0) {
