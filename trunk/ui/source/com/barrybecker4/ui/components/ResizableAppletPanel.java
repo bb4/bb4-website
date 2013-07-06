@@ -47,7 +47,6 @@ public class ResizableAppletPanel extends JPanel {
     @Override
     public void setSize( int width, int height )  {
 
-        System.out.println("setSize( "+width +", " + height + ")");
         int totalWidth = this.getWidth();
         int w = width;
         int h = height;
@@ -66,7 +65,6 @@ public class ResizableAppletPanel extends JPanel {
         resizeVerticalPanel.setPreferredSize(sizeV);
 
         Dimension mainSize = new Dimension(w, h);
-        System.out.println("setting main size to "+w+ ", "+ h);
         mainPanel.setPreferredSize(mainSize);
 
         resizeHorizontalPanel.invalidate();

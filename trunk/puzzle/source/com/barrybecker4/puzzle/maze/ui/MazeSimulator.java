@@ -3,11 +3,13 @@ package com.barrybecker4.puzzle.maze.ui;
 
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.puzzle.maze.MazeController;
+import com.barrybecker4.ui.components.ResizableAppletPanel;
 import com.barrybecker4.ui.util.GUIUtil;
 
 import javax.swing.JApplet;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.event.ComponentListener;
 
 /**
  * A maze generator and solver application.
@@ -34,18 +36,18 @@ public class MazeSimulator extends JApplet {
 
         panel.add(topControls, BorderLayout.NORTH);
         panel.add(mazePanel, BorderLayout.CENTER);
-        getContentPane().add(panel);
 
-        getContentPane().addComponentListener(
-                new ResizeAdapter(mazePanel, topControls));
+        ResizableAppletPanel resizablePanel = new ResizableAppletPanel(panel);
+        getContentPane().add(resizablePanel);
+
+        ComponentListener compListener = new ResizeAdapter(mazePanel, topControls);
+        getContentPane().addComponentListener(compListener);
     }
-
 
     @Override
     public String getName() {
         return "Maze Generator";
     }
-
 
 
     //------ Main method --------------------------------------------------------

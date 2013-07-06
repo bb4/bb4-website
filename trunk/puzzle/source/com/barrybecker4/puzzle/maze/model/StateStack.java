@@ -29,7 +29,7 @@ public class StateStack extends LinkedList<GenState> {
         for ( int i = 0; i < 3; i++ ) {
             Direction direction = directions.get(i);
             Location dir = direction.apply(currentDir);
-            add(0, new GenState(currentPosition, dir, depth ) );
+            this.add(0, new GenState(currentPosition, dir, depth));
         }
     }
 

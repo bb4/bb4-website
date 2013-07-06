@@ -23,21 +23,21 @@ import com.barrybecker4.puzzle.maze.ui.MazePanel;
  */
 public class MazeGenerator {
 
-    private MazeModel maze_;
-    private MazePanel panel_;
+    private MazeModel maze;
+    private MazePanel panel;
     private final StateStack stack;
 
     /** put the stop point at the maximum search depth. */
-    private int maxDepth_ = 0;
+    private int maxDepth = 0;
 
     /** set this to true to get the generator to stop generating */
     private boolean interrupted;
 
     /** Constructor */
     public  MazeGenerator(MazePanel panel) {
-        panel_ = panel;
+        this.panel = panel;
         interrupted = false;
-        maze_ = panel_.getMaze();
+        maze = this.panel.getMaze();
         stack = new StateStack();
     }
 
@@ -46,14 +46,14 @@ public class MazeGenerator {
      */
     public void generate(double forwardProb, double leftProb, double rightProb) {
 
-        maxDepth_ = 0;
+        maxDepth = 0;
 
         Direction.FORWARD.setProbability(forwardProb);
         Direction.LEFT.setProbability(leftProb);
         Direction.RIGHT.setProbability(rightProb);
 
         search();
-        panel_.repaint();
+        panel.repaint();
     }
 
     /**
@@ -64,8 +64,8 @@ public class MazeGenerator {
     public void search() {
         stack.clear();
 
-        Location currentPosition = maze_.getStartPosition();
-        MazeCell currentCell = maze_.getCell(currentPosition);
+        Location currentPosition = maze.getStartPosition();
+        MazeCell currentCell = maze.getCell(currentPosition);
         currentCell.visited = true;
 
         // push the initial moves
@@ -101,17 +101,17 @@ public class MazeGenerator {
             dir = state.getDirection();
             depth = state.getDepth();
 
-            if ( depth > maxDepth_ ) {
-                maxDepth_ = depth;
-                maze_.setStopPosition(currentPosition);
+            if ( depth > maxDepth) {
+                maxDepth = depth;
+                maze.setStopPosition(currentPosition);
             }
             if ( depth > lastCell.getDepth() )  {
                 lastCell.setDepth(depth);
             }
 
-            MazeCell currentCell = maze_.getCell(currentPosition);
+            MazeCell currentCell = maze.getCell(currentPosition);
             Location nextPosition = currentCell.getNextPosition(currentPosition, dir);
-            nextCell = maze_.getCell(nextPosition);
+            nextCell = maze.getCell(nextPosition);
 
             if (nextCell.visited) {
                 addWall(currentCell, dir, nextCell);
@@ -149,8 +149,8 @@ public class MazeGenerator {
 
     /** this can be really slow if you do a refresh every time */
     private void refresh() {
-        if (MathUtil.RANDOM.nextDouble() < 4.0/(Math.pow(panel_.getAnimationSpeed(), 2) + 1)) {
-            panel_.paintAll();
+        if (MathUtil.RANDOM.nextDouble() < 4.0/(Math.pow(panel.getAnimationSpeed(), 2) + 1)) {
+            panel.paintAll();
         }
     }
 
