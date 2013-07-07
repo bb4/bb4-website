@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.simulation.reactiondiffusion.rendering;
 
-import com.barrybecker4.common.ColorMap;
+import com.barrybecker4.ui.util.ColorMap;
 import com.barrybecker4.simulation.common.rendering.ColorRect;
 import com.barrybecker4.simulation.reactiondiffusion.algorithm.GrayScottModel;
 

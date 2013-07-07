@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.profile;
 
-import com.barrybecker4.common.ILog;
+import com.barrybecker4.common.app.ILog;
 import com.barrybecker4.common.format.FormatUtil;
 
 import java.util.LinkedList;

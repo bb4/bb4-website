@@ -1,15 +1,13 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.puzzle.hiq.ui;
 
-import com.barrybecker4.common.AppContext;
-import com.barrybecker4.common.i18n.LocaleType;
+import com.barrybecker4.common.app.AppContext;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 
 /**
  * Shows two buttons to control stepping forward and backward through the puzzle solution.

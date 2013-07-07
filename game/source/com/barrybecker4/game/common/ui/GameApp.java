@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.ui;
 
-import com.barrybecker4.common.CommandLineOptions;
+import com.barrybecker4.common.app.CommandLineOptions;
 import com.barrybecker4.common.i18n.LocaleType;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.plugin.PluginManager;

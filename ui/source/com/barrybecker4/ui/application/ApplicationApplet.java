@@ -1,8 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.application;
 
-import com.barrybecker4.common.AppContext;
-import com.barrybecker4.common.CommandLineOptions;
+import com.barrybecker4.common.app.AppContext;
+import com.barrybecker4.common.app.CommandLineOptions;
 import com.barrybecker4.ui.components.ResizableAppletPanel;
 import com.barrybecker4.ui.util.GUIUtil;
 import com.barrybecker4.ui.util.Log;
