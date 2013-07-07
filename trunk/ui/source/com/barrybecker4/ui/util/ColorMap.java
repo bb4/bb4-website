@@ -26,6 +26,8 @@ public class ColorMap {
     public ColorMap( double[] values, Color[] colors) {
         assert(values!=null) : "values was null";
         assert(colors!=null) : "colors was null";
+        assert(values.length > 0) : "values was empty";
+        assert(colors.length > 0) : "colors was empty";
         // should also assert that the values are increasing
         assert(values.length == colors.length): "there must be as many values as colors";
         values_ = new ArrayList<Double>();
