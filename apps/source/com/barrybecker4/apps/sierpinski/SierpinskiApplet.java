@@ -9,6 +9,9 @@ import java.awt.*;
 
 public class SierpinskiApplet extends ApplicationApplet {
 
+    /** required no arg constructor  */
+    public SierpinskiApplet() {}
+
     @Override
     protected JPanel createMainPanel() {
         SierpinskiComponent sierpinskiComp = new SierpinskiComponent();

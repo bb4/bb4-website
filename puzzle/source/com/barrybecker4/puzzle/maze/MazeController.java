@@ -60,8 +60,8 @@ public final class MazeController {
 
             @Override
             public void finished() {
-                mazePanel.repaint();
                 mazePanel.setCursor(Cursor.getDefaultCursor());
+                mazePanel.repaint();
             }
         };
         generateWorker.start();

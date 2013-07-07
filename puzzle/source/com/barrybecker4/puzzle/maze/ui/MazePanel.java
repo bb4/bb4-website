@@ -53,7 +53,6 @@ public class MazePanel extends JComponent {
         int width = dim.width / thickness;
         int height = dim.height / thickness;
         maze_.setDimensions(width, height);
-
     }
 
     /**
@@ -69,7 +68,7 @@ public class MazePanel extends JComponent {
      * @param point location of the cell to render.
      */
     public void paintCell(Location point) {
-        int csized2 = (cellSize/2)+2;
+        int csized2 = (cellSize/2) + 2;
         int xpos = (point.getX() * cellSize);
         int ypos = (point.getY() * cellSize);
 
