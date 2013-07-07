@@ -4,7 +4,7 @@ package com.barrybecker4.apps.spirograph;
 import com.barrybecker4.apps.spirograph.model.GraphState;
 import com.barrybecker4.apps.spirograph.model.GraphStateChangeListener;
 import com.barrybecker4.apps.spirograph.model.ParametricEquations;
-import com.barrybecker4.common.AppContext;
+import com.barrybecker4.common.app.AppContext;
 import com.barrybecker4.ui.components.GradientButton;
 import com.barrybecker4.ui.sliders.ColorSliderGroup;
 

@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.simulation.common.ui;
 
-import com.barrybecker4.common.ClassLoaderSingleton;
+import com.barrybecker4.common.app.ClassLoaderSingleton;
 import com.barrybecker4.ui.animation.AnimationPanel;
 import com.barrybecker4.ui.application.ApplicationApplet;
 import com.barrybecker4.ui.util.GUIUtil;

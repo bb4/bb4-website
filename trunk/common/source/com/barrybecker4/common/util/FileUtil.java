@@ -1,10 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.util;
 
-import com.barrybecker4.common.AppContext;
-import com.barrybecker4.common.ClassLoaderSingleton;
+import com.barrybecker4.common.app.ClassLoaderSingleton;
 
-import java.applet.AppletContext;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;

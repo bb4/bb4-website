@@ -2,6 +2,7 @@
 package com.barrybecker4.common;
 
 
+import com.barrybecker4.common.app.CommandLineOptions;
 import junit.framework.TestCase;
 
 /**

@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.ui.renderers;
 
-import com.barrybecker4.common.AppContext;
+import com.barrybecker4.common.app.AppContext;
 import com.barrybecker4.common.format.DefaultNumberFormatter;
 import com.barrybecker4.common.format.FormatUtil;
 import com.barrybecker4.common.format.INumberFormatter;

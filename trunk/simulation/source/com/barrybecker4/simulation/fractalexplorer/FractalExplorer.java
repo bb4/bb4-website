@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.simulation.fractalexplorer;
 
-import com.barrybecker4.common.ColorMap;
+import com.barrybecker4.ui.util.ColorMap;
 import com.barrybecker4.simulation.common.Profiler;
 import com.barrybecker4.simulation.common.rendering.ModelImage;
 import com.barrybecker4.simulation.common.ui.Simulator;
