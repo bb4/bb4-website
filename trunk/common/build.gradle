@@ -11,8 +11,6 @@ dependencies {
 }
 
 jar {
-    //baseName = 'bb4-common'
-    //archiveName = 'bb4-common-' + version + '.jar'
     manifest {
         attributes 'Implementation-Title': 'Common code for all bb4 applications',
             'Implementation-Version': version,
