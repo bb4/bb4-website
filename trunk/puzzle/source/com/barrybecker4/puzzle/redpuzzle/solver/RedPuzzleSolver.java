@@ -43,6 +43,7 @@ public abstract class RedPuzzleSolver<P, K>
      * Derived classes must provide the implementation for this abstract method.
      * @return true if a solution is found.
      */
+    @Override
     public abstract List<Piece> solve();
 
     /**

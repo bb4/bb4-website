@@ -19,9 +19,8 @@ import java.awt.*;
 
 /**
  * Physically base dynamic simulation of a trebuchet firing.
- *
- *  @@ Try simulating using Breve.
- *  Currently can't get working because of seg fault (because need to recompile for 64 bit?)
+ * Try simulating using Breve.
+ * @author Barry Becker
  */
 public class TrebuchetSimulator extends NewtonianSimulator
                                 implements ChangeListener {

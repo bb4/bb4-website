@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Panel for showing the optimization visually.
- * @@ add pan and zoom capability based on right click menu.
+ * TODO: add pan and zoom capability based on right click menu.
  * @author Barry Becker
  */
 public class PointsList implements NavigationListener {

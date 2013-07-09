@@ -9,7 +9,6 @@ import java.awt.*;
 
 /**
  * Panel for showing the optimization visually.
- * @@ add pan and zoom capability based on right click menu.
  * @author Barry Becker
  */
 public class PointsListRenderer {

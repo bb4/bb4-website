@@ -17,13 +17,14 @@ public interface RedistributionFunction extends Function {
      * @param value value to remap.
      * @return the remapped value.
      */
+    @Override
     double getValue(double value);
 
     /**
      * Given a y value (i.e. f(x)) return the corresponding x value.
      * Inverse of the above.
-     * @param value
-     * @return
+     * @param value y value to get inverse of
+     * @return x for specified y
      */
     double getInverseFunctionValue(double value);
 
