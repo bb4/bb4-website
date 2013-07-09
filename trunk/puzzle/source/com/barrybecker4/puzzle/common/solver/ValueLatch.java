@@ -8,7 +8,7 @@ import java.util.concurrent.CountDownLatch;
  * ValueLatch
  * <p/>
  * Result-bearing latch used by ConcurrentPuzzleSolver
- * @ThreadSafe
+ * ThreadSafe
  *
  * @author Brian Goetz and Tim Peierls
  */

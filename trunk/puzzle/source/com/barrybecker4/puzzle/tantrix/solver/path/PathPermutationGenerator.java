@@ -31,7 +31,7 @@ public class PathPermutationGenerator  {
 
     /**
      * Constructor
-     * @path path to permute
+     * @param path to permute
      */
     public PathPermutationGenerator(TantrixPath path) {
         this.path = path;

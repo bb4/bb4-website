@@ -53,7 +53,7 @@ public class TilePlacement {
         return location;
     }
 
-    /** @rturn the amount that the tile is rotated. */
+    /** @return the amount that the tile is rotated. */
     public Rotation getRotation() {
         return rotation;
     }
