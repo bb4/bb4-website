@@ -3,7 +3,7 @@ package com.barrybecker4.puzzle.sudoku;
 
 /**
  * Some sample sudoku test puzzle data
- * @@ make these into separate date files eventually an move to test.
+ * Perhaps make these into separate date files eventually an move to test.
  *
  * @author Barry Becker
  */

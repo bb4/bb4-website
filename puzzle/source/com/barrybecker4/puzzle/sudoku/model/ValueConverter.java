@@ -9,8 +9,8 @@ public class ValueConverter {
 
     /**
      * Get a one character symbol for the value.
-     * @param value
-     * @return
+     * @param value value to get symbol for.
+     * @return symbol corresponding to the specified value.
      */
     public static String getSymbol(int value) {
 
