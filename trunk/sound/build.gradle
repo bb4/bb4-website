@@ -8,7 +8,7 @@ mainClassName = "com.barrybecker4.sound.midi.MidiSynth"
 
 
 dependencies {
-   compile project(':common')
+   compile 'com.barrybecker4:bb4-common:1.1'
 }
 
 

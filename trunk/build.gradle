@@ -20,6 +20,8 @@ subprojects {
         mavenCentral()
         maven {
             url "http://repo1.maven.org/maven2/"
+            // this Sonatype repo is where released bb4 jars come from
+            url "https://oss.sonatype.org/content/repositories/releases"
             url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
         }
         flatDir {
