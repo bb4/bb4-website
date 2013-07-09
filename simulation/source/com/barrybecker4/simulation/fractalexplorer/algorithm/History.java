@@ -28,7 +28,7 @@ public class History {
 
     /**
      * Back up one step in the history
-     * @return
+     * @return the last range viewed in the history
      */
     public ComplexNumberRange popLastRange() {
          return stack.pop();

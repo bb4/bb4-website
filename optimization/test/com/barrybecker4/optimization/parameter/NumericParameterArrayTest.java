@@ -44,7 +44,7 @@ public class NumericParameterArrayTest extends TestCase {
         try {
             params.findGlobalSamples(0);
             fail();
-        } catch (AssertionError e) {
+        } catch (IllegalArgumentException e) {
             // success
         }
     }

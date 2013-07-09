@@ -32,7 +32,7 @@ public class Population {
      * Factory method to create an initial population of randomly distributed members.
      * @param type
      * @param initialSize
-     * @return
+     * @return new population
      */
     public static Population createPopulation(CreatureType type, int initialSize)  {
         Population pop = new Population(type);

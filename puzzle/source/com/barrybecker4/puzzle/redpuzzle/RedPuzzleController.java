@@ -35,11 +35,13 @@ public class RedPuzzleController extends AbstractPuzzleController<PieceList, Pie
         algorithm_ = Algorithm.BRUTE_FORCE_ORIGINAL;
     }
 
+    @Override
     public PieceList initialPosition() {
         // empty piece list
         return new PieceList();
     }
 
+    @Override
     public boolean isGoal(PieceList position) {
         // we have reached our goal if we have 9 pieces that fit
         return (position.size() == NUM_PIECES);
@@ -51,6 +53,7 @@ public class RedPuzzleController extends AbstractPuzzleController<PieceList, Pie
      * @param position position to look from.
      * @return list of legal moves that can be made from current position.
      */
+    @Override
     public List<Piece> legalMoves(PieceList position) {
 
         List<Piece> moves = new LinkedList<Piece>();
@@ -71,6 +74,7 @@ public class RedPuzzleController extends AbstractPuzzleController<PieceList, Pie
         return moves;
     }
 
+    @Override
     public PieceList move(PieceList position, Piece move) {
         // To make a move, simple add the piece to the end of our list
         assert position.fits(move) : move  +" does not fit in  "+position;

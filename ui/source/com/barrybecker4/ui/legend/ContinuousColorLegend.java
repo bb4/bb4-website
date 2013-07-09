@@ -11,7 +11,7 @@ import java.awt.event.ComponentEvent;
 /**
  * shows a continuous color legend given a list of colors and corresponding values.
  * It may be editable if isEditable is set.
- * @@ throw a change event when edited.
+ * Might be nice to throw a change event when edited.
  *
  * @author Barry Becker
  */

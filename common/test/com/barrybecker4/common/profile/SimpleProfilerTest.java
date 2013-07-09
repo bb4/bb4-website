@@ -28,7 +28,7 @@ public class SimpleProfilerTest extends TestCase {
 
         ProfilerEntry entry = profiler.getEntry(SimpleProfiler.ROOT);
         Long elapsed = entry.getTime();
-        assertTrue("Unexpected elapsed time: " + elapsed, elapsed>=10 && elapsed <=12);
+        assertTrue("Unexpected elapsed time: " + elapsed, elapsed>=10 && elapsed <=25);
     }
 
     public void testProfilerTimeWhenDisabled() {

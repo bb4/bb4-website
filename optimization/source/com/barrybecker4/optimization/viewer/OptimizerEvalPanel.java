@@ -13,7 +13,7 @@ import java.awt.*;
 
 /**
  * Panel for showing the optimization visually.
- * @@ add pan and zoom capability based on right click menu.
+ * TODO: add pan and zoom capability based on right click menu.
  * @author Barry Becker
  */
 public class OptimizerEvalPanel extends JPanel implements OptimizationListener, NavigationListener {

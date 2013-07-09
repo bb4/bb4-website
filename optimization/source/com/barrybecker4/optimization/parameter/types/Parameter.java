@@ -34,7 +34,7 @@ public interface Parameter {
      * The amount that it changes depends on the size of r, which is the
      * number of standard deviations of the gaussian probability distribution to use.
      *
-     * @param r  the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
+     * @param r the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
      *     (relative to each parameter range).
      */
     void tweakValue(double r, Random rand);
@@ -53,7 +53,7 @@ public interface Parameter {
 
     /**
      * @return the double value of this parameter.
-     *   The natural value needs to be converted to some double.
+     *  The natural value needs to be converted to some double.
      *  e.g a BooleanParameter is returned as a 0 (false) or 1 (true).
      */
     double getValue();
@@ -96,8 +96,7 @@ public interface Parameter {
     boolean isIntegerOnly();
 
     /**
-     * The class type of the underlying parameter value (e.g. float.class or int.class)
-     * @return
+     * @return class type of the underlying parameter value (e.g. float.class or int.class)
      */
     Class getType();
 

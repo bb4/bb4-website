@@ -5,9 +5,18 @@ version = '1.0'
 project.archivesBaseName = 'bb4-ui'
 mainClassName = "com.barrybecker4.ui.application.ApplicationFrame"
 
+/* will use this when dependent jars come from sonatype
+repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/releases"
+    }
+} */
+
 
 dependencies {
     compile project(':common')
+    //compile 'com.barrybecker4:bb4-common:1.1'
+
     compile 'com.sun.media:jai-codec:1.1.3'
 
     // could not find a way to get this from a maven repo

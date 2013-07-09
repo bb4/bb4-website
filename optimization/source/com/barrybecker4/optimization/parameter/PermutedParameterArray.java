@@ -27,7 +27,7 @@ public class PermutedParameterArray extends AbstractParameterArray {
     protected PermutedParameterArray() {}
 
     /**
-     *  Constructor
+     * Constructor
      * @param params an array of params to initialize with.
      */
     public PermutedParameterArray(Parameter[] params) {
@@ -150,7 +150,7 @@ public class PermutedParameterArray extends AbstractParameterArray {
 
     /**
      * Create a new permutation that is not too distant from what we have now.
-     * @paramm radius a indication of the amount of variation to use. 0 is none, 3 is a lot.
+     * @param radius a indication of the amount of variation to use. 0 is none, 3 is a lot.
      *   Change Math.min(1, 10 * radius * N/100) of the entries, where N is the number of params
      * @return the random nbr.
      */
