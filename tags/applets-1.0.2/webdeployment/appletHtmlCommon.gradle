@@ -1,0 +1,41 @@
+/* Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT*/
+
+ext {
+    appletIndexFile = new HashMap()
+    appletIndexFile.put('base', 'applet_index.html')
+
+    appletHtml = new HashMap()
+    appletHtml.put("localesList", [Locale.ENGLISH, Locale.GERMAN, Locale.JAPANESE, new Locale("vi")])
+    appletHtml.put('appletList',
+        ['pente', 'checkers', 'chess', 'go', 'blockade', 'galactic', 'poker', 'set', 'maze',
+         'spirograph','redpuzzle', 'sudoku', 'hiq', 'tantrix', 'trebuchet',
+         'snake', 'dice', 'stock', 'fractalexplorer', 'reactiondiffusion',
+         'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder','adventure',
+         'predprey', 'habitat', 'henonexplorer'])
+
+    // message replacements for the top level index file (excluding the entries)
+    htmlIndex = new HashMap()
+    htmlIndex.put("replacementList",
+          ["locale", "charset", "title", "introduction", "appletGameEntries", "appletPuzzleEntries", "appletSimulationEntries",
+           "tab1", "tab2", "tab3"])
+
+    // message replacements for the entries within the top level index file
+    htmlIndex.put("entryKeyReplacementList",
+          ["title", "name", "longDescription"])
+
+    // message replacements for the individual html applet files
+    html = new HashMap()
+    html.put("type", "html")
+    html.put("replacementList",
+          ["title", "name", "locale", "charset", "language", "longDescription", "qualifiedAppletClassName", "className",
+           "panelClass", "width", "height", "doResize", "jarList"])
+
+    // replacements for jnlp file
+    jnlp = new HashMap()
+    jnlp.put("type", "jnlp")
+    jnlp.put("replacementList",
+          ["title", "description", "locale", "language", "qualifiedAppClassName", "className", "panelClass", "name",
+           "jarElement1", "jarElement2"])
+}
+
+

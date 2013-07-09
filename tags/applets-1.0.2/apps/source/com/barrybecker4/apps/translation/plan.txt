@@ -1,0 +1,11 @@
+App i18n/l10 plan
+
+1) Verify java code is i18n
+  2) Intellij can help identify hardcoded strings and pull them out to message catalogs.
+     All keys should be in base properties file.
+  3) Put resource bundles in separate resource directory instead of source/java
+  4) Work on translation program to automatically do transactions using Google translate.
+   Make sure unicode character encoding (\u1234) is generated.
+    https://developers.google.com/translate/
+  5) upload new localized versions to website.
+  6) Get Bill, Duy, Rick to review translations

@@ -1,0 +1,132 @@
+/*
+ * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+ */
+version = '1.0'
+project.archivesBaseName = 'bb4-puzzle'
+mainClassName = "com.barrybecker4.puzzle.maze.ui.MazeSimulator"
+
+task runAdventure(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.puzzle.adventure.ui.GraphicalAdventure'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runTextAdventure(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.puzzle.adventure.TextAdventure'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['ludlow/ludlowScript.xml']
+}
+
+task runMaze(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.puzzle.maze.ui.MazeSimulator'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runRedPuzzle(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.puzzle.redpuzzle.ui.RedPuzzle'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runTantrixPuzzle(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.puzzle.tantrix.ui.TantrixPuzzle'
+    classpath = sourceSets.main.runtimeClasspath
+    //args = ['-name', 'galactic',  '-locale', 'ENGLISH']
+}
+
+task runSudoku(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.puzzle.sudoku.ui.SudokuPuzzle'
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = ["-ea"]
+}
+
+task runHiQ(type: JavaExec, depends: classes) {
+    main = 'com.barrybecker4.puzzle.hiq.ui.HiQPuzzle'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['-locale', 'VIETNAMESE']
+}
+
+
+dependencies {
+   compile project(':sound')
+   compile project(':optimization')
+}
+
+
+task puzzleJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/puzzle/common/**'
+    baseName = 'bb4-puzzle'
+    manifest {
+        attributes 'Implementation-Title': 'Puzzle common code',
+            'Implementation-Version': version,
+            provider: 'gradle',
+            'Main-Class': mainClassName
+    }
+}
+task adventureJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/puzzle/adventure/**'
+    exclude 'com/barrybecker4/puzzle/adventure/**/*.pdf'
+    baseName = 'bb4-adventure'
+}
+task hiqJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/puzzle/hiq/**'
+    baseName = 'bb4-hiq'
+}
+task mazeJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/puzzle/maze/**'
+    baseName = 'bb4-maze'
+}
+task redpuzzleJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/puzzle/redpuzzle/**'
+    baseName = 'bb4-redpuzzle'
+}
+task sudokuJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/puzzle/sudoku/**'
+    baseName = 'bb4-sudoku'
+}
+task tantrixJar(type: Jar) {
+    from sourceSets.main.output
+    include 'com/barrybecker4/puzzle/tantrix/**'
+    baseName = 'bb4-tantrix'
+}
+
+artifacts {
+    archives puzzleJar
+    archives adventureJar
+    archives hiqJar
+    archives mazeJar
+    archives redpuzzleJar
+    archives sudokuJar
+    archives tantrixJar
+
+    archives sourcesJar
+    archives javadocJar
+}
+
+jar {
+    // skip building the default jar that contains everything
+    enabled = false
+}
+
+/*
+def components = [
+   [name: "adventure"],
+   [name: "hiq"],
+   [name: "maze"],
+   [name: "redpuzzle"],
+   [name: "sudoku"],
+   [name: "tantrix"]
+]
+
+components.each { comp ->
+   project.task(comp.name + 'Jar', type: Jar) {
+       include 'com/barrybecker4/puzzle/' + comp.name + '/**'
+       baseName = 'bb4-' + comp.name
+   }
+} */
+
+

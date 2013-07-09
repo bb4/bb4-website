@@ -1,0 +1,191 @@
+// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+
+import org.apache.tools.ant.filters.ReplaceTokens
+import java.text.MessageFormat
+
+version = '1.0'
+
+ext.distributionGameDir="$distributionDir/applets"
+ext.distributionSchemaDir="$distributionDir/schema"
+
+// Location of all the project related files.
+// The environment variable PROJECT_HOME needs to be set to something like:
+//    E:/projects/java_projects/trunk   (on Windows)   or
+//    /windows/projects/java_projects/trunk (on Linux)
+ext.project_home="$System.env.PROJECT_HOME"
+
+// Location of java SDK
+ext.java_home="$System.env.JAVA_HOME"
+
+
+dependencies {
+    compile project(':optimization')
+    compile project(':sound')
+    compile project(':imageproc')
+    compile project(':puzzle')
+    compile project(':game')
+    compile project(':apps')
+}
+
+
+clean.doLast {
+    // project. is needed to disambiguate from the clean tasks existing delete.
+    project.delete("$distributionDir", "$stagingDir")
+}
+
+// Should be able to have a type: CopyTask and use << instead of doLast
+task deployImages(type: Copy, description: "Copy image files to $distributionGameDir")  {
+    from "$sourceDir/images"
+    into "$distributionGameDir"
+    include '**/*.jpg'
+    include '**/*.png'
+    include '**/*.gif'
+}
+
+// Should be able to have a type: CopyTask and use << instead of doLast
+task deploySchemas(type:Copy, description: "Copy schema files to $distributionDir") {
+
+     from fileTree("$project_home").files
+     into "$distributionSchemaDir"
+     include "**/*.dtd"
+     include "**/*.xsd"
+}
+
+task deployJars(type: Copy, dependsOn: [':common:copyToLib', ':ui:copyToLib', ':imageproc:copyToLib', ':game:copyToLib'],
+    description: "Deploys jar files needed for running applets and web start applications") {
+
+    from fileTree("$project_home").include('*/build/libs/**').files
+    into "$distributionGameDir"
+    include 'bb4-*.jar', 'jhlabs-*.jar', 'jigo-sgf-*.jar', 'jai-codec-*.jar', 'vecmath-*.jar'
+    exclude '*-sources.jar', '*-javadoc.jar'
+}
+
+// I would like this to trigger a top level build of everything, but right now it has to be done manually.
+task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
+            description: "Deploys all files  to $distributionGameDir so they can be bulk copied to a website") << {
+    apply from: 'appletHtmlCommon.gradle'
+
+    println "webdeployment dir ="+ project.absoluteProjectPath("dist")
+    // copy all the js, css, image files (should only be done once, not once per locale)
+    copy {
+        from "$sourceDir/html"
+        into "$distributionGameDir/.."
+        include '*.js', '*.css', '*.gif'
+    }
+
+    println "localesList="+ appletHtml.localesList
+    appletHtml.localesList.each {
+        locale -> createHtmlForLocale(locale)
+    }
+}
+
+/**
+ * Deploys all the html files for the given locale.
+ * This includes the index page, javascript, and individual applet/jnlp files.
+ */
+void createHtmlForLocale(Locale locale) {
+
+    createHtmlIndexPage(locale)
+
+    // there needs to be a set of html and jnlp files for each locale
+    createAppletFilesOfType(html, locale)
+    createAppletFilesOfType(jnlp, locale)
+}
+
+
+void createHtmlIndexPage(Locale locale) {
+    def labels = ResourceBundle.getBundle('html', locale)
+    // make these replacements when copying
+    def indexReplacements = getIndexReplacements(labels);
+    def entryReplacements = getEntryReplacements(labels);
+    def entryKeyReplacements = getEntryKeyReplacements(labels);
+
+    copy {
+        from "$sourceDir/html/" + appletIndexFile['base']
+        into "$distributionGameDir/.."
+        rename { String fileName ->
+            fileName.replace('.html', '_' + locale.toString() + '.html')
+        }
+        filter(ReplaceTokens, tokens: indexReplacements, beginToken: '{', endToken: '}')
+        filter(ReplaceTokens, tokens: entryReplacements, beginToken: '{', endToken: '}')
+        filter(ReplaceTokens, tokens: entryKeyReplacements, beginToken: '{', endToken: '}')
+    }
+}
+
+void createAppletFilesOfType(Map fileTypeMap, Locale locale) {
+    def labels = ResourceBundle.getBundle('html', locale)
+    appletHtml.get("appletList").each { String applet ->
+        def replacements = getFileTypeReplacements(labels, applet, fileTypeMap)
+        copy {
+            from "$sourceDir/html/applet_template." + fileTypeMap.get("type")
+            into "$distributionGameDir"
+            rename { String fileName ->
+                fileName.replace('applet_template', applet + '_' + locale.toString())
+            }
+            filter(ReplaceTokens, tokens: replacements, beginToken: '{', endToken: '}')
+        }
+    }
+}
+
+Map getIndexReplacements(ResourceBundle labels) {
+    def replacements = new HashMap()
+    htmlIndex.get("replacementList").each {
+        key -> if (labels.containsKey(key)) {
+            replacements.put(key, labels.getString(key))
+        }
+    }
+    return replacements
+}
+
+/**
+ * Use parameterized message for html to launch.
+ * @return replacements for entries within the index page
+ */
+Map getEntryReplacements(ResourceBundle labels) {
+
+    def TRTemplate = labels.getString("TRTemplate")
+    def replacements = new HashMap()
+
+    appletHtml.get("appletList").each {
+        key ->
+            def appKey = key + '.name'
+            if (labels.containsKey(appKey)) {
+                def appName = labels.getString(appKey)
+                def titleKey = '{' + key + '.title}'
+                def longDescKey = '{' + key + '.longDescription}'
+                def loc = labels.getLocale().toString()
+                String str = MessageFormat.format(TRTemplate, titleKey, longDescKey, appName, loc)
+                replacements.put(key + "TR", str)
+        }
+    }
+    return replacements
+}
+
+Map getEntryKeyReplacements(ResourceBundle labels) {
+    def replacements = new HashMap()
+    appletHtml.get("appletList").each { applet ->
+        htmlIndex.get("entryKeyReplacementList").each { key ->
+            def appletKey = applet + '.' + key;
+            replacements.put(appletKey, labels.getString(appletKey))
+        }
+    }
+    return replacements
+}
+
+
+Map getFileTypeReplacements(ResourceBundle labels, String applet, Map fileType) {
+    def replacements = new HashMap()
+
+    fileType.get("replacementList").each { String key ->
+        def appletKey = applet + '.' + key;
+        if (labels.containsKey(appletKey))
+            replacements.put(key, labels.getString(appletKey))
+        else
+            replacements.put(key, labels.getString(key))
+    }
+
+    replacements.put("codebase", codebase)
+    return replacements
+}
+
+

@@ -1,0 +1,41 @@
+/*
+ * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+ */
+
+/**
+ * Here is the dependency hierarchy for the subprojects in this multi-project build.
+ *
+ *               __common_____
+ *             /              \
+ *            ui             sound
+ *             |              /  \__
+ *          optimization_   /     | \
+ *         /          \  \/      /\  \______
+ *      imageproc __ apps \     /  \        \
+ *         \         /    puzzle  simulation game
+ *          \       /     __/______/________/
+ *           \     /     /
+ *          webdeployment
+ */
+
+include 'common', 'ui', 'sound', 'optimization', 'imageproc', 'puzzle', 'simulation', 'game', 'apps', 'webdeployment'
+
+
+
+/**
+ *  Another option would be to break up the multi-project build into separate repositories.
+ *  If common, ui, and sound were joined into a "core" jar produced by a separate build,
+ *  then this diagram would become
+ *
+ *            ___core__   (common, ui, sound)
+ *          /          \
+ *         /       optimization_____________
+ *        /       /        \      \          \
+ *     apps _  imageproc   puzzle  simulation  game
+ *         \       |     _/_______/__________/
+ *           \     |   /
+ *          webdeployment
+ *
+ *  Maybe move image breeder from apps to imageproc.
+ */
+

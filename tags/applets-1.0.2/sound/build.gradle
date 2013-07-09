@@ -1,0 +1,25 @@
+/*
+ * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+ */
+
+version = '1.0'
+project.archivesBaseName = 'bb4-sound'
+mainClassName = "com.barrybecker4.sound.midi.MidiSynth"
+
+
+dependencies {
+   compile project(':common')
+}
+
+
+jar {
+    archiveName = 'bb4-sound-' + version + '.jar'
+    manifest {
+        attributes 'Implementation-Title': 'Sound related code',
+            'Implementation-Version': version,
+            provider: 'gradle',
+            'Main-Class': mainClassName
+    }
+}
+
+

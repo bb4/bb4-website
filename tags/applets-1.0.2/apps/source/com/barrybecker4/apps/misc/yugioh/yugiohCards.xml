@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yugioh xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://barrybecker4.com/schema/yugioh.xsd" >
+
+    <monsterCard>
+        <name>Princess of Tsurugi</name>
+        <id>MRD-EN086</id>
+        <attribute>Wind</attribute>
+        <stars>3</stars>
+        <category>Warrior</category>
+        <attack>900</attack>
+        <defense>700</defense>
+        <characteristics>
+            <Effect type="flip"/>
+        </characteristics>
+        <description>
+           FLIP: Inflict 500 points of damage to your opponents Life Points for each spell and
+           Trap Card on your opponent side fo the field.
+        </description>
+    </monsterCard>
+
+    <monsterCard>
+        <name>Oxygeddon</name>
+        <id>EEN-EN014</id>
+        <attribute>Wind</attribute>
+        <stars>4</stars>
+        <category>Dinosaur</category>
+        <attack>1800</attack>
+        <defense>800</defense>
+        <characteristics>
+            <Effect type="normal"/>
+        </characteristics>
+        <description>
+           When this card is destroyed as a result of battle with a Pyro-type monster and sent to the Graveyard,
+           inflict 800 points of damage to both players’ Life Points.
+        </description>
+    </monsterCard>
+
+    <magicCard>
+        <name>Negate Attack</name>
+        <id>TSC-003</id>
+        <attribute>Trap</attribute>
+        <icon>counter</icon>
+        <description>
+           When your opponent attacks with a monster, negate the attack and make your opponent's Battle Phase end.
+        </description>
+    </magicCard>
+
+    <magicCard>
+        <name>Tail Swipe</name>
+        <id>SD09-EN018</id>
+        <attribute>Spell</attribute>
+        <icon>normal</icon>
+        <description>
+           Select 1 face-up Level 5 or higher Dinosaur-Type monster on your side of the field to activate this card.
+           Select and return to the owner's hand(s) up to 2 monsters that are either lower Level than the selected
+           monster or face-down on your opponent's side of the field.
+        </description>
+    </magicCard>
+
+</yugioh>

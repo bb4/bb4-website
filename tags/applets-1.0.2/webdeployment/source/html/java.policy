@@ -1,0 +1,11 @@
+grant {
+    permission java.net.SocketPermission "*:1024-65535",
+        "connect,accept";
+};
+
+
+// Standard extensions get all permissions by default
+
+grant codeBase "file:${java.home}/lib/ext/*" {
+	permission java.security.AllPermission;
+};

@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//{locale}">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset={charset}">
+  <title>{title}</title>
+  <meta name="author" content="Barry Becker">
+  <meta name="description" content="Barry's java applet index page">
+  <meta name="keywords" content="game applet applets chess computer go simulation java minimax negamax optimization barry becker">
+
+  <link rel="stylesheet" type="text/css" href="tabcontent.css" />
+  <script type="text/javascript" src="tabcontent.js">
+  /***********************************************
+  * Tab Content script v2.2- Dynamic Drive DHTML code library (www.dynamicdrive.com)
+  * This notice MUST stay intact for legal use
+  * Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+  ***********************************************/
+  </script>
+</head>
+<body style="color: rgb(0, 0, 0);font-family:arial;font-size:12;background-color: #FaF1cFF;padding-left:10; padding-right:10;"
+ link="#000099" vlink="#990099" alink="#000099">
+<h1 style="text-align: center; text-decoration: underline;">{title}</h1>
+{introduction}
+<br>
+<br>
+<ul id="tabs" class="shadetabs">
+<li><a href="#" rel="tab1" class="selected">{tab1}</a></li>
+<li><a href="#" rel="tab2">{tab2}</a></li>
+<li><a href="#" rel="tab3">{tab3}</a></li>
+</ul>
+
+<div style="border:1px solid gray; width:100%; margin-bottom: 1em; padding: 10px">
+
+    <div id="tab1" class="tabcontent">
+        <table cellpadding="4" cellspacing="4" border="1"
+         style="text-align: left; width: 100%;font-size:12;">
+          <tbody>
+          {appletGameEntries}
+          </tbody>
+        </table>
+    </div>
+
+    <div id="tab2" class="tabcontent">
+        <table cellpadding="4" cellspacing="4" border="1"
+         style="text-align: left; width: 100%;font-size:12;">
+          <tbody>
+          {appletPuzzleEntries}
+          </tbody>
+        </table>
+    </div>
+
+    <div id="tab3" class="tabcontent">
+        <table cellpadding="4" cellspacing="4" border="1"
+         style="text-align: left; width: 100%;font-size:12;">
+          <tbody>
+          {appletSimulationEntries}
+          </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+var tabs=new ddtabcontent("tabs");
+tabs.setpersist(true);
+tabs.setselectedClassTarget("link") //"link" or "linkparent"
+tabs.init();
+</script>
+
+</body>
+</html>
+<noembed><xmp/>
