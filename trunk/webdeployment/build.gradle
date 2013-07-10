@@ -51,7 +51,8 @@ task deploySchemas(type:Copy, description: "Copy schema files to $distributionDi
      include "**/*.xsd"
 }
 
-task deployJars(type: Copy, dependsOn: [':common:copyToLib', ':ui:copyToLib', ':imageproc:copyToLib', ':game:copyToLib'],
+// Used to have ':common:copyToLib', ':ui:copyToLib' to get ui dependent jars.
+task deployJars(type: Copy, dependsOn: [ ':imageproc:copyToLib', ':game:copyToLib'],
     description: "Deploys jar files needed for running applets and web start applications") {
 
     from fileTree("$project_home").include('*/build/libs/**').files
