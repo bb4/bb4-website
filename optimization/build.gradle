@@ -6,7 +6,7 @@ project.archivesBaseName = 'bb4-optimization'
 mainClassName = "com.barrybecker4.optimization.viewer.OptimizerEvalFrame"
 
 dependencies {
-   compile project(':ui')
+   compile 'com.barrybecker4:bb4-ui:1.1'
 }
 
 jar {

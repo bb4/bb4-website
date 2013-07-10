@@ -18,7 +18,7 @@
  *          webdeployment
  */
 
-include 'ui', 'sound', 'optimization', 'imageproc', 'puzzle', 'simulation', 'game', 'apps', 'webdeployment'
+include 'sound', 'optimization', 'imageproc', 'puzzle', 'simulation', 'game', 'apps', 'webdeployment'
 
 
 
