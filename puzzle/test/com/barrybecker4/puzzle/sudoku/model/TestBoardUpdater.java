@@ -12,6 +12,7 @@ import junit.framework.TestCase;
 /**
  * @author Barry Becker
  */
+@SuppressWarnings("unchecked")
 public class TestBoardUpdater extends TestCase {
 
     /** instance under test */

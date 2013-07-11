@@ -19,7 +19,7 @@ ext.java_home="$System.env.JAVA_HOME"
 
 
 dependencies {
-    compile project(':optimization')
+    compile 'com.barrybecker4:bb4-optimization:1.1'
     compile project(':sound')
     compile project(':imageproc')
     compile project(':puzzle')
@@ -51,7 +51,9 @@ task deploySchemas(type:Copy, description: "Copy schema files to $distributionDi
      include "**/*.xsd"
 }
 
-// Used to have ':common:copyToLib', ':ui:copyToLib' to get ui dependent jars.
+// Used to have ':common:copyToLib', ':ui:copyToLib' to get ui dependent jars,
+// however they are no longer needed because ivy will automatically draw them in based
+// on the dependencies specified by the bb4-common and bb4-optimization pom file.
 task deployJars(type: Copy, dependsOn: [ ':imageproc:copyToLib', ':game:copyToLib'],
     description: "Deploys jar files needed for running applets and web start applications") {
 

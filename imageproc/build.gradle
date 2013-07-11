@@ -1,13 +1,11 @@
-/*
- * Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
- */
+/*  Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 
 version = '1.0'
 project.archivesBaseName = 'bb4-imageproc'
 mainClassName = "com.barrybecker4.java2d.ui.RightSizer"
 
 dependencies {
-   compile project(':optimization')
+   compile 'com.barrybecker4:bb4-optimization:1.1'
    compile fileTree(dir: 'lib', include: 'jhlabs-1.0.3.jar')
 }
 
