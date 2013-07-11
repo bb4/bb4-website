@@ -19,6 +19,7 @@ public class DefaultBoardUpdater extends ReflectiveBoardUpdater {
     private static final List<Class<? extends AbstractUpdater>> UPDATERS;
 
     static {
+        //noinspection unchecked
         UPDATERS = Arrays.asList(
                 StandardCRBUpdater.class,
                 LoneRangerUpdater.class,
