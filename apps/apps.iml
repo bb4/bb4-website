@@ -15,9 +15,9 @@
     <orderEntry type="library" exported="" name="xml-apis-1.4.01" level="project" />
     <orderEntry type="library" exported="" name="xercesImpl-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.7" level="project" />
+    <orderEntry type="library" exported="" name="google-api-translate-java-0.97" level="project" />
     <orderEntry type="module" module-name="sound" exported="" />
     <orderEntry type="module" module-name="imageproc" exported="" />
-    <orderEntry type="library" exported="" name="google-api-translate-java-0.97" level="project" />
   </component>
 </module>
 
