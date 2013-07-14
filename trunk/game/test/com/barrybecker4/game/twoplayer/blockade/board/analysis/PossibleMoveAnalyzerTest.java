@@ -6,18 +6,19 @@ import com.barrybecker4.common.geometry.Location;
 import com.barrybecker4.game.twoplayer.blockade.BlockadeTestCase;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import static com.barrybecker4.game.twoplayer.blockade.board.BlockadeTstUtil.createMove;
 import com.barrybecker4.game.twoplayer.blockade.board.move.BlockadeMove;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.barrybecker4.game.twoplayer.blockade.board.BlockadeTstUtil.createMove;
 
 /**
  * @author Barry Becker
  */
 public class PossibleMoveAnalyzerTest extends BlockadeTestCase {
 
-    public void testFindPossibleMoves() {
+    public void testFindPossibleMoves() throws Exception {
 
         List<BlockadeMove> expMoves = Arrays.asList(
                 createMove(3, 3,  5, 3, 0, null, null),
@@ -35,7 +36,7 @@ public class PossibleMoveAnalyzerTest extends BlockadeTestCase {
         verifyPossibleMoves("board/analysis/initial5x7", new ByteLocation(3, 3), expMoves);
     }
 
-    public void testFindPossibleMovesWhenWalls() {
+    public void testFindPossibleMovesWhenWalls() throws Exception {
 
         List<BlockadeMove> expMoves = Arrays.asList(
                 createMove(3, 3,  4, 4, 0, null, null),
@@ -53,7 +54,7 @@ public class PossibleMoveAnalyzerTest extends BlockadeTestCase {
      * @param loc starting location of the shortest paths.
      * @param expMoves the expected possible moves.
      */
-    private void verifyPossibleMoves(String filename, Location loc, List<BlockadeMove> expMoves) {
+    private void verifyPossibleMoves(String filename, Location loc, List<BlockadeMove> expMoves) throws Exception {
 
         restore(filename);
 

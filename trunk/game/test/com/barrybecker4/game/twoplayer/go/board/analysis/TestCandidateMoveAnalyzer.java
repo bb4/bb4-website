@@ -21,15 +21,15 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
     private static final String PREFIX = "scoring/";
 
 
-    public void testCandidateMoves1() {
+    public void testCandidateMoves1() throws Exception {
         verifyCandidateMoves("problem_score1", 114, null);
     }
 
-    public void testCandidateMoves2() {
+    public void testCandidateMoves2() throws Exception{
         verifyCandidateMoves("problem_score2", 108/*53*/, null);
     }
 
-    public void testCandidateMoves3() {
+    public void testCandidateMoves3() throws Exception {
         List<Location> expCandidates = new ArrayList<Location>(10);
         expCandidates.add(new ByteLocation(2, 5));
         expCandidates.add(new ByteLocation(1, 4));
@@ -40,7 +40,7 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
     }
 
     /** XXXX sometimes passes sometimes fails. odd  */
-    public void testCandidateMoves4() {
+    public void testCandidateMoves4() throws Exception {
 
         System.out.println("------------cm4 --------------------------");
         List<Location> expCandidates = new ArrayList<Location>(20);
@@ -62,7 +62,8 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
     /**
      * Verify candidate move generation.
      */
-    private void verifyCandidateMoves(String file, int expNumCandidates, List<Location> expCandidates) {
+    private void verifyCandidateMoves(
+            String file, int expNumCandidates, List<Location> expCandidates) throws Exception {
         restore(PREFIX + file);
 
         GoBoard board = getBoard();

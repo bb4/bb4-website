@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.common;
 
+import ca.dj.jigo.sgf.SGFException;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.GameController;
 import com.barrybecker4.game.common.GameOptions;
@@ -21,7 +22,12 @@ import com.barrybecker4.optimization.Optimizer;
 import com.barrybecker4.optimization.parameter.ParameterArray;
 import com.barrybecker4.optimization.strategy.OptimizationStrategyType;
 
-import java.awt.*;
+import javax.swing.JOptionPane;
+import java.awt.Color;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import static com.barrybecker4.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
@@ -114,8 +120,31 @@ public abstract class TwoPlayerController extends GameController {
 
     @Override
     public void restoreFromFile( String fileName ) {
+
+        try {
+            FileInputStream iStream = new FileInputStream( fileName );
+            GameContext.log(2, "opening " + fileName);
+
+            restoreFromStream(iStream);
+
+        } catch (FileNotFoundException fnfe) {
+            JOptionPane.showMessageDialog(null,
+                    "file " + fileName + " was not found." + fnfe.getMessage());
+        } catch (IOException ioe) {
+            JOptionPane.showMessageDialog( null,
+                                           "IOException occurrred while reading " +
+                                           fileName + " :" + ioe.getMessage() );
+        } catch (SGFException sgfe) {
+            JOptionPane.showMessageDialog( null,
+                                           "file " + fileName + " had an SGF error while loading: " +
+                                           sgfe.getMessage() );
+            sgfe.printStackTrace();
+        }
+    }
+
+    public void restoreFromStream( InputStream iStream ) throws IOException, SGFException {
         TwoPlayerGameImporter importer = new TwoPlayerGameImporter(this);
-        importer.restoreFromFile(fileName);
+        importer.restoreFromStream(iStream);
         TwoPlayerMove m = (TwoPlayerMove)(getLastMove());
         if (m != null) {
             int value = getSearchable().worth( m, weights_.getDefaultWeights());

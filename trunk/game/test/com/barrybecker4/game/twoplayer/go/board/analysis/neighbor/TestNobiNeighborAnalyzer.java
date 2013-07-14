@@ -21,60 +21,61 @@ public class TestNobiNeighborAnalyzer extends GoTestCase {
     private NobiNeighborAnalyzer nobiAnalyzer_;
 
 
-    public void testNoOccupiedNobiNbrs() {
+    public void testNoOccupiedNobiNbrs() throws Exception {
         verifyOccupiedNobiNbrs("nobiNbr_NoneOccupied", new Location[] {new ByteLocation(5, 5)}, 0);
     }
 
-    public void testBlackOccupiedNobiNbrs() {
+    public void testBlackOccupiedNobiNbrs() throws Exception {
         verifyOccupiedNobiNbrs("nobiNbr_BlackOccupied", new Location[] {new ByteLocation(7, 7)}, 3);
     }
 
-    public void testMixOccupiedNobiNbrs() {
+    public void testMixOccupiedNobiNbrs() throws Exception {
         verifyOccupiedNobiNbrs("nobiNbr_MixOccupied", new Location[] {new ByteLocation(7, 7)}, 3);
     }
 
-    public void testMixOccupiedNobiNbrsOnEdge() {
+    public void testMixOccupiedNobiNbrsOnEdge() throws Exception {
         verifyOccupiedNobiNbrs("nobiNbr_MixOccupiedOnEdge", new Location[] {new ByteLocation(5, 1)}, 2);
     }
 
-    public void testNobiNbrsOnEdge() {
+    public void testNobiNbrsOnEdge() throws Exception {
         verifyOccupiedNobiNbrs("nobiNbr_MixOccupiedOnEdge", new Location[] {new ByteLocation(5, 1)}, 2);
     }
 
 
-    public void testUnoccupiedNobiNbrs() {
+    public void testUnoccupiedNobiNbrs() throws Exception {
         verifyNobiNbrs("nobiNbr_Unoccupied", 5, 5, false, NeighborType.UNOCCUPIED, 2);
     }
 
-    public void testUnoccupiedNobiNbrsInCorner() {
+    public void testUnoccupiedNobiNbrsInCorner() throws Exception {
         verifyNobiNbrs("nobiNbr_UnoccupiedInCorner", 1, 1, false, NeighborType.UNOCCUPIED, 2);
     }
 
-    public void testFriendNobiNbrsOneBlack() {
+    public void testFriendNobiNbrsOneBlack() throws Exception {
         verifyNobiNbrs("nobiNbr_OneBlackFriend", 5, 5, true, NeighborType.FRIEND, 1);
     }
 
-    public void testFriendNobiNbrsFourWhite() {
+    public void testFriendNobiNbrsFourWhite() throws Exception {
         verifyNobiNbrs("nobiNbr_FourWhiteFriends", 5, 5, false, NeighborType.FRIEND, 4);
     }
 
-    public void testEnemyNobiNbrsOneWhite() {
+    public void testEnemyNobiNbrsOneWhite() throws Exception {
         verifyNobiNbrs("nobiNbr_OneWhiteEnemy", 5, 5, true, NeighborType.ENEMY, 1);
     }
 
-    public void testEnemyNobiNbrsFourBlack() {
+    public void testEnemyNobiNbrsFourBlack() throws Exception {
         verifyNobiNbrs("nobiNbr_FourBlackEnemies", 5, 5, false, NeighborType.ENEMY, 4);
     }
 
-    public void testNotFriendNobiNbrsTwo() {
+    public void testNotFriendNobiNbrsTwo() throws Exception {
         verifyNobiNbrs("nobiNbr_TwoNotFriends", 5, 5, false, NeighborType.NOT_FRIEND, 2);
     }
 
-    public void testNotFriendNobiNbrsThree() {
+    public void testNotFriendNobiNbrsThree() throws Exception {
         verifyNobiNbrs("nobiNbr_ThreeNotFriends", 5, 5, true, NeighborType.NOT_FRIEND, 3);
     }
 
-    private void verifyOccupiedNobiNbrs(String file, Location[] empties, int expectedNumOccupiedNbrs) {
+    private void verifyOccupiedNobiNbrs(
+            String file, Location[] empties, int expectedNumOccupiedNbrs) throws Exception {
         restore(PREFIX +file);
 
         GoBoard board = getBoard();
@@ -89,7 +90,7 @@ public class TestNobiNeighborAnalyzer extends GoTestCase {
 
     private void verifyNobiNbrs(String file, int row, int col,
                                 boolean friendOwnedByP1, NeighborType type,
-                                int expectedNumNbrs) {
+                                int expectedNumNbrs) throws Exception {
         restore(PREFIX +file);
 
         GoBoard board = getBoard();

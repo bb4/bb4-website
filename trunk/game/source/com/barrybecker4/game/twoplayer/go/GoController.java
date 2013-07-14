@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go;
 
+import ca.dj.jigo.sgf.SGFException;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.common.player.PlayerList;
@@ -22,7 +23,9 @@ import com.barrybecker4.game.twoplayer.go.persistence.GoGameExporter;
 import com.barrybecker4.game.twoplayer.go.persistence.GoGameImporter;
 import com.barrybecker4.game.twoplayer.go.ui.rendering.GoStoneRenderer;
 
-import java.awt.*;
+import java.awt.Color;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -188,9 +191,9 @@ public final class GoController extends TwoPlayerController {
     }
 
     @Override
-    public void restoreFromFile( String fileName ) {
+    public void restoreFromStream(InputStream iStream) throws IOException, SGFException {
         GoGameImporter importer = new GoGameImporter(this);
-        importer.restoreFromFile(fileName);
+        importer.restoreFromStream(iStream);
     }
 
     @Override

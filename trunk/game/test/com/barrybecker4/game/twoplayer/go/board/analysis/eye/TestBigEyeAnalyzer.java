@@ -21,7 +21,7 @@ public class TestBigEyeAnalyzer extends GoTestCase {
     private static final String PATH_PREFIX = "board/analysis/eye/";
 
 
-    public void testE111223() {
+    public void testE111223() throws Exception {
 
         restore(PATH_PREFIX + "BigEye_E111223");
 
@@ -29,7 +29,7 @@ public class TestBigEyeAnalyzer extends GoTestCase {
         checkEyeType(board, EyeType.E6.getInformation("E111223"), true, true, true);
     }
 
-    public void testE111223b() {
+    public void testE111223b() throws Exception {
 
         restore(PATH_PREFIX + "BigEye_E111223b");
 

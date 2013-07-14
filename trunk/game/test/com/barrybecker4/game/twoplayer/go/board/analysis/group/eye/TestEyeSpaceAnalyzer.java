@@ -23,7 +23,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
     private static final String PREFIX = "board/analysis/group/eye/eyespace/";
 
 
-    public void testEyeSpace_SingleIsolatedStone() {
+    public void testEyeSpace_SingleIsolatedStone() throws Exception {
 
         restoreGame("single_isolated_stone");
 
@@ -31,7 +31,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         verifyWhiteEyes(createEyeSet());
     }
 
-    public void testEyeSpace_SingleEye() {
+    public void testEyeSpace_SingleEye() throws Exception {
 
         restoreGame("single_eye");
 
@@ -49,7 +49,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
      *   ECC
      * where C's are counted as being edges as well as corner.
      */
-    public void testEyeSpace_EyesInCorner() {
+    public void testEyeSpace_EyesInCorner() throws Exception {
 
         restoreGame("eyes_in_corner");
 
@@ -59,7 +59,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         verifyWhiteEyes(createEyeSet(whiteEye));
     }
 
-    public void testEyeSpace_EyesInCornerComplex() {
+    public void testEyeSpace_EyesInCornerComplex() throws Exception {
 
         restoreGame("eyes_in_corner_complex");
 
@@ -69,7 +69,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         verifyWhiteEyes(createEyeSet(whiteEye));
     }
 
-    public void testEyeSpace_TwoEyesUnconditional() {
+    public void testEyeSpace_TwoEyesUnconditional() throws Exception {
 
         restoreGame("two_unconditional_eyes");
 
@@ -83,7 +83,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
     }
 
 
-    public void testEyeSpace_TunnelButNoEye() {
+    public void testEyeSpace_TunnelButNoEye() throws Exception {
 
         restoreGame("tunnels_no_eyes");
 
@@ -91,7 +91,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         verifyWhiteEyes(createEyeSet());
     }
 
-    public void testEyeSpace_tunnelButNoEye2() {
+    public void testEyeSpace_tunnelButNoEye2() throws Exception {
 
         restoreGame("tunnels_no_eyes2");
 
@@ -99,7 +99,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         verifyWhiteEyes(createEyeSet());
     }
 
-    public void testEyeSpace_tunnelButNoEye3() {
+    public void testEyeSpace_tunnelButNoEye3() throws Exception {
 
         restoreGame("tunnels_no_eyes2");
 
@@ -107,7 +107,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         verifyWhiteEyes(createEyeSet());
     }
 
-    public void testEyeSpace_tunnelsWithEyes() {
+    public void testEyeSpace_tunnelsWithEyes() throws Exception {
 
         restoreGame("tunnels_with_eyes");
 
@@ -120,7 +120,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
         verifyWhiteEyes(createEyeSet(whiteEye1, whiteEye2));
     }
 
-    public void testEyeSpace_tunnelsWithEyes2() {
+    public void testEyeSpace_tunnelsWithEyes2() throws Exception {
 
         restoreGame("tunnels_with_eyes2");
 
@@ -134,7 +134,7 @@ public class TestEyeSpaceAnalyzer extends GoTestCase {
     }
 
 
-    private void restoreGame(String file) {
+    private void restoreGame(String file) throws Exception {
         restore(PREFIX + file);
     }
 

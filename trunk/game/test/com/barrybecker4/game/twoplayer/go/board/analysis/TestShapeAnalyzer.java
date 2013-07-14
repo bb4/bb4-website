@@ -14,19 +14,19 @@ public class TestShapeAnalyzer extends GoTestCase {
 
     private static final String PREFIX = "board/badshape/";
 
-    public void testBadShape1() {
+    public void testBadShape1() throws Exception {
         verifyBadShape("badShape1", 4, 4, 3);
     }
 
-    public void testBadShape2() {
+    public void testBadShape2() throws Exception {
         verifyBadShape("badShape2", 4, 4, 1);
     }
 
-    public void testBadShape3() {
+    public void testBadShape3() throws Exception {
         verifyBadShape("badShape3", 4, 4, 8);
     }
 
-    public void verifyBadShape(String file, int row, int col, int expected) {
+    public void verifyBadShape(String file, int row, int col, int expected) throws Exception {
         restore(PREFIX + file);
 
         GoBoard board = getBoard();

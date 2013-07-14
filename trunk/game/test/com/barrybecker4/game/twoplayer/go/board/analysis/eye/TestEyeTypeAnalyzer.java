@@ -28,7 +28,7 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
 
     private enum GroupType {BIGGEST, SURROUNDED}
 
-    protected GoBoard initializeBoard(String eyesProblemFile) {
+    protected GoBoard initializeBoard(String eyesProblemFile) throws Exception {
         return initializeBoard(eyesProblemFile, 2);
     }
 
@@ -45,7 +45,8 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
      * @param eyesProblemFile saved sgf game file to load
      * @return the initialized board. Must have 2 groups.
      */
-    protected GoBoard initializeBoard(String eyesProblemFile, int expectedNumGroups) {
+    protected GoBoard initializeBoard(
+            String eyesProblemFile, int expectedNumGroups) throws Exception {
         System.out.println("finding eyes for " + eyesProblemFile + "...");
         restore(getPathPrefix() + eyesProblemFile);
 

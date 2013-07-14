@@ -141,7 +141,7 @@ public class PerformanceResults {
      * @throws IOException
      */
     public void saveTo(String path) throws IOException {
-        FileUtil.verifyDirectoryExistance(path);
+        FileUtil.verifyDirectoryExistence(path);
 
         String baseName = path + FileUtil.FILE_SEPARATOR + getDescription();
         exporter.saveToFile(baseName, null);

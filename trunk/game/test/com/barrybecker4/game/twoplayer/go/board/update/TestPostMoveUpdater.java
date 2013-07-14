@@ -36,32 +36,32 @@ public class TestPostMoveUpdater extends GoTestCase {
     }
 
 
-    public void testMoveWhichJoinsTwoStrings() {
+    public void testMoveWhichJoinsTwoStrings() throws Exception {
         UpdateStats stats = new UpdateStats(0, 10, 4, 1, 0, 3, true);
         verifyPostMove("join_two_strings", new ByteLocation(4, 4), stats);
     }
 
-    public void testMoveWhichJoinsThreeStrings() {
+    public void testMoveWhichJoinsThreeStrings() throws Exception {
         UpdateStats stats = new UpdateStats(0, 13, 7, 1, 0, 2, true);
         verifyPostMove("join_three_strings", new ByteLocation(5, 5), stats);
     }
 
-    public void testMoveWhichJoinsFourStrings() {
+    public void testMoveWhichJoinsFourStrings() throws Exception {
         UpdateStats stats = new UpdateStats(0, 15, 9, 1, 0, 2, true);
         verifyPostMove("join_four_strings", new ByteLocation(5, 5), stats);
     }
 
-    public void testTigerMouthCapture() {
+    public void testTigerMouthCapture() throws Exception {
         UpdateStats stats = new UpdateStats(1, 4, 1, 4, 1, 2, true);
         verifyPostMove("tiger_mouth_capture", new ByteLocation(6, 5), stats);
     }
 
-    public void testJoinTwoGroups() {
+    public void testJoinTwoGroups() throws Exception {
         UpdateStats stats = new UpdateStats(0, 4, 1, 5, 0, 2, true);
         verifyPostMove("join_two_groups", new ByteLocation(5, 8), stats);
     }
 
-    private void verifyPostMove(String file, Location moveLocation, UpdateStats stats) {
+    private void verifyPostMove(String file, Location moveLocation, UpdateStats stats) throws Exception {
 
         restore(PREFIX  + file);
 

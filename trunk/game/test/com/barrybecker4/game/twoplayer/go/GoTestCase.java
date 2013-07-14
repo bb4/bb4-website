@@ -2,7 +2,6 @@
 package com.barrybecker4.game.twoplayer.go;
 
 import com.barrybecker4.common.format.FormatUtil;
-import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.player.Player;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerPlayerOptions;
@@ -25,8 +24,7 @@ import java.util.Set;
 public abstract class GoTestCase extends TestCase {
 
     /** moved all test cases here so they are not included in the jar and do not need to be searched   */
-    public static final String EXTERNAL_TEST_CASE_DIR =
-            FileUtil.getHomeDir() + "game/test/com/barrybecker4/game/twoplayer/go/cases/";
+    public static final String EXTERNAL_TEST_CASE_DIR = "/com/barrybecker4/game/twoplayer/go/cases/";
 
     private static final String SGF_EXTENSION = ".sgf";
 
@@ -84,15 +82,15 @@ public abstract class GoTestCase extends TestCase {
        return (GoBoard) controller_.getBoard();
     }
 
-    protected void restore(String problemFile) {
-        controller_.restoreFromFile(EXTERNAL_TEST_CASE_DIR + problemFile + SGF_EXTENSION);
+    protected void restore(String problemFile) throws Exception {
+        String path = EXTERNAL_TEST_CASE_DIR + problemFile + SGF_EXTENSION;
+        controller_.restoreFromStream(getClass().getResourceAsStream(path));
     }
 
-    protected GoMove getNextMove(String problemFile, boolean blackPlays) {
+    protected GoMove getNextMove(String problemFile, boolean blackPlays) throws Exception {
         System.out.println("finding next move for " + problemFile + " ...");
         long time = System.currentTimeMillis();
         restore(problemFile);
-        //System.out.println("problem restored.");
         controller_.requestComputerMove( blackPlays, true );
 
         GoMove m = (GoMove) controller_.getLastMove();

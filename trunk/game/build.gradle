@@ -5,7 +5,6 @@ version = '1.0'
 project.archivesBaseName = 'bb4-game'
 mainClassName = "com.barrybecker4.game.common.ui.GameApp"
 
-
 task show << {
    println sourceSets.main.runtimeClasspath.each { println it }
    println "---"
@@ -243,7 +242,7 @@ task runPokerServerAndClients(type: JavaExec, depends: classes) {
 
 dependencies {
    compile project(':sound')
-   compile 'com.barrybecker4:bb4-optimization:1.1'
+   compile 'com.barrybecker4:bb4-optimization:1.1.2-SNAPSHOT'
 
    // jars needed for go
    compile fileTree(dir: 'lib', include: '*.jar')

@@ -18,27 +18,27 @@ public class TestGoBoard extends GoTestCase {
     private static final String PREFIX = "board/";
 
     /** verify that the right stones are captured by a given move. */
-    public void testFindCaptures1() {
+    public void testFindCaptures1() throws Exception {
         verifyCaptures("findCaptures1", new ByteLocation(5, 6), 6);
     }
 
-    public void testFindCaptures2() {
+    public void testFindCaptures2() throws Exception {
         verifyCaptures("findCaptures2", new ByteLocation(6, 6), 9);
     }
 
-    public void testFindCaptures3() {
+    public void testFindCaptures3() throws Exception {
         verifyCaptures("findCaptures3", new ByteLocation(5, 4), 7);
     }
 
-    public void testFindCaptures4() {
+    public void testFindCaptures4() throws Exception {
         verifyCaptures("findCaptures4", new ByteLocation(4, 8), 16);
     }
 
-    public void testFindCaptures5() {
+    public void testFindCaptures5() throws Exception {
         verifyCaptures("findCaptures5", new ByteLocation(10, 2), 11);
     }
 
-    private void verifyCaptures(String file, Location moveLocation, int expNnumCaptures) {
+    private void verifyCaptures(String file, Location moveLocation, int expNnumCaptures) throws Exception {
 
         restore(PREFIX  + file);
 
@@ -67,7 +67,7 @@ public class TestGoBoard extends GoTestCase {
     }
 
 
-    public void testCausedAtari1() {
+    public void testCausedAtari1() throws Exception {
         restore(PREFIX + "causedAtari1");
 
         GoMove m = new GoMove(new ByteLocation(4, 4), 0, new GoStone(false));
@@ -76,7 +76,7 @@ public class TestGoBoard extends GoTestCase {
     }
 
 
-    public void testCausedAtari2() {
+    public void testCausedAtari2() throws Exception {
         restore(PREFIX + "causedAtari2");
 
         GoMove m = new GoMove(new ByteLocation(2, 12), 0, new GoStone(true));
@@ -87,11 +87,11 @@ public class TestGoBoard extends GoTestCase {
     }
 
 
-    public void testNumLiberties1() {
+    public void testNumLiberties1() throws Exception {
         verifyGroupLiberties("causedAtari2", 2, 9, 14,  2, 10, 2);
     }
 
-    public void testNumLiberties2() {
+    public void testNumLiberties2() throws Exception {
         verifyGroupLiberties("numLiberties2", 1, 2, 17,   3, 6, 16);
     }
 
@@ -106,8 +106,8 @@ public class TestGoBoard extends GoTestCase {
     }
 
     private void verifyGroupLiberties(String file,
-                                      int bRow, int bCol, int expectedBlackLiberties,
-                                      int wRow, int wCol, int expectedWhiteLiberties) {
+              int bRow, int bCol, int expectedBlackLiberties,
+              int wRow, int wCol, int expectedWhiteLiberties) throws Exception {
         restore(PREFIX + file);
         GoBoard board = getBoard();
 

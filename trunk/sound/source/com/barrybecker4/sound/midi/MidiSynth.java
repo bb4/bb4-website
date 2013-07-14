@@ -29,17 +29,12 @@ package com.barrybecker4.sound.midi;
  * redistribute the Software for such purposes.
  */
 
-import javax.sound.midi.Instrument;
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
-import javax.sound.midi.Soundbank;
-import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Track;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

@@ -23,7 +23,7 @@ public class TestGroupFinding extends GoTestCase {
 
     // ----------- check that we can find group neighbors -------
 
-    public void testFindKoGroupNeighbors() {
+    public void testFindKoGroupNeighbors() throws Exception {
         GoBoard b = initializeBoard("false_ko_eye1");
 
         // white group neighbors
@@ -40,7 +40,7 @@ public class TestGroupFinding extends GoTestCase {
         verifyGroupNeighbors(b, new ByteLocation(8, 6), 5);
     }
 
-    public void testFindKoGroupNeighbors2() {
+    public void testFindKoGroupNeighbors2() throws Exception {
         GoBoard b = initializeBoard("false_ko_eye2");
 
         // white group neighbors
@@ -59,7 +59,7 @@ public class TestGroupFinding extends GoTestCase {
      * Negative test.
      * The position we give to look from does not contain a stone.
      */
-    public void testFindNoGroup() {
+    public void testFindNoGroup() throws Exception {
         GoBoard b = initializeBoard("false_ko_eye1");
         try {
             verifyGroup(b, new ByteLocation(2, 3), 6);
@@ -69,20 +69,20 @@ public class TestGroupFinding extends GoTestCase {
         }
     }
 
-    public void testFindFalseEyeGroup1() {
+    public void testFindFalseEyeGroup1() throws Exception {
         GoBoard b = initializeBoard("false_ko_eye1");
         verifyGroup(b, new ByteLocation(5, 5), 10);
         verifyGroup(b, new ByteLocation(6, 8), 11);
     }
 
-    public void testFindFalseEyeGroup2() {
+    public void testFindFalseEyeGroup2() throws Exception {
         GoBoard b = initializeBoard("false_ko_eye2");
         verifyGroup(b, new ByteLocation(8, 8), 18);
         verifyGroup(b, new ByteLocation(13, 10), 18);
     }
 
 
-    private GoBoard initializeBoard(String file) {
+    private GoBoard initializeBoard(String file) throws Exception  {
         restore(PREFIX  + file);
         return getBoard();
     }

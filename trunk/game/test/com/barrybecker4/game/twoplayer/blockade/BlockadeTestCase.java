@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.blockade;
 
-import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.player.Player;
@@ -20,8 +19,7 @@ import junit.framework.TestCase;
 public abstract class BlockadeTestCase extends TestCase {
 
     /** moved all test cases here so they are not included in the jar and do not need to be searched */
-    private static final String EXTERNAL_TEST_CASE_DIR =
-            FileUtil.getHomeDir() +"/game/test/com/barrybecker4/game/twoplayer/blockade/cases/"; // NON-NLS
+    private static final String EXTERNAL_TEST_CASE_DIR = "/com/barrybecker4/game/twoplayer/blockade/cases/"; // NON-NLS
 
     private static final String SGF_EXTENSION = ".sgf";  // NON-NLS
 
@@ -50,8 +48,9 @@ public abstract class BlockadeTestCase extends TestCase {
         }
     }
 
-    protected void restore(String problemFile) {
-        controller_.restoreFromFile(EXTERNAL_TEST_CASE_DIR + problemFile + SGF_EXTENSION);
+    protected void restore(String problemFile) throws Exception {
+        controller_.restoreFromStream(
+                getClass().getResourceAsStream(EXTERNAL_TEST_CASE_DIR + problemFile + SGF_EXTENSION));
     }
 
     /**
@@ -64,7 +63,7 @@ public abstract class BlockadeTestCase extends TestCase {
         return GenericFileFilter.getFilesMatching(EXTERNAL_TEST_CASE_DIR + directory, pattern);
     }
 
-    protected Move getNextMove(String problemFile, boolean firstPlayerPlays) {
+    protected Move getNextMove(String problemFile, boolean firstPlayerPlays) throws Exception {
 
 
         GameContext.log(1, "finding next move for "+problemFile+" ...");

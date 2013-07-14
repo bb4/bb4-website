@@ -67,13 +67,13 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
 
     /**  Load a game in the middle and verify that we can get reasonable next moves. */
     @Override
-    public void testGenerateAllP1MovesMidGame() {
+    public void testGenerateAllP1MovesMidGame() throws Exception {
          checkGeneratedMoves("middleGameP1Turn", ExpectedSearchableResults.EXPECTED_ALL_MIDDLE_GAME_MOVES_P1);
     }
 
     /**  Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
-    public void testGenerateTopP1MovesMidGame() {
+    public void testGenerateTopP1MovesMidGame() throws Exception {
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("middleGameP1Turn", ExpectedSearchableResults.EXPECTED_TOP_MIDDLE_GAME_MOVES_P1);
     }
@@ -83,13 +83,13 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
       * Of particular interest here is that we can generate moves that lead to a win.
       */
     @Override
-    public void testGenerateAllP1MovesEndGame() {
+    public void testGenerateAllP1MovesEndGame() throws Exception {
          checkGeneratedMoves("endGameP1Turn", ExpectedSearchableResults.EXPECTED_ALL_END_GAME_MOVES_P1);
     }
 
     /** Load a game at the end and verify that we can get all the high value next moves. */
     @Override
-    public void testGenerateTopP1MovesEndGame() {
+    public void testGenerateTopP1MovesEndGame() throws Exception{
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameP1Turn", ExpectedSearchableResults.EXPECTED_TOP_END_GAME_MOVES_P1);
     }
@@ -97,13 +97,13 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
 
     /**  Load a game in the middle and verify that we can get reasonable next moves. */
     @Override
-    public void testGenerateAllP2MovesMidGame() {
+    public void testGenerateAllP2MovesMidGame() throws Exception {
          checkGeneratedMoves("middleGameP2Turn", ExpectedSearchableResults.EXPECTED_ALL_MIDDLE_GAME_MOVES_P2);
     }
 
     /**  Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
-    public void testGenerateTopP2MovesMidGame() {
+    public void testGenerateTopP2MovesMidGame() throws Exception {
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("middleGameP2Turn", ExpectedSearchableResults.EXPECTED_TOP_MIDDLE_GAME_MOVES_P2);
     }
@@ -113,19 +113,19 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
       * Of particular interest here is that we can generate moves that lead to a win.
       */
     @Override
-    public void testGenerateAllP2MovesEndGame() {
+    public void testGenerateAllP2MovesEndGame() throws Exception {
          checkGeneratedMoves("endGameP2Turn", ExpectedSearchableResults.EXPECTED_ALL_END_GAME_MOVES_P2);
     }
 
      /** Load a game at the end and verify that we can get all the high value next moves. */
      @Override
-     public void testGenerateTopP2MovesEndGame() {
+     public void testGenerateTopP2MovesEndGame() throws Exception {
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameP2Turn", ExpectedSearchableResults.EXPECTED_TOP_END_GAME_MOVES_P2);
     }
 
 
-    private void checkGeneratedMoves(String fileName, BlockadeMove[] expectedMoves) {
+    private void checkGeneratedMoves(String fileName, BlockadeMove[] expectedMoves) throws Exception {
         restore(fileName);
         ParameterArray wts = weights();
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();

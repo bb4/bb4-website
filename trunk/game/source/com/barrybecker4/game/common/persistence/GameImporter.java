@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.common.persistence;
 
+import ca.dj.jigo.sgf.SGFException;
 import ca.dj.jigo.sgf.SGFGame;
 import ca.dj.jigo.sgf.SGFLeaf;
 import ca.dj.jigo.sgf.SGFLoader;
@@ -15,6 +16,8 @@ import com.barrybecker4.game.common.Move;
 import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.IRectangularBoard;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 
 /**
@@ -31,10 +34,10 @@ public abstract class GameImporter {
     }
 
     /**
-     * Restore the state of a game from a file.
-     * @param fileName to restore from.
+     * Restore the state of a game from an input stream.
+     * @param iStream the stream to restore from.
      */
-    public abstract void restoreFromFile(String fileName);
+    public abstract void restoreFromStream(InputStream iStream) throws IOException, SGFException;
 
     /**
      * This will retore a game from an SGF structure to the controller

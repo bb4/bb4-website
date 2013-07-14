@@ -5,9 +5,7 @@ import com.barrybecker4.common.util.FileUtil;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.SourceDataLine;
-import java.io.IOException;
 import java.net.URL;
 
 
@@ -16,8 +14,6 @@ import java.net.URL;
  * @author Barry Becker
  */
 public final class SoundUtil {
-
-    private SoundUtil() {}
 
     /**
      * This converts the file to something that jav can paly.
@@ -99,27 +95,5 @@ public final class SoundUtil {
         }
     }
 
-
-    /**
-     * This doesn't work
-     */
-    public void playSound1(URL clipURL) {
-
-        AudioInputStream ais = null;
-        try {
-            Clip clickClip = AudioSystem.getClip();
-
-            ais = AudioSystem.getAudioInputStream(clipURL);
-            clickClip.open(ais);
-            clickClip.start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                ais.close();
-            } catch (IOException ex) {
-               ex.printStackTrace();
-            }
-        }
-    }
+    private SoundUtil() {}
 }

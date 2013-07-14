@@ -15,12 +15,12 @@ public class TestWorthCalculator5 extends WorthCalculatorBase {
     }
 
     /** verify that we get the expected worth value. */
-    public void testFindSimpleWorth() {
+    public void testFindSimpleWorth() throws Exception {
         verifyWorth("worth5x5", 30); //33);
     }
 
     /** verify that we get the expected worth value after a move redo. */
-    public void testFindWorthAfterRedo() {
+    public void testFindWorthAfterRedo() throws Exception {
 
         restore(PREFIX  + "worth5x5");
 
@@ -36,7 +36,7 @@ public class TestWorthCalculator5 extends WorthCalculatorBase {
      * If we arrive at the same exact board position from two different paths,
      * we should calculate the same worth value.
      */
-    public void testSamePositionFromDifferentPathsEqual() {
+    public void testSamePositionFromDifferentPathsEqual() throws Exception {
 
         compareWorths("worth5x5_A", "worth5x5_B", -64); //-70); // -61);
     }

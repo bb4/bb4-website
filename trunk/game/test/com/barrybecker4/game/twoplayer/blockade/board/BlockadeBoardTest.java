@@ -109,7 +109,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
     /**
      * Test the list of candidate next moves.
      */
-    public void testPossibleMoveList() {
+    public void testPossibleMoveList() throws Exception {
 
          restore("whitebox/moveList1");
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
@@ -245,7 +245,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
     /**
      * Test that we can accurately determine all the opponent shortest paths.
      */
-    public void testFindOpponentShortestPaths() {
+    public void testFindOpponentShortestPaths() throws Exception {
          restore("whitebox/shortestPaths1");
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
 
@@ -306,7 +306,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
     }
 
 
-    public void testShortestPathLength() {
+    public void testShortestPathLength() throws Exception {
          restore("whitebox/noMoves2");
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
 
@@ -323,7 +323,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
          Assert.assertTrue("Unexpected Player2 Path lengths - " + actualP2Lengths, expectedP2Lengths.equals(actualP2Lengths));
     }
 
-     public void testShortestPaths2() {
+     public void testShortestPaths2() throws Exception {
 
          restore("whitebox/noMoves2");
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
@@ -355,7 +355,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
 
      private static final int[] EXPECTED_PATHS_LENGTHS = { 0,  11, 12};
 
-     public void testFindShortestPaths() {
+     public void testFindShortestPaths() throws Exception {
          restore("whitebox/shortestPathsCheck");
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
          //BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLast();

@@ -41,14 +41,14 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
    }
 
     @Override
-    public void testNotDoneMidGame() {
+    public void testNotDoneMidGame() throws Exception {
         restore("midGameCenterO");
         assertFalse("Did not expect done in the middle of the game. ",
                 searchable.done((TwoPlayerMove)getController().getLastMove(), false));
     }
 
     @Override
-    public void testDoneForMidGameWin() {
+    public void testDoneForMidGameWin() throws Exception {
         restore("wonGameO");
         assertTrue("Expected done state for this game. ",
                 searchable.done((TwoPlayerMove)getController().getLastMove(), false));
@@ -56,7 +56,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
 
     /** Load a game at the last move and verify that the next move results in done == true  */
     @Override
-    public void testDoneEndGame() {
+    public void testDoneEndGame() throws Exception {
          restore("endGameNoMoreMoves");
         assertTrue("Expected done state for this game because there are no more moves. ",
                 searchable.done((TwoPlayerMove)getController().getLastMove(), false));
@@ -64,7 +64,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
 
     /**  Load a game in the middle and verify that we can get reasonable next moves. */
     @Override
-    public void testGenerateAllP1MovesMidGame() {
+    public void testGenerateAllP1MovesMidGame() throws Exception {
         checkGeneratedMoves("midGameCenterX", EXPECTED_ALL_MIDDLE_GAME_MOVES_CENTER_P1);
         checkGeneratedMoves("midGameCornerX", EXPECTED_ALL_MIDDLE_GAME_MOVES_CORNER_P1);
         checkGeneratedMoves("midGameEdgeX", EXPECTED_ALL_MIDDLE_GAME_MOVES_EDGE_P1);
@@ -72,7 +72,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
 
     /** Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
-    public void testGenerateTopP1MovesMidGame() {
+    public void testGenerateTopP1MovesMidGame() throws Exception {
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("midGameCenterX", EXPECTED_TOP_MIDDLE_GAME_MOVES_CENTER_P1);
         checkGeneratedMoves("midGameCornerX", EXPECTED_TOP_MIDDLE_GAME_MOVES_CORNER_P1);
@@ -84,20 +84,20 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
       * Of particular interest here is that we can generate moves that lead to a win.
       */
     @Override
-    public void testGenerateAllP1MovesEndGame() {
+    public void testGenerateAllP1MovesEndGame() throws Exception {
          checkGeneratedMoves("endGameX", EXPECTED_ALL_END_GAME_MOVES_P1);
     }
 
     /** Load a game at the end and verify that we can get all the high value next moves. */
     @Override
-    public void testGenerateTopP1MovesEndGame() {
+    public void testGenerateTopP1MovesEndGame() throws Exception {
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameX", EXPECTED_TOP_END_GAME_MOVES_P1);
     }
 
     /**  Load a game in the middle and verify that we can get reasonable next moves. */
     @Override
-    public void testGenerateAllP2MovesMidGame() {
+    public void testGenerateAllP2MovesMidGame() throws Exception {
         checkGeneratedMoves("midGameCenterO", EXPECTED_ALL_MIDDLE_GAME_MOVES_CENTER_P2);
         checkGeneratedMoves("midGameCornerO", EXPECTED_ALL_MIDDLE_GAME_MOVES_CORNER_P2);
         checkGeneratedMoves("midGameEdgeO", EXPECTED_ALL_MIDDLE_GAME_MOVES_EDGE_P2);
@@ -105,7 +105,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
 
     /**  Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
-    public void testGenerateTopP2MovesMidGame() {
+    public void testGenerateTopP2MovesMidGame() throws Exception {
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("midGameCenterO", EXPECTED_TOP_MIDDLE_GAME_MOVES_CENTER_P2);
         checkGeneratedMoves("midGameCornerO", EXPECTED_TOP_MIDDLE_GAME_MOVES_CORNER_P2);
@@ -117,19 +117,19 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
      * Of particular interest here is that we can generate moves that lead to a win.
      */
     @Override
-    public void testGenerateAllP2MovesEndGame() {
+    public void testGenerateAllP2MovesEndGame() throws Exception {
         checkGeneratedMoves("endGameO", EXPECTED_ALL_END_GAME_MOVES_P2);
     }
 
      /** Load a game at the end and verify that we can get all the high value next moves. */
      @Override
-     public void testGenerateTopP2MovesEndGame() {
+     public void testGenerateTopP2MovesEndGame() throws Exception {
         checkGeneratedMoves("endGameO", EXPECTED_TOP_END_GAME_MOVES_P2);
     }
 
     /**  Verify that we generate a correct list of urgent moves.  */
     @Override
-    public void  testGenerateUrgentMoves() {
+    public void  testGenerateUrgentMoves() throws Exception {
 
         System.out.println("GEN URGENT 1......");
         restore("urgentMoves");
@@ -143,7 +143,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
     }
 
     /**  Verify that we generate a correct list of urgent moves for the other player.  */
-    public void  testGenerateUrgentMovesP2() {
+    public void  testGenerateUrgentMovesP2() throws Exception {
 
         System.out.println("GEN URGENT 2......");
         restore("urgentMoves");
@@ -157,7 +157,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
     }
 
 
-    private void checkGeneratedMoves(String fileName, TwoPlayerMove[] expectedMoves) {
+    private void checkGeneratedMoves(String fileName, TwoPlayerMove[] expectedMoves) throws Exception {
         restore(fileName);
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
         MoveList moves =

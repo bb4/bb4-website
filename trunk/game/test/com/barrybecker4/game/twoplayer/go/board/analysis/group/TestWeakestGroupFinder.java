@@ -42,7 +42,7 @@ public class TestWeakestGroupFinder extends GoTestCase {
         assertNull("There should not be a weakest group if the board is empty", group);
     }
 
-    public void testFindGroupWithSingleStoneNeighbor() {
+    public void testFindGroupWithSingleStoneNeighbor() throws Exception {
         GoBoard board = initFinder("single_stone");
 
         GoBoardPositionSet groupStones = new GoBoardPositionSet();
@@ -52,7 +52,7 @@ public class TestWeakestGroupFinder extends GoTestCase {
         assertEquals("Unexpected number of stones found.", 1, group.getNumStones());
     }
 
-    public void testFindWeakestGroupWhenTwoCompetingGroups() {
+    public void testFindWeakestGroupWhenTwoCompetingGroups() throws Exception {
         GoBoard board = initFinder("two_groups");
 
         GoBoardPositionSet groupStones = new GoBoardPositionSet();
@@ -64,7 +64,7 @@ public class TestWeakestGroupFinder extends GoTestCase {
         assertEquals("Unexpected number of stones found.", 3, group.getNumStones());
     }
 
-    public void testFindWeakestGroupWhenTwoCompetingGroups2() {
+    public void testFindWeakestGroupWhenTwoCompetingGroups2() throws Exception {
         GoBoard board = initFinder("two_groups2");
 
         GoBoardPositionSet groupStones = new GoBoardPositionSet();
@@ -77,7 +77,7 @@ public class TestWeakestGroupFinder extends GoTestCase {
     }
 
 
-    private GoBoard initFinder(String fileSuffix)  {
+    private GoBoard initFinder(String fileSuffix) throws Exception {
         restore(PREFIX  + fileSuffix);
         GoBoard board = getBoard();
 

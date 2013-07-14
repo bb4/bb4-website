@@ -4,6 +4,8 @@ package com.barrybecker4.game.twoplayer.common.search;
 import com.barrybecker4.game.twoplayer.common.TwoPlayerController;
 import com.barrybecker4.game.twoplayer.common.search.options.SearchOptions;
 
+import java.io.InputStream;
+
 /**
  * @author Barry Becker
  */
@@ -23,12 +25,12 @@ public interface ISearchableHelper {
     /**
      * @return test file containing state of saved game to restore.
      */
-    String getTestFile(String problemFileBase);
+    InputStream getTestResource(String problemFileBase);
 
     /**
      * @param progress how far into the game are we.
      * @param player1 true if player one has just played.
      * @return get the game file corresponding to the given amount of progress and the specified player.
      */
-    String getTestFile(Progress progress, boolean  player1);
+    InputStream getTestResource(Progress progress, boolean player1);
 }

@@ -82,7 +82,7 @@ public class TestLifeAndDeath extends GoTestCase {
      * @param row row of expected next move.
      * @param column  column of expected next move.
      */
-    private void doLifeAndDeathTest(String filename, int row, int column) {
+    private void doLifeAndDeathTest(String filename, int row, int column) throws Exception {
         GoMove m = getNextMove(PREFIX1 + filename, true);
         verifyExpected(m, row, column);
     }
@@ -91,7 +91,8 @@ public class TestLifeAndDeath extends GoTestCase {
      *
      * @param filename
      */
-    private void doLifeAndDeathTest2(String filename, Location[] acceptableMoves, boolean blackToPlay) {
+    private void doLifeAndDeathTest2(
+            String filename, Location[] acceptableMoves, boolean blackToPlay) throws Exception {
         GoMove move = getNextMove(PREFIX2 + filename, blackToPlay);
         verifyAcceptable(move, acceptableMoves);
 

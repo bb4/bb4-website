@@ -11,7 +11,7 @@ public class TestWorthCalculator3 extends WorthCalculatorBase {
      * If we arrive at the same exact board position from two different paths,
      * we should calculate the same worth value.
      */
-    public void testSamePositionFromDifferentPathsEqual() {
+    public void testSamePositionFromDifferentPathsEqual() throws Exception {
 
         compareWorths("worth3x3_A", "worth3x3_B", -151); // -163
     }

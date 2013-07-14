@@ -22,10 +22,8 @@ import com.barrybecker4.game.twoplayer.common.persistence.tokens.Player2NameToke
 import com.barrybecker4.game.twoplayer.common.persistence.tokens.Size2Token;
 import com.barrybecker4.game.twoplayer.common.persistence.tokens.TwoPlayerMoveToken;
 
-import javax.swing.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 
 /**
@@ -41,32 +39,14 @@ public class TwoPlayerGameImporter extends GameImporter {
 
     /**
      * Take what is in the specified file and show it in the viewer.
-     * @param fileName file to load
+     * @param iStream some input stream
      */
-    @Override
-    public void restoreFromFile( String fileName ) {
+    public void restoreFromStream(InputStream iStream)
+            throws IOException, SGFException  {
 
-        try {
-            FileInputStream iStream = new FileInputStream( fileName );
-            GameContext.log(2, "opening " + fileName);
-
-            SGFLoader gameLoader = createLoader();
-            SGFGame game = gameLoader.load( iStream );
-            restoreGame( game );
-
-        } catch (FileNotFoundException fnfe) {
-            JOptionPane.showMessageDialog( null,
-                                           "file " + fileName + " was not found." + fnfe.getMessage() );
-        } catch (IOException ioe) {
-            JOptionPane.showMessageDialog( null,
-                                           "IOException occurrred while reading " +
-                                           fileName + " :" + ioe.getMessage() );
-        } catch (SGFException sgfe) {
-            JOptionPane.showMessageDialog( null,
-                                           "file " + fileName + " had an SGF error while loading: " +
-                                           sgfe.getMessage() );
-            sgfe.printStackTrace();
-        }
+        SGFLoader gameLoader = createLoader();
+        SGFGame game = gameLoader.load(iStream);
+        restoreGame(game);
     }
 
     @Override

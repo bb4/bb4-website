@@ -44,9 +44,10 @@ public abstract class ValueDifferencerTst extends TestCase  {
      * Restore a game file
      * @param problemFileBase the saved game to restore and test.
      */
-    private PenteBoard restoreBoard(String problemFileBase) {
+    private PenteBoard restoreBoard(String problemFileBase) throws Exception {
         PenteController controller = new PenteController();
-        controller.restoreFromFile(TEST_CASE_DIR + problemFileBase + ".sgf");
+        String path = TEST_CASE_DIR + problemFileBase + ".sgf";
+        controller.restoreFromStream(getClass().getResourceAsStream(path));
         return (PenteBoard) controller.getBoard();
     }
 

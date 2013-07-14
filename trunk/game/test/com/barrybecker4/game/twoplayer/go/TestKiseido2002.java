@@ -5,6 +5,13 @@ import com.barrybecker4.game.common.GameContext;
 import com.barrybecker4.game.twoplayer.go.board.move.GoMove;
 import com.barrybecker4.ui.file.GenericFileFilter;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Barry Becker
  */
@@ -17,8 +24,8 @@ public class TestKiseido2002 extends GoTestCase {
     }  */
 
 
-    // just do february for now. Its a lot as it is.
-    public void testFebruary() {
+    // just do february for now. It has a lot as it is.
+    public void testFebruary() throws Exception {
         check("2002-02", 10);
     }
 
@@ -68,7 +75,7 @@ public class TestKiseido2002 extends GoTestCase {
      * Verify that we can load all the files with the specified pattern
      * @param problemPattern verify loading of all files that match this pattern.
      */
-    private void check(String problemPattern) {
+    private void check(String problemPattern) throws Exception {
        check(problemPattern, Integer.MAX_VALUE);
     }
 
@@ -77,13 +84,13 @@ public class TestKiseido2002 extends GoTestCase {
      * @param problemPattern verify loading of all files that match this pattern.
      * @param limit don't load more files that this (since there may be a lot).
      */
-    private void check(String problemPattern, int limit) {
+    private void check(String problemPattern, int limit) throws Exception {
 
         GameContext.log(0, "Now checking "+ problemPattern);
-        String[] files = getFilesMatching("games2002/", problemPattern);
+        List<String> files = getFilesMatching("games2002/", problemPattern);
+
         int ct = 0;
         for (String file : files) {
-
             if (ct++ >= limit) break;
             String filename = file.substring(0, file.length() - 4);
             GameContext.log(0, " about to restore :" + filename);
@@ -107,8 +114,20 @@ public class TestKiseido2002 extends GoTestCase {
     /**
      * @return all the files matching the supplied pattern in the specified directory
      */
-    protected static String[] getFilesMatching(String directory, String pattern) {
+    protected List<String> getFilesMatching(String directory, String pattern) throws IOException, URISyntaxException {
 
-        return GenericFileFilter.getFilesMatching(GoTestCase.EXTERNAL_TEST_CASE_DIR + directory, pattern);
+        return getResourcesForPattern(GoTestCase.EXTERNAL_TEST_CASE_DIR + directory, pattern);
+    }
+
+    private List<String> getResourcesForPattern(String path, String pattern) throws IOException, URISyntaxException {
+
+        URL dirURL = getClass().getResource(path);
+
+        if (dirURL != null && dirURL.getProtocol().equals("file")) {
+            String directory = new File(dirURL.toURI()).getAbsolutePath();
+            return Arrays.asList(GenericFileFilter.getFilesMatching(directory, pattern));
+        }
+
+        return null;
     }
 }

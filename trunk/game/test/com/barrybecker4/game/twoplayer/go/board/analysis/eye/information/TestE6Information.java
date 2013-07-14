@@ -20,56 +20,56 @@ public class TestE6Information extends TestEyeTypeAnalyzer {
 
     //////   E112222  (just a sampling of the cases)
 
-    public void testSixStraightEye() {
+    public void testSixStraightEye() throws Exception {
         GoBoard b = initializeBoard("six_straight_eye", 2);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
     }
 
-    public void testSixBentEye() {
+    public void testSixBentEye() throws Exception {
         GoBoard b = initializeBoard("six_bent_eye", 2);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
     }
 
-    public void testVerySixBentEye() {
+    public void testVerySixBentEye() throws Exception {
         GoBoard b = initializeBoard("six_very_bent_eye", 2);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
     }
 
-    public void testSixBentOneMiddleFilled() {
+    public void testSixBentOneMiddleFilled() throws Exception {
         GoBoard b = initializeBoard("six_bent_one_middle_filled", 4);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
     }
 
-    public void testSixBentTwoMiddleFilled() {
+    public void testSixBentTwoMiddleFilled() throws Exception {
         GoBoard b = initializeBoard("six_bent_two_middle_filled", 4);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
     }
 
-    public void testSixBentThreeMiddleFilled() {
+    public void testSixBentThreeMiddleFilled() throws Exception {
         GoBoard b = initializeBoard("six_bent_three_middle_filled", 4);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
     }
 
-    public void testSixBentFourMiddleFilled() {
+    public void testSixBentFourMiddleFilled() throws Exception {
         GoBoard b = initializeBoard("six_bent_four_middle_filled", 4);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
     }
 
-    public void testSixBentTwoEndsFilled() {
+    public void testSixBentTwoEndsFilled() throws Exception {
         GoBoard b = initializeBoard("six_bent_two_ends_filled", 6);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
@@ -77,21 +77,21 @@ public class TestE6Information extends TestEyeTypeAnalyzer {
     }
 
 
-    public void testSixBentFiveFilled() {
+    public void testSixBentFiveFilled() throws Exception {
         GoBoard b = initializeBoard("six_bent_five_filled", 4);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
     }
 
-    public void testSixBentOnEdge() {
+    public void testSixBentOnEdge() throws Exception {
         GoBoard b = initializeBoard("six_bent_on_edge", 2);
 
         checkEdgeBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
         checkEdgeWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
     }
 
-    public void testSixBentOnEdgeThreeFilled() {
+    public void testSixBentOnEdgeThreeFilled() throws Exception {
         GoBoard b = initializeBoard("six_bent_on_edge_three_filled", 4);
 
         checkEdgeBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
@@ -99,7 +99,7 @@ public class TestE6Information extends TestEyeTypeAnalyzer {
     }
 
 
-    public void testSixBentInCorner() {
+    public void testSixBentInCorner() throws Exception {
         GoBoard b = initializeBoard("six_bent_in_corner", 2);
 
         checkCornerBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
@@ -107,14 +107,14 @@ public class TestE6Information extends TestEyeTypeAnalyzer {
     }
 
     /** This may be an interesting case that needs more study. */
-    public void testSixBentInCornerKoFilled() {
+    public void testSixBentInCornerKoFilled() throws Exception {
         GoBoard b = initializeBoard("six_bent_in_corner_ko_filled", 4);
 
         checkCornerBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
         checkCornerWhiteEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE);
     }
 
-    public void testSixBlackAliveInAtari() {
+    public void testSixBlackAliveInAtari() throws Exception {
         GoBoard b = initializeBoard("six_black_alive_in_atari", 4);
 
         checkBlackEye(b, new E6Information(E112222.toString()), EyeStatus.ALIVE_IN_ATARI);
