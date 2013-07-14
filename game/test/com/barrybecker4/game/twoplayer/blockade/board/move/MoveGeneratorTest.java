@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class MoveGeneratorTest extends BlockadeTestCase {
 
-    public void  testGetWallsForMove() {
+    public void  testGetWallsForMove() throws Exception {
         restore("whitebox/moveList1");
 
         // List<BlockadeWall> walls = generator.getWallsForMove(move, paths);
@@ -25,7 +25,7 @@ public class MoveGeneratorTest extends BlockadeTestCase {
         //GameContext.log(2, "Walls=" + walls);
     }
 
-    public void testGenerateMoves() {
+    public void testGenerateMoves() throws Exception {
 
         restore("whitebox/noMoves2");
 
@@ -39,7 +39,7 @@ public class MoveGeneratorTest extends BlockadeTestCase {
                 +" moves="+ moves, moves.size() == expectedNumMoves);
     }
 
-    public void testGenerateMoves2() {
+    public void testGenerateMoves2() throws Exception {
 
         restore("whitebox/noMoves2");
         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
@@ -64,7 +64,9 @@ public class MoveGeneratorTest extends BlockadeTestCase {
         List moves = generator.generateMoves(lastMove);
 
         int expectedNumMoves = 60;
-        assertTrue("Expected there to be "+expectedNumMoves+" moves but got " +moves.size() +" moves="+ moves, moves.size() == expectedNumMoves);
+        assertTrue("Expected there to be " + expectedNumMoves
+                + " moves but got " +moves.size() +" moves="+ moves,
+                moves.size() == expectedNumMoves);
     }
 
 }

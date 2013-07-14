@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.blockade;
 
+import ca.dj.jigo.sgf.SGFException;
 import com.barrybecker4.game.common.MoveList;
 import com.barrybecker4.game.common.board.BoardPosition;
 import com.barrybecker4.game.common.player.PlayerList;
@@ -17,7 +18,9 @@ import com.barrybecker4.game.twoplayer.common.TwoPlayerOptions;
 import com.barrybecker4.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.barrybecker4.game.twoplayer.common.search.Searchable;
 
-import java.awt.*;
+import java.awt.Color;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -100,9 +103,9 @@ public class BlockadeController extends TwoPlayerController {
     }
 
     @Override
-    public void restoreFromFile( String fileName ) {
+    public void restoreFromStream(InputStream iStream) throws IOException, SGFException {
         BlockadeGameImporter importer = new BlockadeGameImporter(this);
-        importer.restoreFromFile(fileName);
+        importer.restoreFromStream(iStream);
     }
 
     /**

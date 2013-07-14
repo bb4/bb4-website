@@ -19,7 +19,7 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
     GroupNeighborAnalyzer groupAnalyzer_;
     GoBoard board_;
 
-    public void testGroupNbrs_None() {
+    public void testGroupNbrs_None() throws Exception {
         initializeAnalyzer("groupNbr_none");
         verifyFriendGroupNbrs(5, 5, true, 0);
         verifyFriendGroupNbrs(5, 5, false, 0);
@@ -27,43 +27,43 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
         verifyAllGroupNbrs(5, 5, false, 0);
     }
 
-    public void testGroupNbrs_OneDiagonalFriendPartialCut() {
+    public void testGroupNbrs_OneDiagonalFriendPartialCut() throws Exception {
         initializeAnalyzer("groupNbr_oneDiagonalFriendPartialCut");
         verifyFriendGroupNbrs(5, 5, true, 1);
         verifyFriendGroupNbrs(5, 8, false, 1);
     }
 
-    public void testGroupNbrs_OneDiagonalFriendCut() {
+    public void testGroupNbrs_OneDiagonalFriendCut() throws Exception {
         initializeAnalyzer("groupNbr_oneDiagonalFriendCut");
         verifyFriendGroupNbrs(5, 5, true, 0);
         verifyFriendGroupNbrs(5, 8, false, 0);
     }
 
-    public void testGroupNbrs_OneDiagonalEnemy() {
+    public void testGroupNbrs_OneDiagonalEnemy() throws Exception {
         initializeAnalyzer("groupNbr_oneDiagonalEnemy");
         verifyAllGroupNbrs(5, 5, true, 2);
         verifyAllGroupNbrs(5, 8, false, 2);
     }
 
-    public void testGroupNbrs_OneDiagonalEnemyCut() {
+    public void testGroupNbrs_OneDiagonalEnemyCut() throws Exception {
         initializeAnalyzer("groupNbr_oneDiagonalEnemyCut");
         verifyAllGroupNbrs(5, 5, true, 3);
         verifyAllGroupNbrs(5, 8, false, 2);
     }
 
-    public void testGroupNbrs_OneOneSpaceJumpFriendCut() {
+    public void testGroupNbrs_OneOneSpaceJumpFriendCut() throws Exception {
         initializeAnalyzer("groupNbr_oneOneSpaceJumpFriendCut");
         verifyFriendGroupNbrs(5, 5, true, 0);
         verifyFriendGroupNbrs(5, 8, false, 0);
     }
 
-    public void testGroupNbrs_OneOneSpaceJumpFriendAtariCut() {
+    public void testGroupNbrs_OneOneSpaceJumpFriendAtariCut() throws Exception {
         initializeAnalyzer("groupNbr_oneOneSpaceJumpFriendAtariCut");
         verifyFriendGroupNbrs(5, 5, true, 1);
         verifyFriendGroupNbrs(5, 8, false, 1);
     }
 
-    public void testGroupNbrs_OneKogeimaFriendCut() {
+    public void testGroupNbrs_OneKogeimaFriendCut() throws Exception {
         initializeAnalyzer("groupNbr_oneKogeimaFriendCut");
         verifyFriendGroupNbrs(5, 5, true, 0);
         verifyFriendGroupNbrs(5, 8, false, 0);
@@ -73,7 +73,7 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
      *    x--
      *    O-X   this should not be a cut of the knights move.
      */
-    public void testGroupNbrs_OneKogeimaFriendPartialCut() {
+    public void testGroupNbrs_OneKogeimaFriendPartialCut() throws Exception {
         initializeAnalyzer("groupNbr_oneKogeimaFriendPartialCut");
         verifyFriendGroupNbrs(5, 5, true, 1);
         verifyFriendGroupNbrs(5, 8, false, 1);
@@ -82,14 +82,14 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
     /**
      *   This should not be a cut of the knights move.
      */
-    public void testGroupNbrs_OneKogeimaFriendPartialCutInCorner() {
+    public void testGroupNbrs_OneKogeimaFriendPartialCutInCorner() throws Exception {
         initializeAnalyzer("groupNbr_cornerGroupKogeima");
         verifyFriendGroupNbrs(1, 7, false, 1);
         verifyFriendGroupNbrs(2, 5, false, 1);
     }
 
 
-    public void testGroupNbrs_OneFriend() {
+    public void testGroupNbrs_OneFriend() throws Exception {
         initializeAnalyzer("groupNbr_oneFriend");
         verifyFriendGroupNbrs(5, 5, true, 1);
         verifyFriendGroupNbrs(5, 8, false, 1);
@@ -97,7 +97,7 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
         verifyAllGroupNbrs(5, 8, false, 1);
     }
 
-    public void testGroupNbrs_OneNotFriend() {
+    public void testGroupNbrs_OneNotFriend() throws Exception {
         initializeAnalyzer("groupNbr_oneNotFriend");
         verifyFriendGroupNbrs(5, 5, true, 0);
         verifyFriendGroupNbrs(5, 8, false, 0);
@@ -105,7 +105,7 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
         verifyAllGroupNbrs(5, 8, false, 1);
     }
 
-    public void testGroupNbrs_Mixed() {
+    public void testGroupNbrs_Mixed() throws Exception {
         initializeAnalyzer("groupNbr_mixed");
         verifyFriendGroupNbrs(5, 5, true, 2);
         verifyFriendGroupNbrs(5, 8, false, 2);
@@ -113,20 +113,20 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
         verifyAllGroupNbrs(5, 8, false, 3);
     }
 
-    public void testGroupNbrs_nobiOnly() {
+    public void testGroupNbrs_nobiOnly() throws Exception {
         initializeAnalyzer("groupNbr_nobiOnly");
         verifyFriendGroupNbrs(5, 5, true, 4);
         verifyFriendGroupNbrs(5, 8, false, 4);
     }
 
     // Only pure group neigbors present.
-    public void testGroupNbrs_pureOnly() {
+    public void testGroupNbrs_pureOnly() throws Exception {
         initializeAnalyzer("groupNbr_pureOnly");
         verifyFriendGroupNbrs(5, 5, true, 16);
         verifyFriendGroupNbrs(9, 9, false, 16);
     }
 
-    public void testGroupNbrs_all20Mixed() {
+    public void testGroupNbrs_all20Mixed() throws Exception {
         initializeAnalyzer("groupNbr_all20Mixed");
         verifyFriendGroupNbrs(5, 5, true, 9);
         verifyFriendGroupNbrs(9, 9, false, 12);
@@ -134,7 +134,7 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
         verifyAllGroupNbrs(9, 9, false, 12);
     }
 
-    public void testGroupNbrs_randomMixed() {
+    public void testGroupNbrs_randomMixed() throws Exception {
         initializeAnalyzer("groupNbr_randomMixed");
         verifyFriendGroupNbrs(5, 5, true, 1);
         verifyFriendGroupNbrs(9, 9, false, 2);
@@ -146,7 +146,7 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
     /**
      * Corner group on a 7*7 board from a real game.
      */
-    public void testFindGroupFromInitialPosition() {
+    public void testFindGroupFromInitialPosition() throws Exception {
         initializeAnalyzer("groupNbr_cornerGroupKogeima");
         GoBoardPosition pos1 = (GoBoardPosition)board_.getPosition(2, 5);
         List<GoBoardPosition> group1 = groupAnalyzer_.findGroupFromInitialPosition(pos1, true);
@@ -162,7 +162,7 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
     }
 
 
-    private void initializeAnalyzer(String file) {
+    private void initializeAnalyzer(String file) throws Exception {
         restore(PREFIX +file);
         board_ = getBoard();
         groupAnalyzer_ = new GroupNeighborAnalyzer(board_);

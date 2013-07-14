@@ -43,7 +43,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
      *  |
      *  |     O
      */
-    public void testOccupiedPositionalScoreNoEye() {
+    public void testOccupiedPositionalScoreNoEye() throws Exception {
 
         initializeBoard("positional_score_no_eye");
 
@@ -59,7 +59,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
                 0.025, totalScore.getPositionScore(), TOLERANCE);
     }
 
-    public void testOverallPositionalScoreNoEye() {
+    public void testOverallPositionalScoreNoEye() throws Exception {
 
         initializeBoard("positional_score_no_eye");
         verifyExpectedOverallScore(0.025f);
@@ -72,7 +72,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
      *  |
      *  |                  O
      */
-    public void testOccupiedPositionalScoreStoneInEye() {
+    public void testOccupiedPositionalScoreStoneInEye() throws Exception {
 
         initializeBoard("positional_score_stone_in_eye");
 
@@ -88,7 +88,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
                 0.25, totalScore.getPositionScore(), TOLERANCE);
     }
 
-    public void testOverallPositionalScoreInEye() {
+    public void testOverallPositionalScoreInEye() throws Exception {
 
         initializeBoard("positional_score_stone_in_eye");
         verifyExpectedOverallScore(-0.0666667f);
@@ -100,7 +100,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
      *  |  X   OO |
      *  |XX
      */
-    public void testOccupiedPositionalAlive() {
+    public void testOccupiedPositionalAlive() throws Exception {
 
         initializeBoard("positional_score_alive");
 
@@ -121,7 +121,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
                 -1.7083f, totalScore.getPositionScore(), TOLERANCE);
     }
 
-    public void testOverallPositionalScoreAlive() {
+    public void testOverallPositionalScoreAlive() throws Exception {
 
         initializeBoard("positional_score_alive");
         verifyExpectedOverallScore(-0.975f);
@@ -130,7 +130,7 @@ public class TestPositionalScoreAnalyzer extends GoTestCase {
     /**
      * @param file saved sgf game file to load
      */
-    protected void initializeBoard(String file) {
+    protected void initializeBoard(String file) throws Exception {
         restore(PREFIX + file);
 
         GoBoard board = getBoard();

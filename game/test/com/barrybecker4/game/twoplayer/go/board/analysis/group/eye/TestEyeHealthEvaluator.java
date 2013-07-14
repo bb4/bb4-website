@@ -54,7 +54,7 @@ public class TestEyeHealthEvaluator extends GoTestCase {
     }
 
 
-    private void restoreGame(String file) {
+    private void restoreGame(String file) throws Exception {
         restore(PREFIX + file);
     }
 

@@ -31,7 +31,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
 
     // test absolute health calculation, and the number of liberties for the main black and white groups.
     // testAbsHealth1* test configurations with 1 stone in each group.
-    public void testAbsHealth1() {
+    public void testAbsHealth1() throws Exception {
         controller_.reset();
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
@@ -49,7 +49,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
     }
 
 
-    public void testAbsHealth1a() {
+    public void testAbsHealth1a() throws Exception {
         controller_.reset();
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
@@ -65,7 +65,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth1b() {
+    public void testAbsHealth1b() throws Exception {
         controller_.reset();
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
@@ -81,7 +81,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth1c() {
+    public void testAbsHealth1c() throws Exception {
         controller_.reset();
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
@@ -97,7 +97,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth1d() {
+    public void testAbsHealth1d() throws Exception {
         controller_.reset();
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
@@ -114,7 +114,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth2() {
+    public void testAbsHealth2() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 1.18;
@@ -129,7 +129,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth2a() {
+    public void testAbsHealth2a() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.42;
@@ -144,7 +144,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
    }
-    public void testAbsHealth2b() {
+    public void testAbsHealth2b() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.73;
@@ -159,7 +159,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth2c() {
+    public void testAbsHealth2c() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.54;
@@ -174,7 +174,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
    }
-    public void testAbsHealth2d() {
+    public void testAbsHealth2d() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.385;
@@ -189,7 +189,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth2e() {
+    public void testAbsHealth2e() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.516;
@@ -204,7 +204,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
    }
-    public void testAbsHealth2f() {
+    public void testAbsHealth2f() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.596;
@@ -219,7 +219,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth2g() {
+    public void testAbsHealth2g() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.17;
@@ -235,7 +235,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth3() {
+    public void testAbsHealth3() throws Exception {
         EyeInformation[] blackEyes = {E6.getInformation(E222233.toString()), E6.getInformation(E222233.toString())};
         EyeInformation[] whiteEyes = {};
         double bPotential = 1.58;
@@ -251,7 +251,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth3a() {
+    public void testAbsHealth3a() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.877;
@@ -266,7 +266,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth3b() {
+    public void testAbsHealth3b() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.6661734; // 0.82;
@@ -281,7 +281,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth3c() {
+    public void testAbsHealth3c() throws Exception {
         EyeInformation[] blackEyes = {new FalseEyeInformation()};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.59584;
@@ -297,7 +297,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth4() {
+    public void testAbsHealth4() throws Exception {
         EyeInformation[] blackEyes = {};  // should probably have a territorial eye here
         EyeInformation[] whiteEyes = {new E1Information()};
         double bPotential = 1.9;
@@ -312,7 +312,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth4a() {
+    public void testAbsHealth4a() throws Exception {
         EyeInformation[] blackEyes = {};  // should really have a territorial eye here.
         EyeInformation[] whiteEyes = {};
         double bPotential = 1.06;
@@ -327,7 +327,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  blackHealth, whiteHealth,
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-    public void testAbsHealth4b() {
+    public void testAbsHealth4b() throws Exception {
         EyeInformation[] blackEyes = {};  // should really have a territorial eye here.
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.788;
@@ -343,7 +343,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth5() {
+    public void testAbsHealth5() throws Exception {
         EyeInformation[] blackEyes = {new E2Information()};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.7497;
@@ -359,7 +359,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth5a() {
+    public void testAbsHealth5a() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.71;
@@ -375,7 +375,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth5b() {
+    public void testAbsHealth5b() throws Exception {
         EyeInformation[] blackEyes = {E4.getInformation(E2222.toString())};
         EyeInformation[] whiteEyes = {};
         double bPotential = 1.003;
@@ -391,7 +391,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth6() {       // seki
+    public void testAbsHealth6() throws Exception {       // seki
         EyeInformation[] blackEyes = {new E1Information()};
         EyeInformation[] whiteEyes = {new E1Information()};
         double bPotential = 0.67;
@@ -407,7 +407,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth6a() {
+    public void testAbsHealth6a() throws Exception {
         EyeInformation[] blackEyes = {new E1Information(), new E1Information()};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.9881;
@@ -423,7 +423,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-     public void testAbsHealth7() {
+     public void testAbsHealth7() throws Exception {
         EyeInformation[] blackEyes = {E6.getInformation(E222233.toString()), E5.getInformation(E12223.toString())};
         EyeInformation[] whiteEyes = {};
         double bPotential = 1.55;
@@ -439,7 +439,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth8() {
+    public void testAbsHealth8() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.54;
@@ -455,7 +455,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
 
-    public void testAbsHealth9() {
+    public void testAbsHealth9() throws Exception {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 1.49;
@@ -487,7 +487,7 @@ public class TestAbsoluteHealthAnalyzer extends GoTestCase {
                                          double expectedBlackHealth,  double expectedWhiteHealth,
                                          double expectedAbsAbsHealthDifference,
                                          double expectedAbsHealthDifference,
-                                         double expectedRelHealthDifference) {
+                                         double expectedRelHealthDifference) throws Exception  {
         restore(PREFIX + file);
 
         // find the biggest black and white groups

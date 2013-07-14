@@ -18,7 +18,7 @@ import static com.barrybecker4.game.twoplayer.blockade.board.BlockadeTstUtil.cre
 public class BoardAnalyzerTest extends BlockadeTestCase {
 
 
-    public void testFindAllOpponentShortestPathsForSimple5x7Player1() {
+    public void testFindAllOpponentShortestPathsForSimple5x7Player1() throws Exception {
 
         PathList expPaths = new PathList(new Path[] {
             new Path(new BlockadeMove[] {
@@ -44,7 +44,7 @@ public class BoardAnalyzerTest extends BlockadeTestCase {
         verifyOpponentShortestPaths("board/analysis/initial5x7", true, expPaths);
     }
 
-    public void testFindAllOpponentShortestPathsForSimple5x7Player2() {
+    public void testFindAllOpponentShortestPathsForSimple5x7Player2() throws Exception {
 
         PathList expPaths = new PathList(new Path[] {
             new Path(new BlockadeMove[] {
@@ -71,7 +71,7 @@ public class BoardAnalyzerTest extends BlockadeTestCase {
     }
 
 
-    public void testFindAllOpponentShortestPathsFor5x7Player1AfterFirstMove() {
+    public void testFindAllOpponentShortestPathsFor5x7Player1AfterFirstMove() throws Exception {
 
         PathList expPaths = new PathList(new Path[] {
             new Path(new BlockadeMove[] {
@@ -98,7 +98,7 @@ public class BoardAnalyzerTest extends BlockadeTestCase {
         verifyOpponentShortestPaths("board/analysis/afterFirstMove5x7", true, expPaths);
     }
 
-    public void testFindAllOpponentShortestPathsFor5x7Player2AfterFirstMove() {
+    public void testFindAllOpponentShortestPathsFor5x7Player2AfterFirstMove() throws Exception {
 
         PathList expPaths = new PathList(new Path[] {
             new Path(new BlockadeMove[] {
@@ -126,7 +126,7 @@ public class BoardAnalyzerTest extends BlockadeTestCase {
         verifyOpponentShortestPaths("board/analysis/afterFirstMove5x7", false, expPaths);
     }
 
-    public void testFindAllOpponentShortestPathsFor11x14Endgame() {
+    public void testFindAllOpponentShortestPathsFor11x14Endgame() throws Exception {
 
         PathList expPaths = new PathList(new Path[] {
             new Path(new BlockadeMove[] {
@@ -246,7 +246,8 @@ public class BoardAnalyzerTest extends BlockadeTestCase {
      * @param player1  player to check shortest paths for
      * @param expPaths the expected shortest paths to opponent home bases for the specified player.
      */
-    private void verifyOpponentShortestPaths(String filename, boolean player1, PathList expPaths) {
+    private void verifyOpponentShortestPaths(
+            String filename, boolean player1, PathList expPaths) throws Exception {
 
         restore(filename);
 
@@ -255,7 +256,6 @@ public class BoardAnalyzerTest extends BlockadeTestCase {
 
         PathList paths = analyzer.findAllOpponentShortestPaths(player1);
 
-        //System.out.println("paths = " + BlockadeTstUtil.getConstructorString(paths));
         //assertEquals("Unexpected number of shortest paths", 4, paths.size());
         assertEquals("Unexpected paths. Got\n" + BlockadeTstUtil.getConstructorString(paths),
                 expPaths, paths);

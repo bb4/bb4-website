@@ -28,11 +28,11 @@ public abstract class SearchableBaseTst extends TestCase {
     protected abstract ISearchableHelper createSearchableHelper();
 
     /** verify that we can retrieve the lookahead value. */
-    public abstract void testLookaheadValue();
+    public abstract void testLookaheadValue() throws Exception;
 
     /** verify that we can retrieve the lookahead value. */
-    public abstract void testAlphaBetaValue();
+    public abstract void testAlphaBetaValue() throws Exception;
 
     /** verify that we can retrieve the quiescence value. */
-    public abstract void testQuiescenceValue();
+    public abstract void testQuiescenceValue() throws Exception;
 }

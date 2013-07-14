@@ -4,7 +4,6 @@ package com.barrybecker4.game.twoplayer.blockade.board.move.wall;
 import com.barrybecker4.game.twoplayer.blockade.BlockadeTestCase;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoard;
 import com.barrybecker4.game.twoplayer.blockade.board.BlockadeBoardPosition;
-import static com.barrybecker4.game.twoplayer.blockade.board.BlockadeTstUtil.createMove;
 
 /**
  * @author Barry Becker

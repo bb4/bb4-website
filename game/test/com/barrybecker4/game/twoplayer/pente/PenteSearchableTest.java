@@ -36,7 +36,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
    }
 
     @Override
-    public void testNotDoneMidGame() {
+    public void testNotDoneMidGame() throws Exception {
         restore("midGameP1ToPlay");
         assertFalse("Did not expect done in the middle of the game. ",
                 searchable.done((TwoPlayerMove)getController().getLastMove(), false));
@@ -44,7 +44,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
 
     /** Expected done becauise there are 5 ina row and score should exceed the win threshold. */
     @Override
-    public void testDoneForMidGameWin() {
+    public void testDoneForMidGameWin() throws Exception {
         restore("wonGameP1");
         assertTrue("Expected done state for this game. P1 should have won.",
                 searchable.done((TwoPlayerMove)getController().getLastMove(), false));
@@ -56,7 +56,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
 
     /** Load a game at the last move and verify that the next move results in done == true  */
     @Override
-    public void testDoneEndGame() {
+    public void testDoneEndGame() throws Exception {
          restore("endGameNoMoreMoves");
         assertTrue("Expected done state for this game because there are no more moves. ",
                 searchable.done((TwoPlayerMove)getController().getLastMove(), false));
@@ -64,13 +64,13 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
 
     /**  Load a game in the middle and verify that we can get reasonable next moves. */
     @Override
-    public void testGenerateAllP1MovesMidGame() {
+    public void testGenerateAllP1MovesMidGame() throws Exception {
         checkGeneratedMoves("midGameP1ToPlay8x8", EXPECTED_ALL_MIDDLE_GAME_MOVES_P1);
     }
 
     /** Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
-    public void testGenerateTopP1MovesMidGame() {
+    public void testGenerateTopP1MovesMidGame() throws Exception {
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("midGameP1ToPlay8x8", EXPECTED_TOP_MIDDLE_GAME_MOVES_P1);
     }
@@ -80,26 +80,26 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
       * Of particular interest here is that we can generate moves that lead to a win.
       */
     @Override
-    public void testGenerateAllP1MovesEndGame() {
+    public void testGenerateAllP1MovesEndGame() throws Exception {
          checkGeneratedMoves("endGameP1ToPlay8x8", EXPECTED_ALL_END_GAME_MOVES_P1);
     }
 
     /** Load a game at the end and verify that we can get all the high value next moves. */
     @Override
-    public void testGenerateTopP1MovesEndGame() {
+    public void testGenerateTopP1MovesEndGame() throws Exception {
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameP1ToPlay8x8", EXPECTED_TOP_END_GAME_MOVES_P1);
     }
 
     /**  Load a game in the middle and verify that we can get reasonable next moves. */
     @Override
-    public void testGenerateAllP2MovesMidGame() {
+    public void testGenerateAllP2MovesMidGame() throws Exception {
         checkGeneratedMoves("midGameP2ToPlay8x8", EXPECTED_ALL_MIDDLE_GAME_MOVES_P2);
     }
 
     /**  Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
-    public void testGenerateTopP2MovesMidGame() {
+    public void testGenerateTopP2MovesMidGame() throws Exception {
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("midGameP2ToPlay8x8", EXPECTED_TOP_MIDDLE_GAME_MOVES_P2);
     }
@@ -109,20 +109,20 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
      * Of particular interest here is that we can generate moves that lead to a win.
      */
     @Override
-    public void testGenerateAllP2MovesEndGame() {
+    public void testGenerateAllP2MovesEndGame() throws Exception {
         checkGeneratedMoves("endGameP2ToPlay8x8", EXPECTED_ALL_END_GAME_MOVES_P2);
     }
 
      /** Load a game at the end and verify that we can get all the high value next moves. */
      @Override
-     public void testGenerateTopP2MovesEndGame() {
+     public void testGenerateTopP2MovesEndGame() throws Exception {
         getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameP2ToPlay8x8", EXPECTED_TOP_END_GAME_MOVES_P2);
     }
 
     /**  Verify that we generate a correct list of urgent moves.  */
     @Override
-    public void testGenerateUrgentMoves() {
+    public void testGenerateUrgentMoves() throws Exception {
 
         restore("urgentMoveP1ToPlay");
         // there should not be any urgent moves at the very start of the game.
@@ -133,7 +133,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
     }
 
     /**  Verify that we generate a correct list of urgent moves.  */
-    public void testGenerateUrgentMovesP2() {
+    public void testGenerateUrgentMovesP2() throws Exception {
 
         restore("urgentMoveP2ToPlay");
         // there should not be any urgent moves at the very start of the game.
@@ -144,7 +144,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
     }
 
 
-    private void checkGeneratedMoves(String fileName, TwoPlayerMove[] expectedMoves) {
+    private void checkGeneratedMoves(String fileName, TwoPlayerMove[] expectedMoves) throws Exception {
         restore(fileName);
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
         MoveList moves =

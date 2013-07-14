@@ -39,7 +39,6 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        System.out.println("helper = " + helper);
         searchable = getController().getSearchable();
 
         setPlayerSearchOptions();
@@ -75,8 +74,8 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
      * Restore a game file
      * @param problemFileBase the saved game to restore and test.
      */
-    protected void restore(String problemFileBase) {
-        getController().restoreFromFile(helper.getTestFile(problemFileBase));
+    protected void restore(String problemFileBase) throws Exception {
+        getController().restoreFromStream(helper.getTestResource(problemFileBase));
     }
 
     protected TwoPlayerController getController() {
@@ -109,7 +108,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     /** verify that we can retrieve the lookahead value. */
     @Override
-    public void testLookaheadValue() {
+    public void testLookaheadValue() throws Exception {
 
         BruteSearchOptions opts = getSearchOptions().getBruteSearchOptions();
         assertEquals("Unexpected lookahead value.", DEFAULT_LOOKAHEAD, opts.getLookAhead());
@@ -119,7 +118,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     /** verify that we can retrieve the lookahead value. */
     @Override
-    public void testAlphaBetaValue() {
+    public void testAlphaBetaValue() throws Exception{
 
         BruteSearchOptions opts = getSearchOptions().getBruteSearchOptions();
         assertEquals("Unexpected alphabeta value.", true, opts.getAlphaBeta());
@@ -129,7 +128,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     /** verify that we can retrieve the quiescence value. */
     @Override
-    public void testQuiescenceValue()  {
+    public void testQuiescenceValue() throws Exception {
         BruteSearchOptions opts = getSearchOptions().getBruteSearchOptions();
         assertEquals("Unexpected quiessence value.", false, opts.getQuiescence());
         opts.setQuiescence(true);
@@ -138,14 +137,14 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
 
     /**verify that we are not done if we are at the very start of the game.  */
-    public void testDoneBeforeAnyMovesMade() {
+    public void testDoneBeforeAnyMovesMade() throws Exception{
 
         assertFalse("We cannot be done if no moves have been made yet. ",
                 searchable.done(null, false));
     }
 
     /** If next move is null, and we have at least one move made, then done will be true.  */
-    public void testDoneNullAfterFirstMove() {
+    public void testDoneNullAfterFirstMove() throws Exception {
 
         controller.computerMovesFirst();
 
@@ -160,13 +159,13 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     }
 
     /**  Load a game in the middle and verify that a legal midgame move doesn't return true.  */
-    public abstract void testNotDoneMidGame();
+    public abstract void testNotDoneMidGame() throws Exception;
 
     /** Load a game that was won in the middle and verify that done returns true.  */
-    public abstract void testDoneForMidGameWin();
+    public abstract void testDoneForMidGameWin() throws Exception;
 
     /** Load a game that does not have any more valid moves and verify that done == true  */
-    public abstract void testDoneEndGame();
+    public abstract void testDoneEndGame() throws Exception;
 
     /**
      * Verify that we generate a reasonable list of moves to try next.
@@ -202,42 +201,42 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
    }
 
     /**  Load a game in the middle and verify that we can get all the reasonable next moves. */
-   public void testGenerateAllP1MovesMidGame() {
+   public void testGenerateAllP1MovesMidGame() throws Exception {
        assertFalse(false);
    }
 
    /**  Load a game in the middle and verify that we can get the expected high value next moves. */
-   public void testGenerateTopP1MovesMidGame() {
+   public void testGenerateTopP1MovesMidGame() throws Exception {
        assertFalse(false);
    }
 
     /** Load a game at the end and verify that we can get all the reasonable next moves. */
-   public void testGenerateAllP1MovesEndGame() {
+   public void testGenerateAllP1MovesEndGame() throws Exception {
        assertFalse(false);
    }
 
    /** Load a game at the end and verify that we can get all the high value next moves. */
-   public void testGenerateTopP1MovesEndGame() {
+   public void testGenerateTopP1MovesEndGame() throws Exception {
        assertFalse(false);
    }
 
    /**  Load a game in the middle and verify that we can get all the reasonable next moves. */
-   public void testGenerateAllP2MovesMidGame() {
+   public void testGenerateAllP2MovesMidGame() throws Exception {
        assertFalse(false);
    }
 
    /**  Load a game in the middle and verify that we can get the expected high value next moves. */
-   public void testGenerateTopP2MovesMidGame() {
+   public void testGenerateTopP2MovesMidGame() throws Exception {
        assertFalse(false);
    }
 
    /** Load a game at the end and verify that we can get all the reasonable next moves. */
-   public void testGenerateAllP2MovesEndGame() {
+   public void testGenerateAllP2MovesEndGame() throws Exception {
        assertFalse(false);
    }
 
    /** Load a game at the end and verify that we can get all the high value next moves. */
-   public void testGenerateTopP2MovesEndGame() {
+   public void testGenerateTopP2MovesEndGame() throws Exception {
        assertFalse(false);
    }
 
@@ -251,7 +250,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     }
 
    /**  Verify that we generate a correct list of urgent moves.  */
-   public void  testGenerateUrgentMoves() {
+   public void  testGenerateUrgentMoves() throws Exception {
          assertFalse(false);
          // load a typical game in the beginning and verify that there are no urgent next moves.
 

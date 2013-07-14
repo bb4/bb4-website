@@ -34,7 +34,7 @@ public abstract class WorthCalculatorBase extends GoTestCase {
         calculator = new WorthCalculator(board, analyzerMap);
     }
 
-    protected void verifyWorth(String file, int expWorth) {
+    protected void verifyWorth(String file, int expWorth) throws Exception {
 
         restore(PREFIX  + file);
 
@@ -48,7 +48,7 @@ public abstract class WorthCalculatorBase extends GoTestCase {
      * If we arrive at the same exact board position from two different paths,
      * we should calculate the same worth value.
      */
-    protected void compareWorths(String game1, String game2, int expWorth) {
+    protected void compareWorths(String game1, String game2, int expWorth) throws Exception {
 
         restore(PREFIX  + game1);
 

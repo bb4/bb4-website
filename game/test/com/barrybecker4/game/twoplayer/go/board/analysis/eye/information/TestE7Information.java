@@ -18,7 +18,7 @@ public class TestE7Information extends TestEyeTypeAnalyzer {
         return EyeType.E7;
     }
 
-    public void testSevenStraightSpaceEye() {
+    public void testSevenStraightSpaceEye() throws Exception {
         GoBoard b = initializeBoard("seven_space_straight_eye", 2);
 
         checkBlackEye(b, new E7Information(E1122222.toString()), EyeStatus.ALIVE);

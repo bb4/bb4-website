@@ -19,19 +19,19 @@ public class TestNeighborAnalyzer extends GoTestCase {
     private NeighborAnalyzer nbrAnalyzer_;
 
     // test group neighbor detection
-    public void testGetGroupNbrs1() {
+    public void testGetGroupNbrs1() throws Exception {
         verifyGroupNbrs("groupNbr1", 3, 3, 1, 1);
     }
 
-    public void testGetGroupNbrs2() {
+    public void testGetGroupNbrs2() throws Exception {
         verifyGroupNbrs("groupNbr2", 4, 4, 6, 8);
     }
 
-    public void testGetGroupNbrs3() {
+    public void testGetGroupNbrs3() throws Exception {
         verifyGroupNbrs("groupNbr3", 5, 4, 1, 1);
      }
 
-    public void testGetGroupNbrs4() {
+    public void testGetGroupNbrs4() throws Exception {
         verifyGroupNbrs("groupNbr4", 4, 4, 5, 5);
     }
 
@@ -39,43 +39,44 @@ public class TestNeighborAnalyzer extends GoTestCase {
      * Note that only nobi and diagonal enemy nbrs are considered group neighbors
      * while all 20 possible group nbrs are considered for friendly stones.
      */
-    public void testGetGroupNbrs5() {
+    public void testGetGroupNbrs5() throws Exception {
         verifyGroupNbrs("groupNbr5", 4, 4, 0, 1);
     }
 
-    public void testGetGroupNbrs6() {
+    public void testGetGroupNbrs6() throws Exception {
         verifyGroupNbrs("groupNbr6", 4, 4, 0, 3);
     }
 
-    public void testGetGroupNbrs7() {
+    public void testGetGroupNbrs7() throws Exception {
         verifyGroupNbrs("groupNbr7", 4, 4, 0, 4);
     }
 
-     public void testGetGroupNbrs8() {
+     public void testGetGroupNbrs8() throws Exception {
         verifyGroupNbrs("groupNbr8", 4, 4, 4, 6);
     }
 
-    public void testGetGroupNbrs9() {
+    public void testGetGroupNbrs9() throws Exception {
         verifyGroupNbrs("groupNbr9", 4, 4, 2, 6);
     }
 
-    public void testGetGroupNbrs10() {
+    public void testGetGroupNbrs10() throws Exception {
         verifyGroupNbrs("groupNbr10", 4, 4, 0, 1);
     }
 
-    public void testGetGroupNbrs11() {
+    public void testGetGroupNbrs11() throws Exception {
         verifyGroupNbrs("groupNbr11", 4, 4, 2, 3);
     }
 
-    public void testGetGroupNbrs12() {
+    public void testGetGroupNbrs12() throws Exception {
         verifyGroupNbrs("groupNbr12", 4, 4, 5, 5);
     }
 
-    public void testGetGroupNbrs13() {
+    public void testGetGroupNbrs13() throws Exception {
         verifyGroupNbrs("groupNbr13", 2, 6, 2, 6);  // 4, 5?
     }
 
-    private void verifyGroupNbrs(String file, int row, int col, int expectedNumSameNbrs, int expectedNumNbrs) {
+    private void verifyGroupNbrs(
+            String file, int row, int col, int expectedNumSameNbrs, int expectedNumNbrs) throws Exception {
         restore(PREFIX +file);
 
         GoBoard board = getBoard();
@@ -88,7 +89,7 @@ public class TestNeighborAnalyzer extends GoTestCase {
         Assert.assertTrue("numNbrs="+numNbrs+" expected "+ expectedNumNbrs, numNbrs == expectedNumNbrs);
     }
 
-    public void testFindOccupiedNbrs() {
+    public void testFindOccupiedNbrs() throws Exception {
 
         String file = "occupiedNbrs1";
         restore(PREFIX + file);

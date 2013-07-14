@@ -16,49 +16,49 @@ public class TestFalseEyeInformation extends TestEyeTypeAnalyzer {
         return EyeType.FalseEye;
     }
 
-    public void testFalseKoEye1() {
+    public void testFalseKoEye1() throws Exception {
         GoBoard b = initializeBoard("false_ko_eye1");
 
         checkBlackEye(b, new FalseEyeInformation(), EyeStatus.KO);
         checkWhiteEye(b, new FalseEyeInformation(), EyeStatus.KO);
     }
 
-    public void testFalseKoEye2() {
+    public void testFalseKoEye2() throws Exception {
         GoBoard b = initializeBoard("false_ko_eye2");
 
         checkBlackEye(b, new FalseEyeInformation(), EyeStatus.KO);
         checkWhiteEye(b, new FalseEyeInformation(), EyeStatus.KO);
     }
 
-    public void testFalseBasicEyeTwoDeep() {
+    public void testFalseBasicEyeTwoDeep() throws Exception {
         GoBoard b = initializeBoard("false_basic_eye2");
 
         checkBlackEye(b, new FalseEyeInformation(), EyeStatus.KO);
         checkWhiteEye(b, new FalseEyeInformation(), EyeStatus.KO);
     }
 
-    public void testFalseBasicEyeThreeDeep() {
+    public void testFalseBasicEyeThreeDeep() throws Exception {
         GoBoard b = initializeBoard("false_basic_eye3");
 
         checkBlackEye(b, new FalseEyeInformation(), EyeStatus.UNSETTLED);
         checkWhiteEye(b, new FalseEyeInformation(), EyeStatus.UNSETTLED);
     }
 
-    public void testFalseBasicEyeFourDeep() {
+    public void testFalseBasicEyeFourDeep() throws Exception {
         GoBoard b = initializeBoard("false_basic_eye4");
 
         checkBlackEye(b, new FalseEyeInformation(), EyeStatus.UNSETTLED);
         checkEdgeWhiteEye(b, new FalseEyeInformation(), EyeStatus.UNSETTLED);
     }
 
-    public void testFalseBasicEyeFiveDeep() {
+    public void testFalseBasicEyeFiveDeep() throws Exception {
         GoBoard b = initializeBoard("false_basic_eye5");
 
         checkBlackEye(b, new FalseEyeInformation(), EyeStatus.UNSETTLED);
         checkWhiteEye(b, new FalseEyeInformation(), EyeStatus.UNSETTLED);
     }
 
-    public void testFalseBasicEyeSixDeep() {
+    public void testFalseBasicEyeSixDeep() throws Exception {
         GoBoard b = initializeBoard("false_basic_eye6");
 
         checkCornerBlackEye(b, new FalseEyeInformation(), EyeStatus.NAKADE);

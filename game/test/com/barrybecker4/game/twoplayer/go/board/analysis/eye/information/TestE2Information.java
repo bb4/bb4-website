@@ -16,7 +16,7 @@ public class TestE2Information extends TestEyeTypeAnalyzer {
         return EyeType.E2;
     }
 
-    public void testTwoSpaceEye1() {
+    public void testTwoSpaceEye1() throws Exception {
         GoBoard b = initializeBoard("two_space_eye1");
 
         checkBlackEye(b, new E2Information(), EyeStatus.NAKADE);
@@ -24,7 +24,7 @@ public class TestE2Information extends TestEyeTypeAnalyzer {
     }
 
     /** checks edge and corner */
-    public void testTwoSpaceEyeOnEdge1() {
+    public void testTwoSpaceEyeOnEdge1() throws Exception {
         GoBoard b = initializeBoard("two_space_eye_on_edge1");
 
         checkBlackEye(b, new E2Information(), EyeStatus.NAKADE);

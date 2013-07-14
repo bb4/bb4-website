@@ -23,7 +23,7 @@ public class BlockadeControllerTest extends BlockadeTestCase {
     /**
      * Verify that the calculated worth for various moves is within reasonable ranges.
      */
-    public void testWorthOfWinningMove() {
+    public void testWorthOfWinningMove() throws Exception {
         restore("whitebox/endGame");
 
         BlockadeMove winningMove =

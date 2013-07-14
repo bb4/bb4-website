@@ -1,13 +1,10 @@
 Steps to build applet projects:
 
-I. Building requires java, svn, intellij, ant, gradle.
+I. Building requires java, svn, intellij, gradle.
  - Install java JDK 1.6 or higher from http://www.oracle.com/technetwork/java/javase/downloads.
  - Install Tortoise SVN (1.7 or higher from http://tortoisesvn.net/)
  - Install Intellij (free community edition version. 12.x or higher from http://www.jetbrains.com/idea/)
- - Install Ant 1.8+ if you want to deploy from the command line
-   (http://ant.apache.org/) migrating away from this toward using gradle exclusively. Don't need this if run
-   ant from within Intellij.
- - Install gradle 1.4 or higher (http://www.gradle.org/)
+ - Install gradle 1.6 or higher (http://www.gradle.org/)
 
 II. Get the source
     1. Create a java_projects/applets directory.
@@ -15,12 +12,7 @@ II. Get the source
     2. Right click applets dir and select SVN checkout.
        Url of repo = "https://free1.projectlocker.com/Tesujisoft/applets/svn/trunk".
        Alternatively, run "svn co https://free1.projectlocker.com/Tesujisoft/applets/svn/trunk" from the new applets dir
-    3. The ant tasks rely on having the foreach task which is in ant-contrib.
-       Get ant-contrib-0.6.jar from http://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-0.6/
-       and drop it into  <JetBrains install location>\IntelliJ IDEA Community Edition 12.x\lib\ant\lib
-       (note: it downloads as a zip file so pull it out of /lib in the zip)
     4. Set environment variables in Windows or Linux
-       Set PROJECT_HOME to the location of the "trunk" directory (e.g. D:\projects\java_projects\applets)
        Set JAVA_HOME to the JDK install location (e.g. D:\apps\Program Files\Java\jdk1.7.0_12).
 
 III. Building

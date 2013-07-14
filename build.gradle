@@ -18,16 +18,12 @@ subprojects {
 
     repositories {
         mavenCentral()
-        maven {
-            url "http://repo1.maven.org/maven2/"
-            // this Sonatype repo is where released bb4 jars come from
-            url "https://oss.sonatype.org/content/repositories/releases"
-            url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
-        }
-        flatDir {
-            name "fileRepo"
-            dirs "../repository"
-        }
+        maven { url "http://repo1.maven.org/maven2/"  }
+        // this Sonatype repo is where released bb4 jars come from
+        maven { url "https://oss.sonatype.org/content/repositories/releases" }
+        // this Sonatype repo is where SNAPSHOT bb4 jars come from
+        maven { url "https://oss.sonatype.org/content/groups/staging" }
+        maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
     }
 
     dependencies {
@@ -67,22 +63,10 @@ subprojects {
         }
     }
 
-    clean.doLast {
-        // project. is needed to disambiguate from the clean tasks existing delete.
-        project.delete(project.repositories.fileRepo.dirs)
-    }
-
-
     task copyToLib(dependsOn: jar, type: Copy) {
         description = "Copies the downloaded dependencies to the lib directory so they can be deployed (see webdeployment)"
         into "build/libs"
         from configurations.runtime
-    }
-
-    uploadArchives {
-        repositories {
-            add project.repositories.fileRepo
-        }
     }
 
     // all subprojects use this directory layout.

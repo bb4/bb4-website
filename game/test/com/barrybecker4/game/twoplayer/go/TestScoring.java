@@ -16,35 +16,39 @@ public class TestScoring extends GoTestCase {
     /** give some leeway on the territory estimate since its a heuristic. */
     private static final double TOLERANCE = 5;
 
-    public void testScoring1() {
+    public void testScoring1() throws Exception {
         checkScoring("problem_score1", 0, 0, 0, 0, 74, 57, -7);
     }
 
-    public void testScoring55a() { //                 bt, wt, finalWorth
+    public void testScoring55a() throws Exception {
+        //                                           bt, wt, finalWorth
         checkScoring("problem_score55a", 0, 0, 0, 7,  16,  1,   400);
     }
 
-    public void testScoring55b() { //                 bt, wt,  finalWorth
+    public void testScoring55b() throws Exception {
+        //                                           bt, wt,  finalWorth
         checkScoring("problem_score55b", 0, 2, 0, 6,   14, 2,  1604);  // 0, 2, 0, 6, 14, 0);
     }
 
-    public void testScoring2() { //                bt, wt,  finalWorth
+    public void testScoring2() throws Exception {
+        //                                          bt, wt,  finalWorth
         checkScoring("problem_score2", 0, 0, 3, 0, 58, 60,  -138);
     }
 
-    public void testScoringIdentPosition1a() { //           bt, wt,  finalWorth
+    public void testScoringIdentPosition1a() throws Exception {
+        //                                               bt, wt,  finalWorth
         checkScoring("problem_identPosition1a", 0, 0, 4, 0,  5, 7, -94); //13, 12, -94);
     }
 
-    public void testScoringIdentPosition1b() {
+    public void testScoringIdentPosition1b() throws Exception {
         checkScoring("problem_identPosition1b", 0, 0, 4, 0, 5, 7, -94); //13, 12, -94);
     }
 
-    public void testScoringIdentPosition2a() {
+    public void testScoringIdentPosition2a() throws Exception {
         checkScoring("problem_identPosition2a", 0, 0, 2, 1, 4, 5, 19);
     }
 
-    public void testScoringIdentPosition2b() {
+    public void testScoringIdentPosition2b() throws Exception {
         checkScoring("problem_identPosition2b", 0, 1, 2, 1, 4, 5, 596);
     }
 
@@ -60,9 +64,9 @@ public class TestScoring extends GoTestCase {
      * @param expectedWhiteTerr amount of white territory (excluding dead black stones in the territory)
      */
     private void checkScoring(String scoringProblem,
-                        int expectedBlackCapturesSoFar, int expectedWhiteCapturesSoFar,
-                        int expectedDeadBlackOnBoard, int expectedDeadWhiteOnBoard,
-                        int expectedBlackTerr, int expectedWhiteTerr, int expectedFinalWorth) {
+            int expectedBlackCapturesSoFar, int expectedWhiteCapturesSoFar,
+            int expectedDeadBlackOnBoard, int expectedDeadWhiteOnBoard,
+            int expectedBlackTerr, int expectedWhiteTerr, int expectedFinalWorth) throws Exception {
 
         updateLifeAndDeath(PATH_PREFIX + scoringProblem);
 
@@ -101,7 +105,7 @@ public class TestScoring extends GoTestCase {
 
     }
 
-    protected void updateLifeAndDeath(String problemFile) {
+    protected void updateLifeAndDeath(String problemFile) throws Exception {
         GameContext.log(0, "finding score for " + problemFile + " ...");
         restore(problemFile);
 

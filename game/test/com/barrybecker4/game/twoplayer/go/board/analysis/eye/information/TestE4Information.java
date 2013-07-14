@@ -20,35 +20,35 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
 
     // All in a row E1122
 
-    public void testFourBentSpaceEye() {
+    public void testFourBentSpaceEye() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_eye", 2);
 
         checkEdgeBlackEye(b, new E4Information(E1122.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.ALIVE);
     }
 
-    public void testFourBentOneVitalFilled() {
+    public void testFourBentOneVitalFilled() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_one_vital_filled", 4);
 
         checkBlackEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
         checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
     }
 
-    public void testFourBentTwoVitalsFilled() {
+    public void testFourBentTwoVitalsFilled() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_two_vitals_filled", 4);
 
         checkBlackEye(b, new E4Information(E1122.toString()), EyeStatus.NAKADE);
         checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.NAKADE);
     }
 
-    public void testFourBentOneEndFilled() {
+    public void testFourBentOneEndFilled() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_one_end_filled", 4);
 
         checkEdgeBlackEye(b, new E4Information(E1122.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.ALIVE);
     }
 
-    public void testFourBentTwoEndsFilled() {
+    public void testFourBentTwoEndsFilled() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_two_ends_filled", 6);
 
         checkBlackEye(b, new E4Information(E1122.toString()), EyeStatus.ALIVE);
@@ -56,63 +56,63 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
     }
 
 
-    public void testFourBentTwoEndsFilledCut() {
+    public void testFourBentTwoEndsFilledCut() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_two_ends_filled_cut", 7);
 
         checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.ALIVE);
         //checkBlackEye(b, new E4Information(E1122.toString()), EyeStatus.ALIVE);
     }
 
-    public void testFourBentThreeFilled() {
+    public void testFourBentThreeFilled() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_three_filled", 4);
 
         checkBlackEye(b, new E4Information(E1122.toString()), EyeStatus.NAKADE);
         checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
     }
 
-    public void testFourAliveInAtariVitalsSplit() {
+    public void testFourAliveInAtariVitalsSplit() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_in_atari_vitals_split", 6);
 
         checkBlackEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.NAKADE);  // ALIVE_IN_ATARI?
         checkWhiteEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.NAKADE);  // ALIVE_IN_ATARI?
     }
 
-    public void testFourInAtariVitalsStandard() {
+    public void testFourInAtariVitalsStandard() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_in_atari_vitals_standard", 7);
 
         checkBlackEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.NAKADE);
         checkWhiteEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.NAKADE);
     }
 
-    public void testFourAliveInAtariEndsStandard() {
+    public void testFourAliveInAtariEndsStandard() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_in_atari_ends_standard", 6);
 
         checkBlackEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
         checkWhiteEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
     }
 
-    public void testFourAliveInAtariEndsSeparate() {
+    public void testFourAliveInAtariEndsSeparate() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_in_atari_ends_separate", 6);
 
         checkBlackEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
         checkWhiteEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
     }
 
-    public void testFourAliveInAtariEndsSplit() {
+    public void testFourAliveInAtariEndsSplit() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_in_atari_ends_split", 6);
 
         checkBlackEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
         checkWhiteEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
     }
 
-    public void testFourBentEdgeKo() {
+    public void testFourBentEdgeKo() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_edge_ko", 5);
 
         checkEdgeBlackEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
         checkEdgeWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
     }
 
-    public void testFourBentCornerKo() {
+    public void testFourBentCornerKo() throws Exception {
         GoBoard b = initializeBoard("four_space_bent_corner_ko", 6);
 
         checkCornerBlackEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED); //ALIVE_IN_ATARI or KO?);
@@ -122,14 +122,14 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
 
     // pyramid
 
-    public void testFourPyramidSpaceEye() {
+    public void testFourPyramidSpaceEye() throws Exception {
         GoBoard b = initializeBoard("four_space_pyramid_eye", 2);
 
         checkBlackEye(b, new E4Information(E1113.toString()), EyeStatus.UNSETTLED);
         checkWhiteEye(b, new E4Information(E1113.toString()), EyeStatus.UNSETTLED);
     }
 
-    public void testFourPyramidSpaceVitalFilled() {
+    public void testFourPyramidSpaceVitalFilled() throws Exception {
         GoBoard b = initializeBoard("four_space_pyramid_vital_filled", 4);
 
         checkBlackEye(b, new E4Information(E1113.toString()), EyeStatus.NAKADE);
@@ -139,7 +139,7 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
 
     // clump
 
-    public void testFourClumpSpaceEye() {
+    public void testFourClumpSpaceEye() throws Exception {
         GoBoard b = initializeBoard("four_space_clump_eye", 2);
 
         checkBlackEye(b, new E4Information(E2222.toString()), EyeStatus.UNSETTLED);

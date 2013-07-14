@@ -12,7 +12,7 @@ import com.barrybecker4.game.twoplayer.go.board.elements.position.GoBoardPositio
 public class TestStringShapeAnalyzer extends GoTestCase {
 
 
-    public void testShape1() {
+    public void testShape1() throws Exception {
         restore("shape/problem_shape1");
 
         checkShape(4, 4, 0);
@@ -23,7 +23,7 @@ public class TestStringShapeAnalyzer extends GoTestCase {
         checkShape(11, 9, 1);
     }
 
-    public void testShape2() {
+    public void testShape2() throws Exception {
             restore("shape/problem_shape1");
 
             checkShape(4, 9, 3);

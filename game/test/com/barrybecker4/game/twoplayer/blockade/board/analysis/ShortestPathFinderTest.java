@@ -18,7 +18,7 @@ import static com.barrybecker4.game.twoplayer.blockade.board.BlockadeTstUtil.cre
  */
 public class ShortestPathFinderTest extends BlockadeTestCase {
 
-    public void testFindShortestPathsForSimple5x7() {
+    public void testFindShortestPathsForSimple5x7() throws Exception {
 
         PathList expPaths = new PathList(new Path[] {
             new Path(new BlockadeMove[] {
@@ -36,7 +36,7 @@ public class ShortestPathFinderTest extends BlockadeTestCase {
     }
 
 
-    public void testFindShortestPathsWhenWAllsPresentFor5x7() {
+    public void testFindShortestPathsWhenWAllsPresentFor5x7() throws Exception {
 
         PathList expPaths = new PathList(new Path[] {
             new Path(new BlockadeMove[] {
@@ -58,7 +58,7 @@ public class ShortestPathFinderTest extends BlockadeTestCase {
      * @param loc starting location of the shortest paths.
      * @param expPaths the expected shortest paths to opponent home bases for the specified player.
      */
-    private void verifyShortestPaths(String filename, Location loc, PathList expPaths) {
+    private void verifyShortestPaths(String filename, Location loc, PathList expPaths) throws Exception {
 
         restore(filename);
 
@@ -67,7 +67,6 @@ public class ShortestPathFinderTest extends BlockadeTestCase {
 
         PathList paths = pathFinder.findShortestPaths(board.getPosition(loc));
 
-        System.out.println("paths = " + BlockadeTstUtil.getConstructorString(paths));
         //assertEquals("Unexpected number of shortest paths", 4, paths.size());
         assertEquals("Unexpected paths. Got\n" + BlockadeTstUtil.getConstructorString(paths),
                 expPaths, paths);

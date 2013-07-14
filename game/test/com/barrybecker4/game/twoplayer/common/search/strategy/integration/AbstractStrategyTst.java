@@ -48,7 +48,7 @@ public abstract class AbstractStrategyTst extends TestCase {
         initializeSearchOptions();
     }
 
-    private void initializeSearchOptions() {
+    private void initializeSearchOptions()  {
 
         searchOptions = helper.createSearchOptions();
         PlayerList players = controller.getPlayers();
@@ -71,78 +71,78 @@ public abstract class AbstractStrategyTst extends TestCase {
     /**
      * Edge case where no searching is actually done. The found move will be the last move.
      */
-    public void testZeroLookAheadSearch() {
+    public void testZeroLookAheadSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(0);
         verifyMoves("ZeroLookAhead", getExpectedZeroLookAheadMoves());
     }
 
-    public void testOneLevelLookAheadSearch() {
+    public void testOneLevelLookAheadSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(1);
         verifyMoves("OneLevelLookAhead", getExpectedOneLevelLookAheadMoves());
     }
 
-    public void testOneLevelWithQuiescenceSearch() {
+    public void testOneLevelWithQuiescenceSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(1);
         getBruteSearchOptions().setQuiescence(true);
         verifyMoves("OneLevelWithQuiescence", getExpectedOneLevelWithQuiescenceMoves());
     }
 
-    public void testOneLevelWithQuiescenceAndABSearch() {
+    public void testOneLevelWithQuiescenceAndABSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(1);
         getBruteSearchOptions().setQuiescence(true);
         getBruteSearchOptions().setAlphaBeta(true);
         verifyMoves("OneLevelWithQuiescenceAndAB", getExpectedOneLevelWithQuiescenceAndABMoves());
     }
 
-    public void testTwoLevelLookAheadSearch() {
+    public void testTwoLevelLookAheadSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(2);
         verifyMoves("TwoLevelLookAhead", getExpectedTwoLevelLookAheadMoves());
     }
 
-    public void testFourLevelLookAheadSearch() {
+    public void testFourLevelLookAheadSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(4);
         verifyMoves("FourLevelLookAhead", getExpectedFourLevelLookaheadMoves());
     }
 
-    public void testFourLevelBest20PercentSearch() {
+    public void testFourLevelBest20PercentSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(4);
         getBestMovesOptions().setPercentageBestMoves(20);
         getBestMovesOptions().setMinBestMoves(4);
         verifyMoves("FourLevelBest20Percent", getExpectedFourLevelBest20PercentMoves());
     }
 
-    public void testTwoLevelWithQuiescenceLookAheadSearch() {
+    public void testTwoLevelWithQuiescenceLookAheadSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(2);
         getBruteSearchOptions().setQuiescence(true);
         verifyMoves("TwoLevelWithQuiescence", getExpectedTwoLevelWithQuiescenceMoves());
     }
 
-    public void testTwoLevelWithQuiescenceAndABSearch() {
+    public void testTwoLevelWithQuiescenceAndABSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(1);
         getBruteSearchOptions().setQuiescence(true);
         getBruteSearchOptions().setAlphaBeta(true);
         verifyMoves("TwoLevelWithQuiescenceAndAB", getExpectedTwoLevelWithQuiescenceAndABMoves());
     }
 
-    public void testThreeLevelWithQuiescenceLookAheadSearch() {
+    public void testThreeLevelWithQuiescenceLookAheadSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(3);
         getBruteSearchOptions().setQuiescence(true);
         verifyMoves("ThreeLevelWithQuiescence", getExpectedThreeLevelWithQuiescenceMoves());
     }
 
-    public void testFourLevelWithQuiescenceLookAheadSearch() {
+    public void testFourLevelWithQuiescenceLookAheadSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(4);
         getBruteSearchOptions().setQuiescence(true);
         verifyMoves("FourLevelWithQuiescence", getExpectedFourLevelWithQuiescenceMoves());
     }
 
-    public void testFourLevelNoAlphaBetaSearch() {
+    public void testFourLevelNoAlphaBetaSearch() throws Exception {
         getBruteSearchOptions().setLookAhead(4);
         getBruteSearchOptions().setAlphaBeta(false);
         verifyMoves("FourLevelNoAlphaBeta", getExpectedFourLevelNoAlphaBetaMoves());
     }
 
-    public void verifyMoves(String desc, ExpectedMoveMatrix expectedMoves) {
+    public void verifyMoves(String desc, ExpectedMoveMatrix expectedMoves) throws Exception {
         searchOptions.setSearchStrategyMethod(getSearchStrategyToTest());
 
         System.out.println(desc + " " + getSearchStrategyToTest());
@@ -158,9 +158,10 @@ public abstract class AbstractStrategyTst extends TestCase {
         //System.out.println("TOTAL TIME = " + FormatUtil.formatNumber(elapsed));
     }
 
-    public void verifyMove(Progress prog, boolean player1, ExpectedMoveMatrix expectedMoves, String desc) {
+    public void verifyMove(
+            Progress prog, boolean player1, ExpectedMoveMatrix expectedMoves, String desc) throws Exception {
 
-        controller.restoreFromFile(helper.getTestFile(prog, player1));
+        controller.restoreFromStream(helper.getTestResource(prog, player1));
 
         MoveInfo expectedNext = expectedMoves.getExpectedMove(prog, player1);
 
