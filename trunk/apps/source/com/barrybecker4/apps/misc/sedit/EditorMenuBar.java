@@ -97,7 +97,6 @@ public class EditorMenuBar extends JMenuBar implements ActionListener {
     private static JFileChooser getFileChooser() {
         if (chooser_ == null) {
             chooser_ = FileChooserUtil.getFileChooser();
-            //chooser_.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
             chooser_.setFileFilter(new ExtensionFileFilter(EXT));
         }
         return chooser_;

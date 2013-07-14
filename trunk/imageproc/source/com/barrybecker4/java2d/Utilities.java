@@ -1,8 +1,16 @@
 package com.barrybecker4.java2d;
 
-import com.barrybecker4.common.util.FileUtil;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -18,7 +26,7 @@ public class Utilities {
     private static int sID = 0;
 
     public static final String DEFAULT_IMAGE_DIR =
-            FileUtil.PROJECT_HOME + "source/com/barrybecker4/java2d/images/";
+           "/com/barrybecker4/java2d/images/";
 
     /**
      * @param image image to load

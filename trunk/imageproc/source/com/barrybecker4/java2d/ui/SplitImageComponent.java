@@ -21,19 +21,22 @@ public class SplitImageComponent extends JPanel {
     private BufferedImage mSecondImage;
     private int mSplitX;
 
-    public SplitImageComponent( String path ) {
-        setImage( path );
+    /**
+     * @param path resource path to image
+     */
+    public SplitImageComponent(String path) {
+        setImage(path);
         init();
     }
 
-    public SplitImageComponent( BufferedImage image ) {
-        setImage( image );
+    public SplitImageComponent(BufferedImage image) {
+        setImage(image);
         init();
     }
 
-    public void setImage( String path ) {
-        Image image = Utilities.blockingLoad( path );
-        mImage = Utilities.makeBufferedImage( image );
+    public void setImage(String path) {
+        Image image = Utilities.blockingLoad(getClass().getResource(path));
+        mImage = Utilities.makeBufferedImage(image);
     }
 
     public void setImage( BufferedImage image ) {
