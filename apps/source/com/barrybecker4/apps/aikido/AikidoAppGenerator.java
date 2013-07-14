@@ -41,8 +41,7 @@ public class AikidoAppGenerator {
     private static final int THUMB_IMG_HEIGHT = 130;
 
     /**
-     * Used to be /projects/javascript_projects/aikido_builder/,
-     * but I need everything in the PROJECT_HOME to be self contained and transferable.
+     * A self contained and transferable location.
      */
     private static final String RESULT_PATH = FileUtil.PROJECT_HOME + "/apps/dist/aikido_builder/";
 

@@ -1,10 +1,10 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.puzzle.adventure.ui;
 
+import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.puzzle.adventure.Story;
 import com.barrybecker4.ui.file.ExtensionFileFilter;
 import com.barrybecker4.ui.file.FileChooserUtil;
-import com.barrybecker4.ui.util.GUIUtil;
 
 import javax.swing.BorderFactory;
 import javax.swing.JMenu;
@@ -120,7 +120,7 @@ class StoryMenu extends JMenu implements ActionListener  {
     }
 
     private File getDefaultDir() {
-        String defaultDir = GUIUtil.RESOURCE_ROOT + Story.STORIES_ROOT;
+        String defaultDir = FileUtil.PROJECT_HOME + Story.STORIES_ROOT;
         return new File(defaultDir);
     }
 

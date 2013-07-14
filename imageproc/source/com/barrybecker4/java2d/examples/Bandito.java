@@ -35,7 +35,6 @@ public class Bandito {
         // Process the source image raster.
         BufferedImage sourceImage = sic.getImage();
         Raster source = sourceImage.getRaster();
-        System.out.println("source numbands="+ source.getNumBands());
         WritableRaster destination = op.filter( source, null );
 
         // Create a destination image using the processed
@@ -47,6 +46,7 @@ public class Bandito {
         // Set up the frame window.
         f.getContentPane().setLayout( new BorderLayout() );
         f.getContentPane().add( sic, BorderLayout.CENTER );
+        f.pack();
     }
 
     private Bandito() {}
