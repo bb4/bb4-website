@@ -26,7 +26,7 @@ import java.util.List;
  * parallel calc       | 23.8     21.1    20.9    20.5
  * n-par calc          | 19.0     17.1            17.0
  * n-par calc/offscreen|                  12.8    12.9
- * par calc/offscreen   | 17.2     14.2   14.3    14.1
+ * par calc/offscreen  | 17.2     14.2    14.3    14.1
  *
  *   pr/ns : parallel rendering/ no synchronized
  *   npr/ns : no parallel rendering no synchronization.
@@ -47,7 +47,7 @@ import java.util.List;
  * parallel calc       |   180 fps             78 fps
  * n-par calc          |   102 fps             66 fps
  *
- * For larger rectanlge than fixed the performance increases seem even better
+ * For larger rectangle than fixed the performance increases seem even better
  *
  *                       par rend          non-par rendering
  *                      ------------       --------------
@@ -181,6 +181,7 @@ public final class GrayScottController {
             dt_ = dt;
         }
 
+        @Override
         public void run() {
             algorithm_.computeNextTimeStep(minX_, maxX_, dt_);
         }
