@@ -23,7 +23,7 @@
             <jar href="bb4-pente-1.0.jar" main="false"/>
             <jar href="bb4-chess-1.0.jar" main="false"/>
             <jar href="bb4-go-1.0.jar" main="false"/>
-            <jar href="jigo-sgf-1.1.jar" main="false"/>
+            <jar href="jigo-sgf-1.2.jar" main="false"/>
             <jar href="bb4-blockade-1.0.jar" main="false"/>
             <jar href="bb4-galactic-1.0.jar" main="false"/>
             <jar href="bb4-poker-1.0.jar" main="false"/>

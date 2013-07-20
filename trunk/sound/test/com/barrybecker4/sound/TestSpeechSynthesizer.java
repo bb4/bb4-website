@@ -30,7 +30,7 @@ public class TestSpeechSynthesizer extends TestCase {
         speech.sayPhoneWords( PLAY_GAME );
     }
 
-    /** Why can't is say a as in apple?
+    /** Why can't it say a as in apple?
     public void testSayApple() {
         String text = "a|p|l  1sp AA_|P_|l 10ms AA_|p|L_ 50ms AA_|p|LL";
         speech.sayText(text);

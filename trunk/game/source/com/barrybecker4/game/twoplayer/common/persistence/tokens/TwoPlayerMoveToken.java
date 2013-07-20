@@ -1,8 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.common.persistence.tokens;
 
-import ca.dj.jigo.sgf.Point;
-import ca.dj.jigo.sgf.tokens.PlacementToken;
+import com.barrybecker4.ca.dj.jigo.sgf.Point;
+import com.barrybecker4.ca.dj.jigo.sgf.tokens.PlacementToken;
 
 import java.io.IOException;
 import java.io.StreamTokenizer;
