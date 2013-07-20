@@ -1,9 +1,9 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.game.twoplayer.go.persistence;
 
-import ca.dj.jigo.sgf.SGFException;
-import ca.dj.jigo.sgf.SGFLoader;
-import ca.dj.jigo.sgf.tokens.*;
+import com.barrybecker4.ca.dj.jigo.sgf.SGFException;
+import com.barrybecker4.ca.dj.jigo.sgf.SGFLoader;
+import com.barrybecker4.ca.dj.jigo.sgf.tokens.*;
 
 import java.io.IOException;
 import java.io.StreamTokenizer;
