@@ -14,9 +14,8 @@ import javax.vecmath.Vector2d;
  *  Assumes an M*N grid of cells.
  *  X axis increases to the left
  *  Y axis increases downwards to be consistent with java graphics.
- *  adapted from work by Nick Foster.
- *  See
- *  http://physbam.stanford.edu/~fedkiw/papers/stanford2001-02.pdf
+ *  Adapted from work by Nick Foster.
+ *  See http://physbam.stanford.edu/~fedkiw/papers/stanford2001-02.pdf
  *
  *  Improvements:
  *    - increase performance by only keeping track of particles near the surface.
