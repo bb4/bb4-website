@@ -11,6 +11,7 @@ ext.distributionSchemaDir="$distributionDir/schema"
 dependencies {
     compile 'com.barrybecker4:bb4-optimization:1.1.2-SNAPSHOT'
     compile 'com.barrybecker4:bb4-sound:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-sgf:1.1'
     compile project(':imageproc')
     compile project(':puzzle')
     compile project(':game')
@@ -48,7 +49,7 @@ task deployJars(type: Copy, dependsOn: [ ':imageproc:copyToLib', ':game:copyToLi
 
     from fileTree("$project.projectDir").include('*/build/libs/**').files
     into "$distributionGameDir"
-    include 'bb4-*.jar', 'jhlabs-*.jar', 'jigo-sgf-*.jar', 'jai-codec-*.jar', 'vecmath-*.jar'
+    include 'bb4-*.jar', 'jhlabs-*.jar', 'bb4-sgf-*.jar', 'jai-codec-*.jar', 'vecmath-*.jar'
     exclude '*-sources.jar', '*-javadoc.jar'
 }
 

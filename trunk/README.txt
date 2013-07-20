@@ -44,6 +44,6 @@ option 2 - intellij (recommended)
 Additional sources
   I split out jigo (used by go) and jhlabs (used by image breeder) into separate gradle projects which build separate
   jars because they are based on other peoples open source code. In the rare case that you need to modify the source in
-  these jars, do the following.
-  - svn co https://free1.projectlocker.com/Tesujisoft/jhlabs/svn  (in java_projects/jhlabs)
-  - svn co https://free1.projectlocker.com/Tesujisoft/jigo/svn    (in java_projects/jigo)
+  these jars, get them using the following.
+  - svn co https://free1.projectlocker.com/Tesujisoft/jhlabs/svn
+  - git clone https://github.com/barrybecker4/bb4-sgf.git
