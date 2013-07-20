@@ -66,7 +66,7 @@ task runTrebuchet(type: JavaExec, depends: classes) {
 }
 
 dependencies {
-   compile project(':sound')
+   compile 'com.barrybecker4:bb4-sound:1.1.2-SNAPSHOT'
    compile 'com.barrybecker4:bb4-optimization:1.1.2-SNAPSHOT'
 }
 
