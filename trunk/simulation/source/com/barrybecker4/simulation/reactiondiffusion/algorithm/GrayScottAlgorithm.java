@@ -4,7 +4,7 @@ package com.barrybecker4.simulation.reactiondiffusion.algorithm;
 
 /**
  * This is the core of the Gray-Scott reaction diffusion simulation implementation.
- * based on an implementation by Joakim Linde and modified by Barry Becker.
+ * Based on an work by Joakim Linde and modified by Barry Becker.
  */
 final class GrayScottAlgorithm {
 
