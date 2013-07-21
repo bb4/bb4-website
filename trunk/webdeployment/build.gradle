@@ -64,10 +64,9 @@ task deployJars(type: Copy, dependsOn: [ ':imageproc:copyToLib', ':game:copyToLi
 
 // I would like this to trigger a top level build of everything, but right now it has to be done manually.
 task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
-            description: "Deploys all files  to $distributionGameDir so they can be bulk copied to a website") << {
+    description: "Deploys all files  to $distributionGameDir so they can be bulk copied to a website") << {
     apply from: 'appletHtmlCommon.gradle'
 
-    println "webdeployment dir ="+ project.absoluteProjectPath("dist")
     // copy all the js, css, image files (should only be done once, not once per locale)
     copy {
         from "$sourceDir/html"
@@ -75,7 +74,7 @@ task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
         include '*.js', '*.css', '*.gif'
     }
 
-    println "localesList="+ appletHtml.localesList
+    println "locales = " + appletHtml.localesList
     appletHtml.localesList.each {
         locale -> createHtmlForLocale(locale)
     }
