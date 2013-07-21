@@ -5,18 +5,18 @@
  *
  *               __common*_____
  *             /              \
- *            ui*             sound
+ *            ui*             sound*
  *             |              /  \__
  *          optimization*   /     | \
  *         /          \  \/      /\  \______
  *      imageproc __ apps \     /  \        \
- *         \         /    puzzle  simulation game
- *          \       /     __/______/________/
- *           \     /     /
+ *         \         /    puzzle*  simulation game
+ *          \       /     __/______/_________/
+ *           \     /    /
  *          webdeployment
  *
- *    * Now opensource projects in github (https://github.com/barrybecker4)
+ *    * Now open-source projects in github (https://github.com/barrybecker4)
  */
 
-include 'imageproc', 'puzzle', 'simulation', 'game', 'apps', 'webdeployment'
+include 'imageproc', 'simulation', 'game', 'apps', 'webdeployment'
 

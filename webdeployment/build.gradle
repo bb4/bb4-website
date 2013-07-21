@@ -12,9 +12,18 @@ dependencies {
     compile 'com.barrybecker4:bb4-optimization:1.1.2-SNAPSHOT'
     compile 'com.barrybecker4:bb4-sound:1.1.2-SNAPSHOT'
     compile 'com.barrybecker4:bb4-sgf:1.1'
-    compile project(':imageproc')
-    compile project(':puzzle')
+
+    compile 'com.barrybecker4:bb4-puzzle:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-adventure:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-hiq:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-maze:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-redpuzzle:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-sudoku:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-tantrix:1.1.2-SNAPSHOT'
+
+    //compile project(':simulation') need?
     compile project(':game')
+    compile project(':imageproc')
     compile project(':apps')
 }
 

@@ -17,6 +17,9 @@
     <orderEntry type="library" exported="" name="commons-codec-1.7" level="project" />
     <orderEntry type="library" exported="" name="xml-apis-1.4.01" level="project" />
     <orderEntry type="module" module-name="imageproc" exported="" />
+    <orderEntry type="library" exported="" name="bb4-common-1.1.2-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="bb4-sound-1.1.2-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="vecmath-1.3.1" level="project" />
   </component>
 </module>
 
