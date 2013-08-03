@@ -8,15 +8,15 @@
  *            ui*             sound*
  *             |              /  \__
  *          optimization*   /     | \
- *         /          \  \/      /\  \______
- *      imageproc __ apps \     /  \        \
- *         \         /    puzzle*  simulation game
- *          \       /     __/______/_________/
+ *         /          \  \/      /\  \__________
+ *      imageproc __ apps \     /  \            \
+ *         \         /    puzzle*  simulation*  game*
+ *          \       /     __/______/____________/
  *           \     /    /
  *          webdeployment
  *
  *    * Now open-source projects in github (https://github.com/barrybecker4)
  */
 
-include 'imageproc', 'simulation', 'apps', 'webdeployment'
+include 'imageproc', 'apps', 'webdeployment'
 

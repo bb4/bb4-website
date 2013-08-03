@@ -33,7 +33,21 @@ dependencies {
     compile 'com.barrybecker4:bb4-poker:1.1.2-SNAPSHOT'
     compile 'com.barrybecker4:bb4-set:1.1.2-SNAPSHOT'
 
-    //compile project(':simulation') need?
+    compile 'com.barrybecker4:bb4-simulation:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-dice:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-fluid:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-fractalexplorer:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-habitat:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-henonexplorer:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-liquid:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-lsystem:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-predprey:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-reactiondiffusion:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-snake:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-stock:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-trebuchet:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-verhulst:1.1.2-SNAPSHOT'
+
     compile project(':imageproc')
     compile project(':apps')
 }
