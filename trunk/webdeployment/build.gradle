@@ -78,10 +78,10 @@ task deploySchemas(type:Copy, description: "Copy schema files to $distributionDi
 // Used to have ':common:copyToLib', ':ui:copyToLib' to get ui dependent jars,
 // however they are no longer needed because ivy will automatically draw them in based
 // on the dependencies specified by the bb4-common and bb4-optimization pom file.
-task deployJars(type: Copy, dependsOn: [ ':imageproc:copyToLib' ],
-    description: "Deploys jar files needed for running applets and web start applications") {
+task deployJars(type:Copy, dependsOn: [ ':imageproc:copyToLib', ':webdeployment:copyToLib' ],
+    description: "Deploys jar files needed for running applets and web start applications")  {
 
-    from fileTree("$project.projectDir").include('*/build/libs/**').files
+    from fileTree("$project.projectDir").include('build/libs/**').files
     into "$distributionGameDir"
     include 'bb4-*.jar', 'jhlabs-*.jar', 'bb4-sgf-*.jar', 'jai-codec-*.jar', 'vecmath-*.jar'
     exclude '*-sources.jar', '*-javadoc.jar'
@@ -212,6 +212,11 @@ Map getFileTypeReplacements(ResourceBundle labels, String applet, Map fileType) 
 
     replacements.put("codebase", codebase)
     return replacements
+}
+
+jar {
+    // skip building the default jar that contains everything
+    enabled = false
 }
 
 
