@@ -21,8 +21,19 @@ dependencies {
     compile 'com.barrybecker4:bb4-sudoku:1.1.2-SNAPSHOT'
     compile 'com.barrybecker4:bb4-tantrix:1.1.2-SNAPSHOT'
 
+    compile 'com.barrybecker4:bb4-game-common:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-twoplayer-common:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-multiplayer-common:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-card:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-blockade:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-go:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-pente:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-tictactoe:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-galactic:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-poker:1.1.2-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-set:1.1.2-SNAPSHOT'
+
     //compile project(':simulation') need?
-    compile project(':game')
     compile project(':imageproc')
     compile project(':apps')
 }
@@ -53,7 +64,7 @@ task deploySchemas(type:Copy, description: "Copy schema files to $distributionDi
 // Used to have ':common:copyToLib', ':ui:copyToLib' to get ui dependent jars,
 // however they are no longer needed because ivy will automatically draw them in based
 // on the dependencies specified by the bb4-common and bb4-optimization pom file.
-task deployJars(type: Copy, dependsOn: [ ':imageproc:copyToLib', ':game:copyToLib'],
+task deployJars(type: Copy, dependsOn: [ ':imageproc:copyToLib' ],
     description: "Deploys jar files needed for running applets and web start applications") {
 
     from fileTree("$project.projectDir").include('*/build/libs/**').files
