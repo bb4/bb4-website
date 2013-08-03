@@ -18,5 +18,5 @@
  *    * Now open-source projects in github (https://github.com/barrybecker4)
  */
 
-include 'imageproc', 'simulation', 'game', 'apps', 'webdeployment'
+include 'imageproc', 'simulation', 'apps', 'webdeployment'
 
