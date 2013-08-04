@@ -26,6 +26,7 @@ dependencies {
     compile "com.barrybecker4:bb4-twoplayer-common:$version"
     compile "com.barrybecker4:bb4-multiplayer-common:$version"
     compile "com.barrybecker4:bb4-card:$version"
+    compile "com.barrybecker4:bb4-chess:$version"
     compile "com.barrybecker4:bb4-blockade:$version"
     compile "com.barrybecker4:bb4-go:$version"
     compile "com.barrybecker4:bb4-pente:$version"
@@ -83,10 +84,10 @@ task deploySchemas(type:Copy, description: "Copy schema files to $distributionDi
 /**
  * Make sure all the dependent jar files are drawn into the dist directory.
  */
-task deployJars(type:Copy, dependsOn: [ ':imageproc:copyToLib', ':webdeployment:copyToLib' ],
+task deployJars(type:Copy, dependsOn: [':apps:copyToLib', ':imageproc:copyToLib', ':webdeployment:copyToLib'],
     description: "Deploys jar files needed for running applets and web start applications")  {
 
-    from fileTree("$project.projectDir").include('build/libs/**').files
+    from fileTree("$project.projectDir/..").include('**/build/libs/**').files
     into "$distributionGameDir"
     include 'bb4-*.jar', 'jhlabs-*.jar', 'bb4-sgf-*.jar', 'jai-codec-*.jar', 'vecmath-*.jar'
     exclude '*-sources.jar', '*-javadoc.jar'

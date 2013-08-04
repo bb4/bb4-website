@@ -85,7 +85,7 @@ public class ImageBreederApplet extends ApplicationApplet
      */
     private void createImageFrame( String imageFile ) {
         currentImage = GUIUtil.getBufferedImage(imageFile);
-        System.out.println("currentImage=" + currentImage);
+        System.out.println("currentImage=" + currentImage + "\n from " + imageFile);
 
         // also create image list panel
         imageListPanel = new ImageListPanel();

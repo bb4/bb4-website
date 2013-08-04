@@ -33,8 +33,20 @@
         var widthMax = 2600;
         var heightMax = 1600;
 
-        var widthNew = window.innerWidth;
-        var heightNew = window.innerHeight;
+        var widthNew;
+        var heightNew;
+
+        if (self.innerHeight) {
+          // all except Explorer
+          widthNew = self.innerWidth;
+          heightNew = self.innerHeight;
+        }
+        else if (document.body)
+        {
+          // IE Explorers
+          widthNew = document.body.clientWidth;
+          heightNew = document.body.clientHeight;
+        }
 
         if (widthNew > widthMax) {
           widthNew = widthMax;
