@@ -1,25 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/source" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/build" />
+    <exclude-output/>
+    <content url="file://$MODULE_DIR$/">
+      <sourceFolder url="file://$MODULE_DIR$/source" isTestSource="false"/>
+      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true"/>
+      <excludeFolder url="file://$MODULE_DIR$/.gradle"/>
+      <excludeFolder url="file://$MODULE_DIR$/build"/>
     </content>
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="TEST" name="junit-3.8.2" level="project" />
-    <orderEntry type="library" exported="" name="google-api-translate-java-0.97" level="project" />
-    <orderEntry type="library" exported="" name="commons-collections-3.2" level="project" />
-    <orderEntry type="library" exported="" name="xercesImpl-2.3.0" level="project" />
-    <orderEntry type="library" exported="" name="commons-codec-1.7" level="project" />
-    <orderEntry type="library" exported="" name="xml-apis-1.4.01" level="project" />
-    <orderEntry type="module" module-name="imageproc" exported="" />
-    <orderEntry type="library" exported="" name="bb4-common-1.1.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="bb4-sound-1.1.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="vecmath-1.3.1" level="project" />
+    <orderEntry type="inheritedJdk"/>
+    <orderEntry type="sourceFolder" forTests="false"/>
+    <orderEntry type="library" exported="" name="google-api-translate-java-0.97" level="project"/>
+    <orderEntry type="library" exported="" name="bb4-common-1.1.2-SNAPSHOT" level="project"/>
+    <orderEntry type="library" exported="" name="vecmath-1.3.1" level="project"/>
+    <orderEntry type="library" exported="" name="xercesImpl-2.3.0" level="project"/>
+    <orderEntry type="library" scope="TEST" name="junit-3.8.2" level="project"/>
+    <orderEntry type="library" exported="" name="bb4-sound-1.1.2-SNAPSHOT" level="project"/>
+    <orderEntry type="library" exported="" name="commons-collections-3.2" level="project"/>
+    <orderEntry type="library" exported="" name="commons-codec-1.7" level="project"/>
+    <orderEntry type="library" exported="" name="xml-apis-1.4.01" level="project"/>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/commons-collections/commons-collections/3.2/jar/f951934aa5ae5a88d7e6dfaa6d32307d834a88be/commons-collections-3.2.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/commons-collections/commons-collections/3.2/source/73d0340eaecbb0ec9d3e0ace90547ef08cbfaf27/commons-collections-3.2-sources.jar!/"/>
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/com.barrybecker4/bb4-sound/1.1.2-SNAPSHOT/jar/bad64c258effa0f4ea66a4c48d8567cfb3315561/bb4-sound-1.1.2-SNAPSHOT.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/com.barrybecker4/bb4-sound/1.1.2-SNAPSHOT/source/40ad7785ba72dfdc0f233ccb8eda5bc8f394ca2b/bb4-sound-1.1.2-SNAPSHOT-sources.jar!/"/>
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/commons-codec/commons-codec/1.7/jar/9cd61d269c88f9fb0eb36cea1efcd596ab74772f/commons-codec-1.7.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/commons-codec/commons-codec/1.7/source/a97e03d6b57d47e9e1dbf7212278069064324ed/commons-codec-1.7-sources.jar!/"/>
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/xerces/xercesImpl/2.3.0/jar/adbb16a4d99a48a97444a0822f7909314e1c1c5b/xercesImpl-2.3.0.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES/>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/xml-apis/xml-apis/1.4.01/jar/3789d9fada2d3d458c4ba2de349d48780f381ee3/xml-apis-1.4.01.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/xml-apis/xml-apis/1.4.01/source/5502da0c4c0a7916a604356ef19394ccfa30cd4b/xml-apis-1.4.01-sources.jar!/"/>
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/java3d/vecmath/1.3.1/jar/a0ae4f51da409fa0c20fa0ca59e6bbc9413ae71d/vecmath-1.3.1.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES/>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/com.barrybecker4/bb4-common/1.1.2-SNAPSHOT/jar/6380ed6e658b9d556469c0a7d529c5c2ab8daaa7/bb4-common-1.1.2-SNAPSHOT.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/com.barrybecker4/bb4-common/1.1.2-SNAPSHOT/source/f4c2957a336e9cc976c49e2590c20e0bc0cfb411/bb4-common-1.1.2-SNAPSHOT-sources.jar!/"/>
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/google-api-translate-java-0.97.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES/>
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="imageproc" exported=""/>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/junit/junit/3.8.2/jar/7e4cde26b53a9a0e3fe5b00d1dbbc7cc1d46060/junit-3.8.2.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES>
+          <root url="jar://C:/Users/becker/.gradle/caches/artifacts-24/filestore/junit/junit/3.8.2/source/aaa058540bf14ad600dd784de979c46c721ccbbe/junit-3.8.2-sources.jar!/"/>
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
-
