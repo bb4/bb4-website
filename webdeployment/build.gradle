@@ -3,50 +3,51 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 import java.text.MessageFormat
 
-version = '1.0'
+version = getVersion()
 
 ext.distributionGameDir="$distributionDir/applets"
 ext.distributionSchemaDir="$distributionDir/schema"
 
+/** these dependent jars will be pull from Sonatype where they were published */
 dependencies {
-    compile 'com.barrybecker4:bb4-optimization:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-sound:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-sgf:1.1'
+    compile "com.barrybecker4:bb4-optimization:$version"
+    compile "com.barrybecker4:bb4-sound:$version"
+    compile "com.barrybecker4:bb4-sgf:1.1"
 
-    compile 'com.barrybecker4:bb4-puzzle:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-adventure:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-hiq:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-maze:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-redpuzzle:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-sudoku:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-tantrix:1.1.2-SNAPSHOT'
+    compile "com.barrybecker4:bb4-puzzle:$version"
+    compile "com.barrybecker4:bb4-adventure:$version"
+    compile "com.barrybecker4:bb4-hiq:$version"
+    compile "com.barrybecker4:bb4-maze:$version"
+    compile "com.barrybecker4:bb4-redpuzzle:$version"
+    compile "com.barrybecker4:bb4-sudoku:$version"
+    compile "com.barrybecker4:bb4-tantrix:$version"
 
-    compile 'com.barrybecker4:bb4-game-common:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-twoplayer-common:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-multiplayer-common:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-card:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-blockade:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-go:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-pente:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-tictactoe:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-galactic:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-poker:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-set:1.1.2-SNAPSHOT'
+    compile "com.barrybecker4:bb4-game-common:$version"
+    compile "com.barrybecker4:bb4-twoplayer-common:$version"
+    compile "com.barrybecker4:bb4-multiplayer-common:$version"
+    compile "com.barrybecker4:bb4-card:$version"
+    compile "com.barrybecker4:bb4-blockade:$version"
+    compile "com.barrybecker4:bb4-go:$version"
+    compile "com.barrybecker4:bb4-pente:$version"
+    compile "com.barrybecker4:bb4-tictactoe:$version"
+    compile "com.barrybecker4:bb4-galactic:$version"
+    compile "com.barrybecker4:bb4-poker:$version"
+    compile "com.barrybecker4:bb4-set:$version"
 
-    compile 'com.barrybecker4:bb4-simulation:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-dice:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-fluid:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-fractalexplorer:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-habitat:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-henonexplorer:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-liquid:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-lsystem:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-predprey:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-reactiondiffusion:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-snake:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-stock:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-trebuchet:1.1.2-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-verhulst:1.1.2-SNAPSHOT'
+    compile "com.barrybecker4:bb4-simulation:$version"
+    compile "com.barrybecker4:bb4-dice:$version"
+    compile "com.barrybecker4:bb4-fluid:$version"
+    compile "com.barrybecker4:bb4-fractalexplorer:$version"
+    compile "com.barrybecker4:bb4-habitat:$version"
+    compile "com.barrybecker4:bb4-henonexplorer:$version"
+    compile "com.barrybecker4:bb4-liquid:$version"
+    compile "com.barrybecker4:bb4-lsystem:$version"
+    compile "com.barrybecker4:bb4-predprey:$version"
+    compile "com.barrybecker4:bb4-reactiondiffusion:$version"
+    compile "com.barrybecker4:bb4-snake:$version"
+    compile "com.barrybecker4:bb4-stock:$version"
+    compile "com.barrybecker4:bb4-trebuchet:$version"
+    compile "com.barrybecker4:bb4-verhulst:$version"
 
     compile project(':imageproc')
     compile project(':apps')
@@ -57,7 +58,9 @@ clean.doLast {
     project.delete("$distributionDir", "$stagingDir")
 }
 
-// Should be able to have a type: CopyTask and use << instead of doLast
+/**
+ * Copy image files used in web deployment to the dist directory
+ */
 task deployImages(type: Copy, description: "Copy image files to $distributionGameDir")  {
     from "$sourceDir/images"
     into "$distributionGameDir"
@@ -66,7 +69,9 @@ task deployImages(type: Copy, description: "Copy image files to $distributionGam
     include '**/*.gif'
 }
 
-// Should be able to have a type: CopyTask and use << instead of doLast
+/**
+ * Copy XMl schema files to the dist directory so they can be referenced with an http namespace.
+ */
 task deploySchemas(type:Copy, description: "Copy schema files to $distributionDir") {
 
      from fileTree("$project.projectDir").files
@@ -75,9 +80,9 @@ task deploySchemas(type:Copy, description: "Copy schema files to $distributionDi
      include "**/*.xsd"
 }
 
-// Used to have ':common:copyToLib', ':ui:copyToLib' to get ui dependent jars,
-// however they are no longer needed because ivy will automatically draw them in based
-// on the dependencies specified by the bb4-common and bb4-optimization pom file.
+/**
+ * Make sure all the dependent jar files are drawn into the dist directory.
+ */
 task deployJars(type:Copy, dependsOn: [ ':imageproc:copyToLib', ':webdeployment:copyToLib' ],
     description: "Deploys jar files needed for running applets and web start applications")  {
 
@@ -87,12 +92,14 @@ task deployJars(type:Copy, dependsOn: [ ':imageproc:copyToLib', ':webdeployment:
     exclude '*-sources.jar', '*-javadoc.jar'
 }
 
-// I would like this to trigger a top level build of everything, but right now it has to be done manually.
+/**
+ * I would like this to trigger a top level build of everything, but right now it has to be done manually.
+ */
 task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
     description: "Deploys all files  to $distributionGameDir so they can be bulk copied to a website") << {
     apply from: 'appletHtmlCommon.gradle'
 
-    // copy all the js, css, image files (should only be done once, not once per locale)
+    // copy all the js, css, image files (only done once, not once per locale)
     copy {
         from "$sourceDir/html"
         into "$distributionGameDir/.."
@@ -103,6 +110,12 @@ task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
     appletHtml.localesList.each {
         locale -> createHtmlForLocale(locale)
     }
+}
+
+/** read the version from message bundle. It is the version of all the bb4 jars */
+String getVersion() {
+    def labels = ResourceBundle.getBundle('html', Locale.ENGLISH)
+    return labels.getString("version")
 }
 
 /**
@@ -118,7 +131,10 @@ void createHtmlForLocale(Locale locale) {
     createAppletFilesOfType(jnlp, locale)
 }
 
-
+/**
+ * Index pages are created for each language (i.e. locale) supported.
+ * @param locale the locale to create an index page for
+ */
 void createHtmlIndexPage(Locale locale) {
     def labels = ResourceBundle.getBundle('html', locale)
     // make these replacements when copying
@@ -138,6 +154,11 @@ void createHtmlIndexPage(Locale locale) {
     }
 }
 
+/**
+ * Creates either the html applet files or the jnlp webstart files for a specified locale.
+ * @param fileTypeMap either html or jnlp message replacements for the individual files (see appletHtmlCommon.gradle)
+ * @param locale the locale to create an index page for
+ */
 void createAppletFilesOfType(Map fileTypeMap, Locale locale) {
     def labels = ResourceBundle.getBundle('html', locale)
     appletHtml.get("appletList").each { String applet ->
@@ -153,6 +174,11 @@ void createAppletFilesOfType(Map fileTypeMap, Locale locale) {
     }
 }
 
+/**
+ * Create a massage replacement map.
+ * @param labels
+ * @return the index replacements
+ */
 Map getIndexReplacements(ResourceBundle labels) {
     def replacements = new HashMap()
     htmlIndex.get("replacementList").each {
@@ -187,6 +213,10 @@ Map getEntryReplacements(ResourceBundle labels) {
     return replacements
 }
 
+/**
+ * @param labels the message bundle with message keys and values
+ * @return entry key replacements
+ */
 Map getEntryKeyReplacements(ResourceBundle labels) {
     def replacements = new HashMap()
     appletHtml.get("appletList").each { applet ->
@@ -198,14 +228,20 @@ Map getEntryKeyReplacements(ResourceBundle labels) {
     return replacements
 }
 
-
+/**
+ *
+ * @param labels message bundle
+ * @param applet name of the applet
+ * @param fileType map of keys for either htnml or jnlp
+ * @return message replacement map with values taking into account the version
+ */
 Map getFileTypeReplacements(ResourceBundle labels, String applet, Map fileType) {
     def replacements = new HashMap()
 
     fileType.get("replacementList").each { String key ->
         def appletKey = applet + '.' + key;
         if (labels.containsKey(appletKey))
-            replacements.put(key, labels.getString(appletKey))
+            replacements.put(key, MessageFormat.format(labels.getString(appletKey), project.version))
         else
             replacements.put(key, labels.getString(key))
     }

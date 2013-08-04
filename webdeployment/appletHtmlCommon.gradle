@@ -16,7 +16,8 @@ ext {
     // message replacements for the top level index file (excluding the entries)
     htmlIndex = new HashMap()
     htmlIndex.put("replacementList",
-          ["locale", "charset", "title", "introduction", "appletGameEntries", "appletPuzzleEntries", "appletSimulationEntries",
+          ["locale", "charset", "title", "introduction",
+           "appletGameEntries", "appletPuzzleEntries", "appletSimulationEntries",
            "tab1", "tab2", "tab3"])
 
     // message replacements for the entries within the top level index file
@@ -27,14 +28,16 @@ ext {
     html = new HashMap()
     html.put("type", "html")
     html.put("replacementList",
-          ["title", "name", "locale", "charset", "language", "longDescription", "qualifiedAppletClassName", "className",
+          ["title", "name", "locale", "charset", "language", "longDescription",
+           "qualifiedAppletClassName", "className",
            "panelClass", "width", "height", "doResize", "jarList"])
 
     // replacements for jnlp file
     jnlp = new HashMap()
     jnlp.put("type", "jnlp")
     jnlp.put("replacementList",
-          ["title", "description", "locale", "language", "qualifiedAppClassName", "className", "panelClass", "name",
+          ["title", "description", "locale", "language",
+           "className", "panelClass", "name", "version",
            "jarElement1", "jarElement2"])
 }
 
