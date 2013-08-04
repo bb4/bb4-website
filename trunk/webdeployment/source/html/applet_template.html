@@ -37,13 +37,13 @@
         var heightNew;
 
         if (self.innerHeight) {
-          // all except Explorer
+          // all except IE
           widthNew = self.innerWidth;
           heightNew = self.innerHeight;
         }
         else if (document.body)
         {
-          // IE Explorers
+          // IE Explorer
           widthNew = document.body.clientWidth;
           heightNew = document.body.clientHeight;
         }
