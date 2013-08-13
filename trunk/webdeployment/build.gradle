@@ -22,10 +22,9 @@ dependencies {
     compile "com.barrybecker4:bb4-sudoku:$version"
     compile "com.barrybecker4:bb4-tantrix:$version"
 
-    compile "com.barrybecker4:bb4-game-common:$version"
-    compile "com.barrybecker4:bb4-twoplayer-common:$version"
-    compile "com.barrybecker4:bb4-multiplayer-common:$version"
-    compile "com.barrybecker4:bb4-card:$version"
+    compile "com.barrybecker4:bb4-game:$version"
+    compile "com.barrybecker4:bb4-twoplayer:$version"
+    compile "com.barrybecker4:bb4-multiplayer:$version"
     compile "com.barrybecker4:bb4-chess:$version"
     compile "com.barrybecker4:bb4-blockade:$version"
     compile "com.barrybecker4:bb4-go:$version"
