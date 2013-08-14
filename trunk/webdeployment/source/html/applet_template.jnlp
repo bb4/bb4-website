@@ -14,8 +14,8 @@
         <resources>
             <j2se version="1.6+" initial-heap-size="64m" max-heap-size="900m" href="http://java.sun.com/products/autodl/j2se"/>
             <jar href="bb4-common-{version}.jar" main="false"/>
-            <jar href="bb4-twoplayer-common-{version}.jar" main="false"/>
-            <jar href="bb4-multiplayer-common-{version}.jar" main="false"/>
+            <jar href="bb4-twoplayer-{version}.jar" main="false"/>
+            <jar href="bb4-multiplayer-{version}.jar" main="false"/>
             <jar href="bb4-puzzle-{version}.jar" main="false"/>
             <jar href="bb4-sound-{version}.jar" main="false"/>
             <jar href="bb4-ui-{version}.jar" main="false"/>
