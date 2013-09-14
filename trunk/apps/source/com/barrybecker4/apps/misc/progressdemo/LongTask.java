@@ -5,12 +5,12 @@ import com.barrybecker4.common.concurrency.ThreadUtil;
 import com.barrybecker4.common.concurrency.Worker;
 
 /**
- *  Uses a Worker to perform a time-consuming, fake task.
+ * Uses a Worker to perform a time-consuming, fake task.
  */
 public class LongTask {
     private int lengthOfTask;
     private int current = 0;
-    private String statMessage;
+    private String statMessage = "begun";
 
     /**
      * Compute magnitude of task...
@@ -71,11 +71,11 @@ public class LongTask {
      */
     private class ActualTask {
         ActualTask () {
-            //Fake a long task,
-            //making a random amount of progress every second.
+            // Fake a long task,
+            // make a random amount of progress every second.
             while (current < lengthOfTask) {
                 ThreadUtil.sleep(1000);
-                //make some progress
+                // make some progress
                 current += Math.random() * 100;
                 if (current > lengthOfTask) {
                     current = lengthOfTask;
