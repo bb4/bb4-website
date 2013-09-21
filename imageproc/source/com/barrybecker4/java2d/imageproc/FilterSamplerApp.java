@@ -85,7 +85,7 @@ public class FilterSamplerApp extends ApplicationFrame
         bottom.add( topBottom );
         bottom.add( statusLabel );
 
-        // add placeholder param paner
+        // add placeholder param panel
         paramPanel = new ParameterPanel(null);
         add(paramPanel, BorderLayout.CENTER);
         add( filterList, BorderLayout.WEST );
