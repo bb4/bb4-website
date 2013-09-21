@@ -27,6 +27,5 @@ public class BidirectionalText extends ApplicationFrame {
 
     public static void main( String[] args ) {
         new BidirectionalText( "BidirectionalText v1.0" );
-
     }
 }
