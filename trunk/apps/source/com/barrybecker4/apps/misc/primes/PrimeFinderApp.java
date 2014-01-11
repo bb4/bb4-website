@@ -14,7 +14,7 @@ public class PrimeFinderApp extends ApplicationFrame {
     private static final int N = 200000;
 
     private PrimeFinderApp() {
-        super("Primer Number Finder");
+        super("Primer Number Finder");    // NON-NLS
     }
 
     @Override
@@ -27,7 +27,6 @@ public class PrimeFinderApp extends ApplicationFrame {
 
         pfpanel.startComputing(N);
     }
-
 
 
     public static void main(String[] args) {
