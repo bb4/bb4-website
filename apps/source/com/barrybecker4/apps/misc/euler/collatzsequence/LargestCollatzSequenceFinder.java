@@ -33,7 +33,7 @@ public class LargestCollatzSequenceFinder {
 
         long longestStart = 0;
         long longestNumTerms = 0;
-        for (long i = 2; i < limit; i++) {
+        for (long i = 1; i < limit; i++) {
             long numTerms = getNumTerms(i);
             if (numTerms > longestNumTerms) {
                 longestStart = i;
