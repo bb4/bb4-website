@@ -7,34 +7,32 @@ package com.barrybecker4.apps.misc.primes;
  */
 public class PrimeNumberGenerator {
 
-    private int currentCandidate;
+    private long currentCandidate;
+
+
+    public PrimeNumberGenerator(long startingNumber) {
+        currentCandidate = startingNumber;
+    }
 
     public PrimeNumberGenerator() {
-        currentCandidate = 1;
+        this(1);
     }
 
     /**
      * @return the next computed prime number
      */
-    public int getNextPrimeNumber() {
+    public long getNextPrimeNumber() {
         currentCandidate++;
         if (currentCandidate == 2)
             return 2;
 
-        while (!isPrime(currentCandidate)) {
+        while (!PrimeNumberUtil.isPrime(currentCandidate)) {
             currentCandidate++;
         }
         return currentCandidate;
     }
 
 
-    private boolean isPrime(int num) {
-
-        for (int i=2; i <= Math.sqrt(num); i++) {
-            if (num % i == 0) return false;
-        }
-        return true;
-    }
 }
 
 

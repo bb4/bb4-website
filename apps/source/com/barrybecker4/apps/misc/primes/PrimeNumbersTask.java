@@ -29,9 +29,9 @@ class PrimeNumbersTask extends SwingWorker<Integer, Integer> {
     @Override
     public Integer doInBackground() {
         while (numFoundSoFar < numbersToFind && ! isCancelled()) {
-            int number = generator.getNextPrimeNumber();
+            long number = generator.getNextPrimeNumber();
             numFoundSoFar ++;
-            publish(number);
+            publish((int)number);
             setProgress(100 * numFoundSoFar / numbersToFind);
         }
 
