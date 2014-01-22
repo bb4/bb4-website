@@ -7,8 +7,7 @@ package com.barrybecker4.apps.misc.readnumber;
  *
  * @author Barry Becker
  */
-public enum GroupNumber implements INumberEnum
-{
+public enum GroupNumber implements INumberEnum {
 
     THOUSHAND("thousand", "th|o|w|s|a|n|d"),
     MILLION("million", "m|i|ll|y|o|n"),
@@ -58,7 +57,7 @@ public enum GroupNumber implements INumberEnum
 
 
     /**
-     * constructor for eye type enun.
+     * constructor for eye type enum.
      */
     GroupNumber(String label, String pronunciation) {
         label_ = label;
