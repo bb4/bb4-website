@@ -9,7 +9,7 @@ public enum TensNumber implements INumberEnum
 {
     TWENTY("twenty", "t|w|e|n|t|ee"),
     THIRTY("thirty", "th|i|r|t|ee"),
-    FOURTY("fourty", "f|o|r|t|ee"),
+    FOURTY("forty", "f|o|r|t|ee"),
     FIFTY("fifty", "f|i|f|t|ee"),
     SIXTY("sixty", "s|i|k|s|t|ee"),
     SEVENTY("seventy", "s|e|v|e|n|t|ee"),
