@@ -4,11 +4,9 @@ import java.applet.Applet;
 
 import java.awt.*;
 
-
 public class Snowman extends Applet
 {
     public void paint(Graphics page)
-
     {
         final int MID = 150;
         final int TOP = 50;
