@@ -13,20 +13,19 @@ public class Prime {
      */
     public static void main(String[] args) {
 
-        ArrayList<Integer> primes = new ArrayList<Integer>();
+        ArrayList<Integer> factors = new ArrayList<Integer>();
         Scanner kbd = new Scanner(System.in);
+        System.out.println("Find the prime factorization of what number24?");
         int number = kbd.nextInt();
 
         for (int i = 2; i <= number; i++) {
             while (number % i == 0) {
-                primes.add(i);
+                factors.add(i);
                 number /= i;
             }
         }
 
-        for (int j = 0; j < primes.size(); j++) {
-            System.out.print(primes.get(j));
-        }
+        System.out.println( "prime factorization = " + factors);
     }
 
 }
