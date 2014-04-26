@@ -15,7 +15,7 @@ public class Prime {
 
         ArrayList<Integer> factors = new ArrayList<Integer>();
         Scanner kbd = new Scanner(System.in);
-        System.out.println("Find the prime factorization of what number24?");
+        System.out.println("Find the prime factorization of what number?");
         int number = kbd.nextInt();
 
         for (int i = 2; i <= number; i++) {
@@ -27,5 +27,4 @@ public class Prime {
 
         System.out.println( "prime factorization = " + factors);
     }
-
 }
