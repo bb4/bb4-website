@@ -1,10 +1,9 @@
-/** Copyright by Barry G. Becker, 2004. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2004-2014. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.aikido;
 
 import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.common.xml.DomUtil;
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -15,9 +14,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Instructions for creating an Aikido technique app:
- *   1. fill in the <aikdo_technique>.xml file. Its dtd is hierarchy.dtd.  It assumes one root.
- *   2. Take pictures corresponding to nodes in hierarchy using camcorder or other digital camera.
+ * Instructions for creating the Aikido Technique Builder app:
+ *   1. fill in the <aikido_technique>.xml file. Its dtd is hierarchy.dtd.  It assumes one root.
+ *   2. Take pictures corresponding to nodes in the hierarchy using a digital camera.
  *      Store the images in /projects/javascript_projects/aikido_builder/images/katate_dori (or whichever attack)
  *   3. Run this program on the xml file to generate technique_builder.html
  *      and all_techniques.html in barrybecker4/projects/javascript_projects/aikido_builder/.
@@ -35,18 +34,22 @@ public class AikidoAppGenerator {
     private static final boolean DEBUG_MODE = false;
 
     private static String imgPath_ = null;
-    private static final String IMG_SUFFIX = "_s.jpg";
+
 
     private static final int THUMB_IMG_WIDTH = 170;
     private static final int THUMB_IMG_HEIGHT = 130;
 
+    private static final String DEFAULT_INPUT_FILE = "katate_dori.xml";
+
     /**
      * A self contained and transferable location.
      */
-    private static final String RESULT_PATH = FileUtil.getHomeDir() + "/apps/dist/aikido_builder/";
+    private static final String RESULT_PATH = FileUtil.getHomeDir() + "../../javascript_projects/aikido_builder/";
+            //"/apps/dist/aikido_builder/";
 
     /** the builder DHTML application */
     private static final String RESULT_BULDER_FILE = "technique_builder.html";
+
     /** all the techniques in one file (for debugging mostly) */
     private static final String RESULT_ALL_FILE = "all_techniques.html";
 
@@ -103,30 +106,30 @@ public class AikidoAppGenerator {
         // first print the img and label for the node, then next ptrs for all children,
         // then do the same for all its children
         StringBuilder buf = new StringBuilder();
-        NodeInfo nodeInfo = new NodeInfo(node.getAttributes());
-        if (nodeInfo.id == null)  {
-            System.out.println("null id for "+node.getNodeName()+' '+node.getNodeValue());
+        NodeInfo nodeInfo = new NodeInfo(imgPath_, node.getAttributes());
+        if (nodeInfo.getId() == null)  {
+            System.out.println("null id for " + node.getNodeName() + ' ' + node.getNodeValue());
         }
 
         NodeList children = node.getChildNodes();
 
-        if (nodeInfo.id!=null) {
+        if (nodeInfo.getId() != null) {
             buf.append("  img['")
-               .append(nodeInfo.id)
+               .append(nodeInfo.getId())
                .append("']='")
-               .append(nodeInfo.img).append("';\n");
+               .append(nodeInfo.getImage()).append("';\n");
             buf.append("  label['")
-               .append(nodeInfo.id)
+               .append(nodeInfo.getId())
                .append("']='")
-               .append(nodeInfo.label).append("';\n\n");
+               .append(nodeInfo.getLabel()).append("';\n\n");
 
             int len = children.getLength();
             if (len > 0)
-                buf.append("  next['").append(nodeInfo.id).append("']= new Array();\n");
+                buf.append("  next['").append(nodeInfo.getId()).append("']= new Array();\n");
             for (int i=0; i<len; i++) {
                 Node child = children.item(i);
                 buf.append("  next['")
-                   .append(nodeInfo.id)
+                   .append(nodeInfo.getId())
                    .append("'][").append(i).append("]='")
                    .append(DomUtil.getAttribute(child, "id")).append("';\n");
             }
@@ -144,17 +147,14 @@ public class AikidoAppGenerator {
 
     private static String getJSMethods() {
 
-        String copyRight = "Author: Barry G Becker\n"
-         + " Copyright 2004-2007\n";
-
         String getTableMethod = "  function getTable() {\n"
           + "    return document.getElementById(\"techniqueTable\");\n  }\n\n";
 
         String showValsMethod =
-             " // for debugging"
+             " // for debugging\n"
           + "  function showVals(selectedVal, valuesList)\n"
           + "  {\n"
-          + "    var textList = \"selectedVal=\"+selectedVal+\"\\n\";\n"
+          + "    var textList = \"selectedVal=\" + selectedVal + \"\\n\";\n"
           + "    for (var i=0; i<valuesList.magnitude; i++) {\n"
           + "      textList += valuesList[i] + \"\\n\";"
           + "    }\n"
@@ -166,7 +166,7 @@ public class AikidoAppGenerator {
           + "  // \n"
           + "  function selectChanged(selectId) { \n"
           + "    var elSelect = document.getElementById(selectId);\n"
-          + "    var sNum = elSelect.id.substring(4);\n"
+          + "    var sNum = elSelect.id.substring(4, 5);\n"
           + "    var stepNum = parseInt(sNum);\n"
           + "    selectedVal = elSelect.options[elSelect.selectedIndex].value;\n"
           + "    valuesList = next[selectedVal];\n\n"
@@ -177,14 +177,18 @@ public class AikidoAppGenerator {
           + "    //fillerRow.childNodes[0].setAttribute(\"colspan\", stepNum+1);\n"
           + "    fillerRow.childNodes[0].colspan = stepNum+1;\n\n"
           + "    // delete future selects\n"
-          + "    var len = selectRow.childNodes.magnitude;\n"
-          + "    //alert(\"len-stepNum-2=\"+(len-stepNum-2)+\" selectRow.childNodes=\"+selectRow.childNodes);\n\n"
+          + "    var len = selectRow.childNodes.length;\n"
+          + "    alert(\"elSelect.id=\" + elSelect.id + \" sNum=\"+ sNum + \" stepNum=\" + stepNum " +
+                    "+ \" len=\" + len + \" len-stepNum-2=\"+(len-stepNum-2)+\" selectRow.childNodes=\"" +
+                    "+selectRow.childNodes +\" imageRow=\" + imageRow);\n\n"
           + "    // delete steps up to the final filler td\n"
           + "    for (var i=len-2; i>stepNum; i--) {\n"
           + "      selectRow.removeChild(selectRow.childNodes[i]);\n"
           + "      imageRow.removeChild(imageRow.childNodes[i]);\n"
           + "    }\n\n"
 
+           + "   alert(\"imageRow=\" + imageRow + \" stepNum=\" + stepNum + \" imageRow.childNodes[stepNum]=\" " +
+                    "+ imageRow.childNodes[stepNum]);\n\n"
           + "    var currentImage = imageRow.childNodes[stepNum].childNodes[0].childNodes[0];\n"
           + "    if (selectedVal == '-----')\n"
           + "      currentImage.src = 'images/select_s.png';\n"
@@ -234,8 +238,8 @@ public class AikidoAppGenerator {
           + "    newImageAnchor.onmouseover =  function anonymous() { mousedOnThumbnail(imageId); };\n"
           + "    newImage.setAttribute('id', imageId);\n"
           + "    newImage.setAttribute('src', onlyOneChild?img[nextSelectOptions[0]]:'images/select_s.png');\n"
-          + "    newImage.setAttribute('width', '"+ THUMB_IMG_WIDTH +"');\n"
-          + "    newImage.setAttribute('height', '"+ THUMB_IMG_HEIGHT +"');\n"
+          + "    newImage.setAttribute('width', '" + THUMB_IMG_WIDTH + "');\n"
+          + "    newImage.setAttribute('height', '" + THUMB_IMG_HEIGHT + "');\n"
           + "    \n"
           + "    newImage.setAttribute(\"border\", 0);\n"
           + "    newImageAnchor.appendChild(newImage);\n"
@@ -250,7 +254,7 @@ public class AikidoAppGenerator {
 
 
         String mousedOnThumbnail =
-           "  // show a big image when mousing over the thumbnail\n"
+          "  // show a big image when mousing over the thumbnail\n"
         + "  //\n"
         + "  function mousedOnThumbnail(imgId) {\n"
         + "    var elImg = document.getElementById(imgId);\n"
@@ -277,7 +281,8 @@ public class AikidoAppGenerator {
           + "<br>\n"
           + "Build an aikido technique using successive dropdowns below.<br>\n"
           + "For simplicity, we currently restrict the attack to katate dori.<br><br>\n"
-          + "<font size='-1'>This application was built using XML, java and DHTML (<a href='technique_builder_desc.html'>more details</a>).</font> "
+          + "<font size='-1'>This application was built using XML, java and DHTML " +
+                    "(<a href='technique_builder_desc.html'>more details</a>).</font> "
           + "<br><br>\n\n"
 
           + "<table id='outerTable' width=\"100%\" border=\"0\">\n"
@@ -299,7 +304,8 @@ public class AikidoAppGenerator {
           + "  <tr>\n"
           + "    <td nowrap>\n"
           + "      <a onmouseover=\"mousedOnThumbnail('step0_image')\">\n"
-          + "        <img id=\"step0_image\" name=\"step1img\" src=\"images/select_s.png\" border=\"0\" width="+THUMB_IMG_WIDTH+" height="+THUMB_IMG_HEIGHT+">\n"
+          + "        <img id=\"step0_image\" name=\"step1img\" src=\"images/select_s.png\" border=\"0\" width="
+                    + THUMB_IMG_WIDTH + " height=" + THUMB_IMG_HEIGHT + ">\n"
           + "      </a>\n"
           + "    </td>\n"
           + "    <td nowrap width=\"100%\">\n"
@@ -316,7 +322,7 @@ public class AikidoAppGenerator {
           + "  <tr>\n"
           + "    <td>\n"
           + "      <div id=\"bigImgDiv\">\n"
-          + "        <img id=\"big_image\" name=\"step1img\" src=\"select_m.png\" border=\"1\">\n"
+          + "        <img id=\"big_image\" name=\"step1img\" src=\"images/select_m.png\" border=\"1\">\n"
           + "      </div>\n"
           + "    </td>\n"
           + "  </tr>\n"
@@ -332,9 +338,9 @@ public class AikidoAppGenerator {
     private static String genRowForNode(Node node, List<NodeInfo> parentList) {
 
         StringBuilder buf = new StringBuilder();
-        NodeInfo nodeInfo = new NodeInfo(node.getAttributes());
+        NodeInfo nodeInfo = new NodeInfo(imgPath_, node.getAttributes());
 
-        if (nodeInfo.id==null)  {
+        if (nodeInfo.getId() == null)  {
             System.out.println("null id for "+node.getNodeName()+' '+node.getNodeValue());
             //return  "";
         }
@@ -342,7 +348,7 @@ public class AikidoAppGenerator {
 
         NodeList children = node.getChildNodes();
 
-        if ((children.getLength()==0) && (nodeInfo.id != null)) {
+        if ((children.getLength()==0) && (nodeInfo.getId() != null)) {
             // then we have a child node, so print a row corresponding to a technique
 
             buf.append("  <tr nowrap> \n");
@@ -350,15 +356,15 @@ public class AikidoAppGenerator {
                 NodeInfo info = parentList.get(i);
                 buf.append("    <td nowrap>\n");
                 if (DEBUG_MODE)  {
-                    buf.append("      <div title=\"").append(info.id).append("\" style=\"height:14px; width:120px; overflow:hidden;\"\n");
+                    buf.append("      <div title=\"").append(info.getId()).append("\" style=\"height:14px; width:120px; overflow:hidden;\"\n");
                 } else {
-                    buf.append("      <div title=").append(info.label).append("style=\"height:14px; width:90px; overflow:hidden;\"\n");
+                    buf.append("      <div title=").append(info.getLabel()).append("style=\"height:14px; width:90px; overflow:hidden;\"\n");
                 }
                 buf.append("        <font size='-3'><span>");
                 if (DEBUG_MODE)  {
-                    buf.append(info.id);
+                    buf.append(info.getId());
                 }  else {
-                    buf.append(info.label);
+                    buf.append(info.getLabel());
                 }
                 buf.append("        </span></font>");
                 buf.append("      </div>");
@@ -370,11 +376,11 @@ public class AikidoAppGenerator {
                 NodeInfo info = parentList.get(i);
                 buf.append("    <td>\n");
                 //buf.append("      <img src=\""+ info.img +"\" style=\"width:50px; height:44px;\">\n");
-                if (DEBUG_MODE)  {
-                    buf.append("      <img src=\"").append(info.img).append("\" height=\"80\" title=\"").append(info.label).append("\">\n");
-                } else {
-                    buf.append("      <img src=\"").append(info.img).append("\" height=\"60\" title=\"").append(info.label).append("\">\n");
-                }
+                int height = DEBUG_MODE ? 80 : 60;
+
+                buf.append("      <img src=\"").append(info.getImage()).append("\" height=\""
+                        + height + "\" title=\"").append(info.getLabel()).append("\">\n");
+
                 buf.append("    </td>\n");
             }
             buf.append("  </tr>   \n");
@@ -388,13 +394,12 @@ public class AikidoAppGenerator {
         parentList.remove(parentList.size()-1);
 
         return buf.toString();
-
     }
 
 
     private static String getTechniqueTable(Document document) {
         StringBuilder buf = new StringBuilder();
-        List<NodeInfo> parentList = new LinkedList<NodeInfo>();
+        List<NodeInfo> parentList = new LinkedList<>();
 
         // recursive call
         //buf.append("<table id='techniqueTable' width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"1\">\n");
@@ -421,8 +426,10 @@ public class AikidoAppGenerator {
           + "<big><big style=\"font-weight: bold; text-decoration: underline;\">Aikido\n"
           + "Techniques</big></big><br>\n"
           + "<br>\n"
-          + "This page contains all techniques for, katate dori.<br> If you see an error send mail to BarryBecker4@yahoo.com.<br>\n"
-          + "<font size='-1'>This application was built using XML, java and DHTML (<a href='technique_builder_desc.html'>more details</a>).</font> "
+          + "This page contains all techniques for, katate dori.<br> " +
+                    "If you see an error send mail to BarryBecker4@yahoo.com.<br>\n"
+          + "<font size='-1'>This application was built using XML, java and DHTML " +
+                    "(<a href='technique_builder_desc.html'>more details</a>).</font> "
           + "<br><br>\n\n"
 
           + "<table id='outerTable' width=\"100%\" border=\"0\">\n"
@@ -438,7 +445,7 @@ public class AikidoAppGenerator {
           + "  <tr>\n"
           + "    <td>\n"
           + "      <div id=\"bigImgDiv\">\n"
-          + "        <img id=\"big_image\" name=\"step1img\" src=\"select_m.png\" border=\"1\">\n"
+          + "        <img id=\"big_image\" name=\"step1img\" src=\"images/select_m.png\" border=\"1\">\n"
           + "      </div>\n"
           + "    </td>\n"
           + "  </tr>\n"
@@ -476,12 +483,12 @@ public class AikidoAppGenerator {
     /**
      * Auto generate all elements based on the XML file.
      *
-     * @param document
-     * @param fileName
-     * @throws IOException
+     * @param document contains all the techniques in XML.
+     * @param fileName file to write to.
+     * @throws IOException if error writing to the specified file.
      */
-    public static void generateAllElementsFromDom( Document document, String fileName) throws IOException
-    {
+    public static void generateAllElementsFromDom( Document document, String fileName)
+            throws IOException {
 
         FileOutputStream fos = new FileOutputStream(fileName);
 
@@ -493,47 +500,23 @@ public class AikidoAppGenerator {
     }
 
 
-    /**
-     * Convenient inner class for storing info about the node
-     */
-    private static class  NodeInfo {
-        String id;
-        String img;
-        String label;
-
-        NodeInfo(NamedNodeMap attribMap)  {
-            if (attribMap == null)  {
-                 id = null;
-                 img = null;
-                 label = null;
-            }
-            else {
-                for (int i=0; i<attribMap.getLength(); i++) {
-                    Node attr = attribMap.item(i);
-                    if ("id".equals(attr.getNodeName())) {
-                        id = attr.getNodeValue();
-                        // the id gets reused for the image name
-                        img = imgPath_ + attr.getNodeValue() + IMG_SUFFIX;
-                    }
-                    else if ("label".equals(attr.getNodeName()))
-                        label = attr.getNodeValue();
-                }
-            }
-        }
-    }
-
-
     // -----------------------------------------------------------------------------------------------
     public static void main(String argv[])
     {
         Document document;
-        if (argv.length != 1) {
-            //document = DomUtil.buildDom();
+        String filename = FileUtil.getHomeDir() + "apps/source/com/barrybecker4/apps/aikido/" + DEFAULT_INPUT_FILE;
+
+        if (argv.length == 1) {
+            filename = argv[0];
+        }
+        else {
             System.out.println("Usage: <xml file containing data>");
-            return;
+            System.out.println("Since no argument was supplied, " + filename +" will be used.");
         }
 
-        File file = new File(argv[0]);
+        String curDir = System.getProperty("user.dir");
+
+        File file = new File(filename);
         System.out.println("parsing xml from " + file);
         document = DomUtil.parseXMLFile(file, !DEBUG_MODE);
 

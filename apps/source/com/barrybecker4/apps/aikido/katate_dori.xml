@@ -4,7 +4,7 @@
    <!-- Todo:
       - Add more attacks: shomen, yokomen, ryote dori, morote dori, kata dori, ushiro ryote dori, ushiro tekubi tori,
         ai dori, ushiro tori (high/low)
-      - bait and swith to fingers, extend to shoulder, sankyo, variations (inlcuding kaitenage)
+      - bait and swith to fingers, extend to shoulder, sankyo, variations (including kaitenage)
       - angle hand up, then down, kaitenage
    -->
   <node id="katate_dori" label="katate dori">
