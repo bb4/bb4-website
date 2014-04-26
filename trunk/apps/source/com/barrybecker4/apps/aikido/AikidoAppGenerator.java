@@ -7,8 +7,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,7 +41,12 @@ public class AikidoAppGenerator {
     private static final int THUMB_IMG_WIDTH = 170;
     private static final int THUMB_IMG_HEIGHT = 130;
 
-    private static final String DEFAULT_INPUT_FILE = "katate_dori.xml";
+
+
+    private static final String PROJECT_DIR = FileUtil.getHomeDir() + "apps/source/com/barrybecker4/apps/aikido/";
+
+    private static final String DEFAULT_INPUT_FILE = PROJECT_DIR +  "katate_dori.xml";
+    private static final String JAVASCRIPT_FILE = PROJECT_DIR + "methods.js";
 
     /**
      * A self contained and transferable location.
@@ -144,132 +151,31 @@ public class AikidoAppGenerator {
         return buf.toString();
     }
 
-
+    /** @return javascript methods from file as a string */
     private static String getJSMethods() {
 
-        String getTableMethod = "  function getTable() {\n"
-          + "    return document.getElementById(\"techniqueTable\");\n  }\n\n";
+        BufferedReader br = null;
+        StringBuilder bldr = new StringBuilder(1000);
 
-        String showValsMethod =
-             " // for debugging\n"
-          + "  function showVals(selectedVal, valuesList)\n"
-          + "  {\n"
-          + "    var textList = \"selectedVal=\" + selectedVal + \"\\n\";\n"
-          + "    for (var i=0; i<valuesList.magnitude; i++) {\n"
-          + "      textList += valuesList[i] + \"\\n\";"
-          + "    }\n"
-          + "    alert(textList);\n"
-          + "  }\n\n";
+		try {
+			String sCurrentLine;
 
-        String selectChanged =
-            "  // When called, we delete all future selects (and corresponding img) and create a single next one. \n"
-          + "  // \n"
-          + "  function selectChanged(selectId) { \n"
-          + "    var elSelect = document.getElementById(selectId);\n"
-          + "    var sNum = elSelect.id.substring(4, 5);\n"
-          + "    var stepNum = parseInt(sNum);\n"
-          + "    selectedVal = elSelect.options[elSelect.selectedIndex].value;\n"
-          + "    valuesList = next[selectedVal];\n\n"
-          + "    var table = getTable();\n"
-          + "    var selectRow = table.rows[0];\n"
-          + "    var imageRow = table.rows[1];\n"
-          + "    var fillerRow = table.rows[2];\n"
-          + "    //fillerRow.childNodes[0].setAttribute(\"colspan\", stepNum+1);\n"
-          + "    fillerRow.childNodes[0].colspan = stepNum+1;\n\n"
-          + "    // delete future selects\n"
-          + "    var len = selectRow.childNodes.length;\n"
-          + "    alert(\"elSelect.id=\" + elSelect.id + \" sNum=\"+ sNum + \" stepNum=\" + stepNum " +
-                    "+ \" len=\" + len + \" len-stepNum-2=\"+(len-stepNum-2)+\" selectRow.childNodes=\"" +
-                    "+selectRow.childNodes +\" imageRow=\" + imageRow);\n\n"
-          + "    // delete steps up to the final filler td\n"
-          + "    for (var i=len-2; i>stepNum; i--) {\n"
-          + "      selectRow.removeChild(selectRow.childNodes[i]);\n"
-          + "      imageRow.removeChild(imageRow.childNodes[i]);\n"
-          + "    }\n\n"
+			br = new BufferedReader(new FileReader(JAVASCRIPT_FILE));
 
-           + "   alert(\"imageRow=\" + imageRow + \" stepNum=\" + stepNum + \" imageRow.childNodes[stepNum]=\" " +
-                    "+ imageRow.childNodes[stepNum]);\n\n"
-          + "    var currentImage = imageRow.childNodes[stepNum].childNodes[0].childNodes[0];\n"
-          + "    if (selectedVal == '-----')\n"
-          + "      currentImage.src = 'images/select_s.png';\n"
-          +"     else \n"
-          + "      currentImage.src = img[selectedVal];\n\n"
+			while ((sCurrentLine = br.readLine()) != null) {
+				bldr.append(sCurrentLine).append('\n');
+			}
 
-          + "    // add the new select and corresponding image\n"
-          + "    var tdSelect = document.createElement(\"td\");\n"
-          + "    var newSelect = document.createElement(\"select\");\n"
-          + "    var newSelectId = 'step'+(stepNum+1)+'_select'\n"
-          + "    newSelect.setAttribute('id', newSelectId);\n"
-          + "    newSelect.onchange = function anonymous() { selectChanged( newSelectId ); };\n"
-          + "    \n"
-          + "    var nextSelectOptions = next[selectedVal];\n"
-          + "    //alert(\"nextSelectOptions=\"+nextSelectOptions);\n"
-          + "    var onlyOneChild = false;\n"
-          + "    if (nextSelectOptions) {\n"
-          + "      onlyOneChild = true;\n"
-          + "      if (nextSelectOptions.magnitude > 1) {\n;"
-          + "        onlyOneChild = false;\n"
-          + "        // the first one is -----;\n"
-          + "        option = document.createElement(\"option\");\n"
-          + "        var nextOpt = \"-----\";\n"
-          + "        option.value = nextOpt;\n"
-          + "        option.innerText = nextOpt;\n"
-          + "        newSelect.appendChild(option);\n"
-          + "      }\n"
-          + "      for (var i=0; i<nextSelectOptions.magnitude; i++) {\n"
-          + "        option = document.createElement(\"option\");\n"
-          + "        var nextOpt = nextSelectOptions[i];\n"
-          + "        option.value = nextOpt;\n"
-          + "        option.innerText = label[nextOpt];\n"
-          + "        //alert(\"about to add \"+option.outerHTML);\n"
-          + "        newSelect.appendChild(option);\n"
-          + "      }\n"
-          + "    }\n"
-          + "    else\n"
-          + "      return;\n\n"
-
-          + "    tdSelect.appendChild(newSelect);\n\n"
-
-          + "    // and image\n"
-          + "    var tdImage = document.createElement(\"td\");\n"
-          + "    var newImageAnchor = document.createElement(\"a\");\n"
-          + "    var newImage = document.createElement(\"img\");\n"
-          + "    var imageId = 'step'+(stepNum+1)+'_image';\n"
-          + "    newImageAnchor.onmouseover =  function anonymous() { mousedOnThumbnail(imageId); };\n"
-          + "    newImage.setAttribute('id', imageId);\n"
-          + "    newImage.setAttribute('src', onlyOneChild?img[nextSelectOptions[0]]:'images/select_s.png');\n"
-          + "    newImage.setAttribute('width', '" + THUMB_IMG_WIDTH + "');\n"
-          + "    newImage.setAttribute('height', '" + THUMB_IMG_HEIGHT + "');\n"
-          + "    \n"
-          + "    newImage.setAttribute(\"border\", 0);\n"
-          + "    newImageAnchor.appendChild(newImage);\n"
-          + "    tdImage.appendChild(newImageAnchor);\n"
-          + "    \n"
-          + "    selectRow.insertBefore(tdSelect, selectRow.childNodes[stepNum+1]);\n"
-          + "    imageRow.insertBefore(tdImage, imageRow.childNodes[stepNum+1]);\n"
-          + "    if (onlyOneChild) { // add the next one too \n"
-          + "       selectChanged(newSelectId);\n"
-          + "    }\n"
-          + "  }\n\n";
-
-
-        String mousedOnThumbnail =
-          "  // show a big image when mousing over the thumbnail\n"
-        + "  //\n"
-        + "  function mousedOnThumbnail(imgId) {\n"
-        + "    var elImg = document.getElementById(imgId);\n"
-        + "    var bigImg = document.getElementById('big_image');\n"
-        + "    var newSrc = elImg.src.replace(\"_s.\", \"_m.\");\n"
-        + "    bigImg.src = newSrc\n"
-        + "  }\n\n";
-
-        String doOnload =
-            "  // called when page loads\n"
-          + "  //\n"
-          + "  function doOnLoad() {\n"
-          + "  }\n";
-
-        return  getTableMethod + showValsMethod + selectChanged + mousedOnThumbnail + doOnload;
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null) br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+        return bldr.toString();
     }
 
 
@@ -504,7 +410,7 @@ public class AikidoAppGenerator {
     public static void main(String argv[])
     {
         Document document;
-        String filename = FileUtil.getHomeDir() + "apps/source/com/barrybecker4/apps/aikido/" + DEFAULT_INPUT_FILE;
+        String filename = DEFAULT_INPUT_FILE;
 
         if (argv.length == 1) {
             filename = argv[0];
@@ -513,8 +419,6 @@ public class AikidoAppGenerator {
             System.out.println("Usage: <xml file containing data>");
             System.out.println("Since no argument was supplied, " + filename +" will be used.");
         }
-
-        String curDir = System.getProperty("user.dir");
 
         File file = new File(filename);
         System.out.println("parsing xml from " + file);
