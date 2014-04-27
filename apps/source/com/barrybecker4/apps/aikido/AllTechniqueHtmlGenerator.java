@@ -89,7 +89,6 @@ public class AllTechniqueHtmlGenerator {
         StringBuilder buf = new StringBuilder();
         List<NodeInfo> parentList = new LinkedList<>();
 
-        // recursive call
         //buf.append("<table id='techniqueTable' width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"1\">\n");
         buf.append("<table id='techniqueTable' width=\"100%\" border=\"0\">\n");
 
@@ -120,13 +119,13 @@ public class AllTechniqueHtmlGenerator {
             // then we have a child node, so print a row corresponding to a technique
 
             buf.append("  <tr nowrap> \n");
-            for (int i=1; i<parentList.size(); i++) {
+            for (int i=1; i < parentList.size(); i++) {
                 NodeInfo info = parentList.get(i);
                 buf.append("    <td nowrap>\n");
                 if (DEBUG_MODE)  {
                     buf.append("      <div title=\"").append(info.getId()).append("\" style=\"height:14px; width:120px; overflow:hidden;\"\n");
                 } else {
-                    buf.append("      <div title=").append(info.getLabel()).append("style=\"height:14px; width:90px; overflow:hidden;\"\n");
+                    buf.append("      <div title=\"").append(info.getLabel()).append("\" style=\"height:14px; width:90px; overflow:hidden;\"\n");
                 }
                 buf.append("        <font size='-3'><span>");
                 if (DEBUG_MODE)  {
