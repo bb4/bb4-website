@@ -1,6 +1,9 @@
 /** Copyright by Barry G. Becker, 2004-2014. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.aikido;
 
+import com.barrybecker4.apps.aikido.generation.AllTechniqueConfig;
+import com.barrybecker4.apps.aikido.generation.AllTechniqueHtmlGenerator;
+import com.barrybecker4.apps.aikido.generation.AppHtmlGenerator;
 import com.barrybecker4.common.util.FileUtil;
 import com.barrybecker4.common.xml.DomUtil;
 import org.w3c.dom.Document;
@@ -24,7 +27,8 @@ public class AikidoAppGenerator {
     private static final String DEFAULT_INPUT_FILE = AppHtmlGenerator.PROJECT_DIR +  "katate_dori.xml";
 
     /** A self contained and transferable location. */
-    private static final String RESULT_PATH = FileUtil.getHomeDir() + "../../javascript_projects/aikido_builder/";
+    private static final String RESULT_PATH =
+            FileUtil.getHomeDir() + "../../javascript_projects/aikido_builder/";
 
     /** the builder DHTML application */
     private static final String RESULT_BULDER_FILE = "technique_builder.html";
@@ -36,10 +40,10 @@ public class AikidoAppGenerator {
 
     /**
      * Auto generate the html app based on the XML file.
-     * @param document
-     * @param fileName
+     * @param document xml document model of techniques
+     * @param fileName the tile that will be written to
      */
-    public static void generateHTMLAppFromDom( Document document, String fileName)
+    public static void generateHTMLAppFromDom(Document document, String fileName)
             throws IOException {
 
         new AppHtmlGenerator().generateHTMLApp(document, fileName);
@@ -53,7 +57,7 @@ public class AikidoAppGenerator {
     public static void generateAllElementsFromDom(Document document, String fileName)
             throws IOException {
 
-        new AllTechniqueHtmlGenerator().generateAllElementsFromDom(document, fileName);
+        new AllTechniqueHtmlGenerator(new AllTechniqueConfig(true, 40)).generateAllElementsFromDom(document, fileName);
     }
 
 

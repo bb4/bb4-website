@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2014. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.apps.aikido;
+package com.barrybecker4.apps.aikido.generation;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
