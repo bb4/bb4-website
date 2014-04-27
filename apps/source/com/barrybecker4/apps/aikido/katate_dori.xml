@@ -167,7 +167,7 @@
           <node id="hook_arm" label="hook_arm">
               <use ref="zempo_nage_left_finish"/>
           </node>
-          <node id="continue_tenkan_180" label="continue temkan (180 deg)">
+          <node id="continue_tenkan_180" label="continue tenkan (180 deg)">
               <use ref="kokyo_nage_grabbed"/>
               <use ref="zempo_nage_left_finish"/>
           </node>

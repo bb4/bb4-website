@@ -57,8 +57,7 @@ public class AikidoAppGenerator {
     }
 
 
-    public static void main(String argv[])
-    {
+    public static void main(String argv[]) {
         Document document;
         String filename = DEFAULT_INPUT_FILE;
 
