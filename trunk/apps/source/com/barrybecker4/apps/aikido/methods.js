@@ -1,22 +1,15 @@
 
-
     function getTable() {
         return document.getElementById("techniqueTable");
     }
 
-    // for debugging
-    function showVals(selectedVal, valuesList) {
-        var textList = "selectedVal=" + selectedVal + "\n";
-        for (var i=0; i<valuesList.magnitude; i++) {
-           textList += valuesList[i] + "\n";
-        }
-        alert(textList);
-    }
-
-    // When called, we delete all future selects (and corresponding img) and create a single next one.
+    /**
+     * When called, we delete all future selects (and corresponding img) and create a single next one.
+     */
     function selectChanged(selectId) {
         var elSelect = document.getElementById(selectId);
-        var sNum = elSelect.id.substring(4, 5);
+        var index = elSelect.id.indexOf("_select");
+        var sNum = elSelect.id.substring(4, index);
         var stepNum = parseInt(sNum);
         selectedVal = elSelect.options[elSelect.selectedIndex].value;
         valuesList = next[selectedVal];
@@ -25,25 +18,25 @@
         var selectRow = table.rows[0];
         var imageRow = table.rows[1];
         var fillerRow = table.rows[2];
-        //fillerRow.childNodes[0].setAttribute("colspan", stepNum+1);
-        fillerRow.childNodes[0].colspan = stepNum+1;
+        //fillerRow.children[0].setAttribute("colspan", stepNum + 1);
+        fillerRow.children[0].colspan = stepNum + 1;
 
         // delete future selects
-        var len = selectRow.childNodes.length;
-        alert("elSelect.id=" + elSelect.id + " sNum="+ sNum + " stepNum=" + stepNum
-        + " len=" + len + " len-stepNum-2="+(len-stepNum-2)+" selectRow.childNodes="+selectRow.childNodes
-        +" imageRow=" + imageRow);
+        var len = selectRow.children.length;
+        //alert("elSelect.id=" + elSelect.id + " sNum=" + sNum + " stepNum=" + stepNum
+        //+ " len=" + len + " len-stepNum-2="+(len-stepNum-2)+" selectRow.children="+selectRow.children
+        //+" imageRow=" + imageRow);
 
         // delete steps up to the final filler td
         for (var i=len-2; i>stepNum; i--) {
-            selectRow.removeChild(selectRow.childNodes[i]);
-            imageRow.removeChild(imageRow.childNodes[i]);
+            selectRow.removeChild(selectRow.children[i]);
+            imageRow.removeChild(imageRow.children[i]);
         }
 
-        alert("imageRow=" + imageRow + " stepNum=" + stepNum
-           + " imageRow.childNodes[stepNum]=" + imageRow.childNodes[stepNum]);
+        //alert("imageRow=" + imageRow + " stepNum=" + stepNum
+        //   + " imageRow.children[stepNum]=" + imageRow.children[stepNum]);
 
-        var currentImage = imageRow.childNodes[stepNum].childNodes[0].childNodes[0];
+        var currentImage = imageRow.children[stepNum].children[0].children[0];
         if (selectedVal == '-----') {
             currentImage.src = 'images/select_s.png';
         } else {
@@ -58,11 +51,11 @@
         newSelect.onchange = function anonymous() { selectChanged( newSelectId ); };
 
         var nextSelectOptions = next[selectedVal];
-        //alert("nextSelectOptions="+nextSelectOptions);
+        //alert("nextSelectOptions=" + nextSelectOptions);
         var onlyOneChild = false;
         if (nextSelectOptions) {
             onlyOneChild = true;
-            if (nextSelectOptions.magnitude > 1) {
+            if (nextSelectOptions.length > 1) {
                 onlyOneChild = false;
                 // the first one is -----;
                 option = document.createElement("option");
@@ -71,7 +64,7 @@
                 option.innerText = nextOpt;
                 newSelect.appendChild(option);
             }
-            for (var i=0; i<nextSelectOptions.magnitude; i++) {
+            for (var i=0; i<nextSelectOptions.length; i++) {
                 option = document.createElement("option");
                 var nextOpt = nextSelectOptions[i];
                 option.value = nextOpt;
@@ -101,11 +94,20 @@
         newImageAnchor.appendChild(newImage);
         tdImage.appendChild(newImageAnchor);
 
-        selectRow.insertBefore(tdSelect, selectRow.childNodes[stepNum+1]);
-        imageRow.insertBefore(tdImage, imageRow.childNodes[stepNum+1]);
+        selectRow.insertBefore(tdSelect, selectRow.children[stepNum+1]);
+        imageRow.insertBefore(tdImage, imageRow.children[stepNum+1]);
         if (onlyOneChild) { // add the next one too
             selectChanged(newSelectId);
         }
+    }
+
+    // for debugging
+    function showVals(selectedVal, valuesList) {
+        var textList = "selectedVal=" + selectedVal + "\n";
+        for (var i=0; i<valuesList.length; i++) {
+           textList += valuesList[i] + "\n";
+        }
+        alert(textList);
     }
 
     // show a big image when mousing over the thumbnail
@@ -113,7 +115,7 @@
         var elImg = document.getElementById(imgId);
         var bigImg = document.getElementById('big_image');
         var newSrc = elImg.src.replace("_s.", "_m.");
-        bigImg.src = newSrc
+        bigImg.src = newSrc;
     }
 
     // called when page loads
