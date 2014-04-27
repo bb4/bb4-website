@@ -6,10 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Move this to bb4-common
+ * Move this to bb4-common and use that instead
  * @author Barry Becker
  */
-public class LocalFileUtil {
+class LocalFileUtil {
 
     /**
      * @param filename name of file to read from
@@ -41,4 +41,6 @@ public class LocalFileUtil {
         }
         return bldr.toString();
     }
+
+    private LocalFileUtil() {}
 }

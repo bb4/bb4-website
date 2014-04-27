@@ -3,45 +3,56 @@
         return document.getElementById("techniqueTable");
     }
 
-    /**
-     * When called, we delete all future selects (and corresponding img) and create a single next one.
-     */
-    function selectChanged(selectId) {
+    /** @return the number of the select dropdown. There is one for each step in the technique. */
+    function getStepNumber(selectId)  {
         var elSelect = document.getElementById(selectId);
         var index = elSelect.id.indexOf("_select");
         var sNum = elSelect.id.substring(4, index);
-        var stepNum = parseInt(sNum);
-        selectedVal = elSelect.options[elSelect.selectedIndex].value;
-        valuesList = next[selectedVal];
+        return parseInt(sNum);
+    }
 
-        var table = getTable();
-        var selectRow = table.rows[0];
-        var imageRow = table.rows[1];
-        var fillerRow = table.rows[2];
-        //fillerRow.children[0].setAttribute("colspan", stepNum + 1);
-        fillerRow.children[0].colspan = stepNum + 1;
+    function getSelectedValue(selectId) {
+        var elSelect = document.getElementById(selectId);
+        return elSelect.options[elSelect.selectedIndex].value;
+    }
 
-        // delete future selects
+    /**
+     *  Delete future selects. Delete steps up to the final filler td.
+     */
+    function deleteFutureSelects(selectRow, imageRow, stepNum) {
         var len = selectRow.children.length;
-        //alert("elSelect.id=" + elSelect.id + " sNum=" + sNum + " stepNum=" + stepNum
-        //+ " len=" + len + " len-stepNum-2="+(len-stepNum-2)+" selectRow.children="+selectRow.children
-        //+" imageRow=" + imageRow);
-
-        // delete steps up to the final filler td
-        for (var i=len-2; i>stepNum; i--) {
+        for (var i = len-2; i > stepNum; i--) {
             selectRow.removeChild(selectRow.children[i]);
             imageRow.removeChild(imageRow.children[i]);
         }
+    }
 
-        //alert("imageRow=" + imageRow + " stepNum=" + stepNum
-        //   + " imageRow.children[stepNum]=" + imageRow.children[stepNum]);
-
+    /** Set the current large image at the bottom */
+    function setBigImage(imageRow, stepNum, selectedVal) {
         var currentImage = imageRow.children[stepNum].children[0].children[0];
         if (selectedVal == '-----') {
             currentImage.src = 'images/select_s.png';
         } else {
             currentImage.src = img[selectedVal];
         }
+    }
+
+    /**
+     * When called, we delete all future selects (and corresponding img) and create a single next one.
+     */
+    function selectChanged(selectId) {
+
+        var stepNum = getStepNumber(selectId);
+        var selectedVal = getSelectedValue(selectId);
+        valuesList = next[selectedVal];
+
+        var table = getTable();
+        var selectRow = table.rows[0];
+        var imageRow = table.rows[1];
+        //alert("sNum=" + sNum + " stepNum=" + stepNum
+        //+ " len=" + len + " len-stepNum-2="+(len-stepNum-2)+" selectRow.children="+selectRow.children +" imageRow=" + imageRow);
+        deleteFutureSelects(selectRow, imageRow, stepNum);
+        setBigImage(imageRow, stepNum, selectedVal);
 
         // add the new select and corresponding image
         var tdSelect = document.createElement("td");
@@ -101,7 +112,7 @@
         }
     }
 
-    // for debugging
+    /** for debugging */
     function showVals(selectedVal, valuesList) {
         var textList = "selectedVal=" + selectedVal + "\n";
         for (var i=0; i<valuesList.length; i++) {
@@ -110,7 +121,7 @@
         alert(textList);
     }
 
-    // show a big image when mousing over the thumbnail
+    /** show a big image when mousing over the thumbnail */
     function mousedOnThumbnail(imgId) {
         var elImg = document.getElementById(imgId);
         var bigImg = document.getElementById('big_image');
@@ -118,6 +129,6 @@
         bigImg.src = newSrc;
     }
 
-    // called when page loads
+    /** called when page loads */
     function doOnLoad() {
     }
