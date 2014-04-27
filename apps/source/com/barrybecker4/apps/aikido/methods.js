@@ -11,32 +11,6 @@
         return parseInt(sNum);
     }
 
-    function getSelectedValue(selectId) {
-        var elSelect = document.getElementById(selectId);
-        return elSelect.options[elSelect.selectedIndex].value;
-    }
-
-    /**
-     *  Delete future selects. Delete steps up to the final filler td.
-     */
-    function deleteFutureSelects(selectRow, imageRow, stepNum) {
-        var len = selectRow.children.length;
-        for (var i = len-2; i > stepNum; i--) {
-            selectRow.removeChild(selectRow.children[i]);
-            imageRow.removeChild(imageRow.children[i]);
-        }
-    }
-
-    /** Set the current large image at the bottom */
-    function setBigImage(imageRow, stepNum, selectedVal) {
-        var currentImage = imageRow.children[stepNum].children[0].children[0];
-        if (selectedVal == '-----') {
-            currentImage.src = 'images/select_s.png';
-        } else {
-            currentImage.src = img[selectedVal];
-        }
-    }
-
     /**
      * When called, we delete all future selects (and corresponding img) and create a single next one.
      */
@@ -49,17 +23,12 @@
         var table = getTable();
         var selectRow = table.rows[0];
         var imageRow = table.rows[1];
-        //alert("sNum=" + sNum + " stepNum=" + stepNum
-        //+ " len=" + len + " len-stepNum-2="+(len-stepNum-2)+" selectRow.children="+selectRow.children +" imageRow=" + imageRow);
+
         deleteFutureSelects(selectRow, imageRow, stepNum);
         setBigImage(imageRow, stepNum, selectedVal);
 
-        // add the new select and corresponding image
         var tdSelect = document.createElement("td");
-        var newSelect = document.createElement("select");
-        var newSelectId = 'step' + (stepNum+1) + '_select'
-        newSelect.setAttribute('id', newSelectId);
-        newSelect.onchange = function anonymous() { selectChanged( newSelectId ); };
+        var newSelect = createNewSelector(stepNum);
 
         var nextSelectOptions = next[selectedVal];
         //alert("nextSelectOptions=" + nextSelectOptions);
@@ -90,32 +59,85 @@
 
         tdSelect.appendChild(newSelect);
 
-        // and image
         var tdImage = document.createElement("td");
-        var newImageAnchor = document.createElement("a");
-        var newImage = document.createElement("img");
-        var imageId = 'step'+(stepNum+1)+'_image';
-        newImageAnchor.onmouseover =  function anonymous() { mousedOnThumbnail(imageId); };
-        newImage.setAttribute('id', imageId);
-        newImage.setAttribute('src', onlyOneChild?img[nextSelectOptions[0]]:'images/select_s.png');
-        newImage.setAttribute('width', '170');
-        newImage.setAttribute('height', '130');
 
-        newImage.setAttribute("border", 0);
-        newImageAnchor.appendChild(newImage);
+        var newImage = createNewImage(stepNum, onlyOneChild, nextSelectOptions);
+        var newImageAnchor = createImageAnchor(newImage);
         tdImage.appendChild(newImageAnchor);
 
         selectRow.insertBefore(tdSelect, selectRow.children[stepNum+1]);
         imageRow.insertBefore(tdImage, imageRow.children[stepNum+1]);
         if (onlyOneChild) { // add the next one too
-            selectChanged(newSelectId);
+            selectChanged(newSelect.id);
         }
+    }
+
+    /** @return the currently selected value */
+    function getSelectedValue(selectId) {
+        var elSelect = document.getElementById(selectId);
+        return elSelect.options[elSelect.selectedIndex].value;
+    }
+
+    /**
+     *  Delete future selects. Delete steps up to the final filler td.
+     */
+    function deleteFutureSelects(selectRow, imageRow, stepNum) {
+        var len = selectRow.children.length;
+        for (var i = len-2; i > stepNum; i--) {
+            selectRow.removeChild(selectRow.children[i]);
+            imageRow.removeChild(imageRow.children[i]);
+        }
+    }
+
+    /** Set the current large image at the bottom */
+    function setBigImage(imageRow, stepNum, selectedVal) {
+        var currentImage = imageRow.children[stepNum].children[0].children[0];
+        if (selectedVal == '-----') {
+            currentImage.src = 'images/select_s.png';
+        } else {
+            currentImage.src = img[selectedVal];
+        }
+    }
+
+    /** create a new selector fpr the next step and its corresponding image  */
+    function createNewSelector(stepNum) {
+        var newSelect = document.createElement("select");
+        var newSelectId = 'step' + (stepNum+1) + '_select'
+        newSelect.setAttribute('id', newSelectId);
+        newSelect.onchange = function anonymous() { selectChanged( newSelectId ); };
+       return newSelect;
+    }
+
+    /**
+     * @param stepNum the nth step of the technique
+     * @param onlyOneChild true if there is exactly one child.
+     *   In that case if will be automatically shown because there are no other choices.
+     * @param nextSelectOptions the options for the next step's deopdown.
+     * @return a new small image with specified id at the specified step
+     */
+    function createNewImage(stepNum, onlyOneChild, nextSelectOptions) {
+        var imageId = 'step' + (stepNum + 1) + '_image';
+        var image = document.createElement("img");
+        image.setAttribute('id', imageId);
+        image.setAttribute('src', onlyOneChild ? img[nextSelectOptions[0]] : 'images/select_s.png');
+        image.setAttribute('width', '170');
+        image.setAttribute('height', '130');
+        image.setAttribute("border", 0);
+        return image;
+    }
+
+    /** return new image anchor tag */
+    function createImageAnchor(image) {
+        var imageAnchor = document.createElement("a");
+        imageAnchor.onmouseover = function anonymous() { mousedOnThumbnail(image.id); };
+        imageAnchor.appendChild(image);
+        return imageAnchor;
     }
 
     /** for debugging */
     function showVals(selectedVal, valuesList) {
         var textList = "selectedVal=" + selectedVal + "\n";
-        for (var i=0; i<valuesList.length; i++) {
+        for (var i=0; i < valuesList.length; i++) {
            textList += valuesList[i] + "\n";
         }
         alert(textList);
