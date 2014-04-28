@@ -56,7 +56,7 @@
                               <use ref="zempo_nage_left_finish"/>
                           </node>
                           <node id="sankyo_bring_around" label="sankyo bring behind">
-                              <node id="aiki_otoshi_zempo_nage" label="aiki otoshi zempo (?)">
+                              <node id="kneeling_right_zempo_nage" label="kneeling zempo nage">
                                   <node id="zempo_nage_right_finish" label="zempo nage"/>
                               </node>
                               <node id="koshinage_on_upper_arm" label="koshinage (on upper arm?)">
@@ -68,8 +68,8 @@
                           </node>
                       </node>
                   </node>
-                  <node id="nikkyo_sankyo_combo" label="nikkyo-sankkyo combo">
-                      <node id="nikkyo_sankkyo_zempo" label="nikkyo-sankkyo zempo"/>
+                  <node id="nikkyo_sankyo_combo" label="nikkyo-sankyo combo">
+                      <node id="nikkyo_sankyo_zempo" label="nikkyo-sankyo zempo"/>
                   </node>
                   <node id="ikkyo_uchi" label="ikkyo uchi">
                       <node id="ikkyo_uchi_turned" label="ikkyo uchi turned">
@@ -92,6 +92,10 @@
                   <use ref="sankyo_hand_change"/>
                   <use ref="yonkyo_entrance"/>
                   <node id="iriminage_continuance" label="iriminage continuance">
+                      <node id="iriminage_turn" label="irimi nage turn">
+                          <use ref="iriminage_right_throw"/>
+                          <use ref="iriminage_full_entrance"/>
+                      </node>
                       <node id="iriminage_right_throw" label="iriminage throw">
                           <node id="iriminage_right_finish" label="iriminage finish"/>
                       </node>
@@ -161,8 +165,10 @@
               </node>
           </node>
           <node id="shihonage" label="shihonage">
-              <node id="shihonage_regular_throw" label="shihonage throw (regular)"/>
-              <node id="shihonage_high_throw" label="shihonage throw (high)"/>
+              <node id="shihonage_regular_throw" label="shihonage finish">
+                  <node id="shihonage_pin" label="shihonage pin"/>
+              </node>
+              <node id="shihonage_high_throw" label="shihonage high fall"/>
           </node>
           <node id="hook_arm" label="hook_arm">
               <use ref="zempo_nage_left_finish"/>
@@ -206,9 +212,9 @@
           <node id="koshinage_kata_guruma" label="koshinage (kata guruma)">
               <use ref="koshinage_right_finish"/>
           </node>
-          <node id="sukui_nage_entrance" label="sukui nage entrance">
-              <node id="koshinage_sukui_nage" label="koshinage (sukui nage)">
-                  <node id="sukui_nage_finish" label="sukui nage finish"/>
+          <node id="sukui_nage_entrance" label="aiki otoshi entrance">
+              <node id="koshinage_sukui_nage" label="aiki otoshi">
+                  <node id="sukui_nage_finish" label="aiki otoshi finish"/>
               </node>
           </node>
           <node id="arm_bar_over_shoulder" label="arm bar (over shoulder)">
@@ -238,7 +244,7 @@
               </node>
           </node>
           <node id="blend_palm_up" label="blend (palm up)">
-              <node id="turn_palm_down" label="turn and throw"/>
+              <node id="arm_circle_palm_down" label="turn and throw"/>
           </node>
           <node id="elbow_lock" label="elbow lock">
               <node id="kokyo_nage_grabbing" label="kokyo nage">
@@ -265,9 +271,7 @@
               <use ref="zempo_nage_left_finish_toward_right"/>
           </node>
           <node id="irimi_omote_entrance" label="irimi omote entrance">
-              <node id="iriminage_left_throw" label="iriminage throw">
-                  <use ref="iriminage_full_entrance"/>
-              </node>
+              <use ref="iriminage_full_entrance"/>
           </node>
       </node>
    </node>
