@@ -296,27 +296,71 @@
       <node id="tenkan_not_grabbed" label="tenkan">
           <use ref="sumi_entrance"/>
       </node>
+      <node id="irimi_shomen_entrance" label="irimi entrance">
+          <use ref="sumi_entrance"/>
+          <use ref="kokyo_nage_grabbed"/>
+          <use ref="kaiten_nage_continuance"/>
+          <use ref="arm_bar_continuance"/>
+          <use ref="iriminage_turn"/>
+          <use ref="iriminage_right_throw"/>
+          <use ref="kote_geishi_ura_continuance"/>
+          <use ref="juji_nage_entrance"/>
+          <use ref="hook_arm"/>
+      </node>
       <use ref="ikkyo_omote_entrance"/>
       <use ref="ikkyo_ura_entrance"/>
+      <use ref="gokyo_entrance"/>
   </node>
+
   <node id="yokomenuchi" label="yokomen uchi">
+      <node id="yoko_omote_entrance" label="omote entrance">
+          <use ref="shihonage_entrance"/>
+          <use ref="irimi_entrance_break_grip"/>
+          <use ref="kote_geishi_omote_continuance"/>
+          <use ref="omote_iriminage"/>
+          <node id="tenkan_continuance" label="tenkan continuance">
+              <use ref="kaiten_nage_continuance"/>
+              <use ref="kote_geishi_ura_throw"/>
+          </node>
+          <use ref="juji_nage_entrance"/>
+      </node>
+      <node id="yoko_ikkyo_entrance" label="omote entrance">
+          <use ref="ikkyo_omote_entrance"/>
+          <use ref="ikkyo_ura_entrance"/>
+      </node>
+      <node id="yoko_ura_entrance" label="ura entrance">
+          <use ref="shihonage_entrance"/>
+          <use ref="sumi_otoshi_inside_shoulder"/>
+          <use ref="sumi_otoshi_outside_shoulder"/>
+          <use ref="sumi_koshinage_two_hands_on_arm"/>
+          <use ref="sumi_koshinage_arm_around_waist"/>
+      </node>
   </node>
+
   <node id="mentsuki" label="men tsuki">
   </node>
+
   <node id="munetsuki" label="mune tsuki">
   </node>
+
   <node id="ryotetori" label="ryote tori">
   </node>
+
   <node id="morotetori" label="morote tori">
   </node>
+
   <node id="ushiro_ryotetori" label="ushiro ryote tori">
   </node>
+
   <node id="ushiro_ryokatatori" label="ushiro ryokata tori">
   </node>
+
   <node id="ai_tori" label="ai tori">
   </node>
+
   <node id="ushiro_tori_high" label="ai tori (high)">
   </node>
+
   <node id="ushiro_tori_low" label="ai tori (low)">
   </node>
 </hierarchy>
