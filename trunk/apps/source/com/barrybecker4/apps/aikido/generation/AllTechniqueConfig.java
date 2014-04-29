@@ -22,9 +22,11 @@ public class AllTechniqueConfig {
     public AllTechniqueConfig() {
     }
 
-    public AllTechniqueConfig(boolean debug, int imageSize) {
+    public AllTechniqueConfig(boolean debug, int imageSize, int fontSize, int borderWidth) {
         this.debug = debug;
-        showImages = (imageSize > 0);
+        this.showImages = (imageSize > 0);
         this.imageSize = imageSize;
+        this.fontSize = fontSize;
+        this.borderWidth = borderWidth;
     }
 }

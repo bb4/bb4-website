@@ -25,6 +25,7 @@ public class AllTechniqueHtmlGenerator {
         this(new AllTechniqueConfig());
     }
 
+    /** Constructor with formatting configuration specified */
     public AllTechniqueHtmlGenerator(AllTechniqueConfig config) {
         this.config = config;
     }
@@ -65,10 +66,10 @@ public class AllTechniqueHtmlGenerator {
                     "(<a href='technique_builder_desc.html'>more details</a>).</font> "
           + "<br><br>\n\n"
 
-          + "<table id='outerTable' width=\"100%\" border=\"0\">\n"
+          + "<table id='outerTable' border=\"0\">\n"
           + "  <tr>\n"
           + "    <td>\n"
-          + "      <div style=\"width:100%; overflow: auto; font-family:arial; font-size:8;\">\n\n"
+          + "      <div style=\"width:100%; overflow: auto; font-family:arial; font-size:"+config.fontSize+";\">\n\n"
 
           + getTechniqueTable(document)
 
@@ -86,8 +87,8 @@ public class AllTechniqueHtmlGenerator {
         StringBuilder buf = new StringBuilder();
         List<NodeInfo> parentList = new LinkedList<>();
 
-        buf.append("<table id='techniqueTable' width=\"100%\" cellspacing=\"1\" cellpadding=\"2\" border=\"1\">\n");
-        //buf.append("<table id='techniqueTable' width=\"100%\" border=\"0\">\n");
+        buf.append("<table id='techniqueTable' width=\"100%\" cellspacing=\"1\" cellpadding=\"2\" border=\"")
+                .append(config.borderWidth).append("\">\n");
 
         Node root = document.getDocumentElement();
         String imgPath = DomUtil.getAttribute(root, "imgpath");
@@ -133,25 +134,19 @@ public class AllTechniqueHtmlGenerator {
     }
 
     private void techniqueStepsRow(List<NodeInfo> parentList, StringBuilder buf) {
-        buf.append("  <tr nowrap> \n");
+        buf.append("  <tr style=\"white-space:nowrap; font-size:").append(config.fontSize).append("\">\n");
         for (int i=1; i < parentList.size(); i++) {
             NodeInfo info = parentList.get(i);
-            buf.append("    <td nowrap>\n");
-            if (config.debug)  {
-                buf.append("      <span title=\"").append(info.getId())
-                   .append("\" style=\"height:14px; width:120px; overflow:visible; font-size: 8;\">\n");
-            } else {
-                buf.append("      <span title=\"").append(info.getLabel())
-                   .append("\" style=\"height:14px; width:100px; overflow:hidden; font-size: 9;\">\n");
-            }
-            //buf.append("        <span>");
-            if (config.debug)  {
-                buf.append(info.getId());
-            }  else {
-                buf.append(info.getLabel());
-            }
-            //buf.append("        </span>");
-            buf.append("      </span>");
+            buf.append("    <td style=\"width:50px; max-width:150px; height:20; overflow:hidden;\">\n");
+            String label = config.debug ? info.getId() : info.getLabel();
+            buf.append(label);
+
+            /*
+            buf.append("      <span title=\"").append(label)
+                   .append("\" style=\"overflow:hidden; font-size:")
+                   .append(config.fontSize).append("\">\n");
+            // .append("\" style=\"height:14px; width:100px; overflow:hidden; font-size: 9;\">\n");
+            buf.append(label).append("</span>\n");  */
             buf.append("    </td>\n");
         }
         buf.append("  </tr>\n");
@@ -162,8 +157,6 @@ public class AllTechniqueHtmlGenerator {
         for (int i=1; i < parentList.size(); i++) {
             NodeInfo info = parentList.get(i);
             buf.append("    <td>\n");
-            //buf.append("      <img src=\""+ info.img +"\" style=\"width:50px; height:44px;\">\n");
-
             buf.append("      <img src=\"").append(info.getImage()).append("\" height=\""
                     + config.imageSize + "\" title=\"").append(info.getLabel()).append("\">\n");
 
