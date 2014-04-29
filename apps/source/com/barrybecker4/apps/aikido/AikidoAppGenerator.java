@@ -57,7 +57,7 @@ public class AikidoAppGenerator {
     public static void generateAllElementsFromDom(Document document, String fileName)
             throws IOException {
 
-        new AllTechniqueHtmlGenerator(new AllTechniqueConfig(true, 40)).generateAllElementsFromDom(document, fileName);
+        new AllTechniqueHtmlGenerator(new AllTechniqueConfig(true, 50, 10, 1)).generateAllElementsFromDom(document, fileName);
     }
 
 
