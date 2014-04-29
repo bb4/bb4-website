@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright by Barry G. Becker, 2014. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+  -->
+
 <!DOCTYPE hierarchy SYSTEM "http://barrybecker4.com/schema/hierarchy.dtd">
 <hierarchy title="Aikido Technique Hierarchy" imgpath="images/katate_dori/" date="10/19/2004" author="Barry Becker">
-   <!-- Todo:
-      - Add more attacks: shomen, yokomen, ryote dori, morote dori, kata dori, ushiro ryote dori,
-        ai dori, ushiro tori (high/low)
-      - bait and swith to fingers, extend to shoulder, sankyo, variations (including kaitenage)
-      - angle hand up, then down, kaitenage
-   -->
+
   <node id="katate_dori" label="katate dori">
       <node id="tenkan_grabbed" label="tenkan entrance (grabbed)">
-          <node id="sumi_grabbed" label="sumi entrance (grabbed)">
+          <node id="sumi_entrance" label="sumi entrance (grabbed)">
               <node id="sumi_otoshi_basic" label="sumi otoshi (basic)">
                   <node id="right_sit_fall" label="sit fall"/>
               </node>
@@ -181,7 +180,7 @@
       <node id="kokyo_nage_grabbed" label="kokyo nage (grabbed)">
           <node id="kokyo_nage_throw" label="kokyo nage finish"/>
       </node>
-      <use ref="sumi_grabbed"/>
+      <use ref="sumi_entrance"/>
       <node id="step_back_grabbed" label="step back">
           <use ref="ikkyo_omote_entrance"/>
           <use ref="ikkyo_ura_entrance"/>
@@ -291,7 +290,35 @@
           <use ref="sumi_koshinage_arm_around_waist"/>
           <use ref="koshi_nage_past_head"/>
       </node>
-   </node>
+  </node>
+
+  <node id="shomenuchi" label="shomen uchi">
+      <node id="tenkan_not_grabbed" label="tenkan">
+          <use ref="sumi_entrance"/>
+      </node>
+      <use ref="ikkyo_omote_entrance"/>
+      <use ref="ikkyo_ura_entrance"/>
+  </node>
+  <node id="yokomenuchi" label="yokomen uchi">
+  </node>
+  <node id="mentsuki" label="men tsuki">
+  </node>
+  <node id="munetsuki" label="mune tsuki">
+  </node>
+  <node id="ryotetori" label="ryote tori">
+  </node>
+  <node id="morotetori" label="morote tori">
+  </node>
+  <node id="ushiro_ryotetori" label="ushiro ryote tori">
+  </node>
+  <node id="ushiro_ryokatatori" label="ushiro ryokata tori">
+  </node>
+  <node id="ai_tori" label="ai tori">
+  </node>
+  <node id="ushiro_tori_high" label="ai tori (high)">
+  </node>
+  <node id="ushiro_tori_low" label="ai tori (low)">
+  </node>
 </hierarchy>
 
 

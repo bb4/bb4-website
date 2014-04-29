@@ -8,8 +8,10 @@ import org.w3c.dom.NodeList;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Generate expressions for all possible statements that the grammar can produce
@@ -19,6 +21,14 @@ public class AllTechniqueHtmlGenerator {
 
     /** provides optional configuration options to use when creating the page */
     private AllTechniqueConfig config;
+
+    /** used to only show unique images if that is requested */
+    private Set<String> imageSet = new HashSet<>();
+
+    /** total number of images shown in table */
+    private int imagesShown;
+    /** total number of images if all possible images were shown */
+    private int potentialImages;
 
     /** Default constructor */
     public AllTechniqueHtmlGenerator() {
@@ -78,6 +88,7 @@ public class AllTechniqueHtmlGenerator {
           + "  </tr>\n"
           + "</table> \n\n"
           + "<br>\n"
+          + "<div>Total number of images shown = " + imagesShown + " (out of "+ potentialImages + " possible)</div>\n"
           + "</body> \n";
 
         return body;
@@ -92,7 +103,7 @@ public class AllTechniqueHtmlGenerator {
 
         Node root = document.getDocumentElement();
         String imgPath = DomUtil.getAttribute(root, "imgpath");
-        buf.append( genRowForNode(root, parentList, imgPath));
+        buf.append(genRowForNode(root, parentList, imgPath));
 
         buf.append("</table>\n\n");
 
@@ -109,21 +120,20 @@ public class AllTechniqueHtmlGenerator {
 
         if (nodeInfo.getId() == null) {
             System.out.println("null id for " + node.getNodeName() + ' ' + node.getNodeValue());
-            //return  "";
         }
         parentList.add(nodeInfo);
 
         NodeList children = node.getChildNodes();
 
         if (children.getLength()==0 && nodeInfo.getId() != null) {
-            // then we have a child node, so print a row corresponding to a technique
+            // then we are at a leaf node, so print a row corresponding to a technique
             techniqueStepsRow(parentList, buf);
             if (config.showImages) {
                 thumbnailImageRow(parentList, buf);
             }
         }
 
-        for (int i=0; i<children.getLength(); i++) {
+        for (int i=0; i < children.getLength(); i++) {
             Node child = children.item(i);
             buf.append( genRowForNode(child, parentList, imgPath));
         }
@@ -137,16 +147,11 @@ public class AllTechniqueHtmlGenerator {
         buf.append("  <tr style=\"white-space:nowrap; font-size:").append(config.fontSize).append("\">\n");
         for (int i=1; i < parentList.size(); i++) {
             NodeInfo info = parentList.get(i);
-            buf.append("    <td style=\"width:50px; max-width:150px; height:20; overflow:hidden;\">\n");
             String label = config.debug ? info.getId() : info.getLabel();
-            buf.append(label);
-
-            /*
-            buf.append("      <span title=\"").append(label)
-                   .append("\" style=\"overflow:hidden; font-size:")
-                   .append(config.fontSize).append("\">\n");
-            // .append("\" style=\"height:14px; width:100px; overflow:hidden; font-size: 9;\">\n");
-            buf.append(label).append("</span>\n");  */
+            buf.append("    <td title=\"")
+                    .append(label)
+                    .append("style=\"width:50px; max-width:150px; height:20; overflow:hidden;\">\n")
+                    .append(label);
             buf.append("    </td>\n");
         }
         buf.append("  </tr>\n");
@@ -157,9 +162,13 @@ public class AllTechniqueHtmlGenerator {
         for (int i=1; i < parentList.size(); i++) {
             NodeInfo info = parentList.get(i);
             buf.append("    <td>\n");
-            buf.append("      <img src=\"").append(info.getImage()).append("\" height=\""
-                    + config.imageSize + "\" title=\"").append(info.getLabel()).append("\">\n");
-
+            if (!config.showOnlyUniqueImages || !imageSet.contains(info.getId())){
+                buf.append("      <img src=\"").append(info.getImage()).append("\" height=\""
+                        + config.imageSize + "\" title=\"").append(info.getLabel()).append("\">\n");
+                imageSet.add(info.getId());
+                imagesShown++;
+            }
+            potentialImages++;
             buf.append("    </td>\n");
         }
         buf.append("  </tr>\n");

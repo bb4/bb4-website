@@ -15,6 +15,7 @@ public class AllTechniqueConfig {
     boolean debug = false;
 
     boolean showImages = true;
+    boolean showOnlyUniqueImages = false;
     int fontSize = 9;
     int borderWidth = 1;
     int imageSize = 80;
@@ -22,11 +23,13 @@ public class AllTechniqueConfig {
     public AllTechniqueConfig() {
     }
 
-    public AllTechniqueConfig(boolean debug, int imageSize, int fontSize, int borderWidth) {
+    public AllTechniqueConfig(boolean debug, int imageSize, int fontSize, int borderWidth,
+                              boolean showOnlyUniqueImages) {
         this.debug = debug;
         this.showImages = (imageSize > 0);
         this.imageSize = imageSize;
         this.fontSize = fontSize;
         this.borderWidth = borderWidth;
+        this.showOnlyUniqueImages = showOnlyUniqueImages;
     }
 }

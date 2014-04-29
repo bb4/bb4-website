@@ -24,7 +24,7 @@ import java.io.IOException;
  */
 public class AikidoAppGenerator {
 
-    private static final String DEFAULT_INPUT_FILE = AppHtmlGenerator.PROJECT_DIR +  "katate_dori.xml";
+    private static final String DEFAULT_INPUT_FILE = AppHtmlGenerator.PROJECT_DIR +  "techniques.xml";
 
     /** A self contained and transferable location. */
     private static final String RESULT_PATH =
@@ -57,7 +57,7 @@ public class AikidoAppGenerator {
     public static void generateAllElementsFromDom(Document document, String fileName)
             throws IOException {
 
-        new AllTechniqueHtmlGenerator(new AllTechniqueConfig(true, 50, 10, 1)).generateAllElementsFromDom(document, fileName);
+        new AllTechniqueHtmlGenerator(new AllTechniqueConfig(true, 100, 10, 1, true)).generateAllElementsFromDom(document, fileName);
     }
 
 

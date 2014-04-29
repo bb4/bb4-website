@@ -22,12 +22,21 @@ public class XmlToJsConverter {
 
         buf.append('\n');
         buf.append("  // setup structures for grammar\n");
+        buf.append("  var attacks = new Array();\n");
         buf.append("  var next = new Array();\n");
         buf.append("  var img = new Array();\n");
         buf.append("  var label = new Array();\n\n");
 
         Node root = document.getDocumentElement();
         String imgPath = DomUtil.getAttribute(root, "imgpath");
+
+        NodeList children = root.getChildNodes();
+        for (int i=0; i < children.getLength(); i++) {
+            Node child = children.item(i);
+            NodeInfo nodeInfo = new NodeInfo(imgPath, child.getAttributes());
+            buf.append("  attacks[").append(i).append("]='").append(nodeInfo.getId()).append("';\n");
+        }
+
         buf.append( genJSForNode(root, imgPath));
         buf.append('\n');
 
@@ -73,7 +82,7 @@ public class XmlToJsConverter {
                 buf.append('\n');
             }
         }
-        for (int i=0; i<children.getLength(); i++) {
+        for (int i=0; i < children.getLength(); i++) {
             Node child = children.item(i);
             buf.append( genJSForNode(child, imgPath));
         }

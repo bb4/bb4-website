@@ -25,11 +25,11 @@ public class AppHtmlGenerator {
     /**
      * Auto generate the html app based on the XML file.
      *
-     * @param document
+     * @param document xml document model containing all techniques
      * @param fileName
      * @throws IOException
      */
-    public void generateHTMLApp( Document document, String fileName) throws IOException {
+    public void generateHTMLApp(Document document, String fileName) throws IOException {
         System.out.println("file = " + fileName + " doc = " + document);
         FileOutputStream fos = new FileOutputStream(fileName);
 
