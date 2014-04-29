@@ -18,7 +18,6 @@
 
         var stepNum = getStepNumber(selectId);
         var selectedVal = getSelectedValue(selectId);
-        valuesList = next[selectedVal];
 
         var table = getTable();
         var selectRow = table.rows[0];
@@ -151,6 +150,24 @@
         bigImg.src = newSrc;
     }
 
-    /** called when page loads */
+    /**
+     * Called when page loads.
+     * Initializes the menu for the first step with the possible attacks
+     */
     function doOnLoad() {
+        var initialSelect = document.getElementById("step0_select");
+
+        option = document.createElement("option");
+        var nextOpt = "-----";
+        option.value = nextOpt;
+        option.innerText = nextOpt;
+        initialSelect.appendChild(option);
+
+        for (var i=0; i<attacks.length; i++) {
+            option = document.createElement("option");
+            var nextOpt = attacks[i];
+            option.value = nextOpt;
+            option.innerText = label[nextOpt];
+            initialSelect.appendChild(option);
+        }
     }
