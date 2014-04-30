@@ -4,8 +4,7 @@
   -->
 
 <!DOCTYPE hierarchy SYSTEM "http://barrybecker4.com/schema/hierarchy.dtd">
-<hierarchy title="Aikido Technique Hierarchy" imgpath="images/katate_dori/" date="10/19/2004" author="Barry Becker">
-
+<hierarchy title="Aikido Technique Hierarchy" imgpath="images/techniques/" date="5/2/2014" author="Barry Becker">
   <node id="katate_dori" label="katate dori">
       <node id="tenkan_grabbed" label="tenkan entrance (grabbed)">
           <node id="sumi_entrance" label="sumi entrance (grabbed)">
@@ -30,6 +29,9 @@
               </node>
               <node id="omote_uchi_zempo_nage" label="omote uchi zempo nage">
                   <node id="zempo_nage_left_finish" label="zempo nage"/>
+              </node>
+              <node id="ura_uchi_zempo_nage" label="ura uchi zempo nage">
+                  <use ref="zempo_nage_left_finish" />
               </node>
               <node id="ikkyo_omote_entrance" label="ikkyo omote entrance">
                   <node id="ikkyo_omote" label="ikkyo omote">
@@ -83,6 +85,9 @@
                   </node>
                   <node id="yonkyo_omote" label="yonkyo omote">
                       <use ref="yonkyo_pin_standing" />
+                  </node>
+                  <node id="reverse_yonkyo_omote" label="reverse yonkyo omote">
+                      <node id="reverse_yonkyo_pin" label="reverse yonkyo pin"/>
                   </node>
               </node>
               <node id="ikkyo_ura_entrance" label="ikkyo ura entrance">
@@ -242,6 +247,7 @@
                   <node id="juji_nage_throw" label="juji nage throw"/>
               </node>
           </node>
+          <use ref="shihonage"/>
           <node id="blend_palm_up" label="blend (palm up)">
               <node id="arm_circle_palm_down" label="turn and throw"/>
           </node>
@@ -292,9 +298,30 @@
       </node>
   </node>
 
+  <node id="katatori" label="kata tori" >
+      <node id="katatori_step_back_entrance" label="step back">
+          <use ref="ikkyo_omote_entrance"/>
+      </node>
+      <node id="katatori_omote_pivot_entrance" label="omote pivot">
+          <use ref="ikkyo_ura_entrance"/>
+      </node>
+      <node id="katatori_jujinage_entrance" label="kata tori juji nage entrance">
+          <use ref="juji_nage_continuance"/>
+      </node>
+      <node id="katatori_menuchi" label="kata tori men uchi">
+         <use ref="ikkyo_omote_entrance"/>
+         <use ref="ikkyo_ura_entrance"/>
+      </node>
+      <use ref="katatori_jujinage_entrance"/>
+      <node id="fold_trap_elbow_entrance" label="fold/trap elbow">
+
+      </node>
+  </node>
+
   <node id="shomenuchi" label="shomen uchi">
       <node id="tenkan_not_grabbed" label="tenkan">
           <use ref="sumi_entrance"/>
+          <node id="outside_zempo_nage" label="outside zempo nage"/>
       </node>
       <node id="irimi_shomen_entrance" label="irimi entrance">
           <use ref="sumi_entrance"/>
@@ -327,6 +354,7 @@
       <node id="yoko_ikkyo_entrance" label="omote entrance">
           <use ref="ikkyo_omote_entrance"/>
           <use ref="ikkyo_ura_entrance"/>
+          <use ref="sankyo"/>
       </node>
       <node id="yoko_ura_entrance" label="ura entrance">
           <use ref="shihonage_entrance"/>
@@ -344,6 +372,24 @@
   </node>
 
   <node id="ryotetori" label="ryote tori">
+      <node id="tenchi_omote_entrance" label="tenchi entrance (omote)">
+          <node id="tenchinage" label="tenchi nage">
+             <use ref="right_sit_fall"/>
+          </node>
+      </node>
+      <node id="tenchi_ura_entrance" label="tenchi entrance (ura)">
+          <use ref="tenchinage"/>
+      </node>
+      <node id="tenchi_kokyo_omote_entrance" label="tenchi kokyo entrance (omote)">
+          <node id="tenchi_kokyo" label="tenchi kokyo">
+              <use ref="zempo_nage_right_finish"/>
+              <node id="tenchi_koshi_nage" label="tench koshi nage"/>
+          </node>
+      </node>
+      <node id="tenchi_kokyo_ura_entrance" label="tenchi nage kokyo entrance (ura)">
+          <use ref="tenchi_kokyo"/>
+      </node>
+      <use ref="sumi_entrance"/>
   </node>
 
   <node id="morotetori" label="morote tori">
@@ -355,6 +401,12 @@
   <node id="ushiro_ryokatatori" label="ushiro ryokata tori">
   </node>
 
+  <node id="ushiro_ryohijitori" label="ushiro ryohiji tori">
+  </node>
+
+  <node id="ushiro_kubishime" label="ushiro kubishime">
+  </node>
+
   <node id="ai_tori" label="ai tori">
   </node>
 
@@ -363,6 +415,7 @@
 
   <node id="ushiro_tori_low" label="ai tori (low)">
   </node>
+
 </hierarchy>
 
 

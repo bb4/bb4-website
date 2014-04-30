@@ -20,6 +20,10 @@ import java.io.IOException;
  *      and all_techniques.html in barrybecker4/projects/javascript_projects/aikido_builder/.
  *   4. upload technique_builder.html, all_techniques.html and corresponding images to website.
  *
+ * Some interesting links for kubi-shime
+ *  - https://www.youtube.com/watch?v=05hBVD0tHgg
+ *  - https://www.youtube.com/watch?v=PgLdErLByRs
+ *  - https://www.youtube.com/watch?v=gLijUiaSm2E
  * @author Barry Becker
  */
 public class AikidoAppGenerator {
