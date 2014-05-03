@@ -40,10 +40,13 @@ public class AikidoAppGenerator {
             FileUtil.getHomeDir() + "../../javascript_projects/aikido_builder/";
 
     /** the builder DHTML application */
-    private static final String RESULT_BULDER_FILE = "technique_builder.html";
+    private static final String RESULT_BULDER_FILE = RESULT_PATH + "technique_builder.html";
 
     /** all the techniques in one file (for debugging mostly) */
-    private static final String RESULT_ALL_FILE = "all_techniques.html";
+    private static final String RESULT_ALL_FILE = RESULT_PATH + "all_techniques.html";
+
+    /** all the techniques in one file (for debugging mostly) */
+    private static final String RESULT_UNIQUE_FILE = RESULT_PATH + "all_unique.html";
 
     private AikidoAppGenerator() {}
 
@@ -57,19 +60,6 @@ public class AikidoAppGenerator {
 
         new AppHtmlGenerator().generateHTMLApp(document, fileName);
     }
-
-    /**
-     * Auto generate all elements based on the XML file.
-     * @param document contains all the techniques in XML.
-     * @param fileName file to write to.
-     */
-    public static void generateAllElementsFromDom(Document document, String fileName)
-            throws IOException {
-
-        AllTechniqueConfig config = new AllTechniqueConfig(false, 160, 10, 0, false);
-        new AllTechniqueHtmlGenerator(config).generateAllElementsFromDom(document, fileName);
-    }
-
 
     public static void main(String argv[]) {
         Document document;
@@ -88,8 +78,13 @@ public class AikidoAppGenerator {
         document = DomUtil.parseXMLFile(file, true);
 
         try {
-            generateHTMLAppFromDom(document, RESULT_PATH + RESULT_BULDER_FILE);
-            generateAllElementsFromDom(document, RESULT_PATH + RESULT_ALL_FILE);
+            generateHTMLAppFromDom(document, RESULT_BULDER_FILE);
+
+            AllTechniqueConfig config = new AllTechniqueConfig(false, 160, 10, 0, false);
+            new AllTechniqueHtmlGenerator(config).generateAllElementsFromDom(document, RESULT_ALL_FILE);
+
+            config = new AllTechniqueConfig(true, 100, 9, 0, true);
+            new AllTechniqueHtmlGenerator(config).generateAllElementsFromDom(document, RESULT_UNIQUE_FILE);
          }
         catch (IOException e) {
             e.printStackTrace();
