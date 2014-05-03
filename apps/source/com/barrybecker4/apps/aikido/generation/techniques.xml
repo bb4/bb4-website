@@ -9,7 +9,8 @@
       <node id="tenkan_grabbed" label="tenkan entrance (grabbed)" description="Pivot on left leg while left hand grabbed.">
           <node id="sumi_entrance" label="sumi entrance (grabbed)" description="Slide left foot and hand forward toward triangle point to take balance.">
               <node id="sumi_otoshi_basic" label="sumi otoshi (basic)" description="Continue sliding in until they fall.">
-                  <node id="right_sit_fall" label="sit fall" description="Uke tucks right (closer) foot under and sits straight down and rolls backaward. Avoid hitting head by letting feet rise up."/>
+                  <node id="right_sit_fall" label="sit fall"
+                        description="Uke tucks right (closer) foot under and sits straight down and rolls backaward. Avoid hitting head by letting feet rise up."/>
               </node>
               <node id="sumi_otoshi_elbow" label="sumi otoshi (hiji)" description="Apply pressure on uke&quot;s elbow as you enter.">
                   <use ref="zempo_nage_right_finish"/>
@@ -113,6 +114,9 @@
                       <node id="iriminage_full_entrance" label="iriminage full entrance throw">
                           <node id="iriminage_full_entrance_finish" label="irimi full entrance finish"/>
                       </node>
+                  </node>
+                  <node id="iriminage_omote_continuance" label="iriminage continuance (omote)">
+                      <use ref="iriminage_right_throw"/>
                   </node>
               </node>
               <node id="gokyo_entrance" label="gokyo entrance">
@@ -228,6 +232,17 @@
                   <node id="sukui_nage_finish" label="aiki otoshi finish"/>
               </node>
           </node>
+          <node id="elbow_lock" label="elbow lock">
+              <node id="kokyo_nage_grabbing" label="kokyo nage">
+                   <use ref="kokyo_nage_throw"/>
+              </node>
+              <node id="omote_choke" label="choke"/>
+              <node id="locked_kote_geishi" label="locked kote geishi">
+                  <node id="locked_kote_geishi_finish" label="locked kote geishi throw">
+                      <node id="locked_kote_geishi_pin" label="locked kote geishi pin"/>
+                  </node>
+              </node>
+          </node>
           <node id="arm_bar_over_shoulder" label="arm bar (over shoulder)">
               <node id="shiho_zempo_nage" label="shiho zempo nage"/>
           </node>
@@ -257,17 +272,6 @@
               <node id="arm_circle_palm_down" label="turn and throw"/>
           </node>
           <use ref="sukui_nage_entrance"/>
-          <node id="elbow_lock" label="elbow lock">
-              <node id="kokyo_nage_grabbing" label="kokyo nage">
-                   <use ref="kokyo_nage_throw"/>
-              </node>
-              <node id="omote_choke" label="choke"/>
-              <node id="locked_kote_geishi" label="locked kote geishi">
-                  <node id="locked_kote_geishi_finish" label="locked kote geishi throw">
-                      <node id="locked_kote_geishi_pin" label="locked kote geishi pin"/>
-                  </node>
-              </node>
-          </node>
       </node>
       <node id="reverse_kote_geishi" label="reverse kote geishi">
           <node id="reverse_kote_geishi_throw" label="reverse kote geishi throw"/>
@@ -303,28 +307,61 @@
       </node>
   </node>
 
-  <node id="katatori" label="kata tori" >
-      <node id="katatori_step_back_entrance" label="step back">
+  <node id="katatori" label="kata tori">
+      <node id="katatori_step_back_entrance" label="step back" description="Atemi, then draw back with hand to elbow.">
           <use ref="ikkyo_omote_entrance"/>
+          <use ref="ikkyo_ura_entrance"/>
           <use ref="nikkyo"/>
       </node>
       <node id="atemi_nikkyo_entrance" label="atemi nikkyo">
           <use ref="nikkyo_omote_finish"/>
+          <use ref="zempo_nage_left_finish_toward_right"/>
       </node>
-      <node id="katatori_omote_pivot_entrance" label="omote pivot">
-          <use ref="ikkyo_ura_entrance"/>
+      <node id="katatori_omote_pivot_entrance" label="omote pivot" description="step to the front, atemi to face, cut to elbow">
+          <use ref="ikkyo_omote_entrance"/>
           <use ref="atemi_nikkyo_entrance"/>
       </node>
-      <node id="katatori_jujinage_entrance" label="kata tori juji nage entrance">
-          <use ref="juji_nage_continuance"/>
+      <node id="katatori_lock_hand_omote" label="lock hand (omote)">
+          <node id="katatori_lock_hand_omote_continuance" label="lock hand and step" description="With hand locked on shoulder step forward and throw">
+             <use ref="zempo_nage_left_finish_toward_right"/>
+          </node>
+          <node id="katatori_lock_hand_ura" label="lock hand (ura)">
+             <node id="katatori_lock_hand_ura_continuance" label="lock hand and turn" description="With hand locked on shoulder turn and throw">
+                 <use ref="zempo_nage_left_finish"  />
+             </node>
+          </node>
       </node>
       <node id="katatori_menuchi" label="kata tori men uchi">
-         <use ref="ikkyo_omote_entrance"/>
-         <use ref="ikkyo_ura_entrance"/>
+          <node id="katamenuchi_ikkyo" label="ikkyo catch" description="Raise hand to catch strike.">
+              <use ref="ikkyo_omote_entrance"/>
+              <use ref="ikkyo_ura_entrance"/>
+              <node id="katatori_jujinage_entrance" label="kata tori juji nage entrance">
+                  <use ref="juji_nage_continuance"/>
+              </node>
+              <node id="katamenuchi_tenkan" label="tenkan" description="Lower arm to allow strike to continue as you turn">
+                  <use ref="nikkyo"/>
+                  <node id="kote_geishi_omote_right" label="kote geishi (omote)">
+                      <node id="kote_geishi_throw_right" label="kote geishi throw">
+                          <node id="kote_geishi_finish_right" label="kote gaishi finis" />
+                      </node>
+                  </node>
+                  <node id="kote_geishi_ura_right" label="kote geishi (ura)">
+                      <use ref="kote_geishi_throw_right"/>
+                  </node>
+              </node>
+          </node>
       </node>
       <use ref="katatori_jujinage_entrance"/>
       <node id="fold_trap_elbow_entrance" label="fold/trap elbow">
          <node id="kubishimi" label="kubishimi" />
+      </node>
+      <node id="fold_elbow_entrance" label="fold elbow" description="Hook uke&quot;s elbow with thumb and fold it so his shoulders turn.">
+          <node id="lock_arm_kata" label="lock arm" >
+              <node id="locked_arm_kubishime" label="ushiro kubishimi" description="Rear choke with locked arm"/>
+          </node>
+          <use ref="iriminage_omote_continuance"/>
+          <use ref="zempo_nage_left_finish_toward_right"/>
+          <use ref="kokyo_nage_grabbed"/>
       </node>
   </node>
 
