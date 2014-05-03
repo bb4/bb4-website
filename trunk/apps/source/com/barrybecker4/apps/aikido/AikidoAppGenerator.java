@@ -24,6 +24,11 @@ import java.io.IOException;
  *  - https://www.youtube.com/watch?v=05hBVD0tHgg
  *  - https://www.youtube.com/watch?v=PgLdErLByRs
  *  - https://www.youtube.com/watch?v=gLijUiaSm2E
+ *
+ *  Features to add:
+ *   - show video for as many leaf nodes as possible. Hard because of ref nodes that represent subtrees.
+ *   - add more descriptions
+ *
  * @author Barry Becker
  */
 public class AikidoAppGenerator {
@@ -61,7 +66,8 @@ public class AikidoAppGenerator {
     public static void generateAllElementsFromDom(Document document, String fileName)
             throws IOException {
 
-        new AllTechniqueHtmlGenerator(new AllTechniqueConfig(true, 100, 10, 1, true)).generateAllElementsFromDom(document, fileName);
+        AllTechniqueConfig config = new AllTechniqueConfig(false, 160, 10, 0, false);
+        new AllTechniqueHtmlGenerator(config).generateAllElementsFromDom(document, fileName);
     }
 
 
