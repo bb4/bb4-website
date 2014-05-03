@@ -5,13 +5,13 @@
 
 <!DOCTYPE hierarchy SYSTEM "http://barrybecker4.com/schema/hierarchy.dtd">
 <hierarchy title="Aikido Technique Hierarchy" imgpath="images/techniques/" date="5/2/2014" author="Barry Becker">
-  <node id="katate_dori" label="katate dori">
-      <node id="tenkan_grabbed" label="tenkan entrance (grabbed)">
-          <node id="sumi_entrance" label="sumi entrance (grabbed)">
-              <node id="sumi_otoshi_basic" label="sumi otoshi (basic)">
-                  <node id="right_sit_fall" label="sit fall"/>
+  <node id="katate_dori" label="katate dori" description="Grab left wrist.">
+      <node id="tenkan_grabbed" label="tenkan entrance (grabbed)" description="Pivot on left leg while left hand grabbed.">
+          <node id="sumi_entrance" label="sumi entrance (grabbed)" description="Slide left foot and hand forward toward triangle point to take balance.">
+              <node id="sumi_otoshi_basic" label="sumi otoshi (basic)" description="Continue sliding in until they fall.">
+                  <node id="right_sit_fall" label="sit fall" description="Uke tucks right (closer) foot under and sits straight down and rolls backaward. Avoid hitting head by letting feet rise up."/>
               </node>
-              <node id="sumi_otoshi_elbow" label="sumi otoshi (hiji)">
+              <node id="sumi_otoshi_elbow" label="sumi otoshi (hiji)" description="Apply pressure on uke&quot;s elbow as you enter.">
                   <use ref="zempo_nage_right_finish"/>
               </node>
               <node id="sumi_otoshi_inside_shoulder" label="sumi otoshi (inside shoulder)">
@@ -36,6 +36,9 @@
               <node id="ikkyo_omote_entrance" label="ikkyo omote entrance">
                   <node id="ikkyo_omote" label="ikkyo omote">
                       <node id="ikkyo_pin" label="ikkyo pin"/>
+                  </node>
+                  <node id="ikkyo_omote_projection" label="ikkyo projection (omote)">
+                      <use ref="zempo_nage_left_finish_toward_right"/>
                   </node>
                   <node id="nikkyo" label="nikkyo">
                       <node id="nikkyo_ura_finish" label="nikkyo ura finish">
@@ -91,6 +94,9 @@
                   </node>
               </node>
               <node id="ikkyo_ura_entrance" label="ikkyo ura entrance">
+                  <node id="ikkyo_ura_projection" label="ikkyo projection (ura)">
+                      <use ref="zempo_nage_left_finish"/>
+                  </node>
                   <use ref="ikkyo_omote"/>
                   <use ref="nikkyo"/>
                   <use ref="sankyo_hand_change"/>
@@ -100,6 +106,7 @@
                           <use ref="iriminage_right_throw"/>
                           <use ref="iriminage_full_entrance"/>
                       </node>
+                      <node id="irminage_hip_pull" label="iriminage hip pull"/>
                       <node id="iriminage_right_throw" label="iriminage throw">
                           <node id="iriminage_right_finish" label="iriminage finish"/>
                       </node>
@@ -193,7 +200,7 @@
           <use ref="gokyo_entrance"/>
           <node id="step_forward_hand_to_head" label="step forward, raise hand">
               <use ref="shihonage"/>
-              <use ref="zempo_nage_left_finish"/>
+              <use ref="zempo_nage_left_finish_toward_right"/>
           </node>
           <node id="hiji_kime_entrance" label="hiji kime entrance">
               <node id="zempo_nage_left_finish_toward_right" label="zempo nage"/>
@@ -222,9 +229,7 @@
               </node>
           </node>
           <node id="arm_bar_over_shoulder" label="arm bar (over shoulder)">
-              <node id="shiho_zempo_nage" label="shiho zempo nage">
-                  <use ref="zempo_nage_right_finish"/>
-              </node>
+              <node id="shiho_zempo_nage" label="shiho zempo nage"/>
           </node>
       </node>
       <node id="irimi_entrance_break_grip" label="irimi entrance (break grip)">
@@ -301,9 +306,14 @@
   <node id="katatori" label="kata tori" >
       <node id="katatori_step_back_entrance" label="step back">
           <use ref="ikkyo_omote_entrance"/>
+          <use ref="nikkyo"/>
+      </node>
+      <node id="atemi_nikkyo_entrance" label="atemi nikkyo">
+          <use ref="nikkyo_omote_finish"/>
       </node>
       <node id="katatori_omote_pivot_entrance" label="omote pivot">
           <use ref="ikkyo_ura_entrance"/>
+          <use ref="atemi_nikkyo_entrance"/>
       </node>
       <node id="katatori_jujinage_entrance" label="kata tori juji nage entrance">
           <use ref="juji_nage_continuance"/>
@@ -314,7 +324,7 @@
       </node>
       <use ref="katatori_jujinage_entrance"/>
       <node id="fold_trap_elbow_entrance" label="fold/trap elbow">
-
+         <node id="kubishimi" label="kubishimi" />
       </node>
   </node>
 
@@ -410,10 +420,10 @@
   <node id="ai_tori" label="ai tori">
   </node>
 
-  <node id="ushiro_tori_high" label="ai tori (high)">
+  <node id="ushiro_tori_low" label="ushiro tori (low)">
   </node>
 
-  <node id="ushiro_tori_low" label="ai tori (low)">
+  <node id="ushiro_tori_high" label="ushiro tori (high)">
   </node>
 
 </hierarchy>

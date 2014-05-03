@@ -17,6 +17,7 @@
 <!ATTLIST node
     id        ID       #REQUIRED
     label     CDATA    #REQUIRED
+    description CDATA  #IMPLIED
 >
 <!ATTLIST use
     ref       IDREF    #REQUIRED
