@@ -36,17 +36,17 @@
             if (nextSelectOptions.length > 1) {
                 onlyOneChild = false;
                 // the first one is -----;
-                option = document.createElement("option");
+                option = new Option("option");
                 var nextOpt = "-----";
                 option.value = nextOpt;
-                option.innerText = nextOpt;
+                option.textContent = nextOpt;
                 newSelect.appendChild(option);
             }
             for (var i=0; i < nextSelectOptions.length; i++) {
-                option = document.createElement("option");
+                option = new Option("option");
                 var nextOpt = nextSelectOptions[i];
                 option.value = nextOpt;
-                option.innerText = label[nextOpt];
+                option.textContent = label[nextOpt];
                 //alert("about to add "+option.outerHTML);
                 newSelect.appendChild(option);
             }
@@ -159,17 +159,17 @@
     function doOnLoad() {
         var initialSelect = document.getElementById("step0_select");
 
-        option = document.createElement("option");
+        option = new Option("option");
         var nextOpt = "-----";
         option.value = nextOpt;
-        option.innerText = nextOpt;
+        option.textContent = nextOpt;
         initialSelect.appendChild(option);
 
         for (var i=0; i<attacks.length; i++) {
-            option = document.createElement("option");
+            option = new Option("option");
             var nextOpt = attacks[i];
             option.value = nextOpt;
-            option.innerText = label[nextOpt];
+            option.textContent = label[nextOpt];
             initialSelect.appendChild(option);
         }
     }
