@@ -8,7 +8,7 @@ ext {
     appletHtml.put("localesList", [Locale.ENGLISH, Locale.GERMAN, Locale.JAPANESE, new Locale("vi")])
     appletHtml.put('appletList',
         ['pente', 'checkers', 'chess', 'go', 'blockade', 'galactic', 'poker', 'set', 'maze',
-         'spirograph','redpuzzle', 'sudoku', 'hiq', 'tantrix', 'trebuchet',
+         'spirograph','redpuzzle', 'sudoku', 'hiq', 'bridge', 'slidingpuzzle', 'twopails', 'tantrix', 'trebuchet',
          'snake', 'dice', 'stock', 'fractalexplorer', 'reactiondiffusion',
          'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder','adventure',
          'predprey', 'habitat', 'henonexplorer'])
