@@ -3,6 +3,7 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 import java.text.MessageFormat
 
+apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4.gradle'
 version = getVersion()
 
 ext.distributionGameDir="$distributionDir/applets"
@@ -21,6 +22,9 @@ dependencies {
     compile "com.barrybecker4:bb4-redpuzzle:$version"
     compile "com.barrybecker4:bb4-sudoku:$version"
     compile "com.barrybecker4:bb4-tantrix:$version"
+    compile "com.barrybecker4:bb4-bridge:$version"
+    compile "com.barrybecker4:bb4-slidingpuzzle:$version"
+    compile "com.barrybecker4:bb4-twopails:$version"
 
     compile "com.barrybecker4:bb4-game:$version"
     compile "com.barrybecker4:bb4-twoplayer:$version"
@@ -83,7 +87,8 @@ task deploySchemas(type:Copy, description: "Copy schema files to $distributionDi
 /**
  * Make sure all the dependent jar files are drawn into the dist directory.
  */
-task deployJars(type:Copy, dependsOn: [':apps:copyToLib', ':imageproc:copyToLib', ':webdeployment:copyToLib'],
+//task deployJars(type:Copy, dependsOn: [':apps:copyToLib', ':imageproc:copyToLib', ':webdeployment:copyToLib'],
+task deployJars(type:Copy, dependsOn: ['copyToLib'],
     description: "Deploys jar files needed for running applets and web start applications")  {
 
     from fileTree("$project.projectDir/..").include('**/build/libs/**').files

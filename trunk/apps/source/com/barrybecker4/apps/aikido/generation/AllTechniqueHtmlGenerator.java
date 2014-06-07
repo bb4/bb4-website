@@ -70,8 +70,7 @@ public class AllTechniqueHtmlGenerator {
           + "<big><big style=\"font-weight: bold; text-decoration: underline;\">Aikido\n"
           + "Techniques</big></big><br>\n"
           + "<br>\n"
-          + "This page contains all traditional aikido techniques.<br> " +
-                    "If you see an error send mail to BarryBecker4@yahoo.com.<br>\n"
+          + "This page contains all traditional unarmed standing aikido techniques.<br> "
           + "<font size='-1'>This application was built using XML, java and DHTML " +
                     "(<a href='technique_builder_desc.html'>more details</a>).</font> "
           + "<br><br>\n\n"

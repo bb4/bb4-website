@@ -327,12 +327,13 @@ public class ProcessingOperators {
     private static MetaImageOp createCellularOp() {
          List<Parameter> params = new ArrayList<Parameter>();
          params.add(new BooleanParameter(true, "useColor"));
-         Enum[] specValues = {CellularFilter.GridType.RANDOM};
+         int[] specValues = {CellularFilter.GridType.RANDOM.ordinal()};
          double[] specValueProbs = {0.6};
-         params.add(
+        params.add(
              StringParameter.createDiscreteParameter(
-                         CellularFilter.GridType.RANDOM,
-                         CellularFilter.GridType.values(), "gridType",  specValues, specValueProbs));
+                         CellularFilter.GridType.RANDOM.ordinal(),
+                         0, CellularFilter.GridType.values().length,
+                         "gridType",  specValues, specValueProbs));
          params.add(new IntegerParameter(1, 1, 20, "turbulence"));
          params.add(new DoubleParameter(0.0, 0.0, 1.0, "F1"));
          params.add(new DoubleParameter(0.0, 0.0, 1.0, "F2"));
@@ -351,13 +352,16 @@ public class ProcessingOperators {
          List<Parameter>  params = new ArrayList<Parameter>();
          params.add(new StringParameter(FBMFilter.BasisType.CELLULAR, FBMFilter.BasisType.values(), "basisType"));
 
-         Enum[] specValues = {
-             OperationType.REPLACE,  OperationType.NORMAL, OperationType.MIN, OperationType.MAX,
-             OperationType.ADD, OperationType.SUBTRACT,  OperationType.MULTIPLY,
-             OperationType.HUE, OperationType.SATURATION, OperationType.VALUE, OperationType.COLOR,
-             OperationType.SCREEN, OperationType.AVERAGE,  OperationType.CLEAR,
-             OperationType.EXCHANGE, OperationType.DISSOLVE, OperationType.DST_IN, OperationType.ALPHA,
-             OperationType.ALPHA_TO_GRAY};
+         int[] specValues = {
+             OperationType.REPLACE.ordinal(),  OperationType.NORMAL.ordinal(),
+             OperationType.MIN.ordinal(), OperationType.MAX.ordinal(),
+             OperationType.ADD.ordinal(), OperationType.SUBTRACT.ordinal(),  OperationType.MULTIPLY.ordinal(),
+             OperationType.HUE.ordinal(), OperationType.SATURATION.ordinal(),
+             OperationType.VALUE.ordinal(), OperationType.COLOR.ordinal(),
+             OperationType.SCREEN.ordinal(), OperationType.AVERAGE.ordinal(), OperationType.CLEAR.ordinal(),
+             OperationType.EXCHANGE.ordinal(), OperationType.DISSOLVE.ordinal(),
+             OperationType.DST_IN.ordinal(), OperationType.ALPHA.ordinal(),
+             OperationType.ALPHA_TO_GRAY.ordinal()};
          double[] specValueProbs = {
              0.010,  0.001,  0.050,  0.050,
              0.060,  0.060,    0.120,
@@ -366,7 +370,9 @@ public class ProcessingOperators {
              0.001,  0.040,  0.010,  0.010,  0.001,
          };
          params.add(StringParameter.createDiscreteParameter(
-                 OperationType.MULTIPLY, OperationType.values(), "operation", specValues, specValueProbs));
+                 OperationType.MULTIPLY.ordinal(),
+                 0, OperationType.values().length, "operation",
+                 specValues, specValueProbs));
 
          params.add(new DoubleParameter(0.8, 0.1, 3.0, "amount"));
          params.add(new DoubleParameter(32, 4, 128, "scale"));
