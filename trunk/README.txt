@@ -1,3 +1,5 @@
+NOTE: I was forced to make this repository was made public on github because projectLocker no longer allowed me to have a free private repositories. The code in this repository is not clean nor ready for public consumption.
+
 Steps to build applet projects:
 
 I. Building requires java, svn, intellij, gradle.
