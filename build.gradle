@@ -28,7 +28,7 @@ subprojects {
 
     dependencies {
         compile 'commons-collections:commons-collections:3.2'
-        testCompile 'junit:junit:3.+'
+        testCompile 'junit:junit:4.+'
     }
 
     jar {
