@@ -4,44 +4,44 @@ version = '1.1'
 project.archivesBaseName = 'bb4-apps'
 mainClassName = "com.barrybecker4.apps.spirograph.SpiroGraph"
 
-task runImageBreeder(type: JavaExec, depends: classes) {
+task runImageBreeder(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.imagebreeder.ImageBreederApplet'
     classpath = sourceSets.main.runtimeClasspath
 }
 
-task runSpirograph(type: JavaExec, depends: classes) {
+task runSpirograph(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.spirograph.SpiroGraph'
     classpath = sourceSets.main.runtimeClasspath
 }
 
-task runSierpinski(type: JavaExec, depends: classes) {
+task runSierpinski(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.sierpinski.SierpinskiApplet'
     classpath = sourceSets.main.runtimeClasspath
 }
 
-task runSimpleEditor(type: JavaExec, depends: classes) {
+task runSimpleEditor(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.misc.sedit.SimpleEditorFrame'
     classpath = sourceSets.main.runtimeClasspath
 }
 
-task runNativeRender(type: JavaExec, depends: classes) {
+task runNativeRender(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.misc.nativeRender.NativeTenderTest'
     classpath = sourceSets.main.runtimeClasspath
 }
 
-task runXMLViewer(type: JavaExec, depends: classes) {
+task runXMLViewer(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.ui.xmlviewer.DomEcho'
     classpath = sourceSets.main.runtimeClasspath
     args = ['../apps/source/com/barrybecker4/apps/misc/yugioh/yugiohCards.xml']
 }
 
-task runXMLAppGenerator(type: JavaExec, depends: classes) {
+task runXMLAppGenerator(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.aikido.AikidoAppGenerator'
     classpath = sourceSets.main.runtimeClasspath
     args = ['../apps/source/com/barrybecker4/apps/aikido/katate_dori.xml']
 }
 
-task runTranslator(type: JavaExec, depends: classes) {
+task runTranslator(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.translation.Translator'
     classpath = sourceSets.main.runtimeClasspath
     //args = ['../apps/source/com/barrybecker4/apps/aikido/katate_dori.xml']

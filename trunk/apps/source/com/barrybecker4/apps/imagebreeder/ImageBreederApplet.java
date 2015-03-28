@@ -179,7 +179,6 @@ public class ImageBreederApplet extends ApplicationApplet
      * Called when an item in the list of transformations is called.
      * @param ie
      */
-    @Override
     public void itemStateChanged( ItemEvent ie ) {
 
         if ( ie.getStateChange() != ItemEvent.SELECTED )
@@ -272,7 +271,6 @@ public class ImageBreederApplet extends ApplicationApplet
       * Called when the load button or go button is pressed.
       * @param ae
       */
-     @Override
      public void actionPerformed( ActionEvent ae ) {
 
          JButton button = (JButton)ae.getSource();
@@ -296,7 +294,6 @@ public class ImageBreederApplet extends ApplicationApplet
          }
     }
 
-    @Override
     public void sliderChanged(LabeledSlider slider) {
          variance = (float)slider.getValue();
     }
@@ -305,7 +302,6 @@ public class ImageBreederApplet extends ApplicationApplet
      * Make the parameters setting match the last selected image.
      * @param img
      */
-    @Override
     public void imageSelected(BufferedImage img) {
          List<Parameter> params = imgToParamsMap.get(img);
          assert(params != null);

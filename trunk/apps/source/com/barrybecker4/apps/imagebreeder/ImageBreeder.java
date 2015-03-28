@@ -90,7 +90,6 @@ public class ImageBreeder {
             this.metaOp = metaOp.copy();
         }
 
-        @Override
         public BufferedImage call() {
 
             BufferedImageOp randOp = metaOp.getRandomInstance(variance);
