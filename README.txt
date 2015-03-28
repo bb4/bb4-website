@@ -4,9 +4,8 @@ Steps to build applet projects:
 
 I. Building requires java, svn, intellij, gradle.
  - Install java JDK 1.6 or higher from http://www.oracle.com/technetwork/java/javase/downloads.
- - Install Tortoise SVN (1.7 or higher from http://tortoisesvn.net/)
  - Install Intellij (free community edition version. 12.x or higher from http://www.jetbrains.com/idea/)
- - Install gradle 1.6 or higher (http://www.gradle.org/)
+ - Install gradle 1.8 or higher (http://www.gradle.org/)
 
 II. Get the source
     1. Create a java_projects/applets directory.
