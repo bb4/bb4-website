@@ -4,15 +4,11 @@ Steps to build applet projects:
 
 I. Building requires java, svn, intellij, gradle.
  - Install java JDK 1.6 or higher from http://www.oracle.com/technetwork/java/javase/downloads.
- - Install Intellij (free community edition version. 12.x or higher from http://www.jetbrains.com/idea/)
- - Install gradle 1.8 or higher (http://www.gradle.org/)
+ - Install the latest Intellij (free community edition version) from http://www.jetbrains.com/idea/
+ - Gradle wrapper is used now, so it should not be necessary to install gradle.
 
 II. Get the source
-    1. Create a java_projects/applets directory.
-       You can name the directory anything, but the instructions will assume this name.
-    2. Right click applets dir and select SVN checkout.
-       Url of repo = "https://free1.projectlocker.com/Tesujisoft/applets/svn/trunk".
-       Alternatively, run "svn co https://free1.projectlocker.com/Tesujisoft/applets/svn/trunk" from the new applets dir
+    1. Do "git clone https://github.com/barrybecker4/applets.git"
     4. Set environment variables in Windows or Linux
        Set JAVA_HOME to the JDK install location (e.g. D:\apps\Program Files\Java\jdk1.7.0_12).
 

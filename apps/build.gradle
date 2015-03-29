@@ -88,6 +88,7 @@ dependencies {
     // This did not work when I last tried, so downloaded the jar into libs
     //compile 'com.google.translate:google-api-translate-java:0.92'
     compile fileTree(dir: 'lib', include: 'google-api-translate-java-0.97.jar')
+    compile project(':imageproc')
 }
 
 jar {
