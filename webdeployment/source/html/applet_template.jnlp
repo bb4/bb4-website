@@ -4,7 +4,7 @@
         codebase="http://{codebase}/applets" href="{name}_{locale}.jnlp">
         <information>
             <title>{title}</title>
-            <vendor>TesujiSoft - Barry G. Becker</vendor>
+            <vendor>BarryBecker4.com</vendor>
             <homepage href="http://{codebase}/applet_index_{locale}.html"/>
             <description>{description}</description>
             <description kind="short">{title}</description>
@@ -20,7 +20,7 @@
             <jar href="bb4-sound-{version}.jar" main="false"/>
             <jar href="bb4-ui-{version}.jar" main="false"/>
             <jar href="bb4-optimization-{version}.jar" main="false"/>
-            <jar href="bb4-pente-{version}.jar" main="false"/>
+            <jar href="bb4-gomoku-{version}.jar" main="false"/>
             <jar href="bb4-chess-{version}.jar" main="false"/>
             <jar href="bb4-go-{version}.jar" main="false"/>
             <jar href="bb4-sgf-1.1.jar" main="false"/>

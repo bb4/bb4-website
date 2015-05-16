@@ -32,7 +32,7 @@ dependencies {
     compile "com.barrybecker4:bb4-chess:$version"
     compile "com.barrybecker4:bb4-blockade:$version"
     compile "com.barrybecker4:bb4-go:$version"
-    compile "com.barrybecker4:bb4-pente:$version"
+    compile "com.barrybecker4:bb4-gomoku:$version"
     compile "com.barrybecker4:bb4-tictactoe:$version"
     compile "com.barrybecker4:bb4-galactic:$version"
     compile "com.barrybecker4:bb4-poker:$version"
