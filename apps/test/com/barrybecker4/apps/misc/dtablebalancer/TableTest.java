@@ -19,7 +19,7 @@ public class TableTest {
                 "1.00\t1.00\t1.00\t\n" +
                 "1.00\t1.00\t1.00\t\n" +
                 "1.00\t1.00\t1.00\t\n" +
-                "Overall coverage: 1.0", table.toString());
+                "Overall coverage: 1.00", table.toString());
     }
 
     @Test
@@ -29,7 +29,7 @@ public class TableTest {
                 "1.00\t1.00\t1.00\t\n" +
                 "1.00\t1.00\t1.00\t\n" +
                 "1.00\t1.00\t1.00\t\n" +
-                "Overall coverage: 0.9801", table.toString());
+                "Overall coverage: 1.0", table.toString());
     }
 
 }

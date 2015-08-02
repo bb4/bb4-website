@@ -85,13 +85,21 @@ public class Table {
     private void initializeMeta() {
         rowMeta = new DimensionMeta[size];
         colMeta = new DimensionMeta[size];
-        int w = this.width / size;
-        int h = this.height / size;
+        double w = (double) this.width / size;
+        double h = (double) this.height / size;
 
         for (int i = 0; i < grid.length; i++) {
             rowMeta[i] = new DimensionMeta(h);
             colMeta[i] = new DimensionMeta(w);
         }
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     /** this needs to be called any time the meta data is modified */
@@ -109,7 +117,7 @@ public class Table {
                 max = rowMeta[i].getMax();
             }
             for (int j=0; j<size; j++) {
-                int cellArea = rowMeta[i].getLength() * colMeta[j].getLength();
+                double cellArea = rowMeta[i].getLength() * colMeta[j].getLength();
                 double valueToGridAreaRatio = (double) grid[i][j] / cellArea;
                 //System.out.println("valueToGridRat=" + valueToGridAreaRatio);
                 if (valueToGridAreaRatio > largestValueToGridAreaRatio) {
@@ -121,7 +129,10 @@ public class Table {
         normalizationScale = 1.0 / largestValueToGridAreaRatio;
         System.out.println("mormScale=" + normalizationScale);
         overallCoverage = (double) grandTotal * normalizationScale / (width * height);
+
+        TableValidator.verifyDimensions(this);
     }
+
 
     private void updateRowMeta(int i) {
         int[] row = new int[size];
@@ -174,7 +185,7 @@ public class Table {
             }
             s += "\n";
         }
-        s += "Overall coverage: " + overallCoverage;
+        s += "Overall coverage: " + FormatUtil.formatNumber(overallCoverage);
         return s;
     }
 }
