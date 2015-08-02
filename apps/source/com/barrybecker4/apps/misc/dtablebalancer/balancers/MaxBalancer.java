@@ -11,7 +11,7 @@ import com.barrybecker4.apps.misc.dtablebalancer.TableValidator;
  *
  * @author Barry Becker
  */
-public class SimpleBalancer implements Balancer {
+public class MaxBalancer extends AbstractBalancer {
 
     /** never less than this many pixels */
     private static final int MIN_DIM = 1;
@@ -26,14 +26,12 @@ public class SimpleBalancer implements Balancer {
 
         for (int i = 0; i<table.getSize(); i++) {
             DimensionMeta meta = table.getColMeta(i);
-            newWidths[i] = Math.sqrt((meta.getMax() + meta.getMean()) / 2.0);
+            newWidths[i] = Math.sqrt(meta.getMax());
             totalWidth += newWidths[i];
-            //meta.setLength(newLen);
 
             meta = table.getRowMeta(i);
-            newHeights[i] = Math.sqrt((meta.getMax() + meta.getMean()) / 2.0);
+            newHeights[i] = Math.sqrt(meta.getMax());
             totalHeight += newHeights[i];
-            //meta.setLength(newLen);
         }
 
         for (int i = 0; i<table.getSize(); i++) {
@@ -46,27 +44,5 @@ public class SimpleBalancer implements Balancer {
 
         finalAdjust(table);
         table.updateMetaData();
-    }
-
-    /** if the new dimensions are just off by a pixel or two because of round-off, then adjust the last row/column */
-    private void finalAdjust(Table table) {
-        double totalWidth = 0;
-        double totalHeight = 0;
-        for (int i=0; i<table.getSize(); i++) {
-            totalWidth += table.getColMeta(i).getLength();
-            totalHeight += table.getRowMeta(i).getLength();
-        }
-        double widthDiff = table.getWidth() - totalWidth;
-        double heightDiff = table.getHeight() -totalHeight;
-        assert widthDiff <= 2;
-        assert heightDiff <= 2;
-        if (widthDiff > 0) {
-            DimensionMeta lastCol = table.getColMeta(table.getSize() - 1);
-            lastCol.setLength(lastCol.getLength() + widthDiff);
-        }
-        if (heightDiff > 0) {
-            DimensionMeta lastRow = table.getRowMeta(table.getSize() - 1);
-            lastRow.setLength(lastRow.getLength() + heightDiff);
-        }
     }
 }
