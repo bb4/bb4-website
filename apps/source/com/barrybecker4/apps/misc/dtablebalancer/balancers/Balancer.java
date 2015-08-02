@@ -4,6 +4,14 @@ package com.barrybecker4.apps.misc.dtablebalancer.balancers;
 import com.barrybecker4.apps.misc.dtablebalancer.Table;
 
 /**
+ * Thoughts on additional balancers
+ *  - sqrt(mean)
+ *  - sqrt(max)
+ *  - sqrt(max + mean)/2)
+ *  - iterate a couple of times to get better
+ *
+ *  In tests do each example crossed with each balancer
+ *
  * @author Barry Becker
  */
 public interface Balancer {
