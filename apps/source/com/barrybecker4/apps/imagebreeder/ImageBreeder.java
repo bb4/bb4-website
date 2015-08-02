@@ -27,7 +27,7 @@ public class ImageBreeder {
 
     private BufferedImage imageToBreed;
 
-    private CallableParallelizer parallelizer = new CallableParallelizer();
+    private CallableParallelizer<BufferedImage> parallelizer = new CallableParallelizer<>();
 
     private Map<BufferedImage, List<Parameter>> imgToParamsMap;
 
@@ -61,7 +61,6 @@ public class ImageBreeder {
             filterTasks.add(new Worker(metaOp));
         }
 
-        //List<Future<BufferedImage>> imageFutures = parallelizer.invokeAll(filterTasks);
         parallelizer.invokeAllWithCallback(filterTasks, new DoneHandler<BufferedImage>() {
             @Override
             public void done(BufferedImage img) {
@@ -69,15 +68,6 @@ public class ImageBreeder {
             }
         });
 
-        /*
-        for (Future<BufferedImage> f : imageFutures) {
-            try {
-                BufferedImage img = f.get();
-                images.add(img);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        } */
 
         return images;
     }
@@ -98,6 +88,7 @@ public class ImageBreeder {
             this.metaOp = metaOp.copy();
         }
 
+        @Override
         public BufferedImage call() {
 
             BufferedImageOp randOp = metaOp.getRandomInstance(variance);
