@@ -5,10 +5,10 @@ package com.barrybecker4.apps.misc.dtablebalancer;
  * @author Barry Becker
  */
 public class DimensionMeta {
-    private double mean;
     private int max;
     private int min;
     private int length;
+    private int total;
 
     /**
      * @param len either the width or height for the dimension
@@ -26,18 +26,20 @@ public class DimensionMeta {
     }
 
     public double getMean() {
-        return mean;
+        return (double) total / (double) length;
     }
 
     public int getLength() {
         return length;
     }
 
-    public void update(int min, int max, double mean) {
-        this.min = min;
-        this.max = max;
-        this.mean = mean;
+    public int getTotal() {
+        return total;
     }
 
-
+    public void update(int min, int max, int sum) {
+        this.min = min;
+        this.max = max;
+        this.total = sum;
+    }
 }
