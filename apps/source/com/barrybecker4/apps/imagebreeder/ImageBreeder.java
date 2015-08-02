@@ -1,7 +1,8 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.imagebreeder;
 
-import com.barrybecker4.common.concurrency.Parallelizer;
+import com.barrybecker4.common.concurrency.CallableParallelizer;
+import com.barrybecker4.common.concurrency.DoneHandler;
 import com.barrybecker4.java2d.imageproc.MetaImageOp;
 import com.barrybecker4.optimization.parameter.types.Parameter;
 
@@ -26,7 +27,7 @@ public class ImageBreeder {
 
     private BufferedImage imageToBreed;
 
-    private Parallelizer<BufferedImage> parallelizer = new Parallelizer<BufferedImage>();
+    private CallableParallelizer parallelizer = new CallableParallelizer();
 
     private Map<BufferedImage, List<Parameter>> imgToParamsMap;
 
@@ -50,7 +51,7 @@ public class ImageBreeder {
      */
     public List<BufferedImage> breedImages(int numChildImages)  {
 
-        List<BufferedImage> images =
+        final List<BufferedImage> images =
                 Collections.synchronizedList(new ArrayList<BufferedImage>(numChildImages));
 
         imgToParamsMap.clear();
@@ -60,8 +61,15 @@ public class ImageBreeder {
             filterTasks.add(new Worker(metaOp));
         }
 
-        List<Future<BufferedImage>> imageFutures = parallelizer.invokeAll(filterTasks);
+        //List<Future<BufferedImage>> imageFutures = parallelizer.invokeAll(filterTasks);
+        parallelizer.invokeAllWithCallback(filterTasks, new DoneHandler<BufferedImage>() {
+            @Override
+            public void done(BufferedImage img) {
+                images.add(img);
+            }
+        });
 
+        /*
         for (Future<BufferedImage> f : imageFutures) {
             try {
                 BufferedImage img = f.get();
@@ -69,7 +77,7 @@ public class ImageBreeder {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }
+        } */
 
         return images;
     }
