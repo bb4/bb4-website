@@ -3,13 +3,11 @@ package com.barrybecker4.apps.misc.dtablebalancer;
 
 import com.barrybecker4.common.format.FormatUtil;
 
-import javax.swing.text.NumberFormatter;
-import java.text.NumberFormat;
 
 /**
  * Represents a decision table graph.
  * We want to optimize the about of each cell that is filled with a bar chart coloring
- * by adjusting the width and height of cells. Each row and column have a constant hieght or width,
+ * by adjusting the width and height of cells. Each row and column have a constant height or width,
  * but they are can all independently adjustable.
  * @author Barry Becker
  */
@@ -24,15 +22,16 @@ public class Table {
     private DimensionMeta[] colMeta;
 
     /**
-     * The amount of are covered by each unit of grid value.
+     * The amount of area covered by each unit of grid value.
      * It is the inverse of the largest grid value to cell area ratio.
      */
     private double normalizationScale;
 
-    /** the maximum grid value */
-    //private double overallMax;
-
-    /** the thing to optimize - ratio of painted are to total area.  */
+    /**
+     * Ratio of colored area in the table. A value between 0 and 1.
+     * The thing to optimize - ratio of painted are to total area.
+     * Coverage is optimal when this is 1.
+     */
     private double overallCoverage;
 
     /**
@@ -41,12 +40,38 @@ public class Table {
      * @param data initial weights in each cell
      */
     public Table(int[][] data, int width, int height) {
-        grid = data;
+        grid = makeCopy(data);
         this.size = grid.length;
         this.width = width;
         this.height = height;
         initializeMeta();
         updateMetaData();
+    }
+
+    /** Copy constructor */
+    public Table(Table table) {
+        this(table.grid, table.width, table.height);
+    }
+
+    private static int[][] makeCopy(int[][] g) {
+        int len = g.length;
+        int[][] gridCopy = new int[len][len];
+        for (int i=0; i<len; i++) {
+            System.arraycopy(g[i], 0, gridCopy[i], 0, len);
+        }
+        return gridCopy;
+    }
+
+    public DimensionMeta getRowMeta(int i) {
+        return rowMeta[i];
+    }
+
+    public DimensionMeta getColMeta(int i) {
+        return colMeta[i];
+    }
+
+    public double getNormalizationScale() {
+        return normalizationScale;
     }
 
     public int getSize() {
@@ -69,7 +94,8 @@ public class Table {
         }
     }
 
-    private void updateMetaData() {
+    /** this needs to be called any time the meta data is modified */
+    public void updateMetaData() {
         for (int i=0; i<size; i++) {
             updateRowMeta(i);
             updateColMeta(i);
@@ -85,7 +111,7 @@ public class Table {
             for (int j=0; j<size; j++) {
                 int cellArea = rowMeta[i].getLength() * colMeta[j].getLength();
                 double valueToGridAreaRatio = (double) grid[i][j] / cellArea;
-                System.out.println("valueToGridRat=" + valueToGridAreaRatio);
+                //System.out.println("valueToGridRat=" + valueToGridAreaRatio);
                 if (valueToGridAreaRatio > largestValueToGridAreaRatio) {
                     largestValueToGridAreaRatio = valueToGridAreaRatio;
                 }
@@ -96,7 +122,6 @@ public class Table {
         System.out.println("mormScale=" + normalizationScale);
         overallCoverage = (double) grandTotal * normalizationScale / (width * height);
     }
-
 
     private void updateRowMeta(int i) {
         int[] row = new int[size];
@@ -126,7 +151,7 @@ public class Table {
                 max = val;
             }
         }
-        meta.update(min, max, total);
+        meta.update(max, total);
     }
 
     /**

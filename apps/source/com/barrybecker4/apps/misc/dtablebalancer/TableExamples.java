@@ -43,9 +43,9 @@ public class TableExamples {
     };
 
     /**
-     *  simulate race by native coutry census data.
-     *  Rows are race (Black, Asian, Hispanic, White),
-     *  cols native country (Africa, China, Brazil, U.S)
+     * Simulate race by native country census data.
+     * Rows are race (Black, Asian, Hispanic, White),
+     * cols native country (Africa, China, Brazil, U.S)
      */
     public static final int[][] RACE_BY_NATIVE_4x4 = new int[][] {
         {411,    6,   9,   351},

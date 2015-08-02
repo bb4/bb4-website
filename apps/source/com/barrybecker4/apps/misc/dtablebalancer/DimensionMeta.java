@@ -6,7 +6,6 @@ package com.barrybecker4.apps.misc.dtablebalancer;
  */
 public class DimensionMeta {
     private int max;
-    private int min;
     private int length;
     private int total;
 
@@ -17,9 +16,6 @@ public class DimensionMeta {
         this.length = len;
     }
 
-    public int getMin() {
-        return min;
-    }
 
     public int getMax() {
         return max;
@@ -37,8 +33,7 @@ public class DimensionMeta {
         return total;
     }
 
-    public void update(int min, int max, int sum) {
-        this.min = min;
+    public void update(int max, int sum) {
         this.max = max;
         this.total = sum;
     }
