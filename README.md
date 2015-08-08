@@ -4,7 +4,18 @@ This project manages the content deployed to [barrybecker4.com/applets](http://b
 NOTE: I was forced to make this repository was made public on github because projectLocker no longer allowed me
 to have a free private repositories. The code in this repository is not clean nor ready for public consumption.
 
-Steps to build applet projects:
+## What is in this project?
+
+This project contains a lot of miscelaneous stuff that needs to be cleaned up or split out, but the major items are:
+- aikido technique builder application: This is java which reads an xml configuration file and outputs a DHTML application for the web.
+- imagebreeder: Allows you to use a genetic algorithm to apply image transformations in a creative way.
+- sierpinski: Recursive triangle fractal
+- spirograph: That fun toy from the 70's - but automated
+- Subprojects
+  - imageproc: Experiments using java2d (derived from code in Java 2d Graphics from Knudsen)
+  - webdeployment: code to deploy applets from all my other projects to [my website](http://barrybecker4.com)
+
+## Steps to build applet projects:
 
 1. Building requires java, git, (optionally) intellij or eclipse.
   - Install java JDK 1.7 or higher from http://www.oracle.com/technetwork/java/javase/downloads.
@@ -21,7 +32,7 @@ Steps to build applet projects:
     - codebase=localhost/dist, and
     - distributionDir=<apache install location>/Apache2.2/htdocs
 
-Using Intellij (recommended)
+### Using Intellij (recommended)
 - run "gradle idea" once to get Intellij files configured to match gradle configuration.
   If you prefer eclipse you can use "gradle eclipse".
    (If you get an error try "gradle cleanIdea" first)
@@ -33,7 +44,7 @@ Using Intellij (recommended)
 - Run individual programs using the corresponding task in the gradle build window,
   or right click on run* tasks in the build.gradle file to run them as applications.
 
-Additional sources
+### Additional sources
   I split out jigo (used by go) and jhlabs (used by image breeder) into separate gradle projects which build separate
   jars because they are based on other peoples open source code. In the rare case that you need to modify the source in
   these jars, get them using the following.

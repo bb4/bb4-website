@@ -1,4 +1,4 @@
-/* Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT*/
+/* Copyright by Barry G. Becker, 2013-2015. Licensed under MIT License: http://www.opensource.org/licenses/MIT*/
 
 ext {
     appletIndexFile = new HashMap()
@@ -7,10 +7,10 @@ ext {
     appletHtml = new HashMap()
     appletHtml.put("localesList", [Locale.ENGLISH, Locale.GERMAN, Locale.JAPANESE, new Locale("vi")])
     appletHtml.put('appletList',
-        ['gomoku', 'checkers', 'chess', 'go', 'blockade', 'galactic', 'poker', 'set', 'maze',
+        ['gomoku', 'checkers', 'chess', 'go', 'blockade', 'mancala', 'hex','galactic', 'poker', 'set', 'maze',
          'spirograph','redpuzzle', 'sudoku', 'hiq', 'bridge', 'slidingpuzzle', 'twopails', 'tantrix', 'trebuchet',
-         'snake', 'dice', 'stock', 'fractalexplorer', 'reactiondiffusion',
-         'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder','adventure',
+         'snake', 'dice', 'stock', 'trading', 'fractalexplorer', 'reactiondiffusion',
+         'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder', 'adventure',
          'predprey', 'habitat', 'henonexplorer'])
 
     // message replacements for the top level index file (excluding the entries)

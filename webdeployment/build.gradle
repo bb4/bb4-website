@@ -37,6 +37,8 @@ dependencies {
     compile "com.barrybecker4:bb4-galactic:$version"
     compile "com.barrybecker4:bb4-poker:$version"
     compile "com.barrybecker4:bb4-set:$version"
+    compile "com.barrybecker4:bb4-mancala:$version"
+    compile "com.barrybecker4:bb4-hex:$version"
 
     compile "com.barrybecker4:bb4-simulation:$version"
     compile "com.barrybecker4:bb4-dice:$version"
@@ -50,6 +52,7 @@ dependencies {
     compile "com.barrybecker4:bb4-reactiondiffusion:$version"
     compile "com.barrybecker4:bb4-snake:$version"
     compile "com.barrybecker4:bb4-stock:$version"
+    compile "com.barrybecker4:bb4-trading:$version"
     compile "com.barrybecker4:bb4-trebuchet:$version"
     compile "com.barrybecker4:bb4-verhulst:$version"
 
