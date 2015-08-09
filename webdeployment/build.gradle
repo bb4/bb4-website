@@ -6,7 +6,7 @@ import java.text.MessageFormat
 apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4.gradle'
 version = getVersion()
 
-ext.distributionGameDir="$distributionDir/applets"
+ext.distributionAppletsDir="$distributionDir/applets"
 ext.distributionSchemaDir="$distributionDir/schema"
 
 /** these dependent jars will be pull from Sonatype where they were published */
@@ -68,9 +68,9 @@ clean.doLast {
 /**
  * Copy image files used in web deployment to the dist directory
  */
-task deployImages(type: Copy, description: "Copy image files to $distributionGameDir")  {
+task deployImages(type: Copy, description: "Copy image files to $distributionAppletsDir")  {
     from "$sourceDir/images"
-    into "$distributionGameDir"
+    into "$distributionAppletsDir"
     include '**/*.jpg'
     include '**/*.png'
     include '**/*.gif'
@@ -95,7 +95,7 @@ task deployJars(type:Copy, dependsOn: ['copyToLib'],
     description: "Deploys jar files needed for running applets and web start applications")  {
 
     from fileTree("$project.projectDir/..").include('**/build/libs/**').files
-    into "$distributionGameDir"
+    into "$distributionAppletsDir"
     include 'bb4-*.jar', 'jhlabs-*.jar', 'bb4-sgf-*.jar', 'jai-codec-*.jar', 'vecmath-*.jar'
     exclude '*-sources.jar', '*-javadoc.jar'
 }
@@ -104,13 +104,13 @@ task deployJars(type:Copy, dependsOn: ['copyToLib'],
  * I would like this to trigger a top level build of everything, but right now it has to be done manually.
  */
 task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
-    description: "Deploys all files  to $distributionGameDir so they can be bulk copied to a website") << {
+    description: "Deploys all files  to $distributionAppletsDir so they can be bulk copied to a website") << {
     apply from: 'appletHtmlCommon.gradle'
 
     // copy all the js, css, image files (only done once, not once per locale)
     copy {
         from "$sourceDir/html"
-        into "$distributionGameDir/.."
+        into "$distributionAppletsDir/.."
         include '*.js', '*.css', '*.gif'
     }
 
@@ -152,7 +152,7 @@ void createHtmlIndexPage(Locale locale) {
 
     copy {
         from "$sourceDir/html/" + appletIndexFile['base']
-        into "$distributionGameDir/.."
+        into "$distributionAppletsDir/.."
         rename { String fileName ->
             fileName.replace('.html', '_' + locale.toString() + '.html')
         }
@@ -173,7 +173,7 @@ void createAppletFilesOfType(Map fileTypeMap, Locale locale) {
         def replacements = getFileTypeReplacements(labels, applet, fileTypeMap)
         copy {
             from "$sourceDir/html/applet_template." + fileTypeMap.get("type")
-            into "$distributionGameDir"
+            into "$distributionAppletsDir"
             rename { String fileName ->
                 fileName.replace('applet_template', applet + '_' + locale.toString())
             }

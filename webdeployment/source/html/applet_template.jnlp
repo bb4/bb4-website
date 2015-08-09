@@ -25,6 +25,8 @@
             <jar href="bb4-go-{version}.jar" main="false"/>
             <jar href="bb4-sgf-1.1.jar" main="false"/>
             <jar href="bb4-blockade-{version}.jar" main="false"/>
+            <jar href="bb4-mancala-{version}.jar" main="false"/>
+            <jar href="bb4-hex-{version}.jar" main="false"/>
             <jar href="bb4-galactic-{version}.jar" main="false"/>
             <jar href="bb4-poker-{version}.jar" main="false"/>
             <jar href="bb4-set-{version}.jar" main="false"/>

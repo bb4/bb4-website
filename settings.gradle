@@ -3,19 +3,19 @@
 /**
  * Here is the dependency hierarchy for the subprojects in this multi-project build.
  *
- *               __common*_____
- *             /              \
- *            ui*             sound*
- *             |              /  \__
- *          optimization*   /     | \
- *         /          \  \/      /\  \__________
- *      imageproc __ apps \     /  \            \
- *         \         /    puzzle*  simulation*  game*
- *          \       /     __/______/____________/
+ *               __bb4-common___
+ *              /               \
+ *           bb4-ui          bb4-sound
+ *             |              /  \_______
+ *       bb4-optimization   /     |  \   \
+ *         /          \  \/      /    \   \____________
+ *      imageproc __ apps \     /      \               \
+ *         \         /    bb4-puzzles bb4-simulations bb4-games
+ *          \       /     _/___________/________________/
  *           \     /    /
  *          webdeployment
  *
- *    * Now open-source projects in github (https://github.com/barrybecker4)
+ *    All modules are open-source projects in github (https://github.com/barrybecker4)
  */
 
 include 'imageproc', 'apps', 'webdeployment'

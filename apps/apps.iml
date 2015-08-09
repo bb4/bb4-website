@@ -43,22 +43,22 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sound/1.2-SNAPSHOT/db134f627044d4e01ff28c5394d4615ad3473569/bb4-sound-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sound/1.2-SNAPSHOT/91ea3659f4f386d54dbb45a2cea3c3d7a402c0b8/bb4-sound-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sound/1.2-SNAPSHOT/b9a319bf8f18fdffd298c72a2748c3d09f001cf6/bb4-sound-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sound/1.2-SNAPSHOT/6e2ecd4f20596869debf5fb0e0f5f96327a46617/bb4-sound-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.2-SNAPSHOT/14a2dafc2888f993ba23c20968c80a8bc128cd0d/bb4-ui-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.2-SNAPSHOT/e1ed8e45f4ea1c3a3d72463b589a9ffe0df48e3f/bb4-ui-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.2-SNAPSHOT/b4d78535aff1adf289945dfb66378df06d5444a4/bb4-ui-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.2-SNAPSHOT/e42b23def0caaf97656d5481bb27c4646c96db80/bb4-ui-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -111,24 +111,6 @@
         <SOURCES>
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-common/1.2-SNAPSHOT/265c34bf12f3ab4ba3ca42be2a65cf1bc3e53e9c/bb4-common-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.media/jai-codec/1.1.3/34a67ba62097778e4695c951156bf189c2c8e016/jai-codec-1.1.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.media/jai-core/1.1.3/b179d2efb1174658483e8b41bf4ac9d2eb5de438/jai-core-1.1.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">

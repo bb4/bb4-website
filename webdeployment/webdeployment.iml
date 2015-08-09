@@ -34,22 +34,22 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-optimization/1.2-SNAPSHOT/72d68d73832976a579e85eeb7f58237ba6f1006d/bb4-optimization-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-optimization/1.2-SNAPSHOT/4632d42f01d04295ac8145ec3a228d074e29cfc6/bb4-optimization-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-optimization/1.2-SNAPSHOT/14edae190914fd4782fc29757c67e7c1e048132a/bb4-optimization-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-optimization/1.2-SNAPSHOT/4a69696cad2e285b84f8a717902f716c49b3ec8d/bb4-optimization-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sound/1.2-SNAPSHOT/db134f627044d4e01ff28c5394d4615ad3473569/bb4-sound-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sound/1.2-SNAPSHOT/91ea3659f4f386d54dbb45a2cea3c3d7a402c0b8/bb4-sound-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sound/1.2-SNAPSHOT/b9a319bf8f18fdffd298c72a2748c3d09f001cf6/bb4-sound-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sound/1.2-SNAPSHOT/6e2ecd4f20596869debf5fb0e0f5f96327a46617/bb4-sound-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -67,429 +67,429 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-puzzle/1.2-SNAPSHOT/32f7444cc015c01cf8bfeb7577205701dad4d494/bb4-puzzle-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-puzzle/1.2-SNAPSHOT/c4cbf4ff9191f62f157690d99a461e11f18c5e9d/bb4-puzzle-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-puzzle/1.2-SNAPSHOT/5dfbb465061429255c70db692ade0cfe376c004f/bb4-puzzle-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-puzzle/1.2-SNAPSHOT/2f2e01c393f76859f2c1a4c1dcb8aa417b50084a/bb4-puzzle-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-adventure/1.2-SNAPSHOT/b4b91b8c6ea1e901facf6d9b62386c77b01bea6f/bb4-adventure-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-adventure/1.2-SNAPSHOT/9263e87bfca9a90a427e485d929a8817a9545733/bb4-adventure-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-adventure/1.2-SNAPSHOT/e7950dd9d5757cc37d721c244197c76fa363cab2/bb4-adventure-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-adventure/1.2-SNAPSHOT/b000ce0107c4f923fa5b06f61e504aa582621a85/bb4-adventure-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-hiq/1.2-SNAPSHOT/6c0aa1a1da39824d1ec171f6e7cf8b56f80c6b82/bb4-hiq-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-hiq/1.2-SNAPSHOT/8a9f31a116b5289a2defee3a95514bbea306e389/bb4-hiq-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-hiq/1.2-SNAPSHOT/1aeaa75dab02630001a99b831adc278cc8463bb2/bb4-hiq-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-hiq/1.2-SNAPSHOT/34371562660851fb12fec4e774653d44bb9971d7/bb4-hiq-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-maze/1.2-SNAPSHOT/8e75ed0a05e8cc22af80ab7f03c1b5ec7dadcf18/bb4-maze-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-maze/1.2-SNAPSHOT/6fa72dcba7c6875bd6d728624a61c5f0038da954/bb4-maze-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-maze/1.2-SNAPSHOT/8e0292ab0fb80880bce8a2141c83f9138c15ba25/bb4-maze-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-maze/1.2-SNAPSHOT/a27be751b3513ce01e1029d6b56e5bb09be72fd1/bb4-maze-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-redpuzzle/1.2-SNAPSHOT/29990e23e5002acf0659389ff522cddbfb0c1a6a/bb4-redpuzzle-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-redpuzzle/1.2-SNAPSHOT/9c47254a6387ad4e9f24c531f564047a38bc68be/bb4-redpuzzle-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-redpuzzle/1.2-SNAPSHOT/c66a30a8beb4481c39339599cb08e1f98c60dd2c/bb4-redpuzzle-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-redpuzzle/1.2-SNAPSHOT/59ccdc54a18384ba3371997b73ef352533f90bd8/bb4-redpuzzle-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sudoku/1.2-SNAPSHOT/a63550b8a2d64fcbfaf8b286b066b974915f0ec2/bb4-sudoku-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sudoku/1.2-SNAPSHOT/11c01d6cc5fd6b432608f04f0575929e8b7bbc31/bb4-sudoku-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sudoku/1.2-SNAPSHOT/7f25d90492eb3fb35c080f9eda7f69df8a64f644/bb4-sudoku-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-sudoku/1.2-SNAPSHOT/8fb3430cba4c7152d9e25b816851a75388820334/bb4-sudoku-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-tantrix/1.2-SNAPSHOT/fcede148911b79186ccf7690334498b00e004aad/bb4-tantrix-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-tantrix/1.2-SNAPSHOT/48c327da9b85fbd52b4616d7a23f3049ca8440d/bb4-tantrix-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-tantrix/1.2-SNAPSHOT/3242d9ac837da8ebd2d5a7d9231b57d5ca772655/bb4-tantrix-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-tantrix/1.2-SNAPSHOT/e43c0b0982922f0914747ca8f01c5c636dc3f784/bb4-tantrix-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-bridge/1.2-SNAPSHOT/1f7c6b97228ff359c84286c1ed77a95f1d8f82a2/bb4-bridge-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-bridge/1.2-SNAPSHOT/d3b6c9e1ce410f9bc973ac68a07315df56f07017/bb4-bridge-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-bridge/1.2-SNAPSHOT/bff05be77a5759c1eea75d2b9c645e77586ae0f1/bb4-bridge-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-bridge/1.2-SNAPSHOT/77ae7bb77a7912715ce439b11b3a6630cf5f1422/bb4-bridge-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-slidingpuzzle/1.2-SNAPSHOT/bc3b73710fa2b0f23ef536010c5ac39a120983af/bb4-slidingpuzzle-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-slidingpuzzle/1.2-SNAPSHOT/84e49dd68d4d9199d5925e331c9415b8ca40c30a/bb4-slidingpuzzle-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-slidingpuzzle/1.2-SNAPSHOT/27f47af52eef90d06459efe5b7d8974bef47142f/bb4-slidingpuzzle-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-slidingpuzzle/1.2-SNAPSHOT/4cfe6d46aca3f2925fcc8075c953f9112cf6587/bb4-slidingpuzzle-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-twopails/1.2-SNAPSHOT/4a7a252818966d087cacff70c94f0f4c4780528/bb4-twopails-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-twopails/1.2-SNAPSHOT/f255146530a4fa942863881a018247e7e2acbd9a/bb4-twopails-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-twopails/1.2-SNAPSHOT/f5fb886aaa6f93b80ac35e0aa9c10286dcaf12bd/bb4-twopails-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-twopails/1.2-SNAPSHOT/5639f9ddc8c8d16cf24f71a0f32b60a614bd0a49/bb4-twopails-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-game/1.2-SNAPSHOT/72f2650c9fe0ed4af9a717abfa12b2cdb57c3929/bb4-game-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-game/1.2-SNAPSHOT/eff2765d56a12f477d00b6b6963fbbee1bcf0bc9/bb4-game-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-game/1.2-SNAPSHOT/707783a0dcab12559ba8c0e57f66374fdd5b3872/bb4-game-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-game/1.2-SNAPSHOT/e0b7cecbaf44118979b18204281593a4f3adcdf8/bb4-game-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-twoplayer/1.2-SNAPSHOT/916646bbff83163e494e9cbb9aa3f6bf89a14cf/bb4-twoplayer-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-twoplayer/1.2-SNAPSHOT/18670c02ad6f18661bca27a153799fb28bf7a26b/bb4-twoplayer-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-twoplayer/1.2-SNAPSHOT/f342b231a219277681918cf558c7bb46aa07a318/bb4-twoplayer-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-twoplayer/1.2-SNAPSHOT/1142b8b1b2f7b3ec2744ad794c2d18e5f6dc6c9e/bb4-twoplayer-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-multiplayer/1.2-SNAPSHOT/9140d08747e35823b549fde9be1f1c7400e4cbc4/bb4-multiplayer-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-multiplayer/1.2-SNAPSHOT/f3200a5d430437cd8ca9c682a8cb3b99c1ab430a/bb4-multiplayer-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-multiplayer/1.2-SNAPSHOT/2825c7487cd21cb8b48bf4accfd42896e3307146/bb4-multiplayer-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-multiplayer/1.2-SNAPSHOT/b5e40c04bff338cd6d00c858477e31d2d0a70691/bb4-multiplayer-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-chess/1.2-SNAPSHOT/dece08f77b49d93dc6e27b9f5c2e2e1293cda6ca/bb4-chess-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-chess/1.2-SNAPSHOT/71cc1bd5a3c831d5e9bc1c09e815df65ec5e496b/bb4-chess-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-chess/1.2-SNAPSHOT/575c636bfa9cc49f984f55389142443dcd4570a0/bb4-chess-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-chess/1.2-SNAPSHOT/9495179cc96ef11d663855fcd6b29e7e6af70c9e/bb4-chess-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-blockade/1.2-SNAPSHOT/3494baa1b89e25b401f6e5a0a869f8589d0ef954/bb4-blockade-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-blockade/1.2-SNAPSHOT/54df1950f1f653584c2699a9797fc99eb55ab1a2/bb4-blockade-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-blockade/1.2-SNAPSHOT/576a26654c589e2baeb6ad9f0d63bb1161affde2/bb4-blockade-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-blockade/1.2-SNAPSHOT/f039d13a54f21c0afdce17955ccd79dbc680b02d/bb4-blockade-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-go/1.2-SNAPSHOT/3a32946281949caad3bbbf84d5504c2b7c8e4ec3/bb4-go-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-go/1.2-SNAPSHOT/e4f8106da108bd8cd9aaf8530d67a884025bd2d4/bb4-go-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-go/1.2-SNAPSHOT/f23403810c5b01d802f5841e8552f110ce10c7f7/bb4-go-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-go/1.2-SNAPSHOT/e1a92afbf95dda48413594f62b207a151d61f2b9/bb4-go-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-gomoku/1.2-SNAPSHOT/82c134a241881473928162e50e86587fa13a1228/bb4-gomoku-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-gomoku/1.2-SNAPSHOT/fa72164008a0cd73f71c22cb3572e7a9767164da/bb4-gomoku-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-gomoku/1.2-SNAPSHOT/4d23c251b2181aa6d935bc764a8b3cae88919ec0/bb4-gomoku-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-gomoku/1.2-SNAPSHOT/c233f39489f0d657865286906ce8ddfa4ed15e5b/bb4-gomoku-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-tictactoe/1.2-SNAPSHOT/304cc68c46074899d70bd1ee42f27f9913721d4f/bb4-tictactoe-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-tictactoe/1.2-SNAPSHOT/698abb34675f06a23c2e685d07f46e4b47b3bcd5/bb4-tictactoe-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-tictactoe/1.2-SNAPSHOT/dcee99d80e3dae6689dad40553f3f448f799a299/bb4-tictactoe-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-tictactoe/1.2-SNAPSHOT/b338a7479d0f6f222d7961c019cd0bdf17b528aa/bb4-tictactoe-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-galactic/1.2-SNAPSHOT/f72d9d7301ad131085753d7a344706160b7f8043/bb4-galactic-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-galactic/1.2-SNAPSHOT/325baa45f29fbaab2dc23c241ab4360cd580cbfa/bb4-galactic-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-galactic/1.2-SNAPSHOT/c65144de6f76a2cf25fe268019e398ae7fba11ce/bb4-galactic-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-galactic/1.2-SNAPSHOT/828e7fab5168781cd450d4f158001ab8cbe4665f/bb4-galactic-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-poker/1.2-SNAPSHOT/4ce2f03bbce1b4672560c93c1f94edfe01d12ea/bb4-poker-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-poker/1.2-SNAPSHOT/a6f0bf7226db523f7e1e1aa4e0b1e731df1a8008/bb4-poker-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-poker/1.2-SNAPSHOT/f255f241766a7eb2edbf15b449472c514c595363/bb4-poker-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-poker/1.2-SNAPSHOT/4527775ef5179535e77ab15553671dfea10c522/bb4-poker-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-set/1.2-SNAPSHOT/8f12c171355aacd0086ee40ad7eddfc5f01deaaa/bb4-set-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-set/1.2-SNAPSHOT/9d494af30a9519c9608521903b02122189062a00/bb4-set-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-set/1.2-SNAPSHOT/1967b1c738e5eec275c38f2f8801213cfeb8ad73/bb4-set-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-set/1.2-SNAPSHOT/b70318f1bcd5dda0d99f48de6e5ccf8edb50e607/bb4-set-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-mancala/1.2-SNAPSHOT/2ab2c896e4396e220111c5d216ac5831e123c879/bb4-mancala-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-mancala/1.2-SNAPSHOT/ba09de8649f77e5ff44bc8b563c133677901d59f/bb4-mancala-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-mancala/1.2-SNAPSHOT/279d48876f1d36478762e1a8b3ac58d5a1322252/bb4-mancala-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-mancala/1.2-SNAPSHOT/6db1474d0c510514ce10cc1df10c76047b2f59e1/bb4-mancala-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-hex/1.2-SNAPSHOT/283401bd6cee97e558736927f40092438d888e51/bb4-hex-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-hex/1.2-SNAPSHOT/f335f1ef12677be7bef07d77a46f410ada759abc/bb4-hex-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-hex/1.2-SNAPSHOT/de72fdbb9a95c054739ec205dc7298a8d3c5f48b/bb4-hex-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-hex/1.2-SNAPSHOT/3120df0d6778d8987d41e577c82a497272d6bacf/bb4-hex-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-simulation/1.2-SNAPSHOT/205ca3db659667443f2ea69a30e456bd05ecfca2/bb4-simulation-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-simulation/1.2-SNAPSHOT/790872a464113ab899f466cadc37256c63ca3bc8/bb4-simulation-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-simulation/1.2-SNAPSHOT/26dd983f13c5b7a8a1982f7829e0fe7627749b1b/bb4-simulation-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-simulation/1.2-SNAPSHOT/88dac966749ab57508726d561f4ae48841ec4056/bb4-simulation-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-dice/1.2-SNAPSHOT/a40c2a6df3d9116368ff28396cf7bb726c42dccd/bb4-dice-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-dice/1.2-SNAPSHOT/ac5ce2269e696251e830d11d373e10af7010cca6/bb4-dice-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-dice/1.2-SNAPSHOT/9da9a9b286b984630d133b12917703aca6016f71/bb4-dice-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-dice/1.2-SNAPSHOT/d237c2ba6262c145bc2253953f502c4d48e267f5/bb4-dice-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-fluid/1.2-SNAPSHOT/5b11c9b659b356e4f1529a66b7258ec2e5ac2990/bb4-fluid-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-fluid/1.2-SNAPSHOT/6b2b923e094ab6f38311e0124d691774a739019f/bb4-fluid-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-fluid/1.2-SNAPSHOT/8ada628c7601e3f0696662cef575ff1e3f545e41/bb4-fluid-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-fluid/1.2-SNAPSHOT/8c3557bb9deff55d97c54c82f3b3e1227eae07d2/bb4-fluid-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-fractalexplorer/1.2-SNAPSHOT/97ec25e4efed946b64ab6edb0302542802d10e8c/bb4-fractalexplorer-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-fractalexplorer/1.2-SNAPSHOT/98bead204c2b58b189860086e3fdbd7796b6f9e5/bb4-fractalexplorer-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-fractalexplorer/1.2-SNAPSHOT/1fc24f4e97ce22dc9af16eaed5c13c967eb14b85/bb4-fractalexplorer-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-fractalexplorer/1.2-SNAPSHOT/74113836c0e2b00c5b2aab5a476b64c1b3dde170/bb4-fractalexplorer-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-habitat/1.2-SNAPSHOT/1e920811113714a0ed8f2cdf3b3af4303492af82/bb4-habitat-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-habitat/1.2-SNAPSHOT/3f5790aa22cbe7c9ae3ecae87598227baf7a349/bb4-habitat-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-habitat/1.2-SNAPSHOT/1b9adc385fc5bfd970756ee17266e33594a5dc7c/bb4-habitat-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-habitat/1.2-SNAPSHOT/d6324392360303a8c39103958979dde8f369551/bb4-habitat-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-henonexplorer/1.2-SNAPSHOT/878f76f3a111850c13cac308f8ded97e0b8bdfc7/bb4-henonexplorer-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-henonexplorer/1.2-SNAPSHOT/4039b1ff4c2c3cbec5a68b2746322165b2d86da1/bb4-henonexplorer-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-henonexplorer/1.2-SNAPSHOT/d999b87e253abb120ef897f33c727338fb69306f/bb4-henonexplorer-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-henonexplorer/1.2-SNAPSHOT/2ae7e377730c804b3e699bf6e54f7a077ca290ee/bb4-henonexplorer-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-liquid/1.2-SNAPSHOT/ced855dce49958b3e3c9d312b33fdcfb78f11425/bb4-liquid-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-liquid/1.2-SNAPSHOT/6801d43eb18b798f6297e1f4b920df0a0927bc28/bb4-liquid-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-liquid/1.2-SNAPSHOT/3fbc57d21a1d61090bc0212736c1af63a0155872/bb4-liquid-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-liquid/1.2-SNAPSHOT/4cbade193f6f3e90b528dab9b9f2173cc97de2dd/bb4-liquid-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-lsystem/1.2-SNAPSHOT/593ab80457b3e0af36c93a3bbc9c76be5b955ac2/bb4-lsystem-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-lsystem/1.2-SNAPSHOT/d4dc31bbd1c8e2b41d737dcb95ad63ad4bc00bd1/bb4-lsystem-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-lsystem/1.2-SNAPSHOT/394685f931ccf76ec90e76355fb8f44f723e5d02/bb4-lsystem-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-lsystem/1.2-SNAPSHOT/97fd807880e440d99092786d41ee6930458f894f/bb4-lsystem-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-predprey/1.2-SNAPSHOT/e0d814795131ccd147141481b2eda91d62962ccf/bb4-predprey-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-predprey/1.2-SNAPSHOT/1d193431ceaa457bd2c5639db40e38da940351e6/bb4-predprey-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-predprey/1.2-SNAPSHOT/327a5c610b41c12c43938105e1d7d06d0c77f72/bb4-predprey-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-predprey/1.2-SNAPSHOT/770000fb166dc8c7c054347428b5b85959dd26fb/bb4-predprey-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-reactiondiffusion/1.2-SNAPSHOT/367d0f64fd742444bd43d9329aa82f86dc16741a/bb4-reactiondiffusion-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-reactiondiffusion/1.2-SNAPSHOT/f926695e86fbe680e8eadf7dbe0ede4a749c977f/bb4-reactiondiffusion-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-reactiondiffusion/1.2-SNAPSHOT/dabf8e75e12026f11d7b0ca5874f6afe9bc1781b/bb4-reactiondiffusion-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-reactiondiffusion/1.2-SNAPSHOT/863d67554772376097d498c902400fbb9d6776fd/bb4-reactiondiffusion-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-snake/1.2-SNAPSHOT/e9999b6f1186676c8bf0adee487879b5e1fcb416/bb4-snake-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-snake/1.2-SNAPSHOT/ddfea62bbb070e7ad3979ae96bc55e4d4a4b4cd/bb4-snake-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-snake/1.2-SNAPSHOT/5a0a092439b67819dbe883617965c548ede646fc/bb4-snake-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-snake/1.2-SNAPSHOT/71160a67b0bd355addd8fb1346c5ef0de5f91b19/bb4-snake-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-stock/1.2-SNAPSHOT/bbb7f949a5d457bd7459d486c3b5e8979c27f938/bb4-stock-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-stock/1.2-SNAPSHOT/ba602c557cb0ae726f85a5135210284b1e5b9fe0/bb4-stock-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-stock/1.2-SNAPSHOT/91cd239e8c99fb95bba397501f519394381172b/bb4-stock-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-stock/1.2-SNAPSHOT/edd1714894d09d701673df67271567ec2b4e1c14/bb4-stock-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trading/1.2-SNAPSHOT/57191de6cb1961b6a2fd155022c3157f0b72c915/bb4-trading-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trading/1.2-SNAPSHOT/1acb7df7807107f75f148c4223af9a70d1c7fcec/bb4-trading-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trading/1.2-SNAPSHOT/c6038795be63a5f4250317fb97098ec756730933/bb4-trading-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trading/1.2-SNAPSHOT/1df385c300bc03a31745e6a1cd44c174264a1224/bb4-trading-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trebuchet/1.2-SNAPSHOT/a477526c4fad1ec31da3c8a425991e8075f214e1/bb4-trebuchet-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trebuchet/1.2-SNAPSHOT/ab5e80dfda8c3a8aa18175ba9a116a49ddefce5a/bb4-trebuchet-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trebuchet/1.2-SNAPSHOT/68864b18a1c2f992492eef799fa93a8d905cfd8a/bb4-trebuchet-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trebuchet/1.2-SNAPSHOT/83ebb707ea72de18b32a7a9293f127c6c18aae57/bb4-trebuchet-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-verhulst/1.2-SNAPSHOT/698ffc221915a1888045e8bf171f0d2a61e25da6/bb4-verhulst-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-verhulst/1.2-SNAPSHOT/b5496ca777804f8d4c19746855aa278a86dbb028/bb4-verhulst-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-verhulst/1.2-SNAPSHOT/a87a0fe225554e7802a656d028b27f3fef2979eb/bb4-verhulst-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-verhulst/1.2-SNAPSHOT/405905b2561d8a0bd12e566c3c483b2dd30ad0dc/bb4-verhulst-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.2-SNAPSHOT/14a2dafc2888f993ba23c20968c80a8bc128cd0d/bb4-ui-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.2-SNAPSHOT/e1ed8e45f4ea1c3a3d72463b589a9ffe0df48e3f/bb4-ui-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.2-SNAPSHOT/b4d78535aff1adf289945dfb66378df06d5444a4/bb4-ui-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.2-SNAPSHOT/e42b23def0caaf97656d5481bb27c4646c96db80/bb4-ui-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -513,24 +513,6 @@
         <SOURCES>
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.8/ea7b97bfc46dc4b28bc53af3e530199a657933bf/commons-codec-1.8-sources.jar!/" />
         </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.media/jai-codec/1.1.3/34a67ba62097778e4695c951156bf189c2c8e016/jai-codec-1.1.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.media/jai-core/1.1.3/b179d2efb1174658483e8b41bf4ac9d2eb5de438/jai-core-1.1.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library" scope="TEST">

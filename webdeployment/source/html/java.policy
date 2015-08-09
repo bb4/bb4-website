@@ -1,13 +1,13 @@
-grant {
-    permission java.net.SocketPermission "*:1024-65535",
-        "connect,accept";
-};
+//grant {
+//    permission java.net.SocketPermission "*:1024-65535",
+//        "connect,accept";
+//};
 
 
 // Standard extensions get all permissions by default
 
 grant codeBase "file:${java.home}/lib/ext/*" {
 	permission java.security.AllPermission;
-	permission java.lang.RuntimePermission "accessClassInPackage.com.sun.media.jai.codec";
-    permission java.lang.RuntimePermission "accessClassInPackage.com.sun.media.jai.codec.*";
+    permission java.net.SocketPermission "*", "accept, connect, listen, resolve";
 };
+
