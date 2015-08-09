@@ -7,7 +7,7 @@ ext {
     appletHtml = new HashMap()
     appletHtml.put("localesList", [Locale.ENGLISH, Locale.GERMAN, Locale.JAPANESE, new Locale("vi")])
     appletHtml.put('appletList',
-        ['gomoku', 'checkers', 'chess', 'go', 'blockade', 'mancala', 'hex','galactic', 'poker', 'set', 'maze',
+        ['gomoku', 'checkers', 'chess', 'go', 'blockade', 'mancala', 'hex', 'galactic', 'poker', 'set', 'maze',
          'spirograph','redpuzzle', 'sudoku', 'hiq', 'bridge', 'slidingpuzzle', 'twopails', 'tantrix', 'trebuchet',
          'snake', 'dice', 'stock', 'trading', 'fractalexplorer', 'reactiondiffusion',
          'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder', 'adventure',

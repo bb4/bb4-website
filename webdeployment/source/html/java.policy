@@ -8,4 +8,6 @@ grant {
 
 grant codeBase "file:${java.home}/lib/ext/*" {
 	permission java.security.AllPermission;
+	permission java.lang.RuntimePermission "accessClassInPackage.com.sun.media.jai.codec";
+    permission java.lang.RuntimePermission "accessClassInPackage.com.sun.media.jai.codec.*";
 };
