@@ -12,7 +12,7 @@
             <offline-allowed/>
         </information>
         <resources>
-            <j2se version="1.6+" initial-heap-size="64m" max-heap-size="900m" href="http://java.sun.com/products/autodl/j2se"/>
+            <j2se version="1.7+" initial-heap-size="64m" max-heap-size="900m" href="http://java.sun.com/products/autodl/j2se"/>
             <jar href="bb4-common-{version}.jar" main="false"/>
             <jar href="bb4-twoplayer-{version}.jar" main="false"/>
             <jar href="bb4-multiplayer-{version}.jar" main="false"/>

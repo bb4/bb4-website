@@ -452,11 +452,11 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trading/1.2-SNAPSHOT/1acb7df7807107f75f148c4223af9a70d1c7fcec/bb4-trading-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trading/1.2-SNAPSHOT/7d4032d9b54aaeaffe479a6ae1c871b3f4b54650/bb4-trading-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trading/1.2-SNAPSHOT/1df385c300bc03a31745e6a1cd44c174264a1224/bb4-trading-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-trading/1.2-SNAPSHOT/865cfd57708aacd5f7512e476cafbd0b338f1839/bb4-trading-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
