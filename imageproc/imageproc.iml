@@ -1,31 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/classes/main" />
-    <output-test url="file://$MODULE_DIR$/build/classes/test" />
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/source" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Gradle: commons-collections:commons-collections:3.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.barrybecker4:bb4-optimization:1.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: java3d:vecmath:1.3.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: javax.media:jai-core:1.1.3" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.sun.media:jai-codec:1.1.3" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: commons-codec:commons-codec:1.8" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.barrybecker4:bb4-common:1.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.barrybecker4:bb4-ui:1.2-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
@@ -40,11 +24,11 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-optimization/1.2-SNAPSHOT/4632d42f01d04295ac8145ec3a228d074e29cfc6/bb4-optimization-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-optimization/1.3/e916ac72cfdf9998bcc3f946dbfa849e62eff12f/bb4-optimization-1.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-optimization/1.2-SNAPSHOT/4a69696cad2e285b84f8a717902f716c49b3ec8d/bb4-optimization-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-optimization/1.3/355265c79b3c442db5e6fac3d0ab202acea006f8/bb4-optimization-1.3-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -60,22 +44,22 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.2-SNAPSHOT/e1ed8e45f4ea1c3a3d72463b589a9ffe0df48e3f/bb4-ui-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.3/aecab3e607e4f5c159f40a9923a0a49c75d310db/bb4-ui-1.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.2-SNAPSHOT/e42b23def0caaf97656d5481bb27c4646c96db80/bb4-ui-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-ui/1.3/dc7ce13c89fc224b11b5ed083a9f3816be87d371/bb4-ui-1.3-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-common/1.2-SNAPSHOT/8f4db11fe6e98048910bbcdd08ddbeb3ccff33a6/bb4-common-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-common/1.3/25b39847be78bb7005bfc31b48acc2d685d85e6f/bb4-common-1.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-common/1.2-SNAPSHOT/265c34bf12f3ab4ba3ca42be2a65cf1bc3e53e9c/bb4-common-1.2-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.barrybecker4/bb4-common/1.3/2988bbd22f2137bcd6b12aa10c77629d525b18c5/bb4-common-1.3-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
