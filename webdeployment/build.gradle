@@ -96,7 +96,7 @@ task deployJars(type:Copy, dependsOn: ['signJars', 'copyToLib'],
 
     from fileTree("$project.projectDir/..").include('**/build/libs/**').files
     into "$distributionAppletsDir"
-    include 'bb4-*.jar', 'jhlabs-*.jar', 'bb4-sgf-*.jar', 'jai-codec-*.jar', 'vecmath-*.jar'
+    include 'bb4-*.jar', 'jhlabs-*.jar', 'bb4-sgf-*.jar', 'vecmath-*.jar'
     exclude '*-sources.jar', '*-javadoc.jar'
 }
 
@@ -120,9 +120,25 @@ task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
     }
 }
 
+/**
+ * Must sign all jars taht are deployed or applets/webstart will complain.
+ * This step requires having a keystore with a certificate
+ *
+ * First setup a keystore using something like this
+ *
+ * keytool -genkeypair -dname "cn=Barry G Becker, ou=software, o=barrybecker4, c=US"
+ *  -alias bb4 -keypass green4 -keystore C:/users/becker/bb4-keystore -storepass green4 -validity 999999
+ *
+ * Then sign with
+ * jarsigner bb4-common-1.3.jar -tsa http://timestamp.digicert.com bb4
+ *
+ * see these referecnes for more info
+ *   http://docs.oracle.com/javase/7/docs/technotes/tools/solaris/keytool.html
+ *   https://docs.oracle.com/javase/tutorial/deployment/jar/signing.html
+ */
 task signJars {
     doLast {
-        def filesToSign = fileTree(dir: 'build/libs', include: "*${version}.jar")
+        def filesToSign = fileTree(dir: 'build/libs', include: "*.jar")
         def antLocal = project.createAntBuilder()
         filesToSign.each { jarName ->
             println "about to sign " + jarName
