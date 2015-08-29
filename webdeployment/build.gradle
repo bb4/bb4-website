@@ -91,7 +91,7 @@ task deploySchemas(type:Copy, description: "Copy schema files to $distributionDi
  * Make sure all the dependent jar files are drawn into the dist directory.
  */
 //task deployJars(type:Copy, dependsOn: [':apps:copyToLib', ':imageproc:copyToLib', ':webdeployment:copyToLib'],
-task deployJars(type:Copy, dependsOn: ['copyToLib'],
+task deployJars(type:Copy, dependsOn: ['signJars', 'copyToLib'],
     description: "Deploys jar files needed for running applets and web start applications")  {
 
     from fileTree("$project.projectDir/..").include('**/build/libs/**').files
@@ -117,6 +117,26 @@ task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
     println "locales = " + appletHtml.localesList
     appletHtml.localesList.each {
         locale -> createHtmlForLocale(locale)
+    }
+}
+
+task signJars {
+    doLast {
+        def filesToSign = fileTree(dir: 'build/libs', include: "*${version}.jar")
+        def antLocal = project.createAntBuilder()
+        filesToSign.each { jarName ->
+            println "about to sign " + jarName
+
+            antLocal.signjar(
+                alias: "bb4",
+                jar: jarName,
+                tsaurl: 'http://timestamp.digicert.com',
+                //keystore: "my_key_store",
+                storepass: "green4",
+                //storetype: "pkcs12",
+                verbose: true
+            )
+        }
     }
 }
 
