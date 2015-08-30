@@ -1,0 +1,44 @@
+/* CSS for main landing page that shows applets */
+
+html {
+    overflow-x: none;
+}
+
+body {
+    color: #000000;
+    font-family: arial;
+    font-size: 12;
+    background-color: #FDFFFE;
+    padding-left: 12px;
+    padding-right: 14px;
+    overflow-x: hidden;
+}
+
+h1 {
+    text-align: center;
+    //text-decoration: underline;
+}
+
+.page-container {
+    border:1px solid #88a099;
+    width: calc(100% - 10px);
+    margin-bottom: 10px;
+    padding: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-spacing: 8;
+}
+
+table, tbody {
+   text-align: left;
+   font-size:12;
+   border-collapse: separate;
+   border-spacing: 12px 12px;
+   //border: 1px solid #88a099;
+}
+
+table td {
+    padding: 5px;
+    border-spacing: 12px 12px;
+    border: 1px solid #88a099;
+}

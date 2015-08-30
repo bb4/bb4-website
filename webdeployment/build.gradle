@@ -71,9 +71,7 @@ clean.doLast {
 task deployImages(type: Copy, description: "Copy image files to $distributionAppletsDir")  {
     from "$sourceDir/images"
     into "$distributionAppletsDir"
-    include '**/*.jpg'
-    include '**/*.png'
-    include '**/*.gif'
+    include '*.jpg', '*.png', '*.gif'
 }
 
 /**
@@ -83,8 +81,7 @@ task deploySchemas(type:Copy, description: "Copy schema files to $distributionDi
 
      from fileTree("$project.projectDir").files
      into "$distributionSchemaDir"
-     include "**/*.dtd"
-     include "**/*.xsd"
+     include "**/*.dtd", "**/*.xsd"
 }
 
 /**
@@ -100,24 +97,28 @@ task deployJars(type:Copy, dependsOn: ['signJars', 'copyToLib'],
     exclude '*-sources.jar', '*-javadoc.jar'
 }
 
-/**
- * I would like this to trigger a top level build of everything, but right now it has to be done manually.
- */
-task deploy(dependsOn: [deployImages, deploySchemas, deployJars],
-    description: "Deploys all files  to $distributionAppletsDir so they can be bulk copied to a website") << {
-    apply from: 'appletHtmlCommon.gradle'
 
-    // copy all the js, css, image files (only done once, not once per locale)
-    copy {
-        from "$sourceDir/html"
-        into "$distributionAppletsDir/.."
-        include '*.js', '*.css', '*.gif'
-    }
+task buildHtml(description: "creates the html files from templates and locale bundles") << {
+    apply from: 'appletHtmlCommon.gradle'
 
     println "locales = " + appletHtml.localesList
     appletHtml.localesList.each {
         locale -> createHtmlForLocale(locale)
     }
+
+    // copy all the js, css, image files (only done once, not once per locale)
+    copy {
+        from "$sourceDir/html"
+        into "$distributionAppletsDir/.."
+        include '*.js', '*.css', '*.gif', '*.png', '*.jpg'
+    }
+}
+
+/**
+ * I would like this to trigger a top level build of everything, but right now it has to be done manually.
+ */
+task deploy(dependsOn: [deployImages, deploySchemas, deployJars, buildHtml],
+    description: "Deploys all files  to $distributionAppletsDir so they can be bulk copied to a website") << {
 }
 
 /**

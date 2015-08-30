@@ -93,7 +93,7 @@ ddtabcontent.prototype={
 	expandsubcontent:function(subcontentid){
 		for (var i=0; i<this.subcontentids.length; i++){
 			var subcontent=document.getElementById(this.subcontentids[i]) //cache current subcontent obj (in for loop)
-			subcontent.style.display=(subcontent.id==subcontentid)? "block" : "none" //"show" or hide sub content based on matching id attr value
+			subcontent.style.display=(subcontent.id==subcontentid)? "inline" : "none" //"show" or hide sub content based on matching id attr value
 		}
 	},
 

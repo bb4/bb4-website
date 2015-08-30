@@ -49,8 +49,9 @@
     text-decoration: none;
 }
 
-.tabcontent{
-    display:none;
+.tabcontent {
+    display: none;
+    overflow-y: auto;
 }
 
 @media print {
