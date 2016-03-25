@@ -15,6 +15,9 @@ public class LargestPalindromicProduct {
 
     private static final NumberFormat FORMAT = new DecimalFormat("#");
 
+    private LargestPalindromicProduct() {
+    }
+
 
     /**
      * Convert the number to a string them

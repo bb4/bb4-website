@@ -15,6 +15,15 @@
             <option value="$PROJECT_DIR$/webdeployment" />
           </set>
         </option>
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/apps" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/imageproc" />
+            <option value="$PROJECT_DIR$/webdeployment" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>
