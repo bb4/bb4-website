@@ -3,9 +3,9 @@
 /**
  * Here is the dependency hierarchy for the subprojects in this multi-project build.
  *
- *               __bb4-common___
- *              /               \
- *           bb4-ui          bb4-sound
+ *               __bb4-common___ ___________
+ *              /               \           \
+ *           bb4-ui          bb4-sound      bb4-A-star
  *             |              /  \_______
  *       bb4-optimization   /     |  \   \
  *         /          \  \/      /    \   \____________

@@ -1,7 +1,7 @@
 # applets
 This project manages the content deployed to [barrybecker4.com/applets](http://barrybecker4.com/applet_index_en.html).
 
-NOTE: I was forced to make this repository was made public on github because projectLocker no longer allowed me
+NOTE: I was forced to make this repository public on github because projectLocker no longer allowed me
 to have a free private repositories. The code in this repository is not clean nor ready for public consumption.
 
 ## What is in this project?
