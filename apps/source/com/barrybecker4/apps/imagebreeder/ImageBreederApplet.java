@@ -248,9 +248,11 @@ public class ImageBreederApplet extends ApplicationApplet
 
         ImageBreeder fb = new ImageBreeder(currentImage, metaOp, variance);
         List<BufferedImage> images = fb.breedImages(NUM_CHILD_IMAGES);
+        assert images != null;
+        assert images.size() > 0;
         imgToParamsMap = fb.getImgToParamsMap();
 
-        int elapsedTime =(int) ((System.currentTimeMillis() - time)/1000);
+        int elapsedTime =(int) ((System.currentTimeMillis() - time)/ 1000);
         statusLabel.setText( "Performing " + key + "...done in " + elapsedTime +" seconds" );
 
         imageListPanel.setImageList(images);
@@ -269,7 +271,7 @@ public class ImageBreederApplet extends ApplicationApplet
 
      /**
       * Called when the load button or go button is pressed.
-      * @param ae
+      * @param ae assertion error
       */
      public void actionPerformed( ActionEvent ae ) {
 
