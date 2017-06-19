@@ -11,7 +11,7 @@ ext.distributionSchemaDir="$distributionDir/schema"
 
 /** these dependent jars will be pull from Sonatype where they were published */
 dependencies {
-    def version = "1.4-SNAPSHOT" //getVersion() //
+    def version = getVersion()
 
     compile "com.barrybecker4:bb4-optimization:$version"
     compile "com.barrybecker4:bb4-sound:$version"
@@ -318,5 +318,5 @@ jar {
 
 // Gradle 3+ does not find message undles in buildSrc for some reason.
 task wrapper1(type: Wrapper) {
-    gradleVersion = '2.14.1'
+    gradleVersion = '2.9'
 }
