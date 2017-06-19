@@ -84,3 +84,8 @@ subprojects {
         }
     }
 }
+
+// Gradle 3+ does not find message undles in buildSrc for some reason.
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
+}
