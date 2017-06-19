@@ -24,9 +24,10 @@ public class ShowOff
 
     /**
      *
-     * @param filename
-     * @param message
-     * @param split
+     * @param filename the file name
+     * @param message message to display
+     * @param split number of splits
+     * @throws IOException if io error
      */
     public ShowOff( String filename, String message, int split )
             throws IOException {
@@ -164,8 +165,8 @@ public class ShowOff
      * what string will be displayed. The third
      * specifies at what point in the string the
      * background color will change.
-     * @param args
-     * @throws IOException
+     * @param args arguments to app
+     * @throws IOException if io error
      */
     public static void main( String[] args ) throws IOException
     {

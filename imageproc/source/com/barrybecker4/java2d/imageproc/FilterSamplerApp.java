@@ -95,7 +95,7 @@ public class FilterSamplerApp extends ApplicationFrame
 
     /**
      * Called when an item in the list of transformations is called.
-     * @param ie
+     * @param ie item event
      */
     @Override
     public void itemStateChanged( ItemEvent ie ) {
@@ -138,7 +138,7 @@ public class FilterSamplerApp extends ApplicationFrame
 
     /**
      * Called whenever one of the UI parameter widgets was changed by the user.
-     * @param param
+     * @param param changed parameter
      */
     @Override
     public void parameterChanged(Parameter param) {
@@ -165,7 +165,7 @@ public class FilterSamplerApp extends ApplicationFrame
 
      /**
       * Called when the load button is pressed.
-      * @param ae
+      * @param ae action event
       */
      @Override
      public void actionPerformed( ActionEvent ae ) {

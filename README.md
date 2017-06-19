@@ -6,7 +6,7 @@ to have a free private repositories. The code in this repository is not clean no
 
 ## What is in this project?
 
-This project contains a lot of miscelaneous stuff that needs to be cleaned up or split out, but the major items are:
+This project contains a lot of miscellaneous stuff that needs to be cleaned up or split out, but the major items are:
 - aikido technique builder application: This is java which reads an xml configuration file and outputs a DHTML application for the web.
 - imagebreeder: Allows you to use a genetic algorithm to apply image transformations in a creative way.
 - sierpinski: Recursive triangle fractal
@@ -17,7 +17,7 @@ This project contains a lot of miscelaneous stuff that needs to be cleaned up or
 
 ## Steps to build applet projects:
 
-1. Building requires java, git, (optionally) intellij or eclipse.
+1. Building requires java, git, and (optionally) intellij or eclipse.
   - Install java JDK 1.7 or higher from http://www.oracle.com/technetwork/java/javase/downloads.
   - Install the latest Intellij (free community edition version) from http://www.jetbrains.com/idea/
   - Gradle wrapper is used now, so it is necessary to install gradle.
@@ -48,5 +48,5 @@ This project contains a lot of miscelaneous stuff that needs to be cleaned up or
   I split out jigo (used by go) and jhlabs (used by image breeder) into separate gradle projects which build separate
   jars because they are based on other peoples open source code. In the rare case that you need to modify the source in
   these jars, get them using the following.
-  - svn co https://free1.projectlocker.com/Tesujisoft/jhlabs/svn
+  - git clone https://github.com/barrybecker4/jhlabs.git
   - git clone https://github.com/barrybecker4/bb4-sgf.git

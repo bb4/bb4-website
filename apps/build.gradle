@@ -4,6 +4,15 @@ version = '1.2'
 project.archivesBaseName = 'bb4-apps'
 mainClassName = "com.barrybecker4.apps.spirograph.SpiroGraph"
 
+// Suppress javadoc warning when using java 8.
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
 task runImageBreeder(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.imagebreeder.ImageBreederApplet'
     classpath = sourceSets.main.runtimeClasspath

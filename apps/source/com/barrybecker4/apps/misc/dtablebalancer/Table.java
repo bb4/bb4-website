@@ -6,7 +6,7 @@ import com.barrybecker4.common.format.FormatUtil;
 
 /**
  * Represents a decision table graph.
- * We want to optimize the about of each cell that is filled with a bar chart coloring
+ * We want to optimize the area of each cell that is filled with a bar chart coloring
  * by adjusting the width and height of cells. Each row and column have a constant height or width,
  * but they are can all independently adjustable.
  * @author Barry Becker

@@ -14,8 +14,9 @@
 hs_err_pid*
 
 #intellij
-.idea/*
-
+.idea
+applets.iml
+applets/.idea
 
 buildSrc/.gradle/
 buildSrc/build/
