@@ -37,15 +37,14 @@ subprojects {
             attributes 'Implementation-Title': 'Applets', provider: 'gradle', 'Implementation-Version': version
         }
     }
+    jar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     task sourcesJar(type: Jar, dependsOn: classes) {
-        //baseName = 'bb4-common'
         classifier = 'sources'
         from sourceSets.main.allSource
     }
 
     task javadocJar(type: Jar, dependsOn: javadoc) {
-        //baseName = 'bb4-common'
         classifier = 'javadoc'
         from javadoc.destinationDir
     }

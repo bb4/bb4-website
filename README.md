@@ -31,7 +31,13 @@ This project contains a lot of miscellaneous stuff that needs to be cleaned up o
   - If you want to deploy to a local webserver, you can set
     - codebase=localhost/dist, and
     - distributionDir=<apache install location>/Apache2.2/htdocs
-
+4. Deploying
+  - You must sign all jars that are deployed or applets/webstart will complain.
+This step requires having a keystore with a certificate
+  - First setup a keystore using something like this<br>
+   `keytool -genkeypair -dname "cn=Barry G Becker, ou=software, o=barrybecker4, c=US"
+ -alias bb4 -keypass <pw> -keystore C:/users/becker/bb4-keystore -storepass <pw> -validity 999999`
+  - Then do `./gradlew deploy`
 ### Using Intellij (recommended)
 - run "gradle idea" once to get Intellij files configured to match gradle configuration.
   If you prefer eclipse you can use "gradle eclipse".
