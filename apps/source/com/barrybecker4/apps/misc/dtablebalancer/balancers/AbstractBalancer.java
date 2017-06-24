@@ -9,8 +9,11 @@ import com.barrybecker4.apps.misc.dtablebalancer.Table;
  */
 public abstract class AbstractBalancer implements Balancer {
 
-
-    /** if the new dimensions are just off by a pixel or two because of round-off, then adjust the last row/column */
+    /**
+     * If the new dimensions are just off by a pixel or two because of round-off,
+     * then adjust the last row/column
+     * @param table the table to adjust
+     */
     protected void finalAdjust(Table table) {
         double totalWidth = 0;
         double totalHeight = 0;

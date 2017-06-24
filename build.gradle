@@ -1,17 +1,18 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 // This gradle build file will build all applet subprojects.
 // @author Barry Becker
+apply plugin: 'idea'
 
 description = 'Applets'
 defaultTasks 'build'
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'scala'
     sourceCompatibility = '1.7'
     targetCompatibility = '1.7'
     apply plugin: 'project-report'
     apply plugin: 'application'
-    apply plugin: 'idea'
 
     defaultTasks 'build'
     version = '1.0'
@@ -36,15 +37,14 @@ subprojects {
             attributes 'Implementation-Title': 'Applets', provider: 'gradle', 'Implementation-Version': version
         }
     }
+    jar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     task sourcesJar(type: Jar, dependsOn: classes) {
-        //baseName = 'bb4-common'
         classifier = 'sources'
         from sourceSets.main.allSource
     }
 
     task javadocJar(type: Jar, dependsOn: javadoc) {
-        //baseName = 'bb4-common'
         classifier = 'javadoc'
         from javadoc.destinationDir
     }
@@ -84,4 +84,7 @@ subprojects {
     }
 }
 
-
+// Gradle 3+ does not find message undles in buildSrc for some reason.
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
+}

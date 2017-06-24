@@ -4,14 +4,25 @@ version = '1.2'
 project.archivesBaseName = 'bb4-apps'
 mainClassName = "com.barrybecker4.apps.spirograph.SpiroGraph"
 
+// Suppress javadoc warning when using java 8.
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
 task runImageBreeder(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.imagebreeder.ImageBreederApplet'
     classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = ["-ea", "-Xms512M", "-Xmx4G"]
 }
 
 task runSpirograph(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.spirograph.SpiroGraph'
     classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = ["-ea"]
 }
 
 task runSierpinski(type: JavaExec, dependsOn: classes) {
@@ -22,6 +33,7 @@ task runSierpinski(type: JavaExec, dependsOn: classes) {
 task runSimpleEditor(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.misc.sedit.SimpleEditorFrame'
     classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = ["-ea"]
 }
 
 task runNativeRender(type: JavaExec, dependsOn: classes) {

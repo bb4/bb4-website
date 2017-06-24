@@ -15,4 +15,11 @@ webdeployment/dist
 hs_err_pid*
 *.iml
 
-
+#intellij
+.idea
+*.iml
+*/.idea
+*.gradle
+buildSrc/.gradle/
+buildSrc/build/
+*/build

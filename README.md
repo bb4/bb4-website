@@ -1,12 +1,12 @@
 # applets
 This project manages the content deployed to [barrybecker4.com/applets](http://barrybecker4.com/applet_index_en.html).
 
-NOTE: I was forced to make this repository was made public on github because projectLocker no longer allowed me
+NOTE: I was forced to make this repository public on github because projectLocker no longer allowed me
 to have a free private repositories. The code in this repository is not clean nor ready for public consumption.
 
 ## What is in this project?
 
-This project contains a lot of miscelaneous stuff that needs to be cleaned up or split out, but the major items are:
+This project contains a lot of miscellaneous stuff that needs to be cleaned up or split out, but the major items are:
 - aikido technique builder application: This is java which reads an xml configuration file and outputs a DHTML application for the web.
 - imagebreeder: Allows you to use a genetic algorithm to apply image transformations in a creative way.
 - sierpinski: Recursive triangle fractal
@@ -17,7 +17,7 @@ This project contains a lot of miscelaneous stuff that needs to be cleaned up or
 
 ## Steps to build applet projects:
 
-1. Building requires java, git, (optionally) intellij or eclipse.
+1. Building requires java, git, and (optionally) intellij or eclipse.
   - Install java JDK 1.7 or higher from http://www.oracle.com/technetwork/java/javase/downloads.
   - Install the latest Intellij (free community edition version) from http://www.jetbrains.com/idea/
   - Gradle wrapper is used now, so it is necessary to install gradle.
@@ -31,7 +31,13 @@ This project contains a lot of miscelaneous stuff that needs to be cleaned up or
   - If you want to deploy to a local webserver, you can set
     - codebase=localhost/dist, and
     - distributionDir=<apache install location>/Apache2.2/htdocs
-
+4. Deploying
+  - You must sign all jars that are deployed or applets/webstart will complain.
+This step requires having a keystore with a certificate
+  - First setup a keystore using something like this<br>
+   `keytool -genkeypair -dname "cn=Barry G Becker, ou=software, o=barrybecker4, c=US"
+ -alias bb4 -keypass <pw> -keystore C:/users/becker/bb4-keystore -storepass <pw> -validity 999999`
+  - Then do `./gradlew deploy`
 ### Using Intellij (recommended)
 - run "gradle idea" once to get Intellij files configured to match gradle configuration.
   If you prefer eclipse you can use "gradle eclipse".
@@ -48,5 +54,5 @@ This project contains a lot of miscelaneous stuff that needs to be cleaned up or
   I split out jigo (used by go) and jhlabs (used by image breeder) into separate gradle projects which build separate
   jars because they are based on other peoples open source code. In the rare case that you need to modify the source in
   these jars, get them using the following.
-  - svn co https://free1.projectlocker.com/Tesujisoft/jhlabs/svn
+  - git clone https://github.com/barrybecker4/jhlabs.git
   - git clone https://github.com/barrybecker4/bb4-sgf.git

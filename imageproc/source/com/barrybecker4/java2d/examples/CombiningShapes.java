@@ -40,13 +40,11 @@ public class CombiningShapes  extends JComponent {
                              "subtract", "exclusive or"}
         );
         // Repaint ourselves when the selection changes.
-        mOptions.addItemListener( new ItemListener()
-        {
-            public void itemStateChanged( ItemEvent ie )
-            {
+        mOptions.addItemListener( new ItemListener() {
+            public void itemStateChanged( ItemEvent ie ) {
                 repaint();
             }
-        } );
+        });
         controls.add( mOptions );
         add( controls, BorderLayout.SOUTH );
     }

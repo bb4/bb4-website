@@ -350,7 +350,8 @@ public class ProcessingOperators {
 
     private static MetaImageOp createFractalOp() {
          List<Parameter>  params = new ArrayList<Parameter>();
-         params.add(new StringParameter(FBMFilter.BasisType.CELLULAR, FBMFilter.BasisType.values(), "basisType"));
+         params.add(new StringParameter(FBMFilter.BasisType.CELLULAR,
+                 FBMFilter.BasisType.values(), "basisType"));
 
          int[] specValues = {
              OperationType.REPLACE.ordinal(),  OperationType.NORMAL.ordinal(),

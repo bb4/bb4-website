@@ -10,7 +10,7 @@
  *       bb4-optimization   /     |  \              \      \
  *         /          \  \/      /    \              \_    bb4-adventure
  *      imageproc __ apps \     /      \               \
- *         \         /    bb4-puzzles  bb4-simulations  bb4-games
+ *         \         /    bb4-puzzles  bb4-simulations   bb4-games
  *          \       /     _/___________/________________/
  *           \     /    /
  *          webdeployment

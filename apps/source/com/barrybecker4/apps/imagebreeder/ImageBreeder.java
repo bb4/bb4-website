@@ -41,12 +41,12 @@ public class ImageBreeder {
         metaOp = op;
         imageToBreed = image;
         this.variance = variance;
-        imgToParamsMap = new HashMap<BufferedImage, List<Parameter>> ();
+        imgToParamsMap = new HashMap<> ();
     }
 
     /**
      *
-     * @param numChildImages number ot child images
+     * @param numChildImages number of child images
      * @return list of bred images
      */
     public List<BufferedImage> breedImages(int numChildImages)  {
@@ -67,7 +67,6 @@ public class ImageBreeder {
                 images.add(img);
             }
         });
-
 
         return images;
     }
