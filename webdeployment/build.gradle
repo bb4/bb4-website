@@ -164,7 +164,7 @@ task signJars {
                 jar: jarName,
                 tsaurl: 'http://timestamp.digicert.com',
                 keystore: "C:/users/BBE/bb4-keystore",
-                storepass: "green4",
+                storepass: "gr***4",
                 //storetype: "pkcs12",
                 verbose: true
             )
