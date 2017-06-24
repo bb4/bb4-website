@@ -1,16 +1,16 @@
-/* Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
+/* Copyright by Barry G. Becker, 2013 - 2017. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 
 /**
  * Here is the dependency hierarchy for the subprojects in this multi-project build.
  *
- *               __bb4-common___
- *              /               \
- *           bb4-ui          bb4-sound
- *             |              /  \_______
- *       bb4-optimization   /     |  \   \
- *         /          \  \/      /    \   \____________
+ *               __bb4-common_______________
+ *              /               \           \
+ *           bb4-ui          bb4-sound     bb4-A-star
+ *             |              /  \_________________________
+ *       bb4-optimization   /     |  \              \      \
+ *         /          \  \/      /    \              \_    bb4-adventure
  *      imageproc __ apps \     /      \               \
- *         \         /    bb4-puzzles bb4-simulations bb4-games
+ *         \         /    bb4-puzzles  bb4-simulations  bb4-games
  *          \       /     _/___________/________________/
  *           \     /    /
  *          webdeployment

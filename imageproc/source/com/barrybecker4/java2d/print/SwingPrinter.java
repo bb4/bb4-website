@@ -1,8 +1,14 @@
 package com.barrybecker4.java2d.print;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.AbstractAction;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.KeyStroke;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -25,7 +31,7 @@ public class SwingPrinter extends JFrame {
         setVisible( true );
     }
 
-    protected void createUI() {
+    private void createUI() {
         setSize( 300, 300 );
         center();
 
@@ -33,13 +39,13 @@ public class SwingPrinter extends JFrame {
         JMenuBar mb = new JMenuBar();
         JMenu file = new JMenu( "File", true );
         file.add( new FilePrintAction() ).setAccelerator(
-                KeyStroke.getKeyStroke( KeyEvent.VK_P, Event.CTRL_MASK ) );
+                KeyStroke.getKeyStroke( KeyEvent.VK_P, InputEvent.CTRL_MASK ) );
         file.add( new FilePageSetupAction() ).setAccelerator(
                 KeyStroke.getKeyStroke( KeyEvent.VK_P,
-                        Event.CTRL_MASK | Event.SHIFT_MASK ) );
+                        InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK ) );
         file.addSeparator();
         file.add( new FileQuitAction() ).setAccelerator(
-                KeyStroke.getKeyStroke( KeyEvent.VK_Q, Event.CTRL_MASK ) );
+                KeyStroke.getKeyStroke( KeyEvent.VK_Q, InputEvent.CTRL_MASK ) );
         mb.add( file );
         setJMenuBar( mb );
 

@@ -9,10 +9,10 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public abstract class AbstractPrimeFactorizer {
+public abstract class AbstractPrimeFactorizer implements PrimeFactorizer {
 
-    protected static final BigInteger ONE = new BigInteger("1");
-    protected static final BigInteger TWO = new BigInteger("2");
+    static final BigInteger ONE = new BigInteger("1");
+    static final BigInteger TWO = new BigInteger("2");
 
     /**
      * Finds all the prime factors in order.

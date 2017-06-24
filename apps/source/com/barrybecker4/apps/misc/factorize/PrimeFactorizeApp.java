@@ -2,6 +2,8 @@
 package com.barrybecker4.apps.misc.factorize;
 
 import com.barrybecker4.apps.misc.factorize.factorizers.BrutePrimeFactorizer;
+import com.barrybecker4.apps.misc.factorize.factorizers.PrimeFactorizer;
+import com.barrybecker4.apps.misc.factorize.factorizers.QuickPrimeFactorizer;
 import com.barrybecker4.common.profile.SimpleProfiler;
 import com.barrybecker4.common.util.Input;
 
@@ -22,12 +24,11 @@ public final class PrimeFactorizeApp {
     /**
      * @param num number to show the prime factors for.
      */
-    public static void showPrimeFactors(BigInteger num) {
+    public static void showPrimeFactors(BigInteger num, PrimeFactorizer factorizer) {
         SimpleProfiler prof = new SimpleProfiler();
         prof.start();
 
         System.out.println( "The prime factors are ..." );
-        BrutePrimeFactorizer factorizer = new BrutePrimeFactorizer();
         System.out.println(factorizer.findPrimeFactors(num));
 
         prof.stop();
@@ -45,7 +46,8 @@ public final class PrimeFactorizeApp {
                 System.out.println("must be positive.");
             }
             else {
-                showPrimeFactors(num);
+                showPrimeFactors(num, new BrutePrimeFactorizer());
+                showPrimeFactors(num, new QuickPrimeFactorizer());
             }
         }
     }

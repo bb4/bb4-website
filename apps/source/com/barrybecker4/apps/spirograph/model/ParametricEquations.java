@@ -9,8 +9,8 @@ package com.barrybecker4.apps.spirograph.model;
  */
 public class ParametricEquations {
 
-    String xEquation;
-    String yEquation;
+    private String xEquation;
+    private String yEquation;
 
     /**
      * Creates the equation expressions at construction time.
