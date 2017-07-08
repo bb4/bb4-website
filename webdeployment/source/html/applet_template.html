@@ -81,7 +81,7 @@
     </div>
     <br>
 
-    <applet width="{width}" height="{height}" align="baseline" codebase="." code="{qualifiedAppletClassName}">
+    <applet id="myApplet" width="{width}" height="{height}" align="baseline" codebase="." code="{qualifiedAppletClassName}">
       <param name="code" value="{qualifiedAppletClassName}">
       <param name="codebase" value=".">
       <param name="cache_option" value="Plugin">
@@ -92,6 +92,7 @@
       <param name="locale" value="{language}">
       <param name="type" value="application/x-java-applet;version=1.7">
       <param name="scriptable" value="true">
+      <param name="draggable" value="true">
     </applet>
 
   </body>

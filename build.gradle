@@ -34,7 +34,10 @@ subprojects {
 
     jar {
          manifest {
-            attributes 'Implementation-Title': 'Applets', provider: 'gradle', 'Implementation-Version': version
+            attributes 'Implementation-Title': 'Applets',
+                    'provider': 'gradle',
+                    'Implementation-Version': version,
+                    'Caller-Allowable-Codebase': 'barrybecker4.com'
         }
     }
     jar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE

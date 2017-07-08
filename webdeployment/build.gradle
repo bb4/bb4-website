@@ -8,10 +8,10 @@ mainClassName = "com.barrybecker4.common.format.CurrencyFormatter"
 
 ext.distributionAppletsDir="$distributionDir/applets"
 ext.distributionSchemaDir="$distributionDir/schema"
+ext.version = getVersion()
 
 /** these dependent jars will be pull from Sonatype where they were published */
 dependencies {
-    def version = getVersion()
 
     compile "com.barrybecker4:bb4-optimization:$version"
     compile "com.barrybecker4:bb4-sound:$version"
@@ -124,17 +124,6 @@ task buildHtml(description: "creates the html files from templates and locale bu
 task deploy(dependsOn: [deployImages, deploySchemas, deployJars, buildHtml],
     description: "Deploys all files  to $distributionAppletsDir so they can be bulk copied to a website") {
 }
-/*
-task buildAndPublishAll(dependsOn: [buildAndPubCommon],
-        description: "Builds all bb4 projects and publishes artifacts " +
-        "to sonatype (if authorized and if they are all checked out locally)") << {
-}
-
-// ./gradlew clean build test publishArtifacts
-task buildAndPubCommon(type: Exec) {
-    executable "../gradlew"
-    args "build", "test", "publishArtifacts"
-}*/
 
 /**
  * Must sign all jars that are deployed or applets/webstart will complain.
@@ -163,8 +152,8 @@ task signJars {
                 alias: "bb4",
                 jar: jarName,
                 tsaurl: 'http://timestamp.digicert.com',
-                keystore: "C:/users/BBE/bb4-keystore",
-                storepass: "gr***4",
+                keystore: "C:/users/barry/bb4-keystore",
+                storepass: "green4",
                 //storetype: "pkcs12",
                 verbose: true
             )
@@ -301,7 +290,7 @@ Map getFileTypeReplacements(ResourceBundle labels, String applet, Map fileType) 
     fileType.get("replacementList").each { String key ->
         def appletKey = applet + '.' + key;
         if (labels.containsKey(appletKey))
-            replacements.put(key, MessageFormat.format(labels.getString(appletKey), project.version))
+            replacements.put(key, MessageFormat.format(labels.getString(appletKey), version))
         else
             replacements.put(key, labels.getString(key))
     }

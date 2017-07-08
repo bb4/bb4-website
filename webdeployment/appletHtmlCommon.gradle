@@ -9,7 +9,7 @@ ext {
     appletHtml.put('appletList',
         ['gomoku', 'checkers', 'chess', 'go', 'blockade', 'mancala', 'hex', 'galactic', 'poker', 'set', 'maze',
          'spirograph','redpuzzle', 'sudoku', 'hiq', 'bridge', 'slidingpuzzle', 'twopails', 'tantrix', 'trebuchet',
-         'snake', 'dice', 'stock', 'trading', 'fractalexplorer', 'reactiondiffusion',
+         'snake', 'dice', 'stock', 'trading', 'fractalexplorer', 'caveexplorer', 'conwayexplorer', 'reactiondiffusion',
          'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder', 'adventure',
          'predprey', 'habitat', 'henonexplorer'])
 
@@ -29,7 +29,7 @@ ext {
     html.put("type", "html")
     html.put("replacementList",
           ["title", "name", "locale", "charset", "language", "longDescription",
-           "qualifiedAppletClassName", "className",
+           "qualifiedAppletClassName", "className", "version",
            "panelClass", "width", "height", "doResize", "jarList"])
 
     // replacements for jnlp file
