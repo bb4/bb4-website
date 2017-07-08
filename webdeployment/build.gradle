@@ -161,11 +161,6 @@ task signJars {
     }
 }
 
-/** read the version from message bundle. It is the version of all the bb4 jars */
-String getVersion() {
-    def labels = ResourceBundle.getBundle('html', Locale.ENGLISH)
-    return labels.getString("version")
-}
 
 /**
  * Deploys all the html files for the given locale.

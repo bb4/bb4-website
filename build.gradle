@@ -91,3 +91,10 @@ subprojects {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14.1'
 }
+
+/** read the version from message bundle. It is the version of all the bb4 jars */
+String getVersion() {
+    def labels = ResourceBundle.getBundle('html', Locale.ENGLISH)
+    println("version ==" + labels.getString("version"))
+    return labels.getString("version")
+}
