@@ -8,7 +8,7 @@ mainClassName = "com.barrybecker4.common.format.CurrencyFormatter"
 
 ext.distributionAppletsDir="$distributionDir/applets"
 ext.distributionSchemaDir="$distributionDir/schema"
-ext.depVersion = getDependentVersion()
+
 
 /** these dependent jars will be pull from Sonatype where they were published */
 dependencies {
@@ -83,9 +83,8 @@ task deployImages(type: Copy, description: "Copy image files to $distributionApp
  */
 task deploySchemas(type:Copy, description: "Copy schema files to $distributionDir") {
 
-     from fileTree("$project.projectDir/..").files
+     from fileTree("$project.projectDir/..").include("**/*.dtd", "**/*.xsd").files
      into "$distributionSchemaDir"
-     include "**/*.dtd", "**/*.xsd"
 }
 
 /**

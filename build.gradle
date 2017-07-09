@@ -5,6 +5,7 @@ apply plugin: 'idea'
 
 description = 'Applets'
 defaultTasks 'build'
+ext.depVersion = getDependentVersion()
 
 subprojects {
     apply plugin: 'java'
@@ -95,7 +96,7 @@ task wrapper(type: Wrapper) {
 
 /** read the version from message bundle. It is the version of all the bb4 jars */
 String getDependentVersion() {
-    //def labels = ResourceBundle.getBundle('html', Locale.ENGLISH)
-    //println("version ==" + labels.getString("version"))
-    return "1.4-SNAPSHOT" //labels.getString("version") //
+    def labels = ResourceBundle.getBundle('html', Locale.ENGLISH)
+    println("version ==" + labels.getString("version"))
+    return labels.getString("version") // "1.4-SNAPSHOT" //
 }
