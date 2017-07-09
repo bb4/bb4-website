@@ -15,7 +15,7 @@ subprojects {
     apply plugin: 'application'
 
     defaultTasks 'build'
-    version = '1.0'
+    version = '1.1'
 
     repositories {
         mavenCentral()
@@ -24,7 +24,7 @@ subprojects {
         maven { url "https://oss.sonatype.org/content/repositories/releases" }
         // this Sonatype repo is where SNAPSHOT bb4 jars come from
         maven { url "https://oss.sonatype.org/content/groups/staging" }
-        maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
+        //maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
     }
 
     dependencies {
@@ -33,16 +33,17 @@ subprojects {
     }
 
     jar {
-         manifest {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        manifest {
             attributes 'Implementation-Title': 'Applets',
                     'provider': 'gradle',
                     'Implementation-Version': version,
                     'Caller-Allowable-Codebase': 'barrybecker4.com'
         }
     }
-    jar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     task sourcesJar(type: Jar, dependsOn: classes) {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         classifier = 'sources'
         from sourceSets.main.allSource
     }
@@ -89,12 +90,12 @@ subprojects {
 
 // Gradle 3+ does not find message undles in buildSrc for some reason.
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.14.1'
+    gradleVersion = '3.3'
 }
 
 /** read the version from message bundle. It is the version of all the bb4 jars */
-String getVersion() {
-    def labels = ResourceBundle.getBundle('html', Locale.ENGLISH)
-    println("version ==" + labels.getString("version"))
-    return labels.getString("version")
+String getDependentVersion() {
+    //def labels = ResourceBundle.getBundle('html', Locale.ENGLISH)
+    //println("version ==" + labels.getString("version"))
+    return "1.4-SNAPSHOT" //labels.getString("version") //
 }
