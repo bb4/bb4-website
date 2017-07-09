@@ -90,7 +90,6 @@ task deploySchemas(type:Copy, description: "Copy schema files to $distributionDi
 /**
  * Make sure all the dependent jar files are drawn into the dist directory.
  */
-//task deployJars(type:Copy, dependsOn: [':apps:copyToLib', ':imageproc:copyToLib', ':webdeployment:copyToLib'],
 task deployJars(type:Copy, dependsOn: ['signJars', 'copyToLib'],
     description: "Deploys jar files needed for running applets and web start applications")  {
 
