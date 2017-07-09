@@ -286,7 +286,7 @@ Map getFileTypeReplacements(ResourceBundle labels, String applet, Map fileType) 
     fileType.get("replacementList").each { String key ->
         def appletKey = applet + '.' + key;
         if (labels.containsKey(appletKey))
-            replacements.put(key, MessageFormat.format(labels.getString(appletKey), version))
+            replacements.put(key, MessageFormat.format(labels.getString(appletKey), depVersion))
         else
             replacements.put(key, labels.getString(key))
     }
