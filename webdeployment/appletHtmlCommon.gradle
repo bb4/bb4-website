@@ -9,7 +9,7 @@ ext {
     appletHtml.put('appletList',
         ['gomoku', 'checkers', 'chess', 'go', 'blockade', 'mancala', 'hex', 'galactic', 'poker', 'set', 'maze',
          'spirograph','redpuzzle', 'sudoku', 'hiq', 'bridge', 'slidingpuzzle', 'twopails', 'tantrix', 'trebuchet',
-         'snake', 'dice', 'stock', 'trading', 'fractalexplorer', 'caveexplorer', 'conwayexplorer', 'reactiondiffusion',
+         'snake', 'dice', 'stock', 'trading', 'fractalexplorer', 'cave', 'conway', 'reactiondiffusion',
          'liquid', 'fluid', 'sierpinski', 'lsystem', 'imagebreeder', 'adventure',
          'predprey', 'habitat', 'henonexplorer'])
 
