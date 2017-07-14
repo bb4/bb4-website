@@ -95,7 +95,7 @@ task deployJars(type:Copy, dependsOn: ['signJars', 'copyToLib'],
 
     from fileTree("$project.projectDir/..").include('**/build/libs/**').files
     into "$distributionAppletsDir"
-    include 'bb4-*.jar', 'jhlabs-*.jar', 'bb4-sgf-*.jar', 'vecmath-*.jar'
+    include 'bb4-*.jar', 'jhlabs-*.jar', 'bb4-sgf-*.jar', 'vecmath-*.jar', 'scala-library-*.jar'
     exclude '*-sources.jar', '*-javadoc.jar'
 }
 
