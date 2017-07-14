@@ -56,7 +56,6 @@ task runXMLAppGenerator(type: JavaExec, dependsOn: classes) {
 task runTranslator(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.translation.Translator'
     classpath = sourceSets.main.runtimeClasspath
-    //args = ['../apps/source/com/barrybecker4/apps/aikido/katate_dori.xml']
 }
 
 
