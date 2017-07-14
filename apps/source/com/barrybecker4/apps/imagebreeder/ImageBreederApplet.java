@@ -13,21 +13,26 @@ import com.barrybecker4.ui.sliders.LabeledSlider;
 import com.barrybecker4.ui.sliders.SliderChangeListener;
 import com.barrybecker4.ui.util.GUIUtil;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Allows you to mix filters together using a genetic algorithm
  * in order to produce very interesting results.
- *
- *  - Brian big hair took 106 seconds to run caustics
  */
 public class ImageBreederApplet extends ApplicationApplet
                              implements ItemListener,
@@ -84,6 +89,7 @@ public class ImageBreederApplet extends ApplicationApplet
      * @param imageFile
      */
     private void createImageFrame( String imageFile ) {
+        System.out.println("The imageFile == " + imageFile);
         currentImage = GUIUtil.getBufferedImage(imageFile);
         System.out.println("currentImage=" + currentImage + "\n from " + imageFile);
 
@@ -302,7 +308,7 @@ public class ImageBreederApplet extends ApplicationApplet
 
     /**
      * Make the parameters setting match the last selected image.
-     * @param img
+     * @param img the image to use as a basis for breeding.
      */
     public void imageSelected(BufferedImage img) {
          List<Parameter> params = imgToParamsMap.get(img);
@@ -319,10 +325,11 @@ public class ImageBreederApplet extends ApplicationApplet
 
     public static void main( String[] args ) {
         String imageFile = IMAGE_DIR + DEFAULT_IMAGE;
-        if ( args.length > 0 && !args[0].equals("imagebreeder") )  {
-            imageFile = args[0];
+        System.out.println("args = " + Arrays.toString(args));
+        if ( args.length > 1 && !args[1].equals("imagebreeder") )  {
+            imageFile = args[1];
         }
-        System.out.println("imageFile=" + imageFile);
+        System.out.println("imageFile = " + imageFile);
 
         ImageBreederApplet breeder = new ImageBreederApplet(imageFile);
         GUIUtil.showApplet( breeder);
