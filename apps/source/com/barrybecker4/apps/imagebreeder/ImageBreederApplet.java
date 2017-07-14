@@ -1,6 +1,7 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.apps.imagebreeder;
 
+import com.barrybecker4.common.app.CommandLineOptions;
 import com.barrybecker4.java2d.Utilities;
 import com.barrybecker4.java2d.imageproc.MetaImageOp;
 import com.barrybecker4.java2d.imageproc.ParameterPanel;
@@ -26,7 +27,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -325,11 +325,11 @@ public class ImageBreederApplet extends ApplicationApplet
 
     public static void main( String[] args ) {
         String imageFile = IMAGE_DIR + DEFAULT_IMAGE;
-        System.out.println("args = " + Arrays.toString(args));
-        if ( args.length > 1 && !args[1].equals("imagebreeder") )  {
-            imageFile = args[1];
+        CommandLineOptions opts = new CommandLineOptions(args);
+        if (opts.contains("imageFile")) {
+            imageFile = opts.getValueForOption("imageFile");
+            System.out.println("imageFile = " + imageFile);
         }
-        System.out.println("imageFile = " + imageFile);
 
         ImageBreederApplet breeder = new ImageBreederApplet(imageFile);
         GUIUtil.showApplet( breeder);
