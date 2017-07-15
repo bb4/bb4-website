@@ -30,6 +30,7 @@
             <jar href="bb4-galactic-{version}.jar" main="false"/>
             <jar href="bb4-poker-{version}.jar" main="false"/>
             <jar href="bb4-set-{version}.jar" main="false"/>
+            <jar href="bb4-A-star-{version}.jar" main="false"/>
             <jar href="vecmath-{vecmathVersion}.jar" main="false"/>
             <jar href="bb4-imageproc-1.1.jar" main="false"/>
             <jar href="scala-library-{scalaVersion}.jar" main="false"/>
