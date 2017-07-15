@@ -276,7 +276,7 @@ Map getEntryKeyReplacements(ResourceBundle labels) {
  *
  * @param labels message bundle
  * @param applet name of the applet
- * @param fileType map of keys for either htnml or jnlp
+ * @param fileType map of keys for either html or jnlp
  * @return message replacement map with values taking into account the version
  */
 Map getFileTypeReplacements(ResourceBundle labels, String applet, Map fileType) {
@@ -291,6 +291,8 @@ Map getFileTypeReplacements(ResourceBundle labels, String applet, Map fileType) 
     }
 
     replacements.put("codebase", codebase)
+    replacements.put("scalaVersion", scalaVersion)
+    replacements.put("vecmathVersion", vecmathVersion)
     return replacements
 }
 
