@@ -24,7 +24,7 @@ This project contains a lot of miscellaneous stuff that needs to be cleaned up o
 2. Get the source
   - Do "git clone https://github.com/barrybecker4/applets.git"
   - Set environment variables in Windows or Linux
-    -Set JAVA_HOME to the JDK install location (e.g. D:\apps\Program Files\Java\jdk1.7.0_12).
+  - Set JAVA_HOME to the JDK install location (e.g. D:\apps\Program Files\Java\jdk1.7.0_12).
 3. Building
   - run "gradle" at the root. This will compile all subprojects and run all tests.
   - try running gradle --gui (suffix & if running with cygwin or *nix) to see a list of all tasks in a nuice UI.

@@ -86,8 +86,8 @@ artifacts {
 }
 
 dependencies {
-    compile 'com.barrybecker4:bb4-sound:1.4-SNAPSHOT'
-    compile 'com.barrybecker4:bb4-ui:1.4-SNAPSHOT'
+    compile 'com.barrybecker4:bb4-sound:1.4'
+    compile 'com.barrybecker4:bb4-ui:1.4'
     project(':imageproc')
 
     compile 'commons-collections:commons-collections:3.2'

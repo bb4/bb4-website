@@ -98,5 +98,5 @@ task wrapper(type: Wrapper) {
 String getDependentVersion() {
     def labels = ResourceBundle.getBundle('html', Locale.ENGLISH)
     println("version ==" + labels.getString("version"))
-    return labels.getString("version") // "1.4-SNAPSHOT" //
+    return labels.getString("version")
 }
