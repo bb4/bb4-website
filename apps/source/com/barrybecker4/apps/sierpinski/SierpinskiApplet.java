@@ -13,7 +13,7 @@ public class SierpinskiApplet extends ApplicationApplet {
     public SierpinskiApplet() {}
 
     @Override
-    protected JPanel createMainPanel() {
+    public JPanel createMainPanel() {
         SierpinskiComponent sierpinskiComp = new SierpinskiComponent();
         sierpinskiComp.setBorder(BorderFactory.createEtchedBorder());
 

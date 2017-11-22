@@ -28,7 +28,7 @@ public class SimpleEditorFrame extends JFrame {
     private SimpleEditor createSimpleEditor() {
         SimpleEditor editArea = new SimpleEditor(30, 45);
         editArea.setEditable(true);
-        editArea.setFont(new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.PLAIN, 12));
+        editArea.setFont(new Font(GUIUtil.DEFAULT_FONT_FAMILY(), Font.PLAIN, 12));
         return editArea;
     }
 

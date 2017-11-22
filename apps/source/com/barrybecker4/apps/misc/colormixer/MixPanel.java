@@ -32,7 +32,7 @@ public class MixPanel extends JPanel {
 
     public static final int NUM_TYPES = 8;
     */
-    private static final Font FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY, Font.BOLD, 16);
+    private static final Font FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY(), Font.BOLD, 16);
 
     private Color colorA_;
     private Color colorB_;

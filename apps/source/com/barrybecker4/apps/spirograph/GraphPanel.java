@@ -20,56 +20,56 @@ import java.awt.event.ComponentEvent;
 public class GraphPanel extends JPanel implements Runnable {
 
     private static final Color BACKGROUND_COLOR = Color.WHITE;
-    private Thread thread_;
-    private GraphRenderer graphRenderer_;
+    private Thread thread;
+    private GraphRenderer graphRenderer;
     private DecorationRenderer decorRenderer_;
 
     /** synchronization monitor.  */
-    private final Object pauseLock_ = new Object();
-    private volatile boolean paused_ = false;
-    private volatile GraphState state_;
+    private final Object pauseLock = new Object();
+    private volatile boolean paused = false;
+    private volatile GraphState state;
 
 
     /**
      * Constructor
      */
     public GraphPanel(GraphState state) {
-        state_ = state;
+        this.state = state;
         setBackground( BACKGROUND_COLOR );
-        state_.initialize(getWidth(), getHeight());
+        this.state.initialize(getWidth(), getHeight());
 
-        thread_ = new Thread(this);
-        decorRenderer_ = new DecorationRenderer(state_.params);
-        graphRenderer_ = new GraphRenderer(state_, this);
+        thread = new Thread(this);
+        decorRenderer_ = new DecorationRenderer(this.state.params);
+        graphRenderer = new GraphRenderer(this.state, this);
         this.addComponentListener( new ComponentAdapter()  {
             @Override
             public void componentResized( ComponentEvent ce ) {
-                graphRenderer_.clear();
+                graphRenderer.clear();
             }
         } );
     }
 
     public void setPaused( boolean newPauseState ) {
-        synchronized (pauseLock_) {
-            if ( paused_ != newPauseState ) {
-                paused_ = newPauseState;
-                pauseLock_.notifyAll();
+        synchronized (pauseLock) {
+            if ( paused != newPauseState ) {
+                paused = newPauseState;
+                pauseLock.notifyAll();
             }
         }
     }
 
     public void reset() {
         stopCurrentThread();
-        thread_ = new Thread(this);
-        state_.reset();
-        graphRenderer_ = new GraphRenderer(state_, this);
-        paused_ = true;
+        thread = new Thread(this);
+        state.reset();
+        graphRenderer = new GraphRenderer(state, this);
+        paused = true;
         this.repaint();
     }
 
     public synchronized void drawCompleteGraph() {
         clear();
-        state_.reset();
+        state.reset();
         startDrawingGraph();
         waitUntilDoneRendering();
         this.repaint();
@@ -80,27 +80,27 @@ public class GraphPanel extends JPanel implements Runnable {
      * then don't mess with trying to draw it in a separate thread.
      */
     public void startDrawingGraph() {
-        if ( paused_ ){
-            paused_ = false;
+        if (paused){
+            paused = false;
         }
 
-        if (state_.isMaxVelocity()) {
-            graphRenderer_.startDrawingGraph();
+        if (state.isMaxVelocity()) {
+            graphRenderer.startDrawingGraph();
         }
         else {
-            thread_.start();
+            thread.start();
         }
     }
 
     private void stopCurrentThread() {
-        paused_ = false;
-        graphRenderer_.abort();
+        paused = false;
+        graphRenderer.abort();
         waitUntilDoneRendering();
-        thread_ = new Thread( this );
+        thread = new Thread( this );
     }
 
     private void waitUntilDoneRendering() {
-        while (state_.isRendering()) {
+        while (state.isRendering()) {
             ThreadUtil.sleep(100);
         }
     }
@@ -110,8 +110,8 @@ public class GraphPanel extends JPanel implements Runnable {
      */
     @Override
     public void run() {
-        graphRenderer_.startDrawingGraph();
-        thread_ = new Thread( this );
+        graphRenderer.startDrawingGraph();
+        thread = new Thread( this );
     }
 
     /**
@@ -120,9 +120,9 @@ public class GraphPanel extends JPanel implements Runnable {
      */
     public void waitIfPaused()  {
         try {
-            synchronized (pauseLock_) {
-                while ( paused_ )
-                    pauseLock_.wait(100);
+            synchronized (pauseLock) {
+                while (paused)
+                    pauseLock.wait(100);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -130,15 +130,15 @@ public class GraphPanel extends JPanel implements Runnable {
     }
 
     public void clear() {
-        graphRenderer_.clear();
+        graphRenderer.clear();
         repaint();
     }
 
     @Override
     public void paint( Graphics g ) {
         Graphics2D g2 = (Graphics2D)g;
-        graphRenderer_.renderCurrentGraph(g2);
-        if ( state_.showDecoration()) {
+        graphRenderer.renderCurrentGraph(g2);
+        if ( state.showDecoration()) {
             decorRenderer_.drawDecoration(g2, getWidth(), getHeight());
         }
     }

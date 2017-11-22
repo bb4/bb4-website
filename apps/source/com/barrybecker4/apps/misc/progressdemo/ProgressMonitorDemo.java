@@ -16,7 +16,7 @@ public class ProgressMonitorDemo extends ApplicationFrame {
     }
 
     @Override
-    protected void createUI() {
+    public void createUI() {
         JPanel contentPane = new ProgressMonitorPanel();
         setContentPane(contentPane);
 

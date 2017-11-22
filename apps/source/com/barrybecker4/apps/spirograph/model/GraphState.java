@@ -23,19 +23,19 @@ public class GraphState implements ColorChangeListener {
     public Parameters params;
     public Parameters oldParams;
 
-    private boolean isRendering_ = false;
-    private int width_ = INITIAL_LINE_WIDTH;
-    private Color color_;
+    private boolean isRendering = false;
+    private int width = INITIAL_LINE_WIDTH;
+    private Color color;
 
-    private int numSegmentsPerRev_;
-    private boolean showDecoration_ = true;
-    private int velocity_ = 2;
-    private List<GraphStateChangeListener> listeners_;
+    private int numSegmentsPerRev;
+    private boolean showDecoration = true;
+    private int velocity = 2;
+    private List<GraphStateChangeListener> listeners;
 
     public GraphState() {
         params = new Parameters();
         oldParams = new Parameters();
-        listeners_ = new LinkedList<GraphStateChangeListener>();
+        listeners = new LinkedList<GraphStateChangeListener>();
     }
 
     public void initialize(int width, int height) {
@@ -44,7 +44,7 @@ public class GraphState implements ColorChangeListener {
     }
 
     public void addStateListener(GraphStateChangeListener listener) {
-       listeners_.add(listener);
+       listeners.add(listener);
     }
 
     @Override
@@ -53,11 +53,11 @@ public class GraphState implements ColorChangeListener {
     }
 
     public synchronized Color getColor() {
-        return color_;
+        return color;
     }
 
     public synchronized void setColor(Color color) {
-        this.color_ = color;
+        this.color = color;
     }
 
     public void setR1(float r1) {
@@ -76,14 +76,14 @@ public class GraphState implements ColorChangeListener {
     }
 
     public void setVelocity(int velocity) {
-        this.velocity_ = velocity;
+        this.velocity = velocity;
         if (isMaxVelocity()) {
             notifyParameterChanged();
         }
     }
 
     public boolean isMaxVelocity() {
-        return velocity_ == GraphState.VELOCITY_MAX;
+        return velocity == GraphState.VELOCITY_MAX;
     }
 
     /**
@@ -91,47 +91,47 @@ public class GraphState implements ColorChangeListener {
      */
     public int getDelayMillis() {
         int delay;
-        if (velocity_ < GraphState.VELOCITY_MAX/2) {
-            delay = 5 * (GraphState.VELOCITY_MAX + (GraphState.VELOCITY_MAX/2 - velocity_)) / velocity_;
+        if (velocity < GraphState.VELOCITY_MAX/2) {
+            delay = 5 * (GraphState.VELOCITY_MAX + (GraphState.VELOCITY_MAX/2 - velocity)) / velocity;
         } else {
-            delay = (5 * GraphState.VELOCITY_MAX) / velocity_ - 5;
+            delay = (5 * GraphState.VELOCITY_MAX) / velocity - 5;
         }
         return delay;
     }
 
     public int getWidth() {
-        return width_;
+        return width;
     }
 
     public void setWidth(int width) {
-        this.width_ = width;
+        this.width = width;
     }
 
     public void setNumSegmentsPerRev(int numSegments) {
-       numSegmentsPerRev_ = numSegments;
+       numSegmentsPerRev = numSegments;
     }
 
     public int getNumSegmentsPerRev() {
-        return numSegmentsPerRev_;
+        return numSegmentsPerRev;
     }
 
 
     public boolean isRendering() {
-        return isRendering_;
+        return isRendering;
     }
 
     public void setRendering(boolean isRendering) {
-        isRendering_ = isRendering;
+        this.isRendering = isRendering;
         if (!isRendering)
             notifyRenderingComplete();
     }
 
     public boolean showDecoration() {
-        return showDecoration_;
+        return showDecoration;
     }
 
     public void setShowDecoration(boolean show) {
-        showDecoration_ = show;
+        showDecoration = show;
     }
 
     /**
@@ -157,13 +157,13 @@ public class GraphState implements ColorChangeListener {
     }
 
     private void notifyParameterChanged() {
-        for (GraphStateChangeListener listener :  listeners_) {
+        for (GraphStateChangeListener listener : listeners) {
             listener.parameterChanged();
         }
     }
 
     private void notifyRenderingComplete() {
-        for (GraphStateChangeListener listener :  listeners_) {
+        for (GraphStateChangeListener listener : listeners) {
             listener.renderingComplete();
         }
     }

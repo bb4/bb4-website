@@ -28,13 +28,13 @@ import java.awt.event.ActionListener;
 public class ControlPanel extends JPanel
                           implements ActionListener, GraphStateChangeListener {
 
-    private ControlSliderGroup sliderGroup_;
-    private GraphState state_;
-    private GraphPanel graphPanel_;
+    private ControlSliderGroup sliderGroup;
+    private GraphState state;
+    private GraphPanel graphPanel;
 
-    private JLabel xFunction_, yFunction_;
-    private GradientButton hide_;
-    private GradientButton draw_;
+    private JLabel xFunction, yFunction;
+    private GradientButton hide;
+    private GradientButton draw;
 
     /**
      * Constructor
@@ -42,19 +42,19 @@ public class ControlPanel extends JPanel
     public ControlPanel(GraphPanel graphPanel, GraphState state) {
 
         setBorder(BorderFactory.createEmptyBorder(4, 4, 12, 3));
-        graphPanel_ = graphPanel;
-        state_ = state;
-        state_.addStateListener(this);
+        this.graphPanel = graphPanel;
+        this.state = state;
+        this.state.addStateListener(this);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        sliderGroup_ = new ControlSliderGroup(graphPanel, state);
+        sliderGroup = new ControlSliderGroup(graphPanel, state);
 
-        add(sliderGroup_);
+        add(sliderGroup);
         add(createButtonGroup());
 
         ColorSliderGroup colorSelector = new ColorSliderGroup();
-        colorSelector.setColorChangeListener(state_);
+        colorSelector.setColorChangeListener(this.state);
         add(colorSelector);
 
         JPanel fill = new JPanel();
@@ -72,15 +72,15 @@ public class ControlPanel extends JPanel
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS) );
         p.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5),
                                                        BorderFactory.createEtchedBorder(EtchedBorder.RAISED)));
-        hide_ = createButton(AppContext.getLabel("HIDE_DECORATION"));
+        hide = createButton(AppContext.getLabel("HIDE_DECORATION"));
         GradientButton reset = createButton(AppContext.getLabel("RESET"));
-        draw_ = createButton(AppContext.getLabel("DRAW"));
+        draw = createButton(AppContext.getLabel("DRAW"));
 
         JPanel bl= new JPanel(new BorderLayout());
-        bl.add(hide_, BorderLayout.CENTER);
-        p.add( createButtonPanel(hide_) );
+        bl.add(hide, BorderLayout.CENTER);
+        p.add( createButtonPanel(hide) );
         p.add( createButtonPanel(reset) );
-        p.add( createButtonPanel(draw_) );
+        p.add( createButtonPanel(draw) );
 
         bp.add(p, BorderLayout.CENTER);
         return bp;
@@ -89,8 +89,8 @@ public class ControlPanel extends JPanel
     private JPanel createFunctionPanel() {
         JPanel functionPanel = new JPanel();
         functionPanel.setLayout(new GridLayout(2, 1, 0, 0));
-        functionPanel.add(xFunction_ = new JLabel("", JLabel.CENTER));
-        functionPanel.add(yFunction_ = new JLabel("", JLabel.CENTER));
+        functionPanel.add(xFunction = new JLabel("", JLabel.CENTER));
+        functionPanel.add(yFunction = new JLabel("", JLabel.CENTER));
         return functionPanel;
     }
 
@@ -118,51 +118,51 @@ public class ControlPanel extends JPanel
         assert source instanceof GradientButton;
         String obj = ((AbstractButton) source).getText();
 
-        if ( sliderGroup_.getRadius2Value() != 0 ) {
+        if ( sliderGroup.getRadius2Value() != 0 ) {
             if (AppContext.getLabel("DRAW").equals(obj) ) {
-                draw_.setText(AppContext.getLabel("PAUSE"));
-                graphPanel_.startDrawingGraph();
+                draw.setText(AppContext.getLabel("PAUSE"));
+                graphPanel.startDrawingGraph();
             }
             else if (AppContext.getLabel("PAUSE").equals(obj) ) {
-                graphPanel_.setPaused( true );
-                draw_.setText(AppContext.getLabel("RESUME"));
+                graphPanel.setPaused( true );
+                draw.setText(AppContext.getLabel("RESUME"));
             }
             else if (AppContext.getLabel("RESUME").equals(obj) ) {
-                graphPanel_.setPaused( false );
-                draw_.setText(AppContext.getLabel("PAUSE"));
+                graphPanel.setPaused( false );
+                draw.setText(AppContext.getLabel("PAUSE"));
             }
         }
 
         if (AppContext.getLabel("RESET").equals(obj) ) {
-            graphPanel_.reset();
-            draw_.setText(AppContext.getLabel("DRAW"));
+            graphPanel.reset();
+            draw.setText(AppContext.getLabel("DRAW"));
         }
         else if (AppContext.getLabel("HIDE_DECORATION").equals(obj) ) {
-            hide_.setText(AppContext.getLabel("SHOW_DECORATION"));
-            state_.setShowDecoration(false);
-            graphPanel_.repaint();
+            hide.setText(AppContext.getLabel("SHOW_DECORATION"));
+            state.setShowDecoration(false);
+            graphPanel.repaint();
         }
         else if (AppContext.getLabel("SHOW_DECORATION").equals(obj) ) {
-            hide_.setText(AppContext.getLabel("HIDE_DECORATION"));
-            state_.setShowDecoration(true);
-            graphPanel_.repaint();
+            hide.setText(AppContext.getLabel("HIDE_DECORATION"));
+            state.setShowDecoration(true);
+            graphPanel.repaint();
         }
     }
 
     /** implements GraphStateChangeListener interface */
     @Override
     public void parameterChanged() {
-        ParametricEquations equations = sliderGroup_.getEquations();
-        xFunction_.setText(equations.getXEquation());
-        yFunction_.setText(equations.getYEquation());
-        if (state_.isMaxVelocity()) {
-            draw_.setText(AppContext.getLabel("DRAW"));
+        ParametricEquations equations = sliderGroup.getEquations();
+        xFunction.setText(equations.getXEquation());
+        yFunction.setText(equations.getYEquation());
+        if (state.isMaxVelocity()) {
+            draw.setText(AppContext.getLabel("DRAW"));
         }
     }
 
     /** implements GraphStateChangeListener interface */
     @Override
     public void renderingComplete() {
-        draw_.setText(AppContext.getLabel("DRAW"));
+        draw.setText(AppContext.getLabel("DRAW"));
     }
 }

@@ -13,6 +13,7 @@ import com.barrybecker4.ui.components.ImageSelectionListener;
 import com.barrybecker4.ui.sliders.LabeledSlider;
 import com.barrybecker4.ui.sliders.SliderChangeListener;
 import com.barrybecker4.ui.util.GUIUtil;
+import scala.collection.Seq;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -61,8 +62,8 @@ public class ImageBreederApplet extends ApplicationApplet
     private ProcessingOperators operations;
     private Map<BufferedImage, List<Parameter>> imgToParamsMap;
     private Map<BufferedImage, List<Parameter>> lastImgToParamsMap;
-    private List<BufferedImage> lastImages;
-    private List<Integer> lastSelectedIndices;
+    private Seq<BufferedImage> lastImages;
+    private Seq<Object> lastSelectedIndices;
     private int lastSelectedFilterIndex;
     private int currentSelectedFilterIndex;
     private int generationCountForFilter = 0;
@@ -108,7 +109,7 @@ public class ImageBreederApplet extends ApplicationApplet
     }
 
     @Override
-    protected JPanel createMainPanel() {
+    public JPanel createMainPanel() {
         filterList = operations.getSortedKeys();
         // When an item is selected, do the corresponding transformation.
         filterList.addItemListener(this);

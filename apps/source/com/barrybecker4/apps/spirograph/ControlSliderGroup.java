@@ -37,16 +37,16 @@ public class ControlSliderGroup extends SliderGroup
                 4*GraphState.DEFAULT_NUM_SEGMENTS,   GraphState.DEFAULT_NUM_SEGMENTS),
     };
 
-    private GraphState state_;
-    protected GraphPanel graphPanel_;
+    private GraphState state;
+    private GraphPanel graphPanel;
 
     /**
      * Constructor.
      */
     public ControlSliderGroup(GraphPanel graphPanel, GraphState state) {
         super(SLIDER_PROPS);
-        graphPanel_ = graphPanel;
-        state_ = state;
+        this.graphPanel = graphPanel;
+        this.state = state;
         addSliderChangeListener(this);
     }
 
@@ -69,25 +69,25 @@ public class ControlSliderGroup extends SliderGroup
             if ( n < 2 - value ) {
                 n = 1 - value;
                 setSliderValue(ControlSliderGroup.RADIUS2, n);
-                state_.setR2(n);
+                state.setR2(n);
             }
             setSliderMinimum(ControlSliderGroup.RADIUS2, ( 2 - value ));
-            state_.setR1(value);
+            state.setR1(value);
         }
         else if ( src == ControlSliderGroup.RADIUS2) {
-            state_.setR2(value);
+            state.setR2(value);
         }
         else if ( src == ControlSliderGroup.POSITION) {
-            state_.setPos(value);
+            state.setPos(value);
         }
         else if ( src == ControlSliderGroup.VELOCITY) {
-            state_.setVelocity(value);
+            state.setVelocity(value);
         }
         else if ( src == ControlSliderGroup.LINE_WIDTH ) {
-            state_.setWidth(value);
+            state.setWidth(value);
         }
         else if ( src == ControlSliderGroup.SEGMENTS ) {
-            state_.setNumSegmentsPerRev(value);
+            state.setNumSegmentsPerRev(value);
 
         }
         else {
@@ -98,12 +98,12 @@ public class ControlSliderGroup extends SliderGroup
 
     private void autoUpdate()
     {
-        if ( state_.isMaxVelocity())  {
-            graphPanel_.reset();
-            graphPanel_.drawCompleteGraph();
+        if ( state.isMaxVelocity())  {
+            graphPanel.reset();
+            graphPanel.drawCompleteGraph();
         }
         else {
-            graphPanel_.repaint();
+            graphPanel.repaint();
         }
     }
 

@@ -57,7 +57,7 @@ public class FilterSamplerApp extends ApplicationFrame
     }
 
     @Override
-    protected void createUI() {
+    public void createUI() {
         super.createUI();
         setFont( new Font( "Serif", Font.PLAIN, 12 ) );
         setLayout( new BorderLayout() );

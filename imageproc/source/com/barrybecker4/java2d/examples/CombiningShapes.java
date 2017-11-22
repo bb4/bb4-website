@@ -24,7 +24,7 @@ public class CombiningShapes  extends JComponent {
     }
 
     private Shape mShapeOne, mShapeTwo;
-    private JComboBox mOptions;
+    private JComboBox<String> mOptions;
 
     public CombiningShapes() {
         // Create the two shapes, a circle and a square.
@@ -35,7 +35,7 @@ public class CombiningShapes  extends JComponent {
         // Create a panel to hold the combo box.
         JPanel controls = new JPanel();
         // Create the combo box with the names of the area operators.
-        mOptions = new JComboBox(
+        mOptions = new JComboBox<>(
                 new String[]{"outline", "add", "intersection",
                              "subtract", "exclusive or"}
         );
@@ -57,7 +57,7 @@ public class CombiningShapes  extends JComponent {
 
         // Retrieve the selection option from the combo box.
         String option = (String) mOptions.getSelectedItem();
-        if ( option.equals( "outline" ) ) {
+        if ( "outline".equals(option) ) {
             // Just draw the outlines and return.
             g2.draw( mShapeOne );
             g2.draw( mShapeTwo );
@@ -67,13 +67,13 @@ public class CombiningShapes  extends JComponent {
         Area areaOne = new Area( mShapeOne );
         Area areaTwo = new Area( mShapeTwo );
         // Combine the Areas according to the selected option.
-        if ( option.equals( "add" ) )
+        if ( "add".equals(option) )
             areaOne.add( areaTwo );
-        else if ( option.equals( "intersection" ) )
+        else if ( "intersection".equals(option) )
             areaOne.intersect( areaTwo );
-        else if ( option.equals( "subtract" ) )
+        else if ( "subtract".equals(option) )
             areaOne.subtract( areaTwo );
-        else if ( option.equals( "exclusive or" ) ) areaOne.exclusiveOr( areaTwo );
+        else if ( "exclusive or".equals(option) ) areaOne.exclusiveOr( areaTwo );
 
         // Fill the resulting Area.
         g2.setPaint( Color.orange );

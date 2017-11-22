@@ -30,7 +30,7 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
     public ColorMixer() {}
 
     @Override
-    protected JPanel createMainPanel()
+    public JPanel createMainPanel()
     {
         mixedColorsPanel_ = new MixedColorsScrollPane(colorA_, colorB_);
         //mixedColorsPanel_.setPreferredSize(new Dimension(300, 500));
@@ -98,7 +98,7 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
             System.out.println("a or b pressed");
             mixedColorsPanel_.setColorsToMix(colorButtonA_.getBackground(), 1.0f,  colorButtonB_.getBackground(), 1.0f);
             mixedColorsPanel_.invalidate();
-            resizablePanel_.repaint();
+            resizablePanel().repaint();
         }
     }
 
@@ -111,7 +111,7 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
         Object source = ce.getSource();
         if ( source == opacitySlider_) {
             mixedColorsPanel_.setOpacity((float)opacitySlider_.getValue()/SLIDER_TICKS);
-            resizablePanel_.repaint();
+            resizablePanel().repaint();
         }
     }
 

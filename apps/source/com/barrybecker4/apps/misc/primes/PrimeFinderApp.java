@@ -18,7 +18,7 @@ public class PrimeFinderApp extends ApplicationFrame {
     }
 
     @Override
-    protected void createUI()  {
+    public void createUI()  {
 
         PrimeFinderPanel pfpanel = new PrimeFinderPanel();
         setContentPane(pfpanel);

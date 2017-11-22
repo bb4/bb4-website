@@ -16,19 +16,19 @@ import java.awt.geom.Point2D;
 public class GraphRenderer {
 
     /** offline rendering is faster */
-    private OfflineGraphics offlineGraphics_;
-    private GraphState state_;
+    private OfflineGraphics offlineGraphics;
+    private GraphState state;
 
     /** UI component to show the offline rendered image in when done. */
-    private GraphPanel graphPanel_;
-    private boolean aborted_ = false;
+    private GraphPanel graphPanel;
+    private boolean aborted = false;
 
     /**
      * Constructor
      */
     public GraphRenderer(GraphState state, GraphPanel graphPanel) {
-        state_ = state;
-        graphPanel_ = graphPanel;
+        this.state = state;
+        this.graphPanel = graphPanel;
     }
 
     /**
@@ -36,23 +36,23 @@ public class GraphRenderer {
      */
     public void startDrawingGraph() {
         int count = 0;
-        state_.initialize(graphPanel_.getWidth(), graphPanel_.getHeight());
-        state_.setRendering(true);
+        state.initialize(graphPanel.getWidth(), graphPanel.getHeight());
+        state.setRendering(true);
 
-        float r2 = state_.params.getR2();
-        float p = state_.params.getPos();
+        float r2 = state.params.getR2();
+        float p = state.params.getPos();
 
         // avoid degenerate (divide by 0 case) curves.
         if ( r2 == 0 ) return;
 
-        int revs = state_.getNumRevolutions();
+        int revs = state.getNumRevolutions();
 
-        float n = 1.0f + state_.getNumSegmentsPerRev() * (Math.abs( p / r2 ));
+        float n = 1.0f + state.getNumSegmentsPerRev() * (Math.abs( p / r2 ));
 
-        while ( count++ < (int) (n * revs + 0.5) && !aborted_) {
+        while ( count++ < (int) (n * revs + 0.5) && !aborted) {
             drawSegment(count, revs, n);
         }
-        state_.setRendering(false);
+        state.setRendering(false);
     }
 
     /**
@@ -60,25 +60,25 @@ public class GraphRenderer {
      * @param g2 graphics to render image into.
      */
     public void renderCurrentGraph( Graphics2D g2 ) {
-        int xpos = (graphPanel_.getSize().width - graphPanel_.getWidth()) >> 1;
-        int ypos = (graphPanel_.getSize().height - graphPanel_.getHeight()) >> 1;
-        g2.drawImage( getOfflineGraphics().getOfflineImage(), xpos, ypos, graphPanel_ );
+        int xpos = (graphPanel.getSize().width - graphPanel.getWidth()) >> 1;
+        int ypos = (graphPanel.getSize().height - graphPanel.getHeight()) >> 1;
+        g2.drawImage(getOfflineGraphics().getOfflineImage().get(), xpos, ypos, graphPanel);
     }
 
     /**
      * Sets the center point.
      */
     public void setPoint(float pos, float phi) {
-        Point2D center = state_.params.getCenter(graphPanel_.getWidth(), graphPanel_.getHeight());
-        state_.params.setX((float)(center.getX() + pos * Math.cos( phi )));
-        state_.params.setY((float)(center.getY() - pos * Math.sin( phi )));
+        Point2D center = state.params.getCenter(graphPanel.getWidth(), graphPanel.getHeight());
+        state.params.setX((float)(center.getX() + pos * Math.cos( phi )));
+        state.params.setY((float)(center.getY() - pos * Math.sin( phi )));
     }
 
     /**
      * Stop the rendering as quickly as possible
      */
     public void abort() {
-        aborted_ = true;
+        aborted = true;
     }
 
     public void clear() {
@@ -93,44 +93,44 @@ public class GraphRenderer {
         float r1;
         float r2;
         float p;
-        r1 = state_.params.getR1();
-        r2 = state_.params.getR2();
-        p = state_.params.getPos();
-        getOfflineGraphics().setColor( state_.getColor() );
+        r1 = state.params.getR1();
+        r2 = state.params.getR2();
+        p = state.params.getPos();
+        getOfflineGraphics().setColor( state.getColor() );
 
         if ( count == (int) (n * revs + 0.5) )
-            state_.params.setTheta(0.0f);
+            state.params.setTheta(0.0f);
         else
-            state_.params.setTheta((float)(2.0f * Math.PI * count / n));
-        float theta = state_.params.getTheta();
-        state_.params.setPhi(theta * (1.0f + r1 / r2));
-        float phi = state_.params.getPhi();
+            state.params.setTheta((float)(2.0f * Math.PI * count / n));
+        float theta = state.params.getTheta();
+        state.params.setPhi(theta * (1.0f + r1 / r2));
+        float phi = state.params.getPhi();
         setPoint(p, phi);
 
-        graphPanel_.waitIfPaused();
-        Stroke stroke = new BasicStroke( (float)state_.getWidth() / (float)GraphState.INITIAL_LINE_WIDTH );
+        graphPanel.waitIfPaused();
+        Stroke stroke = new BasicStroke( (float) state.getWidth() / (float)GraphState.INITIAL_LINE_WIDTH );
         getOfflineGraphics().setStroke( stroke );
-        getOfflineGraphics().drawLine((int) state_.oldParams.getX(), (int) state_.oldParams.getY(),
-                                  (int) state_.params.getX(), (int) state_.params.getY() );
+        getOfflineGraphics().drawLine((int) state.oldParams.getX(), (int) state.oldParams.getY(),
+                                  (int) state.params.getX(), (int) state.params.getY() );
 
-        if (!state_.isMaxVelocity()) {
-            graphPanel_.repaint();
+        if (!state.isMaxVelocity()) {
+            graphPanel.repaint();
             doSmallDelay();
         }
-        state_.recordValues();
+        state.recordValues();
     }
 
     private void doSmallDelay() {
-        ThreadUtil.sleep(state_.getDelayMillis());
+        ThreadUtil.sleep(state.getDelayMillis());
     }
 
     /**
      * @return the offline graphics instance. Creates the it if needed before returning.
      */
     private OfflineGraphics getOfflineGraphics() {
-        if (offlineGraphics_ == null) {
-            offlineGraphics_ = new OfflineGraphics(graphPanel_.getSize(), graphPanel_.getBackground());
+        if (offlineGraphics == null) {
+            offlineGraphics = new OfflineGraphics(graphPanel.getSize(), graphPanel.getBackground());
         }
-        return offlineGraphics_;
+        return offlineGraphics;
     }
 }
