@@ -1,4 +1,4 @@
 commonJenkinsPipeline(
-    gitUrl: 'https://github.com/bb4/bb4-common.git',
+    gitUrl: 'https://github.com/bb4/applets.git',
     deploymentTask: 'deploy'
 )
