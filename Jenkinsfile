@@ -1,3 +1,4 @@
 commonJenkinsPipeline(
-    deploymentTask: 'deploy'
+    deploymentTask: 'deploy',
+    docPath: 'apps/build/docs'
 )
