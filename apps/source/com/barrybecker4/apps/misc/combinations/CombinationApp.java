@@ -46,8 +46,9 @@ public class CombinationApp {
 
         BigDecimal prob = BigDecimal.ZERO;
         int diff = numQuestions - numRight;
-        for (int i = 0; i <= diff; i++) {
+        for (int i = 1; i <= diff; i++) {
 
+            //System.out.println("numQ=" + numQuestions + " numRight=" + numRight + " i=" + i);
             BigDecimal comb = new BigDecimal(MathUtil.combination(numQuestions, numRight + i).doubleValue());
 
             BigDecimal result = comb.multiply(new BigDecimal(Math.pow(CHANGE_WRONG, diff - i)));

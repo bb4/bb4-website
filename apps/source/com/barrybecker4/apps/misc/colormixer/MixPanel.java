@@ -34,28 +34,28 @@ public class MixPanel extends JPanel {
     */
     private static final Font FONT = new Font(GUIUtil.DEFAULT_FONT_FAMILY(), Font.BOLD, 16);
 
-    private Color colorA_;
-    private Color colorB_;
-    private float opacityA_;
-    private float opacityB_;
-    private float opacity_ = .4f;
-    private int type_;
-    private String label_;
+    private Color colorA;
+    private Color colorB;
+    private float opacityA;
+    private float opacityB;
+    private float opacity = .4f;
+    private int type;
+    private String label;
 
 
     public MixPanel(Color colorA, float opacityA, Color colorB, float opacityB, int type, String label) {
         setColors(colorA, opacityA, colorB, opacityB);
-        type_ = type;
-        label_ = label;
-        //assert (type_ < NUM_TYPES);
+        this.type = type;
+        this.label = label;
+        //assert (type < NUM_TYPES);
     }
 
     public void setColors(Color colorA, float opacityA, Color colorB, float opacityB) {
-        colorA_ = colorA;
-        colorB_ = colorB;
+        this.colorA = colorA;
+        this.colorB = colorB;
 
-        opacityA_ = opacityA;
-        opacityB_ = opacityB;
+        this.opacityA = opacityA;
+        this.opacityB = opacityB;
 
         this.setDoubleBuffered(false);
         this.invalidate();
@@ -63,7 +63,7 @@ public class MixPanel extends JPanel {
     }
 
     public void setOpacity(float op)  {
-        opacity_ = op;
+        opacity = op;
     }
 
     private static Color interpColors(Color color1, Color color2) {
@@ -84,31 +84,31 @@ public class MixPanel extends JPanel {
         g2.setColor(this.getBackground());
         g2.fillRect(1, 1, this.getWidth(), this.getHeight());
 
-        g2.setColor(colorA_);
+        g2.setColor(colorA);
         g2.fillRect(10, 1, 100, 30);
         Color mixColor;
 
         Composite composite = null;
-        float opacity = opacity_;
+        float opacity = this.opacity;
 
-        composite = AlphaComposite.getInstance(type_, opacity);
+        composite = AlphaComposite.getInstance(type, opacity);
 
         /*
-        switch (type_) {
+        switch (type) {
             case ADDITIVE_MIX :
-                //mixColor = interpColors(colorA_, colorB_);
+                //mixColor = interpColors(colorA, colorB);
                 //g2.setComposite(AlphaComposite.Dst);
                 composite = AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, opacity);
                 System.out.println("add");
                 break;
             case SUBTRACTIVE_MIX :
-                //mixColor = interpColors(colorA_, colorB_);
+                //mixColor = interpColors(colorA, colorB);
                 composite = AlphaComposite.getInstance(AlphaComposite.SRC_IN, opacity);
                 //g2.setComposite(AlphaComposite.DstAtop);
                 System.out.println("sub");
                 break;
             case OVER_MIX :
-                //mixColor = interpColors(colorA_, colorB_);
+                //mixColor = interpColors(colorA, colorB);
                 //g2.setComposite(AlphaComposite.DstIn);
                 composite = AlphaComposite.getInstance(AlphaComposite.SRC_OUT, opacity);
                 System.out.println("over");
@@ -116,22 +116,22 @@ public class MixPanel extends JPanel {
             case UNDER_MIX :
                 g2.setComposite(AlphaComposite.DstOver);
                 composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity);
-                //mixColor = interpColors(colorA_, colorB_);
+                //mixColor = interpColors(colorA, colorB);
                 //g2.setColor(mixColor);
                 //g2.fillRect(60, 10, 50, 50);
                 System.out.println("under");
                 break;
             default:
-                assert (false):"invalide type="+type_;
+                assert (false):"invalide type="+type;
         }
         */
         g2.setComposite(composite);
-        g2.setColor(colorB_);
+        g2.setColor(colorB);
         g2.fillRect(40, 12, 100, 30);
         g2.setComposite(AlphaComposite.Src);
 
         g2.setFont(FONT);
         g2.setColor(Color.BLACK);
-        g2.drawString(label_, 160, 20);
+        g2.drawString(label, 160, 20);
     }
 }

@@ -118,11 +118,11 @@ public class StringUtil {
         }
     }
 
-	/**
+    /**
      * Purpose:	Write a program that reads a line of text and then change the
-				first word of hate to love.
-	*/
-	public static void main (String[] args) {
+     * first word of hate to love.
+     */
+    public static void main (String[] args) {
         runReplacementRegressionTests();
         runUserInputTest();
     }

@@ -51,7 +51,7 @@ This project contains a lot of miscellaneous stuff that needs to be cleaned up o
 
 ### Additional sources
   I split out jigo (used by go) and jhlabs (used by image breeder) into separate gradle projects which build separate
-  jars because they are based on other peoples open source code. In the rare case that you need to modify the source in
+  jars because they are based on other people's open source code. In the rare case that you need to modify the source in
   these jars, get them using the following.
   - git clone https://github.com/barrybecker4/jhlabs.git
   - git clone https://github.com/barrybecker4/bb4-sgf.git

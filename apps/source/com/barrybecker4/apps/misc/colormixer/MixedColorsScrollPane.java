@@ -14,53 +14,53 @@ import java.util.List;
 public class MixedColorsScrollPane extends JPanel {
 
 
-    JPanel mainPanel_;
-    JScrollPane scrollPane_;
-    List<MixPanel> mixPanels_;
+    JPanel mainPanel;
+    JScrollPane scrollPane;
+    List<MixPanel> mixPanels;
 
     public MixedColorsScrollPane(Color colorA, Color colorB) {
-        mainPanel_ = new JPanel();
-        mainPanel_.setLayout(new BoxLayout(mainPanel_, BoxLayout.Y_AXIS));
-        //mainPanel_.setPreferredSize(new Dimension(500, 900));
-        scrollPane_ =
-                new JScrollPane(mainPanel_, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        //mainPanel.setPreferredSize(new Dimension(500, 900));
+        scrollPane =
+                new JScrollPane(mainPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                                             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        mixPanels_ = new ArrayList<MixPanel>();
+        mixPanels = new ArrayList<MixPanel>();
 
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_ATOP, "Dest Atop"));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_IN, "Dest in"));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_OUT, "Dest out"));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_OVER, "Dest Over"));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_ATOP, "Source Atop"));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_IN, "Source In"));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_OUT, "Source in"));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_OVER, "Source over"));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.CLEAR, "Clear"));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.XOR, "XOR"));
+        mixPanels.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_ATOP, "Dest Atop"));
+        mixPanels.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_IN, "Dest in"));
+        mixPanels.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_OUT, "Dest out"));
+        mixPanels.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_OVER, "Dest Over"));
+        mixPanels.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_ATOP, "Source Atop"));
+        mixPanels.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_IN, "Source In"));
+        mixPanels.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_OUT, "Source in"));
+        mixPanels.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_OVER, "Source over"));
+        mixPanels.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.CLEAR, "Clear"));
+        mixPanels.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.XOR, "XOR"));
 
-        for (MixPanel p : mixPanels_) {
+        for (MixPanel p : mixPanels) {
             p.setPreferredSize(new Dimension(200, 60));
-            mainPanel_.add(p);
+            mainPanel.add(p);
         }
 
         this.setLayout(new BorderLayout());
-        this.add(scrollPane_, BorderLayout.CENTER);
-        mainPanel_.invalidate();
+        this.add(scrollPane, BorderLayout.CENTER);
+        mainPanel.invalidate();
     }
 
     public void setColorsToMix(Color colorA, float opacityA, Color colorB, float opacityB) {
-        for (MixPanel p : mixPanels_) {
+        for (MixPanel p : mixPanels) {
             p.setColors(colorA, opacityA, colorB, opacityB);
         }
-       mainPanel_.invalidate();
+       mainPanel.invalidate();
     }
 
     public void setOpacity(float opacity) {
-        for (MixPanel p : mixPanels_) {
+        for (MixPanel p : mixPanels) {
             p.setOpacity(opacity);
         }
-       mainPanel_.invalidate();
+       mainPanel.invalidate();
     }
 
 }

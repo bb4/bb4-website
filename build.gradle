@@ -97,6 +97,6 @@ task wrapper(type: Wrapper) {
 /** read the version from message bundle. It is the version of all the bb4 jars */
 String getDependentVersion() {
     def labels = ResourceBundle.getBundle('html', Locale.ENGLISH)
-    println("version ==" + labels.getString("version"))
+    println("version == " + labels.getString("version"))
     return labels.getString("version")
 }

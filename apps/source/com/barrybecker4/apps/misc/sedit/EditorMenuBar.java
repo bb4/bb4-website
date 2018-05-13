@@ -66,9 +66,9 @@ public class EditorMenuBar extends JMenuBar implements ActionListener {
     }
 
      /**
-     * restore a game from a previously saved file (in SGF = Smart Game Format)
-     * Derived classes should implement the details of the open
-     */
+      * restore a game from a previously saved file (in SGF = Smart Game Format)
+      * Derived classes should implement the details of the open
+      */
     public void openDoc() {
         JFileChooser chooser = getFileChooser();
         int state = chooser.showOpenDialog( null );

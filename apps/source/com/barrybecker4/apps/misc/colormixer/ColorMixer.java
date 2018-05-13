@@ -16,15 +16,15 @@ import java.util.Hashtable;
 
 public class ColorMixer extends ApplicationApplet implements ActionListener, ChangeListener
 {
-    private JButton colorButtonA_;
-    private JButton colorButtonB_;
-    private Color colorA_ = Color.WHITE;
-    private Color colorB_ = Color.BLACK;
+    private JButton colorButtonA;
+    private JButton colorButtonB;
+    private Color colorA = Color.WHITE;
+    private Color colorB = Color.BLACK;
 
-    private JSlider opacitySlider_;
+    private JSlider opacitySlider;
     private static final int SLIDER_TICKS = 1000;
 
-    private MixedColorsScrollPane mixedColorsPanel_;
+    private MixedColorsScrollPane mixedColorsPanel;
 
     // constructor
     public ColorMixer() {}
@@ -32,21 +32,21 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
     @Override
     public JPanel createMainPanel()
     {
-        mixedColorsPanel_ = new MixedColorsScrollPane(colorA_, colorB_);
-        //mixedColorsPanel_.setPreferredSize(new Dimension(300, 500));
-        mixedColorsPanel_.setBorder(BorderFactory.createEtchedBorder());
+        mixedColorsPanel = new MixedColorsScrollPane(colorA, colorB);
+        //mixedColorsPanel.setPreferredSize(new Dimension(300, 500));
+        mixedColorsPanel.setBorder(BorderFactory.createEtchedBorder());
 
-        colorButtonA_ = createColorButton(colorA_);
-        colorButtonB_ = createColorButton(colorB_);
+        colorButtonA = createColorButton(colorA);
+        colorButtonB = createColorButton(colorB);
 
-        opacitySlider_ = createOpacitySlider();
+        opacitySlider = createOpacitySlider();
 
         JPanel colorPanelA = new ColorInputPanel("Select first color : ",
                                                      "Select the first color to mix",
-                                                     colorButtonA_, this);
+                colorButtonA, this);
         JPanel colorPanelB = new ColorInputPanel("Select second color : ",
                                                      "Select the second color to mix",
-                                                     colorButtonB_, this);
+                colorButtonB, this);
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
@@ -57,11 +57,11 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
         controlsPanel.add(colorPanelB);
         controlsPanel.add( Box.createHorizontalStrut( 15 ) );
         controlsPanel.add(new JLabel("Opacity"));
-        controlsPanel.add(opacitySlider_);
+        controlsPanel.add(opacitySlider);
         controlsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         mainPanel.add( controlsPanel, BorderLayout.NORTH );
-        mainPanel.add( mixedColorsPanel_, BorderLayout.CENTER );
+        mainPanel.add(mixedColorsPanel, BorderLayout.CENTER );
 
         return mainPanel;
     }
@@ -94,10 +94,10 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
 
-        if ( source == colorButtonA_ || source == colorButtonB_) {
+        if ( source == colorButtonA || source == colorButtonB) {
             System.out.println("a or b pressed");
-            mixedColorsPanel_.setColorsToMix(colorButtonA_.getBackground(), 1.0f,  colorButtonB_.getBackground(), 1.0f);
-            mixedColorsPanel_.invalidate();
+            mixedColorsPanel.setColorsToMix(colorButtonA.getBackground(), 1.0f,  colorButtonB.getBackground(), 1.0f);
+            mixedColorsPanel.invalidate();
             resizablePanel().repaint();
         }
     }
@@ -109,8 +109,8 @@ public class ColorMixer extends ApplicationApplet implements ActionListener, Cha
 
     public void stateChanged(ChangeEvent ce) {
         Object source = ce.getSource();
-        if ( source == opacitySlider_) {
-            mixedColorsPanel_.setOpacity((float)opacitySlider_.getValue()/SLIDER_TICKS);
+        if ( source == opacitySlider) {
+            mixedColorsPanel.setOpacity((float) opacitySlider.getValue()/SLIDER_TICKS);
             resizablePanel().repaint();
         }
     }
