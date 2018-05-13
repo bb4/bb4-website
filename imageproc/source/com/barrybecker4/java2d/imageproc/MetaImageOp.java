@@ -1,13 +1,13 @@
 package com.barrybecker4.java2d.imageproc;
 
 import com.barrybecker4.optimization.parameter.types.Parameter;
+import scala.util.Random;
 
 import java.awt.image.BufferedImageOp;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -103,10 +103,6 @@ public class MetaImageOp {
      * Call the methods on the filter to set its custom parameters.
      * @param filter
      * @param randomVariance
-     * @throws NoSuchMethodException
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
-     * @throws InvocationTargetException
      */
     private synchronized List<Parameter> tweakParameters(BufferedImageOp filter, float randomVariance)
             throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
@@ -127,6 +123,7 @@ public class MetaImageOp {
             if (randomVariance > 0) {
                 param.tweakValue(randomVariance, RANDOM);
             }
+            System.out.println("tweaked min = " + param.getMinValue() + " max = " + param.getMaxValue() +"  v = " + param.getValue());
             System.out.println("tweaked value = " + param);
             newParams.add(param);
 

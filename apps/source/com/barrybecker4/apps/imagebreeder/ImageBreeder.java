@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
+//import java.util.concurrent.Future;
 
 /**
  * Create a set of images from a single MetaImageOp
@@ -27,7 +27,8 @@ public class ImageBreeder {
 
     private BufferedImage imageToBreed;
 
-    private CallableParallelizer<BufferedImage> parallelizer = new CallableParallelizer<>();
+    private CallableParallelizer<BufferedImage> parallelizer =
+            new CallableParallelizer<>(Runtime.getRuntime().availableProcessors());
 
     private Map<BufferedImage, List<Parameter>> imgToParamsMap;
 

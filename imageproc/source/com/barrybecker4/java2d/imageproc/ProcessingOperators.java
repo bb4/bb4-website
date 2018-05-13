@@ -152,7 +152,7 @@ public class ProcessingOperators {
          params.add(new IntegerParameter(0xff2200aa, 0xff000000, 0xffffffff, "edgeColor"));
          mOps.put("Crystallize", new MetaImageOp(CrystallizeFilter.class, params));
 
-         params = new ArrayList<Parameter>();
+         params = new ArrayList<>();
          params.add(new BooleanParameter(true, "emboss"));
          params.add(new DoubleParameter(2.0, 0.0, Math.PI, "azimuth"));
          params.add(new DoubleParameter(0.4, 0.0, Math.PI/2.0, "elevation"));
@@ -162,19 +162,19 @@ public class ProcessingOperators {
          mOps.put("Equalize", new MetaImageOp(new EqualizeFilter()));
          mOps.put("Fractal Noise", createFractalOp());
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new BooleanParameter(true, "useImageColors"));
         params.add(new DoubleParameter(0.9, 0.01, 2.0, "turbulence"));
         params.add(new DoubleParameter(1.0, 0.01, 3.0, "scaling"));
         params.add(new BooleanParameter(true, "useImageColors"));
         mOps.put("Plasma", new MetaImageOp(PlasmaFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new StringParameter(PolarFilter.PolarMappingType.RECT_TO_POLAR, PolarFilter.PolarMappingType.values(), "type"));
         params.add(new StringParameter(EdgeAction.WRAP, EdgeAction.values(), "edgeAction"));
         mOps.put("Polar", new MetaImageOp(PolarFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new StringParameter(RippleFilter.RippleType.SINE, RippleFilter.RippleType.values(), "waveType"));
         params.add(new DoubleParameter(5.0, 0.0, 10.0, "xAmplitude"));
         params.add(new DoubleParameter(0.0, 0.0, 10.0, "yAmplitude"));
@@ -182,32 +182,32 @@ public class ProcessingOperators {
         params.add(new DoubleParameter(16, 1, 64, "yWavelength"));
         mOps.put("Ripple", new MetaImageOp(RippleFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new StringParameter(EdgeAction.WRAP, EdgeAction.values(), "edgeAction"));
         params.add(new DoubleParameter(2.0, 0.5, 6.0, "scale"));
         mOps.put("Diffuse", new MetaImageOp(DiffuseFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new DoubleParameter(1.0, 0.1, 5.0, "redGamma"));
         params.add(new DoubleParameter(1.0, 0.1, 5.0, "greenGamma"));
         params.add(new DoubleParameter(1.0, 0.1, 5.0, "blueGamma"));
         mOps.put("Gamma", new MetaImageOp(GammaFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new StringParameter(LightFilter.BumpShapeType.NONE, LightFilter.BumpShapeType.values(), "bumpShape"));
         params.add(new DoubleParameter(.5, 0.1, 2.0, "bumpHeight"));
         params.add(new DoubleParameter(0.0, 0.0, 3.0, "bumpSoftness"));
         params.add(new DoubleParameter(10000.0, 10.0, 10000.0, "viewDistance"));
         mOps.put("Light", new MetaImageOp(LightFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new DoubleParameter(1.0, 0.8, 5.0, "amount"));
         params.add(new DoubleParameter(1.0, 0.5, 16.0, "turbulence"));
         params.add(new DoubleParameter(6.0, 1.0, 100.0, "xScale"));
         params.add(new DoubleParameter(6.0, 1.0, 100.0, "yScale"));
         mOps.put("Marble", new MetaImageOp(MarbleFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new DoubleParameter(1.0, 0.5, 10.0, "turbulence"));
         params.add(new DoubleParameter(0.5, 0.1, 5.0, "turbulenceFactor"));
         params.add(new DoubleParameter(32.0, 8.0, 128.0, "scale"));
@@ -216,24 +216,24 @@ public class ProcessingOperators {
         params.add(new DoubleParameter(1.0, 0.5, 6.0, "brightness"));
         mOps.put("MarbleTexture", new MetaImageOp(MarbleTexFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new BooleanParameter(true, "useOpacity"));
         params.add(new DoubleParameter(1.0, 0.1, 1.0, "opacity"));
         params.add(new DoubleParameter(0.5, 0.4, 0.9, "centreY"));
         mOps.put("Mirror", new MetaImageOp(MirrorFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new BooleanParameter(false, "raysOnly"));
         params.add(new DoubleParameter(0.5, 0.1, 1.0, "opacity"));
         params.add(new DoubleParameter(0.5, 0.1, 1.0, "threshold"));
         params.add(new DoubleParameter(0.5, 0.0, 1.0, "strength"));
         mOps.put("Rays", new MetaImageOp(RaysFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new DoubleParameter(0.5, 0.2, 2.0, "amount"));
         mOps.put("Saturation", new MetaImageOp(SaturationFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new BooleanParameter(false, "shadowOnly"));
         params.add(new BooleanParameter(false, "addMargins"));
         params.add(new DoubleParameter(0.5, 0.0, 1.0, "opacity"));
@@ -245,12 +245,12 @@ public class ProcessingOperators {
 
         mOps.put("Kaleidoscope", createKaleidoscopeOp());
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new IntegerParameter(127, 0, 127, "lowerThreshold"));
         params.add(new IntegerParameter(127, 127, 255, "upperThreshold"));
         mOps.put("Threshold", new MetaImageOp(ThresholdFilter.class, params));
 
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         params.add(new IntegerParameter(40, 8, 1000, "width"));
         params.add(new IntegerParameter(40, 8, 1000, "height"));
         mOps.put("Scale", new MetaImageOp(ScaleFilter.class, params));
@@ -293,14 +293,14 @@ public class ProcessingOperators {
          */
 
         /* tricky
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         float x[] = {0f, 0.1f, 0.8f, 1f};
         float y[] = {0f, 0.01f, .95f, 1f};
         CurvesFilter.Curve c =
                 new CurvesFilter.Curve(x, y);
         curvesFilter.setCurve(c);
         mOps.put("Curves", new MetaImageOp(CurvesFilter.class, params));
-        params = new ArrayList<Parameter>();
+        params = new ArrayList<>();
         mOps.put("Diffusion", new MetaImageOp(DiffusionFilter.class, params));
 
          //mOps.put("JavaLnf", new JavaLnFFilter());
@@ -314,7 +314,7 @@ public class ProcessingOperators {
     }
 
     private static MetaImageOp createCausticsOp() {
-        List<Parameter> params = new ArrayList<Parameter>();
+        List<Parameter> params = new ArrayList<>();
         params.add(new DoubleParameter(0.0, 0, 10.0, "time"));
         params.add(new DoubleParameter(32.0, 0.1, 100.0, "scale"));
         params.add(new IntegerParameter(10, 1, 50, "brightness"));
@@ -325,7 +325,7 @@ public class ProcessingOperators {
     }
 
     private static MetaImageOp createCellularOp() {
-         List<Parameter> params = new ArrayList<Parameter>();
+         List<Parameter> params = new ArrayList<>();
          params.add(new BooleanParameter(true, "useColor"));
          int[] specValues = {CellularFilter.GridType.RANDOM.ordinal()};
          double[] specValueProbs = {0.6};
@@ -349,7 +349,7 @@ public class ProcessingOperators {
     }
 
     private static MetaImageOp createFractalOp() {
-         List<Parameter>  params = new ArrayList<Parameter>();
+         List<Parameter>  params = new ArrayList<>();
          params.add(new StringParameter(FBMFilter.BasisType.CELLULAR,
                  FBMFilter.BasisType.values(), "basisType"));
 
@@ -390,7 +390,7 @@ public class ProcessingOperators {
     }
 
     private static MetaImageOp createContourOp() {
-         List<Parameter>params = new ArrayList<Parameter>();
+         List<Parameter>params = new ArrayList<>();
          params.add(new DoubleParameter(5.0, 0.1, 10.0, "levels"));
          params.add(new DoubleParameter(1.0, 0.1, 10.0, "scale"));
          params.add(new DoubleParameter(0.0, 0.0, 2.0, "offset"));
@@ -399,7 +399,7 @@ public class ProcessingOperators {
     }
 
     private static MetaImageOp createKaleidoscopeOp() {
-         List<Parameter>  params = new ArrayList<Parameter>();
+         List<Parameter>  params = new ArrayList<>();
          params.add(new IntegerParameter(3, 1, 6, "sides"));
          double[] sv = {0.0};
          double[] svp = {0.3};
