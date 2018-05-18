@@ -2,7 +2,7 @@
 This project manages the content deployed to [barrybecker4.com/applets](http://barrybecker4.com/applet_index_en.html).
 
 NOTE: I was forced to make this repository public on github because projectLocker no longer allowed me
-to have a free private repositories. The code in this repository is not clean nor ready for public consumption.
+to have free private repositories.
 
 ## What is in this project?
 
@@ -28,10 +28,14 @@ This project contains a lot of miscellaneous stuff that needs to be cleaned up o
 3. Building
   - run "gradle" at the root. This will compile all subprojects and run all tests.
   - try running gradle --gui (suffix & if running with cygwin or *nix) to see a list of all tasks in a nice UI.
-  - If you want to deploy to a local webserver, you can set
-    - codebase=localhost/dist, and
-    - distributionDir=<apache install location>/Apache2.2/htdocs
 4. Deploying
+  - If you want to deploy to a local apache web-server, you can set the following in webdeployment/gradle.properties
+      - codebase=localhost/dist, and
+      - distributionDir=<apache install location>/Apache2.2/htdocs
+      - after deployement access at http://localhost/dist/applet_index_en.html
+  - If you want to deploy to pythons simple webserver, you navigate to webdeployment under applets project, then enter
+      - python -m http.server 1337
+      - after deployment accesss at http://localhost:1337/dist/applet_index_en.html
   - You must sign all jars that are deployed or applets/webstart will complain.
     This step requires having a keystore with a certificate.
   - First setup a keystore using something like this<br>
