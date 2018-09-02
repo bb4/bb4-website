@@ -1,6 +1,6 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 
-version = '1.2'
+version = '1.3'
 project.archivesBaseName = 'bb4-apps'
 mainClassName = "com.barrybecker4.apps.spirograph.SpiroGraph"
 
@@ -60,13 +60,6 @@ task runXMLAppGenerator(type: JavaExec, dependsOn: classes) {
     args = ['../apps/source/com/barrybecker4/apps/aikido/katate_dori.xml']
 }
 
-task runTranslator(type: JavaExec, dependsOn: classes) {
-    group = 'application'
-    main = 'com.barrybecker4.apps.translation.Translator'
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-
 task sierpinskiJar(type: Jar) {
     from sourceSets.main.output
     include 'com/barrybecker4/apps/sierpinski/**'
@@ -102,10 +95,6 @@ dependencies {
     compile 'commons-codec:commons-codec:1.8'
     compile 'xerces:xercesImpl:2.3.0' //2.11.0'
     compile 'xml-apis:xml-apis:1.4.01' //2.0.2'
-
-    // This did not work when I last tried, so downloaded the jar into libs
-    //compile 'com.google.translate:google-api-translate-java:0.92'
-    compile fileTree(dir: 'lib', include: 'google-api-translate-java-0.97.jar')
     compile project(':imageproc')
 }
 

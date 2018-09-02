@@ -10,14 +10,14 @@ import com.barrybecker4.common.concurrency.ThreadUtil;
  */
 public class Game {
 
-    PingPongTable table;
+    private PingPongTable table;
 
 
-    public Game() {
+    private Game() {
         table = new PingPongTable();
     }
 
-    public void startGame(String[] players, int duration) {
+    private void startGame(String[] players, int duration) {
         int numPlayers = players.length;
 
         for (int i=0; i < numPlayers; i++) {

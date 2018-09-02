@@ -7,7 +7,7 @@ import com.barrybecker4.common.concurrency.ThreadUtil;
  * Table at which the ping pong players play.
  * see http://www.javaworld.com/jw-04-1996/jw-04-synch.html?page=1
  */
-public class PingPongTable {
+class PingPongTable {
 
     /** state variable identifying whose turn it is.*/
     private String playerToPlay = null;
@@ -20,7 +20,7 @@ public class PingPongTable {
      * @param opponent opposite player that we are hitting the ball to.
      * @return true if we should keep playing, else terminate.
      */
-    public synchronized boolean hit(String opponent) {
+    synchronized boolean hit(String opponent) {
 
         String currentPlayer = Thread.currentThread().getName();
 

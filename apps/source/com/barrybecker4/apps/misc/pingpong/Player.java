@@ -7,11 +7,11 @@ package com.barrybecker4.apps.misc.pingpong;
 public class Player implements Runnable {
 
     /** Table where they play */
-    PingPongTable table;
-    String opponent;
+    private PingPongTable table;
+    private String opponent;
 
 
-    public Player(String opponent, PingPongTable table) {
+    Player(String opponent, PingPongTable table) {
         this.table = table;
         this.opponent = opponent;
     }

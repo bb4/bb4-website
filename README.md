@@ -1,9 +1,6 @@
 # applets
 This project manages the content deployed to [barrybecker4.com/applets](http://barrybecker4.com/applet_index_en.html).
 
-NOTE: I was forced to make this repository public on github because projectLocker no longer allowed me
-to have free private repositories.
-
 ## What is in this project?
 
 This project contains a lot of miscellaneous stuff that needs to be cleaned up or split out, but the major items are:
@@ -18,7 +15,7 @@ This project contains a lot of miscellaneous stuff that needs to be cleaned up o
 ## Steps to build applet projects:
 
 1. Building requires java, git, and (optionally) intellij or eclipse.
-  - Install java JDK 1.7 or higher from http://www.oracle.com/technetwork/java/javase/downloads.
+  - Install java JDK 1.8 or higher from http://www.oracle.com/technetwork/java/javase/downloads.
   - Install the latest Intellij (free community edition version) from http://www.jetbrains.com/idea/
   - Gradle wrapper is used now, so it is not necessary to install gradle.
 2. Get the source

@@ -48,7 +48,7 @@ public class MetaImageOp {
      * @param opClass the operator class.
      * @param params all the parameters that need to be set on the op.
      */
-    public MetaImageOp(Class<? extends BufferedImageOp> opClass, List<Parameter> params) {
+    MetaImageOp(Class<? extends BufferedImageOp> opClass, List<Parameter> params) {
 
         this.opClass = opClass;
         this.parameters = params;
@@ -113,7 +113,7 @@ public class MetaImageOp {
         for (Parameter p : parameters) {
             // the name must match the property (e.g. foo will be set using setFoo)
             String methodName =
-                    "set" +  p.getName().substring(0, 1).toUpperCase() + p.getName().substring(1);
+                    "set" +  p.name().substring(0, 1).toUpperCase() + p.name().substring(1);
             System.out.println("methodName = " + methodName);
             Method method = filter.getClass().getDeclaredMethod(methodName, p.getType()); // p.getNaturalValue().getClass());
 
@@ -123,7 +123,7 @@ public class MetaImageOp {
             if (randomVariance > 0) {
                 param.tweakValue(randomVariance, RANDOM);
             }
-            System.out.println("tweaked min = " + param.getMinValue() + " max = " + param.getMaxValue() +"  v = " + param.getValue());
+            System.out.println("tweaked min = " + param.minValue() + " max = " + param.maxValue() +"  v = " + param.getValue());
             System.out.println("tweaked value = " + param);
             newParams.add(param);
 

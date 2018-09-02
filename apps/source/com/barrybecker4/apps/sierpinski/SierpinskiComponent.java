@@ -20,15 +20,13 @@ public class SierpinskiComponent extends JPanel implements ActionListener, Slide
     private static final int INITIAL_RECURSIVE_DEPTH = 1;
     private static final int MAX_RECURSIVE_DEPTH = 10;
 
-    SierpinskiPanel sierpinskiPanel;
-    LabeledSlider lineWidthSlider;
-    NumberInput depthField;
+    private SierpinskiPanel sierpinskiPanel;
+    private LabeledSlider lineWidthSlider;
+    private NumberInput depthField;
 
-    JButton drawButton;
+    private JButton drawButton;
 
-    /**
-     * Constructor
-     */
+
     public SierpinskiComponent() {
         createUI();
     }

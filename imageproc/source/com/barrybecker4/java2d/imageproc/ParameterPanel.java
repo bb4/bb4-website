@@ -44,16 +44,14 @@ public class ParameterPanel extends JScrollPane
 
         if (params == null)
             return;
-        if (parameters != null) {
-            assert params.size() == parameters.size() :
-                "old param size = "+parameters.size() + " new param size = " + params.size();
-        }
+        assert parameters == null || params.size() == parameters.size() :
+            "old param size = "+parameters.size() + " new param size = " + params.size();
 
         for (int i=0; i<params.size(); i++) {
 
             Parameter newp = params.get(i);
             Parameter currentp = parameters.get(i);
-            assert newp.getName().equals(currentp.getName());
+            assert newp.name().equals(currentp.name());
             currentp.setValue(newp.getValue());
         }
         int numKids = viewPanel.getComponentCount();
@@ -66,13 +64,13 @@ public class ParameterPanel extends JScrollPane
     /**
      * Add a unique UI element for manipulating each individual parameter.
      */
-    protected void initializeUI() {
+    private void initializeUI() {
         for (Parameter param : parameters) {
             viewPanel.add(param.createWidget(this));
         }
     }
 
-    public void addParameterChangeListener(ParameterChangeListener listener) {
+    void addParameterChangeListener(ParameterChangeListener listener) {
         changeListeners.add(listener);
     }
 
