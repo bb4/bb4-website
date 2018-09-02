@@ -57,7 +57,7 @@ task runXMLAppGenerator(type: JavaExec, dependsOn: classes) {
     group = 'application'
     main = 'com.barrybecker4.apps.aikido.AikidoAppGenerator'
     classpath = sourceSets.main.runtimeClasspath
-    args = ['../apps/source/com/barrybecker4/apps/aikido/katate_dori.xml']
+    args = ['../apps/source/com/barrybecker4/apps/aikido/generation/techniques.xml']
 }
 
 task sierpinskiJar(type: Jar) {

@@ -14,7 +14,7 @@ public class AppHtmlGenerator {
 
     /** location where data files are read from */
     public static final String PROJECT_DIR =
-            FileUtil.getHomeDir() + "apps/source/com/barrybecker4/apps/aikido/generation/";
+            FileUtil.getHomeDir() + "source/com/barrybecker4/apps/aikido/generation/";
 
     private static final String JAVASCRIPT_FILE = PROJECT_DIR + "methods.js";
     private static final String BODY_HTML_FILE = PROJECT_DIR + "body.html";

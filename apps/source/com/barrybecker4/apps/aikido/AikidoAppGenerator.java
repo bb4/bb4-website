@@ -37,7 +37,7 @@ public class AikidoAppGenerator {
 
     /** A self contained and transferable location. */
     private static final String RESULT_PATH =
-            FileUtil.getHomeDir() + "../../javascript_projects/aikido_builder/";
+            FileUtil.getHomeDir() + "../../../javascript_projects/aikido_builder/";
 
     /** the builder DHTML application */
     private static final String RESULT_BULDER_FILE = RESULT_PATH + "technique_builder.html";
