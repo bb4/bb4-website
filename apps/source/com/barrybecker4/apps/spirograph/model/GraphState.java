@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Hold shared state information for the spirograph.
+ * Holds shared state information for the spirograph.
  * The view model.
  *
  * @author Barry Becker

@@ -23,7 +23,7 @@ This project contains a lot of miscellaneous stuff that needs to be cleaned up o
   - Set environment variables in Windows or Linux.
     Set JAVA_HOME to the JDK install location (e.g. D:\apps\Program Files\Java\jdk1.8.0_92).
 3. Building
-  - run "gradle" at the root. This will compile all subprojects and run all tests.
+  - run "./gradlew" at the root. This will compile all subprojects and run all tests.
   - try running gradle --gui (suffix & if running with cygwin or *nix) to see a list of all tasks in a nice UI.
 4. Deploying
   - If you want to deploy to a local apache web-server, you can set the following in webdeployment/gradle.properties

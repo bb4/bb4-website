@@ -49,14 +49,14 @@ public class ParametricEquations {
                 actualRadius *= -1;
                 sign2 = "+";
             }
-            xEquation = new StringBuilder().append("x(t)=").append(combinedRad).
-                    append("cos(t)").append(sign1).append(actualPosition).
-                    append("cos(").append(combinedRad).append("t / ").
-                    append(actualRadius).append(')').toString();
-            yEquation = new StringBuilder().append("y(t)=").append(combinedRad).
-                    append("sin(t)").append(sign2).append(actualPosition).
-                    append("sin(").append(combinedRad).append("t / ").
-                    append(actualRadius).append(')').toString();
+            xEquation = "x(t)=" + combinedRad +
+                    "cos(t)" + sign1 + actualPosition +
+                    "cos(" + combinedRad + "t / " +
+                    actualRadius + ')';
+            yEquation = "y(t)=" + combinedRad +
+                    "sin(t)" + sign2 + actualPosition +
+                    "sin(" + combinedRad + "t / " +
+                    actualRadius + ')';
         }
     }
 

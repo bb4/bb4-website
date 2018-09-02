@@ -17,7 +17,7 @@ ext {
     htmlIndex = new HashMap()
     htmlIndex.put("replacementList",
           ["locale", "charset", "title", "introduction",
-           "appletGameEntries", "appletPuzzleEntries", "appletSimulationEntries",
+           "appletSimulationEntries", "appletPuzzleEntries", "appletGameEntries",
            "tab1", "tab2", "tab3"])
 
     // message replacements for the entries within the top level index file
