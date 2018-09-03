@@ -10,17 +10,17 @@ import java.awt.*;
  */
 public class SierpinskiPanel extends JPanel {
 
-    SierpinskiRenderer renderer;
+    private SierpinskiRenderer renderer;
 
-    public SierpinskiPanel() {
+    SierpinskiPanel() {
         renderer = new SierpinskiRenderer();
     }
 
-    public void setRecursiveDepth(int depth) {
+    void setRecursiveDepth(int depth) {
         renderer.setDepth(depth);
     }
 
-    public void setLineWidth(float width) {
+    void setLineWidth(float width) {
         renderer.setLineWidth(width);
     }
 

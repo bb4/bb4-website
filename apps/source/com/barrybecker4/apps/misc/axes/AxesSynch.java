@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class AxesSynch extends JApplet {
 
-    ResizableAppletPanel resizablePanel = null;
+    private ResizableAppletPanel resizablePanel = null;
 
     /** constructor*/
     public AxesSynch() {
