@@ -1,4 +1,4 @@
-// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// Copyright by Barry G. Becker, 2013 - 2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 
 import org.apache.tools.ant.filters.ReplaceTokens
 import java.text.MessageFormat
@@ -59,6 +59,8 @@ dependencies {
     compile "com.barrybecker4:bb4-trading:$depVersion"
     compile "com.barrybecker4:bb4-trebuchet:$depVersion"
     compile "com.barrybecker4:bb4-verhulst:$depVersion"
+    compile "com.barrybecker4:bb4-sierpinski:$depVersion"
+    compile "com.barrybecker4:bb4-spirograph:$depVersion"
 
     compile project(':imageproc')
     compile project(':apps')
@@ -95,7 +97,7 @@ task deployJars(type:Copy, dependsOn: ['signJars', 'copyToLib'],
 
     from fileTree("$project.projectDir/..").include('**/build/libs/**').files
     into "$distributionAppletsDir"
-    include 'bb4-*.jar', 'jhlabs-*.jar', 'bb4-sgf-*.jar', 'vecmath-*.jar', 'scala-library-*.jar'
+    include 'bb4-*.jar', 'jhlabs-*.jar', 'bb4-sgf-*.jar', 'vecmath-*.jar', 'scala-*.jar'
     exclude '*-sources.jar', '*-javadoc.jar'
 }
 

@@ -2,7 +2,7 @@
 
 version = '1.3'
 project.archivesBaseName = 'bb4-apps'
-mainClassName = "com.barrybecker4.apps.spirograph.SpiroGraph"
+mainClassName = "com.barrybecker4.apps.imagebreeder.ImageBreederApplet"
 
 // Suppress javadoc warning when using java 8.
 if (JavaVersion.current().isJava8Compatible()) {
@@ -18,19 +18,6 @@ task runImageBreeder(type: JavaExec, dependsOn: classes) {
     main = 'com.barrybecker4.apps.imagebreeder.ImageBreederApplet'
     classpath = sourceSets.main.runtimeClasspath
     jvmArgs = ["-ea", "-Xms512M", "-Xmx4G"]
-}
-
-task runSpirograph(type: JavaExec, dependsOn: classes) {
-    group = 'application'
-    main = 'com.barrybecker4.apps.spirograph.SpiroGraph'
-    classpath = sourceSets.main.runtimeClasspath
-    jvmArgs = ["-ea"]
-}
-
-task runSierpinski(type: JavaExec, dependsOn: classes) {
-    group = 'application'
-    main = 'com.barrybecker4.apps.sierpinski.SierpinskiApplet'
-    classpath = sourceSets.main.runtimeClasspath
 }
 
 task runSimpleEditor(type: JavaExec, dependsOn: classes) {
@@ -60,16 +47,6 @@ task runXMLAppGenerator(type: JavaExec, dependsOn: classes) {
     args = ['../apps/source/com/barrybecker4/apps/aikido/generation/techniques.xml']
 }
 
-task sierpinskiJar(type: Jar) {
-    from sourceSets.main.output
-    include 'com/barrybecker4/apps/sierpinski/**'
-    baseName = 'bb4-sierpinski'
-}
-task spirographJar(type: Jar) {
-    from sourceSets.main.output
-    include 'com/barrybecker4/apps/spirograph/**'
-    baseName = 'bb4-spirograph'
-}
 task imagebreederJar(type: Jar) {
     from sourceSets.main.output
     include 'com/barrybecker4/apps/imagebreeder/**'
@@ -78,8 +55,6 @@ task imagebreederJar(type: Jar) {
 
 
 artifacts {
-    archives sierpinskiJar
-    archives spirographJar
     archives imagebreederJar
 
     archives sourcesJar

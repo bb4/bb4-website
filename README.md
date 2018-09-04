@@ -6,8 +6,6 @@ This project manages the content deployed to [barrybecker4.com/applets](http://b
 This project contains a lot of miscellaneous stuff that needs to be cleaned up or split out, but the major items are:
 - Aikido technique builder application: This is java which reads an xml configuration file and outputs a DHTML application for the web.
 - imagebreeder: Allows you to use a genetic algorithm to apply image transformations in a creative way.
-- sierpinski: Recursive triangle fractal
-- spirograph: That fun toy from the 70's - but automated
 - Subprojects:
   - imageproc: Experiments using java2d (derived from code in Java 2d Graphics from Knudsen)
   - webdeployment: code to deploy applets from all my other projects to [my website](http://barrybecker4.com)
