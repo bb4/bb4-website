@@ -2,7 +2,6 @@
 package com.barrybecker4.apps.misc.colormixer;
 
 import com.barrybecker4.ui.util.GUIUtil;
-
 import javax.swing.*;
 import java.awt.*;
 

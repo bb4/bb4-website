@@ -23,11 +23,11 @@ import java.net.UnknownHostException;
 public class Client extends JFrame implements ActionListener {
 
     private static final String DEFAULT_HOST = "127.0.0.1"; /// "192.168.1.100";
-    private PrintWriter out_;
-    private BufferedReader in_;
+    private PrintWriter out;
+    private BufferedReader in;
 
-    private JButton button_;
-    private JTextField textField_;
+    private JButton button;
+    private JTextField textField;
 
     public Client() {
         initUI();
@@ -37,15 +37,15 @@ public class Client extends JFrame implements ActionListener {
         JLabel text =  new JLabel("Text to send over socket:");
         JPanel panel;
 
-        textField_ = new JTextField(40);
+        textField = new JTextField(40);
 
-        button_ = new JButton("Send message");
-        button_.setToolTipText("Send data to server");
-        button_.addActionListener(this);
+        button = new JButton("Send message");
+        button.setToolTipText("Send data to server");
+        button.addActionListener(this);
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(new JPanel());
-        buttonPanel.add(button_);
+        buttonPanel.add(button);
         buttonPanel.add(new JPanel());
 
         panel = new JPanel();
@@ -53,7 +53,7 @@ public class Client extends JFrame implements ActionListener {
         panel.setBackground(Color.white);
         getContentPane().add(panel);
         panel.add("North", text);
-        panel.add("Center", textField_);
+        panel.add("Center", textField);
         panel.add("South", buttonPanel);
     }
 
@@ -63,14 +63,14 @@ public class Client extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         Object source = event.getSource();
 
-        if (source == button_) {
+        if (source == button) {
             //Send data over socket
-            String text = textField_.getText();
-            out_.println(text);
-            textField_.setText("");
+            String text = textField.getText();
+            out.println(text);
+            textField.setText("");
             //Receive text from server
             try {
-                String line = in_.readLine();
+                String line = in.readLine();
                 System.out.println("Text received:" + line);
             }
             catch (IOException e) {
@@ -82,9 +82,9 @@ public class Client extends JFrame implements ActionListener {
     public void createListenSocket() {
         try {
             Socket socket_ = new Socket(DEFAULT_HOST, Server.PORT);
-            out_ = new PrintWriter(socket_.getOutputStream(), true);
-            in_ = new BufferedReader(new InputStreamReader(socket_.getInputStream()));
-            System.out.println("create listen out_1 = "+ out_);
+            out = new PrintWriter(socket_.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket_.getInputStream()));
+            System.out.println("create listen out_1 = "+ out);
         }
         catch (UnknownHostException e) {
             exceptionOccurred("Unknown host: "+ DEFAULT_HOST, e);
@@ -92,7 +92,7 @@ public class Client extends JFrame implements ActionListener {
         catch (IOException e) {
             exceptionOccurred("No I/O", e);
         }
-        assert(out_ != null) : "Failed to create socket";
+        assert(out != null) : "Failed to create socket";
     }
 
     private static void exceptionOccurred(String msg, Throwable t) {

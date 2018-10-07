@@ -10,12 +10,12 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 class ClientWorker implements Runnable {
-    private Socket client_;
-    private Appendable text_;
+    private Socket client;
+    private Appendable text;
 
     ClientWorker(Socket client, Appendable text) {
-        this.client_ = client;
-        this.text_ = text;
+        this.client = client;
+        this.text = text;
     }
 
     public void run() {
@@ -23,8 +23,8 @@ class ClientWorker implements Runnable {
         BufferedReader in = null;
         PrintWriter out = null;
         try {
-            in = new BufferedReader(new InputStreamReader(client_.getInputStream()));
-            out = new PrintWriter(client_.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new PrintWriter(client.getOutputStream(), true);
         }
         catch (IOException e) {
             System.out.println("in or out failed");
@@ -37,7 +37,7 @@ class ClientWorker implements Runnable {
                 line = in.readLine();
                  //Send data back to client
                 out.println("RECIEVED:" + line);
-                text_.append(line + '\n');
+                text.append(line + '\n');
             }
             catch (IOException e) {
                 System.out.println("Read failed");

@@ -20,8 +20,8 @@ public class Server extends JFrame {
 
     public  static final int PORT = 4444;
 
-    private ScrollingTextArea textArea_;
-    private ServerSocket server_;
+    private ScrollingTextArea textArea;
+    private ServerSocket server;
 
     Server() {
         initUI();
@@ -41,19 +41,19 @@ public class Server extends JFrame {
     private void initUI() {
         JPanel panel = new JPanel();
         JLabel label = new JLabel("Text received over socket:");
-        textArea_ = new ScrollingTextArea(20, 40);
+        textArea = new ScrollingTextArea(20, 40);
 
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.white);
         panel.add("North", label);
-        panel.add("Center", textArea_);
+        panel.add("Center", textArea);
 
         getContentPane().add(panel);
     }
 
     public void listenSocket() {
         try {
-            server_ = new ServerSocket(PORT);
+            server = new ServerSocket(PORT);
         }
         catch (IOException e) {
             System.out.println("Could not listen on port " + PORT);
@@ -63,7 +63,7 @@ public class Server extends JFrame {
         while (true) {
             ClientWorker w;
             try {
-                w = new ClientWorker(server_.accept(), textArea_);
+                w = new ClientWorker(server.accept(), textArea);
                 // should use executor framework here.
                 Thread t = new Thread(w);
                 t.start();
@@ -84,7 +84,7 @@ public class Server extends JFrame {
     protected void finalize() {
         try {
             super.finalize();
-            server_.close();
+            server.close();
         }
         catch (IOException e) {
             System.out.println("Could not close socket");

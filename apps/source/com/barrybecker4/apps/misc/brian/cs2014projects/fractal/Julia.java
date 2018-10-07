@@ -6,12 +6,9 @@ import java.awt.*;
 
 public class Julia extends Applet {
 
-    private LogisticJuliaPlot canvas;
-
     public void init() {
         setLayout(new BorderLayout());
-        canvas = new LogisticJuliaPlot();
+        LogisticJuliaPlot canvas = new LogisticJuliaPlot();
         add("Center", canvas);
-
     }
 }

@@ -16,11 +16,11 @@ import java.io.File;
 public class EditorMenuBar extends JMenuBar implements ActionListener {
 
     // menu options
-    private JMenuItem openItem_;
-    private JMenuItem saveItem_;
-    private JMenuItem exitItem_;
+    private JMenuItem openItem;
+    private JMenuItem saveItem;
+    private JMenuItem exitItem;
 
-    private static JFileChooser chooser_ = null;
+    private static JFileChooser chooser = null;
 
     private static final String EXT = "sed";
 
@@ -32,13 +32,13 @@ public class EditorMenuBar extends JMenuBar implements ActionListener {
         JMenu fileMenu = new JMenu("File");
         fileMenu.setBorder(BorderFactory.createEtchedBorder());
 
-        openItem_ = createMenuItem("Open");
-        saveItem_ = createMenuItem("Save");
-        exitItem_ = createMenuItem("Exit");
+        openItem = createMenuItem("Open");
+        saveItem = createMenuItem("Save");
+        exitItem = createMenuItem("Exit");
 
-        fileMenu.add(openItem_);
-        fileMenu.add(saveItem_);
-        fileMenu.add(exitItem_);
+        fileMenu.add(openItem);
+        fileMenu.add(saveItem);
+        fileMenu.add(exitItem);
         add(fileMenu);
     }
 
@@ -54,13 +54,13 @@ public class EditorMenuBar extends JMenuBar implements ActionListener {
      */
     public void actionPerformed( ActionEvent e ) {
         JMenuItem item = (JMenuItem) e.getSource();
-        if (item == openItem_)  {
+        if (item == openItem)  {
             openDoc();
         }
-        else if (item == saveItem_) {
+        else if (item == saveItem) {
             saveDoc();
         }
-        else if (item == exitItem_) {
+        else if (item == exitItem) {
             System.exit(0);
         }
     }
@@ -95,10 +95,10 @@ public class EditorMenuBar extends JMenuBar implements ActionListener {
     }
 
     private static JFileChooser getFileChooser() {
-        if (chooser_ == null) {
-            chooser_ = FileChooserUtil.getFileChooser();
-            chooser_.setFileFilter(new ExtensionFileFilter(EXT));
+        if (chooser == null) {
+            chooser = FileChooserUtil.getFileChooser();
+            chooser.setFileFilter(new ExtensionFileFilter(EXT));
         }
-        return chooser_;
+        return chooser;
     }
 }

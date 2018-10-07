@@ -10,11 +10,14 @@ import java.awt.Graphics;
  */
 class LogisticJuliaPlot extends Canvas {
 
-    private int maxcol = 399, maxrow = 399, max_colors = 16,
-    max_iterations = 256, max_size = 4;
-    private Color cmap[];
-    public LogisticJuliaPlot() {
-        cmap = new Color[max_colors];
+    private int maxcol = 399;
+    private int maxrow = 399;
+    private static int max_colors = 16;
+    private int max_iterations = 256;
+    private int max_size = 4;
+
+    private static Color cmap[] = new Color[max_colors];
+    static {
         cmap[0] = Color.black;
         cmap[1] = new Color(0, 0, 168);
         cmap[2] = new Color(100, 50, 0);
@@ -33,6 +36,7 @@ class LogisticJuliaPlot extends Canvas {
         cmap[15] = Color.white;
     }
 
+
     private void plot(Graphics g, int x, int y, int color_index) {
 
         g.setColor(cmap[color_index]);
@@ -41,9 +45,12 @@ class LogisticJuliaPlot extends Canvas {
 
     public void paint(Graphics g) {
 
+        g.setColor(Color.BLUE);
+        g.drawOval(200, 200, 300, 300);
+
         float Q[] = new float[400];
         double Pmax = 1.5, Pmin = -.5, Qmax = .7, Qmin = -.7, A = 1.678, B = .95,
-                P, deltaP, deltaQ, X, Y, Xfactor, Yfactor, Xsquare, Ysquare;
+                P, deltaP, deltaQ;
 
         int color, row, col;//(1.68,.95)
         deltaP = (Pmax - Pmin) / (double) (maxcol - 1);
@@ -55,21 +62,23 @@ class LogisticJuliaPlot extends Canvas {
         for (col = 0; col <= maxcol; col++) {
             P = Pmin + col * deltaP;
             for (row = 0; row <= maxrow; row++) {
-                for (color = 0; color <= max_iterations - 1; color++) {
-                    X = P;
-                    Y = Q[row];
-                    color = 0;
-                    Xfactor = X - X * X + Y * Y;
-                    Yfactor = 2 * X * Y - Y;
+                double X = P;
+                double Y = Q[row];
+                color = 0;
+                double Xsquare = 0.0;
+                double Ysquare = 0.0;
+                while (color <= max_iterations - 1 && (Xsquare + Ysquare) <= max_size) {
+                    double Xfactor = X - X * X + Y * Y;
+                    double Yfactor = 2 * X * Y - Y;
                     X = A * Xfactor + B * Yfactor;
                     Y = B * Xfactor - A * Yfactor;
                     Xsquare = X * X;
                     Ysquare = Y * Y;
-
-                    if ((Xsquare + Ysquare) > max_size) break;
+                    color += 1;
                 }
                 plot(g, col, row, color % max_colors);
             }
         }
+
     }
 }
