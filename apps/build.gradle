@@ -20,25 +20,6 @@ task runImageBreeder(type: JavaExec, dependsOn: classes) {
     jvmArgs = ["-ea", "-Xms512M", "-Xmx4G"]
 }
 
-task runSimpleEditor(type: JavaExec, dependsOn: classes) {
-    group = 'application'
-    main = 'com.barrybecker4.apps.misc.sedit.SimpleEditorFrame'
-    classpath = sourceSets.main.runtimeClasspath
-    jvmArgs = ["-ea"]
-}
-
-task runNativeRender(type: JavaExec, dependsOn: classes) {
-    group = 'application'
-    main = 'com.barrybecker4.apps.misc.nativeRender.NativeRenderTest'
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-task runXMLViewer(type: JavaExec, dependsOn: classes) {
-    group = 'application'
-    main = 'com.barrybecker4.ui.xmlviewer.DomEcho'
-    classpath = sourceSets.main.runtimeClasspath
-    args = ['../apps/source/com/barrybecker4/apps/misc/yugioh/yugiohCards.xml']
-}
 
 task runXMLAppGenerator(type: JavaExec, dependsOn: classes) {
     group = 'application'
