@@ -21,13 +21,6 @@ task runImageBreeder(type: JavaExec, dependsOn: classes) {
 }
 
 
-task runXMLAppGenerator(type: JavaExec, dependsOn: classes) {
-    group = 'application'
-    main = 'com.barrybecker4.apps.aikido.AikidoAppGenerator'
-    classpath = sourceSets.main.runtimeClasspath
-    args = ['../apps/source/com/barrybecker4/apps/aikido/generation/techniques.xml']
-}
-
 task imagebreederJar(type: Jar) {
     from sourceSets.main.output
     include 'com/barrybecker4/apps/imagebreeder/**'

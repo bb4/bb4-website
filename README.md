@@ -3,8 +3,7 @@ This project manages the content deployed to [barrybecker4.com/applets](http://b
 
 ## What is in this project?
 
-This project contains a lot of miscellaneous stuff that needs to be cleaned up or split out, but the major items are:
-- Aikido technique builder application: This is java which reads an xml configuration file and outputs a DHTML application for the web.
+This project contains a some miscellaneous stuff that needs to be cleaned up or split out, but the major items are:
 - imagebreeder: Allows you to use a genetic algorithm to apply image transformations in a creative way.
 - Subprojects:
   - imageproc: Experiments using java2d (derived from code in Java 2d Graphics from Knudsen)
