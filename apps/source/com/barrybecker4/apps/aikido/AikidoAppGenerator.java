@@ -20,7 +20,7 @@ import java.io.IOException;
  *      and all_techniques.html in barrybecker4/projects/javascript_projects/aikido_builder/.
  *   4. upload technique_builder.html, all_techniques.html and corresponding images to website.
  *
- * Some interesting links for kubi-shime
+ * Some interesting links for kubi-shime (also known as ude gurame)
  *  - https://www.youtube.com/watch?v=05hBVD0tHgg
  *  - https://www.youtube.com/watch?v=PgLdErLByRs
  *  - https://www.youtube.com/watch?v=gLijUiaSm2E
@@ -40,7 +40,7 @@ public class AikidoAppGenerator {
             FileUtil.getHomeDir() + "../../../javascript_projects/aikido_builder/";
 
     /** the builder DHTML application */
-    private static final String RESULT_BULDER_FILE = RESULT_PATH + "technique_builder.html";
+    private static final String RESULT_BUILDER_FILE = RESULT_PATH + "technique_builder.html";
 
     /** all the techniques in one file (for debugging mostly) */
     private static final String RESULT_ALL_FILE = RESULT_PATH + "all_techniques.html";
@@ -78,7 +78,7 @@ public class AikidoAppGenerator {
         document = DomUtil.parseXMLFile(file, true);
 
         try {
-            generateHTMLAppFromDom(document, RESULT_BULDER_FILE);
+            generateHTMLAppFromDom(document, RESULT_BUILDER_FILE);
 
             AllTechniqueConfig config = new AllTechniqueConfig(false, 160, 10, 0, false);
             new AllTechniqueHtmlGenerator(config).generateAllElementsFromDom(document, RESULT_ALL_FILE);

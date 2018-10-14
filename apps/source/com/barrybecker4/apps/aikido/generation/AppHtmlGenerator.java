@@ -26,7 +26,7 @@ public class AppHtmlGenerator {
      * Auto generate the html app based on the XML file.
      *
      * @param document xml document model containing all techniques
-     * @param fileName
+     * @param fileName name of the XML config file to read.
      * @throws IOException
      */
     public void generateHTMLApp(Document document, String fileName) throws IOException {
