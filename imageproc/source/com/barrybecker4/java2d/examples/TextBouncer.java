@@ -1,7 +1,9 @@
 package com.barrybecker4.java2d.examples;
 
+import com.barrybecker4.common.app.AppContext;
 import com.barrybecker4.ui.animation.AnimationComponent;
 import com.barrybecker4.ui.animation.AnimationFrame;
+import com.barrybecker4.ui.util.Log;
 
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -10,6 +12,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -77,6 +80,13 @@ public class TextBouncer extends AnimationComponent {
     private String mString;
 
     public TextBouncer( String s, Font f ) {
+
+        AppContext.initialize("ENGLISH",
+                scala.collection.JavaConverters.
+                        asScalaBuffer(Arrays.asList("com.barrybecker4.ui.message", "com.barrybecker4.java2d.examples.message"))
+                        .toList(),
+                new Log());
+
         mString = s;
         setFont( f );
         reset();

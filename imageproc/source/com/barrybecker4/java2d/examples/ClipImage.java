@@ -22,7 +22,7 @@ public class ClipImage extends ApplicationFrame {
 
         String filename = Utilities.DEFAULT_IMAGE_DIR + "roa2.jpg";
 
-        Image img = Utilities.blockingLoad( filename );
+        Image img = Utilities.blockingLoad( getClass().getResource(filename) );
         image = Utilities.makeBufferedImage( img );
     }
 

@@ -3,7 +3,19 @@ package com.barrybecker4.java2d.examples;
 import com.barrybecker4.ui.animation.AnimationComponent;
 import com.barrybecker4.ui.animation.AnimationFrame;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
+import java.awt.Checkbox;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Panel;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
@@ -40,6 +52,7 @@ public class Bouncer extends AnimationComponent {
     private float mTheta;
     private int mN;
     private Shape mClipShape;
+
 
     public Bouncer() {
         mN = NUM_BALLS;  //38
