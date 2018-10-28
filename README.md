@@ -1,18 +1,10 @@
 # applets
 This project manages the content deployed to [barrybecker4.com/applets](http://barrybecker4.com/applet_index_en.html).
 
-## What is in this project?
-
-This project contains a some miscellaneous stuff that needs to be cleaned up or split out, but the major items are:
-- imagebreeder: Allows you to use a genetic algorithm to apply image transformations in a creative way.
-- Subprojects:
-  - imageproc: Experiments using java2d (derived from code in Java 2d Graphics from Knudsen)
-  - webdeployment: code to deploy applets from all my other projects to [my website](http://barrybecker4.com)
-
 ## Steps to build applet projects:
 
 1. Building requires java, git, and (optionally) intellij or eclipse.
-  - Install java JDK 1.8 or higher from http://www.oracle.com/technetwork/java/javase/downloads.
+  - Install java JDK 1.8 (but no higher) from http://www.oracle.com/technetwork/java/javase/downloads.
   - Install the latest Intellij (free community edition version) from http://www.jetbrains.com/idea/
   - Gradle wrapper is used now, so it is not necessary to install gradle.
 2. Get the source
@@ -20,7 +12,7 @@ This project contains a some miscellaneous stuff that needs to be cleaned up or 
   - Set environment variables in Windows or Linux.
     Set JAVA_HOME to the JDK install location (e.g. D:\apps\Program Files\Java\jdk1.8.0_92).
 3. Building
-  - run "./gradlew" at the root. This will compile all subprojects and run all tests.
+  - run "./gradlew" at the root. This will compile all subprojects (only one now) and run all tests.
   - try running gradle --gui (suffix & if running with cygwin or *nix) to see a list of all tasks in a nice UI.
 4. Deploying
   - If you want to deploy to a local apache web-server, you can set the following in webdeployment/gradle.properties
@@ -36,6 +28,7 @@ This project contains a some miscellaneous stuff that needs to be cleaned up or 
    `keytool -genkeypair -dname "cn=Barry G Becker, ou=software, o=barrybecker4, c=US"
  -alias bb4 -keypass <pw> -keystore C:/users/becker/bb4-keystore -storepass <pw> -validity 999999`
   - Then do `./gradlew deploy`
+  
 ### Using Intellij (recommended)
 - run "gradle idea" once to get Intellij files configured to match gradle configuration (If you get an error try "gradle cleanIdea" first).
   If you prefer eclipse you can use "gradle eclipse".

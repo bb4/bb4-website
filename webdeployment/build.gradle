@@ -61,8 +61,8 @@ dependencies {
     compile "com.barrybecker4:bb4-sierpinski:$depVersion"
     compile "com.barrybecker4:bb4-spirograph:$depVersion"
 
-    compile project(':imageproc')
-    compile project(':apps')
+    compile "com.barrybecker4:bb4-imageproc:1.3-SNAPSHOT"
+    compile "com.barrybecker4:bb4-image-breeder:1.1-SNAPSHOT"
 }
 
 clean.doLast {
