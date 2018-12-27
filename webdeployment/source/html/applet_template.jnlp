@@ -12,7 +12,7 @@
             <offline-allowed/>
         </information>
         <resources>
-            <j2se version="1.7+" initial-heap-size="64m" max-heap-size="900m" href="http://java.sun.com/products/autodl/j2se"/>
+            <j2se version="1." initial-heap-size="64m" max-heap-size="900m" href="http://java.sun.com/products/autodl/j2se"/>
             <jar href="bb4-common-{version}.jar" main="false"/>
             <jar href="bb4-twoplayer-{version}.jar" main="false"/>
             <jar href="bb4-multiplayer-{version}.jar" main="false"/>
@@ -32,7 +32,7 @@
             <jar href="bb4-set-{version}.jar" main="false"/>
             <jar href="bb4-A-star-{version}.jar" main="false"/>
             <jar href="vecmath-{vecmathVersion}.jar" main="false"/>
-            <jar href="bb4-imageproc-1.3.jar" main="false"/>
+            <jar href="bb4-imageproc-{version}.jar" main="false"/>
             <jar href="scala-library-{scalaVersion}.jar" main="false"/>
             <jar href="scala-parser-combinators_2.12-1.0.4.jar" main="false" />
             <jar href="scala-swing_2.12-2.0.0.jar" main="false" />
