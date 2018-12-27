@@ -1,7 +1,9 @@
 /* Copyright by Barry G. Becker, 2013 - 2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 
 /**
- * Here is the dependency hierarchy for the subprojects in this multi-project build.
+ * There used to be lots of sub-projects, but they have all been moved out to independent projects so that
+ * all builds are stand-alone and artifact based. The only sub-project that remains is "webdeployment".
+ * This diagram shows the dependency hierarchy for the libraries in the bb4 ecosystem.
  *
  *               __bb4-common______
  *             /                   \
@@ -14,7 +16,7 @@
  *     |                   bb4-puzzles  bb4-simulations   bb4-games
  *     |                     ___/____________/_________________/
  *    bb4-image-breeder      /
- *         \                /
+ *              \           /
  *              webdeployment
  *
  *    All modules are open-source projects in github (https://github.com/barrybecker4)

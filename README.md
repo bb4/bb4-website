@@ -4,7 +4,7 @@ This project manages the content deployed to [barrybecker4.com/applets](http://b
 ## Steps to build applet projects:
 
 1. Building requires java, git, and (optionally) intellij or eclipse.
-  - Install java JDK 1.8 (but no higher) from http://www.oracle.com/technetwork/java/javase/downloads.
+  - Install java JDK 1.8 (but no higher, because applets not supported in more recent versions) from http://www.oracle.com/technetwork/java/javase/downloads.
   - Install the latest Intellij (free community edition version) from http://www.jetbrains.com/idea/
   - Gradle wrapper is used now, so it is not necessary to install gradle.
 2. Get the source
@@ -12,16 +12,15 @@ This project manages the content deployed to [barrybecker4.com/applets](http://b
   - Set environment variables in Windows or Linux.
     Set JAVA_HOME to the JDK install location (e.g. D:\apps\Program Files\Java\jdk1.8.0_92).
 3. Building
-  - run "./gradlew" at the root. This will compile all subprojects (only one now) and run all tests.
-  - try running gradle --gui (suffix & if running with cygwin or *nix) to see a list of all tasks in a nice UI.
+  - run "./gradlew" at the root. This will compile the webdeployment sub-project and run all tests.
 4. Deploying
   - If you want to deploy to a local apache web-server, you can set the following in webdeployment/gradle.properties
       - codebase=localhost/dist, and
       - distributionDir=<apache install location>/Apache2.2/htdocs
       - after deployement access at http://localhost/dist/applet_index_en.html
-  - If you want to deploy to pythons simple webserver, you navigate to webdeployment under applets project, then enter
+  - If you want to deploy to python's simple webserver, you navigate to webdeployment under applets project, then enter
       - python -m http.server 1337
-      - after deployment accesss at http://localhost:1337/dist/applet_index_en.html
+      - after deployment access at http://localhost:1337/dist/applet_index_en.html
   - You must sign all jars that are deployed or applets/webstart will complain.
     This step requires having a keystore with a certificate.
   - First setup a keystore using something like this<br>
