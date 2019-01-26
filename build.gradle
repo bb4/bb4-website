@@ -10,8 +10,8 @@ ext.depVersion = getDependentVersion()
 subprojects {
     apply plugin: 'java'
     apply plugin: 'scala'
-    sourceCompatibility = '1.7'
-    targetCompatibility = '1.7'
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
     apply plugin: 'project-report'
     apply plugin: 'application'
 
@@ -26,46 +26,6 @@ subprojects {
         // this Sonatype repo is where SNAPSHOT bb4 jars come from
         maven { url "https://oss.sonatype.org/content/groups/staging" }
         //maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
-    }
-
-    dependencies {
-        compile 'commons-collections:commons-collections:3.2'
-        testCompile 'junit:junit:4.11'
-    }
-
-    jar {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        manifest {
-            attributes 'Implementation-Title': 'Applets',
-                    'provider': 'gradle',
-                    'Implementation-Version': version,
-                    'Caller-Allowable-Codebase': 'barrybecker4.com'
-        }
-    }
-
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        classifier = 'javadoc'
-        from javadoc.destinationDir
-    }
-
-    artifacts {
-        archives jar
-        archives sourcesJar
-        archives javadocJar
-    }
-
-    javadoc.doLast {
-        copy {
-            from sourceSets.main.allSource
-            into javadoc.destinationDir
-            include '**/package.png'
-        }
     }
 
     // all subprojects use this directory layout.

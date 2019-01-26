@@ -1,4 +1,8 @@
 # applets
+
+*Important Note*: 
+*This is all old now. Will be removed soon. Since applets and web-start are no longer supported by java or browsers, deployment is done from each bb4-project. There is a single index.html page in source/html/index.html that ties everything together.*
+ 
 This project manages the content deployed to [barrybecker4.com/applets](http://barrybecker4.com/applet_index_en.html).
 
 ## Steps to build applet projects:
