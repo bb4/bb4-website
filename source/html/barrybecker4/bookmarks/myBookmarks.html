@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xmlns="http://www.w3.org/TR/xhtml1"><HEAD><TITLE>Barry Becker's Web Bookmarks</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<head>
+<LINK href="tree.css" type=text/css rel=stylesheet>
+<SCRIPT language=JavaScript src="tree.js"></SCRIPT>
+
+<SCRIPT language=JavaScript>
+
+       // preload these commonly used images
+      var folderIcon = "images/iconFolder.gif";
+      var leafIcon = "images/iconMyComputer.gif"; 
+      preloadImage("folderIconImg", "folderIcon");
+      preloadImage("leafIconImg", "leafIcon");
+
+      var objTree = new jsTree;
+     
+       var open = "_blank";
+
+      //create the root of the folder hierarchy
+      objTree.createRoot("images/iconDesktop.gif", "Barry's Favorites", "http://www.geocities.com/BarryBecker4/bookmarks/myBookmarks.html", "_search");
+        
+      // ******** Aikido ********
+      var dirAikido = objTree.root.addChild(folderIcon, "Aikido", "http://www.aikiweb.com/search/", open);
+         var objAikiZenShin = dirAikido.addChild(leafIcon, "Aiki Zen Shin Dojo", "http://www.aikido-of-fremont.com/", open);
+         var objAikidoLivermore = dirAikido.addChild(leafIcon, "Aikido of Livermore (Shinrei dojo)", "http://www.aikilivermore.com/", open);
+         var objSearch = dirAikido.addChild(leafIcon, "Dojo Search", "http://www.aikiweb.com/search/", open);
+
+      // ******** Companies ********
+      var dirCompanies = objTree.root.addChild(folderIcon, "Companies", "http://www.bluemartini.com", open);
+         var objBMS = dirCompanies.addChild(leafIcon, "Blue Martini Software", "http://www.bluemartini.com", open);
+         var objSGI = dirCompanies.addChild(leafIcon, "SGI", "http://www.sgi.com", open);
+         var objSun = dirCompanies.addChild(leafIcon, "Sun", "http://www.sun.com", open);
+         var objMS = dirCompanies.addChild(leafIcon, "MicroSoft", "http://www.microsoft.com", open);
+         var objRedHat = dirCompanies.addChild(leafIcon, "Red Hat", "http://www.redhat.com", open);
+        
+      // ******** Computers ********
+      var dirComputers = objTree.root.addChild(folderIcon, "Computers", "http://www.pricewatch.com", open);
+         var objMyHomePage = dirComputers.addChild(leafIcon, "My Home Page", "http://www.geocities.com/BarryBecker4/", open);
+         var objRegister = dirComputers.addChild(leafIcon, "Computer news (The Register)", "http://www.theregister.co.uk/", open);
+         var dirHardware = dirComputers.addChild(folderIcon, "Hardware", "http://www.pricewatch.com", open);
+            var objPricewatch = dirHardware.addChild(leafIcon, "PriceWatch", "http://www.pricewatch.com", open);
+            var objBuildComputer3 = dirHardware.addChild(leafIcon, "PCMechanic: Build your own computer", "http://www.pcmech.com/build.htm", open);
+            var objBuildComputer2 = dirHardware.addChild(leafIcon, "Build your own computer", "http://www.hardwarecentral.com/hardwarecentral/tutorials/109/1/", open);
+            var objFasterComputers = dirHardware.addChild(leafIcon, "Faster Computers", "http://www.kingvinnie.com/fastercomputers/building", open);
+            var objBuyHP = dirHardware.addChild(leafIcon, "HP Computer", "http://www.hp.com/workstations/how_to_buy/index.html", open);
+            var objIBuyPower = dirHardware.addChild(leafIcon, "I Buy Power", "http://www.ibuypower.com/confirm/configurator-ti-xp.htm", open);
+            var objNetworkEveryWhere = dirHardware.addChild(leafIcon, "NetworkEverywhere", "http://www.networkeverywhere.com/support/routersupport.asp", open);
+            var objAIPCSDual = dirHardware.addChild(leafIcon, "AIPCS Dual Machine", "http://www.aipcs.com/index.cfm?promo=49", open);
+            var objParallelVM = dirHardware.addChild(leafIcon, "Parallel Virtual Machine (PVM)", "http://www.csm.ornl.gov/pvm/pvm_home.html", open);
+
+         var dirLinux = dirComputers.addChild(folderIcon, "Linux", "http://www.linux.org/", open);
+            var objLinux = dirLinux.addChild(leafIcon, "Linux.org", "http://www.linux.org/", open);
+            var objLinuxTut = dirLinux.addChild(leafIcon, "Getting Started Tutorial", "http://www.linux.org/lessons/beginner/l1/lesson1c.html", open);
+            var objApache = dirLinux.addChild(leafIcon, "Apache web server Tutorial", "http://httpd.apache.org/docs/misc/tutorials.html", open);
+
+        
+         var objMime = dirComputers.addChild(leafIcon, "Mime Types", "http://www.ucsi.cc/hosting/mime.html", open);
+         var objRealPlayer = dirComputers.addChild(leafIcon, "Real Player", "http://www.real.com", open);
+         var dirMusic = dirComputers.addChild(folderIcon, "Music", "http://windowsmedia.com/radiotuner/MyRadio.asp", open);
+            var objRadio = dirMusic.addChild(leafIcon, "Radio", "http://windowsmedia.com/radiotuner/MyRadio.asp", open);
+            var objWinAmpRadio = dirMusic.addChild(leafIcon, "Win Amp Radio", "http://www.shoutcast.com/mbradio.phtml", open);
+        
+         var dirSearch = dirComputers.addChild(folderIcon, "Search Engines", "http://www.google.com/", open);
+            var objGoogle = dirSearch.addChild(leafIcon, "Google", "http://www.google.com/", open);
+            var objWisenut = dirSearch.addChild(leafIcon, "WiseNut", "http://www.wisenut.com/", open); 
+            var objGrokker = dirSearch.addChild(leafIcon, "grokker", "http://www.groxis.com/cgi-bin/grok/", open); 
+            var objLocationSearch = dirSearch.addChild(leafIcon, "Search by geographic location", "http://labs.google.com/location", open); 
+        
+         var dirAI = dirComputers.addChild(folderIcon, "Artificial Intelligence", "http://www.ai.com/", open);           
+             var objBreve = dirAI.addChild(leafIcon, "Breve A-life application", " http://www.spiderland.org/breve/", open); 
+             var objKurzeil = dirAI.addChild(leafIcon, "KurweilAI.net", "http://www.kurzweilai.net/index.html?flash=2", open); 
+             var objCybernetics = dirAI.addChild(leafIcon, "Principia Cybernetica", "http://pcp.lanl.gov/DEFAULT.html", open); 
+             var objHibbard = dirAI.addChild(leafIcon, "Super-Intelligent Machines (Hibbard)", "http://www.ssec.wisc.edu/~billh/super.html", open); 
+             var objMOL = dirAI.addChild(leafIcon, "Meaning of Life (Yudkowsky)", " http://yudkowsky.net/tmol-faq/meaningoflife.html", open);    
+             var objSingInst = dirAI.addChild(leafIcon, "Singularity Institute (Yudkowsky)", " http://singinst.org/", open);                
+             var objALife = dirAI.addChild(leafIcon, "Artificial Life", " http://www.highindex.com/Computers/Artificial_Life/", open);      
+             var objALifeLinks = dirAI.addChild(leafIcon, "Artificial Life Links", " http://www.alife.org/links.html", open);   
+             var objCycorp = dirAI.addChild(leafIcon, "Cycorp (knowledge database)", " http://www.cyc.com/products2.html", open);   
+             var dirRobotics = dirAI.addChild(folderIcon, "Robotics", "http://www.frc.ri.cmu.edu/users/hpm/book97/", open);
+                var objRobots = dirRobotics.addChild(leafIcon, "Moravec on Robots", "http://www.frc.ri.cmu.edu/users/hpm/book97/", open);
+                var objMindstormFerrari = dirRobotics.addChild(leafIcon, "Ferrari's Robots", "http://www.marioferrari.org/s6/s6.html", open);
+                var objMindstormTechPuppy = dirRobotics.addChild(leafIcon, "Techpuppy Robots", "http://www.geocities.com/technicpuppy/", open);
+                var objMindstormTransmissions = dirRobotics.addChild(leafIcon, "Mindstorm Transmissions", "http://member.nifty.ne.jp/mindstorms/gallery/k024e.html", open);
+                var objBipedal = dirRobotics.addChild(leafIcon, "Bipedal Robots", "http://www.geocities.com/technicpuppy/lblinks.html", open);
+                var objCogShifter = dirRobotics.addChild(leafIcon, "COG Shifter Robot", "http://207.236.16.161/JinSato/MindStorms/mtr/MTR-024/index.html", open);
+               var objBrickLink = dirRobotics.addChild(leafIcon, "Brick Link", "http://www.bricklink.com/login.asp?logPage=/my.asp&logFolder=p&logSub=w", open);
+               var objBalancer = dirRobotics.addChild(leafIcon, "Two Wheeled Balancer", "http://www.geology.smu.edu/~dpa-www/robo/nbot/", open);
+
+      // ******** Games ********
+      var dirGames = objTree.root.addChild(folderIcon, "Games", "http://www.gameai.com/ai.html", open);
+         var dirComputerGames = dirGames.addChild(folderIcon, "Computer Games", "http://www.ea.com/home/home.jsp", open);
+            var objSimCity = dirComputerGames.addChild(leafIcon, "Sim City 4", "http://simcity.ea.com/help/knowledgebase.php", open);
+            var objSimCityCheat = dirComputerGames.addChild(leafIcon, "Sim City Cheat", "http://www.cheatindex.com/pc_cheat.html?game=SimCity+4", open);
+            var objDirectX = dirComputerGames.addChild(leafIcon, "Direct X", "http://www.microsoft.com/windows/directx/default.asp", open);
+            var objRoboforge = dirComputerGames.addChild(leafIcon, "Roboforge Game", "http://www.roboforge.net", open);
+
+         var dirGo = dirGames.addChild(folderIcon, "Play Go Online", "http://kgs.kiseido.com/", open);
+            var objYahooGo = dirGo.addChild(leafIcon, "Go on Yahoo", "http://login.yahoo.com/config/login?.src=ga&.intl=&.partner=&.done=http%3a//games.yahoo.com/games/login2%3fpage=go", open);
+            var objKiseido = dirGo.addChild(leafIcon, "Kiseido", "http://kgs.kiseido.com/", open);
+            var objIGS = dirGo.addChild(leafIcon, "IGS", "http://panda-igs.joyjoy.net/English/contents.html", open);
+        
+         var dirComputerGo = dirGames.addChild(folderIcon, "Computer Go", "http://www.inventivity.com/OpenGo/", open);
+            var objConanGo = dirComputerGo.addChild(leafIcon, "Conan's Go", "http://www.compapp.dcu.ie/~conan/go/tecchie.html", open);
+            var objGoIndex = dirComputerGo.addChild(leafIcon, "Computer Go Index", "http://www.usgo.org/resources/computer.asp", open);
+            var objGoIndex = dirComputerGo.addChild(leafIcon, "Computer Go Index2", "http://www2.psy.uq.edu.au/~jay/go/CS-TR-339.html", open);
+            var objOpenGo = dirComputerGo.addChild(leafIcon, "Open Go ", "http://www.inventivity.com/OpenGo/", open);
+            var objBoBoard = dirComputerGo.addChild(leafIcon, "Go Board Tools (sourceforge)", "http://sourceforge.net/projects/go-board-tools/", open);
+            var objDweebo = dirComputerGo.addChild(leafIcon, "Dweebo's stone games", "http://sourceforge.net/projects/dsg/", open);
+
+         var dirGameDev = dirGames.addChild(folderIcon, "Game Development", "http://www.gameai.com/ai.html", open);
+            var objGameAI = dirGameDev.addChild(leafIcon, "Game AI", "http://www.gameai.com/ai.html", open);
+            var objSpeach = dirGameDev.addChild(leafIcon, "ATT Speach program", "http://www.research.att.com/~ttsweb/cgi-bin/ttsdemo", open);
+            var objDevelopment = dirGameDev.addChild(leafIcon, "Game Development", "http://www.gdse.com/servlet/gdse.main", open);
+            var objGameDevelopment = dirGameDev.addChild(leafIcon, "Game Development search", "http://www.gdse.com/servlet/gdse.main", open);
+            var objQSearch = dirGameDev.addChild(leafIcon, "Quiescent Search", "http://www.seanet.com/~brucemo/topics/quiescent.htm", open);
+            var objBoardGamePalyer = dirGameDev.addChild(leafIcon, "SourceForge: board game player", "http://sourceforge.net/projects/kgameplayer/", open); 
+            var objRisk = dirGameDev.addChild(leafIcon, "JRisk", "http://sourceforge.net/projects/javarisk/", open);
+            var objChessFonts = dirGameDev.addChild(leafIcon, "Chess fonts", "http://world.std.com/~wij/fixation/default-fonts.gif", open); 
+            var objXGF = dirGameDev.addChild(leafIcon, "XGF Game format", "http://www.red-bean.com/sgf/xml/", open); 
+
+         var dirKidsGames = dirGames.addChild(folderIcon, "Kids Games", "http://lycoszone.lycos.com/", open);
+            var objLycosZone = dirKidsGames.addChild(leafIcon, "Lycos Zone", "http://lycoszone.lycos.com/", open);
+            var objLego = dirKidsGames.addChild(leafIcon, "Lego", "http://www.lego.com/eng/Default.asp", open);  
+            var objPowers10 = dirKidsGames.addChild(leafIcon, "Powers of 10", "http://micro.magnet.fsu.edu/primer/java/scienceopticsu/powersof10/", open);  
+        
+         var dirMultiUser = dirGames.addChild(folderIcon, "Multi-User Games", "http://www.avalon-rpg.com/javacon.html", open);
+            var dirAvalon = dirMultiUser.addChild(leafIcon, "Avalon", "http://www.avalon-rpg.com/javacon.html", open);
+            var dirSpaceWar = dirMultiUser.addChild(leafIcon, "Space War", "http://www.subspacehq.com/", open);
+      
+         var dirPuzzles = dirGames.addChild(folderIcon, "Puzzles", "http://math.ucsd.edu/~crypto/Monty/Montytitle.html", open);
+            var objMonte = dirPuzzles.addChild(leafIcon, "Monte Hall", "http://math.ucsd.edu/~crypto/Monty/Montytitle.html", open);
+
+      // ******** General Reference ********
+      var dirReference = objTree.root.addChild(folderIcon, "General Reference", "http://java.sun.com", open); 
+          var objMetric = dirReference.addChild(leafIcon, "Metric Prefixes", "http://dbhs.wvusd.k12.ca.us/Metric/Metric-Prefixes.html", open);
+          var objDictionary = dirReference.addChild(leafIcon, "Dictionary", "http://www.m-w.com/home.htm", open);
+          var objMVLib = dirReference.addChild(leafIcon, "Mountain View Library Card Catalog", "http://library.ci.mtnview.ca.us/screens/opacmenu.html", open);
+          var objCAGS = dirReference.addChild(leafIcon, "CA Geological Survey", " http://gmw.consrv.ca.gov/shmp/", open);
+          var objAWG = dirReference.addChild(leafIcon, "Arithmetic Worksheet Generator (by Bob Brown)", "http://www.openeye.com/school/arithmetic.htm", open);
+          var objDrMath = dirReference.addChild(leafIcon, "Dr Math", "http://mathforum.org/dr.math/", open);
+        
+      // ******** Java ********
+      var dirJava = objTree.root.addChild(folderIcon, "Java", "http://java.sun.com", open); 
+
+          var dirAnt = dirJava.addChild(folderIcon, "Ant", "http://ant.apache.org/", open);
+             var objAntContrib = dirAnt.addChild(leafIcon, "Ant Contrib", "http://ant-contrib.sourceforge.net/ant-contrib/manual/", open);
+
+          var dirApplets = dirJava.addChild(folderIcon, "Applets", "http://java.sun.com/applets/", open);
+             var objSamples = dirApplets.addChild(leafIcon, "Sample Applets", "http://www.stat.duke.edu/sites/java.html", open);
+             var ibjSecurity = dirApplets.addChild(leafIcon, "Sample Applets", "http://java.sun.com/sfaq/#prevent", open);
+             //var dirFluid = dirApplets.addChild(leafIcon, "Fluid Dynamics", "", open);
+             var objFlow = dirApplets.addChild(leafIcon, "Ideal Flow Machine", "http://www.aoe.vt.edu/aoe5104/ifm/ifm.html", open);
+             var appletCaching = dirApplets.addChild(leafIcon, "Applet Caching", "http://java.sun.com/products/plugin/1.3/docs/appletcaching.html", open);
+             var dirFractal = dirApplets.addChild(leafIcon, "Fractal Applet", "http://www.softwarefederation.com/fractal.html", open); 
+  
+         var objJavasoft = dirJava.addChild(leafIcon, "Javasoft", "http://www.javasoft.com", open);
+         var dirJavascript = dirJava.addChild(folderIcon, "Javascript", "http://www.pageresource.com/jscript/", open);
+            var objTutorials = dirJavascript.addChild(leafIcon, "Javascript Tutorials", "http://www.pageresource.com/jscript/", open);
+            var objRadioButtons = dirJavascript.addChild(leafIcon, "Radio Buttons", "http://www.dansteinman/dynduo/en/radio.html/", open);
+            var objDHTMLRef = dirJavascript.addChild(leafIcon, "DHTML Reference", "http://msdn.microsoft.com/library/default.asp?url=/workshop/author/dhtml/dhtml.asp", open);
+            var objNicsExamples = dirJavascript.addChild(leafIcon, "Nic's Examples", "http://www.javascript-page.com/all/", open);
+ 
+         var dirProducts = dirJava.addChild(folderIcon, "Products", "blank.html", open);
+         var dirWebstart = dirJava.addChild(folderIcon, "Web Start", "http://java.sun.com/products/javawebstart/", open);
+            var objWebstartHome = dirWebstart.addChild(leafIcon, "Java Web Start Home", "http://java.sun.com/products/javawebstart/", open);
+            var objWebstartFAQ = dirWebstart.addChild(leafIcon, "Web Start FAQ", "http://www.vamphq.com/jwsfaq.html", open);
+         var objJBuilder = dirJava.addChild(leafIcon, "JBuilder", "http://www.borland.com/jbuilder/", open);
+         var objNetBeans = dirJava.addChild(leafIcon, "NetBeans", "http://www.netbeans.org", open);
+ 
+         var objJavaTips = dirJava.addChild(leafIcon, "Java Tips", "http://www.javaworld.com/columns/jw-tips-index.shtml", open);
+         var objJavaTalk = dirJava.addChild(leafIcon, "Talking Java", "http://www.javaworld.com/javaworld/jw-08-2001/jw-0817-javatalk.html?", open);
+         var objLookFeel = dirJava.addChild(leafIcon, "Creating Custom Look & Feel", "http://www.szptt.net.cn/9810dnwl/new/jfc/ch23/ch23.htm#UsingUIProperties", open);
+         var objSourceForge = dirJava.addChild(leafIcon, "Source Forge", "http://www.sourceforge.net/", open);
+         var objPerformance = dirJava.addChild(leafIcon, "Performance book", "http://java.sun.com/docs/books/performance/1st_edition/html/JPTOC.fm.html", open);
+         var objRoboCode = dirJava.addChild(leafIcon, "RoboCode", "http://robocode.alphaworks.ibm.com/home/home.html", open);
+         var objSound = dirJava.addChild(leafIcon, "Soundbank", "http://java.sun.com/j2se/1.3/docs/api/javax/sound/midi/Synthesizer.html#isSoundbankSupported(javax.sound.midi.Soundbank)", open);
+         var objRMI = dirJava.addChild(leafIcon, "RMI tutorial", "http://www-sfb288.math.tu-berlin.de/Documentation/java/tutorial/rmi/index.html", open);
+         var objPatterns = dirJava.addChild(leafIcon, "Design Pattern tips", "http://www.javaworld.com/columns/jw-java-design-patterns-index.shtml", open);
+         var objTuningTips = dirJava.addChild(leafIcon, "Tuning Java tips", "http://www.javaperformancetuning.com/tips.shtml", open);
+         var objJavaStyle = dirJava.addChild(leafIcon, "Java Style Guidelines", "http://geosoft.no/javastyle.html#Recommendation", open);
+         var objJavaGuidelines = dirJava.addChild(leafIcon, "Java Programming Guidelines (Eckel)", "http://www.camtp.uni-mb.si/books/Thinking-in-Java/AppendixC.html", open);
+         var objJ2EEClient = dirJava.addChild(leafIcon, "Rich Clients for J2EE", "http://www.canoo.com/ulc/", open);
+
+      // ******** Personal ********
+      var dirPersonal = objTree.root.addChild(folderIcon, "Personal", "http://geocities.yahoo.com/home/", open);  
+         var dirEntertainment = dirPersonal.addChild(folderIcon, "Entertainment", "http://www.yahoo.com", open);  
+            var objProdigy = dirEntertainment.addChild(leafIcon, "Prodigy", "http://sbcglobal.prodigy.net/", open);  
+            var objGeocities = dirEntertainment.addChild(leafIcon, "Geocities", "http://geocities.yahoo.com/home/", open);  
+            var objYahoo = dirEntertainment.addChild(leafIcon, "Yahoo", "http://www.yahoo.com", open);  
+            var objKidsGames = dirEntertainment.addChild(leafIcon, "Outdoor kids games", "http://www.gameskidsplay.net/frame_alphabetical_listing.htm", open);  
+            var objGatestrix = dirEntertainment.addChild(leafIcon, "Gatestrix movie", "http://www.gatestrix.com/", open);  
+            var objSpeak  = dirEntertainment.addChild(leafIcon, "Speak to me", " http://www.speak2me.net/", open);  
+   
+         var dirFinance = dirPersonal.addChild(folderIcon, "Finance", "http://finance.yahoo.com", open); 
+            var objFinance = dirFinance.addChild(leafIcon, "Yahoo Finance", "http://finance.yahoo.com", open);  
+            var objFinance = dirFinance.addChild(leafIcon, "American Century", "http://www.americancentury.com", open);  
+            var objOptionsLink = dirFinance.addChild(leafIcon, "E-Trade OptionsLink", "https://optionslink.etrade.com/e/t/applogic/OLLoginPage", open);  
+
+         var dirNews = dirPersonal.addChild(folderIcon, "News", "http://www.bayarea.com", open);
+            var objBayArea = dirNews.addChild(leafIcon, "Bay Area", "http://www.bayarea.com", open);
+            var objCNN = dirNews.addChild(leafIcon, "News", "http://www.cnn.com", open);
+            var objWeather = dirNews.addChild(leafIcon, "Weather", "http://www.weather.com/maps/geography/westus/index_large.html", open);
+
+         var dirRealEstate = dirPersonal.addChild(folderIcon, "RealEstate", "http://sanjoseproperty.com", open);
+            var objSVRealEstate = dirRealEstate.addChild(leafIcon, "Silicon Valley", "http://sanjoseproperty.com", open);
+            var objCountry = dirRealEstate.addChild(leafIcon, "United Country", "http://www.unitedcountry.com", open);
+            var objBargain = dirRealEstate.addChild(leafIcon, "Bargain real estate", "http://www.bargain.com/fe/homes/default.aspx?AID=pr_i029&bhcp=1", open);
+            var objMVToxics = dirRealEstate.addChild(leafIcon, "Mountain View Toxics", "http://www.svtc.org/cgi-bin/map.cgi?FieldHeader=ID&FieldContent=10", open);
+            var objSVMaps =  dirRealEstate.addChild(leafIcon, "Silicon Valley Maps", "http://www.siliconvalleymap.com/maps.htm", open);
+            var objSVDir =  dirRealEstate.addChild(leafIcon, "Silicon Valley Wer Directory", "http://www.gocee.com/valley/sitemap.htm", open);
+            var objUndergroundHomes = dirRealEstate.addChild(leafIcon, "Underground Homes", "http://www.liquefaction.com/berm/", open);
+            var objShip = dirRealEstate.addChild(leafIcon, "Freedom Ship", "http://www.freedomship.com/", open);
+            var objNbrFinder = dirReference.addChild(leafIcon, "Neighborhood finder", "http://houseandhome.msn.com/PickAPlace/nf_Results.aspx?save=1&search=3&ix=1&state=CA&region=p%3A7400", open);
+            var objDomainia = dirRealEstate.addChild(leafIcon, "Comparable sales", "http://www.domania.com/", open);
+            var objClifton = dirRealEstate.addChild(leafIcon, "Clifton Park", "http://www.epodunk.com/cgi-bin/genInfo.php?locIndex=419", open);
+        
+         var dirTravel = dirPersonal.addChild(folderIcon, "Travel", "", open);
+            var objVietnam = dirTravel.addChild(leafIcon, "Vietnam travel tips", "http://www.discovermekong.com/public/traveltips.pdf", open);
+            var objYosemite = dirTravel.addChild(leafIcon, "Curry Village, Yosemite", "http://www.yosemitepark.com/content2hdr.cfm?SectionID=26&PageID=54", open);
+            var objWaikiki = dirTravel.addChild(leafIcon, "Waikiki beach cam", "http://live.waikikitimes.com/", open);
+            var objHawaii = dirTravel.addChild(leafIcon, "Hawaii virtual tours", "http://www.hawaii.net/visit/tours/oahu/", open);  
+            var objOahuMA = dirTravel.addChild(leafIcon, "Martial arts on Oahu", "http://onzuka.com/oahu.html", open);          
+
+         var dirPeople = dirPersonal.addChild(folderIcon, "Other Peoples Home Pages", "http://www.geocities.com/BrianJamesBecker/index.html", open);
+            var objBrian = dirPeople.addChild(leafIcon, "Brian Becker (son)", "http://www.geocities.com/BrianJamesBecker/index.html", open);
+            var objShanna = dirPeople.addChild(leafIcon, "Shanna Becker (lovely wife)", "http://www.geocities.com/ShannaNguyen/index.html", open);
+            var objStirling = dirPeople.addChild(leafIcon, "Stirling Stovall (nephew)", "http://www.geocities.com/matriox86/matrioxrevolution.html", open);
+            var objDuy = dirPeople.addChild(leafIcon, "Duy Pham (nephew)", "http://www.geocities.com/darkaznshadow06/darkaznshadow06.html", open);
+            var objMom = dirPeople.addChild(leafIcon, "Marilyn Becker (mother)", "http://home.att.net/~becker.marilyn/wsb/html/view.cgi-home.html-.html", open);
+            var objPam = dirPeople.addChild(leafIcon, "Pam Becker (sister)", "http://www.harbingergallery.net/gallery.htm/becker_01.html", open);
+            var objBill = dirPeople.addChild(leafIcon, "Bill Keese", "http://www.geocities.com/wkeese/", open);
+            var objKarvel = dirPeople.addChild(leafIcon, "Karvel Thornber", "http://external.nj.nec.com/homepages/karvel/", open);
+            var objMason = dirPeople.addChild(leafIcon, "Mason Clark", "http://www.geocities.com/CapitolHill/3210/", open);
+            var objBobBrown = dirPeople.addChild(leafIcon, "Robert Brown", "http://www.openeye.com/rlb/", open);
+          
+        
+          var objBookAuthor = dirPersonal.addChild(leafIcon, "E-Book Author", "http://www.ebookpublishingtips.com/articles.shtml", open);
+  
+
+      // ******** Software Engineering ********
+      var dirSoftwareEng = objTree.root.addChild(folderIcon, "Software Engineering", "http://www.joelonsoftware.com/", open);  
+         var dirDesign = dirSoftwareEng.addChild(folderIcon, "Design", "http://www.joelonsoftware.com/", open);   
+         var dirUsability = dirSoftwareEng.addChild(folderIcon, "Usability", "http://www.joelonsoftware.com/", open); 
+            var objNielson = dirUsability.addChild(leafIcon, "Jakob Nielsons page", "http://useit.com/", open); 
+            var objJoel = dirUsability.addChild(leafIcon, "Joel on Software", "http://www.joelonsoftware.com/", open); 
+         var dirTools = dirSoftwareEng.addChild(folderIcon, "Tools", "http://www.cs.ubc.ca/spider/ladic/anim_pc.html", open); 
+            var objAnim = dirTools.addChild(leafIcon, "Creating animations", "http://www.cs.ubc.ca/spider/ladic/anim_pc.html", open); 
+            var objAnt = dirTools.addChild(leafIcon, "Ant", "http://jakarta.apache.org/ant/manual/", open); 
+            var objTerminalServices = dirTools.addChild(leafIcon, "MS Terminal Services", "http://www.microsoft.com/windowsxp/pro/downloads/rdclientdl.asp", open); 
+            var objPerlSubst = dirTools.addChild(leafIcon, "Perl Substitution", "http://www.alwanza.com/bells/perlscripts/textSubstitution.html", open); 
+
+         var dirSourceForge = dirSoftwareEng.addChild(folderIcon, "Source Forge (opensource)", "http://sourceforge.net/", open);   
+            var objAnims = dirTools.addChild(leafIcon, "Creating animations", "http://www.cs.ubc.ca/spider/ladic/anim_pc.html", open);
+ 
+
+      // ******** Graphics ********
+      var dirGraphics = objTree.root.addChild(folderIcon, "Graphics", "blank.html", open); 
+         var dirProducts = dirGraphics.addChild(folderIcon, "Products", "blank.html", open); 
+            var objBryce = dirProducts.addChild(leafIcon, "Bryce",  "http://www3.corel.com/cgi-bin/gx.cgi/AppLogic+FTContentServer?pagename=Corel/Product/Details&id=CC1M72VRBAC", open); 
+
+         var dirSVG = dirGraphics.addChild(folderIcon, "SVG (Scalable Vector Graphics)", "http://www.croczilla.com/svg/", open); 
+            var objBatik = dirSVG.addChild(leafIcon, "Batik toolkit", "http://xml.apache.org/batik/", open); 
+            var objBatikList = dirSVG.addChild(leafIcon, "Batik mailing list",  "http://graphicssoft.about.com/gi/dynamic/offsite.htm?site=http%3A%2F%2Fxml.apache.org%2Fbatik%2F", open); 
+            var objCoolDemo = dirSVG.addChild(leafIcon, "Cartography Demo", "http://www.karto.ethz.ch/neumann/cartography/vienna/", open); 
+            var objSVGFacts = dirSVG.addChild(leafIcon, "SVG Comparison", "http://www.kevlindev.com/", open);
+         var objAoI = dirGraphics.addChild(leafIcon, "Art of Illusion", "http://www.artofillusion.org/", open); 
+         var dirWebDesign = dirGraphics.addChild(folderIcon, "Web Design", "http://hotwired.lycos.com/webmonkey/", open); 
+            var objCoolHomePages = dirWebDesign.addChild(leafIcon, "Cool Home Pages", "http://www.coolhomepages.com/", open); 
+            var objPhotoshopText = dirWebDesign.addChild(leafIcon, "See Though Text", "http://graphicssoft.about.com/library/tuts/bltut14.htm", open); 
+
+      // ******** Visualization ********
+      var dirVisualization = objTree.root.addChild(folderIcon, "Visualization", "http://vis.computer.org/vis2002/", open); 
+         var objVTK = dirVisualization.addChild(leafIcon, "VTK (Kitware)", "http://public.kitware.com/VTK/", open);
+         var objVizAD = dirVisualization.addChild(leafIcon, "VisAD", "http://sourceforge.net/projects/visad/", open);
+         var dirConferences = dirVisualization.addChild(folderIcon, "Conferences", "http://vis.computer.org/vis2002/", open);
+            var objSiggraph = dirConferences.addChild(leafIcon, "SIGGRAPH", "http://www.siggraph.org/", open);
+            var objViz = dirConferences.addChild(leafIcon, "Visualization Conf", "http://vis.computer.org/vis2002/", open);
+            var objSiggraphEx = dirConferences.addChild(leafIcon, "SIGGRAPH 2003 Exhibition", "http://www.siggraph.org/cgi-bin/cgi/idESearch.html", open);
+
+         var dirFluidDynamics = dirVisualization.addChild(folderIcon, "Fluid Dynamics", "blank.html", open);
+            var objFluidDynamics = dirFluidDynamics.addChild(leafIcon, "Foster and Metaxis", "http://www.cs.unc.edu/~lee/project/fluid/foster96/", open);
+            var objFoster96 = dirFluidDynamics.addChild(leafIcon, "Foster 96", "http://www.cis.upenn.edu/~fostern/liquid.html", open);
+            var objIdealFlow = dirFluidDynamics.addChild(leafIcon, "Ideal Flow Machine", "http://www.aoe.vt.edu/aoe5104/ifm/ifm.html", open);
+        
+        var dirMath = dirVisualization.addChild(folderIcon, "Math Viz", "http://www.wolfram.com/products/", open);
+           var objMathematica = dirMath.addChild(leafIcon, "Mathematica", "http://www.wolfram.com/products/", open);
+
+        var objEarthviewer = dirVisualization.addChild(leafIcon, "Earthviewer", "http://www.earthviewer.com/company/index.html", open);
+        var objOpenChart = dirVisualization.addChild(leafIcon, "OpenChart (sourceforge)", "http://sourceforge.net/projects/jopenchart/", open);
+
+      // ******** Work ********
+       var dirWork = objTree.root.addChild(folderIcon, "Work", "http://www-home.bluemartini.com", open); 
+          var objBugzilla = dirWork.addChild(leafIcon, "Bugzilla", "http://bugzilla.bluemartini.com/", open);
+          var objExBMS = dirWork.addChild(leafIcon, "Ex BMS", "http://www.ex-bms.org/", open);
+          var objMineSet = dirWork.addChild(leafIcon, "MineSet (at purple insight", "http://www.purpleinsight.com/home.html", open);
+
+
+
+
+       // render the tree
+       //
+      function doLoad() {
+          //var startTime = new Date().getTime();
+          objTree.buildDOM();
+          //alert("It took ="+((new Date().getTime()-startTime)/1000)+" seconds to draw this tree.");
+      } 
+
+  </SCRIPT>
+</head>
+
+<BODY bgColor=#f8feff onload=doLoad();>
+
+</BODY>
+</HTML>
+<noembed><xmp>

@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" 
+	height="100%" width="100%" verticalScrollPolicy="on" styleName="applicationStyle">
+
+    <mx:Style source="assets/flexStyles.css"/>
+   
+    <mx:Script>
+		<![CDATA[
+			import mx.collections.*;
+			import mx.containers.*;
+			import mx.controls.*;	
+			import mx.effects.*;
+			import mx.effects.easing.*;		
+			
+			[Embed(source="assets/sounds/geiger1.mp3")]
+            private static const blip:Class;	
+            [Embed(source="assets/sounds/complexSet.mp3")]
+            private static const complexSound:Class;    
+            [Embed(source="assets/sounds/imaginarySet.mp3")]
+            private static const imaginarySound:Class;    
+            [Embed(source="assets/sounds/integerSet.mp3")]
+            private static const integerSound:Class;    
+            [Embed(source="assets/sounds/irrationalSet.mp3")]
+            private static const irrationalSound:Class;    
+            [Embed(source="assets/sounds/primeSet.mp3")]
+            private static const primeSound:Class;    
+            [Embed(source="assets/sounds/rationalSet.mp3")]
+            private static const rationalSound:Class;    
+            [Embed(source="assets/sounds/realSet.mp3")]
+            private static const realSound:Class;    
+            [Embed(source="assets/sounds/transcendentalSet.mp3")]
+            private static const transcendentalSound:Class;    
+            [Embed(source="assets/sounds/wholeSet.mp3")]
+            private static const wholeSound:Class; 
+            
+            private static const RESIZE_PIXELS:int = 12;
+            private static const columnWidth:int = 28;
+            private static const narrowColumnWidth:int = 27;
+            
+            private function playAudio(event:MouseEvent, sound:SoundEffect):void
+            {
+            	sound.stop();
+            	sound.target = event.target;
+            	sound.play(); 
+            	event.stopPropagation();          	
+            }
+            
+		]]>
+	</mx:Script>
+ 
+    <mx:XMLList id="factoringTricks">
+    <trick>
+        <x>2</x>
+        <description>even (ends with 0, 2, 4, 6, or 8)</description>
+        <label>even (ends with 0, 2, 4, 6, or 8)</label>
+    </trick>
+    <trick>
+        <x>3</x>
+        <description>digits sum to a multiple of 3</description>
+        <label>digits sum to a multiple of 3</label>
+    </trick>
+    <trick>
+        <x>4</x>
+        <description>last 2 digits are a multiple 4</description>
+        <label>digits sum to a multiple of 3</label>
+    </trick>
+    <trick>
+        <x>5</x>
+        <description>ends with a 0 or 5</description>
+        <label>digits sum to a multiple of 3</label>
+    </trick>
+    <trick>
+        <x>6</x>
+        <description>has 2 and 3 as factors</description>
+        <label>digits sum to a multiple of 3</label>
+    </trick>
+    <trick>
+        <x>7</x>
+        <description>- no easy rule -</description>
+        <label>digits sum to a multiple of 3</label>
+    </trick>
+    <trick>
+        <x>8</x>
+        <description>last 3 digits are a multiple of 8</description>
+        <label>digits sum to a multiple of 3</label>
+    </trick>
+    <trick>
+        <x>9</x>
+        <description>digits sum to a multiple of 9</description>
+        <label>digits sum to a multiple of 3</label>
+    </trick>
+    <trick>
+        <x>10</x>
+        <description>ends with 0</description>
+        <label>If last digit is 0, then you know it is a multiple of 10.</label>
+    </trick>
+    </mx:XMLList>
+    
+    <mx:XMLList id="plusTable">
+    <row>
+        <op>x</op><x>2x</x><zero>x</zero><inf>&#8734;</inf>                   
+    </row>
+    <row>
+        <op>0</op><x>x</x><zero>0</zero><inf>&#8734;</inf>                   
+    </row>
+    <row>
+        <op>&#8734;</op><x>&#8734;</x><zero>&#8734;</zero><inf>&#8734;</inf>                   
+    </row>    
+    </mx:XMLList>
+    
+    
+    <mx:XMLList id="minusTable">
+    <row>
+        <op>x</op><x>0</x><zero>x</zero><inf>-&#8734;</inf>                   
+    </row>
+    <row>
+        <op>0</op><x>x</x><zero>0</zero><inf>-&#8734;</inf>                   
+    </row>
+    <row>
+        <op>&#8734;</op><x>&#8734;</x><zero>&#8734;</zero><inf>?</inf>                   
+    </row>    
+    </mx:XMLList>
+    
+    <mx:XMLList id="timesTable">
+    <row>
+        <op>x</op><x>x&#178;</x><zero>0</zero><one>x</one><negOne>-x</negOne><inf>&#8734;*</inf>                   
+    </row>
+    <row>
+        <op>0</op><x>0</x><zero>0</zero><one>0</one><negOne>0</negOne><inf>0</inf>               
+    </row>
+    <row>
+        <op>1</op><x>x</x><zero>0</zero><one>1</one><negOne>-1</negOne><inf>&#8734;</inf>            
+    </row>    
+    <row>
+        <op>-1</op><x>-x</x><zero>0</zero><one>-1</one><negOne>1</negOne><inf>-&#8734;</inf>            
+    </row> 
+    <row>
+        <op>&#8734;</op><x>&#8734;*</x><zero>0</zero><one>&#8734;</one><negOne>-&#8734;</negOne><inf>&#8734;</inf>            
+    </row>    
+    </mx:XMLList>
+    
+    <mx:XMLList id="divideTable">
+    <row>
+        <op>x</op><x>1**</x><zero>&#8734;*</zero><one>x</one><negOne>-x</negOne><inf>0</inf>                   
+    </row>
+    <row>
+        <op>0</op><x>0**</x><zero>?</zero><one>0</one><negOne>0</negOne><inf>0</inf>               
+    </row>
+    <row>
+        <op>1</op><x>1/x</x><zero>&#8734;</zero><one>1</one><negOne>-1</negOne><inf>0</inf>            
+    </row>    
+    <row>
+        <op>-1</op><x>-1&#47;x</x><zero>-&#8734;</zero><one>-1</one><negOne>1</negOne><inf>0</inf>            
+    </row>   
+    <row>
+        <op>&#8734;</op><x>&#8734;</x><zero>&#8734;</zero><one>&#8734;</one><negOne>-&#8734;</negOne><inf>?</inf>            
+    </row>  
+    </mx:XMLList>
+
+
+    <mx:Label width="100%" htmlText="Mathematics  + - x &#247;" styleName="titleStyle" />
+      
+    <mx:VBox  width="100%" height="100%">          
+        <mx:HBox id="complexSet" styleName="complexSetStyle" width="100%" height="300"  minHeight="210"  
+        	    horizontalScrollPolicy="off" verticalScrollPolicy="off" click="playAudio(event, complexAudio)"
+                backgroundSize="100%" backgroundImage="assets/brian_smile_muscle.png" >  
+            <mx:VBox width="80%" height="100%">                           
+                <mx:Text id="complexTA" width="400" toolTip="{complexTA.text}">
+                    <mx:htmlText>
+                        <![CDATA[<font size="+2"><b>Complex</b></font> numbers can be written in the form a + b<i>i</i>, where a is the real part and b is the imaginary part.]]>
+                    </mx:htmlText>                    
+                </mx:Text>                                                 
+                <mx:HBox id="realSet" styleName="setStyle" width="100%" height="100%" 
+                	     rollOverEffect="{panelGlow}"  click="playAudio(event, realAudio)">
+                    <mx:VBox width="70%" height="100%">  
+                        <mx:Text id="realTA" width="100%" toolTip="{realTA.text}" >                                       
+	                        <mx:htmlText>
+	                            <![CDATA[<font size="+2"><b>Real</b></font> numbers correspond to points on a number line. They are exactly the union of the sets of rational and irrational numbers.]]>
+	                        </mx:htmlText>  
+	                    </mx:Text>   
+                        <mx:VBox id="rationalSet" styleName="setStyle"  width="100%" height="100%" 
+                        	     rollOverEffect="{panelGlow}" click="playAudio(event, rationalAudio)">
+                             <mx:Text id="rationalTA" width="100%" toolTip="{rationalTA.text}">
+			                    <mx:htmlText>
+			                        <![CDATA[<font size="+2"><b>Rational</b></font> numbers can be expressed as a fraction. In other words, as a ratio of two integers a/b.]]>
+			                    </mx:htmlText>                    
+			                 </mx:Text> 
+                             <mx:VBox id="integerSet" styleName="setStyle" width="100%" height="60%" minHeight="140" 
+                             	      rollOverEffect="{panelGlow}" click="playAudio(event, integerAudio)">
+                                 <mx:Text id="integerTA" width="100%"  toolTip="{integerTA.text}">
+				                     <mx:htmlText>
+				                         <![CDATA[<font size="+2"><b>Integer</b></font> numbers are {..., -2, -1, 0, 1, 2, ...}]]>
+				                     </mx:htmlText>                    
+				                 </mx:Text> 
+                                 <mx:VBox id="wholeSet" styleName="setStyle" width="100%" height="60%" minHeight="96" 
+                                 	      rollOverEffect="{panelGlow}" click="playAudio(event, wholeAudio)">
+                                     <mx:Text id="wholeTA" width="100%"  toolTip="{wholeTA.text}">
+					                     <mx:htmlText>
+					                         <![CDATA[<font size="+2"><b>Whole</b></font> numbers are {0, 1, 2, ...}]]>
+					                     </mx:htmlText>                    
+					                 </mx:Text> 
+                                     <mx:VBox id="primeSet" styleName="setStyle" width="100%" height="10%" minHeight="50" 
+                                     	      rollOverEffect="{panelGlow}" click="playAudio(event, primeAudio)">
+                                         <mx:Text id="primeTA" width="100%" toolTip="{primeTA.text}">
+						                     <mx:htmlText>
+						                         <![CDATA[<font size="+2"><b>Prime</b></font> numbers have only 1 and themselves as factors.]]>
+						                     </mx:htmlText>                    
+						                 </mx:Text> 
+                                    </mx:VBox>
+                                </mx:VBox>
+                            </mx:VBox>
+                        </mx:VBox>
+                    </mx:VBox>                                   	                  
+	                 <mx:VBox styleName="setStyle" width="30%" height="100%" 
+	                 	      rollOverEffect="{panelGlow}" click="playAudio(event, irrationalAudio)">
+                        <mx:Text id="irrationalTA" width="100%" toolTip="{irrationalTA.text}">
+		                    <mx:htmlText>
+		                        <![CDATA[<font size="+2"><b>Irrational</b></font> numbers <i>cannot</i> be expressed as a fraction. <b>&#960;</b>, <b>e</b>, and <b>&#8730;2</b> are examples.]]>
+		                    </mx:htmlText>                    
+		                 </mx:Text> 	                    
+	                    <mx:VBox styleName="setStyle" width="100%" height="40%" 
+	                    	     rollOverEffect="{panelGlow}" click="playAudio(event, transcendentalAudio)">
+	                        <mx:Text id="transcendentalTA" width="100%" toolTip="{transcendentalTA.text}">
+			                    <mx:htmlText>
+			                        <![CDATA[<font size="+2"><b>Transcendental</b></font> numbers are not solutions to any polynomial with integer coefficients. <b>&#960;</b> and <b>e</b> are examples. ]]>
+			                    </mx:htmlText>                    
+			                 </mx:Text> 
+	                    </mx:VBox> 
+                    </mx:VBox>  
+                </mx:HBox>                                           
+            </mx:VBox>             
+            <mx:VBox styleName="setStyle" width="20%" height="100%" 
+            	     rollOverEffect="{panelGlow}" click="playAudio(event, imaginaryAudio)">                
+                <mx:Text id="imaginaryTA" width="100%" toolTip="{imaginaryTA.text}">
+                    <mx:htmlText>
+                        <![CDATA[<font size="+2"><b>Imaginary</b></font> numbers, when squared, are negative real numbers. They have &#8730;-1 (or <i>i</i>) as a factor.]]>
+                    </mx:htmlText>                    
+                 </mx:Text>                                  
+            </mx:VBox>            
+        </mx:HBox>
+       
+        <mx:VBox width="100%" height="60%" verticalScrollPolicy="off">
+            <mx:Panel title="Definitions" styleName="panelStyle" width="100%" height="134" 
+            	    rollOverEffect="{panelGlowGrow}" verticalScrollPolicy="off">  
+                <mx:TextArea width="100%" height="100%">
+                    <mx:htmlText>
+                        <![CDATA[The <b>Product</b> of <i>a</i> and <i>b</i> can be written as <i>a</i> times <i>b</i> = <i>a</i> &#215; <i>b</i> = (<i>a</i>)(<i>b</i>) = <i>ab</i> = <i>c</i>
+The <b>Quotient</b> of <i>c</i> and <i>b</i> can be written <i>c</i> &#247;<i>b</i> = <i>c</i> / <i>b</i> = <i>a</i>.
+If <i>a</i> and <i>b</i> are positive integers, and there is an integer <i>c</i> such that <i>a</i> = <i>bc</i>, then <i>b</i> is a <b>factor</b> of <i>a</i>, and <i>a</i> as is a <b>multiple</b> of <i>b</i>.
+<b>Fundamental Theorem of Arithmetic</b>: Every positive integer can be expressed as a unique product of primes.
+<b>Percent</b> means parts per 100. n% means n parts out of 100 or n/100.]]>
+                    </mx:htmlText>                    
+                </mx:TextArea>               
+            </mx:Panel>
+            <mx:HBox width="100%" height="66%">
+                <mx:Panel title="Factoring Tricks" styleName="panelStyle" width="50%" height="100%" 
+                	      rollOverEffect="{panelGlowGrow}">                                 
+                    <mx:DataGrid dataProvider="{factoringTricks}" width="100%" height="100%"  
+                    	         showDataTips="true" rowCount="9">
+                        <mx:columns>
+                            <mx:DataGridColumn dataField="x" headerText="x" width="26" />
+                            <mx:DataGridColumn dataField="description" headerText="is a factor of a number if (and only if)" />                        
+                        </mx:columns>
+                    </mx:DataGrid>                                                                          
+                </mx:Panel>
+                <mx:Panel title="Arithmetic Tables" styleName="panelStyle" width="50%" height="100%" 
+                	      rollOverEffect="{panelGlowGrow}" verticalScrollPolicy="off">   
+                	<mx:Grid  width="100%">
+                		<mx:GridRow>
+                			<mx:GridItem>               				
+                				<mx:DataGrid dataProvider="{plusTable}" rowCount="4" sortableColumns="false" resizableColumns="false">
+			                        <mx:columns>   
+			                            <mx:DataGridColumn dataField="op" backgroundColor="#efefcc" 
+			                            	fontSize="14" fontWeight="bold" headerText="+" width="{narrowColumnWidth}"/>
+			                            <mx:DataGridColumn dataField="x" headerText="x" width="{narrowColumnWidth}"/>
+			                            <mx:DataGridColumn dataField="zero" headerText="0" width="{narrowColumnWidth}"/>
+			                            <mx:DataGridColumn dataField="inf" headerText="&#8734;" width="{narrowColumnWidth}"/>                           
+			                        </mx:columns>
+			                    </mx:DataGrid>       
+                			</mx:GridItem>   
+                			<mx:GridItem>               				
+                				<mx:DataGrid dataProvider="{minusTable}"  rowCount="4" sortableColumns="false" resizableColumns="false">
+			                        <mx:columns>
+			                            <mx:DataGridColumn dataField="op" backgroundColor="#efefcc" 
+			                            	fontSize="14" fontWeight="bold" headerText="-" width="{narrowColumnWidth}"/>
+			                            <mx:DataGridColumn dataField="x" headerText="x" width="{narrowColumnWidth}"/>
+			                            <mx:DataGridColumn dataField="zero" headerText="0" width="{narrowColumnWidth}"/>
+			                            <mx:DataGridColumn dataField="inf" headerText="&#8734;" width="{narrowColumnWidth}"/>                           
+			                        </mx:columns>
+			                    </mx:DataGrid>       
+                			</mx:GridItem>                 			
+                		</mx:GridRow>
+                		<mx:GridRow>
+                			<mx:GridItem>       
+                			    <mx:VBox height="100%">               			    	                			          				
+	                				<mx:DataGrid dataProvider="{timesTable}" rowCount="6" sortableColumns="false" resizableColumns="false">
+				                        <mx:columns>
+				                            <mx:DataGridColumn dataField="op" backgroundColor="#efefcc" fontWeight="bold" 
+				                            	fontSize="14" headerText="&#215;" width="{narrowColumnWidth}"/>
+				                            <mx:DataGridColumn dataField="x" headerText="x" width="{narrowColumnWidth}"/>
+				                            <mx:DataGridColumn dataField="zero" headerText="0" width="{narrowColumnWidth}"/>
+				                            <mx:DataGridColumn dataField="one" headerText="1" width="{narrowColumnWidth}"/>   
+				                            <mx:DataGridColumn dataField="negOne" headerText="-1" width="{narrowColumnWidth}"/>   
+				                            <mx:DataGridColumn dataField="inf" headerText="&#8734;" width="{narrowColumnWidth}"/>                        
+				                        </mx:columns>
+			                        </mx:DataGrid> 
+			                        <mx:Text styleName="footnotStyle" width="100%" >                                       
+				                        <mx:htmlText>
+				                            <![CDATA[* if x > 0]]>
+				                        </mx:htmlText>  
+				                    </mx:Text>       
+			                    </mx:VBox>    
+                			</mx:GridItem>   
+                			<mx:GridItem>     
+                			    <mx:VBox height="100%">          				
+	                				<mx:DataGrid dataProvider="{divideTable}" rowCount="6" sortableColumns="false" resizableColumns="false">
+				                        <mx:columns>
+				                            <mx:DataGridColumn dataField="op" backgroundColor="#efefcc" fontWeight="bold" 
+				                            	fontSize="14" headerText="&#247;" width="{columnWidth}"/>
+				                            <mx:DataGridColumn dataField="x" headerText="x" width="36"/>
+				                            <mx:DataGridColumn dataField="zero" headerText="0" width="{columnWidth}"/>
+				                            <mx:DataGridColumn dataField="one" headerText="1" width="{columnWidth}"/>   
+				                            <mx:DataGridColumn dataField="negOne" headerText="-1" width="{columnWidth}"/>   
+				                            <mx:DataGridColumn dataField="inf" headerText="&#8734;" width="{columnWidth}"/>                             
+				                        </mx:columns>
+				                    </mx:DataGrid> 
+				                    <mx:Text styleName="footnotStyle" width="100%" >                                       
+					                        <mx:htmlText>
+					                            <![CDATA[** if x not equal 0]]>
+					                        </mx:htmlText>  
+					                    </mx:Text>       
+				                    </mx:VBox>       
+                			</mx:GridItem>                 			
+                		</mx:GridRow>
+                	</mx:Grid>               
+                                                         
+                </mx:Panel>               
+            </mx:HBox>
+        </mx:VBox>
+    </mx:VBox> 
+    
+    <mx:Parallel id="panelGlow" suspendBackgroundProcessing="false"  >
+        <mx:Glow duration="1000" blurXFrom="10" blurXTo="10" blurYFrom="10" blurYTo="10" color="0xddff66" knockout="false" /> 
+        <mx:SoundEffect  duration="0.4" source="{blip}" volumeFrom=".4" volumeTo=".1"/>       
+    </mx:Parallel>
+
+    <mx:SoundEffect id="complexAudio" source="{complexSound}" useDuration="false" /> 
+    <mx:SoundEffect id="imaginaryAudio" source="{imaginarySound}" useDuration="false"/> 
+    <mx:SoundEffect id="integerAudio" source="{integerSound}" useDuration="false"/> 
+    <mx:SoundEffect id="primeAudio" source="{primeSound}" useDuration="false"/> 
+    <mx:SoundEffect id="rationalAudio" source="{rationalSound}" useDuration="false"/> 
+    <mx:SoundEffect id="irrationalAudio" source="{irrationalSound}" useDuration="false"/> 
+    <mx:SoundEffect id="realAudio" source="{realSound}" useDuration="false"/> 
+    <mx:SoundEffect id="transcendentalAudio" source="{transcendentalSound}" useDuration="false"/> 
+    <mx:SoundEffect id="wholeAudio" source="{wholeSound}" useDuration="false"/> 
+    
+    <mx:Parallel id="panelGlowGrow" suspendBackgroundProcessing="false"  >
+        <mx:Glow duration="800" blurXFrom="12" blurXTo="12" blurYFrom="12" blurYTo="12" color="0xddff66" knockout="false" /> 
+        <mx:Sequence>
+            <mx:Resize  duration="100" heightBy="{-RESIZE_PIXELS/2}" widthBy="{-RESIZE_PIXELS}"  />
+            <mx:Resize  duration="100" heightBy="{RESIZE_PIXELS/2}" widthBy="{RESIZE_PIXELS}"   /> 
+        </mx:Sequence>
+    </mx:Parallel>
+	     
+</mx:Application>

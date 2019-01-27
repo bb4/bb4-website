@@ -1,0 +1,158 @@
+/* CSS styles */
+
+Application {	
+	themeColor: #556655;	
+	dropShadowEnabled: true;
+    fontThickness: 4;
+    backgroundGradientColors: #AABBB3, #EEFFF5;
+}
+
+ApplicationControlBar {
+   shadowDistance: 2;
+   highlightAlphas: 0.39, 0.14;
+   fillAlphas: 1, 1;
+   fillColors: #e1e1e1, #acacac;
+}
+
+ComboBox {
+   borderColor: #cccccc;
+   highlightAlphas: 0.1, 0.25;
+   fillAlphas: 0, 0, 0, 0;
+   fontWeight: normal;
+   color: #000000;
+   themeColor: #648ef8;
+   backgroundAlpha: .9;
+}
+
+
+DataGrid {
+   backgroundAlpha: 0.5;
+   backgroundColor: #ffffff;
+   alternatingItemColors: #ffffff, #edefec;
+   headerColors: #efefcc, #ffffff;
+   horizontalGridLines: false;
+   horizontalGridLineColor: #336699;
+   verticalGridLines: true;
+   verticalGridLineColor: #cccccc;
+   rollOverColor: #ffffdd;
+   textRollOverColor: #000000;
+   borderThickness: 0;
+   selectionColor: #eeffaa;
+   color: #000000;
+   textSelectedColor: #000000;
+   textIndent: 0;
+   fontSize: 12;
+}
+
+VRule {
+	strokeColor:#acacac;
+	shadowColor:#e1e1e1;
+}
+
+
+TabNavigator {
+    backgroundColor: #FFFFFF; 
+    left: 0;
+	top: 5;
+	right: 0;
+}
+
+Panel {
+   paddingTop: 5;
+   borderStyle: solid;
+   borderColor: #009933;
+   borderAlpha: 1;
+   borderThickness: 0;
+   roundedBottomCorners: true;
+   cornerRadius: 5;
+   headerHeight: 27;
+   backgroundAlpha: 0.7;
+   highlightAlphas: 0.5, 0;
+   headerColors: #aabbb3, #aaccaf;
+   shadowDistance: 3;
+   shadowDirection: right;
+   titleStyleName: "panelTitle";
+}
+
+.panelTitle 
+{
+   color: #000000;
+   fontSize: 12;
+   fontWeight: bold;
+}
+
+TextArea {
+   fontSize: 11;
+   textAlign: left;
+   color: ff0000;
+   borderThickness: 0;
+   dropShadowEnabled: false;
+   shadowDirection: right;
+   shadowDistance: 6;
+   backgroundAlpha: 0.0;
+}
+
+HBox {
+}
+
+VBox {
+}
+
+VDividedBox {
+    dividerAffordance: 20;
+    dividerColor: 119911;
+    dividerThickness: 3;
+}
+
+.complexSetStyle {
+    paddingLeft: 10;
+    paddingTop: 6;
+    paddingRight: 10;
+    paddingBottom: 6;
+    
+    backgroundColor: #FFFFBB;
+    backgroundAlpha: 0.25;
+    borderStyle: solid;
+    borderThickness: 2; 
+    borderColor: #005511; 
+    cornerRadius: 10;
+     
+    color: #000000;
+    fontSize: 9;
+    fontWeight: normal;
+}
+
+
+.setStyle {
+    paddingLeft: 10;
+    paddingTop: 6;
+    paddingRight: 10;
+    paddingBottom: 6;
+    
+    backgroundColor: #FFFFBB;
+    backgroundAlpha: 0.2;
+    borderStyle: solid;
+    borderThickness: 2; 
+    borderColor: #005511; 
+    cornerRadius: 10;
+     
+    color: #000000;
+    fontSize: 9;
+    fontWeight: normal;
+}
+
+
+.titleStyle {
+    fontSize: 24;
+    color: #000000;
+    fontWeight: bold;
+}
+
+
+.footnoteStyle {
+    fontSize: 10;
+    color: #000000;
+    fontWeight: normal;
+}
+
+

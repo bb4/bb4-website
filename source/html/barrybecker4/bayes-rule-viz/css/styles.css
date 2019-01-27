@@ -1,0 +1,45 @@
+
+body {
+    font-family: Calibri, SansSerif, sans-serif;
+    min-width: 900px;
+}
+
+.diseased {
+    font-weight: bold;
+    color: #990000;
+}
+
+.healthy {
+    font-weight: bold;
+    color: #009900;
+}
+
+/* if this changes significantly, also update in disease.js. This version should be a little darker */
+.positive {
+    font-weight: bold;
+    color: #cc9900;
+}
+
+.inputs {
+    width: 830px;
+}
+
+#bayes-rule-view {
+    width: 99%;
+    padding: 10px;
+}
+#sankey-view {
+    float: left;
+    width: 50%;
+    height: 650px;
+}
+#venn-diagram-view {
+    float: right;
+    width: 50%;
+    height: 650px;
+}
+
+#notes {
+    float: left;
+    width: 100%;
+}

@@ -1,0 +1,3194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta content="text/html; charset=ISO-8859-1"http-equiv="content-type"><title>Aikido Technique Builder</title>
+
+<script language="JavaScript">
+  // setup structures for grammar
+  var next = new Array();
+  var img = new Array();
+  var label = new Array();
+
+  img['katate_dori']='images/katate_dori/katate_dori_s.jpg';
+  label['katate_dori']='katate dori';
+
+  next['katate_dori']= new Array();
+  next['katate_dori'][0]='tenkan_grabbed';
+  next['katate_dori'][1]='kokyo_nage_grabbed';
+  next['katate_dori'][2]='sumi_grabbed';
+  next['katate_dori'][3]='step_back_grabbed';
+  next['katate_dori'][4]='step_forward_hand_to_head';
+  next['katate_dori'][5]='shihonage_entrance';
+  next['katate_dori'][6]='irimi_entrance_break_grip';
+  next['katate_dori'][7]='reverse_kote_geishi';
+  next['katate_dori'][8]='soto_mawari_grabbed';
+  next['katate_dori'][9]='arc_hand_to_shoulder';
+  next['katate_dori'][10]='hiji_continuance';
+  next['katate_dori'][11]='raise_hand';
+
+  img['tenkan_grabbed']='images/katate_dori/tenkan_grabbed_s.jpg';
+  label['tenkan_grabbed']='tenkan entrance (grabbed)';
+
+  next['tenkan_grabbed']= new Array();
+  next['tenkan_grabbed'][0]='sumi_grabbed';
+  next['tenkan_grabbed'][1]='shihonage';
+  next['tenkan_grabbed'][2]='hook_arm';
+  next['tenkan_grabbed'][3]='continue_tenkan_180';
+
+  img['sumi_grabbed']='images/katate_dori/sumi_grabbed_s.jpg';
+  label['sumi_grabbed']='sumi entrance (grabbed)';
+
+  next['sumi_grabbed']= new Array();
+  next['sumi_grabbed'][0]='sumi_otoshi_basic';
+  next['sumi_grabbed'][1]='sumi_otoshi_elbow';
+  next['sumi_grabbed'][2]='sumi_otoshi_inside_shoulder';
+  next['sumi_grabbed'][3]='sumi_otoshi_outside_shoulder';
+  next['sumi_grabbed'][4]='sumi_otoshi_head';
+  next['sumi_grabbed'][5]='sumi_koshinage_two_hands_on_arm';
+  next['sumi_grabbed'][6]='sumi_koshinage_arm_around_waist';
+  next['sumi_grabbed'][7]='omote_uchi_zempo_nage';
+  next['sumi_grabbed'][8]='ikkyo_omote_entrance';
+  next['sumi_grabbed'][9]='yonkyo_entrance';
+  next['sumi_grabbed'][10]='ikkyo_ura_entrance';
+  next['sumi_grabbed'][11]='gokyo_entrance';
+  next['sumi_grabbed'][12]='rokyo_omote';
+  next['sumi_grabbed'][13]='uchi_mawari_grabbed';
+  next['sumi_grabbed'][14]='soto_mawari_grabbed';
+  next['sumi_grabbed'][15]='hiji_continuance';
+
+  img['sumi_otoshi_basic']='images/katate_dori/sumi_otoshi_basic_s.jpg';
+  label['sumi_otoshi_basic']='sumi otoshi (basic)';
+
+  next['sumi_otoshi_basic']= new Array();
+  next['sumi_otoshi_basic'][0]='right_sit_fall';
+
+  img['right_sit_fall']='images/katate_dori/right_sit_fall_s.jpg';
+  label['right_sit_fall']='sit fall';
+
+  img['sumi_otoshi_elbow']='images/katate_dori/sumi_otoshi_elbow_s.jpg';
+  label['sumi_otoshi_elbow']='sumi otoshi (hiji)';
+
+  next['sumi_otoshi_elbow']= new Array();
+  next['sumi_otoshi_elbow'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_inside_shoulder']='images/katate_dori/sumi_otoshi_inside_shoulder_s.jpg';
+  label['sumi_otoshi_inside_shoulder']='sumi otoshi (inside shoulder)';
+
+  next['sumi_otoshi_inside_shoulder']= new Array();
+  next['sumi_otoshi_inside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_outside_shoulder']='images/katate_dori/sumi_otoshi_outside_shoulder_s.jpg';
+  label['sumi_otoshi_outside_shoulder']='sumi otoshi (outside shoulder)';
+
+  next['sumi_otoshi_outside_shoulder']= new Array();
+  next['sumi_otoshi_outside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_head']='images/katate_dori/sumi_otoshi_head_s.jpg';
+  label['sumi_otoshi_head']='sumi otoshi (head)';
+
+  img['sumi_koshinage_two_hands_on_arm']='images/katate_dori/sumi_koshinage_two_hands_on_arm_s.jpg';
+  label['sumi_koshinage_two_hands_on_arm']='koshinage (morote seoinage)';
+
+  next['sumi_koshinage_two_hands_on_arm']= new Array();
+  next['sumi_koshinage_two_hands_on_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sumi_koshinage_arm_around_waist']='images/katate_dori/sumi_koshinage_arm_around_waist_s.jpg';
+  label['sumi_koshinage_arm_around_waist']='koshinage (arm around waist)';
+
+  next['sumi_koshinage_arm_around_waist']= new Array();
+  next['sumi_koshinage_arm_around_waist'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['omote_uchi_zempo_nage']='images/katate_dori/omote_uchi_zempo_nage_s.jpg';
+  label['omote_uchi_zempo_nage']='omote uchi zempo nage';
+
+  next['omote_uchi_zempo_nage']= new Array();
+  next['omote_uchi_zempo_nage'][0]='zempo_nage_left_finish';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['ikkyo_omote_entrance']='images/katate_dori/ikkyo_omote_entrance_s.jpg';
+  label['ikkyo_omote_entrance']='ikkyo omote entrance';
+
+  next['ikkyo_omote_entrance']= new Array();
+  next['ikkyo_omote_entrance'][0]='ikkyo_omote';
+  next['ikkyo_omote_entrance'][1]='nikkyo';
+  next['ikkyo_omote_entrance'][2]='sankyo_hand_change';
+  next['ikkyo_omote_entrance'][3]='nikkyo_sankyo_combo';
+  next['ikkyo_omote_entrance'][4]='ikkyo_uchi';
+
+  img['ikkyo_omote']='images/katate_dori/ikkyo_omote_s.jpg';
+  label['ikkyo_omote']='ikkyo omote';
+
+  next['ikkyo_omote']= new Array();
+  next['ikkyo_omote'][0]='ikkyo_pin';
+
+  img['ikkyo_pin']='images/katate_dori/ikkyo_pin_s.jpg';
+  label['ikkyo_pin']='ikkyo pin';
+
+  img['nikkyo']='images/katate_dori/nikkyo_s.jpg';
+  label['nikkyo']='nikkyo';
+
+  next['nikkyo']= new Array();
+  next['nikkyo'][0]='nikkyo_ura_finish';
+  next['nikkyo'][1]='nikkyo_omote_finish';
+
+  img['nikkyo_ura_finish']='images/katate_dori/nikkyo_ura_finish_s.jpg';
+  label['nikkyo_ura_finish']='nikkyo ura finish';
+
+  next['nikkyo_ura_finish']= new Array();
+  next['nikkyo_ura_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['nikkyo_omote_finish']='images/katate_dori/nikkyo_omote_finish_s.jpg';
+  label['nikkyo_omote_finish']='nikkyo omote finish';
+
+  next['nikkyo_omote_finish']= new Array();
+  next['nikkyo_omote_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['sankyo_hand_change']='images/katate_dori/sankyo_hand_change_s.jpg';
+  label['sankyo_hand_change']='sankyo hand change';
+
+  next['sankyo_hand_change']= new Array();
+  next['sankyo_hand_change'][0]='sankyo';
+
+  img['sankyo']='images/katate_dori/sankyo_s.jpg';
+  label['sankyo']='sankyo';
+
+  next['sankyo']= new Array();
+  next['sankyo'][0]='sankyo_ura';
+  next['sankyo'][1]='sankyo_omote';
+  next['sankyo'][2]='sankyo_zempo_nage';
+  next['sankyo'][3]='sankyo_bring_around';
+
+  img['sankyo_ura']='images/katate_dori/sankyo_ura_s.jpg';
+  label['sankyo_ura']='sankyo ura';
+
+  next['sankyo_ura']= new Array();
+  next['sankyo_ura'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['sankyo_omote']='images/katate_dori/sankyo_omote_s.jpg';
+  label['sankyo_omote']='sankyo omote';
+
+  next['sankyo_omote']= new Array();
+  next['sankyo_omote'][0]='sankyo_standing_pin';
+
+  img['sankyo_standing_pin']='images/katate_dori/sankyo_standing_pin_s.jpg';
+  label['sankyo_standing_pin']='sankyo standing pin';
+
+  img['sankyo_zempo_nage']='images/katate_dori/sankyo_zempo_nage_s.jpg';
+  label['sankyo_zempo_nage']='sankyo zempo nage';
+
+  next['sankyo_zempo_nage']= new Array();
+  next['sankyo_zempo_nage'][0]='zempo_nage_left_finish';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['sankyo_bring_around']='images/katate_dori/sankyo_bring_around_s.jpg';
+  label['sankyo_bring_around']='sankyo bring behind';
+
+  next['sankyo_bring_around']= new Array();
+  next['sankyo_bring_around'][0]='aiki_otoshi_zempo_nage';
+  next['sankyo_bring_around'][1]='koshinage_on_upper_arm';
+  next['sankyo_bring_around'][2]='tai_otoshi';
+
+  img['aiki_otoshi_zempo_nage']='images/katate_dori/aiki_otoshi_zempo_nage_s.jpg';
+  label['aiki_otoshi_zempo_nage']='aiki otoshi zempo (?)';
+
+  next['aiki_otoshi_zempo_nage']= new Array();
+  next['aiki_otoshi_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['koshinage_on_upper_arm']='images/katate_dori/koshinage_on_upper_arm_s.jpg';
+  label['koshinage_on_upper_arm']='koshinage (on upper arm?)';
+
+  next['koshinage_on_upper_arm']= new Array();
+  next['koshinage_on_upper_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['tai_otoshi']='images/katate_dori/tai_otoshi_s.jpg';
+  label['tai_otoshi']='tai otoshi (over leg)';
+
+  next['tai_otoshi']= new Array();
+  next['tai_otoshi'][0]='tai_otoshi_finish';
+
+  img['tai_otoshi_finish']='images/katate_dori/tai_otoshi_finish_s.jpg';
+  label['tai_otoshi_finish']='tai otoshi finish';
+
+  img['nikkyo_sankyo_combo']='images/katate_dori/nikkyo_sankyo_combo_s.jpg';
+  label['nikkyo_sankyo_combo']='nikkyo-sankkyo combo';
+
+  next['nikkyo_sankyo_combo']= new Array();
+  next['nikkyo_sankyo_combo'][0]='nikkyo_sankkyo_zempo';
+
+  img['nikkyo_sankkyo_zempo']='images/katate_dori/nikkyo_sankkyo_zempo_s.jpg';
+  label['nikkyo_sankkyo_zempo']='nikkyo-sankkyo zempo';
+
+  img['ikkyo_uchi']='images/katate_dori/ikkyo_uchi_s.jpg';
+  label['ikkyo_uchi']='ikkyo uchi';
+
+  next['ikkyo_uchi']= new Array();
+  next['ikkyo_uchi'][0]='ikkyo_uchi_turned';
+
+  img['ikkyo_uchi_turned']='images/katate_dori/ikkyo_uchi_turned_s.jpg';
+  label['ikkyo_uchi_turned']='ikkyo uchi turned';
+
+  next['ikkyo_uchi_turned']= new Array();
+  next['ikkyo_uchi_turned'][0]='direct_downward_throw';
+  next['ikkyo_uchi_turned'][1]='shihonage_entrance';
+
+  img['direct_downward_throw']='images/katate_dori/direct_downward_throw_s.jpg';
+  label['direct_downward_throw']='direct downward throw';
+
+  img['shihonage_entrance']='images/katate_dori/shihonage_entrance_s.jpg';
+  label['shihonage_entrance']='shihonage entrance';
+
+  next['shihonage_entrance']= new Array();
+  next['shihonage_entrance'][0]='shihonage';
+  next['shihonage_entrance'][1]='udekimonage';
+  next['shihonage_entrance'][2]='kokyo_nage_grabbing';
+  next['shihonage_entrance'][3]='shiho_koshinage';
+  next['shihonage_entrance'][4]='omote_iriminage';
+  next['shihonage_entrance'][5]='koshinage_kata_guruma';
+  next['shihonage_entrance'][6]='sukui_nage_entrance';
+  next['shihonage_entrance'][7]='arm_bar_over_shoulder';
+
+  img['shihonage']='images/katate_dori/shihonage_s.jpg';
+  label['shihonage']='shihonage';
+
+  next['shihonage']= new Array();
+  next['shihonage'][0]='shihonage_regular_throw';
+  next['shihonage'][1]='shihonage_high_throw';
+
+  img['shihonage_regular_throw']='images/katate_dori/shihonage_regular_throw_s.jpg';
+  label['shihonage_regular_throw']='shihonage throw (regular)';
+
+  img['shihonage_high_throw']='images/katate_dori/shihonage_high_throw_s.jpg';
+  label['shihonage_high_throw']='shihonage throw (high)';
+
+  img['udekimonage']='images/katate_dori/udekimonage_s.jpg';
+  label['udekimonage']='udekimonage';
+
+  next['udekimonage']= new Array();
+  next['udekimonage'][0]='udekimonage_left_finish';
+
+  img['udekimonage_left_finish']='images/katate_dori/udekimonage_left_finish_s.jpg';
+  label['udekimonage_left_finish']='udekimonage finish';
+
+  img['kokyo_nage_grabbing']='images/katate_dori/kokyo_nage_grabbing_s.jpg';
+  label['kokyo_nage_grabbing']='kokyo nage';
+
+  next['kokyo_nage_grabbing']= new Array();
+  next['kokyo_nage_grabbing'][0]='kokyo_nage_throw';
+
+  img['kokyo_nage_throw']='images/katate_dori/kokyo_nage_throw_s.jpg';
+  label['kokyo_nage_throw']='kokyo nage finish';
+
+  img['shiho_koshinage']='images/katate_dori/shiho_koshinage_s.jpg';
+  label['shiho_koshinage']='shiho koshinage (hand at center)';
+
+  next['shiho_koshinage']= new Array();
+  next['shiho_koshinage'][0]='koshinage_left_finish';
+
+  img['koshinage_left_finish']='images/katate_dori/koshinage_left_finish_s.jpg';
+  label['koshinage_left_finish']='koshinage finish';
+
+  img['omote_iriminage']='images/katate_dori/omote_iriminage_s.jpg';
+  label['omote_iriminage']='omote iriminage';
+
+  next['omote_iriminage']= new Array();
+  next['omote_iriminage'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['koshinage_kata_guruma']='images/katate_dori/koshinage_kata_guruma_s.jpg';
+  label['koshinage_kata_guruma']='koshinage (kata guruma)';
+
+  next['koshinage_kata_guruma']= new Array();
+  next['koshinage_kata_guruma'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sukui_nage_entrance']='images/katate_dori/sukui_nage_entrance_s.jpg';
+  label['sukui_nage_entrance']='sukui nage entrance';
+
+  next['sukui_nage_entrance']= new Array();
+  next['sukui_nage_entrance'][0]='koshinage_sukui_nage';
+
+  img['koshinage_sukui_nage']='images/katate_dori/koshinage_sukui_nage_s.jpg';
+  label['koshinage_sukui_nage']='koshinage (sukui nage)';
+
+  next['koshinage_sukui_nage']= new Array();
+  next['koshinage_sukui_nage'][0]='sukui_nage_finish';
+
+  img['sukui_nage_finish']='images/katate_dori/sukui_nage_finish_s.jpg';
+  label['sukui_nage_finish']='sukui nage finish';
+
+  img['arm_bar_over_shoulder']='images/katate_dori/arm_bar_over_shoulder_s.jpg';
+  label['arm_bar_over_shoulder']='arm bar (over shoulder)';
+
+  next['arm_bar_over_shoulder']= new Array();
+  next['arm_bar_over_shoulder'][0]='shiho_zempo_nage';
+
+  img['shiho_zempo_nage']='images/katate_dori/shiho_zempo_nage_s.jpg';
+  label['shiho_zempo_nage']='shiho zempo nage';
+
+  next['shiho_zempo_nage']= new Array();
+  next['shiho_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['yonkyo_entrance']='images/katate_dori/yonkyo_entrance_s.jpg';
+  label['yonkyo_entrance']='yonkyo entrance';
+
+  next['yonkyo_entrance']= new Array();
+  next['yonkyo_entrance'][0]='yonkyo_ura';
+  next['yonkyo_entrance'][1]='yonkyo_omote';
+
+  img['yonkyo_ura']='images/katate_dori/yonkyo_ura_s.jpg';
+  label['yonkyo_ura']='yonkyo ura';
+
+  next['yonkyo_ura']= new Array();
+  next['yonkyo_ura'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['yonkyo_omote']='images/katate_dori/yonkyo_omote_s.jpg';
+  label['yonkyo_omote']='yonkyo omote';
+
+  next['yonkyo_omote']= new Array();
+  next['yonkyo_omote'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['ikkyo_ura_entrance']='images/katate_dori/ikkyo_ura_entrance_s.jpg';
+  label['ikkyo_ura_entrance']='ikkyo ura entrance';
+
+  next['ikkyo_ura_entrance']= new Array();
+  next['ikkyo_ura_entrance'][0]='ikkyo_omote';
+  next['ikkyo_ura_entrance'][1]='nikkyo';
+  next['ikkyo_ura_entrance'][2]='sankyo_hand_change';
+  next['ikkyo_ura_entrance'][3]='yonkyo_entrance';
+  next['ikkyo_ura_entrance'][4]='iriminage_continuance';
+
+  img['ikkyo_omote']='images/katate_dori/ikkyo_omote_s.jpg';
+  label['ikkyo_omote']='ikkyo omote';
+
+  next['ikkyo_omote']= new Array();
+  next['ikkyo_omote'][0]='ikkyo_pin';
+
+  img['ikkyo_pin']='images/katate_dori/ikkyo_pin_s.jpg';
+  label['ikkyo_pin']='ikkyo pin';
+
+  img['nikkyo']='images/katate_dori/nikkyo_s.jpg';
+  label['nikkyo']='nikkyo';
+
+  next['nikkyo']= new Array();
+  next['nikkyo'][0]='nikkyo_ura_finish';
+  next['nikkyo'][1]='nikkyo_omote_finish';
+
+  img['nikkyo_ura_finish']='images/katate_dori/nikkyo_ura_finish_s.jpg';
+  label['nikkyo_ura_finish']='nikkyo ura finish';
+
+  next['nikkyo_ura_finish']= new Array();
+  next['nikkyo_ura_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['nikkyo_omote_finish']='images/katate_dori/nikkyo_omote_finish_s.jpg';
+  label['nikkyo_omote_finish']='nikkyo omote finish';
+
+  next['nikkyo_omote_finish']= new Array();
+  next['nikkyo_omote_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['sankyo_hand_change']='images/katate_dori/sankyo_hand_change_s.jpg';
+  label['sankyo_hand_change']='sankyo hand change';
+
+  next['sankyo_hand_change']= new Array();
+  next['sankyo_hand_change'][0]='sankyo';
+
+  img['sankyo']='images/katate_dori/sankyo_s.jpg';
+  label['sankyo']='sankyo';
+
+  next['sankyo']= new Array();
+  next['sankyo'][0]='sankyo_ura';
+  next['sankyo'][1]='sankyo_omote';
+  next['sankyo'][2]='sankyo_zempo_nage';
+  next['sankyo'][3]='sankyo_bring_around';
+
+  img['sankyo_ura']='images/katate_dori/sankyo_ura_s.jpg';
+  label['sankyo_ura']='sankyo ura';
+
+  next['sankyo_ura']= new Array();
+  next['sankyo_ura'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['sankyo_omote']='images/katate_dori/sankyo_omote_s.jpg';
+  label['sankyo_omote']='sankyo omote';
+
+  next['sankyo_omote']= new Array();
+  next['sankyo_omote'][0]='sankyo_standing_pin';
+
+  img['sankyo_standing_pin']='images/katate_dori/sankyo_standing_pin_s.jpg';
+  label['sankyo_standing_pin']='sankyo standing pin';
+
+  img['sankyo_zempo_nage']='images/katate_dori/sankyo_zempo_nage_s.jpg';
+  label['sankyo_zempo_nage']='sankyo zempo nage';
+
+  next['sankyo_zempo_nage']= new Array();
+  next['sankyo_zempo_nage'][0]='zempo_nage_left_finish';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['sankyo_bring_around']='images/katate_dori/sankyo_bring_around_s.jpg';
+  label['sankyo_bring_around']='sankyo bring behind';
+
+  next['sankyo_bring_around']= new Array();
+  next['sankyo_bring_around'][0]='aiki_otoshi_zempo_nage';
+  next['sankyo_bring_around'][1]='koshinage_on_upper_arm';
+  next['sankyo_bring_around'][2]='tai_otoshi';
+
+  img['aiki_otoshi_zempo_nage']='images/katate_dori/aiki_otoshi_zempo_nage_s.jpg';
+  label['aiki_otoshi_zempo_nage']='aiki otoshi zempo (?)';
+
+  next['aiki_otoshi_zempo_nage']= new Array();
+  next['aiki_otoshi_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['koshinage_on_upper_arm']='images/katate_dori/koshinage_on_upper_arm_s.jpg';
+  label['koshinage_on_upper_arm']='koshinage (on upper arm?)';
+
+  next['koshinage_on_upper_arm']= new Array();
+  next['koshinage_on_upper_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['tai_otoshi']='images/katate_dori/tai_otoshi_s.jpg';
+  label['tai_otoshi']='tai otoshi (over leg)';
+
+  next['tai_otoshi']= new Array();
+  next['tai_otoshi'][0]='tai_otoshi_finish';
+
+  img['tai_otoshi_finish']='images/katate_dori/tai_otoshi_finish_s.jpg';
+  label['tai_otoshi_finish']='tai otoshi finish';
+
+  img['yonkyo_entrance']='images/katate_dori/yonkyo_entrance_s.jpg';
+  label['yonkyo_entrance']='yonkyo entrance';
+
+  next['yonkyo_entrance']= new Array();
+  next['yonkyo_entrance'][0]='yonkyo_ura';
+  next['yonkyo_entrance'][1]='yonkyo_omote';
+
+  img['yonkyo_ura']='images/katate_dori/yonkyo_ura_s.jpg';
+  label['yonkyo_ura']='yonkyo ura';
+
+  next['yonkyo_ura']= new Array();
+  next['yonkyo_ura'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['yonkyo_omote']='images/katate_dori/yonkyo_omote_s.jpg';
+  label['yonkyo_omote']='yonkyo omote';
+
+  next['yonkyo_omote']= new Array();
+  next['yonkyo_omote'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['iriminage_continuance']='images/katate_dori/iriminage_continuance_s.jpg';
+  label['iriminage_continuance']='iriminage continuance';
+
+  next['iriminage_continuance']= new Array();
+  next['iriminage_continuance'][0]='iriminage_right_throw';
+  next['iriminage_continuance'][1]='iriminage_full_entrance';
+
+  img['iriminage_right_throw']='images/katate_dori/iriminage_right_throw_s.jpg';
+  label['iriminage_right_throw']='iriminage throw';
+
+  next['iriminage_right_throw']= new Array();
+  next['iriminage_right_throw'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['iriminage_full_entrance']='images/katate_dori/iriminage_full_entrance_s.jpg';
+  label['iriminage_full_entrance']='iriminage full entrance throw';
+
+  next['iriminage_full_entrance']= new Array();
+  next['iriminage_full_entrance'][0]='iriminage_full_entrance_finish';
+
+  img['iriminage_full_entrance_finish']='images/katate_dori/iriminage_full_entrance_finish_s.jpg';
+  label['iriminage_full_entrance_finish']='irimi full entrance finish';
+
+  img['gokyo_entrance']='images/katate_dori/gokyo_entrance_s.jpg';
+  label['gokyo_entrance']='gokyo entrance';
+
+  next['gokyo_entrance']= new Array();
+  next['gokyo_entrance'][0]='gokyo_omote';
+  next['gokyo_entrance'][1]='gokyo_ura';
+
+  img['gokyo_omote']='images/katate_dori/gokyo_omote_s.jpg';
+  label['gokyo_omote']='gokyo omote';
+
+  next['gokyo_omote']= new Array();
+  next['gokyo_omote'][0]='gokyo_pin';
+
+  img['gokyo_pin']='images/katate_dori/gokyo_pin_s.jpg';
+  label['gokyo_pin']='gokyo pin';
+
+  img['gokyo_ura']='images/katate_dori/gokyo_ura_s.jpg';
+  label['gokyo_ura']='gokyo ura';
+
+  next['gokyo_ura']= new Array();
+  next['gokyo_ura'][0]='gokyo_pin';
+
+  img['gokyo_pin']='images/katate_dori/gokyo_pin_s.jpg';
+  label['gokyo_pin']='gokyo pin';
+
+  img['rokyo_omote']='images/katate_dori/rokyo_omote_s.jpg';
+  label['rokyo_omote']='rokyo omote';
+
+  next['rokyo_omote']= new Array();
+  next['rokyo_omote'][0]='rokyo_pin';
+
+  img['rokyo_pin']='images/katate_dori/rokyo_pin_s.jpg';
+  label['rokyo_pin']='rokyo pin';
+
+  img['uchi_mawari_grabbed']='images/katate_dori/uchi_mawari_grabbed_s.jpg';
+  label['uchi_mawari_grabbed']='uchi mawari (grabbed)';
+
+  next['uchi_mawari_grabbed']= new Array();
+  next['uchi_mawari_grabbed'][0]='zempo_nage_left_finish';
+  next['uchi_mawari_grabbed'][1]='kaiten_nage_continuance';
+  next['uchi_mawari_grabbed'][2]='arm_bar_continuance';
+  next['uchi_mawari_grabbed'][3]='koshi_nage_past_head';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['kaiten_nage_continuance']='images/katate_dori/kaiten_nage_continuance_s.jpg';
+  label['kaiten_nage_continuance']='kaiten nage continuance';
+
+  next['kaiten_nage_continuance']= new Array();
+  next['kaiten_nage_continuance'][0]='kaiten_nage_omote';
+  next['kaiten_nage_continuance'][1]='kaiten_nage_ura';
+
+  img['kaiten_nage_omote']='images/katate_dori/kaiten_nage_omote_s.jpg';
+  label['kaiten_nage_omote']='kaiten nage omote';
+
+  next['kaiten_nage_omote']= new Array();
+  next['kaiten_nage_omote'][0]='kaiten_nage_throw';
+
+  img['kaiten_nage_throw']='images/katate_dori/kaiten_nage_throw_s.jpg';
+  label['kaiten_nage_throw']='kaiten nage throw';
+
+  img['kaiten_nage_ura']='images/katate_dori/kaiten_nage_ura_s.jpg';
+  label['kaiten_nage_ura']='kaiten nage ura';
+
+  next['kaiten_nage_ura']= new Array();
+  next['kaiten_nage_ura'][0]='kaiten_nage_throw';
+
+  img['kaiten_nage_throw']='images/katate_dori/kaiten_nage_throw_s.jpg';
+  label['kaiten_nage_throw']='kaiten nage throw';
+
+  img['arm_bar_continuance']='images/katate_dori/arm_bar_continuance_s.jpg';
+  label['arm_bar_continuance']='arm bar continuance';
+
+  next['arm_bar_continuance']= new Array();
+  next['arm_bar_continuance'][0]='arm_bar';
+
+  img['arm_bar']='images/katate_dori/arm_bar_s.jpg';
+  label['arm_bar']='arm bar';
+
+  next['arm_bar']= new Array();
+  next['arm_bar'][0]='arm_bar_pin';
+
+  img['arm_bar_pin']='images/katate_dori/arm_bar_pin_s.jpg';
+  label['arm_bar_pin']='arm bar pin';
+
+  img['koshi_nage_past_head']='images/katate_dori/koshi_nage_past_head_s.jpg';
+  label['koshi_nage_past_head']='koshi nage (past head)';
+
+  next['koshi_nage_past_head']= new Array();
+  next['koshi_nage_past_head'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['soto_mawari_grabbed']='images/katate_dori/soto_mawari_grabbed_s.jpg';
+  label['soto_mawari_grabbed']='soto mawari (grabbed)';
+
+  next['soto_mawari_grabbed']= new Array();
+  next['soto_mawari_grabbed'][0]='zempo_nage_left_finish';
+  next['soto_mawari_grabbed'][1]='kaiten_nage_continuance';
+  next['soto_mawari_grabbed'][2]='arm_bar_continuance';
+  next['soto_mawari_grabbed'][3]='yonkyo_continuance';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['kaiten_nage_continuance']='images/katate_dori/kaiten_nage_continuance_s.jpg';
+  label['kaiten_nage_continuance']='kaiten nage continuance';
+
+  next['kaiten_nage_continuance']= new Array();
+  next['kaiten_nage_continuance'][0]='kaiten_nage_omote';
+  next['kaiten_nage_continuance'][1]='kaiten_nage_ura';
+
+  img['kaiten_nage_omote']='images/katate_dori/kaiten_nage_omote_s.jpg';
+  label['kaiten_nage_omote']='kaiten nage omote';
+
+  next['kaiten_nage_omote']= new Array();
+  next['kaiten_nage_omote'][0]='kaiten_nage_throw';
+
+  img['kaiten_nage_throw']='images/katate_dori/kaiten_nage_throw_s.jpg';
+  label['kaiten_nage_throw']='kaiten nage throw';
+
+  img['kaiten_nage_ura']='images/katate_dori/kaiten_nage_ura_s.jpg';
+  label['kaiten_nage_ura']='kaiten nage ura';
+
+  next['kaiten_nage_ura']= new Array();
+  next['kaiten_nage_ura'][0]='kaiten_nage_throw';
+
+  img['kaiten_nage_throw']='images/katate_dori/kaiten_nage_throw_s.jpg';
+  label['kaiten_nage_throw']='kaiten nage throw';
+
+  img['arm_bar_continuance']='images/katate_dori/arm_bar_continuance_s.jpg';
+  label['arm_bar_continuance']='arm bar continuance';
+
+  next['arm_bar_continuance']= new Array();
+  next['arm_bar_continuance'][0]='arm_bar';
+
+  img['arm_bar']='images/katate_dori/arm_bar_s.jpg';
+  label['arm_bar']='arm bar';
+
+  next['arm_bar']= new Array();
+  next['arm_bar'][0]='arm_bar_pin';
+
+  img['arm_bar_pin']='images/katate_dori/arm_bar_pin_s.jpg';
+  label['arm_bar_pin']='arm bar pin';
+
+  img['yonkyo_continuance']='images/katate_dori/yonkyo_continuance_s.jpg';
+  label['yonkyo_continuance']='yonkyo continuance';
+
+  next['yonkyo_continuance']= new Array();
+  next['yonkyo_continuance'][0]='yonkyo_omote';
+  next['yonkyo_continuance'][1]='sankyo_like_continuance_omote';
+  next['yonkyo_continuance'][2]='sankyo_like_continuance_ura';
+  next['yonkyo_continuance'][3]='zempo_nage_left_finish';
+  next['yonkyo_continuance'][4]='uchi_yonkyo';
+
+  img['yonkyo_omote']='images/katate_dori/yonkyo_omote_s.jpg';
+  label['yonkyo_omote']='yonkyo omote';
+
+  next['yonkyo_omote']= new Array();
+  next['yonkyo_omote'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['sankyo_like_continuance_omote']='images/katate_dori/sankyo_like_continuance_omote_s.jpg';
+  label['sankyo_like_continuance_omote']='sankyo-like (omote)';
+
+  next['sankyo_like_continuance_omote']= new Array();
+  next['sankyo_like_continuance_omote'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['sankyo_like_continuance_ura']='images/katate_dori/sankyo_like_continuance_ura_s.jpg';
+  label['sankyo_like_continuance_ura']='sankyo-like (ura)';
+
+  next['sankyo_like_continuance_ura']= new Array();
+  next['sankyo_like_continuance_ura'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['uchi_yonkyo']='images/katate_dori/uchi_yonkyo_s.jpg';
+  label['uchi_yonkyo']='uchi yonkyo';
+
+  next['uchi_yonkyo']= new Array();
+  next['uchi_yonkyo'][0]='sumi_otoshi_elbow';
+  next['uchi_yonkyo'][1]='sumi_otoshi_inside_shoulder';
+  next['uchi_yonkyo'][2]='sumi_otoshi_outside_shoulder';
+  next['uchi_yonkyo'][3]='sumi_otoshi_head';
+  next['uchi_yonkyo'][4]='sumi_koshinage_two_hands_on_arm';
+  next['uchi_yonkyo'][5]='sumi_koshinage_arm_around_waist';
+  next['uchi_yonkyo'][6]='shihonage_entrance';
+
+  img['sumi_otoshi_elbow']='images/katate_dori/sumi_otoshi_elbow_s.jpg';
+  label['sumi_otoshi_elbow']='sumi otoshi (hiji)';
+
+  next['sumi_otoshi_elbow']= new Array();
+  next['sumi_otoshi_elbow'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_inside_shoulder']='images/katate_dori/sumi_otoshi_inside_shoulder_s.jpg';
+  label['sumi_otoshi_inside_shoulder']='sumi otoshi (inside shoulder)';
+
+  next['sumi_otoshi_inside_shoulder']= new Array();
+  next['sumi_otoshi_inside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_outside_shoulder']='images/katate_dori/sumi_otoshi_outside_shoulder_s.jpg';
+  label['sumi_otoshi_outside_shoulder']='sumi otoshi (outside shoulder)';
+
+  next['sumi_otoshi_outside_shoulder']= new Array();
+  next['sumi_otoshi_outside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_head']='images/katate_dori/sumi_otoshi_head_s.jpg';
+  label['sumi_otoshi_head']='sumi otoshi (head)';
+
+  img['sumi_koshinage_two_hands_on_arm']='images/katate_dori/sumi_koshinage_two_hands_on_arm_s.jpg';
+  label['sumi_koshinage_two_hands_on_arm']='koshinage (morote seoinage)';
+
+  next['sumi_koshinage_two_hands_on_arm']= new Array();
+  next['sumi_koshinage_two_hands_on_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sumi_koshinage_arm_around_waist']='images/katate_dori/sumi_koshinage_arm_around_waist_s.jpg';
+  label['sumi_koshinage_arm_around_waist']='koshinage (arm around waist)';
+
+  next['sumi_koshinage_arm_around_waist']= new Array();
+  next['sumi_koshinage_arm_around_waist'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['shihonage_entrance']='images/katate_dori/shihonage_entrance_s.jpg';
+  label['shihonage_entrance']='shihonage entrance';
+
+  next['shihonage_entrance']= new Array();
+  next['shihonage_entrance'][0]='shihonage';
+  next['shihonage_entrance'][1]='udekimonage';
+  next['shihonage_entrance'][2]='kokyo_nage_grabbing';
+  next['shihonage_entrance'][3]='shiho_koshinage';
+  next['shihonage_entrance'][4]='omote_iriminage';
+  next['shihonage_entrance'][5]='koshinage_kata_guruma';
+  next['shihonage_entrance'][6]='sukui_nage_entrance';
+  next['shihonage_entrance'][7]='arm_bar_over_shoulder';
+
+  img['shihonage']='images/katate_dori/shihonage_s.jpg';
+  label['shihonage']='shihonage';
+
+  next['shihonage']= new Array();
+  next['shihonage'][0]='shihonage_regular_throw';
+  next['shihonage'][1]='shihonage_high_throw';
+
+  img['shihonage_regular_throw']='images/katate_dori/shihonage_regular_throw_s.jpg';
+  label['shihonage_regular_throw']='shihonage throw (regular)';
+
+  img['shihonage_high_throw']='images/katate_dori/shihonage_high_throw_s.jpg';
+  label['shihonage_high_throw']='shihonage throw (high)';
+
+  img['udekimonage']='images/katate_dori/udekimonage_s.jpg';
+  label['udekimonage']='udekimonage';
+
+  next['udekimonage']= new Array();
+  next['udekimonage'][0]='udekimonage_left_finish';
+
+  img['udekimonage_left_finish']='images/katate_dori/udekimonage_left_finish_s.jpg';
+  label['udekimonage_left_finish']='udekimonage finish';
+
+  img['kokyo_nage_grabbing']='images/katate_dori/kokyo_nage_grabbing_s.jpg';
+  label['kokyo_nage_grabbing']='kokyo nage';
+
+  next['kokyo_nage_grabbing']= new Array();
+  next['kokyo_nage_grabbing'][0]='kokyo_nage_throw';
+
+  img['kokyo_nage_throw']='images/katate_dori/kokyo_nage_throw_s.jpg';
+  label['kokyo_nage_throw']='kokyo nage finish';
+
+  img['shiho_koshinage']='images/katate_dori/shiho_koshinage_s.jpg';
+  label['shiho_koshinage']='shiho koshinage (hand at center)';
+
+  next['shiho_koshinage']= new Array();
+  next['shiho_koshinage'][0]='koshinage_left_finish';
+
+  img['koshinage_left_finish']='images/katate_dori/koshinage_left_finish_s.jpg';
+  label['koshinage_left_finish']='koshinage finish';
+
+  img['omote_iriminage']='images/katate_dori/omote_iriminage_s.jpg';
+  label['omote_iriminage']='omote iriminage';
+
+  next['omote_iriminage']= new Array();
+  next['omote_iriminage'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['koshinage_kata_guruma']='images/katate_dori/koshinage_kata_guruma_s.jpg';
+  label['koshinage_kata_guruma']='koshinage (kata guruma)';
+
+  next['koshinage_kata_guruma']= new Array();
+  next['koshinage_kata_guruma'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sukui_nage_entrance']='images/katate_dori/sukui_nage_entrance_s.jpg';
+  label['sukui_nage_entrance']='sukui nage entrance';
+
+  next['sukui_nage_entrance']= new Array();
+  next['sukui_nage_entrance'][0]='koshinage_sukui_nage';
+
+  img['koshinage_sukui_nage']='images/katate_dori/koshinage_sukui_nage_s.jpg';
+  label['koshinage_sukui_nage']='koshinage (sukui nage)';
+
+  next['koshinage_sukui_nage']= new Array();
+  next['koshinage_sukui_nage'][0]='sukui_nage_finish';
+
+  img['sukui_nage_finish']='images/katate_dori/sukui_nage_finish_s.jpg';
+  label['sukui_nage_finish']='sukui nage finish';
+
+  img['arm_bar_over_shoulder']='images/katate_dori/arm_bar_over_shoulder_s.jpg';
+  label['arm_bar_over_shoulder']='arm bar (over shoulder)';
+
+  next['arm_bar_over_shoulder']= new Array();
+  next['arm_bar_over_shoulder'][0]='shiho_zempo_nage';
+
+  img['shiho_zempo_nage']='images/katate_dori/shiho_zempo_nage_s.jpg';
+  label['shiho_zempo_nage']='shiho zempo nage';
+
+  next['shiho_zempo_nage']= new Array();
+  next['shiho_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['hiji_continuance']='images/katate_dori/hiji_continuance_s.jpg';
+  label['hiji_continuance']='hiji continuance';
+
+  next['hiji_continuance']= new Array();
+  next['hiji_continuance'][0]='hijinage_throw';
+  next['hiji_continuance'][1]='sumi_otoshi_outside_shoulder';
+  next['hiji_continuance'][2]='tai_otoshi';
+
+  img['hijinage_throw']='images/katate_dori/hijinage_throw_s.jpg';
+  label['hijinage_throw']='hijinage throw';
+
+  img['sumi_otoshi_outside_shoulder']='images/katate_dori/sumi_otoshi_outside_shoulder_s.jpg';
+  label['sumi_otoshi_outside_shoulder']='sumi otoshi (outside shoulder)';
+
+  next['sumi_otoshi_outside_shoulder']= new Array();
+  next['sumi_otoshi_outside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['tai_otoshi']='images/katate_dori/tai_otoshi_s.jpg';
+  label['tai_otoshi']='tai otoshi (over leg)';
+
+  next['tai_otoshi']= new Array();
+  next['tai_otoshi'][0]='tai_otoshi_finish';
+
+  img['tai_otoshi_finish']='images/katate_dori/tai_otoshi_finish_s.jpg';
+  label['tai_otoshi_finish']='tai otoshi finish';
+
+  img['shihonage']='images/katate_dori/shihonage_s.jpg';
+  label['shihonage']='shihonage';
+
+  next['shihonage']= new Array();
+  next['shihonage'][0]='shihonage_regular_throw';
+  next['shihonage'][1]='shihonage_high_throw';
+
+  img['shihonage_regular_throw']='images/katate_dori/shihonage_regular_throw_s.jpg';
+  label['shihonage_regular_throw']='shihonage throw (regular)';
+
+  img['shihonage_high_throw']='images/katate_dori/shihonage_high_throw_s.jpg';
+  label['shihonage_high_throw']='shihonage throw (high)';
+
+  img['hook_arm']='images/katate_dori/hook_arm_s.jpg';
+  label['hook_arm']='hook_arm';
+
+  next['hook_arm']= new Array();
+  next['hook_arm'][0]='zempo_nage_left_finish';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['continue_tenkan_180']='images/katate_dori/continue_tenkan_180_s.jpg';
+  label['continue_tenkan_180']='continue temkan (180 deg)';
+
+  next['continue_tenkan_180']= new Array();
+  next['continue_tenkan_180'][0]='kokyo_nage_grabbed';
+  next['continue_tenkan_180'][1]='zempo_nage_left_finish';
+
+  img['kokyo_nage_grabbed']='images/katate_dori/kokyo_nage_grabbed_s.jpg';
+  label['kokyo_nage_grabbed']='kokyo nage (grabbed)';
+
+  next['kokyo_nage_grabbed']= new Array();
+  next['kokyo_nage_grabbed'][0]='kokyo_nage_throw';
+
+  img['kokyo_nage_throw']='images/katate_dori/kokyo_nage_throw_s.jpg';
+  label['kokyo_nage_throw']='kokyo nage finish';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['kokyo_nage_grabbed']='images/katate_dori/kokyo_nage_grabbed_s.jpg';
+  label['kokyo_nage_grabbed']='kokyo nage (grabbed)';
+
+  next['kokyo_nage_grabbed']= new Array();
+  next['kokyo_nage_grabbed'][0]='kokyo_nage_throw';
+
+  img['kokyo_nage_throw']='images/katate_dori/kokyo_nage_throw_s.jpg';
+  label['kokyo_nage_throw']='kokyo nage finish';
+
+  img['sumi_grabbed']='images/katate_dori/sumi_grabbed_s.jpg';
+  label['sumi_grabbed']='sumi entrance (grabbed)';
+
+  next['sumi_grabbed']= new Array();
+  next['sumi_grabbed'][0]='sumi_otoshi_basic';
+  next['sumi_grabbed'][1]='sumi_otoshi_elbow';
+  next['sumi_grabbed'][2]='sumi_otoshi_inside_shoulder';
+  next['sumi_grabbed'][3]='sumi_otoshi_outside_shoulder';
+  next['sumi_grabbed'][4]='sumi_otoshi_head';
+  next['sumi_grabbed'][5]='sumi_koshinage_two_hands_on_arm';
+  next['sumi_grabbed'][6]='sumi_koshinage_arm_around_waist';
+  next['sumi_grabbed'][7]='omote_uchi_zempo_nage';
+  next['sumi_grabbed'][8]='ikkyo_omote_entrance';
+  next['sumi_grabbed'][9]='yonkyo_entrance';
+  next['sumi_grabbed'][10]='ikkyo_ura_entrance';
+  next['sumi_grabbed'][11]='gokyo_entrance';
+  next['sumi_grabbed'][12]='rokyo_omote';
+  next['sumi_grabbed'][13]='uchi_mawari_grabbed';
+  next['sumi_grabbed'][14]='soto_mawari_grabbed';
+  next['sumi_grabbed'][15]='hiji_continuance';
+
+  img['sumi_otoshi_basic']='images/katate_dori/sumi_otoshi_basic_s.jpg';
+  label['sumi_otoshi_basic']='sumi otoshi (basic)';
+
+  next['sumi_otoshi_basic']= new Array();
+  next['sumi_otoshi_basic'][0]='right_sit_fall';
+
+  img['right_sit_fall']='images/katate_dori/right_sit_fall_s.jpg';
+  label['right_sit_fall']='sit fall';
+
+  img['sumi_otoshi_elbow']='images/katate_dori/sumi_otoshi_elbow_s.jpg';
+  label['sumi_otoshi_elbow']='sumi otoshi (hiji)';
+
+  next['sumi_otoshi_elbow']= new Array();
+  next['sumi_otoshi_elbow'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_inside_shoulder']='images/katate_dori/sumi_otoshi_inside_shoulder_s.jpg';
+  label['sumi_otoshi_inside_shoulder']='sumi otoshi (inside shoulder)';
+
+  next['sumi_otoshi_inside_shoulder']= new Array();
+  next['sumi_otoshi_inside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_outside_shoulder']='images/katate_dori/sumi_otoshi_outside_shoulder_s.jpg';
+  label['sumi_otoshi_outside_shoulder']='sumi otoshi (outside shoulder)';
+
+  next['sumi_otoshi_outside_shoulder']= new Array();
+  next['sumi_otoshi_outside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_head']='images/katate_dori/sumi_otoshi_head_s.jpg';
+  label['sumi_otoshi_head']='sumi otoshi (head)';
+
+  img['sumi_koshinage_two_hands_on_arm']='images/katate_dori/sumi_koshinage_two_hands_on_arm_s.jpg';
+  label['sumi_koshinage_two_hands_on_arm']='koshinage (morote seoinage)';
+
+  next['sumi_koshinage_two_hands_on_arm']= new Array();
+  next['sumi_koshinage_two_hands_on_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sumi_koshinage_arm_around_waist']='images/katate_dori/sumi_koshinage_arm_around_waist_s.jpg';
+  label['sumi_koshinage_arm_around_waist']='koshinage (arm around waist)';
+
+  next['sumi_koshinage_arm_around_waist']= new Array();
+  next['sumi_koshinage_arm_around_waist'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['omote_uchi_zempo_nage']='images/katate_dori/omote_uchi_zempo_nage_s.jpg';
+  label['omote_uchi_zempo_nage']='omote uchi zempo nage';
+
+  next['omote_uchi_zempo_nage']= new Array();
+  next['omote_uchi_zempo_nage'][0]='zempo_nage_left_finish';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['ikkyo_omote_entrance']='images/katate_dori/ikkyo_omote_entrance_s.jpg';
+  label['ikkyo_omote_entrance']='ikkyo omote entrance';
+
+  next['ikkyo_omote_entrance']= new Array();
+  next['ikkyo_omote_entrance'][0]='ikkyo_omote';
+  next['ikkyo_omote_entrance'][1]='nikkyo';
+  next['ikkyo_omote_entrance'][2]='sankyo_hand_change';
+  next['ikkyo_omote_entrance'][3]='nikkyo_sankyo_combo';
+  next['ikkyo_omote_entrance'][4]='ikkyo_uchi';
+
+  img['ikkyo_omote']='images/katate_dori/ikkyo_omote_s.jpg';
+  label['ikkyo_omote']='ikkyo omote';
+
+  next['ikkyo_omote']= new Array();
+  next['ikkyo_omote'][0]='ikkyo_pin';
+
+  img['ikkyo_pin']='images/katate_dori/ikkyo_pin_s.jpg';
+  label['ikkyo_pin']='ikkyo pin';
+
+  img['nikkyo']='images/katate_dori/nikkyo_s.jpg';
+  label['nikkyo']='nikkyo';
+
+  next['nikkyo']= new Array();
+  next['nikkyo'][0]='nikkyo_ura_finish';
+  next['nikkyo'][1]='nikkyo_omote_finish';
+
+  img['nikkyo_ura_finish']='images/katate_dori/nikkyo_ura_finish_s.jpg';
+  label['nikkyo_ura_finish']='nikkyo ura finish';
+
+  next['nikkyo_ura_finish']= new Array();
+  next['nikkyo_ura_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['nikkyo_omote_finish']='images/katate_dori/nikkyo_omote_finish_s.jpg';
+  label['nikkyo_omote_finish']='nikkyo omote finish';
+
+  next['nikkyo_omote_finish']= new Array();
+  next['nikkyo_omote_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['sankyo_hand_change']='images/katate_dori/sankyo_hand_change_s.jpg';
+  label['sankyo_hand_change']='sankyo hand change';
+
+  next['sankyo_hand_change']= new Array();
+  next['sankyo_hand_change'][0]='sankyo';
+
+  img['sankyo']='images/katate_dori/sankyo_s.jpg';
+  label['sankyo']='sankyo';
+
+  next['sankyo']= new Array();
+  next['sankyo'][0]='sankyo_ura';
+  next['sankyo'][1]='sankyo_omote';
+  next['sankyo'][2]='sankyo_zempo_nage';
+  next['sankyo'][3]='sankyo_bring_around';
+
+  img['sankyo_ura']='images/katate_dori/sankyo_ura_s.jpg';
+  label['sankyo_ura']='sankyo ura';
+
+  next['sankyo_ura']= new Array();
+  next['sankyo_ura'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['sankyo_omote']='images/katate_dori/sankyo_omote_s.jpg';
+  label['sankyo_omote']='sankyo omote';
+
+  next['sankyo_omote']= new Array();
+  next['sankyo_omote'][0]='sankyo_standing_pin';
+
+  img['sankyo_standing_pin']='images/katate_dori/sankyo_standing_pin_s.jpg';
+  label['sankyo_standing_pin']='sankyo standing pin';
+
+  img['sankyo_zempo_nage']='images/katate_dori/sankyo_zempo_nage_s.jpg';
+  label['sankyo_zempo_nage']='sankyo zempo nage';
+
+  next['sankyo_zempo_nage']= new Array();
+  next['sankyo_zempo_nage'][0]='zempo_nage_left_finish';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['sankyo_bring_around']='images/katate_dori/sankyo_bring_around_s.jpg';
+  label['sankyo_bring_around']='sankyo bring behind';
+
+  next['sankyo_bring_around']= new Array();
+  next['sankyo_bring_around'][0]='aiki_otoshi_zempo_nage';
+  next['sankyo_bring_around'][1]='koshinage_on_upper_arm';
+  next['sankyo_bring_around'][2]='tai_otoshi';
+
+  img['aiki_otoshi_zempo_nage']='images/katate_dori/aiki_otoshi_zempo_nage_s.jpg';
+  label['aiki_otoshi_zempo_nage']='aiki otoshi zempo (?)';
+
+  next['aiki_otoshi_zempo_nage']= new Array();
+  next['aiki_otoshi_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['koshinage_on_upper_arm']='images/katate_dori/koshinage_on_upper_arm_s.jpg';
+  label['koshinage_on_upper_arm']='koshinage (on upper arm?)';
+
+  next['koshinage_on_upper_arm']= new Array();
+  next['koshinage_on_upper_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['tai_otoshi']='images/katate_dori/tai_otoshi_s.jpg';
+  label['tai_otoshi']='tai otoshi (over leg)';
+
+  next['tai_otoshi']= new Array();
+  next['tai_otoshi'][0]='tai_otoshi_finish';
+
+  img['tai_otoshi_finish']='images/katate_dori/tai_otoshi_finish_s.jpg';
+  label['tai_otoshi_finish']='tai otoshi finish';
+
+  img['nikkyo_sankyo_combo']='images/katate_dori/nikkyo_sankyo_combo_s.jpg';
+  label['nikkyo_sankyo_combo']='nikkyo-sankkyo combo';
+
+  next['nikkyo_sankyo_combo']= new Array();
+  next['nikkyo_sankyo_combo'][0]='nikkyo_sankkyo_zempo';
+
+  img['nikkyo_sankkyo_zempo']='images/katate_dori/nikkyo_sankkyo_zempo_s.jpg';
+  label['nikkyo_sankkyo_zempo']='nikkyo-sankkyo zempo';
+
+  img['ikkyo_uchi']='images/katate_dori/ikkyo_uchi_s.jpg';
+  label['ikkyo_uchi']='ikkyo uchi';
+
+  next['ikkyo_uchi']= new Array();
+  next['ikkyo_uchi'][0]='ikkyo_uchi_turned';
+
+  img['ikkyo_uchi_turned']='images/katate_dori/ikkyo_uchi_turned_s.jpg';
+  label['ikkyo_uchi_turned']='ikkyo uchi turned';
+
+  next['ikkyo_uchi_turned']= new Array();
+  next['ikkyo_uchi_turned'][0]='direct_downward_throw';
+  next['ikkyo_uchi_turned'][1]='shihonage_entrance';
+
+  img['direct_downward_throw']='images/katate_dori/direct_downward_throw_s.jpg';
+  label['direct_downward_throw']='direct downward throw';
+
+  img['shihonage_entrance']='images/katate_dori/shihonage_entrance_s.jpg';
+  label['shihonage_entrance']='shihonage entrance';
+
+  next['shihonage_entrance']= new Array();
+  next['shihonage_entrance'][0]='shihonage';
+  next['shihonage_entrance'][1]='udekimonage';
+  next['shihonage_entrance'][2]='kokyo_nage_grabbing';
+  next['shihonage_entrance'][3]='shiho_koshinage';
+  next['shihonage_entrance'][4]='omote_iriminage';
+  next['shihonage_entrance'][5]='koshinage_kata_guruma';
+  next['shihonage_entrance'][6]='sukui_nage_entrance';
+  next['shihonage_entrance'][7]='arm_bar_over_shoulder';
+
+  img['shihonage']='images/katate_dori/shihonage_s.jpg';
+  label['shihonage']='shihonage';
+
+  next['shihonage']= new Array();
+  next['shihonage'][0]='shihonage_regular_throw';
+  next['shihonage'][1]='shihonage_high_throw';
+
+  img['shihonage_regular_throw']='images/katate_dori/shihonage_regular_throw_s.jpg';
+  label['shihonage_regular_throw']='shihonage throw (regular)';
+
+  img['shihonage_high_throw']='images/katate_dori/shihonage_high_throw_s.jpg';
+  label['shihonage_high_throw']='shihonage throw (high)';
+
+  img['udekimonage']='images/katate_dori/udekimonage_s.jpg';
+  label['udekimonage']='udekimonage';
+
+  next['udekimonage']= new Array();
+  next['udekimonage'][0]='udekimonage_left_finish';
+
+  img['udekimonage_left_finish']='images/katate_dori/udekimonage_left_finish_s.jpg';
+  label['udekimonage_left_finish']='udekimonage finish';
+
+  img['kokyo_nage_grabbing']='images/katate_dori/kokyo_nage_grabbing_s.jpg';
+  label['kokyo_nage_grabbing']='kokyo nage';
+
+  next['kokyo_nage_grabbing']= new Array();
+  next['kokyo_nage_grabbing'][0]='kokyo_nage_throw';
+
+  img['kokyo_nage_throw']='images/katate_dori/kokyo_nage_throw_s.jpg';
+  label['kokyo_nage_throw']='kokyo nage finish';
+
+  img['shiho_koshinage']='images/katate_dori/shiho_koshinage_s.jpg';
+  label['shiho_koshinage']='shiho koshinage (hand at center)';
+
+  next['shiho_koshinage']= new Array();
+  next['shiho_koshinage'][0]='koshinage_left_finish';
+
+  img['koshinage_left_finish']='images/katate_dori/koshinage_left_finish_s.jpg';
+  label['koshinage_left_finish']='koshinage finish';
+
+  img['omote_iriminage']='images/katate_dori/omote_iriminage_s.jpg';
+  label['omote_iriminage']='omote iriminage';
+
+  next['omote_iriminage']= new Array();
+  next['omote_iriminage'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['koshinage_kata_guruma']='images/katate_dori/koshinage_kata_guruma_s.jpg';
+  label['koshinage_kata_guruma']='koshinage (kata guruma)';
+
+  next['koshinage_kata_guruma']= new Array();
+  next['koshinage_kata_guruma'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sukui_nage_entrance']='images/katate_dori/sukui_nage_entrance_s.jpg';
+  label['sukui_nage_entrance']='sukui nage entrance';
+
+  next['sukui_nage_entrance']= new Array();
+  next['sukui_nage_entrance'][0]='koshinage_sukui_nage';
+
+  img['koshinage_sukui_nage']='images/katate_dori/koshinage_sukui_nage_s.jpg';
+  label['koshinage_sukui_nage']='koshinage (sukui nage)';
+
+  next['koshinage_sukui_nage']= new Array();
+  next['koshinage_sukui_nage'][0]='sukui_nage_finish';
+
+  img['sukui_nage_finish']='images/katate_dori/sukui_nage_finish_s.jpg';
+  label['sukui_nage_finish']='sukui nage finish';
+
+  img['arm_bar_over_shoulder']='images/katate_dori/arm_bar_over_shoulder_s.jpg';
+  label['arm_bar_over_shoulder']='arm bar (over shoulder)';
+
+  next['arm_bar_over_shoulder']= new Array();
+  next['arm_bar_over_shoulder'][0]='shiho_zempo_nage';
+
+  img['shiho_zempo_nage']='images/katate_dori/shiho_zempo_nage_s.jpg';
+  label['shiho_zempo_nage']='shiho zempo nage';
+
+  next['shiho_zempo_nage']= new Array();
+  next['shiho_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['yonkyo_entrance']='images/katate_dori/yonkyo_entrance_s.jpg';
+  label['yonkyo_entrance']='yonkyo entrance';
+
+  next['yonkyo_entrance']= new Array();
+  next['yonkyo_entrance'][0]='yonkyo_ura';
+  next['yonkyo_entrance'][1]='yonkyo_omote';
+
+  img['yonkyo_ura']='images/katate_dori/yonkyo_ura_s.jpg';
+  label['yonkyo_ura']='yonkyo ura';
+
+  next['yonkyo_ura']= new Array();
+  next['yonkyo_ura'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['yonkyo_omote']='images/katate_dori/yonkyo_omote_s.jpg';
+  label['yonkyo_omote']='yonkyo omote';
+
+  next['yonkyo_omote']= new Array();
+  next['yonkyo_omote'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['ikkyo_ura_entrance']='images/katate_dori/ikkyo_ura_entrance_s.jpg';
+  label['ikkyo_ura_entrance']='ikkyo ura entrance';
+
+  next['ikkyo_ura_entrance']= new Array();
+  next['ikkyo_ura_entrance'][0]='ikkyo_omote';
+  next['ikkyo_ura_entrance'][1]='nikkyo';
+  next['ikkyo_ura_entrance'][2]='sankyo_hand_change';
+  next['ikkyo_ura_entrance'][3]='yonkyo_entrance';
+  next['ikkyo_ura_entrance'][4]='iriminage_continuance';
+
+  img['ikkyo_omote']='images/katate_dori/ikkyo_omote_s.jpg';
+  label['ikkyo_omote']='ikkyo omote';
+
+  next['ikkyo_omote']= new Array();
+  next['ikkyo_omote'][0]='ikkyo_pin';
+
+  img['ikkyo_pin']='images/katate_dori/ikkyo_pin_s.jpg';
+  label['ikkyo_pin']='ikkyo pin';
+
+  img['nikkyo']='images/katate_dori/nikkyo_s.jpg';
+  label['nikkyo']='nikkyo';
+
+  next['nikkyo']= new Array();
+  next['nikkyo'][0]='nikkyo_ura_finish';
+  next['nikkyo'][1]='nikkyo_omote_finish';
+
+  img['nikkyo_ura_finish']='images/katate_dori/nikkyo_ura_finish_s.jpg';
+  label['nikkyo_ura_finish']='nikkyo ura finish';
+
+  next['nikkyo_ura_finish']= new Array();
+  next['nikkyo_ura_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['nikkyo_omote_finish']='images/katate_dori/nikkyo_omote_finish_s.jpg';
+  label['nikkyo_omote_finish']='nikkyo omote finish';
+
+  next['nikkyo_omote_finish']= new Array();
+  next['nikkyo_omote_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['sankyo_hand_change']='images/katate_dori/sankyo_hand_change_s.jpg';
+  label['sankyo_hand_change']='sankyo hand change';
+
+  next['sankyo_hand_change']= new Array();
+  next['sankyo_hand_change'][0]='sankyo';
+
+  img['sankyo']='images/katate_dori/sankyo_s.jpg';
+  label['sankyo']='sankyo';
+
+  next['sankyo']= new Array();
+  next['sankyo'][0]='sankyo_ura';
+  next['sankyo'][1]='sankyo_omote';
+  next['sankyo'][2]='sankyo_zempo_nage';
+  next['sankyo'][3]='sankyo_bring_around';
+
+  img['sankyo_ura']='images/katate_dori/sankyo_ura_s.jpg';
+  label['sankyo_ura']='sankyo ura';
+
+  next['sankyo_ura']= new Array();
+  next['sankyo_ura'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['sankyo_omote']='images/katate_dori/sankyo_omote_s.jpg';
+  label['sankyo_omote']='sankyo omote';
+
+  next['sankyo_omote']= new Array();
+  next['sankyo_omote'][0]='sankyo_standing_pin';
+
+  img['sankyo_standing_pin']='images/katate_dori/sankyo_standing_pin_s.jpg';
+  label['sankyo_standing_pin']='sankyo standing pin';
+
+  img['sankyo_zempo_nage']='images/katate_dori/sankyo_zempo_nage_s.jpg';
+  label['sankyo_zempo_nage']='sankyo zempo nage';
+
+  next['sankyo_zempo_nage']= new Array();
+  next['sankyo_zempo_nage'][0]='zempo_nage_left_finish';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['sankyo_bring_around']='images/katate_dori/sankyo_bring_around_s.jpg';
+  label['sankyo_bring_around']='sankyo bring behind';
+
+  next['sankyo_bring_around']= new Array();
+  next['sankyo_bring_around'][0]='aiki_otoshi_zempo_nage';
+  next['sankyo_bring_around'][1]='koshinage_on_upper_arm';
+  next['sankyo_bring_around'][2]='tai_otoshi';
+
+  img['aiki_otoshi_zempo_nage']='images/katate_dori/aiki_otoshi_zempo_nage_s.jpg';
+  label['aiki_otoshi_zempo_nage']='aiki otoshi zempo (?)';
+
+  next['aiki_otoshi_zempo_nage']= new Array();
+  next['aiki_otoshi_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['koshinage_on_upper_arm']='images/katate_dori/koshinage_on_upper_arm_s.jpg';
+  label['koshinage_on_upper_arm']='koshinage (on upper arm?)';
+
+  next['koshinage_on_upper_arm']= new Array();
+  next['koshinage_on_upper_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['tai_otoshi']='images/katate_dori/tai_otoshi_s.jpg';
+  label['tai_otoshi']='tai otoshi (over leg)';
+
+  next['tai_otoshi']= new Array();
+  next['tai_otoshi'][0]='tai_otoshi_finish';
+
+  img['tai_otoshi_finish']='images/katate_dori/tai_otoshi_finish_s.jpg';
+  label['tai_otoshi_finish']='tai otoshi finish';
+
+  img['yonkyo_entrance']='images/katate_dori/yonkyo_entrance_s.jpg';
+  label['yonkyo_entrance']='yonkyo entrance';
+
+  next['yonkyo_entrance']= new Array();
+  next['yonkyo_entrance'][0]='yonkyo_ura';
+  next['yonkyo_entrance'][1]='yonkyo_omote';
+
+  img['yonkyo_ura']='images/katate_dori/yonkyo_ura_s.jpg';
+  label['yonkyo_ura']='yonkyo ura';
+
+  next['yonkyo_ura']= new Array();
+  next['yonkyo_ura'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['yonkyo_omote']='images/katate_dori/yonkyo_omote_s.jpg';
+  label['yonkyo_omote']='yonkyo omote';
+
+  next['yonkyo_omote']= new Array();
+  next['yonkyo_omote'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['iriminage_continuance']='images/katate_dori/iriminage_continuance_s.jpg';
+  label['iriminage_continuance']='iriminage continuance';
+
+  next['iriminage_continuance']= new Array();
+  next['iriminage_continuance'][0]='iriminage_right_throw';
+  next['iriminage_continuance'][1]='iriminage_full_entrance';
+
+  img['iriminage_right_throw']='images/katate_dori/iriminage_right_throw_s.jpg';
+  label['iriminage_right_throw']='iriminage throw';
+
+  next['iriminage_right_throw']= new Array();
+  next['iriminage_right_throw'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['iriminage_full_entrance']='images/katate_dori/iriminage_full_entrance_s.jpg';
+  label['iriminage_full_entrance']='iriminage full entrance throw';
+
+  next['iriminage_full_entrance']= new Array();
+  next['iriminage_full_entrance'][0]='iriminage_full_entrance_finish';
+
+  img['iriminage_full_entrance_finish']='images/katate_dori/iriminage_full_entrance_finish_s.jpg';
+  label['iriminage_full_entrance_finish']='irimi full entrance finish';
+
+  img['gokyo_entrance']='images/katate_dori/gokyo_entrance_s.jpg';
+  label['gokyo_entrance']='gokyo entrance';
+
+  next['gokyo_entrance']= new Array();
+  next['gokyo_entrance'][0]='gokyo_omote';
+  next['gokyo_entrance'][1]='gokyo_ura';
+
+  img['gokyo_omote']='images/katate_dori/gokyo_omote_s.jpg';
+  label['gokyo_omote']='gokyo omote';
+
+  next['gokyo_omote']= new Array();
+  next['gokyo_omote'][0]='gokyo_pin';
+
+  img['gokyo_pin']='images/katate_dori/gokyo_pin_s.jpg';
+  label['gokyo_pin']='gokyo pin';
+
+  img['gokyo_ura']='images/katate_dori/gokyo_ura_s.jpg';
+  label['gokyo_ura']='gokyo ura';
+
+  next['gokyo_ura']= new Array();
+  next['gokyo_ura'][0]='gokyo_pin';
+
+  img['gokyo_pin']='images/katate_dori/gokyo_pin_s.jpg';
+  label['gokyo_pin']='gokyo pin';
+
+  img['rokyo_omote']='images/katate_dori/rokyo_omote_s.jpg';
+  label['rokyo_omote']='rokyo omote';
+
+  next['rokyo_omote']= new Array();
+  next['rokyo_omote'][0]='rokyo_pin';
+
+  img['rokyo_pin']='images/katate_dori/rokyo_pin_s.jpg';
+  label['rokyo_pin']='rokyo pin';
+
+  img['uchi_mawari_grabbed']='images/katate_dori/uchi_mawari_grabbed_s.jpg';
+  label['uchi_mawari_grabbed']='uchi mawari (grabbed)';
+
+  next['uchi_mawari_grabbed']= new Array();
+  next['uchi_mawari_grabbed'][0]='zempo_nage_left_finish';
+  next['uchi_mawari_grabbed'][1]='kaiten_nage_continuance';
+  next['uchi_mawari_grabbed'][2]='arm_bar_continuance';
+  next['uchi_mawari_grabbed'][3]='koshi_nage_past_head';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['kaiten_nage_continuance']='images/katate_dori/kaiten_nage_continuance_s.jpg';
+  label['kaiten_nage_continuance']='kaiten nage continuance';
+
+  next['kaiten_nage_continuance']= new Array();
+  next['kaiten_nage_continuance'][0]='kaiten_nage_omote';
+  next['kaiten_nage_continuance'][1]='kaiten_nage_ura';
+
+  img['kaiten_nage_omote']='images/katate_dori/kaiten_nage_omote_s.jpg';
+  label['kaiten_nage_omote']='kaiten nage omote';
+
+  next['kaiten_nage_omote']= new Array();
+  next['kaiten_nage_omote'][0]='kaiten_nage_throw';
+
+  img['kaiten_nage_throw']='images/katate_dori/kaiten_nage_throw_s.jpg';
+  label['kaiten_nage_throw']='kaiten nage throw';
+
+  img['kaiten_nage_ura']='images/katate_dori/kaiten_nage_ura_s.jpg';
+  label['kaiten_nage_ura']='kaiten nage ura';
+
+  next['kaiten_nage_ura']= new Array();
+  next['kaiten_nage_ura'][0]='kaiten_nage_throw';
+
+  img['kaiten_nage_throw']='images/katate_dori/kaiten_nage_throw_s.jpg';
+  label['kaiten_nage_throw']='kaiten nage throw';
+
+  img['arm_bar_continuance']='images/katate_dori/arm_bar_continuance_s.jpg';
+  label['arm_bar_continuance']='arm bar continuance';
+
+  next['arm_bar_continuance']= new Array();
+  next['arm_bar_continuance'][0]='arm_bar';
+
+  img['arm_bar']='images/katate_dori/arm_bar_s.jpg';
+  label['arm_bar']='arm bar';
+
+  next['arm_bar']= new Array();
+  next['arm_bar'][0]='arm_bar_pin';
+
+  img['arm_bar_pin']='images/katate_dori/arm_bar_pin_s.jpg';
+  label['arm_bar_pin']='arm bar pin';
+
+  img['koshi_nage_past_head']='images/katate_dori/koshi_nage_past_head_s.jpg';
+  label['koshi_nage_past_head']='koshi nage (past head)';
+
+  next['koshi_nage_past_head']= new Array();
+  next['koshi_nage_past_head'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['soto_mawari_grabbed']='images/katate_dori/soto_mawari_grabbed_s.jpg';
+  label['soto_mawari_grabbed']='soto mawari (grabbed)';
+
+  next['soto_mawari_grabbed']= new Array();
+  next['soto_mawari_grabbed'][0]='zempo_nage_left_finish';
+  next['soto_mawari_grabbed'][1]='kaiten_nage_continuance';
+  next['soto_mawari_grabbed'][2]='arm_bar_continuance';
+  next['soto_mawari_grabbed'][3]='yonkyo_continuance';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['kaiten_nage_continuance']='images/katate_dori/kaiten_nage_continuance_s.jpg';
+  label['kaiten_nage_continuance']='kaiten nage continuance';
+
+  next['kaiten_nage_continuance']= new Array();
+  next['kaiten_nage_continuance'][0]='kaiten_nage_omote';
+  next['kaiten_nage_continuance'][1]='kaiten_nage_ura';
+
+  img['kaiten_nage_omote']='images/katate_dori/kaiten_nage_omote_s.jpg';
+  label['kaiten_nage_omote']='kaiten nage omote';
+
+  next['kaiten_nage_omote']= new Array();
+  next['kaiten_nage_omote'][0]='kaiten_nage_throw';
+
+  img['kaiten_nage_throw']='images/katate_dori/kaiten_nage_throw_s.jpg';
+  label['kaiten_nage_throw']='kaiten nage throw';
+
+  img['kaiten_nage_ura']='images/katate_dori/kaiten_nage_ura_s.jpg';
+  label['kaiten_nage_ura']='kaiten nage ura';
+
+  next['kaiten_nage_ura']= new Array();
+  next['kaiten_nage_ura'][0]='kaiten_nage_throw';
+
+  img['kaiten_nage_throw']='images/katate_dori/kaiten_nage_throw_s.jpg';
+  label['kaiten_nage_throw']='kaiten nage throw';
+
+  img['arm_bar_continuance']='images/katate_dori/arm_bar_continuance_s.jpg';
+  label['arm_bar_continuance']='arm bar continuance';
+
+  next['arm_bar_continuance']= new Array();
+  next['arm_bar_continuance'][0]='arm_bar';
+
+  img['arm_bar']='images/katate_dori/arm_bar_s.jpg';
+  label['arm_bar']='arm bar';
+
+  next['arm_bar']= new Array();
+  next['arm_bar'][0]='arm_bar_pin';
+
+  img['arm_bar_pin']='images/katate_dori/arm_bar_pin_s.jpg';
+  label['arm_bar_pin']='arm bar pin';
+
+  img['yonkyo_continuance']='images/katate_dori/yonkyo_continuance_s.jpg';
+  label['yonkyo_continuance']='yonkyo continuance';
+
+  next['yonkyo_continuance']= new Array();
+  next['yonkyo_continuance'][0]='yonkyo_omote';
+  next['yonkyo_continuance'][1]='sankyo_like_continuance_omote';
+  next['yonkyo_continuance'][2]='sankyo_like_continuance_ura';
+  next['yonkyo_continuance'][3]='zempo_nage_left_finish';
+  next['yonkyo_continuance'][4]='uchi_yonkyo';
+
+  img['yonkyo_omote']='images/katate_dori/yonkyo_omote_s.jpg';
+  label['yonkyo_omote']='yonkyo omote';
+
+  next['yonkyo_omote']= new Array();
+  next['yonkyo_omote'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['sankyo_like_continuance_omote']='images/katate_dori/sankyo_like_continuance_omote_s.jpg';
+  label['sankyo_like_continuance_omote']='sankyo-like (omote)';
+
+  next['sankyo_like_continuance_omote']= new Array();
+  next['sankyo_like_continuance_omote'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['sankyo_like_continuance_ura']='images/katate_dori/sankyo_like_continuance_ura_s.jpg';
+  label['sankyo_like_continuance_ura']='sankyo-like (ura)';
+
+  next['sankyo_like_continuance_ura']= new Array();
+  next['sankyo_like_continuance_ura'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['uchi_yonkyo']='images/katate_dori/uchi_yonkyo_s.jpg';
+  label['uchi_yonkyo']='uchi yonkyo';
+
+  next['uchi_yonkyo']= new Array();
+  next['uchi_yonkyo'][0]='sumi_otoshi_elbow';
+  next['uchi_yonkyo'][1]='sumi_otoshi_inside_shoulder';
+  next['uchi_yonkyo'][2]='sumi_otoshi_outside_shoulder';
+  next['uchi_yonkyo'][3]='sumi_otoshi_head';
+  next['uchi_yonkyo'][4]='sumi_koshinage_two_hands_on_arm';
+  next['uchi_yonkyo'][5]='sumi_koshinage_arm_around_waist';
+  next['uchi_yonkyo'][6]='shihonage_entrance';
+
+  img['sumi_otoshi_elbow']='images/katate_dori/sumi_otoshi_elbow_s.jpg';
+  label['sumi_otoshi_elbow']='sumi otoshi (hiji)';
+
+  next['sumi_otoshi_elbow']= new Array();
+  next['sumi_otoshi_elbow'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_inside_shoulder']='images/katate_dori/sumi_otoshi_inside_shoulder_s.jpg';
+  label['sumi_otoshi_inside_shoulder']='sumi otoshi (inside shoulder)';
+
+  next['sumi_otoshi_inside_shoulder']= new Array();
+  next['sumi_otoshi_inside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_outside_shoulder']='images/katate_dori/sumi_otoshi_outside_shoulder_s.jpg';
+  label['sumi_otoshi_outside_shoulder']='sumi otoshi (outside shoulder)';
+
+  next['sumi_otoshi_outside_shoulder']= new Array();
+  next['sumi_otoshi_outside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_head']='images/katate_dori/sumi_otoshi_head_s.jpg';
+  label['sumi_otoshi_head']='sumi otoshi (head)';
+
+  img['sumi_koshinage_two_hands_on_arm']='images/katate_dori/sumi_koshinage_two_hands_on_arm_s.jpg';
+  label['sumi_koshinage_two_hands_on_arm']='koshinage (morote seoinage)';
+
+  next['sumi_koshinage_two_hands_on_arm']= new Array();
+  next['sumi_koshinage_two_hands_on_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sumi_koshinage_arm_around_waist']='images/katate_dori/sumi_koshinage_arm_around_waist_s.jpg';
+  label['sumi_koshinage_arm_around_waist']='koshinage (arm around waist)';
+
+  next['sumi_koshinage_arm_around_waist']= new Array();
+  next['sumi_koshinage_arm_around_waist'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['shihonage_entrance']='images/katate_dori/shihonage_entrance_s.jpg';
+  label['shihonage_entrance']='shihonage entrance';
+
+  next['shihonage_entrance']= new Array();
+  next['shihonage_entrance'][0]='shihonage';
+  next['shihonage_entrance'][1]='udekimonage';
+  next['shihonage_entrance'][2]='kokyo_nage_grabbing';
+  next['shihonage_entrance'][3]='shiho_koshinage';
+  next['shihonage_entrance'][4]='omote_iriminage';
+  next['shihonage_entrance'][5]='koshinage_kata_guruma';
+  next['shihonage_entrance'][6]='sukui_nage_entrance';
+  next['shihonage_entrance'][7]='arm_bar_over_shoulder';
+
+  img['shihonage']='images/katate_dori/shihonage_s.jpg';
+  label['shihonage']='shihonage';
+
+  next['shihonage']= new Array();
+  next['shihonage'][0]='shihonage_regular_throw';
+  next['shihonage'][1]='shihonage_high_throw';
+
+  img['shihonage_regular_throw']='images/katate_dori/shihonage_regular_throw_s.jpg';
+  label['shihonage_regular_throw']='shihonage throw (regular)';
+
+  img['shihonage_high_throw']='images/katate_dori/shihonage_high_throw_s.jpg';
+  label['shihonage_high_throw']='shihonage throw (high)';
+
+  img['udekimonage']='images/katate_dori/udekimonage_s.jpg';
+  label['udekimonage']='udekimonage';
+
+  next['udekimonage']= new Array();
+  next['udekimonage'][0]='udekimonage_left_finish';
+
+  img['udekimonage_left_finish']='images/katate_dori/udekimonage_left_finish_s.jpg';
+  label['udekimonage_left_finish']='udekimonage finish';
+
+  img['kokyo_nage_grabbing']='images/katate_dori/kokyo_nage_grabbing_s.jpg';
+  label['kokyo_nage_grabbing']='kokyo nage';
+
+  next['kokyo_nage_grabbing']= new Array();
+  next['kokyo_nage_grabbing'][0]='kokyo_nage_throw';
+
+  img['kokyo_nage_throw']='images/katate_dori/kokyo_nage_throw_s.jpg';
+  label['kokyo_nage_throw']='kokyo nage finish';
+
+  img['shiho_koshinage']='images/katate_dori/shiho_koshinage_s.jpg';
+  label['shiho_koshinage']='shiho koshinage (hand at center)';
+
+  next['shiho_koshinage']= new Array();
+  next['shiho_koshinage'][0]='koshinage_left_finish';
+
+  img['koshinage_left_finish']='images/katate_dori/koshinage_left_finish_s.jpg';
+  label['koshinage_left_finish']='koshinage finish';
+
+  img['omote_iriminage']='images/katate_dori/omote_iriminage_s.jpg';
+  label['omote_iriminage']='omote iriminage';
+
+  next['omote_iriminage']= new Array();
+  next['omote_iriminage'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['koshinage_kata_guruma']='images/katate_dori/koshinage_kata_guruma_s.jpg';
+  label['koshinage_kata_guruma']='koshinage (kata guruma)';
+
+  next['koshinage_kata_guruma']= new Array();
+  next['koshinage_kata_guruma'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sukui_nage_entrance']='images/katate_dori/sukui_nage_entrance_s.jpg';
+  label['sukui_nage_entrance']='sukui nage entrance';
+
+  next['sukui_nage_entrance']= new Array();
+  next['sukui_nage_entrance'][0]='koshinage_sukui_nage';
+
+  img['koshinage_sukui_nage']='images/katate_dori/koshinage_sukui_nage_s.jpg';
+  label['koshinage_sukui_nage']='koshinage (sukui nage)';
+
+  next['koshinage_sukui_nage']= new Array();
+  next['koshinage_sukui_nage'][0]='sukui_nage_finish';
+
+  img['sukui_nage_finish']='images/katate_dori/sukui_nage_finish_s.jpg';
+  label['sukui_nage_finish']='sukui nage finish';
+
+  img['arm_bar_over_shoulder']='images/katate_dori/arm_bar_over_shoulder_s.jpg';
+  label['arm_bar_over_shoulder']='arm bar (over shoulder)';
+
+  next['arm_bar_over_shoulder']= new Array();
+  next['arm_bar_over_shoulder'][0]='shiho_zempo_nage';
+
+  img['shiho_zempo_nage']='images/katate_dori/shiho_zempo_nage_s.jpg';
+  label['shiho_zempo_nage']='shiho zempo nage';
+
+  next['shiho_zempo_nage']= new Array();
+  next['shiho_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['hiji_continuance']='images/katate_dori/hiji_continuance_s.jpg';
+  label['hiji_continuance']='hiji continuance';
+
+  next['hiji_continuance']= new Array();
+  next['hiji_continuance'][0]='hijinage_throw';
+  next['hiji_continuance'][1]='sumi_otoshi_outside_shoulder';
+  next['hiji_continuance'][2]='tai_otoshi';
+
+  img['hijinage_throw']='images/katate_dori/hijinage_throw_s.jpg';
+  label['hijinage_throw']='hijinage throw';
+
+  img['sumi_otoshi_outside_shoulder']='images/katate_dori/sumi_otoshi_outside_shoulder_s.jpg';
+  label['sumi_otoshi_outside_shoulder']='sumi otoshi (outside shoulder)';
+
+  next['sumi_otoshi_outside_shoulder']= new Array();
+  next['sumi_otoshi_outside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['tai_otoshi']='images/katate_dori/tai_otoshi_s.jpg';
+  label['tai_otoshi']='tai otoshi (over leg)';
+
+  next['tai_otoshi']= new Array();
+  next['tai_otoshi'][0]='tai_otoshi_finish';
+
+  img['tai_otoshi_finish']='images/katate_dori/tai_otoshi_finish_s.jpg';
+  label['tai_otoshi_finish']='tai otoshi finish';
+
+  img['step_back_grabbed']='images/katate_dori/step_back_grabbed_s.jpg';
+  label['step_back_grabbed']='step back';
+
+  next['step_back_grabbed']= new Array();
+  next['step_back_grabbed'][0]='ikkyo_omote_entrance';
+  next['step_back_grabbed'][1]='ikkyo_ura_entrance';
+  next['step_back_grabbed'][2]='yonkyo_entrance';
+  next['step_back_grabbed'][3]='gokyo_entrance';
+  next['step_back_grabbed'][4]='step_forward_hand_to_head';
+  next['step_back_grabbed'][5]='hiji_kime_entrance';
+
+  img['ikkyo_omote_entrance']='images/katate_dori/ikkyo_omote_entrance_s.jpg';
+  label['ikkyo_omote_entrance']='ikkyo omote entrance';
+
+  next['ikkyo_omote_entrance']= new Array();
+  next['ikkyo_omote_entrance'][0]='ikkyo_omote';
+  next['ikkyo_omote_entrance'][1]='nikkyo';
+  next['ikkyo_omote_entrance'][2]='sankyo_hand_change';
+  next['ikkyo_omote_entrance'][3]='nikkyo_sankyo_combo';
+  next['ikkyo_omote_entrance'][4]='ikkyo_uchi';
+
+  img['ikkyo_omote']='images/katate_dori/ikkyo_omote_s.jpg';
+  label['ikkyo_omote']='ikkyo omote';
+
+  next['ikkyo_omote']= new Array();
+  next['ikkyo_omote'][0]='ikkyo_pin';
+
+  img['ikkyo_pin']='images/katate_dori/ikkyo_pin_s.jpg';
+  label['ikkyo_pin']='ikkyo pin';
+
+  img['nikkyo']='images/katate_dori/nikkyo_s.jpg';
+  label['nikkyo']='nikkyo';
+
+  next['nikkyo']= new Array();
+  next['nikkyo'][0]='nikkyo_ura_finish';
+  next['nikkyo'][1]='nikkyo_omote_finish';
+
+  img['nikkyo_ura_finish']='images/katate_dori/nikkyo_ura_finish_s.jpg';
+  label['nikkyo_ura_finish']='nikkyo ura finish';
+
+  next['nikkyo_ura_finish']= new Array();
+  next['nikkyo_ura_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['nikkyo_omote_finish']='images/katate_dori/nikkyo_omote_finish_s.jpg';
+  label['nikkyo_omote_finish']='nikkyo omote finish';
+
+  next['nikkyo_omote_finish']= new Array();
+  next['nikkyo_omote_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['sankyo_hand_change']='images/katate_dori/sankyo_hand_change_s.jpg';
+  label['sankyo_hand_change']='sankyo hand change';
+
+  next['sankyo_hand_change']= new Array();
+  next['sankyo_hand_change'][0]='sankyo';
+
+  img['sankyo']='images/katate_dori/sankyo_s.jpg';
+  label['sankyo']='sankyo';
+
+  next['sankyo']= new Array();
+  next['sankyo'][0]='sankyo_ura';
+  next['sankyo'][1]='sankyo_omote';
+  next['sankyo'][2]='sankyo_zempo_nage';
+  next['sankyo'][3]='sankyo_bring_around';
+
+  img['sankyo_ura']='images/katate_dori/sankyo_ura_s.jpg';
+  label['sankyo_ura']='sankyo ura';
+
+  next['sankyo_ura']= new Array();
+  next['sankyo_ura'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['sankyo_omote']='images/katate_dori/sankyo_omote_s.jpg';
+  label['sankyo_omote']='sankyo omote';
+
+  next['sankyo_omote']= new Array();
+  next['sankyo_omote'][0]='sankyo_standing_pin';
+
+  img['sankyo_standing_pin']='images/katate_dori/sankyo_standing_pin_s.jpg';
+  label['sankyo_standing_pin']='sankyo standing pin';
+
+  img['sankyo_zempo_nage']='images/katate_dori/sankyo_zempo_nage_s.jpg';
+  label['sankyo_zempo_nage']='sankyo zempo nage';
+
+  next['sankyo_zempo_nage']= new Array();
+  next['sankyo_zempo_nage'][0]='zempo_nage_left_finish';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['sankyo_bring_around']='images/katate_dori/sankyo_bring_around_s.jpg';
+  label['sankyo_bring_around']='sankyo bring behind';
+
+  next['sankyo_bring_around']= new Array();
+  next['sankyo_bring_around'][0]='aiki_otoshi_zempo_nage';
+  next['sankyo_bring_around'][1]='koshinage_on_upper_arm';
+  next['sankyo_bring_around'][2]='tai_otoshi';
+
+  img['aiki_otoshi_zempo_nage']='images/katate_dori/aiki_otoshi_zempo_nage_s.jpg';
+  label['aiki_otoshi_zempo_nage']='aiki otoshi zempo (?)';
+
+  next['aiki_otoshi_zempo_nage']= new Array();
+  next['aiki_otoshi_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['koshinage_on_upper_arm']='images/katate_dori/koshinage_on_upper_arm_s.jpg';
+  label['koshinage_on_upper_arm']='koshinage (on upper arm?)';
+
+  next['koshinage_on_upper_arm']= new Array();
+  next['koshinage_on_upper_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['tai_otoshi']='images/katate_dori/tai_otoshi_s.jpg';
+  label['tai_otoshi']='tai otoshi (over leg)';
+
+  next['tai_otoshi']= new Array();
+  next['tai_otoshi'][0]='tai_otoshi_finish';
+
+  img['tai_otoshi_finish']='images/katate_dori/tai_otoshi_finish_s.jpg';
+  label['tai_otoshi_finish']='tai otoshi finish';
+
+  img['nikkyo_sankyo_combo']='images/katate_dori/nikkyo_sankyo_combo_s.jpg';
+  label['nikkyo_sankyo_combo']='nikkyo-sankkyo combo';
+
+  next['nikkyo_sankyo_combo']= new Array();
+  next['nikkyo_sankyo_combo'][0]='nikkyo_sankkyo_zempo';
+
+  img['nikkyo_sankkyo_zempo']='images/katate_dori/nikkyo_sankkyo_zempo_s.jpg';
+  label['nikkyo_sankkyo_zempo']='nikkyo-sankkyo zempo';
+
+  img['ikkyo_uchi']='images/katate_dori/ikkyo_uchi_s.jpg';
+  label['ikkyo_uchi']='ikkyo uchi';
+
+  next['ikkyo_uchi']= new Array();
+  next['ikkyo_uchi'][0]='ikkyo_uchi_turned';
+
+  img['ikkyo_uchi_turned']='images/katate_dori/ikkyo_uchi_turned_s.jpg';
+  label['ikkyo_uchi_turned']='ikkyo uchi turned';
+
+  next['ikkyo_uchi_turned']= new Array();
+  next['ikkyo_uchi_turned'][0]='direct_downward_throw';
+  next['ikkyo_uchi_turned'][1]='shihonage_entrance';
+
+  img['direct_downward_throw']='images/katate_dori/direct_downward_throw_s.jpg';
+  label['direct_downward_throw']='direct downward throw';
+
+  img['shihonage_entrance']='images/katate_dori/shihonage_entrance_s.jpg';
+  label['shihonage_entrance']='shihonage entrance';
+
+  next['shihonage_entrance']= new Array();
+  next['shihonage_entrance'][0]='shihonage';
+  next['shihonage_entrance'][1]='udekimonage';
+  next['shihonage_entrance'][2]='kokyo_nage_grabbing';
+  next['shihonage_entrance'][3]='shiho_koshinage';
+  next['shihonage_entrance'][4]='omote_iriminage';
+  next['shihonage_entrance'][5]='koshinage_kata_guruma';
+  next['shihonage_entrance'][6]='sukui_nage_entrance';
+  next['shihonage_entrance'][7]='arm_bar_over_shoulder';
+
+  img['shihonage']='images/katate_dori/shihonage_s.jpg';
+  label['shihonage']='shihonage';
+
+  next['shihonage']= new Array();
+  next['shihonage'][0]='shihonage_regular_throw';
+  next['shihonage'][1]='shihonage_high_throw';
+
+  img['shihonage_regular_throw']='images/katate_dori/shihonage_regular_throw_s.jpg';
+  label['shihonage_regular_throw']='shihonage throw (regular)';
+
+  img['shihonage_high_throw']='images/katate_dori/shihonage_high_throw_s.jpg';
+  label['shihonage_high_throw']='shihonage throw (high)';
+
+  img['udekimonage']='images/katate_dori/udekimonage_s.jpg';
+  label['udekimonage']='udekimonage';
+
+  next['udekimonage']= new Array();
+  next['udekimonage'][0]='udekimonage_left_finish';
+
+  img['udekimonage_left_finish']='images/katate_dori/udekimonage_left_finish_s.jpg';
+  label['udekimonage_left_finish']='udekimonage finish';
+
+  img['kokyo_nage_grabbing']='images/katate_dori/kokyo_nage_grabbing_s.jpg';
+  label['kokyo_nage_grabbing']='kokyo nage';
+
+  next['kokyo_nage_grabbing']= new Array();
+  next['kokyo_nage_grabbing'][0]='kokyo_nage_throw';
+
+  img['kokyo_nage_throw']='images/katate_dori/kokyo_nage_throw_s.jpg';
+  label['kokyo_nage_throw']='kokyo nage finish';
+
+  img['shiho_koshinage']='images/katate_dori/shiho_koshinage_s.jpg';
+  label['shiho_koshinage']='shiho koshinage (hand at center)';
+
+  next['shiho_koshinage']= new Array();
+  next['shiho_koshinage'][0]='koshinage_left_finish';
+
+  img['koshinage_left_finish']='images/katate_dori/koshinage_left_finish_s.jpg';
+  label['koshinage_left_finish']='koshinage finish';
+
+  img['omote_iriminage']='images/katate_dori/omote_iriminage_s.jpg';
+  label['omote_iriminage']='omote iriminage';
+
+  next['omote_iriminage']= new Array();
+  next['omote_iriminage'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['koshinage_kata_guruma']='images/katate_dori/koshinage_kata_guruma_s.jpg';
+  label['koshinage_kata_guruma']='koshinage (kata guruma)';
+
+  next['koshinage_kata_guruma']= new Array();
+  next['koshinage_kata_guruma'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sukui_nage_entrance']='images/katate_dori/sukui_nage_entrance_s.jpg';
+  label['sukui_nage_entrance']='sukui nage entrance';
+
+  next['sukui_nage_entrance']= new Array();
+  next['sukui_nage_entrance'][0]='koshinage_sukui_nage';
+
+  img['koshinage_sukui_nage']='images/katate_dori/koshinage_sukui_nage_s.jpg';
+  label['koshinage_sukui_nage']='koshinage (sukui nage)';
+
+  next['koshinage_sukui_nage']= new Array();
+  next['koshinage_sukui_nage'][0]='sukui_nage_finish';
+
+  img['sukui_nage_finish']='images/katate_dori/sukui_nage_finish_s.jpg';
+  label['sukui_nage_finish']='sukui nage finish';
+
+  img['arm_bar_over_shoulder']='images/katate_dori/arm_bar_over_shoulder_s.jpg';
+  label['arm_bar_over_shoulder']='arm bar (over shoulder)';
+
+  next['arm_bar_over_shoulder']= new Array();
+  next['arm_bar_over_shoulder'][0]='shiho_zempo_nage';
+
+  img['shiho_zempo_nage']='images/katate_dori/shiho_zempo_nage_s.jpg';
+  label['shiho_zempo_nage']='shiho zempo nage';
+
+  next['shiho_zempo_nage']= new Array();
+  next['shiho_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['ikkyo_ura_entrance']='images/katate_dori/ikkyo_ura_entrance_s.jpg';
+  label['ikkyo_ura_entrance']='ikkyo ura entrance';
+
+  next['ikkyo_ura_entrance']= new Array();
+  next['ikkyo_ura_entrance'][0]='ikkyo_omote';
+  next['ikkyo_ura_entrance'][1]='nikkyo';
+  next['ikkyo_ura_entrance'][2]='sankyo_hand_change';
+  next['ikkyo_ura_entrance'][3]='yonkyo_entrance';
+  next['ikkyo_ura_entrance'][4]='iriminage_continuance';
+
+  img['ikkyo_omote']='images/katate_dori/ikkyo_omote_s.jpg';
+  label['ikkyo_omote']='ikkyo omote';
+
+  next['ikkyo_omote']= new Array();
+  next['ikkyo_omote'][0]='ikkyo_pin';
+
+  img['ikkyo_pin']='images/katate_dori/ikkyo_pin_s.jpg';
+  label['ikkyo_pin']='ikkyo pin';
+
+  img['nikkyo']='images/katate_dori/nikkyo_s.jpg';
+  label['nikkyo']='nikkyo';
+
+  next['nikkyo']= new Array();
+  next['nikkyo'][0]='nikkyo_ura_finish';
+  next['nikkyo'][1]='nikkyo_omote_finish';
+
+  img['nikkyo_ura_finish']='images/katate_dori/nikkyo_ura_finish_s.jpg';
+  label['nikkyo_ura_finish']='nikkyo ura finish';
+
+  next['nikkyo_ura_finish']= new Array();
+  next['nikkyo_ura_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['nikkyo_omote_finish']='images/katate_dori/nikkyo_omote_finish_s.jpg';
+  label['nikkyo_omote_finish']='nikkyo omote finish';
+
+  next['nikkyo_omote_finish']= new Array();
+  next['nikkyo_omote_finish'][0]='nikkyo_pin';
+
+  img['nikkyo_pin']='images/katate_dori/nikkyo_pin_s.jpg';
+  label['nikkyo_pin']='nikkyo pin';
+
+  img['sankyo_hand_change']='images/katate_dori/sankyo_hand_change_s.jpg';
+  label['sankyo_hand_change']='sankyo hand change';
+
+  next['sankyo_hand_change']= new Array();
+  next['sankyo_hand_change'][0]='sankyo';
+
+  img['sankyo']='images/katate_dori/sankyo_s.jpg';
+  label['sankyo']='sankyo';
+
+  next['sankyo']= new Array();
+  next['sankyo'][0]='sankyo_ura';
+  next['sankyo'][1]='sankyo_omote';
+  next['sankyo'][2]='sankyo_zempo_nage';
+  next['sankyo'][3]='sankyo_bring_around';
+
+  img['sankyo_ura']='images/katate_dori/sankyo_ura_s.jpg';
+  label['sankyo_ura']='sankyo ura';
+
+  next['sankyo_ura']= new Array();
+  next['sankyo_ura'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['sankyo_omote']='images/katate_dori/sankyo_omote_s.jpg';
+  label['sankyo_omote']='sankyo omote';
+
+  next['sankyo_omote']= new Array();
+  next['sankyo_omote'][0]='sankyo_standing_pin';
+
+  img['sankyo_standing_pin']='images/katate_dori/sankyo_standing_pin_s.jpg';
+  label['sankyo_standing_pin']='sankyo standing pin';
+
+  img['sankyo_zempo_nage']='images/katate_dori/sankyo_zempo_nage_s.jpg';
+  label['sankyo_zempo_nage']='sankyo zempo nage';
+
+  next['sankyo_zempo_nage']= new Array();
+  next['sankyo_zempo_nage'][0]='zempo_nage_left_finish';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['sankyo_bring_around']='images/katate_dori/sankyo_bring_around_s.jpg';
+  label['sankyo_bring_around']='sankyo bring behind';
+
+  next['sankyo_bring_around']= new Array();
+  next['sankyo_bring_around'][0]='aiki_otoshi_zempo_nage';
+  next['sankyo_bring_around'][1]='koshinage_on_upper_arm';
+  next['sankyo_bring_around'][2]='tai_otoshi';
+
+  img['aiki_otoshi_zempo_nage']='images/katate_dori/aiki_otoshi_zempo_nage_s.jpg';
+  label['aiki_otoshi_zempo_nage']='aiki otoshi zempo (?)';
+
+  next['aiki_otoshi_zempo_nage']= new Array();
+  next['aiki_otoshi_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['koshinage_on_upper_arm']='images/katate_dori/koshinage_on_upper_arm_s.jpg';
+  label['koshinage_on_upper_arm']='koshinage (on upper arm?)';
+
+  next['koshinage_on_upper_arm']= new Array();
+  next['koshinage_on_upper_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['tai_otoshi']='images/katate_dori/tai_otoshi_s.jpg';
+  label['tai_otoshi']='tai otoshi (over leg)';
+
+  next['tai_otoshi']= new Array();
+  next['tai_otoshi'][0]='tai_otoshi_finish';
+
+  img['tai_otoshi_finish']='images/katate_dori/tai_otoshi_finish_s.jpg';
+  label['tai_otoshi_finish']='tai otoshi finish';
+
+  img['yonkyo_entrance']='images/katate_dori/yonkyo_entrance_s.jpg';
+  label['yonkyo_entrance']='yonkyo entrance';
+
+  next['yonkyo_entrance']= new Array();
+  next['yonkyo_entrance'][0]='yonkyo_ura';
+  next['yonkyo_entrance'][1]='yonkyo_omote';
+
+  img['yonkyo_ura']='images/katate_dori/yonkyo_ura_s.jpg';
+  label['yonkyo_ura']='yonkyo ura';
+
+  next['yonkyo_ura']= new Array();
+  next['yonkyo_ura'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['yonkyo_omote']='images/katate_dori/yonkyo_omote_s.jpg';
+  label['yonkyo_omote']='yonkyo omote';
+
+  next['yonkyo_omote']= new Array();
+  next['yonkyo_omote'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['iriminage_continuance']='images/katate_dori/iriminage_continuance_s.jpg';
+  label['iriminage_continuance']='iriminage continuance';
+
+  next['iriminage_continuance']= new Array();
+  next['iriminage_continuance'][0]='iriminage_right_throw';
+  next['iriminage_continuance'][1]='iriminage_full_entrance';
+
+  img['iriminage_right_throw']='images/katate_dori/iriminage_right_throw_s.jpg';
+  label['iriminage_right_throw']='iriminage throw';
+
+  next['iriminage_right_throw']= new Array();
+  next['iriminage_right_throw'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['iriminage_full_entrance']='images/katate_dori/iriminage_full_entrance_s.jpg';
+  label['iriminage_full_entrance']='iriminage full entrance throw';
+
+  next['iriminage_full_entrance']= new Array();
+  next['iriminage_full_entrance'][0]='iriminage_full_entrance_finish';
+
+  img['iriminage_full_entrance_finish']='images/katate_dori/iriminage_full_entrance_finish_s.jpg';
+  label['iriminage_full_entrance_finish']='irimi full entrance finish';
+
+  img['yonkyo_entrance']='images/katate_dori/yonkyo_entrance_s.jpg';
+  label['yonkyo_entrance']='yonkyo entrance';
+
+  next['yonkyo_entrance']= new Array();
+  next['yonkyo_entrance'][0]='yonkyo_ura';
+  next['yonkyo_entrance'][1]='yonkyo_omote';
+
+  img['yonkyo_ura']='images/katate_dori/yonkyo_ura_s.jpg';
+  label['yonkyo_ura']='yonkyo ura';
+
+  next['yonkyo_ura']= new Array();
+  next['yonkyo_ura'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['yonkyo_omote']='images/katate_dori/yonkyo_omote_s.jpg';
+  label['yonkyo_omote']='yonkyo omote';
+
+  next['yonkyo_omote']= new Array();
+  next['yonkyo_omote'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['gokyo_entrance']='images/katate_dori/gokyo_entrance_s.jpg';
+  label['gokyo_entrance']='gokyo entrance';
+
+  next['gokyo_entrance']= new Array();
+  next['gokyo_entrance'][0]='gokyo_omote';
+  next['gokyo_entrance'][1]='gokyo_ura';
+
+  img['gokyo_omote']='images/katate_dori/gokyo_omote_s.jpg';
+  label['gokyo_omote']='gokyo omote';
+
+  next['gokyo_omote']= new Array();
+  next['gokyo_omote'][0]='gokyo_pin';
+
+  img['gokyo_pin']='images/katate_dori/gokyo_pin_s.jpg';
+  label['gokyo_pin']='gokyo pin';
+
+  img['gokyo_ura']='images/katate_dori/gokyo_ura_s.jpg';
+  label['gokyo_ura']='gokyo ura';
+
+  next['gokyo_ura']= new Array();
+  next['gokyo_ura'][0]='gokyo_pin';
+
+  img['gokyo_pin']='images/katate_dori/gokyo_pin_s.jpg';
+  label['gokyo_pin']='gokyo pin';
+
+  img['step_forward_hand_to_head']='images/katate_dori/step_forward_hand_to_head_s.jpg';
+  label['step_forward_hand_to_head']='step forward, raise hand';
+
+  next['step_forward_hand_to_head']= new Array();
+  next['step_forward_hand_to_head'][0]='shihonage';
+  next['step_forward_hand_to_head'][1]='zempo_nage_left_finish';
+
+  img['shihonage']='images/katate_dori/shihonage_s.jpg';
+  label['shihonage']='shihonage';
+
+  next['shihonage']= new Array();
+  next['shihonage'][0]='shihonage_regular_throw';
+  next['shihonage'][1]='shihonage_high_throw';
+
+  img['shihonage_regular_throw']='images/katate_dori/shihonage_regular_throw_s.jpg';
+  label['shihonage_regular_throw']='shihonage throw (regular)';
+
+  img['shihonage_high_throw']='images/katate_dori/shihonage_high_throw_s.jpg';
+  label['shihonage_high_throw']='shihonage throw (high)';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['hiji_kime_entrance']='images/katate_dori/hiji_kime_entrance_s.jpg';
+  label['hiji_kime_entrance']='hiji kime entrance';
+
+  next['hiji_kime_entrance']= new Array();
+  next['hiji_kime_entrance'][0]='zempo_nage_left_finish_toward_right';
+  next['hiji_kime_entrance'][1]='hiji_kime_koshinage';
+
+  img['zempo_nage_left_finish_toward_right']='images/katate_dori/zempo_nage_left_finish_toward_right_s.jpg';
+  label['zempo_nage_left_finish_toward_right']='zempo nage';
+
+  img['hiji_kime_koshinage']='images/katate_dori/hiji_kime_koshinage_s.jpg';
+  label['hiji_kime_koshinage']='hiji kime koshinage';
+
+  img['step_forward_hand_to_head']='images/katate_dori/step_forward_hand_to_head_s.jpg';
+  label['step_forward_hand_to_head']='step forward, raise hand';
+
+  next['step_forward_hand_to_head']= new Array();
+  next['step_forward_hand_to_head'][0]='shihonage';
+  next['step_forward_hand_to_head'][1]='zempo_nage_left_finish';
+
+  img['shihonage']='images/katate_dori/shihonage_s.jpg';
+  label['shihonage']='shihonage';
+
+  next['shihonage']= new Array();
+  next['shihonage'][0]='shihonage_regular_throw';
+  next['shihonage'][1]='shihonage_high_throw';
+
+  img['shihonage_regular_throw']='images/katate_dori/shihonage_regular_throw_s.jpg';
+  label['shihonage_regular_throw']='shihonage throw (regular)';
+
+  img['shihonage_high_throw']='images/katate_dori/shihonage_high_throw_s.jpg';
+  label['shihonage_high_throw']='shihonage throw (high)';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['shihonage_entrance']='images/katate_dori/shihonage_entrance_s.jpg';
+  label['shihonage_entrance']='shihonage entrance';
+
+  next['shihonage_entrance']= new Array();
+  next['shihonage_entrance'][0]='shihonage';
+  next['shihonage_entrance'][1]='udekimonage';
+  next['shihonage_entrance'][2]='kokyo_nage_grabbing';
+  next['shihonage_entrance'][3]='shiho_koshinage';
+  next['shihonage_entrance'][4]='omote_iriminage';
+  next['shihonage_entrance'][5]='koshinage_kata_guruma';
+  next['shihonage_entrance'][6]='sukui_nage_entrance';
+  next['shihonage_entrance'][7]='arm_bar_over_shoulder';
+
+  img['shihonage']='images/katate_dori/shihonage_s.jpg';
+  label['shihonage']='shihonage';
+
+  next['shihonage']= new Array();
+  next['shihonage'][0]='shihonage_regular_throw';
+  next['shihonage'][1]='shihonage_high_throw';
+
+  img['shihonage_regular_throw']='images/katate_dori/shihonage_regular_throw_s.jpg';
+  label['shihonage_regular_throw']='shihonage throw (regular)';
+
+  img['shihonage_high_throw']='images/katate_dori/shihonage_high_throw_s.jpg';
+  label['shihonage_high_throw']='shihonage throw (high)';
+
+  img['udekimonage']='images/katate_dori/udekimonage_s.jpg';
+  label['udekimonage']='udekimonage';
+
+  next['udekimonage']= new Array();
+  next['udekimonage'][0]='udekimonage_left_finish';
+
+  img['udekimonage_left_finish']='images/katate_dori/udekimonage_left_finish_s.jpg';
+  label['udekimonage_left_finish']='udekimonage finish';
+
+  img['kokyo_nage_grabbing']='images/katate_dori/kokyo_nage_grabbing_s.jpg';
+  label['kokyo_nage_grabbing']='kokyo nage';
+
+  next['kokyo_nage_grabbing']= new Array();
+  next['kokyo_nage_grabbing'][0]='kokyo_nage_throw';
+
+  img['kokyo_nage_throw']='images/katate_dori/kokyo_nage_throw_s.jpg';
+  label['kokyo_nage_throw']='kokyo nage finish';
+
+  img['shiho_koshinage']='images/katate_dori/shiho_koshinage_s.jpg';
+  label['shiho_koshinage']='shiho koshinage (hand at center)';
+
+  next['shiho_koshinage']= new Array();
+  next['shiho_koshinage'][0]='koshinage_left_finish';
+
+  img['koshinage_left_finish']='images/katate_dori/koshinage_left_finish_s.jpg';
+  label['koshinage_left_finish']='koshinage finish';
+
+  img['omote_iriminage']='images/katate_dori/omote_iriminage_s.jpg';
+  label['omote_iriminage']='omote iriminage';
+
+  next['omote_iriminage']= new Array();
+  next['omote_iriminage'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['koshinage_kata_guruma']='images/katate_dori/koshinage_kata_guruma_s.jpg';
+  label['koshinage_kata_guruma']='koshinage (kata guruma)';
+
+  next['koshinage_kata_guruma']= new Array();
+  next['koshinage_kata_guruma'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sukui_nage_entrance']='images/katate_dori/sukui_nage_entrance_s.jpg';
+  label['sukui_nage_entrance']='sukui nage entrance';
+
+  next['sukui_nage_entrance']= new Array();
+  next['sukui_nage_entrance'][0]='koshinage_sukui_nage';
+
+  img['koshinage_sukui_nage']='images/katate_dori/koshinage_sukui_nage_s.jpg';
+  label['koshinage_sukui_nage']='koshinage (sukui nage)';
+
+  next['koshinage_sukui_nage']= new Array();
+  next['koshinage_sukui_nage'][0]='sukui_nage_finish';
+
+  img['sukui_nage_finish']='images/katate_dori/sukui_nage_finish_s.jpg';
+  label['sukui_nage_finish']='sukui nage finish';
+
+  img['arm_bar_over_shoulder']='images/katate_dori/arm_bar_over_shoulder_s.jpg';
+  label['arm_bar_over_shoulder']='arm bar (over shoulder)';
+
+  next['arm_bar_over_shoulder']= new Array();
+  next['arm_bar_over_shoulder'][0]='shiho_zempo_nage';
+
+  img['shiho_zempo_nage']='images/katate_dori/shiho_zempo_nage_s.jpg';
+  label['shiho_zempo_nage']='shiho zempo nage';
+
+  next['shiho_zempo_nage']= new Array();
+  next['shiho_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['irimi_entrance_break_grip']='images/katate_dori/irimi_entrance_break_grip_s.jpg';
+  label['irimi_entrance_break_grip']='irimi entrance (break grip)';
+
+  next['irimi_entrance_break_grip']= new Array();
+  next['irimi_entrance_break_grip'][0]='iriminage_continuance';
+  next['irimi_entrance_break_grip'][1]='kote_geishi_omote_continuance';
+  next['irimi_entrance_break_grip'][2]='kote_geishi_ura_continuance';
+  next['irimi_entrance_break_grip'][3]='juji_nage_entrance';
+  next['irimi_entrance_break_grip'][4]='blend_palm_up';
+  next['irimi_entrance_break_grip'][5]='elbow_lock';
+
+  img['iriminage_continuance']='images/katate_dori/iriminage_continuance_s.jpg';
+  label['iriminage_continuance']='iriminage continuance';
+
+  next['iriminage_continuance']= new Array();
+  next['iriminage_continuance'][0]='iriminage_right_throw';
+  next['iriminage_continuance'][1]='iriminage_full_entrance';
+
+  img['iriminage_right_throw']='images/katate_dori/iriminage_right_throw_s.jpg';
+  label['iriminage_right_throw']='iriminage throw';
+
+  next['iriminage_right_throw']= new Array();
+  next['iriminage_right_throw'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['iriminage_full_entrance']='images/katate_dori/iriminage_full_entrance_s.jpg';
+  label['iriminage_full_entrance']='iriminage full entrance throw';
+
+  next['iriminage_full_entrance']= new Array();
+  next['iriminage_full_entrance'][0]='iriminage_full_entrance_finish';
+
+  img['iriminage_full_entrance_finish']='images/katate_dori/iriminage_full_entrance_finish_s.jpg';
+  label['iriminage_full_entrance_finish']='irimi full entrance finish';
+
+  img['kote_geishi_omote_continuance']='images/katate_dori/kote_geishi_omote_continuance_s.jpg';
+  label['kote_geishi_omote_continuance']='kote geishi (omote)';
+
+  next['kote_geishi_omote_continuance']= new Array();
+  next['kote_geishi_omote_continuance'][0]='kote_geishi_omote_throw';
+
+  img['kote_geishi_omote_throw']='images/katate_dori/kote_geishi_omote_throw_s.jpg';
+  label['kote_geishi_omote_throw']='kote geishi throw (omote)';
+
+  next['kote_geishi_omote_throw']= new Array();
+  next['kote_geishi_omote_throw'][0]='kote_geishi_finish';
+
+  img['kote_geishi_finish']='images/katate_dori/kote_geishi_finish_s.jpg';
+  label['kote_geishi_finish']='kote geishi finish';
+
+  next['kote_geishi_finish']= new Array();
+  next['kote_geishi_finish'][0]='kote_geishi_pin_omote';
+  next['kote_geishi_finish'][1]='kote_geishi_pin_ura';
+
+  img['kote_geishi_pin_omote']='images/katate_dori/kote_geishi_pin_omote_s.jpg';
+  label['kote_geishi_pin_omote']='kote geishi pin (front)';
+
+  img['kote_geishi_pin_ura']='images/katate_dori/kote_geishi_pin_ura_s.jpg';
+  label['kote_geishi_pin_ura']='kote geishi pin (side)';
+
+  img['kote_geishi_ura_continuance']='images/katate_dori/kote_geishi_ura_continuance_s.jpg';
+  label['kote_geishi_ura_continuance']='kote geishi (ura)';
+
+  next['kote_geishi_ura_continuance']= new Array();
+  next['kote_geishi_ura_continuance'][0]='kote_geishi_ura_throw';
+
+  img['kote_geishi_ura_throw']='images/katate_dori/kote_geishi_ura_throw_s.jpg';
+  label['kote_geishi_ura_throw']='kote geishi throw (ura)';
+
+  next['kote_geishi_ura_throw']= new Array();
+  next['kote_geishi_ura_throw'][0]='kote_geishi_finish';
+
+  img['kote_geishi_finish']='images/katate_dori/kote_geishi_finish_s.jpg';
+  label['kote_geishi_finish']='kote geishi finish';
+
+  next['kote_geishi_finish']= new Array();
+  next['kote_geishi_finish'][0]='kote_geishi_pin_omote';
+  next['kote_geishi_finish'][1]='kote_geishi_pin_ura';
+
+  img['kote_geishi_pin_omote']='images/katate_dori/kote_geishi_pin_omote_s.jpg';
+  label['kote_geishi_pin_omote']='kote geishi pin (front)';
+
+  img['kote_geishi_pin_ura']='images/katate_dori/kote_geishi_pin_ura_s.jpg';
+  label['kote_geishi_pin_ura']='kote geishi pin (side)';
+
+  img['juji_nage_entrance']='images/katate_dori/juji_nage_entrance_s.jpg';
+  label['juji_nage_entrance']='juji nage entrance';
+
+  next['juji_nage_entrance']= new Array();
+  next['juji_nage_entrance'][0]='juji_nage_continuance';
+
+  img['juji_nage_continuance']='images/katate_dori/juji_nage_continuance_s.jpg';
+  label['juji_nage_continuance']='juji nage continuance';
+
+  next['juji_nage_continuance']= new Array();
+  next['juji_nage_continuance'][0]='juji_nage_throw';
+
+  img['juji_nage_throw']='images/katate_dori/juji_nage_throw_s.jpg';
+  label['juji_nage_throw']='juji nage throw';
+
+  img['blend_palm_up']='images/katate_dori/blend_palm_up_s.jpg';
+  label['blend_palm_up']='blend (palm up)';
+
+  next['blend_palm_up']= new Array();
+  next['blend_palm_up'][0]='turn_palm_down';
+
+  img['turn_palm_down']='images/katate_dori/turn_palm_down_s.jpg';
+  label['turn_palm_down']='turn and throw';
+
+  img['elbow_lock']='images/katate_dori/elbow_lock_s.jpg';
+  label['elbow_lock']='elbow lock';
+
+  next['elbow_lock']= new Array();
+  next['elbow_lock'][0]='kokyo_nage_grabbing';
+  next['elbow_lock'][1]='omote_choke';
+  next['elbow_lock'][2]='locked_kote_geishi';
+
+  img['kokyo_nage_grabbing']='images/katate_dori/kokyo_nage_grabbing_s.jpg';
+  label['kokyo_nage_grabbing']='kokyo nage';
+
+  next['kokyo_nage_grabbing']= new Array();
+  next['kokyo_nage_grabbing'][0]='kokyo_nage_throw';
+
+  img['kokyo_nage_throw']='images/katate_dori/kokyo_nage_throw_s.jpg';
+  label['kokyo_nage_throw']='kokyo nage finish';
+
+  img['omote_choke']='images/katate_dori/omote_choke_s.jpg';
+  label['omote_choke']='choke';
+
+  img['locked_kote_geishi']='images/katate_dori/locked_kote_geishi_s.jpg';
+  label['locked_kote_geishi']='locked kote geishi';
+
+  next['locked_kote_geishi']= new Array();
+  next['locked_kote_geishi'][0]='locked_kote_geishi_finish';
+
+  img['locked_kote_geishi_finish']='images/katate_dori/locked_kote_geishi_finish_s.jpg';
+  label['locked_kote_geishi_finish']='locked kote geishi throw';
+
+  next['locked_kote_geishi_finish']= new Array();
+  next['locked_kote_geishi_finish'][0]='locked_kote_geishi_pin';
+
+  img['locked_kote_geishi_pin']='images/katate_dori/locked_kote_geishi_pin_s.jpg';
+  label['locked_kote_geishi_pin']='locked kote geishi pin';
+
+  img['reverse_kote_geishi']='images/katate_dori/reverse_kote_geishi_s.jpg';
+  label['reverse_kote_geishi']='reverse kote geishi';
+
+  next['reverse_kote_geishi']= new Array();
+  next['reverse_kote_geishi'][0]='reverse_kote_geishi_throw';
+
+  img['reverse_kote_geishi_throw']='images/katate_dori/reverse_kote_geishi_throw_s.jpg';
+  label['reverse_kote_geishi_throw']='reverse kote geishi throw';
+
+  img['soto_mawari_grabbed']='images/katate_dori/soto_mawari_grabbed_s.jpg';
+  label['soto_mawari_grabbed']='soto mawari (grabbed)';
+
+  next['soto_mawari_grabbed']= new Array();
+  next['soto_mawari_grabbed'][0]='zempo_nage_left_finish';
+  next['soto_mawari_grabbed'][1]='kaiten_nage_continuance';
+  next['soto_mawari_grabbed'][2]='arm_bar_continuance';
+  next['soto_mawari_grabbed'][3]='yonkyo_continuance';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['kaiten_nage_continuance']='images/katate_dori/kaiten_nage_continuance_s.jpg';
+  label['kaiten_nage_continuance']='kaiten nage continuance';
+
+  next['kaiten_nage_continuance']= new Array();
+  next['kaiten_nage_continuance'][0]='kaiten_nage_omote';
+  next['kaiten_nage_continuance'][1]='kaiten_nage_ura';
+
+  img['kaiten_nage_omote']='images/katate_dori/kaiten_nage_omote_s.jpg';
+  label['kaiten_nage_omote']='kaiten nage omote';
+
+  next['kaiten_nage_omote']= new Array();
+  next['kaiten_nage_omote'][0]='kaiten_nage_throw';
+
+  img['kaiten_nage_throw']='images/katate_dori/kaiten_nage_throw_s.jpg';
+  label['kaiten_nage_throw']='kaiten nage throw';
+
+  img['kaiten_nage_ura']='images/katate_dori/kaiten_nage_ura_s.jpg';
+  label['kaiten_nage_ura']='kaiten nage ura';
+
+  next['kaiten_nage_ura']= new Array();
+  next['kaiten_nage_ura'][0]='kaiten_nage_throw';
+
+  img['kaiten_nage_throw']='images/katate_dori/kaiten_nage_throw_s.jpg';
+  label['kaiten_nage_throw']='kaiten nage throw';
+
+  img['arm_bar_continuance']='images/katate_dori/arm_bar_continuance_s.jpg';
+  label['arm_bar_continuance']='arm bar continuance';
+
+  next['arm_bar_continuance']= new Array();
+  next['arm_bar_continuance'][0]='arm_bar';
+
+  img['arm_bar']='images/katate_dori/arm_bar_s.jpg';
+  label['arm_bar']='arm bar';
+
+  next['arm_bar']= new Array();
+  next['arm_bar'][0]='arm_bar_pin';
+
+  img['arm_bar_pin']='images/katate_dori/arm_bar_pin_s.jpg';
+  label['arm_bar_pin']='arm bar pin';
+
+  img['yonkyo_continuance']='images/katate_dori/yonkyo_continuance_s.jpg';
+  label['yonkyo_continuance']='yonkyo continuance';
+
+  next['yonkyo_continuance']= new Array();
+  next['yonkyo_continuance'][0]='yonkyo_omote';
+  next['yonkyo_continuance'][1]='sankyo_like_continuance_omote';
+  next['yonkyo_continuance'][2]='sankyo_like_continuance_ura';
+  next['yonkyo_continuance'][3]='zempo_nage_left_finish';
+  next['yonkyo_continuance'][4]='uchi_yonkyo';
+
+  img['yonkyo_omote']='images/katate_dori/yonkyo_omote_s.jpg';
+  label['yonkyo_omote']='yonkyo omote';
+
+  next['yonkyo_omote']= new Array();
+  next['yonkyo_omote'][0]='yonkyo_pin_standing';
+
+  img['yonkyo_pin_standing']='images/katate_dori/yonkyo_pin_standing_s.jpg';
+  label['yonkyo_pin_standing']='yonkyo pin (standing)';
+
+  img['sankyo_like_continuance_omote']='images/katate_dori/sankyo_like_continuance_omote_s.jpg';
+  label['sankyo_like_continuance_omote']='sankyo-like (omote)';
+
+  next['sankyo_like_continuance_omote']= new Array();
+  next['sankyo_like_continuance_omote'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['sankyo_like_continuance_ura']='images/katate_dori/sankyo_like_continuance_ura_s.jpg';
+  label['sankyo_like_continuance_ura']='sankyo-like (ura)';
+
+  next['sankyo_like_continuance_ura']= new Array();
+  next['sankyo_like_continuance_ura'][0]='sankyo_seated_pin';
+
+  img['sankyo_seated_pin']='images/katate_dori/sankyo_seated_pin_s.jpg';
+  label['sankyo_seated_pin']='sankyo seated pin';
+
+  img['zempo_nage_left_finish']='images/katate_dori/zempo_nage_left_finish_s.jpg';
+  label['zempo_nage_left_finish']='zempo nage';
+
+  img['uchi_yonkyo']='images/katate_dori/uchi_yonkyo_s.jpg';
+  label['uchi_yonkyo']='uchi yonkyo';
+
+  next['uchi_yonkyo']= new Array();
+  next['uchi_yonkyo'][0]='sumi_otoshi_elbow';
+  next['uchi_yonkyo'][1]='sumi_otoshi_inside_shoulder';
+  next['uchi_yonkyo'][2]='sumi_otoshi_outside_shoulder';
+  next['uchi_yonkyo'][3]='sumi_otoshi_head';
+  next['uchi_yonkyo'][4]='sumi_koshinage_two_hands_on_arm';
+  next['uchi_yonkyo'][5]='sumi_koshinage_arm_around_waist';
+  next['uchi_yonkyo'][6]='shihonage_entrance';
+
+  img['sumi_otoshi_elbow']='images/katate_dori/sumi_otoshi_elbow_s.jpg';
+  label['sumi_otoshi_elbow']='sumi otoshi (hiji)';
+
+  next['sumi_otoshi_elbow']= new Array();
+  next['sumi_otoshi_elbow'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_inside_shoulder']='images/katate_dori/sumi_otoshi_inside_shoulder_s.jpg';
+  label['sumi_otoshi_inside_shoulder']='sumi otoshi (inside shoulder)';
+
+  next['sumi_otoshi_inside_shoulder']= new Array();
+  next['sumi_otoshi_inside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_outside_shoulder']='images/katate_dori/sumi_otoshi_outside_shoulder_s.jpg';
+  label['sumi_otoshi_outside_shoulder']='sumi otoshi (outside shoulder)';
+
+  next['sumi_otoshi_outside_shoulder']= new Array();
+  next['sumi_otoshi_outside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['sumi_otoshi_head']='images/katate_dori/sumi_otoshi_head_s.jpg';
+  label['sumi_otoshi_head']='sumi otoshi (head)';
+
+  img['sumi_koshinage_two_hands_on_arm']='images/katate_dori/sumi_koshinage_two_hands_on_arm_s.jpg';
+  label['sumi_koshinage_two_hands_on_arm']='koshinage (morote seoinage)';
+
+  next['sumi_koshinage_two_hands_on_arm']= new Array();
+  next['sumi_koshinage_two_hands_on_arm'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sumi_koshinage_arm_around_waist']='images/katate_dori/sumi_koshinage_arm_around_waist_s.jpg';
+  label['sumi_koshinage_arm_around_waist']='koshinage (arm around waist)';
+
+  next['sumi_koshinage_arm_around_waist']= new Array();
+  next['sumi_koshinage_arm_around_waist'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['shihonage_entrance']='images/katate_dori/shihonage_entrance_s.jpg';
+  label['shihonage_entrance']='shihonage entrance';
+
+  next['shihonage_entrance']= new Array();
+  next['shihonage_entrance'][0]='shihonage';
+  next['shihonage_entrance'][1]='udekimonage';
+  next['shihonage_entrance'][2]='kokyo_nage_grabbing';
+  next['shihonage_entrance'][3]='shiho_koshinage';
+  next['shihonage_entrance'][4]='omote_iriminage';
+  next['shihonage_entrance'][5]='koshinage_kata_guruma';
+  next['shihonage_entrance'][6]='sukui_nage_entrance';
+  next['shihonage_entrance'][7]='arm_bar_over_shoulder';
+
+  img['shihonage']='images/katate_dori/shihonage_s.jpg';
+  label['shihonage']='shihonage';
+
+  next['shihonage']= new Array();
+  next['shihonage'][0]='shihonage_regular_throw';
+  next['shihonage'][1]='shihonage_high_throw';
+
+  img['shihonage_regular_throw']='images/katate_dori/shihonage_regular_throw_s.jpg';
+  label['shihonage_regular_throw']='shihonage throw (regular)';
+
+  img['shihonage_high_throw']='images/katate_dori/shihonage_high_throw_s.jpg';
+  label['shihonage_high_throw']='shihonage throw (high)';
+
+  img['udekimonage']='images/katate_dori/udekimonage_s.jpg';
+  label['udekimonage']='udekimonage';
+
+  next['udekimonage']= new Array();
+  next['udekimonage'][0]='udekimonage_left_finish';
+
+  img['udekimonage_left_finish']='images/katate_dori/udekimonage_left_finish_s.jpg';
+  label['udekimonage_left_finish']='udekimonage finish';
+
+  img['kokyo_nage_grabbing']='images/katate_dori/kokyo_nage_grabbing_s.jpg';
+  label['kokyo_nage_grabbing']='kokyo nage';
+
+  next['kokyo_nage_grabbing']= new Array();
+  next['kokyo_nage_grabbing'][0]='kokyo_nage_throw';
+
+  img['kokyo_nage_throw']='images/katate_dori/kokyo_nage_throw_s.jpg';
+  label['kokyo_nage_throw']='kokyo nage finish';
+
+  img['shiho_koshinage']='images/katate_dori/shiho_koshinage_s.jpg';
+  label['shiho_koshinage']='shiho koshinage (hand at center)';
+
+  next['shiho_koshinage']= new Array();
+  next['shiho_koshinage'][0]='koshinage_left_finish';
+
+  img['koshinage_left_finish']='images/katate_dori/koshinage_left_finish_s.jpg';
+  label['koshinage_left_finish']='koshinage finish';
+
+  img['omote_iriminage']='images/katate_dori/omote_iriminage_s.jpg';
+  label['omote_iriminage']='omote iriminage';
+
+  next['omote_iriminage']= new Array();
+  next['omote_iriminage'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['koshinage_kata_guruma']='images/katate_dori/koshinage_kata_guruma_s.jpg';
+  label['koshinage_kata_guruma']='koshinage (kata guruma)';
+
+  next['koshinage_kata_guruma']= new Array();
+  next['koshinage_kata_guruma'][0]='koshinage_right_finish';
+
+  img['koshinage_right_finish']='images/katate_dori/koshinage_right_finish_s.jpg';
+  label['koshinage_right_finish']='koshinage finish';
+
+  img['sukui_nage_entrance']='images/katate_dori/sukui_nage_entrance_s.jpg';
+  label['sukui_nage_entrance']='sukui nage entrance';
+
+  next['sukui_nage_entrance']= new Array();
+  next['sukui_nage_entrance'][0]='koshinage_sukui_nage';
+
+  img['koshinage_sukui_nage']='images/katate_dori/koshinage_sukui_nage_s.jpg';
+  label['koshinage_sukui_nage']='koshinage (sukui nage)';
+
+  next['koshinage_sukui_nage']= new Array();
+  next['koshinage_sukui_nage'][0]='sukui_nage_finish';
+
+  img['sukui_nage_finish']='images/katate_dori/sukui_nage_finish_s.jpg';
+  label['sukui_nage_finish']='sukui nage finish';
+
+  img['arm_bar_over_shoulder']='images/katate_dori/arm_bar_over_shoulder_s.jpg';
+  label['arm_bar_over_shoulder']='arm bar (over shoulder)';
+
+  next['arm_bar_over_shoulder']= new Array();
+  next['arm_bar_over_shoulder'][0]='shiho_zempo_nage';
+
+  img['shiho_zempo_nage']='images/katate_dori/shiho_zempo_nage_s.jpg';
+  label['shiho_zempo_nage']='shiho zempo nage';
+
+  next['shiho_zempo_nage']= new Array();
+  next['shiho_zempo_nage'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['arc_hand_to_shoulder']='images/katate_dori/arc_hand_to_shoulder_s.jpg';
+  label['arc_hand_to_shoulder']='arc hand to shoulder';
+
+  next['arc_hand_to_shoulder']= new Array();
+  next['arc_hand_to_shoulder'][0]='iriminage_right_throw';
+
+  img['iriminage_right_throw']='images/katate_dori/iriminage_right_throw_s.jpg';
+  label['iriminage_right_throw']='iriminage throw';
+
+  next['iriminage_right_throw']= new Array();
+  next['iriminage_right_throw'][0]='iriminage_right_finish';
+
+  img['iriminage_right_finish']='images/katate_dori/iriminage_right_finish_s.jpg';
+  label['iriminage_right_finish']='iriminage finish';
+
+  img['hiji_continuance']='images/katate_dori/hiji_continuance_s.jpg';
+  label['hiji_continuance']='hiji continuance';
+
+  next['hiji_continuance']= new Array();
+  next['hiji_continuance'][0]='hijinage_throw';
+  next['hiji_continuance'][1]='sumi_otoshi_outside_shoulder';
+  next['hiji_continuance'][2]='tai_otoshi';
+
+  img['hijinage_throw']='images/katate_dori/hijinage_throw_s.jpg';
+  label['hijinage_throw']='hijinage throw';
+
+  img['sumi_otoshi_outside_shoulder']='images/katate_dori/sumi_otoshi_outside_shoulder_s.jpg';
+  label['sumi_otoshi_outside_shoulder']='sumi otoshi (outside shoulder)';
+
+  next['sumi_otoshi_outside_shoulder']= new Array();
+  next['sumi_otoshi_outside_shoulder'][0]='zempo_nage_right_finish';
+
+  img['zempo_nage_right_finish']='images/katate_dori/zempo_nage_right_finish_s.jpg';
+  label['zempo_nage_right_finish']='zempo nage';
+
+  img['tai_otoshi']='images/katate_dori/tai_otoshi_s.jpg';
+  label['tai_otoshi']='tai otoshi (over leg)';
+
+  next['tai_otoshi']= new Array();
+  next['tai_otoshi'][0]='tai_otoshi_finish';
+
+  img['tai_otoshi_finish']='images/katate_dori/tai_otoshi_finish_s.jpg';
+  label['tai_otoshi_finish']='tai otoshi finish';
+
+  img['raise_hand']='images/katate_dori/raise_hand_s.jpg';
+  label['raise_hand']='raise hand';
+
+  next['raise_hand']= new Array();
+  next['raise_hand'][0]='turn_and_cut';
+  next['raise_hand'][1]='irimi_omote_entrance';
+
+  img['turn_and_cut']='images/katate_dori/turn_and_cut_s.jpg';
+  label['turn_and_cut']='turn and cut';
+
+  next['turn_and_cut']= new Array();
+  next['turn_and_cut'][0]='zempo_nage_left_finish_toward_right';
+
+  img['zempo_nage_left_finish_toward_right']='images/katate_dori/zempo_nage_left_finish_toward_right_s.jpg';
+  label['zempo_nage_left_finish_toward_right']='zempo nage';
+
+  img['irimi_omote_entrance']='images/katate_dori/irimi_omote_entrance_s.jpg';
+  label['irimi_omote_entrance']='irimi omote entrance';
+
+  next['irimi_omote_entrance']= new Array();
+  next['irimi_omote_entrance'][0]='iriminage_left_throw';
+
+  img['iriminage_left_throw']='images/katate_dori/iriminage_left_throw_s.jpg';
+  label['iriminage_left_throw']='iriminage throw';
+
+  next['iriminage_left_throw']= new Array();
+  next['iriminage_left_throw'][0]='iriminage_full_entrance';
+
+  img['iriminage_full_entrance']='images/katate_dori/iriminage_full_entrance_s.jpg';
+  label['iriminage_full_entrance']='iriminage full entrance throw';
+
+  next['iriminage_full_entrance']= new Array();
+  next['iriminage_full_entrance'][0]='iriminage_full_entrance_finish';
+
+  img['iriminage_full_entrance_finish']='images/katate_dori/iriminage_full_entrance_finish_s.jpg';
+  label['iriminage_full_entrance_finish']='irimi full entrance finish';
+
+
+  function getTable() {
+    return document.getElementById("techniqueTable");
+  }
+
+  function showVals(selectedVal, valuesList)
+  {
+    var textList = "selectedVal="+selectedVal+"\n";
+    for (var i=0; i<valuesList.length; i++) {
+      textList += valuesList[i] + "\n";    }
+    alert(textList);
+  }
+
+  // When called, we delete all future selects (and corresponding img) and create a single next one. 
+  // 
+  function selectChanged(selectId) { 
+    var elSelect = document.getElementById(selectId);
+    var sNum = elSelect.id.substring(4);
+    var stepNum = parseInt(sNum);
+    selectedVal = elSelect.options[elSelect.selectedIndex].value;
+    valuesList = next[selectedVal];
+
+    var table = getTable();
+    var selectRow = table.rows[0];
+    var imageRow = table.rows[1];
+    var fillerRow = table.rows[2];
+    //fillerRow.childNodes[0].setAttribute("colspan", stepNum+1);
+    fillerRow.childNodes[0].colspan = stepNum+1;
+
+    // delete future selects
+    var len = selectRow.childNodes.length;
+    //alert("len-stepNum-2="+(len-stepNum-2)+" selectRow.childNodes="+selectRow.childNodes);
+
+    // delete steps up to the final filler td
+    for (var i=len-2; i>stepNum; i--) {
+      selectRow.removeChild(selectRow.childNodes[i]);
+      imageRow.removeChild(imageRow.childNodes[i]);
+    }
+
+    var currentImage = imageRow.childNodes[stepNum].childNodes[0].childNodes[0];
+    if (selectedVal == '-----')
+      currentImage.src = 'images/select_s.png';
+     else 
+      currentImage.src = img[selectedVal];
+
+    // add the new select and corresponding image
+    var tdSelect = document.createElement("td");
+    var newSelect = document.createElement("select");
+    var newSelectId = 'step'+(stepNum+1)+'_select'
+    newSelect.setAttribute('id', newSelectId);
+    newSelect.onchange = function anonymous() { selectChanged( newSelectId ); };
+    
+    var nextSelectOptions = next[selectedVal];
+    //alert("nextSelectOptions="+nextSelectOptions);
+    var onlyOneChild = false;    if (nextSelectOptions) {
+      onlyOneChild = true;      if (nextSelectOptions.length > 1) {
+;        onlyOneChild = false;
+        // the first one is -----
+;        option = document.createElement("option");
+        var nextOpt = "-----";
+        option.value = nextOpt;
+        option.innerText = nextOpt;
+        newSelect.appendChild(option);
+      }
+      for (var i=0; i<nextSelectOptions.length; i++) {
+        option = document.createElement("option");
+        var nextOpt = nextSelectOptions[i];
+        option.value = nextOpt;
+        option.innerText = label[nextOpt];
+        //alert("about to add "+option.outerHTML);
+        newSelect.appendChild(option);
+      }
+    }
+    else
+      return;
+
+    tdSelect.appendChild(newSelect);
+
+    // and image
+    var tdImage = document.createElement("td");
+    var newImageAnchor = document.createElement("a");
+    var newImage = document.createElement("img");
+    var imageId = 'step'+(stepNum+1)+'_image';
+    newImageAnchor.onmouseover =  function anonymous() { mousedOnThumbnail(imageId); };
+    newImage.setAttribute('id', imageId);
+    newImage.setAttribute('src', onlyOneChild?img[nextSelectOptions[0]]:'images/select_s.png');
+    newImage.setAttribute('width', '170');
+    newImage.setAttribute('height', '130');
+    
+    newImage.setAttribute("border", 0);
+    newImageAnchor.appendChild(newImage);
+    tdImage.appendChild(newImageAnchor);
+    
+    selectRow.insertBefore(tdSelect, selectRow.childNodes[stepNum+1]);
+    imageRow.insertBefore(tdImage, imageRow.childNodes[stepNum+1]);
+    if (onlyOneChild) { // add the next one too 
+       selectChanged(newSelectId);     }
+  }
+  // show a big image when mousing over the thumbnail
+  //
+
+  function mousedOnThumbnail(imgId) {
+    var elImg = document.getElementById(imgId);
+    var bigImg = document.getElementById('big_image');
+    var newSrc = elImg.src.replace("_s.", "_m.");
+    bigImg.src = newSrc
+  }
+
+  // called when page loads
+  //
+  function doOnLoad() {
+  }
+</script></head>
+<body onload="doOnLoad()">
+<big><big style="font-weight: bold; text-decoration: underline;">Aikido
+Technique Builder</big></big><br>
+<br>
+Build an aikido technique using successive dropdowns below.<br>
+For simplicity, we currently restrict the attack to katate dori.<br><br>
+<font size='-1'>This application was built using XML, java and DHTML (<a href='technique_builder_desc.html'>more details</a>).</font> <br><br>
+
+<table id='outerTable' width="100%" border="0">
+  <tr>
+    <td>
+      <div style="width:970px; overflow: auto; font-family:arial; font-size:60%;">
+
+<table id='techniqueTable' width="100%" border="1">
+  <tr>   
+    <td nowrap>
+      <select id="step0_select" onchange="selectChanged('step0_select')">
+        <option value='select'>-----</option>
+        <option value="katate_dori">katate dori</option>
+      </select>
+    </td>
+    <td nowrap width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td nowrap>
+      <a onmouseover="mousedOnThumbnail('step0_image')">
+        <img id="step0_image" name="step1img" src="images/select_s.png" border="0" width=170 height=130>
+      </a>
+    </td>
+    <td nowrap width="100%">
+    </td>
+  </tr>
+  <tr width="100%" height="100%">
+    <td colspan="2"></td>
+  </tr>
+</table>
+
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div id="bigImgDiv">
+        <img id="big_image" name="step1img" src="select_m.png" border="1">
+      </div>
+    </td>
+  </tr>
+</table> 
+
+<br>
+</body> 
+</html>

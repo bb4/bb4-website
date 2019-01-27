@@ -3,7 +3,7 @@
 // @author Barry Becker
 apply plugin: 'idea'
 
-description = 'Applets'
+description = 'Source for barrybecker4.com'
 defaultTasks 'build'
 ext.depVersion = getDependentVersion()
 
@@ -16,7 +16,7 @@ subprojects {
     apply plugin: 'application'
 
     defaultTasks 'build'
-    version = '1.1'
+    version = '2.0'
 
     repositories {
         mavenCentral()
@@ -25,7 +25,6 @@ subprojects {
         maven { url "https://oss.sonatype.org/content/repositories/releases" }
         // this Sonatype repo is where SNAPSHOT bb4 jars come from
         maven { url "https://oss.sonatype.org/content/groups/staging" }
-        //maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
     }
 
     // all subprojects use this directory layout.
@@ -49,7 +48,6 @@ subprojects {
     }
 }
 
-// Gradle 3.x did not find message bundles in buildSrc for some reason.
 wrapper {
     gradleVersion = '4.10.2'
 }
