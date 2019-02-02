@@ -1,306 +1,1 @@
-/*  'Aikido', by Bary Becker, http://www.geocities.com/BarryBecker4/ 
-    css released under Creative Commons License - http://creativecommons.org/licenses/by-nc-sa/1.0/  
-*/
-
-body { 
-	color: #333; 
-	background-color: #edf6e3; 
- 	background-image: url(700_28.jpg);
-	background-position: top center;
-	background-repeat: repeat-y;
-	font-size: 11px; 
-	line-height: 14px;
-	font-family: Verdana, Georgia, times, serif; 
-	text-align: left;
-  margin: 0px; 
-	padding: 0px;
-}
-
-p {
-	font-size: 11px; 
-	line-height: 14px;
-	font-family: Verdana, Georgia, times, serif; 
-	text-align: left; 
-        text-indent: 0px;
-	margin: 0px; 
-	padding: 0px;
-}
-
-h1, h2, h3 {
-	font-size: 11px; 
-	line-height: 14px;
-	font-weight: bold; 
-	font-family: Verdana, Georgia, times, serif; 
-	text-align: left; 
-	margin: 0px; 
-	padding: 0px;
-}
-	
-a:link { 
-	font-weight: bold; 
-	text-decoration: underline; 
-	color: #009900; /*#6faf30; */
-}
-a:visited { 
-	font-weight: bold; 
-	text-decoration: none; 
-	color: #006600; /*#6faf30; */
-}
-a:visited:hover { 
-	font-weight: bold; 
-	text-decoration: underline; 
-	color: #339933; /*#7fc937; */
-}
-a:hover { 
-	text-decoration: underline; 
-	color: #4f711f;
-}
-a:active { 
-	text-decoration: underline; 
-	color: #4f711f;
-}
-
-acronym { 
-	font-weight: normal; 
-	font-style: normal;
-	border: 0;
-}
-
-/* major divs */
-#container { 
-	width: 700px; 
-	position: relative;   
-	margin: 0px auto 0px auto;
-	padding: 0px 0px 0px 0px;
-}
-
-#intro {
- 	width: 500px;
-	margin: 0px 0px 0px 0px; 
-	padding: 0px 0px 0px 0px;
-}
-	
-#supportingText {
- 	width: 500px;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 10px 0px 10px;
-}
-	
-#linkList {
-  position: absolute;
-  top: 255px;
-  left: 0px;
- 	width: 170px;
-	margin: 0px 0px 0px 532px;
-	padding: 0px 0px 0px 0px;
-}
-
-/* minor divs */
-#pageHeader {
- 	width: 700px;
- 	height: 20px; /* strange but ie6 needs this */
- 	background-image: url(tai_otoshi.jpg);
-	background-position: top center;
-	background-repeat: no-repeat;
-	border-top: 0px;    
-	border-right: 1px solid #aaa;    
-	border-bottom: 1px solid #aaa;    
-	border-left: 1px solid #aaa;    
-	margin: 0px 0px 0px 0px; 
-	padding: 224px 0px 0px 0px;
-}
-	
-#pageHeader h1 {
- 	width: 600px;
-	color: #006600;
-	font-size: 44px; 
-	line-height: 48px;
-	font-weight: bold;
-	text-transform: uppercase;
-	margin: -210px 0px 0px 10px;
-	padding: 0px 0px 0px 0px;
-}
-	
-#pageHeader h2 {
- 	width: 600px;
-	color: #003300;
-	font-size: 14px; 
-	line-height: 16px;
-	font-weight: normal;
-	padding: 0px 0px 0px 3px;
-	text-transform: uppercase;
-	margin: 0px 0px 0px 10px;
-	padding: 0px 0px 10px 4px;
-}
-		
-#quickSummary {
- 	width: 500px;
- 	background-position: top center;
-	background-repeat: repeat;
-	background-color: #edf6e3;
-        color: #000;
-	border: 1px solid #aaa;    
-	margin: 10px 0px 10px 0px;
-	padding: 10px 10px 10px 10px;
-}
-
-#preamble {
- 	width: 500px;
-	border: 1px solid #aaa;    
- 	background-position: bottom center;
-	background-repeat: no-repeat;
-	background-color: #fff;
-	margin: 0px 0px 0px 0px;
-	padding: 10px 10px 0px 10px;
-}
-	
-#explanation,
-#participation,
-#benefits,
-#requirements {
- 	width: 500px;
-	border: 1px solid #aaa;    
- 	/*background-image: url(leaf_09d.gif); */
-	background-position: bottom center;
-	background-repeat: no-repeat;
-	background-color: #fff;	
-	margin: 10px -10px 0px -10px;
-	padding: 10px 10px 10px 10px;
-}
-	
-#footer {
- 	width: 500px;
-	border: 1px solid #aaa;    
- 	/*background-image: url(stone_19.gif);*/
-	background-position: center center;
-	background-repeat: repeat;
-	background-color: #edf6e3; 	
-	margin: 10px -10px 20px -10px;
-	padding: 10px 10px 10px 10px;
-	text-align: center;
-}
-	
-#explanation p,
-#participation p,
-#benefits p,
-#requirements p,
-#preamble p {
-	padding-bottom: 4px;
-	text-align: justify;
-}
-
-#preamble h3,
-#supportingText h3 {
-	color: #284C00;
-	background-color: #edf6e3; /*#ddd;*/
- 	font-size: 11px; 
-	line-height: 16px;
-	text-transform: uppercase;
-	margin: -10px -10px 4px -10px;
-	padding: 4px 4px 4px 10px;
-}
-	
-#quickSummary .p1 { 
-	color: #000; ! important;
-	font-size: 12px ! important;
-	line-height: 14px;
-	font-weight: bold;
-	/*text-transform: uppercase;*/
-	text-align: left;
-	margin: 0px 50px 0px 0px;
-	padding: 0px 0px 10px 0px;
-}
-	
-#quickSummary .p2 { 
-	color: #000 ! important;
-	font-size: 10px ! important;
-	line-height: 14px;
-	font-weight: normal;
-	text-transform: uppercase;
-	text-align: left; 
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
-}
-	
-#linkList ul {
-	border-top: 3px dotted #ccc;
-	margin: 5px 5px 0px 5px; 
-	padding: 0px 0px 0px 0px;
-}
-	
-#linkList li {
-	display: block;
-	list-style-type: none;
-	color: #6c9e2d;
-	background-color: #f8f8f8;
-	font-size: 11px; 
-	line-height: 14px;
-	font-weight: normal; 
-	font-style: italic;
-	font-family: Verdana, Georgia, times, serif; 
-	text-align: left; 
-	border-bottom: 1px dotted #ccc;
-	margin: 0px 0px 0px 0px; 
-	padding: 3px 5px 3px 5px;
-}
-	
-#linkList li a:link,
-#linkList li a:visited, 
-#linkList li a:visited:hover,
-#linkList li a:hover, 
-#linkList li a:active {
-	font-style: normal;
-	padding-right: 5px;
-}
-	
-.c { 
-	color: #6c9e2d ! important;
-	font-weight: normal ! important;
-	font-style: italic ! important;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 14px 0px 0px;
-}
-
-#linkList h3 {
-	color: color: #003300;                         /*#7fc937;*/
-	background-color: #ddd;
- 	/*background-image: url(stone_24.gif);*/
-	background-position: center right;
-	background-repeat: repeat-x;
-	font-size: 11px; 
-	line-height: 16px;
-	font-weight: bold; 
-	font-family: Verdana, Georgia, times, serif; 
-	text-transform: uppercase;
-	text-align: left; 
-	border-bottom: 1px solid #aaa;
-	margin: 0px 0px 0px 0px; 
-	padding: 3px 5px 3px 5px;
-}
-	
-#lselect,
-#lfavorites,
-#larchives,
-#lresources {
-	background-image: url(leaf_09a.gif);
-	background-position: bottom center;
-	background-repeat: no-repeat;
-	background-color: #fff;
-	border: 1px solid #aaa;    
-	margin: 0px 0px 10px 0px;
-	padding: 0px 0px 30px 0px;
-}
-	
-/* hovers */
-	
-#preamble:hover {
- 	background-image: url(leaf_09f.gif);
-}
-	
-#linkList li:hover {
-	background-color: #fefefe;
-}
-	
-#lresources:hover {
-	background-image: url(leaf_09b.gif);
-}
+/*  'Aikido', by Bary Becker, http://www.geocities.com/BarryBecker4/     css released under Creative Commons License - http://creativecommons.org/licenses/by-nc-sa/1.0/  */body { 	color: #333; 	background-color: #edf6e3;  	background-image: url(700_28.jpg);	background-position: top center;	background-repeat: repeat-y;	font-size: 11px; 	line-height: 14px;	font-family: Verdana, Georgia, times, serif; 	text-align: left;  margin: 0px; 	padding: 0px;}p {	font-size: 11px; 	line-height: 14px;	font-family: Verdana, Georgia, times, serif; 	text-align: left;         text-indent: 0px;	margin: 0px; 	padding: 0px;}h1, h2, h3 {	font-size: 11px; 	line-height: 14px;	font-weight: bold; 	font-family: Verdana, Georgia, times, serif; 	text-align: left; 	margin: 0px; 	padding: 0px;}	a:link { 	font-weight: bold; 	text-decoration: underline; 	color: #009900; /*#6faf30; */}a:visited { 	font-weight: bold; 	text-decoration: none; 	color: #006600; /*#6faf30; */}a:visited:hover { 	font-weight: bold; 	text-decoration: underline; 	color: #339933; /*#7fc937; */}a:hover { 	text-decoration: underline; 	color: #4f711f;}a:active { 	text-decoration: underline; 	color: #4f711f;}acronym { 	font-weight: normal; 	font-style: normal;	border: 0;}/* major divs */#container { 	width: 700px; 	position: relative;   	margin: 0px auto 0px auto;	padding: 0px 0px 0px 0px;}#intro { 	width: 500px;	margin: 0px 0px 0px 0px; 	padding: 0px 0px 0px 0px;}	#supportingText { 	width: 500px;	margin: 0px 0px 0px 0px;	padding: 0px 10px 0px 10px;}	#linkList {  position: absolute;  top: 255px;  left: 0px; 	width: 170px;	margin: 0px 0px 0px 532px;	padding: 0px 0px 0px 0px;}/* minor divs */#pageHeader { 	width: 700px; 	height: 20px; /* strange but ie6 needs this */ 	background-image: url(tai_otoshi.jpg);	background-position: top center;	background-repeat: no-repeat;	border-top: 0px;    	border-right: 1px solid #aaa;    	border-bottom: 1px solid #aaa;    	border-left: 1px solid #aaa;    	margin: 0px 0px 0px 0px; 	padding: 224px 0px 0px 0px;}	#pageHeader h1 { 	width: 600px;	color: #006600;	font-size: 44px; 	line-height: 48px;	font-weight: bold;	text-transform: uppercase;	margin: -210px 0px 0px 10px;	padding: 0px 0px 0px 0px;}	#pageHeader h2 { 	width: 600px;	color: #003300;	font-size: 14px; 	line-height: 16px;	font-weight: normal;	padding: 0px 0px 0px 3px;	text-transform: uppercase;	margin: 0px 0px 0px 10px;	padding: 0px 0px 10px 4px;}		#quickSummary { 	width: 500px; 	background-position: top center;	background-repeat: repeat;	background-color: #edf6e3;        color: #000;	border: 1px solid #aaa;    	margin: 10px 0px 10px 0px;	padding: 10px 10px 10px 10px;}#preamble { 	width: 500px;	border: 1px solid #aaa;     	background-position: bottom center;	background-repeat: no-repeat;	background-color: #fff;	margin: 0px 0px 0px 0px;	padding: 10px 10px 0px 10px;}	#explanation,#participation,#benefits,#requirements { 	width: 500px;	border: 1px solid #aaa;     	/*background-image: url(leaf_09d.gif); */	background-position: bottom center;	background-repeat: no-repeat;	background-color: #fff;		margin: 10px -10px 0px -10px;	padding: 10px 10px 10px 10px;}	#footer { 	width: 500px;	border: 1px solid #aaa;     	/*background-image: url(stone_19.gif);*/	background-position: center center;	background-repeat: repeat;	background-color: #edf6e3; 		margin: 10px -10px 20px -10px;	padding: 10px 10px 10px 10px;	text-align: center;}	#explanation p,#participation p,#benefits p,#requirements p,#preamble p {	padding-bottom: 4px;	text-align: justify;}#preamble h3,#supportingText h3 {	color: #284C00;	background-color: #edf6e3; /*#ddd;*/ 	font-size: 11px; 	line-height: 16px;	text-transform: uppercase;	margin: -10px -10px 4px -10px;	padding: 4px 4px 4px 10px;}	#quickSummary .p1 { 	color: #000; ! important;	font-size: 12px ! important;	line-height: 14px;	font-weight: bold;	/*text-transform: uppercase;*/	text-align: left;	margin: 0px 50px 0px 0px;	padding: 0px 0px 10px 0px;}	#quickSummary .p2 { 	color: #000 ! important;	font-size: 10px ! important;	line-height: 14px;	font-weight: normal;	text-transform: uppercase;	text-align: left; 	margin: 0px 0px 0px 0px;	padding: 0px 0px 0px 0px;}	#linkList ul {	border-top: 3px dotted #ccc;	margin: 5px 5px 0px 5px; 	padding: 0px 0px 0px 0px;}	#linkList li {	display: block;	list-style-type: none;	color: #6c9e2d;	background-color: #f8f8f8;	font-size: 11px; 	line-height: 14px;	font-weight: normal; 	font-style: italic;	font-family: Verdana, Georgia, times, serif; 	text-align: left; 	border-bottom: 1px dotted #ccc;	margin: 0px 0px 0px 0px; 	padding: 3px 5px 3px 5px;}	#linkList li a:link,#linkList li a:visited, #linkList li a:visited:hover,#linkList li a:hover, #linkList li a:active {	font-style: normal;	padding-right: 5px;}	.c { 	color: #6c9e2d ! important;	font-weight: normal ! important;	font-style: italic ! important;	margin: 0px 0px 0px 0px;	padding: 0px 14px 0px 0px;}#linkList h3 {	color: color: #003300;                         /*#7fc937;*/	background-color: #ddd; 	/*background-image: url(stone_24.gif);*/	background-position: center right;	background-repeat: repeat-x;	font-size: 11px; 	line-height: 16px;	font-weight: bold; 	font-family: Verdana, Georgia, times, serif; 	text-transform: uppercase;	text-align: left; 	border-bottom: 1px solid #aaa;	margin: 0px 0px 0px 0px; 	padding: 3px 5px 3px 5px;}	#lselect,#lfavorites,#larchives,#lresources {	background-image: url(leaf_09a.gif);	background-position: bottom center;	background-repeat: no-repeat;	background-color: #fff;	border: 1px solid #aaa;    	margin: 0px 0px 10px 0px;	padding: 0px 0px 30px 0px;}	/* hovers */	#preamble:hover { 	background-image: url(leaf_09f.gif);}	#linkList li:hover {	background-color: #fefefe;}	#lresources:hover {	background-image: url(leaf_09b.gif);}
