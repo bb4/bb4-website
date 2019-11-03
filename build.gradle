@@ -1,11 +1,10 @@
-// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// Copyright by Barry G. Becker, 2013 - 2019. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 // This gradle build file will build all applet subprojects.
 // @author Barry Becker
 apply plugin: 'idea'
 
 description = 'Source for barrybecker4.com'
 defaultTasks 'build'
-ext.depVersion = getDependentVersion()
 
 subprojects {
     apply plugin: 'java'
@@ -49,12 +48,7 @@ subprojects {
 }
 
 wrapper {
-    gradleVersion = '4.10.2'
+    gradleVersion = '5.6.2'
 }
 
-/** read the version from message bundle. It is the version of all the bb4 jars */
-String getDependentVersion() {
-    def labels = ResourceBundle.getBundle('html', Locale.ENGLISH)
-    println("version == " + labels.getString("version"))
-    return labels.getString("version")
-}
+
