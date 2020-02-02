@@ -18,16 +18,16 @@ The applications from different bb4 projects can be deployed to the "bb4-project
 
 Here is the dependency structure of the bb4 projects. Each is build independently and deployed to Sonatype mave repository.  
  
-                __bb4-common______
-              /                   \
+       bb4-math    __bb4-common______
+             \   /                   \
             bb4-ui             bb4-sound     bb4-A-star
              |                  /  \_________________________
-        bb4-optimization      /     /    \            \      \
-          /          \      /      /      \            \      \
-    bb4-imageproc     \    /      /        \            \    bb4-adventure
-      |         bb4-experiments  /          \            \
-      |                         /            \            \
-      |                   bb4-puzzles  bb4-simulations   bb4-games                   
+        bb4-optimization      /     /    \       \      \
+          /          \      /      /      \       \     bb4-adventure
+    bb4-imageproc     \    /      /        \       \    
+      |         bb4-experiments  /          \       \      bb4-expression
+      |                         /            \       \       /
+      |                   bb4-puzzles   bb4-games    bb4-simulations  
      bb4-image-breeder     
  
 All modules are open-source projects in github (https://github.com/bb4)
