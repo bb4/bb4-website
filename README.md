@@ -31,7 +31,7 @@ Here is the dependency structure of the bb4 projects. Each is build independentl
      bb4-image-breeder     
  
 All modules are open-source projects in github (https://github.com/bb4)
-Pure library projects are bb4-common, bb4-ui, bb4-sound, bb4-A-star, bb4-optimization, bb4-imageproc
+Pure library projects are bb4-common, bb4-math, bb4-expression, bb4-ui, bb4-sound, bb4-A-star, bb4-optimization, bb4-imageproc
 
 ### Additional notes
   I split out jigo (used by go) and jhlabs (used by image breeder) into separate gradle projects which build separate
