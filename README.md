@@ -6,11 +6,8 @@ This repository contains the content for [http://barrybecker4.com](http://barryb
 
 Use Filezilla (or similar) to copy everything (or changed parts) in source/html to the root of http://barrybecker4.com.
 Don't change anything directly on the website itself. Change and test locally before deployment.
-```
-ftp.barrybecker4.com
-User: barrybecker4@barrybecker4.com
-User explicit FTP over TLS if available
-```
+
+![upload to infinity free site](images/filezilla-site.png)
 
 The applications from different bb4 projects can be deployed to the "bb4-projects" subdirectory under the root of the website. Each project has a gradle "deploy" task that will put everything in local dist directory that can then be ftp'd to the website using Filezilla. If you want to test locally before deploying to the live site, you can copy the bb4-common deployment to the local dist directory so that common files can be found locally.
 
