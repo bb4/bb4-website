@@ -1,169 +1,241 @@
-<html>
-  <head>
-    <meta content="text/html; charset=windows-1252" http-equiv="content-type">
-    <title>complete-links-list</title>
-    <meta name="generator" content="Created Using Yahoo! PageBuilder 2.61.90">
-  </head>
-  <body onload="window.onresize=new Function('if (navigator.appVersion==\'Netscape\') history.go(0);');"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barry Becker - Links & Resources</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #4ade80;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
 
-    style="    color: black; background-color: white; background-image: url(&quot;http://www.geocities.com/clipart/pbi/backgrounds/Generic/leaves.jpg&quot;);"
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    link="#0000FF" vlink="#FF0000"><br>
-    <br>
-    <br>
-    <br>
-    <div id="root" style="position:absolute;top:0;left:0;width:505px;height:978px">
-      <div style="position: absolute; left: 147px; top: 877px; width: 354px; height: 235px;">
-        <table style="top: 0px; left: 0px; width: 370px; height: 164px;" border="0"
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.4;
+            color: var(--dark);
+            background-color: var(--light);
+            background-image: url('https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            padding: 2rem 1rem;
+        }
 
-          cellpadding="0" cellspacing="0">
-          <tbody>
-            <tr valign="top">
-              <td><b><u><font size="+1"><span style="font-size:18">Other Peoples
-                        Home Pages<br>
-                      </span></font></u></b><span style="font-size:14"><br>
-                  <a href="https://www.facebook.com/brian.j.becker.7">Brian Becker</a> (son)<br>
-                  <a href="https://www.facebook.com/search/top/?q=shanna%20becker">Shanna Becker</a> (wife)<br>
-                  Marilyn Becker (AKA mom) (</span><a href="http://www.geni.com/home"><span
-                    style="font-size:14">our family tree</span></a><span style="font-size:14">)<br>
-                </span><a href="http://www.PamelaBeckerCreations.com"><span style="font-size:14">Pam
-                    Becker's artwork</span></a><span style="font-size:14">
-                  (sister) <br>
-                </span><a href="https://www.facebook.com/bill.keese"><span style="font-size:14">Bill
-                    Keese</span></a>(friend)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div style="position: absolute; left: 148px; top: 661px; width: 347px; height: 196px;">
-        <table border="0" cellpadding="0" cellspacing="0" height="196" width="347">
-          <tbody>
-            <tr valign="top">
-              <td><b><u><font size="+1"><span style="font-size:18">Personal
-                        Stuff About Me<br>
-                      </span></font></u></b><span style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/resume/resume.html"><span
-                    style="font-size:14">Resume</span></a><span style="font-size:14"><br>
-                </span><a href="http://www.barrybecker4.com/patents.html"><span
-                    style="font-size:14">Patents</span></a><span style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/journal_papers.html"><span
-                    style="font-size:14">Journal Papers<br>
-                  </span></a><span style="font-size:14"> </span><a href="http://www.barrybecker4.com/psycho_profile.html"><span
-                    style="font-size:14">Psychological Profile</span></a><span style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/life-journal.html"><span
-                    style="font-size:14">Life Journal</span></a><span style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/near_death_exps.html"><span
-                    style="font-size:14">Near Death Experiences</span></a><span
-                  style="font-size:14"><br>
-                </span><a href="http://home.att.net/%7Ehuyett.tree/"><span style="font-size:14">Family
-                    Tree</span></a><span style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/aikido/aikido_index.html"><span
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-                    style="font-size:14">Martial Arts Background</span></a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div style="position: absolute; left: 144px; top: 327px; width: 337px; height: 138px;">
-        <table style="left: 0px; width: 512px; top: 0px; height: 140px;" border="0"
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+        }
 
-          cellpadding="0" cellspacing="0">
-          <tbody>
-            <tr valign="top">
-              <td><b><u><font size="+1"><span style="font-size:18">Local School
-                        Related Clubs and Committees</span></font></u></b><span
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
 
-                  style="font-size:14"><br>
-                  <br>
-                  <a title="School committee docs" href="logan/docs-index.html">Logan
-                    School Site Council docs</a><br>
-                  <a href="https://groups.google.com/forum/#%21forum/logan-computer-science">Logan
-                    Computer Science Club</a> (when Brian in 9th grade)<br>
-                  <a href="csc/index.html">AMS Computer Science Club</a> (when Brian in 8th grade)<br>
-                </span><span style="font-size:14"><a href="http://barrybecker4.com/math/">AMS
-                    Math League</a>&nbsp; (when Brian in 7th grade)<br>
-                  <a title="Pioneer Math League" href="http://barrybecker4.com/math/pioneerMathLeague/">Pioneer
-                    Math League</a>&nbsp; (when Brian in 5th grade)<br>
-                </span><span style="font-size:14"><a href="http://www.barrybecker4.com/scratch_intro.html"><span
-                      style="font-size:14">Scratch Intro</span></a><span style="font-size:14"></span><a
-                    href="http://www.barrybecker4.com/math/index.html"><span style="font-size:14"></span></a><span
-                    style="font-size:14"><br>
-                  </span><br>
-                </span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div style="position: absolute; left: 146px; top: 513px; width: 347px; height: 138px;">
-        <table border="0" cellpadding="0" cellspacing="0" height="138" width="337">
-          <tbody>
-            <tr valign="top">
-              <td><b><u><font size="+1"><span style="font-size:18">Home Movies</span></font></u></b><span
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-                  style="font-size:14"><br>
-                  <br>
-                  Alien Movie (</span><a href="https://youtu.be/PoQ-u__RN5c"><span
-                    style="font-size:14">preview</span></a><span style="font-size:14">)
-                  (</span><a href="http://www.barrybecker4.com/alien/alien_screenplay8.html"><span
-                    style="font-size:14">screenplay</span></a><span style="font-size:14">)<br>
-                </span><a href="https://www.youtube.com/watch?v=X18y5ZEdQC8"><span
-                    style="font-size:14">Star Wars Kids</span></a><span style="font-size:14">
-                  </span><br>
-                </span><a href="https://www.youtube.com/watch?v=lv6eepe1vHY"><span
-                    style="font-size:14">Episode II: Revenge of the Kids</span></a><span
-                  style="font-size:14"> <br>
-                </span><a href="http://www.youtube.com/watch?v=8FkMvdEDyKc"><span
-                    style="font-size:14">Thunder Mountain</span></a><span style="font-size:14">
-                  (Sedona 2004)<br>
-                </span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div style="position: absolute; left: 144px; top: 31px; width: 337px; height: 218px;">
-        <table style="left: 0px; width: 348px; top: 0px; height: 276px;" border="0"
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
 
-          cellpadding="0" cellspacing="0">
-          <tbody>
-            <tr valign="top">
-              <td style="width: 469px;"><b><u><font size="+1"><span style="font-size:18">Fun
-                        Things to See on this Site<br>
-                        <br>
-                      </span></font></u></b><span style="font-size:14"> </span><a
-                  href="http://barrybecker4.com/bb4-projects/index.html"><span style="font-size:14">Computer
-                    programming projects</span></a><span style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/go/go-lessons.html"><span style="font-size:14">Things
-                    about Life I learned from Go</span></a><span style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/computer_power.html"><span
-                    style="font-size:14">Thoughts on Computer Power</span></a><span
-                  style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/photos.html"><span style="font-size:14">Family
-                    Photos</span></a><span style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/favorites/favorite_things.html"><span
-                    style="font-size:14">Lists of Favorite Things</span></a><span
-                  style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/zen_garden/zen_garden.html"><span
-                    style="font-size:14">My CSS Zen Garden</span></a><span style="font-size:14"><br>
-                </span><a href="http://www.barrybecker4.com/puzzles/puzzles.html"><span
-                    style="font-size:14">Brain Teasers</span></a><span style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/shannas_pearls.html"><span
-                    style="font-size:14">Shanna's Pearls of Wisdom</span></a><span
-                  style="font-size:14"><br>
-                </span><a href="http://barrybecker4.com/bookmarks/myBookmarks.html"><span
-                    style="font-size:14">My Web Bookmarks</span></a><span style="font-size:14">
-                  (in javascript tree)<br>
-                </span><a href="http://barrybecker4.com/aikido/aikido_grammar.html"><span
-                    style="font-size:14">Aikido Grammar</span></a>
-                <span style="font-size:14"><br>
-                  <a title="Uses d3 to explain how Baye's rule works in the context of disease testing"
-                    href="http://barrybecker4.com/bayes-rule-viz/index.html">Disease
-                    Testing Viz</a> (using Baye's Rule)<br>
-                </span><span style="font-size:14"><br>
-                </span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </body>
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .link-list {
+            list-style: none;
+        }
+
+        .link-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .link-list a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-block;
+            position: relative;
+        }
+
+        .link-list a:hover {
+            color: var(--primary-dark);
+        }
+
+        .link-list a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--secondary);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .link-list a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .link-description {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-left: 0.25rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            color: var(--light);
+            background-color: rgba(30, 41, 59, 0.8);
+            border-radius: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Barry Becker</h1>
+        <p class="tagline">Explore my digital collection of projects, resources, and personal interests</p>
+    </header>
+
+    <main class="card-grid">
+        <section class="card">
+            <h2 class="card-title">Fun Things to See</h2>
+            <ul class="link-list">
+                <li><a href="http://barrybecker4.com/bb4-projects/index.html">Computer Programming Projects</a></li>
+                <li><a href="http://barrybecker4.com/go/go-lessons.html">Things about Life I learned from Go</a></li>
+                <li><a href="http://barrybecker4.com/computer_power.html">Thoughts on Computer Power</a></li>
+                <li><a href="http://barrybecker4.com/photos.html">Family Photos</a></li>
+                <li><a href="http://barrybecker4.com/favorites/favorite_things.html">Lists of Favorite Things</a></li>
+                <li><a href="http://barrybecker4.com/zen_garden/zen_garden.html">My CSS Zen Garden</a></li>
+                <li><a href="http://www.barrybecker4.com/puzzles/puzzles.html">Brain Teasers</a></li>
+                <li><a href="http://barrybecker4.com/shannas_pearls.html">Shanna's Pearls of Wisdom</a></li>
+                <li><a href="http://barrybecker4.com/bookmarks/myBookmarks.html">My Web Bookmarks</a> <span class="link-description">(in javascript tree)</span></li>
+                <li><a href="http://barrybecker4.com/aikido/aikido_grammar.html">Aikido Grammar</a></li>
+                <li><a href="http://barrybecker4.com/bayes-rule-viz/index.html">Disease Testing Viz</a> <span class="link-description">(using Bayes' Rule)</span></li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2 class="card-title">School Related</h2>
+            <ul class="link-list">
+                <li><a href="logan/docs-index.html">Logan School Site Council docs</a></li>
+                <li><a href="https://groups.google.com/forum/#%21forum/logan-computer-science">Logan Computer Science Club</a> <span class="link-description">(when Brian in 9th grade)</span></li>
+                <li><a href="csc/index.html">AMS Computer Science Club</a> <span class="link-description">(when Brian in 8th grade)</span></li>
+                <li><a href="http://barrybecker4.com/math/">AMS Math League</a> <span class="link-description">(when Brian in 7th grade)</span></li>
+                <li><a href="http://barrybecker4.com/math/pioneerMathLeague/">Pioneer Math League</a> <span class="link-description">(when Brian in 5th grade)</span></li>
+                <li><a href="http://www.barrybecker4.com/scratch_intro.html">Scratch Intro</a></li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2 class="card-title">Home Movies</h2>
+            <ul class="link-list">
+                <li>Alien Movie (<a href="https://youtu.be/PoQ-u__RN5c">preview</a>) (<a href="http://www.barrybecker4.com/alien/alien_screenplay8.html">screenplay</a>)</li>
+                <li><a href="https://www.youtube.com/watch?v=X18y5ZEdQC8">Star Wars Kids</a></li>
+                <li><a href="https://www.youtube.com/watch?v=lv6eepe1vHY">Episode II: Revenge of the Kids</a></li>
+                <li><a href="http://www.youtube.com/watch?v=8FkMvdEDyKc">Thunder Mountain</a> <span class="link-description">(Sedona 2004)</span></li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2 class="card-title">Personal Info</h2>
+            <ul class="link-list">
+                <li><a href="http://barrybecker4.com/resume/resume.html">Resume</a></li>
+                <li><a href="http://www.barrybecker4.com/patents.html">Patents</a></li>
+                <li><a href="http://barrybecker4.com/journal_papers.html">Journal Papers</a></li>
+                <li><a href="http://www.barrybecker4.com/psycho_profile.html">Psychological Profile</a></li>
+                <li><a href="http://barrybecker4.com/life-journal.html">Life Journal</a></li>
+                <li><a href="http://barrybecker4.com/near_death_exps.html">Near Death Experiences</a></li>
+                <li><a href="http://home.att.net/%7Ehuyett.tree/">Family Tree</a></li>
+                <li><a href="http://barrybecker4.com/aikido/aikido_index.html">Martial Arts Background</a></li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2 class="card-title">Family & Friends</h2>
+            <ul class="link-list">
+                <li><a href="https://www.facebook.com/brian.j.becker.7">Brian Becker</a> <span class="link-description">(son)</span></li>
+                <li><a href="https://www.facebook.com/search/top/?q=shanna%20becker">Shanna Becker</a> <span class="link-description">(wife)</span></li>
+                <li>Marilyn Becker <span class="link-description">(AKA mom)</span> (<a href="http://www.geni.com/home">our family tree</a>)</li>
+                <li><a href="http://www.PamelaBeckerCreations.com">Pam Becker's artwork</a> also on <a href="https://www.facebook.com/BigVisionArts/">Facebook</a> <span class="link-description">(sister)</span></li>
+                <li><a href="https://www.facebook.com/bill.keese">Bill Keese</a> <span class="link-description">(friend)</span></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Barry Becker • Updated: March 16, 2025</p>
+    </footer>
+</div>
+</body>
 </html>

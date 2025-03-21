@@ -1,83 +1,424 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Journal Papers</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Barry Becker">
+    <meta name="keywords" content="visualization papers, Barry Becker, journal papers, research">
+    <meta name="description" content="Collection of academic journal papers by Barry Becker on visualization and data science topics">
+    <title>Barry Becker - Journal Papers</title>
+    <style>
+        :root {
+          --primary: #003366;
+          --accent: #0066cc;
+          --background: #f8f9fa;
+          --text: #333;
+          --link: #0066cc;
+          --link-hover: #004080;
+          --link-visited: #660099;
+          --card: #ffffff;
+          --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          --border: #e0e0e0;
+        }
 
-<meta name="generator" content="Created Using Yahoo! PageBuilder 2.61.90">
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
 
-<meta name="author" content="Barry Becker">
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          line-height: 1.6;
+          color: var(--text);
+          background-color: var(--background);
+          background-image: linear-gradient(to bottom, #f0f4f8, #e9ecef);
+          padding: 0;
+        }
 
-<meta name="keywords" content="visualization papers Barry Becker">
+        .container {
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 2rem;
+        }
 
+        header {
+          text-align: center;
+          margin-bottom: 3rem;
+        }
+
+        h1 {
+          font-size: 2.4rem;
+          color: var(--primary);
+          margin-bottom: 1rem;
+          position: relative;
+          display: inline-block;
+        }
+
+        h1::after {
+          content: '';
+          display: block;
+          width: 60%;
+          height: 3px;
+          background-color: var(--accent);
+          position: absolute;
+          bottom: -10px;
+          left: 20%;
+        }
+
+        .papers-list {
+          background-color: var(--card);
+          border-radius: 8px;
+          box-shadow: var(--shadow);
+          padding: 2rem;
+        }
+
+        .paper-item {
+          margin-bottom: 1.8rem;
+          padding-bottom: 1.8rem;
+          border-bottom: 1px solid var(--border);
+          display: flex;
+          flex-direction: column;
+        }
+
+        .paper-item:last-child {
+          border-bottom: none;
+          margin-bottom: 0;
+          padding-bottom: 0;
+        }
+
+        .paper-title {
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+
+        .paper-venue {
+          font-style: italic;
+          color: #666;
+          margin-bottom: 0.5rem;
+        }
+
+        .paper-links {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .paper-link {
+          display: inline-flex;
+          align-items: center;
+          color: var(--link);
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 0.2s ease;
+        }
+
+        .paper-link:hover {
+          color: var(--link-hover);
+          text-decoration: underline;
+        }
+
+        .paper-link:visited {
+          color: var(--link-visited);
+        }
+
+        .paper-link svg {
+          margin-right: 0.4rem;
+          width: 16px;
+          height: 16px;
+        }
+
+        footer {
+          text-align: center;
+          margin-top: 3rem;
+          padding: 1rem 0;
+          color: #777;
+          font-size: 0.9rem;
+        }
+
+        .back-link {
+          display: inline-block;
+          margin-top: 1rem;
+          color: var(--link);
+          text-decoration: none;
+        }
+
+        .back-link:hover {
+          text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+          .container {
+            padding: 1.5rem;
+          }
+
+          h1 {
+            font-size: 2rem;
+          }
+
+          .papers-list {
+            padding: 1.5rem;
+          }
+        }
+    </style>
 </head>
+<body>
+<div class="container">
+    <header>
+        <h1>My Journal Papers</h1>
+    </header>
 
-<body background="http://www.geocities.com/clipart/pbi/backgrounds/Generic/resume_bkgd.gif" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" text="#000000"
+    <main class="papers-list">
+        <div class="paper-item">
+            <div class="paper-title">E-Commerce Clickstream Visualization</div>
+            <div class="paper-venue">IEEE Visualization (Viz 2001)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/709hijrnit" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
->
+        <div class="paper-item">
+            <div class="paper-title">Approximating Scatterplots of Large Datasets Using Distribution Splats</div>
+            <div class="paper-venue">SPIE Visualization and Data Analysis (2000)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/c3hyqjx9oy" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
+        <div class="paper-item">
+            <div class="paper-title">Visualizing the Simple Bayesian Classifier</div>
+            <div class="paper-venue">ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD 1997)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/rsg6q948t7" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
-<table border=0 cellspacing=0 cellpadding=0 width=640>
+        <div class="paper-item">
+            <div class="paper-title">Visualizing Decision Table Classifiers</div>
+            <div class="paper-venue">IEEE Visualization (Viz 1998)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/zigmx08ik3" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+                <a href="http://www.box.net/shared/m8hzun8brh" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    Figures
+                </a>
+            </div>
+        </div>
 
-<tr valign="top" align="left">
+        <div class="paper-item">
+            <div class="paper-title">Volume Rendering for Relational Data</div>
+            <div class="paper-venue">IEEE Visualization (Viz 1997)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/nq5psh0hl7" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+                <a href="http://www.box.net/shared/5p00k6bf2r" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    Figures
+                </a>
+            </div>
+        </div>
 
-	<td><img src="http://www.geocities.com/clipart/pbi/c.gif" height=1 width=32></td>
+        <div class="paper-item">
+            <div class="paper-title">Using MineSet for Knowledge Discovery</div>
+            <div class="paper-venue">IEEE Computer Graphics and Applications (CGA 1997)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/7nyf7au12z" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+                <a href="http://www.box.net/shared/nzeuy4qp16" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    Images
+                </a>
+            </div>
+        </div>
 
-	<td><img src="http://www.geocities.com/clipart/pbi/c.gif" height=1 width=192></td>
+        <div class="paper-item">
+            <div class="paper-title">Unsteady Flow Volumes</div>
+            <div class="paper-venue">IEEE Visualization (Viz 1995)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/3unscktzk4" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
-	<td><img src="http://www.geocities.com/clipart/pbi/c.gif" height=1 width=160></td>
+        <div class="paper-item">
+            <div class="paper-title">Flow Visualization of Moving Textures</div>
+            <div class="paper-venue">ICASE Report (1995)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/rbsar05lu2" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
-	<td><img src="http://www.geocities.com/clipart/pbi/c.gif" height=1 width=256></td>
+        <div class="paper-item">
+            <div class="paper-title">Applications of Texture Mapping and Flow Visualization</div>
+            <div class="paper-venue">Graphicon (1995)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/58brrqkmkq" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
-	<td><img src="http://www.geocities.com/clipart/pbi/c.gif" height=1 width=1></td>
+        <div class="paper-item">
+            <div class="paper-title">Sorting and Hardware Assisted Rendering for Volume Visualization</div>
+            <div class="paper-venue">Volume Visualization Symposium (1994)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/gbz8med8lv" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
-</tr>
+        <div class="paper-item">
+            <div class="paper-title">Volume Rendering of 3D Scalar and Vector Fields at LLNL</div>
+            <div class="paper-venue">Supercomputing (SC 1993)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/e67eg7bllf" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
-<tr valign="top">
+        <div class="paper-item">
+            <div class="paper-title">Flow Volumes for Interactive Vector Field Visualization</div>
+            <div class="paper-venue">IEEE Visualization (Viz 1993)</div>
+            <div class="paper-links">
+                <a href="http://www.box.net/shared/ohhdcbmlku" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+            </div>
+        </div>
 
-	<td colspan=5 height=28></td>
+        <div class="paper-item">
+            <div class="paper-title">Smooth Transitions Between Bump Rendering Algorithms</div>
+            <div class="paper-venue">SIGGRAPH (1993)</div>
+            <div class="paper-links">
+                <a href="https://portal.acm.org/poplogin.cfm?dl=GUIDE&coll=GUIDE&comp_id=166141&want_href=delivery%2Ecfm%3Fid%3D166141%26type%3Dpdf&CFID=28934710&CFTOKEN=59031661&td=1097074396593" class="paper-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Paper
+                </a>
+            </div>
+        </div>
+    </main>
 
-</tr>
-
-<tr valign="top">
-
-	<td colspan=2 height=27></td>
-
-	<td align="center" colspan=1 rowspan=1 width=160><b><font size="+1"><span style="font-size:18">My Journal Papers</span></font></b></td>
-
-	<td colspan=2 height=27></td>
-
-</tr>
-
-<tr valign="top">
-
-	<td colspan=5 height=31></td>
-
-</tr>
-
-<tr valign="top">
-
-	<td colspan=1 height=685></td>
-
-	<td colspan=3 rowspan=1 width=608><span style="font-size:14">
-		<br>E-Commerce Clickstream Visualization (Viz 2001) </span><a href="http://www.box.net/shared/709hijrnit"><span style="font-size:14">paper</span></a><span style="font-size:14"><br><br>
-		Approximating Scatterplots of Large Datasets Using Distribution Splats (SPIE 2000)&nbsp; </span><a href="http://www.box.net/shared/c3hyqjx9oy"><span style="font-size:14">paper</span></a><span style="font-size:14"><br><br>
-		Visualizing the Simple Bayesian Classifier (KDD 1997) </span><a href="http://www.box.net/shared/rsg6q948t7"><span style="font-size:14">paper</span></a><span style="font-size:14"> <br><br>
-		Visualizing Decision Table Classifiers (Viz 1998) </span><a href="http://www.box.net/shared/zigmx08ik3"><span style="font-size:14">paper</span></a><span style="font-size:14"> </span><a href="http://www.box.net/shared/m8hzun8brh"><span style="font-size:14">figures</span></a><span style="font-size:14"><br><br>
-		Volume Rendering for Relational Data (Viz 1997) </span><a href="http://www.box.net/shared/nq5psh0hl7"><span style="font-size:14">paper</span></a><span style="font-size:14"> </span><a href="http://www.box.net/shared/5p00k6bf2r"><span style="font-size:14">figures</span></a><span style="font-size:14"><br><br>
-		Using MineSet for Knowledge Discovery (CGA 1997) </span><a href="http://www.box.net/shared/7nyf7au12z"><span style="font-size:14">paper</span></a><span style="font-size:14"> </span><a href="http://www.box.net/shared/nzeuy4qp16"><span style="font-size:14">images</span></a><span style="font-size:14"><br><br>
-		Unsteady Flow Volumes (Viz 1995) </span><a href="http://www.box.net/shared/3unscktzk4"><span style="font-size:14">paper</span></a><span style="font-size:14"><br><br>
-		Flow Visulaization of Moving Textures (ICASE 1995) </span><a href="http://www.box.net/shared/rbsar05lu2"><span style="font-size:14">paper</span></a><span style="font-size:14"><br><br>
-		Applications of Texture Mapping and Flow Visualization (Graphicon 1995) </span><a href="http://www.box.net/shared/58brrqkmkq"><span style="font-size:14">paper</span></a><span style="font-size:14"><br><br>
-		Sorting and Hardware Assisted Rendering for Volume Visualization (Vol Viz 1994) </span><a href="http://www.box.net/shared/gbz8med8lv"><span style="font-size:14">paper</span></a><a href="http://us.f1.yahoofs.com/bc/627a5a8f/bc/papers/Volume+Rendering+(Vol+Viz+94).pdf?BCO7rYBBR.AUMi4G"><span style="font-size:14"><br><br></span></a><span style="font-size:14">
-		Volume Rendering of 3D Scalar and Vector Fields at LLNL (SC 93) </span><a href="http://www.box.net/shared/e67eg7bllf"><span style="font-size:14">paper</span></a><span style="font-size:14"><br><br>
-		Flow Volumes for Interactive Vector Field Visualization (Viz 1993) </span><a href="http://www.box.net/shared/ohhdcbmlku"><span style="font-size:14">paper</span></a><span style="font-size:14"><br><br>
-		Smooth Transitions Between Bump Rendering Algorithms (SIGGRAPH 1993) </span><a href="https://portal.acm.org/poplogin.cfm?dl=GUIDE&coll=GUIDE&comp_id=166141&want_href=delivery%2Ecfm%3Fid%3D166141%26type%3Dpdf&CFID=28934710&CFTOKEN=59031661&td=1097074396593"><span style="font-size:14">paper</span></a><span style="font-size:14"><br><br>
-		<br><br></span></td>
-	<td colspan=1 height=685></td>
-
-</tr>
-
-</table>
-
+    <footer>
+        <p>© 2025 Barry Becker | All rights reserved</p>
+        <a href="index.html" class="back-link">← Back to Homepage</a>
+    </footer>
+</div>
 </body>
 </html>
-
