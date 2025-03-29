@@ -1,0 +1,56 @@
+:root {
+  /* Colors */
+  --primary-color: #4f711f;
+  --secondary-color: #336699;
+  --top-background-color: #edf6e3;
+  --background-color: #f8f9fa;
+  --text-color: #333333;
+  --link-color: #009900;
+  --link-hover-color: #4f711f;
+
+  /* Typography */
+  --base-font-size: 16px;
+  --heading-font: 'Segoe UI', Tahoma, sans-serif;
+  --body-font: 'Open Sans', Verdana, sans-serif;
+
+  /* Spacing */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--base-font-size);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  background-image: linear-gradient(to bottom, var(--top-background-color), var(--background-color));
+  line-height: 1.6;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.container p {
+    margin-right: 40px;
+}
+.container li {
+    margin-right: 40px;
+}
+
+.site-footer {
+    font-size: 10px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --base-font-size: 14px;
+  }
+}

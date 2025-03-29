@@ -4,132 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thoughts on the Future of Computer Power</title>
-    <style>
-        :root {
-          --primary: #2c3e50;
-          --accent: #3498db;
-          --text: #333;
-          --light-bg: #f8f9fa;
-          --card-bg: #ffffff;
-          --link: #2980b9;
-          --link-visited: #8e44ad;
-          --shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-          --border: #e0e0e0;
-        }
-
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        body {
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          line-height: 1.6;
-          color: var(--text);
-          background-color: var(--light-bg);
-          background-image: linear-gradient(to bottom, #e6f7ff, #f8f9fa);
-          padding: 0;
-        }
-
-        .container {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 20px;
-        }
-
-        header {
-          text-align: center;
-          margin: 2rem 0;
-        }
-
-        h1 {
-          font-size: 2.2rem;
-          color: var(--primary);
-          margin-bottom: 1rem;
-        }
-
-        .content {
-          background-color: var(--card-bg);
-          padding: 2rem;
-          border-radius: 8px;
-          box-shadow: var(--shadow);
-          margin-bottom: 2rem;
-        }
-
-        p {
-          margin-bottom: 1.5rem;
-          font-size: 1.05rem;
-          text-align: justify;
-        }
-
-        a {
-          color: var(--link);
-          text-decoration: none;
-          border-bottom: 1px dotted var(--link);
-          transition: color 0.2s ease, border-color 0.2s ease;
-        }
-
-        a:hover {
-          color: var(--accent);
-          border-color: var(--accent);
-        }
-
-        a:visited {
-          color: var(--link-visited);
-          border-color: var(--link-visited);
-        }
-
-        .indented {
-          padding-left: 1.5rem;
-        }
-
-        .chart-container {
-          background-color: var(--card-bg);
-          padding: 1.5rem;
-          border-radius: 8px;
-          box-shadow: var(--shadow);
-          text-align: center;
-        }
-
-        .chart-container img {
-          max-width: 100%;
-          height: auto;
-          margin: 0 auto;
-          display: block;
-          border: 1px solid var(--border);
-          border-radius: 4px;
-        }
-
-        .chart-caption {
-          margin-top: 1rem;
-          text-align: center;
-          font-style: italic;
-          color: #666;
-        }
-
-        footer {
-          text-align: center;
-          margin-top: 2rem;
-          padding: 1rem 0;
-          color: #777;
-          font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-          .container {
-            padding: 15px;
-          }
-
-          .content {
-            padding: 1.5rem;
-          }
-
-          h1 {
-            font-size: 1.8rem;
-          }
-        }
-    </style>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <div class="container">
@@ -156,9 +31,11 @@
         <p class="chart-caption">The figure above (from Moravec's <a href="http://www.frc.ri.cmu.edu/users/hpm/book97/">Robot</a>) shows the super-exponential nature of computer power over time. Note that the graph has an exponential rather than linear shape even though plotted using a log scale for the vertical axis. By the time my son is 23, he will be able to buy a computer that is 1,000,000 times faster than those available today for a fraction of the cost.</p>
     </div>
 
-    <footer>
-        <p>© Barry Becker | Last updated: March 2025</p>
-    </footer>
 </div>
+  <footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2025 Barry Becker. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>
