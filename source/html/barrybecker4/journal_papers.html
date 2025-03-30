@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barry Becker - Journal Papers</title>
     <meta name="author" content="Barry Becker">
     <meta name="keywords" content="visualization papers, Barry Becker, journal papers, research">
     <meta name="description" content="Collection of academic journal papers by Barry Becker on visualization and data science topics">
-    <title>Barry Becker - Journal Papers</title>
+    <link rel="stylesheet" href="css/main.css">
     <style>
         :root {
           --primary: #003366;
@@ -21,51 +22,14 @@
           --border: #e0e0e0;
         }
 
+        h1 {
+           margin: 20px;
+        }
+
         * {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
-        }
-
-        body {
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          line-height: 1.6;
-          color: var(--text);
-          background-color: var(--background);
-          background-image: linear-gradient(to bottom, #f0f4f8, #e9ecef);
-          padding: 0;
-          min-height: 100vh;
-          margin: 0;
-        }
-
-        .container {
-          max-width: 900px;
-          margin: 0 auto;
-          padding: 2rem;
-        }
-
-        header {
-          text-align: center;
-          margin-bottom: 3rem;
-        }
-
-        h1 {
-          font-size: 2.4rem;
-          color: var(--primary);
-          margin-bottom: 1rem;
-          position: relative;
-          display: inline-block;
-        }
-
-        h1::after {
-          content: '';
-          display: block;
-          width: 60%;
-          height: 3px;
-          background-color: var(--accent);
-          position: absolute;
-          bottom: -10px;
-          left: 20%;
         }
 
         .papers-list {
@@ -148,27 +112,12 @@
         .back-link:hover {
           text-decoration: underline;
         }
-
-        @media (max-width: 768px) {
-          .container {
-            padding: 1.5rem;
-          }
-
-          h1 {
-            font-size: 2rem;
-          }
-
-          .papers-list {
-            padding: 1.5rem;
-          }
-        }
     </style>
 </head>
+
 <body>
-<div class="container">
-    <header>
-        <h1>My Journal Papers</h1>
-    </header>
+<main class="container">
+    <h1>Barry's Journal Papers</h1>
 
     <main class="papers-list">
         <div class="paper-item">
@@ -421,6 +370,6 @@
         <p>© 2025 Barry Becker | All rights reserved</p>
         <a href="index.html" class="back-link">← Back to Homepage</a>
     </footer>
-</div>
+</main>
 </body>
 </html>
