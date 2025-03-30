@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barry Becker - Links & Resources</title>
+    <link rel="stylesheet" href="css/main.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -26,23 +28,6 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.4;
-            color: var(--dark);
-            background-color: var(--light);
-            background-image: url('https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            padding: 2rem 1rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
         header {
             text-align: center;
             padding: 2rem 1rem;
@@ -61,7 +46,6 @@
         .tagline {
             font-size: 1.25rem;
             color: var(--gray);
-            max-width: 600px;
             margin: 0 auto;
         }
 
@@ -135,33 +119,12 @@
             color: var(--gray);
             margin-left: 0.25rem;
         }
-
-        footer {
-            text-align: center;
-            margin-top: 3rem;
-            padding: 1.5rem;
-            color: var(--light);
-            background-color: rgba(30, 41, 59, 0.8);
-            border-radius: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-        }
     </style>
 </head>
+
+
 <body>
-<div class="container">
+    <div class="container">
     <header>
         <h1>Barry Becker</h1>
         <p class="tagline">Explore my digital collection of projects, resources, and personal interests</p>
@@ -169,73 +132,85 @@
 
     <main class="card-grid">
         <section class="card">
-            <h2 class="card-title">Fun Things to See</h2>
+            <h2 class="card-title">About Me</h2>
             <ul class="link-list">
-                <li><a href="http://barrybecker4.com/bb4-projects/index.html">Computer Programming Projects</a></li>
-                <li><a href="http://barrybecker4.com/go/go-lessons.html">Things about Life I learned from Go</a></li>
-                <li><a href="http://barrybecker4.com/computer_power.html">Thoughts on Computer Power</a></li>
-                <li><a href="http://barrybecker4.com/photos.html">Family Photos</a></li>
-                <li><a href="http://barrybecker4.com/favorites/favorite_things.html">Lists of Favorite Things</a></li>
-                <li><a href="http://barrybecker4.com/zen_garden/zen_garden.html">My CSS Zen Garden</a></li>
-                <li><a href="http://www.barrybecker4.com/puzzles/puzzles.html">Brain Teasers</a></li>
-                <li><a href="http://barrybecker4.com/shannas_pearls.html">Shanna's Pearls of Wisdom</a></li>
-                <li><a href="http://barrybecker4.com/bookmarks/myBookmarks.html">My Web Bookmarks</a> <span class="link-description">(in javascript tree)</span></li>
-                <li><a href="http://barrybecker4.com/aikido/aikido_grammar.html">Aikido Grammar</a></li>
-                <li><a href="http://barrybecker4.com/bayes-rule-viz/index.html">Disease Testing Viz</a> <span class="link-description">(using Bayes' Rule)</span></li>
+                <li><a href="photos.html">Family Photos</a></li>
+                <li><a href="favorites/favorite_things.html">Lists of Favorite Things</a></li>
+                <li><a href="bookmarks/myBookmarks.html">My Web Bookmarks</a> <span class="link-description">(javascript tree)</span></li>
+                <li><a href="psycho_profile.html">Psychological Profile</a></li>
+                <li><a href="near_death_exps.html">Near-Death Experiences</a></li>
+                <li><a href="http://home.att.net/%7Ehuyett.tree/">Family Tree</a></li>
+                <li><a href="life-journal.html">Life Journal</a></li>
             </ul>
         </section>
-
+        <section class="card">
+            <h2 class="card-title">Programming Projects</h2>
+            <ul class="link-list">
+                <li><a href="bb4-projects/">Computer Programming Projects</a></li>
+                <li><a href="puzzles/puzzles.html">Brain Teasers</a></li>
+                <li><a href="bayes-rule-viz">Disease Testing Viz</a> <span class="link-description">(with Bayes' Rule)</span></li>
+                <li><a href="wordle">Wordle</a></li>
+                <li><a href="hammurabi-game/index.html">Hammurabi Game</a></li>
+                <li><a href="zen_garden/zen_garden.html">My CSS Zen Garden</a></li>
+            </ul>
+        </section>
+        <section class="card">
+            <h2 class="card-title">Professional</h2>
+            <ul class="link-list">
+                <li><a href="resume/resume.html">Resume</a></li>
+                <li><a href="patents.html">Patents</a></li>
+                <li><a href="journal_papers.html">Journal Papers</a></li>
+            </ul>
+        </section>
+        <section class="card">
+            <h2 class="card-title">Interests</h2>
+            <ul class="link-list">
+                <li><a href="go/go-lessons.html">Things about Life I learned from Go</a></li>
+                <li><a href="go/go_club_calendar.html">Union City Go Club Calendar</a></li>
+                <li><a href="go/go_terminology.html">Go Terminology</a></li>
+                <li><a href="https://drive.google.com/drive/folders/1NYxUVR9SAh_TZ2kMoeCnB95UubQ5sf_g">Introductory Go Curriculum</a></li>
+                <li><a href="computer_power.html">Thoughts on Computer Power</a></li>
+                <li><a href="aikido/aikido_index.html">My Martial Arts experience</a></li>
+                <li><a href="aikido/aikido_grammar.html">Aikido Grammar</a></li>
+                <li><a href="puzzles/puzzles.html">Brain Teasers</a></li>
+            </ul>
+        </section>
         <section class="card">
             <h2 class="card-title">School Related</h2>
             <ul class="link-list">
                 <li><a href="logan/docs-index.html">Logan School Site Council docs</a></li>
-                <li><a href="https://groups.google.com/forum/#%21forum/logan-computer-science">Logan Computer Science Club</a> <span class="link-description">(when Brian in 9th grade)</span></li>
-                <li><a href="csc/index.html">AMS Computer Science Club</a> <span class="link-description">(when Brian in 8th grade)</span></li>
-                <li><a href="http://barrybecker4.com/math/">AMS Math League</a> <span class="link-description">(when Brian in 7th grade)</span></li>
-                <li><a href="http://barrybecker4.com/math/pioneerMathLeague/">Pioneer Math League</a> <span class="link-description">(when Brian in 5th grade)</span></li>
-                <li><a href="http://www.barrybecker4.com/scratch_intro.html">Scratch Intro</a></li>
+                <li><a href="https://groups.google.com/forum/#%21forum/logan-computer-science">Logan Computer Science Club (deleted)</a> <span class="link-description">(when Brian in HS)</span></li>
+                <li><a href="csc">AMS Computer Science Club</a> <span class="link-description">(when Brian in 8th grade)</span></li>
+                <li><a href="csc/career-day.html">Career day speech (that never happened</a></li>
+                <li><a href="math/">AMS Math League</a> <span class="link-description">(when Brian in 7th grade)</span></li>
+                <li><a href="math/pioneerMathLeague/">Pioneer Math League</a> <span class="link-description">(when Brian in 5th grade)</span></li>
+                <li><a href="scratch_intro.html">Scratch Intro</a></li>
+                <li><a href="mathSheet/mathSheet.html">Brian's Math Sheet</a><span class="link-description">(legacy Flash)</span></li>
             </ul>
         </section>
-
         <section class="card">
             <h2 class="card-title">Home Movies</h2>
             <ul class="link-list">
-                <li>Alien Movie (<a href="https://youtu.be/PoQ-u__RN5c">preview</a>) (<a href="http://www.barrybecker4.com/alien/alien_screenplay8.html">screenplay</a>)</li>
+                <li><a href="movies/">index</a></li>
+                <li><a href="https://www.youtube.com/watch?v=uPDpbMlPcGI">Union City Assassin</a></li>
+                <li>Alien Movie (<a href="https://youtu.be/PoQ-u__RN5c">preview</a>) (<a href="http://www.barrybecker4.com/alien/alien_screenplay8.html">screenplay</a>) (<a href="http://www.barrybecker4.com/alien/props.html">props</a>)</li>
                 <li><a href="https://www.youtube.com/watch?v=X18y5ZEdQC8">Star Wars Kids</a></li>
                 <li><a href="https://www.youtube.com/watch?v=lv6eepe1vHY">Episode II: Revenge of the Kids</a></li>
                 <li><a href="http://www.youtube.com/watch?v=8FkMvdEDyKc">Thunder Mountain</a> <span class="link-description">(Sedona 2004)</span></li>
             </ul>
         </section>
-
-        <section class="card">
-            <h2 class="card-title">Personal Info</h2>
-            <ul class="link-list">
-                <li><a href="http://barrybecker4.com/resume/resume.html">Resume</a></li>
-                <li><a href="http://www.barrybecker4.com/patents.html">Patents</a></li>
-                <li><a href="http://barrybecker4.com/journal_papers.html">Journal Papers</a></li>
-                <li><a href="http://www.barrybecker4.com/psycho_profile.html">Psychological Profile</a></li>
-                <li><a href="http://barrybecker4.com/life-journal.html">Life Journal</a></li>
-                <li><a href="http://barrybecker4.com/near_death_exps.html">Near Death Experiences</a></li>
-                <li><a href="http://home.att.net/%7Ehuyett.tree/">Family Tree</a></li>
-                <li><a href="http://barrybecker4.com/aikido/aikido_index.html">Martial Arts Background</a></li>
-            </ul>
-        </section>
-
         <section class="card">
             <h2 class="card-title">Family & Friends</h2>
             <ul class="link-list">
+                <li><a href="shannas_pearls.html">Shanna's Pearls of Wisdom</a></li>
                 <li><a href="https://www.facebook.com/brian.j.becker.7">Brian Becker</a> <span class="link-description">(son)</span></li>
                 <li><a href="https://www.facebook.com/search/top/?q=shanna%20becker">Shanna Becker</a> <span class="link-description">(wife)</span></li>
-                <li>Marilyn Becker <span class="link-description">(mom)</span> (<a href="http://www.geni.com/home">our family tree</a>)</li>
+                <li><a href="https://photoprism.barrybecker4.org/library/albums/asfhkx9i6ywku5j6/marilyn-becker">Marilyn Becker</a> <span class="link-description">(mom)</span> (<a href="http://www.geni.com/home">our family tree</a>)</li>
                 <li><a href="http://www.PamelaBeckerCreations.com">Pam Becker's artwork</a> also on <a href="https://www.facebook.com/BigVisionArts/">Facebook</a> <span class="link-description">(sister)</span></li>
                 <li><a href="https://www.facebook.com/bill.keese">Bill Keese</a> <span class="link-description">(friend)</span></li>
             </ul>
         </section>
     </main>
-
-    <footer>
-        <p>&copy; 2025 Barry Becker • Updated: March 16, 2025</p>
-    </footer>
 </div>
 </body>
 </html>
