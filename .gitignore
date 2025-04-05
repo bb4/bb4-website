@@ -2,9 +2,8 @@
 ### Java template
 *.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-webdeployment/dist
+source/html/barrybecker4/bb4-website.cpf
+source/html/barrybecker4/bb4-website.cpfs
 
 # Package Files #
 *.war
@@ -12,7 +11,6 @@ webdeployment/dist
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-
 
 #intellij
 .idea
@@ -28,3 +26,4 @@ webdeployment/gradle/
 webdeployment/gradlew
 webdeployment/gradlew.bat
 webdeployment/out/
+
