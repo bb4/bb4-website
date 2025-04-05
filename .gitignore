@@ -21,7 +21,6 @@ hs_err_pid*
 
 */build
 .gradle
-ui/
 webdeployment/gradle/
 webdeployment/gradlew
 webdeployment/gradlew.bat
