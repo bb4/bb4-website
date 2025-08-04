@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="src/css/styles.css">
+
+        <script src="node_modules/planck-js/dist/planck.min.js"></script>
+        <script src="node_modules/phaser/dist/phaser.min.js"></script>
+        <script type="module" src="src/js/totemGame.js"></script>
+    </head>
+
+    <body>
+        <div id="UI" class="ui-controls">
+            <span>Select a totem puzzle: </span>
+            <select id="totemSelector">
+                <option value="totem1">Easy</option>
+                <option selected value="totem2">Hard</option>
+                <option value="totem3">Complex</option>
+            </select>
+            <button id="restartButton">Restart</button>
+        </div>
+        <div id = "TotemDestroyerGame"></div>
+    </body>
+
+</html>

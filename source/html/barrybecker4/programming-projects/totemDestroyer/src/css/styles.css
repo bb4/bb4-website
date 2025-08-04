@@ -1,0 +1,14 @@
+
+body {
+    background: #eeeeee;
+    padding: 0px;
+    margin: 0px;
+}
+
+.ui-controls {
+    color: #000000;
+    margin: auto;
+    width: 90%;
+    padding: 10px;
+}
+

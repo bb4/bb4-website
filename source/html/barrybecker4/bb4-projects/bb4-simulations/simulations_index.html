@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Simulations</title>
+    <meta name="author" content="Barry Becker">
+    <meta name="description" content="A collection of Simulations">
+    <meta name="keywords" content="simulation optimization barry becker">
+    <link rel="stylesheet" type="text/css" href="../bb4-common/bb4-common.css">
+</head>
+<body>
+
+<div id="intro">
+    <h1>Simulations</h1>
+    <p><a href="https://github.com/bb4/bb4-simulations">This project</a> consists of a simulation framework and
+        a collection of simulations written in Scala.
+        Examples include reaction diffusion, fractals, snakes, stocks, dice, fluid flow, and many more.
+    </p>
+    <p>
+    Download this <a href="bb4-simulations-1.5.zip">zip file</a> and unzip it.
+    Then in the bin directory <a href="../bb4-common/run-instructions.html">run</a> one of commands indicated below.
+    </p>
+    <br>
+</div>
+
+<div>
+    <table>
+        <tbody>
+        <tr>
+          <td>
+            <h3>Reaction Diffusion</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.reactiondiffusion.RDSimulator</pre>
+            <p>Simulates a interaction between 2 chemicals in a reaction diffusion simulation. The program is based on an applet by <a href="http://www.joakimlinde.se/java/ReactionDiffusion/">Joakim Linde</a>. There are 2 chemicals that react in complex ways as defined by a non-linear differential equation that cannot be solved analytically. The simulation solves it numerically.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/reactiondiffusion.jpg" title="Reaction Diffusion" alt="Reaction Diffusion">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Henon Phase Explorer</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.henonphase.HenonPhaseExplorer</pre>
+            <p>The <a href="http://www.complexification.net/gallery/machines/henonPhaseDeep/">Henon Strange Attractor</a> is defined by the following transformations:<br/>Xn+1 = Xn cos(a) - (Yn - Xn^2) sin(a) <br/>Yn+1 = Xn sin(a) + (Yn - Xn^2) cos(a)</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/henonexplorer.jpg" title="Henon Phase Explorer" alt="Henon Phase Explorer">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Fractal Explorer</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.fractalexplorer.FractalExplorer</pre>
+            <p>This program allows you to navigate through the most complex object in mathematics, the <a href="http://en.wikipedia.org/wiki/Mandelbrot_set">Mandelbrot set</a>. Drag open a bock to zoom, and click the "go back" button to undo the last zoom. When I created my first implementation of this program in turbo pascal in high school, I can remember waiting for hours for the images to generate (on a 640 by 200 pixel screen). Now its almost instantaneous.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/fractalexplorer.jpg" title="Fractal Explorer" alt="Fractal Explorer">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Cave Explorer</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.cave.CaveExplorer</pre>
+            <p>This program allows you generate random caves that might be used in a game or for other purposes. The technique is described in this <a href="https://gamedevelopment.tutsplus.com/tutorials/generate-random-cave-levels-using-cellular-automata--gamedev-9664">article</a>.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/cave.jpg" title="Cave Explorer" alt="Cave Explorer">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Conway's Game of Life</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.conway.ConwayExplorer</pre>
+            <p>This program allows you to   simulate <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's game of life</a>.   Color is used to indicate the age of the particles. Several different rule systems are allowed.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/conway.jpg" title="Conway's Game of Life" alt="Conway's Game of Life">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Snake</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.snake.SnakeSimulator</pre>
+            <p>Simulate a living snake. The program uses a spring based model to represent the snake. There is a sinusoidal force function applied to each side to simulate muscular contractions. Directional friction is used to make the snake go forward (as happens with a real snake). Snakes have 4 ways of moving: rectilinear progression, horizontal undulatory progression, sindwinding, and concertina progression (rarely used). I only used the most common gait, horizontal undulatory progression, in this demo, but will probably add the others. You can also change the parameters of this gait to get different behaviors. The snake "learns" to move more efficiently by a process of automated optimization. It uses exactly the optimization code I use for improving the performance of the game programs. I now understand really well how a snake moves. Based on work by <a href="http://www.snakerobots.com/simulation.html">Gavin Miller</a> in his 1988 SIGGRAPH paper.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/snake.jpg" title="Snake" alt="Snake">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Dice</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.dice.DiceSimulator</pre>
+            <p>This simulator evolved out of looking for a good way to explain probability distributions to my son and his clasmates. This simple program illustrates the different sorts of bell-curve (or gaussian) distributions that can arise as you vary the number of dice and the number of sides that they have.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/dice.jpg" title="Dice" alt="Dice">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Stock Price Simulation</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.stock.StockSimulator</pre>
+            <p>This simulation was motivated by the following <a href="http://www.barrybecker4.com/puzzle_answers.html">problem</a>.<br/>You invest $100,000 in a volatile stock. Each year, with equal probability, it either rises 60% or falls by 40%. What would be the expected (mean), median, and mode stock valuations after 100 years? <br/> The moral of the story is Diversify!</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/stock.jpg" title="Stock Price Simulation" alt="Stock Price Simulation">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Stock Trading Simulation</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.trading.TradingSimulator</pre>
+            <p>This work was requested by a friend. The public version of this project has some trivial generation and trading strategies, but there is a private repo that has proprietary strategies.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/trading.jpg" title="Stock Trading Simulation" alt="Stock Trading Simulation">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Habitat Simulation</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.habitat.HabitatSimulator</pre>
+            <p>Create and maintain a set of creatures in a self-sustaining habitat. In the future, I would like to add many more attributes to each creature to make the simulation more realistic.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/habitat.jpg" title="Habitat Simulation" alt="Habitat Simulation">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Verhulst Population Simulation</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.verhulst.VerhulstSimulator</pre>
+            <p>Chaotic behavior can emerge from using a dynamic logistic population growth model like the one researched by Pierr Verhulst.  See <a href="https://fractalfoundation.org/OFC/OFC-6-1.html">Rabbits and Coyotes</a>.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/verhulst.jpg" title="Verhulst Population Simulation" alt="Verhulst Population Simulation">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Predator Prey Simulation</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.predprey.PredPreySimulator</pre>
+            <p>Simulates foxes (predators) and rabbits (prey) in the wild. Simulating the <a href="http://home.messiah.edu/~deroos/csc171/PredPrey/PPIntro.htm">predator prey relationship</a> can help us understand how complex systems can arise from very simple rules.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/predprey.jpg" title="Predator Prey Simulation" alt="Predator Prey Simulation">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Fluid Simulation</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.fluid.ui.FluidSimulator</pre>
+            <p>Deep water simulation based on work by <a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf">Jos Stam</a>. Use the mouse to stir up the fluid by clicking and dragging.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/fluid.jpg" title="Fluid Simulation" alt="Fluid Simulation">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Liquid Simulation</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.liquid.LiquidSimulator</pre>
+            <p>Particle based fluid simulation based on <a href="http://physbam.stanford.edu/~fedkiw/papers/stanford2001-02.pdf">Nick Fosters SIGGRAPH paper</a>. Numerical instability (due to a bug) causes this simulation to blow up after a relatively short time unfortunately.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/liquid.jpg" title="Liquid Simulation" alt="Liquid Simulation">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>2D Deep Water Simulation</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.water.ui.WaterSimulator</pre>
+            <p>Deep water simulation based on work by <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.89.1204&rep=rep1&type=pdf">Kass and Miller</a>. Drag the mouse to interactively change the height of the water or of the ocean floor.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/water.jpg" title="2D Deep Water Simulation" alt="2D Deep Water Simulation">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Trebuchet</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.trebuchet.TrebuchetSimulator</pre>
+            <p>Simulate a <a href="http://en.wikipedia.org/wiki/Trebuchet">trebuchet</a>.This program uses a physically based model to represent a trebuchet. When my son and I were watching Lord of the Rings, we noticed that Minas Tirith used trebuchets to defend itself. We built one out of lego, but optimizing lego is tedious, so I made this virtual trebuchet in order to try different designs. The trebuchet can also "learn" to move more efficiently by a process of automated optimization. It uses exactly the optimization code I use for improving the performance of the game programs. This is still a work in progress. I need to use constrained dynamics for the projectile's attachement to the sling (instead of a simple spring based restorative force which leads to instability). When done, I hope to build a trebuchet with my son according to the optimized specifications.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/trebuchet.jpg" title="Trebuchet" alt="Trebuchet">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Spirograph</h3>
+            <pre>bb4-spirograph</pre>
+            <p>Remember that psychodelic toy from the 70's?  Here's a version of <a href="http://en.wikipedia.org/wiki/Spirograph">Spirograph</a> for the computer, that can do things beyond what that old toy could do. Adapted from work done by <a href=http://www.math.psu.edu/dlittle/java/parametricequations/spirograph/index.html>David Little</a>.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/spirograph.jpg" title="Spirograph" alt="Spirograph">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Sierpinski Triangle</h3>
+            <pre>bb4-sierpinski</pre>
+            <p>This is an example of a self-similar set. \
+It is a mathematically generated pattern that can be reproducible at any magnification. \
+See <a href="http://en.wikipedia.org/wiki/Sierpinski_triangle">Sierpinski Triangle</a></p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/sierpinski.jpg" title="Sierpinski Triangle" alt="Sierpinski Triangle">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>L-System Tree</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.lsystem.LSystemExplorer</pre>
+            <p>Create trees from l-system expressions.  See <a href="http://www.javaview.de/vgp/tutor/lsystem/PaLSystem.html">Java View implementation</a>  or <a href="http://nodebox.net/code/index.php/L-system">NodeBox implemenation</a> for other examples.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/lsystem.jpg" title="L-System Tree" alt="L-System Tree">
+          </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Puzzles</title>
+    <meta name="author" content="Barry Becker">
+    <meta name="description" content="A collection of puzzles">
+    <meta name="keywords" content="puzzle optimization barry becker">
+    <link rel="stylesheet" type="text/css" href="../bb4-common/bb4-common.css">
+</head>
+<body>
+
+<div id="intro">
+    <h1>Puzzles</h1>
+    <p><a href="https://github.com/bb4/bb4-puzzles">This project</a> is a Scala puzzle framework.
+        Example implementations for puzzles like Sudoku, Hi-Q, One Tough Puzzle, Tantrix, and others, are provided.
+    </p>
+    <p>
+    Download this <a href="bb4-puzzles-1.5.zip">zip file</a> and unzip it.
+    Then in the bin directory <a href="../bb4-common/run-instructions.html">run</a> one of commands indicated below.
+    Since these commands do not require arguments, you can just double click on them in the file explorer to run them.
+    </p>
+    <br>
+</div>
+
+<div>
+    <table>
+        <tbody>
+        <tr>
+          <td>
+            <h3>Hi-Q</h3>
+            <pre>bb4-hiq</pre>
+            <p><a href="https://en.wikipedia.org/wiki/Peg_solitaire">Hi-Q</a> is another one of those games that can be very frustrating without the aid of a computer. The object is to have only 1 peg in the center position when you are done. This simulation takes into account board symmetry, and while searching it keeps track of the paths that it has tried. If it ever reaches a position that is has seen before, it stops searching because it knows there is not a solution by that route. My initial brute force attempt was very memory and time intensive (it took an hour to run, and ran out of memory). Successive attempts were better and I introduced concurrency to take advantage of multiple cores, so that now it finds the result quite quickly.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/hiq.jpg" title="Hi-Q" alt="Hi-Q">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Sliding Puzzle</h3>
+            <pre>bb4-slidingpuzzle</pre>
+            <p>In the <a href="http://en.wikipedia.org/wiki/Sliding_puzzle">sliding puzzle</a> you slide tiles around until the numbers are in order, or some picture is completed. There is one tile missing, which allows the rest to move around. Typical sizes are n^2-1, or 8, 16, and 25.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/slidingpuzzle.jpg" title="Sliding Puzzle" alt="Sliding Puzzle">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Sudoku Puzzle</h3>
+            <pre>bb4-sudoku</pre>
+            <p><a href="http://en.wikipedia.org/wiki/Sudoku">Sudoku</a> is the a populat puzzle based on latin squares. I'm not all that good at solving them by hand, so I wrote a program to do it. Generation takes longer, because we start with a solved board and randomly remove all the numbers we can and still infer a solution. That means we have to solve the whole board each time we remove a number. I originally collaborated with my mother, an avid soduko player and retired programmer, when developing the code. More recently I changed the solver to take <a href="http://norvig.com/sudoku.html">an approach suggested by Peter Norvig</a>.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/sudoku.jpg" title="Sudoku Puzzle" alt="Sudoku Puzzle">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Tantrix Puzzle</h3>
+            <pre>bb4-tantrix</pre>
+            <p><a href="http://www.tantrix.com/">Tantrix</a> is another one of those games that can be very frustrating without the aid of a computer. There are a variety of different strategies that you can use for solving. Some work better than others.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/tantrix.jpg" title="Tantrix Puzzle" alt="Tantrix Puzzle">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Amazing Maze Puzzle</h3>
+            <pre>bb4-maze</pre>
+            <p>You can get different types of mazes by varying the parameters. I originally made this program to help my 3 year old son, Brian, control a pencil better. He really enjoys doing the mazes. I hope you will too! </p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/maze.jpg" title="Amazing Maze Puzzle" alt="Amazing Maze Puzzle">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>One Tough Puzzle</h3>
+            <pre>bb4-redpuzzle</pre>
+            <p>The Red Puzzle (Also Called <a href="http://www.google.com/search?q=one+tough+puzzle&hl=en&rls=com.microsoft:en-us:IE-SearchBox&prmd=ivns&source=univ&tbs=shop:1&tbo=u&sa=X&ei=jhSFTeeyNYq4sQORpOzvAQ&sqi=2&ved=0CEwQrQQ">"One Tough Puzzle"</a> from Great American Puzzle Factory, Inc) is a 9 piece jigsaw puzzle. It is very hard because every piece has four nubs. There are no edge pieces. There are over 300,000 incorrect configurations. The brute force solver will solve it in about 5,000 - 60,000 iterations. It shuffles the pieces so there is a different result each time. The search algorithm tries pieces until it finds one that doesn't fit. If none of the remaining pieces fit after all rotations have been tried, it backtracks one position and tries again. Its guaranteed to find a solution if there is one. Brute force was too slow, so I created other solvers that use concurrency and genetic algorthm search to make finding the solution much faster. <p>The letters indicate the shape of the nub: Heart, Diamond, Club or Spade. Maybe someday I will draw the pieces as they really look.</p></p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/redpuzzle.jpg" title="One Tough Puzzle" alt="One Tough Puzzle">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Bridge Crossing with Flashlight</h3>
+            <pre>bb4-bridge</pre>
+            <p>The <a href="http://en.wikipedia.org/wiki/Bridge_and_torch_problem">Bridge crossing puzzle</a> is a common brain teaser. Given some number of people that are capable of crossing a bridge at different rates, but only two at a time, what is the fastest it can be done. They must cross at night and only have one flashlight. The problem is analogous to scheduling tasks to maximize throughput.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/bridge.jpg" title="Bridge Crossing with Flashlight" alt="Bridge Crossing with Flashlight">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Two Pails Puzzle</h3>
+            <pre>bb4-twopails</pre>
+            <p>This version of the <a href="http://demonstrations.wolfram.com/WaterPouringProblem/">water pouring problem</a> was inspired by Peter Norvig&quot;s <a href="http://www.coursetalk.com/udacity/design-of-computer-programs">Design of Computer Programs</a> class on Udacity. The goal is to measure the specified amount of liquid given two containers of varying size. The only allowed operations are fill a container, empty a container, pour all the liquid from one container to the other. Sometimes the problem cannot be solved.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/twopails.jpg" title="Two Pails Puzzle" alt="Two Pails Puzzle">
+          </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="left-up" width="30" height="30" tilewidth="20" tileheight="20" infinite="0" nextlayerid="3" nextobjectid="43">
+ <editorsettings>
+  <export target="level3.json" format="json"/>
+ </editorsettings>
+ <layer id="1" name="Tile Layer 1" width="30" height="30">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="2" x="-32.3229" y="593.612"/>
+  <object id="4" type="BREAKABLE" x="160" y="560" width="40" height="40"/>
+  <object id="5" type="BREAKABLE" x="380" y="580" width="40" height="20"/>
+  <object id="6" type="BREAKABLE" x="380" y="560" width="40" height="20"/>
+  <object id="7" type="BREAKABLE" x="60" y="540" width="460" height="20"/>
+  <object id="8" type="BREAKABLE" x="280" y="500" width="40" height="40"/>
+  <object id="9" type="BREAKABLE" x="240" y="500" width="40" height="40"/>
+  <object id="10" type="BREAKABLE" x="140" y="480" width="280" height="20"/>
+  <object id="12" type="BREAKABLE" x="400" y="400" width="20" height="80"/>
+  <object id="13" type="BREAKABLE" x="360" y="400" width="20" height="80"/>
+  <object id="14" type="BREAKABLE" x="140" y="400" width="20" height="80"/>
+  <object id="15" type="BREAKABLE" x="180" y="400" width="20" height="80"/>
+  <object id="16" type="BREAKABLE" x="260" y="400" width="40" height="80"/>
+  <object id="17" type="BREAKABLE" x="280" y="380" width="220" height="20"/>
+  <object id="18" type="BREAKABLE" x="80" y="380" width="200" height="20"/>
+  <object id="19" type="BREAKABLE" x="80" y="300" width="40" height="80"/>
+  <object id="20" type="BREAKABLE" x="460" y="300" width="40" height="80"/>
+  <object id="21" type="BREAKABLE" x="280" y="240" width="20" height="140"/>
+  <object id="22" type="BREAKABLE" x="260" y="240" width="20" height="140"/>
+  <object id="23" type="BREAKABLE" x="180" y="300" width="20" height="80"/>
+  <object id="24" type="BREAKABLE" x="360" y="300" width="20" height="80"/>
+  <object id="26" type="BREAKABLE" x="60" y="280" width="200" height="20"/>
+  <object id="27" type="BREAKABLE" x="300" y="280" width="220" height="20"/>
+  <object id="28" type="BREAKABLE" x="300" y="200" width="40" height="80"/>
+  <object id="29" type="BREAKABLE" x="220" y="200" width="40" height="80"/>
+  <object id="30" type="BREAKABLE" x="200" y="180" width="160" height="20"/>
+  <object id="31" type="BREAKABLE" x="360" y="140" width="20" height="140"/>
+  <object id="32" type="BREAKABLE" x="180" y="140" width="20" height="140"/>
+  <object id="33" type="BREAKABLE" x="160" y="120" width="240" height="20"/>
+  <object id="35" type="IDOL" x="280" y="80" width="20" height="40"/>
+  <object id="38" type="UNBREAKABLE" x="260" y="160" width="60" height="20"/>
+  <object id="40" type="UNBREAKABLE" x="220" y="340" width="40" height="40"/>
+  <object id="41" type="UNBREAKABLE" x="320" y="340" width="40" height="40"/>
+ </objectgroup>
+</map>

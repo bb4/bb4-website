@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Games</title>
+    <meta name="author" content="Barry Becker">
+    <meta name="description" content="A collection of computer games">
+    <meta name="keywords" content="games optimization barry becker">
+    <link rel="stylesheet" type="text/css" href="../bb4-common/bb4-common.css">
+</head>
+<body>
+
+<div id="intro">
+    <h1>Games</h1>
+    <p>Below are some games created using <a href="https://github.com/bb4/bb4-games">this game framework</a>.
+        There are implementations for games like Chess, Checkers, Go, Blockade,
+        Pente, Mancala, Poker, and others.
+    </p>
+    <p>
+        Download this <a href="bb4-games-1.5.zip">zip file</a> and unzip it.
+        Then in the bin directory, <a href="../bb4-common/run-instructions.html">run</a> one of commands indicated below.
+    </p>
+    <p>
+        All the two player games on this page use the
+        <a href="http://sourcemaking.com/design_patterns/strategy">strategy design pattern</a>
+        to determine how to search. This means that it is easy to plug in alternative search algorithms.
+        So far, I have implemented <a href="http://en.wikipedia.org/wiki/Minimax">minimax</a>,
+        <a href="http://en.wikipedia.org/wiki/Negamax">negamax</a>,
+        <a href="http://en.wikipedia.org/wiki/Negascout">negascout</a>,
+        negamax with memory, negascout with memory, <a href="http://en.wikipedia.org/wiki/MTD-f">MTD-f</a>,
+        and <a href="http://senseis.xmp.net/?UCT">UCT</a>.
+        Go requires a very different strategy in order to be successful,
+        but for now these methods provide a starting point for experimentation. A more cutting edge version of
+        go can be found in <a href="https://github.com/gcp/leela-zero">Leela-Zero</a>.
+        If you look in the options, you will see a way to show a visualization of the
+        game tree while you are playing.</p>
+</div>
+
+<div>
+    <table>
+        <tbody>
+        <tr>
+          <td>
+            <h3>Go-Moku</h3>
+            <pre>bb4-games -name gomoku</pre>
+            <p>Try to win by getting five in a row before the computer does. I used to play <a href="http://en.wikipedia.org/wiki/GoMoku">gomoku</a> a lot with my wife when we first met (she is quite good at it). GoMoku is the first game that I created using my game framework.  I first created a <a href="http://en.wikipedia.org/wiki/Turbo_Pascal">Turbo Pascal</a> version back in 1991, nbut this one is better. My motivation has been to make it good enough to beat my wife. The object of the game is to get 5 in a row (horizontally, vertically, or diagonally). As with all the games created using this framework, you can play against the computer, another person, or have the computer play against itself.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/gomoku.jpg" title="Go-Moku" alt="Go-Moku">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Chess</h3>
+            <pre>bb4-games -name chess</pre>
+            <p><a href="http://en.wikipedia.org/wiki/Chess">Chess</a> is a relatively simple game compared to go. I implemented it in only 3 days - after I spent a year implementing go and the rest of my java game framework. Try to beat the computer by check-mating her king. Your pieces are at the top. Checkmate the opponent's King to win.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/chess.jpg" title="Chess" alt="Chess">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Checkers</h3>
+            <pre>bb4-games -name checkers</pre>
+            <p><a href="http://www.ehow.com/way_5421915_checkers-game-instructions.html">Checkers</a> is a simple game. I implemented it in only 2 weekends after I got the gomoku program running and already established a framework for creating additional games. Capture all of the opponents pieces to win.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/checkers.jpg" title="Checkers" alt="Checkers">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Go</h3>
+            <pre>bb4-games -name go</pre>
+            <p><a href="http://en.wikipedia.org/wiki/Go_(game)">Go</a> has long been a grand challenge for computer scientists. Until the year 2000, the Ing Foundation offered <a href="http://www.computer-go.info/h-c/">a million dollar prize</a> to anyone that could create a go program capable of beating a professional player.  In 2017, <a href="https://deepmind.com/research/alphago/">AlphaGo</a> became the first program to beat a professional. I started work on this program in the year 2000. It does not play very well, but it lead me on an interesting journey. For those interested in learning about a deep learning solution to Go, I recommend looking at <a href="https://github.com/gcp/leela-zero">Leela-Zero</a>.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/go.jpg" title="Go" alt="Go">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Blockade</h3>
+            <pre>bb4-games -name blockade</pre>
+            <p><a href="http://boardgamegeek.com/boardgame/2559/blockade">Blockade</a> is a relatively new game created by Lakeside. I used to play it as a kid, but I don't see it in the stores anymore. Each player starts with two pawns on designated spaces near their side of the board. They each have (typically) ten blue walls and ten green walls, which fit in the slots between the grid squares and are two squares wide. A player's turn consists of moving his pawn two spaces and then placing a wall anywhere on the grid. The object is to get one of your pawns around the obstacles being set by your opponent and onto one of his or her starting spaces.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/blockade.jpg" title="Blockade" alt="Blockade">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Hex</h3>
+            <pre>bb4-games -name hex</pre>
+            <p><a href="https://en.wikipedia.org/wiki/Hex_(board_game)">Hex</a> Alternate placing of pieces. When players edges connect by a string of pieces of the same color, that player wins. The player who goes first has a distinct advantage.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/hex.jpg" title="Hex" alt="Hex">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Galactic Empire</h3>
+            <pre>bb4-games -name galactic</pre>
+            <p>This multi-player game is loosely based on a game I played on a Comodore 128 back in the late 80's. <a href="http://en.wikipedia.org/wiki/Galactic_Empire_(Br%C3%B8derbund_video_game)">the original game</a> had only text graphics, but was fun to play with friends in the college dorm at <a href="http://rpi.edu/">RPI</a>. This version has several improvements: better graphics, robot players, and there are visual indications of fleet sizes and locations.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/galactic.jpg" title="Galactic Empire" alt="Galactic Empire">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Poker</h3>
+            <pre>bb4-games -name poker</pre>
+            <p>This is basic 5 card stud <a href="http://en.wikipedia.org/wiki/Poker">poker</a>. I may expand it to play Texas holdem and other poker variations in the future. There is also a client server version of this and the other games for online play, but its a work in progress. This version takes a little while to start because it checks to see if there is a server first, and has to wait for that check to timeout.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/poker.jpg" title="Poker" alt="Poker">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Mancala</h3>
+            <pre>bb4-games -name mancala</pre>
+            <p><a href="https://en.wikipedia.org/wiki/Mancala">Mancala</a> Move stones on your side of the board. To move, you click on one of the bins in your row. This picks up all the stones in that bin and moves them counter-clockwise, putting one stone in each bin as it goes. If the last stone lands in your home, then you go again. If the last stone lands in an empty bin on your side and there are stones in the opponent's cup right across from it, then all the stones in both cups get put into your home.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/mancala.jpg" title="Mancala" alt="Mancala">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Tic-Tac-Toe</h3>
+            <pre>bb4-games -name tictactoe</pre>
+            <p>Implementing unbeatable <a href="https://en.wikipedia.org/wiki/Tic-tac-toe">Tic-Tac-Toe</a> was very easy using the game framework. If you want to add your own game, this implementation may provide a useful example.</p>
+          </td>
+          <td style="vertical-align: top;">
+            <img src="images/tictactoe.jpg" title="Tic-Tac-Toe" alt="Tic-Tac-Toe">
+          </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
