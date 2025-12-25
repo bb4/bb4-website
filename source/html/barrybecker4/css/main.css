@@ -49,8 +49,80 @@ body {
     font-size: 10px;
 }
 
+.float-right {
+    float: right;
+    margin: 0 0 1rem 1.5rem;
+    max-width: 300px;
+    height: auto;
+}
+
+.toc {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+}
+
+.toc h2 {
+    margin-top: 0;
+    font-size: 1.3em;
+    color: var(--primary-color);
+}
+
+.toc ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.toc li {
+    margin: 0.5rem 0;
+}
+
+.toc a {
+    text-decoration: none;
+    color: var(--link-color);
+}
+
+.toc a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+.life-section {
+    margin: 3rem 0;
+    padding-top: 1rem;
+}
+
+.life-section h2 {
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.life-section h3 {
+    color: var(--secondary-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.life-section h4 {
+    color: var(--primary-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
 @media (max-width: 768px) {
   :root {
     --base-font-size: 14px;
+  }
+  
+  .float-right {
+      float: none;
+      display: block;
+      margin: 1rem auto;
+      max-width: 100%;
   }
 }
