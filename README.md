@@ -1,6 +1,6 @@
 # bb4-website
 
-This repository contains the content for [http://barrybecker4.com](http://barrybecker4.com). 
+This repository contains the content for [http://barrybecker4.org](http://barrybecker4.org). 
 
 ## Steps to deploy (using Github Pages)
 
@@ -38,7 +38,7 @@ these jars, get them using the following.
 
 ## Old Steps to deploy (using InfinityFree)
 
-Use Filezilla (or similar) to copy everything (or changed parts) in source/html to the root of http://barrybecker4.com.
+Use Filezilla (or similar) to copy everything (or changed parts) in source/html to the root of http://barrybecker4.org.
 Don't change anything directly on the website itself. Change and test locally before deployment.
 
 ![upload to infinity free site](images/filezilla-site.png)
