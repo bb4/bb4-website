@@ -49,6 +49,18 @@ body {
     font-size: 10px;
 }
 
+.back-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.back-link:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
 .float-right {
     float: right;
     margin: 0 0 1rem 1.5rem;
