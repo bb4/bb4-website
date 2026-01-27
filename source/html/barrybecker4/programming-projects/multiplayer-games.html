@@ -13,24 +13,58 @@
     <meta name="google-adsense-account" content="ca-pub-7416723383632921">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>multiplayer games</title>
+    <meta name="description" content="Real-time and turn-based strategy games: Galactic Conflict, World Conflict, Galactopoly, Into the Singularity. Play in the browser.">
+    <title>Online Games – Barry Becker</title>
     <link rel="stylesheet" href="../css/main.css">
 </head>
-  <body>
+<body>
   <main class="container">
+    <header class="games-hero">
       <h1>Multiplayer Online Games</h1>
-      <p>
-          Lately, I have been working on some multiplayer games with the hope of perhaps monetizing them. They are developed with Svelte and use Cloudflare for deployment.
-          <ul>
-              <li><a href="https://world-conflict.pages.dev/">Galactic Conflict</a> - a real-time strategy space war game
-              <li><a href="https://galactic-conflict.pages.dev/">World Conflict</a> - a turn-based, risk-like game  (not yet released)
-              <li><a href="https://galactopoly.pages.dev/">Galactopoly</a> - a galaxy themed version of that old family favorite (not yest released)
-              <li><a href="https://into-the-singularity.pages.dev/">Into the Singularity</a> - a grand strategy simulation game about the future. Meant for educational and entertainment purposes. This one is a work in progress. Don't expect it to do much yet.
-          </ul>
-      <p>
-      <p>
-      Other <a href="https://barrybecker4.org/programming-projects/">programming projects</a>
-      </p>
+      <p class="games-hero__tagline">Real-time and turn-based strategy in the browser. Built with Svelte, deployed on Cloudflare.</p>
+    </header>
+
+    <section class="games-grid">
+      <article class="game-card">
+        <img src="../images/games/galactic-conflict-bg.png" alt="Galactic Conflict" class="game-card__image">
+        <div class="game-card__header">
+          <h2 class="game-card__title">Galactic Conflict</h2>
+          <a href="https://galactic-conflict.pages.dev/" class="game-card__cta">Play now</a>
+        </div>
+        <p class="game-card__desc">A real-time strategy space war game.</p>
+      </article>
+
+      <article class="game-card">
+        <img src="../images/games/world-conflict-bg.png" alt="World Conflict" class="game-card__image">
+        <div class="game-card__header">
+          <h2 class="game-card__title">World Conflict</h2>
+          <a href="https://world-conflict.pages.dev/" class="game-card__cta">Preview</a>
+        </div>
+        <p class="game-card__desc">A turn-based, Risk-like game of conquest.</p>
+      </article>
+
+      <article class="game-card">
+        <img src="../images/games/galactopoly-bg.png" alt="Galactopoly" class="game-card__image">
+        <div class="game-card__header">
+          <h2 class="game-card__title">Galactopoly</h2>
+          <a href="https://galactopoly.pages.dev/" class="game-card__cta">Coming soon</a>
+        </div>
+        <p class="game-card__desc">A galaxy-themed version of that old family favorite.</p>
+      </article>
+
+      <article class="game-card">
+        <img src="../images/games/into-the-singularity-bg.png" alt="Into the Singularity" class="game-card__image">
+        <div class="game-card__header">
+          <h2 class="game-card__title">Into the Singularity</h2>
+          <a href="https://into-the-singularity.pages.dev/" class="game-card__cta">Try early build</a>
+        </div>
+        <p class="game-card__desc">A grand strategy simulation about the future. Educational and entertaining—work in progress.</p>
+      </article>
+    </section>
+
+    <p class="games-footer">
+      Other <a href="index.html">programming projects</a>
+    </p>
   </main>
 </body>
 </html>

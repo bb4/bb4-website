@@ -126,6 +126,97 @@ body {
     font-weight: 600;
 }
 
+/* Games landing page */
+.games-hero {
+  margin-bottom: var(--spacing-lg);
+}
+
+.games-hero__tagline {
+  color: var(--secondary-color);
+  font-size: 1.05em;
+  margin-top: var(--spacing-sm);
+  margin-bottom: 0;
+  margin-right: 40px;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+  margin: var(--spacing-lg) 0;
+}
+
+.game-card {
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+}
+
+.game-card__image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  background-color: #f0f0f0;
+}
+
+.game-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-md) 0;
+}
+
+.game-card__header .game-card__title {
+  margin: 0;
+}
+
+.game-card > .game-card__desc {
+  padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+  flex-grow: 1;
+}
+
+.game-card__title {
+  font-family: var(--heading-font);
+  font-size: 1.3em;
+  color: var(--primary-color);
+  margin: 0 0 0.2em 0;
+}
+
+.game-card__desc {
+  margin: 0;
+  flex-grow: 1;
+}
+
+.game-card__cta {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 0.5em 1em;
+  background-color: var(--link-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  width: fit-content;
+  transition: background-color 0.2s;
+}
+
+.game-card__cta:hover {
+  background-color: var(--link-hover-color);
+}
+
+.games-footer {
+  margin-top: var(--spacing-lg);
+  margin-right: 40px;
+}
+
 @media (max-width: 768px) {
   :root {
     --base-font-size: 14px;
@@ -136,5 +227,17 @@ body {
       display: block;
       margin: 1rem auto;
       max-width: 100%;
+  }
+
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .games-hero__tagline {
+    margin-right: 0;
+  }
+
+  .games-footer {
+    margin-right: 0;
   }
 }
