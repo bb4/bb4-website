@@ -2,27 +2,19 @@
 
 <html lang="en">
 
+<!--
 
-
-<!-- 
-
-Smart developers always View Source. 
-
-
+Smart developers always View Source.
 
 This application was built using Adobe Flex, an open source framework
 
 for building rich Internet applications that get delivered via the
 
-Flash Player or to desktops via Adobe AIR. 
+Flash Player or to desktops via Adobe AIR.
 
-
-
-Learn more about Flex at http://flex.org 
+Learn more about Flex at http://flex.org
 
 // -->
-
-
 
 <head>
 <!-- Google tag (gtag.js) -->
@@ -38,215 +30,174 @@ Learn more about Flex at http://flex.org
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-
-
 <!--  BEGIN Browser History required section -->
 
 <link rel="stylesheet" type="text/css" href="history/history.css" />
 
 <!--  END Browser History required section -->
 
-
-
-<title></title>
-
-<script src="AC_OETags.js" language="javascript"></script>
-
-
+<title>Math Sheet</title>
 
 <!--  BEGIN Browser History required section -->
 
-<script src="history/history.js" language="javascript"></script>
+<script src="history/history.js"></script>
 
 <!--  END Browser History required section -->
 
-
-
 <style>
-
-body { margin: 0px; overflow:hidden }
-
+body { margin: 0; overflow: hidden; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+#flash-player-container,
+#flash-instructions-container {
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+}
+#flash-instructions-container {
+  overflow: auto;
+  padding: 1.25rem 1.5rem;
+  background: #869ca7;
+  color: #111;
+  line-height: 1.5;
+}
+#flash-instructions-container h1 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+}
+#flash-instructions-container ol {
+  margin: 0.5rem 0 0 1.25rem;
+  padding: 0;
+}
+#flash-instructions-container li { margin: 0.35rem 0; }
+#flash-instructions-container a { color: #0a3d62; }
+#flash-instructions-container .note {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.95;
+}
+.hidden { display: none !important; }
 </style>
 
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
+/**
+ * Detect whether the browser reports Flash / Shockwave Flash handling (e.g. emulator extension).
+ */
+function hasShockwaveFlashSupport() {
+  try {
+    var mimeTypes = navigator.mimeTypes;
+    if (mimeTypes) {
+      var swf = mimeTypes['application/x-shockwave-flash'];
+      if (swf && swf.enabledPlugin) {
+        return true;
+      }
+    }
+    var plugins = navigator.plugins;
+    if (plugins && plugins.length) {
+      for (var i = 0; i < plugins.length; i++) {
+        var p = plugins[i];
+        if (!p || !p.name) continue;
+        if (/shockwave\s+flash|ruffle/i.test(p.name)) {
+          return true;
+        }
+      }
+    }
+  } catch (e) { /* ignore */ }
+  return false;
+}
 
-<!--
+function isChromeBrowser() {
+  var ua = navigator.userAgent || '';
+  return /Chrome\//.test(ua) && !/Edg\//.test(ua) && !/OPR\//.test(ua);
+}
 
-// -----------------------------------------------------------------------------
+function showFlashPlayer() {
+  var wrap = document.getElementById('flash-player-container');
+  var instr = document.getElementById('flash-instructions-container');
+  if (wrap) wrap.classList.remove('hidden');
+  if (instr) instr.classList.add('hidden');
+}
 
-// Globals
+function showInstructions() {
+  var wrap = document.getElementById('flash-player-container');
+  var instr = document.getElementById('flash-instructions-container');
+  if (wrap) wrap.classList.add('hidden');
+  if (instr) instr.classList.remove('hidden');
+}
 
-// Major version of Flash required
+function initFlashFallback() {
+  var chrome = isChromeBrowser();
+  var chromeOnly = document.getElementById('chrome-only-steps');
+  var genericOnly = document.getElementById('generic-browser-steps');
+  if (chromeOnly) chromeOnly.style.display = chrome ? 'block' : 'none';
+  if (genericOnly) genericOnly.style.display = chrome ? 'none' : 'block';
 
-var requiredMajorVersion = 9;
+  if (hasShockwaveFlashSupport()) {
+    showFlashPlayer();
+  } else {
+    showInstructions();
+  }
+}
 
-// Minor version of Flash required
-
-var requiredMinorVersion = 0;
-
-// Minor version of Flash required
-
-var requiredRevision = 28;
-
-// -----------------------------------------------------------------------------
-
-// -->
-
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initFlashFallback);
+} else {
+  initFlashFallback();
+}
 </script>
 
 </head>
 
-
-
 <body scroll="no">
 
-<script language="JavaScript" type="text/javascript">
+<div id="flash-player-container" class="hidden">
+  <object
+    id="mathSheet"
+    name="mathSheet"
+    type="application/x-shockwave-flash"
+    data="mathSheet.swf"
+    width="100%"
+    height="100%">
+    <param name="movie" value="mathSheet.swf" />
+    <param name="quality" value="high" />
+    <param name="bgcolor" value="#869ca7" />
+    <param name="allowScriptAccess" value="sameDomain" />
+    <param name="play" value="true" />
+    <param name="loop" value="false" />
+  </object>
+</div>
 
-<!--
-
-// Version check for the Flash Player that has the ability to start Player Product Install (6.0r65)
-
-var hasProductInstall = DetectFlashVer(6, 0, 65);
-
-
-
-// Version check based upon the values defined in globals
-
-var hasRequestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
-
-
-
-if ( hasProductInstall && !hasRequestedVersion ) {
-
-	// DO NOT MODIFY THE FOLLOWING FOUR LINES
-
-	// Location visited after installation is complete if installation is required
-
-	var MMPlayerType = (isIE == true) ? "ActiveX" : "PlugIn";
-
-	var MMredirectURL = window.location;
-
-    document.title = document.title.slice(0, 47) + " - Flash Player Installation";
-
-    var MMdoctitle = document.title;
-
-
-
-	AC_FL_RunContent(
-
-		"src", "playerProductInstall",
-
-		"FlashVars", "MMredirectURL="+MMredirectURL+'&MMplayerType='+MMPlayerType+'&MMdoctitle='+MMdoctitle+"",
-
-		"width", "100%",
-
-		"height", "100%",
-
-		"align", "middle",
-
-		"id", "mathSheet",
-
-		"quality", "high",
-
-		"bgcolor", "#869ca7",
-
-		"name", "mathSheet",
-
-		"allowScriptAccess","sameDomain",
-
-		"type", "application/x-shockwave-flash",
-
-		"pluginspage", "http://www.adobe.com/go/getflashplayer"
-
-	);
-
-} else if (hasRequestedVersion) {
-
-	// if we've detected an acceptable version
-
-	// embed the Flash Content SWF when all tests are passed
-
-	AC_FL_RunContent(
-
-			"src", "mathSheet",
-
-			"width", "100%",
-
-			"height", "100%",
-
-			"align", "middle",
-
-			"id", "mathSheet",
-
-			"quality", "high",
-
-			"bgcolor", "#869ca7",
-
-			"name", "mathSheet",
-
-			"allowScriptAccess","sameDomain",
-
-			"type", "application/x-shockwave-flash",
-
-			"pluginspage", "http://www.adobe.com/go/getflashplayer"
-
-	);
-
-  } else {  // flash is too old or we can't detect the plugin
-
-    var alternateContent = 'Alternate HTML content should be placed here. '
-
-  	+ 'This content requires the Adobe Flash Player. '
-
-   	+ '<a href=http://www.adobe.com/go/getflash/>Get Flash</a>';
-
-    document.write(alternateContent);  // insert non-flash content
-
-  }
-
-// -->
-
-</script>
+<div id="flash-instructions-container">
+  <h1>Flash content (Math Sheet)</h1>
+  <p>
+    This page embeds a legacy Flash (<code>.swf</code>) application. Modern browsers no longer include Adobe Flash Player.
+    To view it in <strong>Google Chrome</strong>, install a Flash-compatible emulator extension (for example
+    <a href="https://ruffle.rs/" rel="noopener noreferrer">Ruffle</a>
+    or another extension that handles Shockwave Flash content), then reload this page.
+  </p>
+  <div id="chrome-only-steps">
+    <p><strong>In Chrome:</strong></p>
+    <ol>
+      <li>Open the Chrome Web Store and add a Flash emulator extension (e.g. Ruffle).</li>
+      <li>Pin or enable the extension if prompted.</li>
+      <li>Return to this tab and use <strong>Reload</strong> (or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> / <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> for a hard refresh).</li>
+    </ol>
+  </div>
+  <div id="generic-browser-steps" style="display:none">
+    <p>
+      Use a browser that supports a Flash emulator for <code>application/x-shockwave-flash</code>, or switch to Google Chrome
+      and follow the steps above.
+    </p>
+  </div>
+  <p class="note">
+    If you already installed an emulator but still see this message, the browser may not be exposing the Flash handler yet—try a full restart of Chrome, then reload this page.
+  </p>
+</div>
 
 <noscript>
-
-  	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-
-			id="mathSheet" width="100%" height="100%"
-
-			codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
-
-			<param name="movie" value="mathSheet.swf" />
-
-			<param name="quality" value="high" />
-
-			<param name="bgcolor" value="#869ca7" />
-
-			<param name="allowScriptAccess" value="sameDomain" />
-
-			<embed src="mathSheet.swf" quality="high" bgcolor="#869ca7"
-
-                   width="100%" height="100%" name="mathSheet" align="middle"
-
-                   play="true"
-
-                   loop="false"
-
-                   quality="high"
-
-                   allowScriptAccess="sameDomain"
-
-                   type="application/x-shockwave-flash"
-
-                   pluginspage="http://www.adobe.com/go/getflashplayer">
-
-			</embed>
-
-	</object>
-
+  <p style="margin:0;padding:0.75rem 1rem;background:#e8e8e8;color:#111;font-family:system-ui,sans-serif;font-size:0.9rem;">
+    <strong>JavaScript is off.</strong> Turn it on so this page can detect a Flash emulator and show the Math Sheet, or use a browser/tool that opens <code>mathSheet.swf</code> directly.
+  </p>
 </noscript>
 
 </body>
 
 </html>
-
