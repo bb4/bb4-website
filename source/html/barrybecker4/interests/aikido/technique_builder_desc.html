@@ -75,8 +75,8 @@ First I created an XML file that specifies the technique hierarchy.
    There is a Scala program that reads in the XML data file (parsing it using javax.xml.parsers).
     This is another advantage of XML, there are native java parsers and validating logic available (I hardly had to write any code to do this part).
     Then the program generates an HTML page that contains a ton of generated javascript to specify state information.
-    Javascript builds the dropdowns, handles the images to show, and does the rollovers.
-    Every time you change a dropdown, Javascript dynamically changes the page DOM to show appropriate new form elements and images.
+    JavaScript builds the dropdowns, handles the images to show, and does the rollovers.
+    Every time you change a dropdown, JavaScript dynamically changes the page DOM to show appropriate new form elements and images.
     The Scala code actually generates 3 different html files used for different purposes but based on the same data.
     There is the technique builder, all possible techniques, and all unique images.
 </p>
