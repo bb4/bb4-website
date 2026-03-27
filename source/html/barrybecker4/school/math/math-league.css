@@ -1,0 +1,106 @@
+@import url("../../css/main.css");
+
+/* Math league section pages: narrow readable column on top of main.css */
+.math-league {
+  box-sizing: border-box;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+}
+
+.math-league h1 {
+  font-family: var(--heading-font);
+  font-size: 1.75rem;
+  color: var(--primary-color);
+  margin: 0 0 var(--spacing-md);
+  line-height: 1.25;
+}
+
+.math-league h2 {
+  font-family: var(--heading-font);
+  font-size: 1.25rem;
+  color: var(--secondary-color);
+  margin: var(--spacing-lg) 0 var(--spacing-sm);
+}
+
+.math-league h3 {
+  font-family: var(--heading-font);
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  margin: var(--spacing-md) 0 var(--spacing-sm);
+}
+
+.math-league p {
+  margin: 0 0 var(--spacing-md);
+}
+
+.math-league ul,
+.math-league ol {
+  margin: 0 0 var(--spacing-md);
+  padding-left: 1.5rem;
+}
+
+.math-league li {
+  margin-bottom: 0.35rem;
+}
+
+.math-league .link-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.math-league .link-list li {
+  margin-bottom: 0.5rem;
+}
+
+.math-league .note {
+  font-weight: 600;
+}
+
+.math-league .problem-block {
+  margin: var(--spacing-md) 0;
+}
+
+.math-league pre,
+.math-league .mono {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.95em;
+}
+
+.math-league table.data {
+  border-collapse: collapse;
+  margin: var(--spacing-md) 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.math-league table.data th,
+.math-league table.data td {
+  border: 1px solid #ccc;
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+}
+
+.math-league .back-nav {
+  margin-bottom: var(--spacing-md);
+  font-size: 0.95em;
+}
+
+.math-league .back-nav a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.math-league .back-nav a:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Legacy long-form bonus pages (minimal markup cleanup) */
+.math-league .bonus-archive {
+  line-height: 1.55;
+}
+
+.math-league .test-archive {
+  line-height: 1.55;
+}
