@@ -101,6 +101,29 @@
   line-height: 1.55;
 }
 
+.math-league .bonus-problem h2 {
+  font-size: 1.15rem;
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+.math-league .bonus-archive > .bonus-problem:first-of-type h2 {
+  margin-top: var(--spacing-md);
+}
+
+.math-league .bonus-date {
+  font-weight: 400;
+  font-size: 0.92em;
+  color: var(--text-color);
+  opacity: 0.88;
+}
+
+.math-league .hint {
+  font-style: italic;
+  color: var(--text-color);
+  opacity: 0.95;
+}
+
 .math-league .test-archive {
   line-height: 1.55;
 }
