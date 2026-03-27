@@ -124,6 +124,16 @@
   opacity: 0.95;
 }
 
+.math-league .solution {
+  margin: var(--spacing-sm) 0 var(--spacing-md);
+}
+
+.math-league .solution pre {
+  margin: var(--spacing-sm) 0;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
 .math-league .test-archive {
   line-height: 1.55;
 }
