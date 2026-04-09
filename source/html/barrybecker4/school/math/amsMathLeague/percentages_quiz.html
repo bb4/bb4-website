@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Percentages Quiz — 8th Grade</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #faf8f3;
+    --cream: #f0ece0;
+    --gold: #c8922a;
+    --gold-light: #f0d080;
+    --gold-pale: #fdf6e3;
+    --red: #c0392b;
+    --green: #1e7b4b;
+    --rule: #d4c9a8;
+    --shadow: rgba(15,14,12,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0 0 80px;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 27px, var(--rule) 27px, var(--rule) 28px);
+    background-size: 100% 28px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 48px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '%';
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 320px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    top: -60px; right: -20px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  header .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+  header p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 12px;
+    font-weight: 300;
+  }
+  header .meta {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  header .meta span {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+  }
+  header .meta span strong { color: #fff; }
+
+  /* ── PROGRESS BAR ── */
+  #progress-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  #progress-bar-bg {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  #progress-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  #progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-light);
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  /* ── MAIN CONTAINER ── */
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 24px;
+  }
+  .section-header .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .section-header .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--rule);
+    border-radius: 2px;
+    margin-bottom: 20px;
+    padding: 24px 28px;
+    box-shadow: 2px 2px 0 var(--shadow);
+    transition: border-left-color 0.3s;
+  }
+  .q-card.answered-correct { border-left-color: var(--green); }
+  .q-card.answered-wrong   { border-left-color: var(--red); }
+
+  .q-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .q-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+  .q-text em { font-style: italic; color: #555; }
+  .q-note {
+    font-size: 13px;
+    color: #888;
+    font-style: italic;
+    margin-top: -14px;
+    margin-bottom: 16px;
+  }
+
+  /* MC OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1.5px solid var(--rule);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    font-size: 15px;
+    background: var(--paper);
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .option:hover:not(.locked) { background: var(--gold-pale); border-color: var(--gold); }
+  .option .opt-letter {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gold);
+    min-width: 18px;
+  }
+  .option.selected { background: var(--gold-pale); border-color: var(--gold); }
+  .option.correct  { background: #e8f5ee; border-color: var(--green); color: var(--green); }
+  .option.wrong    { background: #fde8e6; border-color: var(--red); color: var(--red); }
+  .option.locked   { cursor: default; }
+  .option.reveal-correct { background: #e8f5ee; border-color: var(--green); color: var(--green); }
+
+  /* FREE INPUT */
+  .input-row {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .q-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1.5px solid var(--rule);
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    background: var(--paper);
+    color: var(--ink);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .q-input:focus { border-color: var(--gold); }
+  .q-input.correct-input { border-color: var(--green); background: #e8f5ee; }
+  .q-input.wrong-input   { border-color: var(--red);   background: #fde8e6; }
+  .q-input:disabled { opacity: 0.75; cursor: default; }
+  .check-btn {
+    padding: 12px 20px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .check-btn:hover:not(:disabled) { background: var(--gold); color: var(--ink); }
+  .check-btn:disabled { opacity: 0.4; cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 12px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    display: none;
+    padding: 10px 14px;
+    border-radius: 2px;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: #e8f5ee; color: var(--green); border-left: 3px solid var(--green); }
+  .feedback.wrong-fb   { background: #fde8e6; color: var(--red);   border-left: 3px solid var(--red); }
+  .feedback strong { font-weight: 600; }
+
+  /* TABLE (for question context) */
+  .q-table {
+    border-collapse: collapse;
+    margin: 12px 0 18px;
+    font-size: 14px;
+    width: 100%;
+  }
+  .q-table th {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 14px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  .q-table td {
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .q-table tr:nth-child(even) td { background: var(--gold-pale); }
+
+  /* ── RESULTS PANEL ── */
+  #results {
+    display: none;
+    margin-top: 40px;
+  }
+  #results.show { display: block; }
+  .results-card {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 4px;
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .results-card::before {
+    content: attr(data-score);
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 260px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .results-card .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--gold);
+  }
+  .results-card .score-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+  .results-card .grade {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-top: 24px;
+  }
+  .results-card .message {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 12px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  .results-breakdown {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .rb-item { text-align: center; }
+  .rb-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+  }
+  .rb-num.c { color: #6fcf97; }
+  .rb-num.w { color: #eb5757; }
+  .rb-num.s { color: var(--gold); }
+  .rb-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .retry-btn {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 14px 36px;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.15s;
+  }
+  .retry-btn:hover { background: var(--gold-light); }
+
+  /* SUBMIT ALL BUTTON */
+  #submit-all-wrap {
+    text-align: center;
+    margin-top: 40px;
+  }
+  #submit-btn {
+    padding: 18px 60px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  #submit-btn:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .q-card { padding: 18px 16px; }
+    .results-card { padding: 32px 20px; }
+    .results-breakdown { gap: 24px; }
+    .input-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="label">8th Grade Mathematics</div>
+  <h1>Mastering Percentages</h1>
+  <p>A comprehensive quiz covering all core concepts</p>
+  <div class="meta">
+    <span><strong>20</strong> Questions</span>
+    <span><strong>5</strong> Sections</span>
+    <span>Show all your work</span>
+  </div>
+</header>
+
+<div id="progress-wrap">
+  <div id="progress-bar-bg"><div id="progress-bar-fill"></div></div>
+  <div id="progress-label">0 / 20</div>
+</div>
+
+<main>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION A: Foundations
+  ════════════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">Section A</span>
+    <h2>Foundations</h2>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="q1">
+    <div class="q-num">Question 01 — Multiple Choice</div>
+    <div class="q-text">Which of the following is equivalent to 35%?</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q1','A','C')"><span class="opt-letter">A</span> 35/10</div>
+      <div class="option" onclick="selectMC('q1','B','C')"><span class="opt-letter">B</span> 3.5</div>
+      <div class="option" onclick="selectMC('q1','C','C')"><span class="opt-letter">C</span> 7/20</div>
+      <div class="option" onclick="selectMC('q1','D','C')"><span class="opt-letter">D</span> 0.035</div>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-num">Question 02 — Fill in the Blank</div>
+    <div class="q-text">Convert 0.072 to a percentage.</div>
+    <div class="q-note">Enter a number (e.g., 7.2 for 7.2%)</div>
+    <div class="input-row">
+      <input class="q-input" id="in-q2" type="number" step="any" placeholder="Answer in %" onkeydown="enterCheck(event,'q2')">
+      <button class="check-btn" id="btn-q2" onclick="checkInput('q2', 7.2, 0.001)">Check</button>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-num">Question 03 — Multiple Choice</div>
+    <div class="q-text">What is 3/8 expressed as a percentage? (Round to the nearest tenth.)</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q3','A','B')"><span class="opt-letter">A</span> 36.5%</div>
+      <div class="option" onclick="selectMC('q3','B','B')"><span class="opt-letter">B</span> 37.5%</div>
+      <div class="option" onclick="selectMC('q3','C','B')"><span class="opt-letter">C</span> 38.0%</div>
+      <div class="option" onclick="selectMC('q3','D','B')"><span class="opt-letter">D</span> 40.0%</div>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-num">Question 04 — Fill in the Blank</div>
+    <div class="q-text">Order these values from least to greatest: 0.4, 42%, 2/5, 45%.<br>Enter the number of the correct ordering below.</div>
+    <div class="q-note">1) 2/5, 0.4, 42%, 45% &nbsp; 2) 0.4, 2/5, 42%, 45% &nbsp; 3) 2/5 = 0.4 = 40%, 42%, 45% &nbsp; 4) 42%, 2/5, 0.4, 45%</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q4','A','C')"><span class="opt-letter">1</span> 2/5, 0.4, 42%, 45%</div>
+      <div class="option" onclick="selectMC('q4','B','C')"><span class="opt-letter">2</span> 0.4, 2/5, 42%, 45%</div>
+      <div class="option" onclick="selectMC('q4','C','C')"><span class="opt-letter">3</span> 2/5 = 0.4 = 40%, then 42%, then 45%</div>
+      <div class="option" onclick="selectMC('q4','D','C')"><span class="opt-letter">4</span> 42%, 2/5, 0.4, 45%</div>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION B: Finding the Percentage / Part
+  ════════════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">Section B</span>
+    <h2>Finding Part, Whole & Percent</h2>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-num">Question 05 — Fill in the Blank</div>
+    <div class="q-text">What is 18% of 250?</div>
+    <div class="input-row">
+      <input class="q-input" id="in-q5" type="number" step="any" placeholder="Answer" onkeydown="enterCheck(event,'q5')">
+      <button class="check-btn" id="btn-q5" onclick="checkInput('q5', 45, 0.01)">Check</button>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-num">Question 06 — Multiple Choice</div>
+    <div class="q-text">45 is 60% of what number?</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q6','A','C')"><span class="opt-letter">A</span> 27</div>
+      <div class="option" onclick="selectMC('q6','B','C')"><span class="opt-letter">B</span> 70</div>
+      <div class="option" onclick="selectMC('q6','C','C')"><span class="opt-letter">C</span> 75</div>
+      <div class="option" onclick="selectMC('q6','D','C')"><span class="opt-letter">D</span> 80</div>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-num">Question 07 — Fill in the Blank</div>
+    <div class="q-text">36 is what percent of 90? Enter just the number.</div>
+    <div class="input-row">
+      <input class="q-input" id="in-q7" type="number" step="any" placeholder="%" onkeydown="enterCheck(event,'q7')">
+      <button class="check-btn" id="btn-q7" onclick="checkInput('q7', 40, 0.01)">Check</button>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-num">Question 08 — Multiple Choice</div>
+    <div class="q-text">A bag contains 120 marbles. 15 of them are red. What percentage of the marbles are <em>not</em> red?</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q8','A','D')"><span class="opt-letter">A</span> 12.5%</div>
+      <div class="option" onclick="selectMC('q8','B','D')"><span class="opt-letter">B</span> 85%</div>
+      <div class="option" onclick="selectMC('q8','C','D')"><span class="opt-letter">C</span> 87%</div>
+      <div class="option" onclick="selectMC('q8','D','D')"><span class="opt-letter">D</span> 87.5%</div>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION C: Percent Change
+  ════════════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">Section C</span>
+    <h2>Percent Increase &amp; Decrease</h2>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <div class="q-num">Question 09 — Fill in the Blank</div>
+    <div class="q-text">A jacket originally costs $80. It goes on sale for $56. What is the percent decrease? Enter just the number.</div>
+    <div class="input-row">
+      <input class="q-input" id="in-q9" type="number" step="any" placeholder="%" onkeydown="enterCheck(event,'q9')">
+      <button class="check-btn" id="btn-q9" onclick="checkInput('q9', 30, 0.01)">Check</button>
+    </div>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <div class="q-num">Question 10 — Multiple Choice</div>
+    <div class="q-text">A town's population grew from 4,500 to 5,400. What was the percent increase?</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q10','A','B')"><span class="opt-letter">A</span> 16.7%</div>
+      <div class="option" onclick="selectMC('q10','B','B')"><span class="opt-letter">B</span> 20%</div>
+      <div class="option" onclick="selectMC('q10','C','B')"><span class="opt-letter">C</span> 22%</div>
+      <div class="option" onclick="selectMC('q10','D','B')"><span class="opt-letter">D</span> 25%</div>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="q11">
+    <div class="q-num">Question 11 — Fill in the Blank</div>
+    <div class="q-text">After a 15% increase, a price becomes $138. What was the original price?</div>
+    <div class="input-row">
+      <input class="q-input" id="in-q11" type="number" step="any" placeholder="$" onkeydown="enterCheck(event,'q11')">
+      <button class="check-btn" id="btn-q11" onclick="checkInput('q11', 120, 0.5)">Check</button>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="q12">
+    <div class="q-num">Question 12 — Multiple Choice</div>
+    <div class="q-text">A store reduces a $200 item by 20%, then reduces the new price by a further 10%. What is the final price?</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q12','A','C')"><span class="opt-letter">A</span> $140.00</div>
+      <div class="option" onclick="selectMC('q12','B','C')"><span class="opt-letter">B</span> $142.00</div>
+      <div class="option" onclick="selectMC('q12','C','C')"><span class="opt-letter">C</span> $144.00</div>
+      <div class="option" onclick="selectMC('q12','D','C')"><span class="opt-letter">D</span> $150.00</div>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION D: Real-World Applications
+  ════════════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">Section D</span>
+    <h2>Real-World Applications</h2>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="q13">
+    <div class="q-num">Question 13 — Multiple Choice</div>
+    <div class="q-text">Maya scored 84 out of 120 points on a test. Her friend scored 72%. Who scored higher?</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q13','A','A')"><span class="opt-letter">A</span> Maya scored higher (70% vs 72%... wait — recalculate!). Maya: 84/120 = 70%; friend = 72%. Friend scored higher.</div>
+      <div class="option" onclick="selectMC('q13','B','B')"><span class="opt-letter">B</span> Maya's friend scored higher — 72% > 70%</div>
+      <div class="option" onclick="selectMC('q13','C','B')"><span class="opt-letter">C</span> They scored the same</div>
+      <div class="option" onclick="selectMC('q13','D','B')"><span class="opt-letter">D</span> Maya scored higher — 84 points is more than 72 points</div>
+    </div>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="q14">
+    <div class="q-num">Question 14 — Fill in the Blank</div>
+    <div class="q-text">A restaurant bill is $65.00. You want to leave an 18% tip. How much is the tip? (Round to the nearest cent.)</div>
+    <div class="input-row">
+      <input class="q-input" id="in-q14" type="number" step="0.01" placeholder="$" onkeydown="enterCheck(event,'q14')">
+      <button class="check-btn" id="btn-q14" onclick="checkInput('q14', 11.70, 0.02)">Check</button>
+    </div>
+    <div class="feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="q15">
+    <div class="q-num">Question 15 — Multiple Choice</div>
+    <div class="q-text">A $350 bicycle is on sale at 25% off. After the discount, a 8% sales tax is applied. What is the final price paid?</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q15','A','C')"><span class="opt-letter">A</span> $280.00</div>
+      <div class="option" onclick="selectMC('q15','B','C')"><span class="opt-letter">B</span> $294.00</div>
+      <div class="option" onclick="selectMC('q15','C','C')"><span class="opt-letter">C</span> $283.50</div>
+      <div class="option" onclick="selectMC('q15','D','C')"><span class="opt-letter">D</span> $301.00</div>
+    </div>
+    <div class="feedback" id="fb-q15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="q16">
+    <div class="q-num">Question 16 — Fill in the Blank</div>
+    <div class="q-text">A bank account earns 4% simple interest per year. If you deposit $2,500, how much interest is earned after 3 years?</div>
+    <div class="input-row">
+      <input class="q-input" id="in-q16" type="number" step="any" placeholder="$" onkeydown="enterCheck(event,'q16')">
+      <button class="check-btn" id="btn-q16" onclick="checkInput('q16', 300, 0.5)">Check</button>
+    </div>
+    <div class="feedback" id="fb-q16"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION E: Challenge & Critical Thinking
+  ════════════════════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-num">Section E</span>
+    <h2>Challenge &amp; Critical Thinking</h2>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="q17">
+    <div class="q-num">Question 17 — Multiple Choice</div>
+    <div class="q-text">If 40% of a number is 56, what is 75% of the same number?</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q17','A','C')"><span class="opt-letter">A</span> 90</div>
+      <div class="option" onclick="selectMC('q17','B','C')"><span class="opt-letter">B</span> 98</div>
+      <div class="option" onclick="selectMC('q17','C','C')"><span class="opt-letter">C</span> 105</div>
+      <div class="option" onclick="selectMC('q17','D','C')"><span class="opt-letter">D</span> 112</div>
+    </div>
+    <div class="feedback" id="fb-q17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="q18">
+    <div class="q-num">Question 18 — Fill in the Blank</div>
+    <div class="q-text">A school's enrollment increased by 20% one year, then decreased by 20% the following year. Is the final enrollment higher, lower, or the same as the original? Enter the final enrollment if the original was 500 students.</div>
+    <div class="input-row">
+      <input class="q-input" id="in-q18" type="number" step="any" placeholder="students" onkeydown="enterCheck(event,'q18')">
+      <button class="check-btn" id="btn-q18" onclick="checkInput('q18', 480, 0.5)">Check</button>
+    </div>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="q19">
+    <div class="q-num">Question 19 — Multiple Choice</div>
+    <div class="q-text">Look at the table below. Which product had the greatest <em>percent increase</em> in sales from January to February?
+      <table class="q-table">
+        <thead><tr><th>Product</th><th>January</th><th>February</th></tr></thead>
+        <tbody>
+          <tr><td>Apples</td><td>200</td><td>250</td></tr>
+          <tr><td>Bananas</td><td>50</td><td>68</td></tr>
+          <tr><td>Cherries</td><td>400</td><td>480</td></tr>
+          <tr><td>Dates</td><td>80</td><td>100</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q19','A','B')"><span class="opt-letter">A</span> Apples (25%)</div>
+      <div class="option" onclick="selectMC('q19','B','B')"><span class="opt-letter">B</span> Bananas (36%)</div>
+      <div class="option" onclick="selectMC('q19','C','B')"><span class="opt-letter">C</span> Cherries (20%)</div>
+      <div class="option" onclick="selectMC('q19','D','B')"><span class="opt-letter">D</span> Dates (25%)</div>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="q20">
+    <div class="q-num">Question 20 — Multiple Choice (Challenge)</div>
+    <div class="q-text">In a class of 30 students, 60% are girls. After some new students join, girls now make up 50% of the class. If the number of girls did not change, how many new students joined?</div>
+    <div class="options">
+      <div class="option" onclick="selectMC('q20','A','C')"><span class="opt-letter">A</span> 4</div>
+      <div class="option" onclick="selectMC('q20','B','C')"><span class="opt-letter">B</span> 5</div>
+      <div class="option" onclick="selectMC('q20','C','C')"><span class="opt-letter">C</span> 6</div>
+      <div class="option" onclick="selectMC('q20','D','C')"><span class="opt-letter">D</span> 8</div>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div id="submit-all-wrap">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz →</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div class="results-card" id="results-card">
+      <div class="score-big" id="res-pct">—</div>
+      <div class="score-label">Final Score</div>
+      <div class="grade" id="res-grade">—</div>
+      <div class="message" id="res-message">—</div>
+      <div class="results-breakdown">
+        <div class="rb-item"><div class="rb-num c" id="res-correct">—</div><div class="rb-lbl">Correct</div></div>
+        <div class="rb-item"><div class="rb-num w" id="res-wrong">—</div><div class="rb-lbl">Incorrect</div></div>
+        <div class="rb-item"><div class="rb-num s" id="res-skip">—</div><div class="rb-lbl">Skipped</div></div>
+      </div>
+      <button class="retry-btn" onclick="retryQuiz()">Try Again</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ─────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────
+const TOTAL = 20;
+let answered = {}; // qId -> 'correct' | 'wrong' | 'skip'
+
+// FEEDBACK MESSAGES
+const explanations = {
+  q1:  "35% = 35/100 = 7/20. As a decimal: 0.35.",
+  q2:  "Move the decimal two places right: 0.072 × 100 = 7.2%.",
+  q3:  "3 ÷ 8 = 0.375. Multiply by 100 → 37.5%.",
+  q4:  "Convert all to decimals: 2/5 = 0.40, 0.40, 42% = 0.42, 45% = 0.45. So 2/5 = 0.4 = 40% are tied, then 42%, then 45%.",
+  q5:  "18% × 250 = 0.18 × 250 = 45.",
+  q6:  "Use: Whole = Part ÷ Percent → 45 ÷ 0.60 = 75.",
+  q7:  "Percent = Part ÷ Whole × 100 = 36 ÷ 90 × 100 = 40%.",
+  q8:  "Red: 15/120 = 12.5%. Not red: 100% − 12.5% = 87.5%.",
+  q9:  "Decrease = 80 − 56 = 24. Percent decrease = 24/80 × 100 = 30%.",
+  q10: "Increase = 5400 − 4500 = 900. Percent increase = 900/4500 × 100 = 20%.",
+  q11: "Original × 1.15 = 138 → Original = 138 ÷ 1.15 = $120.",
+  q12: "After 20% off: $200 × 0.80 = $160. After 10% off: $160 × 0.90 = $144. Note: two successive discounts are NOT the same as one combined 30% discount.",
+  q13: "Maya: 84/120 = 0.70 = 70%. Friend: 72%. 72% > 70% → friend scored higher.",
+  q14: "18% of $65 = 0.18 × 65 = $11.70.",
+  q15: "Discounted price: $350 × 0.75 = $262.50. With 8% tax: $262.50 × 1.08 = $283.50.",
+  q16: "Simple interest: I = P × r × t = 2500 × 0.04 × 3 = $300.",
+  q17: "40% = 56 → whole = 56 ÷ 0.40 = 140. 75% of 140 = 0.75 × 140 = 105.",
+  q18: "500 × 1.20 = 600 (after increase). 600 × 0.80 = 480 (after decrease). Final = 480, which is LESS than 500. A 20% increase followed by a 20% decrease always results in a net loss of 4%.",
+  q19: "Apples: 50/200=25%. Bananas: 18/50=36%. Cherries: 80/400=20%. Dates: 20/80=25%. Bananas had the highest percent increase.",
+  q20: "Girls = 60% of 30 = 18. After new students join, 18 = 50% of new total → new total = 36. New students = 36 − 30 = 6."
+};
+
+// ─────────────────────────────────────────────────────
+// MULTIPLE CHOICE
+// ─────────────────────────────────────────────────────
+function selectMC(qId, chosen, correct) {
+  if (answered[qId]) return; // already answered
+
+  const card = document.getElementById(qId);
+  const opts = card.querySelectorAll('.option');
+  opts.forEach(o => o.classList.add('locked'));
+
+  // Letter → index map
+  const letters = ['A','B','C','D'];
+  const chosenIdx = letters.indexOf(chosen);
+  const correctIdx = letters.indexOf(correct);
+
+  opts[chosenIdx].classList.add(chosen === correct ? 'correct' : 'wrong');
+  if (chosen !== correct) opts[correctIdx].classList.add('reveal-correct');
+
+  const isCorrect = chosen === correct;
+  answered[qId] = isCorrect ? 'correct' : 'wrong';
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  showFeedback(qId, isCorrect);
+  updateProgress();
+}
+
+// ─────────────────────────────────────────────────────
+// INPUT QUESTIONS
+// ─────────────────────────────────────────────────────
+function checkInput(qId, correctAns, tolerance) {
+  const input = document.getElementById('in-' + qId);
+  const btn   = document.getElementById('btn-' + qId);
+  const val   = parseFloat(input.value);
+
+  if (isNaN(val)) { input.focus(); return; }
+
+  const isCorrect = Math.abs(val - correctAns) <= tolerance;
+  input.classList.add(isCorrect ? 'correct-input' : 'wrong-input');
+  input.disabled = true;
+  btn.disabled = true;
+
+  const card = document.getElementById(qId);
+  answered[qId] = isCorrect ? 'correct' : 'wrong';
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  showFeedback(qId, isCorrect, isCorrect ? null : correctAns);
+  updateProgress();
+}
+
+function enterCheck(e, qId) {
+  if (e.key === 'Enter') {
+    const btn = document.getElementById('btn-' + qId);
+    if (btn && !btn.disabled) btn.click();
+  }
+}
+
+// ─────────────────────────────────────────────────────
+// FEEDBACK
+// ─────────────────────────────────────────────────────
+function showFeedback(qId, isCorrect, correctAns) {
+  const fb = document.getElementById('fb-' + qId);
+  const exp = explanations[qId] || '';
+  if (isCorrect) {
+    fb.innerHTML = `<strong>✓ Correct!</strong> ${exp}`;
+    fb.className = 'feedback show correct-fb';
+  } else {
+    const ans = correctAns !== null && correctAns !== undefined ? ` The correct answer is <strong>${correctAns}</strong>.` : '';
+    fb.innerHTML = `<strong>✗ Not quite.</strong>${ans} ${exp}`;
+    fb.className = 'feedback show wrong-fb';
+  }
+}
+
+// ─────────────────────────────────────────────────────
+// PROGRESS
+// ─────────────────────────────────────────────────────
+function updateProgress() {
+  const done = Object.keys(answered).length;
+  const pct  = (done / TOTAL) * 100;
+  document.getElementById('progress-bar-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = done + ' / ' + TOTAL;
+}
+
+// ─────────────────────────────────────────────────────
+// SUBMIT
+// ─────────────────────────────────────────────────────
+function submitQuiz() {
+  // Auto-mark unanswered as skipped
+  for (let i = 1; i <= TOTAL; i++) {
+    const qId = 'q' + i;
+    if (!answered[qId]) answered[qId] = 'skip';
+  }
+  updateProgress();
+
+  const correct = Object.values(answered).filter(v => v === 'correct').length;
+  const wrong   = Object.values(answered).filter(v => v === 'wrong').length;
+  const skip    = Object.values(answered).filter(v => v === 'skip').length;
+  const pct     = Math.round((correct / TOTAL) * 100);
+
+  let grade, message;
+  if (pct >= 95) { grade = 'A+'; message = 'Outstanding! You have a masterful understanding of percentages. Exceptional work.'; }
+  else if (pct >= 90) { grade = 'A';  message = 'Excellent! You have a strong command of percentages — just a few small gaps to review.'; }
+  else if (pct >= 80) { grade = 'B';  message = 'Great job! You understand most concepts well. Review the questions you missed and you\'ll be solid.'; }
+  else if (pct >= 70) { grade = 'C';  message = 'Good effort! A few key concepts need more practice — focus on percent change and working backwards.'; }
+  else if (pct >= 60) { grade = 'D';  message = 'Keep going! The foundation is there, but you\'ll want to revisit each section and study the explanations carefully.'; }
+  else                { grade = 'F';  message = 'Don\'t give up! Go back through each section slowly, study the explanations, and try again.'; }
+
+  document.getElementById('res-pct').textContent     = pct + '%';
+  document.getElementById('res-grade').textContent   = 'Grade: ' + grade;
+  document.getElementById('res-message').textContent = message;
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-wrong').textContent   = wrong;
+  document.getElementById('res-skip').textContent    = skip;
+  document.getElementById('results-card').setAttribute('data-score', pct + '%');
+
+  const resultEl = document.getElementById('results');
+  resultEl.classList.add('show');
+  resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('submit-btn').disabled = true;
+}
+
+// ─────────────────────────────────────────────────────
+// RETRY
+// ─────────────────────────────────────────────────────
+function retryQuiz() { location.reload(); }
+</script>
+</body>
+</html>
