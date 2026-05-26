@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8th Grade Geometry Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f2;
+      --surface: #ffffff;
+      --border: #e2e0d8;
+      --border-strong: #c8c5bb;
+      --text: #1a1916;
+      --text-muted: #6b6960;
+      --text-hint: #9b9890;
+      --blue: #1a6fc4;
+      --blue-bg: #e8f1fb;
+      --blue-dark: #0e4a88;
+      --green: #2e7d32;
+      --green-bg: #e8f5e9;
+      --green-border: #81c784;
+      --red: #b71c1c;
+      --red-bg: #ffebee;
+      --red-border: #ef9a9a;
+      --amber: #c17000;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .quiz-container {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    /* Header */
+    .quiz-header {
+      margin-bottom: 2rem;
+    }
+    .quiz-header .eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+    .quiz-header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .quiz-header p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Progress */
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.75rem;
+    }
+    .progress-bar {
+      flex: 1;
+      height: 5px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--blue);
+      border-radius: 3px;
+      transition: width 0.35s ease;
+    }
+    .progress-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Question card */
+    .question-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 12px;
+      transition: border-color 0.25s;
+    }
+    .question-card.correct { border-color: var(--green-border); background: var(--green-bg); }
+    .question-card.wrong   { border-color: var(--red-border);   background: var(--red-bg); }
+
+    .q-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .q-num {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-hint);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+    .q-result-badge {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-radius: 20px;
+      padding: 2px 10px;
+      display: none;
+    }
+    .q-result-badge.correct { display: inline; background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+    .q-result-badge.wrong   { display: inline; background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red-border); }
+
+    .q-text {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    /* Options */
+    .options {
+      display: grid;
+      gap: 7px;
+    }
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      text-align: left;
+      transition: border-color 0.15s, background 0.15s;
+      width: 100%;
+    }
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--border-strong);
+      background: var(--surface);
+    }
+    .option-btn.selected {
+      border-color: var(--blue);
+      background: var(--blue-bg);
+      color: var(--blue-dark);
+    }
+    .option-btn.correct-ans {
+      border-color: var(--green-border);
+      background: var(--green-bg);
+      color: var(--green);
+    }
+    .option-btn.wrong-ans {
+      border-color: var(--red-border);
+      background: var(--red-bg);
+      color: var(--red);
+    }
+    .option-btn:disabled { cursor: default; }
+
+    .option-letter {
+      font-size: 11px;
+      font-weight: 500;
+      min-width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .option-btn.selected   .option-letter { background: var(--blue);         color: white; }
+    .option-btn.correct-ans .option-letter { background: var(--green);        color: white; }
+    .option-btn.wrong-ans  .option-letter { background: var(--red);          color: white; }
+
+    /* Explanation */
+    .explanation {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      line-height: 1.65;
+      display: none;
+      border-left: 3px solid transparent;
+    }
+    .explanation.show { display: block; }
+    .explanation.correct {
+      background: #dcedc8;
+      color: #1b5e20;
+      border-color: var(--green);
+    }
+    .explanation.wrong {
+      background: #fce4ec;
+      color: var(--red);
+      border-color: var(--red);
+    }
+    .explanation strong { font-weight: 500; }
+
+    /* Submit area */
+    .submit-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .submit-btn {
+      padding: 11px 32px;
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .submit-btn:hover:not(:disabled) { opacity: 0.88; }
+    .submit-btn:active:not(:disabled) { transform: scale(0.98); }
+    .submit-btn:disabled { opacity: 0.35; cursor: default; }
+
+    /* Score card */
+    .score-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-top: 1.5rem;
+      display: none;
+    }
+    .score-card.show { display: block; }
+
+    .score-top {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 1.25rem;
+    }
+    .score-pct {
+      font-size: 56px;
+      font-weight: 500;
+      line-height: 1;
+    }
+    .score-info .grade {
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .score-info .label {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+    .score-cell {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+    }
+    .score-cell .num {
+      font-size: 22px;
+      font-weight: 500;
+    }
+    .score-cell .lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .retry-btn {
+      padding: 9px 22px;
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--text);
+      transition: background 0.15s;
+    }
+    .retry-btn:hover { background: var(--bg); }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .quiz-header h1 { font-size: 22px; }
+      .question-card { padding: 1rem; }
+      .score-pct { font-size: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div class="quiz-header">
+    <div class="eyebrow">Geometry · 8th Grade</div>
+    <h1>Geometry Challenge</h1>
+    <p>10 questions · Select an answer to lock it in · Explanations shown after submission</p>
+  </div>
+
+  <div class="progress-row">
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+    <span class="progress-label" id="ans-count">0 / 10</span>
+  </div>
+
+  <div id="questions"></div>
+
+  <div class="submit-row">
+    <button class="submit-btn" id="submit-btn" disabled onclick="submitQuiz()">Submit quiz</button>
+  </div>
+
+  <div class="score-card" id="score-card">
+    <div class="score-top">
+      <div class="score-pct" id="score-pct"></div>
+      <div class="score-info">
+        <div class="grade" id="score-grade"></div>
+        <div class="label" id="score-label"></div>
+      </div>
+    </div>
+    <div class="score-grid">
+      <div class="score-cell">
+        <div class="num" id="m-correct" style="color:var(--green)"></div>
+        <div class="lbl">Correct</div>
+      </div>
+      <div class="score-cell">
+        <div class="num" id="m-wrong" style="color:var(--red)"></div>
+        <div class="lbl">Incorrect</div>
+      </div>
+      <div class="score-cell">
+        <div class="num" id="m-score"></div>
+        <div class="lbl">Final score</div>
+      </div>
+    </div>
+    <button class="retry-btn" onclick="resetQuiz()">&#8635; Try again</button>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    {
+      text: "A triangle has angles measuring 47° and 83°. What is the measure of the third angle?",
+      options: ["40°", "50°", "60°", "130°"],
+      answer: 1,
+      explanation: "The three angles of any triangle sum to 180°. Third angle = 180° − 47° − 83° = <strong>50°</strong>."
+    },
+    {
+      text: "The two legs of a right triangle measure 9 cm and 12 cm. What is the length of the hypotenuse?",
+      options: ["15 cm", "21 cm", "≈14.2 cm", "√108 cm"],
+      answer: 0,
+      explanation: "Use the Pythagorean theorem: a² + b² = c². So 9² + 12² = 81 + 144 = 225, and √225 = <strong>15 cm</strong>. This is the classic 3-4-5 triple scaled by 3."
+    },
+    {
+      text: "A circle has a radius of 7 cm. What is its area? (Use π ≈ 3.14)",
+      options: ["43.96 cm²", "153.86 cm²", "21.98 cm²", "307.72 cm²"],
+      answer: 1,
+      explanation: "Area = πr². With r = 7: 3.14 × 7² = 3.14 × 49 = <strong>153.86 cm²</strong>. Don't confuse with circumference (πd)."
+    },
+    {
+      text: "Two parallel lines are cut by a transversal. One co-interior (same-side interior) angle measures 65°. What does the other co-interior angle measure?",
+      options: ["65°", "115°", "25°", "90°"],
+      answer: 1,
+      explanation: "Co-interior angles (also called consecutive interior angles) are supplementary — they add to 180°. So the other angle = 180° − 65° = <strong>115°</strong>."
+    },
+    {
+      text: "What is the surface area of a rectangular prism with length 5 m, width 3 m, and height 4 m?",
+      options: ["60 m²", "94 m²", "47 m²", "120 m²"],
+      answer: 1,
+      explanation: "SA = 2(lw + lh + wh) = 2(5×3 + 5×4 + 3×4) = 2(15 + 20 + 12) = 2 × 47 = <strong>94 m²</strong>."
+    },
+    {
+      text: "Triangle ABC is similar to triangle DEF. AB = 6 cm and DE = 9 cm. If BC = 8 cm, what is EF?",
+      options: ["10 cm", "12 cm", "5.3 cm", "4 cm"],
+      answer: 1,
+      explanation: "Similar triangles have proportional sides. Scale factor = DE/AB = 9/6 = 1.5. So EF = BC × 1.5 = 8 × 1.5 = <strong>12 cm</strong>."
+    },
+    {
+      text: "The diameter of a circle is 10 cm. What is the circumference? (Use π ≈ 3.14)",
+      options: ["15.7 cm", "31.4 cm", "78.5 cm", "62.8 cm"],
+      answer: 1,
+      explanation: "Circumference = πd = 3.14 × 10 = <strong>31.4 cm</strong>. Use the full diameter, not the radius."
+    },
+    {
+      text: "A trapezoid has parallel bases of 8 cm and 14 cm, and a height of 5 cm. What is its area?",
+      options: ["55 cm²", "110 cm²", "70 cm²", "56 cm²"],
+      answer: 0,
+      explanation: "Area of a trapezoid = ½ × (b₁ + b₂) × h = ½ × (8 + 14) × 5 = ½ × 22 × 5 = <strong>55 cm²</strong>."
+    },
+    {
+      text: "In a right triangle, the hypotenuse is 13 cm and one leg is 5 cm. What is the length of the other leg?",
+      options: ["8 cm", "10 cm", "12 cm", "11 cm"],
+      answer: 2,
+      explanation: "Using a² + b² = c²: 5² + b² = 13², so 25 + b² = 169, b² = 144, b = <strong>12 cm</strong>. This is the 5-12-13 Pythagorean triple."
+    },
+    {
+      text: "Two angles are supplementary. One angle is three times the other. What are the two angle measures?",
+      options: ["30° and 90°", "45° and 135°", "40° and 120°", "30° and 150°"],
+      answer: 1,
+      explanation: "Supplementary angles sum to 180°. Let one angle = x, the other = 3x. Then 4x = 180°, so x = 45°. The angles are <strong>45° and 135°</strong>. Check: 45 + 135 = 180 ✓"
+    }
+  ];
+
+  let answers = new Array(questions.length).fill(null);
+  let submitted = false;
+
+  function renderQuestions() {
+    const container = document.getElementById('questions');
+    container.innerHTML = '';
+    questions.forEach((q, qi) => {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = 'card-' + qi;
+      const opts = q.options.map((o, oi) =>
+        `<button class="option-btn" id="opt-${qi}-${oi}" onclick="selectAnswer(${qi},${oi})">
+          <span class="option-letter">${String.fromCharCode(65 + oi)}</span>
+          <span>${o}</span>
+        </button>`
+      ).join('');
+      card.innerHTML = `
+        <div class="q-meta">
+          <span class="q-num">Question ${qi + 1} of ${questions.length}</span>
+          <span class="q-result-badge" id="badge-${qi}"></span>
+        </div>
+        <div class="q-text">${q.text}</div>
+        <div class="options">${opts}</div>
+        <div class="explanation" id="exp-${qi}"></div>`;
+      container.appendChild(card);
+    });
+  }
+
+  function selectAnswer(qi, oi) {
+    if (submitted) return;
+    answers[qi] = oi;
+    questions[qi].options.forEach((_, i) => {
+      document.getElementById(`opt-${qi}-${i}`).className =
+        'option-btn' + (i === oi ? ' selected' : '');
+    });
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const n = answers.filter(a => a !== null).length;
+    document.getElementById('progress').style.width = (n / questions.length * 100) + '%';
+    document.getElementById('ans-count').textContent = n + ' / ' + questions.length;
+    document.getElementById('submit-btn').disabled = n < questions.length;
+  }
+
+  function submitQuiz() {
+    if (submitted) return;
+    submitted = true;
+    document.getElementById('submit-btn').disabled = true;
+    let correct = 0;
+    questions.forEach((q, qi) => {
+      const userAns = answers[qi];
+      const isCorrect = userAns === q.answer;
+      if (isCorrect) correct++;
+      document.getElementById('card-' + qi).className = 'question-card ' + (isCorrect ? 'correct' : 'wrong');
+      const badge = document.getElementById('badge-' + qi);
+      badge.textContent = isCorrect ? 'Correct' : 'Incorrect';
+      badge.className = 'q-result-badge ' + (isCorrect ? 'correct' : 'wrong');
+      q.options.forEach((_, i) => {
+        const btn = document.getElementById(`opt-${qi}-${i}`);
+        btn.disabled = true;
+        if (i === q.answer) btn.className = 'option-btn correct-ans';
+        else if (i === userAns && !isCorrect) btn.className = 'option-btn wrong-ans';
+        else btn.className = 'option-btn';
+      });
+      const exp = document.getElementById('exp-' + qi);
+      exp.className = 'explanation ' + (isCorrect ? 'correct' : 'wrong') + ' show';
+      exp.innerHTML = (isCorrect ? '✓ ' : '✗ ') + '<strong>' + (isCorrect ? 'Correct! ' : 'Incorrect. ') + '</strong>' + q.explanation;
+    });
+    showScore(correct);
+  }
+
+  function showScore(correct) {
+    const total = questions.length;
+    const pct = Math.round(correct / total * 100);
+    let grade, label, color;
+    if      (pct >= 90) { grade = 'A'; label = 'Excellent work!';              color = 'var(--green)'; }
+    else if (pct >= 80) { grade = 'B'; label = 'Good job!';                    color = '#2e7d32'; }
+    else if (pct >= 70) { grade = 'C'; label = 'Not bad — review missed ones.';color = 'var(--amber)'; }
+    else if (pct >= 60) { grade = 'D'; label = 'Needs improvement.';           color = '#c45000'; }
+    else                { grade = 'F'; label = 'Study up and try again!';      color = 'var(--red)'; }
+    document.getElementById('score-pct').textContent = pct + '%';
+    document.getElementById('score-pct').style.color = color;
+    document.getElementById('score-grade').textContent = 'Grade: ' + grade;
+    document.getElementById('score-label').textContent = label;
+    document.getElementById('m-correct').textContent = correct;
+    document.getElementById('m-wrong').textContent = total - correct;
+    document.getElementById('m-score').textContent = correct + ' / ' + total;
+    const sc = document.getElementById('score-card');
+    sc.className = 'score-card show';
+    sc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function resetQuiz() {
+    answers = new Array(questions.length).fill(null);
+    submitted = false;
+    document.getElementById('score-card').className = 'score-card';
+    renderQuestions();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  renderQuestions();
+  updateProgress();
+</script>
+</body>
+</html>
