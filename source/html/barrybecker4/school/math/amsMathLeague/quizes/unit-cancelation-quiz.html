@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit Cancelation Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F6F3;
+    --surface: #FFFFFF;
+    --surface2: #F0EFE9;
+    --border: #E2E0D8;
+    --border2: #C8C6BC;
+    --text: #1A1917;
+    --text2: #6B6860;
+    --text3: #9B9990;
+    --accent: #1D6A4A;
+    --accent-bg: #EBF5EF;
+    --accent-border: #8BC4A5;
+    --wrong-bg: #FDF0EF;
+    --wrong-border: #E8A09C;
+    --wrong-text: #8B2B26;
+    --correct-bg: #EBF5EF;
+    --correct-border: #8BC4A5;
+    --correct-text: #1A4D34;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 4rem;
+  }
+
+  header {
+    width: 100%;
+    max-width: 640px;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.25;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .quiz-wrap { width: 100%; max-width: 640px; }
+
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.25rem;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 5px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .progress-label {
+    font-size: 12px;
+    color: var(--text3);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .q-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.65;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+  }
+
+  /* Worked example badge shown on Q1 */
+  .worked-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 3px 8px;
+    margin-bottom: 0.75rem;
+  }
+
+  .fraction-setup {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .fraction-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    display: block;
+    margin-bottom: 4px;
+    font-family: var(--sans);
+  }
+
+  .hint {
+    font-size: 13px;
+    color: var(--text2);
+    font-style: italic;
+    margin-bottom: 1.25rem;
+    padding-left: 2px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+    font-size: 14px;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--sans);
+    transition: border-color 0.12s, background 0.12s;
+  }
+
+  .opt:hover:not(:disabled) { border-color: var(--border2); background: var(--surface); }
+  .opt:disabled { cursor: default; }
+
+  .opt-letter {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+    color: var(--text2);
+    background: var(--surface);
+    transition: inherit;
+  }
+
+  .opt.correct { background: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-text); }
+  .opt.correct .opt-letter { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .opt.wrong { background: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-text); }
+  .opt.wrong .opt-letter { background: #C9413B; border-color: #C9413B; color: #fff; }
+
+  /* Post-answer panel — shown after any answer */
+  .after-answer {
+    margin-top: 1.25rem;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .after-answer.show { display: flex; }
+
+  /* Setup reveal (shown post-answer on Q2–10) */
+  .setup-reveal {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text2);
+    line-height: 1.8;
+  }
+
+  /* Explanation box */
+  .explanation {
+    padding: 14px 16px;
+    background: #FFFBF0;
+    border: 1px solid #E8D88A;
+    border-radius: var(--radius);
+    font-size: 13.5px;
+    color: #5A4A10;
+    line-height: 1.7;
+  }
+
+  .explanation strong { font-weight: 600; color: #3D3008; }
+
+  .expl-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9A8220;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* Correct-but-still-show-setup note */
+  .correct-note {
+    padding: 10px 14px;
+    background: var(--correct-bg);
+    border: 1px solid var(--correct-border);
+    border-radius: var(--radius);
+    font-size: 13px;
+    color: var(--correct-text);
+  }
+
+  .nav-row { display: flex; justify-content: flex-end; }
+
+  .next-btn {
+    padding: 10px 22px;
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--sans);
+    display: none;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .next-btn:hover { background: var(--surface2); border-color: var(--text3); }
+
+  .score-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 1.75rem;
+    text-align: center;
+    display: none;
+  }
+
+  .score-icon { font-size: 40px; margin-bottom: 1rem; }
+
+  .score-num {
+    font-size: 52px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .score-denom { font-size: 20px; color: var(--text3); font-weight: 400; }
+
+  .score-msg {
+    font-size: 15px;
+    color: var(--text2);
+    margin-top: 0.75rem;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+
+  .restart-btn {
+    padding: 11px 28px;
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: background 0.12s;
+  }
+  .restart-btn:hover { background: var(--surface2); }
+
+  .opt:focus-visible, .next-btn:focus-visible, .restart-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .progress-fill, .opt, .opt-letter, .next-btn, .restart-btn { transition: none; }
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 21px; }
+    .q-card { padding: 1.25rem; }
+    .score-num { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">8th grade math</p>
+  <h1>Unit Cancelation Quiz</h1>
+  <p class="subtitle">Set up conversion fractions to cancel units and solve each problem. Relevant conversions are provided — you write the setup.</p>
+</header>
+
+<main class="quiz-wrap" role="main">
+  <div class="progress-row">
+    <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+    <span class="progress-label" id="prog-label">1 / 10</span>
+  </div>
+
+  <div class="q-card" id="q-card">
+    <div id="worked-badge" class="worked-badge" style="display:none">Worked example</div>
+    <p class="q-text" id="q-text"></p>
+
+    <!-- Q1: setup shown upfront. Q2–10: hidden until after answer -->
+    <div id="setup-before" style="display:none">
+      <div class="fraction-setup">
+        <span class="fraction-label">Conversion setup</span>
+        <span id="q-fraction-before"></span>
+      </div>
+    </div>
+
+    <p class="hint" id="q-hint"></p>
+    <div class="options" id="options"></div>
+
+    <!-- Shown after answering -->
+    <div class="after-answer" id="after-answer">
+      <div id="setup-after" style="display:none">
+        <div class="setup-reveal">
+          <span class="fraction-label">Conversion setup</span>
+          <span id="q-fraction-after"></span>
+        </div>
+      </div>
+      <div id="correct-note" class="correct-note" style="display:none">
+        ✓ Correct! Here's the full cancelation setup above to compare with your work.
+      </div>
+      <div class="explanation" id="explanation" style="display:none">
+        <span class="expl-label">Step-by-step solution</span>
+        <span id="expl-body"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="next-btn" id="next-btn" onclick="nextQ()">Next question &rarr;</button>
+  </div>
+
+  <div class="score-card" id="score-card">
+    <div class="score-icon" id="score-icon"></div>
+    <div class="score-num"><span id="score-n"></span><span class="score-denom"> / 10</span></div>
+    <p class="score-msg" id="score-msg"></p>
+    <button class="restart-btn" onclick="restart()">&#8635; Try again</button>
+  </div>
+</main>
+
+<script>
+const questions = [
+  {
+    q: "A cheetah runs at 70 miles per hour. How far does it travel in 15 minutes?",
+    fraction: "70 miles/hr  ×  (15 min)  ×  (1 hr / 60 min)  =  ?",
+    hint: "💡 Multiply by a conversion fraction so that 'hr' appears in both a numerator and denominator — then it cancels, leaving only miles.",
+    showSetupBefore: true,
+    options: ["17.5 miles", "1,050 miles", "4.7 miles", "70 miles"],
+    answer: 0,
+    explanation: "The 'min' on top and bottom cancel, leaving miles. → 70 × 15 / 60 = 70 × 0.25 = <strong>17.5 miles</strong>."
+  },
+  {
+    q: "A recipe calls for 3 cups of flour, but you only have a tablespoon measure. How many tablespoons do you need?\n(1 cup = 16 tablespoons)",
+    fraction: "3 cups  ×  (16 tbsp / 1 cup)  =  ?",
+    hint: "💡 You need to go from cups to tablespoons. Write the conversion as a fraction with 'cups' in the denominator so it cancels.",
+    showSetupBefore: false,
+    options: ["19 tbsp", "48 tbsp", "5.3 tbsp", "32 tbsp"],
+    answer: 1,
+    explanation: "3 cups × (16 tbsp / 1 cup) — 'cups' cancel → 3 × 16 = <strong>48 tablespoons</strong>."
+  },
+  {
+    q: "A snail moves at 0.03 miles per hour. How many feet per minute is that?\n(1 mile = 5,280 ft  |  1 hour = 60 min)",
+    fraction: "0.03 mi/hr  ×  (5,280 ft / 1 mi)  ×  (1 hr / 60 min)  =  ?",
+    hint: "💡 You need two conversion fractions chained together — one to swap miles for feet, another to swap hours for minutes.",
+    showSetupBefore: false,
+    options: ["158.4 ft/min", "2.64 ft/min", "0.044 ft/min", "9,504 ft/min"],
+    answer: 1,
+    explanation: "0.03 mi/hr × (5,280 ft/mi) × (1 hr/60 min) — 'mi' cancels, 'hr' cancels → 0.03 × 5,280 / 60 = 158.4 / 60 = <strong>2.64 ft/min</strong>."
+  },
+  {
+    q: "A juice box holds 200 mL. You drink 3 juice boxes a day. How many liters do you drink in one week?\n(1 liter = 1,000 mL)",
+    fraction: "3 boxes/day  ×  200 mL/box  ×  7 days  ×  (1 L / 1,000 mL)  =  ?",
+    hint: "💡 Think about what units you want to eliminate: boxes, mL, and days should all cancel, leaving liters.",
+    showSetupBefore: false,
+    options: ["0.42 L", "4.2 L", "42 L", "0.042 L"],
+    answer: 1,
+    explanation: "3 × 200 mL/day × 7 days × (1 L/1,000 mL) — 'boxes', 'mL', and 'days' all cancel → 3 × 200 × 7 / 1,000 = 4,200 / 1,000 = <strong>4.2 liters</strong>."
+  },
+  {
+    q: "Your heart beats about 72 times per minute. How many times does it beat in a full year?\n(1 hour = 60 min  |  1 day = 24 hours  |  1 year = 365 days)",
+    fraction: "72 beats/min  ×  60 min/hr  ×  24 hr/day  ×  365 days/yr  =  ?",
+    hint: "💡 Chain four conversions in a row: min → hr → day → year. Each intermediate unit cancels with the next fraction.",
+    showSetupBefore: false,
+    options: ["37,843,200", "378,432", "37,843", "3,784,320"],
+    answer: 0,
+    explanation: "72 × 60 × 24 × 365 — 'min', 'hr', and 'days' all cancel in the chain → 72 × 60 = 4,320 → × 24 = 103,680 → × 365 = <strong>37,843,200 beats/year</strong>."
+  },
+  {
+    q: "A car gets 30 miles per gallon. Gas costs $3.50 per gallon. How much does it cost to drive 120 miles?",
+    fraction: "120 miles  ×  (1 gallon / 30 miles)  ×  ($3.50 / 1 gallon)  =  ?",
+    hint: "💡 You need to get from miles to dollars. Think about what cancels in each step: miles first, then gallons.",
+    showSetupBefore: false,
+    options: ["$12.60", "$14.00", "$10.50", "$126.00"],
+    answer: 1,
+    explanation: "120 mi × (1 gal / 30 mi) × ($3.50 / gal) — 'miles' cancel, then 'gallons' cancel → 120 / 30 × $3.50 = 4 × $3.50 = <strong>$14.00</strong>."
+  },
+  {
+    q: "A swimming pool holds 25,000 gallons. A garden hose fills it at 9 gallons per minute. How many hours will it take to fill the pool?\n(1 hour = 60 min)",
+    fraction: "25,000 gal  ×  (1 min / 9 gal)  ×  (1 hr / 60 min)  =  ?",
+    hint: "💡 The fill rate is gallons/minute — flip it to get minutes/gallon so that gallons cancel. Then convert minutes to hours.",
+    showSetupBefore: false,
+    options: ["231 hours", "46.3 hours", "2,778 hours", "23.1 hours"],
+    answer: 1,
+    explanation: "25,000 gal × (1 min / 9 gal) × (1 hr / 60 min) — 'gal' cancels, 'min' cancels → 25,000 / 9 / 60 ≈ <strong>46.3 hours</strong>."
+  },
+  {
+    q: "A skateboarder travels 500 centimeters per second. What is their speed in kilometers per hour?\n(100 cm = 1 m  |  1,000 m = 1 km  |  1 hour = 3,600 s)",
+    fraction: "500 cm/s  ×  (1 m / 100 cm)  ×  (1 km / 1,000 m)  ×  (3,600 s / 1 hr)  =  ?",
+    hint: "💡 You need to make four unit pairs cancel: cm, m, s — and end up with km/hr.",
+    showSetupBefore: false,
+    options: ["1.8 km/hr", "18 km/hr", "180 km/hr", "0.18 km/hr"],
+    answer: 1,
+    explanation: "500 × (1/100) × (1/1,000) × 3,600 — 'cm', 'm', and 's' all cancel → 500 / 100 / 1,000 × 3,600 = 0.005 × 3,600 = <strong>18 km/hr</strong>."
+  },
+  {
+    q: "A movie theater sells popcorn at $0.15 per ounce. A large tub holds 3 pounds. How much does the large tub cost?\n(1 lb = 16 oz)",
+    fraction: "3 lb  ×  (16 oz / 1 lb)  ×  ($0.15 / 1 oz)  =  ?",
+    hint: "💡 You need to go from pounds to dollars. Use two fractions: one to cancel lb, another to cancel oz.",
+    showSetupBefore: false,
+    options: ["$0.72", "$7.20", "$2.88", "$72.00"],
+    answer: 1,
+    explanation: "3 lb × (16 oz / lb) × ($0.15 / oz) — 'lb' cancels, 'oz' cancels → 3 × 16 × $0.15 = 48 × $0.15 = <strong>$7.20</strong>."
+  },
+  {
+    q: "The International Space Station orbits Earth at 7.7 km per second. How many miles per hour is that?\n(1 km = 0.621 miles  |  1 hour = 3,600 s)",
+    fraction: "7.7 km/s  ×  (0.621 mi / 1 km)  ×  (3,600 s / 1 hr)  =  ?",
+    hint: "💡 Two conversions needed: km → miles, and seconds → hours. Make sure km and s each appear in a denominator to cancel.",
+    showSetupBefore: false,
+    options: ["17,213 mph", "4,783 mph", "27,212 mph", "1,721 mph"],
+    answer: 0,
+    explanation: "7.7 km/s × (0.621 mi / km) × (3,600 s / hr) — 'km' cancels, 's' cancels → 7.7 × 0.621 × 3,600 ≈ 4.78 × 3,600 ≈ <strong>17,213 mph</strong>. That's about 8× faster than a bullet!"
+  }
+];
+
+const LETTERS = ['A', 'B', 'C', 'D'];
+let current = 0, score = 0, answered = false;
+
+function render() {
+  const q = questions[current];
+  document.getElementById('prog').style.width = `${(current / questions.length) * 100}%`;
+  document.getElementById('prog-label').textContent = `${current + 1} / ${questions.length}`;
+
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('q-hint').textContent = q.hint;
+
+  const badge = document.getElementById('worked-badge');
+  badge.style.display = q.showSetupBefore ? 'inline-block' : 'none';
+
+  const setupBefore = document.getElementById('setup-before');
+  if (q.showSetupBefore) {
+    document.getElementById('q-fraction-before').textContent = q.fraction;
+    setupBefore.style.display = 'block';
+  } else {
+    setupBefore.style.display = 'none';
+  }
+
+  const opts = document.getElementById('options');
+  opts.innerHTML = '';
+  q.options.forEach((o, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.innerHTML = `<span class="opt-letter">${LETTERS[i]}</span>${o}`;
+    btn.setAttribute('aria-label', `Option ${LETTERS[i]}: ${o}`);
+    btn.onclick = () => select(i);
+    opts.appendChild(btn);
+  });
+
+  document.getElementById('after-answer').className = 'after-answer';
+  document.getElementById('setup-after').style.display = 'none';
+  document.getElementById('correct-note').style.display = 'none';
+  document.getElementById('explanation').style.display = 'none';
+  document.getElementById('expl-body').innerHTML = '';
+  document.getElementById('next-btn').style.display = 'none';
+  answered = false;
+}
+
+function select(idx) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.opt');
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.answer) b.classList.add('correct');
+    else if (i === idx) b.classList.add('wrong');
+  });
+
+  const correct = idx === q.answer;
+  if (correct) score++;
+
+  document.getElementById('after-answer').className = 'after-answer show';
+
+  if (!q.showSetupBefore) {
+    document.getElementById('q-fraction-after').textContent = q.fraction;
+    document.getElementById('setup-after').style.display = 'block';
+  }
+
+  if (correct) {
+    if (!q.showSetupBefore) {
+      document.getElementById('correct-note').style.display = 'block';
+    }
+  } else {
+    document.getElementById('expl-body').innerHTML = q.explanation;
+    document.getElementById('explanation').style.display = 'block';
+  }
+
+  const nb = document.getElementById('next-btn');
+  nb.style.display = 'inline-block';
+  nb.textContent = current < questions.length - 1 ? 'Next question \u2192' : 'See my results \u2192';
+}
+
+function nextQ() {
+  current++;
+  if (current >= questions.length) showScore();
+  else render();
+}
+
+function showScore() {
+  document.getElementById('q-card').style.display = 'none';
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('prog').style.width = '100%';
+  document.getElementById('prog-label').textContent = `${questions.length} / ${questions.length}`;
+  const sc = document.getElementById('score-card');
+  sc.style.display = 'block';
+  document.getElementById('score-n').textContent = score;
+  const pct = score / questions.length;
+  document.getElementById('score-icon').textContent = pct === 1 ? '🏆' : pct >= 0.8 ? '🎉' : pct >= 0.6 ? '👍' : '📐';
+  const msgs = [
+    "Keep practicing — unit cancelation takes repetition. Review the setups that appeared after each answer and try again!",
+    "Good effort! You've got the idea — a few more problems and it'll click.",
+    "Nice work! Review any mistakes and you'll be an expert in no time.",
+    "Great job! You really understand how to set up unit cancelation.",
+    "Perfect score! You're a unit cancelation master. 🌟"
+  ];
+  const tier = pct === 1 ? 4 : pct >= 0.8 ? 3 : pct >= 0.6 ? 2 : pct >= 0.4 ? 1 : 0;
+  document.getElementById('score-msg').textContent = msgs[tier];
+}
+
+function restart() {
+  current = 0; score = 0;
+  document.getElementById('q-card').style.display = 'block';
+  document.getElementById('score-card').style.display = 'none';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
