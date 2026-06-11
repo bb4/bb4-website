@@ -33,11 +33,16 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Prepare site with Cloudflare Web Analytics
+        env:
+          CF_WEB_ANALYTICS_TOKEN: ${{ secrets.CF_WEB_ANALYTICS_TOKEN }}
+        run: |
+          cp -r source/html/barrybecker4 deploy-site
+          python3 scripts/inject_cloudflare_analytics.py deploy-site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload specific directory
-          path: 'source/html/barrybecker4'
+          path: deploy-site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

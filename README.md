@@ -6,6 +6,20 @@ This repository contains the content for [http://barrybecker4.org](http://barryb
 
 Simply commit content to /source/html/barrybecker4 and it will appear at https://barrybecker4.org.
 
+### Cloudflare Web Analytics
+
+GitHub Pages is served directly from GitHub, not through Cloudflare's proxy, so the dashboard "Enable" (auto-inject) option does not work for this site. Use manual snippet installation instead:
+
+1. In Cloudflare **Observability → Web Analytics → Manage site**, choose **Enable with JS Snippet installation** and copy the `token` value from the snippet.
+2. Add a GitHub repository secret named `CF_WEB_ANALYTICS_TOKEN` with that token value.
+3. Push to `master` (or run the deploy workflow manually). The deploy workflow injects the beacon into all HTML pages before publishing.
+
+To verify locally after setting the token:
+
+```bash
+CF_WEB_ANALYTICS_TOKEN='your-token' python3 scripts/inject_cloudflare_analytics.py source/html/barrybecker4
+```
+
 The scala software projects can be generated from respective bb4 projects. There is a `deploy` task in each which will produce a `dist` directory - the contents of which can then be copied into barrybecker4/bb4-projects.
 
 ### Library dependencies
