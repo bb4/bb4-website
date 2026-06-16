@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMC 8 Practice Quiz</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f3;
+      --bg-tertiary: #eeede8;
+      --text-primary: #1a1a18;
+      --text-secondary: #5f5e5a;
+      --text-tertiary: #888780;
+      --border: rgba(0,0,0,0.12);
+      --border-hover: rgba(0,0,0,0.22);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --accent: #534AB7;
+      --accent-light: #EEEDFE;
+      --accent-dark: #3C3489;
+      --success-bg: #EAF3DE;
+      --success-border: #3B6D11;
+      --success-text: #27500A;
+      --error-bg: #FCEBEB;
+      --error-border: #A32D2D;
+      --error-text: #791F1F;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #1e1e1c;
+        --bg-secondary: #2a2a28;
+        --bg-tertiary: #232321;
+        --text-primary: #f0efe8;
+        --text-secondary: #b4b2a9;
+        --text-tertiary: #888780;
+        --border: rgba(255,255,255,0.1);
+        --border-hover: rgba(255,255,255,0.2);
+        --accent: #7F77DD;
+        --accent-light: #26215C;
+        --accent-dark: #CECBF6;
+        --success-bg: #173404;
+        --success-border: #639922;
+        --success-text: #C0DD97;
+        --error-bg: #501313;
+        --error-border: #E24B4A;
+        --error-text: #F7C1C1;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .page-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .site-header {
+      margin-bottom: 2rem;
+    }
+    .site-header h1 {
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .site-header p {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    .progress-bar-wrap {
+      background: var(--bg-secondary);
+      border-radius: 99px;
+      height: 6px;
+      margin: 1rem 0 2rem;
+    }
+    .progress-bar {
+      background: var(--accent);
+      height: 6px;
+      border-radius: 99px;
+      transition: width 0.3s ease;
+    }
+
+    .question-card {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .q-meta {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .q-text {
+      font-size: 16px;
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 15px;
+      color: var(--text-primary);
+      transition: background 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+    .option-label:hover { background: var(--bg-secondary); border-color: var(--border-hover); }
+    .option-label input[type=radio] { accent-color: var(--accent); width: 16px; height: 16px; flex-shrink: 0; }
+    .option-label.selected { border-color: var(--accent); background: var(--accent-light); color: var(--accent-dark); }
+    .option-label.correct  { border-color: var(--success-border); background: var(--success-bg); color: var(--success-text); }
+    .option-label.incorrect { border-color: var(--error-border); background: var(--error-bg); color: var(--error-text); }
+    .option-label.reveal-correct { border-color: var(--success-border); background: var(--success-bg); color: var(--success-text); }
+    .option-label.review-mode { cursor: default; pointer-events: none; }
+
+    .check-icon { margin-left: auto; color: var(--success-border); }
+    .x-icon    { margin-left: auto; color: var(--error-border); }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: opacity 0.15s;
+    }
+    .submit-btn:hover { opacity: 0.88; }
+    .submit-btn:disabled { opacity: 0.4; cursor: default; }
+
+    #results-section { display: none; }
+
+    .score-card {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .score-num { font-size: 52px; font-weight: 500; color: var(--accent); }
+    .score-label { font-size: 15px; color: var(--text-secondary); margin-top: 4px; }
+    .score-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+    .metric {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 12px;
+    }
+    .metric-val { font-size: 20px; font-weight: 500; color: var(--text-primary); }
+    .metric-lbl { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+    .explanation {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: var(--bg-secondary);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .explanation strong { color: var(--text-primary); font-weight: 500; }
+
+    .review-intro {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .retry-wrap { text-align: center; margin-top: 1.5rem; }
+    .retry-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 28px;
+      border: 0.5px solid var(--border-hover);
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      color: var(--text-primary);
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.15s;
+    }
+    .retry-btn:hover { background: var(--bg-secondary); }
+
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .result-badge .ti { font-size: 15px; }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+  <header class="site-header">
+    <h1>AMC 8 practice quiz</h1>
+    <p>10 problems covering key AMC 8 topics · Select one answer per question</p>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="prog" style="width:0%"></div>
+    </div>
+  </header>
+
+  <main>
+    <section id="quiz-section" aria-label="Quiz questions">
+      <div id="questions-container"></div>
+      <button class="submit-btn" id="submit-btn" onclick="submitQuiz()">Submit answers</button>
+    </section>
+
+    <section id="results-section" aria-label="Quiz results">
+      <div class="score-card">
+        <div class="score-num" id="score-display" aria-live="polite"></div>
+        <div class="score-label">out of 10 correct</div>
+        <div class="score-metrics">
+          <div class="metric">
+            <div class="metric-val" id="pct-display"></div>
+            <div class="metric-lbl">Percent score</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val" id="correct-display"></div>
+            <div class="metric-lbl">Correct</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val" id="wrong-display"></div>
+            <div class="metric-lbl">Incorrect / skipped</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="review-intro">Review each problem below — the correct answer and explanation are shown for every question.</p>
+      <div id="review-container"></div>
+
+      <div class="retry-wrap">
+        <button class="retry-btn" onclick="resetQuiz()">
+          <i class="ti ti-refresh" aria-hidden="true"></i> Try again
+        </button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+const questions = [
+  {
+    topic: "Number sense",
+    text: "What is the value of 1 − 2 + 3 − 4 + 5 − 6 + 7 − 8 + 9 − 10 + 11 − 12 + 13 − 14 + 15 − 16 + 17 − 18 + 19 − 20?",
+    options: ["−20", "−10", "0", "10", "20"],
+    answer: 1,
+    explanation: "Group the terms in pairs: (1−2) + (3−4) + (5−6) + … + (19−20). Each pair equals −1, and there are 10 pairs, so the total is 10 × (−1) = −10."
+  },
+  {
+    topic: "Fractions & operations",
+    text: "What is the value of ½ + ¼ + ⅛ + 1/16 + 1/32?",
+    options: ["15/16", "31/32", "1", "63/64", "17/32"],
+    answer: 1,
+    explanation: "Convert to 32nds: 16/32 + 8/32 + 4/32 + 2/32 + 1/32 = 31/32. This is a finite partial sum of the geometric series that approaches 1 but never reaches it — each term is half the previous one."
+  },
+  {
+    topic: "Geometry",
+    text: "A square has a perimeter of 48 cm. What is the area of the square in square centimeters?",
+    options: ["12", "36", "108", "144", "192"],
+    answer: 3,
+    explanation: "Perimeter = 4 × side length, so side = 48 ÷ 4 = 12 cm. Area = side² = 12² = 144 cm²."
+  },
+  {
+    topic: "Counting & probability",
+    text: "A bag contains 5 red marbles, 3 blue marbles, and 2 green marbles. If one marble is chosen at random, what is the probability it is NOT red?",
+    options: ["1/2", "2/5", "3/10", "1/5", "5/10"],
+    answer: 0,
+    explanation: "Total marbles = 5 + 3 + 2 = 10. Non-red marbles = 3 + 2 = 5. Probability = 5/10 = 1/2. Note that 5/10 (choice E) simplifies to 1/2 (choice A), so both are technically equal — but 1/2 is the fully simplified form and is the answer."
+  },
+  {
+    topic: "Algebra",
+    text: "If 3x + 7 = 22, what is the value of 6x − 4?",
+    options: ["5", "10", "26", "30", "34"],
+    answer: 2,
+    explanation: "Solve for x: 3x = 22 − 7 = 15, so x = 5. Then 6x − 4 = 6(5) − 4 = 30 − 4 = 26. A shortcut: notice 6x − 4 = 2(3x) − 4 = 2(15) − 4 = 30 − 4 = 26 without needing x."
+  },
+  {
+    topic: "Number theory",
+    text: "How many positive integers less than 100 are divisible by both 3 and 4?",
+    options: ["6", "7", "8", "9", "10"],
+    answer: 2,
+    explanation: "A number divisible by both 3 and 4 must be divisible by their least common multiple (LCM). Since gcd(3,4) = 1, LCM = 3 × 4 = 12. Multiples of 12 less than 100: 12, 24, 36, 48, 60, 72, 84, 96 — that is 8 numbers."
+  },
+  {
+    topic: "Ratios & proportions",
+    text: "On a map, 1 inch represents 40 miles. Two cities are 3.5 inches apart on the map. What is the actual distance between the cities?",
+    options: ["80 miles", "120 miles", "140 miles", "160 miles", "175 miles"],
+    answer: 2,
+    explanation: "Set up the proportion: 1 inch / 40 miles = 3.5 inches / x miles. Cross-multiply: x = 3.5 × 40 = 140 miles. Alternatively, just multiply map distance by the scale factor: 3.5 × 40 = 140."
+  },
+  {
+    topic: "Patterns & sequences",
+    text: "The sequence 2, 6, 12, 20, 30, … follows a pattern. What is the next term?",
+    options: ["40", "42", "44", "48", "52"],
+    answer: 1,
+    explanation: "The differences between consecutive terms are 4, 6, 8, 10, … — they increase by 2 each time. So the next difference is 12, giving 30 + 12 = 42. Another way: the nth term equals n(n+1). Check: 1×2=2, 2×3=6, 3×4=12, 4×5=20, 5×6=30, 6×7=42. ✓"
+  },
+  {
+    topic: "Percentages",
+    text: "A shirt originally costs $40. It is put on sale for 25% off, then an additional 10% off the sale price. What is the final price?",
+    options: ["$24.00", "$26.00", "$27.00", "$28.00", "$30.00"],
+    answer: 2,
+    explanation: "Step 1: 25% off $40 → $40 × 0.75 = $30. Step 2: 10% off $30 → $30 × 0.90 = $27. Watch out: the two discounts do NOT simply add up to 35%. Consecutive percentage discounts must be applied one at a time. The effective discount is 1 − (0.75 × 0.90) = 1 − 0.675 = 32.5% off."
+  },
+  {
+    topic: "Logic & reasoning",
+    text: "In a class of 30 students, 18 play soccer, 12 play basketball, and 5 play both sports. How many students play neither sport?",
+    options: ["3", "5", "7", "10", "12"],
+    answer: 1,
+    explanation: "Use the inclusion-exclusion principle: |Soccer ∪ Basketball| = |Soccer| + |Basketball| − |Both| = 18 + 12 − 5 = 25. Students who play neither = 30 − 25 = 5. Drawing a Venn diagram helps: 13 play only soccer, 7 play only basketball, 5 play both — total = 25, leaving 5 who play neither."
+  }
+];
+
+let answers = new Array(10).fill(null);
+
+function buildQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.setAttribute('role', 'group');
+    card.setAttribute('aria-label', `Problem ${i+1}`);
+    card.innerHTML = `
+      <div class="q-meta">Problem ${i+1} &nbsp;·&nbsp; ${q.topic}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="options" id="opts-${i}" role="radiogroup" aria-label="Choices for problem ${i+1}">
+        ${q.options.map((opt, j) => `
+          <label class="option-label" id="opt-${i}-${j}" onclick="selectAnswer(${i},${j})">
+            <input type="radio" name="q${i}" value="${j}" aria-label="${String.fromCharCode(65+j)}: ${opt}">
+            <span>${String.fromCharCode(65+j)}. ${opt}</span>
+          </label>
+        `).join('')}
+      </div>`;
+    container.appendChild(card);
+  });
+  updateProgress();
+}
+
+function selectAnswer(qi, oi) {
+  answers[qi] = oi;
+  for (let j = 0; j < questions[qi].options.length; j++) {
+    const lbl = document.getElementById(`opt-${qi}-${j}`);
+    lbl.classList.toggle('selected', j === oi);
+    lbl.querySelector('input').checked = (j === oi);
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const filled = answers.filter(a => a !== null).length;
+  document.getElementById('prog').style.width = (filled / 10 * 100) + '%';
+}
+
+function submitQuiz() {
+  let score = 0;
+  answers.forEach((a, i) => { if (a === questions[i].answer) score++; });
+
+  document.getElementById('quiz-section').style.display = 'none';
+  const rs = document.getElementById('results-section');
+  rs.style.display = 'block';
+  document.getElementById('score-display').textContent = score;
+  document.getElementById('pct-display').textContent = (score * 10) + '%';
+  document.getElementById('correct-display').textContent = score;
+  document.getElementById('wrong-display').textContent = 10 - score;
+
+  const rc = document.getElementById('review-container');
+  rc.innerHTML = '';
+  questions.forEach((q, i) => {
+    const userAns = answers[i];
+    const correct = q.answer;
+    const isCorrect = userAns === correct;
+    const skipped = userAns === null;
+
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.style.marginBottom = '1rem';
+
+    let statusColor = isCorrect ? 'var(--success-border)' : skipped ? 'var(--text-tertiary)' : 'var(--error-border)';
+    let statusIcon = isCorrect ? 'ti-check' : skipped ? 'ti-minus' : 'ti-x';
+    let statusText = isCorrect ? 'Correct' : skipped ? 'Not answered' : 'Incorrect';
+
+    card.innerHTML = `
+      <div class="q-meta">
+        <span class="result-badge" style="color:${statusColor}">
+          <i class="ti ${statusIcon}" aria-hidden="true"></i> ${statusText}
+        </span>
+        &nbsp;·&nbsp; Problem ${i+1} &nbsp;·&nbsp; ${q.topic}
+      </div>
+      <div class="q-text">${q.text}</div>
+      <div class="options">
+        ${q.options.map((opt, j) => {
+          let cls = 'option-label review-mode';
+          let trailingIcon = '';
+          if (j === correct) {
+            cls += ' reveal-correct';
+            trailingIcon = `<i class="ti ti-check check-icon" aria-hidden="true"></i>`;
+          } else if (j === userAns && !isCorrect) {
+            cls += ' incorrect';
+            trailingIcon = `<i class="ti ti-x x-icon" aria-hidden="true"></i>`;
+          }
+          return `<div class="${cls}">${String.fromCharCode(65+j)}. ${opt}${trailingIcon}</div>`;
+        }).join('')}
+      </div>
+      <div class="explanation">
+        <strong>Explanation:</strong> ${q.explanation}
+      </div>`;
+    rc.appendChild(card);
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  answers = new Array(10).fill(null);
+  document.getElementById('results-section').style.display = 'none';
+  document.getElementById('quiz-section').style.display = 'block';
+  buildQuestions();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildQuestions();
+</script>
+</body>
+</html>
