@@ -1,139 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2VRHF9NHLD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Games – Barry Becker</title>
+<meta name="description" content="Real-time and turn-based strategy games: Galactic Conflict, World Conflict, Galactopoly, Into the Singularity, and more. Play in the browser.">
+<style>
+  :root {
+    --game-accent: #3b82f6;
+    --game-accent-soft: #60a5fa;
+    --bg-page: #0f172a;
+    --bg-panel-dark: rgba(15, 23, 42, 0.8);
+    --bg-panel-light: rgba(30, 41, 59, 0.6);
+    --border-medium: #374151;
+    --border-dark: #1f2937;
+    --text-warning: #fbbf24;
+    --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-family-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    --radius-md: 6px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg-page); font-family: var(--font-family-base); }
+  a { color: inherit; }
 
-  gtag('config', 'G-2VRHF9NHLD');
-</script>
-    <meta name="google-adsense-account" content="ca-pub-7416723383632921">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Real-time and turn-based strategy games: Galactic Conflict, World Conflict, Galactopoly, Into the Singularity. Play in the browser.">
-    <title>Online Games – Barry Becker</title>
-    <link rel="stylesheet" href="../css/main.css">
+  .glp-shell { display: flex; min-height: 100vh; }
+  .glp-sidebar {
+    width: 220px; flex: none; background: var(--bg-panel-dark);
+    border-right: 1px solid var(--border-medium); padding: 28px 20px;
+    position: sticky; top: 0; align-self: flex-start; height: 100vh; overflow-y: auto;
+  }
+  .glp-navlist { display: flex; flex-direction: column; }
+  .glp-navlink {
+    font: 600 0.8rem var(--font-family-base); color: #93c5fd; padding: 8px 0;
+    border-bottom: 1px solid var(--border-dark); text-decoration: none; display: block;
+  }
+  .glp-main { flex: 1; padding: 32px 36px; min-width: 0; }
+  .glp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 14px; }
+  .glp-card {
+    text-decoration: none; border-radius: var(--radius-md); overflow: hidden;
+    border: 1px solid var(--border-medium); background: var(--bg-panel-light);
+    display: block; transition: border-color .2s;
+  }
+  .glp-card:hover { border-color: var(--game-accent-soft); }
+  .glp-card-img { position: relative; height: 90px; background-size: cover; background-position: center; }
+  .glp-badge {
+    position: absolute; top: 6px; padding: 2px 7px; border-radius: 999px;
+    font: 600 10px var(--font-family-mono); background: rgba(15,23,42,0.85); color: #cbd5e1;
+  }
+  .glp-badge.warn { color: var(--text-warning); font-family: var(--font-family-base); left: 6px; }
+  .glp-badge.players { right: 6px; }
+  .glp-card-body { padding: 10px 12px 12px; }
+  .glp-card-title { margin: 0 0 4px; font: 700 0.9rem var(--font-family-base); color: #f8fafc; }
+  .glp-card-tag { margin: 0; font: 0.78rem/1.4 var(--font-family-base); color: #94a3b8; }
+  .glp-actions { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
+  .glp-btn {
+    display: block; text-align: center; text-decoration: none; font: 600 0.8rem var(--font-family-base);
+    color: #cbd5e1; border: 1px solid var(--border-medium); border-radius: var(--radius-md);
+    padding: 8px 10px; transition: border-color .2s, color .2s;
+  }
+  .glp-btn:hover { color: #fff; border-color: var(--game-accent-soft); }
+  .glp-cat-title { font: 700 1.1rem var(--font-family-base); color: #f8fafc; margin: 0 0 14px; }
+  .glp-intro { font: 0.95rem/1.5 var(--font-family-base); color: #94a3b8; margin: 0 0 28px; max-width: 640px; }
+  .glp-cat { margin-bottom: 32px; scroll-margin-top: 16px; }
+  .glp-brand-title { font: 800 1.1rem var(--font-family-base); color: #f8fafc; }
+  .glp-brand-sub { font: 0.75rem var(--font-family-base); color: #64748b; }
+
+  @media (max-width: 760px) {
+    .glp-shell { flex-direction: column; }
+    .glp-sidebar {
+      width: 100%; height: auto; position: static; padding: 16px 16px 12px;
+      border-right: none; border-bottom: 1px solid var(--border-medium);
+    }
+    .glp-navlist {
+      flex-direction: row; overflow-x: auto; gap: 8px;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .glp-navlist::-webkit-scrollbar { display: none; }
+    .glp-navlink {
+      flex: none; border-bottom: none; border: 1px solid var(--border-medium);
+      border-radius: 999px; padding: 8px 14px; white-space: nowrap;
+    }
+    .glp-actions { flex-direction: row; margin-top: 14px; }
+    .glp-actions > * { flex: 1; }
+    .glp-main { padding: 20px 16px 40px; }
+    .glp-grid { grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 10px; }
+    .glp-card-img { height: 76px; }
+  }
+</style>
 </head>
 <body>
-  <main class="container">
-    <header class="games-hero">
-      <h1>Multiplayer Online Games</h1>
-      <p class="games-hero__tagline">Real-time and turn-based strategy in the browser.
-        Built with <a href="https://svelte.dev/" target="_blank" >Svelte</a>,
-        deployed on <a href="https://www.cloudflare.com/" target="_blank" >Cloudflare</a>.
-        <br/>All games are described on <a href="https://www.youtube.com/@BarryBecker4">my youtube channel</a>.</p>
-      <a href="https://usage-stats.pages.dev/" target="_blank" >Recent usage statistics</a>
-    </header>
+<div class="glp-shell">
+  <div class="glp-sidebar">
+    <div class="glp-brand-title">Online Games</div>
+    <div class="glp-brand-sub">by Barry Becker</div>
+    <nav class="glp-navlist" style="margin-top:16px;">
+      <a class="glp-navlink" href="#cat-strategy">Strategy &amp; Conquest</a>
+      <a class="glp-navlink" href="#cat-board">Board &amp; Puzzle</a>
+      <a class="glp-navlink" href="#cat-party">Party &amp; Trivia</a>
+      <a class="glp-navlink" href="#cat-arcade">Arcade Action</a>
+      <a class="glp-navlink" href="#cat-rpg">Adventure &amp; RPG</a>
+    </nav>
+    <div class="glp-actions">
+      <a class="glp-btn" href="https://www.youtube.com/@BarryBecker4">YouTube channel</a>
+      <a class="glp-btn" href="https://usage-stats.pages.dev/">Usage stats</a>
+    </div>
+  </div>
 
-    <section class="games-grid">
-      <article class="game-card">
-        <img src="../images/games/galactic-conflict-bg.png" alt="Galactic Conflict" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">Galactic Conflict</h2>
-          <a href="https://galactic-conflict.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">A real-time strategy space war game.</p>
-      </article>
+  <div class="glp-main">
+    <p class="glp-intro">Real-time and turn-based strategy in the browser. Built with Svelte, deployed on Cloudflare.</p>
 
-      <article class="game-card">
-        <img src="../images/games/world-conflict-bg.png" alt="World Conflict" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">World Conflict</h2>
-          <a href="https://world-conflict.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">A turn-based, Risk-like game of conquest.</p>
-      </article>
+    <div class="glp-cat" id="cat-strategy">
+      <h2 class="glp-cat-title">Strategy &amp; Conquest</h2>
+      <div class="glp-grid">
+        <a class="glp-card" href="https://galactic-conflict.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/galactic-conflict-bg.png');">
+            <span class="glp-badge players">2-20 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Galactic Conflict</h3>
+            <p class="glp-card-tag">Command a fleet and battle for the galaxy in real time.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://world-conflict.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/world-conflict-bg.png');">
+            <span class="glp-badge players">2-6 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">World Conflict</h3>
+            <p class="glp-card-tag">A turn-based, Risk-like game of conquest.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://into-the-singularity.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/into-the-singularity-bg.png');">
+            <span class="glp-badge warn">Discord + itch.io</span>
+            <span class="glp-badge players">2-12 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Into the Singularity</h3>
+            <p class="glp-card-tag">Steer humanity through the future in this grand strategy sim.</p>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <article class="game-card">
-        <img src="../images/games/galactopoly-bg.png" alt="Galactopoly" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">Galactopoly</h2>
-          <a href="https://galactopoly.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">A galaxy-themed version of that old family favorite.</p>
-      </article>
+    <div class="glp-cat" id="cat-board">
+      <h2 class="glp-cat-title">Board &amp; Puzzle</h2>
+      <div class="glp-grid">
+        <a class="glp-card" href="https://galactopoly.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/galactopoly-bg.png');">
+            <span class="glp-badge players">2-6 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Galactopoly</h3>
+            <p class="glp-card-tag">That old family favorite, reimagined across the galaxy.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://quantum-tic-tac-toe.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/quantum-tic-tac-toe-bg.png');">
+            <span class="glp-badge players">2 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Quantum Tic-tac-toe</h3>
+            <p class="glp-card-tag">A mind-bending quantum take on tic-tac-toe.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://capablanca-shogi.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/capablanca-shogi-bg.png');">
+            <span class="glp-badge players">2 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Capablanca Shogi Chess</h3>
+            <p class="glp-card-tag">A merge of Shogi with traditional chess.</p>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <article class="game-card">
-        <img src="../images/games/into-the-singularity-bg.png" alt="Into the Singularity" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">Into the Singularity</h2>
-          <a href="https://into-the-singularity.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">A grand strategy simulation about the future. Educational and entertaining. <a href="https://discord.gg/us7HrpYk">Join the discord server</a>.
-        <a href="https://barrybecker4.itch.io/into-the-singularity">Play on itch.io</a></p>.
-      </article>
+    <div class="glp-cat" id="cat-party">
+      <h2 class="glp-cat-title">Party &amp; Trivia</h2>
+      <div class="glp-grid">
+        <a class="glp-card" href="https://fermi-showdown.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/fermi-showdown-bg.png');">
+            <span class="glp-badge players">1-12 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Fermi Showdown</h3>
+            <p class="glp-card-tag">Test your estimation skills against others.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://boggle-10g.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/boggle-bg.png');">
+            <span class="glp-badge players">1-12 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Word Shake</h3>
+            <p class="glp-card-tag">A multiplayer word search game.</p>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <article class="game-card">
-        <img src="../images/games/quantum-tic-tac-toe-bg.png" alt="Quantum Tic-tac-toe" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">Quantum Tic-tac-toe</h2>
-          <a href="https://quantum-tic-tac-toe.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">A mind-bending quantum take on tic-tac-toe.</p>.
-      </article>
+    <div class="glp-cat" id="cat-arcade">
+      <h2 class="glp-cat-title">Arcade Action</h2>
+      <div class="glp-grid">
+        <a class="glp-card" href="https://tank-battle-1p8.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/tank-battle-bg.png');">
+            <span class="glp-badge players">2-6 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Tank Battle</h3>
+            <p class="glp-card-tag">Tank-on-tank combat, inspired by the old Atari Combat.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://space-war-8ty.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/space-war-bg.png');">
+            <span class="glp-badge players">2-6 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Space War</h3>
+            <p class="glp-card-tag">Duel in zero-g, inspired by Spacewar from the '80s.</p>
+          </div>
+        </a>
+      </div>
+    </div>
 
-      <article class="game-card">
-        <img src="../images/games/fermi-showdown-bg.png" alt="Fermi Estimate Showdown" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">Fermi Showdown</h2>
-          <a href="https://fermi-showdown.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">Test your estimation skills against others.</p>.
-      </article>
-
-      <article class="game-card">
-        <img src="../images/games/boggle-bg.png" alt="Word Shake" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">Word Shake</h2>
-          <a href="https://boggle-10g.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">A multiplayer word search game.</p>.
-      </article>
-
-      <article class="game-card">
-        <img src="../images/games/capablanca-shogi-bg.png" alt="Capablanca Shogi Chess" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">Capablanca Shogi Chess</h2>
-          <a href="https://capablanca-shogi.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">A merge of Shogi with traditional chess.</p>.
-      </article>
-
-      <article class="game-card">
-        <img src="../images/games/tank-battle-bg.png" alt="Tank Battle" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">Tank Battle</h2>
-          <a href="https://tank-battle-1p8.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">Like the old Atari Combat game, players fight each other with tanks.</p>.
-      </article>
-
-      <article class="game-card">
-        <img src="../images/games/space-war-bg.png" alt="Space War" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">Space War</h2>
-          <a href="https://space-war-8ty.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">Players shoot at each other in space. Inspired by Spacewar game from the 80'.</p>.
-      </article>
-
-      <article class="game-card">
-        <img src="../images/games/depths-and-dragons-bg.png" alt="Depths & Dragons" class="game-card__image">
-        <div class="game-card__header">
-          <h2 class="game-card__title">Depths & Dragons</h2>
-          <a href="https://depths-and-dragons.pages.dev/" class="game-card__cta">Play now</a>
-        </div>
-        <p class="game-card__desc">A fantasy dungeons and dragons style role playing game based on <a href="https://www.dndbeyond.com/srd">5e System</a>.
-          The AI is the dungeon master. This is the only game listed here that requires an email and payment due to token costs.</p>.
-      </article>
-    </section>
-
-    <p class="games-footer">
-      Other <a href="index.html">programming projects</a>
-    </p>
-  </main>
+    <div class="glp-cat" id="cat-rpg">
+      <h2 class="glp-cat-title">Adventure &amp; RPG</h2>
+      <div class="glp-grid">
+        <a class="glp-card" href="https://depths-and-dragons.pages.dev/">
+          <div class="glp-card-img" style="background-image:url('https://barrybecker4.org/images/games/depths-and-dragons-bg.png');">
+            <!--span class="glp-badge warn">Requires payment</span-->
+            <span class="glp-badge players">1-6 players</span>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Depths &amp; Dragons</h3>
+            <p class="glp-card-tag">Delve a 5e dungeon together with an AI dungeon master.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
