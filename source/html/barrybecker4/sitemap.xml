@@ -6,17 +6,42 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://barrybecker4.org/bb4-projects/</loc>
-    <changefreq>monthly</changefreq>
+    <loc>https://barrybecker4.org/about.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/privacy-policy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/personal/life-journal.html</loc>
+    <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://barrybecker4.org/programming-projects/</loc>
-    <changefreq>monthly</changefreq>
+    <loc>https://barrybecker4.org/interests/go/go-lessons.html</loc>
+    <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://barrybecker4.org/professional/</loc>
+    <loc>https://barrybecker4.org/interests/go/go_terminology.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/interests/puzzles/puzzles.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/interests/aikido/aikido_index.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/professional/patents.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -26,59 +51,38 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://barrybecker4.org/personal/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://barrybecker4.org/interests/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://barrybecker4.org/interests/aikido/aikido_index.html</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://barrybecker4.org/interests/go/go-lessons.html</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://barrybecker4.org/school/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://barrybecker4.org/movies/</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://barrybecker4.org/bb4-projects/bb4-games/games_index.html</loc>
     <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://barrybecker4.org/bb4-projects/bb4-puzzles/puzzles_index.html</loc>
     <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://barrybecker4.org/bb4-projects/bb4-simulations/simulations_index.html</loc>
     <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://barrybecker4.org/programming-projects/bayes-rule-viz/</loc>
+    <loc>https://barrybecker4.org/programming-projects/zen_garden/zen_garden.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/school/math/pioneerMathLeague/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://barrybecker4.org/programming-projects/wordle/</loc>
+    <loc>https://barrybecker4.org/school/math/amsMathLeague/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/school/math/amsMathLeague/tests/testIndex.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>
-

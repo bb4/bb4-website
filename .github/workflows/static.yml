@@ -38,6 +38,9 @@ jobs:
           CF_WEB_ANALYTICS_TOKEN: ${{ secrets.CF_WEB_ANALYTICS_TOKEN }}
         run: |
           cp -r source/html/barrybecker4 deploy-site
+          cp robots.txt deploy-site/
+          # Keep archived screenplays out of the live site even if reintroduced under source/
+          rm -f deploy-site/movies/alien/alien_screenplay*.html
           python3 scripts/inject_cloudflare_analytics.py deploy-site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
