@@ -1,5 +1,5 @@
-<!DOCTYPE>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2VRHF9NHLD"></script>
@@ -12,7 +12,7 @@
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Aikido Technique Builder</title>
 
-<script language="JavaScript">
+<script>
   // setup structures for grammar
   var attacks = new Array();
   var next = new Array();
@@ -18212,34 +18212,34 @@
 </script></head>
 
 <body onload="doOnLoad()">
-<big>
-    <big style="font-weight: bold; text-decoration: underline;">Aikido Technique Builder</big>
-</big><br><br>
+<span style="font-size: larger">
+    <span style="font-size: larger; font-weight: bold; text-decoration: underline;">Aikido Technique Builder</span>
+</span><br><br>
 Build an aikido technique using successive drop-lists below.<br>
 There are still many missing images. More will be added later.<br><br>
-<font size='-1'>This application was built using XML, java and DHTML (<a href='technique_builder_desc.html'>more details</a>).</font>
+<span style="font-size: 0.9em">This application was built using XML, java and DHTML (<a href='technique_builder_desc.html'>more details</a>).</span>
 <br><br>
 
-<table id='outerTable' width="100%" border="0">
+<table id='outerTable' style="width: 100%; border: 0">
   <tr>
     <td>
       <div style="width:100%; overflow: auto; font-family:arial; font-size:60%;">
 
-        <table id='techniqueTable' width="100%" border="1">
+        <table id='techniqueTable' style="width: 100%; border: 1px solid">
           <tr>
-            <td nowrap>
+            <td style="white-space:nowrap">
               <select id="step0_select" onchange="selectChanged('step0_select')"></select>
             </td>
-            <td nowrap width="100%">
+            <td style="white-space:nowrap; width: 100%">
             </td>
           </tr>
           <tr>
-            <td nowrap>
+            <td style="white-space:nowrap">
               <a onmouseover="mousedOnThumbnail('step0_image')">
-                <img id="step0_image" name="step1img" title="select something" src="images/select.png" border="0" width=170 height=130>
+                <img id="step0_image" name="step1img" title="select something" src="images/select.png" width=170 height=130 style="border: 0">
               </a>
             </td>
-            <td nowrap width="100%">
+            <td style="white-space:nowrap; width: 100%">
             </td>
           </tr>
         </table>
@@ -18250,7 +18250,7 @@ There are still many missing images. More will be added later.<br><br>
   <tr>
     <td>
       <div id="bigImgDiv">
-        <img id="big_image" name="step1img" src="images/select.png" border="1">
+        <img id="big_image" name="step1img" src="images/select.png" style="border: 1px solid">
       </div>
     </td>
   </tr>

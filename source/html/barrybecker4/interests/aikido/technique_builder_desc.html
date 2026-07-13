@@ -1,8 +1,8 @@
+<!DOCTYPE html>
 <!--
   ~ Copyright by Barry G. Becker, 2014. Licensed under MIT License: http://www.opensource.org/licenses/MIT
   -->
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
@@ -20,8 +20,8 @@
 
 <body style="background-color: #effff2; margin:40px">
 
-<big><big style="font-weight: bold; text-decoration: underline;">Aikido
-Technique Builder Technical Description</big></big><br>
+<span style="font-size: larger"><span style="font-size: larger; font-weight: bold; text-decoration: underline;">Aikido
+Technique Builder Technical Description</span></span><br>
 <br>
 <p>
 First I created an XML file that specifies the technique hierarchy.
@@ -32,9 +32,8 @@ First I created an XML file that specifies the technique hierarchy.
     (Document Type Definition) for my XML hierarchy syntax.
     This enforces the legal structure of the data file when it gets parsed. This avoids much difficult debugging.
     Here is a snippet from the XML datafile:
-</p><pre><font size="-1"><xmp>
+</p><pre><span style="font-size: 0.9em"><xmp>
 <?xml version="1.0"?>
-<!DOCTYPE hierarchy SYSTEM "hierarchy.dtd">
 <hierarchy title="Katate dori technique hierarchy" imgpath="images/katate_dori/" date="10/19/2014" author="Barry Becker">
   <node id="katate_dori" label="katate dori" description="left wrist grab">
       <node id="tenkan_grabbed" label="tenkan entrance (grabbed)">
@@ -65,7 +64,7 @@ First I created an XML file that specifies the technique hierarchy.
           :::
           :::
 </hierarchy>
-</xmp></font></pre>
+</xmp></span></pre>
 <p>
   Next I shot the images at the dojo using a digital camera. The images were too large, so I resampled them using IRFan (a free image processing tool).
     One of the mistakes I made was to not batch the contrast and color correction. On my next attempt I will try photoshop or script GIMP.

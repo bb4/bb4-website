@@ -26,3 +26,6 @@ webdeployment/gradlew
 webdeployment/gradlew.bat
 webdeployment/out/
 
+
+# Vendor / generated dependencies (exclude from IDE noise if present)
+**/node_modules/
