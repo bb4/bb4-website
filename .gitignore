@@ -13,9 +13,10 @@ source/html/barrybecker4/bb4-website.cpfs
 hs_err_pid*
 
 #intellij
-.idea
-*/.idea
+.idea/**
+!.idea/bb4-website.iml
 *.iml
+!.idea/bb4-website.iml
 *.ipr
 *.iws
 

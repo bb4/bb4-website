@@ -233,7 +233,7 @@
     <h1>AMC 8 practice quiz</h1>
     <p>10 problems covering key AMC 8 topics · Select one answer per question</p>
     <div class="progress-bar-wrap">
-      <div class="progress-bar" id="prog" style="width:0%"></div>
+      <div class="progress-bar" id="prog" style="width: 0"></div>
     </div>
   </header>
 
@@ -420,7 +420,7 @@ function submitQuiz() {
 
     card.innerHTML = `
       <div class="q-meta">
-        <span class="result-badge" style="color:${statusColor}">
+        <span class="result-badge" style="color: ${statusColor}">
           <i class="ti ${statusIcon}" aria-hidden="true"></i> ${statusText}
         </span>
         &nbsp;·&nbsp; Problem ${i+1} &nbsp;·&nbsp; ${q.topic}

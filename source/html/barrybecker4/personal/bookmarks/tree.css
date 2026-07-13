@@ -1,0 +1,22 @@
+/* Styles for the classic jsTree bookmark page */
+body {
+  margin: 0.75rem;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 13px;
+  background: #f8feff;
+  color: #111;
+}
+
+a {
+  color: #06c;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  border: 0;
+  vertical-align: middle;
+}
