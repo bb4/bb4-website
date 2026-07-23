@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power Levels — Exponents Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F1B2D;
+    --card: #16233A;
+    --card-border: #223454;
+    --accent: #F2B84B;
+    --accent-dim: #7A5F27;
+    --teal: #4ECDC4;
+    --text: #E8EEF7;
+    --muted: #8FA3C0;
+    --success: #6BCB77;
+    --success-bg: #17301C;
+    --error: #FF6B6B;
+    --error-bg: #331A1A;
+    --display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --body: 'Inter', 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', 'Consolas', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(78,205,196,0.08), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(242,184,75,0.07), transparent 40%);
+    color: var(--text);
+    font-family: var(--body);
+    min-height: 100vh;
+    padding: 32px 16px 64px;
+  }
+
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ---- Header / signature element: exponent tower ---- */
+  .hero {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .tower {
+    font-family: var(--mono);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -1px;
+    user-select: none;
+    margin-bottom: 8px;
+  }
+  .tower .t1 { font-size: 44px; color: var(--muted); }
+  .tower .t2 { font-size: 30px; color: var(--teal); vertical-align: super; margin-left: 2px;}
+  .tower .t3 { font-size: 19px; color: var(--accent); vertical-align: super; margin-left: 1px;}
+
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 28px;
+    margin: 4px 0 6px;
+    letter-spacing: -0.3px;
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: 14.5px;
+    margin: 0;
+  }
+
+  /* ---- Power meter (progress bar leveling motif) ---- */
+  .meter-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0 20px;
+  }
+  .level-badge {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 5px 9px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .meter-track {
+    flex: 1;
+    height: 8px;
+    background: #1D2C46;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+  }
+  .meter-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--teal), var(--accent));
+    border-radius: 999px;
+    transition: width 0.4s ease;
+  }
+  .meter-count {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ---- Card ---- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 26px 24px;
+  }
+
+  .category-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--teal);
+    background: rgba(78,205,196,0.1);
+    border: 1px solid rgba(78,205,196,0.3);
+    padding: 3px 9px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+  }
+
+  .question {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.45;
+    margin: 0 0 20px;
+  }
+  .question .math {
+    font-family: var(--mono);
+    color: var(--accent);
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    background: #101B2E;
+    border: 1.5px solid var(--card-border);
+    color: var(--text);
+    padding: 13px 14px;
+    border-radius: 10px;
+    font-family: var(--body);
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+  }
+  .option:hover:not(:disabled) {
+    border-color: var(--teal);
+    transform: translateY(-1px);
+  }
+  .option:disabled { cursor: default; }
+
+  .option .letter {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    color: var(--muted);
+    background: #1D2C46;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .option .ans-text { font-family: var(--mono); }
+
+  .option.correct {
+    background: var(--success-bg);
+    border-color: var(--success);
+  }
+  .option.correct .letter { background: var(--success); color: #0F1B2D; }
+
+  .option.incorrect {
+    background: var(--error-bg);
+    border-color: var(--error);
+  }
+  .option.incorrect .letter { background: var(--error); color: #0F1B2D; }
+
+  .explain {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: #101B2E;
+    border-left: 3px solid var(--accent);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted);
+    display: none;
+  }
+  .explain strong { color: var(--text); }
+  .explain .math { font-family: var(--mono); color: var(--accent); }
+
+  .next-btn {
+    margin-top: 18px;
+    width: 100%;
+    background: var(--accent);
+    color: #251A05;
+    border: none;
+    padding: 13px;
+    border-radius: 10px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    display: none;
+    transition: filter 0.15s ease;
+  }
+  .next-btn:hover { filter: brightness(1.08); }
+
+  /* ---- Results screen ---- */
+  .results { text-align: center; display: none; }
+  .results .big-score {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 52px;
+    color: var(--accent);
+    margin: 6px 0;
+  }
+  .results h2 {
+    font-family: var(--display);
+    font-size: 22px;
+    margin: 0 0 4px;
+  }
+  .results p.sub { color: var(--muted); font-size: 14.5px; margin-bottom: 20px; }
+
+  .breakdown {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 20px 0;
+  }
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13.5px;
+    padding: 9px 12px;
+    background: #101B2E;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+  }
+  .breakdown-row .cat { color: var(--muted); font-family: var(--mono); font-size: 12.5px;}
+  .breakdown-row .frac { font-family: var(--mono); font-weight: 700; }
+  .breakdown-row .frac.good { color: var(--success); }
+  .breakdown-row .frac.mid { color: var(--accent); }
+  .breakdown-row .frac.bad { color: var(--error); }
+
+  .retry-btn {
+    width: 100%;
+    background: transparent;
+    color: var(--teal);
+    border: 1.5px solid var(--teal);
+    padding: 13px;
+    border-radius: 10px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .retry-btn:hover { background: rgba(78,205,196,0.08); }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 28px;
+    font-family: var(--mono);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .meter-fill, .option { transition: none; }
+  }
+
+  @media (max-width: 420px) {
+    .card { padding: 20px 16px; }
+    .question { font-size: 18px; }
+    .tower .t1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="tower"><span class="t1">2</span><span class="t2">n</span><span class="t3">+1</span></div>
+    <h1>Power Levels</h1>
+    <p>An exponents workout — laws, tricks, and a few AMC8-style traps</p>
+  </div>
+
+  <div class="meter-row">
+    <span class="level-badge" id="levelBadge">LV 1</span>
+    <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+    <span class="meter-count" id="meterCount">0 / 16</span>
+  </div>
+
+  <div class="card">
+    <div id="quizArea">
+      <span class="category-tag" id="catTag">CATEGORY</span>
+      <p class="question" id="questionText"></p>
+      <div class="options" id="optionsArea"></div>
+      <div class="explain" id="explainArea"></div>
+      <button class="next-btn" id="nextBtn">Next question →</button>
+    </div>
+
+    <div class="results" id="resultsArea">
+      <h2>Run complete</h2>
+      <div class="big-score" id="finalScore">0/16</div>
+      <p class="sub" id="finalMsg">Nice work.</p>
+      <div class="breakdown" id="breakdownArea"></div>
+      <button class="retry-btn" id="retryBtn">Try again</button>
+    </div>
+  </div>
+
+  <footer>MADE FOR AMC8 PREP · NO CALCULATOR ALLOWED</footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    cat: "Core Laws",
+    q: "Simplify: <span class='math'>x⁵ · x³</span>",
+    options: ["x⁸", "x¹⁵", "x²", "2x⁸"],
+    correct: 0,
+    explain: "When multiplying powers with the same base, add the exponents: <span class='math'>x⁵ · x³ = x⁵⁺³ = x⁸</span>."
+  },
+  {
+    cat: "Core Laws",
+    q: "Simplify: <span class='math'>(y⁴)³</span>",
+    options: ["y⁷", "y¹²", "3y⁴", "y⁶⁴"],
+    correct: 1,
+    explain: "Power of a power: multiply the exponents. <span class='math'>(y⁴)³ = y⁴ˣ³ = y¹²</span>."
+  },
+  {
+    cat: "Zero & Negative",
+    q: "What is <span class='math'>7⁰</span>?",
+    options: ["0", "7", "1", "undefined"],
+    correct: 2,
+    explain: "Any nonzero number to the power 0 equals 1. You can see why using the quotient rule: <span class='math'>7³/7³ = 7⁰</span> but also <span class='math'>7³/7³ = 1</span>."
+  },
+  {
+    cat: "Zero & Negative",
+    q: "Simplify: <span class='math'>3⁻²</span>",
+    options: ["-9", "-6", "1/9", "9"],
+    correct: 2,
+    explain: "A negative exponent means reciprocal: <span class='math'>3⁻² = 1/3² = 1/9</span>."
+  },
+  {
+    cat: "Order of Operations",
+    q: "Evaluate: <span class='math'>2 + 3²·2</span>",
+    options: ["20", "50", "38", "25"],
+    correct: 0,
+    explain: "Exponents before multiplication before addition: <span class='math'>3² = 9</span>, then <span class='math'>9·2 = 18</span>, then <span class='math'>2 + 18 = 20</span>."
+  },
+  {
+    cat: "Order of Operations",
+    q: "Evaluate: <span class='math'>-2⁴</span>",
+    options: ["16", "-16", "8", "-8"],
+    correct: 1,
+    explain: "There are no parentheses around -2, so the exponent applies to 2 first, then the negative: <span class='math'>-(2⁴) = -16</span>. (This is different from <span class='math'>(-2)⁴ = 16</span>.)"
+  },
+  {
+    cat: "Fractional Exponents",
+    q: "Simplify: <span class='math'>16^(1/2)</span>",
+    options: ["8", "4", "2", "32"],
+    correct: 1,
+    explain: "A power of 1/2 is a square root: <span class='math'>16^(1/2) = √16 = 4</span>."
+  },
+  {
+    cat: "Fractional Exponents",
+    q: "Simplify: <span class='math'>8^(2/3)</span>",
+    options: ["4", "16", "64", "512"],
+    correct: 0,
+    explain: "Take the cube root first, then square: <span class='math'>8^(1/3) = 2</span>, then <span class='math'>2² = 4</span>."
+  },
+  {
+    cat: "Unit Digit Cycles",
+    q: "What is the units digit of <span class='math'>7²⁰²³</span>?",
+    options: ["1", "7", "9", "3"],
+    correct: 3,
+    explain: "Units digits of 7ⁿ cycle every 4: <span class='math'>7¹=7, 7²=49, 7³=343, 7⁴=2401</span> → cycle is 7, 9, 3, 1, then repeats. Since <span class='math'>2023 = 4·505 + 3</span>, the exponent 2023 lines up with position 3 in the cycle, which is <strong>3</strong>."
+  },
+  {
+    cat: "Comparing Powers",
+    q: "Which is larger: <span class='math'>2³⁰⁰</span> or <span class='math'>3²⁰⁰</span>?",
+    options: ["2³⁰⁰", "3²⁰⁰", "They're equal", "Can't tell without a calculator"],
+    correct: 1,
+    explain: "Rewrite both with exponent 100: <span class='math'>2³⁰⁰ = (2³)¹⁰⁰ = 8¹⁰⁰</span> and <span class='math'>3²⁰⁰ = (3²)¹⁰⁰ = 9¹⁰⁰</span>. Since 9 > 8, <span class='math'>3²⁰⁰</span> is larger — no calculator needed."
+  },
+  {
+    cat: "Comparing Powers",
+    q: "Which is larger: <span class='math'>5⁴⁴</span> or <span class='math'>4⁴⁵</span>?",
+    options: ["5⁴⁴", "4⁴⁵", "They're equal", "Not enough info"],
+    correct: 0,
+    explain: "Compare 5⁴⁴ to 4⁴⁴·4. Since 5⁴⁴ > 4⁴⁴ · 4 would need checking, easier: 4⁴⁵ = 4·4⁴⁴, and 5⁴⁴/4⁴⁴ = (5/4)⁴⁴ which is far bigger than 4 (since 1.25⁴⁴ grows huge). So 5⁴⁴ is larger."
+  },
+  {
+    cat: "Factoring Sums",
+    q: "Simplify: <span class='math'>2¹⁰⁰ + 2⁹⁹</span>",
+    options: ["2¹⁹⁹", "3 · 2⁹⁹", "2¹⁰¹", "4 · 2⁹⁹"],
+    correct: 1,
+    explain: "Factor out the smaller power: <span class='math'>2¹⁰⁰ + 2⁹⁹ = 2⁹⁹(2 + 1) = 3 · 2⁹⁹</span>. This trick — factoring out the common power — is one of the most useful AMC8 exponent moves."
+  },
+  {
+    cat: "Factoring Sums",
+    q: "Simplify: <span class='math'>3⁸ + 3⁸ + 3⁸</span>",
+    options: ["3⁹", "9⁸", "3²⁴", "3¹¹"],
+    correct: 0,
+    explain: "Adding three copies of 3⁸ is the same as multiplying by 3: <span class='math'>3·3⁸ = 3⁹</span>. Careful — it's NOT 3²⁴ (that would be if you multiplied, not added)."
+  },
+  {
+    cat: "Solving Equations",
+    q: "Solve for x: <span class='math'>2ˣ = 64</span>",
+    options: ["4", "5", "6", "8"],
+    correct: 2,
+    explain: "Rewrite 64 as a power of 2: <span class='math'>64 = 2⁶</span>, so <span class='math'>x = 6</span>."
+  },
+  {
+    cat: "Solving Equations",
+    q: "Solve for x: <span class='math'>9^(x-1) = 27</span>",
+    options: ["5/2", "2", "3/2", "7/2"],
+    correct: 0,
+    explain: "Write both sides with base 3: <span class='math'>9 = 3²</span> so left side is <span class='math'>3^(2x-2)</span>; right side <span class='math'>27 = 3³</span>. Set exponents equal: <span class='math'>2x - 2 = 3</span>, so <span class='math'>x = 5/2</span>."
+  },
+  {
+    cat: "Growth & Real World",
+    q: "A bacteria population doubles every hour, starting at 100. How many bacteria after 5 hours?",
+    options: ["500", "1600", "3200", "1000"],
+    correct: 2,
+    explain: "Doubling n times means multiplying by 2ⁿ: <span class='math'>100 · 2⁵ = 100 · 32 = 3200</span>."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+const catStats = {};
+QUESTIONS.forEach(q => { if (!catStats[q.cat]) catStats[q.cat] = {correct: 0, total: 0}; catStats[q.cat].total++; });
+
+const catTag = document.getElementById('catTag');
+const questionText = document.getElementById('questionText');
+const optionsArea = document.getElementById('optionsArea');
+const explainArea = document.getElementById('explainArea');
+const nextBtn = document.getElementById('nextBtn');
+const meterFill = document.getElementById('meterFill');
+const meterCount = document.getElementById('meterCount');
+const levelBadge = document.getElementById('levelBadge');
+const quizArea = document.getElementById('quizArea');
+const resultsArea = document.getElementById('resultsArea');
+const retryBtn = document.getElementById('retryBtn');
+
+function renderQuestion() {
+  answered = false;
+  const q = QUESTIONS[current];
+  catTag.textContent = q.cat.toUpperCase();
+  questionText.innerHTML = q.q;
+  explainArea.style.display = 'none';
+  explainArea.innerHTML = '';
+  nextBtn.style.display = 'none';
+  optionsArea.innerHTML = '';
+
+  const letters = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.innerHTML = `<span class="letter">${letters[idx]}</span><span class="ans-text">${opt}</span>`;
+    btn.addEventListener('click', () => selectAnswer(idx));
+    optionsArea.appendChild(btn);
+  });
+
+  updateMeter();
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const opts = optionsArea.querySelectorAll('.option');
+  opts.forEach(o => o.disabled = true);
+
+  if (idx === q.correct) {
+    score++;
+    catStats[q.cat].correct++;
+    opts[idx].classList.add('correct');
+  } else {
+    opts[idx].classList.add('incorrect');
+    opts[q.correct].classList.add('correct');
+  }
+
+  explainArea.innerHTML = `<strong>${idx === q.correct ? 'Correct. ' : 'Not quite. '}</strong>${q.explain}`;
+  explainArea.style.display = 'block';
+  nextBtn.style.display = 'block';
+  nextBtn.textContent = current === QUESTIONS.length - 1 ? 'See results →' : 'Next question →';
+  updateMeter();
+}
+
+function updateMeter() {
+  const answeredCount = current + (answered ? 1 : 0);
+  const pct = Math.round((answeredCount / QUESTIONS.length) * 100);
+  meterFill.style.width = pct + '%';
+  meterCount.textContent = `${score} / ${QUESTIONS.length}`;
+  const level = Math.max(1, Math.floor(score / 3) + 1);
+  levelBadge.textContent = 'LV ' + level;
+}
+
+nextBtn.addEventListener('click', () => {
+  if (current < QUESTIONS.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+});
+
+function showResults() {
+  quizArea.style.display = 'none';
+  resultsArea.style.display = 'block';
+  document.getElementById('finalScore').textContent = `${score}/${QUESTIONS.length}`;
+
+  const pct = score / QUESTIONS.length;
+  let msg;
+  if (pct === 1) msg = "Perfect run. You're ready for the real thing.";
+  else if (pct >= 0.8) msg = "Strong showing — just a couple gaps to patch up.";
+  else if (pct >= 0.5) msg = "Solid foundation. Review the missed categories below.";
+  else msg = "Good first pass — exponents click with practice. Try again!";
+  document.getElementById('finalMsg').textContent = msg;
+
+  const breakdown = document.getElementById('breakdownArea');
+  breakdown.innerHTML = '';
+  Object.keys(catStats).forEach(cat => {
+    const s = catStats[cat];
+    const row = document.createElement('div');
+    row.className = 'breakdown-row';
+    const ratio = s.correct / s.total;
+    const cls = ratio === 1 ? 'good' : ratio >= 0.5 ? 'mid' : 'bad';
+    row.innerHTML = `<span class="cat">${cat.toUpperCase()}</span><span class="frac ${cls}">${s.correct}/${s.total}</span>`;
+    breakdown.appendChild(row);
+  });
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0;
+  score = 0;
+  Object.keys(catStats).forEach(c => catStats[c].correct = 0);
+  quizArea.style.display = 'block';
+  resultsArea.style.display = 'none';
+  renderQuestion();
+});
+
+renderQuestion();
+</script>
+</body>
+</html>
