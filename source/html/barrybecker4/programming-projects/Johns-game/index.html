@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Hue Hunt — spot the odd color</title>
+<meta name="description" content="One tile is a slightly different color. Find it before the clock runs out. How far can you get?">
+<meta name="theme-color" content="#0d0f14">
+<meta property="og:title" content="Hue Hunt">
+<meta property="og:description" content="One tile is a slightly different color. Find it before the clock runs out.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#0d0f14;
+    --panel:#161a22;
+    --line:#262c39;
+    --text:#e8ecf5;
+    --muted:#8b95ab;
+    --accent:#5ee6a8;
+    --danger:#ff5f6d;
+    --gap:clamp(4px, 1.2vmin, 10px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #1b2130 0%, transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+    -webkit-user-select:none;user-select:none;
+    -webkit-tap-highlight-color:transparent;
+    overflow:hidden;
+  }
+  #app{width:min(94vw, 480px);display:flex;flex-direction:column;gap:14px}
+
+  header{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .brand{font-size:15px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .brand b{color:var(--accent)}
+
+  .stats{display:flex;gap:8px}
+  .stat{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:6px 10px;min-width:64px;text-align:center;
+  }
+  .stat .k{display:block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .stat .v{display:block;font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.25}
+
+  #timerWrap{height:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  #timer{height:100%;width:100%;background:linear-gradient(90deg,var(--accent),#7ad7ff);border-radius:999px}
+  #timer.low{background:linear-gradient(90deg,var(--danger),#ff9f68)}
+
+  #board{position:relative;width:100%;aspect-ratio:1/1}
+  #grid{
+    position:absolute;inset:0;display:grid;gap:var(--gap);
+    touch-action:manipulation;
+  }
+  .tile{
+    border:0;padding:0;border-radius:clamp(6px,2vmin,14px);
+    background:var(--c);cursor:pointer;
+    animation:pop .22s cubic-bezier(.2,1.4,.4,1) backwards;
+    transition:transform .08s ease;
+  }
+  .tile:active{transform:scale(.94)}
+  .tile:focus-visible{outline:3px solid #fff;outline-offset:2px}
+  @keyframes pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+  .tile.hit{animation:hit .3s ease forwards}
+  @keyframes hit{to{transform:scale(1.35);opacity:0;box-shadow:0 0 0 8px rgba(255,255,255,.25)}}
+  #grid.shake{animation:shake .32s}
+  @keyframes shake{
+    0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}
+    40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}
+  }
+
+  #combo{
+    position:absolute;left:50%;top:-6px;transform:translate(-50%,-100%);
+    font-size:13px;font-weight:700;color:var(--accent);opacity:0;pointer-events:none;
+  }
+  #combo.show{animation:rise .7s ease forwards}
+  @keyframes rise{
+    0%{opacity:0;transform:translate(-50%,-70%) scale(.8)}
+    30%{opacity:1;transform:translate(-50%,-110%) scale(1.1)}
+    100%{opacity:0;transform:translate(-50%,-160%) scale(1)}
+  }
+
+  .overlay{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:14px;text-align:center;
+    background:rgba(13,15,20,.86);backdrop-filter:blur(10px);
+    border-radius:16px;border:1px solid var(--line);padding:22px;
+    animation:fade .25s ease;
+  }
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .overlay[hidden]{display:none}
+  .overlay h1{font-size:clamp(28px,8vw,42px);letter-spacing:-.02em}
+  .overlay h1 span{color:var(--accent)}
+  .overlay p{color:var(--muted);font-size:14px;line-height:1.55;max-width:30ch}
+  .big{font-size:clamp(46px,15vw,72px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+  .sub{font-size:13px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+  .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  button.btn{
+    font:inherit;font-weight:700;font-size:15px;cursor:pointer;
+    padding:12px 22px;border-radius:999px;border:1px solid var(--line);
+    background:var(--accent);color:#08130d;transition:transform .08s ease,filter .15s ease;
+  }
+  button.btn.ghost{background:transparent;color:var(--text)}
+  button.btn:hover{filter:brightness(1.08)}
+  button.btn:active{transform:scale(.96)}
+
+  footer{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}
+  #mute{background:none;border:0;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;padding:4px}
+  #mute:hover{color:var(--text)}
+  .newbest{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">Hue<b>Hunt</b></div>
+    <div class="stats">
+      <div class="stat"><span class="k">Level</span><span class="v" id="lvl">1</span></div>
+      <div class="stat"><span class="k">Score</span><span class="v" id="score">0</span></div>
+      <div class="stat"><span class="k">Best</span><span class="v" id="best">0</span></div>
+    </div>
+  </header>
+
+  <div id="timerWrap"><div id="timer"></div></div>
+
+  <div id="board">
+    <div id="combo"></div>
+    <div id="grid" role="group" aria-label="Color grid"></div>
+
+    <div class="overlay" id="menu">
+      <h1>Hue <span>Hunt</span></h1>
+      <p>One tile is a slightly different color.<br>Tap it before the clock runs out.</p>
+      <button class="btn" id="playBtn">Play</button>
+      <p style="font-size:12px">Right answers buy time. Wrong ones cost it.</p>
+    </div>
+
+    <div class="overlay" id="over" hidden>
+      <div class="sub">Final score</div>
+      <div class="big" id="finalScore">0</div>
+      <div id="bestLine" class="sub">Best 0 · Level 1</div>
+      <div class="row">
+        <button class="btn" id="againBtn">Play again</button>
+        <button class="btn ghost" id="shareBtn">Share</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span id="hint">Find the odd tile</span>
+    <button id="mute" aria-pressed="false">🔊 Sound on</button>
+  </footer>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+  const gridEl = $('grid'), timerEl = $('timer'), comboEl = $('combo');
+  const lvlEl = $('lvl'), scoreEl = $('score'), bestEl = $('best');
+  const menuEl = $('menu'), overEl = $('over');
+  const finalScoreEl = $('finalScore'), bestLineEl = $('bestLine'), hintEl = $('hint');
+
+  const MAX_TIME = 14;      // seconds the bar can hold
+  const START_TIME = 12;
+  const REWARD = 1.15;      // seconds gained per correct tile
+  const PENALTY = 2.5;      // seconds lost per miss
+  const BEST_KEY = 'huehunt.best';
+
+  let state = 'menu';       // menu | playing | over
+  let level = 1, score = 0, streak = 0;
+  let timeLeft = START_TIME, lastFrame = 0, oddIndex = 0;
+  let best = Number(localStorage.getItem(BEST_KEY) || 0);
+  bestEl.textContent = best;
+
+  /* ---------- difficulty ---------- */
+
+  // Grid grows in steps; each step is a fresh breather before shades tighten again.
+  function gridSize(l) {
+    if (l < 3)  return 2;
+    if (l < 6)  return 3;
+    if (l < 10) return 4;
+    if (l < 15) return 5;
+    if (l < 21) return 6;
+    if (l < 28) return 7;
+    return 8;
+  }
+
+  // Lightness difference between the odd tile and the rest, in HSL percentage points.
+  function shadeDelta(l) {
+    return Math.max(1.15, 26 * Math.pow(0.905, l - 1));
+  }
+
+  /* ---------- sound ---------- */
+
+  let muted = localStorage.getItem('huehunt.muted') === '1';
+  let ctx = null;
+  function beep(freq, dur, type = 'sine', gain = 0.06) {
+    if (muted) return;
+    try {
+      ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type; o.frequency.value = freq;
+      g.gain.setValueAtTime(gain, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur);
+      o.connect(g).connect(ctx.destination);
+      o.start(); o.stop(ctx.currentTime + dur);
+    } catch (_) { /* audio is optional */ }
+  }
+  const muteBtn = $('mute');
+  function paintMute() {
+    muteBtn.textContent = muted ? '🔇 Sound off' : '🔊 Sound on';
+    muteBtn.setAttribute('aria-pressed', String(muted));
+  }
+  muteBtn.addEventListener('click', () => {
+    muted = !muted;
+    localStorage.setItem('huehunt.muted', muted ? '1' : '0');
+    paintMute();
+  });
+  paintMute();
+
+  /* ---------- round rendering ---------- */
+
+  function buildRound() {
+    const n = gridSize(level);
+    const d = shadeDelta(level);
+
+    const hue = Math.random() * 360;
+    const sat = 62 + Math.random() * 16;
+    const light = 46 + Math.random() * 16;
+    // Push the odd tile away from whichever end of the range we're closer to.
+    const dir = light > 56 ? -1 : 1;
+    const base = `hsl(${hue.toFixed(1)} ${sat.toFixed(1)}% ${light.toFixed(1)}%)`;
+    const odd  = `hsl(${(hue + dir * d * 0.7).toFixed(1)} ${sat.toFixed(1)}% ${(light + dir * d).toFixed(1)}%)`;
+
+    oddIndex = Math.floor(Math.random() * n * n);
+    gridEl.style.gridTemplateColumns = `repeat(${n}, 1fr)`;
+    gridEl.style.gridTemplateRows = `repeat(${n}, 1fr)`;
+
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < n * n; i++) {
+      const t = document.createElement('button');
+      t.className = 'tile';
+      t.type = 'button';
+      t.dataset.i = i;
+      t.style.setProperty('--c', i === oddIndex ? odd : base);
+      t.style.animationDelay = (i % n + Math.floor(i / n)) * 8 + 'ms';
+      t.setAttribute('aria-label', 'tile ' + (i + 1));
+      frag.appendChild(t);
+    }
+    gridEl.replaceChildren(frag);
+    lvlEl.textContent = level;
+  }
+
+  /* ---------- scoring ---------- */
+
+  function multiplier() {
+    return Math.min(5, 1 + Math.floor(streak / 3) * 0.5);
+  }
+
+  function onCorrect(tile) {
+    const m = multiplier();
+    score += Math.round((8 + level * 4) * m);
+    streak++;
+    level++;
+    timeLeft = Math.min(MAX_TIME, timeLeft + REWARD);
+    scoreEl.textContent = score;
+
+    beep(520 + Math.min(streak, 12) * 40, 0.09, 'triangle');
+    if (navigator.vibrate) navigator.vibrate(8);
+
+    tile.classList.add('hit');
+    if (m > 1) {
+      comboEl.textContent = '×' + m.toFixed(1).replace('.0', '') + '  streak ' + streak;
+      comboEl.classList.remove('show');
+      void comboEl.offsetWidth;              // restart the animation
+      comboEl.classList.add('show');
+    }
+    setTimeout(() => { if (state === 'playing') buildRound(); }, 110);
+  }
+
+  function onWrong() {
+    streak = 0;
+    timeLeft -= PENALTY;
+    beep(150, 0.16, 'sawtooth', 0.05);
+    if (navigator.vibrate) navigator.vibrate([12, 40, 12]);
+    gridEl.classList.remove('shake');
+    void gridEl.offsetWidth;
+    gridEl.classList.add('shake');
+    if (timeLeft <= 0) endGame();
+  }
+
+  gridEl.addEventListener('click', e => {
+    if (state !== 'playing') return;
+    const tile = e.target.closest('.tile');
+    if (!tile || tile.classList.contains('hit')) return;
+    Number(tile.dataset.i) === oddIndex ? onCorrect(tile) : onWrong();
+  });
+
+  /* ---------- loop ---------- */
+
+  function frame(ts) {
+    if (state !== 'playing') return;
+    const dt = Math.min(0.1, (ts - lastFrame) / 1000);   // clamp: tab switches shouldn't gut the clock
+    lastFrame = ts;
+    timeLeft -= dt;
+    if (timeLeft <= 0) { timeLeft = 0; paintTimer(); endGame(); return; }
+    paintTimer();
+    requestAnimationFrame(frame);
+  }
+
+  function paintTimer() {
+    const pct = Math.max(0, Math.min(1, timeLeft / MAX_TIME));
+    timerEl.style.width = (pct * 100).toFixed(2) + '%';
+    timerEl.classList.toggle('low', timeLeft < 4);
+  }
+
+  /* ---------- state ---------- */
+
+  function startGame() {
+    state = 'playing';
+    level = 1; score = 0; streak = 0; timeLeft = START_TIME;
+    scoreEl.textContent = '0';
+    menuEl.hidden = true; overEl.hidden = true;
+    hintEl.textContent = 'Find the odd tile';
+    buildRound();
+    paintTimer();
+    lastFrame = performance.now();
+    requestAnimationFrame(frame);
+  }
+
+  function endGame() {
+    state = 'over';
+    beep(320, 0.18, 'sine', 0.05);
+    setTimeout(() => beep(200, 0.3, 'sine', 0.05), 130);
+
+    const isBest = score > best;
+    if (isBest) { best = score; localStorage.setItem(BEST_KEY, String(best)); }
+    bestEl.textContent = best;
+
+    finalScoreEl.textContent = score;
+    bestLineEl.innerHTML = isBest
+      ? '<span class="newbest">★ New personal best</span>'
+      : 'Best ' + best + ' · reached level ' + level;
+    overEl.hidden = false;
+    gridEl.replaceChildren();
+  }
+
+  $('playBtn').addEventListener('click', startGame);
+  $('againBtn').addEventListener('click', startGame);
+
+  $('shareBtn').addEventListener('click', async () => {
+    const text = `🎨 I scored ${score} on Hue Hunt (level ${level}). Think you can spot faster?`;
+    const url = location.href;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: 'Hue Hunt', text, url });
+      } else {
+        await navigator.clipboard.writeText(text + ' ' + url);
+        hintEl.textContent = 'Copied to clipboard!';
+        setTimeout(() => { hintEl.textContent = 'Find the odd tile'; }, 2000);
+      }
+    } catch (_) { /* user dismissed the share sheet */ }
+  });
+
+  // Space / Enter restarts from either overlay.
+  document.addEventListener('keydown', e => {
+    if ((e.key === ' ' || e.key === 'Enter') && state !== 'playing'
+        && !e.target.classList.contains('btn')) {
+      e.preventDefault();
+      startGame();
+    }
+  });
+
+  // Losing the tab shouldn't cost you a run.
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (state === 'playing') { state = 'paused'; }
+    } else if (state === 'paused') {
+      state = 'playing';
+      lastFrame = performance.now();
+      requestAnimationFrame(frame);
+    }
+  });
+
+  document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
+  paintTimer();
+})();
+</script>
+</body>
+</html>
