@@ -46,15 +46,30 @@
   }
   .glp-card:hover { border-color: var(--game-accent-soft); }
   .glp-card-img { position: relative; height: 90px; background-size: cover; background-position: center; }
+  .glp-card-badges {
+    position: absolute; top: 6px; right: 6px;
+    display: flex; gap: 4px; align-items: center;
+  }
+  .glp-card-badges .glp-badge { position: static; }
   .glp-badge {
     position: absolute; top: 6px; padding: 2px 7px; border-radius: 999px;
     font: 600 10px var(--font-family-mono); background: rgba(15,23,42,0.85); color: #cbd5e1;
   }
   .glp-badge.warn { color: var(--text-warning); font-family: var(--font-family-base), sans-serif; left: 6px; }
-  .glp-badge.players { right: 6px; }
+  .glp-badge.mobile {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 3px 5px;
+  }
+  .glp-badge.mobile img { display: block; width: 16px; height: 16px; }
   .glp-card-body { padding: 10px 12px 12px; }
   .glp-card-title { margin: 0 0 4px; font: 700 0.9rem var(--font-family-base); color: #f8fafc; }
   .glp-card-tag { margin: 0; font: 0.78rem/1.4 var(--font-family-base); color: #94a3b8; }
+  .glp-footnote {
+    margin: 8px 0 0; max-width: 640px;
+    font: 0.8rem/1.5 var(--font-family-base); color: #64748b;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .glp-footnote .glp-badge.mobile { position: static; flex: none; }
   .glp-actions { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
   .glp-btn {
     display: block; text-align: center; text-decoration: none; font: 600 0.8rem var(--font-family-base);
@@ -121,7 +136,9 @@
       <div class="glp-grid">
         <a class="glp-card" href="https://galactic-conflict.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/galactic-conflict-bg.png')">
-            <span class="glp-badge players">2-20 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-20 players</span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Galactic Conflict</h3>
@@ -130,7 +147,9 @@
         </a>
         <a class="glp-card" href="https://world-conflict.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/world-conflict-bg.png')">
-            <span class="glp-badge players">2-6 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-6 players</span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">World Conflict</h3>
@@ -139,7 +158,9 @@
         </a>
         <a class="glp-card" href="https://warfront-9e6.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/warfront-bg.png')">
-            <span class="glp-badge players">2-6 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-6 players</span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Warfront</h3>
@@ -149,7 +170,9 @@
         <a class="glp-card" href="https://into-the-singularity.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/into-the-singularity-bg.png')">
             <span class="glp-badge warn">Discord + itch.io</span>
-            <span class="glp-badge players">2-12 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-12 players</span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Into the Singularity</h3>
@@ -164,7 +187,9 @@
       <div class="glp-grid">
         <a class="glp-card" href="https://galactopoly.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/galactopoly-bg.png')">
-            <span class="glp-badge players">2-6 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-6 players</span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Galactopoly</h3>
@@ -173,7 +198,12 @@
         </a>
         <a class="glp-card" href="https://quantum-tic-tac-toe.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/quantum-tic-tac-toe-bg.png')">
-            <span class="glp-badge players">2 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Quantum Tic-tac-toe</h3>
@@ -182,7 +212,12 @@
         </a>
         <a class="glp-card" href="https://capablanca-shogi.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/capablanca-shogi-bg.png')">
-            <span class="glp-badge players">2 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Capablanca Shogi Chess</h3>
@@ -191,7 +226,9 @@
         </a>
         <a class="glp-card" href="https://babble-ay2.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/babble-bg.png')">
-            <span class="glp-badge players">1-6 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-6 players</span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Babble</h3>
@@ -206,7 +243,9 @@
       <div class="glp-grid">
         <a class="glp-card" href="https://fermi-showdown.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/fermi-showdown-bg.png')">
-            <span class="glp-badge players">1-12 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-12 players</span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Fermi Showdown</h3>
@@ -215,7 +254,12 @@
         </a>
         <a class="glp-card" href="https://boggle-10g.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/boggle-bg.png')">
-            <span class="glp-badge players">1-12 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-12 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Word Shake</h3>
@@ -224,7 +268,12 @@
         </a>
         <a class="glp-card" href="https://sudoku-race.pages.dev">
           <div class="glp-card-img" style="background-image: url('../images/games/sudoku-race-bg.png')">
-            <span class="glp-badge players">1-6 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-6 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Sudoku-race</h3>
@@ -233,7 +282,12 @@
         </a>
         <a class="glp-card" href="https://matchwise-arr.pages.dev">
           <div class="glp-card-img" style="background-image: url('../images/games/matchwise-bg.png')">
-            <span class="glp-badge players">1-12 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-12 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Matchwise</h3>
@@ -248,7 +302,12 @@
       <div class="glp-grid">
         <a class="glp-card" href="https://tank-battle-1p8.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/tank-battle-bg.png')">
-            <span class="glp-badge players">2-6 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-6 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Tank Battle</h3>
@@ -257,7 +316,9 @@
         </a>
         <a class="glp-card" href="https://space-war-8ty.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/space-war-bg.png')">
-            <span class="glp-badge players">2-6 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-6 players</span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Space War</h3>
@@ -266,7 +327,12 @@
         </a>
         <a class="glp-card" href="https://snake-5zb.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/snake-bg.png')">
-            <span class="glp-badge players">1-6 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-6 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Snake</h3>
@@ -282,7 +348,9 @@
         <a class="glp-card" href="https://depths-and-dragons.pages.dev/">
           <div class="glp-card-img" style="background-image: url('../images/games/depths-and-dragons-bg.png')">
             <!--span class="glp-badge warn">Requires payment</span-->
-            <span class="glp-badge players">1-6 players</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-6 players</span>
+            </div>
           </div>
           <div class="glp-card-body">
             <h3 class="glp-card-title">Depths &amp; Dragons</h3>
@@ -291,6 +359,13 @@
         </a>
       </div>
     </div>
+
+    <p class="glp-footnote">
+      <span class="glp-badge mobile" aria-hidden="true">
+        <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+      </span>
+      <span>Mobile friendly. These games play particularly well on phones; all games still work on any device.</span>
+    </p>
   </div>
 </div>
 </body>

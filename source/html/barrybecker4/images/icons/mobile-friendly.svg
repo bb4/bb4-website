@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <!-- Phone body -->
+  <rect
+    x="5.5" y="2.5" width="11" height="19" rx="2.4"
+    stroke="#f1f5f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+  />
+  <!-- Speaker slit -->
+  <path d="M9.2 5.2h3.6" stroke="#f1f5f9" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- Home button -->
+  <circle cx="11" cy="18.6" r="1" fill="#f1f5f9"/>
+  <!-- Separate green check badge -->
+  <circle cx="17.6" cy="17.6" r="4.6" fill="#22c55e"/>
+  <path
+    d="M15.5 17.6l1.35 1.35 2.7-2.85"
+    stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
+  />
+</svg>
