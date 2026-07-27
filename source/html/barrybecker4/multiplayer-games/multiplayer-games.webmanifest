@@ -1,7 +1,7 @@
 {
   "name": "Online Games",
   "short_name": "Online Games",
-  "description": "Real-time and turn-based strategy games in the browser.",
+  "description": "Multiplayer browser games you can play with friends — no install required.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
