@@ -5,9 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Online Games – Barry Becker</title>
 <meta name="description" content="Real-time and turn-based strategy games: Galactic Conflict, World Conflict, Galactopoly, Into the Singularity, and more. Play in the browser.">
-<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="icon" type="image/svg+xml" href="../images/icons/multiplayer-games/favicon.svg">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./multiplayer-games.webmanifest">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Online Games">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
   :root {
     --game-accent: #3b82f6;
@@ -83,6 +88,39 @@
   .glp-brand-title { font: 800 1.1rem var(--font-family-base); color: #f8fafc; }
   .glp-brand-sub { font: 0.75rem var(--font-family-base); color: #64748b; }
 
+  .install-banner {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--border-medium);
+    background: rgba(15, 23, 42, 0.98);
+    color: #e2e8f0;
+    font: 600 0.9rem var(--font-family-base);
+  }
+  .install-banner.is-visible { display: flex; }
+  .install-banner p { margin: 0; }
+  .install-banner-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+  .banner-btn {
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--radius-md);
+    font: 600 0.82rem var(--font-family-base);
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .install-btn {
+    display: none;
+    background: var(--game-accent);
+    color: #0f172a;
+  }
+  .install-btn.is-visible { display: inline-block; }
+  .dismiss-btn {
+    background: transparent;
+    border-color: rgba(148, 163, 184, 0.35);
+    color: #e2e8f0;
+  }
+
   @media (max-width: 760px) {
     .glp-shell { flex-direction: column; }
     .glp-sidebar {
@@ -107,6 +145,13 @@
 </style>
 </head>
 <body>
+<aside id="install-banner" class="install-banner" role="status" aria-live="polite" hidden>
+  <p id="install-banner-text">Install as an app</p>
+  <div class="install-banner-actions">
+    <button type="button" id="install-banner-install" class="banner-btn install-btn">Install</button>
+    <button type="button" id="install-banner-dismiss" class="banner-btn dismiss-btn" aria-label="Dismiss install prompt">Not now</button>
+  </div>
+</aside>
 <div class="glp-shell">
   <div class="glp-sidebar">
     <div class="glp-brand-title">Online Games</div>
@@ -368,5 +413,112 @@
     </p>
   </div>
 </div>
+<script>
+(function () {
+  var INSTALL_BANNER_DISMISSED_KEY = 'onlineGamesInstallBannerDismissed';
+  var banner = document.getElementById('install-banner');
+  var bannerText = document.getElementById('install-banner-text');
+  var installBtn = document.getElementById('install-banner-install');
+  var dismissBtn = document.getElementById('install-banner-dismiss');
+  var deferredInstallPrompt = null;
+
+  function isStandaloneMode() {
+    var iOSStandalone = window.navigator.standalone === true;
+    var displayModeStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    var displayModeFullscreen = window.matchMedia('(display-mode: fullscreen)').matches;
+    return iOSStandalone || displayModeStandalone || displayModeFullscreen;
+  }
+
+  function isIosDevice() {
+    var ua = window.navigator.userAgent || '';
+    var platform = window.navigator.platform || '';
+    var touchPoints = window.navigator.maxTouchPoints || 0;
+    var iosUA = /iphone|ipad|ipod/i.test(ua);
+    var iPadDesktopMode = /mac/i.test(platform) && touchPoints > 1;
+    return iosUA || iPadDesktopMode;
+  }
+
+  function isPhoneOrTablet() {
+    var ua = window.navigator.userAgent || '';
+    var platform = window.navigator.platform || '';
+    var touchPoints = window.navigator.maxTouchPoints || 0;
+    var coarse = window.matchMedia('(pointer: coarse)').matches;
+    var noHover = window.matchMedia('(hover: none)').matches;
+    var mobileUA = /iphone|ipad|ipod|android|mobile/i.test(ua);
+    var iPadDesktopMode = /mac/i.test(platform) && touchPoints > 1;
+    return (coarse && noHover) || mobileUA || iPadDesktopMode;
+  }
+
+  function wasDismissed() {
+    try {
+      return window.localStorage.getItem(INSTALL_BANNER_DISMISSED_KEY) === '1';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function shouldShowBanner(hasInstallPrompt) {
+    return !isStandaloneMode() && !wasDismissed() && (isPhoneOrTablet() || hasInstallPrompt);
+  }
+
+  function updateBanner(hasInstallPrompt) {
+    if (!shouldShowBanner(hasInstallPrompt)) {
+      banner.classList.remove('is-visible');
+      banner.hidden = true;
+      return;
+    }
+
+    if (isIosDevice() && !hasInstallPrompt) {
+      bannerText.textContent = 'Install as an app: tap Share, then Add to Home Screen';
+    } else {
+      bannerText.textContent = 'Install as an app';
+    }
+
+    if (hasInstallPrompt) {
+      installBtn.classList.add('is-visible');
+    } else {
+      installBtn.classList.remove('is-visible');
+    }
+
+    banner.hidden = false;
+    banner.classList.add('is-visible');
+  }
+
+  function dismissInstallBanner() {
+    banner.classList.remove('is-visible');
+    banner.hidden = true;
+    try {
+      window.localStorage.setItem(INSTALL_BANNER_DISMISSED_KEY, '1');
+    } catch (e) {
+      // localStorage may be unavailable in private modes.
+    }
+  }
+
+  function installApp() {
+    if (!deferredInstallPrompt) return;
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.finally(function () {
+      deferredInstallPrompt = null;
+      dismissInstallBanner();
+    });
+  }
+
+  dismissBtn.addEventListener('click', dismissInstallBanner);
+  installBtn.addEventListener('click', installApp);
+
+  updateBanner(false);
+
+  window.addEventListener('beforeinstallprompt', function (event) {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    updateBanner(true);
+  });
+
+  window.addEventListener('appinstalled', function () {
+    deferredInstallPrompt = null;
+    dismissInstallBanner();
+  });
+})();
+</script>
 </body>
 </html>
