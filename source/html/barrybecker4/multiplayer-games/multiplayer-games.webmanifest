@@ -2,20 +2,20 @@
   "name": "Online Games",
   "short_name": "Online Games",
   "description": "Real-time and turn-based strategy games in the browser.",
-  "start_url": "./multiplayer-games.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
   "icons": [
     {
-      "src": "../images/icons/multiplayer-games/icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "../images/icons/multiplayer-games/icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

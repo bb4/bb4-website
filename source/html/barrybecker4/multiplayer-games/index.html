@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Games – Barry Becker</title>
+<meta name="description" content="Real-time and turn-based strategy games: Galactic Conflict, World Conflict, Galactopoly, Into the Singularity, and more. Play in the browser.">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./multiplayer-games.webmanifest">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Online Games">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+  :root {
+    --game-accent: #3b82f6;
+    --game-accent-soft: #60a5fa;
+    --bg-page: #0f172a;
+    --bg-panel-dark: rgba(15, 23, 42, 0.8);
+    --bg-panel-light: rgba(30, 41, 59, 0.6);
+    --border-medium: #374151;
+    --border-dark: #1f2937;
+    --text-warning: #fbbf24;
+    --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-family-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    --radius-md: 6px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg-page); font-family: var(--font-family-base), sans-serif; }
+  a { color: inherit; }
+
+  .glp-shell { display: flex; min-height: 100vh; }
+  .glp-sidebar {
+    width: 220px; flex: none; background: var(--bg-panel-dark);
+    border-right: 1px solid var(--border-medium); padding: 28px 20px;
+    position: sticky; top: 0; align-self: flex-start; height: 100vh; overflow-y: auto;
+  }
+  .glp-navlist { display: flex; flex-direction: column; }
+  .glp-navlink {
+    font: 600 0.8rem var(--font-family-base); color: #93c5fd; padding: 8px 0;
+    border-bottom: 1px solid var(--border-dark); text-decoration: none; display: block;
+  }
+  .glp-main { flex: 1; padding: 32px 36px; min-width: 0; }
+  .glp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 14px; }
+  .glp-card {
+    text-decoration: none; border-radius: var(--radius-md); overflow: hidden;
+    border: 1px solid var(--border-medium); background: var(--bg-panel-light);
+    display: block; transition: border-color .2s;
+  }
+  .glp-card:hover { border-color: var(--game-accent-soft); }
+  .glp-card-img { position: relative; height: 90px; background-size: cover; background-position: center; }
+  .glp-card-badges {
+    position: absolute; top: 6px; right: 6px;
+    display: flex; gap: 4px; align-items: center;
+  }
+  .glp-card-badges .glp-badge { position: static; }
+  .glp-badge {
+    position: absolute; top: 6px; padding: 2px 7px; border-radius: 999px;
+    font: 600 10px var(--font-family-mono); background: rgba(15,23,42,0.85); color: #cbd5e1;
+  }
+  .glp-badge.warn { color: var(--text-warning); font-family: var(--font-family-base), sans-serif; left: 6px; }
+  .glp-badge.mobile {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 3px 5px;
+  }
+  .glp-badge.mobile img { display: block; width: 16px; height: 16px; }
+  .glp-card-body { padding: 10px 12px 12px; }
+  .glp-card-title { margin: 0 0 4px; font: 700 0.9rem var(--font-family-base); color: #f8fafc; }
+  .glp-card-tag { margin: 0; font: 0.78rem/1.4 var(--font-family-base); color: #94a3b8; }
+  .glp-footnote {
+    margin: 8px 0 0; max-width: 640px;
+    font: 0.8rem/1.5 var(--font-family-base); color: #64748b;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .glp-footnote .glp-badge.mobile { position: static; flex: none; }
+  .glp-actions { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
+  .glp-btn {
+    display: block; text-align: center; text-decoration: none; font: 600 0.8rem var(--font-family-base);
+    color: #cbd5e1; border: 1px solid var(--border-medium); border-radius: var(--radius-md);
+    padding: 8px 10px; transition: border-color .2s, color .2s;
+  }
+  .glp-btn:hover { color: #fff; border-color: var(--game-accent-soft); }
+  .glp-cat-title { font: 700 1.1rem var(--font-family-base); color: #f8fafc; margin: 0 0 14px; }
+  .glp-intro { font: 0.95rem/1.5 var(--font-family-base); color: #94a3b8; margin: 0 0 28px; max-width: 640px; }
+  .glp-cat { margin-bottom: 32px; scroll-margin-top: 16px; }
+  .glp-brand-title { font: 800 1.1rem var(--font-family-base); color: #f8fafc; }
+  .glp-brand-sub { font: 0.75rem var(--font-family-base); color: #64748b; }
+
+  .install-banner {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--border-medium);
+    background: rgba(15, 23, 42, 0.98);
+    color: #e2e8f0;
+    font: 600 0.9rem var(--font-family-base);
+  }
+  .install-banner.is-visible { display: flex; }
+  .install-banner p { margin: 0; }
+  .install-banner-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+  .banner-btn {
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--radius-md);
+    font: 600 0.82rem var(--font-family-base);
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .install-btn {
+    display: none;
+    background: var(--game-accent);
+    color: #0f172a;
+  }
+  .install-btn.is-visible { display: inline-block; }
+  .dismiss-btn {
+    background: transparent;
+    border-color: rgba(148, 163, 184, 0.35);
+    color: #e2e8f0;
+  }
+
+  @media (max-width: 760px) {
+    .glp-shell { flex-direction: column; }
+    .glp-sidebar {
+      width: 100%; height: auto; position: static; padding: 16px 16px 12px;
+      border-right: none; border-bottom: 1px solid var(--border-medium);
+    }
+    .glp-navlist {
+      flex-direction: row; overflow-x: auto; gap: 8px;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .glp-navlist::-webkit-scrollbar { display: none; }
+    .glp-navlink {
+      flex: none; border: 1px solid var(--border-medium);
+      border-radius: 999px; padding: 8px 14px; white-space: nowrap;
+    }
+    .glp-actions { flex-direction: row; margin-top: 14px; }
+    .glp-actions > * { flex: 1; }
+    .glp-main { padding: 20px 16px 40px; }
+    .glp-grid { grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 10px; }
+    .glp-card-img { height: 76px; }
+  }
+</style>
+</head>
+<body>
+<aside id="install-banner" class="install-banner" role="status" aria-live="polite" hidden>
+  <p id="install-banner-text">Install as an app</p>
+  <div class="install-banner-actions">
+    <button type="button" id="install-banner-install" class="banner-btn install-btn">Install</button>
+    <button type="button" id="install-banner-dismiss" class="banner-btn dismiss-btn" aria-label="Dismiss install prompt">Not now</button>
+  </div>
+</aside>
+<div class="glp-shell">
+  <div class="glp-sidebar">
+    <div class="glp-brand-title">Online Games</div>
+    <div class="glp-brand-sub">by Barry Becker</div>
+    <nav class="glp-navlist" style="margin-top: 16px">
+      <a class="glp-navlink" href="#cat-strategy">Strategy &amp; Conquest</a>
+      <a class="glp-navlink" href="#cat-board">Board</a>
+      <a class="glp-navlink" href="#cat-party">Party &amp; Puzzle</a>
+      <a class="glp-navlink" href="#cat-arcade">Arcade Action</a>
+      <a class="glp-navlink" href="#cat-rpg">Adventure &amp; RPG</a>
+    </nav>
+    <div class="glp-actions">
+      <a class="glp-btn" href="https://www.youtube.com/@BarryBecker4">YouTube channel</a>
+      <a class="glp-btn" href="https://usage-stats.pages.dev/">Usage stats</a>
+    </div>
+  </div>
+
+  <div class="glp-main">
+    <p class="glp-intro">
+      Real-time and turn-based strategy in the browser.
+      Built with Svelte, deployed on Cloudflare.
+      Some are variations on familiar favorites, others are completely from my imagination.
+    </p>
+
+    <div class="glp-cat" id="cat-strategy">
+      <h2 class="glp-cat-title">Strategy &amp; Conquest</h2>
+      <div class="glp-grid">
+        <a class="glp-card" href="https://galactic-conflict.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/galactic-conflict-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-20 players</span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Galactic Conflict</h3>
+            <p class="glp-card-tag">Command a fleet and battle for the planets in real time.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://world-conflict.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/world-conflict-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-6 players</span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">World Conflict</h3>
+            <p class="glp-card-tag">A turn-based, Risk-like game of conquest.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://warfront-9e6.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/warfront-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-6 players</span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Warfront</h3>
+            <p class="glp-card-tag">A fast-paced real-time strategy game of battling factions.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://into-the-singularity.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/into-the-singularity-bg.png')">
+            <span class="glp-badge warn">Discord + itch.io</span>
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-12 players</span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Into the Singularity</h3>
+            <p class="glp-card-tag">Steer humanity through the future in this grand strategy simulation.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="glp-cat" id="cat-board">
+      <h2 class="glp-cat-title">Board</h2>
+      <div class="glp-grid">
+        <a class="glp-card" href="https://galactopoly.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/galactopoly-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-6 players</span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Galactopoly</h3>
+            <p class="glp-card-tag">That old family favorite, reimagined with a galaxy theme.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://quantum-tic-tac-toe.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/quantum-tic-tac-toe-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Quantum Tic-tac-toe</h3>
+            <p class="glp-card-tag">A mind-bending quantum take on tic-tac-toe.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://capablanca-shogi.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/capablanca-shogi-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Capablanca Shogi Chess</h3>
+            <p class="glp-card-tag">A merge of Shogi with traditional Capablanca chess.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://babble-ay2.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/babble-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-6 players</span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Babble</h3>
+            <p class="glp-card-tag">A Scrabble-inspired word game with neon tiles.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="glp-cat" id="cat-party">
+      <h2 class="glp-cat-title">Party &amp; Puzzle</h2>
+      <div class="glp-grid">
+        <a class="glp-card" href="https://fermi-showdown.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/fermi-showdown-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-12 players</span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Fermi Showdown</h3>
+            <p class="glp-card-tag">Test your estimation skills against others.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://boggle-10g.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/boggle-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-12 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Word Shake</h3>
+            <p class="glp-card-tag">A multiplayer word search game.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://sudoku-race.pages.dev">
+          <div class="glp-card-img" style="background-image: url('../images/games/sudoku-race-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-6 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Sudoku-race</h3>
+            <p class="glp-card-tag">Collaborative or competitive Sudoku puzzles.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://matchwise-arr.pages.dev">
+          <div class="glp-card-img" style="background-image: url('../images/games/matchwise-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-12 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Matchwise</h3>
+            <p class="glp-card-tag">Find triples where every trait is all the same or all different.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="glp-cat" id="cat-arcade">
+      <h2 class="glp-cat-title">Arcade Action</h2>
+      <div class="glp-grid">
+        <a class="glp-card" href="https://tank-battle-1p8.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/tank-battle-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-6 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Tank Battle</h3>
+            <p class="glp-card-tag">Tank-on-tank combat, inspired by the old Atari Combat.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://space-war-8ty.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/space-war-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">2-6 players</span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Space War</h3>
+            <p class="glp-card-tag">Duel in zero-g, inspired by Spacewar from the '80s.</p>
+          </div>
+        </a>
+        <a class="glp-card" href="https://snake-5zb.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/snake-bg.png')">
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-6 players</span>
+              <span class="glp-badge mobile" title="Mobile friendly" aria-label="Mobile friendly">
+                <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+              </span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Snake</h3>
+            <p class="glp-card-tag">Eat, grow, and be the last snake alive.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="glp-cat" id="cat-rpg">
+      <h2 class="glp-cat-title">Adventure &amp; RPG</h2>
+      <div class="glp-grid">
+        <a class="glp-card" href="https://depths-and-dragons.pages.dev/">
+          <div class="glp-card-img" style="background-image: url('../images/games/depths-and-dragons-bg.png')">
+            <!--span class="glp-badge warn">Requires payment</span-->
+            <div class="glp-card-badges">
+              <span class="glp-badge players">1-6 players</span>
+            </div>
+          </div>
+          <div class="glp-card-body">
+            <h3 class="glp-card-title">Depths &amp; Dragons</h3>
+            <p class="glp-card-tag">Delve a 5e dungeon together with an AI dungeon master.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <p class="glp-footnote">
+      <span class="glp-badge mobile" aria-hidden="true">
+        <img src="../images/icons/mobile-friendly.svg" alt="" width="16" height="16">
+      </span>
+      <span>Mobile friendly. These games play particularly well on phones; all games still work on any device.</span>
+    </p>
+  </div>
+</div>
+<script>
+(function () {
+  var INSTALL_BANNER_DISMISSED_KEY = 'onlineGamesInstallBannerDismissed';
+  var banner = document.getElementById('install-banner');
+  var bannerText = document.getElementById('install-banner-text');
+  var installBtn = document.getElementById('install-banner-install');
+  var dismissBtn = document.getElementById('install-banner-dismiss');
+  var deferredInstallPrompt = null;
+
+  function isStandaloneMode() {
+    var iOSStandalone = window.navigator.standalone === true;
+    var displayModeStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    var displayModeFullscreen = window.matchMedia('(display-mode: fullscreen)').matches;
+    return iOSStandalone || displayModeStandalone || displayModeFullscreen;
+  }
+
+  function isIosDevice() {
+    var ua = window.navigator.userAgent || '';
+    var platform = window.navigator.platform || '';
+    var touchPoints = window.navigator.maxTouchPoints || 0;
+    var iosUA = /iphone|ipad|ipod/i.test(ua);
+    var iPadDesktopMode = /mac/i.test(platform) && touchPoints > 1;
+    return iosUA || iPadDesktopMode;
+  }
+
+  function isPhoneOrTablet() {
+    var ua = window.navigator.userAgent || '';
+    var platform = window.navigator.platform || '';
+    var touchPoints = window.navigator.maxTouchPoints || 0;
+    var coarse = window.matchMedia('(pointer: coarse)').matches;
+    var noHover = window.matchMedia('(hover: none)').matches;
+    var mobileUA = /iphone|ipad|ipod|android|mobile/i.test(ua);
+    var iPadDesktopMode = /mac/i.test(platform) && touchPoints > 1;
+    return (coarse && noHover) || mobileUA || iPadDesktopMode;
+  }
+
+  function wasDismissed() {
+    try {
+      return window.localStorage.getItem(INSTALL_BANNER_DISMISSED_KEY) === '1';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function shouldShowBanner(hasInstallPrompt) {
+    return !isStandaloneMode() && !wasDismissed() && (isPhoneOrTablet() || hasInstallPrompt);
+  }
+
+  function updateBanner(hasInstallPrompt) {
+    if (!shouldShowBanner(hasInstallPrompt)) {
+      banner.classList.remove('is-visible');
+      banner.hidden = true;
+      return;
+    }
+
+    if (isIosDevice() && !hasInstallPrompt) {
+      bannerText.textContent = 'Install as an app: tap Share, then Add to Home Screen';
+    } else {
+      bannerText.textContent = 'Install as an app';
+    }
+
+    if (hasInstallPrompt) {
+      installBtn.classList.add('is-visible');
+    } else {
+      installBtn.classList.remove('is-visible');
+    }
+
+    banner.hidden = false;
+    banner.classList.add('is-visible');
+  }
+
+  function dismissInstallBanner() {
+    banner.classList.remove('is-visible');
+    banner.hidden = true;
+    try {
+      window.localStorage.setItem(INSTALL_BANNER_DISMISSED_KEY, '1');
+    } catch (e) {
+      // localStorage may be unavailable in private modes.
+    }
+  }
+
+  function installApp() {
+    if (!deferredInstallPrompt) return;
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.finally(function () {
+      deferredInstallPrompt = null;
+      dismissInstallBanner();
+    });
+  }
+
+  dismissBtn.addEventListener('click', dismissInstallBanner);
+  installBtn.addEventListener('click', installApp);
+
+  updateBanner(false);
+
+  window.addEventListener('beforeinstallprompt', function (event) {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    updateBanner(true);
+  });
+
+  window.addEventListener('appinstalled', function () {
+    deferredInstallPrompt = null;
+    dismissInstallBanner();
+  });
+})();
+</script>
+</body>
+</html>

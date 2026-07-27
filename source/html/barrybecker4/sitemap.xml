@@ -68,6 +68,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://barrybecker4.org/multiplayer-games/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://barrybecker4.org/programming-projects/zen_garden/zen_garden.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
