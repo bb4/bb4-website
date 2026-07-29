@@ -28,22 +28,22 @@ table.fraction {
 }
 
 .prob-diseased-result {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: bold;
     padding: 0 5px;
     border-radius: 4px;
-    transition: color 0.25s ease, background-color 0.2s ease;
+    background: rgba(0,0,0,0.05);
 }
 
 .prob-diseased-worry {
-    font-size: 18px;
-    padding: 10px 0;
-    margin-left: 0;
+    font-size: 24px;
+    padding: 10px;
+    margin-left: 15px;
     font-style: italic;
     font-weight: 500;
     border-radius: 4px;
-    display: block;
-    transition: color 0.25s ease;
+    display: inline-block;
+    transition: background-color 0.3s ease;
 }
 
 .bayesian-formula {
@@ -55,12 +55,4 @@ table.fraction {
     padding: 2px 5px;
     border-radius: 3px;
     background: rgba(0,0,0,0.05);
-    transition: background-color 0.2s ease;
-}
-
-.prob-positive.highlighted,
-.prob-diseased.highlighted,
-.prob-pos-given-diseased.highlighted,
-.prob-diseased-result.highlighted {
-    background-color: rgba(0, 0, 0, 0.12);
 }

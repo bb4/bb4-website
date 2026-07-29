@@ -13,43 +13,17 @@
 
 .link {
     fill: none;
-    transition: stroke-opacity 0.3s ease;
-    cursor: pointer;
-}
-
-.sankey-tooltip {
-    position: absolute;
-    background: rgba(50, 50, 50, 0.9);
-    color: #fff;
-    padding: 10px;
-    border-radius: 4px;
     pointer-events: none;
-    max-width: 250px;
-    z-index: 1000;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    font-size: 14px;
-    line-height: 1.4;
+    transition: stroke-opacity 0.3s ease;
 }
 
-.sankey-controls {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 5px;
-}
-
-.sankey-button {
-    background: rgba(255,255,255,0.8);
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 5px 10px;
+.link-hit {
+    fill: none;
+    stroke: transparent;
     cursor: pointer;
-    font-size: 12px;
-    transition: background 0.2s ease;
 }
 
-.sankey-button:hover {
-    background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+.link-outline {
+    fill: none;
+    pointer-events: none;
 }

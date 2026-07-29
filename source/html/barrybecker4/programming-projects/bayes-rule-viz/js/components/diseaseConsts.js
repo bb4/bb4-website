@@ -1,38 +1,55 @@
-
-const DISEASED_COLOR = "#d32f2f";        // More accessible red
-const HEALTHY_COLOR = "#388e3c";         // More accessible green
-const POSITIVE_COLOR = "#f57c00";        // Amber for positive
-const TEST_NEG_HEALTHY_COLOR = "#4caf50"; // Lighter green
-const TEST_NEG_DISEASED_COLOR = "#e57373"; // Lighter red
+const DISEASED_COLOR = "#d32f2f";
+const HEALTHY_COLOR = "#388e3c";
+const POSITIVE_COLOR = "#1976d2";
+const TEST_NEG_COLOR = "#9e9e9e";
+/** Shared palette for the four test outcomes (legend, Sankey, Venn). */
+const TRUE_POSITIVE_COLOR = "#1976d2";
+const FALSE_POSITIVE_COLOR = "#90caf9";
+const FALSE_NEGATIVE_COLOR = "#d32f2f";
+const FALSE_NEGATIVE_OUTLINE = "#d32f2f";
+/** Same light green as the Venn whole-population / true-negative area. */
+const WHOLE_POPULATION_COLOR = "#a5d6a7";
+const TRUE_NEGATIVE_COLOR = WHOLE_POPULATION_COLOR;
 
 const DISEASED = "diseased";
 const HEALTHY = "healthy";
-const TEST_NEG_DISEASED = "test-negative-diseased";
-const TEST_NEG_HEALTHY = "test-negative-healthy";
 const TEST_POS = "test-positive";
+const TEST_NEG = "test-negative";
+const WHOLE_POPULATION = "whole-population";
 
-// The 4 interesting intersection regions
-const HEALTHY_TEST_NEG = HEALTHY + "--" + TEST_NEG_HEALTHY;
 const DISEASED_TEST_POS = DISEASED + "--" + TEST_POS;
-const DISEASED_TEST_NEG = DISEASED + "--" + TEST_NEG_DISEASED;
 const HEALTHY_TEST_POS = HEALTHY + "--" + TEST_POS;
+const DISEASED_TEST_NEG = DISEASED + "--" + TEST_NEG;
+const HEALTHY_TEST_NEG = HEALTHY + "--" + TEST_NEG;
 
-export default  {
+/** Probability-term highlight IDs (labels / formula only — not diagram outcomes). */
+const PROB_D = "prob-d";
+const PROB_D_GIVEN_POS = "prob-d-given-pos";
+const PROB_POS_GIVEN_D = "prob-pos-given-d";
+const PROB_POS = "prob-pos";
+const PROB_NEG_GIVEN_H = "prob-neg-given-h";
+
+export default {
     DISEASED, HEALTHY,
-    TEST_NEG_DISEASED, TEST_NEG_HEALTHY, TEST_POS,
-    HEALTHY_TEST_NEG, DISEASED_TEST_POS, DISEASED_TEST_NEG, HEALTHY_TEST_POS,
+    TEST_POS, TEST_NEG, WHOLE_POPULATION,
+    DISEASED_TEST_POS, HEALTHY_TEST_POS, DISEASED_TEST_NEG, HEALTHY_TEST_NEG,
+    PROB_D, PROB_D_GIVEN_POS, PROB_POS_GIVEN_D, PROB_POS, PROB_NEG_GIVEN_H,
     NODES: [
         { "node": 0, "id": DISEASED, "name": "Diseased" },
         { "node": 1, "id": HEALTHY, "name": "Healthy" },
-        { "node": 2, "id": TEST_NEG_DISEASED, "name": "Test negative, but infected!" },
-        { "node": 3, "id": TEST_POS, "name": "Test positive for the Disease" },
-        { "node": 4, "id": TEST_NEG_HEALTHY, "name": "Test negative and Healthy" }
+        { "node": 2, "id": TEST_POS, "name": "Test positive" },
+        { "node": 3, "id": TEST_NEG, "name": "Test negative" },
     ],
     POSITIVE_COLOR,
     HEALTHY_COLOR,
     DISEASED_COLOR,
-    TEST_NEG_HEALTHY_COLOR,
-    TEST_NEG_DISEASED_COLOR,
+    TEST_NEG_COLOR,
+    TRUE_POSITIVE_COLOR,
+    FALSE_POSITIVE_COLOR,
+    TRUE_NEGATIVE_COLOR,
+    FALSE_NEGATIVE_COLOR,
+    FALSE_NEGATIVE_OUTLINE,
+    WHOLE_POPULATION_COLOR,
 
     format,
 }

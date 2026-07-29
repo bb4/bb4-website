@@ -1,45 +1,42 @@
 .ui-slider-horizontal {
-    height: 4px;
+    height: 8px;
     width: 100%;
-    max-width: none;
-    border-radius: 2px;
-    background: #bbdefb;
+    max-width: 420px;
+    border-radius: 4px;
+    background: #e0e0e0;
     border: none;
-    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .ui-slider .ui-slider-handle {
     height: 18px;
     width: 18px;
-    top: -7px;
-    margin-left: -9px;
+    top: -5px;
     border-radius: 50%;
-    background: #1976d2;
-    border: 2px solid #fff;
+    background: #4285f4;
+    border: none;
     cursor: pointer;
-    box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.22);
-    transition: background 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: background 0.2s ease;
 }
 
 .ui-slider .ui-slider-handle:hover,
 .ui-slider .ui-slider-handle:focus {
-    background: #1565c0;
+    background: #3367d6;
     outline: none;
-    box-shadow: 0 0 0 5px rgba(25, 118, 210, 0.3);
 }
 
 .slider {
-    float: none;
-    width: 100%;
-    margin: 0;
-    clear: both;
+    float: right;
+    margin-left: 15px;
 }
 
 .tooltip {
     position: absolute;
     z-index: 1020;
     display: block;
-    padding: 0;
+    padding: 0px;
     font-size: 12px;
     margin-top: -6px;
     bottom: 120%;
@@ -67,7 +64,7 @@
 .tooltip-inner {
     max-width: 200px;
     padding: 8px 12px;
-    color: #1976d2;
+    color: #333;
     text-align: center;
     text-decoration: none;
     background-color: #ffffff;

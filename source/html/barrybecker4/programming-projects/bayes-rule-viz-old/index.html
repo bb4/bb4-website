@@ -1,8 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2VRHF9NHLD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2VRHF9NHLD');
+</script>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Disease Testing</title>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="lib/jquery-ui-1.11.4.min.css">
@@ -30,7 +40,7 @@
 
     <body>
         <div class="container" id="app">
-            <introduction-content :total-population="100000"></introduction-content>
+            <introduction-content></introduction-content>
             <disease-simulation 
                 :total-population="100000" 
                 :initial-pct-diseased="1" 

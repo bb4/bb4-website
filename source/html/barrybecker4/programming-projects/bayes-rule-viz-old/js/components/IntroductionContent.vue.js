@@ -13,14 +13,14 @@ export default {
                     be surprisingly different from what you'd expect.
                 </p>
    
-                <p>We're looking at a population of {{totalPopulation.toLocaleString()}} people.
+                <p>In this simulation, we're looking at a population of <span id="total-population"></span> people.
                     Let <span class="diseased">D</span> = <span class="diseased">Diseased</span>
                     and <span class="healthy">H</span> = <span class="healthy">Healthy</span>.
                 </p>
+                
+                <p>Use the sliders below to adjust the disease prevalence and test accuracy to see how
+                   these factors affect your probability of actually having the disease after a positive test.
+                </p>
             </div>
        </div>`,
-
-    props: {
-        totalPopulation: { type: Number, required: true },
-    },
-}
+ }

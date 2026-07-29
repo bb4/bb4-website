@@ -14,40 +14,84 @@ body {
 
 .diseased {
     font-weight: bold;
-    color: #d32f2f; /* Darker red */
+    color: #d32f2f;
 }
 
 .healthy {
     font-weight: bold;
-    color: #388e3c; /* Darker green */
+    color: #388e3c;
 }
 
 .positive {
     font-weight: bold;
-    color: #ffa000; /* Amber */
+    color: #1976d2;
+}
+
+.negative {
+    font-weight: bold;
+    color: #9e9e9e;
+}
+
+.prob-term {
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 1px 3px;
+    transition: background-color 0.2s ease;
+}
+
+.prob-term.highlighted {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .inputs {
     width: 100%;
-    max-width: 830px;
     margin-bottom: 30px;
     background: #fff;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 20px;
+    padding: 22px 24px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-sizing: border-box;
 }
 
 .input-line {
-    margin-bottom: 20px;
+    margin-bottom: 28px;
+}
+
+.input-line:last-child {
+    margin-bottom: 4px;
+}
+
+.input-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    gap: 12px;
+}
+
+.input-header label {
+    font-weight: 700;
+    color: #222;
+    font-size: 15px;
+}
+
+.slider-value {
+    font-weight: 700;
+    font-size: 15px;
+    color: #1976d2;
+    white-space: nowrap;
 }
 
 #bayes-rule-view {
     width: 100%;
     padding: 20px;
     background: #fff;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     margin-bottom: 30px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-sizing: border-box;
 }
 
 .visualization-container {
@@ -62,36 +106,151 @@ body {
     min-width: 300px;
     height: 600px;
     background: #fff;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 15px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chart-panel-title {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+    flex-shrink: 0;
+}
+
+.chart-svg-wrap {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.sankey-legend {
+    flex-shrink: 0;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.sankey-legend-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin-left: -4px;
+    margin-right: -4px;
+    transition: background-color 0.2s ease;
+}
+
+.sankey-legend-row.highlighted {
+    background-color: rgba(0, 0, 0, 0.06);
+    font-weight: 500;
+}
+
+.sankey-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+    top: 1px;
+}
+
+.sankey-legend-row.alert {
+    color: #d32f2f;
+}
+
+.sankey-legend-row.alert strong {
+    color: #d32f2f;
+}
+
+.venn-enlarge-note {
+    flex-shrink: 0;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
 }
 
 #notes {
     width: 100%;
     background: #fff;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 20px;
     margin-top: 20px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-sizing: border-box;
+}
+
+#notes h3 {
+    margin-top: 0;
+}
+
+.notes-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 40px;
+}
+
+.note-section h4 {
+    margin-top: 0;
+}
+
+.note-section ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+.note-section li {
+    margin-bottom: 8px;
 }
 
 .big {
     font-size: 24px;
 }
 
-/* Media queries for smaller screens */
+.viz-tooltip {
+    position: fixed;
+    background: rgba(20, 20, 20, 0.92);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    pointer-events: none;
+    max-width: 280px;
+    z-index: 10000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    font-size: 13px;
+    line-height: 1.4;
+    white-space: pre-line;
+}
+
 @media (max-width: 900px) {
     .visualization-container {
         flex-direction: column;
     }
-    
+
     #sankey-view, #venn-diagram-view {
         width: 100%;
-        height: 500px;
+        height: 560px;
     }
-    
+
     .inputs {
         width: 100%;
+    }
+
+    .notes-content {
+        grid-template-columns: 1fr;
     }
 }
