@@ -50,34 +50,67 @@ function overlapAnchor(cx1, cy1, r1, cx2, cy2, r2) {
 
 /**
  * Place the permanent overlap callout so it stays on-screen and clear of the Diseased label.
+ * When the diseased circle is tiny and near the panel center (rare disease + accurate test),
+ * vertical room above center is scarce — allow the callout into the Tested Positive disk below.
  */
 function placeOverlapCallout({
-    chartWidth, anchor, centerX, chartHeightD2, diseasedCenterY,
+    chartWidth, chartHeight, anchor, centerX, chartHeightD2, diseasedCenterY,
     diseasedRad, diseasedTop, line1,
 }) {
     const textWidth = Math.max(line1.length * CALLOUT_CHAR_WIDTH, 120);
+    const calloutHeight = 34; // two tspans (~1.2em apart)
+    const diseasedLabelWidth = 72;
     const maxLabelX = chartWidth - PANEL_PAD - textWidth;
     const diseasedLabelX = centerX + 30;
-    const diseasedLabelY = Math.max(PANEL_PAD + 12, diseasedTop - 5);
+    let diseasedLabelY = Math.max(PANEL_PAD + 12, diseasedTop - 5);
 
     let labelX = Math.max(anchor.x + 18, centerX + Math.min(diseasedRad, 80) + 20);
     let labelY = Math.min(diseasedCenterY, chartHeightD2) - 28;
 
-    // Prefer sitting below the Diseased label when they would collide
-    if (labelY < diseasedLabelY + 22 && labelX < diseasedLabelX + 90) {
-        labelY = diseasedLabelY + 26;
+    const overlapsDiseased = function (x, y) {
+        return y < diseasedLabelY + 16
+            && y + calloutHeight > diseasedLabelY - 4
+            && x < diseasedLabelX + diseasedLabelWidth
+            && x + textWidth > diseasedLabelX;
+    };
+
+    if (overlapsDiseased(labelX, labelY)) {
+        // Prefer below Diseased — plenty of room inside the positive circle
+        labelY = diseasedLabelY + 22;
+        if (labelY + calloutHeight > chartHeight - PANEL_PAD) {
+            // No room below: try above, nudging Diseased down if needed
+            const aboveY = PANEL_PAD + 18;
+            if (aboveY + calloutHeight + 8 <= diseasedLabelY) {
+                labelY = aboveY;
+            } else {
+                diseasedLabelY = Math.min(
+                    diseasedLabelY + calloutHeight + 10,
+                    Math.max(diseasedTop + 14, chartHeightD2)
+                );
+                labelY = PANEL_PAD + 18;
+            }
+        }
     }
 
-    labelY = Math.max(PANEL_PAD + 18, Math.min(labelY, chartHeightD2 - 24));
+    // Keep on-screen; do not clamp to mid-panel — that re-collides with Diseased when centered
+    labelY = Math.max(PANEL_PAD + 18, Math.min(labelY, chartHeight - PANEL_PAD - calloutHeight));
     labelX = Math.min(labelX, maxLabelX);
 
     // If still no room on the right, park the callout to the left of the diseased circle
     if (labelX < PANEL_PAD + 8 || labelX + textWidth > chartWidth - PANEL_PAD) {
         labelX = Math.max(PANEL_PAD, Math.min(centerX - textWidth - 12, maxLabelX));
         labelY = Math.max(PANEL_PAD + 18, diseasedTop + 8);
+        if (overlapsDiseased(labelX, labelY)) {
+            labelY = diseasedLabelY + 22;
+        }
     }
 
     labelX = Math.max(PANEL_PAD, Math.min(labelX, maxLabelX));
+
+    // Final guard if clamps nudged us back onto Diseased
+    if (overlapsDiseased(labelX, labelY)) {
+        labelY = Math.min(diseasedLabelY + 22, chartHeight - PANEL_PAD - calloutHeight);
+    }
 
     return { labelX, labelY, diseasedLabelX, diseasedLabelY };
 }
@@ -184,7 +217,7 @@ export function applyVennLayout(svg, layout, chartHeight) {
     const {
         labelX, labelY, diseasedLabelX, diseasedLabelY,
     } = placeOverlapCallout({
-        chartWidth, anchor, centerX, chartHeightD2, diseasedCenterY,
+        chartWidth, chartHeight, anchor, centerX, chartHeightD2, diseasedCenterY,
         diseasedRad, diseasedTop, line1,
     });
 

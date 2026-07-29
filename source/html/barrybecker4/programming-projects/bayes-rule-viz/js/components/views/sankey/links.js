@@ -1,5 +1,5 @@
 import { getLinkId } from './colorScale.js'
-import { flowStyleFor } from './flowStyles.js'
+import { flowStyleFor, shouldShowDashedOutline } from './flowStyles.js'
 import floatingTooltip from '../floatingTooltip.js'
 
 /** Minimum stroke width for pointer hit targets on thin flows (e.g. false negatives). */
@@ -57,35 +57,6 @@ export function addLinks(linksEl, sankey, graphLinks, handlers) {
     const path = sankey.link();
     const hover = linkHoverHandlers(handlers);
 
-    // Dashed red underlay for false-negative outline
-    const outlines = linksEl.selectAll(".link-outline").data(
-        graphLinks.filter(function (d) {
-            return !!flowStyleFor(getLinkId(d)).dashedOutline;
-        }),
-        getLinkId
-    );
-
-    outlines.enter()
-        .append("path")
-        .attr("class", function (d) { return "link-outline " + getLinkId(d); })
-        .style("fill", "none")
-        .style("pointer-events", "none");
-
-    outlines.exit().remove();
-
-    outlines
-        .attr("d", path)
-        .style("stroke", function (d) {
-            return flowStyleFor(getLinkId(d)).dashedOutline.color;
-        })
-        .style("stroke-width", function (d) {
-            return Math.max(0, d.dy) + 2.5;
-        })
-        .style("stroke-dasharray", function (d) {
-            return flowStyleFor(getLinkId(d)).dashedOutline.dasharray;
-        })
-        .style("stroke-opacity", 0.9);
-
     const links = linksEl.selectAll(".link").data(graphLinks, getLinkId);
 
     links.enter()
@@ -111,6 +82,38 @@ export function addLinks(linksEl, sankey, graphLinks, handlers) {
             return b.dy - a.dy;
         });
 
+    // Dashed outline after solids so thin flows stay visible on top
+    // (always for false negatives; for true positives only when too thin)
+    const outlines = linksEl.selectAll(".link-outline").data(
+        graphLinks.filter(shouldShowDashedOutline),
+        getLinkId
+    );
+
+    outlines.enter()
+        .append("path")
+        .attr("class", function (d) { return "link-outline " + getLinkId(d); })
+        .style("fill", "none")
+        .style("pointer-events", "none");
+
+    outlines.exit().remove();
+
+    outlines
+        .attr("d", path)
+        .style("stroke", function (d) {
+            return flowStyleFor(getLinkId(d)).dashedOutline.color;
+        })
+        .style("stroke-width", function (d) {
+            return Math.max(0, d.dy) + 2.5;
+        })
+        .style("stroke-dasharray", function (d) {
+            return flowStyleFor(getLinkId(d)).dashedOutline.dasharray;
+        })
+        .style("stroke-opacity", 0.9)
+        // Raise outlines above solid ribbons in paint order
+        .each(function () {
+            this.parentNode.appendChild(this);
+        });
+
     // Wider transparent stroke so thin flows (esp. false negatives) are hoverable
     const hits = linksEl.selectAll(".link-hit").data(graphLinks, getLinkId);
 
@@ -133,5 +136,8 @@ export function addLinks(linksEl, sankey, graphLinks, handlers) {
         // Thin flows on top so their hit area is not stolen by neighbors
         .sort(function (a, b) {
             return a.dy - b.dy;
+        })
+        .each(function () {
+            this.parentNode.appendChild(this);
         });
 }

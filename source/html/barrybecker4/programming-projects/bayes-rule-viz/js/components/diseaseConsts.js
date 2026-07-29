@@ -4,6 +4,7 @@ const POSITIVE_COLOR = "#1976d2";
 const TEST_NEG_COLOR = "#9e9e9e";
 /** Shared palette for the four test outcomes (legend, Sankey, Venn). */
 const TRUE_POSITIVE_COLOR = "#1976d2";
+const TRUE_POSITIVE_OUTLINE = "#1976d2";
 const FALSE_POSITIVE_COLOR = "#90caf9";
 const FALSE_NEGATIVE_COLOR = "#d32f2f";
 const FALSE_NEGATIVE_OUTLINE = "#d32f2f";
@@ -45,6 +46,7 @@ export default {
     DISEASED_COLOR,
     TEST_NEG_COLOR,
     TRUE_POSITIVE_COLOR,
+    TRUE_POSITIVE_OUTLINE,
     FALSE_POSITIVE_COLOR,
     TRUE_NEGATIVE_COLOR,
     FALSE_NEGATIVE_COLOR,
