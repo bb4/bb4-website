@@ -3,9 +3,9 @@ import diseaseConsts from '../diseaseConsts.js'
 export default {
 
     template: `<div id="bayes-rule-view">
-       <table class="bayes-rule-exp" align="center" cellpadding="0" cellspacing="0">
+       <table class="bayes-rule-exp">
            <tr>
-               <td rowspan="2" nowrap="nowrap">
+               <td rowspan="2" class="cell-nowrap">
                    <span class="prob-term"
                          :class="{ highlighted: highlightedProbId === ids.PROB_D_GIVEN_POS }"
                          @mouseenter="emitHighlight(ids.PROB_D_GIVEN_POS)"
@@ -28,7 +28,7 @@ export default {
                        p(<span class="positive">positive</span>|<span class="diseased">D</span>)
                    </span>
                </td>
-               <td rowspan="2" nowrap="nowrap"> &nbsp; = &nbsp;</td>
+               <td rowspan="2" class="cell-nowrap"> &nbsp; = &nbsp;</td>
                <td class="numerator">
                    <span class="prob-diseased prob-term"
                          :class="{ highlighted: highlightedProbId === ids.PROB_D }"
@@ -44,17 +44,16 @@ export default {
                        {{probPositiveGivenDiseasedTxt}}
                    </span>
                </td>
-               <td rowspan="2" nowrap="nowrap"> &nbsp; = &nbsp;</td>
-               <td rowspan="2" width="100%">
+               <td rowspan="2" class="cell-nowrap"> &nbsp; = &nbsp;</td>
+               <td rowspan="2" class="cell-grow">
                    <span class="prob-diseased-result prob-term"
-                         :class="{ highlighted: highlightedProbId === ids.PROB_D_GIVEN_POS }"
-                         :style='{color: worryAttrs.color}'
+                         :class="[worryAttrs.level, { highlighted: highlightedProbId === ids.PROB_D_GIVEN_POS }]"
                          @mouseenter="emitHighlight(ids.PROB_D_GIVEN_POS)"
                          @mouseleave="emitUnhighlight">
                        {{probDiseasedGivenPositiveTxt}}
                    </span>
                    chance you're actually infected.
-                   <span class="prob-diseased-worry" :style='{color: worryAttrs.color}'>{{worryAttrs.howMuch}}</span>
+                   <span class="prob-diseased-worry" :class="worryAttrs.level">{{worryAttrs.howMuch}}</span>
                </td>
            </tr>
            <tr>
@@ -140,18 +139,18 @@ export default {
             if (prob < 5) {
                 return {
                     howMuch: "Don't worry at all — very unlikely you have it.",
-                    color: "#2e7d32",
+                    level: "worry-low",
                 };
             }
             if (prob < 30) {
                 return {
                     howMuch: "Worth taking seriously — ask your doctor about a confirmatory test.",
-                    color: "#f9a825",
+                    level: "worry-medium",
                 };
             }
             return {
                 howMuch: "High concern — follow up with your doctor promptly.",
-                color: "#c62828",
+                level: "worry-high",
             };
         },
     },
