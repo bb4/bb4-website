@@ -323,11 +323,53 @@
   }
   .glp-intro {
     font: 0.95rem/1.55 var(--font-family-base); color: #94a3b8;
-    margin: 0 0 28px; max-width: 640px;
+    margin: 0 0 20px; max-width: 640px;
   }
   .glp-intro p { margin: 0 0 0.85em; }
   .glp-intro p:last-child { margin-bottom: 0; }
-  .glp-cat { margin-bottom: 32px; scroll-margin-top: 16px; }
+  .glp-filters {
+    position: sticky; top: 0; z-index: 5;
+    margin: 0 0 24px; padding: 12px 0 14px;
+    background: linear-gradient(to bottom, var(--bg-page) 70%, transparent);
+  }
+  .glp-filter-chips {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  }
+  .glp-chip {
+    appearance: none; cursor: pointer;
+    border: 1px solid var(--border-medium); border-radius: 999px;
+    background: rgba(30, 41, 59, 0.7); color: #cbd5e1;
+    font: 600 0.78rem var(--font-family-base);
+    padding: 7px 12px; transition: border-color .15s, background .15s, color .15s;
+  }
+  .glp-chip:hover { border-color: var(--game-accent-soft); color: #fff; }
+  .glp-chip[aria-pressed="true"] {
+    background: rgba(59, 130, 246, 0.22);
+    border-color: var(--game-accent-soft);
+    color: #e0f2fe;
+  }
+  .glp-chip-clear {
+    border-style: dashed; color: #94a3b8;
+  }
+  .glp-chip-clear[hidden] { display: none; }
+  .glp-filter-status {
+    margin: 10px 0 0; min-height: 1.2em;
+    font: 0.8rem/1.4 var(--font-family-base); color: #64748b;
+  }
+  .glp-filter-status[hidden] { display: none; }
+  .glp-cat { margin-bottom: 32px; scroll-margin-top: 72px; }
+  .glp-cat[hidden], .glp-card[hidden] { display: none; }
+  .glp-filter-empty {
+    margin: 0 0 28px; padding: 18px 16px;
+    border: 1px dashed var(--border-medium); border-radius: var(--radius-md);
+    font: 0.9rem/1.5 var(--font-family-base); color: #94a3b8;
+  }
+  .glp-filter-empty[hidden] { display: none; }
+  .glp-filter-empty button {
+    appearance: none; cursor: pointer;
+    background: none; border: none; padding: 0;
+    font: inherit; color: var(--game-accent-soft); text-decoration: underline;
+  }
   .glp-brand-title { font: 800 1.1rem var(--font-family-base); color: #f8fafc; }
   .glp-brand-sub { font: 0.75rem var(--font-family-base); color: #64748b; }
   .glp-faq {
@@ -411,6 +453,16 @@
     .glp-page-title { font-size: 1.35rem; }
     .glp-grid { grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 10px; }
     .glp-card-img { height: 76px; }
+    .glp-filters {
+      margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px;
+    }
+    .glp-filter-chips {
+      flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .glp-filter-chips::-webkit-scrollbar { display: none; }
+    .glp-chip { flex: none; }
+    .glp-cat { scroll-margin-top: 64px; }
   }
 </style>
 </head>
@@ -454,6 +506,27 @@
       </p>
     </div>
 
+    <div class="glp-filters" id="game-filters">
+      <div class="glp-filter-chips" role="group" aria-label="Filter games by tag">
+        <button type="button" class="glp-chip" data-tag="strategy" data-facet="genre" aria-pressed="false">Strategy</button>
+        <button type="button" class="glp-chip" data-tag="rts" data-facet="genre" title="Real-Time Strategy" aria-label="RTS (Real-Time Strategy)" aria-pressed="false">RTS</button>
+        <button type="button" class="glp-chip" data-tag="board" data-facet="genre" aria-pressed="false">Board</button>
+        <button type="button" class="glp-chip" data-tag="party" data-facet="genre" aria-pressed="false">Party</button>
+        <button type="button" class="glp-chip" data-tag="puzzle" data-facet="genre" aria-pressed="false">Puzzle</button>
+        <button type="button" class="glp-chip" data-tag="arcade" data-facet="genre" aria-pressed="false">Arcade</button>
+        <button type="button" class="glp-chip" data-tag="rpg" data-facet="genre" title="Role-Playing Game" aria-label="RPG (Role-Playing Game)" aria-pressed="false">RPG</button>
+        <button type="button" class="glp-chip" data-tag="mobile" data-facet="device" aria-pressed="false">Mobile</button>
+        <button type="button" class="glp-chip" data-tag="two-player" data-facet="players" aria-pressed="false">2-player</button>
+        <button type="button" class="glp-chip glp-chip-clear" id="filter-clear" hidden>Clear</button>
+      </div>
+      <p class="glp-filter-status" id="filter-status" hidden aria-live="polite"></p>
+    </div>
+
+    <div class="glp-filter-empty" id="filter-empty" hidden>
+      No games match those filters.
+      <button type="button" id="filter-empty-clear">Clear filters</button>
+    </div>
+
     <div class="glp-cat" id="cat-strategy">
       <h2 class="glp-cat-title">Strategy &amp; Conquest</h2>
       <p class="glp-cat-blurb">
@@ -461,7 +534,7 @@
         faction warfare, and a grand strategy simulation about humanity’s future.
       </p>
       <div class="glp-grid">
-        <a class="glp-card" href="https://galactic-conflict.barrybecker4.org/">
+        <a class="glp-card" href="https://galactic-conflict.barrybecker4.org/" data-tags="strategy rts">
           <div class="glp-card-img">
             <img src="../images/games/galactic-conflict-bg.png" alt="Galactic Conflict multiplayer browser strategy game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -473,7 +546,7 @@
             <p class="glp-card-tag">Command a fleet and battle for the planets in real time.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://world-conflict.barrybecker4.org/">
+        <a class="glp-card" href="https://world-conflict.barrybecker4.org/" data-tags="strategy">
           <div class="glp-card-img">
             <img src="../images/games/world-conflict-bg.png" alt="World Conflict turn-based multiplayer conquest game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -485,7 +558,7 @@
             <p class="glp-card-tag">A turn-based, Risk-like game of conquest.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://warfront.barrybecker4.org/">
+        <a class="glp-card" href="https://warfront.barrybecker4.org/" data-tags="strategy rts">
           <div class="glp-card-img">
             <img src="../images/games/warfront-bg.png" alt="Warfront real-time multiplayer strategy game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -497,7 +570,7 @@
             <p class="glp-card-tag">A fast-paced real-time strategy game of battling factions.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://into-the-singularity.barrybecker4.org/">
+        <a class="glp-card" href="https://into-the-singularity.barrybecker4.org/" data-tags="strategy rts rpg">
           <div class="glp-card-img">
             <img src="../images/games/into-the-singularity-bg.png" alt="Into the Singularity grand strategy multiplayer simulation" width="460" height="180" loading="lazy" decoding="async">
             <span class="glp-badge warn">Discord + itch.io</span>
@@ -520,7 +593,7 @@
         a Capablanca–Shogi chess hybrid, and a neon word game.
       </p>
       <div class="glp-grid">
-        <a class="glp-card" href="https://galactopoly.barrybecker4.org/">
+        <a class="glp-card" href="https://galactopoly.barrybecker4.org/" data-tags="board party">
           <div class="glp-card-img">
             <img src="../images/games/galactopoly-bg.png" alt="Galactopoly galaxy-themed multiplayer board game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -532,7 +605,7 @@
             <p class="glp-card-tag">That old family favorite, reimagined with a galaxy theme.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://quantum-tic-tac-toe.barrybecker4.org/">
+        <a class="glp-card" href="https://quantum-tic-tac-toe.barrybecker4.org/" data-tags="board puzzle two-player mobile">
           <div class="glp-card-img">
             <img src="../images/games/quantum-tic-tac-toe-bg.png" alt="Quantum Tic-tac-toe multiplayer browser board game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -547,7 +620,7 @@
             <p class="glp-card-tag">A mind-bending quantum take on tic-tac-toe.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://capablanca-shogi.barrybecker4.org/">
+        <a class="glp-card" href="https://capablanca-shogi.barrybecker4.org/" data-tags="board two-player mobile">
           <div class="glp-card-img">
             <img src="../images/games/capablanca-shogi-bg.png" alt="Capablanca Shogi Chess multiplayer browser chess variant" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -562,7 +635,7 @@
             <p class="glp-card-tag">A merge of Shogi with traditional Capablanca chess.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://babble.barrybecker4.org/">
+        <a class="glp-card" href="https://babble.barrybecker4.org/" data-tags="board party puzzle">
           <div class="glp-card-img">
             <img src="../images/games/babble-bg.png" alt="Babble multiplayer Scrabble-inspired word game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -584,7 +657,7 @@
         collaborative or competitive Sudoku, and a Set-like pattern matcher.
       </p>
       <div class="glp-grid">
-        <a class="glp-card" href="https://fermi-showdown.barrybecker4.org/">
+        <a class="glp-card" href="https://fermi-showdown.barrybecker4.org/" data-tags="party puzzle">
           <div class="glp-card-img">
             <img src="../images/games/fermi-showdown-bg.png" alt="Fermi Showdown multiplayer estimation party game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -596,7 +669,7 @@
             <p class="glp-card-tag">Test your estimation skills against others.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://word-shake.barrybecker4.org/">
+        <a class="glp-card" href="https://word-shake.barrybecker4.org/" data-tags="party puzzle mobile">
           <div class="glp-card-img">
             <img src="../images/games/boggle-bg.png" alt="Word Shake multiplayer word search browser game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -611,7 +684,7 @@
             <p class="glp-card-tag">A multiplayer word search game.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://sudoku-race.barrybecker4.org/">
+        <a class="glp-card" href="https://sudoku-race.barrybecker4.org/" data-tags="party puzzle mobile">
           <div class="glp-card-img">
             <img src="../images/games/sudoku-race-bg.png" alt="Sudoku-race multiplayer Sudoku puzzle game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -626,7 +699,7 @@
             <p class="glp-card-tag">Collaborative or competitive Sudoku puzzles.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://matchwise.barrybecker4.org/">
+        <a class="glp-card" href="https://matchwise.barrybecker4.org/" data-tags="party puzzle mobile">
           <div class="glp-card-img">
             <img src="../images/games/matchwise-bg.png" alt="Matchwise multiplayer pattern matching puzzle game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -651,7 +724,7 @@
         tank combat, zero-g duels, and last-snake-standing survival.
       </p>
       <div class="glp-grid">
-        <a class="glp-card" href="https://tank-battle.barrybecker4.org/">
+        <a class="glp-card" href="https://tank-battle.barrybecker4.org/" data-tags="arcade mobile">
           <div class="glp-card-img">
             <img src="../images/games/tank-battle-bg.png" alt="Tank Battle multiplayer arcade combat game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -666,7 +739,7 @@
             <p class="glp-card-tag">Tank-on-tank combat, inspired by the old Atari Combat.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://space-war.barrybecker4.org/">
+        <a class="glp-card" href="https://space-war.barrybecker4.org/" data-tags="arcade">
           <div class="glp-card-img">
             <img src="../images/games/space-war-bg.png" alt="Space War multiplayer zero-gravity duel game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -678,7 +751,7 @@
             <p class="glp-card-tag">Duel in zero-g, inspired by Spacewar from the '80s.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://snake.barrybecker4.org/">
+        <a class="glp-card" href="https://snake.barrybecker4.org/" data-tags="arcade mobile">
           <div class="glp-card-img">
             <img src="../images/games/snake-bg.png" alt="Snake multiplayer arcade survival game" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -702,7 +775,7 @@
         Cooperative storytelling with friends: explore a fifth-edition-style dungeon guided by an AI dungeon master.
       </p>
       <div class="glp-grid">
-        <a class="glp-card" href="https://depths-and-dragons.barrybecker4.org/">
+        <a class="glp-card" href="https://depths-and-dragons.barrybecker4.org/" data-tags="rpg">
           <div class="glp-card-img">
             <img src="../images/games/depths-and-dragons-bg.png" alt="Depths and Dragons multiplayer AI dungeon master RPG" width="460" height="180" loading="lazy" decoding="async">
             <div class="glp-card-badges">
@@ -749,6 +822,95 @@
     </p>
   </div>
 </div>
+<script>
+(function () {
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.glp-chip[data-tag]'));
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.glp-card[data-tags]'));
+  var categories = Array.prototype.slice.call(document.querySelectorAll('.glp-cat'));
+  var clearBtn = document.getElementById('filter-clear');
+  var emptyClearBtn = document.getElementById('filter-empty-clear');
+  var statusEl = document.getElementById('filter-status');
+  var emptyEl = document.getElementById('filter-empty');
+
+  function selectedByFacet() {
+    var selected = {};
+    chips.forEach(function (chip) {
+      if (chip.getAttribute('aria-pressed') !== 'true') return;
+      var facet = chip.getAttribute('data-facet');
+      if (!selected[facet]) selected[facet] = [];
+      selected[facet].push(chip.getAttribute('data-tag'));
+    });
+    return selected;
+  }
+
+  function cardMatches(card, selected) {
+    var facets = Object.keys(selected);
+    if (!facets.length) return true;
+    var tags = (card.getAttribute('data-tags') || '').split(/\s+/);
+    return facets.every(function (facet) {
+      return selected[facet].some(function (tag) {
+        return tags.indexOf(tag) !== -1;
+      });
+    });
+  }
+
+  function applyFilters() {
+    var selected = selectedByFacet();
+    var activeCount = Object.keys(selected).reduce(function (sum, facet) {
+      return sum + selected[facet].length;
+    }, 0);
+    var matchCount = 0;
+
+    cards.forEach(function (card) {
+      var match = cardMatches(card, selected);
+      card.hidden = !match;
+      if (match) matchCount += 1;
+    });
+
+    categories.forEach(function (cat) {
+      var visible = cat.querySelector('.glp-card:not([hidden])');
+      cat.hidden = !visible;
+    });
+
+    var filtering = activeCount > 0;
+    clearBtn.hidden = !filtering;
+    emptyEl.hidden = !filtering || matchCount > 0;
+
+    if (!filtering) {
+      statusEl.hidden = true;
+      statusEl.textContent = '';
+      return;
+    }
+
+    statusEl.hidden = false;
+    if (matchCount === 0) {
+      statusEl.textContent = 'No games match.';
+    } else if (matchCount === 1) {
+      statusEl.textContent = 'Showing 1 game that matches all selected filters.';
+    } else {
+      statusEl.textContent = 'Showing ' + matchCount + ' games that match all selected filters.';
+    }
+  }
+
+  function clearFilters() {
+    chips.forEach(function (chip) {
+      chip.setAttribute('aria-pressed', 'false');
+    });
+    applyFilters();
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      var pressed = chip.getAttribute('aria-pressed') === 'true';
+      chip.setAttribute('aria-pressed', pressed ? 'false' : 'true');
+      applyFilters();
+    });
+  });
+
+  clearBtn.addEventListener('click', clearFilters);
+  emptyClearBtn.addEventListener('click', clearFilters);
+})();
+</script>
 <script>
 (function () {
   var INSTALL_BANNER_DISMISSED_KEY = 'onlineGamesInstallBannerDismissed';
