@@ -18,9 +18,49 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://barrybecker4.org/personal/life-journal.html</loc>
+    <loc>https://barrybecker4.org/personal/life-journal/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/personal/life-journal/early-years.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/personal/life-journal/high-school.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/personal/life-journal/college.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/personal/life-journal/graduate-school.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/personal/life-journal/adulthood.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/personal/life-journal/career.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/personal/life-journal/raising-brian.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://barrybecker4.org/personal/life-journal/retirement.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://barrybecker4.org/interests/go/go-lessons.html</loc>
