@@ -327,6 +327,26 @@
   }
   .glp-intro p { margin: 0 0 0.85em; }
   .glp-intro p:last-child { margin-bottom: 0; }
+  .glp-account-cta {
+    margin: 0 0 24px; max-width: 640px;
+  }
+  .glp-account-cta-row {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px;
+  }
+  .glp-btn-primary {
+    display: inline-block; text-align: center; text-decoration: none;
+    font: 600 0.85rem var(--font-family-base);
+    color: #0f172a; background: var(--game-accent);
+    border: 1px solid var(--game-accent); border-radius: var(--radius-md);
+    padding: 9px 14px; transition: background .2s, border-color .2s;
+  }
+  .glp-btn-primary:hover {
+    background: var(--game-accent-soft); border-color: var(--game-accent-soft);
+  }
+  .glp-account-hint {
+    margin: 10px 0 0;
+    font: 0.82rem/1.45 var(--font-family-base); color: #64748b;
+  }
   .glp-filters {
     position: sticky; top: 0; z-index: 5;
     margin: 0 0 24px; padding: 12px 0 14px;
@@ -503,6 +523,15 @@
         This collection spans strategy and conquest, board games, party puzzles, arcade action,
         and a cooperative RPG. Built with Svelte and deployed on Cloudflare.
         Some titles remix familiar favorites; others are original designs.
+      </p>
+    </div>
+
+    <div class="glp-account-cta">
+      <div class="glp-account-cta-row">
+        <a id="account-cta" class="glp-btn-primary" href="https://account.barrybecker4.org/login?next=https%3A%2F%2Fbarrybecker4.org%2Fmultiplayer-games%2F">Create free account</a>
+      </div>
+      <p class="glp-account-hint" id="account-cta-hint">
+        Optional — play as a guest anytime. Create a free account for a display name that works across games.
       </p>
     </div>
 
@@ -835,6 +864,10 @@
     <section class="glp-faq" id="faq" aria-labelledby="faq-heading">
       <h2 class="glp-faq-title" id="faq-heading">FAQ</h2>
       <details>
+        <summary>Do I need an account to play?</summary>
+        <p>No. You can play any game as a guest. A free account is optional and gives you a display name that works across games, plus newsletter opt-in if you want it. <a href="https://account.barrybecker4.org/login?next=https%3A%2F%2Fbarrybecker4.org%2Fmultiplayer-games%2F">Sign in / create account</a>.</p>
+      </details>
+      <details>
         <summary>Do I need to install anything?</summary>
         <p>No. These are multiplayer browser games. Open a game link, create or join a room, and play in a modern desktop or mobile browser.</p>
       </details>
@@ -864,6 +897,36 @@
     </p>
   </div>
 </div>
+<script>
+(function () {
+  var ACCOUNT_PROFILE = 'https://account.barrybecker4.org/profile';
+  var ACCOUNT_ME = 'https://account.barrybecker4.org/api/auth/me';
+  var cta = document.getElementById('account-cta');
+  var hint = document.getElementById('account-cta-hint');
+  if (!cta) return;
+
+  fetch(ACCOUNT_ME, { credentials: 'include', mode: 'cors' })
+    .then(function (response) {
+      return response.ok ? response.json() : null;
+    })
+    .then(function (data) {
+      if (!data || !data.user) return;
+      cta.textContent = 'Your Account';
+      cta.href = ACCOUNT_PROFILE;
+      if (!hint) return;
+      if (data.user.displayName) {
+        hint.textContent =
+          'Signed in as ' + data.user.displayName + '. Manage your display name and preferences anytime.';
+      } else {
+        hint.textContent =
+          'Signed in. Set a display name that works across games.';
+      }
+    })
+    .catch(function () {
+      // Stay on guest CTA if session check fails (offline, CORS not deployed, etc.).
+    });
+})();
+</script>
 <script>
 (function () {
   var chips = Array.prototype.slice.call(document.querySelectorAll('.glp-chip[data-tag]'));
