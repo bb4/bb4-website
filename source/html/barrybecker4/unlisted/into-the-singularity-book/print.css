@@ -1,0 +1,46 @@
+body {
+  font-family: Verdana, "Helvetica Neue", Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.65;
+  max-width: 6.5in;
+  margin: 1in auto;
+  color: #111;
+}
+
+h1 {
+  font-size: 16pt;
+  font-weight: 700;
+  margin: 0 0 1.5em;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 0.85em;
+  orphans: 3;
+  widows: 3;
+}
+
+hr {
+  border: none;
+  text-align: center;
+  margin: 1.75em 0;
+  height: auto;
+}
+
+hr::before {
+  content: "* * *";
+  letter-spacing: 0.4em;
+  color: #666;
+  font-size: 10pt;
+}
+
+em {
+  font-style: italic;
+}
+
+@media print {
+  body {
+    margin: 0;
+    max-width: none;
+  }
+}
