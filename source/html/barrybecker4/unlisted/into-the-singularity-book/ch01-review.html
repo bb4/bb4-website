@@ -10,272 +10,136 @@
 <body>
 <h1 id="chapter-1-the-double-blow">Chapter 1: The Double Blow</h1>
 <p>The call came at 6:48 on a Tuesday, while Daniel was explaining to a
-Slack channel why the overnight deploy had eaten itself at 2 a.m. He’d
-been up since five. He was good at this part of the job — tracing cause
-through six services and a message queue until you found the one bad
-assumption everything else had trusted — and there was a small private
-satisfaction in that.</p>
-<p>He had the incident document open and a coffee going cold in his
-other hand. When his phone lit up with MARA on the lock screen he almost
-let it go to voicemail. Mara calling before seven on a weekday was never
-about anything good, and he did not have the bandwidth for whatever it
-was.</p>
-<p>He answered anyway. Some habits outlast their reasons.</p>
+Slack instant message channel why the overnight deploy had eaten itself
+at 2 a.m. He’d been up since five. He was good at this part of the job —
+tracing cause through six services and a message queue until you found
+the one bad assumption everything else had trusted.</p>
+<p>He had the incident document open and a coffee going cold. When his
+phone lit up with MARA he almost let it go to voicemail. Mara calling
+before seven on a weekday was never about anything good.</p>
+<p>He answered anyway.</p>
 <p>“It’s Dad,” Mara said, and then didn’t say anything else for a
 second, which was so unlike her that he knew before she got the rest of
 the sentence out.</p>
 <p>He asked the wrong first question — <em>when</em> instead of
-<em>how</em> — and she answered it anyway, flat, like she was reading
-off a form. Sometime before six that morning. On the shop floor, by the
-mill he still ran himself even though he had three guys who could run it
-for him. Ray Delgado found him when he came in to open up and called it
-in. The paramedics had come, and there had been nothing for them to
-do.</p>
-<p>The county would want to talk to Daniel and Mara both about
-arrangements. Mara had already booked a flight into Columbus for
-Thursday and wanted to know if he wanted her to see if there was a seat
-on the same one.</p>
-<p>“Yeah,” Daniel said. “Yeah, text me the flight.”</p>
+<em>how</em> — and she answered it anyway, flat. Sometime before six
+that morning. On the shop floor, by the mill he still ran himself. Ray
+Delgado found him when he came in to open up. The paramedics had come,
+and there had been nothing for them to do.</p>
+<p>She’d booked a flight into Columbus for Thursday and wanted to know
+if he could get something that landed around the same time.</p>
+<p>“Yeah. Text me the flight.”</p>
 <p>“You okay?”</p>
-<p>“I don’t know yet,” he said, and they both let it sit there for a
-second before she said she had to go make more calls and hung up.</p>
-<p>He put the phone down on the desk, next to the mouse, and looked at
-the incident doc, still open, cursor blinking in a field where he’d been
-about to write <em>root cause: race condition in the batch scheduler,
-mitigated, postmortem to follow.</em> The words meant nothing. Ten
-seconds earlier they had. He closed the laptop. He did not remember
-deciding to do that; his hand just did it, the same way it silenced his
-phone during meetings.</p>
-<p>Outside his window the Austin morning was already going white and hot
-at the edges, sprinklers ticking across the courtyard, somebody’s dog
-barking at somebody’s delivery. None of it had changed. That felt wrong,
-and then almost like a relief. He left both reactions alone.</p>
+<p>“I don’t know yet.”</p>
+<p>He put the phone down and looked at the incident doc, cursor blinking
+where he’d been about to write <em>root cause: race condition in the
+batch scheduler, mitigated, postmortem to follow.</em> The words meant
+nothing. He closed the laptop.</p>
 <hr />
 <p>His father’s name was Warren, and he had run Kessler Machine out of
-the same building on Route 9 in Millbrook, Ohio for thirty-one years.
-Daniel had not been inside it, he realized while booking a rental car,
-in far too long. He’d told himself it was distance and work and the way
-adult children drift from the towns their parents stay in. That was true
-as far as it went. It also wasn’t the whole of it, and he knew that
-too.</p>
-<p>His parents had split up when he was eighteen, quietly and without
-much drama — two people who’d spent a few years failing to explain
-themselves to each other and finally stopped trying. His mother, Joan,
-had moved to Cincinnati not long after. Daniel called her more than he
-called his father, and that had never felt like a decision. He’d just
-noticed, one day, that it was already true.</p>
+the same building on Route 9 in Millbrook, Ohio for thirty-one
+years.</p>
+<p>His parents had split up when he was eighteen, quietly. His mother,
+Joan, had moved to Cincinnati not long after. Daniel called her more
+than he called his father, and that had never felt like a decision. He’d
+just noticed, one day, that it was already true.</p>
 <p>His father had gone back to school once, decades before any of that —
-a graduate program in mathematics, cryptography specifically, the math
-behind secure keys and encrypted messages. He’d dropped out in his
-mid-twenties to come home and keep Kessler Machine running for his own
-father. He’d never once called it a sacrifice, and never once, in
-Daniel’s hearing, brought it up again.</p>
-<p>Bitcoin, they’d all gathered eventually, had gotten under his skin
-around 2013. An old friend from a machinists’ union local had gotten him
-started, back when it was still cheap enough — thirty dollars or so a
-coin — that a machinist’s spare cash could buy a few dozen at a time.
-Most men who bought in that year forgot about it or panic-sold within
-eighteen months. Warren hadn’t. Daniel suspected he’d understood what he
-was looking at because of the graduate program he’d walked away from,
-though Warren had never quite said so.</p>
-<p>He got quieter about it as the years went on, not louder. Longer
-hours at the shop, evenings on a laptop in the back office doing
-something he called “keeping an eye on things” that nobody in the
-family, including apparently his own wife, ever got a straight answer
-about. Daniel had never been sure how much of the marriage’s slow
-unraveling was that, specifically, versus everything else two people
-accumulate over twenty-some years. But he’d never fully believed it was
-nothing.</p>
-<p>Warren didn’t explain himself, then or later. He’d just, every so
-often, hand Daniel an envelope at Christmas with a printed sheet of
-numbers in it and say <em>don’t do anything with this, just hold
-it.</em></p>
-<p>Daniel had held it. He’d never asked what it added up to. That felt,
-this morning, like one more conversation he’d let slide past him on the
-theory that there would obviously be time later.</p>
-<p>The last time he’d actually stood on that shop floor was fourteen
-months ago, over a long weekend he’d almost canceled twice. Not driven
-past it, not seen it in a photo Mara forwarded from the Route 9 Facebook
-group. Actually stood on the oil-dark concrete and felt the mill’s
-vibration come up through his shoes.</p>
-<p>His father had wanted to show him a boring-and-facing machine he’d
-bought used off a shop going under two counties over, proud of the price
-the way another man might be proud of a car. Daniel had nodded in the
-right places and asked one real question, and his father’s face had
-opened while he answered. Then it closed again when Daniel’s phone
-buzzed with a work message he checked without thinking.</p>
-<p>His father hadn’t said anything about that. He’d just gone quiet the
-way he’d been quiet since 2013, and they’d gone to the diner on Fourth
-Street for dinner and talked about nothing. Daniel had flown home Sunday
-night telling himself there’d be a longer visit at Christmas, a better
-one, a real one. There hadn’t been. Christmas had turned into a phone
-call and a padded envelope.</p>
-<p>He called his manager to say he’d be out the rest of the week, family
-emergency. Nadia was kind about it in the brisk, slightly relieved way
-of someone who has a sprint review in twenty minutes and one less thing
-to worry about now that this is handled. She told him to take whatever
-he needed.</p>
-<p>He believed she meant it. He also noticed she said <em>whatever you
-need</em> and not <em>however long you need</em>.</p>
+a graduate program in cryptography. He’d dropped out in his mid-twenties
+to come home and keep Kessler Machine running for his own father.</p>
+<p>Bitcoin had gotten under his skin around 2013. An old friend from a
+machinists’ union local had gotten him started, when it was still thirty
+dollars or so a coin. Most men who bought in that year forgot about it
+or panic-sold within eighteen months. Warren hadn’t. Daniel suspected
+he’d understood what he was looking at because of the graduate program
+he’d walked away from.</p>
+<p>He got quieter about it as the years went on. Longer hours at the
+shop, evenings on a laptop in the back office. Warren didn’t explain
+himself. He’d just, every so often, hand Daniel an envelope at Christmas
+with a printed sheet of numbers in it and say <em>don’t do anything with
+this, just hold it.</em></p>
+<p>Daniel had held it. He’d never asked what it added up to.</p>
+<p>The last time he’d stood on that shop floor was fourteen months ago.
+His father had wanted to show him a boring-and-facing machine he’d
+bought used, proud of the price the way another man might be proud of a
+car. Daniel had nodded in the right places and asked one real question,
+and his father’s face had opened while he answered. Then it closed again
+when Daniel’s phone buzzed with a work message he checked without
+thinking.</p>
+<p>He’d flown home telling himself there’d be a longer visit at
+Christmas. There hadn’t been. Christmas had turned into a phone call and
+a padded envelope.</p>
+<p>He called his manager to say he’d be out the rest of the week. Nadia
+told him to take whatever he needed. He noticed she said <em>whatever
+you need</em> and not <em>however long you need</em>.</p>
 <hr />
-<p>He flew out Thursday morning as planned. The funeral was set for
-Saturday — the county coroner’s office moved on its own schedule, and
-there were things Mara called “logistics” that Daniel understood to mean
-the funeral home needed a deposit before it would commit to a date.</p>
-<p>He spent Wednesday night making lists he didn’t need to make, because
-making lists was a thing he could do with his hands and his attention
-that produced a small, false sense of progress. Suit, dry-cleaned,
-hanging on the closet door already, so that wasn’t even a real item.
-Flight, booked. Out-of-office reply, set.</p>
-<p>He stood in his kitchen at eleven p.m. rewriting the out-of-office
-message four times because none of the wording seemed right. <em>Limited
-availability</em> felt like a lie. <em>Bereavement leave</em> felt like
-something he was performing for an audience of nobody. He picked one and
-stopped looking at it.</p>
-<p>Somewhere around midnight he thought about who else he should call —
-not to tell them anything, just to have said it out loud to somebody who
-wasn’t already inside the week with him — and came up mostly empty.</p>
-<p>There was Elena, except that meant reopening something he’d spent two
-years carefully not reopening, and this was the wrong moment to test
-whether he still meant it. There were a handful of names from grad
-school he texted maybe twice a year — birthday check-ins that didn’t
-survive contact with an actual crisis. There was Wei, if the time
-difference and Wei’s increasingly strange radio silence over the last
-few months hadn’t made the last two calls feel like talking into an
-empty line.</p>
-<p>Mostly there was work, which had become the rhythm of most of his
-days without his ever deciding that it should. And now, apparently, work
-had a Friday meeting scheduled with an HR name he didn’t recognize. He
-didn’t want to follow that thought any further than he had to. He went
-to bed instead. He did not sleep especially well.</p>
-<p>Thursday afternoon, an hour after he landed in Columbus, sitting in
-the rental car in the airport garage with the AC running before he’d
-even pulled out of the space, his phone buzzed with a calendar invite:
-<em>Team Update — Required.</em> Ten a.m. his time Friday. No agenda.
-Nadia wasn’t on the invite. A name from HR he didn’t recognize was.</p>
-<p>He knew what it was before Friday came. The blank agenda was the
-tell.</p>
+<p>The funeral was set for Saturday. He spent Wednesday night making
+lists he didn’t need, because lists gave his hands something to do.</p>
+<p>Around midnight he thought about who else to call and came up mostly
+empty. There was Elena, except that meant reopening something he’d spent
+two years carefully not reopening. There was Wei, if the time difference
+and Wei’s increasingly strange radio silence hadn’t made the last two
+calls feel like talking into an empty line.</p>
+<p>Thursday afternoon, sitting in the rental car in the airport garage
+with the AC running, his phone buzzed with a calendar invite: <em>Team
+Update — Required.</em> Ten a.m. his time Friday. No agenda. A name from
+HR he didn’t recognize was on it.</p>
+<p>He knew what it was. The blank agenda was the tell.</p>
 <p>He’d watched it happen to three people on an adjacent team in the
-spring. Sanjay, who’d been there four years longer than Daniel had. A
-contractor named Beth who never even got a laptop-closing moment out of
-it, just found out over email between two other emails. A third guy
-whose name Daniel was faintly ashamed to realize he’d already half
-forgotten. Each of them getting an identically worded invite with an
-identically blank agenda field.</p>
-<p>He’d told himself at the time that his team was different, that his
-numbers were good, that Meridian’s routing models needed a human in the
-loop for the messy exception cases the system couldn’t confidently
-resolve on its own. Needed him, specifically, because he’d built half of
-that exception-handling logic himself. On Thursday night he still
-believed it. He had reasons to.</p>
-<p>The drive from the airport took an hour and forty minutes, most of it
-on a two-lane state route that went from strip malls to soybean fields
-to more strip malls, the kind of unbroken suburban geometry that made it
-hard to say exactly when Ohio started.</p>
-<p>Somewhere past the county line the fields gave way to a downtown
-built for three times its current population. A shuttered movie theater
-missing half its marquee letters. A hardware store. A diner Daniel
-recognized without wanting to. A bank branch that had become a vape shop
-that had become, per a taped-up paper sign, available for lease.</p>
+spring. Sanjay, who’d been there four years longer than Daniel. A
+contractor named Beth who found out over email. He’d told himself his
+team was different, that his numbers were good, that Meridian’s routing
+models needed a human in the loop for the messy exception cases.</p>
+<p>The drive from the airport took an hour and forty minutes. Somewhere
+past the county line the fields gave way to a downtown built for three
+times its current population. A shuttered movie theater. A hardware
+store. A diner Daniel recognized without wanting to.</p>
 <p>He drove past Kessler Machine without meaning to slow down, and did
-anyway. The lot was empty except for Ray Delgado’s truck. The bay doors
-were shut. Someone — Ray, probably — had already taken down whatever had
-needed taking down, so there was nothing marking the building as
-different from how it had looked the last time Daniel had seen it.</p>
-<p>A building should look different, he thought, after something like
-that happens inside it. This one just looked closed.</p>
-<p>Friday morning he sat in his father’s kitchen in Millbrook. Mara had
-gotten in the night before and taken the guest room without asking,
-which was fine — he hadn’t wanted it.</p>
-<p>He joined the call from his laptop at the same table where he’d eaten
-breakfast as a kid. A hundred miles and one full day away from walking
-into a room with his father’s casket in it.</p>
+anyway. The lot was empty except for Ray’s truck. After something like
+that, a building should look different. This one just looked closed.</p>
+<p>Friday morning he sat in his father’s kitchen in Millbrook. A hundred
+miles and one full day away from walking into a room with his father’s
+casket in it.</p>
 <p>There were three people on the call. Nadia, silent, camera off. The
-HR name from the invite, a woman named Talia Brandt who spoke in the
-unhurried, over-enunciated cadence of someone who does this every week
-and has learned to make each instance sound like the first — and a
-slide, screen-shared, titled <em>Q3 Organizational Efficiency
-Update.</em></p>
+HR woman, Talia Brandt. And a slide titled <em>Q3 Organizational
+Efficiency Update.</em></p>
 <p>She used the phrase twice. <em>Efficiency gains.</em> Once early,
-framing — “as part of a broader set of efficiency gains enabled by our
-platform investments.” And once at the end, softer, almost kind, like
-she thought repeating it might make it land as something other than what
-it was: “We know this is difficult, and we want you to know this
-decision reflects efficiency gains at the org level, not anything about
-your individual performance.”</p>
-<p>Daniel had spent four years writing systems that told warehouse floor
-managers, in that same register, that a shift could run with two fewer
-people and the numbers would hold. He recognized the sentence structure.
-He’d written versions of it himself.</p>
+framing. And once at the end, softer: “We want you to know this decision
+reflects efficiency gains at the org level, not anything about your
+individual performance.”</p>
 <p>Somewhere upstream of Talia Brandt, a dashboard had flagged his role:
 senior, expensive, redundant against a model that had gotten quietly
-better at the exception cases over the last two quarters. A decision
-that had once required a person to make it had instead required a person
-to deliver it. He almost said this out loud, then didn’t.</p>
-<p>“Do you have any questions?” Talia asked, in the tone of someone who
-has been trained to ask this and trained not to expect much of an
-answer.</p>
-<p>“No,” Daniel said. His voice came out steadier than he felt entitled
-to. “I think I understand.”</p>
-<p>The severance details would follow in an email, she said. Eight
-weeks, plus accrued PTO, plus a package that assumed he would not need
-it explained twice — that he was someone who read the fine print
-himself. The assumption was correct, and that made the whole thing feel
-even more like being handled by a system that had already modeled
-him.</p>
-<p>Eight weeks. He did the math without meaning to. Rent in Austin. The
-lease he’d signed in the spring when the offer letter had made it feel
-safe to sign a longer one. The health insurance he’d need to replace
-before eight weeks ran out if he wanted to keep seeing his actual doctor
-instead of whichever one a marketplace plan assigned him.</p>
-<p>It would be fine. He had savings. He had, technically, whatever his
-father’s Christmas envelopes had turned into over the years, unopened,
-unspent, a number he’d never let himself compute. Computing it had
-always felt like betting on something he didn’t want to need.</p>
-<p>It would be fine. He made himself believe that with about the same
-effort it had taken to believe Meridian needed him specifically — enough
-to get through the next five minutes, and no further.</p>
-<p>He closed the laptop. It made the exact same sound it had made three
-days earlier in Austin, plastic meeting plastic, a small definitive
-click, and for a second the two mornings sat on top of each other so
-precisely that he had to put both hands flat on the table to remember
-which one he was in.</p>
+better at the exception cases over the last two quarters.</p>
+<p>“Do you have any questions?”</p>
+<p>“No. I think I understand.”</p>
+<p>Eight weeks severance. He did the math: Austin rent, the lease he’d
+just signed, health insurance. He had savings. He had, technically,
+whatever his father’s Christmas envelopes had turned into over the
+years, unopened, unspent.</p>
+<p>He closed the laptop. For a second the two mornings sat on top of
+each other so precisely that he had to put both hands flat on the table
+to remember which one he was in.</p>
 <hr />
-<p>Mara found him twenty minutes later still sitting there, laptop shut,
-coffee he hadn’t touched going cold in one of their mother’s old mugs,
-the one with the chip on the handle that none of them had ever thrown
-out.</p>
-<p>“You look like you got hit by a truck,” she said, not unkindly. She
-had her own phone in her hand, thumb moving, some market thing she was
-tracking even here, even today, and he didn’t have it in him to resent
-her for it. It was just how she metabolized things. Everybody had a
-version of the laptop-closing habit.</p>
-<p>“Lost my job this morning,” he said.</p>
+<p>Mara found him twenty minutes later still sitting there, coffee going
+cold in one of their mother’s old mugs.</p>
+<p>“You look like you got hit by a truck.”</p>
+<p>“Lost my job this morning.”</p>
 <p>She stopped scrolling. “This morning morning?”</p>
-<p>“Ten a.m. call. ‘Efficiency gains.’” He heard himself say it in Talia
-Brandt’s exact cadence and didn’t try to stop.</p>
-<p>Mara set the phone face-down on the table, which from her was a
-significant gesture, and for once didn’t lead with a plan or a number or
-a piece of advice about what he should do next. She just pulled out the
-chair across from him and sat, and for a while neither of them said
-anything, which was the first thing all week that had felt like the
-right amount of words.</p>
-<p>“Tomorrow’s going to be bad,” she said eventually.</p>
+<p>“Ten a.m. call. ‘Efficiency gains.’”</p>
+<p>Mara set the phone face-down on the table, and for once didn’t lead
+with a plan or a number. She just pulled out the chair across from him
+and sat, and for a while neither of them said anything.</p>
+<p>“Tomorrow’s going to be bad.”</p>
 <p>“Today wasn’t great either.”</p>
-<p>“No.” She almost smiled. “It really wasn’t.”</p>
+<p>“No. It really wasn’t.”</p>
 <p>Outside, the sky had gone the flat gray Ohio got before rain that
-never quite arrived on schedule. Somewhere in the house a pipe knocked
-once and went still, an old-house sound their mother used to explain
-away and their father never had, and neither of them moved to
-investigate it now. They just sat there a while longer, in a kitchen
-built for four that had held one for the last eleven years, letting the
-coffee finish going cold.</p>
-<p>Upstairs, in a closet Daniel hadn’t opened yet, hung the suit he’d
-need in the morning, still creased from the garment bag. Down the hall,
-his father’s back office sat locked and dark, a laptop in a drawer that
-no one had turned on. None of that was tonight’s problem. Tonight he
-just had to get from here to a church at eleven a.m., with two losses
-sitting in him and no clear line between where one ended and the other
+never quite arrived. They sat there a while longer, in a kitchen built
+for four that had held one for the last eleven years, letting the coffee
+finish going cold.</p>
+<p>Upstairs hung the suit he’d need in the morning. Down the hall, his
+father’s back office sat locked and dark, a laptop in a drawer that no
+one had turned on. None of that was tonight’s problem. Tonight he just
+had to get from here to a church at eleven a.m., with two losses sitting
+in him and no clear line between where one ended and the other
 began.</p>
 </body>
 </html>
