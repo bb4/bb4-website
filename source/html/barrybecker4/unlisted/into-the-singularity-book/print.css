@@ -38,9 +38,94 @@ em {
   font-style: italic;
 }
 
+/* The wall: Wei's four sentences, and Daniel's fifth line under them. */
+blockquote {
+  margin: 1.25em 0 1.25em 2.5em;
+  padding: 0;
+  border: none;
+  page-break-inside: avoid;
+}
+
+blockquote p {
+  margin: 0 0 0.35em;
+}
+
+/* Front-matter epigraph page (chapters/front/epigraph.md). Butler, 1872 —
+   public domain, so no permissions line is needed on the copyright page. */
+.epigraph {
+  max-width: 4.5in;
+  margin: 4em auto 0;
+  font-style: italic;
+  font-size: 11.5pt;
+  line-height: 1.7;
+}
+
+.attribution {
+  max-width: 4.5in;
+  margin: 1.25em auto 0;
+  font-size: 10pt;
+  font-style: normal;
+  color: #444;
+  text-align: right;
+}
+
+.chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  font-size: 9.5pt;
+  line-height: 1.4;
+  color: #444;
+}
+
+.chapter-nav-top {
+  margin: 0 0 1.5em;
+  padding-bottom: 0.75em;
+  border-bottom: 1px solid #ddd;
+}
+
+.chapter-nav-bottom {
+  margin: 2em 0 0;
+  padding-top: 0.75em;
+  border-top: 1px solid #ddd;
+}
+
+.chapter-nav a {
+  color: #1a4a7a;
+  text-decoration: none;
+  max-width: 48%;
+}
+
+.chapter-nav a:hover,
+.chapter-nav a:focus {
+  text-decoration: underline;
+}
+
+.chapter-nav-prev {
+  text-align: left;
+}
+
+.chapter-nav-next {
+  text-align: right;
+  margin-left: auto;
+}
+
 @media print {
   body {
     margin: 0;
     max-width: none;
+  }
+
+  .chapter-nav {
+    display: none;
+  }
+
+  /* The epigraph sits a third of the way down its own page. */
+  .epigraph {
+    margin-top: 2.5in;
+  }
+
+  .attribution {
+    page-break-after: always;
   }
 }
