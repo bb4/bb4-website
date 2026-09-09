@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Chapter 7: The Idea</title>
+  <link rel="stylesheet" href="print.css" />
+</head>
+<body>
+<nav class="chapter-nav chapter-nav-top" aria-label="Chapter navigation">
+  <a class="chapter-nav-prev" href="ch06-review-ed75c395.html" rel="prev">← Chapter 6: Unfinished Sentence</a>
+  <a class="chapter-nav-next" href="ch08-review-ed75c395.html" rel="next">Chapter 8: Same Asset, Opposite Temperament →</a>
+</nav>
+
+<h1 id="chapter-7-the-idea">Chapter 7: The Idea</h1>
+<p>Six weeks into unemployment, Daniel had developed a routine he was
+not especially proud of. Coffee, then the job boards for exactly as long
+as it took to feel the specific dread of reading his own resume as if a
+stranger had written it. Then whatever task he could find that had a
+beginning, a middle, and an end short enough to finish before lunch.</p>
+<p>He applied to four jobs. He had wanted none of them.</p>
+<p>He did not want to go be good at the same kind of job again, for the
+same kind of company, until the same kind of dashboard flagged him again
+in another four years.</p>
+<p>Nadia called on a Tuesday. His father had died on one. He’d gotten
+laid off the Friday after, but the calendar invite had landed on a
+Thursday — close enough to count. He answered the phone anyway.</p>
+<p>“There’s an edge case in the software that assigns shipments to
+loading docks. Multi-dock handoffs, the thing you used to call ‘the
+Tuesday problem’ because it only ever showed up—”</p>
+<p>“On Tuesdays. I remember.” Six weeks unemployed and his brain still
+filed that particular piece of logic like it mattered. “You’re telling
+me it’s still happening.”</p>
+<p>“I’m telling you it’s happening <em>more.</em> Since the model update
+in March. Someone raised the confidence threshold — the score that
+decides when the AI has to ask a person for help. The AI coding system
+has proposed four patches since Monday. All plausible. None come with a
+reason anybody trusts, and the last one took two docks at Reno down for
+forty minutes.</p>
+<p>“So now we’ve got three guys taking turns babysitting it manually —
+reviewing whatever the agent proposes overnight, approving what looks
+reasonable, rolling back what doesn’t. Nobody who actually understands
+why it breaks.”</p>
+<p>Daniel turned that over. Three people, rotating, approving or
+rejecting an agent’s homework without being able to grade it —
+re-inventing him, badly, in triplicate.</p>
+<p>“Send me the redacted log. And whatever the agent’s already
+tried.”</p>
+<hr />
+<p>The log arrived twenty minutes later. Along with it came the agent’s
+four rejected fixes, each with a confidence score and a paragraph of
+reasoning. The agent was like a very good student who’d done every page
+of the reading but hadn’t been in the room when the professor explained
+why the exam question existed.</p>
+<p>It took him ninety minutes, and none of it was spent writing code —
+the agent could write circles around anything he’d have typed. It took
+him ninety minutes to remember, digging through his own old design
+notes, why the system had two separate scores for how sure it was — one
+for the zone, one for the dock — and why those two scores had never been
+allowed to use the same rule.</p>
+<p>It was a decision he’d made under deadline pressure eighteen months
+ago and never fully written down anywhere an agent could have read
+it.</p>
+<p>None of the four candidates had gotten that part right. The second
+one had come close. He wrote four sentences explaining why it was the
+right one and sent them to Nadia’s personal email.</p>
+<p>She wrote back within the hour. <em>You just saved us God knows how
+many hours of babysitting. Also — does it bother you that we needed you
+for this and you don’t work here anymore?</em></p>
+<p>He looked at that question longer than the fix had taken him.</p>
+<p>It didn’t bother him that Meridian needed him and couldn’t have him.
+What troubled him was the workaround itself. Three people, rotating,
+pressing approve or reject on homework they couldn’t grade. Nobody had
+solved the problem, just relocated it.</p>
+<p>When the model wasn’t sure, a person was still supposed to decide.
+And nobody had bothered making sure the person doing the deciding was
+allowed to understand what they were deciding.</p>
+<p>Meridian’s engineering group had maybe a fifth as many people as when
+he’d started. The agents now did the work of the other four-fifths. What
+they lacked was the judgment of someone who had made a hard call under
+pressure and lived with what happened next. That knowledge came from
+experience, and nobody had figured out how to mass-produce it.</p>
+<hr />
+<p>He didn’t decide to build anything that night. What happened was
+smaller: he kept thinking about it.</p>
+<p>He thought about it when a recruiter emailed him a job description
+that was the same job he’d just been fired from. A logistics company
+with the same load-bearing sentence buried in paragraph four: <em>drive
+automation of manual exception handling.</em> Meaning: come build the
+thing that replaces you again.</p>
+<p>He didn’t reply. He opened a blank document instead and typed:
+<em>When the model isn’t sure, a person decides. Not three guys rotating
+shifts and hoping. An actual person, who understands why the model broke
+and gets to be responsible for the call.</em></p>
+<p>Underneath it, half a joke to himself: <em>Backstop.</em></p>
+<p>The word had come from nowhere he could trace. Baseball, maybe. The
+thing standing behind the thing that was supposed to catch it.</p>
+<p>Two nights later he opened the wallet app for the first time since
+the reading. The inheritance could pay his living expenses while he
+built the company. Eight weeks of leftover pay was no longer his only
+deadline.</p>
+<p>He closed the app before the number could turn into anything
+specific. There was still a laptop in Millbrook, locked in a drawer,
+that he had not gone back for.</p>
+<hr />
+<p>He called Mara because he wanted to say it out loud to someone who’d
+known him long enough to tell him if he was being an idiot.</p>
+<p>“Walk me through the business, not the feeling. Who pays for
+this?”</p>
+<p>“Companies. Anybody running a model that makes decisions expensive
+enough to get wrong. They plug into a review layer — real people,
+vetted, paid per case — for whatever the model flags as low-confidence
+or high-stakes. It’s not replacing anything. It’s the thing that catches
+what the model already admits it isn’t sure about.”</p>
+<p>“And the humans get paid how?”</p>
+<p>“Per case. Fast. I haven’t worked out the rails yet.” He meant the
+payment system that would move money from a hospital to a reviewer
+quickly and securely.</p>
+<p>“That’s the whole business, though. Not the humans. The rails. You
+have money now you didn’t have three months ago. I need you to say out
+loud that you know the money and the idea are two separate
+questions.”</p>
+<p>“I know they’re separate.”</p>
+<p>“Do you? Because you buried Dad and got fired in the same week, six
+weeks ago. And now you want to quit looking for a real job and spend the
+number in your account on a company named after a baseball position,
+based on one bug you fixed for free for people who don’t pay you
+anymore. Say that back to me.”</p>
+<p>“When you put it that way.”</p>
+<p>“I’m not saying don’t build it. I’m saying don’t let it be about
+proving Meridian wrong, or outrunning the grief. Build something that
+survives you being right about all of it.”</p>
+<p>He didn’t have a clean answer. “What are you doing with your
+half?”</p>
+<p>“Going harder into bitcoin than is probably wise. Somebody in this
+family has to be the one taking the aggressive side of the bet.”</p>
+<p>“Building a company from scratch during a personal crisis isn’t the
+sensible one, Mara.”</p>
+<p>“It is next to what I’m about to do.”</p>
+<hr />
+<p>He texted Denise two days later, mostly as an excuse. He told himself
+he was checking on the shop. He also wanted to say the idea out loud to
+somebody who worked with her hands for a living.</p>
+<p><em>Building something,</em> he wrote. <em>Company that pays humans
+to catch what AI models get wrong. Working name Backstop.</em></p>
+<p>The reply took a while. <em>So a very expensive way of hoping
+somebody still needs people.</em></p>
+<p>He laughed once, alone in his kitchen, at how precisely she’d hit on
+the exact sentence he’d been afraid was true.</p>
+<p><em>Not saying that’s bad,</em> she added. <em>Just — hope isn’t
+usually something you can put in a business plan. You’ll have to figure
+out how to make it look like something else on paper.</em></p>
+<p>He typed <em>thanks, that’s genuinely useful</em> and meant it.</p>
+<p>He went back to the document. Under the name, under the sentence
+about a person deciding, he started a list: <em>what it does. who pays.
+what it isn’t.</em></p>
+<p>The cursor blinked for a long time before he started writing. When he
+finally did, he felt as he had at 6:48 on Tuesday mornings at Meridian:
+a problem in front of him and his hands already halfway to solving
+it.</p>
+<nav class="chapter-nav chapter-nav-bottom" aria-label="Chapter navigation">
+  <a class="chapter-nav-prev" href="ch06-review-ed75c395.html" rel="prev">← Chapter 6: Unfinished Sentence</a>
+  <a class="chapter-nav-next" href="ch08-review-ed75c395.html" rel="next">Chapter 8: Same Asset, Opposite Temperament →</a>
+</nav>
+
+</body>
+</html>
