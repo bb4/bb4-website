@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Into the Singularity — ARC Preview</title>
+  <link rel="stylesheet" href="print.css" />
+  <style>
+    .gate {
+      max-width: 28rem;
+      margin: 3rem auto 0;
+    }
+    .gate h1 {
+      font-size: 1.35rem;
+      margin-bottom: 0.5em;
+    }
+    .gate p {
+      color: #333;
+      margin-bottom: 1.25em;
+    }
+    .gate label {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.4em;
+    }
+    .gate input[type="password"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.55em 0.65em;
+      font-size: 1rem;
+      border: 1px solid #888;
+      border-radius: 4px;
+    }
+    .gate button {
+      margin-top: 0.85em;
+      padding: 0.5em 1.1em;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .gate .error {
+      color: #a11;
+      margin-top: 0.75em;
+      min-height: 1.25em;
+    }
+  </style>
+  <script src="gate.js"></script>
+</head>
+<body>
+  <div class="gate">
+    <h1>Into the Singularity — ARC preview</h1>
+    <p>
+      This is a limited advance reader copy for invited reviewers only.
+      Enter the password you were given to continue.
+    </p>
+    <form id="gate-form" autocomplete="current-password">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required autofocus />
+      <button type="submit">Unlock</button>
+      <p class="error" id="gate-error" role="alert" aria-live="polite"></p>
+    </form>
+  </div>
+  <script>
+    (function () {
+      if (window.ItsArcGate && ItsArcGate.isUnlocked()) {
+        window.location.replace("book-contents.html");
+        return;
+      }
+
+      var form = document.getElementById("gate-form");
+      var errorEl = document.getElementById("gate-error");
+      var passwordInput = document.getElementById("password");
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        errorEl.textContent = "";
+        ItsArcGate.tryUnlock(passwordInput.value).then(function (ok) {
+          if (ok) {
+            window.location.replace("book-contents.html");
+          } else {
+            errorEl.textContent = "Incorrect password.";
+            passwordInput.select();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
