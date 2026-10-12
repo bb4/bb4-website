@@ -283,9 +283,17 @@
   .glp-card {
     text-decoration: none; border-radius: var(--radius-md); overflow: hidden;
     border: 1px solid var(--border-medium); background: var(--bg-panel-light);
-    display: block; transition: border-color .2s;
+    display: block; transition: border-color .2s; color: inherit;
   }
   .glp-card:hover { border-color: var(--game-accent-soft); }
+  .glp-card-link { display: block; text-decoration: none; color: inherit; }
+  .glp-card-related {
+    margin: 0; padding: 0 12px 10px;
+    font: 0.75rem/1.4 var(--font-family-base); color: #64748b;
+  }
+  .glp-card-related a {
+    color: var(--game-accent-soft); text-decoration: underline;
+  }
   .glp-card-img {
     position: relative; height: 90px; overflow: hidden;
     background: var(--border-dark);
@@ -358,6 +366,15 @@
   .glp-account-hint {
     margin: 10px 0 0;
     font: 0.82rem/1.45 var(--font-family-base); color: #64748b;
+  }
+  .glp-book-promo {
+    margin: 0 0 20px; max-width: 640px; padding: 10px 12px;
+    border: 1px solid var(--border-medium); border-radius: var(--radius-md);
+    background: rgba(30, 41, 59, 0.45);
+    font: 0.85rem/1.45 var(--font-family-base); color: #94a3b8;
+  }
+  .glp-book-promo a {
+    color: var(--game-accent-soft); text-decoration: underline; font-weight: 600;
   }
   .glp-filters {
     position: sticky; top: 0; z-index: 5;
@@ -538,6 +555,11 @@
       </p>
     </div>
 
+    <p class="glp-book-promo">
+      New: <a href="https://www.amazon.com/dp/B0HLW7GZF6">Into the Singularity</a> —
+      a science-fiction novel loosely based on the game of the same name.
+    </p>
+
     <div class="glp-account-cta">
       <div class="glp-account-cta-row">
         <a id="account-cta" class="glp-btn-primary" href="https://account.barrybecker4.org/login?next=https%3A%2F%2Fbarrybecker4.org%2Fmultiplayer-games%2F">Create free account</a>
@@ -693,19 +715,25 @@
             <p class="glp-card-tag">A fast-paced real-time strategy game of battling factions.</p>
           </div>
         </a>
-        <a class="glp-card" href="https://into-the-singularity.barrybecker4.org/" data-tags="strategy rts rpg">
-          <div class="glp-card-img">
-            <img src="../images/games/into-the-singularity-bg.png" alt="Into the Singularity grand strategy multiplayer simulation" width="460" height="180" loading="lazy" decoding="async">
-            <span class="glp-badge warn">Discord + itch.io</span>
-            <div class="glp-card-badges">
-              <span class="glp-badge players">2-12 players</span>
+        <div class="glp-card" data-tags="strategy rts rpg">
+          <a class="glp-card-link" href="https://into-the-singularity.barrybecker4.org/">
+            <div class="glp-card-img">
+              <img src="../images/games/into-the-singularity-bg.png" alt="Into the Singularity grand strategy multiplayer simulation" width="460" height="180" loading="lazy" decoding="async">
+              <span class="glp-badge warn">Discord + itch.io</span>
+              <div class="glp-card-badges">
+                <span class="glp-badge players">2-12 players</span>
+              </div>
             </div>
-          </div>
-          <div class="glp-card-body">
-            <h3 class="glp-card-title">Into the Singularity</h3>
-            <p class="glp-card-tag">Steer humanity through the future in this grand strategy simulation.</p>
-          </div>
-        </a>
+            <div class="glp-card-body">
+              <h3 class="glp-card-title">Into the Singularity</h3>
+              <p class="glp-card-tag">Steer humanity through the future in this grand strategy simulation.</p>
+            </div>
+          </a>
+          <p class="glp-card-related">
+            Also a novel —
+            <a href="https://www.amazon.com/dp/B0HLW7GZF6">get it on Amazon</a>
+          </p>
+        </div>
       </div>
     </div>
 
