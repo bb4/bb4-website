@@ -3,6 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#5a3514" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Go Score" />
+    <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="./favicon.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
@@ -12,12 +18,12 @@
 		<link href="./_app/immutable/chunks/BEOtz52Z.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/D2wqpkQN.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/B6fi7pJN.js" rel="modulepreload">
-		<link href="./_app/immutable/entry/app.DKIVeugh.js" rel="modulepreload">
+		<link href="./_app/immutable/entry/app.B0iL3KsR.js" rel="modulepreload">
 		<link href="./_app/immutable/nodes/0.DFbiGYeC.js" rel="modulepreload">
 		<link href="./_app/immutable/chunks/XKyaHtl9.js" rel="modulepreload">
-		<link href="./_app/immutable/nodes/2.Bt49WmIm.js" rel="modulepreload">
+		<link href="./_app/immutable/nodes/2.BvimNWTd.js" rel="modulepreload">
 		<!--1uha8ag--><meta name="description" content="Photograph a Go board, correct the position, and show the score."/><!----><title>Go Score Estimator</title>
-		<link href="./_app/immutable/assets/2.DUX0kQsO.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/2.BJfgAmUs.css" rel="stylesheet">
   </head>
   <body data-sveltekit-preload-data="hover">
     <div style="display: contents"><!--[--><!--[--><!--[0--><!--[--><!--[--><!--[-1--><!--[--><main class="svelte-1uha8ag"><header class="svelte-1uha8ag"><p class="eyebrow svelte-1uha8ag">Photo alignment and scoring</p> <h1 class="svelte-1uha8ag">Go Score Estimator</h1> <p class="instructions svelte-1uha8ag">Photograph a finished board or place the stones yourself. Move back through the steps without
@@ -26,16 +32,16 @@
 			
 			<script>
 				{
-					__sveltekit_1sxrv77 = {
+					__sveltekit_yke9mf = {
 						base: new URL(".", location).pathname.slice(0, -1),
-						version: "1793208454270"
+						version: "1793209902086"
 					};
 
 					const element = document.currentScript.parentElement;
 
 					import("./_app/immutable/entry/start.CnEuJ3BW.js").then(async (kit) => {
-						kit.init(__sveltekit_1sxrv77);
-						const app = await import("./_app/immutable/entry/app.DKIVeugh.js");
+						kit.init(__sveltekit_yke9mf);
+						const app = await import("./_app/immutable/entry/app.B0iL3KsR.js");
 						kit.start(app, element, {
 							node_ids: [0, 2],
 							data: [null,null],
@@ -43,6 +49,18 @@
 							error: null
 						});
 					});
+
+					if ('serviceWorker' in navigator) {
+						const script_url = './service-worker.js';
+						const policy = globalThis?.window?.trustedTypes?.createPolicy(
+							'sveltekit-trusted-url',
+							{ createScriptURL(url) { return url; } }
+						);
+						const sanitised = policy?.createScriptURL(script_url) ?? script_url;
+						addEventListener('load', function () {
+							navigator.serviceWorker.register(sanitised, { type: 'module' });
+						});
+					}
 				}
 			</script>
 		</div>
