@@ -1,0 +1,14 @@
+{
+  "inputSize": 32,
+  "classes": [
+    "empty",
+    "black",
+    "white"
+  ],
+  "cropScale": 1.0,
+  "inputLayout": "NCHW",
+  "valueRange": [
+    0,
+    1
+  ]
+}
