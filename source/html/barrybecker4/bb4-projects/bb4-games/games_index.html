@@ -32,6 +32,14 @@
         (macOS <code>.dmg</code>, Windows <code>.msi</code>, Linux <code>.deb</code>) and double-click to install.
     </p>
     <p>
+        <strong>macOS note:</strong> Because these apps aren't notarized by Apple, macOS will quarantine them.
+        To remove the quarantine, either run <code>xattr -d com.apple.quarantine ~/Downloads/bb4-chess-2.1.dmg</code>
+        (replacing the filename with your downloaded dmg) before opening it, or after copying the app to Applications,
+        run <code>xattr -dr com.apple.quarantine /Applications/bb4-chess.app</code> (replacing
+        <code>bb4-chess.app</code> with the app you installed). Alternatively, try to open the app, then go to
+        System Settings &gt; Privacy &amp; Security and click "Open Anyway" (or Control-click the app and choose Open on older macOS).
+    </p>
+    <p>
         All the two player games on this page use the
         <a href="http://sourcemaking.com/design_patterns/strategy">strategy design pattern</a>
         to determine how to search. This means that it is easy to plug in alternative search algorithms.
