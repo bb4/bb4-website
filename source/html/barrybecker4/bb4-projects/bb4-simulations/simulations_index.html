@@ -28,12 +28,12 @@
     </p>
     <p>
         The easiest way to run a simulation is to download the native installer for your OS from the
-        <a href="https://github.com/bb4/bb4-simulations/releases/latest">latest GitHub Release</a>
+        <a href="https://github.com/bb4/bb4-simulations/releases/tag/3.0-SNAPSHOT">latest GitHub Release</a>
         (macOS <code>.dmg</code>, Windows <code>.msi</code>, Linux <code>.deb</code>) and double-click to install.
     </p>
     <p>
       <strong>macOS note:</strong> Because these apps aren't notarized by Apple, macOS will quarantine them.
-      To remove the quarantine, run <code>xattr -dr com.apple.quarantine /Applications/bb4-cave.app</code> (replacing
+      To remove the quarantine, run <code>xattr -dr com.apple.quarantine &quot;/Applications/Cave Explorer.app&quot;</code> (replacing
       <code>bb4-cave.app</code> with the app you installed) after copying the app to Applications.
     </p>
     <br>
@@ -214,6 +214,18 @@
         </tr>
         <tr>
           <td>
+            <h3>Dungeon Generator</h3>
+            <pre>bb4-dungeon</pre>
+            <p>Use this app to procedurally generate dungeon level floor plans for games.
+              I created this to help explore some dungeon level ideas when my son was working for <a href="https://x.com/augminted">Augminted Labs</a> making retro NFT games.</p>
+          </td>
+          <td style="vertical-align: top">
+            <img src="images/dungeon.png" title="Dungeon Generator" alt="Dungeon Generator">
+          </td>
+        </tr>
+        <tr>
+        <tr>
+          <td>
             <h3>Sierpinski Triangle</h3>
             <pre>bb4-sierpinski</pre>
             <p>This is an example of a self-similar set. \
@@ -234,7 +246,40 @@ See <a href="http://en.wikipedia.org/wiki/Sierpinski_triangle">Sierpinski Triang
             <img src="images/lsystem.jpg" title="L-System Tree" alt="L-System Tree">
           </td>
         </tr>
-
+        <tr>
+          <td>
+            <h3>Complex Mapping</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.complexmapping.ComplexMappingExplorer</pre>
+            <p>For a selected complex function (zeta, gamma, powers, etc.) this app warps a rectangular mesh of points in the complex plane,
+              so you can see the mapping as a distorted, colored grid.<br>I created it to help me get some intuition about the Riemann Zeta function. I wanted to see where the 0's of the function were.</p>
+          </td>
+          <td style="vertical-align: top">
+            <img src="images/complexmapping.png" title="Complex Mapping" alt="Complex Mapping Explorer">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Voronoi Tesselation</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.voronoi.VoronoiExplorer</pre>
+            <p>For a point cloud with a given distribution create a Voronoi tesselation using <a href="https://en.wikipedia.org/wiki/Fortune%27s_algorithm">Fortune's algorithm</a>.
+            </p>
+          </td>
+          <td style="vertical-align: top">
+            <img src="images/voronoi.png" title="Voronoi Tesselation" alt="Voronoi tessalation using Fortune's algorithm">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Wave Function Collapse</h3>
+            <pre>bb4-simulator -panel_class com.barrybecker4.simulation.waveFunctionCollapse.WaveFunctionCollapseExplorer</pre>
+            <p>Procedural tilemap generation from an example image with the help of ideas from quantum mechanics.<br>
+              This Scala implementation of WFC derived from [J Roskopf's Kotlin port](https://github.com/j-roskopf/WFC) of [WFC](https://github.com/mxgmn/WaveFunctionCollapse).
+            </p>
+          </td>
+          <td style="vertical-align: top">
+            <img src="images/wavefunctioncollapse.png" title="Wave Function Collapse" alt="Wave Function Collapse explorer">
+          </td>
+        </tr>
         </tbody>
     </table>
 
